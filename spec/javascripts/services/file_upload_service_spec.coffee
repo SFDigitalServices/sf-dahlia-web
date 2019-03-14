@@ -56,7 +56,7 @@ do ->
       it 'initializes session_uid', ->
         expect(FileUploadService.session_uid).not.toEqual null
 
-    describe 'Service.deletePreferenceFile', ->
+    describe 'Service.deleteFile', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
@@ -64,7 +64,7 @@ do ->
       it 'unsets FileUploadService prefType_proof_file', ->
         stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
         FileUploadService.preferences.documents[prefType].file = file
-        FileUploadService.deletePreferenceFile(prefType)
+        FileUploadService.deleteFile(prefType)
         httpBackend.flush()
         expect(FileUploadService.preferences.documents[prefType].file).toEqual null
 

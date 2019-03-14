@@ -102,7 +102,7 @@ angular.module('dahlia.components')
         opts = {}
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
-        FileUploadService.deletePreferenceFile(@preference, @listingId, opts).then =>
+        FileUploadService.deleteFile(@preference, @listingId, opts).then =>
           @afterDelete()
           @setProofType()
 

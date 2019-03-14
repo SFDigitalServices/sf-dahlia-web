@@ -4,23 +4,18 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
   Service.preferences = {}
   Service.session_uid = -> null
 
-  Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
-    pref = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
-    # might be calling deletePreferenceFile on a preference that this listing doesn't have
-    pref_id = if pref then pref.listingPreferenceID else pref_type
-    return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
-    params =
-      uploaded_file:
-        session_uid: Service.session_uid()
-        listing_id: listing_id
-        listing_preference_id: pref_id
+  Service.deleteFile = (pref_type, listing_id, opts = {}) ->
+    if pref_type
+      pref = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
+      # might be calling deleteFile on a preference that this listing doesn't have
+      pref_id = if pref then pref.listingPreferenceID else pref_type
+      return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
 
-    proofDocument = Service._proofDocument(pref_type, opts)
+      proofDocument = Service._proofDocument(pref_type, opts)
+    else
+      proofDocument = opts.document
 
-    if opts.rentBurdenType
-      params.uploaded_file.rent_burden_type = opts.rentBurdenType
-      params.uploaded_file.address = opts.address
-      params.uploaded_file.rent_burden_index = opts.index
+    params = Service._uploadedFileParams(listing_id, pref_id, opts, proofDocument)
 
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
       proofDocument.proofOption = null if proofDocument
@@ -43,94 +38,34 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
     )
 
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    preference = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
-    pref_id = if preference then preference.listingPreferenceID else pref_type
-    return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
-
-    proofDocument = Service._proofDocument(pref_type, opts)
+    if opts.proofDocument
+      proofDocument = opts.proofDocument
+    else
+      preference = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
+      pref_id = if preference then preference.listingPreferenceID else pref_type
+      return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
+      proofDocument = Service._proofDocument(pref_type, opts)
 
     if (!file)
       return $q.reject()
 
-    uploadedFileParams =
-      session_uid: Service.session_uid()
-      listing_id: listing_id
-      listing_preference_id: pref_id
-      document_type: proofDocument.proofOption
-
-    if opts.rentBurdenType
-      uploadedFileParams.address = opts.address
-      uploadedFileParams.rent_burden_type = opts.rentBurdenType
-      uploadedFileParams.rent_burden_index = opts.index
-
+    uploadedFileParams = Service._uploadedFileParams(listing_id, pref_id, opts, proofDocument).uploaded_file
     proofDocument.loading = true
     Service._processProofFile(file, proofDocument, uploadedFileParams)
 
-  # Rent Burden specific functions
-  Service.uploadedRentBurdenRentFiles = (address) ->
-    addressFiles = Service.preferences.documents.rentBurden[address]
-    if !_.isEmpty(addressFiles)
-      rentFiles = addressFiles.rent
-      _.filter(rentFiles, (file) -> !_.isEmpty(file.file))
-    else
-      []
+  Service._uploadedFileParams = (listing_id, pref_id, opts, document) ->
+    params = uploaded_file:
+      session_uid: Service.session_uid()
+      listing_id: listing_id
+      listing_preference_id: pref_id
+      document_type: document.proofOption
 
-  Service.hasRentBurdenFiles = (address = null) ->
-    hasFiles = false
-    if address
-      docs = Service.preferences.documents.rentBurden[address]
-      return false unless docs
-      hasFiles = !!(docs.lease.file || _.some(_.map(docs.rent, 'file')))
-    else
-      _.map Service.preferences.documents.rentBurden, (doc, address) ->
-        hasFiles = hasFiles || Service.hasRentBurdenFiles(address)
-    return hasFiles
+    if opts.rentBurdenType
+      params.uploaded_file.address = opts.address
+      params.uploaded_file.rent_burden_type = opts.rentBurdenType
+      params.uploaded_file.rent_burden_index = opts.index
 
-  Service.clearRentBurdenFile = (opts) ->
-    rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
-    return unless rentBurdenDocs
-    if opts.rentBurdenType == 'lease'
-      angular.copy({}, rentBurdenDocs.lease)
-    else
-      # remove pref file at opts.index
-      delete rentBurdenDocs.rent[opts.index]
-
-  Service.clearRentBurdenFiles = (address = null) ->
-    if address
-      rentBurdenDocs = Service.preferences.documents.rentBurden[address]
-      angular.copy({}, rentBurdenDocs.lease)
-      angular.copy({}, rentBurdenDocs.rent)
-    else
-      _.each Service.preferences.documents.rentBurden, (docs, address) ->
-        rentBurdenDocs = Service.preferences.documents.rentBurden[address]
-        angular.copy({}, rentBurdenDocs.lease)
-        angular.copy({}, rentBurdenDocs.rent)
-
-  Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
-    pref = ListingPreferenceService.getPreference('rentBurden', ListingDataService.listing)
-    return unless pref
-    pref_id = pref.listingPreferenceID
-    unless Service.hasRentBurdenFiles(address)
-      return $q.resolve()
-    params =
-      uploaded_file:
-        session_uid: Service.session_uid()
-        listing_preference_id: pref_id
-        listing_id: listing_id
-    # if no address provided, we are deleting *all* rentBurdenFiles for this user/listing
-    params.uploaded_file.address = address if address
-
-    $http.delete('/api/v1/short-form/proof', {
-      data: params,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).success((data, status, headers, config) ->
-      # clear out fileObj
-      Service.clearRentBurdenFiles(address)
-    ).error( (data, status, headers, config) ->
-      return
-    )
+    params
 
   Service._proofDocument = (prefType, opts) ->
     if opts.rentBurdenType

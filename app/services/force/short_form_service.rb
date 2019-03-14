@@ -77,7 +77,7 @@ module Force
 
     def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/Attachment/#{application['id']}"
+      endpoint = attachment_endpoint(application, file)
       file_body = Base64.encode64(file.file)
 
       post_body = {
@@ -171,5 +171,15 @@ module Force
       agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
     end
     private_class_method :format_agent
+
+    def self.attachment_endpoint(application, file)
+      file_types = ['Homebuyer education certificate', 'Loan pre-approval']
+      if file_types.any? { |doc_type| doc_type == file.document_type }
+        "/shortForm/file/#{application['id']}"
+      else
+        "/shortForm/Attachment/#{application['id']}"
+      end
+    end
+    private_class_method :attachment_endpoint
   end
 end

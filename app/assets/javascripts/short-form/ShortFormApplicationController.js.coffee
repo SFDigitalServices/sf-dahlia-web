@@ -12,7 +12,7 @@ ShortFormApplicationController = (
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
-  FileUploadService,
+  RentBurdenFileService,
   AnalyticsService,
   AddressValidationService,
   AccountService,
@@ -442,7 +442,7 @@ ShortFormApplicationController = (
 
   $scope.cancelRentBurdenFilesForAddress = (address) ->
     ShortFormNavigationService.isLoading(true)
-    FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
+    RentBurdenFileService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
       $scope.go('dahlia.short-form-application.rent-burdened-preference')
 
   $scope.setRentBurdenError = ->
@@ -1020,7 +1020,7 @@ ShortFormApplicationController = (
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'FileUploadService',
+  'ShortFormHelperService', 'RentBurdenFileService',
   'AnalyticsService',
   'AddressValidationService',
   'AccountService',

@@ -325,6 +325,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
+    data.documents = Service._reformatDocuments(uploadedFiles)
     Service._reformatMetadata(sfApp, data)
 
     allHousehold = angular.copy(data.householdMembers)
@@ -343,6 +344,18 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       dob_month: parseInt(split[1])
       dob_day: parseInt(split[2])
     }
+
+  Service._reformatDocuments = (uploadedFiles) ->
+    files = {}
+    return files unless _.isArray(uploadedFiles)
+    uploadedFiles.forEach (file) ->
+      if file.listing_preference_id == null
+        files[file.document_type] = {
+          proofOption: file.document_type
+          file: file
+        }
+    files
+
 
   Service._reformatAltContact = (alternateContact) ->
     return { alternateContactType: 'None' } unless alternateContact

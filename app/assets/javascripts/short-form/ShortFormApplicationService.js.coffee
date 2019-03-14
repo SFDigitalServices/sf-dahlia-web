@@ -1,7 +1,8 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
   ListingDataService, ListingConstantsService, ListingUnitService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferenceService
+  AddressValidationService, GISService, AnalyticsService, FileUploadService, RentBurdenFileService,
+  SharedService, ListingPreferenceService
 ) ->
   Service = {}
 
@@ -38,6 +39,8 @@ ShortFormApplicationService = (
     alternateContact:
       mailing_address: angular.copy(emptyAddress)
     householdMembers: []
+    documents:
+      preapprovalLetter: {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -91,6 +94,9 @@ ShortFormApplicationService = (
     # initialize FileUploadService to have access to preferences / session_uid
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
+      Service.session_uid
+    RentBurdenFileService.preferences = Service.preferences
+    RentBurdenFileService.session_uid = ->
       Service.session_uid
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
@@ -346,11 +352,11 @@ ShortFormApplicationService = (
     # clear out all fields for this preference
     Service.preferences[preference] = null
     if preference == 'rentBurden'
-      FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
+      RentBurdenFileService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
     else
       Service.preferences["#{preference}_household_member"] = null
       Service.preferences["#{preference}_proofOption"] = null
-      FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+      FileUploadService.deleteFile(preference, Service.listing.Id)
       if preference == 'certOfPreference' || preference == 'displaced'
         Service.preferences["#{preference}_certificateNumber"] = null
       if Service.preferences["#{preference}_address"]
@@ -443,7 +449,7 @@ ShortFormApplicationService = (
     addressPreferences.forEach (preference) ->
       selectedMember = Service.preferences[preference + '_household_member']
       if member.id == selectedMember
-        FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+        FileUploadService.deleteFile(preference, Service.listing.Id)
 
   # update lists of eligible people for the dropdowns for these preferences
   Service.refreshPreferences = (type = 'all') ->
@@ -1072,7 +1078,8 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingDataService', 'ListingConstantsService', 'ListingUnitService', 'ShortFormDataService',
-  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferenceService'
+  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'RentBurdenFileService',
+  'SharedService', 'ListingPreferenceService'
 ]
 
 angular
