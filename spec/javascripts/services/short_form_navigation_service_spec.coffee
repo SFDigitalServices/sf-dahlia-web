@@ -4,9 +4,13 @@ do ->
     ShortFormNavigationService = undefined
     $translate = {}
     $auth = {}
+    $state =
+      current: {}
+      go: jasmine.createSpy()
     Upload = {}
     uuid = {v4: jasmine.createSpy()}
-    $state = undefined
+    fakeAnalyticsService =
+      trackFormSuccess: jasmine.createSpy()
     fakeShortFormApplicationService =
       application:
         householdMembers: []
@@ -29,8 +33,10 @@ do ->
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
       $provide.value '$auth', $auth
+      $provide.value '$state', $state
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AccountService', fakeAccountService
@@ -39,11 +45,65 @@ do ->
       return
     )
 
-    beforeEach inject((_ShortFormNavigationService_, _$state_, _ShortFormApplicationService_) ->
-      $state = _$state_
+    beforeEach inject((_ShortFormNavigationService_) ->
       ShortFormNavigationService = _ShortFormNavigationService_
       return
     )
+
+    describe 'goToAndTrackFormSuccess', ->
+      it 'calls AnalyticsService.trackFormSuccess with "Application"', ->
+        ShortFormNavigationService.goToAndTrackFormSuccess()
+        expect(fakeAnalyticsService.trackFormSuccess).toHaveBeenCalledWith('Application')
+
+      describe 'when params are not provided', ->
+        it 'calls $state.go with the given path', ->
+          path = 'foo'
+          ShortFormNavigationService.goToAndTrackFormSuccess(path)
+          expect($state.go).toHaveBeenCalledWith(path)
+
+      describe 'when params are provided', ->
+        it 'calls $state.go with the given path and params', ->
+          path = 'foo'
+          params = {bar: 'baz'}
+          ShortFormNavigationService.goToAndTrackFormSuccess(path, params)
+          expect($state.go).toHaveBeenCalledWith(path, params)
+
+    describe 'getLandingPage', ->
+      it 'gets the first page of the section if it\'s not Household', ->
+        section = ShortFormNavigationService.sections()[0]
+        page = ShortFormNavigationService.getLandingPage(section)
+        expect(page).toEqual section.pages[0]
+      it 'gets household intro page if no householdMembers', ->
+        householdSection = ShortFormNavigationService.sections()[1]
+        page = ShortFormNavigationService.getLandingPage(householdSection)
+        expect(page).toEqual 'household-intro'
+      it 'gets household members page if householdMembers', ->
+        householdSection = ShortFormNavigationService.sections()[1]
+        fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
+        page = ShortFormNavigationService.getLandingPage(householdSection)
+        expect(page).toEqual 'household-members'
+      it 'gets income landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Income'})
+        expect(page).toEqual 'income-vouchers'
+      it 'gets preference landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Preferences'})
+        expect(page).toEqual 'preferences-intro'
+      it 'gets review survey if survey is incomplete', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-optional'
+      it 'gets review summary if survey is complete', ->
+        fakeShortFormApplicationService.application.surveyComplete = true
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-summary'
+
+    describe 'goToLandingPage', ->
+      it 'calls Service.goToAndTrackFormSuccess with the page path', ->
+        page = 'household-intro'
+        ShortFormNavigationService.getLandingPage = jasmine.createSpy().and.returnValue(page)
+        ShortFormNavigationService.goToAndTrackFormSuccess = jasmine.createSpy()
+        ShortFormNavigationService.goToLandingPage('Household')
+        expect(ShortFormNavigationService.goToAndTrackFormSuccess)
+          .toHaveBeenCalledWith("dahlia.short-form-application.#{page}")
 
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->
@@ -98,42 +158,18 @@ do ->
         expect(previousPage).toEqual 'name'
 
     describe 'getNextReservedPageIfAvailable', ->
+      beforeEach ->
+        ShortFormNavigationService.getPostReservedPage = jasmine.createSpy()
+
       it 'calls ShortFormApplicationService to check for the preference', ->
         type = 'Veteran'
         ShortFormNavigationService.getNextReservedPageIfAvailable(type)
         expect(fakeShortFormApplicationService.listingHasReservedUnitType).toHaveBeenCalledWith(type)
-      it 'moves on to the priorities page if no reserved types found', ->
+      it 'returns the result of ShortFormNavigationService.getPostReservedPage if no reserved types found', ->
         type = 'Veteran'
+        ShortFormNavigationService.getPostReservedPage.and.returnValue('foo')
         page = ShortFormNavigationService.getNextReservedPageIfAvailable(type)
-        expect(page).toEqual 'household-priorities'
-
-    describe 'getLandingPage', ->
-      it 'gets the first page of the section if it\'s not Household', ->
-        section = ShortFormNavigationService.sections()[0]
-        page = ShortFormNavigationService.getLandingPage(section)
-        expect(page).toEqual section.pages[0]
-      it 'gets household intro page if no householdMembers', ->
-        householdSection = ShortFormNavigationService.sections()[1]
-        page = ShortFormNavigationService.getLandingPage(householdSection)
-        expect(page).toEqual 'household-intro'
-      it 'gets household members page if householdMembers', ->
-        householdSection = ShortFormNavigationService.sections()[1]
-        fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
-        page = ShortFormNavigationService.getLandingPage(householdSection)
-        expect(page).toEqual 'household-members'
-      it 'gets income landing page', ->
-        page = ShortFormNavigationService.getLandingPage({name: 'Income'})
-        expect(page).toEqual 'income-vouchers'
-      it 'gets preference landing page', ->
-        page = ShortFormNavigationService.getLandingPage({name: 'Preferences'})
-        expect(page).toEqual 'preferences-intro'
-      it 'gets review survey if survey is incomplete', ->
-        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-        expect(page).toEqual 'review-optional'
-      it 'gets review summary if survey is complete', ->
-        fakeShortFormApplicationService.application.surveyComplete = true
-        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-        expect(page).toEqual 'review-summary'
+        expect(page).toEqual 'foo'
 
     describe 'redirectToListingIfNoApplication', ->
       beforeEach ->
@@ -145,7 +181,7 @@ do ->
         ShortFormNavigationService.redirectIfNoApplication()
         expect($state.go).not.toHaveBeenCalled()
 
-      it 'redirects to the application start if there is a listing id and no lottery number', ->
+      it 'redirects to the application start if there is a listing ID and no lottery number', ->
         fakeShortFormApplicationService.application.lotteryNumber = undefined
         listingId = 'abcdefghij'
         params = { id: listingId }
@@ -153,3 +189,4 @@ do ->
 
         ShortFormNavigationService.redirectIfNoApplication(fakeListing)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', params)
+
