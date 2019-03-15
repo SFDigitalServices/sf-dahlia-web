@@ -1,22 +1,14 @@
-FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPreferenceService) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService) ->
   Service = {}
   # these are to be overridden
   Service.preferences = {}
   Service.session_uid = -> null
 
-  Service.deleteFile = (pref_type, listing_id, opts = {}) ->
-    if pref_type
-      pref = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
-      # might be calling deleteFile on a preference that this listing doesn't have
-      pref_id = if pref then pref.listingPreferenceID else pref_type
-      return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
+  Service.deleteFile = (listing, opts = {}) ->
+    proofDocument = Service._proofDocument(listing, opts)
+    return $q.reject() unless proofDocument
 
-      proofDocument = Service._proofDocument(pref_type, opts)
-    else
-      proofDocument = opts.document
-
-    params = Service._uploadedFileParams(listing_id, pref_id, opts, proofDocument)
-
+    params = Service._uploadedFileParams(listing.Id, opts, proofDocument)
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
       proofDocument.proofOption = null if proofDocument
       return $q.resolve()
@@ -37,27 +29,21 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
       return
     )
 
-  Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    if opts.proofDocument
-      proofDocument = opts.proofDocument
-    else
-      preference = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
-      pref_id = if preference then preference.listingPreferenceID else pref_type
-      return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
-      proofDocument = Service._proofDocument(pref_type, opts)
+  Service.uploadProof = (file, listing, opts = {}) ->
+    return $q.reject() if (!file)
 
-    if (!file)
-      return $q.reject()
+    proofDocument = Service._proofDocument(listing, opts)
+    return $q.reject() unless proofDocument
 
-    uploadedFileParams = Service._uploadedFileParams(listing_id, pref_id, opts, proofDocument).uploaded_file
+    uploadedFileParams = Service._uploadedFileParams(listing.Id, opts, proofDocument).uploaded_file
     proofDocument.loading = true
     Service._processProofFile(file, proofDocument, uploadedFileParams)
 
-  Service._uploadedFileParams = (listing_id, pref_id, opts, document) ->
+  Service._uploadedFileParams = (listingId, opts, document) ->
     params = uploaded_file:
       session_uid: Service.session_uid()
-      listing_id: listing_id
-      listing_preference_id: pref_id
+      listing_id: listingId
+      listing_preference_id: opts.prefId
       document_type: document.proofOption
 
     if opts.rentBurdenType
@@ -67,7 +53,15 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
 
     params
 
-  Service._proofDocument = (prefType, opts) ->
+  Service._proofDocument = (listing, opts) ->
+    return opts.document if opts.document
+
+    pref = ListingPreferenceService.getPreference(opts.prefType, listing)
+    # might be calling deleteFile on a preference that this listing doesn't have
+    # passing prefId to opts, as it will be needed later
+    opts.prefId = if pref then pref.listingPreferenceID else opts.prefType
+    return null unless ListingPreferenceService.getPreferenceById(opts.prefId, listing)
+
     if opts.rentBurdenType
       rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
       return {} unless rentBurdenDocs
@@ -76,7 +70,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
       else
         rentBurdenDocs.rent[opts.index]
     else
-      Service.preferences.documents[prefType] ?= {}
+      Service.preferences.documents[opts.prefType] ?= {}
 
   Service._processProofFile = (file, proofDocument, uploadedFileParams) ->
     if file.size > 2 * 1000 * 1000 # 2MB
@@ -120,7 +114,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid', 'ListingDataService', 'ListingPreferenceService'
+  '$http', '$q', 'Upload', 'uuid', 'ListingPreferenceService'
 ]
 
 angular

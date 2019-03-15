@@ -279,7 +279,7 @@ do ->
         ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 1
-        expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+        expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith(ShortFormApplicationService.listing, { prefType: 'liveInSf' })
 
       it 'does not clear the proof file for a preference if the indicated member is not selected', ->
         ShortFormApplicationService.preferences.liveInSf_household_member = 2
@@ -336,7 +336,7 @@ do ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
-            expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+            expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith(ShortFormApplicationService.listing, {prefType: 'liveInSf'})
 
           it 'invalidates preferences section', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
@@ -1013,9 +1013,8 @@ do ->
         expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
         expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual null
-        listingId = ShortFormApplicationService.listing.Id
         expect(fakeFileUploadService.deleteFile)
-          .toHaveBeenCalledWith('liveInSf', listingId)
+          .toHaveBeenCalledWith(ShortFormApplicationService.listing, {prefType: 'liveInSf'})
 
       it 'should delete Rent Burdened preference files', ->
         listingId = ShortFormApplicationService.listing.Id

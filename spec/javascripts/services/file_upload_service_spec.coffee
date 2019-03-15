@@ -6,6 +6,8 @@ do ->
     listingPreferenceID = '123xyz'
     fileValue = {name: 'img.jpg'}
     prefType = 'liveInSf'
+    opts =
+      prefType: prefType
     address1 = '123 Main St'
     address2 = '345 First St'
     errorMsg = undefined
@@ -18,12 +20,14 @@ do ->
       getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
       getPreferenceById: jasmine.createSpy().and.returnValue(true)
     }
+    fakeDocument =
+      proofOption: 'preapprovalLetter'
+      file:
+        name: "filename.png"
     fakeShortFormApplicationService =
       preferences:
         documents:
           "#{prefType}": {}
-    fakeListingDataService =
-      listing: fakeListing
     $translate = {}
     Upload =
       upload: ->
@@ -37,7 +41,6 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
-      $provide.value 'ListingDataService', fakeListingDataService
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       return
     )
@@ -64,15 +67,25 @@ do ->
       it 'unsets FileUploadService prefType_proof_file', ->
         stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
         FileUploadService.preferences.documents[prefType].file = file
-        FileUploadService.deleteFile(prefType)
+        FileUploadService.deleteFile(fakeListing, opts)
         httpBackend.flush()
         expect(FileUploadService.preferences.documents[prefType].file).toEqual null
+
+      it 'removes file for document without preference', ->
+        stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
+        opts =
+          document: fakeDocument
+        FileUploadService.deleteFile(fakeListing, opts)
+        httpBackend.flush()
+        expect(fakeDocument.file).toEqual null
 
     describe 'Service.uploadProof', ->
       beforeEach ->
         proofDocument = FileUploadService.preferences.documents[prefType]
-        FileUploadService._proofDocument = jasmine.createSpy().and.returnValue(proofDocument)
+        # FileUploadService._proofDocument = jasmine.createSpy().and.returnValue(proofDocument)
         FileUploadService._processProofFile = jasmine.createSpy()
+        opts =
+          prefType: prefType
 
       describe 'when preference is not found on the listing', ->
         beforeEach ->
@@ -82,7 +95,7 @@ do ->
           fakeListingPreferenceService.getPreferenceById = jasmine.createSpy().and.returnValue(listingPreferenceID)
 
         it 'returns a rejection', ->
-          rejection = FileUploadService.uploadProof(file, prefType)
+          rejection = FileUploadService.uploadProof(file, fakeListing, opts)
 
           promiseResult = null
           deferred = $q.defer()
@@ -97,14 +110,12 @@ do ->
 
           expect(promiseResult).toEqual('error')
 
-      it 'calls Service._proofDocument', ->
-        FileUploadService.uploadProof(file, prefType)
-        expect(FileUploadService._proofDocument).toHaveBeenCalled()
-
       describe 'when file is empty', ->
         beforeEach ->
           file = null
           errorMsg = 'ERROR.FILE_MISSING'
+          opts =
+            prefType: prefType
 
         afterEach ->
           file = fileValue
@@ -112,7 +123,7 @@ do ->
           FileUploadService.preferences = fakeShortFormApplicationService.preferences
 
         it 'returns a rejection', ->
-          rejection = FileUploadService.uploadProof(file, prefType)
+          rejection = FileUploadService.uploadProof(file, fakeListing, opts)
 
           promiseResult = null
           deferred = $q.defer()
@@ -128,19 +139,21 @@ do ->
       describe 'when file is present', ->
         beforeEach ->
           file = fileValue
+          opts =
+            prefType: prefType
 
         it "sets the proof document's loading to true", ->
-          FileUploadService.uploadProof(file, prefType, listingID)
+          FileUploadService.uploadProof(file, fakeListing, opts)
           expect(proofDocument.loading).toEqual(true)
 
           describe 'when the rentBurdenType option is not present', ->
             it 'calls Service._processProofFile with the correct non-rent-burdened params', ->
               uploadedFileParams =
                 session_uid: FileUploadService.session_uid()
-                listing_id: listingID
+                listing_id: fakeListing.Id
                 listing_preference_id: listingPreferenceID
                 document_type: proofDocument.proofOption
-              FileUploadService.uploadProof(file, prefType, listingID)
+              FileUploadService.uploadProof(file, fakeListing, opts)
               expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
 
           describe 'when the rentBurdenType option is present', ->
@@ -149,18 +162,32 @@ do ->
                 rentBurdenType: 'lease'
                 address: address1
                 index: 1
+                prefType: prefType
 
               uploadedFileParams =
                 session_uid: FileUploadService.session_uid()
-                listing_id: listingID
+                listing_id: fakeListing.Id
                 listing_preference_id: listingPreferenceID
                 document_type: proofDocument.proofOption
                 address: opts.address
                 rent_burden_type: opts.rentBurdenType
                 rent_burden_index: opts.index
 
-              FileUploadService.uploadProof(file, prefType, listingID, opts)
+              FileUploadService.uploadProof(file, fakeListing, opts)
               expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
+        describe "when document is provided", ->
+          it 'removes file for document without preference', ->
+            fakeDocument.file = null
+            fakeDocument.loading = true
+            opts =
+              document: fakeDocument
+            uploadedFileParams =
+              session_uid: FileUploadService.session_uid()
+              listing_id: fakeListing.Id
+              listing_preference_id: undefined
+              document_type: fakeDocument.proofOption
+            FileUploadService.uploadProof(file, fakeListing, opts)
+            expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, fakeDocument, uploadedFileParams)
 
     describe 'Service._proofDocument', ->
       beforeEach ->
@@ -179,15 +206,17 @@ do ->
 
       describe 'non-rent-burdened file', ->
         it 'returns the correct non-rent-burdened file', ->
-          opts = {}
-          expect(FileUploadService._proofDocument(prefType, opts)).toEqual("#{prefType}_file")
+          opts =
+            prefType: prefType
+          expect(FileUploadService._proofDocument(fakeListing, opts)).toEqual("#{prefType}_file")
 
       describe 'rent burdened lease file', ->
         it 'returns the correct lease file', ->
           opts =
             address: address1
             rentBurdenType: 'lease'
-          expect(FileUploadService._proofDocument(prefType, opts)).toEqual('address1 lease file')
+            prefType: prefType
+          expect(FileUploadService._proofDocument(fakeListing, opts)).toEqual('address1 lease file')
 
       describe 'rent burdened rent file', ->
         it 'returns the correct rent file', ->
@@ -195,7 +224,8 @@ do ->
             address: address2
             rentBurdenType: 'rent'
             index: 1
-          expect(FileUploadService._proofDocument(prefType, opts)).toEqual('address2 rent file')
+            prefType: prefType
+          expect(FileUploadService._proofDocument(fakeListing, opts)).toEqual('address2 rent file')
 
     describe 'Service._uploadProofFile', ->
       beforeEach ->

@@ -10,19 +10,19 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/file-uploader.html'
 
   controller:
-    ['ShortFormApplicationService', 'FileUploadService', 'SharedService', '$translate'
-    (ShortFormApplicationService, FileUploadService, SharedService, $translate) ->
+    ['ShortFormApplicationService', 'FileUploadService', 'SharedService'
+    (ShortFormApplicationService, FileUploadService, SharedService) ->
       ctrl = @
       @fileInputName = "#{@fileType}File"
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @listingId = ShortFormApplicationService.listing.Id
+      @listing = ShortFormApplicationService.listing
 
       @hasFile = =>
         !_.isEmpty(@document.file) && !@document.loading
 
-      @validateFileNameLength = ($file) ->
+      @validateFile = ($file) ->
         if $file
           if $file.name.length > 80
             @document.error = 'ERROR.FILE_NAME_TOO_LONG'
@@ -37,16 +37,16 @@ angular.module('dahlia.components')
       @uploadFile = ($file) =>
         @document.proofOption = @fileType
         opts = {
-          proofDocument: @document
+          document: @document
         }
-        FileUploadService.uploadProof($file, null, @listingId, opts)
+        FileUploadService.uploadProof($file, @listing, opts)
 
       @deleteFile = =>
         opts = {
           document: @document,
           document_type: @fileType
         }
-        FileUploadService.deleteFile(null, @listingId, opts)
+        FileUploadService.deleteFile(@listing, opts)
 
       @assetPaths = SharedService.assetPaths
 

@@ -24,7 +24,7 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @listingId = ShortFormApplicationService.listing.Id
+      @listing = ShortFormApplicationService.listing
       @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
 
       @$onChanges = =>
@@ -88,21 +88,24 @@ angular.module('dahlia.components')
           @proofDocument.error = 'ERROR.FILE_MISSING'
 
       @uploadProofFile = ($file) =>
-        opts = {}
+        opts =
+          prefType: @preference
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
-        FileUploadService.uploadProof($file, @preference, @listingId, opts).then =>
+        FileUploadService.uploadProof($file, @listing, opts).then =>
           @afterUpload()
         if @preference == 'neighborhoodResidence' || @preference == 'antiDisplacement'
           # if we're uploading for NRHP/ADHP, it also copys info and uploads for liveInSf so that the file info is saved into DB
           ShortFormApplicationService.copyNeighborhoodToLiveInSf(@preference)
-          FileUploadService.uploadProof($file, 'liveInSf', @listingId, opts)
+          opts.prefType = 'liveInSf'
+          FileUploadService.uploadProof($file, @listing, opts)
 
       @deletePreferenceFile = =>
-        opts = {}
+        opts =
+          prefType: @preference
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
-        FileUploadService.deleteFile(@preference, @listingId, opts).then =>
+        FileUploadService.deleteFile(@listing, opts).then =>
           @afterDelete()
           @setProofType()
 

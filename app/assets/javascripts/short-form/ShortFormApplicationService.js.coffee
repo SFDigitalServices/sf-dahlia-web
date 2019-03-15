@@ -356,7 +356,9 @@ ShortFormApplicationService = (
     else
       Service.preferences["#{preference}_household_member"] = null
       Service.preferences["#{preference}_proofOption"] = null
-      FileUploadService.deleteFile(preference, Service.listing.Id)
+      opts =
+        prefType: preference
+      FileUploadService.deleteFile(Service.listing, opts)
       if preference == 'certOfPreference' || preference == 'displaced'
         Service.preferences["#{preference}_certificateNumber"] = null
       if Service.preferences["#{preference}_address"]
@@ -449,7 +451,9 @@ ShortFormApplicationService = (
     addressPreferences.forEach (preference) ->
       selectedMember = Service.preferences[preference + '_household_member']
       if member.id == selectedMember
-        FileUploadService.deleteFile(preference, Service.listing.Id)
+        opts =
+          prefType: preference
+        FileUploadService.deleteFile(Service.listing, opts)
 
   # update lists of eligible people for the dropdowns for these preferences
   Service.refreshPreferences = (type = 'all') ->
