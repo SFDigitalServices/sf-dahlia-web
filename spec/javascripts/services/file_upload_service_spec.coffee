@@ -6,6 +6,7 @@ do ->
     listingPreferenceID = '123xyz'
     fileValue = {name: 'img.jpg'}
     prefType = 'liveInSf'
+
     opts = {}
     address1 = '123 Main St'
     address2 = '345 First St'
@@ -100,6 +101,14 @@ do ->
           FileUploadService.deleteFile(fakeListing, opts)
           httpBackend.flush()
           expect(fakeDocument.file).toEqual null
+
+      it 'removes file for document without preference', ->
+        stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
+        opts =
+          document: fakeDocument
+        FileUploadService.deleteFile(fakeListing, opts)
+        httpBackend.flush()
+        expect(fakeDocument.file).toEqual null
 
     describe 'Service.uploadProof', ->
       beforeEach ->

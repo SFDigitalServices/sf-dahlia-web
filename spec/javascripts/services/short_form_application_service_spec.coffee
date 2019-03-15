@@ -337,6 +337,7 @@ do ->
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
             expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith(ShortFormApplicationService.listing, {prefType: 'liveInSf'})
+
           it 'invalidates preferences section', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.application.completedSections['Preferences']).toEqual(false)
