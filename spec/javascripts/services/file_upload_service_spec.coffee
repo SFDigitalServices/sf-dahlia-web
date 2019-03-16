@@ -28,6 +28,8 @@ do ->
       preferences:
         documents:
           "#{prefType}": {}
+    fakeRentBurdenFileService =
+      clearRentBurdenFile = jasmine.createSpy()
     $translate = {}
     Upload =
       upload: ->
@@ -42,6 +44,7 @@ do ->
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
+      $provide.value 'RentBurdenFileService', fakeRentBurdenFileService
       return
     )
 
