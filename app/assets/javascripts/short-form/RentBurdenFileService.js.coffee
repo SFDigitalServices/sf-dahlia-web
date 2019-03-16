@@ -4,7 +4,6 @@ RentBurdenFileService = ($http, $q, uuid, ListingDataService, ListingPreferenceS
   Service.preferences = {}
   Service.session_uid = -> null
 
-  # Rent Burden specific functions
   Service.uploadedRentBurdenRentFiles = (address) ->
     addressFiles = Service.preferences.documents.rentBurden[address]
     if !_.isEmpty(addressFiles)
@@ -24,7 +23,8 @@ RentBurdenFileService = ($http, $q, uuid, ListingDataService, ListingPreferenceS
         hasFiles = hasFiles || Service.hasRentBurdenFiles(address)
     return hasFiles
 
-  Service.clearRentBurdenFile = (opts) ->
+  Service.clearRentBurdenFile = (opts, preferences = null) ->
+    Service.preferences = preferences if preferences
     rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
     return unless rentBurdenDocs
     if opts.rentBurdenType == 'lease'

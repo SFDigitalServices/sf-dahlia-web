@@ -65,6 +65,7 @@ angular.module('dahlia.components')
           rentBurdenType: @rentBurdenType
           index: @proofDocument.id
           docType: @proofDocument.proofOption
+          prefType: @preference
         }
 
       @saveProofOptionToPref = =>

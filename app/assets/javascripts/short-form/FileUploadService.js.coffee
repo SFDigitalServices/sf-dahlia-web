@@ -1,4 +1,4 @@
-FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurdenFileService) ->
   Service = {}
   # these are to be overridden
   Service.preferences = {}
@@ -21,7 +21,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService) ->
     }).success((data, status, headers, config) ->
       # clear out fileObj
       if opts.rentBurdenType
-        Service.clearRentBurdenFile(opts)
+        RentBurdenFileService.clearRentBurdenFile(opts, Service.preferences)
       else
         proofDocument.file = null
         proofDocument.proofOption = null
@@ -114,7 +114,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService) ->
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid', 'ListingPreferenceService'
+  '$http', '$q', 'Upload', 'uuid', 'ListingPreferenceService', 'RentBurdenFileService'
 ]
 
 angular
