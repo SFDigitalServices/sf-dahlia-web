@@ -7,14 +7,16 @@ ShortFormNavigationService = (
   RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
 
-  Service.goToAndTrackFormSuccess = (path, params) ->
+  Service.goToApplicationPage = (path, params) ->
+    # Every time the user completes an application page,
+    # we track that in GTM/GA as a form success.
     AnalyticsService.trackFormSuccess('Application')
     if params
       $state.go(path, params)
     else
       $state.go(path)
 
-  Service.getLandingPage = (section) ->
+  Service.getStartOfSection = (section) ->
     application = ShortFormApplicationService.application
     switch section.name
       when 'Household'
@@ -34,9 +36,9 @@ ShortFormNavigationService = (
       else
         section.pages[0]
 
-  Service.goToLandingPage = (section) ->
-    page = Service.getLandingPage({name: section})
-    Service.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+  Service.goToSection = (section) ->
+    page = Service.getStartOfSection({name: section})
+    Service.goToApplicationPage("dahlia.short-form-application.#{page}")
 
   # Only rental listings have the ADA priorities page after the reserved pages
   Service.getPostReservedPage = (listing) ->
@@ -52,7 +54,7 @@ ShortFormNavigationService = (
     # you
     'prerequisites':
       callbacks: [
-        Service.goToAndTrackFormSuccess.bind(null, 'dahlia.short-form-application.name')
+        Service.goToApplicationPage.bind(null, 'dahlia.short-form-application.name')
       ]
     'name':
       scopedCallbacks: [{func: 'checkAfterNamePage'}]
@@ -69,7 +71,7 @@ ShortFormNavigationService = (
     'alternate-contact-name':
       path: 'alternate-contact-phone-address'
     'alternate-contact-phone-address':
-      callbacks: [Service.goToLandingPage.bind(null, 'Household')]
+      callbacks: [Service.goToSection.bind(null, 'Household')]
     # household
     'household-intro':
       scopedCallbacks: [{
@@ -132,7 +134,7 @@ ShortFormNavigationService = (
     'preferences-programs': {scopedCallbacks: [{func: 'checkForCustomPreferences'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
-    'general-lottery-notice': {callbacks: [Service.goToLandingPage.bind(null, 'Review')]}
+    'general-lottery-notice': {callbacks: [Service.goToSection.bind(null, 'Review')]}
     # review
     'review-optional':
       scopedCallbacks: [{func: 'checkSurveyComplete'}]
