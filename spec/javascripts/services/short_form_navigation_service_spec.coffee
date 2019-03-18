@@ -105,6 +105,19 @@ do ->
         expect(ShortFormNavigationService.goToApplicationPage)
           .toHaveBeenCalledWith("dahlia.short-form-application.#{page}")
 
+    describe 'getPostReservedPage', ->
+      describe 'when given a sale listing', ->
+        it 'returns "income-vouchers"', ->
+          listing = {id: 'foo'}
+          fakeListingIdentityService.isSale.and.returnValue(true)
+          expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('income-vouchers')
+
+      describe 'when given a rental listing', ->
+        it 'returns "household-priorities"', ->
+          listing = {id: 'foo'}
+          fakeListingIdentityService.isSale.and.returnValue(false)
+          expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('household-priorities')
+
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->
         $state.current.name = 'dahlia.short-form-welcome.intro'
