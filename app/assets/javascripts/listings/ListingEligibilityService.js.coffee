@@ -52,7 +52,7 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
     if (
       ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
-      ListingIdentityService.listingIs('1335 Folsom Street', listing) ||
+      ListingIdentityService.listingIs('1335 Folsom Street', listing)
     )
       max = 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)
