@@ -5,6 +5,8 @@ pageUrls = {
   Name: 'name'
   Contact: 'contact'
   'My Applications': 'my-applications'
+  Prerequisites: 'prerequisites'
+  'Income Vouchers': 'income-vouchers'
 }
 
 Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->
