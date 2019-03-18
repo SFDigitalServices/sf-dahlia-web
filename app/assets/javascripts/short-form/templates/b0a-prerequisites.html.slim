@@ -21,6 +21,8 @@
             p.checkbox-block_note id="application_has_completed_homebuyer_education-description" translate="LABEL.APPLICATION_VISIT_HOMEOWNERSHIP_CALENDAR" translate-value-url="http://www.homeownershipsf.org/workshops"
             small.error id="application_has_completed_homebuyer_educationError" ng-show="inputInvalid('application_has_completed_homebuyer_education')"
               | {{'LABEL.FIELD_REQUIRED' | translate}}
+      .form-group.margin-left--2x.margin-right--2x
+        file-uploader button-label="{{'LABEL.UPLOAD_VERIFICATON_LETTER' | translate}}" file-label="{{'LABEL.VERIFICATON_LETTER' | translate}}" document="application.documents.verificationLetter" file-type="verificationLetter" required="true"
       .checkbox-group
         .checkbox-block.margin-bottom--2x
           input#application_has_loan_pre_approval name="application_has_loan_pre_approval" type="checkbox" ng-model="application.hasLoanPreapproval" ng-required="true" ng-class="{ error: inputInvalid('application_has_loan_pre_approval')}"

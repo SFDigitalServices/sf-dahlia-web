@@ -41,6 +41,7 @@ ShortFormApplicationService = (
     householdMembers: []
     documents:
       'Loan pre-approval': {}
+      verificationLetter: {}
     preferences:
       liveInSf: null
       workInSf: null
