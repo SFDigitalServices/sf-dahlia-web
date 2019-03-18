@@ -24,7 +24,7 @@
           .feed-item-inner
             h2.t-delta.t-serif.no-margin
               | Rental Units
-        my-application ng-repeat="application in myApplications" application="application" ng-if="!isSale(application.listing)"
+        my-application ng-repeat="application in myApplications" application="application" ng-if="isRental(application.listing)"
         article.feed-item ng-if="hasSaleAndRentalApplications(myApplications)"
           .feed-item-inner
             h2.t-delta.t-serif.no-margin
