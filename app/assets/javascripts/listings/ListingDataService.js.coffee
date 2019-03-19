@@ -227,15 +227,21 @@ ListingDataService = (
       if type == 'lotteryResultsListings' then _.reverse listings else listings
 
   Service.getListingsByIds = (ids, checkFavorites = false) ->
+    Service._resetHTTPRequests()
     angular.copy([], Service.listings)
-    params = {params: {ids: ids.join(',') }}
+    params =
+      params: {ids: ids.join(',')}
+      timeout: Service.deferred.promise
     $http.get("/api/v1/listings.json", params).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
+      Service.deferred.resolve()
       angular.copy(listings, Service.listings)
       Service.checkFavorites() if checkFavorites
     ).error( (data, status, headers, config) ->
+      Service.deferred.reject(data)
       return
     )
+    return Service.deferred.promise
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
