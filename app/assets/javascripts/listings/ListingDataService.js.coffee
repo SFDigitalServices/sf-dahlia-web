@@ -25,6 +25,8 @@ ListingDataService = (
   Service.favorites = $localStorage.favorites
   Service.preferenceMap = ListingConstantsService.preferenceMap
 
+  Service.deferred = $q.defer()
+
   Service.getFavoriteListings = () ->
     Service.getListingsByIds(Service.favorites, true)
 
@@ -107,25 +109,33 @@ ListingDataService = (
       $timeout(ExternalTranslateService.translatePageContent, 0, false) if retranslate
       Service.toggleStates[Service.listing.Id] ?= {}
 
+  Service._resetHTTPRequests = ->
+    # cancel any pending http requests and setup a new deferred
+    Service.deferred.resolve()
+    Service.deferred = $q.defer()
+
   Service.getListings = (opts = {}) ->
+    Service._resetHTTPRequests()
+
     # check for eligibility options being set in the session
     if opts.clearFilters
       ListingEligibilityService.resetEligibilityFilters()
       IncomeCalculatorService.resetIncomeSources()
     if opts.checkEligibility && ListingEligibilityService.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
-    deferred = $q.defer()
+
     $http.get("/api/v1/listings.json", {
       etagCache: true,
-      params: opts.params
+      params: opts.params,
+      timeout: Service.deferred.promise
     }).success(
-      Service.getListingsResponse(deferred, opts.retranslate)
+      Service.getListingsResponse(Service.deferred, opts.retranslate)
     ).cached(
-      Service.getListingsResponse(deferred, opts.retranslate)
+      Service.getListingsResponse(Service.deferred, opts.retranslate)
     ).error((data, status, headers, config) ->
-      deferred.reject(data)
+      Service.deferred.reject(data)
     )
-    return deferred.promise
+    return Service.deferred.promise
 
   Service.getListingsResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
