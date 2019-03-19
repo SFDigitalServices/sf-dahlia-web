@@ -64,12 +64,6 @@ Then 'I should be on the Ownership listings page', ->
 Then 'I should be on the Rental listings page', ->
   @expect(browser.getCurrentUrl()).to.eventually.contain('/listings/for-rent')
 
-Then 'I should be on prerequisites page', ->
-  Utils.Expect.urlContains('prerequisites')
-
-Then 'I should be on application name page', ->
-  Utils.Expect.urlContains('name')
-
 Then 'I check complete homebuyers education', ->
   Utils.Page.checkCheckbox 'application_has_completed_homebuyer_education', Utils.Page.submit
 

@@ -52,7 +52,6 @@ do ->
     fakeListingIdentityService =
       listingIs: ->
       isSale: ->
-      isFirstComeFirstServe: ->
       isOpen: ->
     fakeListingLotteryService =
       lotteryBucketInfo: {}

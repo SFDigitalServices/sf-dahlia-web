@@ -57,7 +57,6 @@ do ->
     fakeListingIdentityService =
       listingIs: jasmine.createSpy()
       isSale: jasmine.createSpy()
-      isFirstComeFirstServe: jasmine.createSpy()
       isOpen: jasmine.createSpy()
     fakeListingLotteryService =
       getLotteryBuckets: ->
@@ -213,11 +212,6 @@ do ->
         it "calls ListingUnitService.listingHasReservedUnits with the given listing", ->
           ctrl.listingHasReservedUnits(fakeListing)
           expect(fakeListingUnitService.listingHasReservedUnits).toHaveBeenCalledWith(fakeListing)
-
-      describe '$ctrl.isFirstComeFirstServe', ->
-        it 'calls ListingIdentityService.isFirstComeFirstServe with the given listing', ->
-          ctrl.isFirstComeFirstServe(fakeListing)
-          expect(fakeListingIdentityService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingDataService.function to be called', ->

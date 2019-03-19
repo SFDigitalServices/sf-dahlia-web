@@ -55,9 +55,6 @@ angular.module('dahlia.components')
     @listingHasReservedUnits = (listing) ->
       ListingUnitService.listingHasReservedUnits(listing)
 
-    @isFirstComeFirstServe = (listing) ->
-      ListingIdentityService.isFirstComeFirstServe(listing)
-
     @listingApplicationClosed = (listing) ->
       !ListingIdentityService.isOpen(listing)
 

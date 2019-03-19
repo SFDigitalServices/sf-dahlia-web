@@ -53,12 +53,6 @@ do ->
           testListing.Tenure = 'Resale'
           expect(ListingIdentityService.isSale(testListing)).toEqual true
 
-    describe 'Service.isFirstComeFirstServe', ->
-      it 'calls Service.listingIs with the name "168 Hyde Relisting" and the given listing', ->
-        spyOn(ListingIdentityService, 'listingIs')
-        ListingIdentityService.isFirstComeFirstServe(fakeListing)
-        expect(ListingIdentityService.listingIs).toHaveBeenCalledWith('168 Hyde Relisting', fakeListing)
-
     describe 'Service.isOpen', ->
       beforeEach ->
         testListing = angular.copy(fakeListing)
