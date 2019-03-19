@@ -142,6 +142,25 @@ ShortFormApplicationController = (
       # track individual field errors
       AnalyticsService.trackFormFieldError('Application', field)
 
+  # TODO: Refactor the way we handle post-submit actions for short form pages
+  # so that this handleFormSuccess function is not so closely coupled to the
+  # submitOptionsForCurrentPage and submitActions functions in the
+  # ShortFormNavigationService.
+  #
+  # Right now, submitOptionsForCurrentPage returns an object whose keys are
+  # the short form page slugs and whose values are objects that can contain
+  # three types of values:
+  #  - path: a string state name to go to
+  #  - callbacks: an array of functions to call
+  #  - scopedCallbacks: an array of objects of the format:
+  #    - func: a string function name
+  #    - param: a param to be passed to the function named in func
+  # The function names in scopedCallbacks are meant to be called on the scope of
+  # the ShortFormApplicationController. We very much do not want to maintain this
+  # paradigm! But at the moment we don't have time to refactor how this works. We
+  # plan in the future to refactor the entire way the short form application is
+  # set up and the way navigation works between pages, so this paradigm will
+  # definitely be removed and replaced at that time.
   $scope.handleFormSuccess = ->
     options = ShortFormNavigationService.submitOptionsForCurrentPage()
     if options.callbacks
