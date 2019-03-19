@@ -21,7 +21,7 @@ do ->
       getPreferenceById: jasmine.createSpy().and.returnValue(true)
     }
     fakeDocument =
-      proofOption: 'preapprovalLetter'
+      proofOption: 'Loan pre-approval'
       file:
         name: "filename.png"
     fakeShortFormApplicationService =

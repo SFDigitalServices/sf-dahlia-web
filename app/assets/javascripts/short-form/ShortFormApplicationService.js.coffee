@@ -40,7 +40,7 @@ ShortFormApplicationService = (
       mailing_address: angular.copy(emptyAddress)
     householdMembers: []
     documents:
-      preapprovalLetter: {}
+      'Loan pre-approval': {}
     preferences:
       liveInSf: null
       workInSf: null

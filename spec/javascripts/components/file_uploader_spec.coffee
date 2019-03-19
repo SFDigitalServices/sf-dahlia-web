@@ -19,7 +19,7 @@ do ->
       application: fakeApplication
       buttonLabel: 'Preapproval Letter'
       fileLabel: 'Label'
-      fileType: 'preapprovalLetter'
+      fileType: 'Loan pre-approval'
       document: {}
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
