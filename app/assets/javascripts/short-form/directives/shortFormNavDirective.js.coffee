@@ -14,7 +14,7 @@ angular.module('dahlia.directives')
         ShortFormNavigationService.isActiveSection(section)
 
       scope.ngHref = (section) ->
-        $state.href("dahlia.short-form-application.#{scope.getLandingPage(section)}")
+        $state.href("dahlia.short-form-application.#{scope.getStartOfSection(section)}")
 
       # Section nav is disabled if:
       # 1. It is not the currently active section AND
