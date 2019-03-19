@@ -159,17 +159,18 @@ ListingDataService = (
       incomelevel: ListingEligibilityService.eligibilityYearlyIncome()
       includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
       childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
-    deferred = $q.defer()
-    $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}",
-      { etagCache: true }
-    ).success(
-      Service.getListingsWithEligibilityResponse(deferred)
+
+    $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}", {
+      etagCache: true,
+      timeout: Service.deferred.promise
+    }).success(
+      Service.getListingsWithEligibilityResponse(Service.deferred)
     ).cached(
-      Service.getListingsWithEligibilityResponse(deferred)
+      Service.getListingsWithEligibilityResponse(Service.deferred)
     ).error( (data, status, headers, config) ->
-      deferred.reject(data)
+      Service.deferred.reject(data)
     )
-    return deferred.promise
+    return Service.deferred.promise
 
   Service.getListingsWithEligibilityResponse = (deferred) ->
     (data, status, headers, config, itemCache) ->
