@@ -69,7 +69,7 @@ span ng-hide="alternateContact.alternateContactType == 'None'"
       | {{alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getLandingPage({name: 'Household'})}}"
+review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getStartOfSection({name: 'Household'})}}"
 
 .app-inner
   .info-item.margin-bottom ng-if="!householdMembers || householdMembers.length == 0"

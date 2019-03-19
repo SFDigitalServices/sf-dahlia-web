@@ -22,7 +22,7 @@ do ->
       form:
         applicationForm:
           $valid: true
-          $setPristine: -> undefined
+          $setPristine: jasmine.createSpy()
       eligibilityErrors: []
       inputInvalid: ->
       listing: fakeListing
@@ -114,10 +114,9 @@ do ->
       loadApplication: jasmine.createSpy()
       completeSection: jasmine.createSpy()
     fakeFunctions =
-      fakeGetLandingPage: (section, application) ->
-        'household-intro'
       fakeIsLoading: -> false
-      fakeSubmitOptionsForCurrentPage: -> {}
+      foo1: jasmine.createSpy()
+      foo2: jasmine.createSpy()
     fakeShortFormNavigationService = undefined
     fakeShortFormHelperService =
       fileAttachmentsForRentBurden: jasmine.createSpy()
@@ -146,10 +145,12 @@ do ->
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
         sections: []
+        goToApplicationPage: jasmine.createSpy()
+        getStartOfSection: jasmine.createSpy()
+        goToSection: jasmine.createSpy()
+        submitOptionsForCurrentPage: jasmine.createSpy()
         hasNav: jasmine.createSpy()
-        getLandingPage: spyOn(fakeFunctions, 'fakeGetLandingPage').and.callThrough()
         isLoading: spyOn(fakeFunctions, 'fakeIsLoading').and.callThrough()
-        submitOptionsForCurrentPage: spyOn(fakeFunctions, 'fakeSubmitOptionsForCurrentPage').and.callThrough()
         _currentPage: jasmine.createSpy()
         getNextReservedPageIfAvailable: jasmine.createSpy()
       return
@@ -213,31 +214,92 @@ do ->
         expect(fakeShortFormNavigationService.hasNav).toHaveBeenCalled()
 
     describe '$scope.submitForm', ->
-      it 'calls submitOptionsForCurrentPage function on navService if form is valid', ->
+      beforeEach ->
+        scope.handleFormSuccess = jasmine.createSpy()
+        scope.trackFormErrors = jasmine.createSpy()
+        scope.handleErrorState = jasmine.createSpy()
+
+      it 'calls ShortFormNavigationService.isLoading with true', ->
         scope.submitForm()
+        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(true)
+
+      describe 'when form is valid', ->
+        beforeEach ->
+          fakeShortFormApplicationService.form.applicationForm.$valid = true
+
+        it 'calls form.$setPristine', ->
+          form = fakeShortFormApplicationService.form.applicationForm
+          scope.submitForm()
+          expect(form.$setPristine).toHaveBeenCalled()
+
+        it 'calls $scope.handleFormSuccess', ->
+          scope.submitForm()
+          expect(scope.handleFormSuccess).toHaveBeenCalled()
+
+      describe 'when form is invalid', ->
+        beforeEach ->
+          fakeShortFormApplicationService.form.applicationForm.$valid = false
+
+        it 'calls $scope.trackFormErrors', ->
+          scope.submitForm()
+          expect(scope.trackFormErrors).toHaveBeenCalled()
+
+        it 'calls $scope.handleErrorState', ->
+          scope.submitForm()
+          expect(scope.handleErrorState).toHaveBeenCalled()
+
+    describe '$scope.handleFormSuccess', ->
+      it 'calls ShortFormNavigationService.submitOptionsForCurrentPage', ->
+        fakeShortFormNavigationService.submitOptionsForCurrentPage.and.returnValue({})
+        scope.handleFormSuccess()
         expect(fakeShortFormNavigationService.submitOptionsForCurrentPage).toHaveBeenCalled()
 
-      it 'calls isLoading function on navService', ->
-        scope.submitForm()
-        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalled()
+      it "calls the options' callback functions returned by ShortFormNavigationService.submitOptionsForCurrentPage", ->
+        fakeShortFormNavigationService.submitOptionsForCurrentPage.and.returnValue(
+          callbacks: [fakeFunctions.foo1, fakeFunctions.foo2]
+        )
+        scope.handleFormSuccess()
+        expect(fakeFunctions.foo1).toHaveBeenCalled()
+        expect(fakeFunctions.foo2).toHaveBeenCalled()
+
+      it "calls the options' scoped callback functions with param returned by ShortFormNavigationService.submitOptionsForCurrentPage", ->
+        scope.bar1 = jasmine.createSpy()
+        scope.bar2 = jasmine.createSpy()
+        param1 = 1
+        param2 = 2
+        fakeShortFormNavigationService.submitOptionsForCurrentPage.and.returnValue(
+          scopedCallbacks: [
+            {func: 'bar1', param: param1}
+            {func: 'bar2', param: param2}
+          ]
+        )
+        scope.handleFormSuccess()
+        expect(scope.bar1).toHaveBeenCalledWith(param1)
+        expect(scope.bar2).toHaveBeenCalledWith(param2)
+
+      it "calls ShortFormNavigationService.goToApplicationPage with the options' path returned by ShortFormNavigationService.submitOptionsForCurrentPage", ->
+        path = 'baz'
+        fakeShortFormNavigationService.submitOptionsForCurrentPage.and.returnValue({path: path})
+        scope.handleFormSuccess()
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
     describe '$scope.checkIfAlternateContactInfoNeeded', ->
       describe 'No alternate contact indicated', ->
-        it 'navigates ahead to optional info', ->
-          scope.alternateContact.alternateContactType = 'None'
-          scope.checkIfAlternateContactInfoNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
-
         it 'calls clearAlternateContactDetails from ShortFormApplicationService', ->
           scope.alternateContact.alternateContactType = 'None'
           scope.checkIfAlternateContactInfoNeeded()
           expect(fakeShortFormApplicationService.clearAlternateContactDetails).toHaveBeenCalled()
 
+        it 'navigates ahead to optional info', ->
+          scope.alternateContact.alternateContactType = 'None'
+          scope.checkIfAlternateContactInfoNeeded()
+          expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Household')
+
       describe 'Alternate contact type indicated', ->
         it 'navigates ahead to alt contact name page', ->
           scope.alternateContact.alternateContactType = 'Friend'
           scope.checkIfAlternateContactInfoNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
 
     describe '$scope.copyHomeToMailingAddress', ->
       describe 'hasAltMailingAddress unchecked', ->
@@ -306,7 +368,7 @@ do ->
         scope.applicant.preferenceAddressMatch = 'Matched'
         scope.application.validatedForms.You['verify-address'] = true
         scope.checkIfAddressVerificationNeeded()
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
 
       it 'navigates ahead to verify address page if verification had not happened', ->
         scope.applicant.preferenceAddressMatch = null
@@ -314,10 +376,11 @@ do ->
         scope.checkIfAddressVerificationNeeded()
         expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
 
-    describe '$scope.getLandingPage', ->
-      it 'calls getLandingPage in ShortFormNavigationService', ->
-        scope.getLandingPage({name: 'Household'})
-        expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalled()
+    describe '$scope.getStartOfSection', ->
+      it 'calls ShortFormNavigationService.getStartOfSection', ->
+        section = {name: 'Household'}
+        scope.getStartOfSection(section)
+        expect(fakeShortFormNavigationService.getStartOfSection).toHaveBeenCalledWith(section)
 
     describe '$scope.checkPreferenceEligibility', ->
       it 'calls refreshPreferences in ShortFormApplicationService', ->
@@ -349,13 +412,13 @@ do ->
         scope.listing = fakeListing
         scope.application.householdVouchersSubsidies = 'Yes'
         scope.validateHouseholdEligibility('incomeMatch')
-        expect(state.go).toHaveBeenCalled()
+        expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Preferences')
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
         scope.application.hasPublicHousing = 'No'
         scope.checkIfPublicHousing()
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
       it 'skips ahead to next household page if publicHousing answer is "Yes"', ->
         scope.application.hasPublicHousing = 'Yes'
         scope.checkIfPublicHousing()
@@ -431,7 +494,7 @@ do ->
 
         it 'navigates to the given callback url for income', ->
           scope._respondToIncomeEligibilityResults(eligibility, error)
-          expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Preferences'})
+          expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Preferences')
 
       describe 'when incomeMatch is false', ->
         beforeEach ->
@@ -470,52 +533,36 @@ do ->
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({finish: true})
 
     describe 'checkIfPreferencesApply', ->
-      beforeEach ->
-        members = ['somemembers']
-        spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue(members)
-        spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue(members)
-        spyOn(fakeShortFormApplicationService, 'liveInTheNeighborhoodMembers').and.returnValue([])
-
-      describe 'household is eligible for RB/AH preferences',->
-        it 'routes user to assistedHousing preference page', ->
-          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
+      describe 'when household is eligible for Assisted Housing preference', ->
+        it 'uses ShortFormNavigationService.goToApplicationPage to navigate to the Assisted Housing preference', ->
           fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
           path = 'dahlia.short-form-application.assisted-housing-preference'
-          expect(state.go).toHaveBeenCalledWith(path)
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
-        it 'routes user to rentBurden preference page', ->
-          fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
-          scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.rent-burdened-preference'
-          expect(state.go).toHaveBeenCalledWith(path)
+      describe 'when household is not eligible for Assisted Housing preference', ->
+        describe 'when household is eligible for Rent Burdened preference', ->
+          it 'uses ShortFormNavigationService.goToApplicationPage to navigate to the Rent Burdened preference', ->
+            fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
+            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
+            scope.checkIfPreferencesApply()
+            path = 'dahlia.short-form-application.rent-burdened-preference'
+            expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
-      describe 'preferences do not apply to household',->
-        it 'routes user to general lottery notice page', ->
-          fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(true)
-          scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.preferences-programs'
-          expect(state.go).toHaveBeenCalledWith(path)
-
-      describe 'household is not eligible for RB/AH, neighborhood but has live/work',->
-        it 'routes user to live work preferences page', ->
-          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(true)
-          scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.live-work-preference'
-          expect(state.go).toHaveBeenCalledWith(path)
+        describe 'when household is not eligible for Rent Burdened preference', ->
+          it 'calls $scope.checkForNeighborhoodOrLiveWork()', ->
+            fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
+            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
+            scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
+            scope.checkIfPreferencesApply()
+            expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
 
     describe 'checkAfterLiveInTheNeighborhood', ->
       it 'goes to live-work-preference page if you did not select the preference', ->
         spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
         scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.live-work-preference')
+        path = 'dahlia.short-form-application.live-work-preference'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
     describe 'checkAfterLiveWork', ->
       describe 'when listing has Alice Griffith preference', ->
@@ -526,7 +573,7 @@ do ->
           scope.checkAfterLiveWork()
 
           path = 'dahlia.short-form-application.preferences-programs'
-          expect(state.go).toHaveBeenCalledWith(path)
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
       describe 'when listing does not have Alice Griffith preference', ->
         beforeEach ->
@@ -535,7 +582,7 @@ do ->
         it 'goes to preferences-programs page', ->
           scope.checkAfterLiveWork()
           path = 'dahlia.short-form-application.preferences-programs'
-          expect(state.go).toHaveBeenCalledWith(path)
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
@@ -592,30 +639,27 @@ do ->
         scope.householdMember.dob_year = year
         expect(scope.householdMemberValidAge()).toEqual true
 
-    describe 'goToLandingPage', ->
-      it 'expects state.go to be called with landing page path', ->
-        scope.goToLandingPage('Household')
-        # Expect route path that is set up in FakeShortFormNavigationService, above
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
-
     describe 'beginApplication', ->
-      it 'expects state.go to be called with community screening page if listing is a community building', ->
+      it 'expects fakeShortFormNavigationService.goToApplicationPage to be called with community screening page if listing is a community building', ->
         scope.listing.Reserved_community_type = 'Veteran'
         lang = 'en'
         scope.beginApplication(lang)
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening', {lang: lang})
+        path = 'dahlia.short-form-welcome.community-screening'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path, {lang: lang})
 
-      it 'expects state.go to be called with overview page and language param', ->
+      it 'expects fakeShortFormNavigationService.goToApplicationPage to be called with overview page and language param', ->
         scope.listing.Reserved_community_type = null
         lang = 'es'
         scope.beginApplication(lang)
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview', {lang: lang})
+        path = 'dahlia.short-form-welcome.overview'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path, {lang: lang})
 
     describe 'validateCommunityEligibility', ->
-      it 'expects state.go to be called with short form overview page if applicant answered Yes to screening question', ->
+      it 'expects fakeShortFormNavigationService.goToApplicationPage to be called with short form overview page if applicant answered Yes to screening question', ->
         scope.application.answeredCommunityScreening = 'Yes'
         scope.validateCommunityEligibility()
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview')
+        path = 'dahlia.short-form-welcome.overview'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
       it 'expects a community eligibility error if applicant answered No to screening question', ->
         scope.application.answeredCommunityScreening = 'No'
@@ -628,17 +672,17 @@ do ->
       describe 'with rent burden opted out', ->
         it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
           scope.preferences.optOut.rentBurden = true
-          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
+          scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
           scope.checkForRentBurdenFiles()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.neighborhood-preference')
+          expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
 
       describe 'with complete rent burden files', ->
         it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
           scope.preferences.optOut.rentBurden = false
-          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
           fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> true
+          scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
           scope.checkForRentBurdenFiles()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.neighborhood-preference')
+          expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
 
       describe 'with incomplete rent burden files', ->
         it 'sets custom invalid message', ->
@@ -700,11 +744,19 @@ do ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
 
     describe 'checkForCustomPreferences', ->
-      describe 'listing has custom preferences', ->
+      describe 'when listing does not have custom preferences', ->
+        it 'calls $scope.checkForCustomProofPreferences', ->
+          scope.listing.customPreferences = null
+          scope.checkForCustomProofPreferences = jasmine.createSpy()
+          scope.checkForCustomPreferences()
+          expect(scope.checkForCustomProofPreferences).toHaveBeenCalled()
+
+      describe 'when listing has custom preferences', ->
         it 'takes user to custom preferences page', ->
           scope.listing.customPreferences = [{preferenceName: 'customPreference', listingPreferenceID: '123456'}]
           scope.checkForCustomPreferences()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
+          expect(fakeShortFormNavigationService.goToApplicationPage)
+            .toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
 
     describe 'checkForCustomProofPreferences', ->
       beforeEach ->
@@ -714,13 +766,15 @@ do ->
         it 'sends user to custom proof pref page with index 0', ->
           state.params.prefIdx = NaN
           scope.checkForCustomProofPreferences()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 0})
+          path = 'dahlia.short-form-application.custom-proof-preferences'
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path, {prefIdx: 0})
 
       describe 'paging thru custom preferences', ->
         it 'sends user to custom proof pref page with the subsequent index', ->
           state.params.prefIdx = 0
           scope.checkForCustomProofPreferences()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 1})
+          path = 'dahlia.short-form-application.custom-proof-preferences'
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path, {prefIdx: 1})
 
       describe 'at last page of custom preferences', ->
         it 'checks if there are no preferences selected', ->
@@ -743,7 +797,6 @@ do ->
           state: 'CA'
           zip: '94114'
         }
-        spyOn(scope, 'goToAndTrackFormSuccess')
 
       describe 'when preference not claimed', ->
         beforeEach ->
@@ -752,7 +805,7 @@ do ->
         it 'should proceed directly to preferences programs page', ->
           scope.checkAliceGriffithAddress()
 
-          expect(scope.goToAndTrackFormSuccess)
+          expect(fakeShortFormNavigationService.goToApplicationPage)
             .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
       describe 'when preference claimed and address not verified', ->
@@ -774,7 +827,7 @@ do ->
           $rootScope.$apply()
 
           expect(scope.application.aliceGriffith_address_verified).toEqual(true)
-          expect(scope.goToAndTrackFormSuccess)
+          expect(fakeShortFormNavigationService.goToApplicationPage)
             .toHaveBeenCalledWith('dahlia.short-form-application.alice-griffith-verify-address')
 
         it 'should display address errors when verification unsuccessful', ->
@@ -801,7 +854,7 @@ do ->
           $rootScope.$apply()
 
           expect(scope.application.aliceGriffith_address_verified).toEqual(false)
-          expect(scope.goToAndTrackFormSuccess)
+          expect(fakeShortFormNavigationService.goToApplicationPage)
             .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
       describe 'when preference claimed and address is already verified', ->
@@ -813,13 +866,10 @@ do ->
         it 'should proceed directly to preferences programs page', ->
           scope.checkAliceGriffithAddress()
 
-          expect(scope.goToAndTrackFormSuccess)
+          expect(fakeShortFormNavigationService.goToApplicationPage)
             .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
     describe 'chooseDraft', ->
-      beforeEach ->
-        spyOn(scope, 'goToAndTrackFormSuccess')
-
       describe 'when user has chosen their recent application', ->
         beforeEach ->
           scope.chosenApplicationToKeep = 'recent'
@@ -830,23 +880,23 @@ do ->
           it 'sends user to choose application details', ->
             spyOn(fakeShortFormApplicationService, 'hasDifferentInfo').and.returnValue(true)
             scope.chooseDraft()
-            expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
+            expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
 
         describe "when user's account info is the same as the applicant info on their recent application", ->
           it 'calls ShortFormApplicationService.keepCurrentDraftApplication with the logged-in user', ->
             scope.chooseDraft()
             expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalledWith(fakeAccountService.loggedInUser)
 
-          it 'calls scope.goToAndTrackFormSuccess to go to My Applications, skipping the confirm modal', ->
+          it 'calls scope.goToApplicationPage to go to My Applications, skipping the confirm modal', ->
             scope.chooseDraft()
             $rootScope.$apply()
-            expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
+            expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
 
       describe 'when user has chosen their saved draft', ->
-        it 'calls scope.goToAndTrackFormSuccess to go to My Applications, skipping the confirm modal', ->
+        it 'calls scope.goToApplicationPage to go to My Applications, skipping the confirm modal', ->
           scope.chosenApplicationToKeep = 'comparison'
           scope.chooseDraft()
-          expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
+          expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
 
     describe 'chooseApplicantDetails', ->
       describe 'when user chooses to create account', ->
@@ -860,7 +910,8 @@ do ->
           expect(fakeShortFormApplicationService.cancelPreferencesForMember)
             .toHaveBeenCalledWith(scope.applicant.id)
           expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
+          expect(fakeShortFormNavigationService.goToApplicationPage)
+            .toHaveBeenCalledWith('dahlia.short-form-application.create-account')
 
       describe 'when user chooses to continue as guest', ->
         it 'signs out user and sends them to the last page of the app', ->
@@ -869,7 +920,8 @@ do ->
           scope.chooseApplicantDetails()
           scope.$apply()
           expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.contact')
+          expect(fakeShortFormNavigationService.goToApplicationPage)
+            .toHaveBeenCalledWith('dahlia.short-form-application.contact')
 
       describe 'when user chooses to overwrite account info', ->
         beforeEach ->
@@ -889,7 +941,8 @@ do ->
           expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalled()
 
         it 'sends user to name section of the short form', ->
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+          expect(fakeShortFormNavigationService.goToApplicationPage)
+            .toHaveBeenCalledWith('dahlia.short-form-application.name')
 
     describe 'signIn', ->
       beforeEach ->
@@ -1085,8 +1138,8 @@ do ->
             scope.reconcilePreviousAppOrSubmit(previousAppData)
             $rootScope.$apply()
 
-            expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name',
-              { infoChanged })
+            expect(fakeShortFormNavigationService.goToApplicationPage)
+              .toHaveBeenCalledWith('dahlia.short-form-application.name', { infoChanged })
 
     describe 'replaceAppWithPreviousDraft', ->
       previousAppData = { id: '0987654321' }

@@ -1,61 +1,168 @@
 ShortFormNavigationService = (
   $state,
-  bsLoadingOverlayService,
-  ShortFormApplicationService,
-  AccountService,
-  ListingConstantsService,
-  ListingIdentityService
+  AccountService, AnalyticsService, bsLoadingOverlayService,
+  ListingConstantsService, ListingIdentityService, ShortFormApplicationService
 ) ->
   Service = {}
   RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
 
+  Service.goToApplicationPage = (path, params) ->
+    # Every time the user completes an application page,
+    # we track that in GTM/GA as a form success.
+    AnalyticsService.trackFormSuccess('Application')
+    if params
+      $state.go(path, params)
+    else
+      $state.go(path)
+
+  Service.getStartOfSection = (section) ->
+    application = ShortFormApplicationService.application
+    switch section.name
+      when 'Household'
+        if application.householdMembers.length
+          'household-members'
+        else
+          'household-intro'
+      when 'Income'
+        'income-vouchers'
+      when 'Preferences'
+        'preferences-intro'
+      when 'Review'
+        if application.surveyComplete
+          'review-summary'
+        else
+          'review-optional'
+      else
+        section.pages[0]
+
+  Service.goToSection = (section) ->
+    page = Service.getStartOfSection({name: section})
+    Service.goToApplicationPage("dahlia.short-form-application.#{page}")
+
+  # Only rental listings have the ADA priorities page after the reserved pages
+  Service.getPostReservedPage = (listing) ->
+    if ListingIdentityService.isSale(listing)
+      'income-vouchers'
+    else
+      'household-priorities'
+
+  # TODO: Refactor the way we handle post-submit actions for short form pages
+  # so that this submitActions function is not so closely coupled to the
+  # handleFormSuccess function in the ShortFormApplicationController. Do not
+  # have this function handling names of functions that are defined in
+  # ShortFormApplicationController.
+  #
+  # Right now, submitActions returns an object whose keys are the short form page
+  # slugs and whose values are objects that can contain three types of values :
+  #  - path: a string state name to go to
+  #  - callbacks: an array of functions to call
+  #  - scopedCallbacks: an array of objects of the format:
+  #    - func: a string function name
+  #    - param: a param to be passed to the function named in func
+  # The function names in scopedCallbacks are meant to be called on the scope of
+  # the ShortFormApplicationController. We very much do not want to maintain this
+  # paradigm! But at the moment we don't have time to refactor how this works. We
+  # plan in the future to refactor the entire way the short form application is
+  # set up and the way navigation works between pages, so this paradigm will
+  # definitely be removed and replaced at that time.
   Service.submitActions =
     # intro
-    'community-screening': {callback: ['validateCommunityEligibility']}
+    'community-screening':
+      scopedCallbacks: [{func: 'validateCommunityEligibility'}]
     # you
-    'prerequisites': {callback: ['afterPrerequisites']}
-    'name': {callback: ['checkAfterNamePage']}
-    'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
-    'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
-    'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
-    'alternate-contact-name': {path: 'alternate-contact-phone-address'}
-    'alternate-contact-phone-address': {callback: ['goToLandingPage'], params: 'Household'}
+    'prerequisites':
+      callbacks: [
+        Service.goToApplicationPage.bind(null, 'dahlia.short-form-application.name')
+      ]
+    'name':
+      scopedCallbacks: [{func: 'checkAfterNamePage'}]
+    'contact':
+      scopedCallbacks: [
+        {func: 'checkIfAddressVerificationNeeded'}
+        {func: 'checkPreferenceEligibility'}
+      ]
+    'verify-address':
+      scopedCallbacks: [{func: 'checkPreferenceEligibility'}]
+      path: 'alternate-contact-type'
+    'alternate-contact-type':
+      scopedCallbacks: [{func: 'checkIfAlternateContactInfoNeeded'}]
+    'alternate-contact-name':
+      path: 'alternate-contact-phone-address'
+    'alternate-contact-phone-address':
+      callbacks: [Service.goToSection.bind(null, 'Household')]
     # household
-    'household-intro': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
-    'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
-    'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
-    'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
-    'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
-    'household-public-housing': {callback: ['checkIfPublicHousing']}
-    'household-monthly-rent': {callback: ['checkIfReservedUnits']}
-    'household-reserved-units-veteran': {callback: ['checkIfReservedUnits'], params: RESERVED_TYPES.DISABLED}
-    'household-reserved-units-disabled': {path: 'household-priorities'}
+    'household-intro':
+      scopedCallbacks: [{
+        func: 'validateHouseholdEligibility'
+        param: 'householdMatch'
+      }]
+    'household-members':
+      scopedCallbacks: [{
+        func: 'validateHouseholdEligibility'
+        param: 'householdMatch'
+      }]
+    'household-member-form':
+      scopedCallbacks: [
+        {func: 'addHouseholdMember'}
+        {func: 'checkPreferenceEligibility'}
+      ]
+    'household-member-form-edit':
+      scopedCallbacks: [
+        {func: 'addHouseholdMember'}
+        {func: 'checkPreferenceEligibility'}
+      ]
+    'household-member-verify-address':
+      scopedCallbacks: [{func: 'checkPreferenceEligibility'}]
+      path: 'household-members'
+    'household-public-housing': {scopedCallbacks: [{func: 'checkIfPublicHousing'}]}
+    'household-monthly-rent': {scopedCallbacks: [{func: 'checkIfReservedUnits'}]}
+    'household-reserved-units-veteran':
+      scopedCallbacks: [{
+        func: 'checkIfReservedUnits'
+        param: RESERVED_TYPES.DISABLED
+      }]
+    'household-reserved-units-disabled':
+      path: Service.getPostReservedPage(ShortFormApplicationService.listing)
     'household-priorities': {path: 'income-vouchers'}
     # income
     'income-vouchers': {path: 'income'}
-    'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
+    'income':
+      scopedCallbacks: [{
+        func: 'validateHouseholdEligibility'
+        param: 'incomeMatch'
+      }]
     # preferences
-    'preferences-intro': {callback: ['checkIfPreferencesApply']}
-    'assisted-housing-preference': {callback: ['checkForNeighborhoodOrLiveWork']}
-    'rent-burdened-preference': {callback: ['checkForRentBurdenFiles']}
+    'preferences-intro': {scopedCallbacks: [{func: 'checkIfPreferencesApply'}]}
+    'assisted-housing-preference': {scopedCallbacks: [{func: 'checkForNeighborhoodOrLiveWork'}]}
+    'rent-burdened-preference': {scopedCallbacks: [{func: 'checkForRentBurdenFiles'}]}
     'rent-burdened-preference-edit': {path: 'rent-burdened-preference'}
-    'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
-    'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
-    'live-work-preference': {callback: ['checkAfterLiveWork']}
-    'alice-griffith-preference': {callback: ['checkAliceGriffithAddress']}
+    'neighborhood-preference':
+      scopedCallbacks: [{
+        func: 'checkAfterLiveInTheNeighborhood'
+        param: 'neighborhoodResidence'
+      }]
+    'adhp-preference':
+      scopedCallbacks: [{
+        func: 'checkAfterLiveInTheNeighborhood'
+        param: 'antiDisplacement'
+      }]
+    'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
+    'alice-griffith-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
-    'preferences-programs': {callback: ['checkForCustomPreferences']}
-    'custom-preferences': {callback: ['checkForCustomProofPreferences']}
-    'custom-proof-preferences': {callback: ['checkForCustomProofPreferences']}
-    'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
+    'preferences-programs': {scopedCallbacks: [{func: 'checkForCustomPreferences'}]}
+    'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
+    'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
+    'general-lottery-notice': {callbacks: [Service.goToSection.bind(null, 'Review')]}
     # review
-    'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
+    'review-optional':
+      scopedCallbacks: [{func: 'checkSurveyComplete'}]
+      path: 'review-summary'
     'review-summary': {path: 'review-terms'}
-    'review-terms': {callback: ['submitApplication']}
+    'review-terms': {scopedCallbacks: [{func: 'submitApplication'}]}
     # save + finish workflow
-    'choose-draft': {callback: ['chooseDraft']}
-    'choose-applicant-details': {callback: ['chooseApplicantDetails']}
+    'choose-draft': {scopedCallbacks: [{func: 'chooseDraft'}]}
+    'choose-applicant-details': {scopedCallbacks: [{func: 'chooseApplicantDetails'}]}
 
   Service.sections = () ->
     sections = [
@@ -135,26 +242,6 @@ ShortFormNavigationService = (
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
     options.path = "dahlia.short-form-application.#{options.path}" if options.path
     options
-
-  Service.getLandingPage = (section) ->
-    application = ShortFormApplicationService.application
-    switch section.name
-      when 'Household'
-        if application.householdMembers.length
-          'household-members'
-        else
-          'household-intro'
-      when 'Income'
-        'income-vouchers'
-      when 'Preferences'
-        'preferences-intro'
-      when 'Review'
-        if application.surveyComplete
-          'review-summary'
-        else
-          'review-optional'
-      else
-        section.pages[0]
 
   Service.isLoading = (bool = null) ->
     if bool == null
@@ -247,7 +334,7 @@ ShortFormNavigationService = (
         Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
       # -- Income
       when 'income-vouchers'
-        'household-priorities'
+        Service.getPrevPageOfIncomeSection()
       # -- Preferences
       when 'rent-burdened-preference'
         , 'assisted-housing-preference'
@@ -307,11 +394,11 @@ ShortFormNavigationService = (
           'household-reserved-units-disabled'
         else
           if dir == 'next'
-            # once we've gotten to the end of our types, go to Income
-            'household-priorities'
+            # once we've gotten to the end of our types, go to the appropriate
+            # next page for the listing
+            Service.getPostReservedPage(ShortFormApplicationService.listing)
           else
             Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
-
 
   Service.getPrevPageOfHouseholdSection = ->
     application = ShortFormApplicationService.application
@@ -323,6 +410,13 @@ ShortFormNavigationService = (
       'household-members'
     else
       'household-intro'
+
+  Service.getPrevPageOfIncomeSection = ->
+    listing = ShortFormApplicationService.listing
+    if ListingIdentityService.isSale(listing)
+      Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
+    else
+      'household-priorities'
 
   Service.goBackToRentBurden = ->
     if ShortFormApplicationService.eligibleForAssistedHousing()
@@ -374,6 +468,8 @@ ShortFormNavigationService = (
       'household-reserved-units-veteran'
     else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.DISABLED)
       'household-reserved-units-disabled'
+    else if ListingIdentityService.isSale(listing)
+      'income-vouchers'
     else
       'household-priorities'
 
@@ -424,11 +520,8 @@ ShortFormNavigationService = (
 
 ShortFormNavigationService.$inject = [
   '$state',
-  'bsLoadingOverlayService',
-  'ShortFormApplicationService',
-  'AccountService',
-  'ListingConstantsService',
-  'ListingIdentityService'
+  'AccountService', 'AnalyticsService', 'bsLoadingOverlayService',
+  'ListingConstantsService', 'ListingIdentityService', 'ShortFormApplicationService'
 ]
 
 angular
