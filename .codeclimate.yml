@@ -1,7 +1,7 @@
 # Save as .codeclimate.yml (note leading .) in project root directory
 languages:
-  Ruby: true
-  JavaScript: true
+  Ruby: false
+  JavaScript: false
 exclude_paths:
   - "lib/assets"
   # code climate complains a bunch about our toolkit.css -- is it useful to validate our CSS?
