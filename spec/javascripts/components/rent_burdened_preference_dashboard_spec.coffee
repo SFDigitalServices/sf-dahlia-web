@@ -21,7 +21,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: ->
     fakeShortFormHelperService =
       proofOptions: jasmine.createSpy()
-    fakeFileUploadService =
+    fakeRentBurdenFileService =
       uploadedRentBurdenRentFiles: jasmine.createSpy()
       hasRentBurdenFiles: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
@@ -41,7 +41,7 @@ do ->
       deferred = $q.defer()
       locals =
         ShortFormApplicationService: fakeShortFormApplicationService
-        FileUploadService: fakeFileUploadService
+        RentBurdenFileService: fakeRentBurdenFileService
         $translate: $translate
     )
 
@@ -57,7 +57,7 @@ do ->
     describe 'hasFiles', ->
       it 'should call function on FileUploadService', ->
         ctrl.hasFiles('123 Main St')
-        expect(fakeFileUploadService.hasRentBurdenFiles).toHaveBeenCalledWith('123 Main St')
+        expect(fakeRentBurdenFileService.hasRentBurdenFiles).toHaveBeenCalledWith('123 Main St')
 
     describe 'hasCompleteFiles', ->
       it 'calls on hasCompleteRentBurdenFilesForAddress on ShortFormApplicationService', ->

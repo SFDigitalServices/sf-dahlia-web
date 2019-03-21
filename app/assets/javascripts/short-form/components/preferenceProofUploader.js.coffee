@@ -24,7 +24,7 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @listingId = ShortFormApplicationService.listing.Id
+      @listing = ShortFormApplicationService.listing
       @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
 
       @$onChanges = =>
@@ -65,6 +65,7 @@ angular.module('dahlia.components')
           rentBurdenType: @rentBurdenType
           index: @proofDocument.id
           docType: @proofDocument.proofOption
+          prefType: @preference
         }
 
       @saveProofOptionToPref = =>
@@ -75,34 +76,37 @@ angular.module('dahlia.components')
           proofOption = 'Lease'
         @application.preferences[@preference + '_proofOption'] = proofOption
 
-      @validateFileNameLength = ($file) ->
-        if $file
-          if $file.name.length > 80
+      @validateFileNameLength = (file) ->
+        if file
+          if file.name.length > FileUploadService.maxFileNameLength
             @proofDocument.error = 'ERROR.FILE_NAME_TOO_LONG'
           else
-            if $file.size > 5 * 1000 * 1000 # 5MB
+            if file.size > FileUploadService.maxFileSizeBytes
               @proofDocument.error = 'ERROR.FILE_UPLOAD'
             else
               true
         else
           @proofDocument.error = 'ERROR.FILE_MISSING'
 
-      @uploadProofFile = ($file) =>
-        opts = {}
+      @uploadProofFile = (file) =>
+        opts =
+          prefType: @preference
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
-        FileUploadService.uploadProof($file, @preference, @listingId, opts).then =>
+        FileUploadService.uploadProof(file, @listing, opts).then =>
           @afterUpload()
         if @preference == 'neighborhoodResidence' || @preference == 'antiDisplacement'
           # if we're uploading for NRHP/ADHP, it also copys info and uploads for liveInSf so that the file info is saved into DB
           ShortFormApplicationService.copyNeighborhoodToLiveInSf(@preference)
-          FileUploadService.uploadProof($file, 'liveInSf', @listingId, opts)
+          opts.prefType = 'liveInSf'
+          FileUploadService.uploadProof(file, @listing, opts)
 
       @deletePreferenceFile = =>
-        opts = {}
+        opts =
+          prefType: @preference
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
-        FileUploadService.deletePreferenceFile(@preference, @listingId, opts).then =>
+        FileUploadService.deleteFile(@listing, opts).then =>
           @afterDelete()
           @setProofType()
 
