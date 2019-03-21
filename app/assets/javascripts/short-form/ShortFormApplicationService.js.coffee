@@ -348,21 +348,20 @@ ShortFormApplicationService = (
       # default, unset the indicated preference
       Service.unsetPreferenceFields(preference)
 
-  Service.unsetPreferenceFields = (preference) ->
+  Service.unsetPreferenceFields = (prefType) ->
     # clear out all fields for this preference
-    Service.preferences[preference] = null
-    if preference == 'rentBurden'
+    Service.preferences[prefType] = null
+    if prefType == 'rentBurden'
       RentBurdenFileService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
     else
-      Service.preferences["#{preference}_household_member"] = null
-      Service.preferences["#{preference}_proofOption"] = null
-      opts =
-        prefType: preference
+      Service.preferences["#{prefType}_household_member"] = null
+      Service.preferences["#{prefType}_proofOption"] = null
+      opts = {prefType: prefType}
       FileUploadService.deleteFile(Service.listing, opts)
-      if preference == 'certOfPreference' || preference == 'displaced'
-        Service.preferences["#{preference}_certificateNumber"] = null
-      if Service.preferences["#{preference}_address"]
-        Service.preferences["#{preference}_address"] = null
+      if prefType == 'certOfPreference' || prefType == 'displaced'
+        Service.preferences["#{prefType}_certificateNumber"] = null
+      if Service.preferences["#{prefType}_address"]
+        Service.preferences["#{prefType}_address"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
@@ -447,12 +446,11 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   Service.clearAddressRelatedProofForMember = (member) ->
-    addressPreferences = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
-    addressPreferences.forEach (preference) ->
-      selectedMember = Service.preferences[preference + '_household_member']
+    addressPrefTypes = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
+    addressPrefTypes.forEach (prefType) ->
+      selectedMember = Service.preferences[prefType + '_household_member']
       if member.id == selectedMember
-        opts =
-          prefType: preference
+        opts = {prefType: prefType}
         FileUploadService.deleteFile(Service.listing, opts)
 
   # update lists of eligible people for the dropdowns for these preferences

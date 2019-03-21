@@ -6,8 +6,7 @@ do ->
     listingPreferenceID = '123xyz'
     fileValue = {name: 'img.jpg'}
     prefType = 'liveInSf'
-    opts =
-      prefType: prefType
+    opts = {}
     address1 = '123 Main St'
     address2 = '345 First St'
     errorMsg = undefined
@@ -29,7 +28,7 @@ do ->
         documents:
           "#{prefType}": {}
     fakeRentBurdenFileService =
-      clearRentBurdenFile = jasmine.createSpy()
+      clearRentBurdenFile: jasmine.createSpy()
     $translate = {}
     Upload =
       upload: ->
@@ -67,20 +66,40 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'unsets FileUploadService prefType_proof_file', ->
-        stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
-        FileUploadService.preferences.documents[prefType].file = file
-        FileUploadService.deleteFile(fakeListing, opts)
-        httpBackend.flush()
-        expect(FileUploadService.preferences.documents[prefType].file).toEqual null
+      describe 'when opts.rentBurdenType is present', ->
+        it 'calls RentBurdenFileService.clearRentBurdenFile with the opts and Service.preferences', ->
+          stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
+          opts =
+            prefType: prefType
+            rentBurdenType: 'lease'
+          FileUploadService.preferences.documents[prefType].file = file
+          FileUploadService._proofDocument = jasmine.createSpy()
+            .and.returnValue(FileUploadService.preferences.documents[prefType])
+          FileUploadService.deleteFile(fakeListing, opts)
+          httpBackend.flush()
+          expect(fakeRentBurdenFileService.clearRentBurdenFile)
+            .toHaveBeenCalledWith(
+              opts,
+              FileUploadService.preferences
+            )
 
-      it 'removes file for document without preference', ->
-        stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
-        opts =
-          document: fakeDocument
-        FileUploadService.deleteFile(fakeListing, opts)
-        httpBackend.flush()
-        expect(fakeDocument.file).toEqual null
+      describe 'when opts.rentBurdenType is not present', ->
+        it 'sets the file property of the proof document to null', ->
+          stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
+          opts =
+            prefType: prefType
+          FileUploadService.preferences.documents[prefType].file = file
+          FileUploadService.deleteFile(fakeListing, opts)
+          httpBackend.flush()
+          expect(FileUploadService.preferences.documents[prefType].file).toEqual null
+
+        it 'removes file for document without preference', ->
+          stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
+          opts =
+            document: fakeDocument
+          FileUploadService.deleteFile(fakeListing, opts)
+          httpBackend.flush()
+          expect(fakeDocument.file).toEqual null
 
     describe 'Service.uploadProof', ->
       beforeEach ->

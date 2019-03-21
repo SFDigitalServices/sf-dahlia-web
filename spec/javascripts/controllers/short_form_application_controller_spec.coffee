@@ -185,24 +185,24 @@ do ->
       _$document_.scrollToElement = jasmine.createSpy()
 
       $controller 'ShortFormApplicationController',
+        $document: _$document_
         $scope: scope
         $state: state
-        $document: _$document_
-        Idle: fakeIdle
-        Title: fakeTitle
         $translate: translate
-        ShortFormApplicationService: fakeShortFormApplicationService
-        ShortFormNavigationService: fakeShortFormNavigationService
-        ShortFormHelperService: fakeShortFormHelperService
-        AnalyticsService: fakeAnalyticsService
-        FileUploadService: fakeFileUploadService
-        RentBurdenFileService: fakeRentBurdenFileService
-        AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
-        ListingDataService: fakeListingDataService
-        SharedService: fakeSharedService
+        AddressValidationService: fakeAddressValidationService
+        AnalyticsService: fakeAnalyticsService
+        Idle: fakeIdle
         inputMaxLength: {}
+        FileUploadService: fakeFileUploadService
+        ListingDataService: fakeListingDataService
         ListingIdentityService: fakeListingIdentityService
+        RentBurdenFileService: fakeRentBurdenFileService
+        SharedService: fakeSharedService
+        ShortFormApplicationService: fakeShortFormApplicationService
+        ShortFormHelperService: fakeShortFormHelperService
+        ShortFormNavigationService: fakeShortFormNavigationService
+        Title: fakeTitle
       return
     )
 

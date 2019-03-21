@@ -1,7 +1,6 @@
 angular.module('dahlia.components')
 .component 'fileUploader',
   bindings:
-    application: '<'
     buttonLabel: '@'
     document: '<'
     fileLabel: '@'
@@ -13,42 +12,39 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'FileUploadService', 'SharedService'
     (ShortFormApplicationService, FileUploadService, SharedService) ->
       ctrl = @
-      @fileInputName = "#{@fileType}File"
-      @inputInvalid = (fieldName) ->
+      fileInputName = "#{ctrl.fileType}File"
+      ctrl.inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @listing = ShortFormApplicationService.listing
+      ctrl.listing = ShortFormApplicationService.listing
 
-      @hasFile = =>
-        !_.isEmpty(@document.file) && !@document.loading
+      ctrl.hasFile = ->
+        !_.isEmpty(ctrl.document.file) && !ctrl.document.loading
 
-      @validateFile = ($file) ->
-        if $file
-          if $file.name.length > 80
-            @document.error = 'ERROR.FILE_NAME_TOO_LONG'
+      ctrl.validateFile = (file) ->
+        if file
+          if file.name.length > FileUploadService.maxFileNameLength
+            ctrl.document.error = 'ERROR.FILE_NAME_TOO_LONG'
           else
-            if $file.size > 5 * 1000 * 1000 # 5MB
-              @document.error = 'ERROR.FILE_UPLOAD'
+            if file.size > FileUploadService.maxFileSizeBytes
+              ctrl.document.error = 'ERROR.FILE_UPLOAD'
             else
               true
         else
-          @document.error = 'ERROR.FILE_MISSING'
+          ctrl.document.error = 'ERROR.FILE_MISSING'
 
-      @uploadFile = ($file) =>
-        @document.proofOption = @fileType
-        opts = {
-          document: @document
-        }
-        FileUploadService.uploadProof($file, @listing, opts)
+      ctrl.uploadFile = (file) ->
+        document.proofOption = ctrl.fileType
+        opts = {document: ctrl.document}
+        FileUploadService.uploadProof(file, ctrl.listing, opts)
 
-      @deleteFile = =>
-        opts = {
-          document: @document,
-          document_type: @fileType
-        }
-        FileUploadService.deleteFile(@listing, opts)
+      ctrl.deleteFile = ->
+        opts =
+          document: ctrl.document,
+          document_type: ctrl.fileType
+        FileUploadService.deleteFile(ctrl.listing, opts)
 
-      @assetPaths = SharedService.assetPaths
+      ctrl.assetPaths = SharedService.assetPaths
 
       return ctrl
   ]

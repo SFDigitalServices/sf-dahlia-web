@@ -1,5 +1,7 @@
 FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurdenFileService) ->
   Service = {}
+  Service.maxFileNameLength = 80
+  Service.maxFileSizeBytes = 5e6 # 5MB
   # these are to be overridden
   Service.preferences = {}
   Service.session_uid = -> null
@@ -7,19 +9,18 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
   Service.deleteFile = (listing, opts = {}) ->
     proofDocument = Service._proofDocument(listing, opts)
     return $q.reject() unless proofDocument
-
-    params = Service._uploadedFileParams(listing.Id, opts, proofDocument)
-    if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
-      proofDocument.proofOption = null if proofDocument
+    if _.isEmpty(proofDocument.file)
+      proofDocument.proofOption = null
       return $q.resolve()
 
+    params = Service._uploadedFileParams(listing.Id, opts, proofDocument)
     $http.delete('/api/v1/short-form/proof', {
       data: params,
       headers: {
         'Content-Type': 'application/json'
       },
     }).success((data, status, headers, config) ->
-      # clear out fileObj
+      # Clear out the file
       if opts.rentBurdenType
         RentBurdenFileService.clearRentBurdenFile(opts, Service.preferences)
       else
@@ -85,7 +86,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
       Service._uploadProofFile(file, proofDocument, uploadedFileParams)
 
   Service._uploadProofFile = (file, proofDocument, uploadedFileParams) ->
-    if file.size > 5 * 1000 * 1000 # 5MB
+    if file.size > Service.maxFileSizeBytes
       proofDocument.file = null
       proofDocument.loading = false
       proofDocument.error = 'ERROR.FILE_UPLOAD'

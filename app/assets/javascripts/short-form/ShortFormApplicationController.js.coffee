@@ -3,23 +3,23 @@
 ############################################################################################
 
 ShortFormApplicationController = (
+  $document,
   $scope,
   $state,
-  $window,
-  $document,
   $translate,
-  Idle,
-  ShortFormApplicationService,
-  ShortFormNavigationService,
-  ShortFormHelperService,
-  RentBurdenFileService,
-  AnalyticsService,
-  AddressValidationService,
+  $window,
   AccountService,
-  ListingDataService,
-  SharedService,
+  AddressValidationService,
+  AnalyticsService,
+  Idle,
   inputMaxLength,
-  ListingIdentityService
+  ListingDataService,
+  ListingIdentityService,
+  RentBurdenFileService,
+  SharedService,
+  ShortFormApplicationService,
+  ShortFormHelperService,
+  ShortFormNavigationService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -1027,16 +1027,23 @@ ShortFormApplicationController = (
     ListingIdentityService.isSale(listing)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'RentBurdenFileService',
-  'AnalyticsService',
-  'AddressValidationService',
+  '$document',
+  '$scope',
+  '$state',
+  '$translate',
+  '$window',
   'AccountService',
-  'ListingDataService',
-  'SharedService',
+  'AddressValidationService',
+  'AnalyticsService',
+  'Idle',
   'inputMaxLength',
-  'ListingIdentityService'
+  'ListingDataService',
+  'ListingIdentityService',
+  'RentBurdenFileService',
+  'SharedService',
+  'ShortFormApplicationService',
+  'ShortFormHelperService',
+  'ShortFormNavigationService'
 ]
 
 angular

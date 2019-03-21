@@ -6,7 +6,7 @@ do ->
     locals = undefined
     fakeFile = {
       name: 'filename.jpg'
-      size: 3 * 1000 * 1000
+      size: 3e6 # 3MB
     }
     fakeAddress = '123 Main St'
     fakeApplication =
@@ -32,6 +32,8 @@ do ->
       title: 'Preference'
       proofDocument: {}
     fakeFileUploadService =
+      maxFileNameLength: 80
+      maxFileSizeBytes: 5e6 # 5MB
       uploadProof: jasmine.createSpy()
       deleteFile: jasmine.createSpy()
 
@@ -59,11 +61,10 @@ do ->
         ctrl.validateFileNameLength(null)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_MISSING')
       it 'should return an error if file is too big', ->
-        fakeFile.size = 6 * 1000 * 1000
+        fakeFile.size = fakeFileUploadService.maxFileSizeBytes + 1
         ctrl.validateFileNameLength(fakeFile)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_UPLOAD')
       it 'should return an error if file name is too long', ->
-        fakeFile.name = ""
-        _.times(81, -> fakeFile.name += "a")
+        fakeFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
         ctrl.validateFileNameLength(fakeFile)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_NAME_TOO_LONG')
