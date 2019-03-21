@@ -34,7 +34,7 @@ angular.module('dahlia.components')
           ctrl.document.error = 'ERROR.FILE_MISSING'
 
       ctrl.uploadFile = (file) ->
-        document.proofOption = ctrl.fileType
+        ctrl.document.proofOption = ctrl.fileType
         opts = {document: ctrl.document}
         FileUploadService.uploadProof(file, ctrl.listing, opts)
 
