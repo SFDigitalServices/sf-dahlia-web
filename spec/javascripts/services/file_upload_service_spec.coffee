@@ -102,14 +102,6 @@ do ->
           httpBackend.flush()
           expect(fakeDocument.file).toEqual null
 
-      it 'removes file for document without preference', ->
-        stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
-        opts =
-          document: fakeDocument
-        FileUploadService.deleteFile(fakeListing, opts)
-        httpBackend.flush()
-        expect(fakeDocument.file).toEqual null
-
     describe 'Service.uploadProof', ->
       beforeEach ->
         proofDocument = FileUploadService.preferences.documents[prefType]
