@@ -2,11 +2,12 @@ Utils = require('../utils')
 { Given, When, Then } = require('cucumber')
 
 pageUrls = {
-  Name: 'name'
   Contact: 'contact'
-  'My Applications': 'my-applications'
-  Prerequisites: 'prerequisites'
+  Income: 'income'
   'Income Vouchers': 'income-vouchers'
+  'My Applications': 'my-applications'
+  Name: 'name'
+  Prerequisites: 'prerequisites'
 }
 
 Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->

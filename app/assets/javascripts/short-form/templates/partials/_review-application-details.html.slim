@@ -115,10 +115,10 @@ div ng-if="prioritiesSelectedExists()"
 
 / Income
 div ng-if="application.householdIncome.incomeTotal"
-  review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
+  review-summary-section header="{{'LABEL.INCOME' | translate}}" to="{{ 'dahlia.short-form-application.' + getStartOfSection({name: 'Income'}) }}"
 
   .app-inner
-    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}" identifier="income-vouchers"
+    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}" identifier="income-vouchers" ng-if="!isSale(listing)"
       | {{applicationVouchersSubsidies()}}
 
     review-summary-item label="{{'LABEL.INCOME' | translate}}" identifier="income-amount"
