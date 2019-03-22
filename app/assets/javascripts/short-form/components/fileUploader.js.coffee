@@ -12,7 +12,7 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'FileUploadService', 'SharedService'
     (ShortFormApplicationService, FileUploadService, SharedService) ->
       ctrl = @
-      fileInputName = "#{ctrl.fileType}File"
+      ctrl.fileInputName = "#{ctrl.fileType}File"
       ctrl.inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 

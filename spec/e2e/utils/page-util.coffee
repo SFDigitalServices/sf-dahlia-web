@@ -45,7 +45,7 @@ PageUtil = {
     # need this for uploading file to sauce labs
     browser.setFileDetector new remote.FileDetector()
     filePath = "#{process.env.PWD}#{filePath}"
-    element.all(By.css('input[type="file"]')).then( (items) ->
+    element.all(By.id("ngf-#{documentType}File")).then( (items) ->
       items[0].sendKeys(filePath)
     )
     browser.sleep(5000)
