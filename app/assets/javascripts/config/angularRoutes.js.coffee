@@ -896,6 +896,10 @@
       views:
         'container':
           templateUrl: 'short-form/templates/d2-income-household.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
     })
     # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-intro', {
