@@ -1,7 +1,17 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingDataService, ListingConstantsService, ListingIdentityService, ListingUnitService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferenceService
+  AddressValidationService,
+  AnalyticsService,
+  FileUploadService,
+  GISService,
+  ListingConstantsService,
+  ListingDataService,
+  ListingIdentityService,
+  ListingPreferenceService,
+  ListingUnitService,
+  RentBurdenFileService,
+  SharedService,
+  ShortFormDataService
 ) ->
   Service = {}
 
@@ -38,6 +48,8 @@ ShortFormApplicationService = (
     alternateContact:
       mailing_address: angular.copy(emptyAddress)
     householdMembers: []
+    documents:
+      'Loan pre-approval': {}
     preferences:
       liveInSf: null
       workInSf: null
@@ -91,6 +103,9 @@ ShortFormApplicationService = (
     # initialize FileUploadService to have access to preferences / session_uid
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
+      Service.session_uid
+    RentBurdenFileService.preferences = Service.preferences
+    RentBurdenFileService.session_uid = ->
       Service.session_uid
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
@@ -342,19 +357,20 @@ ShortFormApplicationService = (
       # default, unset the indicated preference
       Service.unsetPreferenceFields(preference)
 
-  Service.unsetPreferenceFields = (preference) ->
+  Service.unsetPreferenceFields = (prefType) ->
     # clear out all fields for this preference
-    Service.preferences[preference] = null
-    if preference == 'rentBurden'
-      FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
+    Service.preferences[prefType] = null
+    if prefType == 'rentBurden'
+      RentBurdenFileService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
     else
-      Service.preferences["#{preference}_household_member"] = null
-      Service.preferences["#{preference}_proofOption"] = null
-      FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
-      if preference == 'certOfPreference' || preference == 'displaced'
-        Service.preferences["#{preference}_certificateNumber"] = null
-      if Service.preferences["#{preference}_address"]
-        Service.preferences["#{preference}_address"] = null
+      Service.preferences["#{prefType}_household_member"] = null
+      Service.preferences["#{prefType}_proofOption"] = null
+      opts = {prefType: prefType}
+      FileUploadService.deleteFile(Service.listing, opts)
+      if prefType == 'certOfPreference' || prefType == 'displaced'
+        Service.preferences["#{prefType}_certificateNumber"] = null
+      if Service.preferences["#{prefType}_address"]
+        Service.preferences["#{prefType}_address"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
@@ -439,11 +455,12 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   Service.clearAddressRelatedProofForMember = (member) ->
-    addressPreferences = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
-    addressPreferences.forEach (preference) ->
-      selectedMember = Service.preferences[preference + '_household_member']
+    addressPrefTypes = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
+    addressPrefTypes.forEach (prefType) ->
+      selectedMember = Service.preferences[prefType + '_household_member']
       if member.id == selectedMember
-        FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+        opts = {prefType: prefType}
+        FileUploadService.deleteFile(Service.listing, opts)
 
   # update lists of eligible people for the dropdowns for these preferences
   Service.refreshPreferences = (type = 'all') ->
@@ -1077,8 +1094,18 @@ ShortFormApplicationService = (
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
-  'ListingDataService', 'ListingConstantsService', 'ListingIdentityService', 'ListingUnitService', 'ShortFormDataService',
-  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferenceService'
+  'AddressValidationService',
+  'AnalyticsService',
+  'FileUploadService',
+  'GISService',
+  'ListingConstantsService',
+  'ListingDataService',
+  'ListingIdentityService',
+  'ListingPreferenceService',
+  'ListingUnitService',
+  'RentBurdenFileService',
+  'SharedService',
+  'ShortFormDataService'
 ]
 
 angular

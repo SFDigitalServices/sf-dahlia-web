@@ -29,7 +29,7 @@ do ->
       unsetPreferenceFields: jasmine.createSpy()
     fakeShortFormHelperService =
       proofOptions: jasmine.createSpy()
-    fakeFileUploadService =
+    fakeRentBurdenFileService =
       uploadedRentBurdenRentFiles: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
 
@@ -46,11 +46,11 @@ do ->
         instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
       }
       deferred = $q.defer()
-      spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       locals =
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormHelperService: fakeShortFormHelperService
-        FileUploadService: fakeFileUploadService
+        RentBurdenFileService: fakeRentBurdenFileService
         $translate: $translate
     )
 
@@ -128,7 +128,7 @@ do ->
 
       describe 'initUploadedRentFiles', ->
         it 'should call uploadedRentBurdenRentFiles on Service', ->
-          expect(fakeFileUploadService.uploadedRentBurdenRentFiles).toHaveBeenCalledWith(fakeAddress)
+          expect(fakeRentBurdenFileService.uploadedRentBurdenRentFiles).toHaveBeenCalledWith(fakeAddress)
 
       describe 'initNewRentDocument', ->
         it 'should set up an object with a timestamped id for rent_burden_index', ->
@@ -144,4 +144,4 @@ do ->
         it 'should call deleteRentBurdenPreferenceFiles on Service if preference is unset', ->
           fakeBindings.application.preferences.rentBurden = false
           ctrl.resetPreferenceData()
-          expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles).toHaveBeenCalled()
+          expect(fakeRentBurdenFileService.deleteRentBurdenPreferenceFiles).toHaveBeenCalled()

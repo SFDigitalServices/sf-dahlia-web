@@ -10,8 +10,8 @@ angular.module('dahlia.components')
 
   templateUrl: 'short-form/components/rent-burdened-preference.html'
   controller:
-    ['ShortFormApplicationService', 'ShortFormHelperService', 'FileUploadService', '$translate',
-    (ShortFormApplicationService, ShortFormHelperService, FileUploadService, $translate) ->
+    ['ShortFormApplicationService', 'ShortFormHelperService', 'RentBurdenFileService', '$translate',
+    (ShortFormApplicationService, ShortFormHelperService, RentBurdenFileService, $translate) ->
       ctrl = @
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -29,7 +29,7 @@ angular.module('dahlia.components')
       @rentDocuments = rentBurdenDocs[@address].rent
 
       @initUploadedRentFiles = =>
-        @uploadedRentFiles = FileUploadService.uploadedRentBurdenRentFiles(@address)
+        @uploadedRentFiles = RentBurdenFileService.uploadedRentBurdenRentFiles(@address)
 
       @initNewRentDocument = =>
         # init empty object for new uploads
@@ -50,7 +50,7 @@ angular.module('dahlia.components')
         listingId = ShortFormApplicationService.listing.Id
         # will delete files if any previously existed, if we are unchecking the box
         if !@application.preferences.rentBurden
-          FileUploadService.deleteRentBurdenPreferenceFiles(listingId, @address).then =>
+          RentBurdenFileService.deleteRentBurdenPreferenceFiles(listingId, @address).then =>
             @reinitializeFiles()
         else
           # we are checking the box for rent burden

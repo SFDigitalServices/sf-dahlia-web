@@ -30,6 +30,8 @@
             small.error id="application_has_loan_pre_approvalError" ng-show="inputInvalid('application_has_loan_pre_approval')"
               | {{'LABEL.FIELD_REQUIRED' | translate}}
       lending-institution application="application" form="form"
+      .form-group.margin-left--2x.margin-right--2x
+        file-uploader button-label="{{'LABEL.UPLOAD_PREAPPROVAL_LETTER' | translate}}" file-label="{{'LABEL.PREAPPROVAL_LETTER' | translate}}" document="application.documents['Loan pre-approval']" file-type="Loan pre-approval" required="true"
   .button-pager
     .button-pager_row.primary
       input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}" ng-disabled="isLoading()"

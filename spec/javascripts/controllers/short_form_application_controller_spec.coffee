@@ -132,7 +132,8 @@ do ->
       validationError: jasmine.createSpy()
     }
     fakeFileUploadService =
-      deletePreferenceFile: jasmine.createSpy()
+      deleteFile: jasmine.createSpy()
+    fakeRentBurdenFileService =
       deleteRentBurdenPreferenceFiles: ->
     fakeSharedService = {}
     fakeEvent =
@@ -171,7 +172,7 @@ do ->
       deferred.resolve('resolveData')
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
-      spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
@@ -186,23 +187,24 @@ do ->
       _$document_.scrollToElement = jasmine.createSpy()
 
       $controller 'ShortFormApplicationController',
+        $document: _$document_
         $scope: scope
         $state: state
-        $document: _$document_
-        Idle: fakeIdle
-        Title: fakeTitle
         $translate: translate
-        ShortFormApplicationService: fakeShortFormApplicationService
-        ShortFormNavigationService: fakeShortFormNavigationService
-        ShortFormHelperService: fakeShortFormHelperService
-        AnalyticsService: fakeAnalyticsService
-        FileUploadService: fakeFileUploadService
-        AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
-        ListingDataService: fakeListingDataService
-        SharedService: fakeSharedService
+        AddressValidationService: fakeAddressValidationService
+        AnalyticsService: fakeAnalyticsService
+        Idle: fakeIdle
         inputMaxLength: {}
+        FileUploadService: fakeFileUploadService
+        ListingDataService: fakeListingDataService
         ListingIdentityService: fakeListingIdentityService
+        RentBurdenFileService: fakeRentBurdenFileService
+        SharedService: fakeSharedService
+        ShortFormApplicationService: fakeShortFormApplicationService
+        ShortFormHelperService: fakeShortFormHelperService
+        ShortFormNavigationService: fakeShortFormNavigationService
+        Title: fakeTitle
       return
     )
 
@@ -696,7 +698,7 @@ do ->
       it 'expects deleteRentBurdenPreferenceFiles to be called on Service', ->
         address = '123 Main St'
         scope.cancelRentBurdenFilesForAddress(address)
-        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
+        expect(fakeRentBurdenFileService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
 
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'expects hasCompleteRentBurdenFilesForAddress to be called on Service', ->
