@@ -238,7 +238,7 @@ ShortFormNavigationService = (
       }
     ]
     listing = ShortFormApplicationService.listing
-    if listing && !ListingIdentityService.isSale(listing)
+    if listing && ListingIdentityService.isRental(listing)
       sections[0]['pages'].shift()
     sections
 
@@ -278,7 +278,7 @@ ShortFormNavigationService = (
       'confirmation',
       'prerequisites'
     ]
-    if !ListingIdentityService.isSale(ShortFormApplicationService.listing)
+    if ListingIdentityService.isRental(ShortFormApplicationService.listing)
       hideBackButton.push('name')
     hideBackButton.indexOf(Service._currentPage()) < 0
 

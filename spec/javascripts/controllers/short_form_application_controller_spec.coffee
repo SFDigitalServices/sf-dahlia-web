@@ -113,6 +113,8 @@ do ->
       addSeniorEligibilityError: jasmine.createSpy()
       loadApplication: jasmine.createSpy()
       completeSection: jasmine.createSpy()
+      listingIsRental: jasmine.createSpy()
+      listingIsSale: jasmine.createSpy()
     fakeFunctions =
       fakeIsLoading: -> false
       foo1: jasmine.createSpy()
@@ -1152,3 +1154,15 @@ do ->
         expect(fakeShortFormApplicationService.loadApplication)
           .toHaveBeenCalledWith(previousAppData)
         expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
+
+    describe 'listingIsRental', ->
+      it 'should call listingIsRental on ShortFormApplicationService', ->
+        scope.listingIsRental()
+        expect(fakeShortFormApplicationService.listingIsRental)
+          .toHaveBeenCalled()
+
+    describe 'listingIsSale', ->
+      it 'should call listingIsSale on ShortFormApplicationService', ->
+        scope.listingIsSale()
+        expect(fakeShortFormApplicationService.listingIsSale)
+          .toHaveBeenCalled()

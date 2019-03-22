@@ -27,6 +27,7 @@ do ->
       modalInstance: {}
     fakeAccountService = {}
     fakeListingIdentityService =
+      isRental: jasmine.createSpy()
       isSale: jasmine.createSpy()
 
     beforeEach module('ui.router')
@@ -148,13 +149,13 @@ do ->
         $state.current.name = 'dahlia.short-form-welcome.intro'
         ShortFormNavigationService.hasBackButton()
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
-      it 'returns true for name page on sale application', ->
-        fakeListingIdentityService.isSale.and.returnValue(true)
+      it 'returns true for the Name page on a sale listing application', ->
+        fakeListingIdentityService.isRental.and.returnValue(false)
         $state.current.name = 'dahlia.short-form-application.name'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual true
-      it 'returns false for name page on sale application', ->
-        fakeListingIdentityService.isSale.and.returnValue(false)
+      it 'returns false for the Name page on a rental listing application', ->
+        fakeListingIdentityService.isRental.and.returnValue(true)
         $state.current.name = 'dahlia.short-form-application.name'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual false
