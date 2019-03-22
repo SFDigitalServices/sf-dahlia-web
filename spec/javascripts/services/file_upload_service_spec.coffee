@@ -6,6 +6,7 @@ do ->
     listingPreferenceID = '123xyz'
     fileValue = {name: 'img.jpg'}
     prefType = 'liveInSf'
+
     opts = {}
     address1 = '123 Main St'
     address2 = '345 First St'

@@ -10,7 +10,7 @@
     | {{'E2C_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.preference == 'aliceGriffith'"
     | {{'PREFERENCES.ALICE_GRIFFITH.PROOF_DESC' | translate}}
-  p.form-note ng-if="$ctrl.proofType == 'Copy of Lease'"
+  p.form-note.margin-bottom ng-if="$ctrl.proofType == 'Copy of Lease'"
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
 
   div ng-if="$ctrl.showProofOptionSelector()"
