@@ -4,7 +4,7 @@ ShortFormNavigationService = (
   ListingConstantsService, ListingIdentityService, ShortFormApplicationService
 ) ->
   Service = {}
-  RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
+  Service.RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
 
   Service.goToApplicationPage = (path, params) ->
@@ -25,7 +25,10 @@ ShortFormNavigationService = (
         else
           'household-intro'
       when 'Income'
-        'income-vouchers'
+        if ListingIdentityService.isSale(ShortFormApplicationService.listing)
+          'income'
+        else
+          'income-vouchers'
       when 'Preferences'
         'preferences-intro'
       when 'Review'
@@ -40,10 +43,11 @@ ShortFormNavigationService = (
     page = Service.getStartOfSection({name: section})
     Service.goToApplicationPage("dahlia.short-form-application.#{page}")
 
-  # Only rental listings have the ADA priorities page after the reserved pages
+  # Only rental listing applications have the ADA priorities page after the
+  # reserved pages
   Service.getPostReservedPage = (listing) ->
     if ListingIdentityService.isSale(listing)
-      'income-vouchers'
+      'income'
     else
       'household-priorities'
 
@@ -120,7 +124,7 @@ ShortFormNavigationService = (
     'household-reserved-units-veteran':
       scopedCallbacks: [{
         func: 'checkIfReservedUnits'
-        param: RESERVED_TYPES.DISABLED
+        param: Service.RESERVED_TYPES.DISABLED
       }]
     'household-reserved-units-disabled':
       path: Service.getPostReservedPage(ShortFormApplicationService.listing)
@@ -302,7 +306,7 @@ ShortFormNavigationService = (
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
-        ,'income'
+        ,'income-vouchers'
         ,'preferences-intro'
         ,'review-summary'
         ,'review-terms'
@@ -329,12 +333,12 @@ ShortFormNavigationService = (
       when 'household-reserved-units-veteran'
         Service.getPrevPageOfHouseholdSection()
       when 'household-reserved-units-disabled'
-        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+        Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.VETERAN, 'prev')
       when 'household-priorities'
-        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
+        Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
       # -- Income
-      when 'income-vouchers'
-        Service.getPrevPageOfIncomeSection()
+      when 'income'
+        Service.getPrevPageOfIncomePage()
       # -- Preferences
       when 'rent-burdened-preference'
         , 'assisted-housing-preference'
@@ -377,19 +381,19 @@ ShortFormNavigationService = (
         'intro'
     page
 
-  Service.getNextReservedPageIfAvailable = (type = RESERVED_TYPES.VETERAN, dir = 'next') ->
+  Service.getNextReservedPageIfAvailable = (type = Service.RESERVED_TYPES.VETERAN, dir = 'next') ->
     hasType = ShortFormApplicationService.listingHasReservedUnitType(type)
     switch type
-      when RESERVED_TYPES.VETERAN
+      when Service.RESERVED_TYPES.VETERAN
         if hasType
           'household-reserved-units-veteran'
         else
           if dir == 'next'
             # move on to the next type
-            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'next')
+            Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'next')
           else
             Service.getPrevPageOfHouseholdSection()
-      when RESERVED_TYPES.DISABLED
+      when Service.RESERVED_TYPES.DISABLED
         if hasType
           'household-reserved-units-disabled'
         else
@@ -398,7 +402,7 @@ ShortFormNavigationService = (
             # next page for the listing
             Service.getPostReservedPage(ShortFormApplicationService.listing)
           else
-            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+            Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.VETERAN, 'prev')
 
   Service.getPrevPageOfHouseholdSection = ->
     application = ShortFormApplicationService.application
@@ -411,12 +415,12 @@ ShortFormNavigationService = (
     else
       'household-intro'
 
-  Service.getPrevPageOfIncomeSection = ->
+  Service.getPrevPageOfIncomePage = ->
     listing = ShortFormApplicationService.listing
     if ListingIdentityService.isSale(listing)
-      Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
+      Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
     else
-      'household-priorities'
+      'income-vouchers'
 
   Service.goBackToRentBurden = ->
     if ShortFormApplicationService.eligibleForAssistedHousing()
@@ -460,16 +464,16 @@ ShortFormNavigationService = (
     # This returns the page in the household section that comes directly after
     # the household members page
     application = ShortFormApplicationService.application
-    listing = ShortFormApplicationService.listing
     return '' if application.status.toLowerCase() == 'submitted'
+
     if application.hasPublicHousing
       'household-public-housing'
-    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.VETERAN)
+    else if ShortFormApplicationService.listingHasReservedUnitType(Service.RESERVED_TYPES.VETERAN)
       'household-reserved-units-veteran'
-    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.DISABLED)
+    else if ShortFormApplicationService.listingHasReservedUnitType(Service.RESERVED_TYPES.DISABLED)
       'household-reserved-units-disabled'
-    else if ListingIdentityService.isSale(listing)
-      'income-vouchers'
+    else if ListingIdentityService.isSale(ShortFormApplicationService.listing)
+      ''
     else
       'household-priorities'
 
