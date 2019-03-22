@@ -86,12 +86,12 @@
         /     svg
         /       use xlink:href="#i-info"
         /   |  More Info
-      rental-unit-stats unit-groups="::unitGroups" ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing)"
+      rental-unit-stats unit-groups="::unitGroups" ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       sale-unit-stats unit-groups="::unitGroups" ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
 
 
   / TODO: remove case for hardcoded listings
-  .content-card ng-if="::$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) && !$ctrl.parent.listingIs('750 Harrison Street', $ctrl.parent.listing)"
+  .content-card ng-if="::$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
     h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
     / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
     p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!$ctrl.parent.listingIs('Merry Go Round Shared Housing', $ctrl.parent.listing)"

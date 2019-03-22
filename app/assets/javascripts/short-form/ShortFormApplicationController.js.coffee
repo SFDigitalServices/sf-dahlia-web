@@ -3,23 +3,23 @@
 ############################################################################################
 
 ShortFormApplicationController = (
+  $document,
   $scope,
   $state,
-  $window,
-  $document,
   $translate,
-  Idle,
-  ShortFormApplicationService,
-  ShortFormNavigationService,
-  ShortFormHelperService,
-  FileUploadService,
-  AnalyticsService,
-  AddressValidationService,
+  $window,
   AccountService,
-  ListingDataService,
-  SharedService,
+  AddressValidationService,
+  AnalyticsService,
+  Idle,
   inputMaxLength,
-  ListingIdentityService
+  ListingDataService,
+  ListingIdentityService,
+  RentBurdenFileService,
+  SharedService,
+  ShortFormApplicationService,
+  ShortFormHelperService,
+  ShortFormNavigationService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -453,7 +453,7 @@ ShortFormApplicationController = (
 
   $scope.cancelRentBurdenFilesForAddress = (address) ->
     ShortFormNavigationService.isLoading(true)
-    FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
+    RentBurdenFileService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
       $scope.go('dahlia.short-form-application.rent-burdened-preference')
 
   $scope.setRentBurdenError = ->
@@ -651,6 +651,12 @@ ShortFormApplicationController = (
     linkText = $translate.instant('LABEL.ON_THE_LISTING')
     link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
     {listingLink: "<a href='#{link}'>#{linkText}</a>"}
+
+  $scope.listingIsRental = ->
+    ShortFormApplicationService.listingIsRental()
+
+  $scope.listingIsSale = ->
+    ShortFormApplicationService.listingIsSale()
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
@@ -1027,16 +1033,23 @@ ShortFormApplicationController = (
     ListingIdentityService.isSale(listing)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'FileUploadService',
-  'AnalyticsService',
-  'AddressValidationService',
+  '$document',
+  '$scope',
+  '$state',
+  '$translate',
+  '$window',
   'AccountService',
-  'ListingDataService',
-  'SharedService',
+  'AddressValidationService',
+  'AnalyticsService',
+  'Idle',
   'inputMaxLength',
-  'ListingIdentityService'
+  'ListingDataService',
+  'ListingIdentityService',
+  'RentBurdenFileService',
+  'SharedService',
+  'ShortFormApplicationService',
+  'ShortFormHelperService',
+  'ShortFormNavigationService'
 ]
 
 angular

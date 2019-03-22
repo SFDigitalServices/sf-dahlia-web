@@ -16,4 +16,4 @@ Feature: Short Form Application - Sale Listing
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
-        Then I should be on the "Income Vouchers" page
+        Then I should be on the "Income" page

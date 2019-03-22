@@ -60,8 +60,6 @@ ListingDataService = (
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id, forceRecache = false, retranslate = false) ->
-    _id = Service.mapSlugToId(_id)
-
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
@@ -417,13 +415,6 @@ ListingDataService = (
       listing.Project_ID
     else
       null
-
-  Service.mapSlugToId = (id) ->
-    # strip spaces and lowercase the listing names e.g. "Argenta 909" => "argenta909"
-    mapping = _.mapKeys _.invert(ListingConstantsService.LISTING_MAP), (v, k) -> k.toLowerCase().replace(/ /g, '')
-    slug = id.toLowerCase()
-    # by default will just return the id, unless it finds a matching slug
-    return if mapping[slug] then mapping[slug] else id
 
   return Service
 

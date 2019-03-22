@@ -19,17 +19,12 @@
         span.ui-icon.ui-static.ui-medium.i-white
           svg
             use xlink:href="#i-clock"
-        span ng-if="::!$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
+        span
           | Application Deadline: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
-        span ng-if="::$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
-          / # TODO: -- REMOVE HARDCODED FEATURES --
-          | Application Available: December 6th
       span.application-label.label.label--flag.alert ng-if="::$ctrl.isClosedListing($ctrl.listing)"
         | Application Closed: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
-      span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && !$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+      span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
         | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
-      span.status-label.label.label--flag ng-if="::$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
-        | First-come, first-serve (no lottery)
       span.application-label.label.label--flag ng-if="::$ctrl.isLotteryResultsListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
         | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
 
@@ -53,7 +48,7 @@
       // -- Unit Summary Table(s)
       / General
       .scrollable-table-container
-        rental-stats listing="::$ctrl.listing" ng-if="::!$ctrl.listingContainer.isSale($ctrl.listing)"
+        rental-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isRental($ctrl.listing)"
         sale-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isSale($ctrl.listing)"
 
       .property-card_action.small-only-text-center

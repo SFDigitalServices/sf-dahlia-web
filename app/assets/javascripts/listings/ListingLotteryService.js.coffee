@@ -31,7 +31,6 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
       false
 
   Service.lotteryDatePassed = (listing) ->
-    return true if ListingIdentityService.isFirstComeFirstServe(listing) && !ListingIdentityService.isOpen(listing)
     return false unless listing.Lottery_Date
     today = moment().tz('America/Los_Angeles').startOf('day')
     lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')

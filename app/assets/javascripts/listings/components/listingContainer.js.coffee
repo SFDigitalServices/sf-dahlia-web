@@ -23,6 +23,9 @@ angular.module('dahlia.components')
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
     @showSaleListings = $window.env.showSaleListings == 'true'
 
+    @isRental = (listing) ->
+      ListingIdentityService.isRental(listing)
+
     @isSale = (listing) ->
       ListingIdentityService.isSale(listing)
 
@@ -54,9 +57,6 @@ angular.module('dahlia.components')
 
     @listingHasReservedUnits = (listing) ->
       ListingUnitService.listingHasReservedUnits(listing)
-
-    @isFirstComeFirstServe = (listing) ->
-      ListingIdentityService.isFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
       !ListingIdentityService.isOpen(listing)

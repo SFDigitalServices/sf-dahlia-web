@@ -284,6 +284,7 @@ class Api::V1::ShortFormController < ApiController
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
       listing_preference_id: uploaded_file_params[:listing_preference_id],
+      document_type: uploaded_file_params[:document_type],
     }
     %i[address rent_burden_index].each do |field|
       file_params[field] = uploaded_file_params[field] if uploaded_file_params[field]
