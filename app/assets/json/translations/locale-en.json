@@ -646,8 +646,8 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
-    "LEASING_AGENT": {
-        "CONTACT": "Contact Leasing Agent",
+    "CONTACT_AGENT": {
+        "CONTACT": "Contact",
         "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
         "OFFICE_HOURS": "Office Hours"
     },
@@ -684,9 +684,6 @@
             "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
         },
         "SEE_THE_LISTINGS": "See the listings"
-    },
-    "SALES_AGENT": {
-        "CONTACT": "Contact Sales Agent"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
