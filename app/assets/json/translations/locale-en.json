@@ -75,7 +75,8 @@
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
-        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
+        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?",
+        "ALLOWING_TO_DISCUSS": "By providing an alternate contact, you are allowing us to discuss information on your application with them."
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
