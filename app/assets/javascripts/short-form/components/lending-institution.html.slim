@@ -14,3 +14,4 @@
     option ng-repeat="agent in $ctrl.agents" value="{{agent.Id}}" {{$ctrl.agentName(agent)}}
   small.error id="lendingAgentError" ng-show="$ctrl.inputInvalid('lendingAgent')"
     | {{'LABEL.APPLICANT_SELECT_A_LOAN_OFFICER' | translate}}
+  p.checkbox-block_note.margin-bottom--2x id="application_has_loan_pre_approval-description" translate="LABEL.APPLICATION_CANT_FIND_LENDER" translate-value-url="https://sfmohcd.org/lender-list"
