@@ -44,7 +44,6 @@ ExternalTranslateService = ($q, $timeout, $window) ->
         changeEvent.initEvent('change', bubbles, cancelable)
       googleTranslateOption.dispatchEvent(changeEvent)
     else
-      $timeout Service.translatePageContent, 25, false
       # Default to 15 recursive calls, break the loop if it's not working.
       if iterationCount > 0
         # Service.init()
