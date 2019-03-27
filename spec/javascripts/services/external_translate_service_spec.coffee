@@ -102,6 +102,9 @@ do ->
           expect(ExternalTranslateService.language).toEqual('es')
 
     describe 'translatePageContent', ->
+      beforeEach ->
+        ExternalTranslateService.init = jasmine.createSpy()
+
       it 'attempts to find the external translate widget DOM element that corresponds to Service.language', ->
         spyOn(document, 'querySelector')
         ExternalTranslateService.language = 'es'
