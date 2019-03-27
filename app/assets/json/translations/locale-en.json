@@ -75,7 +75,8 @@
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
-        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
+        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?",
+        "ALLOWING_TO_DISCUSS": "By providing an alternate contact, you are allowing us to discuss information on your application with them."
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
@@ -643,8 +644,8 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
-    "LEASING_AGENT": {
-        "CONTACT": "Contact Leasing Agent",
+    "CONTACT_AGENT": {
+        "CONTACT": "Contact",
         "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
         "OFFICE_HOURS": "Office Hours"
     },
@@ -681,9 +682,6 @@
             "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
         },
         "SEE_THE_LISTINGS": "See the listings"
-    },
-    "SALES_AGENT": {
-        "CONTACT": "Contact Sales Agent"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
