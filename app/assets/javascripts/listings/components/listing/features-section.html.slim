@@ -70,7 +70,7 @@ accordion-heading
               td
                 | {{::unit.Priority_Type}}
 
-  .content-tile.feature-tile ng-if="!$ctrl.parent.isSale($ctrl.parent.listing)"
+  .content-tile.feature-tile ng-if="$ctrl.parent.isRental($ctrl.parent.listing)"
     .content-card.bg-dust
       h5.content-card_title Additional Fees
       .row.collapse.margin-bottom

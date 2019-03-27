@@ -10,8 +10,8 @@ angular.module('dahlia.components')
 
   templateUrl: 'short-form/components/rent-burdened-preference-dashboard.html'
   controller:
-    ['ShortFormApplicationService','FileUploadService', '$translate',
-    (ShortFormApplicationService, FileUploadService, $translate) ->
+    ['ShortFormApplicationService','RentBurdenFileService', '$translate',
+    (ShortFormApplicationService, RentBurdenFileService, $translate) ->
       ctrl = @
       @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
       @addressLinkText = {}
@@ -31,7 +31,7 @@ angular.module('dahlia.components')
         # will delete files if any previously existed, if we are unchecking the box
         if !@application.preferences.rentBurden
           # on uncheck
-          FileUploadService.deleteRentBurdenPreferenceFiles(listingId)
+          RentBurdenFileService.deleteRentBurdenPreferenceFiles(listingId)
           @onUncheck()
         else
           # we are checking the box
@@ -40,7 +40,7 @@ angular.module('dahlia.components')
           ShortFormApplicationService.invalidatePreferencesForm()
 
       @hasFiles = (address) ->
-        FileUploadService.hasRentBurdenFiles(address)
+        RentBurdenFileService.hasRentBurdenFiles(address)
 
       @hasCompleteFiles = (address) ->
         ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)

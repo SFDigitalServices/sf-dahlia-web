@@ -27,6 +27,7 @@ do ->
       modalInstance: {}
     fakeAccountService = {}
     fakeListingIdentityService =
+      isRental: jasmine.createSpy()
       isSale: jasmine.createSpy()
 
     beforeEach module('ui.router')
@@ -82,9 +83,16 @@ do ->
         fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getStartOfSection(householdSection)
         expect(page).toEqual 'household-members'
-      it 'gets income landing page', ->
-        page = ShortFormNavigationService.getStartOfSection({name: 'Income'})
-        expect(page).toEqual 'income-vouchers'
+      describe 'for a sale listing', ->
+        it 'returns "income" as the start of the Income section', ->
+          fakeListingIdentityService.isSale.and.returnValue(true)
+          page = ShortFormNavigationService.getStartOfSection({name: 'Income'})
+          expect(page).toEqual 'income'
+      describe 'for a rental listing', ->
+        it 'returns "income-vouchers" as the start of the Income section', ->
+          fakeListingIdentityService.isSale.and.returnValue(false)
+          page = ShortFormNavigationService.getStartOfSection({name: 'Income'})
+          expect(page).toEqual 'income-vouchers'
       it 'gets preference landing page', ->
         page = ShortFormNavigationService.getStartOfSection({name: 'Preferences'})
         expect(page).toEqual 'preferences-intro'
@@ -107,10 +115,10 @@ do ->
 
     describe 'getPostReservedPage', ->
       describe 'when given a sale listing', ->
-        it 'returns "income-vouchers"', ->
+        it 'returns "income"', ->
           listing = {id: 'foo'}
           fakeListingIdentityService.isSale.and.returnValue(true)
-          expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('income-vouchers')
+          expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('income')
 
       describe 'when given a rental listing', ->
         it 'returns "household-priorities"', ->
@@ -141,13 +149,13 @@ do ->
         $state.current.name = 'dahlia.short-form-welcome.intro'
         ShortFormNavigationService.hasBackButton()
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
-      it 'returns true for name page on sale application', ->
-        fakeListingIdentityService.isSale.and.returnValue(true)
+      it 'returns true for the Name page on a sale listing application', ->
+        fakeListingIdentityService.isRental.and.returnValue(false)
         $state.current.name = 'dahlia.short-form-application.name'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual true
-      it 'returns false for name page on sale application', ->
-        fakeListingIdentityService.isSale.and.returnValue(false)
+      it 'returns false for the Name page on a rental listing application', ->
+        fakeListingIdentityService.isRental.and.returnValue(true)
         $state.current.name = 'dahlia.short-form-application.name'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual false
@@ -202,4 +210,28 @@ do ->
 
         ShortFormNavigationService.redirectIfNoApplication(fakeListing)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', params)
+
+    describe 'getPrevPageOfIncomePage', ->
+      describe 'for a sale listing', ->
+        it 'calls Service.getNextReservedPageIfAvailable with Service.RESERVED_TYPES.DISABLED and "prev"', ->
+          fakeListingIdentityService.isSale.and.returnValue(true)
+          ShortFormNavigationService.getNextReservedPageIfAvailable = jasmine.createSpy()
+          ShortFormNavigationService.getPrevPageOfIncomePage()
+          expect(ShortFormNavigationService.getNextReservedPageIfAvailable)
+            .toHaveBeenCalledWith(
+              ShortFormNavigationService.RESERVED_TYPES.DISABLED,
+              'prev'
+            )
+
+        it 'returns the result of calling Service.getNextReservedPageIfAvailable', ->
+          fakeListingIdentityService.isSale.and.returnValue(true)
+          path = 'foo'
+          ShortFormNavigationService.getNextReservedPageIfAvailable = jasmine.createSpy()
+          ShortFormNavigationService.getNextReservedPageIfAvailable.and.returnValue(path)
+          expect(ShortFormNavigationService.getPrevPageOfIncomePage()).toEqual(path)
+
+      describe 'for a rental listing', ->
+        it 'returns "income-vouchers"', ->
+          fakeListingIdentityService.isSale.and.returnValue(false)
+          expect(ShortFormNavigationService.getPrevPageOfIncomePage()).toEqual('income-vouchers')
 

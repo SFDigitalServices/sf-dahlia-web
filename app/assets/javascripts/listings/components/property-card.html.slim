@@ -48,7 +48,7 @@
       // -- Unit Summary Table(s)
       / General
       .scrollable-table-container
-        rental-stats listing="::$ctrl.listing" ng-if="::!$ctrl.listingContainer.isSale($ctrl.listing)"
+        rental-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isRental($ctrl.listing)"
         sale-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isSale($ctrl.listing)"
 
       .property-card_action.small-only-text-center

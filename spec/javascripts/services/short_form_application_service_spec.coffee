@@ -29,6 +29,9 @@ do ->
       city: 'Mount Shasta'
     fakeApplicant = undefined
     fakeHouseholdMember = undefined
+    fakeListingIdentityService =
+      isRental: jasmine.createSpy()
+      isSale: jasmine.createSpy()
     fakeListingDataService =
       listing:
         Id: ''
@@ -46,7 +49,8 @@ do ->
       trackTimeout: jasmine.createSpy()
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
-      deletePreferenceFile: jasmine.createSpy()
+      deleteFile: jasmine.createSpy()
+    fakeRentBurdenFileService =
       deleteRentBurdenPreferenceFiles: jasmine.createSpy()
     fakeSharedService =
       languageMap: {es: 'Spanish'}
@@ -94,9 +98,11 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingDataService', fakeListingDataService
+      $provide.value 'ListingIdentityService', fakeListingIdentityService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
+      $provide.value 'RentBurdenFileService', fakeRentBurdenFileService
       $provide.value 'SharedService', fakeSharedService
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       return
@@ -122,6 +128,18 @@ do ->
       it 'initializes alternateContact defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.alternateContact
         expect(ShortFormApplicationService.alternateContact).toEqual expectedDefault
+
+    describe 'listingIsRental', ->
+      it 'calls on isRental on ListingIdentityService', ->
+        ShortFormApplicationService.listing = fakeListing
+        ShortFormApplicationService.listingIsRental()
+        expect(fakeListingIdentityService.isRental).toHaveBeenCalledWith(fakeListing)
+
+    describe 'listingIsSale', ->
+      it 'calls on isSale on ListingIdentityService', ->
+        ShortFormApplicationService.listing = fakeListing
+        ShortFormApplicationService.listingIsSale()
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
 
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
@@ -269,7 +287,7 @@ do ->
         setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson', id: 1 })
         ShortFormApplicationService.applicant = fakeApplicant
         # reset the spy so that we can check for "not" toHaveBeenCalled
-        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+        fakeFileUploadService.deleteFile = jasmine.createSpy()
       afterEach ->
         resetFakePeople()
 
@@ -277,13 +295,13 @@ do ->
         ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 1
-        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+        expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith(ShortFormApplicationService.listing, { prefType: 'liveInSf' })
 
       it 'does not clear the proof file for a preference if the indicated member is not selected', ->
         ShortFormApplicationService.preferences.liveInSf_household_member = 2
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
-        expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
+        expect(fakeFileUploadService.deleteFile).not.toHaveBeenCalled()
 
     describe 'refreshPreferences', ->
       beforeEach ->
@@ -316,7 +334,7 @@ do ->
         describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
             fakeApplicant.home_address = fakeNonSFAddress
-            fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+            fakeFileUploadService.deleteFile = jasmine.createSpy()
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
             ShortFormApplicationService.application.completedSections['Preferences'] = true
@@ -334,7 +352,7 @@ do ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
-            expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+            expect(fakeFileUploadService.deleteFile).toHaveBeenCalledWith(ShortFormApplicationService.listing, {prefType: 'liveInSf'})
 
           it 'invalidates preferences section', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
@@ -998,7 +1016,7 @@ do ->
 
     describe 'unsetPreferenceFields', ->
       it 'should clear preference name, household member, proof option, and file', ->
-        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+        fakeFileUploadService.deleteFile = jasmine.createSpy()
         ShortFormApplicationService.preferences.liveInSf = true
         ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.preferences.liveInSf_proofOption = 'Telephone bill'
@@ -1011,15 +1029,14 @@ do ->
         expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
         expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual null
-        listingId = ShortFormApplicationService.listing.Id
-        expect(fakeFileUploadService.deletePreferenceFile)
-          .toHaveBeenCalledWith('liveInSf', listingId)
+        expect(fakeFileUploadService.deleteFile)
+          .toHaveBeenCalledWith(ShortFormApplicationService.listing, {prefType: 'liveInSf'})
 
       it 'should delete Rent Burdened preference files', ->
         listingId = ShortFormApplicationService.listing.Id
 
         ShortFormApplicationService.unsetPreferenceFields('rentBurden')
-        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles)
+        expect(fakeRentBurdenFileService.deleteRentBurdenPreferenceFiles)
           .toHaveBeenCalledWith(listingId)
 
       it 'should clear COP certificate number', ->

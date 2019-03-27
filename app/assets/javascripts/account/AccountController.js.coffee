@@ -255,6 +255,9 @@ AccountController = (
     # which will auto-trigger its ui-validation
     day.$setViewValue(day.$viewValue + ' ')
 
+  $scope.isRental = (listing) ->
+    ListingIdentityService.isRental(listing)
+
   $scope.isSale = (listing) ->
     ListingIdentityService.isSale(listing)
 

@@ -78,7 +78,7 @@
   .content-group
     h4.h-caps-lined
       | {{'LISTINGS.APPLY.NEED_HELP' | translate}}
-    div ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing)"
+    div ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       p.c-charcoal.t-small.margin-bottom
         | {{'LISTINGS.APPLY.VISIT_A_HOUSING_COUNSELOR' | translate}}
       a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"

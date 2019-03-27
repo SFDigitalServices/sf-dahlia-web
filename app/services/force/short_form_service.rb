@@ -77,7 +77,7 @@ module Force
 
     def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/Attachment/#{application['id']}"
+      endpoint =  "/shortForm/file/#{application['id']}"
       file_body = Base64.encode64(file.file)
 
       post_body = {
