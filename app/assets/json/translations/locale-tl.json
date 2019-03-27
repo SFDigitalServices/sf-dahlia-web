@@ -622,7 +622,7 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
-    "LEASING_AGENT": {
+    "CONTACT_AGENT": {
         "CONTACT": "Kontakin ang Leasing Agent (ahente para sa pagpapaupa)",
         "DUE_TO_HIGH_CALL_VOLUME": "Dahil sa napakaraming tumatawag, posibleng mensahe ang marinig ninyo",
         "OFFICE_HOURS": "Mga Oras ng Pagpasok "
