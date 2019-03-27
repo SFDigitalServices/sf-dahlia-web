@@ -9,7 +9,7 @@
     p translate="F2_REVIEW_TERMS.P3"
     p
       | {{ 'F2_REVIEW_TERMS.P4' | translate }}
-      | {{ ($ctrl.parent.isSale($ctrl.parent.listing) ? 'this is a sale' : 'F2_REVIEW_TERMS.APPLICANTS_WILL_BE_SCREENED') }}
+      | {{ (listingIsSale() ? '' : 'F2_REVIEW_TERMS.APPLICANTS_WILL_BE_SCREENED') | translate }}
     p translate="F2_REVIEW_TERMS.P5"
     p translate="F2_REVIEW_TERMS.P6"
 
