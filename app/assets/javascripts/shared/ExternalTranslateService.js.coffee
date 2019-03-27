@@ -27,7 +27,7 @@ ExternalTranslateService = ($q, $timeout, $window) ->
   Service.setLanguage = (language) ->
     Service.language = if language == 'zh' then 'zh-TW' else language
 
-  Service.translatePageContent = ->
+  Service.translatePageContent = (iterationCount=15) ->
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{Service.language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
@@ -45,6 +45,12 @@ ExternalTranslateService = ($q, $timeout, $window) ->
       googleTranslateOption.dispatchEvent(changeEvent)
     else
       $timeout Service.translatePageContent, 25, false
+      # Default to 15 recursive calls, break the loop if it's not working.
+      if iterationCount > 0
+        Service.init()
+        $timeout Service.translatePageContent(iterationCount-1), 25, false
+      else
+        return false
 
   Service.init = ->
     Service.translateElement = new $window.google.translate.TranslateElement(
