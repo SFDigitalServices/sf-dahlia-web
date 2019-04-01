@@ -727,9 +727,10 @@
       onEnter: [
         '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService',
         ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
-          ShortFormApplicationService.completeSection('Intro')
           if ShortFormApplicationService.listingIsSale()
             ShortFormApplicationService.completeSection('Qualify')
+          else
+            ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged

@@ -167,6 +167,7 @@ ShortFormApplicationService = (
       when 'You'
         if Service.listingIsSale()
           # make sure all validatedForms in previous section == true
+          completed.Intro &&
           completed.Qualify &&
           _.every(validated['Qualify'], (i) -> i)
         else
