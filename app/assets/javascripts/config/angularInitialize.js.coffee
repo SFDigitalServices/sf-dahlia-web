@@ -141,13 +141,14 @@
         AutosaveService.stopTimer()
 
       # check if we're on short form and trying to access a later section than the first section
-      toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
-      if toSection
+      enteringShortForm = toState.name.match(/dahlia.short-form-application\./)
+      if enteringShortForm
         # we're in shortForm
         fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
         ShortFormApplicationService.checkFormState(fromState.name, fromSection) if fromSection
         # if not authorized to proceed, take user to start of the application - prerequisites for sales, and name for rentals
-        if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+        toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
+        if !toSection || !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           if ShortFormApplicationService.listingIsSale()
             return $state.go('dahlia.short-form-application.prerequisites', toParams)
