@@ -146,8 +146,11 @@
         # we're in shortForm
         fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
         ShortFormApplicationService.checkFormState(fromState.name, fromSection) if fromSection
+        # if not authorized to proceed, take user to start of the application - prerequisites for sales, and name for rentals
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
+          if ShortFormApplicationService.listingIsSale()
+            return $state.go('dahlia.short-form-application.prerequisites', toParams)
           return $state.go('dahlia.short-form-application.name', toParams)
 
       # remember which page of short form we're on when we go to create account
