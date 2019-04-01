@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726222046) do
+ActiveRecord::Schema.define(version: 20190401223852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170726222046) do
     t.string   "unconfirmed_email"
     t.string   "salesforce_contact_id"
     t.string   "temp_session_id"
+    t.boolean  "allow_password_change",  default: false,   null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
