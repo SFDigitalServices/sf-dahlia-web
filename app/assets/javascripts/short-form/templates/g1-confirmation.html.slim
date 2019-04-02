@@ -23,7 +23,8 @@
       span translate="G1_CONFIRMATION.NEXT_STEPS_BODY1"
       '
       ' {{ listing.Lottery_Date | date : 'longDate'}}.
-      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2" translate-values="listingLink()"
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2_RENTAL" ng-if='listingIsRental()' translate-value-listing-link="listingLink()"
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2_SALE" ng-if='listingIsSale()' translate-value-listing-link="listingLink()" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
 
   .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && accountExists()) }"
     .form-group
