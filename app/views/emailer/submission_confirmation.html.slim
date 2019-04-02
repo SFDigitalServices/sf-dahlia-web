@@ -9,7 +9,10 @@ p
   ==> t '.lottery_will_be_held', lottery_date: @lottery_date, link: link_to(t('.on_the_listing'), @listing_url)
   = t '.applicants_will_be_contacted'
 p
-  = t '.should_your_application_be_chosen'
+  - if @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
+    = t '.should_your_application_be_chosen_sale', link: link_to(t('.required_supporting_documents'), 'https://sfmohcd.org/after-homebuyer-lottery')
+  - else
+    = t '.should_your_application_be_chosen_rental'
 p
   = t '.see_below_for_contact_information'
 
