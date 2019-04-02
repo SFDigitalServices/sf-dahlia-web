@@ -20,11 +20,10 @@
     },
     "A4_OVERVIEW": {
         "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
-        "P2": "If you are curious about which required documents you may need for the application, please see our Documents Checklist for information about required documents and claiming preferences.",
+        "P2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
         "P3": "You may also start the application now and save it and upload documents later.",
         "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
-        "VIEW_DOCUMENT_CHECKLIST": "View Document Checklist",
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
