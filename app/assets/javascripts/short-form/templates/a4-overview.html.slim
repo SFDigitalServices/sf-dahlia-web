@@ -11,11 +11,7 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
         .app-inner.inset
           p.form-note.margin-bottom
             | {{'A4_OVERVIEW.P1' | translate}}
-          p.form-note.margin-bottom
-            | {{'A4_OVERVIEW.P2' | translate}}
-          p.form-note.margin-bottom
-            a ui-sref="dahlia.document-checklist" target="_blank"
-              | {{'A4_OVERVIEW.VIEW_DOCUMENT_CHECKLIST' | translate}}
+          p.form-note.margin-bottom translate="A4_OVERVIEW.P2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
           p.form-note.margin-bottom
             | {{'A4_OVERVIEW.P3' | translate}}
           p.form-note.margin-bottom

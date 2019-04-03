@@ -4,8 +4,9 @@
       | {{'D1_INCOME_VOUCHERS.TITLE_YOU' | translate }}
     h2#question-title.app-card_question ng-if="householdMembers.length > 0"
       | {{'D1_INCOME_VOUCHERS.TITLE_HOUSEHOLD' | translate }}
-    p.form-note.margin-bottom
-      | {{'D1_INCOME_VOUCHERS.P1' | translate}}
+    p.form-note.margin-bottom translate="D1_INCOME_VOUCHERS.P1"
+    p.form-note.margin-bottom translate="D1_INCOME_VOUCHERS.P2"
+    p.form-note.margin-bottom translate="D1_INCOME_VOUCHERS.P3"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
