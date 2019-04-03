@@ -5,3 +5,16 @@ header.lead-header.bg-image
         h1.lead-header_title.serif.c-white Household Income Calculator
 
 div(ui-view="container")
+
+
+div.row
+	div.columns.medium-8.large-6.medium-centered
+		div.block--short.bg-wash.p-small.t-small.text-left.margin-bottom--2x
+		  p
+		    | {{'LISTINGS.INCOME_EXCEPTIONS.INTRO' | translate}}
+		  ul
+		    li.
+		      | {{'LISTINGS.INCOME_EXCEPTIONS.STUDENTS' | translate }}
+		    li.margin-bottom translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
+		  p translate="LISTINGS.INCOME_EXCEPTIONS.LEARN_MORE" translate-value-url="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
+
