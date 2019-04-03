@@ -39,6 +39,20 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
             | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
+          p.custom-counter_text
+            | People in your household may need special income calculations if they:
+          ul
+            li.custom-counter_text
+             | Are full-time students (but not the primary applicant)
+            li.custom-counter_text.margin-bottom
+              | Receive&nbsp;
+              span data-tooltip="Non-taxable income might include SSI, SSDI, child support payments, and worker's compensation benefits." aria-haspopup="true" class="has-tip" title="Non-taxable income might include SSI, SSDI, child support payments, and worker's compensation benefits."
+                | non-taxable income
+
+            p.custom-counter_text
+              | To learn more, read pages 10–11 of the
+              a href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
+                |  2018 inclusionary housing program manual.
 
 
         .content-card.padding--2x ng-show="$ctrl.parent.loading.ami"
