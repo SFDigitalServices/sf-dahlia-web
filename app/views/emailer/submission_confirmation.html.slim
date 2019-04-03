@@ -10,7 +10,7 @@ p
   = t '.applicants_will_be_contacted'
 p
   - if @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
-    = t '.should_your_application_be_chosen_sale', link: link_to(t('.required_supporting_documents'), 'https://sfmohcd.org/after-homebuyer-lottery')
+    == t '.should_your_application_be_chosen_sale', link: link_to(t('.required_supporting_documents'), 'https://sfmohcd.org/after-homebuyer-lottery')
   - else
     = t '.should_your_application_be_chosen_rental'
 p
