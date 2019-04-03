@@ -680,6 +680,9 @@
       onEnter: [
         '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
         ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+          # If applicant tries to go to this page on a rental listing, redirect them back to homepage
+          if !ShortFormApplicationService.listingIsSale()
+            $state.go('dahlia.welcome')
           ShortFormApplicationService.completeSection('Intro')
           ShortFormApplicationService.getLendingInstitutions()
           if AccountService.loggedIn()
