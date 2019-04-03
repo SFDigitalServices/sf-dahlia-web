@@ -20,11 +20,10 @@
     },
     "A4_OVERVIEW": {
         "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
-        "P2": "If you are curious about which required documents you may need for the application, please see our resource guide of required documents and claiming preferences.",
+        "P2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
         "P3": "You may also start the application now and save it and upload documents later.",
         "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
-        "VIEW_DOCUMENT_CHECKLIST": "View Document Checklist",
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
@@ -379,8 +378,8 @@
         "P1": "This application must be submitted by {{date}}.",
         "P2": "Applicants will be contacted by the agent in lottery rank and preference order until vacancies are filled.",
         "P3": "All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.",
-        "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted. For more information, please contact the developer or agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing. ",
-        "APPLICANTS_WILL_BE_SCREENED": "All applicants will be screened as outlined in the property's Resident Selection Criteria.",
+        "P4_RENTAL": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted. For more information, please contact the developer or agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing. All applicants will be screened as outlined in the property's Resident Selection Criteria.",
+        "P4_SALE": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted. For more information, please contact the developer or agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing. ",
         "P5": "You cannot change your online application after you submit.",
         "P6": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
@@ -410,7 +409,8 @@
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
-        "NEXT_STEPS_BODY2": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.",
+        "NEXT_STEPS_BODY2_RENTAL": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days.",
+        "NEXT_STEPS_BODY2_SALE": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days.",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",

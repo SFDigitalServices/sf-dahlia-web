@@ -7,9 +7,8 @@
     p translate="F2_REVIEW_TERMS.P1" translate-value-date="{{listing.Application_Due_Date | date : 'MMM d, yyyy' }}"
     p translate="F2_REVIEW_TERMS.P2"
     p translate="F2_REVIEW_TERMS.P3"
-    p
-      | {{ 'F2_REVIEW_TERMS.P4' | translate }}
-      | {{ (listingIsSale() ? '' : 'F2_REVIEW_TERMS.APPLICANTS_WILL_BE_SCREENED') | translate }}
+    p translate="F2_REVIEW_TERMS.P4_RENTAL" ng-if='listingIsRental()'
+    p translate="F2_REVIEW_TERMS.P4_SALE" ng-if='listingIsSale()' translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
     p translate="F2_REVIEW_TERMS.P5"
     p translate="F2_REVIEW_TERMS.P6"
 
