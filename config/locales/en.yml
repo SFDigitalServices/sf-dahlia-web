@@ -31,9 +31,10 @@ en:
       what_to_expect_next: "What to expect next"
       lottery_will_be_held: "The lottery will be held on %{lottery_date}. Housing lottery results will be posted %{link}."
       on_the_listing: "on the listing"
-      applicants_will_be_contacted: "Applicants will be contacted by the property agent in lottery rank order until vacancies are filled."
+      applicants_will_be_contacted: "Applicants will be contacted by the agent in lottery rank order until vacancies are filled."
       should_your_application_be_chosen: "Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents."
-      see_below_for_contact_information: "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the property agent. See below for contact information for the Property Agent for this listing."
+      see_below_for_contact_information: "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the
+      agent. See below for contact information for the agent for this listing."
       how_are_we_doing: "How are we doing?"
       we_would_like_your_feedback: "We'd like to get your feedback"
       office_hours: "Office Hours"
