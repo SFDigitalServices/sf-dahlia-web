@@ -737,6 +737,13 @@
         "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
         "INCOME_CALCULATOR_LINK": "get help calculating your income",
+        "INCOME_EXCEPTIONS": {
+            "INTRO": "People in your household may need special income calculations if they:",
+            "STUDENTS": "Are full-time students (but not the primary applicant)",
+            "NONTAXABLE": "Receive <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
+            "NONTAXABLE_TOOLTIP": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.",
+            "LEARN_MORE": "To learn more, read page 11 of the <a href='{{url}}'>2018 inclusionary housing program manual.</a>"
+        },
         "LOTTERY_RESULTS": {
             "HIDE": "Hide Lottery Results",
             "NO_RESULTS": "There are no listings with lottery results at this time.",
