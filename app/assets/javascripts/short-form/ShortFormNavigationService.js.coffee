@@ -171,10 +171,16 @@ ShortFormNavigationService = (
   Service.sections = () ->
     sections = [
       {
+        name: 'Qualify',
+        translatedLabel: 'SHORT_FORM_NAV.QUALIFY',
+        pages: [
+          'prerequisites'
+        ]
+      },
+      {
         name: 'You',
         translatedLabel: 'SHORT_FORM_NAV.YOU',
         pages: [
-          'prerequisites'
           'name'
           'welcome-back'
           'contact'
@@ -239,7 +245,7 @@ ShortFormNavigationService = (
     ]
     listing = ShortFormApplicationService.listing
     if listing && ListingIdentityService.isRental(listing)
-      sections[0]['pages'].shift()
+      sections.shift()
     sections
 
   Service.submitOptionsForCurrentPage = ->
