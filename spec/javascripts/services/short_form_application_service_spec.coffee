@@ -30,8 +30,8 @@ do ->
     fakeApplicant = undefined
     fakeHouseholdMember = undefined
     fakeListingIdentityService =
-      isRental: jasmine.createSpy()
-      isSale: jasmine.createSpy()
+      isRental: ->
+      isSale: ->
     fakeListingDataService =
       listing:
         Id: ''
@@ -131,12 +131,14 @@ do ->
 
     describe 'listingIsRental', ->
       it 'calls on isRental on ListingIdentityService', ->
+        spyOn(fakeListingIdentityService, 'isRental').and.returnValue(true)
         ShortFormApplicationService.listing = fakeListing
         ShortFormApplicationService.listingIsRental()
         expect(fakeListingIdentityService.isRental).toHaveBeenCalledWith(fakeListing)
 
     describe 'listingIsSale', ->
       it 'calls on isSale on ListingIdentityService', ->
+        spyOn(fakeListingIdentityService, 'isSale').and.returnValue(true)
         ShortFormApplicationService.listing = fakeListing
         ShortFormApplicationService.listingIsSale()
         expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
@@ -625,19 +627,45 @@ do ->
           expect(ShortFormApplicationService.showPreference('workInSf')).toEqual true
 
     describe 'authorizedToProceed', ->
-      it 'always allows you to access first page of You section', ->
-        toState = {name: 'dahlia.short-form-application.name'}
-        fromState = {name: ''}
-        toSection = {name: 'You'}
-        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
-        expect(authorized).toEqual true
+      describe 'for Rental', ->
+        it 'always allows you to access first page of You section', ->
+          toState = {name: 'dahlia.short-form-application.name'}
+          fromState = {name: ''}
+          toSection = {name: 'You'}
+          authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          expect(authorized).toEqual true
 
-      it 'does not allow you to jump ahead', ->
-        toState = {name: 'dahlia.short-form-application.household-intro'}
-        fromState = {name: ''}
-        toSection = {name: 'Household'}
-        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
-        expect(authorized).toEqual false
+        it 'does not allow you to jump ahead', ->
+          toState = {name: 'dahlia.short-form-application.household-intro'}
+          fromState = {name: ''}
+          toSection = {name: 'Household'}
+          authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          expect(authorized).toEqual false
+
+        it 'does not allow you to access sale prerequisites page', ->
+          spyOn(fakeListingIdentityService, 'isSale').and.returnValue(false)
+          toState = {name: 'dahlia.short-form-application.prerequisites'}
+          fromState = {name: ''}
+          toSection = {name: 'Qualify'}
+          authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          expect(authorized).toEqual false
+
+      describe 'for Sale', ->
+        it 'always allows you to access first page of Qualify section', ->
+          spyOn(fakeListingIdentityService, 'isSale').and.returnValue(true)
+          toState = {name: 'dahlia.short-form-application.prerequisites'}
+          fromState = {name: ''}
+          toSection = {name: 'Qualify'}
+          authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          expect(authorized).toEqual true
+
+        it 'does not allow you to jump ahead to name', ->
+          spyOn(fakeListingIdentityService, 'isSale').and.returnValue(true)
+          toState = {name: 'dahlia.short-form-application.name'}
+          fromState = {name: ''}
+          toSection = {name: 'You'}
+          authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          expect(authorized).toEqual false
 
     describe 'isLeavingShortForm', ->
       it 'should know if you\'re not leaving short form', ->

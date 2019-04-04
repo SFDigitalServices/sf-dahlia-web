@@ -74,31 +74,38 @@ do ->
         section = ShortFormNavigationService.sections()[0]
         page = ShortFormNavigationService.getStartOfSection(section)
         expect(page).toEqual section.pages[0]
+
       it 'gets household intro page if no householdMembers', ->
-        householdSection = ShortFormNavigationService.sections()[1]
+        householdSection = ShortFormNavigationService.sections()[2]
         page = ShortFormNavigationService.getStartOfSection(householdSection)
         expect(page).toEqual 'household-intro'
+
       it 'gets household members page if householdMembers', ->
-        householdSection = ShortFormNavigationService.sections()[1]
+        householdSection = ShortFormNavigationService.sections()[2]
         fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getStartOfSection(householdSection)
         expect(page).toEqual 'household-members'
+
       describe 'for a sale listing', ->
         it 'returns "income" as the start of the Income section', ->
           fakeListingIdentityService.isSale.and.returnValue(true)
           page = ShortFormNavigationService.getStartOfSection({name: 'Income'})
           expect(page).toEqual 'income'
+
       describe 'for a rental listing', ->
         it 'returns "income-vouchers" as the start of the Income section', ->
           fakeListingIdentityService.isSale.and.returnValue(false)
           page = ShortFormNavigationService.getStartOfSection({name: 'Income'})
           expect(page).toEqual 'income-vouchers'
+
       it 'gets preference landing page', ->
         page = ShortFormNavigationService.getStartOfSection({name: 'Preferences'})
         expect(page).toEqual 'preferences-intro'
+
       it 'gets review survey if survey is incomplete', ->
         page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
         expect(page).toEqual 'review-optional'
+
       it 'gets review summary if survey is complete', ->
         fakeShortFormApplicationService.application.surveyComplete = true
         page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
