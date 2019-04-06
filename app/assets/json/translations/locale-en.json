@@ -131,12 +131,6 @@
         "TITLE_HOUSEHOLD": "Do you or anyone in your household need any of the following ADA accessibility features?",
         "TITLE_YOU": "Do you need any of the following ADA accessibility features?"
     },
-    "CHOOSE_ACCOUNT_SETTINGS": {
-        "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
-        "ALERT_TITLE": "Please choose which version of primary contact details you want to use.",
-        "PRIMARY_CONTACT_OPTIONS": "Primary Contact Options",
-        "TITLE": "The primary contact details on your new application don't match your current account settings."
-    },
     "CHOOSE_APPLICANT_DETAILS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
         "CONTINUE_ANON": "Continue without an account",
@@ -490,7 +484,6 @@
         "COPY_OF_LEASE": "Copy of Lease",
         "COUSIN": "Cousin",
         "CREATE_ACCOUNT": "Create Account",
-        "CURRENT_ACCOUNT_SETTINGS": "Current Account Settings",
         "DOB": "Date of Birth",
         "DOB_DAY": "Day",
         "DOB_MONTH": "Month",
@@ -501,7 +494,6 @@
         "EDITED": "Edited",
         "EDIT_ELIGIBILITY": "Edit Eligibility",
         "EMAIL_ADDRESS": "Email",
-        "ESTIMATE_YOUR_ELIGIBILITY": "Estimate Your Eligibility",
         "FAMILY_MEMBER": "Family member",
         "FEMALE": "Female",
         "FIELD_REQUIRED": "This field is required",
@@ -568,7 +560,6 @@
         "PHONE_CELL": "Cell",
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
-        "PLEASE_ENTER": "Please enter",
         "PLEASE_SELECT_ALL_THAT_APPLY": "Please select all that apply.",
         "PLEASE_SELECT_ONE": "Please select one.",
         "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
@@ -705,7 +696,6 @@
         "HOUSEHOLD_MAXIMUM_INCOME": "Household Maximum Income",
         "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
-        "INCOME_CALCULATOR_LINK": "get help calculating your income",
         "LOTTERY_RESULTS": {
             "HIDE": "Hide Lottery Results",
             "NO_RESULTS": "There are no listings with lottery results at this time.",
@@ -721,7 +711,6 @@
         "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "Occupancy for this building is limited to {{numberOfPeople}} people per unit.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
-        "OCCUPANCY_SEE_UNIT_INFO": "For the types of units available in this listing please see above.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
@@ -749,7 +738,6 @@
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SPECIAL_NOTES": "Special Notes",
-        "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "UNITS_ARE_FOR": "These units are for {{type}}.",
         "UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR": "These units have accessibility features for people with {{type}}.",
         "UPCOMING_LOTTERIES": {
@@ -950,8 +938,6 @@
         "FORGOT_PASSWORD": "Forgot password?",
         "LOGGED_OUT_DUE_TO_INACTIVITY": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
-        "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
-        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
         "SIGNED_OUT_SUCCESSFULLY": "You have successfully logged out of your account.",
         "SIGN_IN_REQUIRED": "Please sign in to your account to access this page.",
         "USER_TOKEN_VALIDATION_TIMEOUT": "We care about your security. We logged you out due to a connection issue. Please sign in to continue."
@@ -1004,9 +990,7 @@
         "YOU": "You"
     },
     "WELCOME": {
-        "ADDITIONAL_OPPORTUNITIES": "Additional Opportunities",
         "ALL_APPLICATION_CLOSED": "All applications are currently closed, but you can view closed listings.",
-        "BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE": "We encourage you to browse other resources, as there may be more rental and ownership opportunities.",
         "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
         "SEE_RENTAL_LISTINGS": "Rent",
         "SEE_SALE_LISTINGS": "Buy",
