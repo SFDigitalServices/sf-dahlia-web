@@ -62,6 +62,9 @@ module.exports = function(grunt) {
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
+         'translate="([A-Z0-9\.\-\_]*)"',
+         'proofDocument.error = \'([A-Z0-9\.\-\_]*)\.', // handle values in preferenceProofUploader
+         'when \'[a-z]+\' then \'([A-Z0-9\.\-\_]*)\.', // handle values in preferencesSummaryDirective
          'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
