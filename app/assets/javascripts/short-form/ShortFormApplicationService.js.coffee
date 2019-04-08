@@ -70,6 +70,7 @@ ShortFormApplicationService = (
     adaPrioritiesSelected: {}
     completedSections:
       Intro: false
+      Qualify: false
       You: false
       Household: false
       Income: false
@@ -78,6 +79,7 @@ ShortFormApplicationService = (
     #  [pagename]: T/F
     # to indicate if that form was left valid or invalid
     validatedForms:
+      Qualify: {}
       You: {}
       Household: {}
       Income: {}
@@ -160,8 +162,16 @@ ShortFormApplicationService = (
       return false
 
     switch name
+      when 'Qualify'
+        !!Service.listingIsSale()
       when 'You'
-        true
+        if Service.listingIsSale()
+          # make sure all validatedForms in previous section == true
+          completed.Intro &&
+          completed.Qualify &&
+          _.every(validated['Qualify'], (i) -> i)
+        else
+          true
       when 'Household'
         completed.Intro &&
         completed.You &&
@@ -638,7 +648,6 @@ ShortFormApplicationService = (
         return false
 
       Service.application.validatedForms[section.name][stateName] = isValid
-
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
     if not Service.userCanAccessSection(toSection.name)
