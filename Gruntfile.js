@@ -63,13 +63,11 @@ module.exports = function(grunt) {
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
          'translate="([A-Z0-9\.\-\_]*)"',
-         'proofDocument.error = \'([A-Z0-9\.\-\_]*)\.', // handle values in preferenceProofUploader
-         'when \'[a-z]+\' then \'([A-Z0-9\.\-\_]*)\.', // handle values in preferencesSummaryDirective
          'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
          'translatedLabel: \'([A-Z\.\-\_]*)\'',
-         /\', t\(\'([A-Z\.\-\_]*)\'\)/
+         'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
       lang:     ['locale-en'],
