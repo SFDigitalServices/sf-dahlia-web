@@ -62,11 +62,12 @@ module.exports = function(grunt) {
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
+         'translate="([A-Z0-9\.\-\_]*)"',
          'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
          'translatedLabel: \'([A-Z\.\-\_]*)\'',
-         /\', t\(\'([A-Z\.\-\_]*)\'\)/
+         'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
       lang:     ['locale-en'],

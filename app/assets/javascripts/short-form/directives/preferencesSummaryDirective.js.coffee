@@ -1,11 +1,15 @@
 angular.module('dahlia.directives')
-.directive 'preferencesSummary', ['$state', '$translate', ($state, $translate) ->
+.directive 'preferencesSummary', ['ShortFormHelperService', '$state', '$translate', (ShortFormHelperService, $state, $translate) ->
   restrict: 'E'
   replace: true
   scope: true
   templateUrl: 'short-form/directives/preferences-summary.html'
 
   link: (scope, elem, attrs) ->
+
+
+    scope.flagForI18n = (str) ->
+      ShortFormHelperService.flagForI18n(str)
     # Using the keys from the preferenceMap, check which preferences the
     # applicant has selected on this application. Create a list of info
     # for the selected preferences.
@@ -18,15 +22,15 @@ angular.module('dahlia.directives')
 
         # Get the display name of this pref
         displayNameTranslateKey = switch key
-          when 'certOfPreference' then 'E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE'
-          when 'displaced' then 'E7_PREFERENCES_PROGRAMS.DISPLACED'
-          when 'neighborhoodResidence' then 'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME'
-          when 'antiDisplacement' then 'E2B_ADHP_PREFERENCE.PREFERENCE.NAME'
-          when 'liveInSf' then 'E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE'
-          when 'workInSf' then 'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE'
-          when 'assistedHousing' then 'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE'
-          when 'rentBurden' then 'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE'
-          when 'aliceGriffith' then 'PREFERENCES.ALICE_GRIFFITH.TITLE'
+          when 'certOfPreference' then scope.flagForI18n('E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE')
+          when 'displaced' then scope.flagForI18n('E7_PREFERENCES_PROGRAMS.DISPLACED')
+          when 'neighborhoodResidence' then scope.flagForI18n('E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME')
+          when 'antiDisplacement' then scope.flagForI18n('E2B_ADHP_PREFERENCE.PREFERENCE.NAME')
+          when 'liveInSf' then scope.flagForI18n('E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE')
+          when 'workInSf' then scope.flagForI18n('E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE')
+          when 'assistedHousing' then scope.flagForI18n('E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE')
+          when 'rentBurden' then scope.flagForI18n('E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE')
+          when 'aliceGriffith' then scope.flagForI18n('PREFERENCES.ALICE_GRIFFITH.TITLE')
 
         # If we didn't find a display name for this key, skip over it
         return unless displayNameTranslateKey

@@ -586,9 +586,9 @@
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
     },
     "T": {
-        "APPLICATION_FOR_LISTING": "{{listingName}} Solicitud",
         "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
         "APPLICATION_DUE": "Vencimiento de la solicitud",
+        "APPLICATION_FOR_LISTING": "{{listingName}} Solicitud",
         "APPLICATION_SUBMITTED": "Solicitud presentada",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Está seguro de que desea salir de esta página? Perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para completar la solicitud en otro momento, haga clic en el botón “Guardar y finalizar en otro momento”.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
