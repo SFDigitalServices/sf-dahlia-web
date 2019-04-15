@@ -1,2 +1,2 @@
-class GeocodingLog < ActiveRecord::Base
+class GeocodingLog < ApplicationRecord
 end

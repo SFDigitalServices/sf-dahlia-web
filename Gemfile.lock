@@ -260,14 +260,15 @@ GEM
       bundler (>= 1.3.0)
       railties (= 5.0.7.2)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.2)
+      actionpack (~> 5.x, >= 5.0.1)
+      actionview (~> 5.x, >= 5.0.1)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
     rails_autoscale_agent (0.3.1)
       activesupport (>= 3.2)
     rails_best_practices (1.16.0)
@@ -278,8 +279,6 @@ GEM
       json
       require_all
       ruby-progressbar
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
     railties (5.0.7.2)
       actionpack (= 5.0.7.2)
       activesupport (= 5.0.7.2)
@@ -404,19 +403,18 @@ DEPENDENCIES
   StreetAddress!
   actionmailer-text
   actionpack-page_caching (~> 1.1.0)
-  activejob (>= 4.2.11)
   angular-rails-templates
   awesome_print
   better_errors
   binding_of_caller
   bower-rails
   codeclimate-test-reporter
-  coffee-rails (~> 4.2.2)
+  coffee-rails
   dalli
   database_cleaner
   devise (~> 4.4.0)
   devise_token_auth (~> 0.1.43)
-  dotenv-rails (~> 2.7.2)
+  dotenv-rails
   easypost (>= 3.0.1)
   facets
   factory_girl_rails
@@ -447,8 +445,8 @@ DEPENDENCIES
   rack (>= 1.6.11)
   rack-cors (~> 1.0.1)
   rack-rewrite (~> 1.5.0)
-  rails (~> 5.0.7.2)
-  rails_12factor
+  rails (~> 5.0.7)
+  rails-controller-testing
   rails_autoscale_agent
   rails_best_practices
   restforce (~> 3.1.0)

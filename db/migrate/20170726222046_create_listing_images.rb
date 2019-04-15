@@ -1,4 +1,4 @@
-class CreateListingImages < ActiveRecord::Migration
+class CreateListingImages < ActiveRecord::Migration[4.2]
   def change
     create_table :listing_images do |t|
       t.string :salesforce_listing_id

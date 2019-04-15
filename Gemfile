@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.0.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -16,7 +16,7 @@ gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.2.2'
+gem 'coffee-rails'
 # Add ability to generate source maps in Sprockets
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -63,7 +63,6 @@ gem 'devise_token_auth', '~> 0.1.43'
 gem 'pg'
 
 gem 'actionmailer-text'
-gem 'activejob', '>= 4.2.11'
 
 gem 'hashie'
 
@@ -92,6 +91,7 @@ gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
   gem 'codeclimate-test-reporter'
+  gem 'rails-controller-testing'
   gem 'webmock'
   gem 'vcr'
 end
@@ -112,7 +112,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'awesome_print'
-  gem 'dotenv-rails', '~> 2.7.2'
+  gem 'dotenv-rails'
   gem 'jquery-rails' # only needed for jasmine-jquery
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`

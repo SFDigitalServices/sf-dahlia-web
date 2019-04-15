@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -34,9 +33,8 @@ ActiveRecord::Schema.define(version: 20190401223852) do
     t.string   "image_url"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.index ["salesforce_listing_id"], name: "index_listing_images_on_salesforce_listing_id", using: :btree
   end
-
-  add_index "listing_images", ["salesforce_listing_id"], name: "index_listing_images_on_salesforce_listing_id", using: :btree
 
   create_table "uploaded_files", force: :cascade do |t|
     t.binary   "file"
@@ -55,11 +53,10 @@ ActiveRecord::Schema.define(version: 20190401223852) do
     t.string   "application_id"
     t.datetime "delivered_at"
     t.string   "error"
+    t.index ["rent_burden_type", "rent_burden_index", "address"], name: "rent_burden_idx", using: :btree
+    t.index ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree
+    t.index ["user_id"], name: "index_uploaded_files_on_user_id", using: :btree
   end
-
-  add_index "uploaded_files", ["rent_burden_type", "rent_burden_index", "address"], name: "rent_burden_idx", using: :btree
-  add_index "uploaded_files", ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree
-  add_index "uploaded_files", ["user_id"], name: "index_uploaded_files_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",      null: false
@@ -84,12 +81,11 @@ ActiveRecord::Schema.define(version: 20190401223852) do
     t.string   "salesforce_contact_id"
     t.string   "temp_session_id"
     t.boolean  "allow_password_change",  default: false,   null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["temp_session_id"], name: "index_users_on_temp_session_id", using: :btree
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["temp_session_id"], name: "index_users_on_temp_session_id", using: :btree
-  add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
 end

@@ -1,4 +1,4 @@
-class CreateGeocodingLogs < ActiveRecord::Migration
+class CreateGeocodingLogs < ActiveRecord::Migration[4.2]
   def change
     create_table :geocoding_logs do |t|
       t.string :address
