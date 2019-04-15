@@ -1,4 +1,4 @@
-FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurdenFileService) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurdenFileService, ShortFormHelperService) ->
   Service = {}
   Service.maxFileNameLength = 80
   Service.maxFileSizeBytes = 5e6 # 5MB
@@ -89,7 +89,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
     if file.size > Service.maxFileSizeBytes
       proofDocument.file = null
       proofDocument.loading = false
-      proofDocument.error = 'ERROR.FILE_UPLOAD'
+      proofDocument.error = ShortFormHelperService.flagForI18n('ERROR.FILE_UPLOAD')
     else
       uploadedFileParams.file = file
       Upload.upload(
@@ -105,7 +105,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
         # error handler
         proofDocument.file = null
         proofDocument.loading = false
-        proofDocument.error = 'ERROR.FILE_UPLOAD_FAILED'
+        proofDocument.error = ShortFormHelperService.flagForI18n('ERROR.FILE_UPLOAD_FAILED')
       ))
 
   return Service
@@ -115,7 +115,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid', 'ListingPreferenceService', 'RentBurdenFileService'
+  '$http', '$q', 'Upload', 'uuid', 'ListingPreferenceService', 'RentBurdenFileService', 'ShortFormHelperService'
 ]
 
 angular

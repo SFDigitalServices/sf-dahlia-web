@@ -162,6 +162,11 @@
         "PLEASE_LOGIN": "Mangyaring mag-login sa inyong account para magpatulong. ",
         "RESEND_EMAIL": "Magpadalang muli ng email"
     },
+    "CONTACT_AGENT": {
+        "CONTACT": "Kontakin ang Leasing Agent (ahente para sa pagpapaupa)",
+        "DUE_TO_HIGH_CALL_VOLUME": "Dahil sa napakaraming tumatawag, posibleng mensahe ang marinig ninyo",
+        "OFFICE_HOURS": "Mga Oras ng Pagpasok "
+    },
     "CONTINUE_PREVIOUS_DRAFT": {
         "CONTINUE_WITH_THESE_DETAILS": "Magpatuloy gamit ang mga detalyeng ito",
         "DESCRIPTION": "Mukhang nasimulan na ninyo ang draft o panimulang pagsulat para sa aplikasyong ito. Pakipag-aralang muli ang mga sumusunod na detalye, at magpatuloy mula sa bahaging huminto kayo. ",
@@ -622,11 +627,6 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
-    "CONTACT_AGENT": {
-        "CONTACT": "Kontakin ang Leasing Agent (ahente para sa pagpapaupa)",
-        "DUE_TO_HIGH_CALL_VOLUME": "Dahil sa napakaraming tumatawag, posibleng mensahe ang marinig ninyo",
-        "OFFICE_HOURS": "Mga Oras ng Pagpasok "
-    },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Karagdagang Impormasyon",
         "ADDITIONAL_LISTINGS": {
@@ -875,9 +875,9 @@
         "USER_TOKEN_VALIDATION_TIMEOUT": "Mahalaga sa amin ang inyong seguridad. Ni-log out namin kayo dahil may problema sa koneksiyon. Mangyaring mag-sign in para makapagpatuloy. "
     },
     "T": {
-        "APPLICATION_FOR_LISTING": "Aplikasyon para sa {{listingName}}",
         "APPLICATION_DEADLINE": "Huling Araw para sa Pagsusumite ng Aplikasyon",
         "APPLICATION_DUE": "Huling Araw ng Pagsusumite ng Aplikasyon",
+        "APPLICATION_FOR_LISTING": "Aplikasyon para sa {{listingName}}",
         "APPLICATION_SUBMITTED": "Naisumite na ang Aplikasyon",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Sigurado ba kayong gusto ninyong umalis mula sa page na ito? Mawawala ang lahat ng impormasyon na nailagay na ninyo sa aplikasyon para sa nakalistang pabahay na ito. Kung gusto ninyong i-save ang inyong impormasyon at tapusin ang aplikasyon sa ibang panahon, paki-click ang 'I-save at Tapusin sa Ibang Panahon (Save and Finish later)' na button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Sigurado ba kayong gusto ninyong umalis sa page na ito? Kapag ni-link ninyo ang inyong aplikasyon sa isang account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",

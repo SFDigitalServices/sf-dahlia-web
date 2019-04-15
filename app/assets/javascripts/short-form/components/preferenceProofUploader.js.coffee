@@ -18,8 +18,8 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/preference-proof-uploader.html'
 
   controller:
-    ['ShortFormApplicationService', 'FileUploadService', 'SharedService', '$translate'
-    (ShortFormApplicationService, FileUploadService, SharedService, $translate) ->
+    ['ShortFormApplicationService', 'FileUploadService', 'SharedService', 'ShortFormHelperService', '$translate'
+    (ShortFormApplicationService, FileUploadService, SharedService, ShortFormHelperService, $translate) ->
       ctrl = @
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -76,17 +76,20 @@ angular.module('dahlia.components')
           proofOption = 'Lease'
         @application.preferences[@preference + '_proofOption'] = proofOption
 
+      @flagForI18n = (str) =>
+        ShortFormHelperService.flagForI18n(str)
+
       @validateFileNameLength = (file) ->
         if file
           if file.name.length > FileUploadService.maxFileNameLength
-            @proofDocument.error = 'ERROR.FILE_NAME_TOO_LONG'
+            @proofDocument.error = @flagForI18n('ERROR.FILE_NAME_TOO_LONG')
           else
             if file.size > FileUploadService.maxFileSizeBytes
-              @proofDocument.error = 'ERROR.FILE_UPLOAD'
+              @proofDocument.error = @flagForI18n('ERROR.FILE_UPLOAD')
             else
               true
         else
-          @proofDocument.error = 'ERROR.FILE_MISSING'
+          @proofDocument.error = @flagForI18n('ERROR.FILE_MISSING')
 
       @uploadProofFile = (file) =>
         opts =

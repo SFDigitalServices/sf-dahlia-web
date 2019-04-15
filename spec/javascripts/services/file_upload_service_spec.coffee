@@ -30,6 +30,8 @@ do ->
           "#{prefType}": {}
     fakeRentBurdenFileService =
       clearRentBurdenFile: jasmine.createSpy()
+    fakeShortFormHelperService =
+      flagForI18n: (str) -> str
     $translate = {}
     Upload =
       upload: ->
@@ -45,6 +47,7 @@ do ->
       $provide.value 'uuid', uuid
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       $provide.value 'RentBurdenFileService', fakeRentBurdenFileService
+      $provide.value 'ShortFormHelperService', fakeShortFormHelperService
       return
     )
 

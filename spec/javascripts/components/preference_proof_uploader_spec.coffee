@@ -36,7 +36,8 @@ do ->
       maxFileSizeBytes: 5e6 # 5MB
       uploadProof: jasmine.createSpy()
       deleteFile: jasmine.createSpy()
-
+    fakeShortFormHelperService =
+      flagForI18n: (str) -> str
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_, $q) ->
       $componentController = _$componentController_
@@ -47,6 +48,7 @@ do ->
       locals =
         ShortFormApplicationService: fakeShortFormApplicationService
         FileUploadService: fakeFileUploadService
+        ShortFormHelperService: fakeShortFormHelperService
         SharedService: fakeSharedService
         $translate: $translate
     )
