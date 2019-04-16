@@ -5,8 +5,8 @@ angular.module('dahlia.components')
     parent: '^listingContainer'
   bindings:
     tenureType: '@'
-  controller: ['$state', 'IncomeCalculatorService', 'ListingDataService', 'ListingEligibilityService',
-  ($state, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
+  controller: ['$state', '$translate', 'IncomeCalculatorService', 'ListingDataService', 'ListingEligibilityService',
+  ($state, $translate, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
     ctrl = @
 
     @eligibilityFilters = ListingEligibilityService.eligibility_filters
@@ -15,6 +15,12 @@ angular.module('dahlia.components')
     @clearEligibilityFilters = ->
       ListingEligibilityService.resetEligibilityFilters()
       IncomeCalculatorService.resetIncomeSources()
+
+    @headerText = (listingType) ->
+      listingTypeTranslation = $translate.instant('LISTINGS.' + listingType.toUpperCase())
+      interpolate = { listingsType: listingTypeTranslation }
+      $translate.instant('LISTINGS.SHOWING_MATCHES_FOR', interpolate)
+
 
     return ctrl
   ]

@@ -5,11 +5,13 @@ ng-include src="'listings/templates/_sale-header.html'" ng-if="$ctrl.tenureType 
 header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
   .row
     .medium-12.columns
-      h1.lead-header_title.serif.margin-bottom-none translate="LISTINGS.SHOWING_MATCHES_FOR"
+      h1.lead-header_title.serif.margin-bottom-none
+        | {{ $ctrl.headerText($ctrl.tenureType) }}
       .results-header
         p.results-header_values
+          | For
           strong
-            ' {{$ctrl.eligibilityFilters.household_size}}
+            '  {{$ctrl.eligibilityFilters.household_size}}
           ' {{$ctrl.eligibilityFilters.household_size == 1 ? 'person ' : 'people '}}
           span ng-if="$ctrl.eligibilityFilters.children_under_6 && $ctrl.eligibilityFilters.children_under_6 > 0"
             ' (including
@@ -19,7 +21,7 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
             ' under 6)
           ' at <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ $ctrl.eligibilityFilters.income_timeframe | incomeTimeframe }}
         .results-header_actions
-          a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator"
+          a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator({listingsType: $ctrl.tenureType})"
             | {{'LABEL.EDIT_ELIGIBILITY' | translate}}
             span.ui-icon.ui-static.ui-small.i-color
               svg
