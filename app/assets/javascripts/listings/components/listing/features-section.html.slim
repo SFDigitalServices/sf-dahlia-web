@@ -10,7 +10,7 @@ accordion-heading
 
 .content-section
   .content-tile.feature-tile
-    feature-row title="Neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}"
+    feature-row title="Neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}" skiptranslate="{{true}}"
     feature-row title="Built" description="{{::$ctrl.parent.listing.Year_Built}}"
     feature-row title="Appliances" description="{{::$ctrl.parent.listing.Appliances}}"
     feature-row title="{{$ctrl.parent.isSale($ctrl.parent.listing) ? 'Services Covered by HOA Dues' : 'Services Onsite' }}" description="{{::$ctrl.parent.listing.Services_Onsite}}"

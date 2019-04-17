@@ -17,15 +17,15 @@
                 svg
                   use xlink:href="#i-right"
 
-    h1.property-hero_title.offset
+    h1.property-hero_title.offset.skiptranslate
       | {{::$ctrl.parent.listing.Name}}
     span.property-hero_label.label.radius.bg-splash ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'building')}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
-      p.property-hero_address
+      p.property-hero_address.skiptranslate
         | {{::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}
-      p.content-group_address.c-steel
+      p.content-group_address.c-steel.skiptranslate
         | {{::$ctrl.parent.listing.Developer}}
       a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}"
         | View on Map

@@ -4,7 +4,7 @@ section.app-container
       h2.t-gamma.text-center.margin-top.padding-left--2x.padding-right--2x
         | {{'A1_INTRO.TITLE' | translate}}
       form.app-card.form-card.focus-container
-        h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
+        h1.property-card_title.text-center.margin-bottom.hide-for-medium-up.skiptranslate
           | {{listing.Name}}
         figure.property-card_figure.radius
           .property-card_overlay
@@ -12,7 +12,7 @@ section.app-container
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
-          figcaption.property-card_info
+          figcaption.property-card_info.skiptranslate
             h1.property-card_title.show-for-medium-up
               | {{listing.Name}}
             p.property-card_address
