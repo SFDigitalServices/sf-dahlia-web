@@ -1,7 +1,7 @@
 h4.h-caps-lined translate="CONTACT_AGENT.CONTACT"
 h3.t-delta.t-sans.no-margin.skiptranslate
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Name }}
-p.c-steel.skiptranslate
+p.c-steel
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Title }}
 a.has-icon.margin-bottom--half title="Call {{ ::$ctrl.parent.listing.Leasing_Agent_Phone }}" ng-href="tel:{{::$ctrl.parent.listing.Leasing_Agent_Phone | htmlTel}}" ng-if="::$ctrl.parent.listing.Leasing_Agent_Phone"
   span.ui-icon.ui-static.ui-medium.i-primary
