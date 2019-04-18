@@ -53,7 +53,7 @@ describe Overrides::PasswordsController do
         put :update, password: 'newpassword', password_confirmation: 'newpassword'
       end.to(change { user.encrypted_password })
 
-      expect(response.status).to eq 200
+      expect(response.status).to eq 204
     end
   end
 end
