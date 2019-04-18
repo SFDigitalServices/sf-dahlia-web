@@ -658,6 +658,10 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
+  $scope.checklistSection = ->
+    if ShortFormApplicationService.listingIsSale()
+      'homebuyers'
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||

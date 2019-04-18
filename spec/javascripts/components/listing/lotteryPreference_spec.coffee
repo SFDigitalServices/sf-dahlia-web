@@ -14,11 +14,15 @@ do ->
     fakeListingDataService =
       listings: fakeListings
 
+    fakeListingIdentityService =
+      isSale: jasmine.createSpy()
+
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
         ListingDataService: fakeListingDataService
+        ListingIdentityService: fakeListingIdentityService
       }
     )
 
@@ -31,8 +35,12 @@ do ->
           expect(ctrl.isPrefWithProof()).toEqual true
 
       describe 'docSection', ->
-        it 'returns correct value', ->
+        it 'returns resident for rental listing', ->
           expect(ctrl.docSection()).toEqual 'resident'
+
+        it 'returns homebuyers for sale listing', ->
+          fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(true)
+          expect(ctrl.docSection()).toEqual 'homebuyers'
 
     describe 'lotteryPreference with missing reference', ->
       beforeEach ->

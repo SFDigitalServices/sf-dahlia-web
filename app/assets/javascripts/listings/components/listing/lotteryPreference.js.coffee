@@ -2,9 +2,10 @@ angular.module('dahlia.components')
 .component 'lotteryPreference',
   bindings:
     preference: '<'
+    listing: '<'
   templateUrl: 'listings/components/listing/lottery-preference.html'
 
-  controller: ['ListingDataService', (ListingDataService) ->
+  controller: ['ListingDataService', 'ListingIdentityService', (ListingDataService, ListingIdentityService) ->
     ctrl = @
 
     docSectionMap = {
@@ -19,7 +20,10 @@ angular.module('dahlia.components')
       _.has(docSectionMap, @preference.preferenceName)
 
     @docSection = ->
-      docSectionMap[@preference.preferenceName]
+      if ListingIdentityService.isSale(@listing)
+        'homebuyers'
+      else
+        docSectionMap[@preference.preferenceName]
 
     return ctrl
   ]
