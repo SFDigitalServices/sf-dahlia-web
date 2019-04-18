@@ -7,3 +7,4 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     scope.title = attrs.title
     scope.description = attrs.description
+    scope.skiptranslate = attrs.skiptranslate

@@ -1,5 +1,5 @@
 h4.h-caps-lined translate="CONTACT_AGENT.CONTACT"
-h3.t-delta.t-sans.no-margin
+h3.t-delta.t-sans.no-margin.skiptranslate
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Name }}
 p.c-steel
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Title }}
@@ -14,7 +14,7 @@ a.has-icon.d-block.margin-bottom title="Email {{::$ctrl.parent.listing.Leasing_A
     svg
       use xlink:href="#i-mail"
   | {{ 'LABEL.EMAIL_ADDRESS' | translate }}
-p.c-steel ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
+p.c-steel.skiptranslate ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Street }}
   br
   | {{ ::$ctrl.parent.listing.Leasing_Agent_City }} {{ ::$ctrl.parent.listing.Leasing_Agent_State }} {{ ::$ctrl.parent.listing.Leasing_Agent_Zip }}

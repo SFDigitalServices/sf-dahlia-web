@@ -6,7 +6,7 @@
       | {{ $ctrl.parent.listing.Lottery_Date | date : 'longDate' }}
     span.content-group_time
       | {{ $ctrl.parent.listing.Lottery_Date | date : 'shortTime' | lowercase }}
-  p.content-group_address.c-steel
+  p.content-group_address.c-steel.skiptranslate
     | {{ $ctrl.parent.listing.Lottery_Venue }}
     br
     | {{ $ctrl.parent.listing.Lottery_Street_Address }}

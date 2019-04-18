@@ -2,7 +2,7 @@
   short-form-header
     h2.app-card_question
       | {{'G1_CONFIRMATION.TITLE' | translate}}
-      br
+      br.skiptranslate
         | {{listing.Name}}
   figure.full-figure
     img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.imageURL}}"
@@ -35,7 +35,7 @@
       p.form-note.margin-bottom ng-if="!applicant.email"
         | {{'G1_CONFIRMATION.DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL' | translate}}
 
-      p.form-note
+      p.form-note.skiptranslate
         | {{ listing.Leasing_Agent_Name }}
         br
           | {{ listing.Application_Organization }}
