@@ -12,7 +12,7 @@ class Api::V1::ShortFormController < ApiController
   def validate_household
     response = Force::ShortFormService.check_household_eligibility(
       params[:listing_id],
-      eligibility_params,
+      eligibility_params.to_h,
     )
     render json: response
   end
@@ -66,7 +66,7 @@ class Api::V1::ShortFormController < ApiController
     # the initial entry into the application Name page
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
     response =
-      Force::ShortFormService.create_or_update(application_params, applicant_attrs)
+      Force::ShortFormService.create_or_update(application_params.to_h, applicant_attrs)
     if response.present?
       process_submit_app_response(response)
       render json: response
@@ -166,7 +166,7 @@ class Api::V1::ShortFormController < ApiController
         listing_id: application_params[:listingID],
       )
     else
-      upload_params = uploaded_file_params.merge(
+      upload_params = uploaded_file_params.to_h.merge(
         user_id: nil,
         listing_id: application_params[:listingID],
       )
@@ -176,7 +176,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_temp_files_to_user
-    files = UploadedFile.where(uploaded_file_params)
+    files = UploadedFile.where(uploaded_file_params.to_h)
     files.update_all(user_id: current_user.id)
   end
 
