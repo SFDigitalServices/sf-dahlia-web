@@ -16,11 +16,14 @@ angular.module('dahlia.components')
       ListingEligibilityService.resetEligibilityFilters()
       IncomeCalculatorService.resetIncomeSources()
 
-    @headerText = (listingType) ->
-      listingTypeTranslation = $translate.instant('LISTINGS.' + listingType.toUpperCase())
+    @headerText = () ->
+      listingTypeTranslation = $translate.instant('LISTINGS.' + @tenureType.toUpperCase())
       interpolate = { listingsType: listingTypeTranslation }
       $translate.instant('LISTINGS.SHOWING_MATCHES_FOR', interpolate)
 
+    @noMatchesLabel = () ->
+      listingTypeTranslation = $translate.instant('LISTINGS.' + @tenureType.toUpperCase())
+      $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY', type: listingTypeTranslation)
 
     return ctrl
   ]

@@ -50,7 +50,7 @@ module Force
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = get_listings(filters)
+      results = get_listings(filters.except(:listingsType))
       results = filter_listings(results, Tenure: filters[:listingsType])
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list

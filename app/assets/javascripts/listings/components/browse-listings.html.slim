@@ -6,7 +6,7 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
   .row
     .medium-12.columns
       h1.lead-header_title.serif.margin-bottom-none
-        | {{ $ctrl.headerText($ctrl.tenureType) }}
+        | {{ $ctrl.headerText() }}
       .results-header
         p.results-header_values
           | For
@@ -61,7 +61,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
           h2.status-header_title.gamma
             | {{'LISTINGS.NO_MATCHES' | translate}}
           p.margin-bottom--half
-            | {{'LISTINGS.YOU_DONT_MATCH_ANY' | translate}}
+            | {{ $ctrl.noMatchesLabel() }}
           p.t-small.c-steel.no-margin
             | <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
 

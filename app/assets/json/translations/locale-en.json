@@ -723,7 +723,7 @@
         "REALTOR_COMMISSION_NOT_ELIGIBLE": "Your realtor is not eligible for a commission on this unit",
         "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
-        "RENTAL": "rental",
+        "RENTAL": "rent",
         "REQUIRED_DOCUMENTS": "Required Documents",
         "REQUIRED_DOCUMENTS_AFTER_APPLYING": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
@@ -736,7 +736,7 @@
         "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
         "SEE_PREFERENCE_INFORMATION": "See Preference Information",
         "SEE_UNIT_INFORMATION": "See Unit Information",
-        "SHOWING_MATCHES_FOR": "Showing matches for {{listingsType}}",
+        "SHOWING_MATCHES_FOR": "Showing matching units for {{listingsType}}",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SPECIAL_NOTES": "Special Notes",
@@ -751,7 +751,7 @@
         },
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
-        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
+        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings for {{type}}.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
     },
     "LISTINGS_FOR_RENT": {
