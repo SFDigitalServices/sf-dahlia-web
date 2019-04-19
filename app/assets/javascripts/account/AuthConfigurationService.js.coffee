@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountConfirmationService = ($state, $location, AccountService) ->
+AuthConfigurationService = ($state, $location, AccountService) ->
   Service = {}
 
   Service.confirmationSuccessUrl = ->
@@ -11,13 +11,18 @@ AccountConfirmationService = ($state, $location, AccountService) ->
     #       are different UX paths needing different modals/params
     $state.href('dahlia.my-account', {}, {absolute: true})
 
+  Service.passwordResetSuccessUrl = ->
+    # give absolute (full) URL to provide to server for redirect
+    # Url used for sucessful password reset request
+    $state.href('dahlia.reset-password', {}, {absolute: true})
+
   return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountConfirmationService.$inject = ['$state', '$location', 'AccountService']
+AuthConfigurationService.$inject = ['$state', '$location', 'AccountService']
 
 angular
   .module('dahlia.services')

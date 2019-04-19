@@ -63,16 +63,17 @@
 ]
 
 @dahlia.config [
-  '$authProvider', 'AccountConfirmationServiceProvider',
-  ($authProvider, AccountConfirmationServiceProvider) ->
-    # this creates a new AccountConfirmationService,
-    # which can tap into AccountService to provide the appropriate confirmationSuccessUrl
-    conf = AccountConfirmationServiceProvider.$get()
+  '$authProvider', 'AuthConfigurationService',
+  ($authProvider, AuthConfigurationService) ->
+    # this creates a new AuthConfigurationService,
+    # which can tap into AccountService to provide the appropriate redirectUrls
+    conf = AuthConfigurationService.$get()
     $authProvider.configure
       apiUrl: '/api/v1'
       storage: getAvailableStorageType()
       confirmationSuccessUrl: conf.confirmationSuccessUrl
       validateOnPageLoad: false
+      passwordResetSuccessUrl: conf.passwordResetSuccessUrl
 ]
 
 @dahlia.config ['$translateProvider', ($translateProvider) ->
