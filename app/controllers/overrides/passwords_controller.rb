@@ -22,21 +22,9 @@ module Overrides
       end
     end
 
-    def save_resource_for_edit
-      # ensure that user is confirmed
-      @resource.skip_confirmation! if user_is_confirmed
-      # allow user to change password once without current_password
-      @resource.allow_password_change = true
-      @resource.save!
-    end
-
     def render_edit_error
       # TODO: Create a proper token expired error message?
       redirect_to root_url
-    end
-
-    def user_is_confirmed
-      @resource.devise_modules.include?(:confirmable) && !@resource.confirmed_at
     end
   end
 end

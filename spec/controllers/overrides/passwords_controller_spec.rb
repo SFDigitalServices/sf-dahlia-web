@@ -29,10 +29,18 @@ describe Overrides::PasswordsController do
 
     it 'change allow_password_change to true' do
       expect do
-        get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/forgot-password'
+        get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/reset-password'
       end.to change { user.reload.allow_password_change }.to(true)
 
       expect(response.status).to eq 302
+    end
+
+    it 'should redirect to home page if user not found' do
+      @token = ''
+      controller.instance_variable_set(:@resource, nil)
+      get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/reset-password'
+
+      expect(response).to redirect_to('/')
     end
   end
 
