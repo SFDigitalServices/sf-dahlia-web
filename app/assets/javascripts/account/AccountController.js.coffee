@@ -37,6 +37,7 @@ AccountController = (
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
   $scope.showSaleListings = $window.env.showSaleListings == 'true'
+  $scope.passwordConfirmation
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -271,6 +272,20 @@ AccountController = (
         ListingIdentityService.isSale(application.listing) != firstIsSale
     else
       false
+
+  $scope.validatePasswordConfirmationMatch = (value) ->
+    # ng-model is not set until values are valid, so we save current value to check what type of error it is
+    $scope.passwordConfirmation = value
+    if $scope.userAuth.user.password
+      value == $scope.userAuth.user.password
+    else
+      true
+
+  $scope.passwordConfirmationError = () ->
+    if _.isEmpty($scope.passwordConfirmation)
+      $translate.instant('LABEL.FIELD_REQUIRED')
+    else
+      $translate.instant('ERROR.PASSWORD_CONFIRMATION')
 
 AccountController.$inject = [
   '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',

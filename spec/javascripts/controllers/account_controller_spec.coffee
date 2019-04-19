@@ -13,7 +13,10 @@ do ->
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeUser =
+      email: 'email@test.com'
     fakeAccountService =
+      userAuth: {user: fakeUser}
       createAccount: ->
       signIn: ->
       loggedIn: ->
@@ -243,3 +246,21 @@ do ->
         fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValues(false, true)
         expect(scope.hasSaleAndRentalApplications([fakeApplication, fakeApplication])).toEqual(true)
 
+    describe '$scope.validatePasswordConfirmationMatch', ->
+      it 'returns true if password is empty', ->
+        expect(scope.validatePasswordConfirmationMatch('password')).toEqual(true)
+      it 'returns false if password and confirmation does not match', ->
+        fakeAccountService.userAuth.user.password = 'password'
+        expect(scope.validatePasswordConfirmationMatch('pass')).toEqual(false)
+      it 'returns true if password and confirmation match', ->
+        fakeAccountService.userAuth.user.password = 'password'
+        expect(scope.validatePasswordConfirmationMatch('password')).toEqual(true)
+
+    describe '$scope.passwordConfirmationError', ->
+      it 'calls translate with require message when confirmation is not set', ->
+        scope.passwordConfirmationError()
+        expect($translate.instant).toHaveBeenCalledWith('LABEL.FIELD_REQUIRED')
+      it 'calls translate with match error when confirmation is set', ->
+        scope.passwordConfirmation = 'password'
+        scope.passwordConfirmationError()
+        expect($translate.instant).toHaveBeenCalledWith('ERROR.PASSWORD_CONFIRMATION')

@@ -56,13 +56,15 @@
               input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'LABEL.NEW_PASSWORD' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
               small.error#auth_password_error ng-if="inputInvalid('password')"
                 | {{'ERROR.PASSWORD' | translate}}
+                p
+                  |  {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
 
               label.label-secondary for="auth_password_confirmation"
                 | {{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}
-              input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
+              input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'validatePasswordConfirmationMatch($value)'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
 
               small.error#auth_password_confirmation_error ng-if="inputInvalid('password_confirmation')"
-                | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}
+                | {{passwordConfirmationError()}}
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}" ng-disabled="submitDisabled"
