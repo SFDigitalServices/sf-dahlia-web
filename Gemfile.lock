@@ -120,9 +120,9 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise_token_auth (0.1.43)
-      devise (> 3.5.2, < 4.5)
-      rails (< 6)
+    devise_token_auth (1.1.0)
+      devise (> 3.5.2, < 4.7)
+      rails (>= 4.2.0, < 6)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.20160615)
@@ -421,7 +421,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   devise (~> 4.4.0)
-  devise_token_auth (~> 0.1.43)
+  devise_token_auth (~> 1.1.0)
   dotenv-rails
   easypost (>= 3.0.1)
   facets
@@ -481,4 +481,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   2.0.1
+   1.17.3
