@@ -2,5 +2,5 @@
   .medium-3.columns.padding-right--half
     h4.feature-title
       | {{title}}
-  .medium-9.columns
+  .medium-9.columns ng-class="{skiptranslate: skiptranslate}"
     p.feature-tile_content.t-small ng-bind-html="description | nl2br"
