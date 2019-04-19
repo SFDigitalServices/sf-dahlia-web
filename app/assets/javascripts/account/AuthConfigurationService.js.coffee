@@ -26,4 +26,4 @@ AuthConfigurationService.$inject = ['$state', '$location', 'AccountService']
 
 angular
   .module('dahlia.services')
-  .service('AccountConfirmationService', AccountConfirmationService)
+  .service('AuthConfigurationService', AuthConfigurationService)
