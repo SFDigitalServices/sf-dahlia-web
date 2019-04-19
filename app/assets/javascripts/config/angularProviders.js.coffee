@@ -63,11 +63,11 @@
 ]
 
 @dahlia.config [
-  '$authProvider', 'AuthConfigurationService',
-  ($authProvider, AuthConfigurationService) ->
-    # this creates a new AuthConfigurationService,
+  '$authProvider', 'AuthConfigurationServiceProvider',
+  ($authProvider, AuthConfigurationServiceProvider) ->
+    # this creates a new AuthConfigurationServiceProvider,
     # which can tap into AccountService to provide the appropriate redirectUrls
-    conf = AuthConfigurationService.$get()
+    conf = AuthConfigurationServiceProvider.$get()
     $authProvider.configure
       apiUrl: '/api/v1'
       storage: getAvailableStorageType()
