@@ -63,5 +63,17 @@ describe Overrides::PasswordsController do
 
       expect(response.status).to eq 200
     end
+
+    it 'should call Emailer on success' do
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
+      expect(Emailer).to receive(:account_update).and_return(message_delivery)
+      allow(message_delivery).to receive(:deliver_later)
+
+      expect do
+        put :update, password: 'newpassword', password_confirmation: 'newpassword'
+      end.to(change { user.encrypted_password })
+
+      expect(response.status).to eq 200
+    end
   end
 end
