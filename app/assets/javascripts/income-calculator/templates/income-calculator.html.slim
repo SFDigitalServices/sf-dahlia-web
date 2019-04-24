@@ -9,10 +9,7 @@ div(ui-view="container")
 div.row
   div.columns.medium-8.large-6.medium-centered
     div.block--short.bg-wash.p-small.t-small.text-left.margin-bottom--2x
-      p
-        | {{'LISTINGS.INCOME_EXCEPTIONS.INTRO' | translate}}
-      ul
+        p translate="LISTINGS.INCOME_EXCEPTIONS.INTRO" translate-value-url="https://sfmohcd.org/special-calculations-household-income"      ul
         li
           | {{'LISTINGS.INCOME_EXCEPTIONS.STUDENTS' | translate }}
-        li.margin-bottom translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
-      p translate="LISTINGS.INCOME_EXCEPTIONS.LEARN_MORE" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
+        li translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"

@@ -39,13 +39,11 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
             | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
-          p.custom-counter_text
-            | {{'LISTINGS.INCOME_EXCEPTIONS.INTRO' | translate}}
+          p.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.INTRO" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
           ul
             li.custom-counter_text
               | {{'LISTINGS.INCOME_EXCEPTIONS.STUDENTS' | translate }}
-            li.custom-counter_text.margin-bottom translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
-          p.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.LEARN_MORE" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
+            li.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
 
         .content-card.padding--2x ng-show="$ctrl.parent.loading.ami"
           .padding--2x ng-include="'shared/templates/spinner.html'"
