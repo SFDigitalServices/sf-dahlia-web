@@ -37,7 +37,6 @@ AccountController = (
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
   $scope.showSaleListings = $window.env.showSaleListings == 'true'
-  $scope.passwordConfirmation
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -45,6 +44,7 @@ AccountController = (
     $scope.form.createAccount ||
     $scope.form.updatePassword ||
     $scope.form.passwordReset ||
+    $scope.form.accountPassword ||
     $scope.form.current
 
   $scope.closeModal = ->
@@ -274,15 +274,10 @@ AccountController = (
       false
 
   $scope.validatePasswordConfirmationMatch = (value) ->
-    # ng-model is not set until values are valid, so we save current value to check what type of error it is
-    $scope.passwordConfirmation = value
-    if $scope.userAuth.user.password
-      value == $scope.userAuth.user.password
-    else
-      true
+    value == $scope.userAuth.user.password
 
   $scope.passwordConfirmationError = () ->
-    if _.isEmpty($scope.passwordConfirmation)
+    if _.isEmpty($scope.userAuth.user.password_confirmation)
       $translate.instant('LABEL.FIELD_REQUIRED')
     else
       $translate.instant('ERROR.PASSWORD_CONFIRMATION')
