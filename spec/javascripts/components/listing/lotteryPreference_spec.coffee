@@ -38,10 +38,6 @@ do ->
         it 'returns resident for rental listing', ->
           expect(ctrl.docSection()).toEqual 'resident'
 
-        it 'returns homebuyers for sale listing', ->
-          fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(true)
-          expect(ctrl.docSection()).toEqual 'homebuyers'
-
     describe 'lotteryPreference with missing reference', ->
       beforeEach ->
         ctrl = $componentController 'lotteryPreference', locals, {preference: fakeMissingPreference}
