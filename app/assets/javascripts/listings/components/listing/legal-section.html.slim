@@ -39,9 +39,10 @@ accordion-heading
           strong translate="LISTINGS.REALTOR_COMMISSION_HEADER"
           span
             | {{$ctrl.realtorCommissionMessage($ctrl.parent.listing)}}
-        p
+        p ng-if="$ctrl.parent.listing.Realtor_Commission_Info"
           strong translate="LISTINGS.REALTOR_COMMISSION_HOW_TO"
-          |  {{$ctrl.parent.listing.Realtor_Commission_Info}}
+          | {{" "}}
+          span ng-text-truncate="::$ctrl.parent.listing.Realtor_Commission_Info | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust ng-if="::$ctrl.parent.listing.Repricing_Mechanism"
       h4.content-card_title.t-serif
         | {{'LISTINGS.RE_PRICING' | translate}}

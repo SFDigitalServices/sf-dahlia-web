@@ -717,7 +717,7 @@
         "PERSON": "person",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
-        "REALTOR_COMMISSION": "For the Buyers's Realtor",
+        "REALTOR_COMMISSION": "For the Buyer's Realtor",
         "REALTOR_COMMISSION_HEADER": "Your Commission: ",
         "REALTOR_COMMISSION_HOW_TO": "How to receive it: ",
         "REALTOR_COMMISSION_NOT_ELIGIBLE": "Your realtor is not eligible for a commission on this unit",
