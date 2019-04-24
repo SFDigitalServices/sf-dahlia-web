@@ -57,7 +57,7 @@ section.row.margin-bottom--2x
             .form-income
               span.label-dollar $
               input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" ng-required="true" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }" aria-describedby="income_total_error"
-              a.button.input-editor.tiny.secondary title="Edit" ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
+              a.button.input-editor.tiny.secondary title="Edit" ui-sref="dahlia.income-calculator.edit({listingsType: listingsType()})" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
                 | Edit
           small.error#income_total_error ng-show="inputInvalid('income_total')"
               | Please enter an income amount

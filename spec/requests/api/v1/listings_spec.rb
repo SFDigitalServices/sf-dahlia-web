@@ -112,6 +112,7 @@ describe 'Listings API' do
         householdsize: 2,
         incomelevel: 20_000,
         childrenUnder6: 1,
+        listingsType: 'rental',
       }
       get '/api/v1/listings/eligibility.json', params
     end

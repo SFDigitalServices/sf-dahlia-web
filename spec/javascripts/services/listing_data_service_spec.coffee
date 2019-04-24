@@ -123,11 +123,11 @@ do ->
       it 'returns Service.getListingsWithEligibility if eligibility options are set', ->
         ListingDataService.getListingsWithEligibility = jasmine.createSpy()
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
-        ListingDataService.getListings({checkEligibility: true})
+        ListingDataService.getListings({checkEligibility: true, params: {Tenure: 'rental'}})
         expect(ListingDataService.getListingsWithEligibility).toHaveBeenCalled()
       it 'calls ListingEligibilityService.eligibilityYearlyIncome', ->
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
-        ListingDataService.getListings({checkEligibility: true})
+        ListingDataService.getListings({checkEligibility: true, params: {Tenure: 'rental'}})
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
       it 'passes params to http request', ->
         fakeParams = {checkEligibility: false, params: {Tenure: 'rental'}}
@@ -303,7 +303,7 @@ do ->
         ListingDataService.cleanListings = jasmine.createSpy()
         ListingDataService.groupListings = jasmine.createSpy()
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
-        ListingDataService.getListingsWithEligibility()
+        ListingDataService.getListingsWithEligibility({Tenure: 'rental'})
         httpBackend.flush()
         expect(ListingDataService.cleanListings).toHaveBeenCalled()
         expect(ListingDataService.groupListings).toHaveBeenCalled()
@@ -311,7 +311,7 @@ do ->
         ListingDataService.cleanListings = jasmine.createSpy()
         ListingDataService.groupListings = jasmine.createSpy()
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
-        ListingDataService.getListingsWithEligibility()
+        ListingDataService.getListingsWithEligibility({Tenure: 'rental'})
         httpBackend.flush()
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 

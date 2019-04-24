@@ -24,6 +24,6 @@ section.row.margin-bottom--2x
 
       .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
         .small-6.columns
-          a.button.button-link.button-lined ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
+          a.button.button-link.button-lined ui-sref="dahlia.eligibility-estimator({listingsType: listingsType()})" title="Cancel" Cancel
         .small-6.columns
-          a.button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done
+          a.button.primary.right ui-sref="dahlia.income-calculator.summary({listingsType: listingsType()})" title="Done" Done
