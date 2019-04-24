@@ -75,8 +75,16 @@ ShortFormApplicationController = (
 
   $scope.emailRegex = SharedService.emailRegex
 
-  $scope.trackAutofill = ->
+  $scope.startAutofilledApp = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+    # Start page after autofill preview
+    $scope.go($scope.getFirstFillableAppPage())
+
+  $scope.getFirstFillableAppPage = ->
+    if $scope.listingIsSale()
+      'dahlia.short-form-application.prerequisites'
+    else
+      'dahlia.short-form-application.name'
 
   $scope.trackContinuePreviousDraft = ->
     AnalyticsService.trackFormSuccess('Application', 'Continue with these details')
@@ -94,7 +102,7 @@ ShortFormApplicationController = (
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
     AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
-    $state.go('dahlia.short-form-application.name')
+    $state.go($scope.getFirstFillableAppPage())
 
   $scope.resetAndReplaceApp = ShortFormApplicationService.resetAndReplaceApp
 
