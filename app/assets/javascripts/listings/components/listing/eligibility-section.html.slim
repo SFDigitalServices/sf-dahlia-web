@@ -72,6 +72,8 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
+          p.custom-counter_text ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_MIN_ONE' | translate}}
           / TODO: Remove case for hardcoded listings - still needs Folsom 3/3/19
           p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
@@ -124,7 +126,7 @@ accordion-heading.lead
 
         div ng-show="!$ctrl.loading.preferences && !$ctrl.error.preferences"
 
-          lottery-preference preference="preference" ng-repeat="preference in $ctrl.parent.listing.preferences"
+          lottery-preference preference="preference" listing="$ctrl.parent.listing" ng-repeat="preference in $ctrl.parent.listing.preferences"
 
           div ng-if="::$ctrl.listingHasPreferences()"
             p.custom-counter_text
