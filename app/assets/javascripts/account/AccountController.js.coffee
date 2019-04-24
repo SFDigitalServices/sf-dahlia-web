@@ -65,8 +65,9 @@ AccountController = (
     duration = 400 # animation speed in ms
     $document.scrollToElement(el, topOffset, duration)
 
-  $scope.inputInvalid = (fieldName, identifier = '') ->
-    form = $scope.accountForm()
+  $scope.inputInvalid = (fieldName, identifier = '', form = null) ->
+    if !form
+      form = $scope.accountForm()
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
