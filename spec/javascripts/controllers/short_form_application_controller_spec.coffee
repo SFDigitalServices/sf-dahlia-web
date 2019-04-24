@@ -1166,12 +1166,3 @@ do ->
         scope.listingIsSale()
         expect(fakeShortFormApplicationService.listingIsSale)
           .toHaveBeenCalled()
-
-    describe 'checklistSection', ->
-      it 'should call listingIsSale on ShortFormApplicationService', ->
-        scope.checklistSection()
-        expect(fakeShortFormApplicationService.listingIsSale)
-          .toHaveBeenCalled()
-      it 'returns homebuyers for sale listing', ->
-        fakeShortFormApplicationService.listingIsSale = jasmine.createSpy().and.returnValue(true)
-        expect(scope.checklistSection()).toEqual('homebuyers')

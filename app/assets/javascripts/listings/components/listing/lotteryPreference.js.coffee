@@ -20,10 +20,7 @@ angular.module('dahlia.components')
       _.has(docSectionMap, @preference.preferenceName)
 
     @docSection = ->
-      if ListingIdentityService.isSale(@listing)
-        'homebuyers'
-      else
-        docSectionMap[@preference.preferenceName]
+      docSectionMap[@preference.preferenceName]
 
     return ctrl
   ]
