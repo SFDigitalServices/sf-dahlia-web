@@ -69,10 +69,20 @@ describe Force::ListingService do
     end
 
     it 'returns only rental listings' do
-      eligible_listings = Force::ListingService.eligible_listings(filters)
+      rental_filters = filters.merge(listingsType: 'rental')
+      eligible_listings = Force::ListingService.eligible_listings(rental_filters)
       expect(eligible_listings.size).to eq(2)
       eligible_listings.each do |listing|
         expect(listing['Tenure']).not_to include('sale')
+      end
+    end
+
+    it 'returns only sale listings' do
+      sale_filters = filters.merge(listingsType: 'sale')
+      eligible_listings = Force::ListingService.eligible_listings(sale_filters)
+      expect(eligible_listings.size).to eq(2)
+      eligible_listings.each do |listing|
+        expect(listing['Tenure']).not_to include('rental')
       end
     end
   end

@@ -43,6 +43,7 @@ class Api::V1::ListingsController < ApiController
       householdsize: params[:householdsize].to_i,
       incomelevel: params[:incomelevel].to_f,
       childrenUnder6: params[:childrenUnder6].to_i,
+      listingsType: params[:listingsType],
     }
     @listings = Force::ListingService.eligible_listings(filters)
     render json: { listings: @listings }

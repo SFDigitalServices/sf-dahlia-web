@@ -120,7 +120,7 @@ ListingDataService = (
       ListingEligibilityService.resetEligibilityFilters()
       IncomeCalculatorService.resetIncomeSources()
     if opts.checkEligibility && ListingEligibilityService.hasEligibilityFilters()
-      return Service.getListingsWithEligibility()
+      return Service.getListingsWithEligibility(opts.params)
 
     $http.get("/api/v1/listings.json", {
       etagCache: true,
@@ -151,12 +151,13 @@ ListingDataService = (
       $timeout(ExternalTranslateService.translatePageContent, 0, false) if retranslate
       deferred.resolve()
 
-  Service.getListingsWithEligibility = ->
+  Service.getListingsWithEligibility = (params) ->
     params =
       householdsize: ListingEligibilityService.eligibility_filters.household_size
       incomelevel: ListingEligibilityService.eligibilityYearlyIncome()
       includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
       childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
+      listingsType: params.Tenure
 
     $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}", {
       etagCache: true,

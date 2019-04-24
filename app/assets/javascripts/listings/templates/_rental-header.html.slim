@@ -7,5 +7,5 @@ header.directory-header#listings_header ng-if="!$ctrl.parent.hasEligibilityFilte
     .directory-header_primary.medium-7.columns
       p.margin-bottom--2x translate="LISTINGS_FOR_RENT.HEADER.IF_YOU_TELL_US"
       p.margin-bottom--half
-        a.button.secondary.no-margin ui-sref="dahlia.eligibility-estimator" translate="LISTINGS_FOR_RENT.HEADER.FIND_MATCHING_LISTINGS"
-      p.t-small translate="LISTINGS_FOR_RENT.HEADER.OR_GET_HELP_CALCULATING_INCOME" translate-compile="true" translate-value-sref="dahlia.income-calculator.intro"
+        a.button.secondary.no-margin ui-sref="dahlia.eligibility-estimator({listingsType: 'rental'})" translate="LISTINGS_FOR_RENT.HEADER.FIND_MATCHING_LISTINGS"
+      p.t-small translate="LISTINGS_FOR_RENT.HEADER.OR_GET_HELP_CALCULATING_INCOME" translate-compile="true" translate-value-sref='dahlia.income-calculator.intro({listingsType: "rental"})'
