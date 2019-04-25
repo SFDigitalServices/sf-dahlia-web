@@ -44,7 +44,6 @@ AccountController = (
     $scope.form.createAccount ||
     $scope.form.updatePassword ||
     $scope.form.passwordReset ||
-    $scope.form.accountPassword ||
     $scope.form.current
 
   $scope.closeModal = ->
