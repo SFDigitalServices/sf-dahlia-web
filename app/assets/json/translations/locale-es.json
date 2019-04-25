@@ -57,7 +57,6 @@
         "WORK_IN_SF_DESC": "Esto significa que usted trabaja actualmente en San Francisco por lo menos el 75 % de sus horas laborales."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
-        "GOOD_ALTERNATE_CONTACT": "Un buen contacto alternativo es una persona que sabe cómo comunicarse con usted.",
         "TITLE": "¿Hay alguna otra persona que usted nos autorice a contactar en caso de que no podamos comunicarnos con usted?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
@@ -586,9 +585,9 @@
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
     },
     "T": {
-        "APPLICATION_FOR_LISTING": "{{listingName}} Solicitud",
         "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
         "APPLICATION_DUE": "Vencimiento de la solicitud",
+        "APPLICATION_FOR_LISTING": "{{listingName}} Solicitud",
         "APPLICATION_SUBMITTED": "Solicitud presentada",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Está seguro de que desea salir de esta página? Perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para completar la solicitud en otro momento, haga clic en el botón “Guardar y finalizar en otro momento”.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",

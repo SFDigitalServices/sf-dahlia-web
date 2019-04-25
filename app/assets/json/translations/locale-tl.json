@@ -71,7 +71,6 @@
         "WORK_IN_SF_DESC": "Nangangahulugan ito na kasalukuyan kayong nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng inyong mga oras ng trabaho."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
-        "GOOD_ALTERNATE_CONTACT": "Ang magandang kahaliling kontak ay ang taong alam kung paano namin kayo makakausap o mapadadalhan ng sulat.",
         "TITLE": "May iba pa bang tao na gusto ninyong bigyan ng awtorisasyon para makontak namin sakaling hindi namin kayo makausap o mapadalhan ng sulat?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
@@ -161,6 +160,11 @@
         "EXPIRED_EMAIL_SENT_TO": "Nagpadala na ng email sa {{email}}, pero nag-expire na o nawalan na ng bisa ang link na iyon matapos ang 24 oras. Puwede kaming magpadalang muli ng email na may bagong link para sa kumpirmasyon sa email address din na ito. ",
         "PLEASE_LOGIN": "Mangyaring mag-login sa inyong account para magpatulong. ",
         "RESEND_EMAIL": "Magpadalang muli ng email"
+    },
+    "CONTACT_AGENT": {
+        "CONTACT": "Kontakin ang Leasing Agent (ahente para sa pagpapaupa)",
+        "DUE_TO_HIGH_CALL_VOLUME": "Dahil sa napakaraming tumatawag, posibleng mensahe ang marinig ninyo",
+        "OFFICE_HOURS": "Mga Oras ng Pagpasok "
     },
     "CONTINUE_PREVIOUS_DRAFT": {
         "CONTINUE_WITH_THESE_DETAILS": "Magpatuloy gamit ang mga detalyeng ito",
@@ -622,11 +626,6 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
-    "CONTACT_AGENT": {
-        "CONTACT": "Kontakin ang Leasing Agent (ahente para sa pagpapaupa)",
-        "DUE_TO_HIGH_CALL_VOLUME": "Dahil sa napakaraming tumatawag, posibleng mensahe ang marinig ninyo",
-        "OFFICE_HOURS": "Mga Oras ng Pagpasok "
-    },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Karagdagang Impormasyon",
         "ADDITIONAL_LISTINGS": {
@@ -875,9 +874,9 @@
         "USER_TOKEN_VALIDATION_TIMEOUT": "Mahalaga sa amin ang inyong seguridad. Ni-log out namin kayo dahil may problema sa koneksiyon. Mangyaring mag-sign in para makapagpatuloy. "
     },
     "T": {
-        "APPLICATION_FOR_LISTING": "Aplikasyon para sa {{listingName}}",
         "APPLICATION_DEADLINE": "Huling Araw para sa Pagsusumite ng Aplikasyon",
         "APPLICATION_DUE": "Huling Araw ng Pagsusumite ng Aplikasyon",
+        "APPLICATION_FOR_LISTING": "Aplikasyon para sa {{listingName}}",
         "APPLICATION_SUBMITTED": "Naisumite na ang Aplikasyon",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Sigurado ba kayong gusto ninyong umalis mula sa page na ito? Mawawala ang lahat ng impormasyon na nailagay na ninyo sa aplikasyon para sa nakalistang pabahay na ito. Kung gusto ninyong i-save ang inyong impormasyon at tapusin ang aplikasyon sa ibang panahon, paki-click ang 'I-save at Tapusin sa Ibang Panahon (Save and Finish later)' na button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Sigurado ba kayong gusto ninyong umalis sa page na ito? Kapag ni-link ninyo ang inyong aplikasyon sa isang account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",

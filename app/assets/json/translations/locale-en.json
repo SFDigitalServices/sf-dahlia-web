@@ -1,4 +1,5 @@
 {
+    "415-701-5500": "415-701-5500",
     "A1_INTRO": {
         "CHOOSE_YOUR_LANGUAGE": "Choose your language",
         "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
@@ -41,14 +42,14 @@
         "MESSAGE": "You have already submitted an application to this listing.",
         "TITLE": "Good news!"
     },
-    "B0_PREREQUISITES": {
-        "TITLE": "First, let’s make sure you’re eligible to apply."
-    },
     "B0_AUTOFILL_PREVIEW": {
         "DESCRIPTION": "We'll simply pre-fill your application with the following details, and you can  make updates as you go.",
         "START_FROM_SCRATCH": "Reset and start fresh",
         "START_WITH_AUTOFILL": "Start with these details",
         "TITLE": "Save time by using the details from your last application."
+    },
+    "B0_PREREQUISITES": {
+        "TITLE": "First, let’s make sure you’re eligible to apply."
     },
     "B1A_WELCOME_BACK": {
         "CONTINUE_WITHOUT_SIGNING_IN": "Continue without signing in",
@@ -73,9 +74,8 @@
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
-        "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
-        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?",
-        "ALLOWING_TO_DISCUSS": "By providing an alternate contact, you are allowing us to discuss information on your application with them."
+        "ALLOWING_TO_DISCUSS": "By providing an alternate contact, you are allowing us to discuss information on your application with them.",
+        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
@@ -131,12 +131,6 @@
         "TITLE_HOUSEHOLD": "Do you or anyone in your household need any of the following ADA accessibility features?",
         "TITLE_YOU": "Do you need any of the following ADA accessibility features?"
     },
-    "CHOOSE_ACCOUNT_SETTINGS": {
-        "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
-        "ALERT_TITLE": "Please choose which version of primary contact details you want to use.",
-        "PRIMARY_CONTACT_OPTIONS": "Primary Contact Options",
-        "TITLE": "The primary contact details on your new application don't match your current account settings."
-    },
     "CHOOSE_APPLICANT_DETAILS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
         "CONTINUE_ANON": "Continue without an account",
@@ -164,6 +158,11 @@
         "EXPIRED_EMAIL_SENT_TO": "A confirmation link was sent to {{email}}, but that link expired after 24 hours. We can resend an email with a new confirmation link to this same email address.",
         "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
+    },
+    "CONTACT_AGENT": {
+        "CONTACT": "Contact",
+        "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
+        "OFFICE_HOURS": "Office Hours"
     },
     "CONTINUE_PREVIOUS_DRAFT": {
         "CONTINUE_WITH_THESE_DETAILS": "Continue with these details",
@@ -196,9 +195,9 @@
         "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "This list outlines the documents your household might need to provide when applying for housing.",
-        "HOMEBUYER_HEADER": "For Homebuyers",
         "HOMEBUYER_DESC": "You'll need the following documents in order to apply for units for sale:",
-        "HOMEBUYER_EDUCATION_DESC": "Verification of homebuyer education for all adult household members",
+        "HOMEBUYER_EDUCATION_DESC": "Verification of Homebuyer Education Completion",
+        "HOMEBUYER_HEADER": "For Homebuyers",
         "HOMEBUYER_LOAN_DESC": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>",
         "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
         "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
@@ -207,7 +206,7 @@
         "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with one of the following:",
         "RENT_BURDEN_TITLE": "Rent Burdened Preference",
         "RESIDENT_DESC": "You'll need one of the following documents showing the address where you live in San Francisco:",
-        "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
+        "RESIDENT_TITLE": "Live in San Francisco and Neighborhood Resident Housing Preferences",
         "TITLE": "Document Checklist",
         "WORK_SF_DESC": "You'll need one of the following documents showing the address where you work in San Francisco:",
         "WORK_SF_TITLE": "Work in San Francisco Preference"
@@ -391,7 +390,7 @@
         "DISCLAIMER": "Disclaimer",
         "FOR_GENERAL_QUESTIONS": "For general program inquiries, you may call MOHCD at 415-701-5500.",
         "GIVE_FEEDBACK": "Give Feedback",
-        "LISTING_QUESTIONS": "For listing and application questions, please contact the aent displayed on the listing.",
+        "LISTING_QUESTIONS": "For listing and application questions, please contact the agent displayed on the listing.",
         "PRIVACY_POLICY": "Privacy Policy"
     },
     "FORGOT_PASSWORD": {
@@ -409,8 +408,8 @@
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
-        "NEXT_STEPS_BODY2_RENTAL": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days.",
-        "NEXT_STEPS_BODY2_SALE": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days.",
+        "NEXT_STEPS_BODY2_RENTAL": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
+        "NEXT_STEPS_BODY2_SALE": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",
@@ -442,6 +441,8 @@
         "APPLICANT_GENDER": "What is your gender?",
         "APPLICANT_GENDER_SUBTITLE": "Select one that best describes your current gender identity.",
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
+        "APPLICANT_LENDING_INSTITUTION": "lending institution",
+        "APPLICANT_NAME_LOAN_OFFICER": "loan officer",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
@@ -449,19 +450,16 @@
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
+        "APPLICANT_SELECT_A_LENDING_INSTITUTION": "Please select a lending institution",
+        "APPLICANT_SELECT_A_LOAN_OFFICER": "Please select a loan officer",
         "APPLICANT_SEPARATE_ADDRESS": "Send my mail to a different address",
         "APPLICANT_SEXUAL_ORIENTATION": "How do you describe your sexual orientation or sexual identity?",
-        "APPLICATION_CONTACT_DETAILS": "Application Contact Details",
-        "APPLICATION_IS_FIRST_TIME_HOMEBUYER": "I have not owned residential property within the past 3 years.",
-        "APPLICATION_HAS_COMPLETED_HOMEBUYER_EDUCATION": "I have attended 8 hours of Homebuyer Education.",
-        "APPLICATION_VISIT_HOMEOWNERSHIP_CALENDAR": "If you haven't done this yet, visit the <a href='{{url}}' target='_blank'>HomeownershipSF calendar</a> to sign up for a workshop.",
         "APPLICATION_ALL_APPLICANTS_ARE_REQUIRED": "All adult household members who will be on the loan and title are required to complete homebuyer education. However, only the primary applicant needs to upload the verification letter to be included in the lottery.",
-        "APPLICATION_HAS_LOAN_PRE_APPROVAL": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
         "APPLICATION_CANT_FIND_LENDER": "Can’t find your loan officer? Your pre-approval letter must be from <a target='_blank' href='{{url}}'>someone on our list</a>.",
-        "APPLICANT_LENDING_INSTITUTION": "lending institution",
-        "APPLICANT_SELECT_A_LENDING_INSTITUTION": "Please select a lending institution",
-        "APPLICANT_NAME_LOAN_OFFICER": "loan officer",
-        "APPLICANT_SELECT_A_LOAN_OFFICER": "Please select a loan officer",
+        "APPLICATION_HAS_COMPLETED_HOMEBUYER_EDUCATION": "I have attended 8 hours of Homebuyer Education.",
+        "APPLICATION_HAS_LOAN_PRE_APPROVAL": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
+        "APPLICATION_IS_FIRST_TIME_HOMEBUYER": "I have not owned residential property within the past 3 years.",
+        "APPLICATION_VISIT_HOMEOWNERSHIP_CALENDAR": "If you haven't done this yet, visit the <a href='{{url}}' target='_blank'>HomeownershipSF calendar</a> to sign up for a workshop.",
         "APPLY_ONLINE": "Apply Online",
         "ASIAN": "Asian",
         "ASIAN_WHITE": "Asian and White",
@@ -485,7 +483,6 @@
         "COPY_OF_LEASE": "Copy of Lease",
         "COUSIN": "Cousin",
         "CREATE_ACCOUNT": "Create Account",
-        "CURRENT_ACCOUNT_SETTINGS": "Current Account Settings",
         "DOB": "Date of Birth",
         "DOB_DAY": "Day",
         "DOB_MONTH": "Month",
@@ -496,7 +493,6 @@
         "EDITED": "Edited",
         "EDIT_ELIGIBILITY": "Edit Eligibility",
         "EMAIL_ADDRESS": "Email",
-        "ESTIMATE_YOUR_ELIGIBILITY": "Estimate Your Eligibility",
         "FAMILY_MEMBER": "Family member",
         "FEMALE": "Female",
         "FIELD_REQUIRED": "This field is required",
@@ -563,7 +559,6 @@
         "PHONE_CELL": "Cell",
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
-        "PLEASE_ENTER": "Please enter",
         "PLEASE_SELECT_ALL_THAT_APPLY": "Please select all that apply.",
         "PLEASE_SELECT_ONE": "Please select one.",
         "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
@@ -634,12 +629,12 @@
         "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
         "UPLOAD_PROOF_OF_RENT_PAYMENT": "Upload proof of rent payment",
         "UPLOAD_RENT_DESCRIPTION": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
-        "UPLOAD_VERIFICATON_LETTER": "Upload verification letter",
+        "UPLOAD_VERIFICATION_LETTER": "Upload verification letter",
+        "VERIFICATION_LETTER": "Verification Letter",
         "VETERANS_IN_HOUSEHOLD": "Veterans in Household",
         "VIEW_APPLICATION": "View Application",
         "VIEW_MAP": "View Map",
         "VISION_IMPAIRMENTS": "For Vision Impairments",
-        "VERIFICATON_LETTER": "Verification Letter",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_IS_YOUR_RELATIONSHIP": "What is your relationship?",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
@@ -652,45 +647,6 @@
         "YOU_HAVE_CLAIMED": "You have claimed:",
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
-    },
-    "CONTACT_AGENT": {
-        "CONTACT": "Contact",
-        "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
-        "OFFICE_HOURS": "Office Hours"
-    },
-    "LISTINGS_FOR_RENT": {
-        "CALLOUT": {
-            "TITLE": "See more listings from our community partners.",
-            "BUTTON": "View opportunities"
-        },
-        "HEADER": {
-            "FIND_MATCHING_LISTINGS": "Find matching listings",
-            "IF_YOU_TELL_US": "If you tell us your household size and income, we can highlight listings you may qualify for.",
-            "OR_GET_HELP_CALCULATING_INCOME": "or <a ui-sref='{{sref}}'>get help calculating your income</a>"
-        }
-    },
-    "LISTINGS_FOR_SALE": {
-        "CALLOUT": {
-            "TITLE": "More listings are available on our website.",
-            "BUTTON": "See listings"
-        },
-        "BEFORE_APPLYING": {
-            "MAKE_SURE_YOU": "Make sure you:",
-            "READ_FULL_LIST": "Read <a href='{{url}}' target='_blank'>our full list of requirements</a> for more details.",
-            "STEP_1": "Haven't owned property in the past 3 years",
-            "STEP_2": "Meet our <a href='{{url}}' target='_blank'>income requirements</a>",
-            "STEP_3": "Complete <a href='{{url}}' target='_blank'>homebuyer education</a>",
-            "STEP_4": "Get pre-approved for a loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
-            "STEP_5": "Have enough in savings for closing costs and downpayment",
-            "TITLE": "Before applying"
-        },
-        "GET_HELP": {
-            "TITLE": "Get help",
-            "SOME_PEOPLE_MAY_QUALIFY": "Some people may qualify for downpayment assistance.",
-            "OTHER_GROUPS_MAY_QUALIFY": "Others, like San Francisco teachers and first responders, may qualify for loans.",
-            "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
-        },
-        "SEE_THE_LISTINGS": "See the listings"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
@@ -710,7 +666,7 @@
             "DROP_OFF_APPLICATION": "Drop Off Application",
             "DROP_OFF_APPLICATION_OR_MAIL": "Drop Off Application or Send by US Mail",
             "FIND_A_HOUSING_COUNSELOR": "Find a Housing Counselor",
-            "VISIT_HOMEOWNERSHIP_SF": "Visit HomeownershipSF",
+            "FULFILL_ELIGIBILITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}' target='_blank'>eligibility requirements</a> for this listing before you begin.",
             "GET_A_PAPER_APPLICATION": "Get a Paper Application",
             "HOW_TO_APPLY": "How to Apply",
             "INCLUDE_AN_ENVELOPE": "In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you.",
@@ -720,23 +676,31 @@
             "SEND_BY_US_MAIL": "Send Application by US Mail",
             "SUBMIT_A_PAPER_APPLICATION": "Submit a Paper Application",
             "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application.",
-            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}' target='_blank'>eligibility requirements</a> for this listing before you begin."
+            "VISIT_HOMEOWNERSHIP_SF": "Visit HomeownershipSF"
         },
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
         "AVAILABLE_UNITS_AND_WAITLIST": "Available units and waitlist",
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
         "BATH": "bath",
+        "CC&R": "Covenants, Conditions and Restrictions (CC&R's)",
+        "CC&R_DESCRIPTION": "The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.",
         "CONFIRMED_PREFERENCE_LIST": "Confirmed {{preference}} List",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
+        "DOWNLOAD_PDF": "Download PDF",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
         "FINAL_WAITLIST_SIZE": "Final Waitlist Size",
         "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",
         "HOUSEHOLD_MAXIMUM_INCOME": "Household Maximum Income",
         "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
-        "INCOME_CALCULATOR_LINK": "get help calculating your income",
+        "INCOME_EXCEPTIONS": {
+            "INTRO": "People in your household may need <a href='{{url}}' target='_blank'>special income calculations</a> if they:",
+            "STUDENTS": "Are full-time students (but not the primary applicant)",
+            "NONTAXABLE": "Receive <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
+            "NONTAXABLE_TOOLTIP": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits."
+        },
         "LOTTERY_RESULTS": {
             "HIDE": "Hide Lottery Results",
             "NO_RESULTS": "There are no listings with lottery results at this time.",
@@ -752,14 +716,20 @@
         "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "Occupancy for this building is limited to {{numberOfPeople}} people per unit.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
-        "OCCUPANCY_SEE_UNIT_INFO": "For the types of units available in this listing please see above.",
+        "OCCUPANCY_DESCRIPTION_MIN_ONE": "A minimum of one person per bedroom is required.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
         "PERSON": "person",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
+        "REALTOR_COMMISSION": "For the Buyer's Realtor",
+        "REALTOR_COMMISSION_HEADER": "Your Commission: ",
+        "REALTOR_COMMISSION_HOW_TO": "How to receive it: ",
+        "REALTOR_COMMISSION_NOT_ELIGIBLE": "Your realtor is not eligible for a commission on this unit",
+        "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
+        "RENTAL": "rent",
         "REQUIRED_DOCUMENTS": "Required Documents",
         "REQUIRED_DOCUMENTS_AFTER_APPLYING": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
@@ -767,14 +737,15 @@
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
+        "SALE": "sale",
+        "RE_PRICING": "Resale Price Restrictions",
         "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
         "SEE_PREFERENCE_INFORMATION": "See Preference Information",
         "SEE_UNIT_INFORMATION": "See Unit Information",
-        "SHOWING_MATCHES_FOR": "Showing matches for",
+        "SHOWING_MATCHES_FOR": "Showing matching units for {{listingsType}}",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SPECIAL_NOTES": "Special Notes",
-        "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "UNITS_ARE_FOR": "These units are for {{type}}.",
         "UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR": "These units have accessibility features for people with {{type}}.",
         "UPCOMING_LOTTERIES": {
@@ -786,17 +757,42 @@
         },
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
-        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
-        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property.",
-        "CC&R": "Covenants, Conditions and Restrictions (CC&R's)",
-        "CC&R_DESCRIPTION": "The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.",
-        "DOWNLOAD_PDF": "Download PDF",
-        "RE_PRICING": "Re-Pricing",
-        "REALTOR_COMMISSION": "For the Buyers's Realtor",
-        "REALTOR_COMMISSION_NOT_ELIGIBILE": "Your realtor is not eligible for a commission on this unit",
-        "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
-        "REALTOR_COMMISSION_HEADER": "Your Commission: ",
-        "REALTOR_COMMISSION_HOW_TO": "How to receive it: "
+        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings for {{type}}.",
+        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
+    },
+    "LISTINGS_FOR_RENT": {
+        "CALLOUT": {
+            "BUTTON": "View opportunities",
+            "TITLE": "See more listings from our community partners."
+        },
+        "HEADER": {
+            "FIND_MATCHING_LISTINGS": "Find matching listings",
+            "IF_YOU_TELL_US": "If you tell us your household size and income, we can highlight listings you may qualify for.",
+            "OR_GET_HELP_CALCULATING_INCOME": "or <a ui-sref='{{sref}}'>get help calculating your income</a>"
+        }
+    },
+    "LISTINGS_FOR_SALE": {
+        "BEFORE_APPLYING": {
+            "MAKE_SURE_YOU": "Make sure you:",
+            "READ_FULL_LIST": "Read <a href='{{url}}' target='_blank'>our full list of requirements</a> for more details.",
+            "STEP_1": "Haven't owned residential property in the past 3 years",
+            "STEP_2": "Meet our <a href='{{url}}' target='_blank'>income requirements</a>",
+            "STEP_3": "Complete <a href='{{url}}' target='_blank'>homebuyer education</a>",
+            "STEP_4": "Get pre-approved for a mortgage loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
+            "STEP_5": "Have enough in savings for closing costs and downpayment",
+            "TITLE": "Before applying"
+        },
+        "CALLOUT": {
+            "BUTTON": "See listings",
+            "TITLE": "More listings are available on our website."
+        },
+        "GET_HELP": {
+            "OTHER_GROUPS_MAY_QUALIFY": "Others, like San Francisco teachers and first responders, may qualify for loans.",
+            "SOME_PEOPLE_MAY_QUALIFY": "Some people may qualify for downpayment assistance.",
+            "TITLE": "Get help",
+            "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
+        },
+        "SEE_THE_LISTINGS": "See the listings"
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
@@ -840,16 +836,16 @@
     "NAV": {
         "ACCOUNT_SETTINGS": "Account Settings",
         "BROWSE_PROPERTIES": "Browse Properties",
+        "BUY": "Buy",
         "GET_ASSISTANCE": "Get Assistance",
         "GET_FEEDBACK": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
         "MY_ACCOUNT": "My Account",
         "MY_APPLICATIONS": "My Applications",
         "MY_DASHBOARD": "My Dashboard",
         "MY_FAVORITES": "My Favorites",
+        "RENT": "Rent",
         "SIGN_IN": "Sign In",
-        "SIGN_OUT": "Sign Out",
-        "BUY": "Buy",
-        "RENT": "Rent"
+        "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
@@ -861,13 +857,13 @@
         "FAVORITES": "My Favorites",
         "GET_ASSISTANCE": "Get Assistance",
         "HOUSING_COUNSELORS": "Housing Counselors",
-        "RENTAL_LISTINGS": "Rental Listings",
-        "SALE_LISTINGS": "Sale Listings",
-        "RENT": "Rent affordable housing",
         "LISTING_APPLICATION": "{{listing}} Application",
         "MY_ACCOUNT": "My Account",
         "MY_APPLICATIONS": "My Applications",
         "PRIVACY": "Privacy Policy",
+        "RENT": "Rent affordable housing",
+        "RENTAL_LISTINGS": "Rental Listings",
+        "SALE_LISTINGS": "Sale Listings",
         "SHARE_LISTING": "Share {{listing}}",
         "SIGN_IN": "Sign In",
         "WELCOME_CHINESE": "中文",
@@ -940,9 +936,9 @@
         "HOUSEHOLD": "Household",
         "INCOME": "Income",
         "PREFERENCES": "Preferences",
+        "QUALIFY": "Qualify",
         "REVIEW": "Review",
-        "YOU": "You",
-        "QUALIFY": "Qualify"
+        "YOU": "You"
     },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
@@ -950,16 +946,14 @@
         "FORGOT_PASSWORD": "Forgot password?",
         "LOGGED_OUT_DUE_TO_INACTIVITY": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
-        "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
-        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
         "SIGNED_OUT_SUCCESSFULLY": "You have successfully logged out of your account.",
         "SIGN_IN_REQUIRED": "Please sign in to your account to access this page.",
         "USER_TOKEN_VALIDATION_TIMEOUT": "We care about your security. We logged you out due to a connection issue. Please sign in to continue."
     },
     "T": {
-        "APPLICATION_FOR_LISTING": "{{listingName}} Application",
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
+        "APPLICATION_FOR_LISTING": "{{listingName}} Application",
         "APPLICATION_SUBMITTED": "Application Submitted",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose any unsaved information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
@@ -1004,9 +998,7 @@
         "YOU": "You"
     },
     "WELCOME": {
-        "ADDITIONAL_OPPORTUNITIES": "Additional Opportunities",
         "ALL_APPLICATION_CLOSED": "All applications are currently closed, but you can view closed listings.",
-        "BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE": "We encourage you to browse other resources, as there may be more rental and ownership opportunities.",
         "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
         "SEE_RENTAL_LISTINGS": "Rent",
         "SEE_SALE_LISTINGS": "Buy",

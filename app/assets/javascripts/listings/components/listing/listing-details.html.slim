@@ -48,7 +48,7 @@
           hgroup.listing-header_group
             h3.listing-header_name
               | Additional Information
-            span.content-header_subheader
+            span.content-header_subheader ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
               | Required documents and selection criteria
         legal-section
 
