@@ -52,9 +52,11 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def show_listing_application_for_user
+    puts 'Trying to see if I have an application for this user', current_user
     return render json: { application: {} } unless current_user.present?
-    find_listing_application
+    app = find_listing_application
     find_application_files
+    puts 'I found an application!', @application, app
     render json: {
       application: @application,
       files: @files,
@@ -212,6 +214,7 @@ class Api::V1::ShortFormController < ApiController
       autofill: params[:autofill],
     }
     @application = Force::ShortFormService.find_listing_application(opts)
+    return @application
   end
 
   def find_application_files

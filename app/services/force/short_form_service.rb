@@ -36,6 +36,7 @@ module Force
       if !application && opts[:autofill]
         application = autofill(applications, opts[:listing_id])
       end
+      puts 'Application found in find_listing_application', application
       application
     end
 
