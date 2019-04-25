@@ -75,7 +75,6 @@
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "ALLOWING_TO_DISCUSS": "By providing an alternate contact, you are allowing us to discuss information on your application with them.",
-        "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
         "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
@@ -197,7 +196,7 @@
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "This list outlines the documents your household might need to provide when applying for housing.",
         "HOMEBUYER_DESC": "You'll need the following documents in order to apply for units for sale:",
-        "HOMEBUYER_EDUCATION_DESC": "Verification of homebuyer education for all adult household members",
+        "HOMEBUYER_EDUCATION_DESC": "Verification of Homebuyer Education Completion",
         "HOMEBUYER_HEADER": "For Homebuyers",
         "HOMEBUYER_LOAN_DESC": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>",
         "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
@@ -207,7 +206,7 @@
         "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with one of the following:",
         "RENT_BURDEN_TITLE": "Rent Burdened Preference",
         "RESIDENT_DESC": "You'll need one of the following documents showing the address where you live in San Francisco:",
-        "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
+        "RESIDENT_TITLE": "Live in San Francisco and Neighborhood Resident Housing Preferences",
         "TITLE": "Document Checklist",
         "WORK_SF_DESC": "You'll need one of the following documents showing the address where you work in San Francisco:",
         "WORK_SF_TITLE": "Work in San Francisco Preference"
@@ -696,6 +695,12 @@
         "HOUSEHOLD_MAXIMUM_INCOME": "Household Maximum Income",
         "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
+        "INCOME_EXCEPTIONS": {
+            "INTRO": "People in your household may need <a href='{{url}}' target='_blank'>special income calculations</a> if they:",
+            "STUDENTS": "Are full-time students (but not the primary applicant)",
+            "NONTAXABLE": "Receive <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
+            "NONTAXABLE_TOOLTIP": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits."
+        },
         "LOTTERY_RESULTS": {
             "HIDE": "Hide Lottery Results",
             "NO_RESULTS": "There are no listings with lottery results at this time.",
@@ -711,18 +716,20 @@
         "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "Occupancy for this building is limited to {{numberOfPeople}} people per unit.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
+        "OCCUPANCY_DESCRIPTION_MIN_ONE": "A minimum of one person per bedroom is required.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
         "PERSON": "person",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
-        "REALTOR_COMMISSION": "For the Buyers's Realtor",
+        "REALTOR_COMMISSION": "For the Buyer's Realtor",
         "REALTOR_COMMISSION_HEADER": "Your Commission: ",
         "REALTOR_COMMISSION_HOW_TO": "How to receive it: ",
         "REALTOR_COMMISSION_NOT_ELIGIBLE": "Your realtor is not eligible for a commission on this unit",
         "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
+        "RENTAL": "rent",
         "REQUIRED_DOCUMENTS": "Required Documents",
         "REQUIRED_DOCUMENTS_AFTER_APPLYING": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
@@ -730,11 +737,12 @@
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
-        "RE_PRICING": "Re-Pricing",
+        "SALE": "sale",
+        "RE_PRICING": "Resale Price Restrictions",
         "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
         "SEE_PREFERENCE_INFORMATION": "See Preference Information",
         "SEE_UNIT_INFORMATION": "See Unit Information",
-        "SHOWING_MATCHES_FOR": "Showing matches for",
+        "SHOWING_MATCHES_FOR": "Showing matching units for {{listingsType}}",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SPECIAL_NOTES": "Special Notes",
@@ -749,7 +757,7 @@
         },
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
-        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
+        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings for {{type}}.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
     },
     "LISTINGS_FOR_RENT": {
@@ -767,10 +775,10 @@
         "BEFORE_APPLYING": {
             "MAKE_SURE_YOU": "Make sure you:",
             "READ_FULL_LIST": "Read <a href='{{url}}' target='_blank'>our full list of requirements</a> for more details.",
-            "STEP_1": "Haven't owned property in the past 3 years",
+            "STEP_1": "Haven't owned residential property in the past 3 years",
             "STEP_2": "Meet our <a href='{{url}}' target='_blank'>income requirements</a>",
             "STEP_3": "Complete <a href='{{url}}' target='_blank'>homebuyer education</a>",
-            "STEP_4": "Get pre-approved for a loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
+            "STEP_4": "Get pre-approved for a mortgage loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
             "STEP_5": "Have enough in savings for closing costs and downpayment",
             "TITLE": "Before applying"
         },

@@ -31,7 +31,7 @@ do ->
 
     beforeEach inject(($rootScope, $controller) ->
       scope = $rootScope.$new()
-      state = jasmine.createSpyObj('$state', ['go'])
+      state = jasmine.createSpyObj('$state', ['go', 'params'])
       fakeListingEligibilityService.setEligibilityFilters = jasmine.createSpy()
       fakeListingEligibilityService.resetEligibilityFilters = jasmine.createSpy()
 
