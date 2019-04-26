@@ -64,6 +64,7 @@ class Api::V1::ShortFormController < ApiController
   def submit_application
     # TODO: remove hotfix for preventing POST autosaves that don't come from
     # the initial entry into the application Name page
+    puts 'SUBMITTING APPLICATION WITH PARAMS', application_params.to_h
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
     response =
       Force::ShortFormService.create_or_update(application_params.to_h, applicant_attrs)
@@ -264,8 +265,10 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def unconfirmed_user_with_temp_session_id
+    puts 'Looking for unconfirmed_user with temp_session_id!', params[:temp_session_id]
     return false if params[:temp_session_id].blank?
     @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
+    puts 'Looking out for unconfirmed_user with temp_session_id!', @unconfirmed_user
     return unless @unconfirmed_user
     params.delete :temp_session_id
     @unconfirmed_user.update(temp_session_id: nil)

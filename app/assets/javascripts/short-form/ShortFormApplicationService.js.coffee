@@ -762,6 +762,7 @@ ShortFormApplicationService = (
       Service.application.completedSections[section.name] = false
 
   Service.submitApplication = (options={}) ->
+    console.log('submitting application', options, Service.application)
     # Turns off autosave requests based on config variable
     return if options.autosave && $window.AUTOSAVE != 'true'
 
@@ -786,6 +787,7 @@ ShortFormApplicationService = (
 
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
+      console.log('doing the temp session id thing')
       params.temp_session_id = Service.session_uid
 
     if Service.application.id
@@ -833,7 +835,7 @@ ShortFormApplicationService = (
         householdPrefAddressMatchEmpty = _.some(householdMembers, (member) -> _.isNil(member.preferenceAddressMatch))
         if householdPrefAddressMatchEmpty
           Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
-
+    console.log('path', path, 'params', params)
     method(path, params).success((data, status, headers, config) ->
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber
