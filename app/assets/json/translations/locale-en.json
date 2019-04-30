@@ -697,9 +697,9 @@
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
         "INCOME_EXCEPTIONS": {
             "INTRO": "People in your household may need <a href='{{url}}' target='_blank'>special income calculations</a> if they:",
-            "STUDENTS": "Are full-time students (but not the primary applicant)",
             "NONTAXABLE": "Receive <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
-            "NONTAXABLE_TOOLTIP": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits."
+            "NONTAXABLE_TOOLTIP": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.",
+            "STUDENTS": "Are full-time students (but not the primary applicant)"
         },
         "LOTTERY_RESULTS": {
             "HIDE": "Hide Lottery Results",
@@ -714,9 +714,9 @@
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "Occupancy for this building is limited to {{numberOfPeople}} people per unit.",
+        "OCCUPANCY_DESCRIPTION_MIN_ONE": "A minimum of one person per bedroom is required.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
-        "OCCUPANCY_DESCRIPTION_MIN_ONE": "A minimum of one person per bedroom is required.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
@@ -729,7 +729,6 @@
         "REALTOR_COMMISSION_NOT_ELIGIBLE": "Your realtor is not eligible for a commission on this unit",
         "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
-        "RENTAL": "rent",
         "REQUIRED_DOCUMENTS": "Required Documents",
         "REQUIRED_DOCUMENTS_AFTER_APPLYING": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
@@ -737,12 +736,12 @@
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
-        "SALE": "sale",
         "RE_PRICING": "Resale Price Restrictions",
         "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
         "SEE_PREFERENCE_INFORMATION": "See Preference Information",
         "SEE_UNIT_INFORMATION": "See Unit Information",
-        "SHOWING_MATCHES_FOR": "Showing matching units for {{listingsType}}",
+        "SHOWING_MATCHES_FOR_RENT": "Showing matching units for rent",
+        "SHOWING_MATCHES_FOR_SALE": "Showing matching units for sale",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SPECIAL_NOTES": "Special Notes",
@@ -757,7 +756,8 @@
         },
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
-        "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings for {{type}}.",
+        "YOU_DONT_MATCH_ANY_RENT": "Based on information you entered, you don't match any current listings for rent.",
+        "YOU_DONT_MATCH_ANY_SALE": "Based on information you entered, you don't match any current listings for sale.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
     },
     "LISTINGS_FOR_RENT": {
