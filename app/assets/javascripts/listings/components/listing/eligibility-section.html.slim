@@ -39,7 +39,11 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
             | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
-
+          p.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.INTRO" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
+          ul
+            li.custom-counter_text
+              | {{'LISTINGS.INCOME_EXCEPTIONS.STUDENTS' | translate }}
+            li.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
 
         .content-card.padding--2x ng-show="$ctrl.parent.loading.ami"
           .padding--2x ng-include="'shared/templates/spinner.html'"
@@ -68,6 +72,8 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
+          p.custom-counter_text ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_MIN_ONE' | translate}}
           / TODO: Remove case for hardcoded listings - still needs Folsom 3/3/19
           p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
@@ -120,7 +126,7 @@ accordion-heading.lead
 
         div ng-show="!$ctrl.loading.preferences && !$ctrl.error.preferences"
 
-          lottery-preference preference="preference" ng-repeat="preference in $ctrl.parent.listing.preferences"
+          lottery-preference preference="preference" listing="$ctrl.parent.listing" ng-repeat="preference in $ctrl.parent.listing.preferences"
 
           div ng-if="::$ctrl.listingHasPreferences()"
             p.custom-counter_text

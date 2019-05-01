@@ -1,4 +1,4 @@
-IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
+IncomeCalculatorController = ($scope, $state, IncomeCalculatorService) ->
   # initialization
   $scope.forms = {}
   $scope.income = angular.copy(IncomeCalculatorService.defaultIncomeSource)
@@ -8,6 +8,9 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     income.editing = false
   $scope.additionalIncome = false
   $scope.additionalIncomeClass = "tint"
+
+  $scope.listingsType = () ->
+    $state.params.listingsType
 
   $scope.noIncomeSources = ->
     $scope.incomeSources.length == 0
@@ -66,7 +69,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.parsedValue = (value) ->
     IncomeCalculatorService._parseIncomeValue(value)
 
-IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
+IncomeCalculatorController.$inject = ['$scope', '$state', 'IncomeCalculatorService']
 
 angular
   .module('dahlia.controllers')

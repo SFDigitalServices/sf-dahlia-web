@@ -45,7 +45,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
   / show this button for the initial form (we don't have income sources)
   .row.padding-top--2x.show-for-small-only ng-if="noIncomeSources()"
   .small-6.columns ng-if="noIncomeSources()"
-    button.button-link.button-lined title="Cancel" ui-sref="dahlia.eligibility-estimator"
+    button.button-link.button-lined title="Cancel" ui-sref="dahlia.eligibility-estimator({listingsType: listingsType()})"
       | Cancel
   .small-6.columns ng-if="noIncomeSources()"
     button.primary.right.no-margin title="Save" ng-click="addAdditionalIncome()" Save

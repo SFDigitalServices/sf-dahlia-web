@@ -36,6 +36,7 @@ do ->
         ListingDataService: fakeListingDataService
         IncomeCalculatorService: fakeIncomeCalculatorService
         $state: state
+        $translate: $translate
         ListingEligibilityService: fakeListingEligibilityService
       }
     )

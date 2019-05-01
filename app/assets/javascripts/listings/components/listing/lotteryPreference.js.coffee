@@ -2,6 +2,7 @@ angular.module('dahlia.components')
 .component 'lotteryPreference',
   bindings:
     preference: '<'
+    listing: '<'
   templateUrl: 'listings/components/listing/lottery-preference.html'
 
   controller: ['ListingDataService', (ListingDataService) ->

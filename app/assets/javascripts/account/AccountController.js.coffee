@@ -64,8 +64,9 @@ AccountController = (
     duration = 400 # animation speed in ms
     $document.scrollToElement(el, topOffset, duration)
 
-  $scope.inputInvalid = (fieldName, identifier = '') ->
-    form = $scope.accountForm()
+  $scope.inputInvalid = (fieldName, identifier = '', form = null) ->
+    if !form
+      form = $scope.accountForm()
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
@@ -271,6 +272,15 @@ AccountController = (
         ListingIdentityService.isSale(application.listing) != firstIsSale
     else
       false
+
+  $scope.validatePasswordConfirmationMatch = (value) ->
+    value == $scope.userAuth.user.password
+
+  $scope.passwordConfirmationError = () ->
+    if _.isEmpty($scope.userAuth.user.password_confirmation)
+      $translate.instant('LABEL.FIELD_REQUIRED')
+    else
+      $translate.instant('ERROR.PASSWORD_CONFIRMATION')
 
 AccountController.$inject = [
   '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',

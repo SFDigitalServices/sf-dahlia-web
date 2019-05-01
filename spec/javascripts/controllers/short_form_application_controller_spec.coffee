@@ -153,6 +153,7 @@ do ->
         goToSection: jasmine.createSpy()
         submitOptionsForCurrentPage: jasmine.createSpy()
         hasNav: jasmine.createSpy()
+        initialState: jasmine.createSpy().and.returnValue('initialStatePage')
         isLoading: spyOn(fakeFunctions, 'fakeIsLoading').and.callThrough()
         _currentPage: jasmine.createSpy()
         getNextReservedPageIfAvailable: jasmine.createSpy()
@@ -744,8 +745,9 @@ do ->
       it 'unsets application autofill value', ->
         expect(scope.application.autofill).toBeUndefined()
 
-      it 'send user to You section of short form', ->
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+      it 'send user to first page of short form', ->
+        expect(fakeShortFormNavigationService.initialState).toHaveBeenCalled()
+        expect(state.go).toHaveBeenCalledWith('initialStatePage')
 
     describe 'checkForCustomPreferences', ->
       describe 'when listing does not have custom preferences', ->
