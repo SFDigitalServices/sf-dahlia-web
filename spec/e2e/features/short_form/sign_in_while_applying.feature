@@ -158,9 +158,7 @@ Feature: Sign-in while filling out application
         And I select my recent application and submit
         And I choose to reconcile my application details by creating a new account
         Then I should be signed out
-        And I wait "3" seconds
         And I should see a form alert that says "Create a new account with a different email address and you won't lose any of the information you've entered so far"
-        And I wait "3" seconds
 
         When I create an account for "Alice Walker"
         Then I should see a form alert that says "Email is already in use"
