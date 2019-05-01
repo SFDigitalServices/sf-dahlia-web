@@ -166,8 +166,8 @@ Feature: Sign-in while filling out application
         And I should see a form alert that says "Create a new account with a different email address and you won't lose any of the information you've entered so far"
         And I wait "3" seconds
 
-        # When I create an account for "Alice Walker"
-        # Then I should see a form alert that says "Email is already in use"
+        When I create an account for "Alice Walker"
+        Then I should see a form alert that says "Email is already in use"
 
         When I create an account for "Harper Lee"
         # wait a moment for account confirmation
@@ -175,17 +175,17 @@ Feature: Sign-in while filling out application
         And I continue my saved draft for the Test Listing
         And I sign in as "Harper Lee"
         Then I should be on the "Name" page of the application
-        # And I should only by able to edit my info from account settings
-        # And I should not be able to navigate to the "Income" section
-        # And I should not be able to navigate to the "Preferences" section
+        And I should only by able to edit my info from account settings
+        And I should not be able to navigate to the "Income" section
+        And I should not be able to navigate to the "Preferences" section
         And I should see the account info for "Harper Lee" filled in on the Name page
         And I should see my address, NRHP match, on the Contact page
 
-        # When I hit the Next button "1" time
-        # And I indicate I will live alone
-        # And I hit the Next button "5" times
-        # Then I should see the "assistedHousing" checkbox un-checked
-        # And I sign out without saving
+        When I hit the Next button "1" time
+        And I indicate I will live alone
+        And I hit the Next button "5" times
+        Then I should see the "assistedHousing" checkbox un-checked
+        And I sign out without saving
 
     Scenario: Signing in to save and finish later with different account details and using new application
         Given I go to the first page of the "Test Listing" application
@@ -237,7 +237,7 @@ Feature: Sign-in while filling out application
         And I sign out without saving
 
 
-    # ### User has a previously submitted application ###
+    ### User has a previously submitted application ###
 
 
     Scenario: Signing in to save and finish later with an already submitted application
