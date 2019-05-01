@@ -135,6 +135,7 @@ Feature: Sign-in while filling out application
         And I should be on the "Contact" page of the application
         # Contact fields should be blank, unlike saved application
         And the Contact page fields should be empty
+        And I wait "3" seconds
 
     Scenario: Signing in to save and finish later with different account details and creating a new account
         Given I go to the first page of the "Test Listing" application
