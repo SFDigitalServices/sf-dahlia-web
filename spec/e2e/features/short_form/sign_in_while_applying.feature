@@ -135,12 +135,8 @@ Feature: Sign-in while filling out application
         And I should be on the "Contact" page of the application
         # Contact fields should be blank, unlike saved application
         And the Contact page fields should be empty
-        And I wait "3" seconds
 
     Scenario: Signing in to save and finish later with different account details and creating a new account
-        Given I go to the first page of the "Test Listing" application
-        When I fill out the Name page as "Alice Walker" with birth date "4/4/1954"
-        And I continue without signing in
         # Already started with anonymous application in previous test
         When I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I confirm my address
