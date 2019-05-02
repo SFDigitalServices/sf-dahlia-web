@@ -17,13 +17,16 @@ angular.module('dahlia.components')
       IncomeCalculatorService.resetIncomeSources()
 
     @headerText = () ->
-      listingTypeTranslation = $translate.instant('LISTINGS.' + @tenureType.toUpperCase())
-      interpolate = { listingsType: listingTypeTranslation }
-      $translate.instant('LISTINGS.SHOWING_MATCHES_FOR', interpolate)
+      if @tenureType == 'sale'
+        $translate.instant('LISTINGS.SHOWING_MATCHES_FOR_SALE')
+      else if @tenureType == 'rental'
+        $translate.instant('LISTINGS.SHOWING_MATCHES_FOR_RENT')
 
     @noMatchesLabel = () ->
-      listingTypeTranslation = $translate.instant('LISTINGS.' + @tenureType.toUpperCase())
-      $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY', type: listingTypeTranslation)
+      if @tenureType == 'sale'
+        $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY_SALE')
+      else if @tenureType == 'rental'
+        $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY_RENT')
 
     return ctrl
   ]
