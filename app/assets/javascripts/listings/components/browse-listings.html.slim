@@ -53,7 +53,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
 .has-eligibility-filters ng-if="$ctrl.parent.hasEligibilityFilters()"
 
   / No Matches Section Heading
-  section.results-section.no-match.border-top ng-if="!$ctrl.openMatchListings.length"
+  section.results-section.no-match.border-top#listing-results ng-if="!$ctrl.openMatchListings.length"
     / Notification: No Matches based on Eligibility
     .row
       .large-12.columns
@@ -68,7 +68,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
     .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
 
   / Notification: Matched listings
-  section.results-section.bg-dust ng-if="$ctrl.openMatchListings.length"
+  section.results-section.bg-dust#listing-results ng-if="$ctrl.openMatchListings.length"
     .row
       .large-12.columns
         header.status-header.status--matched
