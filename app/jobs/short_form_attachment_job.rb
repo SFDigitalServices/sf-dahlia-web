@@ -1,5 +1,5 @@
 # Job for processing attachment submissions to Salesforce
-class ShortFormAttachmentJob < ActiveJob::Base
+class ShortFormAttachmentJob < ApplicationJob
   queue_as :default
 
   rescue_from(ActiveRecord::RecordNotFound) do |e|

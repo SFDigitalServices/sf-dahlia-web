@@ -70,6 +70,6 @@ class Api::V1::ListingsController < ApiController
   private
 
   def listings_params
-    params.permit(:ids, :Tenure)
+    params.permit(:ids, :Tenure).to_h
   end
 end

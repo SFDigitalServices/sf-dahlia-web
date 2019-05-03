@@ -13,5 +13,6 @@ class Api::V1::AddressValidationController < ApiController
   def address_params
     params.require(:address)
           .permit(:company, :street1, :street2, :city, :state, :zip)
+          .to_h
   end
 end

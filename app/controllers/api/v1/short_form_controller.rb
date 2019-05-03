@@ -302,12 +302,14 @@ class Api::V1::ShortFormController < ApiController
   def eligibility_params
     params.require(:eligibility)
           .permit(%i[householdsize incomelevel childrenUnder6])
+          .to_h
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(%i[file session_uid listing_id listing_preference_id
                      document_type address rent_burden_type rent_burden_index])
+          .to_h
   end
 
   def application_params
@@ -440,6 +442,7 @@ class Api::V1::ShortFormController < ApiController
             :hasLoanPreapproval,
             :lendingAgent,
           )
+          .to_h
   end
 
   def uploaded_file_attrs

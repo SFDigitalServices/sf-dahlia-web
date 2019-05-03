@@ -160,6 +160,7 @@ module Overrides
       params
         .require(:contact)
         .permit(:firstName, :middleName, :lastName, :DOB, :email)
+        .to_h
     end
 
     # override DeviseTokenAuth method
@@ -176,6 +177,7 @@ module Overrides
       params
         .require(:user)
         .permit(:email, :password, :password_confirmation, :temp_session_id)
+        .to_h
     end
   end
 end

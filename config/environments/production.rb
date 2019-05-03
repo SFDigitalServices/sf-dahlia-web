@@ -21,10 +21,20 @@ Rails.application.configure do
   # nginx, varnish or squid.
   # config.action_dispatch.rack_cache = true
 
-  # this automatically gets set to true via `rails_12factor` gem
-  config.serve_static_files = true
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
   # cache for 1 year
-  config.static_cache_control = 'public, max-age=31536000'
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=31536000'
+  }
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier_with_source_maps
@@ -64,6 +74,8 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to
   # raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.perform_caching = true
 
   host ||= ENV['MAILER_DOMAIN']
   host ||= ENV['HEROKU_APP_NAME'] ? "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" : nil
