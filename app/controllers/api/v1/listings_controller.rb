@@ -5,7 +5,7 @@ class Api::V1::ListingsController < ApiController
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    @listings = Force::ListingService.listings(listings_params.to_h)
+    @listings = Force::ListingService.listings(listings_params)
     render json: { listings: @listings }
   end
 
@@ -70,6 +70,6 @@ class Api::V1::ListingsController < ApiController
   private
 
   def listings_params
-    params.permit(:ids, :Tenure)
+    params.permit(:ids, :Tenure).to_h
   end
 end

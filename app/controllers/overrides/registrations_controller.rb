@@ -36,7 +36,7 @@ module Overrides
           # <SFDAHLIA> custom way to determine if we want to send reconfirmation
           @resource.initiate_email_reconfirmation = true
         end
-        if @resource.send(resource_update_method, account_update_params.to_h)
+        if @resource.send(resource_update_method, account_update_params)
           # <SFDAHLIA> turn off to disable any effects of after_save happening again
           @resource.initiate_email_reconfirmation = false
           yield @resource if block_given?
@@ -56,7 +56,7 @@ module Overrides
     end
 
     def setup_resource_for_create
-      @resource            = resource_class.new(sign_up_params.to_h)
+      @resource            = resource_class.new(sign_up_params)
       @resource.provider   = 'email'
 
       # honor devise configuration for case_insensitive_keys
@@ -140,7 +140,7 @@ module Overrides
 
     def sync_with_salesforce
       return false if @resource.errors.any?
-      attrs = account_params.to_h.merge(webAppID: current_user.id)
+      attrs = account_params.merge(webAppID: current_user.id)
       salesforce_contact = Force::AccountService.create_or_update(attrs)
       unless salesforce_contact && salesforce_contact['contactId'].present?
         @resource.errors.set(:salesforce_contact_id, ["can't be blank"])
@@ -160,6 +160,7 @@ module Overrides
       params
         .require(:contact)
         .permit(:firstName, :middleName, :lastName, :DOB, :email)
+        .to_h
     end
 
     # override DeviseTokenAuth method
@@ -176,6 +177,7 @@ module Overrides
       params
         .require(:user)
         .permit(:email, :password, :password_confirmation, :temp_session_id)
+        .to_h
     end
   end
 end

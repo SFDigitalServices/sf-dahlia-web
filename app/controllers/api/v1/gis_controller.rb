@@ -18,7 +18,7 @@ class Api::V1::GisController < ApiController
   # Otherwise, always return at least a nil boundary match so users can move on
   # with the application.
   def geocoding_data
-    geocoded_addresses = GeocodingService.new(address_params.to_h).geocode
+    geocoded_addresses = GeocodingService.new(address_params).geocode
     address = GeocodingService.select_best_candidate(geocoded_addresses[:candidates])
 
     if address.present?
@@ -81,19 +81,19 @@ class Api::V1::GisController < ApiController
   end
 
   def address_params
-    params.require(:address).permit(:address1, :city, :state, :zip)
+    params.require(:address).permit(:address1, :city, :state, :zip).to_h
   end
 
   def member_params
-    params.require(:member).permit(:firstName, :lastName, :dob)
+    params.require(:member).permit(:firstName, :lastName, :dob).to_h
   end
 
   def applicant_params
-    params.require(:applicant).permit(:firstName, :lastName, :dob)
+    params.require(:applicant).permit(:firstName, :lastName, :dob).to_h
   end
 
   def listing_params
-    params.require(:listing).permit(:Id, :Name, :Project_ID)
+    params.require(:listing).permit(:Id, :Name, :Project_ID).to_h
   end
 
   def log_params

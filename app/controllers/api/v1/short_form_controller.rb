@@ -12,7 +12,7 @@ class Api::V1::ShortFormController < ApiController
   def validate_household
     response = Force::ShortFormService.check_household_eligibility(
       params[:listing_id],
-      eligibility_params.to_h,
+      eligibility_params,
     )
     render json: response
   end
@@ -66,7 +66,7 @@ class Api::V1::ShortFormController < ApiController
     # the initial entry into the application Name page
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
     response =
-      Force::ShortFormService.create_or_update(application_params.to_h, applicant_attrs)
+      Force::ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
       process_submit_app_response(response)
       render json: response
@@ -166,7 +166,7 @@ class Api::V1::ShortFormController < ApiController
         listing_id: application_params[:listingID],
       )
     else
-      upload_params = uploaded_file_params.to_h.merge(
+      upload_params = uploaded_file_params.merge(
         user_id: nil,
         listing_id: application_params[:listingID],
       )
@@ -176,7 +176,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_temp_files_to_user
-    files = UploadedFile.where(uploaded_file_params.to_h)
+    files = UploadedFile.where(uploaded_file_params)
     files.update_all(user_id: current_user.id)
   end
 
@@ -302,12 +302,14 @@ class Api::V1::ShortFormController < ApiController
   def eligibility_params
     params.require(:eligibility)
           .permit(%i[householdsize incomelevel childrenUnder6])
+          .to_h
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(%i[file session_uid listing_id listing_preference_id
                      document_type address rent_burden_type rent_burden_index])
+          .to_h
   end
 
   def application_params
@@ -440,6 +442,7 @@ class Api::V1::ShortFormController < ApiController
             :hasLoanPreapproval,
             :lendingAgent,
           )
+          .to_h
   end
 
   def uploaded_file_attrs

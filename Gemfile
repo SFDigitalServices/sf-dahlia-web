@@ -91,7 +91,10 @@ gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
   gem 'codeclimate-test-reporter'
+
+  # Provide some testing functions that were removed in Rails 5
   gem 'rails-controller-testing'
+
   gem 'webmock'
   gem 'vcr'
 end
