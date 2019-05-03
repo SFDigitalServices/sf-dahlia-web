@@ -42,12 +42,12 @@
       | {{'LISTINGS.APPLY.INCLUDE_AN_ENVELOPE' | translate}}
 
   / Section 2a: Send by Mail
-  .content-group.bg-snow.skiptranslate ng-if="::$ctrl.parent.listing.Accepting_applications_by_PO_Box" ng-class="{'has-divider': $ctrl.parent.listing.Accepting_applications_at_leasing_agent}"
+  .content-group.bg-snow ng-if="::$ctrl.parent.listing.Accepting_applications_by_PO_Box" ng-class="{'has-divider': $ctrl.parent.listing.Accepting_applications_at_leasing_agent}"
     h3.content-group_title
       | {{'LISTINGS.APPLY.SEND_BY_US_MAIL' | translate}}
-    p.content-group_address.no-margin
+    p.content-group_address.no-margin.skiptranslate
       | {{ ::$ctrl.parent.listing.Application_Organization}}
-    p.content-group_address
+    p.content-group_address.skiptranslate
       | {{ ::$ctrl.parent.listing.Application_Street_Address }}
       br
       | {{ ::$ctrl.parent.listing.Application_City }} {{ ::$ctrl.parent.listing.Application_State }} {{ ::$ctrl.parent.listing.Application_Postal_Code }}
