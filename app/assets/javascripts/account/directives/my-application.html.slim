@@ -8,7 +8,7 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
         ' {{listing.Application_Due_Date | date : "MMM d, yyyy" }}
     section.feed-item-content
       .feed-item-details
-        p.feed-item-address
+        p.feed-item-address.skiptranslate
           | {{formattedAddress()}}
         p.feed-item-number(ng-if="::isSubmitted()" translate="MY_APPLICATIONS.YOUR_LOTTERY_NUMBER_IS" translate-value-lottery-number="{{::lotteryNumber()}}" translate-compile)
 
