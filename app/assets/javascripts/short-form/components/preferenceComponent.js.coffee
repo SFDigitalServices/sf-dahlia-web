@@ -27,6 +27,7 @@ angular.module('dahlia.components')
       @memberSelectorLabel = ''
 
       @initVariables = =>
+        console.log('initializing variables')
         @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
         prefs = @application.preferences
         if @hasProof
@@ -39,6 +40,7 @@ angular.module('dahlia.components')
         @proofOptions = ShortFormHelperService.proofOptions(@preference)
 
       @resetPreference = =>
+        console.log('preference true or false',@application.preferences[@preference])
         if !@application.preferences[@preference]
           # unchecking the box
           ShortFormApplicationService.cancelPreference(@preference)
@@ -47,6 +49,7 @@ angular.module('dahlia.components')
           ShortFormApplicationService.cancelOptOut(@preference)
 
       @onChange = =>
+        console.log('changing the buttons')
         @resetPreference()
 
       @initVariables()

@@ -671,6 +671,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.invalidateAltContactTypeForm = ->
+    console.log('invalidatig alt contact type form')
     ShortFormApplicationService.invalidateAltContactTypeForm()
 
   $scope.checkSurveyComplete = ->

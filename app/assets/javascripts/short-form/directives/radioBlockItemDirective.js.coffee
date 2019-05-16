@@ -6,6 +6,9 @@ angular.module('dahlia.directives')
   templateUrl: 'short-form/directives/radio-block-item.html'
 
   link: (scope, elem, attrs) ->
+    console.log('User in the directive', attrs.user)
+    console.log('scope in the directive', scope[attrs.user])
+    console.log('Whats the scope')
     scope.id = "#{attrs.name}_#{_.kebabCase(attrs.value)}"
     scope.user = scope[attrs.user] if attrs.user
     scope.name = attrs.name

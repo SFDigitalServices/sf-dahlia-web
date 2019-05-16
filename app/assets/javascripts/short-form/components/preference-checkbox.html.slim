@@ -1,9 +1,27 @@
 .checkbox-block ng-class="{ error: $ctrl.invalid(), 'margin-bottom': $ctrl.marginBottom }"
-  input id="preferences-{{$ctrl.preference}}" name="{{$ctrl.preference}}" data-event="{{$ctrl.dataEvent}}" ng-model="$ctrl.application.preferences[$ctrl.preference]" type="checkbox" ng-click="$ctrl.onChange()" aria-describedby="description-{{$ctrl.preference}}" ng-required="$ctrl.required()" ng-class="{ error: $ctrl.invalid() }"
   label.checkbox-block_label for="preferences-{{$ctrl.preference}}" ng-class="{ 'margin-bottom--2x': !($ctrl.translatedDescription || $ctrl.customDescription || $ctrl.shortDescription || $ctrl.moreInfoLink) }"
-    strong.form-label.caps
+    p.form-note.margin-bottom
       | {{$ctrl.title}}
     p.checkbox-block_note translate='{{$ctrl.shortDescription}}' ng-if="$ctrl.shortDescription"
+  .radio-group role="radiogroup" aria-label="{{'LABEL.INCOME' | translate}}"
+    .radio-block.margin-bottom
+      input(id="{{$ctrl.preference}}_true" ng-required="false" ng-model="$ctrl.application.preferences[$ctrl.preference]" name="{{$ctrl.preference}}" type="radio" ng-value="true" ng-class="{ error: inputInvalid(name)}" ng-change="{{$ctrl.onChange()}}" aria-describedby="description-{{$ctrl.preference}}")
+      label.radio-block_label for="{{$ctrl.preference}}_true"
+        | {{'T.YES' | translate}}
+    .radio-block.margin-bottom
+      input(id="{{$ctrl.preference}}_false" ng-required="false" ng-model="$ctrl.application.preferences[$ctrl.preference]" name="{{$ctrl.preference}}" type="radio" ng-value="null" ng-class="{ error: inputInvalid(name)}" ng-change="{{$ctrl.onChange()}}" aria-describedby="description-{{$ctrl.preference}}")
+      label.radio-block_label for="{{$ctrl.preference}}_false"
+        | {{'T.NO' | translate}}
+
+
+
+
+
+    / radio-block-item value="true" name="{{$ctrl.preference}}" user='$ctrl.application.preferences' ng-required='true' on-change="{{$ctrl.onChange()}}" aria-describedby="description-{{$ctrl.preference}}"
+    /   | {{'T.YES' | translate}}
+    / radio-block-item value='false' user='$ctrl.application.preferences' name="{{$ctrl.preference}}" ng-required='true' on-change="{{$ctrl.onChange()}}" aria-describedby="description-{{$ctrl.preference}}"
+    /   | {{'T.NO' | translate}}
+
 
   .checkbox-block_note-inner ng-if="$ctrl.translatedDescription || $ctrl.customDescription || $ctrl.moreInfoLink"
     a.toggler.toggle-more.hide-for-print.open-bottom title="read {{ $ctrl.showDescription ? 'less' : 'more' }}" ng-class="{ 'margin-top-none' : $ctrl.shortDescription, open: $ctrl.showDescription }" ng-click="$ctrl.showDescription = !$ctrl.showDescription"
