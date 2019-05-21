@@ -28,7 +28,7 @@
     "angular-http-etag": "2.0.17",
     "js-yaml": "3.6.1",
     "lifely-angular-carousel": "1.1.0",
-    "lodash": "4.6.1",
+    "lodash": "4.17.11",
     "moment": "2.12.0",
     "moment-timezone": "0.5.6",
     "ng-currency": "0.9.6",
