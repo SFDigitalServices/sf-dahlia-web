@@ -248,10 +248,13 @@ do ->
 
     describe '$scope.validatePasswordConfirmationMatch', ->
       it 'returns false if password is empty', ->
+        fakeAccountService.userAuth.user.password = ''
         expect(scope.validatePasswordConfirmationMatch('password')).toEqual(false)
+
       it 'returns false if password and confirmation does not match', ->
         fakeAccountService.userAuth.user.password = 'password'
         expect(scope.validatePasswordConfirmationMatch('pass')).toEqual(false)
+
       it 'returns true if password and confirmation match', ->
         fakeAccountService.userAuth.user.password = 'password'
         expect(scope.validatePasswordConfirmationMatch('password')).toEqual(true)

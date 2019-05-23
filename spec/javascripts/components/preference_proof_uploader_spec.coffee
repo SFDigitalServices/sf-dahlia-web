@@ -57,16 +57,21 @@ do ->
       ctrl = $componentController 'preferenceProofUploader', locals, fakeBindings
 
     describe 'validateFileNameLength', ->
-      it 'should return true is file is OK', ->
+      it 'should return true if file is OK', ->
         expect(ctrl.validateFileNameLength(fakeFile)).toEqual(true)
+
       it 'should return an error if file is missing', ->
         ctrl.validateFileNameLength(null)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_MISSING')
+
       it 'should return an error if file is too big', ->
-        fakeFile.size = fakeFileUploadService.maxFileSizeBytes + 1
-        ctrl.validateFileNameLength(fakeFile)
+        tooBigFile = angular.copy(fakeFile)
+        tooBigFile.size = fakeFileUploadService.maxFileSizeBytes + 1
+        ctrl.validateFileNameLength(tooBigFile)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_UPLOAD')
+
       it 'should return an error if file name is too long', ->
-        fakeFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
-        ctrl.validateFileNameLength(fakeFile)
+        tooLongNameFile = angular.copy(fakeFile)
+        tooLongNameFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
+        ctrl.validateFileNameLength(tooLongNameFile)
         expect(fakeBindings.proofDocument.error).toEqual('ERROR.FILE_NAME_TOO_LONG')

@@ -103,6 +103,7 @@ do ->
         expect(page).toEqual 'preferences-intro'
 
       it 'gets review survey if survey is incomplete', ->
+        fakeShortFormApplicationService.application.surveyComplete = false
         page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
         expect(page).toEqual 'review-optional'
 

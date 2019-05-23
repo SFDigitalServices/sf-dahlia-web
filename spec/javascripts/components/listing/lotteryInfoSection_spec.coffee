@@ -52,12 +52,16 @@ do ->
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
           ctrl.showDownloadLotteryResultsButton()
           expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
+
         it 'returns false if listing has buckets', ->
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual false
+
         it 'returns true if listing is missing buckets', ->
+          fakeListingLotteryService.loading.lotteryResults = false
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual true
+
         it 'returns false if loading', ->
           fakeListingLotteryService.loading.lotteryResults = true
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)

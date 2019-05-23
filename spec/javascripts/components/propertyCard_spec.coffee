@@ -12,7 +12,6 @@ do ->
     fakeSharedService = {
       showSharing: jasmine.createSpy()
     }
-    fakeListing.reservedDescriptor = [{name: 'fake'}, {name: 'not'}]
     fakeListingContainer = {
       listing: fakeListing
       hasEligibilityFilters: () -> null
@@ -119,13 +118,15 @@ do ->
 
       describe '$ctrl.reservedForLabels', ->
         it 'calls ListingDataService.reservedLabel', ->
-          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
+          fakeListing.reservedDescriptor = [{name: 'foo'}, {name: 'bar'}]
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('foo')
           ctrl.reservedForLabels(fakeListing)
           expect(fakeListingDataService.reservedLabel).toHaveBeenCalled()
         it 'returns values joined with or', ->
-          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
-          expect(ctrl.reservedForLabels(fakeListing)).toEqual 'fake or fake'
+          fakeListing.reservedDescriptor = [{name: 'foo'}, {name: 'bar'}]
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('foo')
+          expect(ctrl.reservedForLabels(fakeListing)).toEqual 'foo or foo'
         it 'returns empty string for empty reservedDescriptor', ->
           fakeListing.reservedDescriptor = null
-          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('foo')
           expect(ctrl.reservedForLabels(fakeListing)).toEqual ''

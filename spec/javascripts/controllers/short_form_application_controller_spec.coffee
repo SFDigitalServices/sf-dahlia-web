@@ -87,7 +87,7 @@ do ->
         { error: -> null }
       validateApplicantAddress: ->
         { error: -> null }
-      checkHouseholdEligiblity: (listing) ->
+      checkHouseholdEligibility: (listing) ->
       hasHouseholdPublicHousingQuestion: ->
       submitApplication: (options={}) ->
       listingHasPreference: ->
@@ -175,7 +175,7 @@ do ->
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'checkHouseholdEligibility').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
@@ -409,10 +409,10 @@ do ->
         scope.eligibilityErrors = ['Error']
         scope.validateHouseholdEligibility()
         expect(scope.eligibilityErrors).toEqual([])
-      it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
+      it 'calls checkHouseholdEligibility in ShortFormApplicationService', ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
-        expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+        expect(fakeShortFormApplicationService.checkHouseholdEligibility).toHaveBeenCalledWith(fakeListing)
       it 'skips ahead if incomeMatch and vouchers', ->
         scope.listing = fakeListing
         scope.application.householdVouchersSubsidies = 'Yes'
@@ -549,7 +549,7 @@ do ->
         describe 'when household is eligible for Rent Burdened preference', ->
           it 'uses ShortFormNavigationService.goToApplicationPage to navigate to the Rent Burdened preference', ->
             fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
+            spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(true)
             scope.checkIfPreferencesApply()
             path = 'dahlia.short-form-application.rent-burdened-preference'
             expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
@@ -557,7 +557,7 @@ do ->
         describe 'when household is not eligible for Rent Burdened preference', ->
           it 'calls $scope.checkForNeighborhoodOrLiveWork()', ->
             fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
+            spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(false)
             scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
             scope.checkIfPreferencesApply()
             expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()

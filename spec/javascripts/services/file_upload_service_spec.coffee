@@ -172,18 +172,18 @@ do ->
           FileUploadService.uploadProof(file, fakeListing, opts)
           expect(proofDocument.loading).toEqual(true)
 
-          describe 'when the rentBurdenType option is not present', ->
-            it 'calls Service._processProofFile with the correct non-rent-burdened params', ->
-              uploadedFileParams =
-                session_uid: FileUploadService.session_uid()
-                listing_id: fakeListing.Id
-                listing_preference_id: listingPreferenceID
-                document_type: proofDocument.proofOption
-              FileUploadService.uploadProof(file, fakeListing, opts)
-              expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
+        describe 'when the rentBurdenType option is not present', ->
+          it 'calls Service._processProofFile with the correct non-rent-burdened params', ->
+            uploadedFileParams =
+              session_uid: FileUploadService.session_uid()
+              listing_id: fakeListing.Id
+              listing_preference_id: listingPreferenceID
+              document_type: proofDocument.proofOption
+            FileUploadService.uploadProof(file, fakeListing, opts)
+            expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
 
-          describe 'when the rentBurdenType option is present', ->
-            it 'calls Service._processProofFile with the correct rent burdened params', ->
+        describe 'when the rentBurdenType option is present', ->
+          it 'calls Service._processProofFile with the correct rent burdened params', ->
               opts =
                 rentBurdenType: 'lease'
                 address: address1
@@ -201,6 +201,7 @@ do ->
 
               FileUploadService.uploadProof(file, fakeListing, opts)
               expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
+
         describe "when document is provided", ->
           it 'removes file for document without preference', ->
             fakeDocument.file = null

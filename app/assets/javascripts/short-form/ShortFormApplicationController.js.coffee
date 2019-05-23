@@ -561,7 +561,7 @@ ShortFormApplicationController = (
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       ShortFormNavigationService.goToSection('Preferences')
       return
-    ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
+    ShortFormApplicationService.checkHouseholdEligibility($scope.listing)
       .then( (response) ->
         eligibility = response.data
         if match == 'householdMatch'
