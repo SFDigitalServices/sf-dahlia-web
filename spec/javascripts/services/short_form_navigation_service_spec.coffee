@@ -77,6 +77,7 @@ do ->
 
       it 'gets household intro page if no householdMembers', ->
         householdSection = ShortFormNavigationService.sections()[2]
+        fakeShortFormApplicationService.application.householdMembers = []
         page = ShortFormNavigationService.getStartOfSection(householdSection)
         expect(page).toEqual 'household-intro'
 

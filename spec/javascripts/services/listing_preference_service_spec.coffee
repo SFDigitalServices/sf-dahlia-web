@@ -41,7 +41,7 @@ do ->
     )
 
     describe 'Service.getListingPreferences', ->
-      beforeEach ->
+      beforeEach (done) ->
         # have to populate listing first
         listing = angular.copy(fakeListing)
         listing.Id = 'fakeId-123'
@@ -50,6 +50,7 @@ do ->
         preferences.preferences = preferences.preferences.concat fakeCustomPrefs
         stubAngularAjaxRequest httpBackend, "/api/v1/listings/#{listing.Id}/preferences", preferences
         ListingPreferenceService.getListingPreferences(listing)
+        done()
 
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()

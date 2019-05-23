@@ -82,7 +82,7 @@ do ->
 
     describe 'loadScript', ->
       it 'appends a script tag with the external translation JS URL as src to the page head', ->
-        ExternalTranslateService.URL = 'http://foo.com/bar.js'
+        ExternalTranslateService.URL = 'https://google.com'
         ExternalTranslateService.loadScript()
         head = document.getElementsByTagName('head')[0]
         translateScriptTag = _.find(head.childNodes, (node) ->
@@ -144,6 +144,7 @@ do ->
 
         it 'dispatches a change event to the element', ->
           # WIP
+          $window.Event = jasmine.createSpy().and.returnValue(changeEvent)
           ExternalTranslateService.translatePageContent()
           expect(element.dispatchEvent).toHaveBeenCalledWith(changeEvent)
 
