@@ -9,6 +9,8 @@ do ->
     $timeout = jasmine.createSpy()
     callbackFunction = undefined
     promise = undefined
+    dummyScriptElement = document.createElement('script')
+    dummyHeadElement = document.createElement('head')
 
     beforeEach module('dahlia.services', ($provide) ->)
 
@@ -81,14 +83,21 @@ do ->
         expect(promise.constructor.name).toEqual('Promise')
 
     describe 'loadScript', ->
-      it 'appends a script tag with the external translation JS URL as src to the page head', ->
-        ExternalTranslateService.URL = 'https://google.com'
+      beforeEach ->
+        spyOn(document, 'createElement').and.returnValue(dummyScriptElement)
+        spyOn(document, 'getElementsByTagName').and.returnValue([dummyHeadElement])
+        ExternalTranslateService.URL = 'foo'
+
+      afterEach ->
+        ExternalTranslateService.URL = null
+
+      it 'adds a script tag with the service\'s URL to the page head', ->
         ExternalTranslateService.loadScript()
-        head = document.getElementsByTagName('head')[0]
-        translateScriptTag = _.find(head.childNodes, (node) ->
-          node.tagName && node.tagName.toLowerCase() == 'script' && node.getAttribute('src') == ExternalTranslateService.URL
-        )
-        expect(typeof translateScriptTag).not.toEqual('undefined')
+        expect(dummyHeadElement.childNodes[0]).toBe(dummyScriptElement)
+        expect(dummyHeadElement.childNodes[0].getAttribute('type'))
+          .toEqual('text/javascript')
+        expect(dummyHeadElement.childNodes[0].getAttribute('src'))
+          .toEqual(ExternalTranslateService.URL)
 
     describe 'setLanguage', ->
       describe 'if the given language is "zh"', ->

@@ -83,10 +83,15 @@ do ->
             expect(ctrl.isClosedListing(fakeListing)).toEqual true
 
       describe '$ctrl.isLotteryResultsListing', ->
-        describe 'lottery results listing', ->
+        describe 'when the given listing is in the list of lottery results listings', ->
           it 'returns true',->
             fakeListingContainer.lotteryResultsListings = [fakeListing]
             expect(ctrl.isLotteryResultsListing(fakeListing)).toEqual true
+
+        describe 'when the given listing is not in the list of lottery results listings', ->
+          it 'returns true',->
+            fakeListingContainer.lotteryResultsListings = [{id: 12345}]
+            expect(ctrl.isLotteryResultsListing(fakeListing)).toEqual false
 
       describe '$ctrl.showSharing', ->
         it 'calls SharedService.showSharing', ->
