@@ -57,6 +57,7 @@ do ->
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     fakeListingPreferenceService = {
+      getListingPreferences: ->
       hasPreference: ->
     }
     setupFakeApplicant = (attributes) ->
@@ -731,17 +732,20 @@ do ->
         ShortFormApplicationService._sendApplication = jasmine.createSpy()
         ShortFormApplicationService.application = fakeShortForm
 
-      it 'should indicate app status as submitted', ->
-        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
-        expect(ShortFormApplicationService.application.status).toEqual('submitted')
+      describe 'when the finish option is set', ->
+        it 'should set app status to "submitted"', ->
+          ShortFormApplicationService.submitApplication({finish: true})
+          expect(ShortFormApplicationService.application.status).toEqual('submitted')
 
       it 'should call $translate.use() to get current locale', ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect($translate.use).toHaveBeenCalled()
 
       it 'should call formatApplication on ShortFormDataService when preferences are defined', ->
-        spyOn(fakeDataService, 'formatApplication').and.callThrough()
+        fakeListingDataService.listing.preferences = [{id: 1}]
+        spyOn(fakeDataService, 'formatApplication').and.returnValue({id: 12345})
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        $rootScope.$apply()
         expect(fakeListingPreferenceService.getListingPreferences).not.toHaveBeenCalled()
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
@@ -798,15 +802,23 @@ do ->
         ShortFormApplicationService.application = fakeShortForm
         ShortFormApplicationService.accountApplication = fakeShortForm
         ShortFormApplicationService.accountApplication.id = '99'
+        ShortFormApplicationService.importUserData = jasmine.createSpy()
+        ShortFormApplicationService.submitApplication = jasmine.createSpy()
+
       afterEach ->
         resetFakePeople()
+
+      it 'should call Service.importUserData with the given logged-in user', ->
+        ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
+        expect(ShortFormApplicationService.importUserData).toHaveBeenCalledWith(fakeApplicant)
 
       it 'should inherit id from accountApplication', ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.application.id).toEqual('99')
-      it 'should importUserData into current application', ->
+
+      it 'submits the application', ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
-        expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
+        expect(ShortFormApplicationService.submitApplication).toHaveBeenCalled()
 
     describe 'importUserData', ->
       describe 'account name differs from application name', ->
@@ -1194,32 +1206,39 @@ do ->
         expect(ShortFormApplicationService.application.validatedForms.Preferences).toEqual {}
         expect(ShortFormApplicationService.application.preferences.optOut.liveInSf).toEqual false
 
-    describe 'checkHouseholdEligiblity', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'should make validate-household api request', ->
+    describe 'checkHouseholdEligibility', ->
+      it 'should make a validate-household api request', ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
         ShortFormApplicationService.application.householdIncome =
           incomeTotal: 22222
           incomeTimeframe: 'per_year'
         requestUrl = "/api/v1/short-form/validate-household"
         stubAngularAjaxRequest httpBackend, requestURL, validateHouseholdMatch
-        ShortFormApplicationService.checkHouseholdEligiblity(fakeListing)
+        ShortFormApplicationService.checkHouseholdEligibility(fakeListing)
         httpBackend.flush()
         expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
 
     describe 'hasHouseholdPublicHousingQuestion', ->
-      it 'should includes public housing question when listing has Rent Burdened / Assisted Housing Preference', ->
+      it 'returns true when the listing has the Rent Burdened/Assisted Housing Preference', ->
         fakeListingPreferenceService.hasPreference = jasmine.createSpy().and.returnValue(true)
-        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingPreferenceService.hasPreference).toHaveBeenCalledWith('assistedHousing', fakeListing)
-        expect(showHouseholdPublicHousingQuestion).toEqual true
+        result = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingPreferenceService.hasPreference).toHaveBeenCalledWith(
+          'assistedHousing',
+          fakeListingDataService.listing
+        )
+        expect(result).toEqual true
 
-      it 'should NOT include public housing question when listing doesn\'t have Rent Burdened / Assisted Housing Preference', ->
+      it 'returns false when the listing doesn\'t have the Rent Burdened/Assisted Housing Preference', ->
         fakeListingPreferenceService.hasPreference = jasmine.createSpy().and.returnValue(false)
-        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingPreferenceService.hasPreference).toHaveBeenCalledWith('assistedHousing', fakeListing)
-        expect(showHouseholdPublicHousingQuestion).toEqual false
+        listing = fakeListingDataService.listing
+        result = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingPreferenceService.hasPreference).toHaveBeenCalledWith(
+          'assistedHousing',
+          fakeListingDataService.listing
+        )
+        expect(result).toEqual false
 
     describe 'loadApplication', ->
       it 'reformats the application', ->

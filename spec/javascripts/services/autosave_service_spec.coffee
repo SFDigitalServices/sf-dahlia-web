@@ -25,11 +25,13 @@ do ->
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({autosave: true})
 
     describe 'Service.startTimer', ->
-      beforeEach ->
+      beforeEach (done) ->
         AutosaveService.startTimer()
+        done()
 
       it 'creates the autosave timer', ->
         expect(AutosaveService.timer).not.toEqual(null)
+
       it 'calls submitApplication after 1 minute', ->
         spyOn(fakeShortFormApplicationService, 'submitApplication')
         $interval.flush(1000) # move forward 1 second

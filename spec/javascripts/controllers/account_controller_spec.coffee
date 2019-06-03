@@ -231,27 +231,32 @@ do ->
 
     describe '$scope.isSale', ->
       it 'calls ListingIdentityService.isSale', ->
-        spyOn(fakeListingIdentityService, 'isSale')
+        fakeListingIdentityService.isSale = jasmine.createSpy()
         scope.isSale(fakeListing)
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
 
     describe '$scope.hasSaleAndRentalApplications', ->
       it 'calls ListingIdentityService.isSale', ->
-        spyOn(fakeListingIdentityService, 'isSale')
+        fakeListingIdentityService.isSale = jasmine.createSpy()
         scope.hasSaleAndRentalApplications([fakeApplication])
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+
       it 'returns false if there are no applications', ->
         expect(scope.hasSaleAndRentalApplications([])).toEqual(false)
+
       it 'returns true if there are at least two different applications', ->
         fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValues(false, true)
         expect(scope.hasSaleAndRentalApplications([fakeApplication, fakeApplication])).toEqual(true)
 
     describe '$scope.validatePasswordConfirmationMatch', ->
       it 'returns false if password is empty', ->
+        fakeAccountService.userAuth.user.password = ''
         expect(scope.validatePasswordConfirmationMatch('password')).toEqual(false)
+
       it 'returns false if password and confirmation does not match', ->
         fakeAccountService.userAuth.user.password = 'password'
         expect(scope.validatePasswordConfirmationMatch('pass')).toEqual(false)
+
       it 'returns true if password and confirmation match', ->
         fakeAccountService.userAuth.user.password = 'password'
         expect(scope.validatePasswordConfirmationMatch('password')).toEqual(true)
