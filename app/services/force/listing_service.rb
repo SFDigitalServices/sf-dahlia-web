@@ -32,7 +32,8 @@ module Force
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
     def self.listings(attrs = {})
-      params = attrs[:ids].present? ? { ids: attrs[:ids] } : nil
+      params = { Tenure: attrs[:Tenure] }
+      params[:ids] = { ids: attrs[:ids] } if attrs[:ids].present?
       results = get_listings(params)
       # TODO: Move filtering to saleforce request
       results = filter_listings(results, attrs) if attrs.present?
