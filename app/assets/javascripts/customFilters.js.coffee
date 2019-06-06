@@ -10,6 +10,15 @@ angular.module('customFilters', [])
     suffix = if relevantDigits <= 3 then suffixes[relevantDigits] else suffixes[0]
     dtfilter + suffix
   ]
+.filter 'dateSuffixOrShort', ['$filter', ($filter) ->
+  (input) ->
+    return '' unless input
+
+    if new Date(input).getYear() == new Date().getYear()
+      $filter('dateSuffix')(input)
+    else
+      return $filter('date')(input, 'M/d/yyyy')
+  ]
 .filter 'htmlTel', ['$filter', ($filter) ->
   (input) ->
     return '' unless input
