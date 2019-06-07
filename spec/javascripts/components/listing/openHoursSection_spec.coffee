@@ -1,6 +1,6 @@
 do ->
   'use strict'
-  describe 'Process Section Component', ->
+  describe 'Open Hours Section Component', ->
     $componentController = undefined
     ctrl = undefined
     locals = undefined
@@ -24,11 +24,11 @@ do ->
       }
     )
 
-    describe 'processSection', ->
+    describe 'openHoursSection', ->
       beforeEach ->
-        ctrl = $componentController 'processSection', locals, {parent: fakeParent}
+        ctrl = $componentController 'openHoursSection', locals, {parent: fakeParent}
 
-      describe 'sortedInformationSessions', ->
+      describe 'sortedOpenHouses', ->
         it 'calls ListingDataService.sortByDate', ->
-          ctrl.sortedInformationSessions()
-          expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Information_Sessions)
+          ctrl.sortedOpenHouses()
+          expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Open_Houses)

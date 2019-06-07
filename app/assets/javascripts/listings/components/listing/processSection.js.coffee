@@ -9,8 +9,5 @@ angular.module('dahlia.components')
     @sortedInformationSessions = ->
       ListingDataService.sortByDate(this.parent.listing.Information_Sessions)
 
-    @sortedOpenHouses = ->
-      ListingDataService.sortByDate(this.parent.listing.Open_Houses)
-
     return ctrl
   ]
