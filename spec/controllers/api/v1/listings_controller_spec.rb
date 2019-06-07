@@ -6,13 +6,13 @@ require 'support/vcr_setup'
 describe Api::V1::ListingsController do
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
-      listings = Force::ListingService.send :get_listings, Tenure: 'rental'
+      listings = Force::ListingService.send :get_listings, type: 'rental'
       listings.take(4)
     end
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
-      listings = Force::ListingService.send :get_listings, Tenure: 'rental'
+      listings = Force::ListingService.send :get_listings, type: 'rental'
       listings.take(4)
     end
   end
@@ -22,28 +22,28 @@ describe Api::V1::ListingsController do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with(Tenure: 'rental')
+          .with(type: 'rental')
           .and_return(rental_listings)
       end
 
       it 'returns only rental listings' do
-        get :index, Tenure: 'rental'
+        get :index, type: 'rental'
         resp = JSON.parse(response.body)['listings']
-        expect(resp.all? { |l| l['Tenure'].include? 'rental' }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].include?('New rental') || l['Tenure'].include?('Re-rental') }).to be_truthy
       end
     end
     context 'sale listings' do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with(Tenure: 'sale')
+          .with(type: 'ownership')
           .and_return(sale_listings)
       end
 
       it 'returns only sale listings' do
-        get :index, Tenure: 'sale'
+        get :index, type: 'ownership'
         resp = JSON.parse(response.body)['listings']
-        expect(resp.all? { |l| l['Tenure'].include? 'sale' }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].include?('New sale') || l['Tenure'].include?('Resale') }).to be_truthy
       end
     end
     context 'raises an error' do
