@@ -1,5 +1,13 @@
 { "locations": [
     {
+      "name": "Asian, Inc.",
+      "languages": ["Cantonese", "Mandarin", "English"],
+      "address": "1167 Mission Street, 4th Floor",
+      "citystate": "San Francisco, CA 94103",
+      "phone": "(415) 928-5910",
+      "website": "http://asianinc.org/"
+    },
+    {
       "name": "BALANCE",
       "languages": ["English", "Cantonese", "Spanish", "Filipino", "Russian"],
       "address": "1390 Market St, Suite 200",
