@@ -43,7 +43,7 @@ class Api::V1::ListingsController < ApiController
       householdsize: params[:householdsize].to_i,
       incomelevel: params[:incomelevel].to_f,
       childrenUnder6: params[:childrenUnder6].to_i,
-      Tenure: params[:listingsType],
+      type: params[:listingsType],
     }
     @listings = Force::ListingService.eligible_listings(filters)
     render json: { listings: @listings }
@@ -70,6 +70,6 @@ class Api::V1::ListingsController < ApiController
   private
 
   def listings_params
-    params.permit(:ids, :Tenure).to_h
+    params.permit(:ids, :type).to_h
   end
 end

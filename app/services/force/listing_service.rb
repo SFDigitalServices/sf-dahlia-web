@@ -32,7 +32,7 @@ module Force
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
     def self.listings(attrs = {})
-      params = { Tenure: attrs[:Tenure] }
+      params = { type: attrs[:type] }
       params[:ids] = { ids: attrs[:ids] } if attrs[:ids].present?
       results = get_listings(params)
       clean_listings_for_browse(results)
@@ -41,9 +41,9 @@ module Force
     def self.raw_listings(opts = {})
       force = opts[:refresh_cache] || false
       Request.new(parse_response: true)
-             .cached_get('/ListingDetails', { Tenure: 'rental' }, force)
+             .cached_get('/ListingDetails', { type: 'rental' }, force)
       Request.new(parse_response: true)
-             .cached_get('/ListingDetails', { Tenure: 'sale' }, force)
+             .cached_get('/ListingDetails', { type: 'ownership' }, force)
     end
 
     # get listings with eligibility matches applied
