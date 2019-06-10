@@ -56,6 +56,8 @@ span ng-hide="alternateContact.alternateContactType == 'None'"
   review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" to="dahlia.short-form-application.alternate-contact-type"
 
   .app-inner
+    p.form-note.margin-bottom
+      | {{ 'REVIEW_APPLICATION.DISCLOSURE' | translate}}
     review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="alt-contact-name" sub-label="{{alternateContactRelationship()}}" bold-sub-label="{{ alternateContact.agency }}"
       | {{alternateContact.firstName}} {{alternateContact.lastName}}
     review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" identifier="alt-contact-email" ng-if="alternateContact.email"

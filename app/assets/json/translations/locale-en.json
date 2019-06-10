@@ -930,7 +930,8 @@
         "PRINT_A_COPY": "Print a copy for your records",
         "TITLE": "Here's the information you submitted.",
         "VIEW_ORIGINAL_LISTING": "View the original listing",
-        "YOUR_LOTTERY_NUMBER": "Your lottery number"
+        "YOUR_LOTTERY_NUMBER": "Your lottery number",
+        "DISCLOSURE": "By providing an alternate contact, you allowed us to discuss information on your application with them."
     },
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "Household",
