@@ -59,6 +59,8 @@ module Force
 
     # get one detailed listing result by id
     def self.listing(id, opts = {})
+      p 'this is the ID'
+      p id
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
@@ -136,6 +138,7 @@ module Force
     private_class_method def self.add_image_urls(listings)
       listing_images = ListingImage.all
       listings.each do |listing|
+        p listing['Building_URL']
         listing_image = listing_images.select do |li|
           li.salesforce_listing_id == listing['Id']
         end.first
