@@ -64,13 +64,9 @@ describe Force::ListingService do
 
   describe '.listing' do
     it 'should return details of a listing' do
-      p 'listing_id'
-      p listing_id
       endpoint = '/ListingDetails/' + listing_id
-      p 'endpoint'
-      p endpoint
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with(endpoint, nil, false).and_return(single_listing)
+        .with(endpoint, nil, false).and_return([single_listing])
       Force::ListingService.listing(listing_id)
     end
   end
