@@ -4,6 +4,12 @@ require 'rails_helper'
 require 'support/vcr_setup'
 
 describe Force::ListingService do
+  listing_ids = %w[a0W0P00000F8YG4UAN a0W0P00000GwGl3]
+  let(:listings_by_ids) do
+    VCR.use_cassette('listings/listings_by_ids') do
+      Force::ListingService.send :get_listings, ids: listing_ids
+    end
+  end
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
       Force::ListingService.send :get_listings, type: 'rental'
@@ -34,6 +40,11 @@ describe Force::ListingService do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails', type: 'rental').and_return(rental_listings)
       Force::ListingService.listings(type: 'rental')
+    end
+    it 'should pass id down to Salesforce request if part of params' do
+      expect_any_instance_of(Force::Request).to receive(:cached_get)
+        .with('/ListingDetails', ids: listing_ids).and_return(listings_by_ids)
+      Force::ListingService.listings(ids: listing_ids)
     end
   end
 

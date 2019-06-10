@@ -32,8 +32,9 @@ module Force
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
     def self.listings(attrs = {})
-      params = { type: attrs[:type] }
-      params[:ids] = { ids: attrs[:ids] } if attrs[:ids].present?
+      params = {}
+      params[:type] = attrs[:type] if attrs[:type].present?
+      params[:ids] = attrs[:ids] if attrs[:ids].present?
       results = get_listings(params)
       clean_listings_for_browse(results)
     end
