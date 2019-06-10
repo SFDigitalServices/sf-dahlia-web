@@ -14,6 +14,11 @@ describe Force::ListingService do
       Force::ListingService.send :get_listings, type: 'ownership'
     end
   end
+  let(:all_listings) do
+    VCR.use_cassette('listings/all_listings') do
+      Force::ListingService.send :get_listings
+    end
+  end
 
   before do
     allow_any_instance_of(Force::Request).to receive(:oauth_token)
@@ -29,6 +34,14 @@ describe Force::ListingService do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails', type: 'rental').and_return(rental_listings)
       Force::ListingService.listings(type: 'rental')
+    end
+  end
+
+  describe '.raw_listings' do
+    it ' should return both rental and ownership listings' do
+      expect_any_instance_of(Force::Request).to receive(:cached_get)
+        .with('/ListingDetails', nil, false).and_return(all_listings)
+      Force::ListingService.raw_listings
     end
   end
 
