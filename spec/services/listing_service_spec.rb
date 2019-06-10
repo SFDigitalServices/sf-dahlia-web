@@ -6,12 +6,12 @@ require 'support/vcr_setup'
 describe Force::ListingService do
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
-      Force::ListingService.send :get_listings, Tenure: 'rental'
+      Force::ListingService.send :get_listings, type: 'rental'
     end
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
-      Force::ListingService.send :get_listings, Tenure: 'sale'
+      Force::ListingService.send :get_listings, type: 'ownership'
     end
   end
 
@@ -20,15 +20,15 @@ describe Force::ListingService do
   end
 
   describe '.listings' do
-    it 'should pass Tenure down to Salesforce request for sale listing' do
+    it 'should pass type down to Salesforce request for ownership listing' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', Tenure: 'sale').and_return([])
-      Force::ListingService.listings(Tenure: 'sale')
+        .with('/ListingDetails', type: 'ownership').and_return(sale_listings)
+      Force::ListingService.listings(type: 'ownership')
     end
-    it 'should pass Tenure down to Salesforce request' do
+    it 'should pass type down to Salesforce request for rental listings' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', Tenure: 'rental').and_return(sale_listings)
-      Force::ListingService.listings(Tenure: 'rental')
+        .with('/ListingDetails', type: 'rental').and_return(rental_listings)
+      Force::ListingService.listings(type: 'rental')
     end
   end
 
@@ -43,21 +43,23 @@ describe Force::ListingService do
 
     it 'returns only rental listings' do
       allow(Force::ListingService).to receive(:get_listings).and_return(rental_listings)
-      rental_filters = filters.merge(Tenure: 'rental')
+      rental_filters = filters.merge(type: 'rental')
       eligible_listings = Force::ListingService.eligible_listings(rental_filters)
-      expect(eligible_listings.size).to eq(2)
+      expect(eligible_listings.size).to eq(49)
       eligible_listings.each do |listing|
-        expect(listing['Tenure']).not_to include('sale')
+        expect(listing['Tenure']).not_to include('New sale')
+        expect(listing['Tenure']).not_to include('Resale')
       end
     end
 
-    it 'returns only sale listings' do
+    it 'returns only ownership listings' do
       allow(Force::ListingService).to receive(:get_listings).and_return(sale_listings)
-      sale_filters = filters.merge(Tenure: 'sale')
+      sale_filters = filters.merge(type: 'ownership')
       eligible_listings = Force::ListingService.eligible_listings(sale_filters)
-      expect(eligible_listings.size).to eq(2)
+      expect(eligible_listings.size).to eq(5)
       eligible_listings.each do |listing|
-        expect(listing['Tenure']).not_to include('rental')
+        expect(listing['Tenure']).not_to include('New rental')
+        expect(listing['Tenure']).not_to include('Re-rental')
       end
     end
   end

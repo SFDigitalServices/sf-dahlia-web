@@ -80,7 +80,7 @@ describe 'Listings API' do
 
   it 'sends a list of listings' do
     VCR.use_cassette('listings/rental_listings') do
-      get '/api/v1/listings.json', Tenure: 'rental'
+      get '/api/v1/listings.json', type: 'rental'
     end
 
     json = JSON.parse(response.body)

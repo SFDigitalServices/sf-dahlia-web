@@ -12,7 +12,7 @@ describe Api::V1::ListingsController do
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
-      listings = Force::ListingService.send :get_listings, type: 'rental'
+      listings = Force::ListingService.send :get_listings, type: 'ownership'
       listings.take(4)
     end
   end
@@ -29,7 +29,8 @@ describe Api::V1::ListingsController do
       it 'returns only rental listings' do
         get :index, type: 'rental'
         resp = JSON.parse(response.body)['listings']
-        expect(resp.all? { |l| l['Tenure'].include?('New rental') || l['Tenure'].include?('Re-rental') }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].exclude?('New sale') }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].exclude?('Resale') }).to be_truthy
       end
     end
     context 'sale listings' do
@@ -43,7 +44,8 @@ describe Api::V1::ListingsController do
       it 'returns only sale listings' do
         get :index, type: 'ownership'
         resp = JSON.parse(response.body)['listings']
-        expect(resp.all? { |l| l['Tenure'].include?('New sale') || l['Tenure'].include?('Resale') }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].exclude?('New rental') }).to be_truthy
+        expect(resp.all? { |l| l['Tenure'].exclude?('Re-rental') }).to be_truthy
       end
     end
     context 'raises an error' do
