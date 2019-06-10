@@ -41,9 +41,7 @@ module Force
     def self.raw_listings(opts = {})
       force = opts[:refresh_cache] || false
       Request.new(parse_response: true)
-             .cached_get('/ListingDetails', { type: 'rental' }, force)
-      Request.new(parse_response: true)
-             .cached_get('/ListingDetails', { type: 'ownership' }, force)
+             .cached_get('/ListingDetails', nil, force)
     end
 
     # get listings with eligibility matches applied
