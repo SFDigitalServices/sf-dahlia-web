@@ -10,7 +10,7 @@ describe 'Listings API' do
   describe 'index' do
     save_fixture do
       VCR.use_cassette('listings/rental_listings') do
-        get '/api/v1/listings.json', Tenure: 'rental'
+        get '/api/v1/listings.json', type: 'rental'
       end
     end
   end
