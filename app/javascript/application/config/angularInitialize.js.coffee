@@ -1,4 +1,5 @@
-@dahlia.run [
+import dahlia from './angularModules.js'
+dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',

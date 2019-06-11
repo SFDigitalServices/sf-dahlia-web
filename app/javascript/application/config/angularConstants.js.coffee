@@ -1,4 +1,6 @@
-@dahlia.constant 'inputMaxLength', {
+import dahlia from './angularModules.js'
+
+dahlia.constant 'inputMaxLength', {
   firstName: 40
   middleName: 20
   lastName: 40
