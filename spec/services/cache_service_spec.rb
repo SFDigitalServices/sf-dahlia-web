@@ -4,7 +4,7 @@ require 'ostruct'
 
 describe CacheService do
   let(:cached_listings) do
-    listings = VCR.use_cassette('listings/listings') do
+    listings = VCR.use_cassette('listings/all_listings') do
       Force::ListingService.raw_listings
     end
     # Trim down, we only need one listing for testing

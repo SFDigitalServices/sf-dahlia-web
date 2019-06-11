@@ -32,16 +32,17 @@ module Force
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
     def self.listings(attrs = {})
-      params = attrs[:ids].present? ? { ids: attrs[:ids] } : nil
+      params = {}
+      params[:type] = attrs[:type] if attrs[:type].present?
+      params[:ids] = attrs[:ids] if attrs[:ids].present?
       results = get_listings(params)
-      # TODO: Move filtering to saleforce request
-      results = filter_listings(results, attrs) if attrs.present?
       clean_listings_for_browse(results)
     end
 
     def self.raw_listings(opts = {})
       force = opts[:refresh_cache] || false
-      Request.new(parse_response: true).cached_get('/ListingDetails', nil, force)
+      Request.new(parse_response: true)
+             .cached_get('/ListingDetails', nil, force)
     end
 
     # get listings with eligibility matches applied
@@ -50,8 +51,7 @@ module Force
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = get_listings(filters.except(:listingsType))
-      results = filter_listings(results, Tenure: filters[:listingsType])
+      results = get_listings(filters)
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
@@ -152,30 +152,6 @@ module Force
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
         end
       end
-    end
-
-    private_class_method def self.filter_listings(results, filter)
-      results = results.collect(&:with_indifferent_access)
-      filter.except(:ids).each do |key, value|
-        results = case key.to_sym
-                  when :Tenure
-                    case value
-                    when 'rental'
-                      results.select do |listing|
-                        listing[key] == 'New rental' || listing[key] == 'Re-rental'
-                      end
-                    when 'sale'
-                      results.select do |listing|
-                        listing[key] == 'New sale' || listing[key] == 'Resale'
-                      end
-                    else
-                      results
-                    end
-                  else
-                    results
-                  end
-      end
-      results
     end
   end
 end
