@@ -28,11 +28,17 @@ angular.module('dahlia.components')
         else
           false
 
+      @agentIsInactive = (id) ->
+        return unless id
+        selectedAgent = _.find(@agents, { Id: id })
+        !selectedAgent.Active
+
       @lendingInstitutionsNames = ->
         _.keys(@lendingInstitutions)
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
+        # TODO: Add filter here that removes agents inactive for 120+ days - need to be returned by API
         @agents = @lendingInstitutions[@selectedInstitution]
 
       @showLendingAgents = ->

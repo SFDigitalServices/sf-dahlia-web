@@ -12,6 +12,11 @@
   select#lendingAgent data-width="auto" name="lendingAgent" ng-disabled="!$ctrl.showLendingAgents()" ng-required="true" ng-model="$ctrl.application.lendingAgent" ng-class="{ error: $ctrl.inputInvalid('lendingAgent')}"
     option value="" {{'LABEL.PLEASE_SELECT_ONE' | translate}}
     option ng-repeat="agent in $ctrl.agents" value="{{agent.Id}}" {{$ctrl.agentName(agent)}}
+  .alert-box.primary#inactive-agent-warning ng-if="$ctrl.agentIsInactive($ctrl.application.lendingAgent)"
+    .alert-body
+      p As of May 19, we no longer accept pre-approval letters from this officer.
+      p Your application will still be in the lottery. But you will need to get another letter from someone on our list before June 29.
+
   small.error id="lendingAgentError" ng-show="$ctrl.inputInvalid('lendingAgent')"
     | {{'LABEL.APPLICANT_SELECT_A_LOAN_OFFICER' | translate}}
   p.checkbox-block_note.margin-bottom--2x id="application_has_loan_pre_approval-description" translate="LABEL.APPLICATION_CANT_FIND_LENDER" translate-value-url="https://sfmohcd.org/lender-list"
