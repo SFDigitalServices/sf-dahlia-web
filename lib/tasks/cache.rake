@@ -6,17 +6,17 @@ namespace :cache do
 
   desc 'Pre-fetch all listings, rental listings, and ownership listings, for caching'
   task prefetch: :environment do
-    Request.new(parse_response: true)
-           .cached_get('/ListingDetails', { type: 'rental' }, force)
-    Request.new(parse_response: true)
-           .cached_get('/ListingDetails', { type: 'ownership' }, force)
+    Force::Request.new(parse_response: true)
+                  .cached_get('/ListingDetails', { type: 'rental' }, false)
+    Force::Request.new(parse_response: true)
+                  .cached_get('/ListingDetails', { type: 'ownership' }, false)
     CacheService.new.prefetch_listings(refresh_all: false)
   end
   task prefetch_daily: :environment do
-    Request.new(parse_response: true)
-           .cached_get('/ListingDetails', { type: 'rental' }, force)
-    Request.new(parse_response: true)
-           .cached_get('/ListingDetails', { type: 'ownership' }, force)
+    Force::Request.new(parse_response: true)
+                  .cached_get('/ListingDetails', { type: 'rental' }, true)
+    Force::Request.new(parse_response: true)
+                  .cached_get('/ListingDetails', { type: 'ownership' }, true)
     CacheService.new.prefetch_listings(refresh_all: true)
   end
 end
