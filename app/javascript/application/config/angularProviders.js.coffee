@@ -1,4 +1,6 @@
-@dahlia.config ['$httpProvider', ($httpProvider) ->
+import dahlia from './angularModules.js'
+
+dahlia.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.useXDomain = true
   delete $httpProvider.defaults.headers.common["X-Requested-With"]
   $httpProvider.defaults.headers.common["Accept"] = "application/json"
@@ -49,42 +51,42 @@
   ]
 ]
 
-@dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
+dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
   uiMaskConfigProvider.clearOnBlur(false)
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
 
 # ng-idle configuration
-@dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
+dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
   # don't override the title with timeout countdowns/warnings
   TitleProvider.enabled(false)
   IdleProvider.idle(300)
   IdleProvider.timeout(60)
 ]
 
-@dahlia.config [
-  '$authProvider', 'AuthConfigurationServiceProvider',
-  ($authProvider, AuthConfigurationServiceProvider) ->
+dahlia.config [
+  '$authProvider',
+  ($authProvider) ->
     # this creates a new AuthConfigurationServiceProvider,
     # which can tap into AccountService to provide the appropriate redirectUrls
-    conf = AuthConfigurationServiceProvider.$get()
+    # conf = AuthConfigurationServiceProvider.$get()
     $authProvider.configure
       apiUrl: '/api/v1'
       storage: getAvailableStorageType()
-      confirmationSuccessUrl: conf.confirmationSuccessUrl
+      # confirmationSuccessUrl: conf.confirmationSuccessUrl
       validateOnPageLoad: false
-      passwordResetSuccessUrl: conf.passwordResetSuccessUrl
+      # passwordResetSuccessUrl: conf.passwordResetSuccessUrl
 ]
 
-@dahlia.config ['$translateProvider', ($translateProvider) ->
-  $translateProvider
-    .preferredLanguage('en')
-    .fallbackLanguage('en')
-    .useSanitizeValueStrategy('sceParameters')
-    .useLoader('assetPathLoader') # custom loader, see below
-]
+# dahlia.config ['$translateProvider', ($translateProvider) ->
+#   $translateProvider
+#     .preferredLanguage('en')
+#     .fallbackLanguage('en')
+#     .useSanitizeValueStrategy('sceParameters')
+#     .useLoader('assetPathLoader') # custom loader, see below
+# ]
 
-@dahlia.factory 'assetPathLoader', ['$q', '$http', '$window', ($q, $http, $window) ->
+dahlia.factory 'assetPathLoader', ['$q', '$http', '$window', ($q, $http, $window) ->
   (options) ->
     deferred = $q.defer()
     # asset paths have unpredictable hash suffixes, which is why we need the custom loader
@@ -96,14 +98,14 @@
     return deferred.promise
 ]
 
-@dahlia.config ['$titleProvider', ($titleProvider) ->
+dahlia.config ['$titleProvider', ($titleProvider) ->
   $titleProvider.documentTitle ['$rootScope', ($rootScope) ->
     defaultTitle = 'DAHLIA San Francisco Housing Portal'
     if $rootScope.$title then "#{$rootScope.$title}  |  #{defaultTitle}" else defaultTitle
   ]
 ]
 
-@dahlia.config ['httpEtagProvider', (httpEtagProvider) ->
+dahlia.config ['httpEtagProvider', (httpEtagProvider) ->
   httpEtagProvider.defineCache 'persistentCache',
     cacheService: 'localStorage'
 ]

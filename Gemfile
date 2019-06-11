@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.0.7'
+gem 'rails', '~> 5.1.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -17,6 +17,8 @@ gem 'slim-rails'
 gem 'uglifier', '~> 3.2'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
+# Asset manager
+gem 'webpacker', '~> 4.0'
 # Add ability to generate source maps in Sprockets
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes

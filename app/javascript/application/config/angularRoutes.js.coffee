@@ -1,5 +1,6 @@
+import dahlia from './angularModules.js'
 # Angular UI-router setup
-@dahlia.config [
+dahlia.config [
   '$stateProvider',
   '$urlRouterProvider',
   '$urlMatcherFactoryProvider',
