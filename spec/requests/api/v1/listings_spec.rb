@@ -9,8 +9,8 @@ describe 'Listings API' do
   ### generate Jasmine fixtures
   describe 'index' do
     save_fixture do
-      VCR.use_cassette('listings/listings') do
-        get '/api/v1/listings.json'
+      VCR.use_cassette('listings/rental_listings') do
+        get '/api/v1/listings.json', type: 'rental'
       end
     end
   end
@@ -79,8 +79,8 @@ describe 'Listings API' do
   # ---- end Jasmine fixtures
 
   it 'sends a list of listings' do
-    VCR.use_cassette('listings/listings') do
-      get '/api/v1/listings.json'
+    VCR.use_cassette('listings/rental_listings') do
+      get '/api/v1/listings.json', type: 'rental'
     end
 
     json = JSON.parse(response.body)
