@@ -56,7 +56,7 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.4.0'
+gem 'devise', '~> 4.6.2'
 gem 'devise_token_auth', '~> 1.1.0'
 
 # postgresql database
@@ -117,7 +117,7 @@ group :development, :test do
   gem 'awesome_print'
   gem 'dotenv-rails'
   gem 'jquery-rails' # only needed for jasmine-jquery
-  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'jasmine'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
   gem 'phantomjs', '~> 2.1.1'
   gem 'pry-byebug'

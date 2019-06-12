@@ -41,18 +41,23 @@ do ->
       ctrl = $componentController 'fileUploader', locals, fakeBindings
 
     describe 'validateFile', ->
-      it 'should return true is file is OK', ->
+      it 'should return true if file is OK', ->
         expect(ctrl.validateFile(fakeFile)).toEqual(true)
+
       it 'should return an error if file is missing', ->
         ctrl.validateFile(null)
         expect(fakeBindings.document.error).toEqual('ERROR.FILE_MISSING')
+
       it 'should return an error if file is too big', ->
-        fakeFile.size = fakeFileUploadService.maxFileSizeBytes + 1
-        ctrl.validateFile(fakeFile)
+        tooBigFile = angular.copy(fakeFile)
+        tooBigFile.size = fakeFileUploadService.maxFileSizeBytes + 1
+        ctrl.validateFile(tooBigFile)
         expect(fakeBindings.document.error).toEqual('ERROR.FILE_UPLOAD')
+
       it 'should return an error if file name is too long', ->
-        fakeFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
-        ctrl.validateFile(fakeFile)
+        tooLongNameFile = angular.copy(fakeFile)
+        tooLongNameFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
+        ctrl.validateFile(tooLongNameFile)
         expect(fakeBindings.document.error).toEqual('ERROR.FILE_NAME_TOO_LONG')
 
     describe 'hasFile', ->

@@ -423,7 +423,7 @@ ShortFormApplicationService = (
     else
       'workInSf'
 
-  Service.checkHouseholdEligiblity = (listing) ->
+  Service.checkHouseholdEligibility = (listing) ->
     params =
       listing_id: listing.Id,
       eligibility:

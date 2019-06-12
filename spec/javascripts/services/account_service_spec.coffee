@@ -177,6 +177,7 @@ do ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
+
       it 'assigns an email success message', ->
         AccountService.userAuth =
           user:
@@ -185,18 +186,13 @@ do ->
         AccountService.updateAccount('email')
         httpBackend.flush()
         expect(AccountService.accountSuccess.messages.email).not.toEqual null
+
       it 'assigns new name/DOB attributes after update', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
         AccountService.updateAccount('nameDOB')
         httpBackend.flush()
         expect(AccountService.loggedInUser.firstName).toEqual fakeUpdateResponse.contact.firstName
-      it 'triggers loading overlay', ->
-        AccountService.userAuth = angular.copy(fakeUserAuth)
-        stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
-        AccountService.updateAccount('nameDOB')
-        httpBackend.flush()
-        expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
 
     describe 'openConfirmEmailModal', ->
       describe 'account just created', ->

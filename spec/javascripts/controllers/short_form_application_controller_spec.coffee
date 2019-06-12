@@ -87,7 +87,7 @@ do ->
         { error: -> null }
       validateApplicantAddress: ->
         { error: -> null }
-      checkHouseholdEligiblity: (listing) ->
+      checkHouseholdEligibility: (listing) ->
       hasHouseholdPublicHousingQuestion: ->
       submitApplication: (options={}) ->
       listingHasPreference: ->
@@ -175,7 +175,7 @@ do ->
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'checkHouseholdEligibility').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
@@ -409,10 +409,10 @@ do ->
         scope.eligibilityErrors = ['Error']
         scope.validateHouseholdEligibility()
         expect(scope.eligibilityErrors).toEqual([])
-      it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
+      it 'calls checkHouseholdEligibility in ShortFormApplicationService', ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
-        expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+        expect(fakeShortFormApplicationService.checkHouseholdEligibility).toHaveBeenCalledWith(fakeListing)
       it 'skips ahead if incomeMatch and vouchers', ->
         scope.listing = fakeListing
         scope.application.householdVouchersSubsidies = 'Yes'
@@ -462,14 +462,20 @@ do ->
         expect(fakeShortFormApplicationService.validMailingAddress).toHaveBeenCalled()
 
     describe '_respondToHouseholdEligibilityResults', ->
+      beforeEach ->
+        scope.householdDoesNotMeetSeniorRequirements = jasmine.createSpy().and.returnValue(false)
+        scope.checkIfReservedUnits = jasmine.createSpy()
+        scope._determineHouseholdEligibilityErrors = jasmine.createSpy().and.returnValue(true)
+        scope.handleErrorState = jasmine.createSpy().and.returnValue(true)
+
       describe 'when householdMatch is true', ->
         beforeEach ->
           eligibility = { householdMatch: true }
           error = null
 
-        it 'navigates to the given callback url for household', ->
+        it 'calls $scope.checkIfReservedUnits', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
+          expect(scope.checkIfReservedUnits).toHaveBeenCalled()
 
       describe 'when householdMatch is false', ->
         beforeEach ->
@@ -478,18 +484,9 @@ do ->
           fakeHHOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
 
-        it 'expects household section to be invalidated', ->
+        it 'calls $scope._determineHouseholdEligibilityErrors', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
-
-        it 'assigns an error message function', ->
-          scope.eligibilityErrors = []
-          scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(scope.eligibilityErrors).not.toEqual([])
-
-        it 'tracks a household size form error in analytics', ->
-          scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big', fakeHHOpts)
+          expect(scope._determineHouseholdEligibilityErrors).toHaveBeenCalled()
 
     describe '_respondToIncomeEligibilityResults', ->
       describe 'when incomeMatch is true', ->
@@ -549,7 +546,7 @@ do ->
         describe 'when household is eligible for Rent Burdened preference', ->
           it 'uses ShortFormNavigationService.goToApplicationPage to navigate to the Rent Burdened preference', ->
             fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
+            spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(true)
             scope.checkIfPreferencesApply()
             path = 'dahlia.short-form-application.rent-burdened-preference'
             expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
@@ -557,7 +554,7 @@ do ->
         describe 'when household is not eligible for Rent Burdened preference', ->
           it 'calls $scope.checkForNeighborhoodOrLiveWork()', ->
             fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
-            fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
+            spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(false)
             scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
             scope.checkIfPreferencesApply()
             expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
@@ -594,6 +591,7 @@ do ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
           scope.saveAndFinishLater(fakeEvent)
+          $rootScope.$apply()
 
         it 'submits application as a draft', ->
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
@@ -674,26 +672,32 @@ do ->
         expect(scope.eligibilityErrors).toEqual scope.communityEligibilityErrorMsg
 
     describe 'checkForRentBurdenFiles', ->
+      beforeEach ->
+        fakeShortFormApplicationService.hasCompleteRentBurdenFiles = jasmine.createSpy()
+        scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
+        scope.setRentBurdenError = jasmine.createSpy()
+        scope.handleErrorState = jasmine.createSpy()
+
       describe 'with rent burden opted out', ->
-        it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
+        it 'calls $scope.checkForNeighborhoodOrLiveWork to determine next page', ->
           scope.preferences.optOut.rentBurden = true
-          scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
           scope.checkForRentBurdenFiles()
           expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
 
       describe 'with complete rent burden files', ->
-        it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
+        it 'calls $scope.checkForNeighborhoodOrLiveWork to determine next page', ->
           scope.preferences.optOut.rentBurden = false
-          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> true
-          scope.checkForNeighborhoodOrLiveWork = jasmine.createSpy()
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles.and.returnValue(true)
           scope.checkForRentBurdenFiles()
           expect(scope.checkForNeighborhoodOrLiveWork).toHaveBeenCalled()
 
-      describe 'with incomplete rent burden files', ->
-        it 'sets custom invalid message', ->
-          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> false
+      describe 'with rent burden not opted out and with incomplete rent burden files', ->
+        it 'sets the rent burden error and handles the error state', ->
+          scope.preferences.optOut.rentBurden = false
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles.and.returnValue(false)
           scope.checkForRentBurdenFiles()
-          expect(scope.customInvalidMessage).not.toEqual(null)
+          expect(scope.setRentBurdenError).toHaveBeenCalled()
+          expect(scope.handleErrorState).toHaveBeenCalled()
 
     describe 'cancelRentBurdenFilesForAddress', ->
       it 'expects deleteRentBurdenPreferenceFiles to be called on Service', ->

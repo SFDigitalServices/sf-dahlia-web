@@ -54,6 +54,7 @@ do ->
 
       describe '$ctrl.submittedApplication', ->
         it 'returns true if application is submitted', ->
+          fakeApplication.status = 'submitted'
           expect(ctrl.submittedApplication()).toEqual true
         it 'returns false if application is not submitted', ->
           fakeApplication.status = 'any'
