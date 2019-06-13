@@ -5,8 +5,7 @@ angular.module('dahlia.components')
     form: '<'
   templateUrl: 'short-form/components/lending-institution.html'
   controller:
-    ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',
-    (ShortFormApplicationService, ShortFormHelperService, $translate) ->
+    ['ShortFormApplicationService', (ShortFormApplicationService) ->
       ctrl = @
       @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
       @selectedInstitution = ''
@@ -38,7 +37,6 @@ angular.module('dahlia.components')
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
-        # TODO: Add filter here that removes agents inactive for 120+ days - need to be returned by API
         @agents = @lendingInstitutions[@selectedInstitution]
 
       @showLendingAgents = ->

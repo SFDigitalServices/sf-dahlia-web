@@ -6,6 +6,9 @@ describe Force::ShortFormService do
   data = JSON.parse(File.read("#{Rails.root}/spec/support/sample-applications.json"))
   apps = data['applications']
   fake_listing_id = 'xyz0001232x'
+  institutions_path = '/spec/javascripts/fixtures/json/short_form-api-'\
+    'lending-institutions.json'
+  fake_lending_institutions = JSON.parse(File.read("#{Rails.root}#{institutions_path}"))
 
   describe '.autofill' do
     it 'should pull in details from the most recently submitted application' do
@@ -46,35 +49,13 @@ describe Force::ShortFormService do
   end
 
   describe '.lending_institutions' do
-    it 'should call Force::Request and format response properly' do
-      institution = { 'Name' => 'Homestreet Bank',
-                      'Id' => '0010P00001mM1HcQAK',
-                      'Contacts' => {
-                        'records' => [
-                          {
-                            'Id' => 'XYZ',
-                            'FirstName' => 'Jason',
-                            'LastName' => 'Lockhart',
-                            'Lending_Agent_Status__c' => 'Active',
-                            'BMR_Certified__c' => true,
-                          },
-                          {
-                            'Id' => 'ABC',
-                            'FirstName' => 'Tim',
-                            'LastName' => 'Lockhart',
-                            'Lending_Agent_Status__c' => 'Active',
-                            'BMR_Certified__c' => false,
-                          },
-                        ],
-                      } }
-      expect_any_instance_of(Force::Request)
-        .to(receive(:cached_get).and_return([institution]))
-      VCR.use_cassette('force/initialize') do
-        expect(Force::ShortFormService.lending_institutions).to eq 'Homestreet Bank' =>
-          [{ 'Id' => 'XYZ',
-             'FirstName' => 'Jason',
-             'LastName' => 'Lockhart',
-             'Active' => true }]
+    it 'should return lending institutions' do
+      allow(Force::ShortFormService)
+        .to receive(:lending_institutions)
+        .and_return(fake_lending_institutions)
+      VCR.use_cassette('shortform/lending-institutions') do
+        expect(Force::ShortFormService.lending_institutions)
+          .to eq fake_lending_institutions
       end
     end
   end
