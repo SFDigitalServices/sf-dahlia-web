@@ -23,7 +23,7 @@ EligibilityEstimatorController = ($scope, $state, ListingDataService, IncomeCalc
         $scope.filters.income_timeframe = 'per_year'
         $scope.filters.income_total = 0
       ListingEligibilityService.setEligibilityFilters($scope.filters)
-      if $scope.listingsType() == 'sale'
+      if $scope.listingsType() == 'ownership'
         $state.go('dahlia.listings-for-sale')
       else
         $state.go('dahlia.listings-for-rent')
