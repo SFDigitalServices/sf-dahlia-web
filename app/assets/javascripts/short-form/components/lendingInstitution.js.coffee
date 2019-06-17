@@ -30,14 +30,16 @@ angular.module('dahlia.components')
       @agentIsInactive = (id) ->
         return unless id
         selectedAgent = _.find(@agents, { Id: id })
-        !selectedAgent.Active
+        selectedAgent.Status == 'Inactive'
 
       @lendingInstitutionsNames = ->
         _.keys(@lendingInstitutions)
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
-        @agents = @lendingInstitutions[@selectedInstitution]
+        @agents = _.filter(@lendingInstitutions[@selectedInstitution], (agent) ->
+          agent.Status != 'Removed'
+        )
 
       @showLendingAgents = ->
         !_.isEmpty(@agents)
