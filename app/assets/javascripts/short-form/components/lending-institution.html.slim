@@ -14,8 +14,8 @@
     option ng-repeat="agent in $ctrl.agents" value="{{agent.Id}}" {{$ctrl.agentName(agent)}}
   .alert-box.primary#inactive-agent-warning ng-if="$ctrl.agentIsInactive($ctrl.application.lendingAgent)"
     .alert-body
-      p As of May 19, we no longer accept pre-approval letters from this officer.
-      p Your application will still be in the lottery. But you will need to get another letter from someone on our list before June 29.
+      p As of May 19, 2019, we no longer accept pre-approval letters from this officer.
+      p Your application will still be in the lottery. But you will need to get another letter from someone on our list before {{$ctrl.lotteryDate}}.
 
   small.error id="lendingAgentError" ng-show="$ctrl.inputInvalid('lendingAgent')"
     | {{'LABEL.APPLICANT_SELECT_A_LOAN_OFFICER' | translate}}
