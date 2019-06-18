@@ -10,6 +10,7 @@ do ->
 
     fakeShortFormApplicationService =
       lendingInstitutions: fakeLendingInstitutions
+      listing: {'Lottery_Date': '2019-04-30'}
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -17,17 +18,23 @@ do ->
       locals = {
         ShortFormApplicationService: fakeShortFormApplicationService
       }
+    )
 
     describe 'lendingInstitutions', ->
       beforeEach ->
-        ctrl = $componentController 'lendingInstitutions', locals
+        ctrl = $componentController 'lendingInstitution', locals
+        ctrl.application = {}
 
       describe '$ctrl.agentIsInactive', ->
         describe 'inactive agent', ->
           it 'returns true', ->
-            agentIsInactive = ctrl.agentIsInactive(ctrl.lendingInstitutions[institutionWithInactiveAgent])
-            expect(agentIsInactive).toEqual(true)
+            ctrl.selectedInstitution = institutionWithInactiveAgent
+            ctrl.onChangeLendingInstitution()
+            agent = ctrl.lendingInstitutions[institutionWithInactiveAgent][0]
+            expect(ctrl.agentIsInactive(agent.Id)).toEqual(true)
         describe 'active agent', ->
           it 'returns false', ->
-            agentIsInactive = ctrl.agentIsInactive(ctrl.lendingInstitutions[institutionWithActiveAgent])
-            expect(agentIsInactive).toEqual(false)
+            ctrl.selectedInstitution = institutionWithActiveAgent
+            ctrl.onChangeLendingInstitution()
+            agent = ctrl.lendingInstitutions[institutionWithActiveAgent][0]
+            expect(ctrl.agentIsInactive(agent.Id)).toEqual(false)
