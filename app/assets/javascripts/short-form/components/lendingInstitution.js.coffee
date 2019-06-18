@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', (ShortFormApplicationService) ->
       ctrl = @
       @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
-      @lotteryDate = moment(ShortFormApplicationService.listing.Lottery_Date)
+      @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
       @selectedInstitution = ''
       @agents = []
 
@@ -43,9 +43,7 @@ angular.module('dahlia.components')
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
-        @agents = _.filter(@lendingInstitutions[@selectedInstitution], (agent) ->
-          agent.Status != 'Removed'
-        )
+        @agents = @lendingInstitutions[@selectedInstitution]
 
       @showLendingAgents = ->
         !_.isEmpty(@agents)
