@@ -34,6 +34,11 @@ angular.module('dahlia.components')
         selectedAgent = _.find(@agents, { Id: id })
         selectedAgent.Status == 'Inactive'
 
+      @agentInactiveDate = (id) ->
+        return unless id
+        selectedAgent = _.find(@agents, { Id: id })
+        selectedAgent.Lending_Agent_Inactive_Date
+
       @lendingInstitutionsNames = ->
         _.keys(@lendingInstitutions)
 
