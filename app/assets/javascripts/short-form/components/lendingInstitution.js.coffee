@@ -9,7 +9,6 @@ angular.module('dahlia.components')
       ctrl = @
       @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
       @lotteryDate = moment(ShortFormApplicationService.listing.Lottery_Date)
-        .format('MMMM DD')
       @selectedInstitution = ''
       @agents = []
 
