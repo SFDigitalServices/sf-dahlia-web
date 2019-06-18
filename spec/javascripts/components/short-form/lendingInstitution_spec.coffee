@@ -26,15 +26,20 @@ do ->
         ctrl.application = {}
 
       describe '$ctrl.agentIsInactive', ->
-        describe 'inactive agent', ->
-          it 'returns true', ->
-            ctrl.selectedInstitution = institutionWithInactiveAgent
-            ctrl.onChangeLendingInstitution()
-            agent = ctrl.lendingInstitutions[institutionWithInactiveAgent][0]
-            expect(ctrl.agentIsInactive(agent.Id)).toEqual(true)
-        describe 'active agent', ->
-          it 'returns false', ->
-            ctrl.selectedInstitution = institutionWithActiveAgent
-            ctrl.onChangeLendingInstitution()
-            agent = ctrl.lendingInstitutions[institutionWithActiveAgent][0]
-            expect(ctrl.agentIsInactive(agent.Id)).toEqual(false)
+        it 'returns true for inactive agent', ->
+          ctrl.selectedInstitution = institutionWithInactiveAgent
+          ctrl.onChangeLendingInstitution()
+          agent = ctrl.lendingInstitutions[institutionWithInactiveAgent][0]
+          expect(ctrl.agentIsInactive(agent.Id)).toEqual(true)
+        it 'returns false for active agent', ->
+          ctrl.selectedInstitution = institutionWithActiveAgent
+          ctrl.onChangeLendingInstitution()
+          agent = ctrl.lendingInstitutions[institutionWithActiveAgent][0]
+          expect(ctrl.agentIsInactive(agent.Id)).toEqual(false)
+
+      describe '$ctrl.agentInactiveDate', ->
+        it 'returns inactive date', ->
+          ctrl.selectedInstitution = institutionWithInactiveAgent
+          ctrl.onChangeLendingInstitution()
+          agent = ctrl.lendingInstitutions[institutionWithInactiveAgent][0]
+          expect(ctrl.agentInactiveDate(agent.Id)).toEqual('2018-06-01')
