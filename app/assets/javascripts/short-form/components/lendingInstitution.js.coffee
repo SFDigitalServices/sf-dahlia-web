@@ -5,10 +5,10 @@ angular.module('dahlia.components')
     form: '<'
   templateUrl: 'short-form/components/lending-institution.html'
   controller:
-    ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',
-    (ShortFormApplicationService, ShortFormHelperService, $translate) ->
+    ['ShortFormApplicationService', (ShortFormApplicationService) ->
       ctrl = @
       @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
+      @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
       @selectedInstitution = ''
       @agents = []
 
@@ -27,6 +27,16 @@ angular.module('dahlia.components')
           field.$invalid && (field.$touched || form.$submitted)
         else
           false
+
+      @agentIsInactive = (id) ->
+        return unless id
+        selectedAgent = _.find(@agents, { Id: id })
+        selectedAgent.Status == 'Inactive'
+
+      @agentInactiveDate = (id) ->
+        return unless id
+        selectedAgent = _.find(@agents, { Id: id })
+        selectedAgent.Lending_Agent_Inactive_Date
 
       @lendingInstitutionsNames = ->
         _.keys(@lendingInstitutions)

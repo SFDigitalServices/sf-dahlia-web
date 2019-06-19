@@ -165,10 +165,12 @@ module Force
 
     def self.format_agent(agent)
       return unless agent.present? && agent['BMR_Certified__c']
-
-      status = agent['Lending_Agent_Status__c'].present? &&
-               agent['Lending_Agent_Status__c'] == 'Active'
-      agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
+      status = agent['Lending_Agent_Status__c']
+      inactive_date = agent['Lending_Agent_Inactive_Date__c']
+      agent.slice('Id', 'FirstName', 'LastName').merge(
+        'Status' => status,
+        'Lending_Agent_Inactive_Date' => inactive_date,
+      )
     end
     private_class_method :format_agent
   end

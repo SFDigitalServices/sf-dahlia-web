@@ -54,6 +54,14 @@ describe 'ShortForm API' do
     end
   end
 
+  describe 'lending institutions' do
+    save_fixture do
+      VCR.use_cassette('shortform/lending-institutions') do
+        get '/api/v1/short-form/lending_institutions'
+      end
+    end
+  end
+
   # ---- end Jasmine fixtures
 
   it 'gets eligibility matches' do
