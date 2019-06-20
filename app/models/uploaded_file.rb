@@ -1,5 +1,5 @@
 # Model for storing temporary uploaded files in the DB
-class UploadedFile < ActiveRecord::Base
+class UploadedFile < ApplicationRecord
   enum rent_burden_type: %i[lease rent]
 
   def self.create_and_resize(attrs)

@@ -123,20 +123,23 @@ do ->
       it 'returns Service.getListingsWithEligibility if eligibility options are set', ->
         ListingDataService.getListingsWithEligibility = jasmine.createSpy()
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
-        ListingDataService.getListings({checkEligibility: true})
+        ListingDataService.getListings({checkEligibility: true, params: {type: 'rental'}})
         expect(ListingDataService.getListingsWithEligibility).toHaveBeenCalled()
+
       it 'calls ListingEligibilityService.eligibilityYearlyIncome', ->
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
-        ListingDataService.getListings({checkEligibility: true})
+        ListingDataService.getListings({checkEligibility: true, params: {type: 'rental'}})
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
+
       it 'passes params to http request', ->
-        fakeParams = {checkEligibility: false, params: {Tenure: 'rental'}}
-        httpBackend.expect('GET', "/api/v1/listings.json?Tenure=rental").respond(fakeListings)
+        fakeParams = {checkEligibility: false, params: {type: 'rental'}}
+        httpBackend.expect('GET', "/api/v1/listings.json?type=rental").respond(fakeListings)
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(false)
         ListingDataService.getListings(fakeParams)
-        httpBackend.flush()
+        expect(httpBackend.flush).not.toThrow()
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
+
       it 'cleans filters', ->
         ListingDataService.getListings({checkEligibility: false, clearFilters: true})
         expect(fakeListingEligibilityService.resetEligibilityFilters).toHaveBeenCalled()
@@ -303,7 +306,7 @@ do ->
         ListingDataService.cleanListings = jasmine.createSpy()
         ListingDataService.groupListings = jasmine.createSpy()
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
-        ListingDataService.getListingsWithEligibility()
+        ListingDataService.getListingsWithEligibility({type: 'rental'})
         httpBackend.flush()
         expect(ListingDataService.cleanListings).toHaveBeenCalled()
         expect(ListingDataService.groupListings).toHaveBeenCalled()
@@ -311,7 +314,7 @@ do ->
         ListingDataService.cleanListings = jasmine.createSpy()
         ListingDataService.groupListings = jasmine.createSpy()
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
-        ListingDataService.getListingsWithEligibility()
+        ListingDataService.getListingsWithEligibility({type: 'rental'})
         httpBackend.flush()
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 

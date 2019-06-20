@@ -7,8 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 4.2.11'
-gem 'rails-api'
+gem 'rails', '~> 5.0.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -17,7 +16,7 @@ gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '~> 3.2'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 # Add ability to generate source maps in Sprockets
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -25,7 +24,7 @@ gem 'sprockets_uglifier_with_source_maps'
 gem 'puma'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder', '~> 2.8.0'
 # takes care of importing javascript dependencies
 # see /bower.json for more info
 gem 'bower-rails'
@@ -57,17 +56,15 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.4.0'
-gem 'devise_token_auth', '~> 0.1.43'
+gem 'devise', '~> 4.6.2'
+gem 'devise_token_auth', '~> 1.1.0'
 
 # postgresql database
 gem 'pg'
 
 gem 'actionmailer-text'
-gem 'activejob', '>= 4.2.11'
 
 gem 'hashie'
-gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
@@ -94,6 +91,10 @@ gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
   gem 'codeclimate-test-reporter'
+
+  # Provide some testing functions that were removed in Rails 5
+  gem 'rails-controller-testing'
+
   gem 'webmock'
   gem 'vcr'
 end
@@ -116,14 +117,12 @@ group :development, :test do
   gem 'awesome_print'
   gem 'dotenv-rails'
   gem 'jquery-rails' # only needed for jasmine-jquery
-  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'jasmine'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
   gem 'phantomjs', '~> 2.1.1'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'quiet_assets'
   gem 'binding_of_caller'
-  gem 'thor-rails'
   gem 'database_cleaner'
   gem 'foreman'
 end
@@ -134,5 +133,4 @@ group :production do
   gem 'memcachier'
   gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
   gem 'rails_autoscale_agent'
-  gem 'rails_12factor'
 end

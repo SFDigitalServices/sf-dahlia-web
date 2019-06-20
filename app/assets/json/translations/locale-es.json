@@ -75,7 +75,6 @@
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "ALLOWING_TO_DISCUSS": "Al proporcionar otra persona de contacto, nos autoriza a corroborar la información de su solicitud con esa persona.",
-        "GOOD_ALTERNATE_CONTACT": "Un buen contacto alternativo es una persona que sabe cómo comunicarse con usted.",
         "TITLE": "¿Hay alguna otra persona que usted nos autorice a contactar en caso de que no podamos comunicarnos con usted?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {

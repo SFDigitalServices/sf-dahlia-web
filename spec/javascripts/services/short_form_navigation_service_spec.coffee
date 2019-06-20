@@ -77,6 +77,7 @@ do ->
 
       it 'gets household intro page if no householdMembers', ->
         householdSection = ShortFormNavigationService.sections()[2]
+        fakeShortFormApplicationService.application.householdMembers = []
         page = ShortFormNavigationService.getStartOfSection(householdSection)
         expect(page).toEqual 'household-intro'
 
@@ -103,6 +104,7 @@ do ->
         expect(page).toEqual 'preferences-intro'
 
       it 'gets review survey if survey is incomplete', ->
+        fakeShortFormApplicationService.application.surveyComplete = false
         page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
         expect(page).toEqual 'review-optional'
 

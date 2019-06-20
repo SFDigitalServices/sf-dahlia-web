@@ -70,7 +70,7 @@
           templateUrl: 'listings/templates/listings-for-rent.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {Tenure: 'rental'}})
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {type: 'rental'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -84,7 +84,7 @@
           templateUrl: 'listings/templates/listings-for-sale.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: false, retranslate: false, clearFilters: true, params: {Tenure: 'sale'}})
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {type: 'ownership'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -484,7 +484,7 @@
 
     })
     .state('dahlia.eligibility-estimator', {
-      url: '/eligibility-estimator'
+      url: '/eligibility-estimator/:listingsType'
       views:
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
@@ -495,7 +495,7 @@
         ]
     })
     .state('dahlia.income-calculator', {
-      url: '/income-calculator'
+      url: '/income-calculator/:listingsType'
       abstract: true
       views:
         'container@':

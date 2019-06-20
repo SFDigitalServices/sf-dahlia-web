@@ -423,7 +423,7 @@ ShortFormApplicationService = (
     else
       'workInSf'
 
-  Service.checkHouseholdEligiblity = (listing) ->
+  Service.checkHouseholdEligibility = (listing) ->
     params =
       listing_id: listing.Id,
       eligibility:
@@ -833,7 +833,6 @@ ShortFormApplicationService = (
         householdPrefAddressMatchEmpty = _.some(householdMembers, (member) -> _.isNil(member.preferenceAddressMatch))
         if householdPrefAddressMatchEmpty
           Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
-
     method(path, params).success((data, status, headers, config) ->
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber

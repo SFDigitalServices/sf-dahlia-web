@@ -29,10 +29,18 @@ describe Overrides::PasswordsController do
 
     it 'change allow_password_change to true' do
       expect do
-        get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/forgot-password'
+        get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/reset-password'
       end.to change { user.reload.allow_password_change }.to(true)
 
       expect(response.status).to eq 302
+    end
+
+    it 'should redirect to home page if user not found' do
+      @token = ''
+      controller.instance_variable_set(:@resource, nil)
+      get :edit, email: user.email, reset_password_token: token, redirect_url: 'http://localhost:3000/reset-password'
+
+      expect(response).to redirect_to('/')
     end
   end
 
@@ -49,6 +57,18 @@ describe Overrides::PasswordsController do
 
     it 'should update password' do
       expect(controller).to receive(:render_update_success).and_return(true)
+      expect do
+        put :update, password: 'newpassword', password_confirmation: 'newpassword'
+      end.to(change { user.encrypted_password })
+
+      expect(response.status).to eq 204
+    end
+
+    it 'should call Emailer on success' do
+      message_delivery = instance_double(ActionMailer::MessageDelivery)
+      expect(Emailer).to receive(:account_update).and_return(message_delivery)
+      allow(message_delivery).to receive(:deliver_later)
+
       expect do
         put :update, password: 'newpassword', password_confirmation: 'newpassword'
       end.to(change { user.encrypted_password })

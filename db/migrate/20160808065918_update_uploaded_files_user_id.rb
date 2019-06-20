@@ -1,4 +1,4 @@
-class UpdateUploadedFilesUserId < ActiveRecord::Migration
+class UpdateUploadedFilesUserId < ActiveRecord::Migration[4.2]
   def change
     remove_index :uploaded_files, column: %i(session_uid userkey listing_id preference),
                                name: 'composite_uid'

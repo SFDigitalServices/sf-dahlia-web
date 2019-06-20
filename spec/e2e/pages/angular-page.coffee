@@ -28,7 +28,4 @@ class AngularPage
       checkbox.click() unless selected
       callback() if callback
 
-
-
-
 module.exports.AngularPage = AngularPage

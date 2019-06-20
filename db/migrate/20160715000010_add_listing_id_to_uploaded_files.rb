@@ -1,4 +1,4 @@
-class AddListingIdToUploadedFiles < ActiveRecord::Migration
+class AddListingIdToUploadedFiles < ActiveRecord::Migration[4.2]
   def change
     add_column :uploaded_files, :listing_id, :string
     add_column :uploaded_files, :document_type, :string

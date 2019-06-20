@@ -54,12 +54,14 @@ do ->
 
     describe 'Service.calculateTotalYearlyIncome', ->
       it 'correctly adds up total yearly income from incomeSources', ->
-        fakeIncomeSource2 =
-          source: "Disability"
-          value: "175"
-          frequency: "month"
-          editing: false
-        expectedResult = fakeIncomeSource.value + (fakeIncomeSource2.value * 12)
-        IncomeCalculatorService.addIncomeSource(fakeIncomeSource)
-        IncomeCalculatorService.addIncomeSource(fakeIncomeSource2)
-        expect(IncomeCalculatorService.calculateTotalYearlyIncome()).toEqual expectedResult
+        fakeYearlyIncomeSource =
+          value: 10000
+          frequency: 'year'
+        fakeMonthlyIncomeSource =
+          value: 175
+          frequency: 'month'
+        expectedTotalIncome = fakeYearlyIncomeSource.value + (fakeMonthlyIncomeSource.value * 12)
+
+        IncomeCalculatorService.incomeSources = [fakeYearlyIncomeSource, fakeMonthlyIncomeSource]
+        spyOn(IncomeCalculatorService, '_parseIncomeValue').and.returnValues(10000.0, 175.0)
+        expect(IncomeCalculatorService.calculateTotalYearlyIncome()).toEqual expectedTotalIncome

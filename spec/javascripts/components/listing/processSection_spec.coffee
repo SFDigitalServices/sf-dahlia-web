@@ -32,8 +32,3 @@ do ->
         it 'calls ListingDataService.sortByDate', ->
           ctrl.sortedInformationSessions()
           expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Information_Sessions)
-
-      describe 'sortedOpenHouses', ->
-        it 'calls ListingDataService.sortByDate', ->
-          ctrl.sortedOpenHouses()
-          expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Open_Houses)

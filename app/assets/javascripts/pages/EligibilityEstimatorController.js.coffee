@@ -14,13 +14,19 @@ EligibilityEstimatorController = ($scope, $state, ListingDataService, IncomeCalc
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
 
+  $scope.listingsType = () ->
+    $state.params.listingsType
+
   $scope.submitForm = () ->
     if ($scope.eligibilityForm.$valid)
       if !$scope.filters.income_total
         $scope.filters.income_timeframe = 'per_year'
         $scope.filters.income_total = 0
       ListingEligibilityService.setEligibilityFilters($scope.filters)
-      $state.go('dahlia.listings-for-rent')
+      if $scope.listingsType() == 'ownership'
+        $state.go('dahlia.listings-for-sale')
+      else
+        $state.go('dahlia.listings-for-rent')
     else
       $scope.hideAlert = false
 

@@ -37,7 +37,7 @@ do ->
           expect(fakeListingLotteryService.listingHasLotteryResults).toHaveBeenCalled()
 
       describe 'openLotteryResultsModal', ->
-        it 'expect ListingLotteryService.openLotteryResultsModal to be called', ->
+        it 'calls ListingLotteryService.openLotteryResultsModal', ->
           ctrl.openLotteryResultsModal()
           expect(fakeListingLotteryService.openLotteryResultsModal).toHaveBeenCalled()
 
@@ -48,17 +48,20 @@ do ->
           expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
 
       describe '$ctrl.showDownloadLotteryResultsButton', ->
-        it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
-          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
-          ctrl.showDownloadLotteryResultsButton()
-          expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
         it 'returns false if listing has buckets', ->
+          fakeListingLotteryService.loading.lotteryResults = false
+          fakeParent.listing.LotteryResultsURL = 'foo'
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual false
+
         it 'returns true if listing is missing buckets', ->
+          fakeListingLotteryService.loading.lotteryResults = false
+          fakeParent.listing.LotteryResultsURL = 'foo'
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual true
+
         it 'returns false if loading', ->
           fakeListingLotteryService.loading.lotteryResults = true
+          fakeParent.listing.LotteryResultsURL = 'foo'
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual false

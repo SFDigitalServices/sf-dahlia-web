@@ -30,7 +30,7 @@ When /^I create an account for "([^"]*)"$/, (fullName) ->
     email: account.email
     password: account.password
   }
-
+  browser.waitForAngular()
   Utils.Account.confirm(account.email) unless existingAccount
 
 When /^I create an account for "([^"]*)" with my pre-filled application details$/,

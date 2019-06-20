@@ -165,7 +165,7 @@ Feature: Sign-in while filling out application
 
         When I create an account for "Harper Lee"
         # wait a moment for account confirmation
-        And I wait "1" seconds
+        And I wait "5" seconds
         And I continue my saved draft for the Test Listing
         And I sign in as "Harper Lee"
         Then I should be on the "Name" page of the application
