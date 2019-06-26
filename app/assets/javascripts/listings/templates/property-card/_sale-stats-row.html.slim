@@ -1,15 +1,44 @@
-tr ng-repeat="unitSummary in ::summary" ng-if="::unitSummary.minPriceWithoutParking || unitSummary.minPriceWithParking"
-  td scope="row"
-    | {{::unitSummary.unitType}}
-  td ng-if="::$ctrl.hasUnitsWithoutParking($ctrl.listing)"
+/ Row without Parking
+tr ng-repeat-start="unitSummary in ::summary" ng-if="0"
+tr ng-if="::unitSummary.minPriceWithoutParking"
+  td.is-subtitled scope="row"
     span
-      span ng-show="::$ctrl.hasRangeOfPricesWithoutParking(unitSummary)"
-        | {{::unitSummary.minPriceWithoutParking | currency:"$":0}} or more
-      span ng-show="::!$ctrl.hasRangeOfPricesWithoutParking(unitSummary)"
+      | {{::unitSummary.unitType}}
+    small
+      | no parking
+  / Unit Price
+  td.is-subtitled
+    span
+      span
         | {{::unitSummary.minPriceWithoutParking | currency:"$":0}}
-  td ng-if="::$ctrl.hasUnitsWithParking($ctrl.listing)"
+      small ng-show="::$ctrl.hasRangeOfPricesWithoutParking(unitSummary)"
+        | or more
+  / HOA Dues
+  td.is-subtitled
     span
-      span ng-show="::$ctrl.hasRangeOfPricesWithParking(unitSummary)"
-        | {{::unitSummary.minPriceWithParking | currency:"$":0}} or more
-      span ng-show="::!$ctrl.hasRangeOfPricesWithParking(unitSummary)"
+      span
+        | {{::unitSummary.minHoaDuesWithoutParking | currency:"$":0}}
+      small ng-show="::$ctrl.hasRangeOfHoaWithoutParking(unitSummary)"
+        | or more
+/ Row with parking
+tr ng-if="::unitSummary.minPriceWithParking"
+  td.is-subtitled scope="row"
+    span
+      | {{::unitSummary.unitType}}
+    small
+      | with parking
+  / Unit Price
+  td.is-subtitled
+    span
+      span
         | {{::unitSummary.minPriceWithParking | currency:"$":0}}
+      small ng-show="::$ctrl.hasRangeOfPricesWithParking(unitSummary)"
+        | or more
+  / HOA Dues
+  td.is-subtitled
+    span
+      span
+        | {{::unitSummary.minHoaDuesWithParking | currency:"$":0}}
+      small ng-show="::$ctrl.hasRangeOfHoaWithParking(unitSummary)"
+        | or more
+tr ng-repeat-end="true" ng-if="0"
