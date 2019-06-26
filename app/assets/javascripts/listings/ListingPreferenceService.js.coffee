@@ -31,13 +31,14 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
     httpConfig = { etagCache: true }
     httpConfig.params = { force: true } if forceRecache
     $http.get("/api/v1/listings/#{listing.Id}/preferences", httpConfig)
-    .then((data, status, headers, config) ->
+    .then((response) ->
+      data = response.data
       if data && data.preferences
         listing.preferences = data.preferences
         # TODO: -- REMOVE HARDCODED PREFERENCES --
         Service._extractCustomPreferences(listing)
         Service.loading.preferences = false
-    ).catch( (data, status, headers, config) ->
+    ).catch( ->
       Service.loading.preferences = false
       Service.error.preferences = true
     )

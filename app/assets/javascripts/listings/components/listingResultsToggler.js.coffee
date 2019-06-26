@@ -16,7 +16,7 @@ angular.module('dahlia.components')
     @togglerId = "#{@sectionName}-toggler"
     @text = {}
 
-    @hasListings = !!@listingResults.length
+    @hasListings = @listingResults && !!@listingResults.length
 
     @setupText = ->
       switch @sectionName
