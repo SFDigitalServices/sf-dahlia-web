@@ -78,7 +78,7 @@ gem 'image_optimizer', '~> 1.7.0'
 gem 'prerender_rails', '~> 1.6.0'
 
 # http requests made easy
-gem 'http', require: false
+gem 'http', '~> 2.0.2', require: false
 
 gem 'sidekiq', '~> 5.0.2'
 
@@ -90,7 +90,7 @@ gem 'fog-aws'
 gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
-  gem 'codeclimate-test-reporter'
+  gem 'codeclimate-test-reporter', '= 0.6.0'
 
   # Provide some testing functions that were removed in Rails 5
   gem 'rails-controller-testing'
