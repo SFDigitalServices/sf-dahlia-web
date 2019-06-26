@@ -163,14 +163,14 @@ GEM
     hashdiff (0.3.9)
     hashie (3.6.0)
     htmlentities (4.3.4)
-    http (4.1.1)
+    http (2.0.3)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
-      http-form_data (~> 2.0)
+      http-form_data (~> 1.0.1)
       http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    http-form_data (2.1.1)
+    http-form_data (1.0.3)
     http_parser.rb (0.6.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -426,7 +426,7 @@ DEPENDENCIES
   hashdiff (~> 0.3.0)
   hashie
   heroku-deflater!
-  http
+  http (~> 2.0.2)
   image_optimizer (~> 1.7.0)
   jasmine
   jasmine-jquery-rails

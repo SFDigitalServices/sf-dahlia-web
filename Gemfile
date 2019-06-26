@@ -78,7 +78,7 @@ gem 'image_optimizer', '~> 1.7.0'
 gem 'prerender_rails', '~> 1.6.0'
 
 # http requests made easy
-gem 'http', require: false
+gem 'http', '~> 2.0.2', require: false
 
 gem 'sidekiq', '~> 5.0.2'
 
