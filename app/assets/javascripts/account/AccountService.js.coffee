@@ -57,12 +57,12 @@ AccountService = (
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
-      .success((response) ->
+      .then((response) ->
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         Service.clearAccountMessages()
         return true
-      ).error((response) ->
+      ).catch((response) ->
         # for errors we manually stop the loading overlay
         bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
@@ -129,9 +129,9 @@ AccountService = (
       Service.accountError.messages.password = msg
 
   Service.checkForAccount = (email) ->
-    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
-      Service.accountExists = data.account_exists
-    ).catch( (data, status, headers, config) ->
+    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").then((response) ->
+      Service.accountExists = response.data.account_exists
+    ).catch( ->
       Service.accountExists = false
     )
 
@@ -160,14 +160,15 @@ AccountService = (
     params =
       email: Service.createdAccount.email
 
-    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
-      data
-    ).catch( (data, status, headers, config) ->
+    $http.post('/api/v1/auth/confirmation', params).then((response) ->
+      response.data
+    ).catch( ->
       return
     )
 
   Service.getMyApplications = ->
-    $http.get('/api/v1/account/my-applications').success((data) ->
+    $http.get('/api/v1/account/my-applications').then((response) ->
+      data = response.data
       if data.applications
         myApplications = _.map(data.applications, ShortFormDataService.reformatApplication)
         angular.copy(myApplications, Service.myApplications)
@@ -179,9 +180,9 @@ AccountService = (
       params =
         user:
           email: Service.userAuth.user.email
-      $http.put('/api/v1/auth', params).success((data) ->
+      $http.put('/api/v1/auth', params).then((response) ->
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
-      ).error((response) ->
+      ).catch((response) ->
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
           Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
@@ -191,11 +192,11 @@ AccountService = (
     else
       params =
         contact: Service.userDataForSalesforce()
-      $http.put('/api/v1/account/update', params).success((data) ->
+      $http.put('/api/v1/account/update', params).then((response) ->
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
-        _.merge(Service.loggedInUser, data.contact)
+        _.merge(Service.loggedInUser, response.data.contact)
         Service._reformatDOB()
-      ).error((response) ->
+      ).catch((response) ->
         # currently, shouldn't ever really reach this case
         bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]

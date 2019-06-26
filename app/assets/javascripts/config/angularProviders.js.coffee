@@ -88,9 +88,9 @@
   (options) ->
     deferred = $q.defer()
     # asset paths have unpredictable hash suffixes, which is why we need the custom loader
-    $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
-      deferred.resolve(data)
-    ).error( ->
+    $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).then((response) ->
+      deferred.resolve(response.data)
+    ).catch( ->
       deferred.reject({status: 503})
     )
     return deferred.promise

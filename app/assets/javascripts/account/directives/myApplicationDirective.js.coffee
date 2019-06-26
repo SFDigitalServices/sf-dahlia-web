@@ -42,10 +42,10 @@ angular.module('dahlia.directives')
           onConfirm: ->
             ShortFormNavigationService.isLoading(true)
             scope.deleteDisabled = true
-            ShortFormApplicationService.deleteApplication(id).success ->
+            ShortFormApplicationService.deleteApplication(id).then ->
               ShortFormNavigationService.isLoading(false)
               scope.application.deleted = true
-            .error ->
+            .catch ->
               scope.deleteDisabled = false
         )
 

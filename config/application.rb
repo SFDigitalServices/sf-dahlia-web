@@ -13,6 +13,7 @@ Bundler.require(*Rails.groups)
 module SfDahliaWeb
   # setting up config for application
   class Application < Rails::Application
+    config.assets.paths << Rails.root.join('node_modules')
     config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations')
 
