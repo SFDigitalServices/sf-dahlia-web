@@ -14,7 +14,6 @@ module SfDahliaWeb
   # setting up config for application
   class Application < Rails::Application
     config.assets.paths << Rails.root.join('node_modules')
-    config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations')
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
