@@ -1,37 +1,35 @@
-table.pricing-table.table-flex.no-margin
-  thead
-    tr
-      th Unit Type
-      th ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" Sales price - No parking
-      th ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" Sales price with parking
-      th Availability
-  tr ng-repeat="group in ::$ctrl.unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
-    td.tr data-th="Unit Type"
-      span.h-small
-        ' {{::group.Unit_Type}}
-        span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
+div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
+  h5.table-pricing-header
+   | {{::group[0].Unit_Type}}
+  table.table-pricing.table-pricing-sale role="grid"
+    thead
+      tr
+        th
+          span.show-for-sr
+            | Availability
+        th ng-if="::$ctrl.groupHasUnitsWithoutParking(group)" Prices without parking
+        th ng-if="::$ctrl.groupHasUnitsWithParking(group)" With one parking space
+    tr ng-repeat="row in ::group" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
+      td.is-subtitled data-th="Availability"
+        small.pricing-table-waitlist ng-if="::row.Status == 'Occupied'"
+          | Waitlist
+        span ng-if="::row.Status != 'Occupied'"
+          i
+            | {{::row.total}}
+          small
+            | available
+        span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::row.Reserved_Type"
           svg
-            use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
-    td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="Sales price - No parking"
-      | {{::group.Price_Without_Parking | currency:"$":0}}
-      div ng-show="::group.Price_Without_Parking && group.HOA_Dues_Without_Parking"
-        small
-          |  HOA dues:
-        |  {{::group.HOA_Dues_Without_Parking | currency:"$":0}}
-        small
-          | /month
-    td ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" data-th="Sales price w/ parking"
-      | {{::group.Price_With_Parking | currency:"$":0}}
-      div ng-show="::group.Price_With_Parking && group.HOA_Dues_With_Parking"
-        small
-          |  HOA dues:
-        |  {{::group.HOA_Dues_With_Parking | currency:"$":0}}
-        small
-          | /month
-    td data-th="Availability"
-      em ng-if="::group.Status == 'Occupied'"
-        | Waitlist
-      span ng-if="::group.Status != 'Occupied'"
-        | {{::group.total}}
-        small
-          ng-pluralize count="::group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+            use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, row.Reserved_Type)}}"
+      td.is-subtitled ng-if="::$ctrl.groupHasUnitsWithoutParking(group)" data-th="Price without parking"
+         dl.clearfix ng-show="::row.Price_Without_Parking && row.HOA_Dues_Without_Parking"
+          dt Sales price:
+          dd <strong>{{::row.Price_Without_Parking | currency:"$":0}}</strong>
+          dt HOA dues:
+          dd <strong>{{::row.HOA_Dues_Without_Parking | currency:"$":0}}</strong> per month
+      td.is-subtitled ng-if="::$ctrl.groupHasUnitsWithParking(group)" data-th="With one parking space"
+        dl.clearfix ng-show="::row.Price_With_Parking && row.HOA_Dues_With_Parking"
+          dt Sales price:
+          dd <strong>{{::row.Price_With_Parking | currency:"$":0}}</strong>
+          dt HOA dues:
+          dd <strong>{{::row.HOA_Dues_With_Parking | currency:"$":0}}</strong> per month

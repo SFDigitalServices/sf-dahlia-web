@@ -53,6 +53,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
       _.forEach groupedByType, (groupedByAmiAndType, unitType) ->
         grouped[percent][unitType] = []
         # Create an identity function to group by unique price and income
+        # TODO: Move this summing to separate function for clarity
         group = _.groupBy groupedByAmiAndType, (unit) ->
           _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
         _.forEach group, (groupedUnits, id) ->
