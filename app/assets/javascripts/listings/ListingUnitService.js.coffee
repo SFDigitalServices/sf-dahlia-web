@@ -38,12 +38,27 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     _.map(combined, (u) -> u.Unit_Type = u.unitType)
     Service._sortGroupedUnits(combined)
 
+  # Given ListingConstantsService.fieldsForUnitGrouping,
+  # combine similar units, and add up the number of available units
+  Service._sumSimilarUnits = (units) ->
+    summaries = []
+    # Create an identity function to group by unique price and income
+    group = _.groupBy units, (unit) ->
+      _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
+    _.forEach group, (groupedUnits, id) ->
+      # Summarize each group by combining the unit details + # of units for that type/AMI combo
+      summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
+      summary.total = groupedUnits.length
+      summaries.push(summary)
+    summaries
+
   # Group units by AMI % and Unit type
   # Returns an object of the form:
-  #  {'50 (percent ami)': {'1br': [{rent/price, etc}, ...], '2br': [...]}}
+  #  {'50 (percent ami)':
+  #     {'1br': [{rent/price, etc}, ...], '2br': [...]},
+  #   '40 (percent ami)': {...}}
   Service.groupUnitDetails = (units) ->
     grouped = {}
-
     # Group by AMI
     groupedByAmi = _.groupBy units, 'of_AMI_for_Pricing_Unit'
     _.forEach groupedByAmi, (unitsGroupedByAmi, percent) ->
@@ -51,19 +66,8 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
       groupedByType = _.groupBy unitsGroupedByAmi, 'Unit_Type'
       grouped[percent] = {}
       _.forEach groupedByType, (groupedByAmiAndType, unitType) ->
-        grouped[percent][unitType] = []
-        # Create an identity function to group by unique price and income
-        # TODO: Move this summing to separate function for clarity
-        group = _.groupBy groupedByAmiAndType, (unit) ->
-          _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
-        _.forEach group, (groupedUnits, id) ->
-          # Summarize each group by combining the unit details + # of units for that type/AMI combo
-          summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
-          summary.total = groupedUnits.length
-          grouped[percent][unitType].push(summary)
-
-          # Sort each array by income
-          grouped[percent][unitType] = Service._sortGroupedUnits(grouped[percent][unitType])
+        summaries = Service._sumSimilarUnits(groupedByAmiAndType)
+        grouped[percent][unitType] = Service._sortGroupedUnits(summaries)
     return grouped
 
   Service.groupUnitTypes = (units) ->
