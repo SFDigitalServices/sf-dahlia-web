@@ -7,8 +7,16 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
         th
           span.show-for-sr
             | Availability
-        th Minimum Income
-        th Rent
+        th
+          span ng-show="!$first"
+            | &nbsp;
+          span ng-class="{'show-for-sr': !$first}"
+            | Minimum Income
+        th
+          span ng-show="!$first"
+            | &nbsp;
+          span ng-class="{'show-for-sr': !$first}"
+            | Rent
     tr ng-repeat="row in ::group" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
       td.is-subtitled data-th="Availability"
         small.pricing-table-waitlist ng-if="::group.Status == 'Occupied'"
