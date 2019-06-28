@@ -1,6 +1,7 @@
-table.table-pricing.table-pricing-hero  role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
-  caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
-    span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
+div.table-pricing-wrapper
+  table.table-pricing.table-pricing-hero  role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
+    caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
+      span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
   thead
     tr
       th scope="col" Unit Type
