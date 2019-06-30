@@ -1,3 +1,4 @@
+require('angular')
 # Custom Directives
 angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
@@ -17,8 +18,8 @@ angular.module('dahlia.components', [])
 
 dahlia = angular.module 'dahlia', [
   'dahlia.directives',
-  'dahlia.controllers',
   'dahlia.services',
+  'dahlia.controllers',
   'dahlia.components',
   # filters
   # 'customFilters',
