@@ -10,7 +10,7 @@ describe 'Listings API' do
   describe 'index' do
     save_fixture do
       VCR.use_cassette('listings/rental_listings') do
-        get '/api/v1/listings.json', type: 'rental'
+        get '/api/v1/listings.json', type: 'rental', subset: 'browse'
       end
     end
   end
@@ -80,7 +80,7 @@ describe 'Listings API' do
 
   it 'sends a list of listings' do
     VCR.use_cassette('listings/rental_listings') do
-      get '/api/v1/listings.json', type: 'rental'
+      get '/api/v1/listings.json', type: 'rental', subset: 'browse'
     end
 
     json = JSON.parse(response.body)
