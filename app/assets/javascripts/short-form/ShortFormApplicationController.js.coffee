@@ -128,6 +128,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.isLoading(true)
     if form.$valid
       # reset page form state (i.e. reset error messages)
+      ShortFormNavigationService.isLoading(false)
       form.$setPristine()
       $scope.handleFormSuccess()
     else
@@ -135,6 +136,7 @@ ShortFormApplicationController = (
       $scope.handleErrorState()
 
   $scope.trackFormErrors = ->
+    ShortFormNavigationService.isLoading(false)
     # track global form error
     AnalyticsService.trackFormError('Application')
     form = $scope.form.applicationForm
