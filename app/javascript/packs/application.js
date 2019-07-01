@@ -57,4 +57,6 @@ import 'application/config/angularRoutes.js'
 import 'application/config/angularProviders.js'
 import 'application/config/angularInitialize.js'
 import 'application/config/angularConstants.js'
+function requireAll(r) { r.keys().forEach(r) }
+requireAll(require.context('../application', true, /\.(js|coffee)$/))
 //= require_tree .
