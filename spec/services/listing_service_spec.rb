@@ -31,6 +31,11 @@ describe Force::ListingService do
       Force::ListingService.send :get_listings
     end
   end
+  let(:all_listings_browse) do
+    VCR.use_cassette('listings/all_listings_browse') do
+      Force::ListingService.send :get_listings, subset: 'browse'
+    end
+  end
 
   # before do
   #   allow_any_instance_of(Force::Request).to receive(:oauth_token)
@@ -51,6 +56,11 @@ describe Force::ListingService do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails', ids: listing_ids).and_return(listings_by_ids)
       Force::ListingService.listings(ids: listing_ids)
+    end
+    it 'should pass subset down to Salesforce request if part of params' do
+      expect_any_instance_of(Force::Request).to receive(:cached_get)
+        .with('/ListingDetails', subset: 'browse').and_return(all_listings_browse)
+      Force::ListingService.listings(subset: 'browse')
     end
   end
 
@@ -84,7 +94,7 @@ describe Force::ListingService do
       allow(Force::ListingService).to receive(:get_listings).and_return(rental_listings)
       rental_filters = filters.merge(type: 'rental')
       eligible_listings = Force::ListingService.eligible_listings(rental_filters)
-      expect(eligible_listings.size).to eq(49)
+      expect(eligible_listings.size).to eq(50)
       eligible_listings.each do |listing|
         expect(listing['Tenure']).not_to include('New sale')
         expect(listing['Tenure']).not_to include('Resale')

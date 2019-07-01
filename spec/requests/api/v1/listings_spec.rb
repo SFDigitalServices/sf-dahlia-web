@@ -10,7 +10,7 @@ describe 'Listings API' do
   describe 'index' do
     save_fixture do
       VCR.use_cassette('listings/rental_listings') do
-        get '/api/v1/listings.json', type: 'rental'
+        get '/api/v1/listings.json', type: 'rental', subset: 'browse'
       end
     end
   end
@@ -47,6 +47,7 @@ describe 'Listings API' do
           householdsize: 2,
           incomelevel: 20_000,
           childrenUnder6: 1,
+          subset: 'browse',
         }
         get '/api/v1/listings/eligibility.json', params
       end
@@ -106,13 +107,14 @@ describe 'Listings API' do
     expect(json['listing']['Id']).to eq(listing_id)
   end
 
-  it 'gets eligibility matches' do
-    VCR.use_cassette('listings/eligibility') do
+  it 'gets rental eligibility matches' do
+    VCR.use_cassette('listings/eligibility/rental') do
       params = {
         householdsize: 2,
         incomelevel: 20_000,
         childrenUnder6: 1,
         listingsType: 'rental',
+        subset: 'browse',
       }
       get '/api/v1/listings/eligibility.json', params
     end
