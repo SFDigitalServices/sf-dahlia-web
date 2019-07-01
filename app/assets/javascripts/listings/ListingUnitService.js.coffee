@@ -55,7 +55,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
   # Group units by AMI % and Unit type
   # Returns an object of the form:
   #  {'50 (percent ami)':
-  #     {'1br': [{rent/price, etc}, ...], '2br': [...]},
+  #     {'1br': [{rent/price, # of units, etc}, ...], '2br': [...]},
   #   '40 (percent ami)': {...}}
   Service.groupUnitDetails = (units) ->
     grouped = {}
