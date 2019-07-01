@@ -18,11 +18,12 @@ AddressValidationService = ($http) ->
         # EasyPost calls it "street1,2" instead of "address1,2"
         key.replace('address', 'street')
       )
-    $http.post('/api/v1/addresses/validate.json', params).then((data, status, headers, config) ->
+    $http.post('/api/v1/addresses/validate.json', params).then((response) ->
+      data = response.data
       angular.copy((if data and data.address then data.address else {}), validated_address_obj)
       # now copy the validated address data into our source address
       Service.copy(validated_address_obj, address)
-    ).catch( (data, status, headers, config) ->
+    ).catch( (data) ->
       # still grab the data for capturing the verifications/errors
       validated_with_errors = (if data and data.address then data.address else {})
       # add invalid flag to indicate validation error

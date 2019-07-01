@@ -321,7 +321,7 @@ ShortFormApplicationController = (
       # validate + geocode address, but kick out if we have errors
       ShortFormApplicationService.validateApplicantAddress( ->
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.verify-address')
-      ).error( ->
+      ).catch( ->
         $scope.addressError = true
         $scope.handleErrorState()
       )
@@ -562,8 +562,7 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToSection('Preferences')
       return
     ShortFormApplicationService.checkHouseholdEligibility($scope.listing)
-      .then( (response) ->
-        eligibility = response.data
+      .then( (eligibility) ->
         if match == 'householdMatch'
           error = eligibility.householdEligibilityResult.toLowerCase()
           $scope._respondToHouseholdEligibilityResults(eligibility, error)
@@ -914,6 +913,7 @@ ShortFormApplicationController = (
       else
         ShortFormNavigationService.isLoading(true)
         AccountService.checkForAccount($scope.applicant.email).then ->
+          ShortFormNavigationService.isLoading(false)
           if AccountService.accountExists
             ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.welcome-back')
           else

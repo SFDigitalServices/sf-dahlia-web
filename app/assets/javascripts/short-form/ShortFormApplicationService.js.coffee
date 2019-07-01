@@ -430,10 +430,10 @@ ShortFormApplicationService = (
         householdsize: Service.householdSize()
         incomelevel: Service.calculateHouseholdIncome()
         childrenUnder6: Service._childrenUnder6()
-    $http.post("/api/v1/short-form/validate-household", params).then((data, status, headers, config) ->
+    $http.post("/api/v1/short-form/validate-household", params).then((response) ->
       # assigning value to object for now to make function unit testable
-      angular.copy(data, Service._householdEligibility)
-      return Service.householdEligibility
+      angular.copy(response.data, Service._householdEligibility)
+      return Service._householdEligibility
     )
 
   Service.hasCompleteRentBurdenFiles = ->
@@ -833,11 +833,12 @@ ShortFormApplicationService = (
         householdPrefAddressMatchEmpty = _.some(householdMembers, (member) -> _.isNil(member.preferenceAddressMatch))
         if householdPrefAddressMatchEmpty
           Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
-    method(path, params).success((data, status, headers, config) ->
+    method(path, params).then((response) ->
+      data = response.data
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber
         Service.application.id = data.id
-    ).error( (data, status, headers, config) ->
+    ).catch( (error) ->
       # error alert is handled by httpProvider.interceptor in angularProviders
       return
     )
@@ -941,7 +942,7 @@ ShortFormApplicationService = (
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
-    ).success( ->
+    ).then( ->
       Service.copyHomeToMailingAddress()
       # gis data errors are handled in the Rails controller
       GISService.getGISData(
@@ -962,7 +963,7 @@ ShortFormApplicationService = (
     AddressValidationService.validate(
       address: Service.householdMember.home_address
       type: 'home'
-    ).success( ->
+    ).then( ->
       # gis data errors are handled in the Rails controller
       GISService.getGISData(
         address: Service.householdMember.home_address
