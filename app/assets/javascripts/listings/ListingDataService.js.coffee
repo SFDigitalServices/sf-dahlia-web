@@ -152,12 +152,14 @@ ListingDataService = (
       deferred.resolve()
 
   Service.getListingsWithEligibility = (params) ->
+    # Given houshold attributes, return listings that household is eligible for
     params =
       householdsize: ListingEligibilityService.eligibility_filters.household_size
       incomelevel: ListingEligibilityService.eligibilityYearlyIncome()
       includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
       childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
-      listingsType: params.type
+      listingsType: params.type,
+      subset: 'browse'
 
     $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}", {
       etagCache: true,
@@ -229,7 +231,7 @@ ListingDataService = (
     Service._resetHTTPRequests()
     angular.copy([], Service.listings)
     params =
-      params: {ids: ids.join(',')}
+      params: {ids: ids.join(','), subset: 'browse'}
       timeout: Service.deferred.promise
     $http.get("/api/v1/listings.json", params).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []

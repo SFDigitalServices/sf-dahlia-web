@@ -6,13 +6,17 @@ require 'support/vcr_setup'
 describe Api::V1::ListingsController do
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
-      listings = Force::ListingService.send :get_listings, type: 'rental'
+      listings = Force::ListingService.send(:get_listings,
+                                            type: 'rental',
+                                            subset: 'browse')
       listings.take(4)
     end
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
-      listings = Force::ListingService.send :get_listings, type: 'ownership'
+      listings = Force::ListingService.send(:get_listings,
+                                            type: 'ownership',
+                                            subset: 'browse')
       listings.take(4)
     end
   end

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.15.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,20 +21,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 27 Dec 2018 03:16:49 GMT
+      - Mon, 01 Jul 2019 20:23:02 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
       - nosniff
       X-Xss-Protection:
       - 1; mode=block
-      Content-Security-Policy:
-      - upgrade-insecure-requests
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=GCIDO8kvRSKxBLe0c_zi2g;Path=/;Domain=.salesforce.com;Expires=Mon,
-        25-Feb-2019 03:16:49 GMT;Max-Age=5184000
+      - BrowserId=ofq6tNJ7Syybfnx7_ereZw;Path=/;Domain=.salesforce.com;Expires=Fri,
+        30-Aug-2019 20:23:02 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,9 +45,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545880610028","signature":"pHLk7ZbFsZS25R2diFk7z0USlCOqYzlioLUWpg8q5xQ="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1562012582441","signature":"mbYpZgDTXHQUMdEMkP7jNKcri1plgIKr0O09v+SmkFo="}'
     http_version: 
-  recorded_at: Thu, 27 Dec 2018 03:16:50 GMT
+  recorded_at: Mon, 01 Jul 2019 20:23:02 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/Preferences/a0W0P00000F8YG4UAN"
@@ -58,7 +56,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.15.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -71,22 +69,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 27 Dec 2018 03:16:50 GMT
+      - Mon, 01 Jul 2019 20:23:04 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
+        includeSubDomains; report-uri="https://a.forcesslreports.com/hpkp-report/00D0t0000000xVqm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
+      - max-age=86400; report-uri="https://a.forcesslreports.com/Expect-CT-report/00D0t0000000xVqm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=p6ww9Gk7QNiBzVCyjGF2aw;Path=/;Domain=.salesforce.com;Expires=Mon,
-        25-Feb-2019 03:16:50 GMT;Max-Age=5184000
+      - BrowserId=JQ567V-0SSqmrWn128RSVw;Path=/;Domain=.salesforce.com;Expires=Fri,
+        30-Aug-2019 20:23:04 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -127,5 +125,5 @@ http_interactions:
         in the targeted redevelopment site on or after the time of application for
         Choice Neighborhoods of October 26, 2010.","appTotal":null}]'
     http_version: 
-  recorded_at: Thu, 27 Dec 2018 03:16:50 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Mon, 01 Jul 2019 20:23:04 GMT
+recorded_with: VCR 5.0.0
