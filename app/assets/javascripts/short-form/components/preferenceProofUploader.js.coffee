@@ -21,6 +21,10 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'FileUploadService', 'SharedService', 'ShortFormHelperService', '$translate'
     (ShortFormApplicationService, FileUploadService, SharedService, ShortFormHelperService, $translate) ->
       ctrl = @
+
+      @$onInit = =>
+        @setProofType()
+
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
@@ -115,6 +119,5 @@ angular.module('dahlia.components')
 
       @assetPaths = SharedService.assetPaths
 
-      @setProofType()
       return ctrl
   ]

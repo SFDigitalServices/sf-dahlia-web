@@ -26,9 +26,7 @@ angular.module('dahlia.components')
       @eligibleMembers = []
       @memberSelectorLabel = ''
 
-      @initVariables = =>
-        if !@application && ShortFormApplicationService.application
-          @application = ShortFormApplicationService.application
+      @$onInit = =>
         @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
         prefs = @application.preferences
         if @hasProof
@@ -50,8 +48,6 @@ angular.module('dahlia.components')
 
       @onChange = =>
         @resetPreference()
-
-      @initVariables()
 
       return ctrl
 
