@@ -75,8 +75,8 @@
         button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
 
-    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in $ctrl.parent.listing.groupedUnits"
-      h2.property-hero_stat-header ng-if="percent && $ctrl.hasMultipleAMIUnits()"
+    .property-hero_stat.margin-top--2x.margin-left.margin-right ng-repeat="(percent, unitGroups) in $ctrl.parent.listing.groupedUnits"
+      h2.table-pricing-ami ng-if="percent && $ctrl.hasMultipleAMIUnits()"
         ' {{percent}}% AMI
         ng-pluralize count="unitGroups.length" when="{'1': ' Unit', 'other': ' Units'}"
 

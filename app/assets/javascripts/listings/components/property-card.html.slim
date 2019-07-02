@@ -39,7 +39,7 @@
 
   .property-card_content
     .property-card_stats
-      h2.property-card_label
+      h2.t-base.t-alt-sans.t-semi.margin-bottom
         span translate="LISTINGS.AVAILABLE_UNITS" ng-if="::!$ctrl.listing.hasWaitlist"
         span translate="LISTINGS.OPEN_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
         span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
