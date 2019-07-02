@@ -27,6 +27,8 @@ angular.module('dahlia.components')
       @memberSelectorLabel = ''
 
       @initVariables = =>
+        if !@application && ShortFormApplicationService.application
+          @application = ShortFormApplicationService.application
         @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
         prefs = @application.preferences
         if @hasProof
