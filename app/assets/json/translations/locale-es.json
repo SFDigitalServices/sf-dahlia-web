@@ -759,7 +759,7 @@
         "HEADER": {
             "FIND_MATCHING_LISTINGS": "Encuentre anuncios compatibles",
             "IF_YOU_TELL_US": "Si nos informa el tamaño y los ingresos del grupo familiar, podemos destacar los anuncios de vivienda para los que sería elegible.",
-            "OR_GET_HELP_CALCULATING_INCOME": "u <a ui-sref=\"{{sref}}\">obtenga ayuda para calcular sus ingresos</a>"
+            "OR_GET_HELP_CALCULATING_INCOME": "u <a ui-sref='{{sref}}'>obtenga ayuda para calcular sus ingresos</a>"
         }
     },
     "LISTINGS_FOR_SALE": {
