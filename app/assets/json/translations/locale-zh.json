@@ -759,7 +759,7 @@
         "HEADER": {
             "FIND_MATCHING_LISTINGS": "尋找符合的名單",
             "IF_YOU_TELL_US": "如果您告知家庭人數以及收入，我們可以將您可能符合資格的清單標亮顯示。",
-            "OR_GET_HELP_CALCULATING_INCOME": "或是<a ui-sref=\"{{sref}}\">獲得收入計算協助</a>"
+            "OR_GET_HELP_CALCULATING_INCOME": "或是<a ui-sref='{{sref}}'>獲得收入計算協助</a>"
         }
     },
     "LISTINGS_FOR_SALE": {
