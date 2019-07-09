@@ -13,6 +13,10 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',
     (ShortFormApplicationService, ShortFormHelperService, $translate) ->
       ctrl = @
+
+      @$onInit = =>
+        @initVariables()
+
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
@@ -60,8 +64,6 @@ angular.module('dahlia.components')
       @liveOrWorkSelected = =>
         preferences = @application.preferences
         preferences.liveInSf || preferences.workInSf
-
-      @initVariables()
 
       return ctrl
 

@@ -506,15 +506,15 @@ ShortFormApplicationController = (
     if preferenceAddressVerified || !$scope.preferences.aliceGriffith
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
     else
-      AddressValidationService.validate {
+      AddressValidationService.validate(
         address: ShortFormApplicationService.preferences.aliceGriffith_address
         type: 'home'
-      }
-      .then ->
+      )
+      .then( ->
         $scope.application.aliceGriffith_address_verified = true
         ShortFormNavigationService.goToApplicationPage(
           'dahlia.short-form-application.alice-griffith-verify-address')
-      .catch (error) ->
+      ).catch( (error) ->
         $scope.application.aliceGriffith_address_verified = false
         # 422 is the status returned when the request was successful but
         # the address is invalid
@@ -524,6 +524,7 @@ ShortFormApplicationController = (
         else
           # continue application if address verification service errors so user isn't stuck
           ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
+      )
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->

@@ -16,6 +16,9 @@ angular.module('dahlia.components')
       @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
       @addressLinkText = {}
 
+      @$onInit = =>
+        @initAddressLinkText()
+
       @initAddressLinkText = =>
         _.each @groupedHouseholdAddresses, (groupedAddress) =>
           address = groupedAddress.address
@@ -56,6 +59,5 @@ angular.module('dahlia.components')
       @addressInvalid = (address) =>
         !@hasCompleteFiles(address) && !!@customInvalidMessage
 
-      @initAddressLinkText()
       return ctrl
   ]

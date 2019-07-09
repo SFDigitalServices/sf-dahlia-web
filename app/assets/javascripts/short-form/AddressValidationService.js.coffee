@@ -23,13 +23,15 @@ AddressValidationService = ($http) ->
       angular.copy((if data and data.address then data.address else {}), validated_address_obj)
       # now copy the validated address data into our source address
       Service.copy(validated_address_obj, address)
-    ).catch( (data) ->
+    ).catch( (response) ->
+      data = response.data
       # still grab the data for capturing the verifications/errors
       validated_with_errors = (if data and data.address then data.address else {})
       # add invalid flag to indicate validation error
       validated_with_errors.invalid = true
       validated_with_errors.error = data.error
-      angular.copy(validated_with_errors, validated_address_obj)
+      validated_with_errors.status = response.status
+      Promise.reject(angular.copy(validated_with_errors, validated_address_obj))
     )
 
   Service.copy = (validated, copyTo) ->

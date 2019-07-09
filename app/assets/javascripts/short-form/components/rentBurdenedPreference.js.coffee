@@ -13,6 +13,10 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'ShortFormHelperService', 'RentBurdenFileService', '$translate',
     (ShortFormApplicationService, ShortFormHelperService, RentBurdenFileService, $translate) ->
       ctrl = @
+
+      @$onInit = =>
+        @reinitializeFiles()
+
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
@@ -67,7 +71,6 @@ angular.module('dahlia.components')
         @initUploadedRentFiles()
         @initNewRentDocument()
 
-      @reinitializeFiles()
       return ctrl
 
   ]
