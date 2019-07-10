@@ -977,20 +977,30 @@ ShortFormApplicationService = (
       )
     )
 
-  # this will only return true if the senior requirement is "everyone",
-  # meaning the primary applicant *must* be a senior
-  Service.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
+  # This return true if the listing is an at least 1 senior building AND NO one in the household is a senior
+  Service.householdDoesNotMeetAtLeastOneSeniorRequirement = () ->
+    requirement = Service.listing.Reserved_Community_Requirement || ''
+    return false unless !!requirement.match(/One household member/g)
+    membersToAssess = Service.fullHousehold().concat(Service.householdMember)
+    seniorMembers = _.filter membersToAssess, (member) ->
+      age = Service.memberAge(member)
+      return age >= Service.listing.Reserved_community_minimum_age
+    _.isEmpty(seniorMembers)
+
+  # This returns true if the listing is an all senior building AND applicant/app member does not meet age requirement
+  Service.applicantDoesNotmeetAllSeniorBuildingRequirements = (member = 'applicant') ->
     listing = Service.listing
     requirement = listing.Reserved_Community_Requirement || ''
-    reservedType = listing.Reserved_community_type || ''
+    return false unless !!requirement.match(/entire household/i)
+
     if _.isString(member)
       # are we evaluating a form value
       age = Service.memberAgeOnForm(member)
     else
       # or evaluating an appMember object
       age = Service.memberAge(member)
-    !!reservedType.match(/senior/i) && !!requirement.match(/entire household/i) &&
-      age < listing.Reserved_community_minimum_age
+
+    age < listing.Reserved_community_minimum_age
 
   Service.addSeniorEligibilityError = ->
     age = { minAge: Service.listing.Reserved_community_minimum_age }
