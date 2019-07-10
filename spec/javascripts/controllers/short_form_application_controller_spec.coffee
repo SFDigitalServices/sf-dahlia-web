@@ -106,7 +106,8 @@ do ->
       importUserData: jasmine.createSpy()
       cancelPreferencesForMember: jasmine.createSpy()
       resetCompletedSections: jasmine.createSpy()
-      applicantDoesNotMeetSeniorRequirements: ->
+      applicantDoesNotmeetAllSeniorBuildingRequirements: ->
+      householdDoesNotMeetAtLeastOneSeniorRequirement: jasmine.createSpy()
       memberAgeOnForm: ->
       isEnteringShortForm: jasmine.createSpy()
       storeLastPage: jasmine.createSpy()
@@ -330,6 +331,12 @@ do ->
         expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
 
     describe '$scope.addHouseholdMember', ->
+      describe 'all senior building', ->
+        it 'calls applicantDoesNotmeetAllSeniorBuildingRequirements in ShortFormApplicationService', ->
+          scope.form.applicationForm.date_of_birth_year = {$viewValue: '1955'}
+          scope.addHouseholdMember()
+          expect(fakeShortFormApplicationService.applicantDoesNotmeetAllSeniorBuildingRequirements).toHaveBeenCalled()
+
       describe 'user has same address applicant', ->
         it 'directly calls addHouseholdMember in ShortFormApplicationService', ->
           scope.form.applicationForm.date_of_birth_year = {$viewValue: '1955'}
@@ -409,6 +416,7 @@ do ->
         scope.eligibilityErrors = ['Error']
         scope.validateHouseholdEligibility()
         expect(scope.eligibilityErrors).toEqual([])
+
       it 'calls checkHouseholdEligibility in ShortFormApplicationService', ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
@@ -418,6 +426,13 @@ do ->
         scope.application.householdVouchersSubsidies = 'Yes'
         scope.validateHouseholdEligibility('incomeMatch')
         expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Preferences')
+
+      describe 'senior building', ->
+        it 'checks if household meets at least one senior requirement' ->
+        scope.validateHouseholdEligibility('incomeMatch')
+        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+        scope.validateHouseholdEligibility('householdMatch')
+        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -994,7 +1009,7 @@ do ->
       describe 'when senior requirements AND when account birth date doesn\'t qualify', ->
         it 'should sign out and redirect ', ->
           spyOn(fakeShortFormApplicationService,
-            'applicantDoesNotMeetSeniorRequirements').and.returnValue(true)
+            'applicantDoesNotmeetAllSeniorBuildingRequirements').and.returnValue(true)
 
           scope.afterSignInWhileApplying()
 
@@ -1006,7 +1021,7 @@ do ->
       describe 'when no senior requirements OR account birth date does qualify', ->
         it 'should load previous application(s)', ->
           spyOn(fakeShortFormApplicationService,
-            'applicantDoesNotMeetSeniorRequirements').and.returnValue(false)
+            'applicantDoesNotmeetAllSeniorBuildingRequirements').and.returnValue(false)
           deferred = $q.defer()
           deferred.resolve()
           scope.getPrevAppData = jasmine.createSpy().and.returnValue(deferred.promise)
