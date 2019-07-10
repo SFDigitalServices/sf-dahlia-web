@@ -31,9 +31,30 @@ do ->
 
     describe 'Service.groupUnitDetails', ->
       it 'should return an object containing a list of units for each AMI level', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnits.units)
-        # fakeUnits just has one AMI level
-        expect(_.keys(grouped).length).toEqual 1
+        fakeUnitsMultiAMI = {'units': [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]}
+        fakeUnitsMultiAMI.units[1]['of_AMI_for_Pricing_Unit'] = 40
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMultiAMI.units)
+
+        expect(_.keys(grouped).length).toEqual 2
+      it 'should group units by unit Type within AMI levels', ->
+        fakeUnitsMultiType = {'units': [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]}
+        fakeUnitsMultiType.units[1]['Unit_Type'] = '2 BR'
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMultiType.units)
+
+        expect(_.keys(grouped[100])).toEqual ['1 BR', '2 BR']
+    describe 'Service._sumSimilarUnits', ->
+      it 'should return availability that\'s the sum of sumilar units', ->
+        units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
+        summed = ListingUnitService._sumSimilarUnits(units)
+        expect(summed.length).toEqual 1
+        expect(summed[0].total).toEqual 2
+      it 'should not combine units with different rents', ->
+        units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
+        units[0]['BMR_Rent_Monthly'] = 1000
+        summed = ListingUnitService._sumSimilarUnits(units)
+        expect(summed.length).toEqual 2
+        expect(summed[0].total).toEqual 1
+        expect(summed[1].total).toEqual 1
 
     describe 'Service.getListingUnits', ->
       beforeEach ->

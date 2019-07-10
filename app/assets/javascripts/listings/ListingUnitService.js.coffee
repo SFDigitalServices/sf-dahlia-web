@@ -38,23 +38,37 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     _.map(combined, (u) -> u.Unit_Type = u.unitType)
     Service._sortGroupedUnits(combined)
 
-  Service.groupUnitDetails = (units) ->
-    grouped = _.groupBy units, 'of_AMI_for_Pricing_Unit'
-    flattened = {}
-    _.forEach grouped, (amiUnits, percent) ->
-      flattened[percent] = []
-      grouped[percent] = _.groupBy amiUnits, (unit) ->
-        # create an identity function to group by all unit features in the pickList
-        _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
-      _.forEach grouped[percent], (groupedUnits, id) ->
-        # summarize each group by combining the unit details + total # of units
-        summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
-        summary.total = groupedUnits.length
-        flattened[percent].push(summary)
+  # Given ListingConstantsService.fieldsForUnitGrouping,
+  # combine similar units, and add up the number of available units
+  Service._sumSimilarUnits = (units) ->
+    summaries = []
+    # Create an identity function to group by unique price and income
+    group = _.groupBy units, (unit) ->
+      _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
+    _.forEach group, (groupedUnits, id) ->
+      # Summarize each group by combining the unit details + # of units for that type/AMI combo
+      summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
+      summary.total = groupedUnits.length
+      summaries.push(summary)
+    summaries
 
-      # make sure each array is sorted according to our desired order
-      flattened[percent] = Service._sortGroupedUnits(flattened[percent])
-    return flattened
+  # Group units by AMI % and Unit type
+  # Returns an object of the form:
+  #  {'50 (percent ami)':
+  #     {'1br': [{rent/price, # of units, etc}, ...], '2br': [...]},
+  #   '40 (percent ami)': {...}}
+  Service.groupUnitDetails = (units) ->
+    grouped = {}
+    # Group by AMI
+    groupedByAmi = _.groupBy units, 'of_AMI_for_Pricing_Unit'
+    _.forEach groupedByAmi, (unitsGroupedByAmi, percent) ->
+      # Group by Unit Type
+      groupedByType = _.groupBy unitsGroupedByAmi, 'Unit_Type'
+      grouped[percent] = {}
+      _.forEach groupedByType, (groupedByAmiAndType, unitType) ->
+        summaries = Service._sumSimilarUnits(groupedByAmiAndType)
+        grouped[percent][unitType] = Service._sortGroupedUnits(summaries)
+    return grouped
 
   Service.groupUnitTypes = (units) ->
     # get a grouping of unit types across both "general" and "reserved"

@@ -22,4 +22,9 @@ angular.module('dahlia.components')
       @hasRangeOfPricesWithParking = (unitSummary) ->
         unitSummary.maxPriceWithParking > unitSummary.minPriceWithParking
 
+      @hasRangeOfHoaWithoutParking = (unitSummary) ->
+        unitSummary.maxHoaDuesWithoutParking > unitSummary.minHoaDuesWithoutParking
+
+      @hasRangeOfHoaWithParking = (unitSummary) ->
+        unitSummary.maxHoaDuesWithParking > unitSummary.minHoaDuesWithParking
       return ctrl

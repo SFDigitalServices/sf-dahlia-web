@@ -3,40 +3,17 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService
-    WHITELIST_BROWSE_FIELDS = %i[
-      Id
-      listingID
-      Tenure
-      Name
-      Application_Due_Date
-      Accepting_Online_Applications
-      Lottery_Date
-      Lottery_Results
-      Lottery_Results_Date
-      Reserved_community_type
-      Reserved_community_minimum_age
-      reservedDescriptor
-      prioritiesDescriptor
-      hasWaitlist
-      Units_Available
-      unitSummaries
-      Does_Match
-      LastModifiedDate
-      imageURL
-      Realtor_Commission_Amount
-      Realtor_Commission_Unit
-      Realtor_Commission_Info
-      Allows_Realtor_Commission
-    ].freeze
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
+    # `type` designates "ownership" or "rental" listings
+    # `subset` returns only fields needed for listing direcotry if set to "browse"
     # returns cached and cleaned listings
     def self.listings(attrs = {})
       params = {}
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
-      results = get_listings(params)
-      clean_listings_for_browse(results)
+      params[:subset] = attrs[:subset] if attrs[:subset].present?
+      get_listings(params)
     end
 
     def self.raw_listings(opts = {})
@@ -52,7 +29,6 @@ module Force
     #  childrenUnder6: n
     def self.eligible_listings(filters)
       results = get_listings(filters)
-      results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
     end
@@ -144,14 +120,6 @@ module Force
         listing['imageURL'] = url
       end
       listings
-    end
-
-    private_class_method def self.clean_listings_for_browse(results)
-      results.map do |listing|
-        listing.select do |key|
-          WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
-        end
-      end
     end
   end
 end

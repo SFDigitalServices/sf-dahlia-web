@@ -34,7 +34,7 @@ module.exports = function(grunt) {
             replacement: '//fonts.googleapis.com'
           },
           {
-            match: /"\.\.\/images\/([a-zA-Z0-9\-_@]*\.(png|jpg|svg))"/g,
+            match: /\.\.\/images\/([a-zA-Z0-9\-_@]*\.(png|jpg|svg))/g,
             replacement: "asset-path('$1')"
           }
         ],
