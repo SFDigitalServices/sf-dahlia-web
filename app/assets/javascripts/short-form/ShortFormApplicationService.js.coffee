@@ -624,6 +624,8 @@ ShortFormApplicationService = (
         $state.go("dahlia.short-form-application.#{appLastPage}")
 
   Service.checkFormState = (stateName, section) ->
+    console.log stateName
+    console.log section
     if Service.form.applicationForm
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
@@ -717,6 +719,7 @@ ShortFormApplicationService = (
     Service.application.validatedForms['You']['alternate-contact-type'] = false
 
   Service.invalidateIncomeForm = ->
+    console.log "invalidate Income form"
     Service.application.completedSections['Income'] = false
     Service.application.validatedForms['Income']['income'] = false
 

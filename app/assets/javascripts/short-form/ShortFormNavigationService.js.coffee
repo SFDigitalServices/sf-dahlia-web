@@ -252,7 +252,6 @@ ShortFormNavigationService = (
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
     options.path = "dahlia.short-form-application.#{options.path}" if options.path
     options
-
   Service.isLoading = (bool = null) ->
     if bool == null
       return Service.loading
