@@ -195,25 +195,23 @@ do ->
         ShortFormApplicationService.applicant = fakeApplicant
         setupFakeHouseholdMember()
 
-      describe 'Listing is at lease one senior member requirement', ->
+      describe 'Listing has at lease one senior member requirement', ->
         it 'returns true if there are no seniors', ->
           ShortFormApplicationService.listing.Reserved_Community_Requirement = 'One household member'
           setupFakeHouseholdMember({dob_year: '2012'})
-          ShortFormApplicationService.householdMember = fakeHouseholdMember
-          ShortFormApplicationService.householdMembers = []
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
           expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual true
 
         it 'returns false if there is at least one senior', ->
           ShortFormApplicationService.listing.Reserved_Community_Requirement = 'One household member'
-          ShortFormApplicationService.householdMember = fakeHouseholdMember
-          ShortFormApplicationService.householdMembers = []
+          setupFakeHouseholdMember()
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
           expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual false
 
-      describe 'Listing is NOT at least one senior requirement', ->
+      describe 'Listing does not have at least one senior requirement', ->
         it 'returns false', ->
           ShortFormApplicationService.listing.Reserved_Community_Requirement = null
-          ShortFormApplicationService.householdMember = fakeHouseholdMember
-          ShortFormApplicationService.householdMembers = []
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
           expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual false
 
     describe 'addHouseholdMember', ->
