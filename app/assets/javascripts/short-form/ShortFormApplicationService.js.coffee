@@ -977,15 +977,11 @@ ShortFormApplicationService = (
       )
     )
 
-  # This return true if the listing is an at least 1 senior building AND NO one in the household is a senior
-  Service.householdDoesNotMeetAtLeastOneSeniorRequirement = () ->
+  # Return true if the listing is an at least 1 senior building AND oldest member in household is not a senior
+  Service.householdDoesNotMeetAtLeastOneSeniorRequirement = ->
     requirement = Service.listing.Reserved_Community_Requirement || ''
     return false unless !!requirement.match(/One household member/g)
-    membersToAssess = Service.fullHousehold().concat(Service.householdMember)
-    seniorMembers = _.filter membersToAssess, (member) ->
-      age = Service.memberAge(member)
-      return age >= Service.listing.Reserved_community_minimum_age
-    _.isEmpty(seniorMembers)
+    Service.maxHouseholdAge() < Service.listing.Reserved_community_minimum_age
 
   # This returns true if the listing is an all senior building AND applicant/app member does not meet age requirement
   Service.applicantDoesNotmeetAllSeniorBuildingRequirements = (member = 'applicant') ->
@@ -1001,10 +997,6 @@ ShortFormApplicationService = (
       age = Service.memberAge(member)
 
     age < listing.Reserved_community_minimum_age
-
-  Service.addSeniorEligibilityError = ->
-    age = { minAge: Service.listing.Reserved_community_minimum_age }
-    Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
 
   Service.memberAge = (member) ->
     dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')

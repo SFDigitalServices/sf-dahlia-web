@@ -586,15 +586,14 @@ ShortFormApplicationController = (
     $scope.eligibilityErrors.length = 0
 
   $scope._respondToHouseholdEligibilityResults = (eligibility, error) ->
-    seniorReqError = $scope.householdDoesNotMeetSeniorRequirements()
-    if eligibility.householdMatch && !seniorReqError
+    if eligibility.householdMatch
       # determine next page of household section
       if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.household-public-housing')
       else
         $scope.checkIfReservedUnits()
     else
-      $scope._determineHouseholdEligibilityErrors(error, seniorReqError)
+      $scope._determineHouseholdEligibilityErrors(error)
       $scope.handleErrorState()
 
   $scope._respondToIncomeEligibilityResults = (eligibility, error) ->
@@ -604,7 +603,7 @@ ShortFormApplicationController = (
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
-  $scope._determineHouseholdEligibilityErrors = (error, seniorReqError) ->
+  $scope._determineHouseholdEligibilityErrors = (error) ->
     ShortFormApplicationService.invalidateHouseholdForm()
     # send household errors to analytics
     analyticsOpts =
@@ -615,9 +614,6 @@ ShortFormApplicationController = (
       $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_BIG"))
     else if error == 'too small'
       $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_SMALL"))
-    if seniorReqError
-      # special case for "you or anyone" must be a senior, and you did not meet the reqs
-      ShortFormApplicationService.addSeniorEligibilityError()
 
   $scope._determineIncomeEligibilityErrors = (error = 'too low') ->
     # error message from salesforce seems to be blank when income == 0, so default to 'too low'
@@ -950,15 +946,6 @@ ShortFormApplicationController = (
 
   $scope.applicantDoesNotmeetAllSeniorBuildingRequirements = (member = 'applicant') ->
     ShortFormApplicationService.applicantDoesNotmeetAllSeniorBuildingRequirements(member)
-
-  $scope.householdDoesNotMeetSeniorRequirements = ->
-    listing = $scope.listing
-    requirement = listing.Reserved_Community_Requirement || ''
-    reservedType = listing.Reserved_community_type || ''
-    # senior, but not entire household
-    reservedType.match(/senior/i) && !requirement.match(/entire household/i) &&
-      # check if the oldest person in the house does not meet the min requirements
-      ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
     $scope.memberAgeOnForm('applicant') < 18
