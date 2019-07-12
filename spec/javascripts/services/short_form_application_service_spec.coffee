@@ -186,6 +186,34 @@ do ->
         ShortFormApplicationService.householdMembers = [fakeHouseholdMember]
         expect(ShortFormApplicationService.getHouseholdMember(1)).toEqual fakeHouseholdMember
 
+    describe 'householdDoesNotMeetAtLeastOneSeniorRequirement', ->
+      beforeEach ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
+        ShortFormApplicationService.listing = fakeListing
+        ShortFormApplicationService.listing.Reserved_community_minimum_age = 50
+        setupFakeApplicant()
+        ShortFormApplicationService.applicant = fakeApplicant
+        setupFakeHouseholdMember()
+
+      describe 'Listing has at lease one senior member requirement', ->
+        it 'returns true if there are no seniors', ->
+          ShortFormApplicationService.listing.Reserved_Community_Requirement = 'One household member'
+          setupFakeHouseholdMember({dob_year: '2012'})
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
+          expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual true
+
+        it 'returns false if there is at least one senior', ->
+          ShortFormApplicationService.listing.Reserved_Community_Requirement = 'One household member'
+          setupFakeHouseholdMember()
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
+          expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual false
+
+      describe 'Listing does not have at least one senior requirement', ->
+        it 'returns false', ->
+          ShortFormApplicationService.listing.Reserved_Community_Requirement = null
+          ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
+          expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual false
+
     describe 'addHouseholdMember', ->
       beforeEach ->
         setupFakeApplicant({preferenceAddressMatch: 'Matched'})
