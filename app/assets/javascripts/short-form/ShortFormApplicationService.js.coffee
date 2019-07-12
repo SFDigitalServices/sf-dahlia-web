@@ -980,14 +980,16 @@ ShortFormApplicationService = (
   # Return true if the listing is an at least 1 senior building AND oldest member in household is not a senior
   Service.householdDoesNotMeetAtLeastOneSeniorRequirement = ->
     requirement = Service.listing.Reserved_Community_Requirement || ''
-    return false unless !!requirement.match(/One household member/g)
+    reservedType = listing.Reserved_community_type || ''
+    return false unless !!reservedType.match(/senior/i)  && !!requirement.match(/One household member/g)
     Service.maxHouseholdAge() < Service.listing.Reserved_community_minimum_age
 
   # This returns true if the listing is an all senior building AND applicant/app member does not meet age requirement
   Service.applicantDoesNotmeetAllSeniorBuildingRequirements = (member = 'applicant') ->
     listing = Service.listing
+    reservedType = listing.Reserved_community_type || ''
     requirement = listing.Reserved_Community_Requirement || ''
-    return false unless !!requirement.match(/entire household/i)
+    return false unless !!reservedType.match(/senior/i) && !!requirement.match(/entire household/i)
 
     if _.isString(member)
       # are we evaluating a form value
