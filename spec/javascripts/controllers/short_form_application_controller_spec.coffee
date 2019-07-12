@@ -444,9 +444,9 @@ do ->
         scope.checkIfPublicHousing()
         expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
 
-    describe 'checkIfReservedUnits', ->
+    describe 'goToNextReservedPageIfAvailable', ->
       it 'calls getNextReservedPageIfAvailable on navService', ->
-        scope.checkIfReservedUnits()
+        scope.goToNextReservedPageIfAvailable()
         expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
 
     describe 'publicHousingYes', ->
@@ -479,8 +479,8 @@ do ->
     describe '_respondToHouseholdEligibilityResults', ->
       beforeEach ->
         scope.householdDoesNotMeetSeniorRequirements = jasmine.createSpy().and.returnValue(false)
-        scope.checkIfReservedUnits = jasmine.createSpy()
-        scope._determineHouseholdEligibilityErrors = jasmine.createSpy().and.returnValue(true)
+        scope.goToNextReservedPageIfAvailable = jasmine.createSpy()
+        scope._determineHouseholdSizeEligibilityErrors = jasmine.createSpy().and.returnValue(true)
         scope.handleErrorState = jasmine.createSpy().and.returnValue(true)
 
       describe 'when householdMatch is true', ->
@@ -488,9 +488,9 @@ do ->
           eligibility = { householdMatch: true }
           error = null
 
-        it 'calls $scope.checkIfReservedUnits', ->
+        it 'calls $scope.goToNextReservedPageIfAvailable', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(scope.checkIfReservedUnits).toHaveBeenCalled()
+          expect(scope.goToNextReservedPageIfAvailable).toHaveBeenCalled()
 
       describe 'when householdMatch is false', ->
         beforeEach ->
@@ -499,9 +499,9 @@ do ->
           fakeHHOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
 
-        it 'calls $scope._determineHouseholdEligibilityErrors', ->
+        it 'calls $scope._determineHouseholdSizeEligibilityErrors', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(scope._determineHouseholdEligibilityErrors).toHaveBeenCalled()
+          expect(scope._determineHouseholdSizeEligibilityErrors).toHaveBeenCalled()
 
     describe '_respondToIncomeEligibilityResults', ->
       describe 'when incomeMatch is true', ->

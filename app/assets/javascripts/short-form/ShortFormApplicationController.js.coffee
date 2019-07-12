@@ -591,9 +591,9 @@ ShortFormApplicationController = (
       if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.household-public-housing')
       else
-        $scope.checkIfReservedUnits()
+        $scope.goToNextReservedPageIfAvailable()
     else
-      $scope._determineHouseholdEligibilityErrors(error)
+      $scope._determineHouseholdSizeEligibilityError(error)
       $scope.handleErrorState()
 
   $scope._respondToIncomeEligibilityResults = (eligibility, error) ->
@@ -603,7 +603,7 @@ ShortFormApplicationController = (
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
-  $scope._determineHouseholdEligibilityErrors = (error) ->
+  $scope._determineHouseholdSizeEligibilityError = (error) ->
     ShortFormApplicationService.invalidateHouseholdForm()
     # send household errors to analytics
     analyticsOpts =
@@ -634,10 +634,10 @@ ShortFormApplicationController = (
     if $scope.application.hasPublicHousing == 'No'
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.household-monthly-rent')
     else
-      $scope.checkIfReservedUnits()
+      $scope.goToNextReservedPageIfAvailable()
 
   # Check for need to ask about reserved units on the listing
-  $scope.checkIfReservedUnits = (type) ->
+  $scope.goToNextReservedPageIfAvailable = (type) ->
     page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
