@@ -23,7 +23,6 @@ angular.module('dahlia.directives')
       # 3a. The form is invalid AND
       # 3b. It's not a previous section
       scope.sectionDisabled = (section) ->
-        if section.name && section.name == 'Preferences'
         !scope.isActiveSection(section) &&
         (
           !ShortFormApplicationService.userCanAccessSection(section.name, $state.current) ||
