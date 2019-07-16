@@ -759,7 +759,7 @@
         "HEADER": {
             "FIND_MATCHING_LISTINGS": "尋找符合的物業項目",
             "IF_YOU_TELL_US": "如果您告知家庭人數以及收入，我們可以篩選並例出您可能符合資格的物業項目。",
-            "OR_GET_HELP_CALCULATING_INCOME": "或者<a ui-sref=\"{{sref}}\">尋求協助如何計算您的收入</a>"
+            "OR_GET_HELP_CALCULATING_INCOME": "或者<a ui-sref='{{sref}}'>尋求協助如何計算您的收入</a>"
         }
     },
     "LISTINGS_FOR_SALE": {
