@@ -24,6 +24,7 @@ do ->
       beforeEach ->
         ctrl = $componentController 'lendingInstitution', locals
         ctrl.application = {}
+        ctrl.$onInit()
 
       describe '$ctrl.agentIsInactive', ->
         it 'returns true for inactive agent', ->

@@ -55,6 +55,7 @@ do ->
 
     beforeEach ->
       ctrl = $componentController 'preferenceProofUploader', locals, fakeBindings
+      ctrl.$onInit()
 
     describe 'validateFileNameLength', ->
       it 'should return true if file is OK', ->

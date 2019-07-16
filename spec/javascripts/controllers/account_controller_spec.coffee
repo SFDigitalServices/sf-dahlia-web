@@ -60,13 +60,9 @@ do ->
       state.go = jasmine.createSpy()
       deferred = $q.defer()
       fakeHttp =
-        success: (callback) ->
-          callback({})
-          { error: -> return }
         then: (callback) ->
           callback({})
           { catch: -> return }
-        error: (callback) -> callback({})
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'updatePassword').and.returnValue(deferred.promise)

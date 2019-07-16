@@ -53,6 +53,7 @@ do ->
         rent:
           1: {file: 'somefile'}
       ctrl = $componentController 'rentBurdenedPreferenceDashboard', locals, fakeBindings
+      ctrl.$onInit()
 
     describe 'hasFiles', ->
       it 'should call function on FileUploadService', ->

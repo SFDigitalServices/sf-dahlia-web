@@ -80,7 +80,7 @@ do ->
 
       it 'returns a promise', ->
         promise = ExternalTranslateService.loadAPI()
-        expect(promise.constructor.name).toEqual('Promise')
+        expect(typeof promise.then).toEqual('function')
 
     describe 'loadScript', ->
       beforeEach ->

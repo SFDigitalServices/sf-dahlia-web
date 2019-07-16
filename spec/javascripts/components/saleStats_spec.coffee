@@ -30,7 +30,6 @@ do ->
     describe 'saleStats', ->
       beforeEach ->
         ctrl = $componentController 'saleStats', locals, {parent: fakeParent}
-
       describe '$ctrl.hasUnitsWithoutParking', ->
         it 'returns true if a listing has a general unit with a without-parking price', ->
           listing = {

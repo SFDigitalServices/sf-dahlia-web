@@ -67,17 +67,20 @@ do ->
         it 'should set proofDocument if `hasProof`', ->
           fakeBindings.hasProof = true
           ctrl = $componentController 'preference', locals, fakeBindings
+          ctrl.$onInit()
           proofDocument = ctrl.application.preferences.documents[ctrl.preference]
           expect(proofDocument).not.toEqual(undefined)
           expect(ctrl.proofDocument).toEqual(proofDocument)
         it 'should not set proofDocument if does not `hasProof`', ->
           fakeBindings.hasProof = false
           ctrl = $componentController 'preference', locals, fakeBindings
+          ctrl.$onInit()
           expect(ctrl.proofDocument).toEqual(undefined)
 
       describe 'resetPreference', ->
         beforeEach ->
           ctrl = $componentController 'preference', locals, fakeBindings
+          ctrl.$onInit()
         it 'should call cancelPreference on Service if preference is unset', ->
           fakeBindings.application.preferences[pref] = false
           ctrl.resetPreference()
@@ -93,7 +96,7 @@ do ->
       beforeEach ->
         fakeBindings.application.preferences.liveWorkInSf_preference = 'liveInSf'
         ctrl = $componentController 'liveWorkComboPreference', locals, fakeBindings
-
+        ctrl.$onInit()
       describe 'initVariables', ->
         it 'should get appropriate proof options to match liveWorkInSf_preference', ->
           expect(fakeShortFormHelperService.proofOptions).toHaveBeenCalledWith('liveInSf')
@@ -122,6 +125,7 @@ do ->
           lease: {}
           rent: {}
         ctrl = $componentController 'rentBurdenedPreference', locals, fakeBindings
+        ctrl.$onInit()
 
       it 'should get appropriate proof options to match rentBurden', ->
         expect(fakeShortFormHelperService.proofOptions).toHaveBeenCalledWith('rentBurden')

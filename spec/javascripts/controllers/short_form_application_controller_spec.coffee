@@ -177,7 +177,7 @@ do ->
       spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligibility').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()

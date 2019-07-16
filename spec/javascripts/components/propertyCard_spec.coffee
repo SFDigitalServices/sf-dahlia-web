@@ -39,7 +39,6 @@ do ->
     describe 'propertyCard', ->
       beforeEach ->
         ctrl = $componentController 'propertyCard', locals, {listingContainer: fakeListingContainer}
-
       describe '$ctrl.showMatches', ->
         describe 'dahlia.listings-for-rent state with filters available', ->
           it 'returns true', ->

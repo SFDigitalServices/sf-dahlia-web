@@ -73,13 +73,9 @@ do ->
       $q = _$q_
       httpBackend = _$httpBackend_
       fakeHttp =
-        success: (callback) ->
-          callback({})
-          { error: -> return }
         then: (callback) ->
           callback({})
           { catch: -> return }
-        error: (callback) -> callback({})
       spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
       spyOn($auth, 'signOut').and.callFake -> fakeHttp
       spyOn($auth, 'submitLogin').and.callFake -> fakeHttp

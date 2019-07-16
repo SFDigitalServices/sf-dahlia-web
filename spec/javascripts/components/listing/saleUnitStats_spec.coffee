@@ -26,6 +26,7 @@ do ->
     describe 'saleUnitStats', ->
       beforeEach ->
         ctrl = $componentController 'saleUnitStats', locals, {parent: fakeParent}
+
       describe 'groupHasUnitsWithParking', ->
         it 'returns true if group has a unit with parking', ->
           fakeUnitGroup = [fakeUnitWithWithParkingPrice, fakeUnitWithoutAnyPrice]
