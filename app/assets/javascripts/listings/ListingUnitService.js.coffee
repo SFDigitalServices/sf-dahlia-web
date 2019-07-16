@@ -93,7 +93,8 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     httpConfig = {}
     httpConfig.params = { force: true } if forceRecache
     $http.get("/api/v1/listings/#{listing.Id}/units", httpConfig)
-    .then((data, status, headers, config) ->
+    .then((response) ->
+      data = response.data
       Service.loading.units = false
       Service.error.units = false
       if data && data.units
@@ -103,7 +104,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
         listing.unitTypes = Service.groupUnitTypes(units)
         listing.priorityUnits = Service.groupSpecialUnits(listing.Units, 'Priority_Type')
         listing.reservedUnits = Service.groupSpecialUnits(listing.Units, 'Reserved_Type')
-    ).catch( (data, status, headers, config) ->
+    ).catch( (response) ->
       Service.loading.units = false
       Service.error.units = true
       return

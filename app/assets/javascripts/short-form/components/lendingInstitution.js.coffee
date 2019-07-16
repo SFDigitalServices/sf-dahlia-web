@@ -7,15 +7,16 @@ angular.module('dahlia.components')
   controller:
     ['ShortFormApplicationService', (ShortFormApplicationService) ->
       ctrl = @
-      @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
-      @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
-      @selectedInstitution = ''
-      @agents = []
 
       @$onInit = ->
+        @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
+        @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
+        @selectedInstitution = ''
+        @agents = []
+
         if @application.lendingAgent
           @selectedInstitution = _.findKey(@lendingInstitutions, (agents) ->
-            _.some(agents, {'Id': ctrl.application.lendingAgent})
+            _.some(agents, {'Id': @application.lendingAgent})
           )
           @agents = @lendingInstitutions[@selectedInstitution]
 

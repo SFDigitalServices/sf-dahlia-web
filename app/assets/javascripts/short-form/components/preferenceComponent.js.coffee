@@ -20,13 +20,14 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',
     (ShortFormApplicationService, ShortFormHelperService, $translate) ->
       ctrl = @
-      @inputInvalid = (fieldName) ->
-        ShortFormApplicationService.inputInvalid(fieldName)
-
-      @eligibleMembers = []
-      @memberSelectorLabel = ''
 
       @$onInit = =>
+        @inputInvalid = (fieldName) ->
+          ShortFormApplicationService.inputInvalid(fieldName)
+
+        @eligibleMembers = []
+        @memberSelectorLabel = ''
+
         @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
         prefs = @application.preferences
         if @hasProof
@@ -38,13 +39,13 @@ angular.module('dahlia.components')
         @eligibleMembers = ShortFormApplicationService.eligibleMembers(@preference)
         @proofOptions = ShortFormHelperService.proofOptions(@preference)
 
-      @resetPreference = =>
-        if !@application.preferences[@preference]
-          # unchecking the box
-          ShortFormApplicationService.cancelPreference(@preference)
-        else
-          # checking the box
-          ShortFormApplicationService.cancelOptOut(@preference)
+        @resetPreference = =>
+          if !@application.preferences[@preference]
+            # unchecking the box
+            ShortFormApplicationService.cancelPreference(@preference)
+          else
+            # checking the box
+            ShortFormApplicationService.cancelOptOut(@preference)
 
       @onChange = =>
         @resetPreference()

@@ -13,11 +13,11 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService','RentBurdenFileService', '$translate',
     (ShortFormApplicationService, RentBurdenFileService, $translate) ->
       ctrl = @
-      @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
-      @addressLinkText = {}
 
       @$onInit = =>
         @initAddressLinkText()
+        @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
+        @addressLinkText = {}
 
       @initAddressLinkText = =>
         _.each @groupedHouseholdAddresses, (groupedAddress) =>

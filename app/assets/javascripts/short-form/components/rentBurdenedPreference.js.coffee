@@ -15,22 +15,21 @@ angular.module('dahlia.components')
       ctrl = @
 
       @$onInit = =>
+        @showCheckbox = true if @showCheckbox == undefined
+        @groupedHouseholdAddress = @application.groupedHouseholdAddresses[@groupedHouseholdAddressIndex]
+        @address = @groupedHouseholdAddress.address
+        @monthlyRent = @groupedHouseholdAddress.monthlyRent
+        @members = @groupedHouseholdAddress.members
+        @proofOptions = ShortFormHelperService.proofOptions('rentBurden')
+        @additionalUploadActivated = false
+
+        rentBurdenDocs = @application.preferences.documents.rentBurden
+        @leaseDocument = rentBurdenDocs[@address].lease
+        @rentDocuments = rentBurdenDocs[@address].rent
         @reinitializeFiles()
 
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
-
-      @showCheckbox = true if @showCheckbox == undefined
-      @groupedHouseholdAddress = @application.groupedHouseholdAddresses[@groupedHouseholdAddressIndex]
-      @address = @groupedHouseholdAddress.address
-      @monthlyRent = @groupedHouseholdAddress.monthlyRent
-      @members = @groupedHouseholdAddress.members
-      @proofOptions = ShortFormHelperService.proofOptions('rentBurden')
-      @additionalUploadActivated = false
-
-      rentBurdenDocs = @application.preferences.documents.rentBurden
-      @leaseDocument = rentBurdenDocs[@address].lease
-      @rentDocuments = rentBurdenDocs[@address].rent
 
       @initUploadedRentFiles = =>
         @uploadedRentFiles = RentBurdenFileService.uploadedRentBurdenRentFiles(@address)

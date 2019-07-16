@@ -25,9 +25,6 @@ gem 'puma'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
-# takes care of importing javascript dependencies
-# see /bower.json for more info
-gem 'bower-rails'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Adds HTML templates into Angular's $templateCache using asset pipeline.

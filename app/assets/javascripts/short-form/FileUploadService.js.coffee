@@ -19,14 +19,14 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
       headers: {
         'Content-Type': 'application/json'
       },
-    }).then((data, status, headers, config) ->
+    }).then((response) ->
       # Clear out the file
       if opts.rentBurdenType
         RentBurdenFileService.clearRentBurdenFile(opts, Service.preferences)
       else
         proofDocument.file = null
         proofDocument.proofOption = null
-    ).catch( (data, status, headers, config) ->
+    ).catch( (response) ->
       return
     )
 

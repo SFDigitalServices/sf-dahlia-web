@@ -121,7 +121,7 @@ ListingDataService = (
     if opts.checkEligibility && ListingEligibilityService.hasEligibilityFilters()
       return Service.getListingsWithEligibility(opts.params)
 
-    $http.get("/api/v1/listings.json", { etagCache: true }).then((response, itemCache) ->
+    $http.get("/api/v1/listings.json", { etagCache: true, params: opts.params }).then((response, itemCache) ->
       Service.getListingsResponse(response.data, itemCache, Service.deferred, opts.retranslate)
     )
     .ifCached((response, itemCache) ->
@@ -156,9 +156,10 @@ ListingDataService = (
       listingsType: params.type,
       subset: 'browse'
 
-    $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}", {
+    $http.get("/api/v1/listings/eligibility.json", {
       etagCache: true,
-      timeout: Service.deferred.promise
+      timeout: Service.deferred.promise,
+      params: params
     }).then((response, itemCache) ->
       Service.getListingsWithEligibilityResponse(response.data, itemCache, Service.deferred)
     ).ifCached((response, itemCache) ->
