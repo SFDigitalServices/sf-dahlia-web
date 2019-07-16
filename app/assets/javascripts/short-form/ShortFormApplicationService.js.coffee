@@ -981,6 +981,7 @@ ShortFormApplicationService = (
   Service.householdDoesNotMeetAtLeastOneSeniorRequirement = ->
     requirement = Service.listing.Reserved_Community_Requirement || ''
     reservedType = Service.listing.Reserved_community_type || ''
+    console.log('requirement', requirement, 'reservedType', reservedType)
     return false unless !!reservedType.match(/senior/i)  && !!requirement.match(/One household member/g)
     Service.maxHouseholdAge() < Service.listing.Reserved_community_minimum_age
 

@@ -428,11 +428,11 @@ do ->
         expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Preferences')
 
       describe 'senior building', ->
-        it 'checks if household meets at least one senior requirement' ->
-        scope.validateHouseholdEligibility('incomeMatch')
-        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
-        scope.validateHouseholdEligibility('householdMatch')
-        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+        it 'checks if household meets at least one senior requirement', ->
+          scope.validateHouseholdEligibility('incomeMatch')
+          expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+          scope.validateHouseholdEligibility('householdMatch')
+          expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
