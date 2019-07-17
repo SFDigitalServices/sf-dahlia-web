@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'lotteryInfoSection',
-  templateUrl: 'listings/components/listing/lottery-info-section.html'
+  template: require('html-loader!application/listings/components/listing/lottery-info-section.html'
   require:
     parent: '^listingContainer'
   controller: ['ListingDataService', 'ListingLotteryService', (ListingDataService, ListingLotteryService) ->

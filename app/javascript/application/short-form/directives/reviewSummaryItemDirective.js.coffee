@@ -8,4 +8,4 @@ angular.module('dahlia.directives')
     rentBurdenSubLabels: '='
     identifier: '@'
   transclude: true
-  templateUrl: 'short-form/directives/review-summary-item.html'
+  template: require('html-loader!application/short-form/directives/review-summary-item.html')

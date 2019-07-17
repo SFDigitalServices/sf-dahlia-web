@@ -7,7 +7,7 @@ angular.module('dahlia.components')
     modelName: '@'
     onChange: '&'
     hideAddress2: '@'
-  templateUrl: 'short-form/components/address-form.html'
+  template: require('html-loader!application/short-form/components/address-form.html')
 
   controller:
     ['ShortFormApplicationService', 'inputMaxLength', '$scope',

@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'browseListings',
-  templateUrl: 'listings/components/browse-listings.html'
+  template: require('html-loader!application/listings/components/browse-listings.html')
   require:
     parent: '^listingContainer'
   bindings:

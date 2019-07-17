@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'saleStats',
-  templateUrl: 'listings/components/sale-stats.html'
+  template: require('html-loader!application/listings/components/sale-stats.html')
   bindings:
     listing: '<'
   require:

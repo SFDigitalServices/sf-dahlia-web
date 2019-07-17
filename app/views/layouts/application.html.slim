@@ -11,13 +11,13 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 
     / ---- async load CSS via Javascript onload ----
-    link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
+    / link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
     noscript
       / if no JS available load as usual
-      = stylesheet_link_tag 'application', media: 'all'
-      / = stylesheet_pack_tag 'stylesheets'
+      / = stylesheet_link_tag 'application', media: 'all'
+      = stylesheet_pack_tag 'stylesheets'
     / polyfill for CSS async methods
-    = javascript_include_tag 'https://cdn.jsdelivr.net/loadcss/1.3.1/loadCSS.js', async: true, onload: "loadCSS('#{asset_url('application.css')}')"
+    / = javascript_include_tag 'https://cdn.jsdelivr.net/loadcss/1.3.1/loadCSS.js', async: true, onload: "loadCSS('#{asset_url('application.css')}')"
     / ----> end load CSS
 
     meta http-equiv="X-UA-Compatible" content="IE=edge"
@@ -78,7 +78,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         section(ui-view="footer")
 
     / icon collection
-    ng-include src="'shared/templates/icons.html'"
+    / ng-include src="'shared/templates/icons.html'"
 
 
     / RAVEN: scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
@@ -100,6 +100,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     / TODO: move all JS globals below into an Angular constant
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
-      var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+      // var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
       var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"

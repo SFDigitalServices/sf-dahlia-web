@@ -9,7 +9,7 @@ angular.module('dahlia.directives')
     replace: true
     scope:
       application: '=application'
-    templateUrl: 'account/directives/my-application.html'
+    template: require('html-loader!application/account/directives/my-application.html')
 
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing

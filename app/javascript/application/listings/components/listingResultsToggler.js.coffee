@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'listingResultsToggler',
-  templateUrl: 'listings/components/listing-results-toggler.html'
+  template: require('html-loader!application/listings/components/listing-results-toggler.html')
   bindings:
     listingResults: '<'
     sectionName: '@'

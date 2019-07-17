@@ -14,8 +14,7 @@
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
-
-console.log('Hello World from Webpacker')
+import './stylesheets.scss'
 import 'lodash/lodash.min.js'
 import 'angular/angular.min.js'
 import 'angular-foundation/mm-foundation-tpls.js'
@@ -57,6 +56,45 @@ import 'application/config/angularRoutes.js'
 import 'application/config/angularProviders.js'
 import 'application/config/angularInitialize.js'
 import 'application/config/angularConstants.js'
-function requireAll(r) { r.keys().forEach(r) }
-requireAll(require.context('../application', true, /\.(js|coffee)$/))
+import 'application/customFilters.js'
+// SERVICES
+import 'application/shared/SharedService.js'
+import 'application/shared/AnalyticsService.js'
+import 'application/short-form/ShortFormApplicationService.js'
+import 'application/short-form/AddressValidationService.js'
+import 'application/short-form/FileUploadService.js'
+import 'application/listings/ListingPreferenceService.js'
+import 'application/listings/ListingConstantsService.js'
+import 'application/listings/ListingIdentityService.js'
+import 'application/short-form/RentBurdenFileService.js'
+import 'application/listings/ListingDataService.js'
+import 'application/shared/ExternalTranslateService.js'
+import 'application/listings/ListingEligibilityService.js'
+import 'application/listings/ListingUnitService.js'
+import 'application/listings/ListingLotteryService.js'
+import 'application/shared/ModalService.js'
+import 'application/income-calculator/IncomeCalculatorService.js'
+import 'application/short-form/ShortFormHelperService.js'
+import 'application/short-form/GISService.js'
+import 'application/short-form/ShortFormDataService.js'
+import 'application/account/AccountService.js'
+import 'application/short-form/ShortFormNavigationService.js'
+import 'application/short-form/AutosaveService.js'
+//CONTROLLERS
+import 'application/shared/SharedController.js'
+import 'application/shared/NavController.js'
+//COMPONENTS
+import 'application/listings/components/listingContainer.js'
+import 'application/listings/components/welcomeComponent.js'
+import 'application/shared/components/languageSwitcher.js'
+
+// require
+// function requireAll(r) { r.keys().forEach(r) }
+// requireAll(require.context('../application/account', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/directives', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/income-calculator', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/listings', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/pages', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/shared', true, /\.(js|coffee)$/))
+// requireAll(require.context('../application/short-form', true, /\.(js|coffee)$/))
 //= require_tree .

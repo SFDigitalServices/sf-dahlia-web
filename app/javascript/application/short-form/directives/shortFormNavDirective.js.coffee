@@ -5,7 +5,7 @@ angular.module('dahlia.directives')
     restrict: 'E'
     replace: true
     scope: true
-    templateUrl: 'short-form/directives/short-form-nav.html'
+    template: require('html-loader!application/short-form/directives/short-form-nav.html')
 
     link: (scope, elem, attrs) ->
       scope.sections = ShortFormNavigationService.sections()

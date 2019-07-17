@@ -2,6 +2,7 @@ require('coffee-script').register();
 var projectDir = process.cwd();
 
 module.exports = {
+  directConnect: true,
   getPageTimeout: 60000,
   allScriptsTimeout: 60000,
   framework: 'custom',

@@ -1,4 +1,4 @@
-import dahlia from './angularModules.js'
+# import dahlia from './angularModules.js'
 # Angular UI-router setup
 dahlia.config [
   '$stateProvider',
@@ -19,14 +19,14 @@ dahlia.config [
         skipConfirm: { squash: true, value: false }
       views:
         'translate@':
-          templateUrl: 'shared/templates/translate-bar.html'
+          template: require('html-loader!application/shared/templates/translate-bar.html')
         'version@':
-          templateUrl: 'shared/templates/version.html'
+          template: require('html-loader!application/shared/templates/version.html')
         'navigation@':
-          templateUrl: 'shared/templates/nav/navigation.html'
+          template: require('html-loader!application/shared/templates/nav/navigation.html')
           controller: 'NavController'
         'footer@':
-          templateUrl: 'shared/templates/footer.html'
+          template: require('html-loader!application/shared/templates/footer.html')
       data:
         meta:
           'description': 'Search and apply for affordable housing on the City of San Francisco\'s DAHLIA Housing Portal.'
@@ -45,7 +45,7 @@ dahlia.config [
       url: ''
       views:
         'container@':
-          templateUrl: 'pages/templates/welcome.html'
+          template: require('application/pages/templates/welcome.html')
       resolve:
         listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getListings({checkEligibility: false})
@@ -55,7 +55,7 @@ dahlia.config [
       url: '/housing-counselors'
       views:
         'container@':
-          templateUrl: 'pages/templates/housing-counselors.html',
+          template: require('html-loader!application/pages/templates/housing-counselors.html'),
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.HOUSING_COUNSELORS')
@@ -68,7 +68,7 @@ dahlia.config [
       url: '/listings/for-rent'
       views:
         'container@':
-          templateUrl: 'listings/templates/listings-for-rent.html'
+          template: require('html-loader!application/listings/templates/listings-for-rent.html')
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {type: 'rental'}})
@@ -82,7 +82,7 @@ dahlia.config [
       url: '/listings/for-sale'
       views:
         'container@':
-          templateUrl: 'listings/templates/listings-for-sale.html'
+          template: require('html-loader!application/listings/templates/listings-for-sale.html')
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {type: 'ownership'}})
@@ -100,13 +100,13 @@ dahlia.config [
         preview: null
       views:
         'container@':
-          templateUrl: ($stateParams) ->
+          template: ($stateParams) ->
             # templateUrl is a special function that only takes $stateParams
             # which is why we can't include ListingDataService here
             if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
-              'listings/templates/listing-maintenance.html'
+              require('html-loader!application/listings/templates/listing-maintenance.html')
             else
-              'listings/templates/listing.html'
+              require('html-loader!application/listings/templates/listing.html')
       resolve:
         listing: [
           '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService',
@@ -161,7 +161,7 @@ dahlia.config [
       url: '/create-account'
       views:
         'container@':
-          templateUrl: 'account/templates/create-account.html'
+          template: require('html-loader!application/account/templates/create-account.html')
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
@@ -179,7 +179,7 @@ dahlia.config [
       url: '/create-account'
       views:
         'container@':
-          templateUrl: 'account/templates/create-account.html'
+          template: require('html-loader!application/account/templates/create-account.html')
           controller: 'AccountController'
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
         reconcilingAccountDetails =
@@ -213,7 +213,7 @@ dahlia.config [
         userTokenValidationTimeout: null
       views:
         'container@':
-          templateUrl: 'account/templates/sign-in.html'
+          template: require('html-loader!application/account/templates/sign-in.html')
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
@@ -247,7 +247,7 @@ dahlia.config [
       views: {
         'container@': {
           controller: 'ShortFormApplicationController'
-          templateUrl: 'account/templates/sign-in.html'
+          template: require('html-loader!application/account/templates/sign-in.html')
         }
       }
       onEnter: ['AccountService', (AccountService) ->
@@ -268,7 +268,7 @@ dahlia.config [
       url: '/forgot-password'
       views:
         'container@':
-          templateUrl: 'account/templates/forgot-password.html'
+          template: require('html-loader!application/account/templates/forgot-password.html')
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
@@ -279,7 +279,7 @@ dahlia.config [
       views:
         'container@':
           # use same template as usual sign-in route
-          templateUrl: 'account/templates/sign-in.html'
+          template: require('html-loader!application/account/templates/sign-in.html')
           controller: 'AccountController'
     })
     .state('dahlia.short-form-application.forgot-password', {
@@ -288,7 +288,7 @@ dahlia.config [
       url: '/forgot-password'
       views:
         'container@':
-          templateUrl: 'account/templates/forgot-password.html'
+          template: require('html-loader!application/account/templates/forgot-password.html')
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
@@ -298,7 +298,7 @@ dahlia.config [
       url: '/reset-password'
       views:
         'container@':
-          templateUrl: 'account/templates/reset-password.html'
+          template: require('html-loader!application/account/templates/reset-password.html')
           controller: 'AccountController'
       resolve:
         auth: ['$auth', ($auth) ->
@@ -316,7 +316,7 @@ dahlia.config [
         reconfirmed: null
       views:
         'container@':
-          templateUrl: 'account/templates/account-settings.html'
+          template: require('html-loader!application/account/templates/account-settings.html')
           controller: 'AccountController'
       resolve:
         auth: ['$auth', 'AccountService', ($auth, AccountService) ->
@@ -334,7 +334,7 @@ dahlia.config [
       url: '/eligibility-settings'
       views:
         'container@':
-          templateUrl: 'account/templates/eligibility-settings.html'
+          template: require('html-loader!application/account/templates/eligibility-settings.html')
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
@@ -348,7 +348,7 @@ dahlia.config [
         accountConfirmed: null
       views:
         'container@':
-          templateUrl: 'account/templates/my-account.html'
+          template: require('html-loader!application/account/templates/my-account.html')
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
@@ -376,7 +376,7 @@ dahlia.config [
       views:
         'container@':
           controller: 'AccountController'
-          templateUrl: 'account/templates/my-applications.html'
+          template: require('html-loader!application/account/templates/my-applications.html')
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
@@ -401,7 +401,7 @@ dahlia.config [
       url: '/favorites'
       views:
         'container@':
-          templateUrl: 'listings/templates/favorites.html'
+          template: require('html-loader!application/listings/templates/favorites.html')
       resolve:
         listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getFavoriteListings()
@@ -414,7 +414,7 @@ dahlia.config [
       url: '/welcome-chinese'
       views:
         'container@':
-          templateUrl: 'pages/templates/welcome-chinese.html'
+          template: require('html-loader!application/pages/templates/welcome-chinese.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
@@ -427,7 +427,7 @@ dahlia.config [
       url: '/welcome-spanish'
       views:
         'container@':
-          templateUrl: 'pages/templates/welcome-spanish.html'
+          template: require('html-loader!application/pages/templates/welcome-spanish.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
@@ -440,7 +440,7 @@ dahlia.config [
       url: '/welcome-filipino'
       views:
         'container@':
-          templateUrl: 'pages/templates/welcome-filipino.html'
+          template: require('html-loader!application/pages/templates/welcome-filipino.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')
@@ -453,7 +453,7 @@ dahlia.config [
       url: '/disclaimer'
       views:
         'container@':
-          templateUrl: 'pages/templates/disclaimer.html'
+          template: require('html-loader!application/pages/templates/disclaimer.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.DISCLAIMER')
@@ -463,7 +463,7 @@ dahlia.config [
       url: '/privacy'
       views:
         'container@':
-          templateUrl: 'pages/templates/privacy.html'
+          template: require('html-loader!application/pages/templates/privacy.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.PRIVACY')
@@ -473,7 +473,7 @@ dahlia.config [
       url: '/share/:id'
       views:
         'container@':
-          templateUrl: 'pages/templates/share.html'
+          template: require('html-loader!application/pages/templates/share.html')
           controller: 'ShareController'
       resolve:
         $title: ['$title', '$translate', 'ListingDataService', ($title, $translate, ListingDataService) ->
@@ -488,7 +488,7 @@ dahlia.config [
       url: '/eligibility-estimator/:listingsType'
       views:
         'container@':
-          templateUrl: 'pages/templates/eligibility-estimator.html'
+          template: require('html-loader!application/pages/templates/eligibility-estimator.html')
           controller: 'EligibilityEstimatorController'
       resolve:
         $title: ['$translate', ($translate) ->
@@ -500,32 +500,32 @@ dahlia.config [
       abstract: true
       views:
         'container@':
-          templateUrl: 'income-calculator/templates/income-calculator.html'
+          template: require('html-loader!application/income-calculator/templates/income-calculator.html')
           controller: 'IncomeCalculatorController'
     })
     .state('dahlia.income-calculator.intro', {
       url: '/intro'
       views:
         'container':
-          templateUrl: 'income-calculator/templates/pages/intro.html'
+          template: require('html-loader!application/income-calculator/templates/pages/intro.html')
     })
     .state('dahlia.income-calculator.edit', {
       url: '/edit'
       views:
         'container':
-          templateUrl: 'income-calculator/templates/pages/edit.html'
+          template: require('html-loader!application/income-calculator/templates/pages/edit.html')
     })
     .state('dahlia.income-calculator.summary', {
       url: '/summary'
       views:
         'container':
-          templateUrl: 'income-calculator/templates/pages/summary.html'
+          template: require('html-loader!application/income-calculator/templates/pages/summary.html')
     })
     .state('dahlia.get-assistance',{
       url: '/get-assistance'
       views:
         'container@':
-          templateUrl: 'pages/templates/get-assistance.html'
+          template: require('html-loader!application/pages/templates/get-assistance.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.GET_ASSISTANCE')
@@ -535,7 +535,7 @@ dahlia.config [
       url: '/additional-resources'
       views:
         'container@':
-          templateUrl: 'pages/templates/additional-resources.html'
+          template: require('html-loader!application/pages/templates/additional-resources.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
@@ -547,7 +547,7 @@ dahlia.config [
         section: null
       views:
         'container@':
-          templateUrl: 'pages/templates/document-checklist.html'
+          template: require('html-loader!application/pages/templates/document-checklist.html')
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
@@ -575,7 +575,7 @@ dahlia.config [
       url: '/intro'
       views:
         'container@':
-          templateUrl: 'short-form/templates/a1-intro.html'
+          template: require('html-loader!application/short-form/templates/a1-intro.html')
           controller: 'ShortFormApplicationController'
     })
     .state('dahlia.short-form-welcome.community-screening', {
@@ -584,16 +584,16 @@ dahlia.config [
         skipConfirm: { squash: true, value: false }
       views:
         'container@':
-          templateUrl: 'short-form/templates/layout.html'
+          template: require('html-loader!application/short-form/templates/layout.html')
           controller: 'ShortFormApplicationController'
         'container@dahlia.short-form-welcome.community-screening':
-          templateUrl: 'short-form/templates/a2-community-screening.html'
+          template: require('html-loader!application/short-form/templates/a2-community-screening.html')
     })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
         'container@':
-          templateUrl: 'short-form/templates/a4-overview.html'
+          template: require('html-loader!application/short-form/templates/a4-overview.html')
           controller: 'ShortFormApplicationController'
     })
     ## -- Short Form Application pages -- ##
@@ -602,7 +602,7 @@ dahlia.config [
       abstract: true
       views:
         'container@':
-          templateUrl: 'short-form/templates/layout.html'
+          template: require('html-loader!application/short-form/templates/layout.html')
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
@@ -674,7 +674,7 @@ dahlia.config [
       url: '/prerequisites'
       views:
         'container':
-          templateUrl: 'short-form/templates/b0a-prerequisites.html'
+          template: require('html-loader!application/short-form/templates/b0a-prerequisites.html')
       params:
         infoChanged:
           squash: true
@@ -695,7 +695,7 @@ dahlia.config [
       url: '/autofill-preview'
       views:
         'container':
-          templateUrl: 'short-form/templates/b0-autofill-preview.html'
+          template: require('html-loader!application/short-form/templates/b0-autofill-preview.html')
       resolve:
         # autofill-preview requires you to be logged in
         auth: ['$auth', ($auth) ->
@@ -724,7 +724,7 @@ dahlia.config [
       url: '/name'
       views:
         'container':
-          templateUrl: 'short-form/templates/b1-name.html'
+          template: require('html-loader!application/short-form/templates/b1-name.html')
       params:
         infoChanged:
           squash: true
@@ -748,7 +748,7 @@ dahlia.config [
       url: '/welcome-back'
       views:
         'container':
-          templateUrl: 'short-form/templates/b1a-welcome-back.html'
+          template: require('html-loader!application/short-form/templates/b1a-welcome-back.html')
       onEnter: [
         '$state', 'ShortFormApplicationService', 'AccountService',
         ($state, ShortFormApplicationService, AccountService) ->
@@ -769,38 +769,38 @@ dahlia.config [
       url: '/contact'
       views:
         'container':
-          templateUrl: 'short-form/templates/b2-contact.html'
+          template: require('html-loader!application/short-form/templates/b2-contact.html')
     })
     .state('dahlia.short-form-application.verify-address', {
       url: '/verify-address'
       views:
         'container':
-          templateUrl: 'short-form/templates/b2a-verify-address.html'
+          template: require('html-loader!application/short-form/templates/b2a-verify-address.html')
     })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
       views:
         'container':
-          templateUrl: 'short-form/templates/b3-alternate-contact-type.html'
+          template: require('html-loader!application/short-form/templates/b3-alternate-contact-type.html')
     })
     .state('dahlia.short-form-application.alternate-contact-name', {
       url: '/alternate-contact-name'
       views:
         'container':
-          templateUrl: 'short-form/templates/b4-alternate-contact-name.html'
+          template: require('html-loader!application/short-form/templates/b4-alternate-contact-name.html')
     })
     .state('dahlia.short-form-application.alternate-contact-phone-address', {
       url: '/alternate-contact-phone-address'
       views:
         'container':
-          templateUrl: 'short-form/templates/b4a-alternate-contact-phone-address.html'
+          template: require('html-loader!application/short-form/templates/b4a-alternate-contact-phone-address.html')
     })
     # Short form: "Household" section
     .state('dahlia.short-form-application.household-intro', {
       url: '/household-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/c1-household-intro.html'
+          template: require('html-loader!application/short-form/templates/c1-household-intro.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('You')
@@ -810,13 +810,13 @@ dahlia.config [
       url: '/household-overview'
       views:
         'container':
-          templateUrl: 'short-form/templates/c1a-household-overview.html'
+          template: require('html-loader!application/short-form/templates/c1a-household-overview.html')
     })
     .state('dahlia.short-form-application.household-members', {
       url: '/household-members'
       views:
         'container':
-          templateUrl: 'short-form/templates/c2-household-members.html'
+          template: require('html-loader!application/short-form/templates/c2-household-members.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('You')
@@ -826,7 +826,7 @@ dahlia.config [
       url: '/household-member-form'
       views:
         'container':
-          templateUrl: 'short-form/templates/c3-household-member-form.html'
+          template: require('html-loader!application/short-form/templates/c3-household-member-form.html')
       resolve:
         householdMember: [
           'ShortFormApplicationService',
@@ -838,7 +838,7 @@ dahlia.config [
       url: '/household-member-form/:member_id'
       views:
         'container':
-          templateUrl: 'short-form/templates/c3-household-member-form.html'
+          template: require('html-loader!application/short-form/templates/c3-household-member-form.html')
       resolve:
         householdMember: [
           '$stateParams',
@@ -851,19 +851,19 @@ dahlia.config [
       url: '/household-member-verify-address/:member_id'
       views:
         'container':
-          templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
+          template: require('html-loader!application/short-form/templates/c3a-household-member-verify-address.html')
     })
     .state('dahlia.short-form-application.household-public-housing', {
       url: '/household-public-housing'
       views:
         'container':
-          templateUrl: 'short-form/templates/c4-household-public-housing.html'
+          template: require('html-loader!application/short-form/templates/c4-household-public-housing.html')
     })
     .state('dahlia.short-form-application.household-monthly-rent', {
       url: '/household-monthly-rent'
       views:
         'container':
-          templateUrl: 'short-form/templates/c5-household-monthly-rent.html'
+          template: require('html-loader!application/short-form/templates/c5-household-monthly-rent.html')
       onEnter: [
         'ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.groupHouseholdAddresses()
@@ -873,26 +873,26 @@ dahlia.config [
       url: '/household-reserved-units-veteran'
       views:
         'container':
-          templateUrl: 'short-form/templates/c6a-household-reserved-units-veteran.html'
+          template: require('html-loader!application/short-form/templates/c6a-household-reserved-units-veteran.html')
     })
     .state('dahlia.short-form-application.household-reserved-units-disabled', {
       url: '/household-reserved-units-disabled'
       views:
         'container':
-          templateUrl: 'short-form/templates/c6b-household-reserved-units-disabled.html'
+          template: require('html-loader!application/short-form/templates/c6b-household-reserved-units-disabled.html')
     })
     .state('dahlia.short-form-application.household-priorities', {
       url: '/household-priorities'
       views:
         'container':
-          templateUrl: 'short-form/templates/c7-household-priorities.html'
+          template: require('html-loader!application/short-form/templates/c7-household-priorities.html')
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'
       views:
         'container':
-          templateUrl: 'short-form/templates/d1-income-vouchers.html'
+          template: require('html-loader!application/short-form/templates/d1-income-vouchers.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
@@ -902,7 +902,7 @@ dahlia.config [
       url: '/income'
       views:
         'container':
-          templateUrl: 'short-form/templates/d2-income-household.html'
+          template: require('html-loader!application/short-form/templates/d2-income-household.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
@@ -913,7 +913,7 @@ dahlia.config [
       url: '/preferences-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/e1-preferences-intro.html'
+          template: require('html-loader!application/short-form/templates/e1-preferences-intro.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Income')
@@ -923,7 +923,7 @@ dahlia.config [
       url: '/neighborhood-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
+          template: require('html-loader!application/short-form/templates/e2a-neighborhood-preference.html')
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
       ],
@@ -935,7 +935,7 @@ dahlia.config [
       url: '/adhp-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2b-adhp-preference.html'
+          template: require('html-loader!application/short-form/templates/e2b-adhp-preference.html')
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('antiDisplacement')
       ],
@@ -947,7 +947,7 @@ dahlia.config [
       url: '/live-work-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2c-live-work-preference.html'
+          template: require('html-loader!application/short-form/templates/e2c-live-work-preference.html')
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
       ],
@@ -959,7 +959,7 @@ dahlia.config [
       url: '/assisted-housing-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3a-assisted-housing-preference.html'
+          template: require('html-loader!application/short-form/templates/e3a-assisted-housing-preference.html')
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('assistedHousing')
       ],
@@ -971,7 +971,7 @@ dahlia.config [
       url: '/rent-burdened-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burdened-preference.html'
+          template: require('html-loader!application/short-form/templates/e3b-rent-burdened-preference.html')
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ],
@@ -983,7 +983,7 @@ dahlia.config [
       url: '/rent-burdened-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burdened-preference-edit.html'
+          template: require('html-loader!application/short-form/templates/e3b-rent-burdened-preference-edit.html')
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
@@ -995,13 +995,13 @@ dahlia.config [
       url: '/alice-griffith-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e6a-alice-griffith-preference.html'
+          template: require('html-loader!application/short-form/templates/e6a-alice-griffith-preference.html')
     })
     .state('dahlia.short-form-application.alice-griffith-verify-address', {
       url: '/alice-griffith-verify-address'
       views: {
         container: {
-          templateUrl: 'short-form/templates/e6b-alice-griffith-verify-address.html'
+          template: require('html-loader!application/short-form/templates/e6b-alice-griffith-verify-address.html')
         }
       }
     })
@@ -1009,19 +1009,19 @@ dahlia.config [
       url: '/preferences-programs'
       views:
         'container':
-          templateUrl: 'short-form/templates/e7-preferences-programs.html'
+          template: require('html-loader!application/short-form/templates/e7-preferences-programs.html')
     })
     .state('dahlia.short-form-application.custom-preferences', {
       url: '/custom-preferences'
       views:
         'container':
-          templateUrl: 'short-form/templates/e7b-custom-preferences.html'
+          template: require('html-loader!application/short-form/templates/e7b-custom-preferences.html')
     })
     .state('dahlia.short-form-application.custom-proof-preferences', {
       url: '/custom-proof-preferences/:prefIdx'
       views:
         'container':
-          templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
+          template: require('html-loader!application/short-form/templates/e7c-custom-proof-preferences.html')
       onEnter: [
         '$stateParams', 'ShortFormApplicationService',
         ($stateParams, ShortFormApplicationService) ->
@@ -1033,14 +1033,14 @@ dahlia.config [
       url: '/general-lottery-notice'
       views:
         'container':
-          templateUrl: 'short-form/templates/e8-general-lottery-notice.html'
+          template: require('html-loader!application/short-form/templates/e8-general-lottery-notice.html')
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
       url: '/review-optional'
       views:
         'container':
-          templateUrl: 'short-form/templates/f0-review-optional.html'
+          template: require('html-loader!application/short-form/templates/f0-review-optional.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
@@ -1050,7 +1050,7 @@ dahlia.config [
       url: '/review-summary'
       views:
         'container':
-          templateUrl: 'short-form/templates/f1-review-summary.html'
+          template: require('html-loader!application/short-form/templates/f1-review-summary.html')
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
@@ -1063,13 +1063,13 @@ dahlia.config [
         loginMessage: { squash: true }
       views:
         'container':
-          templateUrl: 'short-form/templates/f2-review-terms.html'
+          template: require('html-loader!application/short-form/templates/f2-review-terms.html')
     })
     .state('dahlia.short-form-application.confirmation', {
       url: '/confirmation'
       views:
         'container':
-          templateUrl: 'short-form/templates/g1-confirmation.html'
+          template: require('html-loader!application/short-form/templates/g1-confirmation.html')
       onEnter: [
         'listing', 'ShortFormNavigationService',
         (listing, ShortFormNavigationService) ->
@@ -1080,7 +1080,7 @@ dahlia.config [
       url: '/review-submitted'
       views:
         'container@':
-          templateUrl: 'short-form/templates/review-application.html'
+          template: require('html-loader!application/short-form/templates/review-application.html')
           controller: 'ShortFormApplicationController'
       onEnter: [
         'listing', 'ShortFormNavigationService',
@@ -1093,7 +1093,7 @@ dahlia.config [
       url: '/applications/:id'
       views:
         'container@':
-          templateUrl: 'short-form/templates/review-application.html'
+          template: require('html-loader!application/short-form/templates/review-application.html')
           controller: 'ShortFormApplicationController'
       resolve:
         application: [
@@ -1119,7 +1119,7 @@ dahlia.config [
       url: '/continue-previous-draft'
       views:
         'container@':
-          templateUrl: 'short-form/templates/continue-previous-draft.html'
+          template: require('html-loader!application/short-form/templates/continue-previous-draft.html')
           controller: 'ShortFormApplicationController'
       resolve:
         auth: ['$auth', ($auth) ->
@@ -1136,7 +1136,7 @@ dahlia.config [
       url: '/choose-draft'
       views:
         'container@':
-          templateUrl: 'short-form/templates/choose-draft.html'
+          template: require('html-loader!application/short-form/templates/choose-draft.html')
           controller: 'ShortFormApplicationController'
       resolve:
         auth: ['$auth', ($auth) ->
@@ -1153,7 +1153,7 @@ dahlia.config [
       url: '/choose-applicant-details'
       views:
         'container@':
-          templateUrl: 'short-form/templates/choose-applicant-details.html'
+          template: require('html-loader!application/short-form/templates/choose-applicant-details.html')
           controller: 'ShortFormApplicationController'
       resolve:
         auth: ['$auth', ($auth) ->

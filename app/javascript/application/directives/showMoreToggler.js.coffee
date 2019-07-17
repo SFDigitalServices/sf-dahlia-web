@@ -7,7 +7,7 @@ angular.module('dahlia.directives')
       inline: '@'
       toggleState: '='
     replace: true
-    templateUrl: 'directives/show-more-toggler.html'
+    template: require('html-loader!application/directives/show-more-toggler.html')
 
     link: (scope, elem, attrs) ->
       # if any other verbs to be supported other than "show" and "read", must be added here for translation purposes

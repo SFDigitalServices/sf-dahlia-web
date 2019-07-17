@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'propertyCard',
-  templateUrl: 'listings/components/property-card.html'
+  template: require('html-loader!application/listings/components/property-card.html')
   bindings:
     listing: '<'
   require:

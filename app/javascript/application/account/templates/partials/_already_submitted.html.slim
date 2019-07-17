@@ -14,4 +14,4 @@ div ng-controller="AccountController"
       ' {{currentApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
 
-  ng-include src="'account/templates/partials/_modal_close.html'"
+  ng-include src="require('application/account/templates/partials/_modal_close.html')"

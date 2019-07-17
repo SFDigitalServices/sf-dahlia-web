@@ -5,7 +5,7 @@ angular.module('dahlia.components')
     eligibleMembers: '<'
     preference: '@'
     label: '@'
-  templateUrl: 'short-form/components/preference-member-selector.html'
+  template: require('html-loader!application/short-form/components/preference-member-selector.html')
 
   controller:
     ['ShortFormApplicationService',

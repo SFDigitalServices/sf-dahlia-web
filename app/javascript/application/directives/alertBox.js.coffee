@@ -16,7 +16,7 @@ angular.module('dahlia.directives')
     # shortEligibilityError is used by choose-applicant-details page
     shortEligibilityError: '=?'
 
-  templateUrl: 'directives/alert-box.html'
+  template: require('application/directives/alert-box.html')
 
   link: (scope, elem, attrs) ->
     if scope.shortForm

@@ -2,7 +2,7 @@ angular.module('dahlia.components')
 .component 'addressError',
   bindings:
     error: '<'
-  templateUrl: 'short-form/components/address-error.html'
+  template: require('html-loader!application/short-form/components/address-error.html')
 
   controller:
     ['$translate', ($translate) ->

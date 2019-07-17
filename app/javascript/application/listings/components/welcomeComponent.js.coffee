@@ -1,5 +1,5 @@
 angular.module('dahlia.components')
 .component 'welcomeComponent',
-  templateUrl: 'listings/components/welcome-component.html'
+  template: require('html-loader!application/listings/components/welcome-component.html')
   require:
     parent: '^listingContainer'

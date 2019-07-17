@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   bindings:
     application: '<'
     preference: '@'
-  templateUrl: 'short-form/components/preference-certificate-input.html'
+  template: require('html-loader!application/short-form/components/preference-certificate-input.html')
 
   controller:
     ['$translate', 'ShortFormApplicationService', 'inputMaxLength'

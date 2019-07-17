@@ -3,7 +3,7 @@ angular.module('dahlia.directives')
   replace: true
   scope: true
   transclude: true
-  templateUrl: 'short-form/directives/radio-block-item.html'
+  template: require('html-loader!application/short-form/directives/radio-block-item.html')
 
   link: (scope, elem, attrs) ->
     scope.id = "#{attrs.name}_#{_.kebabCase(attrs.value)}"

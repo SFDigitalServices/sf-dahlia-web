@@ -2,4 +2,4 @@ angular.module('dahlia.directives')
 .directive 'lockIcon', ->
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/lock-icon.html'
+  template: require('html-loader!application/short-form/directives/lock-icon.html')

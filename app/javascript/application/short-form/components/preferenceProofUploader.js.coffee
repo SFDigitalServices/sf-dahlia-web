@@ -15,7 +15,7 @@ angular.module('dahlia.components')
     address: '<'
     rentBurdenType: '@'
     uploaded: '<'
-  templateUrl: 'short-form/components/preference-proof-uploader.html'
+  template: require('html-loader!application/short-form/components/preference-proof-uploader.html')
 
   controller:
     ['ShortFormApplicationService', 'FileUploadService', 'SharedService', 'ShortFormHelperService', '$translate'

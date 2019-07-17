@@ -3,7 +3,7 @@ angular.module('dahlia.directives')
   replace: true
   scope: true
   transclude: true
-  templateUrl: 'short-form/directives/short-form-header.html'
+  template: require('html-loader!application/short-form/directives/short-form-header.html')
 
   link: (scope, elem, attrs) ->
     scope.loggedInMessage = attrs.loggedInMessage

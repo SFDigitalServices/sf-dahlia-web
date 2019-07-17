@@ -6,4 +6,4 @@ div ng-controller="AccountController"
     p.c-steel
       | {{'ACCOUNT_SETTINGS.CONTACT_INFORMATION_UPDATED_MESSAGE' | translate}}
 
-  ng-include src="'account/templates/partials/_modal_close.html'"
+  ng-include src="require('application/'account/templates/partials/_modal_close.html')"

@@ -5,7 +5,7 @@ angular.module('dahlia.directives')
     isGeneral: '<'
     itemType: '@'
     prefName: '@'
-  templateUrl: 'listings/directives/lottery-results-row.html'
+  template: require('html-loader!application/listings/directives/lottery-results-row.html')
 
   link: (scope, elem, attrs) ->
     scope.isRank = (scope.itemType == 'rank')

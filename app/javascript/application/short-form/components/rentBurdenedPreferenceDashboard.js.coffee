@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     customInvalidMessage: '<'
     onUncheck: '&'
 
-  templateUrl: 'short-form/components/rent-burdened-preference-dashboard.html'
+  template: require('html-loader!application/short-form/components/rent-burdened-preference-dashboard.html')
   controller:
     ['ShortFormApplicationService','RentBurdenFileService', '$translate',
     (ShortFormApplicationService, RentBurdenFileService, $translate) ->

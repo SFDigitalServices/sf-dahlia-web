@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'eligibilitySection',
-  templateUrl: 'listings/components/listing/eligibility-section.html'
+  template: require('html-loader!application/listings/components/listing/eligibility-section.html')
   require:
     parent: '^listingContainer'
   controller: [

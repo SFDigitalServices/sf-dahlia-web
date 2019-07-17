@@ -7,7 +7,7 @@ angular.module('dahlia.components')
     translatedDescription: '@'
     dataEvent: '@'
     required: '&'
-  templateUrl: 'short-form/components/live-work-combo-preference.html'
+  template: require('html-loader!application/short-form/components/live-work-combo-preference.html')
 
   controller:
     ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',

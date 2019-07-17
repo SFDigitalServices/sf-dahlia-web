@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     required: '&'
     showCheckbox: '<'
 
-  templateUrl: 'short-form/components/rent-burdened-preference.html'
+  template: require('html-loader!application/short-form/components/rent-burdened-preference.html')
   controller:
     ['ShortFormApplicationService', 'ShortFormHelperService', 'RentBurdenFileService', '$translate',
     (ShortFormApplicationService, ShortFormHelperService, RentBurdenFileService, $translate) ->

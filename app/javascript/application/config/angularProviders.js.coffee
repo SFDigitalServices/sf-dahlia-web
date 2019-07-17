@@ -1,4 +1,7 @@
-import dahlia from './angularModules.js'
+import translationsEn from 'locales/locale-en.json'
+import translationsEs from 'locales/locale-es.json'
+import translationsTl from 'locales/locale-tl.json'
+import translationsZh from 'locales/locale-zh.json'
 
 dahlia.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.useXDomain = true
@@ -78,25 +81,29 @@ dahlia.config [
       # passwordResetSuccessUrl: conf.passwordResetSuccessUrl
 ]
 
-# dahlia.config ['$translateProvider', ($translateProvider) ->
-#   $translateProvider
-#     .preferredLanguage('en')
-#     .fallbackLanguage('en')
-#     .useSanitizeValueStrategy('sceParameters')
-#     .useLoader('assetPathLoader') # custom loader, see below
-# ]
+dahlia.config ['$translateProvider', ($translateProvider) ->
+  $translateProvider
+    .preferredLanguage('en')
+    .fallbackLanguage('en')
+    .useSanitizeValueStrategy('sceParameters')
+    .translations('en', translationsEn)
+    .translations('es', translationsEs)
+    .translations('tl', translationsTl)
+    .translations('zh', translationsZh)
+#    .useLoader('assetPathLoader') # custom loader, see below
+ ]
 
-dahlia.factory 'assetPathLoader', ['$q', '$http', '$window', ($q, $http, $window) ->
-  (options) ->
-    deferred = $q.defer()
-    # asset paths have unpredictable hash suffixes, which is why we need the custom loader
-    $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).then((response) ->
-      deferred.resolve(response.data)
-    ).catch( ->
-      deferred.reject({status: 503})
-    )
-    return deferred.promise
-]
+#dahlia.factory 'assetPathLoader', ['$q', '$http', '$window', ($q, $http, $window) ->
+#  (options) ->
+#    deferred = $q.defer()
+#    # asset paths have unpredictable hash suffixes, which is why we need the custom loader
+#    $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).then((response) ->
+#      deferred.resolve(response.data)
+#    ).catch( ->
+#      deferred.reject({status: 503})
+#    )
+#    return deferred.promise
+#]
 
 dahlia.config ['$titleProvider', ($titleProvider) ->
   $titleProvider.documentTitle ['$rootScope', ($rootScope) ->

@@ -2,7 +2,7 @@ angular.module('dahlia.directives')
 .directive 'communityScreeningHeader', ['$translate', ($translate) ->
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/community-screening-header.html'
+  template: require('html-loader!application/short-form/directives/community-screening-header.html')
 
   link: (scope, elem, attrs) ->
     listing = scope.listing

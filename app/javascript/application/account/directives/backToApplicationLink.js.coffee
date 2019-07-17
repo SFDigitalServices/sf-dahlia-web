@@ -2,5 +2,5 @@ angular.module('dahlia.directives')
 .directive 'backToApplicationLink', [ ->
   replace: true
   scope: true
-  templateUrl: 'account/directives/back-to-application-link.html'
+  template: require('html-loader!application/account/directives/back-to-application-link.html')
 ]

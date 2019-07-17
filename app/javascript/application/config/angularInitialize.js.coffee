@@ -1,14 +1,21 @@
-import dahlia from './angularModules.js'
+# import dahlia from './angularModules.js'
 dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
-  'SharedService', 'ExternalTranslateService', 'ModalService',
+  'SharedService', 'ExternalTranslateService', 'ModalService', '$templateCache'
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
-  SharedService, ExternalTranslateService, ModalService) ->
+  SharedService, ExternalTranslateService, ModalService, $templateCache) ->
     timeoutRetries = 2
     ngMeta.init()
+
+    # Attempt to include all templates at once
+    # modules = requireAll(require.context("application", true, /\.tplc\.html$/))
+    $templateCache.put('shared/templates/spinner.html', require('html-loader!application/shared/templates/spinner.html'))
+    $templateCache.put('shared/templates/nav/_nav_items.html', require('html-loader!application/shared/templates/nav/_nav_items.html'))
+    $templateCache.put('shared/templates/nav/nav-mobile.html', require('html-loader!application/shared/templates/nav/nav-mobile.html'))
+    $templateCache.put('shared/templates/nav/nav-bar.html', require('html-loader!application/shared/templates/nav/nav-bar.html'))
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -19,7 +26,7 @@ dahlia.run [
     bsLoadingOverlayService.setGlobalConfig({
       delay: 0
       activeClass: 'loading'
-      templateUrl: 'shared/templates/spinner.html'
+      template: require('application/shared/templates/spinner.html')
     })
 
     $rootScope.$on 'IdleStart', ->

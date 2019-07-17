@@ -1,4 +1,3 @@
-require('angular')
 # Custom Directives
 angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
@@ -16,13 +15,13 @@ angular.module('dahlia.components', [])
 #     .addPlugin(Raven.Plugins.Angular)
 #     .install()
 
-dahlia = angular.module 'dahlia', [
+global.dahlia = angular.module 'dahlia', [
   'dahlia.directives',
   'dahlia.services',
   'dahlia.controllers',
   'dahlia.components',
   # filters
-  # 'customFilters',
+  'customFilters',
   'ng-currency',
   # dependencies
   'ui.router',
@@ -31,7 +30,7 @@ dahlia = angular.module 'dahlia', [
   # 'templates',
   'mm.foundation',
   'angular.filter',
-  # 'angular-carousel',
+  'angular-carousel',
   'ngMessages',
   'pascalprecht.translate',
   'ui.mask',
@@ -48,4 +47,4 @@ dahlia = angular.module 'dahlia', [
   # 'ngRaven'
 ]
 
-export default dahlia
+# export default dahlia

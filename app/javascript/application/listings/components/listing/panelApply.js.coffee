@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'panelApply',
-  templateUrl: 'listings/components/listing/panel-apply.html'
+  template: require('html-loader!application/listings/components/listing/panel-apply.html')
   require:
     parent: '^listingContainer'
   controller: [

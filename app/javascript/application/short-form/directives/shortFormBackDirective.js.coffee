@@ -3,7 +3,7 @@ angular.module('dahlia.directives')
   restrict: 'E'
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/short-form-back.html'
+  template: require('html-loader!application/short-form/directives/short-form-back.html')
 
   link: (scope, elem, attrs) ->
     # gets these parent scope functions from ShortFormApplicationController

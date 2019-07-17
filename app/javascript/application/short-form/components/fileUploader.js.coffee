@@ -6,7 +6,7 @@ angular.module('dahlia.components')
     fileLabel: '@'
     fileType: '@'
     required: '<'
-  templateUrl: 'short-form/components/file-uploader.html'
+  template: require('html-loader!application/short-form/components/file-uploader.html')
 
   controller:
     ['ShortFormApplicationService', 'FileUploadService', 'SharedService'

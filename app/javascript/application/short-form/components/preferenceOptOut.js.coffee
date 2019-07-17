@@ -5,7 +5,7 @@ angular.module('dahlia.components')
     preference: '@'
     invalid: '<'
     cancelPreference: '&'
-  templateUrl: 'short-form/components/preference-opt-out.html'
+  template: require('html-loader!application/short-form/components/preference-opt-out.html')
 
   controller: ->
     ctrl = @

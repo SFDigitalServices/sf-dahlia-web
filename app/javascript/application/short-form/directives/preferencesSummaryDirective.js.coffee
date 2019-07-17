@@ -3,7 +3,7 @@ angular.module('dahlia.directives')
   restrict: 'E'
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/preferences-summary.html'
+  template: require('html-loader!application/short-form/directives/preferences-summary.html')
 
   link: (scope, elem, attrs) ->
 

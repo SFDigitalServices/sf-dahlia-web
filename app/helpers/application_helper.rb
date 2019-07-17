@@ -12,6 +12,7 @@ module ApplicationHelper
 
   def dev_asset_paths
     asset_paths = {}
+    return asset_paths
     Rails.application.assets.each_file do |f|
       next if f !~ %r{images/|json/} || f =~ %r{favicon/}
       filename = Pathname(f).basename.to_s

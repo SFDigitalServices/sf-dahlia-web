@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   bindings:
     application: '<'
     form: '<'
-  templateUrl: 'short-form/components/lending-institution.html'
+  template: require('html-loader!application/short-form/components/lending-institution.html')
   controller:
     ['ShortFormApplicationService', (ShortFormApplicationService) ->
       ctrl = @

@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   bindings:
     preference: '<'
     listing: '<'
-  templateUrl: 'listings/components/listing/lottery-preference.html'
+  template: require('html-loader!application/listings/components/listing/lottery-preference.html')
 
   controller: ['ListingDataService', (ListingDataService) ->
     ctrl = @

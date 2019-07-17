@@ -1,5 +1,5 @@
 angular.module('dahlia.components')
 .component 'favoritesComponent',
-  templateUrl: 'listings/components/favorites-component.html'
+  template: require('html-loader!application/listings/components/favorites-component.html')
   require:
     parent: '^listingContainer'

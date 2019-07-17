@@ -1,3 +1,4 @@
+import moment from "moment"
 ############################################################################################
 ####################################### SERVICE ############################################
 ############################################################################################
@@ -113,7 +114,7 @@ ListingDataService = (
 
   Service.getListings = (opts = {}) ->
     Service._resetHTTPRequests()
-
+    console.log('getting')
     # check for eligibility options being set in the session
     if opts.clearFilters
       ListingEligibilityService.resetEligibilityFilters()

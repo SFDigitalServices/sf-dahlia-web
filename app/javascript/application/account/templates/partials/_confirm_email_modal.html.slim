@@ -22,4 +22,4 @@ div ng-controller="AccountController"
         button.button.tertiary ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
           | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
 
-  ng-include src="'account/templates/partials/_modal_close.html'"
+  ng-include src="require('application/account/templates/partials/_modal_close.html')"

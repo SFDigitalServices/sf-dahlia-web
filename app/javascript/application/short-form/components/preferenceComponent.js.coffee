@@ -14,7 +14,7 @@ angular.module('dahlia.components')
     proofType: '@'
     marginBottom: '<'
     required: '&'
-  templateUrl: 'short-form/components/preference-component.html'
+  template: require('html-loader!application/short-form/components/preference-component.html')
 
   controller:
     ['ShortFormApplicationService', 'ShortFormHelperService', '$translate',

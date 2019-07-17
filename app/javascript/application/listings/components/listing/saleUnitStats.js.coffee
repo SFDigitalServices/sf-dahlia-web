@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'saleUnitStats',
-  templateUrl: 'listings/components/listing/sale-unit-stats.html'
+  template: require('html-loader!application/listings/components/listing/sale-unit-stats.html')
   require:
     parent: '^propertyHero'
   bindings:

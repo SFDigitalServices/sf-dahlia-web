@@ -2,7 +2,7 @@ angular.module('dahlia.directives')
 .directive 'addressVerificationForm', ['$state', ($state) ->
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/address-verification-form.html'
+  template: require('html-loader!application/short-form/directives/address-verification-form.html')
 
   link: (scope, elem, attrs) ->
     # scope.user holds data for interacting with forms,

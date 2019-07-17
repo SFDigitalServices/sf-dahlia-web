@@ -10,7 +10,7 @@ angular.module('dahlia.components')
     customDescription: '@'
     shortDescription: '@'
     onChange: '&'
-  templateUrl: 'short-form/components/preference-checkbox.html'
+  template: require('html-loader!application/short-form/components/preference-checkbox.html')
 
   controller: ['ListingDataService', 'ListingPreferenceService', (ListingDataService, ListingPreferenceService) ->
     ctrl = @

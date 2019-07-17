@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'languageSwitcher', {
-  templateUrl: 'shared/components/language-switcher.html'
+  template: require('html-loader!application/shared/components/language-switcher.html')
   controller: ['SharedService', '$state', '$scope', (SharedService, $state, $scope) ->
     $scope.stateForLanguage = (lang) ->
       toStateName = $state.current.name

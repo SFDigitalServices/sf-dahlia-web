@@ -20,4 +20,4 @@ div ng-controller="AccountController"
         button.button.primary.min-width ng-click="closeModal()"
           | {{'T.OK' | translate}}
 
-  ng-include src="'account/templates/partials/_modal_close.html'"
+  ng-include src="require('application/account/templates/partials/_modal_close.html')"

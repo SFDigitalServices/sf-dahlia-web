@@ -1,7 +1,7 @@
 angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
-  templateUrl: 'listings/components/listing-container.html'
+  template: require('html-loader!application/listings/components/listing-container.html')
   controller: ['$window', 'ListingDataService', 'ListingEligibilityService', 'ListingIdentityService', 'ListingUnitService', 'SharedService',
   ($window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
