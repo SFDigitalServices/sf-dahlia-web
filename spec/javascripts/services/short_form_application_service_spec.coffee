@@ -198,6 +198,7 @@ do ->
       describe 'Listing has at lease one senior member requirement', ->
         it 'returns true if there are no seniors', ->
           ShortFormApplicationService.listing.Reserved_Community_Requirement = 'One household member'
+          ShortFormApplicationService.listing.Reserved_community_type = 'senior'
           setupFakeHouseholdMember({dob_year: '2012'})
           ShortFormApplicationService.application.householdMembers = [fakeHouseholdMember]
           expect(ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()).toEqual true

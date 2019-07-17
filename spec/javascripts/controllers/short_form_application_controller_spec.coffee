@@ -333,6 +333,7 @@ do ->
     describe '$scope.addHouseholdMember', ->
       describe 'all senior building', ->
         it 'calls applicantDoesNotmeetAllSeniorBuildingRequirements in ShortFormApplicationService', ->
+          spyOn(fakeShortFormApplicationService, 'applicantDoesNotmeetAllSeniorBuildingRequirements').and.callThrough()
           scope.form.applicationForm.date_of_birth_year = {$viewValue: '1955'}
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.applicantDoesNotmeetAllSeniorBuildingRequirements).toHaveBeenCalled()
@@ -428,11 +429,11 @@ do ->
         expect(fakeShortFormNavigationService.goToSection).toHaveBeenCalledWith('Preferences')
 
       describe 'senior building', ->
-        it 'checks if household meets at least one senior requirement' ->
-        scope.validateHouseholdEligibility('incomeMatch')
-        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
-        scope.validateHouseholdEligibility('householdMatch')
-        expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+        it 'checks if household meets at least one senior requirement', ->
+          scope.validateHouseholdEligibility('incomeMatch')
+          expect(fakeShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+          scope.validateHouseholdEligibility('householdMatch')
+          expect(fakeShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -480,7 +481,7 @@ do ->
       beforeEach ->
         scope.householdDoesNotMeetSeniorRequirements = jasmine.createSpy().and.returnValue(false)
         scope.goToNextReservedPageIfAvailable = jasmine.createSpy()
-        scope._determineHouseholdSizeEligibilityErrors = jasmine.createSpy().and.returnValue(true)
+        scope._determineHouseholdSizeEligibilityError = jasmine.createSpy().and.returnValue(true)
         scope.handleErrorState = jasmine.createSpy().and.returnValue(true)
 
       describe 'when householdMatch is true', ->
@@ -499,9 +500,9 @@ do ->
           fakeHHOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
 
-        it 'calls $scope._determineHouseholdSizeEligibilityErrors', ->
+        it 'calls $scope._determineHouseholdSizeEligibilityError', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(scope._determineHouseholdSizeEligibilityErrors).toHaveBeenCalled()
+          expect(scope._determineHouseholdSizeEligibilityError).toHaveBeenCalled()
 
     describe '_respondToIncomeEligibilityResults', ->
       describe 'when incomeMatch is true', ->
