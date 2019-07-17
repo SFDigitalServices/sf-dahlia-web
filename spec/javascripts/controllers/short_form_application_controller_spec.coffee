@@ -481,7 +481,7 @@ do ->
       beforeEach ->
         scope.householdDoesNotMeetSeniorRequirements = jasmine.createSpy().and.returnValue(false)
         scope.goToNextReservedPageIfAvailable = jasmine.createSpy()
-        scope._determineHouseholdSizeEligibilityErrors = jasmine.createSpy().and.returnValue(true)
+        scope._determineHouseholdSizeEligibilityError = jasmine.createSpy().and.returnValue(true)
         scope.handleErrorState = jasmine.createSpy().and.returnValue(true)
 
       describe 'when householdMatch is true', ->
@@ -500,9 +500,9 @@ do ->
           fakeHHOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
 
-        it 'calls $scope._determineHouseholdSizeEligibilityErrors', ->
+        it 'calls $scope._determineHouseholdSizeEligibilityError', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(scope._determineHouseholdSizeEligibilityErrors).toHaveBeenCalled()
+          expect(scope._determineHouseholdSizeEligibilityError).toHaveBeenCalled()
 
     describe '_respondToIncomeEligibilityResults', ->
       describe 'when incomeMatch is true', ->
