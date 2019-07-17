@@ -182,6 +182,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'applicantDoesNotmeetAllSeniorBuildingRequirements').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -430,9 +431,9 @@ do ->
       describe 'senior building', ->
         it 'checks if household meets at least one senior requirement', ->
           scope.validateHouseholdEligibility('incomeMatch')
-          expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+          expect(fakeShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
           scope.validateHouseholdEligibility('householdMatch')
-          expect(fakeShortFormNavigationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
+          expect(fakeShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
