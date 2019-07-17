@@ -733,7 +733,6 @@
         "SEE_MAXIMUM_INCOME_INFORMATION": "Consulte la información sobre ingresos máximos",
         "SEE_PREFERENCE_INFORMATION": "Consulte la información de preferencia",
         "SEE_UNIT_INFORMATION": "Consulte la información de la unidad",
-        "SHOWING_MATCHES_FOR": "Mostrando resultados para",
         "SINGLE_ROOM_OCCUPANCY": "Viviendas con habitaciones individuales",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "Esta propiedad ofrece habitaciones individuales solo para una persona. Los inquilinos podrían tener que compartir los baños y en ocasiones la cocina.",
         "SPECIAL_NOTES": "Notas Especiales",
@@ -748,7 +747,6 @@
         },
         "VIEW_LOTTERY_RESULTS": "Ver los Resultados del Sorteo",
         "WAITLIST_IS_OPEN": "La lista de espera está abierta",
-        "YOU_DONT_MATCH_ANY": "No encontramos anuncios compatibles según la información ingresada.",
         "YOU_MAY_BE_ELIGIBLE": "Según la información ingresada, usted podría ser elegible para las unidades de la siguiente propiedad."
     },
     "LISTINGS_FOR_RENT": {
