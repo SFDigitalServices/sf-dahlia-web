@@ -182,7 +182,6 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'applicantDoesNotmeetAllSeniorBuildingRequirements').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -334,6 +333,7 @@ do ->
     describe '$scope.addHouseholdMember', ->
       describe 'all senior building', ->
         it 'calls applicantDoesNotmeetAllSeniorBuildingRequirements in ShortFormApplicationService', ->
+          spyOn(fakeShortFormApplicationService, 'applicantDoesNotmeetAllSeniorBuildingRequirements').and.callThrough()
           scope.form.applicationForm.date_of_birth_year = {$viewValue: '1955'}
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.applicantDoesNotmeetAllSeniorBuildingRequirements).toHaveBeenCalled()
