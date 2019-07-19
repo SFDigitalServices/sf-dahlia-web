@@ -3,12 +3,14 @@ class CacheService
   def prefetch_listings(opts = {})
     # refresh oauth_token before beginning
     Force::Request.new.refresh_oauth_token
-    @old_listings = Force::ListingService.raw_listings
-    @new_listings = Force::ListingService.raw_listings(refresh_cache: true)
+    # Get cached listings
+    @old_listings = Force::ListingService.listings(subset: 'browse')
+    # Get latest listings
+    @new_listings = Force::ListingService.listings(subset: 'browse', force: true)
     if opts[:refresh_all]
-      cache_listings
+      cache_all_listings
     else
-      check_listings
+      check_for_listing_updates
     end
   end
 
@@ -16,25 +18,22 @@ class CacheService
 
   attr_accessor :old_listings, :new_listings
 
-  def cache_listings
+  def cache_all_listings
     new_listings.each { |listing| cache_single_listing(listing) }
   end
 
-  def check_listings
+  def check_for_listing_updates
+    # Check to see if any of the listings have updated since the last cache
     new_listings.each do |listing|
-      id = listing['Id']
-      old_listing = old_listings.find { |l| l['Id'] == id }
-      unchanged = false
-      if old_listing.present?
-        sorted_old_listing = Force::ListingService.array_sort!(old_listing)
-        sorted_listing = Force::ListingService.array_sort!(listing)
-        # NOTE: This comparison isn't perfect, as the browse listings API endpoint doesn't
-        # contain some relational data e.g. some individual unit/preference details.
-        # That's why we more aggressively re-cache open listings.
-        unchanged = HashDiff.diff(sorted_old_listing, sorted_listing).empty?
-      end
-      cache_single_listing(listing) unless unchanged
+      old_listing = old_listings.find { |l| l['Id'] == listing['Id'] }
+
+      cache_single_listing(listing) unless
+        old_listing.present? and !listing_updated?(old_listing, listing)
     end
+  end
+
+  def listing_updated?(old_listing, new_listing)
+    old_listing['LastModifiedDate'] != new_listing['LastModifiedDate']
   end
 
   def cache_single_listing(listing)

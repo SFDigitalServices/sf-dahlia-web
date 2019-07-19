@@ -4,8 +4,8 @@ require 'ostruct'
 
 describe CacheService do
   let(:cached_listings) do
-    listings = VCR.use_cassette('listings/all_listings') do
-      Force::ListingService.raw_listings
+    listings = VCR.use_cassette('listings/all_listings_browse') do
+      Force::ListingService.listings(subset: 'browse')
     end
     # Trim down, we only need one listing for testing
     listings.take(1)
@@ -15,21 +15,21 @@ describe CacheService do
     # map from cached listings to prevent listing properties from
     # being passed by reference (and thus updated in both places)
     updated_listings = cached_listings.map(&:clone)
-    updated_listings.first['Name'] = 'The Newest Listing on the Block'
+    updated_listings.first['LastModifiedDate'] = 'Very recent date time'
     updated_listings
   end
 
   let(:updated_listing) { updated_listings.first }
 
-  let(:updated_listing_id) { updated_listing['listingID'] }
+  let(:updated_listing_id) { updated_listing['Id'] }
 
   let(:listing_image_service) { instance_double(ListingImageService) }
 
   before do
-    allow(Force::ListingService).to receive(:raw_listings)
-      .with(no_args).and_return(cached_listings)
-    allow(Force::ListingService).to receive(:raw_listings)
-      .with(refresh_cache: true).and_return(updated_listings)
+    allow(Force::ListingService).to receive(:listings)
+      .with(subset: 'browse').and_return(cached_listings)
+    allow(Force::ListingService).to receive(:listings)
+      .with(subset: 'browse', force: true).and_return(updated_listings)
     allow(Force::ListingService).to receive(:listing)
     allow(Force::ListingService).to receive(:units)
     allow(Force::ListingService).to receive(:preferences)
@@ -41,7 +41,7 @@ describe CacheService do
 
   shared_examples 'cacher of listings' do
     # expects `prefetch_args` to be a hash of options passed to `prefetch_listings`
-    it 'refreshes the listing cache' do
+    it 'refreshes the listing cache for updated listing' do
       expect(Force::ListingService).to receive(:listing)
         .with(updated_listing_id, force: true)
       expect(Force::ListingService).to receive(:units)
@@ -99,8 +99,8 @@ describe CacheService do
     context 'listing is updated' do
       before do
         # simulate an updated listing
-        allow(Force::ListingService).to receive(:raw_listings)
-          .with(refresh_cache: true).and_return(updated_listings)
+        allow(Force::ListingService).to receive(:listings)
+          .with(subset: 'browse', force: true).and_return(updated_listings)
       end
 
       it_behaves_like 'cacher of listings' do

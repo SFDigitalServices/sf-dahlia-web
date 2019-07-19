@@ -13,13 +13,8 @@ module Force
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
       params[:subset] = attrs[:subset] if attrs[:subset].present?
-      get_listings(params)
-    end
-
-    def self.raw_listings(opts = {})
-      force = opts[:refresh_cache] || false
-      Request.new(parse_response: true)
-             .cached_get('/ListingDetails', nil, force)
+      force = attrs[:force].present? ? attrs[:force] : false
+      get_listings(params, force)
     end
 
     # get listings with eligibility matches applied
@@ -104,8 +99,9 @@ module Force
       end
     end
 
-    private_class_method def self.get_listings(params = nil)
-      results = Request.new(parse_response: true).cached_get('/ListingDetails', params)
+    private_class_method def self.get_listings(params = nil, force = false)
+      results = Request.new(parse_response: true)
+                       .cached_get('/ListingDetails', params, force)
       add_image_urls(results)
     end
 
