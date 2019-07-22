@@ -26,11 +26,6 @@ describe Force::ListingService do
       Force::ListingService.send :get_listings, type: 'ownership', subset: 'browse'
     end
   end
-  let(:all_listings) do
-    VCR.use_cassette('listings/all_listings') do
-      Force::ListingService.send :get_listings
-    end
-  end
   let(:all_listings_browse) do
     VCR.use_cassette('listings/all_listings_browse') do
       Force::ListingService.send :get_listings, subset: 'browse'
@@ -45,34 +40,25 @@ describe Force::ListingService do
     it 'should pass type down to Salesforce request for ownership listing' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails',
-              type: 'ownership',
-              subset: 'browse').and_return(sale_listings)
+              { type: 'ownership', subset: 'browse' }, false).and_return(sale_listings)
       Force::ListingService.listings(type: 'ownership', subset: 'browse')
     end
     it 'should pass type down to Salesforce request for rental listings' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails',
-              type: 'rental',
-              subset: 'browse').and_return(rental_listings)
+              { type: 'rental', subset: 'browse' }, false).and_return(rental_listings)
       Force::ListingService.listings(type: 'rental', subset: 'browse')
     end
     it 'should pass id down to Salesforce request if part of params' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', ids: listing_ids).and_return(listings_by_ids)
+        .with('/ListingDetails', { ids: listing_ids }, false).and_return(listings_by_ids)
       Force::ListingService.listings(ids: listing_ids)
     end
     it 'should pass subset down to Salesforce request if part of params' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', subset: 'browse').and_return(all_listings_browse)
+        .with('/ListingDetails',
+              { subset: 'browse' }, false).and_return(all_listings_browse)
       Force::ListingService.listings(subset: 'browse')
-    end
-  end
-
-  describe '.raw_listings' do
-    it 'should return both rental and ownership listings' do
-      expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', nil, false).and_return(all_listings)
-      Force::ListingService.raw_listings
     end
   end
 

@@ -1,40 +1,40 @@
 # service class for pre-fetching + caching salesforce data
 class CacheService
   def prefetch_listings(opts = {})
-    # refresh oauth_token before beginning
+    # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
-    @old_listings = Force::ListingService.raw_listings
-    @new_listings = Force::ListingService.raw_listings(refresh_cache: true)
+    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
+
     if opts[:refresh_all]
-      cache_listings
+      cache_all_listings
     else
-      check_listings
+      cache_only_updated_listings
     end
   end
 
   private
 
-  attr_accessor :old_listings, :new_listings
+  attr_accessor :prev_cached_listings, :fresh_listings
 
-  def cache_listings
-    new_listings.each { |listing| cache_single_listing(listing) }
+  def cache_all_listings
+    fresh_listings.each { |l| cache_single_listing(l) }
   end
 
-  def check_listings
-    new_listings.each do |listing|
-      id = listing['Id']
-      old_listing = old_listings.find { |l| l['Id'] == id }
-      unchanged = false
-      if old_listing.present?
-        sorted_old_listing = Force::ListingService.array_sort!(old_listing)
-        sorted_listing = Force::ListingService.array_sort!(listing)
-        # NOTE: This comparison isn't perfect, as the browse listings API endpoint doesn't
-        # contain some relational data e.g. some individual unit/preference details.
-        # That's why we more aggressively re-cache open listings.
-        unchanged = HashDiff.diff(sorted_old_listing, sorted_listing).empty?
+  def cache_only_updated_listings
+    fresh_listings.each do |fresh_listing|
+      prev_cached_listing = prev_cached_listings.find do |l|
+        l['Id'] == fresh_listing['Id']
       end
-      cache_single_listing(listing) unless unchanged
+
+      cache_single_listing(fresh_listing) unless
+        listing_unchanged?(prev_cached_listing, fresh_listing)
     end
+  end
+
+  def listing_unchanged?(prev_cached_listing, fresh_listing)
+    prev_cached_listing.present? &&
+      (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def cache_single_listing(listing)

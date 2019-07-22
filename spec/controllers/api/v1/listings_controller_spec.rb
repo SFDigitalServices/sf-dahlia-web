@@ -26,7 +26,7 @@ describe Api::V1::ListingsController do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with(type: 'rental')
+          .with({ type: 'rental' }, false)
           .and_return(rental_listings)
       end
 
@@ -41,7 +41,7 @@ describe Api::V1::ListingsController do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with(type: 'ownership')
+          .with({ type: 'ownership' }, false)
           .and_return(sale_listings)
       end
 
