@@ -6,13 +6,14 @@ module Force
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # `type` designates "ownership" or "rental" listings
-    # `subset` returns only fields needed for listing direcotry if set to "browse"
+    # `subset` returns only fields needed for listing directory
+    # by default and all for "full"
     # returns cached and cleaned listings
     def self.listings(attrs = {})
       params = {}
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
-      params[:subset] = attrs[:subset] if attrs[:subset].present?
+      params[:subset] = 'browse' unless attrs[:subset] == 'full'
       force = attrs[:force].present? ? attrs[:force] : false
       get_listings(params, force)
     end

@@ -231,7 +231,7 @@ ListingDataService = (
     Service._resetHTTPRequests()
     angular.copy([], Service.listings)
     params =
-      params: {ids: ids.join(','), subset: 'browse'}
+      params: {ids: ids.join(',')}
       timeout: Service.deferred.promise
     $http.get("/api/v1/listings.json", params).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
