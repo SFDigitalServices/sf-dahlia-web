@@ -120,10 +120,10 @@ ShortFormNavigationService = (
       scopedCallbacks: [{func: 'checkPreferenceEligibility'}]
       path: 'household-members'
     'household-public-housing': {scopedCallbacks: [{func: 'checkIfPublicHousing'}]}
-    'household-monthly-rent': {scopedCallbacks: [{func: 'checkIfReservedUnits'}]}
+    'household-monthly-rent': {scopedCallbacks: [{func: 'goToNextReservedPageIfAvailable'}]}
     'household-reserved-units-veteran':
       scopedCallbacks: [{
-        func: 'checkIfReservedUnits'
+        func: 'goToNextReservedPageIfAvailable'
         param: Service.RESERVED_TYPES.DISABLED
       }]
     'household-reserved-units-disabled':

@@ -733,7 +733,6 @@
         "SEE_MAXIMUM_INCOME_INFORMATION": "Consulte la información sobre ingresos máximos",
         "SEE_PREFERENCE_INFORMATION": "Consulte la información de preferencia",
         "SEE_UNIT_INFORMATION": "Consulte la información de la unidad",
-        "SHOWING_MATCHES_FOR": "Mostrando resultados para",
         "SINGLE_ROOM_OCCUPANCY": "Viviendas con habitaciones individuales",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "Esta propiedad ofrece habitaciones individuales solo para una persona. Los inquilinos podrían tener que compartir los baños y en ocasiones la cocina.",
         "SPECIAL_NOTES": "Notas Especiales",
@@ -748,7 +747,6 @@
         },
         "VIEW_LOTTERY_RESULTS": "Ver los Resultados del Sorteo",
         "WAITLIST_IS_OPEN": "La lista de espera está abierta",
-        "YOU_DONT_MATCH_ANY": "No encontramos anuncios compatibles según la información ingresada.",
         "YOU_MAY_BE_ELIGIBLE": "Según la información ingresada, usted podría ser elegible para las unidades de la siguiente propiedad."
     },
     "LISTINGS_FOR_RENT": {
@@ -759,7 +757,7 @@
         "HEADER": {
             "FIND_MATCHING_LISTINGS": "Encuentre anuncios compatibles",
             "IF_YOU_TELL_US": "Si nos informa el tamaño y los ingresos del grupo familiar, podemos destacar los anuncios de vivienda para los que sería elegible.",
-            "OR_GET_HELP_CALCULATING_INCOME": "u <a ui-sref=\"{{sref}}\">obtenga ayuda para calcular sus ingresos</a>"
+            "OR_GET_HELP_CALCULATING_INCOME": "u <a ui-sref='{{sref}}'>obtenga ayuda para calcular sus ingresos</a>"
         }
     },
     "LISTINGS_FOR_SALE": {

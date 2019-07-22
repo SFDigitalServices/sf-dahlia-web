@@ -9,14 +9,14 @@ tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minRentalMi
       span ng-show="::!unit_summary.minRentalMinIncome"
         | {{::unit_summary.maxRentalMinIncome | currency:"$":0}}
       span ng-show="::unit_summary.minRentalMinIncome && (unit_summary.maxRentalMinIncome > unit_summary.minRentalMinIncome)"
-        | -{{::unit_summary.maxRentalMinIncome | currency:"$":0}}
+        |  to {{::unit_summary.maxRentalMinIncome | currency:"$":0}}
       small
         | per month
   td.text-right.is-subtitled data-th="Rent"
     span
       | {{::unit_summary.minMonthlyRent | currency:"$":0}}
       span ng-show="::unit_summary.maxMonthlyRent > unit_summary.minMonthlyRent"
-        | -{{::unit_summary.maxMonthlyRent | currency:"$":0}}
+        |  to {{::unit_summary.maxMonthlyRent | currency:"$":0}}
       small
         | per month
 
@@ -35,6 +35,6 @@ tr ng-repeat-end="" ng-if="::unit_summary.minPercentIncome"
     span
       | {{::unit_summary.minPercentIncome}}
       span ng-show="::unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
-        | -{{::unit_summary.maxPercentIncome}}
+        |  to {{::unit_summary.maxPercentIncome}}
       small
         | % income

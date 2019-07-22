@@ -69,7 +69,7 @@ gem 'nokogiri', '>= 1.8.2'
 gem 'actionpack-page_caching', '~> 1.1.0'
 
 # image manipulation
-gem 'mini_magick', '~> 4.7.2'
+gem 'mini_magick', '~> 4.9.4'
 gem 'image_optimizer', '~> 1.7.0'
 
 gem 'prerender_rails', '~> 1.6.0'

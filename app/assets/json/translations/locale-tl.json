@@ -733,7 +733,6 @@
         "SEE_MAXIMUM_INCOME_INFORMATION": "Tingnan ang Impormasyon Tungkol sa Maximum o Pinakamataas nang Posibleng Kita ",
         "SEE_PREFERENCE_INFORMATION": "Tingnan ang Impormasyon tungkol sa Preperensiya",
         "SEE_UNIT_INFORMATION": "SEE_UNIT_INFORMATION",
-        "SHOWING_MATCHES_FOR": "Ipinapakita ang nagtutugma para sa ",
         "SINGLE_ROOM_OCCUPANCY": "Mga Indibidwal na Kuwarto sa Gusali (Single Room Occupancy)",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "Naghahandog ang gusaling ito ng mga indibidwal na kuwarto na para lamang sa iisang tao. Posibleng may mga banyo, at kung minsan, mga kusina, na komyunal na ginagamit ng mga nangungupahan. ",
         "SPECIAL_NOTES": "Mga Espesyal na Tala",
@@ -748,7 +747,6 @@
         },
         "VIEW_LOTTERY_RESULTS": "Ipakita ang mga Resulta ng Lottery",
         "WAITLIST_IS_OPEN": "Bukas pa ang Waitlist (listahan ng mga naghihintay magkaroon ng pabahay) ",
-        "YOU_DONT_MATCH_ANY": "Batay sa impormasyong inilagay ninyo, wala sa mga kasalukuyang nakalistang pabahay ang nababagay sa inyo. ",
         "YOU_MAY_BE_ELIGIBLE": "Batay sa impormasyong impormasyong inilagay ninyo, posibleng kuwalipikado kayo para sa mga unit sa mga sumusunod na gusali. "
     },
     "LISTINGS_FOR_RENT": {
