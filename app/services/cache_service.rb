@@ -1,39 +1,40 @@
 # service class for pre-fetching + caching salesforce data
 class CacheService
   def prefetch_listings(opts = {})
-    # refresh oauth_token before beginning
+    # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
-    # Get cached listings
-    @old_listings = Force::ListingService.listings(subset: 'browse')
-    # Get latest listings
-    @new_listings = Force::ListingService.listings(subset: 'browse', force: true)
+    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
+
     if opts[:refresh_all]
       cache_all_listings
     else
-      check_for_listing_updates
+      cache_only_updated_listings
     end
   end
 
   private
 
-  attr_accessor :old_listings, :new_listings
+  attr_accessor :prev_cached_listings, :fresh_listings
 
   def cache_all_listings
-    new_listings.each { |listing| cache_single_listing(listing) }
+    fresh_listings.each { |l| cache_single_listing(l) }
   end
 
-  def check_for_listing_updates
-    # Check to see if any of the listings have updated since the last cache
-    new_listings.each do |listing|
-      old_listing = old_listings.find { |l| l['Id'] == listing['Id'] }
+  def cache_only_updated_listings
+    fresh_listings.each do |fresh_listing|
+      prev_cached_listing = prev_cached_listings.find do |l|
+        l['Id'] == fresh_listing['Id']
+      end
 
-      cache_single_listing(listing) unless
-        old_listing.present? and !listing_updated?(old_listing, listing)
+      cache_single_listing(fresh_listing) unless
+        listing_unchanged?(prev_cached_listing, fresh_listing)
     end
   end
 
-  def listing_updated?(old_listing, new_listing)
-    old_listing['LastModifiedDate'] != new_listing['LastModifiedDate']
+  def listing_unchanged?(prev_cached_listing, fresh_listing)
+    prev_cached_listing.present? &&
+      (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def cache_single_listing(listing)
