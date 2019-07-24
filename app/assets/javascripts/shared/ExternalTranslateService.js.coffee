@@ -52,15 +52,15 @@ ExternalTranslateService = ($q, $timeout, $window) ->
         return false
 
   Service.init = ->
-    Service.translateElement = new $window.google.translate.TranslateElement(
-      pageLanguage: 'en'
-      includedLanguages: 'en,es,tl,zh-TW'
-      layout: $window.google.translate.TranslateElement.InlineLayout.HORIZONTAL
-      autoDisplay: false
-      multilanguagePage: true
-      gaTrack: true
-      gaId: 'UA-71549528-1'
-    , 'google_translate_element')
+    # Service.translateElement = new $window.google.translate.TranslateElement(
+    #   pageLanguage: 'en'
+    #   includedLanguages: 'en,es,tl,zh-TW'
+    #   layout: $window.google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    #   autoDisplay: false
+    #   multilanguagePage: true
+    #   gaTrack: true
+    #   gaId: 'UA-71549528-1'
+    # , 'google_translate_element')
 
   Service
 
