@@ -27,6 +27,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'isFirstTimeHomebuyer'
       'hasLoanPreapproval'
       'lendingAgent'
+      'homebuyerEducationAgency'
     ]
     primaryApplicant: [
       'appMemberId', 'contactId',

@@ -443,6 +443,8 @@
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
         "APPLICANT_LENDING_INSTITUTION": "lending institution",
         "APPLICANT_NAME_LOAN_OFFICER": "loan officer",
+        "APPLICANT_HOMEBUYER_EDUCATION_AGENCY": "Homebuyer education agency",
+        "APPLICANT_SELECT_A_HOMEBUYER_EDUCATION_AGENCY": "Please select a homebuyer education agency",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
