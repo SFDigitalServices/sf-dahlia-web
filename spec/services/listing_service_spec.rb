@@ -13,22 +13,22 @@ describe Force::ListingService do
   end
   let(:listings_by_ids) do
     VCR.use_cassette('listings/listings_by_ids') do
-      Force::ListingService.send :get_listings, ids: listing_ids
+      Force::ListingService.send :get_listings, params: { ids: listing_ids }
     end
   end
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
-      Force::ListingService.send :get_listings, type: 'rental', subset: 'browse'
+      Force::ListingService.send :get_listings, params: { type: 'rental' }
     end
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
-      Force::ListingService.send :get_listings, type: 'ownership', subset: 'browse'
+      Force::ListingService.send :get_listings, params: { type: 'ownership' }
     end
   end
   let(:all_listings_browse) do
     VCR.use_cassette('listings/all_listings_browse') do
-      Force::ListingService.send :get_listings, subset: 'browse'
+      Force::ListingService.send :get_listings
     end
   end
 
@@ -49,7 +49,7 @@ describe Force::ListingService do
               { type: 'rental', subset: 'browse' }, false).and_return(rental_listings)
       Force::ListingService.listings(type: 'rental')
     end
-    it 'should pass id down to Salesforce request if part of params' do
+    it 'should pass ids down to Salesforce request if part of params' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails', { ids: listing_ids, subset: 'browse' }, false)
         .and_return(listings_by_ids)
@@ -60,12 +60,6 @@ describe Force::ListingService do
         .with('/ListingDetails', { subset: 'browse' }, false)
         .and_return(all_listings_browse)
       Force::ListingService.listings
-    end
-    it 'should not pass subset to Force::Request for subset: "full"' do
-      expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails',
-              { type: 'rental' }, false).and_return(rental_listings)
-      Force::ListingService.listings(type: 'rental', subset: 'full')
     end
   end
 
@@ -91,7 +85,7 @@ describe Force::ListingService do
       allow(Force::ListingService).to receive(:get_listings).and_return(rental_listings)
       rental_filters = filters.merge(type: 'rental')
       eligible_listings = Force::ListingService.eligible_listings(rental_filters)
-      expect(eligible_listings.size).to eq(51)
+      expect(eligible_listings.size).to eq(52)
       eligible_listings.each do |listing|
         expect(listing['Tenure']).not_to include('New sale')
         expect(listing['Tenure']).not_to include('Resale')

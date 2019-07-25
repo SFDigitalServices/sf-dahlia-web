@@ -6,16 +6,13 @@ module Force
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # `type` designates "ownership" or "rental" listings
-    # `subset` returns only fields needed for listing directory
-    # by default and all for "full"
     # returns cached and cleaned listings
     def self.listings(attrs = {})
       params = {}
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
-      params[:subset] = 'browse' unless attrs[:subset] == 'full'
       force = attrs[:force].present? ? attrs[:force] : false
-      get_listings(params, force)
+      get_listings(params: params, force_recache: force)
     end
 
     # get listings with eligibility matches applied
@@ -24,7 +21,7 @@ module Force
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = get_listings(filters)
+      results = get_listings(params: filters)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
     end
@@ -100,9 +97,10 @@ module Force
       end
     end
 
-    private_class_method def self.get_listings(params = nil, force = false)
+    private_class_method def self.get_listings(params: {}, force_recache: false)
+      params[:subset] ||= 'browse'
       results = Request.new(parse_response: true)
-                       .cached_get('/ListingDetails', params, force)
+                       .cached_get('/ListingDetails', params, force_recache)
       add_image_urls(results)
     end
 

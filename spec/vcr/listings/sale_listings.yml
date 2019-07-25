@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 01 Jul 2019 23:36:39 GMT
+      - Thu, 25 Jul 2019 23:17:02 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=LEMr4sucT72g1Js-3b-D1A;Path=/;Domain=.salesforce.com;Expires=Fri,
-        30-Aug-2019 23:36:39 GMT;Max-Age=5184000
+      - BrowserId=4IfovCUURBGyEPRTasiZgA;Path=/;Domain=.salesforce.com;Expires=Mon,
+        23-Sep-2019 23:17:02 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -45,9 +45,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1562024199962","signature":"ULOVN0TyWSVoy6K0p00ugh9TUWxqfvMzlGaKjcmr6UE="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1564096622819","signature":"g82pNW2gliuDVwrWvTBfa2dXu7c2ju5hfAddfeuBAv4="}'
     http_version: 
-  recorded_at: Mon, 01 Jul 2019 23:36:39 GMT
+  recorded_at: Thu, 25 Jul 2019 23:17:02 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ListingDetails?subset=browse&type=ownership"
@@ -69,7 +69,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 01 Jul 2019 23:36:40 GMT
+      - Thu, 25 Jul 2019 23:17:03 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=nJJCTOT6QOqFTT8hH27YyQ;Path=/;Domain=.salesforce.com;Expires=Fri,
-        30-Aug-2019 23:36:40 GMT;Max-Age=5184000
+      - BrowserId=phI9B367S-e44PfPS-bP6w;Path=/;Domain=.salesforce.com;Expires=Mon,
+        23-Sep-2019 23:17:03 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -98,7 +98,7 @@ http_interactions:
       string: '[{"unitSummaries":{"reserved":null,"general":[{"unitType":"1 BR","totalUnits":2,"priorities":null,"minSquareFt":900,"minRentalMinIncome":0.00,"minPriceWithParking":380000.00,"minPriceWithoutParking":320000.00,"minPercentIncome":null,"minOccupancy":1,"minMonthlyRent":null,"minHoaDuesWithParking":650.00,"minHoaDuesWithoutParking":450.00,"maxSquareFt":900,"maxRentalMinIncome":0.00,"maxPriceWithParking":380000.00,"maxPriceWithoutParking":320000.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":650.00,"maxHoaDuesWithoutParking":450.00,"listingID":"a0W0P00000GlKfBUAV"},{"unitType":"2
         BR","totalUnits":2,"priorities":null,"minSquareFt":1050,"minRentalMinIncome":0.00,"minPriceWithParking":480000.00,"minPriceWithoutParking":420000.00,"minPercentIncome":null,"minOccupancy":2,"minMonthlyRent":null,"minHoaDuesWithParking":750.00,"minHoaDuesWithoutParking":550.00,"maxSquareFt":1050,"maxRentalMinIncome":0.00,"maxPriceWithParking":480000.00,"maxPriceWithoutParking":420000.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":750.00,"maxHoaDuesWithoutParking":550.00,"listingID":"a0W0P00000GlKfBUAV"},{"unitType":"3
         BR","totalUnits":2,"priorities":null,"minSquareFt":1050,"minRentalMinIncome":0.00,"minPriceWithParking":580000.00,"minPriceWithoutParking":520000.00,"minPercentIncome":null,"minOccupancy":3,"minMonthlyRent":null,"minHoaDuesWithParking":850.00,"minHoaDuesWithoutParking":650.00,"maxSquareFt":2000,"maxRentalMinIncome":0.00,"maxPriceWithParking":580000.00,"maxPriceWithoutParking":520000.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":850.00,"maxHoaDuesWithoutParking":650.00,"listingID":"a0W0P00000GlKfBUAV"}]},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0W0P00000GlKfBUAV","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0W0P00000GlKfBUAV"},"Id":"a0W0P00000GlKfBUAV","Tenure__c":"New
-        sale","Name":"Sale Test Listing (do not modify) - Homeownership Acres","Application_Due_Date__c":"2020-01-03T01:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2020-01-17T19:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2020-01-24","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":6,"LastModifiedDate":"2019-06-27T21:51:02.000+0000","Building_URL__c":"https://cdn.unifiedcommerce.com/content/product/large/8710126185452.jpg","Realtor_Commission_Amount__c":3.00,"Realtor_Commission_Unit__c":"percent","Realtor_Commission_Info__c":"<b>This</b>
+        sale","Name":"Sale Test Listing (do not modify) - Homeownership Acres","Application_Due_Date__c":"2020-01-03T01:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2020-01-17T19:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2020-01-24","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":6,"LastModifiedDate":"2019-07-25T17:06:57.000+0000","Building_URL__c":"https://cdn.unifiedcommerce.com/content/product/large/8710126185452.jpg","Realtor_Commission_Amount__c":3.00,"Realtor_Commission_Unit__c":"percent","Realtor_Commission_Info__c":"<b>This</b>
         is <i>how</i> <a href=\"http://exygy.com\" target=\"_blank\">link</a>","Allows_Realtor_Commission__c":true,"Building_Name__c":"Test
         Homeownership Building I","Building_City__c":"San Francisco","Building_State__c":"CA","Building__c":"a0a0P00000HHpRyQAL","RecordTypeId":"0120P000000kPURQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0P00000HHpRyQAL"},"Id":"a0a0P00000HHpRyQAL"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPURQA2"},"Id":"0120P000000kPURQA2","Name":"Listing
         Ownership"}},"doesMatch":null,"chartTypes":[{"year":2017,"percent":55,"numOfHousehold":null,"chartType":"HUD
@@ -107,7 +107,7 @@ http_interactions:
         BR","totalUnits":72,"priorities":null,"minSquareFt":800,"minRentalMinIncome":0.00,"minPriceWithParking":null,"minPriceWithoutParking":183142.00,"minPercentIncome":null,"minOccupancy":1,"minMonthlyRent":null,"minHoaDuesWithParking":null,"minHoaDuesWithoutParking":625.02,"maxSquareFt":800,"maxRentalMinIncome":0.00,"maxPriceWithParking":null,"maxPriceWithoutParking":347669.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":null,"maxHoaDuesWithoutParking":694.50,"listingID":"a0W0t0000016zSdEAI"},{"unitType":"2
         BR","totalUnits":64,"priorities":null,"minSquareFt":950,"minRentalMinIncome":0.00,"minPriceWithParking":null,"minPriceWithoutParking":254562.00,"minPercentIncome":null,"minOccupancy":2,"minMonthlyRent":null,"minHoaDuesWithParking":null,"minHoaDuesWithoutParking":637.19,"maxSquareFt":950,"maxRentalMinIncome":0.00,"maxPriceWithParking":null,"maxPriceWithoutParking":468514.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":null,"maxHoaDuesWithoutParking":781.97,"listingID":"a0W0t0000016zSdEAI"},{"unitType":"3
         BR","totalUnits":20,"priorities":null,"minSquareFt":1150,"minRentalMinIncome":0.00,"minPriceWithParking":null,"minPriceWithoutParking":287637.00,"minPercentIncome":null,"minOccupancy":3,"minMonthlyRent":null,"minHoaDuesWithParking":null,"minHoaDuesWithoutParking":781.97,"maxSquareFt":1150,"maxRentalMinIncome":0.00,"maxPriceWithParking":null,"maxPriceWithoutParking":515667.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":null,"maxHoaDuesWithoutParking":849.93,"listingID":"a0W0t0000016zSdEAI"}]},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0W0t0000016zSdEAI","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0W0t0000016zSdEAI"},"Id":"a0W0t0000016zSdEAI","Tenure__c":"New
-        sale","Name":"EmTest Apts Phase I","Application_Due_Date__c":"2019-12-06T01:10:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2020-01-10T19:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2020-02-05","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":156,"LastModifiedDate":"2019-06-26T23:26:03.000+0000","Building_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/388Beale.jpg","Realtor_Commission_Amount__c":2.00,"Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"Special
+        sale","Name":"EmTest Apts Phase I","Application_Due_Date__c":"2019-12-06T01:10:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2020-01-10T19:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2020-02-05","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":156,"LastModifiedDate":"2019-07-10T21:02:27.000+0000","Building_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/388Beale.jpg","Realtor_Commission_Amount__c":391.00,"Realtor_Commission_Unit__c":"dollars","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"Special
         messages about the building and units.","Building_Name__c":"EmTest Apts Phase
         I","Building_City__c":"San Francisco","Building_State__c":"CA","Building__c":"a0a0t000001bKvlAAE","RecordTypeId":"0120P000000kPURQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0t000001bKvlAAE"},"Id":"a0a0t000001bKvlAAE"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPURQA2"},"Id":"0120P000000kPURQA2","Name":"Listing
         Ownership"}},"doesMatch":null,"chartTypes":[{"year":2018,"percent":90,"numOfHousehold":null,"chartType":"HUD
@@ -116,7 +116,7 @@ http_interactions:
         Unadjusted","amount":null},{"year":2018,"percent":120,"numOfHousehold":null,"chartType":"HUD
         Unadjusted","amount":null}]},{"unitSummaries":{"reserved":null,"general":[{"unitType":"1
         BR","totalUnits":1,"priorities":null,"minSquareFt":713,"minRentalMinIncome":0.00,"minPriceWithParking":null,"minPriceWithoutParking":342066.00,"minPercentIncome":null,"minOccupancy":1,"minMonthlyRent":null,"minHoaDuesWithParking":null,"minHoaDuesWithoutParking":749.00,"maxSquareFt":713,"maxRentalMinIncome":0.00,"maxPriceWithParking":null,"maxPriceWithoutParking":342066.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":null,"maxHoaDuesWithoutParking":749.00,"listingID":"a0W0P00000GlJ7qUAF"}]},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0W0P00000GlJ7qUAF","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0W0P00000GlJ7qUAF"},"Id":"a0W0P00000GlJ7qUAF","Tenure__c":"New
-        sale","Name":"6 Mint Plaza, Unit 203A","Application_Due_Date__c":"2019-08-16T00:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2019-08-22T22:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2019-08-29","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":1,"LastModifiedDate":"2019-06-26T20:58:13.000+0000","Building_URL__c":"https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/6%20mint%20photo.jpg","Realtor_Commission_Amount__c":0.00,"Realtor_Commission_Unit__c":"dollars","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"To
+        sale","Name":"6 Mint Plaza, Unit 203A","Application_Due_Date__c":"2019-08-16T00:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2019-08-22T22:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2019-08-29","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":1,"LastModifiedDate":"2019-07-10T18:47:46.000+0000","Building_URL__c":"https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/6%20mint%20photo.jpg","Realtor_Commission_Amount__c":1501.00,"Realtor_Commission_Unit__c":"dollars","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"To
         review the Covenants, Conditions &amp; Restrictions for this building, please
         click <a href=\"https://www.dropbox.com/s/1hshcmw87gvaj0e/CC%26Rs%20%28Required%20Civil%20Code%20Sec.%204525%29%281%29.pdf?dl=0\"
         target=\"_blank\"><u>HERE</u></a>.","Building_Name__c":"6 Mint Plaza","Building_City__c":"San
@@ -125,14 +125,14 @@ http_interactions:
         Unadjusted","amount":null}]},{"unitSummaries":{"reserved":null,"general":[{"unitType":"3
         BR","totalUnits":2,"priorities":null,"minSquareFt":1200,"minRentalMinIncome":0.00,"minPriceWithParking":550000.00,"minPriceWithoutParking":500000.00,"minPercentIncome":null,"minOccupancy":3,"minMonthlyRent":null,"minHoaDuesWithParking":550.00,"minHoaDuesWithoutParking":500.00,"maxSquareFt":1200,"maxRentalMinIncome":0.00,"maxPriceWithParking":550000.00,"maxPriceWithoutParking":500000.00,"maxPercentIncome":null,"maxOccupancy":null,"maxMonthlyRent":null,"maxHoaDuesWithParking":550.00,"maxHoaDuesWithoutParking":500.00,"listingID":"a0W0t000001788OEAQ"}]},"reservedDescriptor":null,"prioritiesDescriptor":[{"shortDescription":null,"numberOfUnits":1,"name":"Mobility
         impairments","listingId":"a0W0t000001788OEAQ"}],"listingID":"a0W0t000001788OEAQ","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0W0t000001788OEAQ"},"Id":"a0W0t000001788OEAQ","Tenure__c":"New
-        sale","Name":"ChineseTrans Own","Application_Due_Date__c":"2019-07-02T00:48:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2019-07-02T17:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2019-06-14","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":2,"LastModifiedDate":"2019-06-26T18:40:28.000+0000","Building_URL__c":"https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/chinesetestownlisting.jpg","Realtor_Commission_Amount__c":1.50,"Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"a
+        sale","Name":"ChineseTrans Own","Application_Due_Date__c":"2019-07-02T00:48:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2019-07-02T17:00:00.000+0000","Lottery_Results__c":false,"Lottery_Results_Date__c":"2019-06-14","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":2,"LastModifiedDate":"2019-07-09T18:41:14.000+0000","Building_URL__c":"https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/chinesetestownlisting.jpg","Realtor_Commission_Amount__c":1.50,"Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":true,"Units_Building_Special_Message__c":"a
         very special message","Building_Name__c":"Lemonade Tower","Building_City__c":"San
         Francisco","Building_State__c":"CA","Building__c":"a0a0t000001bKwPAAU","RecordTypeId":"0120P000000kPURQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0t000001bKwPAAU"},"Id":"a0a0t000001bKwPAAU"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPURQA2"},"Id":"0120P000000kPURQA2","Name":"Listing
         Ownership"}},"doesMatch":null,"chartTypes":[{"year":2018,"percent":90,"numOfHousehold":null,"chartType":"HUD
         Unadjusted","amount":null}]},{"unitSummaries":{"reserved":null,"general":null},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0W0P00000HMHrSUAX","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0W0P00000HMHrSUAX"},"Id":"a0W0P00000HMHrSUAX","Tenure__c":"Resale","Name":"1160
-        Mission Unit 709","Application_Due_Date__c":"2018-12-08T01:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2018-12-21T19:00:00.000+0000","Lottery_Results__c":true,"Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":0,"LastModifiedDate":"2019-06-17T21:21:43.000+0000","Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":false,"Building_Name__c":"1160
+        Mission Unit 709","Application_Due_Date__c":"2018-12-08T01:00:00.000+0000","Accepting_Online_Applications__c":true,"Lottery_Date__c":"2018-12-21T19:00:00.000+0000","Lottery_Results__c":true,"Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":0,"LastModifiedDate":"2019-07-09T18:41:14.000+0000","Realtor_Commission_Unit__c":"percent","Allows_Realtor_Commission__c":false,"Building_Name__c":"1160
         Mission Street Unit 709","Building_City__c":"San Francisco","Building_State__c":"CA","Building__c":"a0a0P00000GTFRMQA5","RecordTypeId":"0120P000000kPURQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0P00000GTFRMQA5"},"Id":"a0a0P00000GTFRMQA5"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPURQA2"},"Id":"0120P000000kPURQA2","Name":"Listing
         Ownership"}},"doesMatch":null,"chartTypes":null}]'
     http_version: 
-  recorded_at: Mon, 01 Jul 2019 23:36:40 GMT
+  recorded_at: Thu, 25 Jul 2019 23:17:03 GMT
 recorded_with: VCR 5.0.0

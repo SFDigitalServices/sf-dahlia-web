@@ -158,8 +158,7 @@ ListingDataService = (
       incomelevel: ListingEligibilityService.eligibilityYearlyIncome()
       includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
       childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
-      listingsType: params.type,
-      subset: 'browse'
+      listingsType: params.type
 
     $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}", {
       etagCache: true,

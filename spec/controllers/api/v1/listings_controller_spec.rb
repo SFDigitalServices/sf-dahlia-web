@@ -7,16 +7,16 @@ describe Api::V1::ListingsController do
   let(:rental_listings) do
     VCR.use_cassette('listings/rental_listings') do
       listings = Force::ListingService.send(:get_listings,
-                                            type: 'rental',
-                                            subset: 'browse')
+                                            params: { type: 'rental' },
+                                            force_recache: false)
       listings.take(4)
     end
   end
   let(:sale_listings) do
     VCR.use_cassette('listings/sale_listings') do
       listings = Force::ListingService.send(:get_listings,
-                                            type: 'ownership',
-                                            subset: 'browse')
+                                            params: { type: 'ownership' },
+                                            force_recache: false)
       listings.take(4)
     end
   end
@@ -26,7 +26,7 @@ describe Api::V1::ListingsController do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with({ type: 'rental', subset: 'browse' }, false)
+          .with(params: { type: 'rental' }, force_recache: false)
           .and_return(rental_listings)
       end
 
@@ -41,7 +41,7 @@ describe Api::V1::ListingsController do
       before do
         allow(Force::ListingService)
           .to receive(:get_listings)
-          .with({ type: 'ownership', subset: 'browse' }, false)
+          .with(params: { type: 'ownership' }, force_recache: false)
           .and_return(sale_listings)
       end
 
