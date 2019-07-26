@@ -15,7 +15,7 @@
         .large-12.columns
           form.row.collapse ng-submit="showLotteryRanking()"
             .small-10.columns
-              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
+              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="{{'LOTTERY.ENTER_LOTTERY_NO' | translate}}" type="text" ng-model="lotterySearchNumber"
 
             label.small-2.columns
               input type="submit" ng-hide="true"
