@@ -684,11 +684,14 @@
           if !ShortFormApplicationService.listingIsSale()
             $state.go('dahlia.welcome')
           ShortFormApplicationService.completeSection('Intro')
-          ShortFormApplicationService.getLendingInstitutions()
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
       ]
+      resolve:
+        lendingInstitutions: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.getLendingInstitutions()
+        ]
     })
     .state('dahlia.short-form-application.autofill-preview', {
       url: '/autofill-preview'
