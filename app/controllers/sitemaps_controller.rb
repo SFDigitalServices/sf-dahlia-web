@@ -19,7 +19,8 @@ class SitemapsController < ApplicationController
     @sitemap.add '/welcome-chinese', changefreq: 'weekly'
     @sitemap.add '/welcome-spanish', changefreq: 'weekly'
     @sitemap.add '/welcome-filipino', changefreq: 'weekly'
-    @sitemap.add '/listings', changefreq: 'daily', priority: 0.75
+    @sitemap.add '/listings/for-rent', changefreq: 'daily', priority: 0.75
+    @sitemap.add '/listings/for-sale', changefreq: 'daily', priority: 0.75
     @sitemap.add '/eligibility-estimator/rental', changefreq: 'monthly'
     @sitemap.add '/eligibility-estimator/sale', changefreq: 'monthly'
     @sitemap.add '/get-assistance', changefreq: 'monthly'
