@@ -801,6 +801,7 @@
         "APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE": "Applications that qualify for this preference will be given a higher priority in the lottery.",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
         "COMPLETE_RESULTS_WILL_BE_POSTED": "Complete lottery results will be posted on this date by 5pm.",
+        "ENTER_LOTTERY_NO": "Enter Your Lottery Number",
         "GENERAL_POOL": "General Pool",
         "HOUSING_PREFERENCES": "Housing Preferences",
         "LOTTERY": "Lottery",
