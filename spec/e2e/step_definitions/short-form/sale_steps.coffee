@@ -14,6 +14,7 @@ Then 'I fill in prerequisites form', ->
   # so we just select the first available option.
   element(By.css('#lendingInstitution > option:nth-child(2)')).click()
   element(By.css('#lendingAgent > option:nth-child(2)')).click()
+  element(By.css('#homebuyerEducationAgency > option:nth-child(2)')).click()
 
   Utils.Page.uploadFile('Loan pre-approval', '/app/assets/images/logo-city.png')
   Utils.Page.uploadFile('Homebuyer education certificate', '/app/assets/images/logo-city.png')
