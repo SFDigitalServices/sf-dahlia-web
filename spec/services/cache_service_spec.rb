@@ -5,7 +5,7 @@ require 'ostruct'
 describe CacheService do
   let(:cached_listings) do
     listings = VCR.use_cassette('listings/all_listings_browse') do
-      Force::ListingService.listings(subset: 'browse')
+      Force::ListingService.listings()
     end
     # Trim down, we only need one listing for testing
     listings.take(1)
@@ -26,10 +26,9 @@ describe CacheService do
   let(:listing_image_service) { instance_double(ListingImageService) }
 
   before do
+    allow(Force::ListingService).to receive(:listings).and_return(cached_listings)
     allow(Force::ListingService).to receive(:listings)
-      .with(subset: 'browse').and_return(cached_listings)
-    allow(Force::ListingService).to receive(:listings)
-      .with(subset: 'browse', force: true).and_return(updated_listings)
+      .with(force: true).and_return(updated_listings)
     allow(Force::ListingService).to receive(:listing)
     allow(Force::ListingService).to receive(:units)
     allow(Force::ListingService).to receive(:preferences)
@@ -100,7 +99,7 @@ describe CacheService do
       before do
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
-          .with(subset: 'browse', force: true).and_return(updated_listings)
+          .with(force: true).and_return(updated_listings)
       end
 
       it_behaves_like 'cacher of listings' do
