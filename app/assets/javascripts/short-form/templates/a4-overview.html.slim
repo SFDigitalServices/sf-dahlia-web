@@ -6,8 +6,8 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
 
       .app-card.form-card
         short-form-header
-          h2.app-card_question
-            | {{'A4_OVERVIEW.TITLE' | translate}}
+          h2.app-card_question translate="A4_OVERVIEW.TITLE"
+          h3.app-card_question translate="A4_OVERVIEW.SUBTITLE" ng-if="application.applicationLanguage == 'Chinese'"
         .app-inner.inset
           p.form-note.margin-bottom
             | {{'A4_OVERVIEW.P1' | translate}}
