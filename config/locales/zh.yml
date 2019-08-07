@@ -18,3 +18,8 @@ zh:
       how_are_we_doing: "How are we doing?"
       we_would_like_your_feedback: "We'd like to get your feedback"
       office_hours: "Office Hours"
+    draft_application_saved:
+      heres_link_to_complete: "Here's a link to complete the application to %{listing_name} that you saved for later on the DAHLIA San Francisco Housing Portal."
+      complete_your_application: "Complete your application"
+      applications_are_due_by: "Applications for this listing are due by %{deadline}."
+      reminder_do_not_submit_duplicate: "Just a quick reminder that if you've already submitted another application for this listing, don't complete this one. Duplicate applications will cause both to be removed from the lottery."
