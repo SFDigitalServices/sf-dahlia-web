@@ -44,3 +44,13 @@ en:
       complete_your_application: "Complete your application"
       applications_are_due_by: "Applications for this listing are due by %{deadline}."
       reminder_do_not_submit_duplicate: "Just a quick reminder that if you've already submitted another application for this listing, don't complete this one. Duplicate applications will cause both to be removed from the lottery."
+  devise:
+    mailer:
+      reconfirmation_instructions:
+        subject: "Email change for DAHLIA"
+        confirm_link_msg: "A request to change your email has been made. To verify this request, please click the link below. Your email will be changed on any unsubmitted applications."
+        confirm_account_link: "Confirm my email"
+      confirmation_instructions:
+        subject: "DAHLIA San Francisco Housing Portal New Account Confirmation"
+        thank_you_msg: "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
+        confirm_link_msg: "To complete your account creation, please click the link below:"
