@@ -193,6 +193,7 @@ class Api::V1::ShortFormController < ApiController
 
   def email_draft_link(response)
     Emailer.draft_application_saved(
+      locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       first_name: response['primaryApplicant']['firstName'],
