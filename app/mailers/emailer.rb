@@ -100,6 +100,9 @@ class Emailer < Devise::Mailer
   end
 
   def draft_application_saved(params)
+    # set language based on params
+    I18n.locale = params[:locale]
+
     listing = Hashie::Mash.new(Force::ListingService.listing(params[:listing_id]))
     @listing_name = listing.Name
     @email = params[:email]
@@ -125,6 +128,7 @@ class Emailer < Devise::Mailer
   private
 
   def format_app_due_date(listing)
+    # TODO: Add localization for deadline
     due = Time.zone.parse(listing['Application_Due_Date'])
     due_time = "#{due.strftime('%-l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
     due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
