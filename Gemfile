@@ -113,7 +113,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-core'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'awesome_print'
   gem 'dotenv-rails'
   gem 'jquery-rails' # only needed for jasmine-jquery
