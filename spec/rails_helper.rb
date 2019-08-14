@@ -2,9 +2,8 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-if Rails.env.production?
-  abort('The Rails environment is running in production mode!')
-end
+
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'spec_helper'
 require 'rspec/rails'
@@ -54,7 +53,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
   config.extend DeviseMacros
 end
