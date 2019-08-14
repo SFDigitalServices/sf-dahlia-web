@@ -57,7 +57,7 @@ angular.module('dahlia.components')
       @formatIncomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
         income = ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
         if income
-          $filter('currency')(income, '$', 0) + '<small>/year</small>'
+          $filter('currency')(income, '$', 0)
 
       return ctrl
   ]
