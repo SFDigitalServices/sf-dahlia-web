@@ -27,6 +27,7 @@ ShortFormApplicationController = (
   $scope.application = ShortFormApplicationService.application
   $scope.accountApplication = ShortFormApplicationService.accountApplication
   $scope.chosenApplicationToKeep = null
+  $scope.lendingInstitutions = ShortFormApplicationService.lendingInstitutions
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.preferenceMap = ListingDataService.preferenceMap
@@ -680,6 +681,15 @@ ShortFormApplicationController = (
     ShortFormApplicationService.checkSurveyComplete()
 
   ## helpers
+  $scope.lendingAgentName = (loanOfficerId) ->
+    agents = $scope.lendingInstitutions[$scope.lendingInstitution(loanOfficerId)]
+    agent = _.find(agents, { Id: loanOfficerId })
+    return "#{agent['FirstName']} #{agent['LastName']}" if agent
+
+  $scope.lendingInstitution = (loanOfficerId) ->
+    _.findKey($scope.lendingInstitutions, (agents) ->
+            _.some(agents, {'Id': loanOfficerId}))
+
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 

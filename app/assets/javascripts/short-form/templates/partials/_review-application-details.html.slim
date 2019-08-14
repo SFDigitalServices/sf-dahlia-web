@@ -1,3 +1,15 @@
+/ Qualify
+// Add ng-if for sale
+review-summary-section header="{{'SHORT_FORM_NAV.QUALIFY' | translate}}" to="dahlia.short-form-application.prerequisites"
+.app-inner
+  review-summary-item label="You have confirmed: " identifier="application-is-first-time-homebuyer"
+    | {{'LABEL.APPLICATION_IS_FIRST_TIME_HOMEBUYER' | translate}}
+  review-summary-item label="You have confirmed: " identifier="application-has-completed-homebuyer-education" sub-label="Education Agency: {{application.homebuyerEducationAgency}}" bold-sub-label="Verification letter attached"
+    | {{'LABEL.APPLICATION_HAS_COMPLETED_HOMEBUYER_EDUCATION' | translate}}
+  review-summary-item label="You have confirmed: " identifier="application-has-loan-pre-approval" sub-label="Loan officer: {{::lendingAgentName(application.lendingAgent)}}, {{::lendingInstitution(application.lendingAgent)}}" bold-sub-label="Pre-approval letter attached"
+    | {{'LABEL.APPLICATION_HAS_LOAN_PRE_APPROVAL' | translate}}
+
+
 / You
 review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
 
