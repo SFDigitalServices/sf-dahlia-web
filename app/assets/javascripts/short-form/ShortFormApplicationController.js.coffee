@@ -682,13 +682,16 @@ ShortFormApplicationController = (
 
   ## helpers
   $scope.lendingAgentName = (loanOfficerId) ->
-    agents = $scope.lendingInstitutions[$scope.lendingInstitution(loanOfficerId)]
-    agent = _.find(agents, { Id: loanOfficerId })
+    agent = _($scope.lendingInstitutions)
+              .values()
+              .flatten()
+              .find({'Id': loanOfficerId})
+
     return "#{agent['FirstName']} #{agent['LastName']}" if agent
 
   $scope.lendingInstitution = (loanOfficerId) ->
-    _.findKey($scope.lendingInstitutions, (agents) ->
-            _.some(agents, {'Id': loanOfficerId}))
+    _.findKey($scope.lendingInstitutions,
+      (agents) -> _.find(agents, {'Id': loanOfficerId}))
 
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
