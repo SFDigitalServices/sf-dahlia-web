@@ -148,7 +148,6 @@ do ->
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
-        sections: []
         goToApplicationPage: jasmine.createSpy()
         getStartOfSection: jasmine.createSpy()
         goToSection: jasmine.createSpy()
@@ -737,11 +736,6 @@ do ->
         scope.cancelPreference()
         expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
 
-    describe 'fileAttachmentsForRentBurden', ->
-      it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
-        scope.fileAttachmentsForRentBurden()
-        expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
-
     describe 'onStateChangeSuccess', ->
       it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
         lang = 'es'
@@ -808,11 +802,6 @@ do ->
           scope.checkIfNoPreferencesSelected = jasmine.createSpy()
           scope.checkForCustomProofPreferences()
           expect(scope.checkIfNoPreferencesSelected).toHaveBeenCalled()
-
-    describe 'claimedCustomPreference', ->
-      it ' calls claimedCustomPreference on ShortFormApplicationService', ->
-        scope.claimedCustomPreference()
-        expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
 
     describe 'checkAliceGriffithAddress', ->
       beforeEach ->
@@ -1188,52 +1177,3 @@ do ->
         scope.listingIsSale()
         expect(fakeShortFormApplicationService.listingIsSale)
           .toHaveBeenCalled()
-
-    describe '_lending agent helpers', ->
-      beforeEach ->
-        scope.lendingInstitutions = {
-          'Lending Institution A': [
-            {
-              "Id": "lender_a1",
-              "FirstName": "Lana",
-              "LastName": "Lender 1",
-              "Status": "Active",
-              "Lending_Agent_Inactive_Date": null
-            },
-            {
-              "Id": "lender_a2",
-              "FirstName": "Larry",
-              "LastName": "Lender 2",
-              "Status": "Active",
-              "Lending_Agent_Inactive_Date": null
-            }
-          ],
-          'Lending Institution B': [
-            {
-              "Id": "lender_b1",
-              "FirstName": "Barry",
-              "LastName": "B1",
-              "Status": "Active",
-              "Lending_Agent_Inactive_Date": null
-            },
-            {
-              "Id": "lender_b2",
-              "FirstName": "Barbara",
-              "LastName": "B2",
-              "Status": "Active",
-              "Lending_Agent_Inactive_Date": null
-            }
-          ]
-        }
-      describe 'lendingAgentName', ->
-        it 'should return the name of a lending agent, given the id', ->
-          expect(scope.lendingAgentName('lender_a1')).toBe('Lana Lender 1')
-          expect(scope.lendingAgentName('lender_b2')).toBe('Barbara B2')
-        it 'should fail gracefully if Id is not found', ->
-          expect(scope.lendingAgentName('not a real id')).toBe(undefined)
-      describe 'lendingInstitution', ->
-        it 'should return the name of a lending agent, given the id', ->
-          expect(scope.lendingInstitution('lender_a1')).toBe('Lending Institution A')
-          expect(scope.lendingInstitution('lender_b2')).toBe('Lending Institution B')
-        it 'should fail gracefully if Id is not found', ->
-          expect(scope.lendingInstitution('not a real id')).toBe(undefined)

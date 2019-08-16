@@ -93,7 +93,6 @@ ShortFormApplicationService = (
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
-  Service.lendingInstitutions = []
 
   Service.applicantAccountFields = [
     'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
@@ -558,9 +557,6 @@ ShortFormApplicationService = (
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
-
-  Service.claimedCustomPreference = (preference) ->
-    Service.applicationHasPreference(preference.listingPreferenceID)
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
@@ -1101,11 +1097,6 @@ ShortFormApplicationService = (
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
-
-  Service.getLendingInstitutions = ->
-    $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
-      angular.copy(data, Service.lendingInstitutions)
-    )
 
   return Service
 

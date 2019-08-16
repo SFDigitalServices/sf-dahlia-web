@@ -131,70 +131,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       else
         Service.preference_proof_options_default
 
-  ## Review Page helpers
-  Service.alternateContactRelationship = (alternateContact) ->
-    if alternateContact.alternateContactType == 'Other'
-      alternateContact.alternateContactTypeOther
-    else
-      alternateContact.alternateContactType
-
-  Service.applicationVouchersSubsidies = (application) ->
-    if application.householdVouchersSubsidies == 'Yes'
-      $translate.instant('T.YES')
-    else
-      $translate.instant('T.NONE')
-
-  Service.applicationIncomeAmount = (application) ->
-    income = parseFloat(application.householdIncome.incomeTotal)
-    if application.householdIncome.incomeTimeframe == 'per_month'
-      phrase = $translate.instant('T.PER_MONTH')
-    else
-      phrase = $translate.instant('T.PER_YEAR')
-
-    yearly_income = $filter('currency')(income, '$', 2)
-    "#{yearly_income} #{phrase}"
-
-
   ## Translation Helpers
-  Service.householdMemberForPreference = (application, pref_type) ->
-    allMembers = angular.copy(application.householdMembers)
-    allMembers.push(application.applicant)
-    memberId = application.preferences["#{pref_type}_household_member"]
-    member = _.find(allMembers, { id: memberId })
-    name = if member then "#{member.firstName} #{member.lastName}" else ''
-    { user: name }
-
-  Service.fileAttachmentForPreference = (application, pref_type) ->
-    proof = application.preferences.documents[pref_type]
-    return '' unless proof && proof.proofOption
-    interpolate = { file: proof.proofOption }
-    $translate.instant('LABEL.FILE_ATTACHED', interpolate)
-
-  Service.fileAttachmentsForRentBurden = (application) ->
-    if application.status.match(/submitted/i)
-      return [
-        subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
-        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: 'Lease and rent proof' })
-      ]
-    labels = []
-    # this one is a little bit complicated because it has to sort through each set of rentBurden
-    # address docs, and create an array of "For {{address}}: {{doc1}}, {{doc2}}... attached"
-    _.each application.preferences.documents.rentBurden, (docs, address) ->
-      proofOptions = [docs.lease.proofOption]
-      rentOptions = _.compact _.map docs.rent, (file) ->
-        file.proofOption if file.file
-      proofOptions = $filter('listify')(_.concat(proofOptions, rentOptions))
-      labels.push({
-        subLabel: $translate.instant('LABEL.FOR_USER', user: address)
-        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
-      })
-    return labels
-
-  Service.certificateNumberForPreference = (application, pref_type) ->
-    certificateNumber = application.preferences["#{pref_type}_certificateNumber"]
-    return '' unless certificateNumber
-    $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
-
   Service.translateLoggedInMessage = (args) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
     link = $state.href('dahlia.account-settings')
@@ -210,12 +147,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
-
-  Service.addressTranslateVariable = (address) ->
-    { address: address }
-
-  Service.membersTranslateVariable = (members) ->
-    { user: $filter('listify')(members, "firstName")}
 
   return Service
 

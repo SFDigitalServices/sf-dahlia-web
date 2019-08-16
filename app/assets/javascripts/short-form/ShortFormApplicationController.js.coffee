@@ -27,7 +27,6 @@ ShortFormApplicationController = (
   $scope.application = ShortFormApplicationService.application
   $scope.accountApplication = ShortFormApplicationService.accountApplication
   $scope.chosenApplicationToKeep = null
-  $scope.lendingInstitutions = ShortFormApplicationService.lendingInstitutions
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.preferenceMap = ListingDataService.preferenceMap
@@ -99,23 +98,6 @@ ShortFormApplicationController = (
     $state.go(ShortFormNavigationService.initialState())
 
   $scope.resetAndReplaceApp = ShortFormApplicationService.resetAndReplaceApp
-
-  $scope.atAutofillPreview = ->
-    $state.current.name == "dahlia.short-form-application.autofill-preview"
-
-  $scope.atContinuePreviousDraft = ->
-    $state.current.name == "dahlia.short-form-application.continue-previous-draft"
-
-  $scope.continueDraftApplicantHasUpdatedInfo = (field) ->
-    current = $scope.applicant
-    old = $scope.application.overwrittenApplicantInfo
-    if field == 'name'
-      fields = ['firstName', 'middleName', 'lastName']
-      !_.isEqual(_.pick(current, fields), _.pick(old, fields))
-    else if field == 'dob'
-      currentDOB = "#{current.dob_day}/#{current.dob_month}/#{current.dob_year}"
-      oldDOB = "#{old.dob_day}/#{old.dob_month}/#{old.dob_year}"
-      currentDOB != oldDOB
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
@@ -263,9 +245,6 @@ ShortFormApplicationController = (
     selected = $scope.application.adaPrioritiesSelected
     !_.some([selected['Mobility impairments'], selected['Vision impairments'], selected['Hearing impairments'], selected.None])
 
-  $scope.prioritiesSelectedExists = ->
-    !_.isEmpty($scope.application.adaPrioritiesSelected)
-
   $scope.clearPriorityOptions = ->
     selected = $scope.application.adaPrioritiesSelected
     _.map selected, (val, k) ->
@@ -349,9 +328,6 @@ ShortFormApplicationController = (
   $scope.getStartOfSection = (section) ->
     ShortFormNavigationService.getStartOfSection(section)
 
-  $scope.getStartOfHouseholdDetails = ->
-    ShortFormNavigationService.getStartOfHouseholdDetails()
-
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
@@ -410,9 +386,6 @@ ShortFormApplicationController = (
     else
       $scope.checkIfNoPreferencesSelected()
 
-  $scope.claimedCustomPreference = (preference) ->
-    ShortFormApplicationService.claimedCustomPreference(preference)
-
   $scope.eligibleForAssistedHousingOrRentBurden = ->
     ShortFormApplicationService.eligibleForAssistedHousing() || ShortFormApplicationService.eligibleForRentBurden()
 
@@ -424,9 +397,6 @@ ShortFormApplicationController = (
     else
       # otherwise go to the Review section
       ShortFormNavigationService.goToSection('Review')
-
-  $scope.applicantHasNoPreferences = ->
-    ShortFormApplicationService.applicantHasNoPreferences()
 
   $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
     # this mainly gets used as one of the submit callbacks for relevant pages in ShortFormNavigationService
@@ -680,27 +650,8 @@ ShortFormApplicationController = (
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 
-  ## helpers
-  $scope.lendingAgentName = (loanOfficerId) ->
-    agent = _($scope.lendingInstitutions)
-              .values()
-              .flatten()
-              .find({'Id': loanOfficerId})
-
-    return "#{agent['FirstName']} #{agent['LastName']}" if agent
-
-  $scope.lendingInstitution = (loanOfficerId) ->
-    _.findKey($scope.lendingInstitutions,
-      (agents) -> _.find(agents, {'Id': loanOfficerId}))
-
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
-
-  $scope.applicationVouchersSubsidies = ->
-    ShortFormHelperService.applicationVouchersSubsidies($scope.application)
-
-  $scope.applicationIncomeAmount = ->
-    ShortFormHelperService.applicationIncomeAmount($scope.application)
 
   $scope.translateLoggedInMessage = (page) ->
     params =
@@ -765,24 +716,6 @@ ShortFormApplicationController = (
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
     ShortFormHelperService.proofOptions(pref_type)
-
-  $scope.householdMemberForPreference = (pref_type) ->
-    ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
-
-  $scope.fileAttachmentForPreference = (pref_type) ->
-    ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
-
-  $scope.fileAttachmentsForRentBurden = ->
-    ShortFormHelperService.fileAttachmentsForRentBurden($scope.application)
-
-  $scope.certificateNumberForPreference = (pref_type) ->
-    ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
-
-  $scope.addressTranslateVariable = (address) ->
-    ShortFormHelperService.addressTranslateVariable(address)
-
-  $scope.membersTranslateVariable = (members) ->
-    ShortFormHelperService.membersTranslateVariable(members)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()

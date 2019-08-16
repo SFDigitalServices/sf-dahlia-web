@@ -5,9 +5,10 @@ angular.module('dahlia.components')
     form: '<'
   templateUrl: 'short-form/components/lending-institution.html'
   controller:
-    ['ShortFormApplicationService', (ShortFormApplicationService) ->
+    ['LendingInstitutionService', 'ShortFormApplicationService',
+    (LendingInstitutionService, ShortFormApplicationService) ->
       ctrl = @
-      @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
+      @lendingInstitutions = LendingInstitutionService.lendingInstitutions
       @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
       @selectedInstitution = ''
       @agents = []

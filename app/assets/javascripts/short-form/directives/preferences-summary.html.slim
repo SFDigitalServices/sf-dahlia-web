@@ -1,9 +1,0 @@
-div
-  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.{{getStartOfSection({name: 'Preferences'})}}"
-
-  .app-inner
-    p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
-      | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
-
-    review-summary-item ng-repeat="pref in sortedApplicationPrefs" identifier="{{pref.identifier}}" label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{pref.subLabel}}" bold-sub-label="{{pref.boldSubLabel}}" rent-burden-sub-labels="pref.rentBurdenSubLabels"
-      | {{pref.displayName}}

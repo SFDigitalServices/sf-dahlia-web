@@ -1,6 +1,6 @@
 do ->
   'use strict'
-  describe 'Legal Section Component', ->
+  describe 'Lending Institution Component', ->
     $componentController = undefined
     ctrl = undefined
     locals = undefined
@@ -8,14 +8,16 @@ do ->
     institutionWithInactiveAgent = 'Homestreet Bank'
     institutionWithActiveAgent = 'First Republic Bank'
 
-    fakeShortFormApplicationService =
+    fakeLendingInstitutionService =
       lendingInstitutions: fakeLendingInstitutions
+    fakeShortFormApplicationService =
       listing: {'Lottery_Date': '2019-04-30'}
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
+        LendingInstitutionService: fakeLendingInstitutionService
         ShortFormApplicationService: fakeShortFormApplicationService
       }
     )
