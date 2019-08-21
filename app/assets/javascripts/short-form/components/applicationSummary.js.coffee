@@ -50,8 +50,8 @@ angular.module('dahlia.components')
         else
           phrase = $translate.instant('T.PER_YEAR')
 
-        yearly_income = $filter('currency')(income, '$', 2)
-        "#{yearly_income} #{phrase}"
+        formatted_income = $filter('currency')(income, '$', 2)
+        "#{formatted_income} #{phrase}"
 
       ctrl.getLendingAgentName = (agentId) ->
         LendingInstitutionService.getLendingAgentName(agentId)
