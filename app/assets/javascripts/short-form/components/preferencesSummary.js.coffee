@@ -57,7 +57,7 @@ angular.module('dahlia.components')
         $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
       ctrl.claimedCustomPreference = (preference) ->
-        !! Service.preferences[preference.listingPreferenceID]
+        !! ShortFormApplicationService.preferences[preference.listingPreferenceID]
 
       ctrl.formatAndSortPrefs = ->
         # Using the keys from the preferenceMap, check which preferences the

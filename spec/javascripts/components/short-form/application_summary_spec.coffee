@@ -56,27 +56,6 @@ do ->
     beforeEach ->
       ctrl = $componentController 'applicationSummary', locals, fakeBindings
 
-    describe 'claimedCustomPreference', ->
-      beforeEach ->
-        fakeListing = getJSONFixture('listings-api-show.json').listing
-        ShortFormApplicationService.listing = fakeListing
-        fakeCustomPreference =
-          listingPreferenceID: '123456'
-        ShortFormApplicationService.listing.customPreferences = [fakeCustomPreference]
-
-    #   it 'returns true if custom preferences were claimed', ->
-    #     ShortFormApplicationService.preferences = {'123456': true}
-    #     expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual true
-
-    #   it 'returns false if custom preferences were not claimed', ->
-    #     ShortFormApplicationService.preferences = {'liveInSf': true}
-    #     expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false
-
-    # describe 'fileAttachmentsForRentBurden', ->
-    #   it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
-    #     ctrl.fileAttachmentsForRentBurden()
-    #     expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
-
     describe 'getLendingAgentName', ->
       it 'should call LendingInstitutionService.getLendingAgentName with the given agent ID', ->
         id = 1234
