@@ -34,6 +34,11 @@ angular.module('dahlia.components')
           oldDOB = "#{old.dob_day}/#{old.dob_month}/#{old.dob_year}"
           currentDOB != oldDOB
 
+      ctrl.preapprovalLetterAttached = ->
+        $translate.instant('LABEL.FILE_ATTACHED', {file: $translate.instant('LABEL.PREAPPROVAL_LETTER')})
+      ctrl.verificationLetterAttached = ->
+        $translate.instant('LABEL.FILE_ATTACHED', {file: $translate.instant('LABEL.VERIFICATION_LETTER')})
+
       ctrl.prioritiesSelectedExists = ->
         _.isEmpty(ctrl.application.adaPrioritiesSelected)
 

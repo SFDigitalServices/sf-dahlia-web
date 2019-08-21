@@ -4,9 +4,9 @@ span ng-show="::$ctrl.isSale"
   .app-inner
     review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-is-first-time-homebuyer"
       | {{'LABEL.APPLICATION_IS_FIRST_TIME_HOMEBUYER' | translate}}
-    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'LABEL.APPLICANT_HOMEBUYER_EDUCATION_AGENCY' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{'LABEL.VERIFICATION_LETTER_ATTACHED' | translate}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'LABEL.APPLICANT_HOMEBUYER_EDUCATION_AGENCY' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}"
       | {{'LABEL.APPLICATION_HAS_COMPLETED_HOMEBUYER_EDUCATION' | translate}}
-    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'LABEL.APPLICANT_NAME_LOAN_OFFICER' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{'LABEL.PREAPPROVAL_LETTER_ATTACHED' | translate}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'LABEL.APPLICANT_NAME_LOAN_OFFICER' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}"
       | {{'LABEL.APPLICATION_HAS_LOAN_PRE_APPROVAL' | translate}}
 / You
 review-summary-section header="{{'T.YOU' | translate}}" section-name="dahlia.short-form-application.name" editable="::$ctrl.sectionsAreEditable"
