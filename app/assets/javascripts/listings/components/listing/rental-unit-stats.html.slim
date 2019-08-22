@@ -19,9 +19,9 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
             | Rent
     tr ng-repeat="row in ::group" ng-class="::{'is-reserved': row.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
       td.is-subtitled data-th="Availability"
-        small.pricing-table-waitlist ng-if="::group.Status == 'Occupied'"
+        small.pricing-table-waitlist ng-if="::row.Status == 'Occupied'"
           | Waitlist
-        span ng-if="::group.Status != 'Occupied'"
+        span ng-if="::row.Status != 'Occupied'"
           i
             | {{::row.total}}
           small
