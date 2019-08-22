@@ -148,7 +148,6 @@ do ->
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
-        sections: []
         goToApplicationPage: jasmine.createSpy()
         getStartOfSection: jasmine.createSpy()
         goToSection: jasmine.createSpy()
@@ -737,11 +736,6 @@ do ->
         scope.cancelPreference()
         expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
 
-    describe 'fileAttachmentsForRentBurden', ->
-      it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
-        scope.fileAttachmentsForRentBurden()
-        expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
-
     describe 'onStateChangeSuccess', ->
       it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
         lang = 'es'
@@ -808,11 +802,6 @@ do ->
           scope.checkIfNoPreferencesSelected = jasmine.createSpy()
           scope.checkForCustomProofPreferences()
           expect(scope.checkIfNoPreferencesSelected).toHaveBeenCalled()
-
-    describe 'claimedCustomPreference', ->
-      it ' calls claimedCustomPreference on ShortFormApplicationService', ->
-        scope.claimedCustomPreference()
-        expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
 
     describe 'checkAliceGriffithAddress', ->
       beforeEach ->

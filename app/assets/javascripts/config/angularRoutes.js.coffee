@@ -689,8 +689,8 @@
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
       ]
       resolve:
-        lendingInstitutions: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.getLendingInstitutions()
+        lendingInstitutions: ['LendingInstitutionService', (LendingInstitutionService) ->
+          LendingInstitutionService.getLendingInstitutions()
         ]
     })
     .state('dahlia.short-form-application.autofill-preview', {

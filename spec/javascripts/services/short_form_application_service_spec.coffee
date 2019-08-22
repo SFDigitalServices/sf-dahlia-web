@@ -1385,22 +1385,6 @@ do ->
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
 
-    describe 'claimedCustomPreference', ->
-      beforeEach ->
-        fakeListing = getJSONFixture('listings-api-show.json').listing
-        ShortFormApplicationService.listing = fakeListing
-        fakeCustomPreference =
-          listingPreferenceID: '123456'
-        ShortFormApplicationService.listing.customPreferences = [fakeCustomPreference]
-
-      it 'returns true if custom preferences were claimed', ->
-        ShortFormApplicationService.preferences = {'123456': true}
-        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual true
-
-      it 'returns false if custom preferences were not claimed', ->
-        ShortFormApplicationService.preferences = {'liveInSf': true}
-        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false
-
     # multilingual
     describe 'setApplicationLanguage', ->
       it 'sets application language to the full name version of the lang param', ->

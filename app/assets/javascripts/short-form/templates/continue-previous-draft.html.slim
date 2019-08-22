@@ -13,7 +13,7 @@ section.app-container
               p.form-note.margin-bottom
                 | {{'CONTINUE_PREVIOUS_DRAFT.DESCRIPTION' | translate}}
 
-            ng-include src="'short-form/templates/partials/_review-application-details.html'"
+            application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()"
 
             .button-pager
               .button-pager_row.primary
