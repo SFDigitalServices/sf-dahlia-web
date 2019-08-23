@@ -243,6 +243,7 @@ AccountService = (
     return {
       user: _.omit(Service.userAuth.user, ['email_confirmation'])
       contact: Service.userDataForSalesforce()
+      locale: $translate.use()
     }
 
   Service._reformatDOB = ->
