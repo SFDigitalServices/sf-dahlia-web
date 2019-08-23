@@ -97,6 +97,7 @@ AccountService = (
     Service.clearAccountMessages()
     params =
       email: Service.userAuth.user.email
+      locale: $translate.use()
     $auth.requestPasswordReset(params).then((resp) ->
       Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
