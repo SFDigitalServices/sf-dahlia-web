@@ -177,10 +177,11 @@ AccountService = (
 
   Service.updateAccount = (infoType) ->
     Service.clearAccountMessages()
-    if infoType == 'email'
       params =
-        user:
-          email: Service.userAuth.user.email
+        locale: $translate.use()
+    if infoType == 'email'
+      params.user =
+        email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       ).error((response) ->
@@ -191,8 +192,8 @@ AccountService = (
           Service.accountError.messages.email = msg
       )
     else
-      params =
-        contact: Service.userDataForSalesforce()
+      params.contact =
+        Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
         _.merge(Service.loggedInUser, data.contact)
