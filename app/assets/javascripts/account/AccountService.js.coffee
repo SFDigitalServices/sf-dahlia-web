@@ -160,6 +160,7 @@ AccountService = (
   Service.resendConfirmationEmail = ->
     params =
       email: Service.createdAccount.email
+      locale: $translate.use()
 
     $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
       data
