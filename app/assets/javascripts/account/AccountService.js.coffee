@@ -177,8 +177,8 @@ AccountService = (
 
   Service.updateAccount = (infoType) ->
     Service.clearAccountMessages()
-      params =
-        locale: $translate.use()
+    params =
+      locale: $translate.use()
     if infoType == 'email'
       params.user =
         email: Service.userAuth.user.email
