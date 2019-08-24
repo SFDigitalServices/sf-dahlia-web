@@ -25,9 +25,14 @@ section.content-wrap
         | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
     p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
 
+
   div ng-if="$ctrl.lotteryComplete()"
     .content-group.expand.text-center
       ng-include src="'listings/templates/listing/_lottery_results.html'"
+    .show-for-medium-up
+      ng-include src="'listings/templates/listing/_waitlist-info.html'"
     open-hours-section
+
+
 
   ng-include src="'listings/templates/listing/_additional_sidebar_info.html'"
