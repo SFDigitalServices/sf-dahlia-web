@@ -4,6 +4,7 @@ do ->
     AccountService = undefined
     ShortFormApplicationService = undefined
     $translate =
+      use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
       instant: ->
     $state = undefined
     $auth = undefined
@@ -156,7 +157,7 @@ do ->
       it 'calls $auth.requestPasswordReset', ->
         AccountService.userAuth =
           user: { email: 'example@email.com' }
-        expectedParams = { email: 'example@email.com' }
+        expectedParams = { email: 'example@email.com', locale: 'currentLocale' }
         AccountService.requestPasswordReset()
         expect($auth.requestPasswordReset).toHaveBeenCalledWith(expectedParams)
 
