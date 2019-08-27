@@ -177,7 +177,6 @@ do ->
         AccountService.requestPasswordReset()
         expect($auth.requestPasswordReset).toHaveBeenCalledWith(expectedParams)
 
-
     describe 'updatePassword', ->
       it 'calls $auth.updatePassword', ->
         AccountService.userAuth =
@@ -189,6 +188,20 @@ do ->
           password_confirmation: 'password'
         AccountService.updatePassword()
         expect($auth.updatePassword).toHaveBeenCalledWith(expectedParams)
+
+    describe 'resendConfirmationEmail', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'sends a post request to the confirmation endpoint', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAuthResponse
+        AccountService.createdAccount.email = 'testEmail'
+        expectedParams =
+          locale: 'currentLocale'
+          email: 'testEmail'
+        httpBackend.expectPOST('/api/v1/auth/confirmation', expectedParams)
+        AccountService.resendConfirmationEmail()
+        httpBackend.flush()
 
     describe 'updateAccount', ->
       afterEach ->
@@ -209,7 +222,6 @@ do ->
         AccountService.updateAccount('email')
         httpBackend.flush()
         expect(AccountService.accountSuccess.messages.email).not.toEqual null
-
 
       it 'assigns new name/DOB attributes after update', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
