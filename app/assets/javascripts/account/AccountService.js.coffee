@@ -237,9 +237,8 @@ AccountService = (
 
   Service.userDataForSalesforce = ->
     contact = Service.userDataForContact()
-    contact.DOB = ShortFormDataService.formatUserDOB(contact)
-    contact = ShortFormDataService.removeDOBFields(contact)
-    contact
+    contactWithDOB = _.merge({}, contact, {'DOB': ShortFormDataService.formatUserDOB(contact)})
+    ShortFormDataService.removeDOBFields(contactWithDOB)
 
   Service._createAccountParams = ->
     return {

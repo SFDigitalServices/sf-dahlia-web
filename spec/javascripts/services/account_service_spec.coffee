@@ -19,8 +19,8 @@ do ->
     fakeShortFormDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
-      formatUserDOB: ->
-      removeDOBFields: ->
+      formatUserDOB: jasmine.createSpy().and.returnValue('fakeDOB')
+      removeDOBFields: jasmine.createSpy().and.returnValue('contactWithoutDOBs')
     fakeModalService =
       openModal: jasmine.createSpy()
       closeModal: jasmine.createSpy()
@@ -37,7 +37,13 @@ do ->
       user:
         email: 'a@b.c'
         password: '123123123'
-      contact: {}
+      contact:
+        dob_day: 1
+        dob_month: 13
+        dob_year: 1920
+        firstName: 'Bob'
+        middleName: 'Paul'
+        lastName: 'Jones'
     fakeShortFormApplicationService =
       applicant: {}
       importUserData: ->
@@ -183,14 +189,28 @@ do ->
         AccountService.userAuth =
           user:
             email: 'newemail@new1.com'
+
+        expectedParams =
+          locale: 'currentLocale'
+          user:
+            email: 'newemail@new1.com'
+        httpBackend.expectPUT('/api/v1/auth', expectedParams)
         stubAngularAjaxRequest httpBackend, requestURL, fakeAuthResponse
         AccountService.updateAccount('email')
         httpBackend.flush()
         expect(AccountService.accountSuccess.messages.email).not.toEqual null
 
+
       it 'assigns new name/DOB attributes after update', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
+        spyOn(AccountService, 'userDataForSalesforce').and.returnValue('fakeContact')
+
+        expectedParams =
+          locale: 'currentLocale'
+          contact: 'fakeContact'
+
+        httpBackend.expectPUT('/api/v1/account/update', expectedParams)
         AccountService.updateAccount('nameDOB')
         httpBackend.flush()
         expect(AccountService.loggedInUser.firstName).toEqual fakeUpdateResponse.contact.firstName
@@ -214,6 +234,26 @@ do ->
           templateUrl = 'account/templates/partials/_confirmation_expired_modal.html'
           AccountService.openConfirmationExpiredModal()
           expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl)
+
+    describe 'userDataForSalesforce', ->
+      it 'calls ShortFormDataService to format DOB', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        contact = AccountService.userDataForSalesforce()
+
+        expectedContact =
+          dob_day: 1
+          dob_month: 13
+          dob_year: 1920
+          firstName: 'Bob'
+          middleName: 'Paul'
+          lastName: 'Jones'
+          email: 'a@b.c'
+
+        expect(contact).toEqual 'contactWithoutDOBs'
+        expect(fakeShortFormDataService.formatUserDOB).toHaveBeenCalledWith expectedContact
+        expectedContact.DOB = 'fakeDOB'
+        expect(fakeShortFormDataService.removeDOBFields).toHaveBeenCalledWith expectedContact
+
 
     describe 'lockCompletedFields', ->
       it 'checks for lockedFields', ->
