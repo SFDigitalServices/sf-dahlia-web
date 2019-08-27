@@ -132,6 +132,16 @@ do ->
       it 'triggers loading overlay', ->
         AccountService.createAccount()
         expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
+    describe '_createAccountParams', ->
+      it 'returns expectedParams', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        expectedParams =
+          user:
+            email: 'a@b.c'
+            password: '123123123'
+          contact: 'contactWithoutDOBs'
+          locale: 'currentLocale'
+        expect(AccountService._createAccountParams()).toEqual expectedParams
 
     describe 'signIn', ->
       it 'calls $auth.submitLogin with userAuth params', ->
