@@ -66,4 +66,47 @@ describe Emailer, type: :mailer do
       end
     end
   end
+
+  describe '.account_update(params)' do
+    before do
+      @record = User.create(
+        email: 'jane@doe.com',
+        salesforce_contact_id: 'fakeId',
+      )
+
+      # Mock contact return
+      @fake_contact = {
+        'firstName' => 'Jane',
+        'lastName' => 'Doe',
+      }
+    end
+
+    it 'renders the headers' do
+      allow(Force::AccountService).to receive(:get).and_return(@fake_contact)
+      mail = Emailer.account_update(@record)
+
+      VCR.use_cassette('emailer/account_update') do
+        subject = 'DAHLIA SF Housing Portal Account Updated'
+        expect(mail.subject).to eq(subject)
+        expect(mail.to).to eq([@record[:email]])
+        expect(mail.from).to eq(['donotreply@sfgov.org'])
+      end
+    end
+
+    it 'renders the body' do
+      allow(Force::AccountService).to receive(:get).and_return(@fake_contact)
+      mail = Emailer.account_update(@record)
+
+      VCR.use_cassette('emailer/account_update') do
+        name = 'Hello Jane Doe,'
+        # rubocop:disable Metrics/LineLength
+        remember = 'Remember to always create a strong password for your account and not share your password with others.'
+        settings_link = '<a href="http://localhost/sign-in?redirectTo=dahlia.account-settings">Account Settings</a>'
+        # rubocop:enable Metrics/LineLength
+        expect(mail.body.encoded).to match(name)
+        expect(mail.body.encoded).to match(remember)
+        expect(mail.html_part.body.raw_source).to include(settings_link)
+      end
+    end
+  end
 end
