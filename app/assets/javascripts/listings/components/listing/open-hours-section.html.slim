@@ -3,7 +3,7 @@
     | Open Houses
   ul.content-list
     li ng-repeat="session in $ctrl.sortedOpenHouses()"
-      p.content-group_date
+      p.content-group_date.no-margin
         span.content-group_day
           | {{::session.Date | dateSuffix}}
         span.content-group_time
