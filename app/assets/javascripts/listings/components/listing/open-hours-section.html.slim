@@ -3,10 +3,14 @@
     | Open Houses
   ul.content-list
     li ng-repeat="session in $ctrl.sortedOpenHouses()"
-      p.content-group_date
+      p.content-group_date.no-margin
         span.content-group_day
           | {{::session.Date | dateSuffix}}
         span.content-group_time
           | {{::session.Start_Time}}
           span ng-if="::session.End_Time"
             | &mdash;{{::session.End_Time}}
+      p.content-group_address.c-steel.no-margin.skiptranslate ng-if="::session.Venue"
+        | {{::session.Venue}}
+      p.content-group_address.c-steel.skiptranslate ng-if="::session.Street_Address"
+        | {{::session.Street_Address}}, {{::session.City}}
