@@ -37,6 +37,11 @@ zh:
         subject: "DAHLIA San Francisco Housing Portal New Account Confirmation"
         thank_you_msg: "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
         confirm_link_msg: "To complete your account creation, please click the link below:"
+        confirm_account_link: "Confirm my account"
       reset_password_instructions:
+        subject: "Reset password instructions"
         password_reset_request_made: "A request to reset your DAHLIA San Francisco Housing Portal website password for housing.sfgov.org has recently been made."
         click_if_your_request: "If you did make this request, please click on the link below to reset your password:"
+        ignore_mail_msg: "If you didn't request this, please ignore this email."
+        password_change_link: "Change my password"
+        no_changes_msg: "Your password won't change until you access the link above and create a new one."
