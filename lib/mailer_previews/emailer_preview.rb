@@ -1,7 +1,7 @@
 # for previewing emailer in browser
 class EmailerPreview < ActionMailer::Preview
   # Set the value of the locale to preview all emails in
-  # a specific value (:es, :zh, :tl, :en)
+  # a specific language (:es, :zh, :tl, :en)
   def locale
     :es || I18n.default_locale
   end
