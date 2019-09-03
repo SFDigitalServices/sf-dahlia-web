@@ -119,7 +119,7 @@ do ->
     describe 'createAccount', ->
       beforeEach ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
-        fakeParams = AccountService._createAccountParams()
+        fakeParams = AccountService.createAccountParams()
 
       it 'calls $auth.submitRegistration with userAuth params', ->
         AccountService.createAccount()
@@ -132,7 +132,7 @@ do ->
       it 'triggers loading overlay', ->
         AccountService.createAccount()
         expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
-    describe '_createAccountParams', ->
+    describe 'createAccountParams', ->
       it 'returns expectedParams', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         expectedParams =
@@ -141,7 +141,7 @@ do ->
             password: '123123123'
           contact: 'contactWithoutDOBs'
           locale: 'currentLocale'
-        expect(AccountService._createAccountParams()).toEqual expectedParams
+        expect(AccountService.createAccountParams()).toEqual expectedParams
 
     describe 'signIn', ->
       it 'calls $auth.submitLogin with userAuth params', ->

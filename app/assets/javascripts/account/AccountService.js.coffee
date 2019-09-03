@@ -56,7 +56,7 @@ AccountService = (
     Service.clearAccountMessages()
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
-    $auth.submitRegistration(Service._createAccountParams())
+    $auth.submitRegistration(Service.createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
@@ -240,7 +240,7 @@ AccountService = (
     contactWithDOB = _.merge({}, contact, {'DOB': ShortFormDataService.formatUserDOB(contact)})
     ShortFormDataService.removeDOBFields(contactWithDOB)
 
-  Service._createAccountParams = ->
+  Service.createAccountParams = ->
     return {
       user: _.omit(Service.userAuth.user, ['email_confirmation'])
       contact: Service.userDataForSalesforce()
