@@ -3,11 +3,11 @@ html
   head
   body
     p
-      = "#{t(:hello, name: (@name || ''))},"
+      = "#{t('HELLO', name: (@name || ''))},"
 
     = yield
 
     p
-      = "#{t(:thank_you).capitalize},"
+      = "#{t('THANK_YOU').capitalize},"
       br
-      = t :email_signature
+      = t 'EMAIL_SIGNATURE'
