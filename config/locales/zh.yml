@@ -23,6 +23,10 @@ zh:
       complete_your_application: "Complete your application"
       applications_are_due_by: "Applications for this listing are due by %{deadline}."
       reminder_do_not_submit_duplicate: "Just a quick reminder that if you've already submitted another application for this listing, don't complete this one. Duplicate applications will cause both to be removed from the lottery."
+    account_update:
+      always_create_strong_password : "Remember to always create a strong password for your account and not share your password with others."
+      account_settings_link: "Account Settings"
+      you_recently_changed_settings_please_visit: "You recently changed information in your DAHLIA SF Housing Portal Account Settings. If you did not make this change, please visit your %{link} to verify your information."
   devise:
     mailer:
       reconfirmation_instructions:
@@ -33,3 +37,11 @@ zh:
         subject: "DAHLIA San Francisco Housing Portal New Account Confirmation"
         thank_you_msg: "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
         confirm_link_msg: "To complete your account creation, please click the link below:"
+        confirm_account_link: "Confirm my account"
+      reset_password_instructions:
+        subject: "Reset password instructions"
+        password_reset_request_made: "A request to reset your DAHLIA San Francisco Housing Portal website password for housing.sfgov.org has recently been made."
+        click_if_your_request: "If you did make this request, please click on the link below to reset your password:"
+        ignore_mail_msg: "If you didn't request this, please ignore this email."
+        password_change_link: "Change my password"
+        no_changes_msg: "Your password won't change until you access the link above and create a new one."

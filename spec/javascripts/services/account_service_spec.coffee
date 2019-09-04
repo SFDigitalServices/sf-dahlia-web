@@ -4,6 +4,7 @@ do ->
     AccountService = undefined
     ShortFormApplicationService = undefined
     $translate =
+      use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
       instant: ->
     $state = undefined
     $auth = undefined
@@ -18,8 +19,8 @@ do ->
     fakeShortFormDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
-      formatUserDOB: ->
-      removeDOBFields: ->
+      formatUserDOB: jasmine.createSpy().and.returnValue('fakeDOB')
+      removeDOBFields: jasmine.createSpy().and.returnValue('contactWithoutDOBs')
     fakeModalService =
       openModal: jasmine.createSpy()
       closeModal: jasmine.createSpy()
@@ -36,7 +37,13 @@ do ->
       user:
         email: 'a@b.c'
         password: '123123123'
-      contact: {}
+      contact:
+        dob_day: 1
+        dob_month: 13
+        dob_year: 1920
+        firstName: 'Bob'
+        middleName: 'Paul'
+        lastName: 'Jones'
     fakeShortFormApplicationService =
       applicant: {}
       importUserData: ->
@@ -112,7 +119,7 @@ do ->
     describe 'createAccount', ->
       beforeEach ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
-        fakeParams = AccountService._createAccountParams()
+        fakeParams = AccountService.createAccountParams()
 
       it 'calls $auth.submitRegistration with userAuth params', ->
         AccountService.createAccount()
@@ -125,6 +132,16 @@ do ->
       it 'triggers loading overlay', ->
         AccountService.createAccount()
         expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
+    describe 'createAccountParams', ->
+      it 'returns expectedParams', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        expectedParams =
+          user:
+            email: 'a@b.c'
+            password: '123123123'
+          contact: 'contactWithoutDOBs'
+          locale: 'currentLocale'
+        expect(AccountService.createAccountParams()).toEqual expectedParams
 
     describe 'signIn', ->
       it 'calls $auth.submitLogin with userAuth params', ->
@@ -156,10 +173,9 @@ do ->
       it 'calls $auth.requestPasswordReset', ->
         AccountService.userAuth =
           user: { email: 'example@email.com' }
-        expectedParams = { email: 'example@email.com' }
+        expectedParams = { email: 'example@email.com', locale: 'currentLocale' }
         AccountService.requestPasswordReset()
         expect($auth.requestPasswordReset).toHaveBeenCalledWith(expectedParams)
-
 
     describe 'updatePassword', ->
       it 'calls $auth.updatePassword', ->
@@ -173,6 +189,20 @@ do ->
         AccountService.updatePassword()
         expect($auth.updatePassword).toHaveBeenCalledWith(expectedParams)
 
+    describe 'resendConfirmationEmail', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'sends a post request to the confirmation endpoint', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAuthResponse
+        AccountService.createdAccount.email = 'testEmail'
+        expectedParams =
+          locale: 'currentLocale'
+          email: 'testEmail'
+        httpBackend.expectPOST('/api/v1/auth/confirmation', expectedParams)
+        AccountService.resendConfirmationEmail()
+        httpBackend.flush()
+
     describe 'updateAccount', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
@@ -182,6 +212,12 @@ do ->
         AccountService.userAuth =
           user:
             email: 'newemail@new1.com'
+
+        expectedParams =
+          locale: 'currentLocale'
+          user:
+            email: 'newemail@new1.com'
+        httpBackend.expectPUT('/api/v1/auth', expectedParams)
         stubAngularAjaxRequest httpBackend, requestURL, fakeAuthResponse
         AccountService.updateAccount('email')
         httpBackend.flush()
@@ -190,6 +226,13 @@ do ->
       it 'assigns new name/DOB attributes after update', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
+        spyOn(AccountService, 'userDataForSalesforce').and.returnValue('fakeContact')
+
+        expectedParams =
+          locale: 'currentLocale'
+          contact: 'fakeContact'
+
+        httpBackend.expectPUT('/api/v1/account/update', expectedParams)
         AccountService.updateAccount('nameDOB')
         httpBackend.flush()
         expect(AccountService.loggedInUser.firstName).toEqual fakeUpdateResponse.contact.firstName
@@ -213,6 +256,26 @@ do ->
           templateUrl = 'account/templates/partials/_confirmation_expired_modal.html'
           AccountService.openConfirmationExpiredModal()
           expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl)
+
+    describe 'userDataForSalesforce', ->
+      it 'calls ShortFormDataService to format DOB', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        contact = AccountService.userDataForSalesforce()
+
+        expectedContact =
+          dob_day: 1
+          dob_month: 13
+          dob_year: 1920
+          firstName: 'Bob'
+          middleName: 'Paul'
+          lastName: 'Jones'
+          email: 'a@b.c'
+
+        expect(contact).toEqual 'contactWithoutDOBs'
+        expect(fakeShortFormDataService.formatUserDOB).toHaveBeenCalledWith expectedContact
+        expectedContact.DOB = 'fakeDOB'
+        expect(fakeShortFormDataService.removeDOBFields).toHaveBeenCalledWith expectedContact
+
 
     describe 'lockCompletedFields', ->
       it 'checks for lockedFields', ->

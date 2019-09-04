@@ -56,7 +56,7 @@ AccountService = (
     Service.clearAccountMessages()
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
-    $auth.submitRegistration(Service._createAccountParams())
+    $auth.submitRegistration(Service.createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
@@ -97,6 +97,7 @@ AccountService = (
     Service.clearAccountMessages()
     params =
       email: Service.userAuth.user.email
+      locale: $translate.use()
     $auth.requestPasswordReset(params).then((resp) ->
       Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
@@ -159,6 +160,7 @@ AccountService = (
   Service.resendConfirmationEmail = ->
     params =
       email: Service.createdAccount.email
+      locale: $translate.use()
 
     $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
       data
@@ -175,10 +177,11 @@ AccountService = (
 
   Service.updateAccount = (infoType) ->
     Service.clearAccountMessages()
+    params =
+      locale: $translate.use()
     if infoType == 'email'
-      params =
-        user:
-          email: Service.userAuth.user.email
+      params.user =
+        email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       ).error((response) ->
@@ -189,8 +192,8 @@ AccountService = (
           Service.accountError.messages.email = msg
       )
     else
-      params =
-        contact: Service.userDataForSalesforce()
+      params.contact =
+        Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
         _.merge(Service.loggedInUser, data.contact)
@@ -234,14 +237,14 @@ AccountService = (
 
   Service.userDataForSalesforce = ->
     contact = Service.userDataForContact()
-    contact.DOB = ShortFormDataService.formatUserDOB(contact)
-    contact = ShortFormDataService.removeDOBFields(contact)
-    contact
+    contactWithDOB = _.merge({}, contact, {'DOB': ShortFormDataService.formatUserDOB(contact)})
+    ShortFormDataService.removeDOBFields(contactWithDOB)
 
-  Service._createAccountParams = ->
+  Service.createAccountParams = ->
     return {
       user: _.omit(Service.userAuth.user, ['email_confirmation'])
       contact: Service.userDataForSalesforce()
+      locale: $translate.use()
     }
 
   Service._reformatDOB = ->

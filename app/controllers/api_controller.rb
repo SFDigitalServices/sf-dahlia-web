@@ -4,6 +4,15 @@ class ApiController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   respond_to :json
 
+  around_action :switch_locale
+
+  # Set locale for use by devise emails
+  # Source: https://guides.rubyonrails.org/i18n.html#managing-the-locale-across-requests
+  def switch_locale(&action)
+    locale = params[:locale] || I18n.default_locale
+    I18n.with_locale(locale, &action)
+  end
+
   rescue_from StandardError do |e|
     if e.is_a?(Faraday::ConnectionFailed) || e.is_a?(Faraday::TimeoutError)
       render_err(e, status: :gateway_timeout, external_capture: true) # 504

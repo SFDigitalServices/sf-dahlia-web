@@ -1,7 +1,5 @@
 p
-  | You recently changed information in your DAHLIA SF Housing Portal Account Settings. If you did not make this change, please visit your
-  => link_to ' Account Settings', @account_settings_url
-  |  to verify your information.
+  == t '.you_recently_changed_settings_please_visit', link: link_to(t('.account_settings_link'), @account_settings_url)
 
 p
-  | Remember to always create a strong password for your account and not share your password with others.
+  = t '.always_create_strong_password'
