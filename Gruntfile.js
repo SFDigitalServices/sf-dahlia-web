@@ -57,7 +57,10 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.js.coffee',
         'app/assets/javascripts/**/*.html',
         'app/assets/javascripts/**/*.html.slim',
-        'app/views/layouts/application.html.slim'
+        'app/views/layouts/application.html.slim',
+        'app/views/devise/mailer/*.html.slim',
+        'app/views/emailer/*.html.slim',
+        'app/views/layouts/email.html.slim'
       ],
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
@@ -67,6 +70,10 @@ module.exports = function(grunt) {
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
          'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         ' t \'([A-Z\.\-\_]*)\'',
+         ' t\\(\'([A-Z\.\-\_]*)\'',
+         '\\(t\\(\'([A-Z\.\-\_]*)\'',
+         '#{t\\(\'([A-Z\.\-\_]*)\'',
          'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
