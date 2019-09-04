@@ -11,7 +11,7 @@ class Emailer < Devise::Mailer
   def account_update(record)
     load_salesforce_contact(record)
     @email = record.email
-    @subject = 'DAHLIA SF Housing Portal Account Updated'
+    @subject = I18n.translate('EMAILER.ACCOUNT_UPDATE.SUBJECT')
     sign_in_path = 'sign-in?redirectTo=dahlia.account-settings'
     @account_settings_url = "#{base_url}/#{sign_in_path}"
     mail(to: @email, subject: @subject) do |format|
@@ -110,7 +110,11 @@ class Emailer < Devise::Mailer
     continue_draft_path = '/continue-draft-sign-in/' + params[:listing_id]
     @saved_application_url = "#{base_url}#{continue_draft_path}"
     format_app_due_date(listing)
-    subject = "Complete your application for #{@listing_name} by #{@deadline}"
+    subject = I18n.translate(
+      'EMAILER.DRAFT_APPLICATION_SAVED.SUBJECT',
+      deadline: @deadline,
+      listing_name: @listing_name,
+    )
     mail(to: @email, subject: subject) do |format|
       format.html do
         render(
@@ -164,7 +168,9 @@ class Emailer < Devise::Mailer
     if @listing.Lottery_Date
       @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
-    @subject = "Thanks for applying to #{@listing_name}"
+    @subject = I18n.translate(
+      'EMAILER.SUBMISSION_CONFIRMATION.SUBJECT', listing_name: @listing_name
+    )
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'submission_confirmation' }
     end
