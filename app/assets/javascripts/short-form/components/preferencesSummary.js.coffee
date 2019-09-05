@@ -72,15 +72,15 @@ angular.module('dahlia.components')
 
             # Get the display name of this pref
             displayNameTranslateKey = switch key
-              when 'certOfPreference' then flagForI18n('E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE')
-              when 'displaced' then flagForI18n('E7_PREFERENCES_PROGRAMS.DISPLACED')
-              when 'neighborhoodResidence' then flagForI18n('E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME')
-              when 'antiDisplacement' then flagForI18n('E2B_ADHP_PREFERENCE.PREFERENCE.NAME')
-              when 'liveInSf' then flagForI18n('E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE')
-              when 'workInSf' then flagForI18n('E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE')
-              when 'assistedHousing' then flagForI18n('E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE')
-              when 'rentBurden' then flagForI18n('E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE')
-              when 'aliceGriffith' then flagForI18n('PREFERENCES.ALICE_GRIFFITH.TITLE')
+              when 'certOfPreference' then )
+              when 'displaced' then )
+              when 'neighborhoodResidence' then )
+              when 'antiDisplacement' then )
+              when 'liveInSf' then )
+              when 'workInSf' then )
+              when 'assistedHousing' then )
+              when 'rentBurden' then )
+              when 'aliceGriffith' then )
 
             # If we didn't find a display name for this key, skip over it
             return unless displayNameTranslateKey

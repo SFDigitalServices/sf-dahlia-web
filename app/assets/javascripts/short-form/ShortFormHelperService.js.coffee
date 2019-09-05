@@ -6,114 +6,114 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.flagForI18n = (str) -> str
 
   Service.alternate_contact_options = [
-    ['Family Member', Service.flagForI18n('LABEL.FAMILY_MEMBER')]
-    ['Friend', Service.flagForI18n('LABEL.FRIEND')]
-    ['Social Worker or Housing Counselor', Service.flagForI18n('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
-    ['Other', Service.flagForI18n('LABEL.OTHER')]
+    ['Family Member', Service.)]
+    ['Friend', Service.)]
+    ['Social Worker or Housing Counselor', Service.)]
+    ['Other', Service.)]
   ]
   Service.gender_options = [
-    ['Female', Service.flagForI18n('LABEL.FEMALE')]
-    ['Male', Service.flagForI18n('LABEL.MALE')]
-    ['Genderqueer/Gender Non-binary', Service.flagForI18n('LABEL.GENDERQUEER_NON_BINARY')]
-    ['Trans Female', Service.flagForI18n('LABEL.TRANS_FEMALE')]
-    ['Trans Male', Service.flagForI18n('LABEL.TRANS_MALE')]
-    ['Not Listed', Service.flagForI18n('LABEL.NOT_LISTED')]
+    ['Female', Service.)]
+    ['Male', Service.)]
+    ['Genderqueer/Gender Non-binary', Service.)]
+    ['Trans Female', Service.)]
+    ['Trans Male', Service.)]
+    ['Not Listed', Service.)]
   ]
 
   Service.relationship_options = [
-    ['Spouse', Service.flagForI18n('LABEL.SPOUSE')]
-    ['Registered Domestic Partner', Service.flagForI18n('LABEL.REGISTERED_DOMESTIC_PARTNER')]
-    ['Parent', Service.flagForI18n('LABEL.PARENT')]
-    ['Child', Service.flagForI18n('LABEL.CHILD')]
-    ['Sibling', Service.flagForI18n('LABEL.SIBLING')]
-    ['Cousin', Service.flagForI18n('LABEL.COUSIN')]
-    ['Aunt', Service.flagForI18n('LABEL.AUNT')]
-    ['Uncle', Service.flagForI18n('LABEL.UNCLE')]
-    ['Nephew', Service.flagForI18n('LABEL.NEPHEW')]
-    ['Niece', Service.flagForI18n('LABEL.NIECE')]
-    ['Grandparent', Service.flagForI18n('LABEL.GRANDPARENT')]
-    ['Great Grandparent', Service.flagForI18n('LABEL.GREAT_GRANDPARENT')]
-    ['In-Law', Service.flagForI18n('LABEL.IN_LAW')]
-    ['Friend', Service.flagForI18n('LABEL.FRIEND')]
-    ['Other', Service.flagForI18n('LABEL.OTHER')]
+    ['Spouse', Service.)]
+    ['Registered Domestic Partner', Service.)]
+    ['Parent', Service.)]
+    ['Child', Service.)]
+    ['Sibling', Service.)]
+    ['Cousin', Service.)]
+    ['Aunt', Service.)]
+    ['Uncle', Service.)]
+    ['Nephew', Service.)]
+    ['Niece', Service.)]
+    ['Grandparent', Service.)]
+    ['Great Grandparent', Service.)]
+    ['In-Law', Service.)]
+    ['Friend', Service.)]
+    ['Other', Service.)]
   ]
   Service.ethnicity_options = [
-    ['Hispanic/Latino', Service.flagForI18n('LABEL.HISPANIC_LATINO')]
-    ['Not Hispanic/Latino', Service.flagForI18n('LABEL.NOT_HISPANIC_LATINO')]
+    ['Hispanic/Latino', Service.)]
+    ['Not Hispanic/Latino', Service.)]
   ]
   Service.race_options = [
-    ['American Indian/Alaskan Native', Service.flagForI18n('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE')]
-    ['Asian', Service.flagForI18n('LABEL.ASIAN')]
-    ['Black/African American', Service.flagForI18n('LABEL.BLACK_AFRICAN_AMERICAN')]
-    ['Native Hawaiian/Other Pacific Islander', Service.flagForI18n('LABEL.NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER')]
-    ['White', Service.flagForI18n('LABEL.WHITE')]
-    ['American Indian/Alaskan Native and Black/African American', Service.flagForI18n('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK')]
-    ['American Indian/Alaskan Native and White', Service.flagForI18n('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE')]
-    ['Asian and White', Service.flagForI18n('LABEL.ASIAN_WHITE')]
-    ['Black/African American and White', Service.flagForI18n('LABEL.BLACK_AFRICAN_AMERICAN_WHITE')]
-    ['Other/Multiracial', Service.flagForI18n('LABEL.OTHER_MULTIRACIAL')]
+    ['American Indian/Alaskan Native', Service.)]
+    ['Asian', Service.)]
+    ['Black/African American', Service.)]
+    ['Native Hawaiian/Other Pacific Islander', Service.)]
+    ['White', Service.)]
+    ['American Indian/Alaskan Native and Black/African American', Service.)]
+    ['American Indian/Alaskan Native and White', Service.)]
+    ['Asian and White', Service.)]
+    ['Black/African American and White', Service.)]
+    ['Other/Multiracial', Service.)]
   ]
   Service.sexual_orientation_options = [
-    ['Bisexual', Service.flagForI18n('LABEL.BISEXUAL')]
-    ['Gay/Lesbian/Same-Gender Loving', Service.flagForI18n('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
-    ['Questioning/Unsure', Service.flagForI18n('LABEL.QUESTIONING_UNSURE')]
-    ['Straight/Heterosexual', Service.flagForI18n('LABEL.STRAIGHT_HETEROSEXUAL')]
-    ['Not listed', Service.flagForI18n('LABEL.NOT_LISTED')]
+    ['Bisexual', Service.)]
+    ['Gay/Lesbian/Same-Gender Loving', Service.)]
+    ['Questioning/Unsure', Service.)]
+    ['Straight/Heterosexual', Service.)]
+    ['Not listed', Service.)]
   ]
   Service.preference_proof_options_default = [
-    ['Telephone bill', Service.flagForI18n('LABEL.PROOF.TELEPHONE_BILL')],
-    ['Cable and internet bill', Service.flagForI18n('LABEL.PROOF.CABLE_BILL')],
-    ['Gas bill', Service.flagForI18n('LABEL.PROOF.GAS_BILL')],
-    ['Electric bill', Service.flagForI18n('LABEL.PROOF.ELECTRIC_BILL')],
-    ['Garbage bill', Service.flagForI18n('LABEL.PROOF.GARBAGE_BILL')],
-    ['Water bill', Service.flagForI18n('LABEL.PROOF.WATER_BILL')],
-    ['Paystub', Service.flagForI18n('LABEL.PROOF.PAYSTUB_HOME')],
-    ['Public benefits record', Service.flagForI18n('LABEL.PROOF.PUBLIC_BENEFITS')],
-    ['School record', Service.flagForI18n('LABEL.PROOF.SCHOOL_RECORD')],
+    ['Telephone bill', Service.)],
+    ['Cable and internet bill', Service.)],
+    ['Gas bill', Service.)],
+    ['Electric bill', Service.)],
+    ['Garbage bill', Service.)],
+    ['Water bill', Service.)],
+    ['Paystub', Service.)],
+    ['Public benefits record', Service.)],
+    ['School record', Service.)],
   ]
   Service.preference_proof_options_work = [
-    ['Paystub with employer address', Service.flagForI18n('LABEL.PROOF.PAYSTUB_EMPLOYER')],
-    ['Letter from employer', Service.flagForI18n('LABEL.PROOF.LETTER_FROM_EMPLOYER')],
+    ['Paystub with employer address', Service.)],
+    ['Letter from employer', Service.)],
   ]
   Service.preference_proof_options_live = angular.copy(Service.preference_proof_options_default)
   Service.preference_proof_options_live.push(
-    ['Letter documenting homelessness', Service.flagForI18n('LABEL.PROOF.HOMELESSNESS')],
+    ['Letter documenting homelessness', Service.)],
   )
 
   Service.preference_proof_options_rent_burden = [
-    ['Money order', Service.flagForI18n('LABEL.PROOF.MONEY_ORDER')]
-    ['Cancelled check', Service.flagForI18n('LABEL.PROOF.CANCELLED_CHECK')]
-    ['Debit from your bank account', Service.flagForI18n('LABEL.PROOF.DEBIT_FROM_BANK')]
-    ['Screenshot of online payment', Service.flagForI18n('LABEL.PROOF.ONLINE_PAYMENT')]
+    ['Money order', Service.)]
+    ['Cancelled check', Service.)]
+    ['Debit from your bank account', Service.)]
+    ['Screenshot of online payment', Service.)]
   ]
 
   Service.preference_proof_options_alice_griffith = [
-    ['Letter from SFHA verifying address', Service.flagForI18n('LABEL.PROOF.SFHA_LETTER')]
-    ['CA ID or Driver\'s License', Service.flagForI18n('LABEL.PROOF.CA_LICENSE')]
-    ['Telephone bill (landline only)', Service.flagForI18n('LABEL.PROOF.TELEPHONE_BILL')]
-    ['Cable and internet bill', Service.flagForI18n('LABEL.PROOF.CABLE_BILL')]
-    ['Paystub (listing home address)', Service.flagForI18n('LABEL.PROOF.PAYSTUB_HOME')]
-    ['Public benefits record', Service.flagForI18n('LABEL.PROOF.PUBLIC_BENEFITS')]
-    ['School record', Service.flagForI18n('LABEL.PROOF.SCHOOL_RECORD')]
+    ['Letter from SFHA verifying address', Service.)]
+    ['CA ID or Driver\'s License', Service.)]
+    ['Telephone bill (landline only)', Service.)]
+    ['Cable and internet bill', Service.)]
+    ['Paystub (listing home address)', Service.)]
+    ['Public benefits record', Service.)]
+    ['School record', Service.)]
   ]
 
   Service.priority_options = [
-    ['Mobility impairments', Service.flagForI18n('LABEL.MOBILITY_IMPAIRMENTS')]
-    ['Vision impairments', Service.flagForI18n('LABEL.VISION_IMPAIRMENTS')]
-    ['Hearing impairments', Service.flagForI18n('LABEL.HEARING_IMPAIRMENTS')]
+    ['Mobility impairments', Service.)]
+    ['Vision impairments', Service.)]
+    ['Hearing impairments', Service.)]
   ]
 
   Service.listing_referral_options = [
-    ['Newspaper', Service.flagForI18n('REFERRAL.NEWSPAPER')]
-    ['MOHCD Website', Service.flagForI18n('REFERRAL.MOHCD_WEBSITE')]
-    ['Developer Website', Service.flagForI18n('REFERRAL.DEVELOPER_WEBSITE')]
-    ['Flyer', Service.flagForI18n('REFERRAL.FLYER')]
-    ['Email Alert', Service.flagForI18n('REFERRAL.EMAIL_ALERT')]
-    ['Friend', Service.flagForI18n('REFERRAL.FRIEND')]
-    ['Housing Counselor', Service.flagForI18n('REFERRAL.HOUSING_COUNSELOR')]
-    ['Radio Ad', Service.flagForI18n('REFERRAL.RADIO_AD')]
-    ['Bus Ad', Service.flagForI18n('REFERRAL.BUS_AD')]
-    ['Other', Service.flagForI18n('LABEL.OTHER')]
+    ['Newspaper', Service.)]
+    ['MOHCD Website', Service.)]
+    ['Developer Website', Service.)]
+    ['Flyer', Service.)]
+    ['Email Alert', Service.)]
+    ['Friend', Service.)]
+    ['Housing Counselor', Service.)]
+    ['Radio Ad', Service.)]
+    ['Bus Ad', Service.)]
+    ['Other', Service.)]
   ]
 
   Service.proofOptions = (preference) ->
