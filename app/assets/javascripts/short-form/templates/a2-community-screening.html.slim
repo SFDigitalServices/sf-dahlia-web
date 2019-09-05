@@ -7,12 +7,12 @@ section.app-container.focus-container
 
         .app-inner.inset
           .form-group ng-class="{ error: inputInvalid('answeredCommunityScreening') || eligibilityErrors.length > 0 }"
-            p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
+            p.form-note.margin-bottom translate="label.please_select_one"
             .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
               radio-block-item value='Yes' user='application' name='answeredCommunityScreening' ng-required='true' on-change='checkCommunityScreening'
                 | {{labels.communityScreeningYes}}
               radio-block-item value='No' user='application' name='answeredCommunityScreening' ng-required='true'
-                | {{'T.NO' | translate}}
+                | {{'t.no' | translate}}
         .button-pager
           .button-pager_row.primary.text-center
-            input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}"
+            input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}"

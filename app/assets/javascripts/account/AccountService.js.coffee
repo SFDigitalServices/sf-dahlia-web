@@ -67,9 +67,9 @@ AccountService = (
         bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
-          Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+          Service.accountError.messages.user = $translate.instant("error.email_already_in_use")
         else if msg == 'Salesforce contact can\'t be blank'
-          Service.accountError.messages.user = $translate.instant("ERROR.CREATE_ACCOUNT")
+          Service.accountError.messages.user = $translate.instant("error.create_account")
         else
           Service.accountError.messages.user = msg
         return false
@@ -101,7 +101,7 @@ AccountService = (
     $auth.requestPasswordReset(params).then((resp) ->
       Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
-      Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_NOT_FOUND")
+      Service.accountError.messages.user = $translate.instant("error.email_not_found")
 
   Service.updatePassword = (type) ->
     Service.clearAccountMessages()
@@ -115,7 +115,7 @@ AccountService = (
       Service.userAuth.user.password = ''
       Service.userAuth.user.password_confirmation = ''
       if type == 'change'
-        msg = $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED')
+        msg = $translate.instant('account_settings.account_changes_saved')
         Service.accountSuccess.messages.password = msg
         $state.go('dahlia.account-settings')
       else
@@ -124,9 +124,9 @@ AccountService = (
       response = response.data if response.data
       msg = response.errors.full_messages[0]
       if msg == 'Current password is invalid'
-        msg = $translate.instant("ERROR.CURRENT_PASSWORD_INVALID")
+        msg = $translate.instant("error.current_password_invalid")
       else
-        msg = $translate.instant("ERROR.PASSWORD_UPDATE")
+        msg = $translate.instant("error.password_update")
       Service.accountError.messages.password = msg
 
   Service.checkForAccount = (email) ->
@@ -183,11 +183,11 @@ AccountService = (
       params.user =
         email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
-        Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
+        Service.accountSuccess.messages.email = $translate.instant("account_settings.verify_email")
       ).error((response) ->
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
-          Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+          Service.accountError.messages.email = $translate.instant("error.email_already_in_use")
         else
           Service.accountError.messages.email = msg
       )
@@ -195,7 +195,7 @@ AccountService = (
       params.contact =
         Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+        Service.accountSuccess.messages.nameDOB = $translate.instant("account_settings.account_changes_saved")
         _.merge(Service.loggedInUser, data.contact)
         Service._reformatDOB()
       ).error((response) ->
@@ -230,14 +230,14 @@ AccountService = (
 
   #################### helper functions
   Service.showReconfirmedMessage = ->
-    Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.EMAIL_RECONFIRMED_UPDATED")
+    Service.accountSuccess.messages.email = $translate.instant("account_settings.email_reconfirmed_updated")
 
   Service.userDataForContact = ->
     _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
 
   Service.userDataForSalesforce = ->
     contact = Service.userDataForContact()
-    contactWithDOB = _.merge({}, contact, {'DOB': ShortFormDataService.formatUserDOB(contact)})
+    contactWithDOB = _.merge({}, contact, {'dob': ShortFormDataService.formatUserDOB(contact)})
     ShortFormDataService.removeDOBFields(contactWithDOB)
 
   Service.createAccountParams = ->
@@ -286,7 +286,7 @@ AccountService = (
     angular.copy(Service.userAuthDefaults, Service.userAuth)
 
   Service.afterLoginRedirect = (path) ->
-    Service.accountSuccess.messages.redirect = $translate.instant('SIGN_IN.SIGN_IN_REQUIRED')
+    Service.accountSuccess.messages.redirect = $translate.instant('sign_in.sign_in_required')
     Service.loginRedirect = path
 
   Service.goToLoginRedirect = ->
@@ -294,10 +294,10 @@ AccountService = (
     Service.loginRedirect = null
 
   Service.afterSignOut = ->
-    Service.accountSuccess.messages.signedOut = $translate.instant('SIGN_IN.SIGNED_OUT_SUCCESSFULLY')
+    Service.accountSuccess.messages.signedOut = $translate.instant('sign_in.signed_out_successfully')
 
   Service.afterUserTokenValidationTimeout = ->
-    Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
+    Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('sign_in.user_token_validation_timeout')
 
   Service.DOBValid = ShortFormDataService.DOBValid
 

@@ -1,16 +1,16 @@
 .form-group
   label.form-label.caps for="user_gender"
-    | {{'LABEL.APPLICANT_GENDER' | translate}}
+    | {{'label.applicant_gender' | translate}}
 
   p.form-note.margin-bottom
-    | {{'LABEL.APPLICANT_GENDER_SUBTITLE' | translate}}
+    | {{'label.applicant_gender_subtitle' | translate}}
 
   select#user_gender ng-model="user.gender" data-width="auto" name="gender" ng-change="resetGenderOther()"
     option disabled="" selected="" value=""
-      | {{'LABEL.SELECT_ONE' | translate}}
+      | {{'label.select_one' | translate}}
     option ng-repeat="option in gender_options" value="{{option[0]}}"
       | {{option[1] | translate}}
 
   .radio-block ng-if="genderNotListed()"
-    label.sr-only for="genderOther" translate="LABEL.YOUR_GENDER"
-    input#genderOther ng-model="user.genderOther" maxlength="{{::INPUT_MAX_LENGTH.genderOther}}" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
+    label.sr-only for="genderOther" translate="label.your_gender"
+    input#genderOther ng-model="user.genderOther" maxlength="{{::INPUT_MAX_LENGTH.genderOther}}" name="genderOther" placeholder="{{'label.your_gender' | translate}}" type="text"

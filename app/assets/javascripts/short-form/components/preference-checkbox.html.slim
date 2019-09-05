@@ -8,9 +8,9 @@
   .checkbox-block_note-inner ng-if="$ctrl.translatedDescription || $ctrl.customDescription || $ctrl.moreInfoLink"
     a.toggler.toggle-more.hide-for-print.open-bottom title="read {{ $ctrl.showDescription ? 'less' : 'more' }}" ng-class="{ 'margin-top-none' : $ctrl.shortDescription, open: $ctrl.showDescription }" ng-click="$ctrl.showDescription = !$ctrl.showDescription"
       span ng-show="$ctrl.showDescription"
-        ' {{'LABEL.READ_LESS' | translate}}
+        ' {{'label.read_less' | translate}}
       span ng-show="!$ctrl.showDescription"
-        ' {{'LABEL.READ_MORE' | translate}}
+        ' {{'label.read_more' | translate}}
 
       span.ui-icon.ui-tiny.i-primary
         svg
@@ -21,4 +21,4 @@
       | {{$ctrl.customDescription}}
 
     p.show-for-print.checkbox-block_more ng-show="$ctrl.showDescription && $ctrl.moreInfoLink"
-      a.lined target="_blank" href="{{$ctrl.moreInfoLink}}" translate="LABEL.FIND_OUT_MORE_ABOUT_PREFERENCES"
+      a.lined target="_blank" href="{{$ctrl.moreInfoLink}}" translate="label.find_out_more_about_preferences"

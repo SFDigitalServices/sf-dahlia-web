@@ -1,4 +1,4 @@
-h4.h-caps-lined translate="CONTACT_AGENT.CONTACT"
+h4.h-caps-lined translate="contact_agent.contact"
 h3.t-delta.t-sans.no-margin.skiptranslate
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Name }}
 p.c-steel
@@ -8,12 +8,12 @@ a.has-icon.margin-bottom--half title="Call {{ ::$ctrl.parent.listing.Leasing_Age
     svg
       use xlink:href="#i-phone"
   | Call {{ ::$ctrl.parent.listing.Leasing_Agent_Phone }}
-p.t-small.c-steel translate="CONTACT_AGENT.DUE_TO_HIGH_CALL_VOLUME" ng-if="::$ctrl.parent.listing.Leasing_Agent_Phone"
+p.t-small.c-steel translate="contact_agent.due_to_high_call_volume" ng-if="::$ctrl.parent.listing.Leasing_Agent_Phone"
 a.has-icon.d-block.margin-bottom title="Email {{::$ctrl.parent.listing.Leasing_Agent_Email}}" ng-href="mailto:{{::$ctrl.parent.listing.Leasing_Agent_Email}}" ng-if="::$ctrl.parent.listing.Leasing_Agent_Email"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-mail"
-  | {{ 'LABEL.EMAIL_ADDRESS' | translate }}
+  | {{ 'label.email_address' | translate }}
 p.c-steel.skiptranslate ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Street }}
   br
@@ -22,7 +22,7 @@ a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map:
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-map"
-  | {{ 'LABEL.GET_DIRECTIONS' | translate }}
+  | {{ 'label.get_directions' | translate }}
 .content-group_hours ng-if="::$ctrl.parent.listing.Office_Hours"
-  h3.content-group_title translate="CONTACT_AGENT.OFFICE_HOURS"
+  h3.content-group_title translate="contact_agent.office_hours"
   .content-group_days.inline ng-bind-html="::$ctrl.parent.listing.Office_Hours"

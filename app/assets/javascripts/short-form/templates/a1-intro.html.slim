@@ -2,7 +2,7 @@ section.app-container
   .row.collapse
     .medium-8.medium-centered.columns.fixed-width
       h2.t-gamma.text-center.margin-top.padding-left--2x.padding-right--2x
-        | {{'A1_INTRO.TITLE' | translate}}
+        | {{'a1_intro.title' | translate}}
       form.app-card.form-card.focus-container
         h1.property-card_title.text-center.margin-bottom.hide-for-medium-up.skiptranslate
           | {{listing.Name}}
@@ -10,7 +10,7 @@ section.app-container
           .property-card_overlay
             img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.imageURL}}"
             span.application-label.label.label--flag.primary
-              ' {{'T.APPLICATION_DUE' | translate}}
+              ' {{'t.application_due' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
           figcaption.property-card_info.skiptranslate
             h1.property-card_title.show-for-medium-up
@@ -19,7 +19,7 @@ section.app-container
               | {{formattedBuildingAddress(listing)}}
     .text-center.padding ng-class="{'margin-top--2x': application.applicationLanguage == 'English'}"
       h3.h-caps.t-base.d-block ng-if="application.applicationLanguage == 'English'"
-        | {{'A1_INTRO.CHOOSE_YOUR_LANGUAGE' | translate}}
+        | {{'a1_intro.choose_your_language' | translate}}
       span ng-if="application.applicationLanguage == 'English'"
         button#submit-en.button.secondary.expand-small.primary.margin-bottom--3halves type="button" ng-click="beginApplication('en')"
           | Begin
@@ -38,7 +38,7 @@ section.app-container
 
 
     .medium-8.medium-centered.columns.fixed-width.text-center.border-top.padding-top--2x ng-if="!loggedInUser.email"
-      h2.t-gamma translate="CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT"
-      p translate="A1_INTRO.SIGN_IN_SAVE_TIME"
+      h2.t-gamma translate="create_account.already_have_account"
+      p translate="a1_intro.sign_in_save_time"
       p
-        a.button.no-margin ui-sref="dahlia.sign-in({fromShortFormIntro: true})" translate="LABEL.SIGN_IN"
+        a.button.no-margin ui-sref="dahlia.sign-in({fromShortFormIntro: true})" translate="label.sign_in"

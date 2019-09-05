@@ -2,9 +2,9 @@
   .app-inner.inset
     .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('confirmed_home_address')}"
       label.form-label.caps
-        | {{'LABEL.SUGGESTED_ADDRESS' | translate}}:
+        | {{'label.suggested_address' | translate}}:
       .form-item.has-edit
-        .radio-group.left role="radiogroup" aria-label="{{'LABEL.SUGGESTED_ADDRESS' | translate}}"
+        .radio-group.left role="radiogroup" aria-label="{{'label.suggested_address' | translate}}"
           radio-block-item value='Yes' user='user' name='confirmed_home_address' ng-required='true' aria-describedby="confirmed_home_address_error"
             p.margin-bottom-none.t-base
               | {{validated_home_address.street1}}
@@ -16,9 +16,9 @@
               ' {{validated_home_address.zip}}
 
             small.error#confirmed_home_address_error ng-if="inputInvalid('confirmed_home_address')"
-              | {{'ERROR.CONFIRMED_ADDRESS' | translate}}
+              | {{'error.confirmed_address' | translate}}
 
         a.edit-link.a-top-right ng-href="{{ngHref}}"
-          | {{'T.EDIT' | translate}}
+          | {{'t.edit' | translate}}
 
   short-form-save-and-submit
