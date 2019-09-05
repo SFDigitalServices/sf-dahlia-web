@@ -4,7 +4,7 @@
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1" ng-model="$ctrl.model[$ctrl.addressType].address1"
       ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address1" placeholder="{{'label.address_1' | translate}}" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text"
       ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('address1') }"
-      aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1_error" ng-pattern="$ctrl.latinRegex" input-error translated-error="ERROR.ADDRESS")
+      aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1_error" ng-pattern="$ctrl.latinRegex" input-error translated-error="error.address")
 
   .form-group-street.form-item.large-12.column ng-class="{ error: $ctrl.inputInvalid('address2') }" ng-if="!$ctrl.hideAddress2"
     label for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address2" translate="label.address_2"
@@ -16,7 +16,7 @@
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city" ng-model="$ctrl.model[$ctrl.addressType].city"
       ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_city" placeholder="{{'label.city' | translate}}" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text"
       ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('city') }"
-      aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city_error" ng-pattern="$ctrl.latinRegex" input-error translated-error="ERROR.CITY")
+      aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city_error" ng-pattern="$ctrl.latinRegex" input-error translated-error="error.city")
 
   .form-group-state.form-item.small-5.columns ng-class="{ error: $ctrl.inputInvalid('state') }"
     label for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_state" translate="label.state"

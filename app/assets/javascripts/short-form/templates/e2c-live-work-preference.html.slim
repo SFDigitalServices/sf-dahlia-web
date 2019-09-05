@@ -9,11 +9,11 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference(preference="liveInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.live_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveInSf')" ng-if="showPreference('liveInSf')")
+        preference(preference="liveInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.live_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="e2c_live_work_preference.live_sf_preference.description" required="preferenceRequired('liveInSf')" ng-if="showPreference('liveInSf')")
 
-        preference(preference="workInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.work_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_documents' | translate}}" translated-description="E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION"  required="preferenceRequired('workInSf')" ng-if="showPreference('workInSf')")
+        preference(preference="workInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.work_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_documents' | translate}}" translated-description="e2c_live_work_preference.work_sf_preference.description"  required="preferenceRequired('workInSf')" ng-if="showPreference('workInSf')")
 
-        live-work-combo-preference(application="application" title="{{'e2c_live_work_preference.live_work_sf_preference.title' | translate}}"  translated-description="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" ng-if="showPreference('liveWorkInSf')")
+        live-work-combo-preference(application="application" title="{{'e2c_live_work_preference.live_work_sf_preference.title' | translate}}"  translated-description="e2c_live_work_preference.live_work_sf_preference.description" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" ng-if="showPreference('liveWorkInSf')")
 
 
       preference-opt-out preference="{{form.currentPreferenceType}}" application="application" invalid="inputInvalid(form.currentPreferenceType)" cancel-preference="cancelPreference(form.currentPreferenceType)"

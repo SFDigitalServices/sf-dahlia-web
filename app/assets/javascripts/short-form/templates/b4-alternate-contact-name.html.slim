@@ -8,10 +8,10 @@
       h3.form-label.caps
         | {{'label.alternate_contact_name' | translate}}
       label.sr-only for="alternate_firstName" translate="label.first_name"
-      input#alternate_first_name(ng-model="alternateContact.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}"  name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="alternate_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+      input#alternate_first_name(ng-model="alternateContact.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}"  name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="alternate_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
 
       label.sr-only for="alternate_lastName" translate="label.last_name"
-      input#alternate_last_name(ng-model="alternateContact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="alternate_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
+      input#alternate_last_name(ng-model="alternateContact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="alternate_last_name_error" ng-pattern="latinRegex" translated-error="error.last_name" input-error)
 
     .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social Worker or Housing Counselor'" ng-class="{ error: inputInvalid('agency') }"
       h3.form-label.caps

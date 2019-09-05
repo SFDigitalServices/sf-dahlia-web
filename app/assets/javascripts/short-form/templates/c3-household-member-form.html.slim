@@ -11,7 +11,7 @@
         | {{'label.household_member_name' | translate}}
       label.sr-only for="houshold_member_first_name"
         | {{'label.first_name' | translate}}
-      input#houshold_member_first_name(ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+      input#houshold_member_first_name(ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
 
       label.sr-only for="household_member_middle_name"
         | {{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
@@ -19,7 +19,7 @@
 
       label.sr-only for="household_member_last_name"
         | {{'label.last_name' | translate}}
-      input#household_member_last_name(ng-model="householdMember.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
+      input#household_member_last_name(ng-model="householdMember.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error" ng-pattern="latinRegex" translated-error="error.last_name" input-error)
 
   .app-inner.inset.border-bottom
     .form-group ng-class="{ error: applicantDOB_hasError() }"
