@@ -13,7 +13,7 @@
             | {{'choose_applicant_details.title' | translate}}
 
         / this alert box displays "You'll need to resolve..." if there are form errors
-        alert-box short-form="true" custom-sub-message="'CHOOSE_APPLICANT_DETAILS.ALERT_MESSAGE' | translate" ng-if="!eligibilityErrors.length && inputInvalid('chooseApplicantDetails')"
+        alert-box short-form="true" custom-sub-message="'choose_applicant_details.alert_message' | translate" ng-if="!eligibilityErrors.length && inputInvalid('chooseApplicantDetails')"
 
         alert-box(custom-message="notEligibleErrorMessage" eligibility-errors="eligibilityErrors" short-eligibility-error="true" hide-alert="hideAlert" ng-if="eligibilityErrors.length" invert="true")
 
