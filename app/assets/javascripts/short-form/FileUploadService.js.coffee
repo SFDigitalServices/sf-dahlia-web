@@ -89,7 +89,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
     if file.size > Service.maxFileSizeBytes
       proofDocument.file = null
       proofDocument.loading = false
-      proofDocument.error = ShortFormHelperService.)
+      proofDocument.error = ShortFormHelperService.flagForI18n('error.file_upload')
     else
       uploadedFileParams.file = file
       Upload.upload(
@@ -105,7 +105,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
         # error handler
         proofDocument.file = null
         proofDocument.loading = false
-        proofDocument.error = ShortFormHelperService.)
+        proofDocument.error = ShortFormHelperService.flagForI18n('error.file_upload_failed')
       ))
 
   return Service
