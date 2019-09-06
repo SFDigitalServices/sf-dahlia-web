@@ -1,5 +1,5 @@
 {
-  "es": {
+  "tl": {
     "415-701-5500": "415-701-5500",
     "a1_intro": {
       "choose_your_language": "Piliin ang inyong wika",
@@ -684,8 +684,8 @@
       "available_units_and_waitlist": "Mga makukuhang unit at waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
       "available_units_and_waitlist_desc": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist para sa <span class+'t-italic'>{{number}}units</span>",
       "bath": "banyo",
-      "cc&R": "Mga Kasunduan, Kondisyon, at Restriksyon (Covenants, Conditions and Restrictions, CC&R's)",
-      "cc&R_DESCRIPTION": "Ipinaliliwanag ng CC&Rs ang mga patakaran ng samahan ng mga may-ari ng bahay o homeowner's association, at ang mga restriksiyon sa pagbabagong magagawa ninyo sa ari-arian. ",
+      "cc&r": "Mga Kasunduan, Kondisyon, at Restriksyon (Covenants, Conditions and Restrictions, CC&R's)",
+      "cc&r_description": "Ipinaliliwanag ng CC&Rs ang mga patakaran ng samahan ng mga may-ari ng bahay o homeowner's association, at ang mga restriksiyon sa pagbabagong magagawa ninyo sa ari-arian. ",
       "confirmed_preference_list": "Kumpirmadong Listahan para sa {{preference}} ",
       "current_waitlist_size": "Kasalukuyang Laki ng Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
       "download_lottery_results": "I-download ang mga Resulta ng Lottery",

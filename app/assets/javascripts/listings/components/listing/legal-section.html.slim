@@ -24,9 +24,9 @@ accordion-heading
       p ng-text-truncate="::$ctrl.parent.listing.Legal_Disclaimers | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust ng-if="::$ctrl.parent.listing.CC_and_R_URL"
       h4.content-card_title.t-serif
-        | {{'LISTINGS.CC&R' | translate}}
+        | {{'listings.cc&r' | translate}}
       p.margin-bottom
-        | {{'LISTINGS.CC&R_DESCRIPTION' | translate}}
+        | {{'listings.cc&r_description' | translate}}
       a.button.secondary target="_blank" href="{{ ::$ctrl.parent.listing.CC_and_R_URL }}"
         | {{'listings.download_pdf' | translate}}
     .content-card.bg-dust ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
