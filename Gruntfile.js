@@ -122,8 +122,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
-    'i18nextract',
-    'json_remove_fields',
+    // 'i18nextract',
+    // 'json_remove_fields',
     'sortJSON',
   ]);
 
