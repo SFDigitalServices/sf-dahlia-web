@@ -22,6 +22,33 @@ module.exports = function(grunt) {
         }
       ],
     },
+    translationsToTmp: {
+      files: [
+        {
+          src: 'app/assets/json/translations/locale-en.json',
+          dest: 'tmp/translations/locale-en.json'
+        }
+      ],
+      options: {
+        process: function (content, srcpath) {
+          return JSON.stringify(JSON.parse(content)['en'], null, 4);
+        }
+      }
+    },
+    translationsFromTmp: {
+      files: [
+        {
+          src: 'tmp/translations/locale-en.json',
+          dest: 'app/assets/json/translations/locale-en.json'
+        }
+      ],
+      options: {
+        process: function (content, srcpath) {
+          let body = {"en": JSON.parse(content)}
+          return JSON.stringify(body, null, 4);
+        }
+      }
+    }
   },
 
   //Make any string replacements that are needed when transfering assets to app.
@@ -81,7 +108,7 @@ module.exports = function(grunt) {
        ],
       namespace: true,
       lang:     ['locale-en'],
-      dest:     'app/assets/json/translations'
+      dest:     'tmp/translations'
     }
   },
   json_remove_fields: {
@@ -100,12 +127,13 @@ module.exports = function(grunt) {
       'app/assets/json/translations/locale-en.json',
       'app/assets/json/translations/locale-es.json',
       'app/assets/json/translations/locale-tl.json',
-      'app/assets/json/translations/locale-zh.json'
+      'app/assets/json/translations/locale-zh.json',
+      'tmp/translations/locale-en.json'
     ],
     // options: {
     //   spacing: 2
     // }
-  },
+  }
 });
 
   // load tasks
@@ -116,7 +144,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sort-json');
   grunt.loadNpmTasks('grunt-json-remove-fields');
 
-
   // register task
   grunt.registerTask('default', [
     'clean',
@@ -125,8 +152,10 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
+    'copy:translationsToTmp',
     'i18nextract',
-    // 'json_remove_fields',
+    'copy:translationsFromTmp',
+    'json_remove_fields',
     'sortJSON',
   ]);
 
