@@ -172,14 +172,14 @@ ShortFormNavigationService = (
     sections = [
       {
         name: 'Qualify',
-        translatedLabel: 'SHORT_FORM_NAV.QUALIFY',
+        ,
         pages: [
           'prerequisites'
         ]
       },
       {
         name: 'You',
-        translatedLabel: 'SHORT_FORM_NAV.YOU',
+        ,
         pages: [
           'name'
           'welcome-back'
@@ -192,7 +192,7 @@ ShortFormNavigationService = (
       },
       {
         name: 'Household',
-        translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
+        ,
         pages: [
           'household-intro'
           'household-overview'
@@ -208,7 +208,7 @@ ShortFormNavigationService = (
       },
       {
         name: 'Income',
-        translatedLabel: 'SHORT_FORM_NAV.INCOME',
+        ,
         pages: [
           'income-vouchers'
           'income'
@@ -216,7 +216,7 @@ ShortFormNavigationService = (
       },
       {
         name: 'Preferences',
-        translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
+        ,
         pages: [
           'preferences-intro'
           'assisted-housing-preference'
@@ -235,7 +235,7 @@ ShortFormNavigationService = (
       },
       {
         name: 'Review',
-        translatedLabel: 'SHORT_FORM_NAV.REVIEW',
+        ,
         pages: [
           'review-optional'
           'review-summary'

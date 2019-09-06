@@ -20,8 +20,8 @@ angular.module('dahlia.components')
           "#{unitSummary.minOccupancy}-#{unitSummary.maxOccupancy}"
 
       @occupancyLabel = (numberOfPeople) ->
-        return $translate.instant('LISTINGS.PERSON') if numberOfPeople == 1
-        $translate.instant('LISTINGS.PEOPLE')
+        return $translate.instant('listings.person') if numberOfPeople == 1
+        $translate.instant('listings.people')
 
       @showAMItoggler = ->
         return false if _.isEmpty(ListingDataService.AMICharts)

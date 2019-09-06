@@ -28,8 +28,8 @@ angular.module('dahlia.components')
       ctrl.fileAttachmentsForRentBurden = ->
         if ctrl.application.status.match(/submitted/i)
           return [
-            subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
-            boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: 'Lease and rent proof' })
+            subLabel: $translate.instant('label.for_your_household')
+            boldSubLabel: $translate.instant('label.file_attached', { file: 'Lease and rent proof' })
           ]
         labels = []
         # this one is a little bit complicated because it has to sort through each set of rentBurden
@@ -40,21 +40,21 @@ angular.module('dahlia.components')
             file.proofOption if file.file
           proofOptions = $filter('listify')(_.concat(proofOptions, rentOptions))
           labels.push({
-            subLabel: $translate.instant('LABEL.FOR_USER', user: address)
-            boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
+            subLabel: $translate.instant('label.for_user', user: address)
+            boldSubLabel: $translate.instant('label.file_attached', { file: proofOptions })
           })
         return labels
 
       ctrl.certificateNumberForPreference = (pref_type) ->
         certificateNumber = ctrl.application.preferences["#{pref_type}_certificateNumber"]
         return '' unless certificateNumber
-        $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
+        $translate.instant('label.certificate_number') + ': ' + certificateNumber
 
       ctrl.fileAttachmentForPreference = (pref_type) ->
         proof = ctrl.application.preferences.documents[pref_type]
         return '' unless proof && proof.proofOption
         interpolate = { file: proof.proofOption }
-        $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+        $translate.instant('label.file_attached', interpolate)
 
       ctrl.claimedCustomPreference = (preference) ->
         !! ShortFormApplicationService.preferences[preference.listingPreferenceID]
@@ -94,7 +94,7 @@ angular.module('dahlia.components')
               boldSubLabel = null
             else
               rentBurdenSubLabels = null
-              subLabel = $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(key))
+              subLabel = $translate.instant('label.for_user', ctrl.householdMemberForPreference(key))
 
               if ['certOfPreference', 'displaced'].indexOf(key) >= 0
                 boldSubLabel = ctrl.certificateNumberForPreference(key)
@@ -120,7 +120,7 @@ angular.module('dahlia.components')
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
-              subLabel: $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(pref.listingPreferenceID))
+              subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
               boldSubLabel: null,
               rentBurdenSubLabels: null
             }
@@ -134,7 +134,7 @@ angular.module('dahlia.components')
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
-              subLabel: $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(pref.listingPreferenceID))
+              subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
               boldSubLabel: ctrl.fileAttachmentForPreference(pref.listingPreferenceID),
               rentBurdenSubLabels: null
             }

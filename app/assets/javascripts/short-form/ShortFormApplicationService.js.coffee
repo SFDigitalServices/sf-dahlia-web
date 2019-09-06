@@ -601,7 +601,7 @@ ShortFormApplicationService = (
 
   Service.onExit = (e) ->
     AnalyticsService.trackFormAbandon('Application')
-    e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+    e.returnValue = $translate.instant('t.are_you_sure_you_want_to_leave')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
@@ -1000,9 +1000,9 @@ ShortFormApplicationService = (
     requirement = Service.listing.Reserved_Community_Requirement || ''
     age = { minAge: Service.listing.Reserved_community_minimum_age }
     if !!requirement.match(/entire household/i)
-      Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
+      Service.eligibilityErrors.push($translate.instant('error.senior_everyone', age))
     else
-      Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_ANYONE', age))
+      Service.eligibilityErrors.push($translate.instant('error.senior_anyone', age))
 
   Service.memberAge = (member) ->
     dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')

@@ -11,11 +11,11 @@ $window) ->
   $scope.signOut = ->
     if ShortFormApplicationService.isShortFormPage($state.current)
       content =
-        title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
-        cancel: $translate.instant('T.STAY')
-        continue:  $translate.instant('T.LEAVE')
+        title: $translate.instant('t.leave_your_application')
+        cancel: $translate.instant('t.stay')
+        continue:  $translate.instant('t.leave')
         alert: true
-        message: $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+        message: $translate.instant('t.are_you_sure_you_want_to_leave')
       ModalService.alert(content,
         onConfirm: ->
           AccountService.signOut()

@@ -133,18 +133,18 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   ## Translation Helpers
   Service.translateLoggedInMessage = (args) ->
-    accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
+    accountSettings =  $translate.instant('account_settings.account_settings')
     link = $state.href('dahlia.account-settings')
     markup = null
     if args.page == 'b1-name' && args.infoChanged
-      nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
-      detailsUpdated = $translate.instant('B1_NAME.APP_DETAILS_UPDATED')
+      nameEditable = $translate.instant('b1_name.name_editable_via')
+      detailsUpdated = $translate.instant('b1_name.app_details_updated')
       markup = "#{detailsUpdated} #{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
     if args.page == 'b1-name' && !args.infoChanged
-      nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
+      nameEditable = $translate.instant('b1_name.name_editable_via')
       markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
     else if args.page == 'b2-contact'
-      nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
+      nameEditable = $translate.instant('b2_contact.email_editable_via')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
 

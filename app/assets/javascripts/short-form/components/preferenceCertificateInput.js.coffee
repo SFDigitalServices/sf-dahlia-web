@@ -13,9 +13,9 @@ angular.module('dahlia.components')
         ShortFormApplicationService.inputInvalid(fieldName)
 
       if @preference == 'certOfPreference'
-        @label = $translate.instant('E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_CERTIFICATE')
+        @label = $translate.instant('e7_preferences_programs.cert_of_preference_certificate')
       else if @preference == 'displaced'
-        @label = $translate.instant('E7_PREFERENCES_PROGRAMS.DISPLACED_CERTIFICATE')
+        @label = $translate.instant('e7_preferences_programs.displaced_certificate')
 
       @preferenceCertificateNumber = "#{@preference}_certificateNumber"
       @INPUT_MAX_LENGTH = inputMaxLength

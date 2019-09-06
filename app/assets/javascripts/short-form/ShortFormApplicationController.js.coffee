@@ -39,7 +39,7 @@ ShortFormApplicationController = (
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
-  $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
+  $scope.notEligibleErrorMessage = $translate.instant('error.not_eligible')
   $scope.eligibilityErrors = ShortFormApplicationService.eligibilityErrors
   $scope.communityEligibilityErrorMsg = []
   $scope.latinRegex = ShortFormApplicationService.latinRegex
@@ -430,7 +430,7 @@ ShortFormApplicationController = (
 
   $scope.setRentBurdenError = ->
     ShortFormApplicationService.invalidatePreferencesForm()
-    $scope.customInvalidMessage = $translate.instant('E3B_RENT_BURDEN_PREFERENCE.FORM_ERROR')
+    $scope.customInvalidMessage = $translate.instant('e3b_rent_burden_preference.form_error')
 
   $scope.clearRentBurdenError = (message) ->
     $scope.customInvalidMessage = null
@@ -530,7 +530,7 @@ ShortFormApplicationController = (
 
     if ShortFormApplicationService.householdDoesNotMeetAtLeastOneSeniorRequirement()
       age = { minAge: $scope.listing.Reserved_community_minimum_age }
-      $scope.eligibilityErrors = [$translate.instant('ERROR.SENIOR_ANYONE', age)]
+      $scope.eligibilityErrors = [$translate.instant('error.senior_anyone', age)]
       $scope.handleErrorState()
       return
 
@@ -581,9 +581,9 @@ ShortFormApplicationController = (
     AnalyticsService.trackFormError('Application', "household #{error}", analyticsOpts)
     # display household eligibility errors, there may be more than one so we `.push()`
     if error == 'too big'
-      $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_BIG"))
+      $scope.eligibilityErrors.push($translate.instant("error.household_too_big"))
     else if error == 'too small'
-      $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_SMALL"))
+      $scope.eligibilityErrors.push($translate.instant("error.household_too_small"))
 
   $scope._determineIncomeEligibilityErrors = (error = 'too low') ->
     # error message from salesforce seems to be blank when income == 0, so default to 'too low'
@@ -595,9 +595,9 @@ ShortFormApplicationController = (
     AnalyticsService.trackFormError('Application', "income #{error}", analyticsOpts)
     # display income eligibility errors
     if error == 'too low'
-      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+      message = $translate.instant("error.household_income_too_low")
     else if error == 'too high'
-      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
+      message = $translate.instant("error.household_income_too_high")
     $scope.eligibilityErrors = [message]
 
   $scope.checkIfPublicHousing = ->
@@ -623,7 +623,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.resetPreference('assistedHousing')
 
   $scope.listingLink = ->
-    linkText = $translate.instant('LABEL.ON_THE_LISTING')
+    linkText = $translate.instant('label.on_the_listing')
     link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
     {listingLink: "<a href='#{link}'>#{linkText}</a>"}
 
@@ -788,7 +788,7 @@ ShortFormApplicationController = (
     ).then (response) ->
       response.data
     .catch ->
-      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
+      alert($translate.instant('error.alert.bad_request'))
       $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
 
   $scope.reconcilePreviousAppOrSubmit = (previousAppData) ->
@@ -943,7 +943,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.applicationCompletionPercentage(application)
 
   $scope.$on 'auth:login-error', (ev, reason) ->
-    $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
+    $scope.accountError.messages.user = $translate.instant('sign_in.bad_credentials')
     $scope.handleErrorState()
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
