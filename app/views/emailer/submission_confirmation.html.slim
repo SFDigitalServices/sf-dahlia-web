@@ -1,20 +1,20 @@
 p
-  == t 'EMAILER.SUBMISSION_CONFIRMATION.THANKS_FOR_APPLYING_TO_LISTING', link: link_to(@listing_name, @listing_url)
+  == t '.thanks_for_applying_to_listing', link: link_to(@listing_name, @listing_url)
 p
-  = t 'EMAILER.SUBMISSION_CONFIRMATION.HERE_IS_YOUR_LOTTERY_NUMBER', lottery_number: @lottery_number
+  = t '.here_is_your_lottery_number', lottery_number: @lottery_number
 p
-  = t 'EMAILER.SUBMISSION_CONFIRMATION.WHAT_TO_EXPECT_NEXT'
+  = t '.what_to_expect_next'
   | :
   br
-  ==> t 'EMAILER.SUBMISSION_CONFIRMATION.LOTTERY_WILL_BE_HELD', lottery_date: @lottery_date, link: link_to(t('EMAILER.SUBMISSION_CONFIRMATION.ON_THE_LISTING'), @listing_url)
-  = t 'EMAILER.SUBMISSION_CONFIRMATION.APPLICANTS_WILL_BE_CONTACTED'
+  ==> t '.lottery_will_be_held', lottery_date: @lottery_date, link: link_to(t('.on_the_listing'), @listing_url)
+  = t '.applicants_will_be_contacted'
 p
   - if @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
-    == t 'EMAILER.SUBMISSION_CONFIRMATION.SHOULD_YOUR_APPLICATION_BE_CHOSEN_SALE', link: link_to(t('EMAILER.SUBMISSION_CONFIRMATION.REQUIRED_SUPPORTING_DOCUMENTS'), 'https://sfmohcd.org/after-homebuyer-lottery')
+    == t '.should_your_application_be_chosen_sale', link: link_to(t('.required_supporting_documents'), 'https://sfmohcd.org/after-homebuyer-lottery')
   - else
-    = t 'EMAILER.SUBMISSION_CONFIRMATION.SHOULD_YOUR_APPLICATION_BE_CHOSEN_RENTAL'
+    = t '.should_your_application_be_chosen_rental'
 p
-  = t 'EMAILER.SUBMISSION_CONFIRMATION.SEE_BELOW_FOR_CONTACT_INFORMATION'
+  = t '.see_below_for_contact_information'
 
 p
   = @listing.Leasing_Agent_Name
@@ -27,11 +27,11 @@ p
 
 - if @listing.Office_Hours || true
   p
-    = t 'EMAILER.SUBMISSION_CONFIRMATION.OFFICE_HOURS'
+    = t '.office_hours'
     | :
   == simple_format strip_tags(@listing.Office_Hours)
 
 p
-  => t 'EMAILER.SUBMISSION_CONFIRMATION.HOW_ARE_WE_DOING'
-  = link_to t('EMAILER.SUBMISSION_CONFIRMATION.WE_WOULD_LIKE_YOUR_FEEDBACK'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
+  => t '.how_are_we_doing'
+  = link_to t('.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
   | .

@@ -11,7 +11,7 @@ class Emailer < Devise::Mailer
   def account_update(record)
     load_salesforce_contact(record)
     @email = record.email
-    @subject = I18n.translate('EMAILER.ACCOUNT_UPDATE.SUBJECT')
+    @subject = I18n.translate('emailer.account_update.subject')
     sign_in_path = 'sign-in?redirectTo=dahlia.account-settings'
     @account_settings_url = "#{base_url}/#{sign_in_path}"
     mail(to: @email, subject: @subject) do |format|
@@ -111,7 +111,7 @@ class Emailer < Devise::Mailer
     @saved_application_url = "#{base_url}#{continue_draft_path}"
     format_app_due_date(listing)
     subject = I18n.translate(
-      'EMAILER.DRAFT_APPLICATION_SAVED.SUBJECT',
+      'emailer.draft_application_saved.subject',
       deadline: @deadline,
       listing_name: @listing_name,
     )
