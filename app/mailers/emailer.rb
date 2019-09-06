@@ -169,7 +169,7 @@ class Emailer < Devise::Mailer
       @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
     @subject = I18n.translate(
-      'EMAILER.SUBMISSION_CONFIRMATION.SUBJECT', listing_name: @listing_name
+      'emailer.submission_confirmation.subject', listing_name: @listing_name
     )
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'submission_confirmation' }

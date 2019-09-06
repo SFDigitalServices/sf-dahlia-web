@@ -1,8 +1,8 @@
 p
-  = t 'DEVISE.MAILER.CONFIRMATION_INSTRUCTIONS.THANK_YOU_MSG'
+  = t '.thank_you_msg'
 p
-  = t 'DEVISE.MAILER.CONFIRMATION_INSTRUCTIONS.CONFIRM_LINK_MSG'
+  = t '.confirm_link_msg'
 
 p
   - params = { confirmation_token: @token, config: message['client-config'].to_s, redirect_url: message['redirect-url'] }
-  = link_to t('DEVISE.MAILER.CONFIRMATION_INSTRUCTIONS.CONFIRM_ACCOUNT_LINK'), confirmation_url(@resource, params).html_safe
+  = link_to t('.confirm_account_link'), confirmation_url(@resource, params).html_safe
