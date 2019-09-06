@@ -14,8 +14,8 @@
       input#houshold_member_first_name(ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
 
       label.sr-only for="household_member_middle_name"
-        | {{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#household_member_middle_name(ng-model="householdMember.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-class="{ error: inputInvalid('middleName') }" ng-pattern="latinRegex" input-error)
+        | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+      input#household_member_middle_name(ng-model="householdMember.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" type="text" ng-class="{ error: inputInvalid('middleName') }" ng-pattern="latinRegex" input-error)
 
       label.sr-only for="household_member_last_name"
         | {{'label.last_name' | translate}}

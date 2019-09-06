@@ -78,7 +78,7 @@ accordion-heading.lead
           p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
             | {{'listings.occupancy_description_all_sro' | translate}}
           p.custom-counter_text ng-if="::$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL' | translate:"{ numberOfPeople: '2' }"}}
+            | {{'listings.occupancy_description_all_sro_plural' | translate:"{ numberOfPeople: '2' }"}}
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && $ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
             | {{'listings.occupancy_description_some_sro' | translate}}
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && $ctrl.parent.isRental($ctrl.parent.listing)"

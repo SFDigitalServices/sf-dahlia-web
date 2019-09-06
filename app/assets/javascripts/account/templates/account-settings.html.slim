@@ -87,8 +87,8 @@
                 | {{'error.first_name' | translate}}
 
               label.sr-only for="middleName"
-                | {{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-              input#middleName type="text" name="middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" ng-model="userAuth.contact.middleName" placeholder="{{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+              input#middleName type="text" name="middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" ng-model="userAuth.contact.middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" ng-change="displayChangeNotice('nameOrDOBChanged')"
 
               label.sr-only for="lastName"
                 | {{'label.last_name' | translate}}

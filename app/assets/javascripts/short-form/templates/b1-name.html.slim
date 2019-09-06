@@ -14,8 +14,8 @@
       input#applicant_first_name(ng-model="applicant.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
 
       label.sr-only for="applicantMiddleName"
-        | {{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#applicant_middle_name(ng-model="applicant.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
+        | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+      input#applicant_middle_name(ng-model="applicant.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
 
       label.sr-only for="applicantLastName"
         | {{'label.last_name' | translate}}

@@ -57,7 +57,7 @@
           templateUrl: 'pages/templates/housing-counselors.html',
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.HOUSING_COUNSELORS')
+          $translate('page_title.housing_counselors')
         ]
         counselors: ['SharedService', (SharedService) ->
           SharedService.getHousingCounselors()
@@ -74,7 +74,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.RENTAL_LISTINGS')
+          $translate('page_title.rental_listings')
         ]
     })
     .state('dahlia.listings-for-sale', {
@@ -88,7 +88,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.SALE_LISTINGS')
+          $translate('page_title.sale_listings')
         ]
     })
     .state('dahlia.listing', {
@@ -169,7 +169,7 @@
       ]
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.CREATE_ACCOUNT')
+          $translate('page_title.create_account')
         ]
     })
     .state('dahlia.short-form-application.create-account', {
@@ -195,7 +195,7 @@
       ]
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.CREATE_ACCOUNT')
+          $translate('page_title.create_account')
         ]
     })
     .state('dahlia.sign-in', {
@@ -236,7 +236,7 @@
       ]
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.SIGN_IN')
+          $translate('page_title.sign_in')
         ]
     })
     .state('dahlia.short-form-application.sign-in', {
@@ -260,7 +260,7 @@
       ]
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.SIGN_IN')
+          $translate('page_title.sign_in')
         ]
     })
     .state('dahlia.forgot-password', {
@@ -353,7 +353,7 @@
           $auth.validateUser()
         ]
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.MY_ACCOUNT')
+          $translate('page_title.my_account')
         ]
       onEnter: ['$stateParams', 'AnalyticsService', ($stateParams, AnalyticsService) ->
         if $stateParams.accountConfirmed
@@ -384,7 +384,7 @@
           AccountService.getMyApplications()
         ]
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.MY_APPLICATIONS')
+          $translate('page_title.my_applications')
         ]
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         if $stateParams.infoChanged
@@ -406,7 +406,7 @@
           ListingDataService.getFavoriteListings()
         ]
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.FAVORITES')
+          $translate('page_title.favorites')
         ]
     })
     .state('dahlia.welcome-chinese', {
@@ -416,7 +416,7 @@
           templateUrl: 'pages/templates/welcome-chinese.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.WELCOME_CHINESE')
+          $translate('page_title.welcome_chinese')
         ]
         counselors: ['SharedService', (SharedService) ->
           SharedService.getHousingCounselors()
@@ -429,7 +429,7 @@
           templateUrl: 'pages/templates/welcome-spanish.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.WELCOME_SPANISH')
+          $translate('page_title.welcome_spanish')
         ]
         counselors: ['SharedService', (SharedService) ->
           SharedService.getHousingCounselors()
@@ -442,7 +442,7 @@
           templateUrl: 'pages/templates/welcome-filipino.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.WELCOME_FILIPINO')
+          $translate('page_title.welcome_filipino')
         ]
         counselors: ['SharedService', (SharedService) ->
           SharedService.getHousingCounselors()
@@ -455,7 +455,7 @@
           templateUrl: 'pages/templates/disclaimer.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.DISCLAIMER')
+          $translate('page_title.disclaimer')
         ]
     })
     .state('dahlia.privacy', {
@@ -465,7 +465,7 @@
           templateUrl: 'pages/templates/privacy.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.PRIVACY')
+          $translate('page_title.privacy')
         ]
     })
     .state('dahlia.share', {
@@ -477,9 +477,9 @@
       resolve:
         $title: ['$title', '$translate', 'ListingDataService', ($title, $translate, ListingDataService) ->
           if !_.isEmpty(ListingDataService.listing)
-            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingDataService.listing.Name})
+            $translate('page_title.share_listing', {listing: ListingDataService.listing.Name})
           else
-            $translate('PAGE_TITLE.SHARE_LISTING', {listing: 'Listing'})
+            $translate('page_title.share_listing', {listing: 'Listing'})
         ]
 
     })
@@ -491,7 +491,7 @@
           controller: 'EligibilityEstimatorController'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.ELIGIBILITY_ESTIMATOR')
+          $translate('page_title.eligibility_estimator')
         ]
     })
     .state('dahlia.income-calculator', {
@@ -527,7 +527,7 @@
           templateUrl: 'pages/templates/get-assistance.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.GET_ASSISTANCE')
+          $translate('page_title.get_assistance')
         ]
     })
     .state('dahlia.additional-resources',{
@@ -537,7 +537,7 @@
           templateUrl: 'pages/templates/additional-resources.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
+          $translate('page_title.additional_resources')
         ]
     })
     .state('dahlia.document-checklist',{
@@ -549,7 +549,7 @@
           templateUrl: 'pages/templates/document-checklist.html'
       resolve:
         $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
+          $translate('page_title.document_checklist')
         ]
     })
     ##########################
@@ -567,7 +567,7 @@
             ListingDataService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
-          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
+          $translate('page_title.listing_application', {listing: listing.Name})
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -665,7 +665,7 @@
             return deferred.promise
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
-          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
+          $translate('page_title.listing_application', {listing: listing.Name})
         ]
     })
     # Short form: "You" section
@@ -1114,7 +1114,7 @@
         $title: [
           '$title', '$translate', 'application',
           ($title, $translate, application) ->
-            $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
+            $translate('page_title.listing_application', {listing: application.listing.Name})
         ]
     })
     .state('dahlia.short-form-application.continue-previous-draft', {

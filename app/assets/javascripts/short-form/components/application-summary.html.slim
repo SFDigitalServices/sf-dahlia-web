@@ -106,7 +106,7 @@ div ng-if="::$ctrl.prioritiesSelectedExists()"
   .app-inner
     review-summary-item label="{{'label.live_in_public_housing_or_hud' | translate}}" identifier="hasPublicHousing" ng-if="::$ctrl.application.hasPublicHousing"
       | {{::$ctrl.application.hasPublicHousing}}
-    review-summary-item ng-repeat="groupedAddress in $ctrl.application.groupedHouseholdAddresses" identifier="groupedAddress-{{$index}}" label="{{'LABEL.RENT_AT_ADDRESS' | translate: $ctrl.addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: $ctrl.membersTranslateVariable(groupedAddress.members)}}"
+    review-summary-item ng-repeat="groupedAddress in $ctrl.application.groupedHouseholdAddresses" identifier="groupedAddress-{{$index}}" label="{{'label.rent_at_address' | translate: $ctrl.addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'label.for_user' | translate: $ctrl.membersTranslateVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
       span ng-if="!groupedAddress.monthlyRent"
