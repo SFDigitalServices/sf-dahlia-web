@@ -60,7 +60,8 @@ module.exports = function(grunt) {
         'app/views/layouts/application.html.slim',
         'app/views/devise/mailer/*.html.slim',
         'app/views/emailer/*.html.slim',
-        'app/views/layouts/email.html.slim'
+        'app/views/layouts/email.html.slim',
+        'app/mailers/**/*.rb',
       ],
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
@@ -70,10 +71,12 @@ module.exports = function(grunt) {
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
          'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         // email template regexes below
          ' t \'([A-Z\.\-\_]*)\'',
          ' t\\(\'([A-Z\.\-\_]*)\'',
          '\\(t\\(\'([A-Z\.\-\_]*)\'',
          '#{t\\(\'([A-Z\.\-\_]*)\'',
+         'I18n\.translate\\(\n?[ ]*\'([A-Z\.\-\_]*)\'', // emailer.rb usages
          'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
@@ -122,7 +125,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
-    // 'i18nextract',
+    'i18nextract',
     // 'json_remove_fields',
     'sortJSON',
   ]);
