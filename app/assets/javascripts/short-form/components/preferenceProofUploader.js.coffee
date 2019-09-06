@@ -82,14 +82,14 @@ angular.module('dahlia.components')
       @validateFileNameLength = (file) ->
         if file
           if file.name.length > FileUploadService.maxFileNameLength
-            @proofDocument.error = @)
+            @proofDocument.error = @flagForI18n('error.file_name_too_long')
           else
             if file.size > FileUploadService.maxFileSizeBytes
-              @proofDocument.error = @)
+              @proofDocument.error = @flagForI18n('error.file_upload')
             else
               true
         else
-          @proofDocument.error = @)
+          @proofDocument.error = @flagForI18n('error.file_missing')
 
       @uploadProofFile = (file) =>
         opts =
