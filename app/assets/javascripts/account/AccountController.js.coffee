@@ -55,7 +55,7 @@ AccountController = (
 
   $scope.handleErrorState = ->
     if !$scope.accountError.messages.user
-      $scope.accountError.messages.user = $translate.instant('ERROR.FORM_SUBMISSION')
+      $scope.accountError.messages.user = $translate.instant('error.form_submission')
     # show error alert
     $scope.hideAlert = false
     el = angular.element(document.getElementById('form-wrapper'))
@@ -147,7 +147,7 @@ AccountController = (
     if (reason.error == 'not_confirmed')
       AccountService.openConfirmEmailModal(reason.email)
     else
-      $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
+      $scope.accountError.messages.user = $translate.instant('sign_in.bad_credentials')
       $scope.handleErrorState()
 
   $scope.updatePassword = (type) ->
@@ -180,25 +180,25 @@ AccountController = (
     AccountService.lockedFields[field]
 
   $scope.emailConfirmInstructions = ->
-    $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
+    $translate.instant('create_account.email_confirm_instructions')
 
   $scope.confirmEmailSentMessage = ->
     interpolate = { email: $scope.createdAccount.email }
-    $translate.instant('CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO', interpolate)
+    $translate.instant('confirm_account.email_has_been_sent_to', interpolate)
 
   $scope.confirmEmailExpiredMessage = ->
     interpolate = { email: $scope.createdAccount.email }
-    $translate.instant('CONFIRM_ACCOUNT.EXPIRED_EMAIL_SENT_TO', interpolate)
+    $translate.instant('confirm_account.expired_email_sent_to', interpolate)
 
   $scope.chooseDifferentEmailMessage = ->
-    $translate.instant('CREATE_ACCOUNT.CHOOSE_DIFF_EMAIL')
+    $translate.instant('create_account.choose_diff_email')
 
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true
     $scope.resentConfirmationMessage = null
     AccountService.resendConfirmationEmail().then( ->
       $scope.resendDisabled = false
-      $scope.resentConfirmationMessage = $translate.instant('SIGN_IN.RESENT_CONFIRMATION_MESSAGE')
+      $scope.resentConfirmationMessage = $translate.instant('sign_in.resent_confirmation_message')
     ).catch( ->
       $scope.resendDisabled = false
     )
@@ -229,7 +229,7 @@ AccountController = (
     angular.copy({}, $scope.createdAccount)
 
   $scope.informationChangeNotice = ->
-    $translate.instant('ACCOUNT_SETTINGS.INFORMATION_CHANGE_NOTICE')
+    $translate.instant('account_settings.information_change_notice')
 
   $scope.displayChangeNotice = (attributesChanged) ->
     AccountService.clearAccountMessages()
@@ -278,9 +278,9 @@ AccountController = (
 
   $scope.passwordConfirmationError = () ->
     if _.isEmpty($scope.userAuth.user.password_confirmation)
-      $translate.instant('LABEL.FIELD_REQUIRED')
+      $translate.instant('label.field_required')
     else
-      $translate.instant('ERROR.PASSWORD_CONFIRMATION')
+      $translate.instant('error.password_confirmation')
 
 AccountController.$inject = [
   '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',

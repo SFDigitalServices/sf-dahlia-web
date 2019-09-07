@@ -1,11 +1,5 @@
 # for previewing emailer in browser
 class EmailerPreview < ActionMailer::Preview
-  # Set the value of the locale to preview all emails in
-  # a specific language (:es, :zh, :tl, :en)
-  def locale
-    :es || I18n.default_locale
-  end
-
   def submission_confirmation
     params = {
       locale: locale,
@@ -85,5 +79,11 @@ class EmailerPreview < ActionMailer::Preview
       member: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
       applicant: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
     }
+  end
+
+  # Set the value of the locale to preview all emails in
+  # a specific language (:es, :zh, :tl, :en)
+  def locale
+    :es || I18n.default_locale
   end
 end

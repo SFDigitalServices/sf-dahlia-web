@@ -27,14 +27,14 @@ angular.module('dahlia.components')
       @memberSelectorLabel = ''
 
       @initVariables = =>
-        @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
+        @buttonLabel ?= $translate.instant('label.upload_proof_of_preference')
         prefs = @application.preferences
         if @hasProof
-          @memberSelectorLabel = $translate.instant('LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME')
+          @memberSelectorLabel = $translate.instant('label.applicant_preferences_document_name')
           prefs.documents[@preference] ?= {}
           @proofDocument = prefs.documents[@preference]
         else
-          @memberSelectorLabel = $translate.instant('LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER')
+          @memberSelectorLabel = $translate.instant('label.applicant_preferences_household_member')
         @eligibleMembers = ShortFormApplicationService.eligibleMembers(@preference)
         @proofOptions = ShortFormHelperService.proofOptions(@preference)
 

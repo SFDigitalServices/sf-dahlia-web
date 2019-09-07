@@ -9,16 +9,16 @@ section.app-container
           .app-card.form-card
             .app-inner.leader
               h2.app-card_question
-                | {{'CONTINUE_PREVIOUS_DRAFT.TITLE' | translate}}
+                | {{'continue_previous_draft.title' | translate}}
               p.form-note.margin-bottom
-                | {{'CONTINUE_PREVIOUS_DRAFT.DESCRIPTION' | translate}}
+                | {{'continue_previous_draft.description' | translate}}
 
             application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()"
 
             .button-pager
               .button-pager_row.primary
                 button#continue-previous-draft.button.primary type="button" ui-sref="dahlia.short-form-application.contact" ng-click="trackContinuePreviousDraft()"
-                  | {{'CONTINUE_PREVIOUS_DRAFT.CONTINUE_WITH_THESE_DETAILS' | translate}}
+                  | {{'continue_previous_draft.continue_with_these_details' | translate}}
               .button-pager_row
                 button#start-from-scratch.button.button-link.button-lined.small-text-center.expand-small type="button" ng-click="resetAndReplaceApp()"
-                  | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}
+                  | {{'b0_autofill_preview.start_from_scratch' | translate}}

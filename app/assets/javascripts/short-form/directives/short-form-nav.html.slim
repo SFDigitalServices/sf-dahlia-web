@@ -1,6 +1,6 @@
 .app-header.app-card.form-card ng-show="hasNav()"
   header.app-card_header
-    h1.app-card_title translate="T.APPLICATION_FOR_LISTING" translate-value-listing-name="{{listing.Name}}"
+    h1.app-card_title translate="t.application_for_listing" translate-value-listing-name="{{listing.Name}}"
   .app-card_nav
     ol.progress-nav
       li.progress-nav_item ng-repeat="section in sections track by $index" ng-class="{active: isActiveSection(section), disabled: sectionDisabled(section, $index)}" ng-disabled="sectionDisabled(section, $index)"

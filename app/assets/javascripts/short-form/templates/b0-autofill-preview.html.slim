@@ -1,16 +1,16 @@
 .app-card.form-card
   .app-inner.leader
     h2.app-card_question
-      | {{'B0_AUTOFILL_PREVIEW.TITLE' | translate}}
+      | {{'b0_autofill_preview.title' | translate}}
     p.form-note.margin-bottom
-      | {{'B0_AUTOFILL_PREVIEW.DESCRIPTION' | translate}}
+      | {{'b0_autofill_preview.description' | translate}}
 
   application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()"
 
   .button-pager
     .button-pager_row.primary
       button.button.primary ng-click="startAutofilledApp()"
-        | {{'B0_AUTOFILL_PREVIEW.START_WITH_AUTOFILL' | translate}}
+        | {{'b0_autofill_preview.start_with_autofill' | translate}}
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ng-click="resetAndStartNewApp()"
-        | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}
+        | {{'b0_autofill_preview.start_from_scratch' | translate}}

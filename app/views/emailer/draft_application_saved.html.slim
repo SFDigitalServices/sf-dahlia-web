@@ -1,10 +1,10 @@
 p
-  == t '.heres_link_to_complete', listing_name: @listing_name
+  == t 'emailer.draft_application_saved.heres_link_to_complete', listing_name: @listing_name
   br
-  => link_to t('.complete_your_application'), @saved_application_url
+  => link_to t('emailer.draft_application_saved.complete_your_application'), @saved_application_url
 
 p
-  == t '.applications_are_due_by', deadline: @deadline
+  == t 'emailer.draft_application_saved.applications_are_due_by', deadline: @deadline
 
 p
-  == t '.reminder_do_not_submit_duplicate'
+  == t 'emailer.draft_application_saved.reminder_do_not_submit_duplicate'

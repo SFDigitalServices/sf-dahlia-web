@@ -8,28 +8,28 @@ pageslide ps-class="ng-pageslide hide-for-print" ps-open="showNavMobile" ps-side
   ul.nav-mobile.skiptranslate
     li ng-if="!showSaleListings"
       a.nav-mobile-focus ui-sref="dahlia.listings-for-rent" ng-blur="trapFocus($event)"
-        | {{ "NAV.BROWSE_PROPERTIES" | translate}}
+        | {{ "nav.browse_properties" | translate}}
     li ng-if-start="showSaleListings"
       a.nav-mobile-focus ui-sref="dahlia.listings-for-rent" ng-blur="trapFocus($event)"
-        | {{ "NAV.RENT" | translate}}
+        | {{ "nav.rent" | translate}}
     li ng-if-end="true"
       a.nav-mobile-focus ui-sref="dahlia.listings-for-sale" ng-blur="trapFocus($event)"
-        | {{ "NAV.BUY" | translate}}
+        | {{ "nav.buy" | translate}}
     li
       a.nav-mobile-focus ui-sref="dahlia.favorites" ng-blur="trapFocus($event)"
-        | {{ "NAV.MY_FAVORITES" | translate}}
+        | {{ "nav.my_favorites" | translate}}
     li
       a.nav-mobile-focus ui-sref="dahlia.get-assistance" ng-blur="trapFocus($event)"
-        | {{ "NAV.GET_ASSISTANCE" | translate}}
+        | {{ "nav.get_assistance" | translate}}
     li ng-if="!loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.sign-in" ng-blur="trapFocus($event)"
-        | {{ "NAV.SIGN_IN" | translate}}
+        | {{ "nav.sign_in" | translate}}
     li ng-if="loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.my-applications" ng-blur="trapFocus($event)"
-        | {{ "NAV.MY_APPLICATIONS" | translate}}
+        | {{ "nav.my_applications" | translate}}
     li ng-if="loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.account-settings" ng-blur="trapFocus($event)"
-        | {{ "NAV.ACCOUNT_SETTINGS" | translate}}
+        | {{ "nav.account_settings" | translate}}
     li ng-if="loggedIn()"
       a.nav-mobile-focus ng-click="signOut()" ng-blur="trapFocus($event)"
-        | {{ "NAV.SIGN_OUT" | translate}}
+        | {{ "nav.sign_out" | translate}}

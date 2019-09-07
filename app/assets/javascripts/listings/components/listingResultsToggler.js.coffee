@@ -22,26 +22,26 @@ angular.module('dahlia.components')
       switch @sectionName
         when 'lotteryResults'
           @text = {
-            title: $translate.instant('LISTINGS.LOTTERY_RESULTS.TITLE')
-            subtitle: $translate.instant('LISTINGS.LOTTERY_RESULTS.SUBTITLE')
-            showResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.SHOW')
-            hideResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.HIDE')
-            noResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.NO_RESULTS')
+            title: $translate.instant('listings.lottery_results.title')
+            subtitle: $translate.instant('listings.lottery_results.subtitle')
+            showResults: $translate.instant('listings.lottery_results.show')
+            hideResults: $translate.instant('listings.lottery_results.hide')
+            noResults: $translate.instant('listings.lottery_results.no_results')
           }
         when 'notMatched'
           @text = {
-            title: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.TITLE')
-            subtitle: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.SUBTITLE')
-            showResults: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.SHOW')
-            hideResults: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.HIDE')
+            title: $translate.instant('listings.additional_listings.title')
+            subtitle: $translate.instant('listings.additional_listings.subtitle')
+            showResults: $translate.instant('listings.additional_listings.show')
+            hideResults: $translate.instant('listings.additional_listings.hide')
           }
         when 'upcomingLotteries'
           @text = {
-            title: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.TITLE')
-            subtitle: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.SUBTITLE')
-            showResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.SHOW')
-            hideResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.HIDE')
-            noResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.NO_RESULTS')
+            title: $translate.instant('listings.upcoming_lotteries.title')
+            subtitle: $translate.instant('listings.upcoming_lotteries.subtitle')
+            showResults: $translate.instant('listings.upcoming_lotteries.show')
+            hideResults: $translate.instant('listings.upcoming_lotteries.hide')
+            noResults: $translate.instant('listings.upcoming_lotteries.no_results')
           }
 
     @toggleListings = (e) ->

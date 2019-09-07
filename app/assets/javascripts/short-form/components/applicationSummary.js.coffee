@@ -35,25 +35,25 @@ angular.module('dahlia.components')
           currentDOB != oldDOB
 
       ctrl.preapprovalLetterAttached = ->
-        $translate.instant('LABEL.FILE_ATTACHED', {file: $translate.instant('LABEL.PREAPPROVAL_LETTER')})
+        $translate.instant('label.file_attached', {file: $translate.instant('label.preapproval_letter')})
       ctrl.verificationLetterAttached = ->
-        $translate.instant('LABEL.FILE_ATTACHED', {file: $translate.instant('LABEL.VERIFICATION_LETTER')})
+        $translate.instant('label.file_attached', {file: $translate.instant('label.verification_letter')})
 
       ctrl.prioritiesSelectedExists = ->
         _.isEmpty(ctrl.application.adaPrioritiesSelected)
 
       ctrl.applicationVouchersSubsidies = ->
         if ctrl.application.householdVouchersSubsidies == 'Yes'
-          $translate.instant('T.YES')
+          $translate.instant('t.yes')
         else
-          $translate.instant('T.NONE')
+          $translate.instant('t.none')
 
       ctrl.applicationIncomeAmount = ->
         income = parseFloat(ctrl.application.householdIncome.incomeTotal)
         if ctrl.application.householdIncome.incomeTimeframe == 'per_month'
-          phrase = $translate.instant('T.PER_MONTH')
+          phrase = $translate.instant('t.per_month')
         else
-          phrase = $translate.instant('T.PER_YEAR')
+          phrase = $translate.instant('t.per_year')
 
         formatted_income = $filter('currency')(income, '$', 2)
         "#{formatted_income} #{phrase}"

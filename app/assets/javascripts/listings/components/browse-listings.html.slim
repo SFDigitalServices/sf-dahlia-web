@@ -22,13 +22,13 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
           ' at <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ $ctrl.eligibilityFilters.income_timeframe | incomeTimeframe }}
         .results-header_actions
           a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator({listingsType: $ctrl.tenureType})"
-            | {{'LABEL.EDIT_ELIGIBILITY' | translate}}
+            | {{'label.edit_eligibility' | translate}}
             span.ui-icon.ui-static.ui-small.i-color
               svg
                 use xlink:href="#i-arrow-down"
 
           button.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="$ctrl.clearEligibilityFilters()"
-            | {{'LABEL.CLEAR' | translate}}
+            | {{'label.clear' | translate}}
             span.ui-icon.ui-static.ui-small.i-color
               svg
                 use xlink:href="#i-close"
@@ -38,7 +38,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
   .row
     .large-12.columns
       .block--short.bg-dust
-        h2.t-delta.t-serif.c-oil.no-margin translate="LISTINGS.NO_OPEN_LISTINGS"
+        h2.t-delta.t-serif.c-oil.no-margin translate="listings.no_open_listings"
 
 / Listings:
 /   * Open (doesn't have a header)
@@ -59,7 +59,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
       .large-12.columns
         header.status-header.status--not-matched
           h2.status-header_title.gamma
-            | {{'LISTINGS.NO_MATCHES' | translate}}
+            | {{'listings.no_matches' | translate}}
           p.margin-bottom--half
             | {{ $ctrl.noMatchesLabel() }}
           p.t-small.c-steel.no-margin
@@ -78,9 +78,9 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
                 use xlink:href="#i-check"
           hgroup.status-header_group
             h2.status-header_title
-              | {{'LABEL.MATCHED' | translate}}
+              | {{'label.matched' | translate}}
             p.no-margin
-              | {{'LISTINGS.YOU_MAY_BE_ELIGIBLE' | translate}}
+              | {{'listings.you_may_be_eligible' | translate}}
 
     / Listings: Open Matched Listings
     .row.margin-top--2x

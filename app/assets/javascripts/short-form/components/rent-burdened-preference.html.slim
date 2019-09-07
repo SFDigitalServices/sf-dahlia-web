@@ -4,40 +4,40 @@
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
 
     p.form-label.caps
-      | 1. {{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}
+      | 1. {{'label.upload_copy_of_lease' | translate}}
 
     / proof uploader
-    preference-proof-uploader(application="$ctrl.application" preference="rentBurden" proof-type="Copy of Lease" rent-burden-type="lease" address="$ctrl.address" proof-document="$ctrl.leaseDocument" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}")
+    preference-proof-uploader(application="$ctrl.application" preference="rentBurden" proof-type="Copy of Lease" rent-burden-type="lease" address="$ctrl.address" proof-document="$ctrl.leaseDocument" button-label="{{'label.upload_copy_of_lease' | translate}}")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
     p.form-label.caps
-      | 2. {{'LABEL.UPLOAD_PROOF_OF_RENT_PAYMENT' | translate}}
-    p.form-note.margin-bottom translate="LABEL.UPLOAD_RENT_DESCRIPTION" translate-value-rent="{{$ctrl.monthlyRent | currency}}"
+      | 2. {{'label.upload_proof_of_rent_payment' | translate}}
+    p.form-note.margin-bottom translate="label.upload_rent_description" translate-value-rent="{{$ctrl.monthlyRent | currency}}"
 
     / repeater for all the UPLOADED files
-    preference-proof-uploader(ng-repeat="file in $ctrl.uploadedRentFiles" proof-document="file" application="$ctrl.application" preference="rentBurden" rent-burden-type="rent" address="$ctrl.address" proof-options="$ctrl.proofOptions" button-label="{{'LABEL.UPLOAD_PROOF_OF_RENT_PAYMENT' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" uploaded="true" after-delete="$ctrl.afterDelete()")
+    preference-proof-uploader(ng-repeat="file in $ctrl.uploadedRentFiles" proof-document="file" application="$ctrl.application" preference="rentBurden" rent-burden-type="rent" address="$ctrl.address" proof-options="$ctrl.proofOptions" button-label="{{'label.upload_proof_of_rent_payment' | translate}}" proof-option-label="{{'label.preference_proof_documents' | translate}}" uploaded="true" after-delete="$ctrl.afterDelete()")
 
     / uploader for the "yet to be uploaded" file
-    preference-proof-uploader(application="$ctrl.application" preference="rentBurden" rent-burden-type="rent" address="$ctrl.address" proof-options="$ctrl.proofOptions" proof-document="$ctrl.newRentDocument" button-label="{{'LABEL.UPLOAD_PROOF_OF_RENT_PAYMENT' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" after-upload="$ctrl.afterUpload()" ng-if="$ctrl.showRentUploader()")
+    preference-proof-uploader(application="$ctrl.application" preference="rentBurden" rent-burden-type="rent" address="$ctrl.address" proof-options="$ctrl.proofOptions" proof-document="$ctrl.newRentDocument" button-label="{{'label.upload_proof_of_rent_payment' | translate}}" proof-option-label="{{'label.preference_proof_documents' | translate}}" after-upload="$ctrl.afterUpload()" ng-if="$ctrl.showRentUploader()")
 
     .form-group.text-center.margin-top--2x ng-if="$ctrl.members.length > 1 && $ctrl.uploadedRentFiles.length == 0"
       button.button.has-icon.secondary.disabled disabled="disabled" type="button"
         span.ui-icon.ui-medium
           svg
             use xlink:href="#i-plus"
-        | {{'LABEL.UPLOAD_ADDITIONAL_PROOF' | translate}}
+        | {{'label.upload_additional_proof' | translate}}
 
     .form-group.bg-snow.input-expand.padding-top ng-if="$ctrl.showAdditionalUploadButton()"
       label.form-label.caps.margin-bottom
-        | {{'E3B_RENT_BURDEN_PREFERENCE.UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS' | translate}}
+        | {{'e3b_rent_burden_preference.upload_another_document_at_this_address' | translate}}
       .form-group.text-center
         button#upload-additional-proof.button.has-icon.secondary type="button" ng-click="$ctrl.additionalUploadActivated = true"
           span.ui-icon.ui-medium
             svg
               use xlink:href="#i-plus"
-          | {{'LABEL.UPLOAD_ADDITIONAL_PROOF' | translate}}
+          | {{'label.upload_additional_proof' | translate}}
 
     .form-group.text-center ng-if="$ctrl.additionalUploadActivated"
       p.margin-top--half
         button.button-link.t-small.button-lined type="button" ng-click="$ctrl.additionalUploadActivated = false"
-          | {{'LABEL.CANCEL_UPLOAD' | translate}}
+          | {{'label.cancel_upload' | translate}}

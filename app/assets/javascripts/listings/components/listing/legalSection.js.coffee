@@ -9,7 +9,7 @@ angular.module('dahlia.components')
 
     @realtorCommissionMessage = (listing) ->
       if listing.Realtor_Commission_Unit == 'percent'
-        $translate.instant("LISTINGS.REALTOR_COMMISSION_PERCENTAGE", percentage: listing.Realtor_Commission_Amount)
+        $translate.instant("listings.realtor_commission_percentage", percentage: listing.Realtor_Commission_Amount)
       else
         " $#{listing.Realtor_Commission_Amount}"
 

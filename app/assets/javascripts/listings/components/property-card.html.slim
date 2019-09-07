@@ -35,15 +35,15 @@
         | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
         br.show-for-small-only
         | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
-      span.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
+      span.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="listings.reserved_community_building" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
 
   .property-card_content
     .property-card_stats
       h2.t-base.t-alt-sans.t-semi.margin-bottom
-        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="::!$ctrl.listing.hasWaitlist"
-        span translate="LISTINGS.OPEN_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
-        span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
-      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{::$ctrl.priorityTypeNames($ctrl.listing)}}" ng-if="::$ctrl.priorityTypes($ctrl.listing).length"
+        span translate="listings.available_units" ng-if="::!$ctrl.listing.hasWaitlist"
+        span translate="listings.open_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
+        span translate="listings.available_and_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
+      p.property-card_subheader translate="listings.includes_priority_units" translate-value-priorities="{{::$ctrl.priorityTypeNames($ctrl.listing)}}" ng-if="::$ctrl.priorityTypes($ctrl.listing).length"
 
       // -- Unit Summary Table(s)
       / General

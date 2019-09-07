@@ -1,8 +1,8 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'B1A_WELCOME_BACK.TITLE' | translate}}
-    p.form-note.margin-bottom translate="B1A_WELCOME_BACK.YOU_ALREADY_HAVE_AN_ACCOUNT"
+      | {{'b1a_welcome_back.title' | translate}}
+    p.form-note.margin-bottom translate="b1a_welcome_back.you_already_have_an_account"
 
   alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
@@ -13,9 +13,9 @@
 
       .form-group
         p.t-small.c-steel.text-center.padding-top.no-margin
-          input.button.no-margin.primary#sign-in type="button" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN_TO_CONTINUE' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"
+          input.button.no-margin.primary#sign-in type="button" data-event="gtm-sign-in" value="{{'label.sign_in_to_continue' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"
 
   .app-inner.inset
     .button-pager
       a#confirm_no_account.button.secondary.radius ui-sref="dahlia.short-form-application.contact"
-        | {{'B1A_WELCOME_BACK.CONTINUE_WITHOUT_SIGNING_IN' | translate}}
+        | {{'b1a_welcome_back.continue_without_signing_in' | translate}}

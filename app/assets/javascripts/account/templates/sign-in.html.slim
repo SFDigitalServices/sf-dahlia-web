@@ -20,7 +20,7 @@
           span.alert-icon.ui-icon.ui-medium.ng-scope
             svg
               use xlink:href="#i-info"
-          p.alert-body translate="SIGN_IN.LOGGED_OUT_DUE_TO_INACTIVITY"
+          p.alert-body translate="sign_in.logged_out_due_to_inactivity"
 
 
         .dash-card-inner.inset.border-bottom
@@ -29,12 +29,12 @@
 
           .form-group
             p.t-small.c-steel.text-center.padding-top.no-margin
-              input.button.no-margin.primary#sign-in type="submit" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN' | translate}}" ng-disabled="submitDisabled"
+              input.button.no-margin.primary#sign-in type="submit" data-event="gtm-sign-in" value="{{'label.sign_in' | translate}}" ng-disabled="submitDisabled"
         footer.dash-header
           h2.dash-title
-            | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
+            | {{'sign_in.dont_have_account' | translate}}
           p.t-small.c-steel
             a.button.no-margin ui-sref="dahlia.short-form-application.create-account" data-event="gtm-create-account" ng-if="rememberedShortFormState"
-              | {{'LABEL.CREATE_ACCOUNT' | translate}}
+              | {{'label.create_account' | translate}}
             a.button.no-margin ui-sref="dahlia.create-account" data-event="gtm-create-account" ng-if="!rememberedShortFormState"
-              | {{'LABEL.CREATE_ACCOUNT' | translate}}
+              | {{'label.create_account' | translate}}

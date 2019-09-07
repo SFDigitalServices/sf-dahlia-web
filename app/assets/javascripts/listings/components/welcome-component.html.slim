@@ -2,23 +2,23 @@ section.splash-header.bg-image
   .row
     header.hero-header.text-center
       h1.hero-title.c-white
-        | {{'WELCOME.TITLE' | translate}}
+        | {{'welcome.title' | translate}}
       .row
         .medium-9.medium-centered.columns
           p.delta.t-sans.t-shadow.c-white ng-if="$ctrl.parent.openListings.length == 0"
-            | {{'WELCOME.ALL_APPLICATION_CLOSED' | translate}}
+            | {{'welcome.all_application_closed' | translate}}
       .row
         .medium-6.medium-centered.columns
           .medium-6.columns ng-class="{'small-centered': !$ctrl.parent.showSaleListings}"
             a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
-              | {{'WELCOME.SEE_RENTAL_LISTINGS' | translate}}
+              | {{'welcome.see_rental_listings' | translate}}
           .medium-6.columns ng-if="$ctrl.parent.showSaleListings"
             a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
-              | {{'WELCOME.SEE_SALE_LISTINGS' | translate}}
+              | {{'welcome.see_sale_listings' | translate}}
 .row
   .columns
     .welcome-block.text-center
       h2.delta.t-alt-sans.c-oil
-        | {{'WELCOME.NEW_LISTING_EMAIL_ALERT' | translate}}
+        | {{'welcome.new_listing_email_alert' | translate}}
       a.button.radius.margin-bottom-none href="{{$ctrl.parent.listingEmailAlertUrl}}"
-        | {{'WELCOME.SIGN_UP_TODAY' | translate}}
+        | {{'welcome.sign_up_today' | translate}}

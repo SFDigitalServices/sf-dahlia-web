@@ -46,19 +46,19 @@ do ->
 
       it 'should return an error if file is missing', ->
         ctrl.validateFile(null)
-        expect(fakeBindings.document.error).toEqual('ERROR.FILE_MISSING')
+        expect(fakeBindings.document.error).toEqual('error.file_missing')
 
       it 'should return an error if file is too big', ->
         tooBigFile = angular.copy(fakeFile)
         tooBigFile.size = fakeFileUploadService.maxFileSizeBytes + 1
         ctrl.validateFile(tooBigFile)
-        expect(fakeBindings.document.error).toEqual('ERROR.FILE_UPLOAD')
+        expect(fakeBindings.document.error).toEqual('error.file_upload')
 
       it 'should return an error if file name is too long', ->
         tooLongNameFile = angular.copy(fakeFile)
         tooLongNameFile.name = _.repeat('a', fakeFileUploadService.maxFileNameLength + 1)
         ctrl.validateFile(tooLongNameFile)
-        expect(fakeBindings.document.error).toEqual('ERROR.FILE_NAME_TOO_LONG')
+        expect(fakeBindings.document.error).toEqual('error.file_name_too_long')
 
     describe 'hasFile', ->
       it 'should return true if there is a file', ->

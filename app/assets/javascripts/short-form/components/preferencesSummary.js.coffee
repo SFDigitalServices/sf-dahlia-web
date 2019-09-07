@@ -28,8 +28,8 @@ angular.module('dahlia.components')
       ctrl.fileAttachmentsForRentBurden = ->
         if ctrl.application.status.match(/submitted/i)
           return [
-            subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
-            boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: 'Lease and rent proof' })
+            subLabel: $translate.instant('label.for_your_household')
+            boldSubLabel: $translate.instant('label.file_attached', { file: 'Lease and rent proof' })
           ]
         labels = []
         # this one is a little bit complicated because it has to sort through each set of rentBurden
@@ -40,21 +40,21 @@ angular.module('dahlia.components')
             file.proofOption if file.file
           proofOptions = $filter('listify')(_.concat(proofOptions, rentOptions))
           labels.push({
-            subLabel: $translate.instant('LABEL.FOR_USER', user: address)
-            boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
+            subLabel: $translate.instant('label.for_user', user: address)
+            boldSubLabel: $translate.instant('label.file_attached', { file: proofOptions })
           })
         return labels
 
       ctrl.certificateNumberForPreference = (pref_type) ->
         certificateNumber = ctrl.application.preferences["#{pref_type}_certificateNumber"]
         return '' unless certificateNumber
-        $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
+        $translate.instant('label.certificate_number') + ': ' + certificateNumber
 
       ctrl.fileAttachmentForPreference = (pref_type) ->
         proof = ctrl.application.preferences.documents[pref_type]
         return '' unless proof && proof.proofOption
         interpolate = { file: proof.proofOption }
-        $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+        $translate.instant('label.file_attached', interpolate)
 
       ctrl.claimedCustomPreference = (preference) ->
         !! ShortFormApplicationService.preferences[preference.listingPreferenceID]
@@ -72,15 +72,15 @@ angular.module('dahlia.components')
 
             # Get the display name of this pref
             displayNameTranslateKey = switch key
-              when 'certOfPreference' then flagForI18n('E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE')
-              when 'displaced' then flagForI18n('E7_PREFERENCES_PROGRAMS.DISPLACED')
-              when 'neighborhoodResidence' then flagForI18n('E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME')
-              when 'antiDisplacement' then flagForI18n('E2B_ADHP_PREFERENCE.PREFERENCE.NAME')
-              when 'liveInSf' then flagForI18n('E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE')
-              when 'workInSf' then flagForI18n('E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE')
-              when 'assistedHousing' then flagForI18n('E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE')
-              when 'rentBurden' then flagForI18n('E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE')
-              when 'aliceGriffith' then flagForI18n('PREFERENCES.ALICE_GRIFFITH.TITLE')
+              when 'certOfPreference' then flagForI18n('e7_preferences_programs.cert_of_preference')
+              when 'displaced' then flagForI18n('e7_preferences_programs.displaced')
+              when 'neighborhoodResidence' then flagForI18n('e2a_neighborhood_preference.preference.name')
+              when 'antiDisplacement' then flagForI18n('e2b_adhp_preference.preference.name')
+              when 'liveInSf' then flagForI18n('e2c_live_work_preference.live_sf_preference.title')
+              when 'workInSf' then flagForI18n('e2c_live_work_preference.work_sf_preference.title')
+              when 'assistedHousing' then flagForI18n('e3a_assisted_housing_preference.preference.title')
+              when 'rentBurden' then flagForI18n('e3b_rent_burden_preference.rent_burden_preference')
+              when 'aliceGriffith' then flagForI18n('preferences.alice_griffith.title')
 
             # If we didn't find a display name for this key, skip over it
             return unless displayNameTranslateKey
@@ -94,7 +94,7 @@ angular.module('dahlia.components')
               boldSubLabel = null
             else
               rentBurdenSubLabels = null
-              subLabel = $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(key))
+              subLabel = $translate.instant('label.for_user', ctrl.householdMemberForPreference(key))
 
               if ['certOfPreference', 'displaced'].indexOf(key) >= 0
                 boldSubLabel = ctrl.certificateNumberForPreference(key)
@@ -120,7 +120,7 @@ angular.module('dahlia.components')
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
-              subLabel: $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(pref.listingPreferenceID))
+              subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
               boldSubLabel: null,
               rentBurdenSubLabels: null
             }
@@ -134,7 +134,7 @@ angular.module('dahlia.components')
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
-              subLabel: $translate.instant('LABEL.FOR_USER', ctrl.householdMemberForPreference(pref.listingPreferenceID))
+              subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
               boldSubLabel: ctrl.fileAttachmentForPreference(pref.listingPreferenceID),
               rentBurdenSubLabels: null
             }

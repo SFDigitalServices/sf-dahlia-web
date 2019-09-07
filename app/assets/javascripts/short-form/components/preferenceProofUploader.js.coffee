@@ -25,7 +25,7 @@ angular.module('dahlia.components')
         ShortFormApplicationService.inputInvalid(fieldName)
 
       @listing = ShortFormApplicationService.listing
-      @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
+      @buttonLabel ?= $translate.instant('label.upload_proof_of_preference') unless @buttonLabel
 
       @$onChanges = =>
         if @rentBurdenType
@@ -82,14 +82,14 @@ angular.module('dahlia.components')
       @validateFileNameLength = (file) ->
         if file
           if file.name.length > FileUploadService.maxFileNameLength
-            @proofDocument.error = @flagForI18n('ERROR.FILE_NAME_TOO_LONG')
+            @proofDocument.error = @flagForI18n('error.file_name_too_long')
           else
             if file.size > FileUploadService.maxFileSizeBytes
-              @proofDocument.error = @flagForI18n('ERROR.FILE_UPLOAD')
+              @proofDocument.error = @flagForI18n('error.file_upload')
             else
               true
         else
-          @proofDocument.error = @flagForI18n('ERROR.FILE_MISSING')
+          @proofDocument.error = @flagForI18n('error.file_missing')
 
       @uploadProofFile = (file) =>
         opts =

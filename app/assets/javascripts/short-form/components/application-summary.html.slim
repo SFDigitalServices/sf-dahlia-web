@@ -1,59 +1,59 @@
 / Qualify
 span ng-show="::$ctrl.isSale"
-  review-summary-section header="{{'SHORT_FORM_NAV.QUALIFY' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable"
   .app-inner
-    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-is-first-time-homebuyer"
-      | {{'LABEL.APPLICATION_IS_FIRST_TIME_HOMEBUYER' | translate}}
-    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'LABEL.APPLICANT_HOMEBUYER_EDUCATION_AGENCY' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}"
-      | {{'LABEL.APPLICATION_HAS_COMPLETED_HOMEBUYER_EDUCATION' | translate}}
-    review-summary-item label="{{'LABEL.YOU_HAVE_CONFIRMED' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'LABEL.APPLICANT_NAME_LOAN_OFFICER' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}"
-      | {{'LABEL.APPLICATION_HAS_LOAN_PRE_APPROVAL' | translate}}
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-first-time-homebuyer"
+      | {{'label.application_is_first_time_homebuyer' | translate}}
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'label.applicant_homebuyer_education_agency' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}"
+      | {{'label.application_has_completed_homebuyer_education' | translate}}
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'label.applicant_name_loan_officer' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}"
+      | {{'label.application_has_loan_pre_approval' | translate}}
 / You
-review-summary-section header="{{'T.YOU' | translate}}" section-name="dahlia.short-form-application.name" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'t.you' | translate}}" section-name="dahlia.short-form-application.name" editable="::$ctrl.sectionsAreEditable"
 
 .app-inner
   / name
   div ng-if="::$ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('name')"
-    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
+    review-summary-item label="{{'label.name' | translate}}" identifier="full-name"
       .c-success
         | {{::$ctrl.applicant.firstName}} {{::$ctrl.applicant.middleName}} {{::$ctrl.applicant.lastName}}
       .c-success.info-item_name.sentence.t-normal
         span.ui-icon.ui-static.ui-small.i-success.padding-right--half
           svg.i-check
             use xlink:href="#i-check"
-        | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
+        | {{'label.updated_based_on_your_account_settings' | translate}}
   div ng-if="::!($ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('name'))"
-    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
+    review-summary-item label="{{'label.name' | translate}}" identifier="full-name"
       | {{::$ctrl.applicant.firstName}} {{::$ctrl.applicant.middleName}} {{::$ctrl.applicant.lastName}}
 
   / DOB
   div ng-if="::$ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('dob')"
-    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
+    review-summary-item label="{{'label.dob' | translate}}" identifier="dob"
       .c-success
         | {{::$ctrl.applicant.dob_month}}/{{::$ctrl.applicant.dob_day}}/{{::$ctrl.applicant.dob_year}}
       .c-success.info-item_name.sentence.t-normal
         span.ui-icon.ui-static.ui-small.i-success.padding-right--half
           svg.i-check
             use xlink:href="#i-check"
-        | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
+        | {{'label.updated_based_on_your_account_settings' | translate}}
   div ng-if="::!($ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('dob'))"
-    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
+    review-summary-item label="{{'label.dob' | translate}}" identifier="dob"
       | {{::$ctrl.applicant.dob_month}}/{{::$ctrl.applicant.dob_day}}/{{::$ctrl.applicant.dob_year}}
 
-  review-summary-item label="{{'LABEL.PHONE' | translate}}" identifier="phone" ng-if="::!$ctrl.applicant.noPhone" sub-label="{{::$ctrl.applicant.phoneType}}"
+  review-summary-item label="{{'label.phone' | translate}}" identifier="phone" ng-if="::!$ctrl.applicant.noPhone" sub-label="{{::$ctrl.applicant.phoneType}}"
     | {{::$ctrl.applicant.phone | tel}}
-  review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" identifier="alt-phone" sub-label="{{::$ctrl.applicant.alternatePhoneType}}" ng-if="::!$ctrl.applicant.noPhone && $ctrl.applicant.additionalPhone"
+  review-summary-item label="{{'label.additional_phone' | translate}}" identifier="alt-phone" sub-label="{{::$ctrl.applicant.alternatePhoneType}}" ng-if="::!$ctrl.applicant.noPhone && $ctrl.applicant.additionalPhone"
     | {{::$ctrl.applicant.alternatePhone | tel}}
-  review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="::!$ctrl.applicant.noEmail" identifier="email"
+  review-summary-item label="{{'label.email_address' | translate}}"  ng-if="::!$ctrl.applicant.noEmail" identifier="email"
     | {{::$ctrl.applicant.email}}
-  review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="home-address"
+  review-summary-item label="{{'label.address' | translate}}" identifier="home-address"
     div ng-if="::$ctrl.applicant.home_address.address1"
       | {{::$ctrl.applicant.home_address.address1}}
       br
       ' {{::$ctrl.applicant.home_address.city}}, {{::$ctrl.applicant.home_address.state}}
       | {{::$ctrl.applicant.home_address.zip}}
 
-  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="mailing-address" ng-if="::$ctrl.applicant.hasAltMailingAddress"
+  review-summary-item label="{{'label.mailing_address' | translate}}" identifier="mailing-address" ng-if="::$ctrl.applicant.hasAltMailingAddress"
     | {{::$ctrl.applicant.mailing_address.address1}}
     br
     ' {{::$ctrl.applicant.mailing_address.city}}, {{::$ctrl.applicant.mailing_address.state}}
@@ -61,39 +61,39 @@ review-summary-section header="{{'T.YOU' | translate}}" section-name="dahlia.sho
 
 / Alternate Contact
 span ng-hide="::$ctrl.alternateContact.alternateContactType == 'None'"
-  review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" section-name="dahlia.short-form-application.alternate-contact-type" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.alternate_contact' | translate}}" section-name="dahlia.short-form-application.alternate-contact-type" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
     p.form-note.margin-bottom
-      | {{ 'REVIEW_APPLICATION.DISCLOSURE' | translate}}
-    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="alt-contact-name" sub-label="{{ctrl.alternateContactRelationship()}}" bold-sub-label="{{ ::$ctrl.alternateContact.agency }}"
+      | {{ 'review_application.disclosure' | translate}}
+    review-summary-item label="{{'label.name' | translate}}" identifier="alt-contact-name" sub-label="{{ctrl.alternateContactRelationship()}}" bold-sub-label="{{ ::$ctrl.alternateContact.agency }}"
       | {{::$ctrl.alternateContact.firstName}} {{::$ctrl.alternateContact.lastName}}
-    review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" identifier="alt-contact-email" ng-if="::$ctrl.alternateContact.email"
+    review-summary-item label="{{'label.email_address' | translate}}" identifier="alt-contact-email" ng-if="::$ctrl.alternateContact.email"
       | {{::$ctrl.alternateContact.email}}
-    review-summary-item label="{{'LABEL.PHONE' | translate}}" identifier="alt-contact-phone" ng-if="::$ctrl.alternateContact.phone"
+    review-summary-item label="{{'label.phone' | translate}}" identifier="alt-contact-phone" ng-if="::$ctrl.alternateContact.phone"
       | {{::$ctrl.alternateContact.phone | tel}}
-    review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="alt-contact-mailing-address" ng-if="::$ctrl.alternateContact.mailing_address.address1"
+    review-summary-item label="{{'label.mailing_address' | translate}}" identifier="alt-contact-mailing-address" ng-if="::$ctrl.alternateContact.mailing_address.address1"
       | {{::$ctrl.alternateContact.mailing_address.address1}}
       br
       ' {{::$ctrl.alternateContact.mailing_address.city}}, {{::$ctrl.alternateContact.mailing_address.state}}
       | {{::$ctrl.alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'label.household_members' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable"
 
 .app-inner
   .info-item.margin-bottom ng-if="::!$ctrl.householdMembers || $ctrl.householdMembers.length == 0"
     h4.info-item_name
-      | {{'T.NONE' | translate}}
+      | {{'t.none' | translate}}
 
   .info-item ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in $ctrl.householdMembers"
-    review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{member.relationship}}" identifier="household-member-{{$index}}-name"
+    review-summary-item label="{{'label.name' | translate}}" sub-label="{{member.relationship}}" identifier="household-member-{{$index}}-name"
       | {{member.firstName}} {{member.middleName}} {{member.lastName}}
 
-    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="household-member-{{$index}}-dob"
+    review-summary-item label="{{'label.dob' | translate}}" identifier="household-member-{{$index}}-dob"
       | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
 
-    review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="household-member-{{$index}}-address" ng-if="member.hasSameAddressAsApplicant == 'No'"
+    review-summary-item label="{{'label.address' | translate}}" identifier="household-member-{{$index}}-address" ng-if="member.hasSameAddressAsApplicant == 'No'"
       | {{member.home_address.address1}}
       br
       ' {{member.home_address.city}}, {{member.home_address.state}}
@@ -101,40 +101,40 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" sectio
 
 / Household Details
 div ng-if="::$ctrl.prioritiesSelectedExists()"
-  review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.household_details' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
-    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" identifier="hasPublicHousing" ng-if="::$ctrl.application.hasPublicHousing"
+    review-summary-item label="{{'label.live_in_public_housing_or_hud' | translate}}" identifier="hasPublicHousing" ng-if="::$ctrl.application.hasPublicHousing"
       | {{::$ctrl.application.hasPublicHousing}}
-    review-summary-item ng-repeat="groupedAddress in $ctrl.application.groupedHouseholdAddresses" identifier="groupedAddress-{{$index}}" label="{{'LABEL.RENT_AT_ADDRESS' | translate: $ctrl.addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: $ctrl.membersTranslateVariable(groupedAddress.members)}}"
+    review-summary-item ng-repeat="groupedAddress in $ctrl.application.groupedHouseholdAddresses" identifier="groupedAddress-{{$index}}" label="{{'label.rent_at_address' | translate: $ctrl.addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'label.for_user' | translate: $ctrl.membersTranslateVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
       span ng-if="!groupedAddress.monthlyRent"
         ' {{ 0 | currency : $ : 0 }}
-      span translate="LABEL.PER_MONTH"
-    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" identifier="hasMilitaryService" ng-if="::$ctrl.application.hasMilitaryService"
+      span translate="label.per_month"
+    review-summary-item label="{{'label.veterans_in_household' | translate}}" identifier="hasMilitaryService" ng-if="::$ctrl.application.hasMilitaryService"
       | {{::$ctrl.application.hasMilitaryService}}
-    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" identifier="hasDevelopmentalDisability" ng-if="$ctrl.application.hasDevelopmentalDisability"
+    review-summary-item label="{{'label.people_with_developmental_disabilities' | translate}}" identifier="hasDevelopmentalDisability" ng-if="$ctrl.application.hasDevelopmentalDisability"
       | {{::$ctrl.application.hasDevelopmentalDisability}}
-    review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.isRental"
+    review-summary-item label="{{'label.ada_accessible_units' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.isRental"
       span ng-repeat="priorityOption in $ctrl.priority_options" ng-if="::$ctrl.application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1] | translate}}
         br
       span ng-if="::$ctrl.application.adaPrioritiesSelected.None"
-        | {{'T.NO' | translate}}
+        | {{'t.no' | translate}}
 
 / Income
 div ng-if="::$ctrl.application.householdIncome.incomeTotal"
-  review-summary-section header="{{'LABEL.INCOME' | translate}}" section-name="{{'dahlia.short-form-application.' + $ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.income' | translate}}" section-name="{{'dahlia.short-form-application.' + $ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
-    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}" identifier="income-vouchers" ng-if="::$ctrl.isRental"
+    review-summary-item label="{{'label.vouchers_and_subsidies' | translate}}" identifier="income-vouchers" ng-if="::$ctrl.isRental"
       | {{::$ctrl.applicationVouchersSubsidies()}}
 
-    review-summary-item label="{{'LABEL.INCOME' | translate}}" identifier="income-amount"
+    review-summary-item label="{{'label.income' | translate}}" identifier="income-amount"
       | {{::$ctrl.applicationIncomeAmount()}}
 
 / Preferences
 div ng-if="::!$ctrl.atAutofillPreview"
-  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.preferences' | translate}}" to="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
   preferences-summary application="$ctrl.application" listing="$ctrl.listing" preferences="$ctrl.preferences"

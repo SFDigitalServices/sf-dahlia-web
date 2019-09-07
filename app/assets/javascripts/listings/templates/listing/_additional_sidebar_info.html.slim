@@ -8,10 +8,10 @@
   ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
 .content-group ng-repeat="lotteryPreference in ::$ctrl.parent.listing.preferences" ng-if="!$ctrl.listingHasLotteryResults() && lotteryPreference.pdfUrl"
-  h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{::lotteryPreference.preferenceName}}"
+  h4.content-group_title translate="listings.confirmed_preference_list" translate-value-preference="{{::lotteryPreference.preferenceName}}"
   a.button.primary.expand ng-href="{{::lotteryPreference.pdfUrl}}" target="_blank"
-    | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
-  p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
+    | {{'lottery.view_preference_list' | translate}}
+  p.c-steel.t-small translate="lottery.applications_that_qualify_for_preference"
 
 .content-group ng-if="::$ctrl.parent.agentInfoAvailable($ctrl.parent.listing)"
   ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"

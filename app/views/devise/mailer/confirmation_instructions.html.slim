@@ -1,8 +1,10 @@
+/ Subject path for grunt i18nExtract
+/ t 'devise.mailer.confirmation_instructions.subject'
 p
-  = t '.thank_you_msg'
+  = t 'devise.mailer.confirmation_instructions.thank_you_msg'
 p
-  = t '.confirm_link_msg'
+  = t 'devise.mailer.confirmation_instructions.confirm_link_msg'
 
 p
   - params = { confirmation_token: @token, config: message['client-config'].to_s, redirect_url: message['redirect-url'] }
-  = link_to t('.confirm_account_link'), confirmation_url(@resource, params).html_safe
+  = link_to t('devise.mailer.confirmation_instructions.confirm_account_link'), confirmation_url(@resource, params).html_safe

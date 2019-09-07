@@ -20,7 +20,7 @@ angular.module('dahlia.components')
         _.each @groupedHouseholdAddresses, (groupedAddress) =>
           address = groupedAddress.address
           @addressLinkText[address] =
-            if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
+            if @hasFiles(address) then $translate.instant('t.edit') else $translate.instant('label.start_upload')
 
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)

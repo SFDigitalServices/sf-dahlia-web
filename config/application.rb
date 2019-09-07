@@ -24,11 +24,17 @@ module SfDahliaWeb
 
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    # Configure i18n
+
     # Whitelist locales available for the application
     I18n.available_locales = %i[en es tl zh]
 
-    # will use English translation if none found
-    config.i18n.fallbacks = true
+    # Set fallbacks
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = [:en]
+
+    # Set locale files
+    config.i18n.load_path += Dir[Rails.root.join('app', 'assets', 'json', 'translations', 'locale-*.json')]
 
     # set up ActiveJob to use Sidekiq
     # if ENV['SIDEKIQ'] is not specified, will use default inline processor

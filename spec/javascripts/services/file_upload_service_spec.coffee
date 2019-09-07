@@ -119,7 +119,7 @@ do ->
 
         it 'returns a rejection', ->
           file = null
-          errorMsg = 'ERROR.FILE_MISSING'
+          errorMsg = 'error.file_missing'
 
           rejection = FileUploadService.uploadProof(file, fakeListing, opts)
 
@@ -236,7 +236,7 @@ do ->
           file =
             size: (5 * 1000 * 1000) + 1
           uploadedFileParams = {}
-          errorMsg = 'ERROR.FILE_UPLOAD'
+          errorMsg = 'error.file_upload'
           FileUploadService._uploadProofFile(file, proofDocument, uploadedFileParams)
 
         it "sets the proofDocument's file to null", ->
@@ -293,7 +293,7 @@ do ->
             uploadedFileParams = {}
             Upload.upload = jasmine.createSpy().and.callFake ->
               $q.reject()
-            errorMsg = 'ERROR.FILE_UPLOAD_FAILED'
+            errorMsg = 'error.file_upload_failed'
             FileUploadService._uploadProofFile(file, proofDocument, uploadedFileParams)
             $rootScope.$apply()
 

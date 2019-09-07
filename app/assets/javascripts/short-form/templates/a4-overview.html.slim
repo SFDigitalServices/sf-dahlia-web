@@ -6,21 +6,21 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
 
       .app-card.form-card
         short-form-header
-          h2.app-card_question translate="A4_OVERVIEW.TITLE"
-          h3.app-card_question translate="A4_OVERVIEW.SUBTITLE" ng-if="application.applicationLanguage == 'Chinese'"
+          h2.app-card_question translate="a4_overview.title"
+          h3.app-card_question translate="a4_overview.subtitle" ng-if="application.applicationLanguage == 'Chinese'"
         .app-inner.inset
           p.form-note.margin-bottom
-            | {{'A4_OVERVIEW.P1' | translate}}
-          p.form-note.margin-bottom translate="A4_OVERVIEW.P2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
+            | {{'a4_overview.p1' | translate}}
+          p.form-note.margin-bottom translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
           p.form-note.margin-bottom
-            | {{'A4_OVERVIEW.P3' | translate}}
+            | {{'a4_overview.p3' | translate}}
           p.form-note.margin-bottom
-            | {{'A4_OVERVIEW.P4' | translate}}
+            | {{'a4_overview.p4' | translate}}
           p.form-note.margin-bottom
-            | {{'A4_OVERVIEW.WARNING' | translate}}
+            | {{'a4_overview.warning' | translate}}
         .button-pager
           .button-pager_row.primary
             button#submit.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})" ng-if="listingIsRental()"
-              | {{'T.NEXT' | translate}}
+              | {{'t.next' | translate}}
             button#submit.button.primary ui-sref="dahlia.short-form-application.prerequisites({id: listing.Id})" ng-if="listingIsSale()"
-              | {{'T.NEXT' | translate}}
+              | {{'t.next' | translate}}

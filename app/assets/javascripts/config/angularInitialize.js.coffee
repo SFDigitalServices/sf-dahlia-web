@@ -23,20 +23,20 @@
 
     $rootScope.$on 'IdleStart', ->
       content =
-        title: $translate.instant('T.CONTINUE_WITH_YOUR_APPLICATION')
-        continue: $translate.instant('T.CONTINUE')
+        title: $translate.instant('t.continue_with_your_application')
+        continue: $translate.instant('t.continue')
       if AccountService.loggedIn()
-        content.message = $translate.instant('T.SESSION_INACTIVITY_LOGGED_IN')
+        content.message = $translate.instant('t.session_inactivity_logged_in')
       else if $state.is('dahlia.short-form-application.confirmation')
-        content.message = $translate.instant('T.SESSION_INACTIVITY_CONFIRMATION')
+        content.message = $translate.instant('t.session_inactivity_confirmation')
       else
-        content.message = $translate.instant('T.SESSION_INACTIVITY')
+        content.message = $translate.instant('t.session_inactivity')
       ModalService.alert(content, {nativeAlert: true})
 
     $rootScope.$on 'IdleTimeout', ->
       content =
-        message: $translate.instant('T.SESSION_EXPIRED')
-        continue: $translate.instant('T.OK')
+        message: $translate.instant('t.session_expired')
+        continue: $translate.instant('t.ok')
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
         AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
@@ -84,19 +84,19 @@
 
       else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         content =
-          title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
-          cancel: $translate.instant('T.STAY')
-          continue:  $translate.instant('T.LEAVE')
+          title: $translate.instant('t.leave_your_application')
+          cancel: $translate.instant('t.stay')
+          continue:  $translate.instant('t.leave')
           alert: true
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
-          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+          content.message = $translate.instant('t.are_you_sure_you_want_to_leave_confirmation')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
-          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
+          content.message = $translate.instant('t.are_you_sure_you_want_to_leave_sign_in')
         else
-          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+          content.message = $translate.instant('t.are_you_sure_you_want_to_leave')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
 

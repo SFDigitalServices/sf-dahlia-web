@@ -1,44 +1,44 @@
 li ng-if="!showSaleListings"
   a ui-sref="dahlia.listings-for-rent"
-    | {{ "NAV.BROWSE_PROPERTIES" | translate}}
+    | {{ "nav.browse_properties" | translate}}
 li ng-if-start="showSaleListings"
   a ui-sref="dahlia.listings-for-rent"
-    | {{ "NAV.RENT" | translate}}
+    | {{ "nav.rent" | translate}}
 li ng-if-end="true"
   a ui-sref="dahlia.listings-for-sale"
-    | {{ "NAV.BUY" | translate}}
+    | {{ "nav.buy" | translate}}
 li
   a ui-sref="dahlia.favorites"
-    | {{ "NAV.MY_FAVORITES" | translate}}
+    | {{ "nav.my_favorites" | translate}}
 li
   a ui-sref="dahlia.get-assistance"
-    | {{ "NAV.GET_ASSISTANCE" | translate}}
+    | {{ "nav.get_assistance" | translate}}
 li ng-if="!loggedIn()"
   a ui-sref="dahlia.sign-in"
-    | {{ "NAV.SIGN_IN" | translate}}
+    | {{ "nav.sign_in" | translate}}
 li(has-dropdown ng-if="loggedIn()")
   a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
-    | {{ "NAV.MY_ACCOUNT" | translate}}
+    | {{ "nav.my_account" | translate}}
   ul#my-account-dropdown.dropdown
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-account"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-profile"
-        | {{ "NAV.MY_DASHBOARD" | translate}}
+        | {{ "nav.my_dashboard" | translate}}
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-application"
-        | {{ "NAV.MY_APPLICATIONS" | translate}}
+        | {{ "nav.my_applications" | translate}}
     li.dropdown-item.has-icon
       a ui-sref="dahlia.account-settings"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-settings"
-        | {{ "NAV.ACCOUNT_SETTINGS" | translate}}
+        | {{ "nav.account_settings" | translate}}
     li.dropdown-item
       / TODO: make into a button, properly styled
       a ng-click="signOut()"
-        | {{ "NAV.SIGN_OUT" | translate}}
+        | {{ "nav.sign_out" | translate}}

@@ -4,19 +4,19 @@
     span.ui-icon.ui-static.ui-medium.i-oil
       svg
         use xlink:href="#i-warning"
-  p.alert-body translate="ERROR.LOTTERY_RANKING_SEARCH"
+  p.alert-body translate="error.lottery_ranking_search"
 
 .modal-inner.padding-bottom-none ng-if="!lotteryRankingInfo[listing.Id].submitted"
   p.t-small
-    | {{'LOTTERY.BUCKETS_INTRO' | translate}}
+    | {{'lottery.buckets_intro' | translate}}
 
 .modal-buckets-container ng-if="!lotteryRankingInfo[listing.Id].submitted"
   .modal-buckets
     header.modal-inner
       h2.h-caps-lined
-        | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
+        | {{'lottery.housing_preferences' | translate}}
       p.t-small.c-steel.no-margin
-        | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
+        | {{'lottery.ranking_order_note' | translate}}
 
     section.buckets
       lottery-results-row ng-repeat-start="bucketResult in lotteryBucketInfo[listing.Id].lotteryBuckets" item-type="bucket" bucket-result="bucketResult" ng-if="bucketResult.preferenceName != 'generalLottery'"
@@ -26,4 +26,4 @@
 
     section.buckets
       / we `ng-repeat` again but this time just to grab the generalLottery bucket
-      lottery-results-row ng-repeat="bucketResult in lotteryBucketInfo[listing.Id].lotteryBuckets" item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" bucket-result="bucketResult" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
+      lottery-results-row ng-repeat="bucketResult in lotteryBucketInfo[listing.Id].lotteryBuckets" item-type="bucket" pref-name="{{'lottery.general_pool' | translate}}" bucket-result="bucketResult" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
