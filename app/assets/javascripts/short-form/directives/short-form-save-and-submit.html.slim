@@ -4,6 +4,6 @@
   .button-pager_row
     button#save_and_finish_later.button.expand-small ng-class="{'button-link button-lined small-text-center': !secondaryButton, 'secondary': secondaryButton}" data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)' ng-disabled="isLoading()"
       span ng-if="!secondaryButton"
-        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+        | {{'t.save_and_finish_later' | translate}}
       span ng-if="secondaryButton"
-        | {{'T.SAVE_AND_COME_BACK_LATER' | translate}}
+        | {{'t.save_and_come_back_later' | translate}}

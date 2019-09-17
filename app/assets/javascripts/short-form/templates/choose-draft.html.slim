@@ -8,26 +8,26 @@
               svg
                 use xlink:href="#i-profile" xmlns:xlink="http://www.w3.org/1999/xlink"
           h1.dash-title.no-margin
-            | {{'CHOOSE_DRAFT.TITLE' | translate}}
+            | {{'choose_draft.title' | translate}}
 
         / this alert box displays "You'll need to resolve..." if there are form errors
-        alert-box short-form="true" custom-sub-message="'CHOOSE_DRAFT.ALERT_MESSAGE' | translate" ng-if="inputInvalid('chooseDraft')"
+        alert-box short-form="true" custom-sub-message="'choose_draft.alert_message' | translate" ng-if="inputInvalid('chooseDraft')"
 
         / this alert box displays the "choose draft" warning
-        alert-box short-form="true" custom-message="'CHOOSE_DRAFT.ALERT_TITLE' | translate" custom-sub-message="'CHOOSE_DRAFT.ALERT_MESSAGE' | translate"  ng-if="!inputInvalid('chooseDraft')"
+        alert-box short-form="true" custom-message="'choose_draft.alert_title' | translate" custom-sub-message="'choose_draft.alert_message' | translate"  ng-if="!inputInvalid('chooseDraft')"
 
         .dash-card-inner.inset
           .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('chooseDraft')}"
             h3.form-label.caps
-              | {{'CHOOSE_DRAFT.APPLICATION_OPTIONS' | translate}}:
+              | {{'choose_draft.application_options' | translate}}:
             p.form-note.margin-bottom
-              | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+              | {{'label.please_select_one' | translate}}
             .form-item.margin-bottom--2x
               .radio-block
                 input#choose_draft_recent(name="chooseDraft" type="radio" value="recent"  ng-model="chosenApplicationToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseDraft')}")
                 label.radio-block_label for="choose_draft_recent"
                   p.form-label
-                    | {{'LABEL.RECENT_APPLICATION' | translate}}:
+                    | {{'label.recent_application' | translate}}:
                   p.t-base.t-normal
                     span.t-bold
                       | {{applicantFullName(application.applicant)}}
@@ -44,7 +44,7 @@
                     span.meter style="width: {{applicationCompletionPercentage(application)}}%"
 
                   p.t-small.t-normal
-                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{'label.edited' | translate}}:
                     ' {{today() | date : "MMM d, yyyy" }}
 
             .form-item
@@ -52,7 +52,7 @@
                 input#choose_draft_original(name="chooseDraft" type="radio" value="comparison" ng-model="chosenApplicationToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseDraft')}")
                 label.radio-block_label for="choose_draft_original"
                   p.form-label
-                    | {{'LABEL.ORIGINAL_APPLICATION' | translate}}:
+                    | {{'label.original_application' | translate}}:
                   p.t-base.t-normal
                     span.t-bold
                       | {{applicantFullName(accountApplication.applicant)}}
@@ -69,8 +69,8 @@
                     span.meter style="width: {{applicationCompletionPercentage(accountApplication)}}%"
 
                   p.t-small.t-normal
-                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{'label.edited' | translate}}:
                     ' {{accountApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
           .form-group
             p.t-small.c-steel.text-center.padding-top
-              input.button.primary.no-margin#submit type="submit" value="{{'T.NEXT' | translate}}"
+              input.button.primary.no-margin#submit type="submit" value="{{'t.next' | translate}}"

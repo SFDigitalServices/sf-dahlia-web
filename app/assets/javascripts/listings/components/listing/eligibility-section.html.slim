@@ -15,35 +15,35 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Before Applying
-          p.custom-counter_text translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.MAKE_SURE_YOU"
+          p.custom-counter_text translate="listings_for_sale.before_applying.make_sure_you"
         .content-card
           ng-include src="'listings/templates/_before-applying-list.html'"
-        p.custom-counter_text translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.READ_FULL_LIST" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+        p.custom-counter_text translate="listings_for_sale.before_applying.read_full_list" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
 
     li.custom-counter_item ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{$ctrl.parent.listing.Reserved_community_type}}"
+          h4.custom-counter_title translate="listings.reserved_community_building" translate-value-type="{{$ctrl.parent.listing.Reserved_community_type}}"
         .content-card
           h4.content-card_title.no-margin
             | {{$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'eligibility')}}
           p.c-steel
-            | {{'LISTINGS.ALL_UNITS' | translate}}
+            | {{'listings.all_units' | translate}}
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
 
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
-            | {{'LISTINGS.HOUSEHOLD_MAXIMUM_INCOME' | translate}}
+            | {{'listings.household_maximum_income' | translate}}
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
-            | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
-          p.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.INTRO" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
+            | {{'listings.for_income_calculations' | translate}}
+          p.custom-counter_text translate="listings.income_exceptions.intro" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
           ul
             li.custom-counter_text
-              | {{'LISTINGS.INCOME_EXCEPTIONS.STUDENTS' | translate }}
-            li.custom-counter_text translate="LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE" translate-value-tooltip="{{'LISTINGS.INCOME_EXCEPTIONS.NONTAXABLE_TOOLTIP' | translate }}" translate-compile="true"
+              | {{'listings.income_exceptions.students' | translate }}
+            li.custom-counter_text translate="listings.income_exceptions.nontaxable" translate-value-tooltip="{{'listings.income_exceptions.nontaxable_tooltip' | translate }}" translate-compile="true"
 
         .content-card.padding--2x ng-show="$ctrl.parent.loading.ami"
           .padding--2x ng-include="'shared/templates/spinner.html'"
@@ -51,7 +51,7 @@ accordion-heading.lead
         .content-card.padding--2x ng-show="$ctrl.parent.error.ami"
           .padding--2x.text-center
             button.button-link ng-click="$ctrl.parent.getListingAMI($ctrl.parent.listing)"
-              | {{'LISTINGS.SEE_MAXIMUM_INCOME_INFORMATION' | translate}}
+              | {{'listings.see_maximum_income_information' | translate}}
 
 
         div ng-show="!$ctrl.parent.loading.ami && !$ctrl.parent.error.ami"
@@ -71,27 +71,27 @@ accordion-heading.lead
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
-            | {{'T.OCCUPANCY' | translate}}
+            | {{'t.occupancy' | translate}}
           p.custom-counter_text ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_MIN_ONE' | translate}}
+            | {{'listings.occupancy_description_min_one' | translate}}
           / TODO: Remove case for hardcoded listings - still needs Folsom 3/3/19
           p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
+            | {{'listings.occupancy_description_all_sro' | translate}}
           p.custom-counter_text ng-if="::$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL' | translate:"{ numberOfPeople: '2' }"}}
+            | {{'listings.occupancy_description_all_sro_plural' | translate:"{ numberOfPeople: '2' }"}}
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && $ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
+            | {{'listings.occupancy_description_some_sro' | translate}}
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && $ctrl.parent.isRental($ctrl.parent.listing)"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
+            | {{'listings.occupancy_description_no_sro' | translate}}
 
         .scrollable-table-container
           table role="grid"
             thead
               tr
                 th scope="col"
-                  | {{'T.UNIT_TYPE' | translate}}
+                  | {{'t.unit_type' | translate}}
                 th scope="col"
-                  | {{'T.OCCUPANCY' | translate}}
+                  | {{'t.occupancy' | translate}}
             tbody
               tr ng-repeat="unit_summary in ::$ctrl.parent.listing.unitSummary"
                 td scope="row"
@@ -122,7 +122,7 @@ accordion-heading.lead
         .content-card.padding--2x ng-show="$ctrl.error.preferences"
           .padding--2x.text-center
             button.button-link ng-click="$ctrl.getListingPreferences()"
-              | {{'LISTINGS.SEE_PREFERENCE_INFORMATION' | translate}}
+              | {{'listings.see_preference_information' | translate}}
 
         div ng-show="!$ctrl.loading.preferences && !$ctrl.error.preferences"
 
@@ -130,15 +130,15 @@ accordion-heading.lead
 
           div ng-if="::$ctrl.listingHasPreferences()"
             p.custom-counter_text
-              | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
+              | {{'listings.remaining_units_after_preference_consideration' | translate}}
 
     li.custom-counter_item ng-if="::$ctrl.parent.listingHasReservedUnits($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
-            | {{'LISTINGS.RESERVED_UNITS' | translate}}
+            | {{'listings.reserved_units' | translate}}
           p.custom-counter_text
-            | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
+            | {{'listings.reserved_units_description' | translate}}
         .content-card ng-repeat="(type, units) in ::$ctrl.parent.listing.reservedUnits"
           h4.content-card_title.no-margin
             | {{::$ctrl.parent.reservedLabel($ctrl.parent.listing, type, 'eligibility')}}
@@ -146,15 +146,15 @@ accordion-heading.lead
             | {{::units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, type, 'unitDescription')}}"
+          p.c-steel translate="listings.units_are_for" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, type, 'unitDescription')}}"
 
     li.custom-counter_item ng-if="$ctrl.listingHasPriorityUnits()"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
-            | {{'LISTINGS.PRIORITY_UNITS' | translate}}
+            | {{'listings.priority_units' | translate}}
           p.custom-counter_text
-            | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
+            | {{'listings.priority_units_description' | translate}}
         .content-card ng-repeat="(type, units) in ::$ctrl.parent.listing.priorityUnits"
           h4.content-card_title.no-margin
             | {{::$ctrl.priorityLabel(type, 'name')}}
@@ -162,7 +162,7 @@ accordion-heading.lead
             | {{::units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{::$ctrl.priorityLabel(type, 'description')}}"
+          p.c-steel translate="listings.units_have_accessibility_features_for" translate-value-type="{{::$ctrl.priorityLabel(type, 'description')}}"
 
     li.custom-counter_item ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       .content-tile

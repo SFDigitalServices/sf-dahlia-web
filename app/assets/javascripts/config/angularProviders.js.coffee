@@ -33,14 +33,14 @@
                     $state.go('dahlia.sign-in', {userTokenValidationTimeout: true})
                     return
                   else
-                    alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                    alertMessage = $translate.instant('error.alert.timeout_please_try_again')
                 else if error.data.message.indexOf('APEX_ERROR') >= 0
                   # handle Salesforce errors that aren't timeouts
                   salesforceError = error.data.message.split("Class")[0].split("APEX_ERROR: ")[1]
                   alertMessage = "An error occurred: " + salesforceError
                 else
                   # handle non-timeout, non-Salesforce errors
-                  alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
+                  alertMessage = $translate.instant('error.alert.bad_request')
                 alert(alertMessage)
                 error
             ]
@@ -89,7 +89,7 @@
     deferred = $q.defer()
     # asset paths have unpredictable hash suffixes, which is why we need the custom loader
     $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
-      deferred.resolve(data)
+      deferred.resolve(data[options.key])
     ).error( ->
       deferred.reject({status: 503})
     )

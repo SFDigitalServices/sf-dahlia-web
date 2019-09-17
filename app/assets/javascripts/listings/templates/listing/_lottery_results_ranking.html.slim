@@ -1,9 +1,9 @@
 // Lottery Ranking
 header.modal-inner.padding-top--2x ng-if="applicantSelectedForPreference()"
   h2.h-caps-lined
-    | {{'LOTTERY.RANKING_TITLE' | translate}}
+    | {{'lottery.ranking_title' | translate}}
   p.t-small.c-steel.no-margin
-    | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
+    | {{'lottery.ranking_order_note' | translate}}
 
 span ng-if="applicantSelectedForPreference()"
   .alert-box.primary.no-margin.no-close.alert-box ng-if="!applicantHasCertOfPreference()"
@@ -11,7 +11,7 @@ span ng-if="applicantSelectedForPreference()"
       svg
         use xlink:href="#i-info"
     p.alert-body
-      | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
+      | {{'lottery.ranking_preference_consideration_note' | translate}}
 
   section.buckets
     lottery-results-row ng-repeat="bucketResult in lotteryRankingInfo[listing.Id].lotteryBuckets" item-type="rank" bucket-result="bucketResult" ng-if="bucketResult.preferenceName != 'generalLottery'"
@@ -23,11 +23,11 @@ div ng-if="!applicantSelectedForPreference()"
         svg
           use xlink:href="#i-info"
       p.alert-body
-        | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
+        | {{'lottery.ranking_preferences_considered_over_general_note' | translate}}
 
     section.buckets
       / we `ng-repeat` again but this time just to grab the generalLottery bucket
-      lottery-results-row ng-repeat="bucketResult in lotteryRankingInfo[listing.Id].lotteryBuckets" item-type="rank" bucket-result="bucketResult" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
+      lottery-results-row ng-repeat="bucketResult in lotteryRankingInfo[listing.Id].lotteryBuckets" item-type="rank" bucket-result="bucketResult" pref-name="{{'lottery.general_pool' | translate}}" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
 
   div ng-if="!loading.lotteryRank && !lotteryNumberValid()"
     .alert-box.alert.no-margin
@@ -35,27 +35,27 @@ div ng-if="!applicantSelectedForPreference()"
         svg
           use xlink:href="#i-warning"
       p.alert-body ng-if="!error.lotteryRank"
-        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P1' | translate}}
+        | {{'lottery.lottery_number_not_found_p1' | translate}}
       p.alert-body ng-if="error.lotteryRank"
-        | {{'ERROR.LOTTERY_RANKING_SEARCH' | translate}}
+        | {{'error.lottery_ranking_search' | translate}}
 
     section.modal-inner
       p.t-small.c-steel
-        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P2' | translate}}
+        | {{'lottery.lottery_number_not_found_p2' | translate}}
       p.t-small.c-steel
-        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P3' | translate}}
+        | {{'lottery.lottery_number_not_found_p3' | translate}}
 
 .t-small.padding--3halves ng-if="lotteryNumberValid()"
   .toggled
-    a.a-dark.toggler.toggle-more.t-small title="{{'LOTTERY.NEXT_STEPS_TITLE' | translate}}" href="#" ng-click="showWhatHappensNextSection = !showWhatHappensNextSection"
-      | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}&nbsp;
+    a.a-dark.toggler.toggle-more.t-small title="{{'lottery.next_steps_title' | translate}}" href="#" ng-click="showWhatHappensNextSection = !showWhatHappensNextSection"
+      | {{'lottery.next_steps_title' | translate}}&nbsp;
       span.ui-icon.ui-static.ui-tiny.i-dark
         svg
           use xlink:href="#i-arrow-down"
     span ng-show="showWhatHappensNextSection"
       p.c-steel.t-small.margin-top
-        | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
+        | {{'lottery.next_steps_p1' | translate}}
       p.c-steel.t-small
-        | {{'LOTTERY.NEXT_STEPS_P2' | translate}}
+        | {{'lottery.next_steps_p2' | translate}}
       p.c-steel.t-small
-        | {{'LOTTERY.NEXT_STEPS_P3' | translate}}
+        | {{'lottery.next_steps_p3' | translate}}

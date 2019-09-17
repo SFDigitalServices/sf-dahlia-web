@@ -1,7 +1,7 @@
 accordion-heading
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-units.svg']}}" alt="neighborhood-building"
-  h3.accordion-name translate="LOTTERY.LOTTERY"
-  span.accordion-subheader translate="LOTTERY.LOTTERY_INFO_SUBHEADER"
+  h3.accordion-name translate="lottery.lottery"
+  span.accordion-subheader translate="lottery.lottery_info_subheader"
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
@@ -13,17 +13,17 @@ section.content-wrap
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-clock"
-        span translate="LISTINGS.APPLICATIONS_CLOSED" translate-value-date="{{::$ctrl.parent.listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
+        span translate="listings.applications_closed" translate-value-date="{{::$ctrl.parent.listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
 
   span ng-if="$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing) && !$ctrl.listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
   .content-group ng-if='!$ctrl.parent.listing.Lottery_Results'
-    h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
+    h4.h-caps-lined translate="lottery.lottery_results"
     p.content-group_date
       span.content-group_day
         | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
-    p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
+    p.c-steel.t-small translate="lottery.complete_results_will_be_posted"
 
 
   div ng-if="$ctrl.lotteryComplete()"

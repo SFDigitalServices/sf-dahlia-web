@@ -33,10 +33,10 @@ angular.module('dahlia.directives')
 
       scope.deleteApplication = (id) ->
         content =
-          title: $translate.instant('T.DELETE_APPLICATION')
-          cancel: $translate.instant('LABEL.CANCEL')
-          continue: $translate.instant('T.DELETE')
-          message: $translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+          title: $translate.instant('t.delete_application')
+          cancel: $translate.instant('label.cancel')
+          continue: $translate.instant('t.delete')
+          message: $translate.instant('my_applications.are_you_sure_you_want_to_delete')
           alert: true
         ModalService.alert(content,
           onConfirm: ->

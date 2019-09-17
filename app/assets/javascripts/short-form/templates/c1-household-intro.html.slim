@@ -1,14 +1,14 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
+      | {{'c1_household_intro.title' | translate}}
 
   .app-inner.inset.border-bottom
     .form-group
       button#live-alone.button.expand.tall type="submit"
-        | {{'LABEL.LIVE_ALONE' | translate}}
+        | {{'label.live_alone' | translate}}
       button#other-people.button.expand.tall ui-sref="dahlia.short-form-application.household-overview"
-       | {{'LABEL.OTHER_PEOPLE' | translate}}
+       | {{'label.other_people' | translate}}
 
 
   short-form-save-and-submit(next-button="false")

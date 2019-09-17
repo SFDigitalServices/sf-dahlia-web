@@ -1,8 +1,8 @@
 .form-group.margin-left--2x.margin-right--2x
   label.form-label for="homebuyerEducationAgency" ng-class="{ error: $ctrl.inputInvalid('homebuyerEducationAgency') }"
-    strong.form-label.caps translate="LABEL.APPLICANT_HOMEBUYER_EDUCATION_AGENCY"
+    strong.form-label.caps translate="label.applicant_homebuyer_education_agency"
   select#homebuyerEducationAgency data-width="auto" name="homebuyerEducationAgency" ng-required="true" ng-model="$ctrl.application.homebuyerEducationAgency" ng-class="{ error: $ctrl.inputInvalid('homebuyerEducationAgency')}"
-    option value="" {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+    option value="" {{'label.please_select_one' | translate}}
     option ng-repeat="agency in $ctrl.agencies" value="{{agency}}" {{agency}}
   small.error id="homebuyerEducationAgencyError" ng-show="$ctrl.inputInvalid('homebuyerEducationAgency')"
-    | {{'LABEL.APPLICANT_SELECT_A_HOMEBUYER_EDUCATION_AGENCY' | translate}}
+    | {{'label.applicant_select_a_homebuyer_education_agency' | translate}}

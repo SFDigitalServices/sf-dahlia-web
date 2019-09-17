@@ -74,21 +74,21 @@ do ->
         it 'returns default labels if application is submitted', ->
           ctrl.application.status = 'submitted'
           expectedLabels = [{
-            subLabel: 'translated:LABEL.FOR_YOUR_HOUSEHOLD',
-            boldSubLabel: 'translated:LABEL.FILE_ATTACHED'
+            subLabel: 'translated:label.for_your_household',
+            boldSubLabel: 'translated:label.file_attached'
           }]
           expect(ctrl.fileAttachmentsForRentBurden()).toEqual expectedLabels
       describe 'when application is not submitted', ->
         it 'returns appropriate labels if one address is provided with multiple rent docs', ->
           expectedLabels = [{
-            subLabel: 'translated:LABEL.FOR_USER',
-            boldSubLabel: 'translated:LABEL.FILE_ATTACHED'
+            subLabel: 'translated:label.for_user',
+            boldSubLabel: 'translated:label.file_attached'
           }]
           expect(ctrl.fileAttachmentsForRentBurden()).toEqual expectedLabels
 
           expect($translate.instant.calls.allArgs()).toEqual([
-            ['LABEL.FOR_USER', { user: '123 Address St.' }],
-            ['LABEL.FILE_ATTACHED', { file: 'Copy of Lease, rentProof1 and rentProof2' }]
+            ['label.for_user', { user: '123 Address St.' }],
+            ['label.file_attached', { file: 'Copy of Lease, rentProof1 and rentProof2' }]
           ])
 
         it 'returns appropriate labels if multiple addresses are provided', ->
@@ -100,8 +100,8 @@ do ->
           labels = ctrl.fileAttachmentsForRentBurden()
           expect(labels.length).toEqual 2
           expect($translate.instant.calls.allArgs()).toEqual([
-            ['LABEL.FOR_USER', { user: '123 Address St.' }],
-            ['LABEL.FILE_ATTACHED', { file: 'Copy of Lease, rentProof1 and rentProof2' }]
-            ['LABEL.FOR_USER', { user: '456 Address St.' }],
-            ['LABEL.FILE_ATTACHED', { file: 'Copy of Lease and rentProof2' }]
+            ['label.for_user', { user: '123 Address St.' }],
+            ['label.file_attached', { file: 'Copy of Lease, rentProof1 and rentProof2' }]
+            ['label.for_user', { user: '456 Address St.' }],
+            ['label.file_attached', { file: 'Copy of Lease and rentProof2' }]
           ])

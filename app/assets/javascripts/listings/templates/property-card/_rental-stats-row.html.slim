@@ -26,7 +26,7 @@ tr ng-repeat-end="" ng-if="::unit_summary.minPercentIncome"
     | {{::unit_summary.unitType}}
   td data-th="Min Income"
     span ng-show="::!unit_summary.minRentalMinIncome"
-      em translate="T.NONE"
+      em translate="t.none"
     span ng-show="::unit_summary.minRentalMinIncome"
       | {{::unit_summary.minRentalMinIncome | currency:"$":0}}
       small

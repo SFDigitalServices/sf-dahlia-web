@@ -265,8 +265,8 @@ do ->
       it 'calls translate with require message when confirmation is not set', ->
         scope.userAuth.user.password_confirmation = ''
         scope.passwordConfirmationError()
-        expect($translate.instant).toHaveBeenCalledWith('LABEL.FIELD_REQUIRED')
+        expect($translate.instant).toHaveBeenCalledWith('label.field_required')
       it 'calls translate with match error when confirmation is set', ->
         scope.userAuth.user.password_confirmation = 'password'
         scope.passwordConfirmationError()
-        expect($translate.instant).toHaveBeenCalledWith('ERROR.PASSWORD_CONFIRMATION')
+        expect($translate.instant).toHaveBeenCalledWith('error.password_confirmation')

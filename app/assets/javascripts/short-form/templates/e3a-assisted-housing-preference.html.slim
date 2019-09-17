@@ -1,20 +1,20 @@
 .app-card.form-card
   short-form-header featured-leader="true"
-    h2.app-card_question translate="LABEL.GOOD_NEWS_FOR_HIGHER_RANKING"
+    h2.app-card_question translate="label.good_news_for_higher_ranking"
     .form-group
-      p.form-note.margin-bottom translate="E3A_ASSISTED_HOUSING_PREFERENCE.INSTRUCTIONS"
+      p.form-note.margin-bottom translate="e3a_assisted_housing_preference.instructions"
 
   .app-inner
     .form-group ng-class="{ error: inputInvalid('assistedHousing') }"
-      p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" translated-description="E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.DESCRIPTION" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')")
+        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'e3a_assisted_housing_preference.preference.title' | translate}}" translated-description="e3a_assisted_housing_preference.preference.description" proof-option-label="{{'label.upload_copy_of_lease' | translate}}" button-label="{{'label.upload_copy_of_lease' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')")
 
       preference-opt-out preference="assistedHousing" application="application" invalid="inputInvalid('assistedHousing')" cancel-preference="cancelPreference('assistedHousing')"
 
       small.error ng-if="inputInvalid('assistedHousing')"
-        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
+        | {{'error.please_select_an_option' | translate}}
 
   short-form-save-and-submit

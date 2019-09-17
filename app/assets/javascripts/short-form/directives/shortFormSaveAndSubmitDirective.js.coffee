@@ -6,7 +6,7 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.secondaryButton = attrs.secondaryButton || false
-    scope.submitValue = attrs.submitValue || $translate.instant('T.NEXT')
+    scope.submitValue = attrs.submitValue || $translate.instant('t.next')
     scope.hasNextButton = if attrs.nextButton == "false" then false else true
 
 ]

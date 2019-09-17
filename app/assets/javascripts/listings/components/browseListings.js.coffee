@@ -18,15 +18,15 @@ angular.module('dahlia.components')
 
     @headerText = () ->
       if @tenureType == 'ownership'
-        $translate.instant('LISTINGS.SHOWING_MATCHES_FOR_SALE')
+        $translate.instant('listings.showing_matches_for_sale')
       else if @tenureType == 'rental'
-        $translate.instant('LISTINGS.SHOWING_MATCHES_FOR_RENT')
+        $translate.instant('listings.showing_matches_for_rent')
 
     @noMatchesLabel = () ->
       if @tenureType == 'ownership'
-        $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY_SALE')
+        $translate.instant('listings.you_dont_match_any_sale')
       else if @tenureType == 'rental'
-        $translate.instant('LISTINGS.YOU_DONT_MATCH_ANY_RENT')
+        $translate.instant('listings.you_dont_match_any_rent')
 
     return ctrl
   ]

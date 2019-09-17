@@ -2,7 +2,7 @@
   preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
-    p.form-label.caps translate="E3B_RENT_BURDEN_PREFERENCE.UPLOAD_FOR_EACH_ADDRESS"
+    p.form-label.caps translate="e3b_rent_burden_preference.upload_for_each_address"
 
     .info-item.tall.dashboard-address ng-class="{'border-bottom': !$last, error: $ctrl.addressInvalid(address.address)}" ng-repeat="address in $ctrl.groupedHouseholdAddresses"
       p.info-item_name
@@ -18,7 +18,7 @@
             use xlink:href="#i-check"
           svg.i-close ng-if="!$ctrl.hasFileForType(address.address, 'lease')"
             use xlink:href="#i-close"
-        |  {{'LABEL.COPY_OF_LEASE' | translate}}
+        |  {{'label.copy_of_lease' | translate}}
 
       p.info-item_doc ng-class="{error: !$ctrl.hasFileForType(address.address, 'rent')}" ng-if="$ctrl.addressInvalid(address.address) || $ctrl.hasFileForType(address.address, 'rent')"
         span.ui-icon.ui-static.ui-tiny.i-color
@@ -26,6 +26,6 @@
             use xlink:href="#i-check"
           svg.i-close ng-if="!$ctrl.hasFileForType(address.address, 'rent')"
             use xlink:href="#i-close"
-        |  {{'LABEL.PROOF_OF_RENT' | translate}}
+        |  {{'label.proof_of_rent' | translate}}
 
-      small.error.margin-bottom-none.margin-top--half ng-if="$ctrl.addressInvalid(address.address)" translate="ERROR.COMPLETE_UPLOADING_DOCUMENTS"
+      small.error.margin-bottom-none.margin-top--half ng-if="$ctrl.addressInvalid(address.address)" translate="error.complete_uploading_documents"

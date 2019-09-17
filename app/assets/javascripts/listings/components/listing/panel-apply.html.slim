@@ -1,11 +1,11 @@
 .content-column ng-if="::$ctrl.parent.submittedApplication()"
   .content-group.has-divider
     h2.h-caps-lined
-      | {{'LABEL.MY_APPLICATION' | translate}}
-    button.button.primary.expand type="button" title="{{'LABEL.VIEW_APPLICATION' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.parent.application.id})"
-      | {{'LABEL.VIEW_APPLICATION' | translate}}
+      | {{'label.my_application' | translate}}
+    button.button.primary.expand type="button" title="{{'label.view_application' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.parent.application.id})"
+      | {{'label.view_application' | translate}}
     p.c-steel.t-small
-      ' {{'T.APPLICATION_SUBMITTED' | translate}}:
+      ' {{'t.application_submitted' | translate}}:
       ' {{$ctrl.parent.application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
 .content-column ng-if="::!$ctrl.parent.submittedApplication()"
@@ -16,20 +16,20 @@
   / Section 1: Get a Paper Application
   .content-group.has-divider
     h2.h-caps-lined ng-if="::!$ctrl.parent.listing.Accepting_Online_Applications"
-      | {{'LISTINGS.APPLY.HOW_TO_APPLY' | translate}}
+      | {{'listings.apply.how_to_apply' | translate}}
     .t-delta.t-serif.margin-bottom
       span.c-primary
         ' 1
-      | {{'LISTINGS.APPLY.GET_A_PAPER_APPLICATION' | translate}}
+      | {{'listings.apply.get_a_paper_application' | translate}}
     p.c-charcoal.t-small.margin-bottom ng-if="::!$ctrl.parent.listing.Accepting_applications_at_leasing_agent"
-      |  {{'LISTINGS.APPLY.PAPER_APPLICATIONS_MUST_BE_MAILED' | translate}}
+      |  {{'listings.apply.paper_applications_must_be_mailed' | translate}}
     ng-include src="'listings/templates/listing/_download_application.html'"
     .option-divider ng-if="::$ctrl.parent.listing.Blank_paper_application_can_be_picked_up"
       span.or
-        | {{'T.OR' | translate}}
+        | {{'t.or' | translate}}
   .content-group.has-divider ng-if="::$ctrl.parent.listing.Blank_paper_application_can_be_picked_up"
     h3.content-group_title
-      | {{'LISTINGS.APPLY.PICK_UP_AN_APPLICATION' | translate}}
+      | {{'listings.apply.pick_up_an_application' | translate}}
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
 
   / Section 2: Submit a Paper Application
@@ -37,14 +37,14 @@
     .t-delta.t-serif ng-class="{'margin-bottom': $ctrl.parent.listing.SASE_Required_for_Lottery_Ticket}"
       span.c-primary
         ' 2
-      | {{'LISTINGS.APPLY.SUBMIT_A_PAPER_APPLICATION' | translate}}
+      | {{'listings.apply.submit_a_paper_application' | translate}}
     p.c-charcoal.t-small ng-if="::$ctrl.parent.listing.SASE_Required_for_Lottery_Ticket"
-      | {{'LISTINGS.APPLY.INCLUDE_AN_ENVELOPE' | translate}}
+      | {{'listings.apply.include_an_envelope' | translate}}
 
   / Section 2a: Send by Mail
   .content-group.bg-snow ng-if="::$ctrl.parent.listing.Accepting_applications_by_PO_Box" ng-class="{'has-divider': $ctrl.parent.listing.Accepting_applications_at_leasing_agent}"
     h3.content-group_title
-      | {{'LISTINGS.APPLY.SEND_BY_US_MAIL' | translate}}
+      | {{'listings.apply.send_by_us_mail' | translate}}
     p.content-group_address.no-margin.skiptranslate
       | {{ ::$ctrl.parent.listing.Application_Organization}}
     p.content-group_address.skiptranslate
@@ -52,37 +52,37 @@
       br
       | {{ ::$ctrl.parent.listing.Application_City }} {{ ::$ctrl.parent.listing.Application_State }} {{ ::$ctrl.parent.listing.Application_Postal_Code }}
     p.c-charcoal.t-small
-      | {{'LISTINGS.APPLY.APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE' | translate}}
+      | {{'listings.apply.applications_must_be_received_by_deadline' | translate}}
 
     .option-divider ng-if="::$ctrl.parent.listing.Accepting_applications_at_leasing_agent"
       span.or.bg-snow
-        | {{'T.OR' | translate}}
+        | {{'t.or' | translate}}
 
   / Section 2b: Drop Off
   .content-group.bg-snow ng-if="::$ctrl.parent.listing.Accepting_applications_at_leasing_agent"
     h3.content-group_title ng-if="::$ctrl.parent.listing.Accepting_applications_by_PO_Box"
-      | {{'LISTINGS.APPLY.DROP_OFF_APPLICATION' | translate}}
+      | {{'listings.apply.drop_off_application' | translate}}
     h3.content-group_title ng-if="::!$ctrl.parent.listing.Accepting_applications_by_PO_Box"
-      | {{'LISTINGS.APPLY.DROP_OFF_APPLICATION_OR_MAIL' | translate}}
+      | {{'listings.apply.drop_off_application_or_mail' | translate}}
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
     p.c-charcoal.t-small ng-if="::!$ctrl.parent.listing.Accepting_applications_by_PO_Box"
-      | {{'LISTINGS.APPLY.APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE' | translate}}
+      | {{'listings.apply.applications_must_be_received_by_deadline' | translate}}
 
   .content-group.bg-snow
     p.c-charcoal.t-small
       span ng-if="::$ctrl.parent.listing.Accepting_Online_Applications"
-        ' {{'LISTINGS.APPLY.DO_NOT_APPLY_ONLINE_AND_PAPER' | translate}}
-      | {{'LISTINGS.APPLY.DO_NOT_DO_MULTIPLE_APPLICATIONS' | translate}}
+        ' {{'listings.apply.do_not_apply_online_and_paper' | translate}}
+      | {{'listings.apply.do_not_do_multiple_applications' | translate}}
 
   / Section 3: Find a Housing Counselor
   .content-group
     h4.h-caps-lined
-      | {{'LISTINGS.APPLY.NEED_HELP' | translate}}
+      | {{'listings.apply.need_help' | translate}}
     div ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       p.c-charcoal.t-small.margin-bottom
-        | {{'LISTINGS.APPLY.VISIT_A_HOUSING_COUNSELOR' | translate}}
+        | {{'listings.apply.visit_a_housing_counselor' | translate}}
       a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"
-        | {{'LISTINGS.APPLY.FIND_A_HOUSING_COUNSELOR' | translate}}
+        | {{'listings.apply.find_a_housing_counselor' | translate}}
     div ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
       a.button.secondary.expand.no-margin href="http://www.homeownershipsf.org/" target="_blank"
-        | {{'LISTINGS.APPLY.VISIT_HOMEOWNERSHIP_SF' | translate}}
+        | {{'listings.apply.visit_homeownership_sf' | translate}}

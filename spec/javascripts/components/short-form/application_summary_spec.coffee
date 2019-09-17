@@ -86,11 +86,11 @@ do ->
           'incomeTotal': '5000.123'
         }}
       it 'should return expected phrase for monthly income', ->
-        expect(ctrl.applicationIncomeAmount()).toEqual '$5,000.12 translated:T.PER_MONTH'
+        expect(ctrl.applicationIncomeAmount()).toEqual '$5,000.12 translated:t.per_month'
 
       it 'should return expected phrase for yearly income', ->
         ctrl.application.householdIncome.incomeTimeframe = 'per_year'
-        expect(ctrl.applicationIncomeAmount()).toEqual '$5,000.12 translated:T.PER_YEAR'
+        expect(ctrl.applicationIncomeAmount()).toEqual '$5,000.12 translated:t.per_year'
 
     describe 'getLendingAgentName', ->
       it 'should call LendingInstitutionService.getLendingAgentName with the given agent ID', ->

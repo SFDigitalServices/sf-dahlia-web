@@ -11,20 +11,20 @@ angular.module('dahlia.directives')
 
     switch listing.Reserved_community_type
       when 'Veteran'
-        scope.title = $translate.instant('A2_COMMUNITY_SCREENING.VETERAN.YOU_OR_ANYONE')
-        scope.description = $translate.instant('A2_COMMUNITY_SCREENING.VETERAN.YOU_OR_ANYONE_DESC')
-        scope.labels.communityScreeningYes = $translate.instant('T.YES')
-        scope.communityEligibilityErrorMsg.push($translate.instant('ERROR.VETERAN_ANYONE'))
+        scope.title = $translate.instant('a2_community_screening.veteran.you_or_anyone')
+        scope.description = $translate.instant('a2_community_screening.veteran.you_or_anyone_desc')
+        scope.labels.communityScreeningYes = $translate.instant('t.yes')
+        scope.communityEligibilityErrorMsg.push($translate.instant('error.veteran_anyone'))
       when 'Senior'
         if restriction == 'Entire household'
-          scope.title = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE')
-          scope.description = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_DESC', age)
-          scope.labels.communityScreeningYes = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_LABEL', age)
-          scope.communityEligibilityErrorMsg.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
+          scope.title = $translate.instant('a2_community_screening.senior.you_and_everyone')
+          scope.description = $translate.instant('a2_community_screening.senior.you_and_everyone_desc', age)
+          scope.labels.communityScreeningYes = $translate.instant('a2_community_screening.senior.you_and_everyone_label', age)
+          scope.communityEligibilityErrorMsg.push($translate.instant('error.senior_everyone', age))
         else
-          scope.title = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE')
-          scope.description = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE_DESC', age)
-          scope.labels.communityScreeningYes = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE_LABEL', age)
-          scope.communityEligibilityErrorMsg.push($translate.instant('ERROR.SENIOR_ANYONE', age))
+          scope.title = $translate.instant('a2_community_screening.senior.you_or_anyone')
+          scope.description = $translate.instant('a2_community_screening.senior.you_or_anyone_desc', age)
+          scope.labels.communityScreeningYes = $translate.instant('a2_community_screening.senior.you_or_anyone_label', age)
+          scope.communityEligibilityErrorMsg.push($translate.instant('error.senior_anyone', age))
 
 ]

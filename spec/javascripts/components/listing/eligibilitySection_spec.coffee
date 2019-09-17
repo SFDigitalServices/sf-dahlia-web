@@ -61,15 +61,15 @@ do ->
 
       describe 'occupancyLabel', ->
         describe 'when maxOccupancy == 1', ->
-          it 'calls $translate.instant with "LISTINGS.PERSON"', ->
+          it 'calls $translate.instant with "listings.person"', ->
             spyOn($translate, 'instant')
             ctrl.occupancyLabel(1)
-            expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
+            expect($translate.instant).toHaveBeenCalledWith('listings.person')
         describe 'when maxOccupancy != 1', ->
-          it 'calls $translate.instant with "LISTINGS.PEOPLE"', ->
+          it 'calls $translate.instant with "listings.people"', ->
             spyOn($translate, 'instant')
             ctrl.occupancyLabel(2)
-            expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
+            expect($translate.instant).toHaveBeenCalledWith('listings.people')
 
       describe 'showAMItoggler', ->
         it 'returns false for empty AMICharts', ->

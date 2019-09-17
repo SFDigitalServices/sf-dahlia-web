@@ -13,8 +13,8 @@ div ng-show="showAlert()"
     p.alert-body ng-bind-html="alertText()"
 
   .alert-notice.alert.invert ng-show="preferenceWarning"
-    p.alert-notice_title translate="ERROR.PLEASE_COMPLETE_PREFERENCE_CONTENT" ng-if="preferenceWarning == 'preferenceIncomplete'"
-    p.alert-notice_title translate="ERROR.PLEASE_SELECT_PREFERENCE_CONTENT" ng-if="preferenceWarning == 'preferenceNotSelected'"
+    p.alert-notice_title translate="error.please_complete_preference_content" ng-if="preferenceWarning == 'preferenceIncomplete'"
+    p.alert-notice_title translate="error.please_select_preference_content" ng-if="preferenceWarning == 'preferenceNotSelected'"
 
   .alert-notice.alert.invert ng-show="customSubMessage"
     p.alert-notice_title
@@ -28,7 +28,7 @@ div ng-show="showAlert()"
     / when you encounter the senior error we just want to show a short eligibility error message
     div ng-hide="shortEligibilityError"
       / otherwise we display the further message about not being eligible and the link to Get Assistance
-      p.t-tiny.margin-bottom translate="ERROR.NOT_ELIGIBLE_DESCRIPTION"
+      p.t-tiny.margin-bottom translate="error.not_eligible_description"
 
       p.t-tiny.c-alert.margin-bottom
-        a ui-sref="dahlia.additional-resources" translate="ERROR.GET_ASSISTANCE"
+        a ui-sref="dahlia.additional-resources" translate="error.get_assistance"

@@ -10,9 +10,9 @@
               svg
                 use xlink:href="#i-profile"
           h1.dash-title
-            | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
+            | {{'create_account.create_an_account' | translate}}
           p.dash-summary
-            | {{'CREATE_ACCOUNT.P1' | translate}}
+            | {{'create_account.p1' | translate}}
         alert-box(form-object="form.accountForm" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
         alert-box(primary="true" hide-alert="hideMessage" info='true' custom-message="chooseDifferentEmailMessage()" ng-if="showChooseDiffEmailMessage")
@@ -22,97 +22,97 @@
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
             h2.form-label.caps
-              ' {{'LABEL.YOUR_NAME' | translate}}
+              ' {{'label.your_name' | translate}}
               lock-icon ng-if="isLocked('name')"
 
             label.sr-only for="firstName"
-              | {{'LABEL.FIRST_NAME' | translate}}
-            input#firstName ng-model="userAuth.contact.firstName" ng-required="true" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
+              | {{'label.first_name' | translate}}
+            input#firstName ng-model="userAuth.contact.firstName" ng-required="true" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
             small.error#firstName_error ng-if="inputInvalid('firstName')"
-              | {{'ERROR.FIRST_NAME' | translate}}
+              | {{'error.first_name' | translate}}
 
             label.sr-only for="middleName"
-              | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-            input#middleName maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="isLocked('name')"
+              | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+            input#middleName maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" type="text" ng-disabled="isLocked('name')"
 
             label.sr-only for="lastName"
-              | {{'LABEL.LAST_NAME' | translate}}
-            input#lastName ng-required="true" ng-model="userAuth.contact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
+              | {{'label.last_name' | translate}}
+            input#lastName ng-required="true" ng-model="userAuth.contact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
             small.error#lastName_error ng-if="inputInvalid('lastName')"
-              | {{'ERROR.LAST_NAME' | translate}}
+              | {{'error.last_name' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
             h2.form-label.caps
-              ' {{'LABEL.YOUR_DOB' | translate}}
+              ' {{'label.your_dob' | translate}}
               lock-icon ng-if="isLocked('dob')"
             .form-date-of-birth.row.collapse
 
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_month"
-                  | {{'LABEL.DOB_MONTH' | translate}}
+                  | {{'label.dob_month' | translate}}
                 input(ng-model="userAuth.contact.dob_month" ng-required="true" maxlength="2" name="date_of_birth_month" placeholder="MM" type="text" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
 
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_day"
-                  | {{'LABEL.DOB_DAY' | translate}}
+                  | {{'label.dob_day' | translate}}
                 input(ng-model="userAuth.contact.dob_day" ng-required="true" maxlength="2" name="date_of_birth_day" placeholder="DD" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
 
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_year"
-                  | {{'LABEL.DOB_YEAR' | translate}}
+                  | {{'label.dob_year' | translate}}
                 input(ng-model="userAuth.contact.dob_year" ng-required="true" maxlength="4" name="date_of_birth_year" placeholder="YYYY" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'year\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
 
             small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
-              | {{'ERROR.DOB' | translate}}
+              | {{'error.dob' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
 
             h2.form-label.caps for="auth_email"
-              ' {{'LABEL.EMAIL_ADDRESS' | translate}}
+              ' {{'label.email_address' | translate}}
               lock-icon ng-if="isLocked('email')"
             label.sr-only for="auth_email"
-              | {{'LABEL.EMAIL_ADDRESS' | translate}}
+              | {{'label.email_address' | translate}}
             input#auth_email ng-model="userAuth.user.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
             small.error#auth_email_error ng-if="inputInvalid('email')"
-              | {{'ERROR.EMAIL' | translate}}
+              | {{'error.email' | translate}}
 
             label.label-secondary for="auth_email_confirmation"
-              | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
+              | {{'label.re_enter_email_address' | translate}}
             input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" maxlength="{{::INPUT_MAX_LENGTH.email}}" ng-required="true" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
 
             small.error#auth_email_confirmation_error ng-if="inputInvalid('email_confirmation')"
-              | {{'ERROR.EMAIL_CONFIRMATION' | translate}}
+              | {{'error.email_confirmation' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('password') || inputInvalid('password_confirmation') }"
             h2.form-label.caps for="password"
-              | {{'LABEL.PASSWORD' | translate}}
+              | {{'label.password' | translate}}
             p.form-note.margin-bottom
-              | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
+              | {{'create_account.password_instructions' | translate}}
             label.sr-only for="auth_password"
-              | {{'LABEL.PASSWORD' | translate}}
-            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error" ng-model-options="{ allowInvalid: true }"
+              | {{'label.password' | translate}}
+            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'create_account.password_short_instructions' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error" ng-model-options="{ allowInvalid: true }"
             small.error#auth_password_error ng-if="inputInvalid('password')"
-              | {{'ERROR.PASSWORD' | translate}}
+              | {{'error.password' | translate}}
 
             label.label-secondary for="auth_password_confirmation"
-              | {{'LABEL.RE_ENTER_PASSWORD' | translate}}
-            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error" ng-model-options="{ allowInvalid: true }"
+              | {{'label.re_enter_password' | translate}}
+            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'create_account.password_short_instructions' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error" ng-model-options="{ allowInvalid: true }"
 
             small.error#auth_password_confirmation_error ng-if="inputInvalid('password_confirmation')"
-              | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}
+              | {{'error.password_confirmation' | translate}}
 
           .form-group
             p.t-small.c-steel.text-center.padding-top
-              input#submit.button.primary.no-margin type="submit" value="{{'LABEL.CREATE_ACCOUNT' | translate}}"  ng-disabled="submitDisabled"
+              input#submit.button.primary.no-margin type="submit" value="{{'label.create_account' | translate}}"  ng-disabled="submitDisabled"
 
         footer.dash-header
           h2.dash-title.t-gamma
-            | {{'CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT' | translate}}
+            | {{'create_account.already_have_account' | translate}}
           p.t-small.c-steel
             a.button.no-margin#sign-in ui-sref="dahlia.short-form-application.sign-in" ng-if="rememberedShortFormState"
-              | {{'LABEL.SIGN_IN' | translate}}
+              | {{'label.sign_in' | translate}}
             a.button.no-margin ui-sref="dahlia.sign-in" ng-if="!rememberedShortFormState"
-              | {{'LABEL.SIGN_IN' | translate}}
+              | {{'label.sign_in' | translate}}

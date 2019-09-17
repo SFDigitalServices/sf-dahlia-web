@@ -22,6 +22,33 @@ module.exports = function(grunt) {
         }
       ],
     },
+    translationsToTmp: {
+      files: [
+        {
+          src: 'app/assets/json/translations/locale-en.json',
+          dest: 'tmp/translations/locale-en.json'
+        }
+      ],
+      options: {
+        process: function (content, srcpath) {
+          return JSON.stringify(JSON.parse(content)['en'], null, 4);
+        }
+      }
+    },
+    translationsFromTmp: {
+      files: [
+        {
+          src: 'tmp/translations/locale-en.json',
+          dest: 'app/assets/json/translations/locale-en.json'
+        }
+      ],
+      options: {
+        process: function (content, srcpath) {
+          let body = {"en": JSON.parse(content)}
+          return JSON.stringify(body, null, 4);
+        }
+      }
+    }
   },
 
   //Make any string replacements that are needed when transfering assets to app.
@@ -57,7 +84,11 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.js.coffee',
         'app/assets/javascripts/**/*.html',
         'app/assets/javascripts/**/*.html.slim',
-        'app/views/layouts/application.html.slim'
+        'app/views/layouts/application.html.slim',
+        'app/views/devise/mailer/*.html.slim',
+        'app/views/emailer/*.html.slim',
+        'app/views/layouts/email.html.slim',
+        'app/mailers/**/*.rb',
       ],
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
@@ -67,11 +98,17 @@ module.exports = function(grunt) {
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
          'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         // email template regexes below
+         ' t \'([A-Z\.\-\_]*)\'',
+         ' t\\(\'([A-Z\.\-\_]*)\'',
+         '\\(t\\(\'([A-Z\.\-\_]*)\'',
+         '#{t\\(\'([A-Z\.\-\_]*)\'',
+         'I18n\.translate\\(\n?[ ]*\'([A-Z\.\-\_]*)\'', // emailer.rb usages
          'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
       lang:     ['locale-en'],
-      dest:     'app/assets/json/translations'
+      dest:     'tmp/translations'
     }
   },
   json_remove_fields: {
@@ -90,12 +127,13 @@ module.exports = function(grunt) {
       'app/assets/json/translations/locale-en.json',
       'app/assets/json/translations/locale-es.json',
       'app/assets/json/translations/locale-tl.json',
-      'app/assets/json/translations/locale-zh.json'
+      'app/assets/json/translations/locale-zh.json',
+      'tmp/translations/locale-en.json'
     ],
     // options: {
     //   spacing: 2
     // }
-  },
+  }
 });
 
   // load tasks
@@ -106,7 +144,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sort-json');
   grunt.loadNpmTasks('grunt-json-remove-fields');
 
-
   // register task
   grunt.registerTask('default', [
     'clean',
@@ -115,7 +152,9 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
+    'copy:translationsToTmp',
     'i18nextract',
+    'copy:translationsFromTmp',
     'json_remove_fields',
     'sortJSON',
   ]);

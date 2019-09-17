@@ -20,7 +20,7 @@ angular.module('dahlia.components')
       @memberSelectorLabel = ''
 
       @initVariables = =>
-        @memberSelectorLabel = $translate.instant('LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME')
+        @memberSelectorLabel = $translate.instant('label.applicant_preferences_document_name')
         prefs = @application.preferences
         unless prefs.liveWorkInSf_preference
           prefs.workInSf = false
@@ -33,11 +33,11 @@ angular.module('dahlia.components')
           when 'liveInSf'
             prefs.liveInSf = true
             @eligibleMembers = ShortFormApplicationService.liveInSfMembers()
-            @proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS')
+            @proofOptionLabel = $translate.instant('label.preference_proof_address_documents')
           when 'workInSf'
             prefs.workInSf = true
             @eligibleMembers = ShortFormApplicationService.workInSfMembers()
-            @proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_DOCUMENTS')
+            @proofOptionLabel = $translate.instant('label.preference_proof_documents')
 
         prefs.documents[prefs.liveWorkInSf_preference] ?= {}
         @proofDocument = prefs.documents[prefs.liveWorkInSf_preference]
