@@ -22,16 +22,16 @@ tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minRentalMi
 
 tr ng-repeat-end="" ng-if="::unit_summary.minPercentIncome"
   / Percent-based rent with no min income
-  td data-th="Unit Type"
+  td.is-subtitled data-th="Unit Type"
     | {{::unit_summary.unitType}}
-  td data-th="Min Income"
+  td.is-subtitled data-th="Min Income"
     span ng-show="::!unit_summary.minRentalMinIncome"
       em translate="T.NONE"
     span ng-show="::unit_summary.minRentalMinIncome"
       | {{::unit_summary.minRentalMinIncome | currency:"$":0}}
       small
         | per month
-  td.text-right data-th="Rent"
+  td.text-right.is-subtitled data-th="Rent"
     span
       | {{::unit_summary.minPercentIncome}}
       span ng-show="::unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
