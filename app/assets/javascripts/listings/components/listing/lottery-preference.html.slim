@@ -6,14 +6,10 @@
         | {{$ctrl.preference.order | ordinalSuffix}}
     h4.content-card_title.no-margin
       | {{$ctrl.preference.preferenceName}}
-    p.c-steel ng-if="$ctrl.preference.unitsAvailable != 'Remaining'"
-      | Up to {{$ctrl.preference.unitsAvailable}} units available
-    p.c-steel ng-if="$ctrl.preference.unitsAvailable == 'Remaining'"
-      | All remaining units
+    p.c-steel ng-if="$ctrl.preference.unitsAvailable != 'Remaining'" translate="listings.lottery_preference.up_to_units" translate-value-units="{{$ctrl.preference.unitsAvailable}}"
+    p.c-steel ng-if="$ctrl.preference.unitsAvailable == 'Remaining'" translate="listings.lottery_preference.all_remaining_units"
   p.c-steel
     | {{$ctrl.preference.description}}
     br
-    a.margin-right ng-href="{{$ctrl.preference.readMoreUrl}}" target="_blank" ng-if="$ctrl.preference.readMoreUrl"
-      | Read More
-    a ui-sref="dahlia.document-checklist({section: $ctrl.docSection()})" ng-if="$ctrl.isPrefWithProof()"
-      | View Document Checklist
+    a.margin-right ng-href="{{$ctrl.preference.readMoreUrl}}" target="_blank" ng-if="$ctrl.preference.readMoreUrl" translate="label.read_more"
+    a ui-sref="dahlia.document-checklist({section: $ctrl.docSection()})" ng-if="$ctrl.isPrefWithProof()" translate="label.view_document_checklist"

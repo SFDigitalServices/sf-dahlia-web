@@ -1,40 +1,40 @@
 tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minRentalMinIncome || unit_summary.maxRentalMinIncome"
   / Dollar based rent and min income
-  td.is-subtitled data-th="Unit Type"
+  td.is-subtitled data-th="{{'t.unit_type' | translate}}"
     | {{::unit_summary.unitType}}
-  td.is-subtitled data-th="Min. Income"
+  td.is-subtitled data-th="{{'t.min_income' | translate}}"
     span
       span ng-show="::unit_summary.minRentalMinIncome"
         | {{::unit_summary.minRentalMinIncome | currency:"$":0}}
       span ng-show="::!unit_summary.minRentalMinIncome"
         | {{::unit_summary.maxRentalMinIncome | currency:"$":0}}
       span ng-show="::unit_summary.minRentalMinIncome && (unit_summary.maxRentalMinIncome > unit_summary.minRentalMinIncome)"
-        |  to {{::unit_summary.maxRentalMinIncome | currency:"$":0}}
+        |  {{'t.to' | translate}} {{::unit_summary.maxRentalMinIncome | currency:"$":0}}
       small
-        | per month
+        | {{'t.income' | translate}}
   td.text-right.is-subtitled data-th="Rent"
     span
       | {{::unit_summary.minMonthlyRent | currency:"$":0}}
       span ng-show="::unit_summary.maxMonthlyRent > unit_summary.minMonthlyRent"
         |  to {{::unit_summary.maxMonthlyRent | currency:"$":0}}
       small
-        | per month
+        | {{'t.per_month' | translate}}
 
 tr ng-repeat-end="" ng-if="::unit_summary.minPercentIncome"
   / Percent-based rent with no min income
-  td data-th="Unit Type"
+  td data-th="{{'t.unit_type' | translate}}"
     | {{::unit_summary.unitType}}
-  td data-th="Min Income"
+  td data-th="{{'t.min_income' | translate}}"
     span ng-show="::!unit_summary.minRentalMinIncome"
       em translate="t.none"
     span ng-show="::unit_summary.minRentalMinIncome"
       | {{::unit_summary.minRentalMinIncome | currency:"$":0}}
       small
-        | per month
+        | {{'t.per_month' | translate}}
   td.text-right data-th="Rent"
     span
       | {{::unit_summary.minPercentIncome}}
       span ng-show="::unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
-        |  to {{::unit_summary.maxPercentIncome}}
+        |  {{'t.to' | translate}} {{::unit_summary.maxPercentIncome}}
       small
-        | % income
+        | % {{'t.income' | translate}}

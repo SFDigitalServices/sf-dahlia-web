@@ -27,8 +27,7 @@
         | {{::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}
       p.content-group_address.c-steel.skiptranslate
         | {{::$ctrl.parent.listing.Developer}}
-      a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}"
-        | View on Map
+      a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}" translate="label.view_on_map"
 
     .property-hero_favorite
       button.button.round-icon.i-block data-event="gtm-favorite" title="Favorite" ng-click="$ctrl.parent.toggleFavoriteListing($ctrl.parent.listing.Id);"
@@ -49,7 +48,7 @@
       span.ui-icon.ui-static.ui-medium.i-color
         svg
           use xlink:href="#i-clock"
-      | Applications Closed {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      | {{'t.applications_closed' | translate}} {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
   section.property-hero_stats.margin-bottom--2x
     .message-group
@@ -77,7 +76,7 @@
 
     .property-hero_stat.margin-top--2x.margin-left.margin-right ng-repeat="(percent, unitGroups) in $ctrl.parent.listing.groupedUnits"
       h2.table-pricing-ami ng-if="percent && $ctrl.hasMultipleAMIUnits()"
-        ' {{percent}}% AMI
+        ' {{percent}}% {{'t.ami' | translate}}
         ng-pluralize count="unitGroups.length" when="{'1': ' Unit', 'other': ' Units'}"
 
         / TODO: will fully implement this More Info popup link in a later story
@@ -104,6 +103,6 @@
         span.ui-icon.ui-medium
           svg
             use xlink:href="#i-clock"
-        | Application Deadline {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+        | {{'t.application_deadline' | translate}} {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
       ng-include src="'listings/templates/listing/_waitlist-info.html'"
       panel-apply

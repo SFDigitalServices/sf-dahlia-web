@@ -5,40 +5,40 @@ tr ng-if="::unitSummary.minPriceWithoutParking"
     span
       | {{::unitSummary.unitType}}
     small
-      | no parking
+      | {{'t.no_parking' | translate}}
   / Unit Price
   td.is-subtitled data-th="Sales Price"
     span
       span
         | {{::unitSummary.minPriceWithoutParking | currency:"$":0}}
       small ng-show="::$ctrl.hasRangeOfPricesWithoutParking(unitSummary)"
-        | or more
+        | {{'t.or_more' | translate}}
   / HOA Dues
   td.is-subtitled data-th="HOA Dues"
     span
       span
         | {{::unitSummary.minHoaDuesWithoutParking | currency:"$":0}}
       small ng-show="::$ctrl.hasRangeOfHoaWithoutParking(unitSummary)"
-        | or more
+        | {{'t.or_more' | translate}}
 / Row with parking
 tr ng-if="::unitSummary.minPriceWithParking"
   td.is-subtitled data-th="Unit Type" scope="row"
     span
       | {{::unitSummary.unitType}}
     small
-      | with parking
+      | {{'t.with_parking' | translate}}
   / Unit Price
   td.is-subtitled data-th="Sales Price"
     span
       span
         | {{::unitSummary.minPriceWithParking | currency:"$":0}}
       small ng-show="::$ctrl.hasRangeOfPricesWithParking(unitSummary)"
-        | or more
+        | {{'t.or_more' | translate}}
   / HOA Dues
   td.is-subtitled data-th="HOA Dues"
     span
       span
         | {{::unitSummary.minHoaDuesWithParking | currency:"$":0}}
       small ng-show="::$ctrl.hasRangeOfHoaWithParking(unitSummary)"
-        | or more
+        | {{'t.or_more' | translate}}
 tr ng-repeat-end="true" ng-if="0"

@@ -1,6 +1,5 @@
 .content-group ng-if="::$ctrl.parent.listing.Open_Houses"
-  h4.content-group_title
-    | Open Houses
+  h4.content-group_title translate="label.open_houses"
   ul.content-list
     li ng-repeat="session in $ctrl.sortedOpenHouses()"
       p.content-group_date.no-margin

@@ -2,8 +2,9 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['$window', 'ListingDataService', 'ListingEligibilityService', 'ListingIdentityService', 'ListingUnitService', 'SharedService',
-  ($window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
+  controller: ['$translate', '$window', 'ListingDataService', 'ListingEligibilityService', 'ListingIdentityService',
+  'ListingUnitService', 'SharedService',
+  ($translate, $window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
@@ -88,9 +89,9 @@ angular.module('dahlia.components')
 
     @featuresCaption = (listing) ->
       if ListingIdentityService.isSale(listing)
-        "Amenities and unit details"
+        $translate.instant("listings.features.sale_subheader")
       else
-        "Amenities, unit details and additional fees"
+        $translate.instant("listings.features.rent_subheader")
 
     return ctrl
   ]

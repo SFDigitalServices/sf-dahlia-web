@@ -1,9 +1,7 @@
 accordion-heading.lead
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
-  h3.accordion-name
-    | Eligibility
-  span.accordion-subheader ng-show="::$ctrl.parent.isRental($ctrl.parent.listing)"
-    | Income, occupancy, preferences, and subsidies
+  h3.accordion-name translate="listings.eligibility.header"
+  span.accordion-subheader ng-show="::$ctrl.parent.isRental($ctrl.parent.listing)" translate="listings.eligibility.subheader"
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
@@ -13,8 +11,7 @@ accordion-heading.lead
     li.custom-counter_item ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title
-            | Before Applying
+          h4.custom-counter_title translate="listings_for_sale.before_applying.title"
           p.custom-counter_text translate="listings_for_sale.before_applying.make_sure_you"
         .content-card
           ng-include src="'listings/templates/_before-applying-list.html'"
@@ -108,13 +105,9 @@ accordion-heading.lead
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title
-            | Lottery Preferences
-          p.custom-counter_text ng-if="::!$ctrl.listingHasPreferences()"
-            | Preference holders will be given highest ranking in the lottery process.
-          p.custom-counter_text ng-if="::$ctrl.listingHasPreferences()"
-            | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-
+          h4.custom-counter_title translate="listings_for_sale.lottery_preferences.title"
+          p.custom-counter_text ng-if="::!$ctrl.listingHasPreferences()" translate="listings_for_sale.lottery_preferences.no_preferences"
+          p.custom-counter_text ng-if="::$ctrl.listingHasPreferences()" translate="listings_for_sale.lottery_preferences.has_preferences"
 
         .content-card.padding--2x ng-show="$ctrl.loading.preferences"
           .padding--2x ng-include="'shared/templates/spinner.html'"
@@ -167,33 +160,28 @@ accordion-heading.lead
     li.custom-counter_item ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title
-            | Rental Assistance
-          p.custom-counter_text
-            | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
-          p.custom-counter_text In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+          h4.custom-counter_title translate="listings_for_rent.rental_assistance.title"
+          p.custom-counter_text translate="listings_for_rent.rental_assistance.info_1"
+          p.custom-counter_text translate="listings_for_rent.rental_assistance.info_2"
 
     li.custom-counter_item ng-if="::$ctrl.parent.listing.Credit_Rating || $ctrl.parent.listing.Eviction_History || $ctrl.parent.listing.Criminal_History"
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title Additional Eligibility Rules
-          p.custom-counter_text Applicants must also qualify under the rules of the building.
+          h4.custom-counter_title translate="listings.additional_eligibility_rules.title"
+          p.custom-counter_text translate="listings.additional_eligibility_rules.text"
 
         .content-card ng-if="::$ctrl.parent.listing.Credit_Rating"
-          h4.content-card_title Credit History
+          h4.content-card_title translate="listings.additional_eligibility_rules.credit_history"
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Credit_Rating | nl2br" ng-tt-words-threshold="60")
 
         .content-card ng-if="::$ctrl.parent.listing.Eviction_History"
-          h4.content-card_title Rental History
+          h4.content-card_title translate="listings.additional_eligibility_rules.rental_history"
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Eviction_History | nl2br" ng-tt-words-threshold="60")
 
         .content-card
-          h4.content-card_title Criminal Background
-          p.c-steel
-            ' Qualified applicants with criminal history will be considered for
-              housing in compliance with <a target="_blank" href="http://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
+          h4.content-card_title translate="listings.additional_eligibility_rules.criminal_background"
+          p.c-steel translate="listings.additional_eligibility_rules.criminal_background_info" translate-value-article-49-url="http://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf" translate-value-fair-chance-url="http://sfgov.org/olse/fair-chance-ordinance-fco"
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Criminal_History | nl2br" ng-tt-words-threshold="20")
 
         p ng-if="::$ctrl.parent.listing.Building_Selection_Criteria"
-          a target="_blank" href="{{$ctrl.parent.listing.Building_Selection_Criteria}}"
-            | Find out more about Building Selection Criteria
+          a target="_blank" href="{{$ctrl.parent.listing.Building_Selection_Criteria}}" translate="listings.additional_eligibility_rules.find_out_more"

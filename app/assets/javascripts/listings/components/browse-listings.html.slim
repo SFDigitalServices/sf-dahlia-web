@@ -9,17 +9,17 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
         | {{ $ctrl.headerText() }}
       .results-header
         p.results-header_values
-          | For
+          | {{'t.for' | translate}}
           strong
             '  {{$ctrl.eligibilityFilters.household_size}}
           ' {{$ctrl.eligibilityFilters.household_size == 1 ? 'person ' : 'people '}}
           span ng-if="$ctrl.eligibilityFilters.children_under_6 && $ctrl.eligibilityFilters.children_under_6 > 0"
-            ' (including
+            ' ({{'t.including' | translate}}
             strong
               ' {{$ctrl.eligibilityFilters.children_under_6}}
-              ' {{$ctrl.eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
-            ' under 6)
-          ' at <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ $ctrl.eligibilityFilters.income_timeframe | incomeTimeframe }}
+              ' {{$ctrl.eligibilityFilters.children_under_6 == 1 ? 't.child' : 't.children' | translate}}
+            ' {{'t.under_6' | translate}})
+          ' {{'t.at' | translate}} <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ 't.' + ($ctrl.eligibilityFilters.income_timeframe | incomeTimeframe) | translate }}
         .results-header_actions
           a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator({listingsType: $ctrl.tenureType})"
             | {{'label.edit_eligibility' | translate}}
@@ -63,7 +63,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
           p.margin-bottom--half
             | {{ $ctrl.noMatchesLabel() }}
           p.t-small.c-steel.no-margin
-            | <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
+            | <a class="lined" ui-sref="dahlia.additional-resources">{{'label.click_here' | translate}}</a> {{'listings.for_other_lisitings' | translate}}
 
     .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
 

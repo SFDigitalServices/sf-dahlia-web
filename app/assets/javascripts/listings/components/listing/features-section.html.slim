@@ -1,7 +1,6 @@
 accordion-heading
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-features.svg']}}" alt="features-options"
-  h3.accordion-name
-    | Features
+  h3.accordion-name translate="listings.features.header"
   span.accordion-subheader
     | {{$ctrl.parent.featuresCaption($ctrl.parent.listing)}}
   span.ui-control.ui-icon.ui-small
@@ -10,18 +9,18 @@ accordion-heading
 
 .content-section
   .content-tile.feature-tile
-    feature-row title="Neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}" skiptranslate="{{true}}"
-    feature-row title="Built" description="{{::$ctrl.parent.listing.Year_Built}}"
-    feature-row title="Appliances" description="{{::$ctrl.parent.listing.Appliances}}"
-    feature-row title="{{$ctrl.parent.isSale($ctrl.parent.listing) ? 'Services Covered by HOA Dues' : 'Services Onsite' }}" description="{{::$ctrl.parent.listing.Services_Onsite}}"
-    feature-row title="Parking" description="{{::$ctrl.parent.listing.Parking_Information}}"
-    feature-row title="Smoking Policy" description="{{::$ctrl.parent.listing.Smoking_Policy}}"
-    feature-row title="Pets Policy" description="{{::$ctrl.parent.listing.Pet_Policy}}"
-    feature-row title="Property Amenities" description="{{::$ctrl.parent.listing.Amenities}}"
-    feature-row title="Accessibility" description="{{::$ctrl.parent.listing.Accessibility}}"
+    feature-row title="listings.features.neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}" skiptranslate="{{true}}"
+    feature-row title="listings.features.built" description="{{::$ctrl.parent.listing.Year_Built}}"
+    feature-row title="listings.features.appliances" description="{{::$ctrl.parent.listing.Appliances}}"
+    feature-row title="{{$ctrl.parent.isSale($ctrl.parent.listing) ? 'listings.features.services_covered_by_hoa_dues' : 'listings.features.services_onsite' }}" description="{{::$ctrl.parent.listing.Services_Onsite}}"
+    feature-row title="listings.features.parking" description="{{::$ctrl.parent.listing.Parking_Information}}"
+    feature-row title="listings.features.smoking_policy" description="{{::$ctrl.parent.listing.Smoking_Policy}}"
+    feature-row title="listings.features.pets_policy" description="{{::$ctrl.parent.listing.Pet_Policy}}"
+    feature-row title="listings.features.property_amenities" description="{{::$ctrl.parent.listing.Amenities}}"
+    feature-row title="listings.features.accessibility" description="{{::$ctrl.parent.listing.Accessibility}}"
 
   .content-tile.feature-tile
-    h4.feature-title.margin-bottom Unit Features
+    h4.feature-title.margin-bottom translate="listings.features.unit_features"
 
     .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
       .padding--2x ng-include="'shared/templates/spinner.html'"
@@ -42,8 +41,7 @@ accordion-heading
               ng-pluralize count="unitGroup.units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           span
             | ,  {{::unitGroup.unitAreaRange}}
-            span
-              |  square feet
+            span translate="listings.features.square_feet"
           span.ui-control.ui-icon.ui-small
             svg
               use xlink:href="#i-arrow-down"
@@ -52,17 +50,18 @@ accordion-heading
         table role="grid"
           thead
             tr
-              th scope="col" Unit
-              th scope="col" Area
-              th scope="col" Baths
-              th scope="col" Floor
-              th scope="col" Accessibility
+              th scope="col" translate="listings.features.unit"
+              th scope="col" translate="listings.features.area"
+              th scope="col" translate="listings.features.baths"
+              th scope="col" translate="listings.features.floor"
+              th scope="col" translate="listings.features.accessibility"
           tbody
             tr ng-repeat="unit in unitGroup.units"
               td scope="row"
                 | {{::unit.Unit_Number}}
               td
-                | {{::unit.Unit_Square_Footage}} <small>sqft</small>
+                | {{::unit.Unit_Square_Footage}}
+                small translate="listings.features.sqft"
               td
                 | {{ $ctrl.formatBaths(unit.Number_of_Bathrooms) }}
               td
@@ -72,26 +71,22 @@ accordion-heading
 
   .content-tile.feature-tile ng-if="$ctrl.parent.isRental($ctrl.parent.listing)"
     .content-card.bg-dust
-      h5.content-card_title Additional Fees
+      h5.content-card_title translate="listings.features.additional_fees"
       .row.collapse.margin-bottom
         .small-6.columns.padding-right.padding-bottom
-          span.t-small Application Fee
+          span.t-small translate="listings.features.additional_fee"
           p.t-delta.no-margin.t-bold
             | {{::$ctrl.parent.listing.Fee | currency:"$":2}}
-          span.content-label.t-small
-            | per applicant age 18 and over
-          span.t-tiny.d-block
-            | Due post lottery
+          span.content-label.t-small translate="listings.features.per_applicant_age_18_and_over"
+          span.t-tiny.d-block translate="listings.features.due_post_lottery"
         .small-6.columns.padding-bottom
-          span.t-small Deposit
+          span.t-small translate="listings.features.deposit"
           p.t-delta.no-margin.t-bold
             | {{::$ctrl.parent.listing.Deposit_Min | currency:"$":0}}
             span ng-if="$ctrl.parent.listing.Deposit_Max && $ctrl.parent.listing.Deposit_Max != $ctrl.parent.listing.Deposit_Min"
               | &ndash;{{ $ctrl.parent.listing.Deposit_Max | currency:"$":0 }}
-          span.content-label.t-small
-            | or one month's rent
-          span.t-tiny.d-block ng-if="$ctrl.listingIsBMR()"
-            | May be higher for lower credit scores
+          span.content-label.t-small translate="listings.features.or_one_months_rent"
+          span.t-tiny.d-block ng-if="$ctrl.listingIsBMR()" translate="listings.features.may_be_higher_for_lower_credit_scores"
 
       .row.collapse ng-if="$ctrl.parent.listing.Costs_Not_Included"
         .small-12.columns

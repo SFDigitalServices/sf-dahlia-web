@@ -1,12 +1,7 @@
 h4.h-caps-lined
-  | What to Expect
-p.c-steel.t-small.margin-bottom
-  ' Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+  | {{'label.what_to_expect' | translate}}
+p.c-steel.t-small.margin-bottom translate="emailer.submission_confirmation.applicants_will_be_contacted"
 .show-for-print ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].whatToExpectOpen"
-  p.c-steel.t-small
-    | All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.
-
-  p.c-steel.t-small
-    | Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.
-
+  p.c-steel.t-small translate='f2_review_terms.p2'
+  p.c-steel.t-small translate='f2_review_terms.p4_rental'
 show-more-toggler toggle-state="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].whatToExpectOpen" verb="read"
