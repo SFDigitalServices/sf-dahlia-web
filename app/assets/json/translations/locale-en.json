@@ -479,6 +479,10 @@
             "translate_bar_google_notice": "This page has been translated with Google Translate."
         },
         "hello": "Hello %{name}",
+        "housing_counselor": {
+            "header": "For more help, we suggest talking with a housing counselor to explore your options.",
+            "find_a_housing_counselor": "Find a Housing Counselor"
+        },
         "label": {
             "ada_accessible_units": "ADA Accessible Units",
             "add_household_member": "Add household member",
@@ -524,6 +528,7 @@
             "asian": "Asian",
             "asian_white": "Asian and White",
             "aunt": "Aunt",
+            "back_to_homepage": "Back to Homepage",
             "bisexual": "Bisexual",
             "black_african_american": "Black/African American",
             "black_african_american_white": "Black/African American and White",
@@ -531,6 +536,7 @@
             "cancel_adding_documents": "Cancel adding documents",
             "cancel_upload": "Cancel upload",
             "certificate_number": "Certificate Number",
+            "check_back_soon": "Check back soon",
             "change_application_details": "Change Application Details",
             "child": "Child",
             "city": "City Name",
@@ -589,8 +595,9 @@
             "last_name": "Last Name",
             "live_alone": "I will live alone",
             "live_in_public_housing_or_hud": "Live in Assisted Housing",
-            "Lottery": "Lottery",
+            "lottery": "Lottery",
             "mailing_address": "Mailing address",
+            "maintanance": "We are in the process of updating this page right now.",
             "male": "Male",
             "matched": "Matched",
             "member_same_address": "Do they have the same address as you?",
@@ -616,6 +623,7 @@
             "other": "Other",
             "other_multiracial": "Other/Multiracial",
             "other_people": "Other people will live with me",
+            "page_updating": "Page Updating",
             "parent": "Parent",
             "password": "Password",
             "people_with_developmental_disabilities": "People with Developmental Disabilities",
@@ -763,6 +771,7 @@
                 "visit_a_housing_counselor": "Visit a local housing counselor for help with your application.",
                 "visit_homeownership_sf": "Visit HomeownershipSF"
             },
+            "at_total_income": "at <strong>{{income}}</strong>/{{per}}",
             "available_and_waitlist": "Available Units & Open Waitlist",
             "available_units": "Available Units",
             "available_units_and_waitlist": "Available units and waitlist",
@@ -815,10 +824,11 @@
             },
             "final_waitlist_size": "Final Waitlist Size",
             "for_income_calculations": "For income calculations, household size includes everyone (all ages) living in the unit.",
-            "for_other_lisitings": "for other rental and ownership affordable housing opportunities.",
+            "click_for_other_lisitings": "<a class='lined' href='{{url}}'>Click Here</a> for other rental and ownership affordable housing opportunities.",
             "household_maximum_income": "Household Maximum Income",
             "housing_program": "Housing Program",
             "important_program_rules": "Important Program Rules",
+            "including_children": "including <strong>{{number}} {{children}}</strong> under 6",
             "includes_priority_units": "Includes Priority Units for {{priorities}}",
             "income_exceptions": {
                 "intro": "People in your household may need <a href='{{url}}' target='_blank'>special income calculations</a> if they:",
@@ -826,6 +836,7 @@
                 "nontaxable_tooltip": "Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.",
                 "students": "Are full-time students (but not the primary applicant)"
             },
+            "for_household_size": "for <strong>{{size}}</strong> {{people}}",
             "lottery_preference": {
                 "all_remaining_units": "All remaining units",
                 "up_to_units": "Up to {{units}} units available"
@@ -1154,7 +1165,8 @@
             "leave_your_application": "Leave your application?",
             "listing_updated": "Listing Updated",
             "lottery_results_posted": "Lottery Results Posted",
-            "maximum": "maximum",
+            "maximum_income_month": "maximum income/month",
+            "maximum_income_year": "maximum income/year",
             "menu": "Menu",
             "min_income": "Min. Income",
             "month": "month",
