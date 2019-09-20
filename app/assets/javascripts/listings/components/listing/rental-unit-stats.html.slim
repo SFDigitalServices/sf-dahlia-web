@@ -42,7 +42,7 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
           small
             | per month
         span ng-if="::!row.BMR_Rent_Monthly && row.Rent_percent_of_income"
-          | {{::group.Rent_percent_of_income}}%
+          | {{::row.Rent_percent_of_income}}%
           small
            | income
 
