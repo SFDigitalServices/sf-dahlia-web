@@ -185,7 +185,7 @@
             "p2": "<strong>Ingresos no gravables</strong>, como Ingreso de Seguro Suplementario (Supplemental Security Income, SSI), Ingreso de Seguro por Incapacidad (Social Security Disability Income, SSDI), pagos de manutención de menores o beneficios de indemnización laboral",
             "p3": "<strong>Subsidios para el alquiler</strong>, como subsidios de los programas de Apoyo a la Vivienda del Departamento de Asuntos de Veteranos (Veterans Affairs Supportive Housing, VASH), de Agencias de Servicios Humanos (Human Services Agencies, HSA), del Programa de Oportunidades de Vivienda para Personas con Sida (Housing Opportunities for Persons with AIDS, HOPWA), de Grupos de Caridad Católicos (Catholic Charities), de la Fundación para el Sida (AIDS Foundation), entre otros.",
             "title_household": "¿Usted o alguna de las personas que figuran en esta solicitud recibe algo de lo siguiente?",
-            "title_you": "¿Recibe algo de lo siguiente?",
+            "title_you": "¿Recibe algo de lo siguiente?"
         },
         "d2_income": {
             "p1": "Agregue los ingresos del grupo familiar totales brutos (sin la deducción de impuestos) provenientes de salarios, beneficios y otras fuentes de todos los integrantes de la familia.",
@@ -423,8 +423,6 @@
             "translate_bar_google_notice": "Esta página ha sido traducida por Google Translate."
         },
         "label": {
-            "applicant_homebuyer_education_agency": "Agencia de capacitación para compradores de viviendas",
-            "applicant_select_a_homebuyer_education_agency": "Seleccione una agencia de capacitación para compradores de viviendas",
             "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
             "add_household_member": "Agregar integrante de la familia",
             "additional_phone": "Teléfono adicional",
@@ -443,6 +441,7 @@
             "applicant_ethnicity": "¿Cómo describiría su origen étnico?",
             "applicant_gender": "¿Cuál es su sexo?",
             "applicant_gender_subtitle": "Seleccione la opción que describa mejor su identidad de género actual.",
+            "applicant_homebuyer_education_agency": "Agencia de capacitación para compradores de viviendas",
             "applicant_income_total": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
             "applicant_lending_institution": "entidad de préstamos",
             "applicant_name_loan_officer": "agente de préstamos",
@@ -453,6 +452,7 @@
             "applicant_preferences_household_member": "¿Qué integrante del grupo familiar tiene esta preferencia?",
             "applicant_race": "¿Cómo describiría su raza?",
             "applicant_second_phone": "Su número de teléfono secundario",
+            "applicant_select_a_homebuyer_education_agency": "Seleccione una agencia de capacitación para compradores de viviendas",
             "applicant_select_a_lending_institution": "Indique su entidad de préstamos",
             "applicant_select_a_loan_officer": "Indique su agente de préstamos",
             "applicant_separate_address": "Envíen mi correspondencia a una dirección diferente",
@@ -652,17 +652,6 @@
             "zipcode": "Código postal"
         },
         "listings": {
-            "income_exceptions": {
-                "intro": "Las personas en su hogar pueden necesitar <a href='{{url}}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
-                "nontaxable": "Reciban <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>ingresos no reportables</span>",
-                "nontaxable_tooltip": "Los ingresos no reportables pueden incluir el SSI (Seguo de Ingreso Suplementario), el SSDI (Seguro Social por Incapacidad), los pagos de manutención de menores  y los beneficios de Compensación al trabajador, ( accidente en el trabajo)",
-                "students": "Sean estudiantes de tiempo completo (no se aplica al solicitante principal)"
-            },
-            "occupancy_description_min_one": "Se requiere un mínimo de una persona por dormitorio.",
-            "showing_matches_for_rent": "Se muestran las unidades compatibles para alquilar",
-            "showing_matches_for_sale": "Se muestran las unidades compatibles para alquilar",
-            "you_dont_match_any_rent": "De acuerdo con la información que ha ingresado, no coincide con ninguno de los anuncios actuales para alquilar.",
-            "you_dont_match_any_sale": "De acuerdo con la información que ha ingresado, no coincide con ninguno de los anuncios actuales para la venta.",
             "additional_information": "Información adicional",
             "additional_listings": {
                 "hide": "Ocultar los anuncios adicionales",
@@ -709,6 +698,12 @@
             "household_maximum_income": "Ingresos anuales del grupo familiar",
             "important_program_rules": "Reglas Importantes del Programa",
             "includes_priority_units": "Incluye unidades con prioridad para {{priorities}}",
+            "income_exceptions": {
+                "intro": "Las personas en su hogar pueden necesitar <a href='{{url}}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
+                "nontaxable": "Reciban <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>ingresos no reportables</span>",
+                "nontaxable_tooltip": "Los ingresos no reportables pueden incluir el SSI (Seguo de Ingreso Suplementario), el SSDI (Seguro Social por Incapacidad), los pagos de manutención de menores  y los beneficios de Compensación al trabajador, ( accidente en el trabajo)",
+                "students": "Sean estudiantes de tiempo completo (no se aplica al solicitante principal)"
+            },
             "lottery_results": {
                 "hide": "Ocultar los resultados del sorteo",
                 "no_results": "No hay anuncios con resultados del sorteo publicados en este momento.",
@@ -722,6 +717,7 @@
             "no_open_listings": "Ninguno de los anuncios está abierto para solicitudes.",
             "occupancy_description_all_sro": "La cantidad máxima de habitantes para este edificio es de 1 persona por unidad.",
             "occupancy_description_all_sro_plural": "La cantidad máxima de habitantes para este edificio es de {{numberOfPeople}} personas por unidad.",
+            "occupancy_description_min_one": "Se requiere un mínimo de una persona por dormitorio.",
             "occupancy_description_no_sro": "La cantidad máxima de habitantes para este edificio difiere del tamaño del grupo familiar y no incluye menores de 6 años.",
             "occupancy_description_some_sro": "La cantidad máxima de habitantes para este edificio varía según el tipo de unidad. Las viviendas con habitaciones individuales (Single Room Occupancy, SRO) tienen una cantidad máxima de habitantes de 1 persona por unidad, sin importar la edad. Los menores de 6 años no se incluyen en la cantidad máxima de habitantes para los demás tipos de unidades.",
             "open_waitlist": "Lista de Espera Abierta",
@@ -747,6 +743,8 @@
             "see_maximum_income_information": "Consulte la información sobre ingresos máximos",
             "see_preference_information": "Consulte la información de preferencia",
             "see_unit_information": "Consulte la información de la unidad",
+            "showing_matches_for_rent": "Se muestran las unidades compatibles para alquilar",
+            "showing_matches_for_sale": "Se muestran las unidades compatibles para alquilar",
             "single_room_occupancy": "Viviendas con habitaciones individuales",
             "single_room_occupancy_description": "Esta propiedad ofrece habitaciones individuales solo para una persona. Los inquilinos podrían tener que compartir los baños y en ocasiones la cocina.",
             "special_notes": "Notas Especiales",
@@ -761,6 +759,8 @@
             },
             "view_lottery_results": "Ver los Resultados del Sorteo",
             "waitlist_is_open": "La lista de espera está abierta",
+            "you_dont_match_any_rent": "De acuerdo con la información que ha ingresado, no coincide con ninguno de los anuncios actuales para alquilar.",
+            "you_dont_match_any_sale": "De acuerdo con la información que ha ingresado, no coincide con ninguno de los anuncios actuales para la venta.",
             "you_may_be_eligible": "Según la información ingresada, usted podría ser elegible para las unidades de la siguiente propiedad."
         },
         "listings_for_rent": {
@@ -798,11 +798,11 @@
             "see_the_listings": "Vea los anuncios"
         },
         "lottery": {
-            "enter_lottery_no": "Ingrese su número de sorteo",
             "any_remaining_units": "Todas las unidades restantes",
             "applications_that_qualify_for_preference": "Las solicitudes elegibles para esta preferencia tendrán mayor prioridad en el sorteo.",
             "buckets_intro": "Los resultados del sorteo se dividen en distintas listas. Abajo encontrará información general de cada preferencia. Si desea ver su resultado, ingrese su número de sorteo.",
             "complete_results_will_be_posted": "Los resultados completos del sorteo se publicarán en esta fecha antes de las 5 p. m.",
+            "enter_lottery_no": "Ingrese su número de sorteo",
             "general_pool": "Pozo general",
             "housing_preferences": "Preferencias de Vivienda\n",
             "lottery": "Sorteo",
@@ -929,8 +929,8 @@
             "update_password": "Actualice la contraseña"
         },
         "review_application": {
-            "disclosure": "Al brindarnos un contacto alternativo, nos permite hablar sobre la información de su solicitud con esta persona.",
             "back_to_my_applications": "Volver a Mis solicitudes",
+            "disclosure": "Al brindarnos un contacto alternativo, nos permite hablar sobre la información de su solicitud con esta persona.",
             "general_lottery_notice": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda. Usted ingresará al sorteo general.",
             "print_a_copy": "Imprimir una copia para sus registros",
             "title": "Esta es la información que usted presentó.",
