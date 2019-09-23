@@ -424,8 +424,6 @@
             "translate_bar_google_notice": "本頁由 Google 翻譯。"
         },
         "label": {
-            "applicant_homebuyer_education_agency": "購房者教育機構",
-            "applicant_select_a_homebuyer_education_agency": "請選擇一個購房者教育機構",
             "ada_accessible_units": "ADA 無障礙設施單位",
             "add_household_member": "新增家庭成員",
             "additional_phone": "其他電話",
@@ -444,6 +442,7 @@
             "applicant_ethnicity": "哪種說法最適合描述您的種族？",
             "applicant_gender": "您的性別是？",
             "applicant_gender_subtitle": "選擇一個最能描述您目前性別認同的選項。",
+            "applicant_homebuyer_education_agency": "購房者教育機構",
             "applicant_income_total": "您家庭的稅前收入總額是多少？",
             "applicant_lending_institution": "借貸機構",
             "applicant_name_loan_officer": "貸款經紀人",
@@ -454,6 +453,7 @@
             "applicant_preferences_household_member": "哪一位家庭成員擁有此優先權利？",
             "applicant_race": "哪種說法最適合描述您的人種？",
             "applicant_second_phone": "您的第二個電話號碼",
+            "applicant_select_a_homebuyer_education_agency": "請選擇一個購房者教育機構",
             "applicant_select_a_lending_institution": "請選擇一間借貸機構",
             "applicant_select_a_loan_officer": "請選擇一位貸款經紀人",
             "applicant_separate_address": "將我的郵件寄送到另一個地址",
@@ -653,15 +653,6 @@
             "zipcode": "郵遞區號"
         },
         "listings": {
-            "income_exceptions": {
-                "intro": "如果您家中的成員符合以下情況，可能需要<a href='{{url}}' target='_blank'>特別收入計算方式</a>：",
-                "nontaxable": "有<span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>不納稅收入</span> ",
-                "nontaxable_tooltip": "不納稅收入可能包括 SSI、SSDI、子女撫養費和工傷補償福利。",
-                "students": "是全日制學生（但不是主申請人）"
-            },
-            "occupancy_description_min_one": "每間臥室至少要住一個人。",
-            "showing_matches_for_rent": "顯示符合條件的出租房屋單位",
-            "showing_matches_for_sale": "顯示符合條件的待售房屋單位",
             "additional_information": "其他資訊",
             "additional_listings": {
                 "hide": "隱藏其他名單",
@@ -708,6 +699,12 @@
             "household_maximum_income": "家庭最高收入",
             "important_program_rules": "重要計畫規定",
             "includes_priority_units": "包括 {{priorities}} 的優先單位",
+            "income_exceptions": {
+                "intro": "如果您家中的成員符合以下情況，可能需要<a href='{{url}}' target='_blank'>特別收入計算方式</a>：",
+                "nontaxable": "有<span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>不納稅收入</span> ",
+                "nontaxable_tooltip": "不納稅收入可能包括 SSI、SSDI、子女撫養費和工傷補償福利。",
+                "students": "是全日制學生（但不是主申請人）"
+            },
             "lottery_results": {
                 "hide": "隱藏抽籤結果",
                 "no_results": "目前沒有已出抽籤結果的清單。",
@@ -721,6 +718,7 @@
             "no_open_listings": "目前沒有任何開放的申請名單。",
             "occupancy_description_all_sro": "此建築限制每個單位僅 1 人可入住。",
             "occupancy_description_all_sro_plural": "此建築限制每個單位僅 {{numberOfPeople}} 人可入住。",
+            "occupancy_description_min_one": "每間臥室至少要住一個人。",
             "occupancy_description_no_sro": "此建築的入住限制會因不同的家庭人數而異，同時不包括 6 歲以下的兒童。",
             "occupancy_description_some_sro": "此建築的入住條件會因為單位類型而有所不同。單人房住房 (Single Room Occupancy, SRO) 的限制為每個單位僅 1 人可入住（無論年齡為何）。對於其他單位類型，入住限制不會計算 6 歲以下的兒童。",
             "open_waitlist": "開放等候名單",
@@ -746,6 +744,8 @@
             "see_maximum_income_information": "查看收入上限資訊",
             "see_preference_information": "查看優先權利資訊",
             "see_unit_information": "查看單位資訊",
+            "showing_matches_for_rent": "顯示符合條件的出租房屋單位",
+            "showing_matches_for_sale": "顯示符合條件的待售房屋單位",
             "single_room_occupancy": "單人房住房",
             "single_room_occupancy_description": "該物業提供的單人房最多僅供一人入住。租戶可以共用浴室，有時還可以共用廚房設施。",
             "special_notes": "特別注意",
@@ -799,11 +799,11 @@
             "see_the_listings": "查看物業名單"
         },
         "lottery": {
-            "enter_lottery_no": "輸入您的抽籤號碼",
             "any_remaining_units": "任何剩餘單位",
             "applications_that_qualify_for_preference": "在抽籤時，符合優先權利資格的申請將擁有較高的優先順序。",
             "buckets_intro": "抽籤結果將會分成多個清單。如需瞭解有關每個優先權利的一般資訊，請參閱下方內容。如需查看特定結果，請輸入您的抽籤號碼。",
             "complete_results_will_be_posted": "在該日期的下午 5 點前，將會公佈完整的抽籤結果。",
+            "enter_lottery_no": "輸入您的抽籤號碼",
             "general_pool": "一般組別",
             "housing_preferences": "住房優先權利",
             "lottery": "抽籤",
@@ -930,8 +930,8 @@
             "update_password": "更新密碼"
         },
         "review_application": {
-            "disclosure": "若您提供替代聯絡人，表示您授權我們的工作人員與該聯絡人討論您申請表上的資訊。",
             "back_to_my_applications": "返回到「我的申請」",
+            "disclosure": "若您提供替代聯絡人，表示您授權我們的工作人員與該聯絡人討論您申請表上的資訊。",
             "general_lottery_notice": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。您將會列入一般抽籤名單。",
             "print_a_copy": "請列印副本做為記錄",
             "title": "這是您提交的資訊。",
