@@ -20,7 +20,8 @@ class Api::V1::ListingsController < ApiController
   end
 
   def lottery_buckets
-    @lottery_buckets = Force::ListingService.lottery_buckets(params[:id])
+    @lottery_buckets = Force::ListingService.lottery_buckets(params[:id],
+                                                             force: params[:force])
     render json: @lottery_buckets
   end
 

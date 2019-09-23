@@ -9,11 +9,13 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
   Service.loading = {}
   Service.error = {}
 
-  Service.getLotteryBuckets = (listing) ->
+  Service.getLotteryBuckets = (listing, forceRecache = false) ->
     return unless listing
     angular.copy({}, Service.lotteryBucketInfo)
     Service.loading.lotteryResults = true
-    $http.get("/api/v1/listings/#{listing.Id}/lottery_buckets").success((data, status, headers, config) ->
+    httpConfig = {}
+    httpConfig.params = { force: true } if forceRecache
+    $http.get("/api/v1/listings/#{listing.Id}/lottery_buckets", httpConfig).success((data, status, headers, config) ->
       Service.loading.lotteryResults = false
       Service.lotteryBucketInfo[listing.Id] = {}
       angular.copy(data, Service.lotteryBucketInfo[listing.Id])
