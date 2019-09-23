@@ -21,9 +21,9 @@
             }
         },
         "a4_overview": {
-            "p1": "首先，我們會詢問您本人以及要同住之成員的相關資料。接著，我們會詢問您的收入情況。最後，我們會看您是否符合任何可負擔房屋的抽籤優先權利。若符合，便會要求您上傳這些優先權利的證明。",
-            "p2": "<a ui-sref='{{sref}}' target='_blank'>請查閱我們的檢查表</a>，以了解有關所需文件和如何宣稱擁有優先權利的資訊。",
-            "p3": "您也可以現在開始填寫申請表並儲存草稿，日後再上傳文檔。",
+            "p1": "首先，我們會詢問您本人以及要同住之成員的相關資料。然後我們會詢問您的收入情況。最後，我們會看您是否符合任何可負擔房屋的抽籤優先權利。若符合，便會要求您上傳這些優先權利的證明。",
+            "p2": "<a ui-sref='{{sref}}' target='_blank'>請查閱所需文件清單和申請優先權利的相關資訊。</a>",
+            "p3": "您也可以現在開始填寫並暫存申請表，日後再上傳文件。",
             "p4": "請注意, 每個家庭成員的名字只限在房屋上市名單的申請表格出現一次. 如果在同一房屋上市名單上您的申請表格包含有其他家庭成員已遞交申請表格, 則所有申請資格都將會被取消.",
             "subtitle": "請用英文回答您申請表格的問題",
             "title": "針對此申請，您需要完成以下作業",
@@ -185,8 +185,8 @@
             "p1": "例如第8類<strong>房屋補助券</strong> (Section 8)",
             "p2": "<strong>非應稅收入</strong>，例如社會安全生活補助金 (Supplemental Security Income, SSI)、社會安全殘障保險 (Social Security Disability Insurance, SSDI)、子女撫養費或是勞工賠償福利金",
             "p3": "<strong>房租補貼</strong>，例如退伍軍人事務支持性住房 (Veterans Affairs Supportive Housing, VASH)、人⺠服務部 (Human Services Agency, HSA) 愛滋病患者住房機會 (Housing Opportunities for Persons with AIDS, HOPWA)、天主教慈善會 (Catholic Charities)、愛滋病基金會 (AIDS Foundation) 等。",
-            "title_household": "您本人或本申請中的任何成員領有以下任何一種福利嗎？",
-            "title_you": "您本人領有以下任何福利嗎？"
+            "title_household": "您本人或任何共同申請人領有以下任何一種福利嗎？",
+            "title_you": "您本人領有以下任何一種福利嗎？"
         },
         "d2_income": {
             "p1": "請將您所有家庭成員的 (稅前) 總收入，包括薪資、福利及其他所得統統加總。",
@@ -198,7 +198,7 @@
             "assisted_housing_title": "輔助住房優先權利",
             "header": "本名單列出在申請房屋時您的家庭可能需要提供的文件。",
             "homebuyer_desc": "您需要以下文件才能申請出售單位：",
-            "homebuyer_education_desc": "所有成人家庭成員的購買住宅課程證明",
+            "homebuyer_education_desc": "完成購屋者教育課程證明",
             "homebuyer_header": "對於購屋者",
             "homebuyer_loan_desc": "<a href=\"{{lenderListUrl}}\" target=\"_blank\">獲 MOHCD 核准的貸款機構</a>所寄送的房貸預先批准信",
             "p1": "在住房申請中請求優先權利是自願選擇的。優先權利項讓您有資格獲得更高的抽籤順位。",
@@ -208,7 +208,7 @@
             "rent_burden_doc_2": "您也需要出示上個月的租金以及以下其中一項內容：",
             "rent_burden_title": "租金負擔優先權利",
             "resident_desc": "您需要下列文件之一，這些文件需顯示您在舊金山的居住地址：",
-            "resident_title": "住在鄰里社區、住在舊金山以及反搬遷住房優先權利",
+            "resident_title": "三藩市以及鄰里社區居民的住房優先權利",
             "title": "文件檢查清單",
             "work_sf_desc": "您需要下列文件之一，這些文件需顯示您在舊金山的工作地址：",
             "work_sf_title": "舊金山工作優先權利"
@@ -242,16 +242,16 @@
             "instructions_p1_singular": "因為您所居住的鄰里正面臨極大的搬遷風險，所以 <strong>{{address}}</strong> 讓您符合較高順位的資格。",
             "instructions_p2": "只需上傳此地址的有效證明，接著<strong>我們將會賦予您「住在舊金山優先權利」。</strong>",
             "preference": {
-                "description": "<strong>反搬遷住房優先權利</strong>旨在造福居住於面臨極大搬遷壓力的鄰里社區的居民。",
+                "description": "設立<strong>反逼遷住房優先權利</strong>旨在造福面臨極大逼遷壓力的鄰里社區的居民。",
                 "name": "反搬遷住房優先權利",
                 "short_description": "您聲稱您的家庭成員中，有人居住在面臨極大搬遷風險的鄰里內。",
                 "title": "住在鄰里內"
             }
         },
         "e2c_live_work_preference": {
-            "document_must_show_correct_name": "如有需要更新申請表上的資料，請不要重新遞交申請表，否則新舊兩份表格將會一起在抽籤前刪除。如果沒收到確認電子郵件，請聯絡您的機構。",
+            "document_must_show_correct_name": "文件必須顯示正確的姓名和您在三藩市的住址，並附有日期，日期需在提交申請的45天以內。",
             "document_must_show_correct_name_for_work": "文件必須顯示正確姓名、您在舊金山的居住地址，以及不得超過申請日期 45 天的日期。",
-            "instructions": "您只需上傳在舊金山居住或工作的有效證明，就能獲得較高的抽籤順位。",
+            "instructions": "您只需上傳在三藩市居住或工作地址的有效證明，即可獲得較高的抽籤順位。",
             "letter_for_homelessness_instructions": "信件上必須載明收容所地址或靠近您所在地點的地址，而且公文信頭需有個案工作人員的簽署。",
             "letter_from_employer_instructions": "信件必須能證明確實在舊金山受聘，且在該城市的工作時數至少達 75%。",
             "live_sf_preference": {
@@ -259,7 +259,7 @@
                 "title": "住在舊金山優先權利"
             },
             "live_work_sf_preference": {
-                "description": "至少有一名家庭成員必須住在舊金山<b>或</b>在舊金山工作，且在舊金山的工作時間至少必須達到其工作時間的 75%，才能獲得居住/工作優先權利。",
+                "description": "至少有一名家庭成員必須住在三藩市<b>或</b>在三藩市工作，且在三藩市的工作時間不少於其全部工作時間的 75%，才能獲得居住/工作優先權利。",
                 "live_sf_preference": "住在舊金山",
                 "title": "在舊金山居住或工作優先權利",
                 "work_sf_preference": "在舊金山工作"
@@ -271,7 +271,7 @@
             }
         },
         "e3a_assisted_housing_preference": {
-            "instructions": "您有資格獲得優先權利，因為您表示您的某位家庭成員居住在公共住房或 HUD 計畫住房內。<br><br>這並不包含「第8類房屋補助優惠券」或「VASH 住房選擇優惠券」。<br><br>只需上傳有效租約複印本，就能在抽籤時獲得較高的順位。",
+            "instructions": "您有資格獲得該項優先權利，因為您表示您的某位家庭成員居住在公共住房或 HUD 計畫住房內。<br><br>這不包含「第8類房屋補助優惠券」或「VASH 住房選擇優惠券」。<br><br>只需上傳有效租約複本，即可在抽籤時獲得較高的順位。",
             "preference": {
                 "description": "輔助住房居民是居住於舊金山市內的公共住房或是方案基礎第8類房屋補助優惠券的住戶。請注意，此優先權利並不適用於第8類房屋補助計劃承租人等類的優惠券持有者。",
                 "title": "輔助住宅優先權利"
@@ -279,9 +279,9 @@
         },
         "e3b_rent_burden_preference": {
             "form_error": "請完成文件上傳作業，或是選擇「您不需要此優先權利」。",
-            "rent_burden_notes": "您有資格獲得優先權利，因為您表示您的家庭目前把收入的 50% 以上花在房租上。<br><br>只需上傳有效租約副本及租金付款證明，就能在抽籤時獲得較高的順位",
+            "rent_burden_notes": "您有資格獲得該項優先權利，因為您表示您家庭目前的租房支出超過家庭收入的一半。<br><br>只需上傳有效租約複本及租金付款證明，即可在抽籤時獲得較高的順位。",
             "rent_burden_preference": "租金負擔優先權利",
-            "rent_burden_preference_desc": "租金負擔的家庭是指那些為住房支付收入的 50% 以上的家庭。",
+            "rent_burden_preference_desc": "有租金負擔的家庭是指那些房租支出占收入一半以上的家庭。",
             "upload_another_document_at_this_address": "您是否需要上傳其他文件，證明針對此住所支付的總租金支出？",
             "upload_documents_for_address": "上傳 {{address}} 的相關文件",
             "upload_for_each_address": "上傳各個地址的相關文件"
@@ -295,13 +295,13 @@
         },
         "e7_preferences_programs": {
             "cert_of_preference": "Certificate of Preference (COP)",
-            "cert_of_preference_certificate": "您知道自己的優先權利憑證 (Certificate of Preference, COP) 的憑證號碼嗎？",
+            "cert_of_preference_certificate": "您的優先權利憑證 (Certificate of Preference, COP) 憑證號碼是多少？",
             "cert_of_preference_desc": "如果您持有由過去舊金山再發展機構核發的「Certificate of Preference (COP)」。  被機構命令搬遷的 COP 擁有者一般是在 1960 和 1970 年代。",
             "displaced": "Displaced Tenant Housing Preference (DTHP)",
-            "displaced_certificate": "您知道自己的迫遷租戶住房優先權利 (Displaced Tenant Housing Preference, DTHP) 的憑證號碼嗎？",
+            "displaced_certificate": "您的逼遷租戶住房優先權利 (Displaced Tenant Housing Preference, DTHP) 憑證號碼是多少？",
             "displaced_tenants_desc": "如果您持有「Displaced Tenant Housing Preference (DTHP)」。DTHP 憑證擁有者是已因「Ellis Act Eviction」或「Owner Move In Eviction」而被迫搬遷，或因火災而已獲安置的房客。",
             "have_not_heard_of_preferences": "如果您未曾聽過這些優先權利，則意味您可能沒有該權利。",
-            "need_certificate_for_preference": "您需要取得此優先權利的證明。如果知道，請輸入您的證明號碼，或者我們可以替您查詢。",
+            "need_certificate_for_preference": "您需要出具憑證以取得此優先權利。如果您不知道您的憑證號碼，<a href='https://sfmohcd.org/contact-us' target='_blank'>請聯絡住房和社區發展市長辦公室 (MOHCD)</a>。",
             "title": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
         },
         "e8_general_lottery_notice": {
@@ -377,11 +377,11 @@
         },
         "f2_review_terms": {
             "p1": "此申請必須在 {{date}} 之前提交。",
-            "p2": "我們將按優先權利及抽籤順序來聯絡申請人，直到沒有空置單位為止。",
+            "p2": "物業管理將按優先權利及抽籤順序來聯絡申請人，直到沒有空置單位為止。",
             "p3": "我們將會對您所提供的信息進行驗證和確認您的資格。如有任何欺詐性的陳述，或任何家庭成員同時被例入多於一份申請表中，您的申請將失去抽籤資格，若我們不能確認您聲稱所擁有的住房優先權利，您將不會得到該優先權但不會受到其他處罰。",
-            "p4_rental": "如果您的申請從抽籤中獲選，請在收到通知後的 5 個工作天內準備填寫更詳細的申請資料並提供 必要的證明文件。如需詳細資訊，請與該物業項目的開發商或機構聯絡。完成此抽籤申請表並不代表授予您住房資格或表示您符合住房資格。所有申請人將會依照物業的住戶選擇標準所列舉條件進行篩選。",
+            "p4_rental": "如果您的申請被抽中，請準備在接到通知的 5 個工作日內填寫更詳細的申請資料並提供必要的證明文件。如需詳細資訊，請與該物業的開發商或代理聯絡。完成此抽籤申請表並不代表授予您住房資格或表示您符合住房資格。所有申請人將會依照物業的住戶選擇標準所列舉條件進行篩選。",
             "p4_sale": "如果您的申請從抽籤中獲選，請準備在收到通知的 5 個工作天內填寫更詳細的申請資料並提供<a href=\"{{url}}\" target=\"_blank\">必要的證明文件</a>。如需詳細資訊，請與該物業項目的開發商或機構聯絡。完成此抽籤申請表並不代表授予您住房資格或表示您符合住房資格。 ",
-            "p5": "提交後，您不能再更改線上申請。",
+            "p5": "線上申請提交後，您不能再做更改。",
             "p6": "我宣誓上述聲明真實準確，並且認可若本申請表有不實聲明或疏忽情況下之聲明，此申請表的抽籤資格將會被取消。",
             "title": "條款"
         },
@@ -404,14 +404,14 @@
             "browse_more_listings": "瀏覽更多清單",
             "create_account_body": "建立帳戶可讓您儲存資訊供日後申請之用，而且您可以隨時查看該申請的狀況。",
             "create_account_title": "您是否要建立帳戶？",
-            "dont_submit_another_app_p1_email": "如有需要更新表格上的資料、請不要重新遞交申請表格、否則新舊兩份表格將會一起被取消抽籤資格。如果沒收到確認的電子郵件、請聯繫您的租賃經紀人。",
-            "dont_submit_another_app_p1_no_email": "如有需要更新表格上的資料，請不要重新遞交申請表格，否則新舊兩份表格將會一起被取消抽籤資格。如有任何問題，請聯絡您的機構。",
-            "dont_submit_another_app_title": "請不要重新遞交此物業項目的申請表",
+            "dont_submit_another_app_p1_email": "如需更新申請表上的資料，請不要重新遞交申請表，否則新舊兩份表格都將被取消抽籤資格。如果沒有收到確認電子郵件，請聯絡物業管理。",
+            "dont_submit_another_app_p1_no_email": "如需更新申請表上的資料，請不要重新遞交申請表，否則新舊兩份表格都將被取消抽籤資格。如有任何問題，請聯絡物業管理。",
+            "dont_submit_another_app_title": "請不要重新遞交此物業項目另一份申請表",
             "go_to_my_applications": "前往「我的申請」",
             "lottery_number": "這是您的抽籤票券號碼",
             "next_steps_body1": "抽籤將於下列日期舉行：",
-            "next_steps_body2_rental": "您不需要參加住房抽籤。結果將會發布 {{listingLink}}。請參考清單以瞭解抽籤結果日期。<br/><br/>機構將按抽籤順位順序來聯絡申請人，直到空房額滿為止。如果您的申請獲選，請準備在 5 個工作日內填寫更詳細的申請資料並提供必要的證明文件。",
-            "next_steps_body2_sale": "您不需要參加住房抽籤。結果將會發布 {{listingLink}}。請參考清單以瞭解抽籤結果日期。<br/><br/>機構將按抽籤順位順序來聯絡申請人，直到空房額滿為止。如果您的申請獲選，請準備在 5 個工作日內填寫更詳細的申請資料並提供<a href=\"{{url}}\" target=\"_blank\">必要的證明文件</a>。",
+            "next_steps_body2_rental": "您不需要參加住房抽籤。抽籤結果將會公佈 {{listingLink}}。欲知抽籤結果的公佈日期，請參考該物業信息。<br/><br/>代理將按抽籤順位順序來聯絡申請人，直到空房額滿為止。如果您的申請獲選，請準備在接到通知的 5 個工作日內填寫更詳細的申請資料並提供必要的證明文件。",
+            "next_steps_body2_sale": "您不需要參加住房抽籤。結果將會公佈 {{listingLink}}。欲知抽籤結果的公佈日期，請參考該物業信息。<br/><br/>代理將按抽籤順位順序來聯絡申請人，直到空房額滿為止。如果您的申請獲選，請準備在接到通知的 5 個工作日內填寫更詳細的申請資料並提供<a href='{{url}}' target='_blank'>必要的證明文件</a>。",
             "next_steps_title": "接下來還想做些什麼嗎",
             "no_thanks_im_done": "不，謝謝，我已完成。",
             "please_write_down_your_number": "請記下您的籤號並妥善保管。若您有提供電子郵件地址，我們也會將此號碼寄送給您。",
@@ -424,6 +424,8 @@
             "translate_bar_google_notice": "本頁由 Google 翻譯。"
         },
         "label": {
+            "applicant_homebuyer_education_agency": "購房者教育機構",
+            "applicant_select_a_homebuyer_education_agency": "請選擇一個購房者教育機構",
             "ada_accessible_units": "ADA 無障礙設施單位",
             "add_household_member": "新增家庭成員",
             "additional_phone": "其他電話",
@@ -563,7 +565,7 @@
             "phone_work": "工作",
             "please_select_all_that_apply": "請選擇所有適用項。",
             "please_select_one": "請選擇一個項目。",
-            "please_select_preference": "請選擇，以便獲得您的抽籤優先權利：",
+            "please_select_preference": "請選擇您所擁有的抽籤優先權利：",
             "preapproval_letter": "預先批准信",
             "preference_option_to_claim": "您想要行使哪一項優先權利？",
             "preference_proof_address_documents": "您想要上傳哪一類型的文件，以便證實您居住在該地址？",
@@ -651,6 +653,15 @@
             "zipcode": "郵遞區號"
         },
         "listings": {
+            "income_exceptions": {
+                "intro": "如果您家中的成員符合以下情況，可能需要<a href='{{url}}' target='_blank'>特別收入計算方式</a>：",
+                "nontaxable": "有<span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>不納稅收入</span> ",
+                "nontaxable_tooltip": "不納稅收入可能包括 SSI、SSDI、子女撫養費和工傷補償福利。",
+                "students": "是全日制學生（但不是主申請人）"
+            },
+            "occupancy_description_min_one": "每間臥室至少要住一個人。",
+            "showing_matches_for_rent": "顯示符合條件的出租房屋單位",
+            "showing_matches_for_sale": "顯示符合條件的待售房屋單位",
             "additional_information": "其他資訊",
             "additional_listings": {
                 "hide": "隱藏其他名單",
@@ -718,8 +729,8 @@
             "person": "人",
             "priority_units": "優先單位",
             "priority_units_description": "如果下列情況適用於您或是家中的某成員，此建築將會為此保留單位：",
-            "re_pricing": "重新定價",
-            "realtor_commission": "對於買方的房地產經紀人",
+            "re_pricing": "轉售價格限制",
+            "realtor_commission": "買方的房地產經紀人須知",
             "realtor_commission_header": "您的佣金： ",
             "realtor_commission_how_to": "如何接收： ",
             "realtor_commission_not_eligible": "您的房地產經紀人不符合在此單位獲得佣金的資格",
@@ -749,8 +760,8 @@
             },
             "view_lottery_results": "查看抽籤結果",
             "waitlist_is_open": "等候名單已公開",
-            "you_dont_match_any_rent": "根據您輸入的資訊，您不合符資格申請目前現有的物業項目。",
-            "you_dont_match_any_sale": "根據您輸入的資訊，您不合符資格申請目前現有的物業項目。",
+            "you_dont_match_any_rent": "根據您輸入的資訊，您不合符資格申請現有的出租物業。",
+            "you_dont_match_any_sale": "根據您輸入的資訊，您不合符資格申請現有的待售物業。",
             "you_may_be_eligible": "根據您輸入的資訊，您可能符合以下物業單位的資格。"
         },
         "listings_for_rent": {
@@ -768,10 +779,10 @@
             "before_applying": {
                 "make_sure_you": "請確定您：",
                 "read_full_list": "如需瞭解更多詳細資料，請閱讀完整的<a href=\"{{url}}\" target=\"_blank\">要求清單</a>。",
-                "step_1": "在過去 3 年並未擁有物業",
+                "step_1": "在過去 3 年並未擁有住宅物業",
                 "step_2": "符合我們的<a href=\"{{url}}\" target=\"_blank\">收入要求</a>",
                 "step_3": "完成<a href=\"{{url}}\" target=\"_blank\">購屋教育證書班</a>",
-                "step_4": "已獲得<a href=\"{{url}}\" target=\"_blank\">核准例表中的貸款機構</a>的貨款預先批准",
+                "step_4": "從經核准的任一<a href='{{url}}' target='_blank'>貸款機構</a>處獲得房貸預先批准",
                 "step_5": "有足夠的積蓄可支付成交費以及首期付款",
                 "title": "申請之前"
             },
@@ -788,6 +799,7 @@
             "see_the_listings": "查看物業名單"
         },
         "lottery": {
+            "enter_lottery_no": "輸入您的抽籤號碼",
             "any_remaining_units": "任何剩餘單位",
             "applications_that_qualify_for_preference": "在抽籤時，符合優先權利資格的申請將擁有較高的優先順序。",
             "buckets_intro": "抽籤結果將會分成多個清單。如需瞭解有關每個優先權利的一般資訊，請參閱下方內容。如需查看特定結果，請輸入您的抽籤號碼。",
@@ -820,7 +832,7 @@
             "view_preference_list": "查看優先權利例表"
         },
         "my_applications": {
-            "are_you_sure_you_want_to_delete": "刪除此申請意味著您將會失去輸入的所有資訊。",
+            "are_you_sure_you_want_to_delete": "刪除此申請表意味著您將會失去輸入的所有資訊。",
             "no_applications": "看來您似乎尚未對任何清單提出申請。",
             "results_posted": "結果已公佈",
             "title": "我的申請",
@@ -918,6 +930,7 @@
             "update_password": "更新密碼"
         },
         "review_application": {
+            "disclosure": "若您提供替代聯絡人，表示您授權我們的工作人員與該聯絡人討論您申請表上的資訊。",
             "back_to_my_applications": "返回到「我的申請」",
             "general_lottery_notice": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。您將會列入一般抽籤名單。",
             "print_a_copy": "請列印副本做為記錄",
@@ -948,7 +961,7 @@
             "application_due": "申請到期日期",
             "application_for_listing": "{{listingName}} 申請",
             "application_submitted": "已提交申請",
-            "are_you_sure_you_want_to_leave": "確定要離開此頁面嗎？您將會失去在本物業項目申請表內的所有已輸入但尚未儲存的資訊。若想要儲存您的資訊供日後再完成申請，請按一下「儲存並稍後完成」按鈕。",
+            "are_you_sure_you_want_to_leave": "確定要離開此頁面嗎？您將會失去已輸入此物業申請表內但尚未儲存的所有資訊。若欲儲存您的資訊供日後完成申請，請點擊「儲存並稍後完成」。",
             "are_you_sure_you_want_to_leave_confirmation": "確定要離開此網頁嗎？若將您的申請與帳戶連結，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
             "are_you_sure_you_want_to_leave_sign_in": "確定要離開此網頁嗎？若您建立一個帳戶，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
             "back": "返回",
@@ -978,9 +991,9 @@
             "save_and_come_back_later": "儲存，並稍後返回",
             "save_and_finish_later": "儲存並稍後完成",
             "session_expired": "您使用本頁面的時限已過。",
-            "session_inactivity": "由於沒有使用活動和為了保護您的身分，本頁面將會在一分鐘內過期。若選擇不回應，您將會失去在本物業項目申請表內的所有已輸入但尚未儲存的資訊。",
-            "session_inactivity_confirmation": "由於沒有使用活動和為了保護您的身分，本頁面將會在一分鐘內過期。若選擇不回應，您將無法儲存本申請至帳戶中，帳戶可讓您隨時追蹤申請的狀態。",
-            "session_inactivity_logged_in": "由於沒有使用活動和為了保護您的身分，本頁面將會在一分鐘內過期。若選擇不回應，您將會失去所有尚未儲存的資訊且遭到登出。",
+            "session_inactivity": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將會失去已輸入此物業申請表但尚未儲存的所有資訊。",
+            "session_inactivity_confirmation": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將無法將此申請表儲存到您可隨時追蹤申請狀態的帳戶中。",
+            "session_inactivity_logged_in": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將會失去尚未儲存的所有資訊且被強行登出。",
             "skip_to_main_content": "跳到主要內容",
             "status": "狀態",
             "stay": "留在此頁",
