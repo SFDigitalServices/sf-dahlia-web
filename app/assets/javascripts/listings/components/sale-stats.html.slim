@@ -5,8 +5,8 @@ div.table-pricing-wrapper
     thead
       tr
         th scope="col" translate="t.unit_type"
-        th scope="col" translate="t.sales_price"
-        th scope="col" translate="t.hoa_dues"
+        th scope="col" translate="listings.stats.sales_price"
+        th scope="col" translate="listings.stats.hoa_dues"
     tbody ng-include="'listings/templates/property-card/_sale-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
     / Reserved
   table.table-pricing.table-pricing-hero.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
