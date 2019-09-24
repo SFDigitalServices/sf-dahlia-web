@@ -105,6 +105,16 @@ describe Force::Request do
 
       Force::Request.new.cached_get(endpoint, params, true)
     end
+
+    it 'doesn\'t recache if false is passed' do
+      allow(client).to receive(:send)
+        .with(:get, api_url(endpoint), params).and_return(default_response)
+
+      expect(cache).to receive(:fetch)
+        .with(cache_key, force: false, expires_in: 10.minutes).and_yield
+
+      Force::Request.new.cached_get(endpoint, params, 'false')
+    end
   end
 
   describe '#post' do
