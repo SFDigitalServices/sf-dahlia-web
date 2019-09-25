@@ -12,10 +12,9 @@
         header.listing-header.show-for-medium-up
           img.listing-header_icon ng-src="{{::$ctrl.parent.assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
           hgroup.listing-header_group
-            h3.listing-header_name
-              | Eligibility
+            h3.listing-header_name translate="listings.eligibility.header"
             span.listing-header_subheader
-              | {{ ::$ctrl.parent.isSale($ctrl.parent.listing) ? null : 'Income, occupancy, preferences, and subsidies' }}
+              | {{ ::$ctrl.eligibilitySubheader($ctrl.parent.listing) }}
         eligibility-section
 
       / sidebar for open listing (larger browser sizes)
@@ -26,8 +25,7 @@
         header.listing-header.show-for-medium-up
           img.listing-header_icon ng-src="{{::$ctrl.parent.assetPaths['listing-features.svg']}}" alt="features-options"
           hgroup.listing-header_group
-            h3.listing-header_name
-              | Features
+            h3.listing-header_name translate="listings.features.header"
             span.listing-header_subheader
               | {{$ctrl.parent.featuresCaption($ctrl.parent.listing)}}
         features-section
@@ -36,29 +34,25 @@
         header.listing-header.show-for-medium-up
           img.listing-header_icon ng-src="{{::$ctrl.parent.assetPaths['listing-neighborhood.svg']}}" alt="neighborhood-building"
           hgroup.listing-header_group
-            h3.listing-header_name
-              | Neighborhood
-            span.listing-header_subheader
-              | Location and transportation
+            h3.listing-header_name translate="listings.neighborhood.header"
+            span.listing-header_subheader  translate="listings.neighborhood.subheader"
         neighborhood-section
 
       accordion-group.bg-white data-event="gtm-accordion-information" is-open="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].additionalInfo"
         header.listing-header.show-for-medium-up
           img.listing-header_icon ng-src="{{::$ctrl.parent.assetPaths['listing-legal.svg']}}" alt="legal-documents"
           hgroup.listing-header_group
-            h3.listing-header_name
-              | Additional Information
-            span.content-header_subheader ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
-              | Required documents and selection criteria
+            h3.listing-header_name translate="listings.additional_information.header"
+            span.content-header_subheader ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)" translate="listings.additional_information.subheader"
         legal-section
 
       .content-panel.accordion-offset.margin-bottom--2x
         .content-card
           .row
             .medium-9.columns
-              p.t-base.t-serif Monitored by the Mayor's Office of Housing & Community Development
+              p.t-base.t-serif translate="listings.monitored_by_mohcd"
             .medium-3.columns
-              img.right alt=("Equal Housing Opportunity Logo") ng-src="{{::$ctrl.parent.assetPaths['logo-equal.png']}}"
+              img.right alt=("{{ ::$ctrl.altLogoText() }}") ng-src="{{::$ctrl.parent.assetPaths['logo-equal.png']}}"
 
     .bg-dust
       .accordion-offset

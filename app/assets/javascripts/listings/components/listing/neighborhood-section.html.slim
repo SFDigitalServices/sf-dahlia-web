@@ -1,8 +1,7 @@
 accordion-heading
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-neighborhood.svg']}}" alt="features-options"
-  h3.accordion-name
-    | Neighborhood
-  span.accordion-subheader Location and transportation
+  h3.accordion-name translate="listings.neighborhood.header"
+  span.accordion-subheader translate="listings.neighborhood.location_and_transportation"
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
@@ -16,4 +15,4 @@ accordion-heading
       span.ui-icon.ui-small.i-deep
         svg
           use xlink:href="#i-map"
-      | Get Directions
+      | {{'label.get_directions' | translate}}

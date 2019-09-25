@@ -6,26 +6,26 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
       tr
         th
           span.show-for-sr
-            | Availability
+            | {{'listings.stats.availability' | translate}}
         th
           span ng-show="!$first"
             | &nbsp;
           span ng-class="{'show-for-sr': !$first}"
-            | Minimum Income
+            | {{'listings.stats.minimum_income' | translate}}
         th
           span ng-show="!$first"
             | &nbsp;
           span ng-class="{'show-for-sr': !$first}"
-            | Rent
+            | {{'listings.stats.rent' | translate}}
     tr ng-repeat="row in ::group" ng-class="::{'is-reserved': row.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
-      td.is-subtitled data-th="Availability"
+      td.is-subtitled data-th="{{'listings.stats.availability' | translate}}"
         small.pricing-table-waitlist ng-if="::row.Status == 'Occupied'"
-          | Waitlist
+          | {{'listings.stats.waitlist' | translate}}
         span ng-if="::row.Status != 'Occupied'"
           i
             | {{::row.total}}
           small
-            | available
+            | {{'listings.stats.available' | translate}}
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::row.Reserved_Type"
             svg
               use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, row.Reserved_Type)}}"
@@ -33,16 +33,16 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
         span ng-if="::row.BMR_Rental_Minimum_Monthly_Income_Needed"
           | {{::row.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
           small
-           | per month
+           | {{'t.per_month' | translate}}
         em ng-if="::!row.BMR_Rental_Minimum_Monthly_Income_Needed"
-          | None
+          | {{'t.none' | translate}}
       td.is-subtitled data-th="Rent"
         span ng-if="::row.BMR_Rent_Monthly"
           | {{::row.BMR_Rent_Monthly | currency:"$":0}}
           small
-            | per month
+            | {{'t.per_month' | translate}}
         span ng-if="::!row.BMR_Rent_Monthly && row.Rent_percent_of_income"
           | {{::row.Rent_percent_of_income}}%
           small
-           | income
+           | {{'t.income' | translate}}
 

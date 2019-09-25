@@ -8,18 +8,7 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
       h1.lead-header_title.serif.margin-bottom-none
         | {{ $ctrl.headerText() }}
       .results-header
-        p.results-header_values
-          | For
-          strong
-            '  {{$ctrl.eligibilityFilters.household_size}}
-          ' {{$ctrl.eligibilityFilters.household_size == 1 ? 'person ' : 'people '}}
-          span ng-if="$ctrl.eligibilityFilters.children_under_6 && $ctrl.eligibilityFilters.children_under_6 > 0"
-            ' (including
-            strong
-              ' {{$ctrl.eligibilityFilters.children_under_6}}
-              ' {{$ctrl.eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
-            ' under 6)
-          ' at <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ $ctrl.eligibilityFilters.income_timeframe | incomeTimeframe }}
+        p.results-header_values ng-bind-html="$ctrl.resultsHeader()"
         .results-header_actions
           a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator({listingsType: $ctrl.tenureType})"
             | {{'label.edit_eligibility' | translate}}
@@ -62,8 +51,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
             | {{'listings.no_matches' | translate}}
           p.margin-bottom--half
             | {{ $ctrl.noMatchesLabel() }}
-          p.t-small.c-steel.no-margin
-            | <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
+          p.t-small.c-steel.no-margin translate="listings.click_for_other_lisitings" translate-value-url="{{$ctrl.href('dahlia.additional-resources')}}"
 
     .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
 
