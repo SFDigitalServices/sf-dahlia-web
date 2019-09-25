@@ -11,7 +11,7 @@ do ->
     tomorrow.setDate(tomorrow.getDate() + 1)
     fakeListingDataService = {}
     $translate =
-      instant: ->
+      instant: jasmine.createSpy()
     fakeWindow = {}
     fakeWindow['env'] = {showSaleListings: 'true'}
     fakeSharedService = {}
@@ -289,9 +289,11 @@ do ->
         it 'calls ListingIdentityService.isSale', ->
           ctrl.featuresCaption(fakeListing)
           expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
-        it 'returns "Amenities and unit details" for sale listing', ->
+        it 'calls translation with "listings.features.sale_subheader" for sale listing', ->
           fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(true)
-          expect(ctrl.featuresCaption(fakeListing)).toEqual("Amenities and unit details")
-        it 'returns "Amenities, unit details and additional fees" for rental listing', ->
+          ctrl.featuresCaption(fakeListing)
+          expect($translate.instant).toHaveBeenCalledWith("listings.features.sale_subheader")
+        it 'calls translation with "listings.features.rent_subheader" for rental listing', ->
           fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(false)
-          expect(ctrl.featuresCaption(fakeListing)).toEqual("Amenities, unit details and additional fees")
+          ctrl.featuresCaption(fakeListing)
+          expect($translate.instant).toHaveBeenCalledWith("listings.features.rent_subheader")
