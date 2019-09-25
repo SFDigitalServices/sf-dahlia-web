@@ -31,8 +31,8 @@ accordion-heading
         button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'listings.see_unit_information' | translate}}
 
-    .stats-toggle.margin-bottom ng-repeat="unitGroup in $ctrl.parent.listing.unitTypes" data-event="gtm-unit-features" ng-click="$ctrl.toggleTable(unitGroup.unitType)"
-      .toggle-box.toggler.has-toggle
+    .stats-toggle.margin-bottom ng-repeat="unitGroup in $ctrl.parent.listing.unitTypes"
+      .toggle-box.toggler.has-toggle data-event="gtm-unit-features" ng-click="$ctrl.toggleTable(unitGroup.unitType)"
         .toggle-box_label
           strong
             | {{::unitGroup.unitType}}:
