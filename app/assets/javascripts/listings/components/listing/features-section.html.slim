@@ -9,15 +9,15 @@ accordion-heading
 
 .content-section
   .content-tile.feature-tile
-    feature-row title="listings.features.neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}" skiptranslate="{{true}}"
-    feature-row title="listings.features.built" description="{{::$ctrl.parent.listing.Year_Built}}"
-    feature-row title="listings.features.appliances" description="{{::$ctrl.parent.listing.Appliances}}"
-    feature-row title="{{$ctrl.parent.isSale($ctrl.parent.listing) ? 'listings.features.services_covered_by_hoa_dues' : 'listings.features.services_onsite' }}" description="{{::$ctrl.parent.listing.Services_Onsite}}"
-    feature-row title="listings.features.parking" description="{{::$ctrl.parent.listing.Parking_Information}}"
-    feature-row title="listings.features.smoking_policy" description="{{::$ctrl.parent.listing.Smoking_Policy}}"
-    feature-row title="listings.features.pets_policy" description="{{::$ctrl.parent.listing.Pet_Policy}}"
-    feature-row title="listings.features.property_amenities" description="{{::$ctrl.parent.listing.Amenities}}"
-    feature-row title="listings.features.accessibility" description="{{::$ctrl.parent.listing.Accessibility}}"
+    feature-row title="{{'listings.features.neighborhood' | translate}}" description="{{::$ctrl.parent.listing.Neighborhood}}" skiptranslate="{{true}}"
+    feature-row title="{{'listings.features.built' | translate}}" description="{{::$ctrl.parent.listing.Year_Built}}"
+    feature-row title="{{'listings.features.appliances' | translate}}" description="{{::$ctrl.parent.listing.Appliances}}"
+    feature-row title="{{($ctrl.parent.isSale($ctrl.parent.listing) ? 'listings.features.services_covered_by_hoa_dues' : 'listings.features.services_onsite') | translate}}" description="{{::$ctrl.parent.listing.Services_Onsite}}"
+    feature-row title="{{'listings.features.parking' | translate}}" description="{{::$ctrl.parent.listing.Parking_Information}}"
+    feature-row title="{{'listings.features.smoking_policy' | translate}}" description="{{::$ctrl.parent.listing.Smoking_Policy}}"
+    feature-row title="{{'listings.features.pets_policy' | translate}}" description="{{::$ctrl.parent.listing.Pet_Policy}}"
+    feature-row title="{{'listings.features.property_amenities' | translate}}" description="{{::$ctrl.parent.listing.Amenities}}"
+    feature-row title="{{'listings.features.accessibility' | translate}}" description="{{::$ctrl.parent.listing.Accessibility}}"
 
   .content-tile.feature-tile
     h4.feature-title.margin-bottom translate="listings.features.unit_features"
