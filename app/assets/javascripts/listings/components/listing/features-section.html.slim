@@ -41,7 +41,8 @@ accordion-heading
               ng-pluralize count="unitGroup.units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           span
             | ,  {{::unitGroup.unitAreaRange}}
-            span translate="listings.features.square_feet"
+            span
+              |  {{'listings.features.square_feet' | translate}}
           span.ui-control.ui-icon.ui-small
             svg
               use xlink:href="#i-arrow-down"

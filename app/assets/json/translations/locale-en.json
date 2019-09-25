@@ -717,6 +717,7 @@
             "vouchers_and_subsidies": "Housing Voucher or Rental Subsidy",
             "what_is_your_relationship": "What is your relationship?",
             "what_to_expect": "What to Expect",
+            "what_to_expect_application_chosen": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
             "what_type_of_number": "What type of number is this?",
             "white": "White",
             "work_in_sf": "Do you work in San Francisco?",
@@ -771,7 +772,7 @@
                 "visit_a_housing_counselor": "Visit a local housing counselor for help with your application.",
                 "visit_homeownership_sf": "Visit HomeownershipSF"
             },
-            "at_total_income": "at <strong>{{income}}</strong> per {{per}}",
+            "at_total_income": "at <strong>{{income}}</strong> {{per}}",
             "available_and_waitlist": "Available Units & Open Waitlist",
             "available_units": "Available Units",
             "available_units_and_waitlist": "Available units and waitlist",
@@ -828,7 +829,7 @@
             "household_maximum_income": "Household Maximum Income",
             "housing_program": "Housing Program",
             "important_program_rules": "Important Program Rules",
-            "including_children": "including <strong>{{number}} {{children}}</strong> under 6",
+            "including_children": "(including <strong>{{number}} {{children}}</strong> under 6)",
             "includes_priority_units": "Includes Priority Units for {{priorities}}",
             "income_exceptions": {
                 "intro": "People in your household may need <a href='{{url}}' target='_blank'>special income calculations</a> if they:",
@@ -909,6 +910,7 @@
                 "waitlist": "Waitlist",
                 "available": "available",
                 "prices_without_parking": "Prices without parking",
+                "price_without_parking": "Price without parking",
                 "with_one_parking_space": "With one parking space",
                 "sales_price": "Sales price",
                 "hoa_dues": "HOA dues"
@@ -1168,7 +1170,7 @@
             "maximum_income_month": "maximum income per month",
             "maximum_income_year": "maximum income per year",
             "menu": "Menu",
-            "min_income": "Min. Income",
+            "min_income_short": "Min. Income",
             "month": "month",
             "never_submitted": "Never Submitted",
             "next": "Next",

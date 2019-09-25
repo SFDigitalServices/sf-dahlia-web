@@ -37,7 +37,7 @@ angular.module('dahlia.components')
         children = $translate.instant(if @eligibilityFilters.children_under_6 == '1' then 't.child' else 't.children')
         header.push($translate.instant('listings.including_children', {number: @eligibilityFilters.children_under_6, children: children}))
 
-      timeframe = $translate.instant('t.' + $filter('incomeTimeframe')(@eligibilityFilters.income_timeframe))
+      timeframe = $translate.instant('t.per_' + $filter('incomeTimeframe')(@eligibilityFilters.income_timeframe))
       income = $filter('currency')(@eligibilityFilters.income_total, '$', 0)
       header.push($translate.instant('listings.at_total_income', {income: income, per: timeframe}))
 

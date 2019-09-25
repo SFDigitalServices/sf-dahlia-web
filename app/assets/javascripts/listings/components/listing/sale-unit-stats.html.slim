@@ -29,15 +29,19 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::row.Reserved_Type"
           svg
             use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, row.Reserved_Type)}}"
-      td.is-subtitled ng-if="::$ctrl.groupHasUnitsWithoutParking(group)" data-th="{{'listings.stats.prices_without_parking' | translate}}"
+      td.is-subtitled ng-if="::$ctrl.groupHasUnitsWithoutParking(group)" data-th="{{'listings.stats.price_without_parking' | translate}}"
          dl.clearfix ng-show="::row.Price_Without_Parking && row.HOA_Dues_Without_Parking"
-          dt translate="listings.stats.sales_price"
+          dt
+            | {{'listings.stats.sales_price' | translate}}:
           dd <strong>{{::row.Price_Without_Parking | currency:"$":0}}</strong>
-          dt translate="listings.stats.hoa_dues"
+          dt
+            | {{'listings.stats.hoa_dues' | translate}}:
           dd <strong>{{::row.HOA_Dues_Without_Parking | currency:"$":0}}</strong> {{'t.per_month' | translate}}
       td.is-subtitled ng-if="::$ctrl.groupHasUnitsWithParking(group)" data-th="{{'listings.stats.with_one_parking_space' | translate}}"
         dl.clearfix ng-show="::row.Price_With_Parking && row.HOA_Dues_With_Parking"
-          dt translate="listings.stats.sales_price"
+          dt
+            | {{'listings.stats.sales_price' | translate}}:
           dd <strong>{{::row.Price_With_Parking | currency:"$":0}}</strong>
-          dt translate="listings.stats.hoa_dues"
+          dt
+            | {{'listings.stats.hoa_dues' | translate}}:
           dd <strong>{{::row.HOA_Dues_With_Parking | currency:"$":0}}</strong> {{'t.per_month' | translate}}
