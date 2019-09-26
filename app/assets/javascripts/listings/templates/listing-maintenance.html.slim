@@ -4,7 +4,7 @@ header class="lead-header bg-dust" id="main-content"
 
       div class="lead-header_group"
         h1 class="lead-header_title c-steel"
-          | Page Updating:
+          | {{'label.page_updating' | translate}}:
           span.skiptranslate
             |  {{listing.Name}}
 
@@ -20,10 +20,10 @@ section class="results-section border-top border-bottom"
 
           hgroup class="status-header_group"
             h2 class="status-header_title gamma"
-              | Check back soon
+              | {{'label.check_back_soon' | translate}}
             p class="no-margin"
-              | We are in the process of updating this page right now.
+              | {{'label.maintanance' | translate}}
 
           div class="status-header_action"
             a ui-sref="dahlia.welcome" class="button ghost-white expand-small right toggler"
-              | Back to Homepage
+              | {{'label.back_to_homepage' | translate}}

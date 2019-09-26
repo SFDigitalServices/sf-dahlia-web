@@ -11,9 +11,9 @@
   table role="grid"
     thead
       tr
-        th scope="col" household size
+        th scope="col" translate="t.household_size"
         th scope="col" ng-repeat="amiChart in $ctrl.parent.AMICharts"
-          | {{::amiChart.percent}}% AMI UNITS
+          | {{::amiChart.percent}}% {{'t.ami' | translate}} {{'t.units' | translate}}
     tbody
       tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff()"
         td scope="row"

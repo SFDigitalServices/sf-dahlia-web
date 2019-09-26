@@ -10,9 +10,9 @@
         span.ui-icon.ui-static.ui-medium.i-white
           svg
             use xlink:href="#i-check"
-        | Matched
+        | {{'label.matched' | translate}}
       span.status-label.label.label--flag ng-if="$ctrl.showMatches() && $ctrl.isOpenNotMatchListing($ctrl.listing)"
-        | Not a Match
+        | {{'label.not_a_match' | translate}}
 
       / Application Deadline & Lottery Results Date Labels
       span.application-label.label.label--flag.primary ng-if="::$ctrl.isOpenListing($ctrl.listing)"
@@ -20,13 +20,13 @@
           svg
             use xlink:href="#i-clock"
         span
-          | Application Deadline: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+          | {{'t.application_deadline' | translate}}: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
       span.application-label.label.label--flag.alert ng-if="::$ctrl.isClosedListing($ctrl.listing)"
-        | Application Closed: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+        | {{'t.application_closed' | translate}}: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
       span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
-        | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
+        | {{'t.lottery_results_posted' | translate}}: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
       span.application-label.label.label--flag ng-if="::$ctrl.isLotteryResultsListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
-        | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffixOrShortDate}}
+        | {{'t.lottery_results_posted' | translate}}: {{::$ctrl.listing.Lottery_Results_Date | dateSuffixOrShortDate}}
 
     figcaption.property-card_info.skiptranslate
       h1.property-card_title.show-for-medium-up
@@ -57,14 +57,13 @@
             svg
               use xlink:href="#i-like" ng-show="!$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
               use xlink:href="#i-like-fill" ng-show="$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
-          span.inline
-            | Favorite
+          span.inline translate="label.favorite"
 
         button.button.round-icon.has-label.i-block data-event="gtm-share" ng-show="$ctrl.showSharing()" ui-sref="dahlia.share({id: $ctrl.listing.Id})"
           span.ui-icon
             svg
               use xlink:href="#i-forward"
               use style="display:none" xlink:href="#i-forward-fill"
-          span.inline Share
+          span.inline translate="label.share"
 
-        a.button.ghost-white.right.expand-small.no-margin ui-sref="dahlia.listing({id: $ctrl.listing.Id})" See Details
+        a.button.ghost-white.right.expand-small.no-margin ui-sref="dahlia.listing({id: $ctrl.listing.Id})" translate="label.see_details"
