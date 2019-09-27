@@ -1,13 +1,12 @@
 p
   - if error[:type] == 'connection_error'
-    | The ArcGIS #{data[:service_name]} service was unreachable when DAHLIA searched for this address.
+    = t('emailer.arc_gis.connection_error', service_name: data[:service_name])
   - elsif error[:type] == 'invalid_response' || error[:type] == 'http_error'
-    | The ArcGIS #{data[:service_name]} service was not returning a valid response when DAHLIA searched for this address.
-
+    = t('emailer.arc_gis.invalid_response', service_name: data[:service_name])
   - if error[:message].present?
-    |  The server responded with "#{error[:message]}"
-
-  |  Please find details below.
+    = " #{t('emailer.arc_gis.server_responded_with')} #{error[:message]}. "
+  br
+  = t 'emailer.arc_gis.please_find_details'
 
 
 = render 'arc_gis_notification_body', log: log, member: member, applicant: applicant, listing_url: listing_url

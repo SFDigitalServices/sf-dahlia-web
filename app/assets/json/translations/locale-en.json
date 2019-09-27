@@ -339,6 +339,16 @@
                 "subject": "DAHLIA SF Housing Portal Account Updated",
                 "you_recently_changed_settings_please_visit": "You recently changed information in your DAHLIA SF Housing Portal Account Settings. If you did not make this change, please visit your %{link} to verify your information."
             },
+            "arc_gis": {
+                "address_not_found": "An address was not found in the ArcGIS service. Please find details below.",
+                "connection_error": "The ArcGIS %{service_name} service was unreachable when DAHLIA searched for this address.",
+                "household_member_applicant_address": " Household Member / Applicant attached to address",
+                "invalid_response": "The ArcGIS %{service_name} service was not returning a valid response when DAHLIA searched for this address.",
+                "notification_header": "If this application is submitted now or in the future, and the listing lottery has Neighborhood Resident Housing Preference, you will need to manually check this application's eligibility and add them to the NRHP preference bucket.",
+                "please_find_details": "Please find details below.",
+                "server_responded_with": "The server responded with",
+                "which_listing": "Which Listing"
+            },
             "draft_application_saved": {
                 "applications_are_due_by": "Applications for this listing are due by %{deadline}.",
                 "complete_your_application": "Complete your application",
@@ -552,6 +562,7 @@
             "dob": "Date of Birth",
             "dob_day": "Day",
             "dob_month": "Month",
+            "dob_short": "DOB",
             "dob_year": "Year",
             "done_adding_people": "Done adding people",
             "done_with_this_address": "Done with this address",
