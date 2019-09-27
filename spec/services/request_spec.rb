@@ -107,6 +107,8 @@ describe Force::Request do
     end
 
     it 'doesn\'t recache if false is passed' do
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with('CACHE_SALESFORCE_REQUESTS').and_return('true')
       allow(client).to receive(:send)
         .with(:get, api_url(endpoint), params).and_return(default_response)
 
