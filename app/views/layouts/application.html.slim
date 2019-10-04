@@ -61,8 +61,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
     #google_translate_element
 
-    button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
-      | {{'t.skip_to_main_content' | translate}}
+    / button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
+    /   | {{'t.skip_to_main_content' | translate}}
 
     .site-container ng-class="{'skiptranslate': doNotGoogleTranslate()}"
       / always skip translations for the header + navigation
