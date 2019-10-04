@@ -55,7 +55,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
+  body id="ng-app" ng-class="hasCenterBody()" ng-cloak="true" keep-scroll-position=""
     - if ENV['GOOGLE_TAG_MANAGER_KEY']
       noscript
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
