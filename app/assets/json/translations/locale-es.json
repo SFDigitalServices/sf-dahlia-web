@@ -192,6 +192,29 @@
             "p2": "En este momento, solo debe indicar un monto total estimado. El total real se calculará si usted sale sorteado.",
             "title": "Pasemos a los ingresos."
         },
+        "devise": {
+            "mailer": {
+                "confirmation_instructions": {
+                    "confirm_account_link": "Confirm my account",
+                    "confirm_link_msg": "To complete your account creation, please click the link below:",
+                    "subject": "DAHLIA San Francisco Housing Portal New Account Confirmation",
+                    "thank_you_msg": "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
+                },
+                "reconfirmation_instructions": {
+                    "confirm_account_link": "Confirm my email",
+                    "confirm_link_msg": "A request to change your email has been made. To verify this request, please click the link below. Your email will be changed on any unsubmitted applications.",
+                    "subject": "Email change for DAHLIA"
+                },
+                "reset_password_instructions": {
+                    "click_if_your_request": "If you did make this request, please click on the link below to reset your password:",
+                    "ignore_mail_msg": "If you didn't request this, please ignore this email.",
+                    "no_changes_msg": "Your password won't change until you access the link above and create a new one.",
+                    "password_change_link": "Change my password",
+                    "password_reset_request_made": "A request to reset your DAHLIA San Francisco Housing Portal website password for housing.sfgov.org has recently been made.",
+                    "subject": "Reset password instructions"
+                }
+            }
+        },
         "document_checklist": {
             "assisted_housing_desc": "Necesitará una copia del contrato de alquiler que demuestre su domicilio actual.",
             "assisted_housing_title": "Preferencia para vivienda asistida",
@@ -422,6 +445,7 @@
             "translate_bar_expert_notice": "Esta página fue traducida por un hablante nativo.",
             "translate_bar_google_notice": "Esta página ha sido traducida por Google Translate."
         },
+        "hello": "Hello %{name}",
         "label": {
             "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
             "add_household_member": "Agregar integrante de la familia",
@@ -960,7 +984,7 @@
             "application_due": "Vencimiento de la solicitud",
             "application_for_listing": "Solicitud para {{listingName}}",
             "application_submitted": "Solicitud presentada",
-            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y terminar más tarde\". (Save and finish later)",
+            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y finalizar en otro momento\"",
             "are_you_sure_you_want_to_leave_confirmation": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "are_you_sure_you_want_to_leave_sign_in": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "back": "Retroceder",
