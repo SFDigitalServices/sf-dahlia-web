@@ -520,7 +520,7 @@
             "applicant_sexual_orientation": "How do you describe your sexual orientation or sexual identity?",
             "application_all_applicants_are_required": "All adult household members who will be on the loan and title are required to complete homebuyer education. However, only the primary applicant needs to upload the verification letter to be included in the lottery.",
             "application_cant_find_lender": "Can’t find your loan officer? Your pre-approval letter must be from <a target='_blank' href='{{url}}'>someone on our list</a>.",
-            "application_has_completed_homebuyer_education": "I have attended 8 hours of Homebuyer Education.",
+            "application_has_completed_homebuyer_education": "I have attended 10 hours of Homebuyer Education.",
             "application_has_loan_pre_approval": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
             "application_is_first_time_homebuyer": "I have not owned residential property within the past 3 years.",
             "application_visit_homeownership_calendar": "If you haven't done this yet, visit the <a href='{{url}}' target='_blank'>HomeownershipSF calendar</a> to sign up for a workshop.",
