@@ -7,7 +7,8 @@
 
 # To use this script:
 #   1. Put the updated env vars in a file (.env generally)
-#   2. Add names of apps to update under webapp_apps and partner_apps
+#   2. Add names of apps to update under webapp_apps
+#.  3. If you don't already have it installed, install the [Semaphore CLI](https://semaphoreci.com/docs/cli-overview.html) and login
 #   3. Run the script, passing your path to env vars as an argument
 
 # TODO: Pull in heroku apps from files or at least review app numbers command line arg
