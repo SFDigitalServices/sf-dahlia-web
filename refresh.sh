@@ -16,7 +16,7 @@
 env_file=".env"
 semaphore_secret="sf-dahlia-web-full"
 
-while getopts ":f:" opt; do
+while getopts ":f::s::h" opt; do
   case $opt in
     h )
       echo "Usage:"
