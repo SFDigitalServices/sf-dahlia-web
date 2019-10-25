@@ -28,7 +28,8 @@ module ArcGISService
       street = "#{street} TI" if @address[:zip].to_s.include?('94130')
       @address = {
         # do not include unit type / unit number in :street
-        street: "#{addr.number} #{street} #{addr.street_type}",
+        # do include prefix (N/S/E/W, etc)
+        street: "#{addr.number} #{addr.prefix} #{street} #{addr.street_type}",
         city: addr.city || 'San Francisco',
         state: addr.state || 'CA',
       }
