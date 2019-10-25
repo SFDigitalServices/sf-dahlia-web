@@ -733,7 +733,7 @@
             "additional_eligibility_rules": {
                 "credit_history": "Credit History",
                 "criminal_background": "Criminal Background",
-                "criminal_background_info": "Qualified applicants with criminal history will be considered for housing in compliance with <a target='_blank' href='{{article-49-url}}'>Article 49</a> of the San Francisco Police Code: <a href='{{fair-chance-url}}' target='_blank'>Fair Chance Ordinance</a>.",
+                "criminal_background_info": "Qualified applicants with criminal history will be considered for housing in compliance with <a target='_blank' href='{{article49Url}}'>Article 49</a> of the San Francisco Police Code: <a href='{{fairChanceUrl}}' target='_blank'>Fair Chance Ordinance</a>.",
                 "find_out_more": "Find out more about Building Selection Criteria",
                 "rental_history": "Rental History",
                 "text": "Applicants must also qualify under the rules of the building.",
