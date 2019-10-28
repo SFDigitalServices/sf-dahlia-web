@@ -26,10 +26,11 @@ module ArcGISService
       street = addr.street
       # modify Treasure Island addresses to append TI
       street = "#{street} TI" if @address[:zip].to_s.include?('94130')
+      # add directional prefix (N/S/E/W, etc) back
+      street = "#{addr.prefix} #{street}" if addr.prefix
       @address = {
         # do not include unit type / unit number in :street
-        # do include prefix (N/S/E/W, etc)
-        street: "#{addr.number} #{addr.prefix} #{street} #{addr.street_type}",
+        street: "#{addr.number} #{street} #{addr.street_type}",
         city: addr.city || 'San Francisco',
         state: addr.state || 'CA',
       }
