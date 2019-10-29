@@ -10,6 +10,57 @@ describe ArcGISService::GeocodingService do
     }
   end
 
+  describe 'clean_address' do
+    before(:each) do
+      @input_address = {
+        address1: '123 Main St',
+        city: 'San Francisco',
+        state: 'CA',
+        zip: '12345',
+      }
+    end
+
+    it 'parses basic addresses correctly' do
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expected_address = {
+        street: '123 Main St',
+        city: 'San Francisco',
+        state: 'CA',
+      }
+      expect(service.address).to eq(expected_address)
+    end
+
+    it 'adds TI to street for addresses in treasure island' do
+      @input_address[:zip] = '94130'
+      service = ArcGISService::GeocodingService.new(@input_address)
+
+      expect(service.address[:street]).to eq('123 Main TI St')
+    end
+
+    it 'does not include unit letters if provided' do
+      @input_address[:address1] = '123 Main St, #A'
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expect(service.address[:street]).to eq('123 Main St')
+
+      @input_address[:address1] = '123 Main St Apt A'
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expect(service.address[:street]).to eq('123 Main St')
+
+      @input_address[:address1] = '123 Main St Apt 1'
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expect(service.address[:street]).to eq('123 Main St')
+    end
+
+    it 'maintains directional prefix if present' do
+      @input_address[:address1] = '123 North Main St'
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expect(service.address[:street]).to eq('123 N Main St')
+
+      @input_address[:address1] = '123 N Main St'
+      service = ArcGISService::GeocodingService.new(@input_address)
+      expect(service.address[:street]).to eq('123 N Main St')
+    end
+  end
   describe '.select_best_candidate' do
     context 'with nil passed' do
       it 'returns an empty object' do
