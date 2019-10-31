@@ -100,7 +100,7 @@ describe CacheService do
       before do
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
-          .with(force: true).and_return(updated_listings)
+          .with(subset: 'browse', force: true).and_return(updated_listings)
       end
 
       it_behaves_like 'cacher of listings' do
