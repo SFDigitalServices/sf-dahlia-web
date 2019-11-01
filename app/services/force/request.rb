@@ -22,6 +22,7 @@ module Force
 
     def cached_get(endpoint, params = nil, force = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
+      force = ActiveModel::Type::Boolean.new.cast(force)
       force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
       if ENV['FREEZE_SALESFORCE_CACHE']
         expires_in = 10.years

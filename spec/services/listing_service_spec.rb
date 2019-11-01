@@ -103,4 +103,13 @@ describe Force::ListingService do
       end
     end
   end
+
+  describe '.lottery_buckets' do
+    it 'should call right endpoint with forced recache' do
+      endpoint = '/Listing/LotteryResult/' + listing_id
+      expect_any_instance_of(Force::Request).to receive(:cached_get)
+        .with(endpoint, nil, true).and_return(single_listing)
+      Force::ListingService.lottery_buckets(listing_id, force: true)
+    end
+  end
 end

@@ -67,6 +67,7 @@ describe CacheService do
       updated_listings.first['Application_Due_Date'] = (Time.now - 7.days).iso8601
 
       expect(Force::ListingService).to receive(:lottery_buckets)
+        .with(updated_listing_id, force: true)
 
       VCR.use_cassette('force/initialize') do
         CacheService.new.prefetch_listings(prefetch_args)
@@ -99,7 +100,7 @@ describe CacheService do
       before do
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
-          .with(force: true).and_return(updated_listings)
+          .with(subset: 'browse', force: true).and_return(updated_listings)
       end
 
       it_behaves_like 'cacher of listings' do
