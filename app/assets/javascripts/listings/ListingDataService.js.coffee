@@ -333,6 +333,12 @@ ListingDataService = (
         reservedFor: 'people with developmental disabilities'
         reservedForWhoAre: 'developmentally disabled'
         unitDescription: 'people with developmental disabilities'
+      "#{ListingConstantsService.RESERVED_TYPES.ARTIST}":
+        building: 'Developmental Disability'
+        eligibility: 'People with developmental disabilities'
+        reservedFor: 'people with developmental disabilities'
+        reservedForWhoAre: 'developmentally disabled'
+        unitDescription: 'people with developmental disabilities'
 
     return type unless labelMap[type]
     return labelMap[type][modifier]
