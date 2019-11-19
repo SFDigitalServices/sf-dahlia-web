@@ -26,5 +26,10 @@ angular.module('dahlia.directives')
           scope.description = $translate.instant('a2_community_screening.senior.you_or_anyone_desc', age)
           scope.labels.communityScreeningYes = $translate.instant('a2_community_screening.senior.you_or_anyone_label', age)
           scope.communityEligibilityErrorMsg.push($translate.instant('error.senior_anyone', age))
+      when 'Artist Live/Work'
+        scope.title = $translate.instant('a2_community_screening.artist.you_or_anyone')
+        scope.description = $translate.instant('a2_community_screening.artist.you_or_anyone_desc')
+        scope.labels.communityScreeningYes = $translate.instant('t.yes')
+        scope.communityEligibilityErrorMsg.push($translate.instant('error.artist_anyone'))
 
 ]
