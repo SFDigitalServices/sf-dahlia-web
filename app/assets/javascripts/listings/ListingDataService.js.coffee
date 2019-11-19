@@ -203,7 +203,7 @@ ListingDataService = (
         else
           openNotMatchListings.push(listing)
       else
-        if ListingLotteryService.lotteryIsUpcoming(listing)
+        if !ListingLotteryService.lotteryComplete(listing)
           closedListings.push(listing)
         else
           lotteryResultsListings.push(listing)
