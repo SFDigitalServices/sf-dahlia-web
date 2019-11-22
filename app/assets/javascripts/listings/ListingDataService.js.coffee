@@ -203,10 +203,10 @@ ListingDataService = (
         else
           openNotMatchListings.push(listing)
       else
-        if !ListingLotteryService.lotteryComplete(listing)
-          closedListings.push(listing)
-        else
+        if ListingLotteryService.lotteryComplete(listing)
           lotteryResultsListings.push(listing)
+        else
+          closedListings.push(listing)
 
     angular.copy(Service.sortListings(openListings, 'openListings'), Service.openListings)
     angular.copy(Service.sortListings(openMatchListings, 'openMatchListings'), Service.openMatchListings)

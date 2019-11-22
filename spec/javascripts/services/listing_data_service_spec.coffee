@@ -101,14 +101,15 @@ do ->
         expect(ListingDataService.openListings).toEqual []
 
     describe 'Service.groupListings', ->
-      it 'assigns ListingDataService listing buckets with grouped arrays of listings', ->
+      it 'assigns every listing to a bucket', ->
         ListingDataService.groupListings(fakeListings.listings)
         combinedLength =
           ListingDataService.openListings.length +
           ListingDataService.closedListings.length +
           ListingDataService.lotteryResultsListings.length
         expect(combinedLength).toEqual fakeListings.listings.length
-
+      it 'correctly assigns open listings to match or notMatch', ->
+        ListingDataService.groupListings(fakeListings.listings)
         openLength =
           ListingDataService.openMatchListings.length +
           ListingDataService.openNotMatchListings.length
