@@ -38,7 +38,7 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
     !! (listing.LotteryResultsURL || Service.listingHasLotteryBuckets(listing))
 
   Service.lotteryComplete = (listing) ->
-    listing && (listing.Lottery_Status == 'Lottery Complete')
+    listing && listing.Publish_Lottery_Results && (listing.Lottery_Status == 'Lottery Complete')
 
   Service.openLotteryResultsModal = ->
     Service.loading.lotteryRank = false
