@@ -40,7 +40,7 @@ angular.module('dahlia.components')
         $translate.instant('label.file_attached', {file: $translate.instant('label.verification_letter')})
 
       ctrl.prioritiesSelectedExists = ->
-        _.isEmpty(ctrl.application.adaPrioritiesSelected)
+        !_.isEmpty(ctrl.application.adaPrioritiesSelected)
 
       ctrl.applicationVouchersSubsidies = ->
         if ctrl.application.householdVouchersSubsidies == 'Yes'
