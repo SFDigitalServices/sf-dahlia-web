@@ -100,7 +100,7 @@ review-summary-section header="{{'label.household_members' | translate}}" sectio
       | {{member.home_address.zip}}
 
 / Household Details
-div ng-if="::$ctrl.prioritiesSelectedExists()"
+div ng-if="::$ctrl.showHouseholdDetails()"
   review-summary-section header="{{'label.household_details' | translate}}" section-name="{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
@@ -116,7 +116,7 @@ div ng-if="::$ctrl.prioritiesSelectedExists()"
       | {{::$ctrl.application.hasMilitaryService}}
     review-summary-item label="{{'label.people_with_developmental_disabilities' | translate}}" identifier="hasDevelopmentalDisability" ng-if="$ctrl.application.hasDevelopmentalDisability"
       | {{::$ctrl.application.hasDevelopmentalDisability}}
-    review-summary-item label="{{'label.ada_accessible_units' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.isRental"
+    review-summary-item label="{{'label.ada_accessible_units' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.prioritiesSelectedExists()"
       span ng-repeat="priorityOption in $ctrl.priority_options" ng-if="::$ctrl.application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1] | translate}}
         br

@@ -36,11 +36,22 @@ angular.module('dahlia.components')
 
       ctrl.preapprovalLetterAttached = ->
         $translate.instant('label.file_attached', {file: $translate.instant('label.preapproval_letter')})
+
       ctrl.verificationLetterAttached = ->
         $translate.instant('label.file_attached', {file: $translate.instant('label.verification_letter')})
 
       ctrl.prioritiesSelectedExists = ->
         !_.isEmpty(ctrl.application.adaPrioritiesSelected)
+
+      ctrl.showHouseholdDetails = ->
+        # If any of the household details items are present, show the section
+        !_.every([
+          ctrl.prioritiesSelectedExists(), # has ADA priority question answered
+          ctrl.application.hasPublicHousing,
+          ctrl.application.groupedHouseholdAddresses, # standin for rent-burdened question
+          ctrl.application.hasMilitaryService, # this doesn't appear to be populated
+          ctrl.application.hasDevelopmentalDisability # this doesn't appear to be populated
+        ], _.isEmpty)
 
       ctrl.applicationVouchersSubsidies = ->
         if ctrl.application.householdVouchersSubsidies == 'Yes'
