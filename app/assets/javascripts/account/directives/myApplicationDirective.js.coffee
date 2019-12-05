@@ -63,13 +63,13 @@ angular.module('dahlia.directives')
         ShortFormApplicationService.applicationWasSubmitted(scope.application)
 
       scope.submittedWithLotteryResults = ->
-        scope.isSubmitted() && scope.listing.Lottery_Results
+        scope.isSubmitted() && ListingLotteryService.lotteryComplete(scope.listing)
 
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
       scope.lotteryNumber = ->
-        if scope.listing.Lottery_Results
+        if ListingLotteryService.lotteryComplete(scope.listing)
           html = """
             <button class='button-link lined' ng-click='viewLotteryResults()'>
               ##{scope.application.lotteryNumber}
@@ -81,7 +81,7 @@ angular.module('dahlia.directives')
 
       scope.viewLotteryResults = ->
         # if the search failed, then viewLotteryResults becomes a button to open the PDF instead
-        if scope.lotteryError.lotteryRank && scope.listing.LotteryResultsURL
+        if scope.lotteryError.lotteryRank && ListingLotteryService.lotteryComplete(scope.listing)
           $window.open(scope.listing.LotteryResultsURL, '_blank')
           return
 

@@ -32,24 +32,13 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
     else
       false
 
-  Service.lotteryDatePassed = (listing) ->
-    return false unless listing.Lottery_Date
-    today = moment().tz('America/Los_Angeles').startOf('day')
-    lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
-    # listing is open if deadline is in the future
-    return today > lotteryDate
-
-  Service.lotteryIsUpcoming = (listing) ->
-    return false unless listing
-    !listing.Lottery_Results && !Service.lotteryDatePassed(listing) && !Service.lotteryComplete(listing)
-
   # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = (listing) ->
     return false unless listing
     !! (listing.LotteryResultsURL || Service.listingHasLotteryBuckets(listing))
 
   Service.lotteryComplete = (listing) ->
-    listing && (listing.Lottery_Status == 'Lottery Complete')
+    listing && listing.Publish_Lottery_Results && (listing.Lottery_Status == 'Lottery Complete')
 
   Service.openLotteryResultsModal = ->
     Service.loading.lotteryRank = false
