@@ -45,13 +45,13 @@ angular.module('dahlia.components')
 
       ctrl.showHouseholdDetails = ->
         # If any of the household details items are present, show the section
-        !_.every([
+        _.some([
           ctrl.prioritiesSelectedExists(), # has ADA priority question answered
           ctrl.application.hasPublicHousing,
-          ctrl.application.groupedHouseholdAddresses, # standin for rent-burdened question
+          !_.isEmpty(ctrl.application.groupedHouseholdAddresses), # standin for rent-burdened question
           ctrl.application.hasMilitaryService, # this doesn't appear to be populated
           ctrl.application.hasDevelopmentalDisability # this doesn't appear to be populated
-        ], _.isEmpty)
+        ])
 
       ctrl.applicationVouchersSubsidies = ->
         if ctrl.application.householdVouchersSubsidies == 'Yes'
