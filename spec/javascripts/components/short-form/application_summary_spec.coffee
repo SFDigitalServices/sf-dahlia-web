@@ -105,3 +105,39 @@ do ->
         ctrl.getLendingInstitution(id)
         expect(fakeLendingInstitutionService.getLendingInstitution)
           .toHaveBeenCalledWith(id)
+
+    describe 'prioritiesSelectedExists', ->
+      it 'should return true if ADA question exists on application', ->
+        ctrl.application.adaPrioritiesSelected = {'None': true}
+        expect(ctrl.prioritiesSelectedExists()).toEqual true
+
+      it 'should return false if ADA question does not exist on application', ->
+        ctrl.application.adaPrioritiesSelected = {}
+        expect(ctrl.prioritiesSelectedExists()).toEqual false
+
+    describe 'showHouseholdDetails', ->
+      beforeEach ->
+        ctrl.application = {
+          'adaPrioritiesSelected': {},
+          'hasPublicHousing': false,
+          'groupedHouseholdAddresses': [],
+        }
+      it 'should return false if all values are empty or undefined', ->
+        expect(ctrl.showHouseholdDetails()).toEqual false
+
+      it 'should return true if ADA priorities are present', ->
+        ctrl.application.adaPrioritiesSelected = {'None': true}
+        expect(ctrl.showHouseholdDetails()).toEqual true
+
+      it 'should return true if rent burdened addresses are defined', ->
+        ctrl.application.groupedHouseholdAddresses = ['something']
+        expect(ctrl.showHouseholdDetails()).toEqual true
+
+      it 'should return true if hasPublicHousing is true', ->
+        ctrl.application.hasPublicHousing = true
+        expect(ctrl.showHouseholdDetails()).toEqual true
+
+
+
+
+
