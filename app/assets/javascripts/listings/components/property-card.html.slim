@@ -1,6 +1,10 @@
 .property-card ng-class="{last: $last, first: $first}"
-  h1.property-card_title.text-center.margin-bottom.hide-for-medium-up.skiptranslate
+  h1.property-card_title.text-center.hide-for-medium-up.skiptranslate
     a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
+  p.property-card_address.text-center.hide-for-medium-up.skiptranslate
+    | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
+    br.show-for-small-only
+    | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
   .property-card_figure-wrapper
     figure.property-card_figure
       a.property-card_overlay ui-sref="dahlia.listing({id: $ctrl.listing.Id})" tabindex="-1"
@@ -10,9 +14,8 @@
       figcaption.property-card_info.skiptranslate
         h1.property-card_title.show-for-medium-up
           a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
-        p.property-card_address
+        p.property-card_address.show-for-medium-up
           | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
-          br.show-for-small-only
           | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
 
     / Matched & Not Matched Labels
