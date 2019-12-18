@@ -1,0 +1,9 @@
+.banner-bar.bar.bg-alert ng-if="alertMessage"
+  .row
+    .medium-12.columns
+      .a-icon-left
+        span.ui-icon.ui-medium.i-white
+          svg
+            use xlink:href="#i-warning"
+        p.offset-icon.c-white.t-small.t-semi
+          | {{ alertMessage }}
