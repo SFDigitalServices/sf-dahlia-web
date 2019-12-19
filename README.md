@@ -64,7 +64,7 @@ Note: These tests will run on Semaphore (our CI) as well for every review app an
 
 We currently manually transfer the application's CSS from [our pattern library](https://github.com/Exygy/sf-dahlia-pattern-library) using Grunt.
 
-If you do not already have grunt installed, run `brew install grunt` to install it before proceeding. 
+If you do not already have grunt installed, run `brew install grunt` to install it before proceeding.
 
 To update this app with the latest PL styles:
 
