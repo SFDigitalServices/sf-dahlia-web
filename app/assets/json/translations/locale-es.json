@@ -829,7 +829,7 @@
             "housing_program": "Programa de vivienda",
             "important_program_rules": "Reglas Importantes del Programa",
             "includes_priority_units": "Incluye unidades con prioridad para {{priorities}}",
-            "including_children": "(incluidos <strong>{{number}} {{niños}}</strong> menores de 6 años)",
+            "including_children": "(incluidos <strong>{{number}} {{children}}</strong> menores de 6 años)",
             "income_exceptions": {
                 "intro": "Las personas en su hogar pueden necesitar <a href='{{url}}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
                 "nontaxable": "Reciban <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>ingresos no reportables</span>",
