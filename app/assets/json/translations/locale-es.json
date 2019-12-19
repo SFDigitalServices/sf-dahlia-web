@@ -519,7 +519,7 @@
             "applicant_sexual_orientation": "¿Cómo describiría su orientación sexual o identidad sexual?",
             "application_all_applicants_are_required": "Se exige que todos los miembros adultos del grupo familiar cuyos nombres estarán en el préstamo y el título completen la capacitación para compradores de vivienda. Sin embargo, solo el solicitante principal tiene que cargar la carta de verificación para que se le incluya en el sorteo.",
             "application_cant_find_lender": "¿No encuentra a su agente de préstamos? Su carta de pre-aprobación debe ser de <a target='_blank' href='{{url}}'>un agente de nuestra lista</a>.",
-            "application_has_completed_homebuyer_education": "Yo completé 8 horas de capacitación para compradores de vivienda.",
+            "application_has_completed_homebuyer_education": "Yo completé 10 horas de capacitación para compradores de vivienda.",
             "application_has_loan_pre_approval": "Yo obtuve la pre-aprobación para obtener un préstamo hipotecario de un agente de préstamos aprobado por la Oficina de Desarrollo Comunitario y de Viviendas del Alcalde (Mayor's Office of Housing and Community Development, MOHCD).",
             "application_is_first_time_homebuyer": "Yo no he sido propietario de vivienda en los últimos 3 años.",
             "application_visit_homeownership_calendar": "Si todavía no lo ha hecho, ingrese al <a href='{{url}}' target='_blank'>calendario de HomeownershipSF</a> para inscribirse en un taller.",
