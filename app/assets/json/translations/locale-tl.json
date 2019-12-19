@@ -192,6 +192,29 @@
             "p2": "Kailangan lamang ninyong magbigay ng tinatayang kabuuang kita sa ngayon. Kakalkulahin ang aktuwal na kabuuan kapag napili kayo sa lottery.",
             "title": "Pumunta naman tayo sa kita."
         },
+        "devise": {
+            "mailer": {
+                "confirmation_instructions": {
+                    "confirm_account_link": "Kumpirmahin ang aking account",
+                    "confirm_link_msg": "Para makumpleto ang paggawa ng inyong account, paki-klik ang link na nasa ibaba:\n",
+                    "subject": "Pagkumpirma ng Bagong Account sa DAHLIA San Francisco Housing Portal\n",
+                    "thank_you_msg": "Salamat sa pagset up ng inyong account sa DAHLIA San Francisco Housing Portal.  Mas madali na ngayon para sa inyo na magsimula, mag-save, at magsumite ng online na aplikasyon para sa nakalistang pabahay na makikita sa site.\n"
+                },
+                "reconfirmation_instructions": {
+                    "confirm_account_link": "Kumpirmahin ang aking email",
+                    "confirm_link_msg": "May ginawang kahilingan para palitan ang inyong email. Para tiyakin na tama ang kahilingang ito, paki-klik ang link na nasa ibaba. Papalitan ang inyong email sa anumang hindi pa nasusumite na aplikasyon.\n",
+                    "subject": "Pagpapalit ng email para sa DAHLIA"
+                },
+                "reset_password_instructions": {
+                    "click_if_your_request": "Kung hindi ninyong ginawa ang paghiling na ito, paki-klik ang link sa ibaba para baguhin ang inyong password:",
+                    "ignore_mail_msg": "Kung hindi ninyo ito hiniling, mangyaring huwag nang pansinin ang email na ito.",
+                    "no_changes_msg": "Hindi mababago ang inyong password hanggang sa mapuntahan ninyo ang link na nasa itaas at gumawa kayo ng bagong password.",
+                    "password_change_link": "Palitan ang aking password",
+                    "password_reset_request_made": "May ginawang paghiling kamakailan na baguhin ang inyong password para sa website ng DAHLIA San Francisco Housing Portal, na para sa housing.sfgov.org.",
+                    "subject": "Baguhin ang mga instruksiyon para sa password"
+                }
+            }
+        },
         "document_checklist": {
             "assisted_housing_desc": "Kailangan ninyo ng Kopya ng Lease o Kasunduan sa Pag-upa na nagpapakita ng address kung saan kayo nakatira. ",
             "assisted_housing_title": "Preperensiya para sa May Tulong na Pabahay o Assisted Housing ",
@@ -306,6 +329,38 @@
         "e8_general_lottery_notice": {
             "title": "Batay sa impormasyong ipinasok ninyo, wala pang kinukuhang anumang preperensiya para sa lottery sa pabahay ang inyong kabahayan.",
             "you_will_be_in_general_lottery": "Mapupunta kayo sa pangkalahatang lottery."
+        },
+        "email_signature": "Ang Opisina ng Mayor para sa Pabahay at Pagpapaunlad sa Komunidad (Mayor's Office of Housing and Community Development) ng San Francisco",
+        "emailer": {
+            "account_update": {
+                "account_settings_link": "Mga Setting ng Account",
+                "always_create_strong_password": "Tandaan na palaging gumawa ng malakas na password para sa inyong account, at huwag ibahagi sa iba ang inyong password. ",
+                "subject": "May binagong impormasyon sa Account na nasa DAHLIA SF Housing Portal",
+                "you_recently_changed_settings_please_visit": "Binago ninyo kamakailan ang impormasyon na nasa Mga Setting ng Inyong Account sa DAHLIA SF Housing Portal. Kung hindi ninyo ginawa ang pagbabagong ito, pakibisita ang inyong %{link} upang matiyak ang inyong impormasyon. "
+            },
+            "draft_application_saved": {
+                "applications_are_due_by": "Mga aplikasyon para sa nakalistang pabahay na ito ay kailangan isumite bago ang takdang petsa ng \n %{deadline}.",
+                "complete_your_application": "Kumpletuhin ang inyong aplikasyon.",
+                "heres_link_to_complete": "Heto ang link upang makumpleto ang inyong aplikasyon para sa %{listing_name} na si-nave ninyo para sa ibang panahon sa DAHLIA San Francisco Housing Portal.",
+                "reminder_do_not_submit_duplicate": "Paalala lang na kung nagsumite na kayo ng ibang aplikasyon para sa nakalistang pabahay na ito, huwag na ninyo itong kumpletuhin. Kapag doble ang aplikasyon, magreresulta ito sa pagtanggal ng dalawang aplikasyon niyo mula sa loterya o palabunutan. ",
+                "subject": "Kompletuhin ang inyong aplikasyon para sa %{listing_name} bago sumapit ang  %{deadline} "
+            },
+            "submission_confirmation": {
+                "applicants_will_be_contacted": "Kokontakin ng ahente ang mga aplikante ayon sa pagkakasunod-sunod ng kanilang ranggo sa loterya o palabunutan hanggang sa mapuno ang lahat ng bakanteng pwesto.\n",
+                "here_is_your_lottery_number": "Heto ang inyong numero para sa loterya o palabunutan: %{lottery_number}",
+                "how_are_we_doing": "Kumusta naman ang trabaho namin? ",
+                "lottery_will_be_held": "Isasagawa ang loterry o palabunutan sa %{lottery_date}. Ipapaskil ang mga resulta ng lottery sa pabahay sa %{link}.",
+                "office_hours": "Mga Oras ng Opisina",
+                "on_the_listing": "sa nakalistang pabahay",
+                "required_supporting_documents": "mga kinakailangang dokumento na nagbibigay ng suporta",
+                "see_below_for_contact_information": "Kung kailangan ninyong maglagay ng pinakabagong impormasyon sa inyong aplikasyon, huwag mag-aplay muli, dahil kapag ginawa ninyo ito, tatanggalin ang dalawa ninyong aplikasyon mula sa lottery o palabunutan. Kontakin ang ahente. Tingnan sa ibaba ang impormasyon sa pagkontak sa Ahente para sa nakalistang pabahay na ito. ",
+                "should_your_application_be_chosen_rental": "Kapag napili ang inyong aplikasyon, maging handa para sa pagsagot ng mas detalyadong aplikasyon at magbigay ng kinakailangang dokumentong nagbibigay ng suporta sa loob ng 5 araw ng negosyo matapos kayong kontakin.",
+                "should_your_application_be_chosen_sale": "Kapag napili ang inyong aplikasyon, maging handa para sa pagsagot ng mas detalyadong aplikasyon at magbigay ng %{link}sa loob ng 5 oras ng trabaho matapos kayong makontak.",
+                "subject": "Salamat sa pag-aaplay para sa %{listing_name}",
+                "thanks_for_applying_to_listing": "Salamat sa pag-aaplay. Natanggap na namin ang inyong aplikasyon para sa %{link}.",
+                "we_would_like_your_feedback": "Gusto naming makuha ang opinyon ninyo",
+                "what_to_expect_next": "Kung ano ang susunod ninyong maaasahan"
+            }
         },
         "error": {
             "address": "Pakipasok ang inyong address",
@@ -422,6 +477,11 @@
             "translate_bar_expert_notice": "Isinalin ang page na ito ng katutubong nagsasalita ng wikang ito. ",
             "translate_bar_google_notice": "Isinalin ang pahinang ito ng Google Translate. "
         },
+        "hello": "Kumusta %{name}",
+        "housing_counselor": {
+            "find_a_housing_counselor": "Humanap ng Tagapayo sa Pabahay (Housing Counselor). ",
+            "header": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon."
+        },
         "label": {
             "ada_accessible_units": "Mga Unit na ADA Accessible (may madaraanan ang may kapansanan)",
             "add_household_member": "Magdagdag ng miyembro ng kabahayan",
@@ -467,6 +527,7 @@
             "asian": "Asyano",
             "asian_white": "Asyano at Puti",
             "aunt": "Tiyahin",
+            "back_to_homepage": "Bumalik sa Homepage",
             "bisexual": "Bisexual",
             "black_african_american": "Itim/Afrikano Amerikano",
             "black_african_american_white": "Itim/Afrikano Amerikano at Puti",
@@ -475,6 +536,7 @@
             "cancel_upload": "Kanselahin ang pag-a-upload",
             "certificate_number": "Numero ng Sertipiko ",
             "change_application_details": "Palitan ang mga Detalye ng Aplikasyon",
+            "check_back_soon": "Bumalik muli sa lalong madaling panahon para matingnan muli ito",
             "child": "Bata",
             "city": "Pangalan ng Lungsod",
             "clear": "Tanggalin ang lahat ng nakasulat",
@@ -493,10 +555,12 @@
             "done_adding_people": "Tapos na ang pagdaragdag ng mga tao",
             "done_with_this_address": "Tapos na sa address na ito",
             "dont_want_preference": "Hindi ko gusto ang preperensiyang ito para sa lottery",
+            "download_application": "I-download ang {{lang}} na Aplikasyon ",
             "edit_eligibility": "I-edit ang Pagiging Kuwalipikado",
             "edited": "Na-edit na",
             "email_address": "Email",
             "family_member": "Miyembro ng Pamilya",
+            "favorite": "Paborito",
             "female": "Babae",
             "field_required": "Kinakailangan ang pagsagot dito",
             "file_attached": "Nakalakip ang {{file}}",
@@ -529,7 +593,9 @@
             "last_name": "Apelyido",
             "live_alone": "Titira ako nang mag-isa",
             "live_in_public_housing_or_hud": "Nakatira sa May Tulong na Pabahay o Assisted Housing (may pangangalaga para sa matatanda o may kapansanan)",
+            "lottery": "Lottery o Palabunutan ",
             "mailing_address": "Address para sa pagpapadala ng sulat",
+            "maintanance": "Nasa proseso kami ng pag-a-update sa page na ito sa ngayon. ",
             "male": "Lalaki",
             "matched": "Nagtutugma",
             "member_same_address": "Pareho ba ang address nila sa inyo?",
@@ -545,14 +611,17 @@
             "niece": "Pamangkin na Babae",
             "no_alternate_contact": "Wala akong kahaliling kontak",
             "no_rent_paid": "Hindi nagbabayad ng upa ",
+            "not_a_match": "Hindi Match o Katugma",
             "not_hispanic_latino": "Hindi Hispaniko/Latino",
             "not_listed": "Hindi Nakalista",
             "old_password": "Lumang Password",
             "on_the_listing": "nasa nakalistang pabahay",
+            "open_houses": "Mga Open House (Panahon na Bukas sa Lahat ang Lugar)",
             "original_application": "Orihinal na Aplikasyon",
             "other": "Iba pa",
             "other_multiracial": "Iba pa/Multiracial (iba’t iba ang lahi)",
             "other_people": "May titirang ibang tao kasama ko",
+            "page_updating": "Nag-a-update ang Page",
             "parent": "Magulang",
             "password": "Password",
             "people_with_developmental_disabilities": "Mga Taong may Kapansanang Developmental (kondisyong bunga ng kapansanang pisikal at kapansanan sa isip)",
@@ -565,6 +634,7 @@
             "please_select_all_that_apply": "Mangyaring piliin ang lahat ng naangkop.",
             "please_select_one": "Mangyaring pumili ng isa.",
             "please_select_preference": "Kung mayroon kayong isa sa mga preperensiyang ito sa lottery o palabunutan, piliin ito sa ibaba: ",
+            "pre_lottery_info": "Magsasagawa ng bukas para sa lahat na lottery para makabunot ng mga numero, at sa gayon, mapagdesisyunan ang pagpili. Opsiyonal ang pagdalo rito. ",
             "preapproval_letter": "Liham ng paunang pag-apruba (Pre-approval letter)",
             "preference_option_to_claim": "Aling opsiyon para sa preperensiya ang gusto ninyong gamitin?",
             "preference_proof_address_documents": "Anong uri ng dokumento ang gusto ninyong i-upload upang maipakita na nakatira kayo sa address na iyon?",
@@ -600,9 +670,11 @@
             "recent_application": "Ang Aplikasyon Kamakailan",
             "registered_domestic_partner": "Rehistradong Domestic Partner (katuwang sa buhay)",
             "rent_at_address": "Umuupa sa {{address}}",
+            "see_details": "Tingnan ang mga Detalye",
             "see_listing": "Tingnan ang Nakalistang Pabahay",
             "select_one": "Pumili ng Isa",
             "send_email": "Magpadala ng email",
+            "share": "I-share",
             "show_less": "mas kaunti ang ipakita",
             "show_more": "mas marami ang ipakita",
             "sibling": "Kapatid",
@@ -636,14 +708,19 @@
             "verification_letter": "Liham ng Pagpapatunay (Verification Letter)",
             "veterans_in_household": "Mga Beterano sa Inyong Kabahayan",
             "view_application": "Tingnan ang Aplikasyon ",
+            "view_document_checklist": "Tingnan ang Listahan ng mga Kailangang Dokumento",
             "view_map": "Tingnan ang Mapa",
+            "view_on_map": "Tingnan sa Mapa",
             "vision_impairments": "Para sa Kapansanan sa Paningin",
             "vouchers_and_subsidies": "Housing Voucher (nakukuhang pinansiyal na tulong) o Subsidyo sa Pag-upa",
             "what_is_your_relationship": "Ano ang inyong kaugnayan sa isa't isa?",
+            "what_to_expect": "Kung Ano ang Maaasahan",
+            "what_to_expect_application_chosen": "Kapag napili ang inyong aplikasyon sa lottery o palabunutan, maging handa sa pagsagot sa mas detalyadong aplikasyon at magkaloob ng kinakailangang mga dokumentong nagbibigay ng suporta sa loob ng 5 araw ng trabaho, matapos kayong makontak. ",
             "what_type_of_number": "Anong uri ng numero ito?",
             "white": "Puti",
             "work_in_sf": "Nagtatrabaho ba kayo sa San Francisco?",
             "you_have_claimed": "Nasabi na ninyong gusto ninyong gamitin ang:",
+            "you_have_confirmed": "Nakumpirma na ninyo: ",
             "your_dob": "Ang Petsa ng Inyong Kapanganakan",
             "your_gender": "Pakitukoy ang inyong kasarian",
             "your_name": "Ang Inyong Pangalan",
@@ -652,7 +729,19 @@
             "zipcode": "Zipcode"
         },
         "listings": {
-            "additional_information": "Karagdagang Impormasyon",
+            "additional_eligibility_rules": {
+                "credit_history": "Kasaysayan ng Credit o Pag-utang",
+                "criminal_background": "Kriminal na Nakaraan ",
+                "criminal_background_info": "Isasaalang-alang para sa pabahay ang mga kuwalipikadong aplikante na may kriminal na kasaysayan bilang pagsunod sa <a target='_blank' href='{{article49Url}}'>Article 49</a> ng Kodigo ng Pulisya (Police Code) ng San Francisco: <a href='{{fairChanceUrl}}' target='_blank'>Ordinansa ukol sa Pagbibigay ng Makatarungang Pagkakataon (Fair Chance Ordinance)",
+                "find_out_more": "Alamin pa ang tungkol sa Pamantayan para sa Pagpili ng Gusali (Building Selection Criteria)",
+                "rental_history": "Kasaysayan sa Pag-upa",
+                "text": "Kailangang kuwalipikado rin ang aplikante batay sa mga patakaran ng gusali. ",
+                "title": "Karagdagang mga Patakaran ukol sa Pagiging Kuwalipikado"
+            },
+            "additional_information": {
+                "header": "Karagdagang Impormasyon",
+                "subheader": "Mga kinakailangang dokumento at pamantayan sa pagpili"
+            },
             "additional_listings": {
                 "hide": "Itago ang mga Karagdagang Nakalistang Pabahay",
                 "show": "Ipakita ang mga Karagdagang Nakalistang Pabahay",
@@ -681,28 +770,75 @@
                 "visit_a_housing_counselor": "Bumisita sa lokal na housing counselor (tagapayo para sa bahay) para matulungan kayo sa inyong aplikasyon.",
                 "visit_homeownership_sf": "Bisitahin ang Homeownership SF"
             },
+            "at_total_income": "sa <strong>{{income}}</strong> {{per}}",
             "available_and_waitlist": "Mga Makukuhang Unit at Bukas na Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
             "available_units": "Mga Makukuhang Unit ",
             "available_units_and_waitlist": "Mga makukuhang unit at waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
             "available_units_and_waitlist_desc": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist para sa <span class+'t-italic'>{{number}}units</span>",
             "bath": "banyo",
+            "below_market_rate": "Presyo na mas Mababa Kaysa sa Presyo ng Merkado (Below Market Rate)",
+            "browse_rentals": "Tingnan ang mga Pinauupahan ",
+            "browse_sales": "Tingnan ang mga Nabenta na ",
             "cc&r": "Mga Kasunduan, Kondisyon, at Restriksyon (Covenants, Conditions and Restrictions, CC&R's)",
             "cc&r_description": "Ipinaliliwanag ng CC&Rs ang mga patakaran ng samahan ng mga may-ari ng bahay o homeowner's association, at ang mga restriksiyon sa pagbabagong magagawa ninyo sa ari-arian. ",
+            "click_for_other_lisitings": "<a class='lined' href='{{url}}'>Mag-klik Dito</a> para sa iba pang oportunidad sa pag-upa at sa pagmamay-ari ng abot-kayang pabahay.  ",
             "confirmed_preference_list": "Kumpirmadong Listahan para sa {{preference}} ",
             "current_waitlist_size": "Kasalukuyang Laki ng Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
             "download_lottery_results": "I-download ang mga Resulta ng Lottery",
             "download_pdf": "I-download ang PDF",
+            "eligibility": {
+                "header": "Pagiging Kuwalipikado",
+                "subheader": "Kita, pagtira, mga preperensiya, at subdisyo"
+            },
             "enter_lottery_for_waitlist": "Sumali sa lottery para sa bukas na puwesto sa waitlist para sa <span class='t-italic'>{{number}} units</span>.",
+            "equal_housing_opportunity_logo": "Logo ng Equal Housing Opportunity (Pantay na Oportunidad sa Pabahay)",
+            "expected_movein_date": "Inaasahang petsa ng pagpasok sa bahay",
+            "features": {
+                "accessibility": "Pagkakaroon ng daan papasok sa gusali ",
+                "additional_fee": "Karagdagang Singil ",
+                "additional_fees": "Mga Dagdag na Singil ",
+                "appliances": "Appliances",
+                "area": "Lugar",
+                "baths": "Banyo",
+                "built": "Itinayo",
+                "deposit": "Deposito",
+                "due_post_lottery": "Kailangan matapos ang lottery o palabunutan",
+                "floor": "Sahig",
+                "header": "Mga Katangian",
+                "may_be_higher_for_lower_credit_scores": "Posibleng mas mataas para sa mga credit score na mas mababa",
+                "neighborhood": "Komunidad",
+                "or_one_months_rent": "o isang buwang upa",
+                "parking": "Paradahan",
+                "per_applicant_age_18_and_over": "kada aplikanteng may edad na 18 o mas matanda pa",
+                "pets_policy": "Polisiya ukol sa Alagang Hayop",
+                "property_amenities": "Mga Katangian o Amenities ng Ari-arian ",
+                "rent_subheader": "Mga Katangian o Amenities, detalye ukol sa unit at karagdagang singil",
+                "sale_subheader": "Mga Katangian o Amenities at detalye ukol sa uit ",
+                "services_covered_by_hoa_dues": "Mga Serbisyong Sakop ng Bayarin sa HOA (HOA Dues)",
+                "services_onsite": "Mga Serbisyo sa Lugar ",
+                "smoking_policy": "Polisiya ukol sa Paninigarilyo",
+                "sqft": "sqft",
+                "square_feet": "square feet (kuwadradong piye)",
+                "unit": "Unit ",
+                "unit_features": "Mga Katangian ng Unit "
+            },
             "final_waitlist_size": "Pinal na Laki ng Waitlist (listahan ng mga naghihintay magkaroon ng pabahay).",
+            "for_household_size": "para sa <strong>{{size}}</strong> {{people}}",
             "for_income_calculations": "Para sa mga kalkulasyon ng kita, kasama sa laki ng kabahayan (household size) ang lahat ng tao (lahat ng edad) na nakatira sa unit.",
             "household_maximum_income": "Maximum o Pinakamalaki nang Kita Dapat ng Kabahayan",
+            "housing_program": "Programa sa Pabahay (Housing Program)",
             "important_program_rules": "Mahahalagang Patakaran ng Programa ",
             "includes_priority_units": "Kasama ang mga Unit na Nagbibigay Prayoridad para sa {{priorities}}",
+            "including_children": "(kasama ang <strong>{{number}} {{children}}</strong> mas bata sa edad na 6)",
             "income_exceptions": {
                 "intro": "Posibleng kailangan ng mga tao sa inyong kabahayan ng  <a href='{{url}}' target='_blank'>espesyal na pagkakalkula ng kita </a> kung sila ay:",
                 "nontaxable": "Tumatanggap ng  <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>hindi binubuwisan (non-taxable) na kita</span>",
                 "nontaxable_tooltip": "Kasama sa hindi binubuwisang kita ang SSI, SSDI, bayad na pangsuporta sa anak at nga benepisyo sa worker's compensation (bayad-pinsala para sa manggagawa).",
                 "students": "Mga buong oras na estudyante (pero hindi ang pangunahing aplikante)"
+            },
+            "lottery_preference": {
+                "all_remaining_units": "Lahat ng natitirang unit",
+                "up_to_units": "Hanggang sa  {{units}} unit na puwedeng makuha"
             },
             "lottery_results": {
                 "hide": "Itago ang mga Resulta ng Lottery",
@@ -712,7 +848,14 @@
                 "title": "Mga Resulta ng Lottery"
             },
             "merry_go_round_single_room_occupancy_description": "Naghahandog ang gusaling ito ng mga single room (pang-isahan) na para sa hanggang 2 katao lamang. Posibleng mag-share ang mga umuupa ng mga banyo, at kung minsan, ng mga pangkusinang lugar at kagamitan. ",
+            "monitored_by_mohcd": "Sinusubaybayan ng Opisina ng Mayor para sa Pabahay at Pagpapaunlad sa Komunidad (Mayor's Office of Housing & Community Development)",
+            "neighborhood": {
+                "header": "Komunidad",
+                "location_and_transportation": "Kinaroroonan at transportasyon",
+                "subheader": "Kinaroroonan at transportasyon"
+            },
             "no_available_units": "Walang makukuhang unit sa ngayon. ",
+            "no_favorites": "Mukhang wala pa kayong nakalistang pabahay na natutukoy bilang paborito.",
             "no_matches": "Walang nagtutugma",
             "no_open_listings": "Walang mga nakalistang pabahay sa kasalukuyan ang may mga bukas na aplikasyon. ",
             "occupancy_description_all_sro": "Para sa gusaling ito, limitado sa 1 tao kada unit ang occupancy o dami ng tao.  ",
@@ -726,6 +869,14 @@
             "person": "tao ",
             "priority_units": "Mga Prayoridad na Unit ",
             "priority_units_description": "May mga nakatabing unit ang building o gusali na ito kung totoo ang alinman sa mga sumusunod sa sitwasyon ninyo o ng sinuman sa inyong kabahayan:",
+            "process": {
+                "header": "Proseso",
+                "information_sessions": "Mga Sesyon para sa Pagbibigay ng Impormasyon",
+                "lottery_date_time_and_venue_to_be_scheduled": "I-iiskedyul pa ang petsa, oras at lugar ng lottery o palabunutan.",
+                "public_lottery": "Pampublikong Lottery o Palabunutan",
+                "see_this_unit_on_mls": "Tingnan ang unit na ito sa MLS",
+                "subheader": "Mahahalagang petsa at impormasyon sa pagkontak "
+            },
             "re_pricing": "Mga Restriksiyon sa Presyo sa Muling Pagbebenta",
             "realtor_commission": "Para sa Realtor (Ahente) ng Bumibili ",
             "realtor_commission_header": "Ang Inyong Komisyon:",
@@ -733,6 +884,7 @@
             "realtor_commission_not_eligible": "Hindi kuwalipikado ang inyong realtor para sa komisyon sa unit na ito",
             "realtor_commission_percentage": "{{percentage}}% ng presyo ng pagkakabenta",
             "remaining_units_after_preference_consideration": "Matapos maisalang-alang ang lahat ng mayroong preperensiya, puwede nang makuha ang anumang natitirang unit sa mga kuwalipikadong aplikante ayon sa pagkakasunod-sunod nila sa lottery.",
+            "rental_units": "Mga Paupahang Unit",
             "required_documents": "Mga Kinakailangang Dokumento",
             "required_documents_after_applying": "Sakaling mapili ang inyong aplikasyon sa lottery o palabunutan, maging handa sa pagsagot ng mas detalyadong aplikasyon at sa pagbibigay ng <a href='{{url}}' target='_blank'>itinatakdang pansuportang mga dokumento </a> sa loob ng 5 araw ng trabaho matapos makontak kayo. ",
             "reserved_community_building": "{{type}} na Building o Gusali",
@@ -740,6 +892,7 @@
             "reserved_units": "Mga Nakareserbang Unit ",
             "reserved_units_description": "Upang maging kuwalipikado para sa mga unit na ito, kailangang too ang isa sa mga sumusunod sa sitwasyon ninyo o ng sinuman sa inyong kabahayan. ",
             "reserved_units_for_who_are": "Nakareserba para sa {{Community Type}} na interesado sa {{reservedType}}",
+            "sale_units": "Mga Binebentang Unit",
             "see_maximum_income_information": "Tingnan ang Impormasyon Tungkol sa Maximum o Pinakamataas nang Posibleng Kita ",
             "see_preference_information": "Tingnan ang Impormasyon tungkol sa Preperensiya",
             "see_unit_information": "SEE_UNIT_INFORMATION",
@@ -748,6 +901,18 @@
             "single_room_occupancy": "Mga Indibidwal na Kuwarto sa Gusali (Single Room Occupancy)",
             "single_room_occupancy_description": "Naghahandog ang gusaling ito ng mga indibidwal na kuwarto na para lamang sa iisang tao. Posibleng may mga banyo, at kung minsan, mga kusina, na komyunal na ginagamit ng mga nangungupahan. ",
             "special_notes": "Mga Espesyal na Tala",
+            "stats": {
+                "availability": "Kung puwedeng makuha o hindi ",
+                "available": "puwedeng makuha",
+                "hoa_dues": "mga singil ng HOA (HOA dues) ",
+                "minimum_income": "Pinakamababa nang posibleng kita",
+                "price_without_parking": "Presyo nang walang paradahan ",
+                "prices_without_parking": "Mga presyo nang walang paradahan",
+                "rent": "Upa",
+                "sales_price": "Presyo sa pagbebenta",
+                "waitlist": "Waitlist (Listahan ng mga Naghihintay)",
+                "with_one_parking_space": "May isang espasyo para sa pagparada"
+            },
             "units_are_for": "Ang mga unit na ito ay para sa {{type}}. ",
             "units_have_accessibility_features_for": "Magagamit o mayroong mga daraanan ang mga unit na ito para sa may kapansanan kaugnay ng {{type}}. ",
             "upcoming_lotteries": {
@@ -758,6 +923,7 @@
                 "title": "Mga Lottery na Malapit nang Mangyari  "
             },
             "view_lottery_results": "Ipakita ang mga Resulta ng Lottery",
+            "waitlist_is_open": "Bukas ang waitlist (listahan ng mga naghihintay)",
             "you_dont_match_any_rent": "Batay sa impormasyong inilagay ninyo, walang nag-match sa inyo na kasalukuyang nakalistang pabahay (listing) na pinauupahan. ",
             "you_dont_match_any_sale": "Batay sa impormasyong inilagay ninyo, walang nag-match sa inyo na kasalukuyang nakalistang pabahay (listing) na ibinebenta.",
             "you_may_be_eligible": "Batay sa impormasyong impormasyong inilagay ninyo, posibleng kuwalipikado kayo para sa mga unit sa mga sumusunod na gusali. "
@@ -771,6 +937,11 @@
                 "find_matching_listings": "Humanap ng mga nagtutugmang nakalistang pabahay",
                 "if_you_tell_us": "Kapag sinabi ninyo sa amin ang laki at ang kita ng inyong kabahayan, puwede naming itampok ang mga nakalistang pabahay kung saan posibleng kuwalipikado kayo. ",
                 "or_get_help_calculating_income": "o <a ui-sref='{{sref}}'>kumuha ng tulong sa pagkalkula sa inyong kita</a>"
+            },
+            "rental_assistance": {
+                "info_1": "Pwedeng gamitin para sa ari-ariang ito ang mga Seksyon 8 na voucher para sa pabahay at iba pang may bisang programa para sa pagtulong sa upa\n",
+                "info_2": "Sa kaso ng may bisang subsidyo sa pag-upa, nakabatay ang kinakailangang pinakamababa nang kita sa bahagi ng upa na ibinabayad ng umuupa (tenant) matapos ang paggamit ng subsidyo.",
+                "title": "Tulong sa Pag-upa"
             }
         },
         "listings_for_sale": {
@@ -793,6 +964,11 @@
                 "some_people_may_qualify": "Posibleng kuwalipikado ang ilang tao para sa tulong sa paunang bayad (downpayment). ",
                 "title": "Kumuha ng tulong",
                 "view_full_list_of_programs": "Tingnan ang buong listahan ng mga programa"
+            },
+            "lottery_preferences": {
+                "has_preferences": "Puwedeng sumali ang sinuman sa lottery o palabunutan sa pabahay para sa nakalistang pabahay na ito. Kung mayroong isa sa mga sumusunod na preperensiya ang inyong kabahayan, isasaalang-alang kayo ayon sa pagkakasuod-sunod na ipinapakita rito. Pag-aaralan ang bawat mayroong preperensiya ayon sa pagkakasunod-sunod ng ranggo sa lottery. ",
+                "no_preferences": "Bibigyan ang mayroong preperensiya ng pinakamataas na ranggo sa proseso ng lottery o palabunutan.",
+                "title": "Mga Preperensya sa Loterya o Palabunutan"
             },
             "see_the_listings": "Tingnan ang mga nakalistang pabahay"
         },
@@ -955,14 +1131,20 @@
             "user_token_validation_timeout": "Mahalaga sa amin ang inyong seguridad. Ni-log out namin kayo dahil may problema sa koneksiyon. Mangyaring mag-sign in para makapagpatuloy. "
         },
         "t": {
+            "ami": "AMI",
+            "application_closed": "Sarado na ang mga Aplikasyon ",
             "application_deadline": "Huling Araw para sa Pagsusumite ng Aplikasyon",
             "application_due": "Huling Araw ng Pagsusumite ng Aplikasyon",
             "application_for_listing": "Aplikasyon para sa {{listingName}}",
             "application_submitted": "Naisumite na ang Aplikasyon",
+            "applications_closed": "Sarado na ang mga Aplikasyon",
             "are_you_sure_you_want_to_leave": "Sigurado ba kayong gusto ninyong umalis sa page na ito?  Mawawala sa inyo ang anumang hindi nai-save na impormasyon na nailagay na ninyo sa aplikasyon para sa nakalistang pabahay na ito. Kung gusto ninyong i-save ang inyong impormasyon para tapusin ang aplikasyon sa ibang panahon, paki-click ang a ‘I-save  at Tapusin sa ibang panahon (Save and Finish later)’ na button.",
             "are_you_sure_you_want_to_leave_confirmation": "Sigurado ba kayong gusto ninyong umalis sa page na ito? Kapag ni-link ninyo ang inyong aplikasyon sa isang account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",
             "are_you_sure_you_want_to_leave_sign_in": "Siguaro ba kayong gusto ninyong umalis sa page na ito? Kapag gumawa kayo ng account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",
+            "at": "sa",
             "back": "Bumalik sa nakaraang page",
+            "child": "anak",
+            "children": "mga bata",
             "close": "Isara na",
             "confirm": "Kumpirmahin",
             "continue": "Magpatuloy",
@@ -971,21 +1153,31 @@
             "delete": "I-delete",
             "delete_application": "Gusto ba ninyong i-delete ang aplikasyong ito? ",
             "edit": "I-edit",
+            "household_size": "laki ng kabahayan",
             "i_agree": "Sinasang-ayunan ko at naiintindihan na wala na akong mababago matapos kong maisumite ito.",
             "in_progress": "Ginagawa na",
+            "income": "kita",
             "leave": "Umalis ",
             "leave_your_application": "Aalisan na ba ninyo ang inyong aplikasyon?",
+            "listing_updated": "Nabago na ang Nakalistang mga Pabahay ",
+            "lottery_results_posted": "Nakapaskil na ang mga Resulta ng Lottery o Palabunutan",
+            "maximum_income_month": "pinakamalaki nang posibleng kita kada buwan",
+            "maximum_income_year": "pinakamalaki nang posibleng kita kada taon",
             "menu": "Menu ",
+            "min_income_short": "Pinakamababa nang Posibleng Kita",
             "never_submitted": "Hindi Kailanman Nagsumite",
             "next": "Susunod",
             "no": "Hindi",
+            "no_parking": "walang paradahan",
             "none": "Wala",
             "occupancy": "Bilang ng Nakatira",
             "ok": "Okay",
             "optional": "Opsiyonal",
             "or": "o",
+            "or_more": "o higit pa",
             "per_month": "kada buwan",
             "per_year": "kada taon",
+            "rent": "Upa",
             "save_and_come_back_later": "I-save at bumalik sa ibang panahon",
             "save_and_finish_later": "I-save at tapusin sa ibang panahon",
             "session_expired": "Nag-expire o nagsara na ang inyong sesyon. ",
@@ -997,10 +1189,14 @@
             "stay": "Manatili rito",
             "submit": "Isumite",
             "submitted": "Nasumite na",
+            "to": "upang",
             "unit_type": "Uri ng Unit",
+            "units": "mga unit ",
+            "with_parking": "may paradahan",
             "yes": "Oo",
             "you": "Kayo"
         },
+        "thank_you": "Salamat",
         "welcome": {
             "all_application_closed": "Sarado na sa kasalukuyan ang lahat ng aplikasyon, pero puwede ninyong tingnan ang mga nakasara nang pabahay na nakalista.",
             "new_listing_email_alert": "Tumanggap ng email kapag may nakalistang pabahay na kapapaskil pa lamang ",

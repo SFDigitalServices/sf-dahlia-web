@@ -29,7 +29,7 @@
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
             "p3": "You may also start the application now and save it and upload documents later.",
             "p4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
-            "subtitle": "",
+            "subtitle": "DO NOT TRANSLATE - Chinese-only",
             "title": "Here's what to expect for this application.",
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },

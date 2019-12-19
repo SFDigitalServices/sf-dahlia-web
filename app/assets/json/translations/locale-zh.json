@@ -193,6 +193,29 @@
             "p2": "您目前只需提供預估總額。若您在抽籤時獲選，屆時會再計算實際總額。",
             "title": "現在來談談收入。"
         },
+        "devise": {
+            "mailer": {
+                "confirmation_instructions": {
+                    "confirm_account_link": "確認我的帳戶",
+                    "confirm_link_msg": "請按此連結，完成帳號建立：",
+                    "subject": "DAHLIA三藩市房屋網站新帳號確認",
+                    "thank_you_msg": "感謝您建立DAHLIA三藩市房屋網站帳號。您現在可以更輕鬆地為本網站上列出的物業開始、儲存和提交線上申請。"
+                },
+                "reconfirmation_instructions": {
+                    "confirm_account_link": "確認我的電子郵箱",
+                    "confirm_link_msg": "已收到您的電子郵箱更改請求。請按此連結核實此申請。任何未提交的申請中的電子郵箱地址將被更改。",
+                    "subject": "DAHLIA電子郵箱更改"
+                },
+                "reset_password_instructions": {
+                    "click_if_your_request": "如果申請由您本人提出，請按此連結重設密碼：",
+                    "ignore_mail_msg": "如果您並未提出申請，請忽略此郵件。",
+                    "no_changes_msg": "除非您訪問以上連結並建立新密碼，您的密碼不會更改。",
+                    "password_change_link": "更改我的密碼",
+                    "password_reset_request_made": "已收到您的DAHLIA三藩市房屋網站housing.sfgov.org的密碼重設申請。",
+                    "subject": "重設密碼說明"
+                }
+            }
+        },
         "document_checklist": {
             "assisted_housing_desc": "您需要有顯示自己居住地址的租約複印本。",
             "assisted_housing_title": "輔助住房優先權利",
@@ -307,6 +330,38 @@
         "e8_general_lottery_notice": {
             "title": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。",
             "you_will_be_in_general_lottery": "您將會列入一般抽籤名單。"
+        },
+        "email_signature": "三藩市市長住房與社區發展辦公室",
+        "emailer": {
+            "account_update": {
+                "account_settings_link": "帳號設置",
+                "always_create_strong_password": "請務必為您的帳號設定高強度的密碼，且切勿與他人分享密碼。",
+                "subject": "DAHLIA三藩市房屋網站帳戶已更新",
+                "you_recently_changed_settings_please_visit": "您最近更改了您的DAHLIA三藩市房屋網站帳號的設置資料。如果您沒有作出此更改，請訪問您的%{link}核實您的資料。"
+            },
+            "draft_application_saved": {
+                "applications_are_due_by": "該物業的申請截止日期為%{deadline}。",
+                "complete_your_application": "完成您的申請",
+                "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的{listing_name}申請。",
+                "reminder_do_not_submit_duplicate": "注意：如果您已經為該物業提交了另一份申請，切勿完成此申請。重複申請將導致兩份申請均被從抽籤中除名。",
+                "subject": "在%{deadline}之前完成您的%{listing_name}申請"
+            },
+            "submission_confirmation": {
+                "applicants_will_be_contacted": "代理人將按抽籤排名次序聯繫申請人，直至空置住房租出或售出。",
+                "here_is_your_lottery_number": "這是您的抽籤號：%{lottery_number}",
+                "how_are_we_doing": "您如何評價我們的工作？",
+                "lottery_will_be_held": "抽籤將於%{lottery_date}舉行。住房抽籤結果將在%{link}公佈。",
+                "office_hours": "辦公時間",
+                "on_the_listing": "在物業資料上",
+                "required_supporting_documents": "必需的證明文件",
+                "see_below_for_contact_information": "若要更新您的申請資料，切勿再次申請，重複申請將被抽籤除名。請聯繫代理人。本物業的代理人的聯絡資料見下。",
+                "should_your_application_be_chosen_rental": "如果您的申請中簽，請準備好在接到通知後5個工作日內填妥詳細申請並提供必需的證明文件。",
+                "should_your_application_be_chosen_sale": "如果您的申請中簽，請準備好在接到通知後5個工作日內填妥詳細申請並提供%{link}。",
+                "subject": "感謝您申請%{listing_name}",
+                "thanks_for_applying_to_listing": "感謝申請。我們已經收到您的%{link}申請。",
+                "we_would_like_your_feedback": "我們歡迎您的回饋。",
+                "what_to_expect_next": "後續流程"
+            }
         },
         "error": {
             "address": "請輸入地址",
@@ -423,6 +478,11 @@
             "translate_bar_expert_notice": "此頁由母語人員翻譯。",
             "translate_bar_google_notice": "本頁由 Google 翻譯。"
         },
+        "hello": "%{Name}，您好",
+        "housing_counselor": {
+            "find_a_housing_counselor": "尋找住房顧問",
+            "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
+        },
         "label": {
             "ada_accessible_units": "ADA 無障礙設施單位",
             "add_household_member": "新增家庭成員",
@@ -468,6 +528,7 @@
             "asian": "亞洲人",
             "asian_white": "亞洲人與白人",
             "aunt": "阿姨",
+            "back_to_homepage": "返回首頁",
             "bisexual": "雙性戀",
             "black_african_american": "黑人/非裔美國人",
             "black_african_american_white": "黑人/非裔美國人和白人",
@@ -476,6 +537,7 @@
             "cancel_upload": "取消上傳",
             "certificate_number": "憑證號碼",
             "change_application_details": "變更申請詳細資料",
+            "check_back_soon": "稍後再來",
             "child": "兒童",
             "city": "城市名稱",
             "clear": "清除",
@@ -494,10 +556,12 @@
             "done_adding_people": "人員新增完成",
             "done_with_this_address": "此地址已填寫完成",
             "dont_want_preference": "我不想要此抽籤優先權利",
+            "download_application": "下載{{lang}}申請",
             "edit_eligibility": "編輯資格",
             "edited": "已編輯",
             "email_address": "電子郵件",
             "family_member": "家庭成員",
+            "favorite": "收藏",
             "female": "女性",
             "field_required": "此為必填欄位",
             "file_attached": "已附加 {{file}}",
@@ -530,7 +594,9 @@
             "last_name": "姓氏",
             "live_alone": "我會獨自生活",
             "live_in_public_housing_or_hud": "住在輔助住宅",
+            "lottery": "抽籤",
             "mailing_address": "郵寄地址",
+            "maintanance": "我們正在更新此頁面。",
             "male": "男性",
             "matched": "符合",
             "member_same_address": "他們的地址與您相同嗎？",
@@ -546,14 +612,17 @@
             "niece": "侄女/外甥女",
             "no_alternate_contact": "我沒有備用聯絡人",
             "no_rent_paid": "沒有付租金",
+            "not_a_match": "不匹配",
             "not_hispanic_latino": "非西班牙裔/拉美裔",
             "not_listed": "未列出",
             "old_password": "舊密碼",
             "on_the_listing": "在該清單上",
+            "open_houses": "開放看房",
             "original_application": "原始申請",
             "other": "其他",
             "other_multiracial": "其他/多族裔",
             "other_people": "會有其他人與我同住",
+            "page_updating": "頁面更新中",
             "parent": "父母",
             "password": "密碼",
             "people_with_developmental_disabilities": "發育性殘障人士",
@@ -566,6 +635,7 @@
             "please_select_all_that_apply": "請選擇所有適用項。",
             "please_select_one": "請選擇一個項目。",
             "please_select_preference": "請選擇您所擁有的抽籤優先權利：",
+            "pre_lottery_info": "中簽者將通過公開抽籤搖號決定。您可自願選擇是否到場。",
             "preapproval_letter": "預先批准信",
             "preference_option_to_claim": "您想要行使哪一項優先權利？",
             "preference_proof_address_documents": "您想要上傳哪一類型的文件，以便證實您居住在該地址？",
@@ -601,9 +671,11 @@
             "recent_application": "近期申請",
             "registered_domestic_partner": "已註冊的家庭伴侶",
             "rent_at_address": "在 {{address}} 租房",
+            "see_details": "查看詳情",
             "see_listing": "查看該物業項目",
             "select_one": "選取一個",
             "send_email": "寄送電子郵件",
+            "share": "分享",
             "show_less": "顯示更少資訊",
             "show_more": "顯示更多資訊",
             "sibling": "兄弟姐妹",
@@ -637,14 +709,19 @@
             "verification_letter": "核查書",
             "veterans_in_household": "家庭中的退伍軍人",
             "view_application": "檢視申請表",
+            "view_document_checklist": "查看文件清單",
             "view_map": "查看地圖",
+            "view_on_map": "查看地圖",
             "vision_impairments": "針對視力障礙",
             "vouchers_and_subsidies": "住房優惠券或房租補貼",
             "what_is_your_relationship": "是何關係？",
+            "what_to_expect": "後續流程",
+            "what_to_expect_application_chosen": "如果您的申請中簽，請準備好在接到通知後5個工作日內填妥詳細申請並提供必需的證明文件。",
             "what_type_of_number": "這是哪種類型的號碼？",
             "white": "白人",
             "work_in_sf": "您在舊金山工作嗎？",
             "you_have_claimed": "您已行使：",
+            "you_have_confirmed": "您已经确认：",
             "your_dob": "您的出生日期",
             "your_gender": "請表明您的性別",
             "your_name": "您的姓名",
@@ -653,7 +730,19 @@
             "zipcode": "郵遞區號"
         },
         "listings": {
-            "additional_information": "其他資訊",
+            "additional_eligibility_rules": {
+                "credit_history": "信貸紀錄",
+                "criminal_background": "犯罪背景",
+                "criminal_background_info": "有犯罪紀錄的合資格申請人将依据《三藩市警務法規》<a target='_blank' href='{{article49Url}}'>第49 條</a>考虑提供住房：<a href='{{fairChanceUrl}}' target='_blank'>《公平機會條例》</a>。",
+                "find_out_more": "瞭解更多大廈選擇標準.",
+                "rental_history": "租賃紀錄",
+                "text": "申請人同時必須符合大廈規定條件。",
+                "title": "補充資格規定"
+            },
+            "additional_information": {
+                "header": "補充資料",
+                "subheader": "必需文件及選擇標準"
+            },
             "additional_listings": {
                 "hide": "隱藏其他名單",
                 "show": "顯示其他名單",
@@ -682,28 +771,75 @@
                 "visit_a_housing_counselor": "約見本地房屋顧問以尋求申請協助。",
                 "visit_homeownership_sf": "點擊 HomeownershipSF"
             },
+            "at_total_income": "總收入：<strong>{{income}}</strong> {{per}}",
             "available_and_waitlist": "現有單位與開放等候名單",
             "available_units": "可用單位",
             "available_units_and_waitlist": "現有單位與等候名單",
             "available_units_and_waitlist_desc": "一旦中籤者住滿所有現有單位，其他中籤者將會被列入 <span class='t-italic'>{{number}} 個單位</span>的等候名單中",
             "bath": "浴室",
+            "below_market_rate": "低於市價",
+            "browse_rentals": "流覽出租物業",
+            "browse_sales": "流覽出售物業",
             "cc&r": "契約、條件與限制 (Covenants, Conditions and Restrictions, CC&R)",
             "cc&r_description": "CC&R 說明有關屋主協會的規定，並且限制您如何裝修該物業。",
+            "click_for_other_lisitings": "<a class='lined' href='{{url}}'>按此</a>查看其他租賃和購買平價住房機會。",
             "confirmed_preference_list": "確認的 {{preference}} 名單",
             "current_waitlist_size": "目前等候名單中的人數",
             "download_lottery_results": "下載抽籤結果",
             "download_pdf": "下載 PDF",
+            "eligibility": {
+                "header": "資格標準",
+                "subheader": "收入、居住人數、優先條件和補貼"
+            },
             "enter_lottery_for_waitlist": "參加 <span class='t-italic'>{{number}} 個單位</span>的開放等候名單空缺抽籤。",
+            "equal_housing_opportunity_logo": "平等住房機會標識",
+            "expected_movein_date": "預計遷入日期",
+            "features": {
+                "accessibility": "無障礙",
+                "additional_fee": "附加費用",
+                "additional_fees": "附加費用",
+                "appliances": "家用電器",
+                "area": "面積",
+                "baths": "浴室",
+                "built": "建築年份",
+                "deposit": "按金",
+                "due_post_lottery": "抽籤後收取",
+                "floor": "樓層",
+                "header": "特徵",
+                "may_be_higher_for_lower_credit_scores": "較低信貸評分可能更高",
+                "neighborhood": "社區",
+                "or_one_months_rent": "或一個月租金",
+                "parking": "停車位",
+                "per_applicant_age_18_and_over": "每位18歲以上申請人",
+                "pets_policy": "寵物政策",
+                "property_amenities": "物業設施",
+                "rent_subheader": "設施、單位詳情和附加費用",
+                "sale_subheader": "設施和單位詳情",
+                "services_covered_by_hoa_dues": "物業費包含服務",
+                "services_onsite": "樓內服務",
+                "smoking_policy": "吸煙政策",
+                "sqft": "平方呎",
+                "square_feet": "平方呎",
+                "unit": "單位",
+                "unit_features": "單位特徵"
+            },
             "final_waitlist_size": "最終等候名單中的人數",
+            "for_household_size": "人數：<strong>{{size}}</strong>{{people}}",
             "for_income_calculations": "為計算收入，請提供居住在該單位的所有家庭人口數 (所有年齡都要提供)。",
             "household_maximum_income": "家庭最高收入",
+            "housing_program": "住房計劃",
             "important_program_rules": "重要計畫規定",
             "includes_priority_units": "包括 {{priorities}} 的優先單位",
+            "including_children": "（包括<strong>{{number}} {{children}}</strong>6歲以下兒童）",
             "income_exceptions": {
                 "intro": "如果您家中的成員符合以下情況，可能需要<a href='{{url}}' target='_blank'>特別收入計算方式</a>：",
                 "nontaxable": "有<span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>不納稅收入</span> ",
                 "nontaxable_tooltip": "不納稅收入可能包括 SSI、SSDI、子女撫養費和工傷補償福利。",
                 "students": "是全日制學生（但不是主申請人）"
+            },
+            "lottery_preference": {
+                "all_remaining_units": "全部其餘單位",
+                "up_to_units": "最多{{units}}間可用單位"
             },
             "lottery_results": {
                 "hide": "隱藏抽籤結果",
@@ -713,7 +849,14 @@
                 "title": "抽籤結果"
             },
             "merry_go_round_single_room_occupancy_description": "該物業提供的單人房最多僅供 2 人入住。租戶可以共用浴室，有時還可以共用廚房設施。",
+            "monitored_by_mohcd": "受市長住房與社區發展辦公室監督",
+            "neighborhood": {
+                "header": "社區",
+                "location_and_transportation": "位置和交通",
+                "subheader": "位置和交通"
+            },
             "no_available_units": "目前沒有可申請的單位。",
+            "no_favorites": "看來您還沒有收藏任何物業清單。",
             "no_matches": "沒有符合的項目",
             "no_open_listings": "目前沒有任何開放的申請名單。",
             "occupancy_description_all_sro": "此建築限制每個單位僅 1 人可入住。",
@@ -727,6 +870,14 @@
             "person": "人",
             "priority_units": "優先單位",
             "priority_units_description": "如果下列情況適用於您或是家中的某成員，此建築將會為此保留單位：",
+            "process": {
+                "header": "流程",
+                "information_sessions": "情況介紹會",
+                "lottery_date_time_and_venue_to_be_scheduled": "抽籤日期、時間和地點待定。",
+                "public_lottery": "公眾抽籤",
+                "see_this_unit_on_mls": "在MLS上查看該單位",
+                "subheader": "重要日期和聯絡資料"
+            },
             "re_pricing": "轉售價格限制",
             "realtor_commission": "買方的房地產經紀人須知",
             "realtor_commission_header": "您的佣金： ",
@@ -734,6 +885,7 @@
             "realtor_commission_not_eligible": "您的房地產經紀人不符合在此單位獲得佣金的資格",
             "realtor_commission_percentage": " {{Percentage}}% 的銷售價格",
             "remaining_units_after_preference_consideration": "在考慮所有優先權利的持有人之後，任何剩餘單位將會依照抽籤順序提供給合格申請人。",
+            "rental_units": "租賃單位",
             "required_documents": "所需文件",
             "required_documents_after_applying": "如果您的申請從抽籤中獲選，請準備在收到通知的 5 個工作天內填寫更詳細的申請資料並提供<a href='{{url}}' target='_blank'>必要的證明文件</a>。",
             "reserved_community_building": "{{Type}} 建築",
@@ -741,6 +893,7 @@
             "reserved_units": "保留的單位",
             "reserved_units_description": "為了符合入住這些單位的資格，您或家中的某成員必須符合以下其中一項條件：",
             "reserved_units_for_who_are": "已經為 {{reservedType}} 保留 {{communityType}}",
+            "sale_units": "出售單位",
             "see_maximum_income_information": "查看收入上限資訊",
             "see_preference_information": "查看優先權利資訊",
             "see_unit_information": "查看單位資訊",
@@ -749,6 +902,18 @@
             "single_room_occupancy": "單人房住房",
             "single_room_occupancy_description": "該物業提供的單人房最多僅供一人入住。租戶可以共用浴室，有時還可以共用廚房設施。",
             "special_notes": "特別注意",
+            "stats": {
+                "availability": "可用情況",
+                "available": "可用",
+                "hoa_dues": "物業費",
+                "minimum_income": "最低收入",
+                "price_without_parking": "無停車位價格",
+                "prices_without_parking": "無停車位價格",
+                "rent": "租金",
+                "sales_price": "出售價格",
+                "waitlist": "輪候名單",
+                "with_one_parking_space": "有一個停車位"
+            },
             "units_are_for": "這些單位適用於 {{type}}。",
             "units_have_accessibility_features_for": "這些單位擁有無障礙設備，可供 {{type}} 的人使用。",
             "upcoming_lotteries": {
@@ -773,6 +938,11 @@
                 "find_matching_listings": "尋找符合的物業項目",
                 "if_you_tell_us": "如果您告知家庭人數以及收入，我們可以篩選並例出您可能符合資格的物業項目。",
                 "or_get_help_calculating_income": "或者<a ui-sref='{{sref}}'>尋求協助如何計算您的收入</a>"
+            },
+            "rental_assistance": {
+                "info_1": "此物業適用第8段房屋補助及其他有效租房援助計劃補貼。",
+                "info_2": "使用有效租房補貼時，所需的最低收入將根據使用補貼後租客應付的租金部分確定。",
+                "title": "租房補助"
             }
         },
         "listings_for_sale": {
@@ -795,6 +965,11 @@
                 "some_people_may_qualify": "某些人可能符合首期付款協助計劃的資格。",
                 "title": "獲得協助",
                 "view_full_list_of_programs": "查閱完整的計畫例表"
+            },
+            "lottery_preferences": {
+                "has_preferences": "任何人均可參加該物業的住房抽籤。如果您的家庭享有以下優先權之一，您將按照如下所示次序獲得考慮。每個優先權擁有者均按抽籤排名次序審議。",
+                "no_preferences": "優先權擁有者將在抽籤中獲得最高排名。",
+                "title": "抽籤優先權"
             },
             "see_the_listings": "查看物業名單"
         },
@@ -957,14 +1132,20 @@
             "user_token_validation_timeout": "我們關心您的安全。由於連線問題，我們已經將您登出。請登入以繼續。"
         },
         "t": {
+            "ami": "區域收入中位數（AMI）",
+            "application_closed": "申請結束",
             "application_deadline": "申請截止日期",
             "application_due": "申請到期日期",
             "application_for_listing": "{{listingName}} 申請",
             "application_submitted": "已提交申請",
+            "applications_closed": "申請結束",
             "are_you_sure_you_want_to_leave": "確定要離開此頁面嗎？您將會失去已輸入此物業申請表內但尚未儲存的所有資訊。若欲儲存您的資訊供日後完成申請，請點擊「儲存並稍後完成」。",
             "are_you_sure_you_want_to_leave_confirmation": "確定要離開此網頁嗎？若將您的申請與帳戶連結，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
             "are_you_sure_you_want_to_leave_sign_in": "確定要離開此網頁嗎？若您建立一個帳戶，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
+            "at": "比率",
             "back": "返回",
+            "child": "孩子",
+            "children": "孩子",
             "close": "關閉",
             "confirm": "確認",
             "continue": "繼續",
@@ -973,21 +1154,31 @@
             "delete": "刪除",
             "delete_application": "刪除此申請？",
             "edit": "編輯",
+            "household_size": "家庭人口",
             "i_agree": "我同意並瞭解，一經提交就再也不能作任何變更。",
             "in_progress": "進行中",
+            "income": "收入",
             "leave": "離開此頁",
             "leave_your_application": "離開您的申請表？",
+            "listing_updated": "物業更新時間",
+            "lottery_results_posted": "抽籤結果公佈",
+            "maximum_income_month": "最高月收入",
+            "maximum_income_year": "最高年收入",
             "menu": "目錄",
+            "min_income_short": "最低收入",
             "never_submitted": "未曾提交",
             "next": "下一步",
             "no": "否",
+            "no_parking": "無停車位",
             "none": "無",
             "occupancy": "居住",
             "ok": "確定",
             "optional": "可選擇回答與否",
             "or": "或",
+            "or_more": "或更多",
             "per_month": "每月",
             "per_year": "每年",
+            "rent": "租金",
             "save_and_come_back_later": "儲存，並稍後返回",
             "save_and_finish_later": "儲存並稍後完成",
             "session_expired": "您使用本頁面的時限已過。",
@@ -999,10 +1190,14 @@
             "stay": "留在此頁",
             "submit": "提交",
             "submitted": "已提交",
+            "to": "至",
             "unit_type": "單位類型",
+            "units": "單位",
+            "with_parking": "有停車位",
             "yes": "是",
             "you": "您"
         },
+        "thank_you": "謝謝",
         "welcome": {
             "all_application_closed": "所有申請目前均已結束，但是您可以查看已結束的清單。",
             "new_listing_email_alert": "每當發佈新的物業項目時，將以電子郵件接收通知。",
