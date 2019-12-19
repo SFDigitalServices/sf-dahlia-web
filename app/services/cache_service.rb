@@ -3,8 +3,8 @@ class CacheService
   def prefetch_listings(opts = {})
     # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
-    @prev_cached_listings = Force::ListingService.listings
-    @fresh_listings = Force::ListingService.listings(force: true)
+    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
     if opts[:refresh_all]
       cache_all_listings

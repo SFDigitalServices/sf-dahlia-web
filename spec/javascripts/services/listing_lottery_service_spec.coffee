@@ -67,47 +67,6 @@ do ->
         ListingLotteryService.lotteryBucketInfo = fakeLotteryBuckets
         expect(ListingLotteryService.listingHasLotteryBuckets(fakeListing)).toEqual true
 
-    describe 'Service.lotteryDatePassed', ->
-      it 'returns true if listing lottery date has passed', ->
-        fakeListing.Lottery_Date = lastWeek.toString()
-        expect(ListingLotteryService.lotteryDatePassed(fakeListing)).toEqual true
-      it 'returns false if listing lottery date has not passed', ->
-        fakeListing.Lottery_Date = tomorrow.toString()
-        expect(ListingLotteryService.lotteryDatePassed(fakeListing)).toEqual false
-
-    describe 'Service.lotteryIsUpcoming', ->
-      it 'returns false when the listing has results and lottery date has not passed', ->
-        fakeListing.Lottery_Results = true
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
-
-      it 'returns false when the listing has results and lottery date has passed', ->
-        fakeListing.Lottery_Results = true
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
-
-      it 'returns false when the listing has no results and lottery date has passed', ->
-        fakeListing.Lottery_Results = false
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
-
-      it 'returns true when the listing has no results, the lottery date has not passed, and the lottery is not complete', ->
-        fakeListing.Lottery_Results = false
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        spyOn(ListingLotteryService, 'lotteryComplete').and.returnValue(false)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual true
-
-      it 'returns true when the listings lottery is not complete', ->
-        fakeListing.Lottery_Results = false
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        spyOn(ListingLotteryService, 'lotteryComplete').and.returnValue(false)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual true
-
-      it 'returns false when the listings lottery is complete', ->
-        fakeListing.Lottery_Status = 'Lottery Complete'
-        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
-
     describe 'Service.listingHasLotteryResults', ->
       it 'returns true if lottery PDF is available', ->
         fakeListing.LotteryResultsURL = 'http://pdf.url'
@@ -124,12 +83,19 @@ do ->
         expect(ListingLotteryService.listingHasLotteryResults(fakeListing)).toEqual false
 
     describe 'Service.lotteryComplete', ->
-      it "returns true when the listing's lottery status is \"Listing Complete\"", ->
+      it "returns true when the listing's lottery status is \"Listing Complete\" and Publish_Lottery_Results is true", ->
         fakeListing.Lottery_Status = 'Lottery Complete'
+        fakeListing.Publish_Lottery_Results = true
         expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual true
 
       it "returns false when the listing's lottery status is not \"Listing Complete\"", ->
         fakeListing.Lottery_Status = 'Not Yet Run'
+        fakeListing.Publish_Lottery_Results = true
+        expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
+
+      it "returns false when the listing.Publish_Lottery_Results is false", ->
+        fakeListing.Lottery_Status = 'Lottery Complete'
+        fakeListing.Publish_Lottery_Results = false
         expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
 
     describe 'Service.openLotteryResultsModal', ->

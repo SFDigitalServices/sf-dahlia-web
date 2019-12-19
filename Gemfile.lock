@@ -415,8 +415,8 @@ DEPENDENCIES
   coffee-rails
   dalli
   database_cleaner
-  devise (~> 4.6.2)
-  devise_token_auth (~> 1.1.0)
+  devise (= 4.6.2)
+  devise_token_auth (= 1.1.0)
   dotenv-rails
   easypost (>= 3.0.1)
   facets

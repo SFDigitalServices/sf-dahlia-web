@@ -1138,7 +1138,7 @@
             "application_for_listing": "Solicitud para {{listingName}}",
             "application_submitted": "Solicitud presentada",
             "applications_closed": "Las solicitudes están cerradas",
-            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y terminar más tarde\". (Save and finish later)",
+            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y finalizar en otro momento\"",
             "are_you_sure_you_want_to_leave_confirmation": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "are_you_sure_you_want_to_leave_sign_in": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "at": "al",

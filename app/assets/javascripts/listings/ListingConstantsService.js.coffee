@@ -79,6 +79,7 @@ ListingConstantsService = () ->
     VETERAN: 'Veteran'
     DISABLED: 'Developmental disabilities'
     SENIOR: 'Senior'
+    ARTIST: 'Artist Live/Work'
   }
 
   # TODO: -- REMOVE HARDCODED FEATURES --
