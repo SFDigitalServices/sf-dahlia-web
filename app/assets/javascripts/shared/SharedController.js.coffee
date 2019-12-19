@@ -27,7 +27,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
 
   $scope.listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
 
-  $scope.alertMessage = if $window.ALERT_MESSAGE then $window.ALERT_MESSAGE else ''
+  $scope.alertMessage = if $window.ALERT_MESSAGE then _.unescape($window.ALERT_MESSAGE) else ''
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
