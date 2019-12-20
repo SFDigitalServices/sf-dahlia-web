@@ -478,7 +478,7 @@
             "translate_bar_expert_notice": "此頁由母語人員翻譯。",
             "translate_bar_google_notice": "本頁由 Google 翻譯。"
         },
-        "hello": "%{Name}，您好",
+        "hello": "%{name}，您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
