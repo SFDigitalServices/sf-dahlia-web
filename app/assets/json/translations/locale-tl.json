@@ -891,7 +891,7 @@
             "reserved_for": "Nakareserba para sa {{type}}",
             "reserved_units": "Mga Nakareserbang Unit ",
             "reserved_units_description": "Upang maging kuwalipikado para sa mga unit na ito, kailangang too ang isa sa mga sumusunod sa sitwasyon ninyo o ng sinuman sa inyong kabahayan. ",
-            "reserved_units_for_who_are": "Nakareserba para sa {{Community Type}} na interesado sa {{reservedType}}",
+            "reserved_units_for_who_are": "Nakareserba para sa {{communityType}} na interesado sa {{reservedType}}",
             "sale_units": "Mga Binebentang Unit",
             "see_maximum_income_information": "Tingnan ang Impormasyon Tungkol sa Maximum o Pinakamataas nang Posibleng Kita ",
             "see_preference_information": "Tingnan ang Impormasyon tungkol sa Preperensiya",
