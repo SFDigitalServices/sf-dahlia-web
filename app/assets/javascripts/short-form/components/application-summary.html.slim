@@ -9,7 +9,7 @@ span ng-show="::$ctrl.isSale"
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'label.applicant_name_loan_officer' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}"
       | {{'label.application_has_loan_pre_approval' | translate}}
 / You
-review-summary-section header="{{'t.you' | translate}}" section-name="dahlia.short-form-application.name" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'t.you' | translate}}" section-name="name" editable="::$ctrl.sectionsAreEditable"
 
 .app-inner
   / name
@@ -61,7 +61,7 @@ review-summary-section header="{{'t.you' | translate}}" section-name="dahlia.sho
 
 / Alternate Contact
 span ng-hide="::$ctrl.alternateContact.alternateContactType == 'None'"
-  review-summary-section header="{{'label.alternate_contact' | translate}}" section-name="dahlia.short-form-application.alternate-contact-type" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.alternate_contact' | translate}}" section-name="alternate-contact-type" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
     p.form-note.margin-bottom
@@ -79,7 +79,7 @@ span ng-hide="::$ctrl.alternateContact.alternateContactType == 'None'"
       | {{::$ctrl.alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'label.household_members' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'label.household_members' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable"
 
 .app-inner
   .info-item.margin-bottom ng-if="::!$ctrl.householdMembers || $ctrl.householdMembers.length == 0"
@@ -100,8 +100,8 @@ review-summary-section header="{{'label.household_members' | translate}}" sectio
       | {{member.home_address.zip}}
 
 / Household Details
-div ng-if="::$ctrl.prioritiesSelectedExists()"
-  review-summary-section header="{{'label.household_details' | translate}}" section-name="dahlia.short-form-application.{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
+div ng-if="::$ctrl.showHouseholdDetails()"
+  review-summary-section header="{{'label.household_details' | translate}}" section-name="{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
     review-summary-item label="{{'label.live_in_public_housing_or_hud' | translate}}" identifier="hasPublicHousing" ng-if="::$ctrl.application.hasPublicHousing"
@@ -116,7 +116,7 @@ div ng-if="::$ctrl.prioritiesSelectedExists()"
       | {{::$ctrl.application.hasMilitaryService}}
     review-summary-item label="{{'label.people_with_developmental_disabilities' | translate}}" identifier="hasDevelopmentalDisability" ng-if="$ctrl.application.hasDevelopmentalDisability"
       | {{::$ctrl.application.hasDevelopmentalDisability}}
-    review-summary-item label="{{'label.ada_accessible_units' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.isRental"
+    review-summary-item label="{{'label.ada_accessible_units' | translate}}" identifier="adaPrioritiesSelected" ng-if="::$ctrl.prioritiesSelectedExists()"
       span ng-repeat="priorityOption in $ctrl.priority_options" ng-if="::$ctrl.application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1] | translate}}
         br
@@ -125,7 +125,7 @@ div ng-if="::$ctrl.prioritiesSelectedExists()"
 
 / Income
 div ng-if="::$ctrl.application.householdIncome.incomeTotal"
-  review-summary-section header="{{'label.income' | translate}}" section-name="{{'dahlia.short-form-application.' + $ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.income' | translate}}" section-name="{{$ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable"
 
   .app-inner
     review-summary-item label="{{'label.vouchers_and_subsidies' | translate}}" identifier="income-vouchers" ng-if="::$ctrl.isRental"
@@ -136,5 +136,5 @@ div ng-if="::$ctrl.application.householdIncome.incomeTotal"
 
 / Preferences
 div ng-if="::!$ctrl.atAutofillPreview"
-  review-summary-section header="{{'label.preferences' | translate}}" to="dahlia.short-form-application.{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.preferences' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
   preferences-summary application="$ctrl.application" listing="$ctrl.listing" preferences="$ctrl.preferences"
