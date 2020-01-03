@@ -85,6 +85,10 @@ In order to test caching locally,
 1. Set CACHE_SALESFORCE_REQUESTS='true' in your .env
 1. Start up the app
 
+## Running stress testing against Salesforce
+
+To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
+
 ## Contributing changes
 
 Use the engineering workflow and coding style standards established below. :smiley:
