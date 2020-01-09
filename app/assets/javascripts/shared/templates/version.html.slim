@@ -1,6 +1,4 @@
-.version-bar.bar ng-class="{ 'bg-primary': !alertMessage, 'bg-alert': alertMessage, 'show-for-small-up': alertMessage }"
+.version-bar.bar.bg-primary
   .row
     .medium-12.columns
-      p.text-right.t-small.c-white.no-margin translate="nav.get_feedback" translate-value-feedback-url="{{feedbackUrl}}" ng-if="!alertMessage"
-      p.text-right.t-small.c-white.no-margin ng-if="alertMessage"
-        | {{ alertMessage }}
+      p.text-right.t-small.c-white.no-margin translate="nav.get_feedback" translate-value-feedback-url="{{feedbackUrl}}"

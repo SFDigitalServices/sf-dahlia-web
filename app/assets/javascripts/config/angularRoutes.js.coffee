@@ -17,6 +17,8 @@
         lang: { squash: true, value: 'en' }
         skipConfirm: { squash: true, value: false }
       views:
+        'alert@':
+          templateUrl: 'shared/templates/alert-message.html'
         'translate@':
           templateUrl: 'shared/templates/translate-bar.html'
         'version@':
