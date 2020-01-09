@@ -3,7 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "Elija su idioma",
-            "sign_in_save_time": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría controlar el estado de esta solicitud en cualquier momento.",
+            "sign_in_save_time": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría revisar el estatus de esta solicitud en cualquier momento.",
             "title": "Comencemos con su solicitud"
         },
         "a2_community_screening": {
@@ -195,23 +195,23 @@
         "devise": {
             "mailer": {
                 "confirmation_instructions": {
-                    "confirm_account_link": "Confirm my account",
-                    "confirm_link_msg": "To complete your account creation, please click the link below:",
-                    "subject": "DAHLIA San Francisco Housing Portal New Account Confirmation",
-                    "thank_you_msg": "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
+                    "confirm_account_link": "Confirmar mi cuenta",
+                    "confirm_link_msg": "Para completar la creación de su cuenta, haga clic en el siguiente enlace:",
+                    "subject": "Confirmación de nueva cuenta del DAHLIA San Francisco Housing Portal",
+                    "thank_you_msg": "Gracias por crear su cuenta en el DAHLIA San Francisco Housing Portal. Ahora será más fácil para usted iniciar, guardar y enviar solicitudes en línea para los listados que aparecen en el sitio."
                 },
                 "reconfirmation_instructions": {
-                    "confirm_account_link": "Confirm my email",
-                    "confirm_link_msg": "A request to change your email has been made. To verify this request, please click the link below. Your email will be changed on any unsubmitted applications.",
-                    "subject": "Email change for DAHLIA"
+                    "confirm_account_link": "Confirmar mi correo electrónico",
+                    "confirm_link_msg": "Se ha realizado una solicitud para cambiar su correo electrónico. Para verificar esta solicitud, haga clic en el siguiente enlace. Su correo electrónico será cambiado en todas las solicitudes que no hayan sido enviadas.",
+                    "subject": "Cambio de correo electrónico para DAHLIA"
                 },
                 "reset_password_instructions": {
-                    "click_if_your_request": "If you did make this request, please click on the link below to reset your password:",
-                    "ignore_mail_msg": "If you didn't request this, please ignore this email.",
-                    "no_changes_msg": "Your password won't change until you access the link above and create a new one.",
-                    "password_change_link": "Change my password",
-                    "password_reset_request_made": "A request to reset your DAHLIA San Francisco Housing Portal website password for housing.sfgov.org has recently been made.",
-                    "subject": "Reset password instructions"
+                    "click_if_your_request": "Si usted hizo esta solicitud, haga clic en el siguiente enlace para restablecer su contraseña:",
+                    "ignore_mail_msg": "Si usted no solicitó esto, ignore este correo electrónico.",
+                    "no_changes_msg": "Su contraseña no cambiará hasta que acceda al enlace de arriba y cree una nueva.",
+                    "password_change_link": "Cambiar mi contraseña",
+                    "password_reset_request_made": "Recientemente se ha solicitado que se restablezca su contraseña del sitio web DAHLIA San Francisco Housing Portal para housing.sfgov.org.",
+                    "subject": "Instrucciones para restablecer la contraseña"
                 }
             }
         },
@@ -330,6 +330,38 @@
             "title": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda.",
             "you_will_be_in_general_lottery": "Usted participará en el sorteo general."
         },
+        "email_signature": "Oficina del Alcalde para la Vivienda y Desarrollo Comunitario de San Francisco",
+        "emailer": {
+            "account_update": {
+                "account_settings_link": "Configuración de la cuenta",
+                "always_create_strong_password": "Recuerde siempre crear una contraseña segura para su cuenta y no compartirla con otros.",
+                "subject": "Actualización de la cuenta de DAHLIA SF Housing Portal",
+                "you_recently_changed_settings_please_visit": "Usted ha cambiado recientemente la información en la configuración de su cuenta de DAHLIA SF Housing Portal. Si usted no ha realizado este cambio, visite su %{link} para verificar su información."
+            },
+            "draft_application_saved": {
+                "applications_are_due_by": "Las solicitudes para este listado deben enviarse antes de %{deadline}.",
+                "complete_your_application": "Complete su solicitud",
+                "heres_link_to_complete": "Aquí hay un enlace para completar la solicitud a %{listing_name} que usted guardó para después en el DAHLIA San Francisco Housing Portal.",
+                "reminder_do_not_submit_duplicate": "Le recordamos que si ya ha enviado otra solicitud para este listado, no complete esta. Si envía solicitudes duplicadas, se eliminarán ambas del sorteo.",
+                "subject": "Complete su solicitud para %{listing_name} antes de %{deadline}."
+            },
+            "submission_confirmation": {
+                "applicants_will_be_contacted": "El agente se pondrá en contacto con los solicitantes, de acuerdo al orden en que estos hayan salido en el sorteo, hasta que se cubran las vacantes.",
+                "here_is_your_lottery_number": "Aquí está su número de sorteo: %{lottery_number}",
+                "how_are_we_doing": "¿Cómo lo estamos haciendo?",
+                "lottery_will_be_held": "El sorteo se llevará a cabo el %{lottery_date}. Los resultados del sorteo de viviendas se publicarán en %{link}.",
+                "office_hours": "Horarios de atención",
+                "on_the_listing": "en el listado",
+                "required_supporting_documents": "documentos de respaldo exigidos",
+                "see_below_for_contact_information": "Si necesita actualizar la información de su solicitud, no la vuelva a enviar ya que ambas solicitudes serán eliminadas del sorteo. Póngase en contacto con el agente. Consulte a continuación la información de contacto del agente para este listado.",
+                "should_your_application_be_chosen_rental": "Si su solicitud es elegida, esté listo para completar una solicitud más detallada y proporcionar los documentos de respaldo exigidos dentro de los 5 días hábiles de haber sido contactado.",
+                "should_your_application_be_chosen_sale": "Si su solicitud es elegida, esté listo para completar una solicitud más detallada y proporcionar %{link} dentro de los 5 días hábiles de haber sido contactado.",
+                "subject": "Gracias por enviar su solicitud para %{listing_name}.",
+                "thanks_for_applying_to_listing": "Gracias por la aplicar. Hemos recibido su solicitud para %{link}.",
+                "we_would_like_your_feedback": "Nos gustaría recibir su opinión",
+                "what_to_expect_next": "Qué esperar a continuación"
+            }
+        },
         "error": {
             "address": "Ingrese una dirección",
             "address_validation_insufficient": "Esta direccion no fue encontrada. Verifique el número, la calle y la ciudad ingresados. Asegúrese de haber ingresado el tipo de calle (por ejemplo, “ST” o “AVE”). No se permiten apartados postales.",
@@ -445,7 +477,11 @@
             "translate_bar_expert_notice": "Esta página fue traducida por un hablante nativo.",
             "translate_bar_google_notice": "Esta página ha sido traducida por Google Translate."
         },
-        "hello": "Hello %{name}",
+        "hello": "Hola, %{name}",
+        "housing_counselor": {
+            "find_a_housing_counselor": "Encuentre un consejero de vivienda",
+            "header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones."
+        },
         "label": {
             "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
             "add_household_member": "Agregar integrante de la familia",
@@ -491,6 +527,7 @@
             "asian": "Asiático",
             "asian_white": "Asiático y blanco",
             "aunt": "Tía",
+            "back_to_homepage": "Volver a la página de inicio",
             "bisexual": "Bisexual",
             "black_african_american": "Negro/Afroamericano",
             "black_african_american_white": "Negro/Afroamericano y blanco",
@@ -499,6 +536,7 @@
             "cancel_upload": "Cancelar la carga",
             "certificate_number": "Número de certificado",
             "change_application_details": "Cambiar detalles de la solicitud",
+            "check_back_soon": "Vuelva a visitarnos pronto",
             "child": "Hijo(a)",
             "city": "Nombre de la ciudad",
             "clear": "Borrar",
@@ -517,10 +555,12 @@
             "done_adding_people": "Ya he agregado a todas las personas",
             "done_with_this_address": "Ya he finalizado con esta dirección",
             "dont_want_preference": "No deseo esta preferencia para el sorteo",
+            "download_application": "Descargar solicitud en {{lang}}",
             "edit_eligibility": "Modifique la elegibilidad",
             "edited": "Editado",
             "email_address": "Correo electrónico",
             "family_member": "Integrante de la familia",
+            "favorite": "Agregar a favoritos",
             "female": "Femenino",
             "field_required": "Este campo es obligatorio",
             "file_attached": "{{file}} adjunto",
@@ -553,7 +593,9 @@
             "last_name": "Apellido",
             "live_alone": "Viviré solo",
             "live_in_public_housing_or_hud": "Vive en vivienda asistencial",
+            "lottery": "Sorteo",
             "mailing_address": "Dirección postal",
+            "maintanance": "Estamos en el proceso de actualizar esta página en este momento.",
             "male": "Masculino",
             "matched": "Compatible",
             "member_same_address": "¿Tienen la misma dirección que usted?",
@@ -569,14 +611,17 @@
             "niece": "Sobrina",
             "no_alternate_contact": "No tengo un contacto alternativo",
             "no_rent_paid": "No pago alquiler",
+            "not_a_match": "No cumple los requisitos",
             "not_hispanic_latino": "No hispano/No latino",
             "not_listed": "No especificado en la lista",
             "old_password": "Contraseña anterior",
             "on_the_listing": "en el aviso de vivienda",
+            "open_houses": "Casas en exhibición",
             "original_application": "Solicitud original",
             "other": "Otro",
             "other_multiracial": "Otro/Multirracial",
             "other_people": "Otras personas vivirán conmigo",
+            "page_updating": "Actualización de la página",
             "parent": "Padre/madre",
             "password": "Contraseña",
             "people_with_developmental_disabilities": "Personas con discapacidades del desarrollo",
@@ -589,6 +634,7 @@
             "please_select_all_that_apply": "Marque todas las opciones que correspondan.",
             "please_select_one": "Seleccione una opción.",
             "please_select_preference": "Si tiene una de estas preferencias de sorteo, selecciónela a continuación: ",
+            "pre_lottery_info": "Se llevará a cabo un sorteo abierto al público para obtener los números y determinar la selección. La asistencia es opcional.",
             "preapproval_letter": "Carta de pre-aprobación ",
             "preference_option_to_claim": "¿Qué preferencia desea solicitar?",
             "preference_proof_address_documents": "¿Qué tipo de documento desea cargar para demostrar que vive en esa dirección?",
@@ -624,9 +670,11 @@
             "recent_application": "Solicitud reciente",
             "registered_domestic_partner": "Pareja doméstica registrada",
             "rent_at_address": "Alquila en {{address}}",
+            "see_details": "Ver detalles",
             "see_listing": "Vea los anuncios",
             "select_one": "Seleccione uno",
             "send_email": "Envíe un correo electrónico",
+            "share": "Compartir",
             "show_less": "ver menos",
             "show_more": "ver mas",
             "sibling": "Hermano(a)",
@@ -660,14 +708,19 @@
             "verification_letter": "Carta de verificación",
             "veterans_in_household": "Veteranos de guerra en el grupo familiar",
             "view_application": "Ver la Solicitud",
+            "view_document_checklist": "Ver lista de verificacion de documentos",
             "view_map": "Ver el Mapa",
+            "view_on_map": "Ver en el mapa",
             "vision_impairments": "Para personas con impedimentos visuales",
             "vouchers_and_subsidies": "Vales para la vivienda o subsidios para la renta",
             "what_is_your_relationship": "¿Cuál es su relación?",
+            "what_to_expect": "Qué esperar",
+            "what_to_expect_application_chosen": "Si su solicitud es elegida en el sorteo, esté listo para completar una solicitud más detallada y proporcionar los documentos de respaldo exigidos dentro de los 5 días hábiles de haber sido contactado.",
             "what_type_of_number": "¿Qué tipo de número es este?",
             "white": "Blanco",
             "work_in_sf": "¿Trabaja usted en San Francisco?",
             "you_have_claimed": "Usted ha solicitado:",
+            "you_have_confirmed": "Usted ha confirmado:",
             "your_dob": "Su fecha de nacimiento",
             "your_gender": "Especifique su sexo",
             "your_name": "Su nombre",
@@ -676,7 +729,19 @@
             "zipcode": "Código postal"
         },
         "listings": {
-            "additional_information": "Información adicional",
+            "additional_eligibility_rules": {
+                "credit_history": "Historial de crédito",
+                "criminal_background": "Antecedentes penales",
+                "criminal_background_info": "Los solicitantes con antecedentes penales que califiquen serán considerados para la vivienda de acuerdo con el <a target='_blank' href='{{article49Url}}'>Artículo 49</a> del Código de la Policía de San Francisco: <a href='{{fairChanceUrl}}' target='_blank'>Ordenanza de oportunidad justa</a>.",
+                "find_out_more": "Obtenga más información sobre los criterios de selección para edificios",
+                "rental_history": "Historial de alquiler",
+                "text": "Los solicitantes también deben calificar de acuerdo con las reglas del edificio.",
+                "title": "Reglas de elegibilidad adicionales"
+            },
+            "additional_information": {
+                "header": "Información adicional",
+                "subheader": "Documentos exigidos y criterios de selección"
+            },
             "additional_listings": {
                 "hide": "Ocultar los anuncios adicionales",
                 "show": "Mostrar los anuncios adicionales",
@@ -705,28 +770,75 @@
                 "visit_a_housing_counselor": "Visite a un consejero de vivienda local si desea recibir ayuda con su solicitud.",
                 "visit_homeownership_sf": "Visite HomeownershipSF"
             },
+            "at_total_income": "a <strong>{{income}}</strong> {{per}}",
             "available_and_waitlist": "Unidades disponibles y lista de espera abierta",
             "available_units": "Unidades disponibles",
             "available_units_and_waitlist": "Unidades disponibles y lista de espera",
             "available_units_and_waitlist_desc": "Una vez que las personas sorteadas ocupen todas las unidades disponibles, las demás personas sorteadas entrarán en la lista de espera para la ocupación de <span class='t-italic'>{{number}} unidades</span>",
             "bath": "baño",
+            "below_market_rate": "Tarifa inferior a la del mercado",
+            "browse_rentals": "Buscar alquileres",
+            "browse_sales": "Buscar ventas",
             "cc&r": "Cláusulas, condiciones y restricciones (Covenants, Conditions and Restrictions, CC&R)",
             "cc&r_description": "Las CC&R establecen las normas de la asociación de propietarios y limitan la modificación de la propiedad.",
+            "click_for_other_lisitings": "<a class='lined' href='{{url}}'>Haga clic aquí</a> para ver otras oportunidades de alquiler y de compra de vivienda asequible.",
             "confirmed_preference_list": "Lista de {{preference}} confirmada",
             "current_waitlist_size": "Tamaño de la lista de espera actual",
             "download_lottery_results": "Descargue los resultados del sorteo",
             "download_pdf": "Descargue en formato PDF",
+            "eligibility": {
+                "header": "Elegibilidad",
+                "subheader": "Ingresos, cantidad de ocupantes, preferencias y subsidios"
+            },
             "enter_lottery_for_waitlist": "Ingrese al sorteo para obtener un lugar en la lista de espera de <span class='t-italic'>{{number}} unidades</span>.",
+            "equal_housing_opportunity_logo": "Logotipo de Igualdad de oportunidades de vivienda",
+            "expected_movein_date": "Fecha prevista para la mudanza",
+            "features": {
+                "accessibility": "Accesibilidad",
+                "additional_fee": "Cargo adicional",
+                "additional_fees": "Cargos adicionales",
+                "appliances": "Electrodomésticos",
+                "area": "Área",
+                "baths": "Baños",
+                "built": "Año de construcción",
+                "deposit": "Depósito",
+                "due_post_lottery": "A pagar después del sorteo",
+                "floor": "Piso",
+                "header": "Características",
+                "may_be_higher_for_lower_credit_scores": "Puede ser más alto para puntajes de crédito más bajos",
+                "neighborhood": "Vecindario",
+                "or_one_months_rent": "o un mes de alquiler",
+                "parking": "Estacionamiento",
+                "per_applicant_age_18_and_over": "por solicitante de 18 años o más",
+                "pets_policy": "Política de mascotas",
+                "property_amenities": "Comodidades de la propiedad",
+                "rent_subheader": "Comodidades, detalles de la unidad y cargos adicionales",
+                "sale_subheader": "Comodidades y detalles de la unidad",
+                "services_covered_by_hoa_dues": "Servicios cubiertos por las cuotas de HOA",
+                "services_onsite": "Servicios en el lugar",
+                "smoking_policy": "Política sobre fumar",
+                "sqft": "ft²",
+                "square_feet": "pies cuadrados",
+                "unit": "Unidad",
+                "unit_features": "Características de la unidad"
+            },
             "final_waitlist_size": "Tamaño de la lista de espera final",
+            "for_household_size": "para <strong>{{size}}</strong> {{people}}",
             "for_income_calculations": "Para el cálculo de los ingresos, tenga en cuenta que el tamaño del grupo familiar incluye a todas las personas (de cualquier edad) que viven en la unidad.",
             "household_maximum_income": "Ingresos anuales del grupo familiar",
+            "housing_program": "Programa de vivienda",
             "important_program_rules": "Reglas Importantes del Programa",
             "includes_priority_units": "Incluye unidades con prioridad para {{priorities}}",
+            "including_children": "(incluidos <strong>{{number}} {{children}}</strong> menores de 6 años)",
             "income_exceptions": {
                 "intro": "Las personas en su hogar pueden necesitar <a href='{{url}}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
                 "nontaxable": "Reciban <span data-tooltip='{{tooltip}}' title='{{tooltip}}' aria-haspopup='true' class='has-tip'>ingresos no reportables</span>",
                 "nontaxable_tooltip": "Los ingresos no reportables pueden incluir el SSI (Seguo de Ingreso Suplementario), el SSDI (Seguro Social por Incapacidad), los pagos de manutención de menores  y los beneficios de Compensación al trabajador, ( accidente en el trabajo)",
                 "students": "Sean estudiantes de tiempo completo (no se aplica al solicitante principal)"
+            },
+            "lottery_preference": {
+                "all_remaining_units": "Todas las unidades restantes",
+                "up_to_units": "Hasta {{units}} unidades disponibles"
             },
             "lottery_results": {
                 "hide": "Ocultar los resultados del sorteo",
@@ -736,7 +848,14 @@
                 "title": "Resultados del Sorteo"
             },
             "merry_go_round_single_room_occupancy_description": "Esta propiedad ofrece habitaciones individuales para un máximo de 2 personas. Los inquilinos podrían tener que compartir los baños y en ocasiones la cocina.",
+            "monitored_by_mohcd": "Supervisado por la Oficina del Alcalde para la Vivienda y Desarrollo Comunitario",
+            "neighborhood": {
+                "header": "Vecindario",
+                "location_and_transportation": "Ubicación y transporte",
+                "subheader": "Ubicación y transporte"
+            },
             "no_available_units": "No hay unidades disponibles en este momento.",
+            "no_favorites": "Parece que aún no ha agregado como favorito ningún listado.",
             "no_matches": "No se encontraron resultados",
             "no_open_listings": "Ninguno de los anuncios está abierto para solicitudes.",
             "occupancy_description_all_sro": "La cantidad máxima de habitantes para este edificio es de 1 persona por unidad.",
@@ -750,6 +869,14 @@
             "person": "persona",
             "priority_units": "Unidades con Prioridad",
             "priority_units_description": "Este edificio tiene unidades reservadas si usted o algún miembro de su grupo familiar cumple con alguno de los siguientes requisitos:",
+            "process": {
+                "header": "Proceso",
+                "information_sessions": "Sesiones informativas",
+                "lottery_date_time_and_venue_to_be_scheduled": "Fecha, hora y lugar del sorteo a programar.",
+                "public_lottery": "Sorteo público",
+                "see_this_unit_on_mls": "Ver esta unidad en MLS",
+                "subheader": "Fechas importantes e información de contacto"
+            },
             "re_pricing": "Restricciones del precio de reventa",
             "realtor_commission": "Para el agente inmobiliario del comprador",
             "realtor_commission_header": "Su comisión: ",
@@ -757,6 +884,7 @@
             "realtor_commission_not_eligible": "Su agente inmobiliario no es elegible para cobrar una comisión por esta unidad",
             "realtor_commission_percentage": " {{percentage}}% del precio de venta",
             "remaining_units_after_preference_consideration": "Luego de que se hayan considerado todas las personas con preferencia, las unidades restantes se ofrecerán a los solicitantes elegibles según el orden del sorteo.",
+            "rental_units": "Unidades en alquiler",
             "required_documents": "Documentación Requerida",
             "required_documents_after_applying": "Si su solicitud sale elegida en el sorteo, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la <a href='{{url}}' target='_blank'>documentación de respaldo requerida</a> en un plazo de 5 días hábiles posteriores a la fecha de notificación.",
             "reserved_community_building": "Edificio {{type}}",
@@ -764,6 +892,7 @@
             "reserved_units": "Unidades reservadas",
             "reserved_units_description": "Para ser elegible para estas unidades, usted o algún miembro de su familia debe cumplir con alguno de los siguientes requisitos:",
             "reserved_units_for_who_are": "Reservada para {{communityType}} que {{reservedType}}",
+            "sale_units": "Unidades a la venta",
             "see_maximum_income_information": "Consulte la información sobre ingresos máximos",
             "see_preference_information": "Consulte la información de preferencia",
             "see_unit_information": "Consulte la información de la unidad",
@@ -772,6 +901,18 @@
             "single_room_occupancy": "Viviendas con habitaciones individuales",
             "single_room_occupancy_description": "Esta propiedad ofrece habitaciones individuales solo para una persona. Los inquilinos podrían tener que compartir los baños y en ocasiones la cocina.",
             "special_notes": "Notas Especiales",
+            "stats": {
+                "availability": "Disponibilidad",
+                "available": "disponible",
+                "hoa_dues": "Cuotas de HOA",
+                "minimum_income": "Ingreso mínimo",
+                "price_without_parking": "Precio sin estacionamiento",
+                "prices_without_parking": "Precios sin estacionamiento",
+                "rent": "Alquiler",
+                "sales_price": "Precio de venta",
+                "waitlist": "Lista de espera",
+                "with_one_parking_space": "Con un lugar de estacionamiento"
+            },
             "units_are_for": "Estas unidades son para {{type}}.",
             "units_have_accessibility_features_for": "Estas unidades tienen características de accesibilidad para personas con {{type}}.",
             "upcoming_lotteries": {
@@ -796,6 +937,11 @@
                 "find_matching_listings": "Encuentre anuncios compatibles",
                 "if_you_tell_us": "Si nos informa el tamaño y los ingresos del grupo familiar, podemos destacar los anuncios de vivienda para los que sería elegible.",
                 "or_get_help_calculating_income": "u <a ui-sref='{{sref}}'>obtenga ayuda para calcular sus ingresos</a>"
+            },
+            "rental_assistance": {
+                "info_1": "Los vales de vivienda de la Sección 8 y otros programas válidos de asistencia para el alquiler pueden utilizarse para esta propiedad.",
+                "info_2": "En el caso de un subsidio de alquiler válido, el ingreso mínimo requerido se basará en la parte del alquiler que el inquilino paga después del uso del subsidio.",
+                "title": "Asistencia para el alquiler"
             }
         },
         "listings_for_sale": {
@@ -818,6 +964,11 @@
                 "some_people_may_qualify": "Algunas personas podrían ser elegibles para recibir asistencia para el pago inicial.",
                 "title": "Obtenga ayuda",
                 "view_full_list_of_programs": "Ver la lista completa de programas."
+            },
+            "lottery_preferences": {
+                "has_preferences": "Cualquier persona puede participar en el sorteo de viviendas para este listado. Si las personas que viven con usted tienen una de las siguientes preferencias, se le considerará en el orden que se muestra aquí. Cada poseedor de preferencias será revisado de acuerdo al orden en que haya salido en el sorteo.",
+                "no_preferences": "Los poseedores de preferencias tendrán la clasificación más alta en el proceso del sorteo.",
+                "title": "Preferencias del sorteo"
             },
             "see_the_listings": "Vea los anuncios"
         },
@@ -980,14 +1131,20 @@
             "user_token_validation_timeout": "Nos preocupa su seguridad. Cerramos su sesión por un problema de coneccion. Inicie sesión para continuar."
         },
         "t": {
+            "ami": "AMI (Ingreso Promedio del Área)",
+            "application_closed": "Las solicitudes están cerradas",
             "application_deadline": "Fecha límite para la presentación de la solicitud",
             "application_due": "Vencimiento de la solicitud",
             "application_for_listing": "Solicitud para {{listingName}}",
             "application_submitted": "Solicitud presentada",
+            "applications_closed": "Las solicitudes están cerradas",
             "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y finalizar en otro momento\"",
             "are_you_sure_you_want_to_leave_confirmation": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "are_you_sure_you_want_to_leave_sign_in": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
+            "at": "al",
             "back": "Retroceder",
+            "child": "niño",
+            "children": "niños",
             "close": "Cerrar",
             "confirm": "Confirmar",
             "continue": "Continuar",
@@ -996,21 +1153,31 @@
             "delete": "Eliminar",
             "delete_application": "¿Desea eliminar esta solicitud?",
             "edit": "Editar",
+            "household_size": "cantidad de personas en el hogar",
             "i_agree": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
             "in_progress": "En curso",
+            "income": "ingreso",
             "leave": "Salir",
             "leave_your_application": "¿Desea salir de su solicitud?",
+            "listing_updated": "Fecha de actualización del listado",
+            "lottery_results_posted": "Resultados del sorteo publicados",
+            "maximum_income_month": "ingreso máximo por mes",
+            "maximum_income_year": "ingreso máximo por año",
             "menu": "Menú",
+            "min_income_short": "Ingreso mínimo",
             "never_submitted": "Nunca se presentó",
             "next": "Siguiente",
             "no": "No",
+            "no_parking": "sin estacionamiento",
             "none": "Ninguno",
             "occupancy": "Ocupación",
             "ok": "Aceptar",
             "optional": "Opcional",
             "or": "o",
+            "or_more": "o más",
             "per_month": "por mes",
             "per_year": "por año",
+            "rent": "Alquiler",
             "save_and_come_back_later": "Guardar y regresar luego",
             "save_and_finish_later": "Guardar y finalizar en otro momento",
             "session_expired": "Su sesión ha caducado.",
@@ -1022,10 +1189,14 @@
             "stay": "Quédese",
             "submit": "Someter",
             "submitted": "Presentada",
+            "to": "a",
             "unit_type": "Tipo de Unidad",
+            "units": "unidades",
+            "with_parking": "con estacionamiento",
             "yes": "Sí",
             "you": "Usted"
         },
+        "thank_you": "Gracias",
         "welcome": {
             "all_application_closed": "Todas las solicitudes están cerradas en este momento, pero puede ver los anuncios cerrados.",
             "new_listing_email_alert": "Reciba un aviso por correo electrónico cuando se publiquen nuevos anuncios.",

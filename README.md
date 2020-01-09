@@ -64,18 +64,30 @@ Note: These tests will run on Semaphore (our CI) as well for every review app an
 
 We currently manually transfer the application's CSS from [our pattern library](https://github.com/Exygy/sf-dahlia-pattern-library) using Grunt.
 
+If you do not already have grunt installed, run `brew install grunt` to install it before proceeding.
+
 To update this app with the latest PL styles:
 
 1. [Clone the PL repository in the same parent directory as this one.](https://github.com/Exygy/sf-dahlia-pattern-library)
-2. Optional: switch to the PL branch you want to import styles from.
-3. `cd` to your `sf-dahlia-web` folder
-4. Run `grunt`
+2. Switch to the PL branch you want to import styles from, either master or a specific branch
+3. Run `npm run-script build` in the pattern lib directory to compile the css
+5. `cd` to your `sf-dahlia-web` folder
+6. Run `grunt`
+7. Commit the updates to toolkit.scss with a reference to the commit you're updating from on pattern-lib
 
 We use `grunt-clean` and `grunt-copy` to transfer the CSS, and `grunt-replace` to replace relative background image paths with Rails asset URLs.
 
-### Acceptance/Feature Apps
+## Running with a cache locally
+In order to test caching locally,
+1. Install memcached locally with `brew install memcached`
+1. Start memcached in a new tab by running `memcached`
+1. Add an empty file to the repo route named `tmp/caching-dev.txt`
+1. Set CACHE_SALESFORCE_REQUESTS='true' in your .env
+1. Start up the app
 
-Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.
+## Running stress testing against Salesforce
+
+To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
 ## Contributing changes
 
@@ -86,6 +98,10 @@ Use the engineering workflow and coding style standards established below. :smil
 Dahlia's current engineering workflow has been fully documented and can be found [here](https://docs.google.com/a/exygy.com/presentation/d/1Y5yAVUcKMFoNobutOH_Sehm69ZCZoTZzJZewupR-5KI/edit?usp=sharing).
 
 Dahlia's project backlog is in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1405352).
+
+### Acceptance/Feature Apps
+
+Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.
 
 ### Code style and quality
 

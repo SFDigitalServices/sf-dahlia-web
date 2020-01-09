@@ -19,7 +19,7 @@
                 "you_or_anyone": "Are you or anyone on this application a veteran?",
                 "you_or_anyone_desc": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
             },
-             "artist": {
+            "artist": {
                 "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
                 "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
             }
@@ -29,7 +29,7 @@
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
             "p3": "You may also start the application now and save it and upload documents later.",
             "p4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
-            "subtitle": "",
+            "subtitle": "DO NOT TRANSLATE - Chinese-only",
             "title": "Here's what to expect for this application.",
             "warning": "Any fraudulent statements will cause your application to be removed from the lottery."
         },
