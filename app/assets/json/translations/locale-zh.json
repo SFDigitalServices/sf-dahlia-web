@@ -478,7 +478,7 @@
             "translate_bar_expert_notice": "此頁由母語人員翻譯。",
             "translate_bar_google_notice": "本頁由 Google 翻譯。"
         },
-        "hello": "%{Name}，您好",
+        "hello": "%{name}，您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
@@ -883,12 +883,12 @@
             "realtor_commission_header": "您的佣金： ",
             "realtor_commission_how_to": "如何接收： ",
             "realtor_commission_not_eligible": "您的房地產經紀人不符合在此單位獲得佣金的資格",
-            "realtor_commission_percentage": " {{Percentage}}% 的銷售價格",
+            "realtor_commission_percentage": " {{percentage}}% 的銷售價格",
             "remaining_units_after_preference_consideration": "在考慮所有優先權利的持有人之後，任何剩餘單位將會依照抽籤順序提供給合格申請人。",
             "rental_units": "租賃單位",
             "required_documents": "所需文件",
             "required_documents_after_applying": "如果您的申請從抽籤中獲選，請準備在收到通知的 5 個工作天內填寫更詳細的申請資料並提供<a href='{{url}}' target='_blank'>必要的證明文件</a>。",
-            "reserved_community_building": "{{Type}} 建築",
+            "reserved_community_building": "{{type}} 建築",
             "reserved_for": "已為 {{type}} 保留",
             "reserved_units": "保留的單位",
             "reserved_units_description": "為了符合入住這些單位的資格，您或家中的某成員必須符合以下其中一項條件：",
@@ -1037,7 +1037,7 @@
             "favorites": "我的最愛",
             "get_assistance": "尋求協助",
             "housing_counselors": "住房顧問",
-            "listing_application": "{{Listing}} 申請",
+            "listing_application": "{{listing}} 申請",
             "my_account": "我的帳戶",
             "my_applications": "我的申請",
             "privacy": "隱私政策",
