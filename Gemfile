@@ -45,7 +45,7 @@ gem 'rack', '>= 1.6.11'
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
 # for CORS requests (specifically for CDN handling)
-gem 'rack-cors', '~> 1.0.1'
+gem 'rack-cors', '~> 1.0.5'
 
 # address validation
 gem 'easypost', '>=3.0.1'
