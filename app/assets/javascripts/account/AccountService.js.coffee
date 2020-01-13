@@ -108,6 +108,7 @@ AccountService = (
     params =
       password: Service.userAuth.user.password
       password_confirmation: Service.userAuth.user.password_confirmation
+      locale: $translate.use()
     if type == 'change'
       params.current_password = Service.userAuth.user.current_password
     $auth.updatePassword(params).then((resp) ->
