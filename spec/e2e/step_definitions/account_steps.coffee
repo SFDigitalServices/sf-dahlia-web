@@ -18,6 +18,7 @@ Given /^I have a confirmed account for "([^"]*)" with birth date "([^"]*)"$/,
       email: account.email
       password: account.password
     }
+    browser.waitForAngular()
     Utils.Account.confirm(account.email)
 
 When /^I create an account for "([^"]*)"$/, (fullName) ->
