@@ -9,6 +9,7 @@ angular.module('dahlia.components')
     (LendingInstitutionService, ShortFormApplicationService) ->
       ctrl = @
       @lendingInstitutions = LendingInstitutionService.lendingInstitutions
+      @lendingInstitutionsNames = _.orderBy(_.keys(@lendingInstitutions))
       @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
       @selectedInstitution = ''
       @agents = []
@@ -38,9 +39,6 @@ angular.module('dahlia.components')
         return unless id
         selectedAgent = _.find(@agents, { Id: id })
         selectedAgent.Lending_Agent_Inactive_Date
-
-      @lendingInstitutionsNames = ->
-        _.keys(@lendingInstitutions)
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
