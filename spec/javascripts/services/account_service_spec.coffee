@@ -186,6 +186,7 @@ do ->
         expectedParams =
           password: 'password'
           password_confirmation: 'password'
+          locale: 'currentLocale'
         AccountService.updatePassword()
         expect($auth.updatePassword).toHaveBeenCalledWith(expectedParams)
 
