@@ -19,7 +19,7 @@ angular.module('dahlia.components')
           @selectedInstitution = _.findKey(@lendingInstitutions, (agents) ->
             _.some(agents, {'Id': ctrl.application.lendingAgent})
           )
-          @agents = @lendingInstitutions[@selectedInstitution]
+          @agents = _.orderBy(@lendingInstitutions[@selectedInstitution], 'FirstName')
 
       @inputInvalid = (fieldName) ->
         form = @form.applicationForm
@@ -42,7 +42,7 @@ angular.module('dahlia.components')
 
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
-        @agents = @lendingInstitutions[@selectedInstitution]
+        @agents = _.orderBy(@lendingInstitutions[@selectedInstitution], 'FirstName')
 
       @showLendingAgents = ->
         !_.isEmpty(@agents)
