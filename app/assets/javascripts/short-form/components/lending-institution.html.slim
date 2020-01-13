@@ -3,7 +3,7 @@
     strong.form-label.caps translate="label.applicant_lending_institution"
   select#lendingInstitution data-width="auto" name="lendingInstitution" ng-model="$ctrl.selectedInstitution" ng-change="$ctrl.onChangeLendingInstitution()" ng-required="true" ng-class="{ error: $ctrl.inputInvalid('lendingInstitution')}"
     option value="" {{'label.please_select_one' | translate}}
-    option ng-repeat="institution in $ctrl.lendingInstitutionsNames()" value="{{institution}}" {{institution}}
+    option ng-repeat="institution in $ctrl.lendingInstitutionsNames" value="{{institution}}" {{institution}}
   small.error id="lendingInstitutionError" ng-show="$ctrl.inputInvalid('lendingInstitution')"
     | {{'label.applicant_select_a_lending_institution' | translate}}
 .form-group.margin-left--2x.margin-right--2x
