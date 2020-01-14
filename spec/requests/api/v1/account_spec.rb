@@ -8,7 +8,7 @@ describe 'Account API' do
 
   it 'gets my applications' do
     VCR.use_cassette('account/my_applications') do
-      get '/api/v1/account/my-applications', {}, @auth_headers
+      get '/api/v1/account/my-applications', params: @auth_headers
     end
     json = JSON.parse(response.body)
 
@@ -27,21 +27,22 @@ describe 'Account API' do
     }
     allow(I18n).to receive(:with_locale)
     VCR.use_cassette('account/update') do
-      put '/api/v1/account/update', { locale: 'es', contact: contact }, @auth_headers
+      params = @auth_headers.merge(locale: 'es', contact: contact)
+      put '/api/v1/account/update', params: params
     end
     expect(I18n).to have_received(:with_locale).with('es')
   end
 
   describe '#check-account' do
     it 'checks for existing user account by email address' do
-      get '/api/v1/account/check-account', email: @user.email
+      get '/api/v1/account/check-account', params: { email: @user.email }
       json = JSON.parse(response.body)
       expect(response).to be_success
       expect(json['account_exists']).to eq(true)
     end
 
     it 'checks for non-existing user account by email address' do
-      get '/api/v1/account/check-account', email: 'nobody@not.email'
+      get '/api/v1/account/check-account', params: { email: 'nobody@not.email' }
       json = JSON.parse(response.body)
       expect(response).to be_success
       expect(json['account_exists']).to eq(false)

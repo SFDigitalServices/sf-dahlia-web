@@ -34,7 +34,7 @@ describe 'ShortForm API' do
               incomelevel: 40_000,
             },
           }
-          post '/api/v1/short-form/validate-household', params
+          post '/api/v1/short-form/validate-household', params: params
         end
       end
     end
@@ -48,7 +48,7 @@ describe 'ShortForm API' do
               incomelevel: 10_000,
             },
           }
-          post '/api/v1/short-form/validate-household', params
+          post '/api/v1/short-form/validate-household', params: params
         end
       end
     end
@@ -73,7 +73,7 @@ describe 'ShortForm API' do
           incomelevel: 40_000,
         },
       }
-      post '/api/v1/short-form/validate-household', params
+      post '/api/v1/short-form/validate-household', params: params
     end
     json = JSON.parse(response.body)
 
@@ -99,7 +99,7 @@ describe 'ShortForm API' do
       params = clean_json_for_vcr(params)
 
       VCR.use_cassette('shortform/submit_application') do
-        post url, params, format: :json
+        post url, params: params.merge(format: :json)
       end
       expect(response).to be_success
     end
@@ -117,8 +117,7 @@ describe 'ShortForm API' do
       VCR.use_cassette('shortform/show_application') do
         get(
           "/api/v1/short-form/application/#{application_show_id}.json",
-          {},
-          @auth_headers,
+          params: @auth_headers,
         )
       end
       json = JSON.parse(response.body)
@@ -140,8 +139,7 @@ describe 'ShortForm API' do
       VCR.use_cassette('shortform/delete_application') do
         delete(
           "/api/v1/short-form/application/#{application_delete_id}.json",
-          {},
-          @auth_headers,
+          params: @auth_headers,
         )
       end
       expect(response).to be_success
@@ -167,7 +165,7 @@ describe 'ShortForm API' do
       params = clean_json_for_vcr(params)
 
       VCR.use_cassette('shortform/update_application') do
-        put url, params, @auth_headers
+        put url, params: params.merge(@auth_headers)
       end
       expect(response).to be_success
     end
@@ -180,7 +178,7 @@ describe 'ShortForm API' do
       params = clean_json_for_vcr(params)
 
       VCR.use_cassette('shortform/update_unauthorized_application') do
-        put url, params, @auth_headers
+        put url, params: params.merge(@auth_headers)
       end
       expect(response).not_to be_success
     end
@@ -205,7 +203,7 @@ describe 'ShortForm API' do
         params['temp_session_id'] = 'xyz123'
         params['application']['id'] = application_claim_id
         params = clean_json_for_vcr(params)
-        put url, params, @auth_headers
+        put url, params: params.merge(@auth_headers)
       end
       expect(response).to be_success
     end
@@ -222,7 +220,7 @@ describe 'ShortForm API' do
     it 'returns successful response' do
       url = '/api/v1/short-form/listing-application/a0Wf0000003j03WEAQ.json'
       VCR.use_cassette('shortform/show_application') do
-        get url, {}, @auth_headers
+        get url, params: @auth_headers
       end
       expect(response).to be_success
     end

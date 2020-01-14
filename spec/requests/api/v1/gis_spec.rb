@@ -61,21 +61,21 @@ describe 'Gis API' do
   describe 'valid address boundary match' do
     save_fixture do
       VCR.use_cassette('gis/adhp_match') do
-        post '/api/v1/addresses/gis-data.json', fake_adhp_params
+        post '/api/v1/addresses/gis-data.json', params: fake_adhp_params
       end
     end
   end
   describe 'valid address no boundary match' do
     save_fixture do
       VCR.use_cassette('gis/adhp_non_match') do
-        post '/api/v1/addresses/gis-data.json', fake_adhp_non_match_params
+        post '/api/v1/addresses/gis-data.json', params: fake_adhp_non_match_params
       end
     end
   end
   describe 'invalid address' do
     save_fixture do
       VCR.use_cassette('gis/invalid') do
-        post '/api/v1/addresses/gis-data.json', fake_invalid_params
+        post '/api/v1/addresses/gis-data.json', params: fake_invalid_params
       end
     end
   end
@@ -84,7 +84,7 @@ describe 'Gis API' do
   describe 'getting GID data for a valid address' do
     before do
       VCR.use_cassette('gis/valid') do
-        post '/api/v1/addresses/gis-data.json', fake_params
+        post '/api/v1/addresses/gis-data.json', params: fake_params
       end
     end
 
@@ -109,7 +109,7 @@ describe 'Gis API' do
         it 'sends a true boundary match' do
           VCR.use_cassette('gis/valid') do
             VCR.use_cassette('gis/adhp_match') do
-              post '/api/v1/addresses/gis-data.json', fake_adhp_params
+              post '/api/v1/addresses/gis-data.json', params: fake_adhp_params
             end
           end
 
@@ -121,7 +121,7 @@ describe 'Gis API' do
       context 'when address is not within the ADHP boundary' do
         it 'sends a false boundary match' do
           VCR.use_cassette('gis/adhp_non_match') do
-            post '/api/v1/addresses/gis-data.json', fake_adhp_non_match_params
+            post '/api/v1/addresses/gis-data.json', params: fake_adhp_non_match_params
           end
 
           json = JSON.parse(response.body)
@@ -135,7 +135,7 @@ describe 'Gis API' do
         it 'sends a true boundary match' do
           VCR.use_cassette('gis/valid') do
             VCR.use_cassette('gis/nrhp_match') do
-              post '/api/v1/addresses/gis-data.json', fake_nrhp_params
+              post '/api/v1/addresses/gis-data.json', params: fake_nrhp_params
             end
           end
 
@@ -147,7 +147,7 @@ describe 'Gis API' do
       context 'address is not within the NRHP boundary' do
         it 'sends a false boundary match' do
           VCR.use_cassette('gis/nrhp_non_match') do
-            post '/api/v1/addresses/gis-data.json', fake_nrhp_non_match_params
+            post '/api/v1/addresses/gis-data.json', params: fake_nrhp_non_match_params
           end
 
           json = JSON.parse(response.body)
@@ -160,7 +160,7 @@ describe 'Gis API' do
   describe 'getting GIS data for an invalid address' do
     before do
       VCR.use_cassette('gis/invalid') do
-        post '/api/v1/addresses/gis-data.json', fake_invalid_params
+        post '/api/v1/addresses/gis-data.json', params: fake_invalid_params
       end
     end
 
