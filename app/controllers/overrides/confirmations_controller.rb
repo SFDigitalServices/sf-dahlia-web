@@ -5,9 +5,9 @@ module Overrides
     def show
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
-      if @resource && @resource.id
+      if @resource&.id
         return redirect_for_link_expiration if @resource.errors[:email].present?
-        # create client id
+        # Create and save the updated token to the user
         add_resource_token
 
         yield @resource if block_given?
@@ -15,18 +15,22 @@ module Overrides
         # we want to disable the after_action,
         # otherwise it will invalidate our current auth token
         DeviseTokenAuth.change_headers_on_each_request = false
-        redirect_to(@resource.build_auth_url(
-                      redirect_url,
-                      token: @token,
-                      client_id: @client_id,
-                      account_confirmation_success: true,
-                      config: params[:config],
-                      utm_source: 'validationemail',
-                      utm_campaign: 'validationemail',
-                      utm_medium: 'email',
-                      # For capturing confirmation success in Angular
-                      accountConfirmed: true,
-        ))
+        redirect_header_options = {
+          account_confirmation_success: true,
+          config: params[:config],
+          utm_source: 'validationemail',
+          utm_campaign: 'validationemail',
+          utm_medium: 'email',
+          # For capturing confirmation success in Angular
+          accountConfirmed: true,
+        }
+        redirect_headers = build_redirect_headers(@token.token,
+                                                  @token.client,
+                                                  redirect_header_options)
+
+        redirect_to_link = @resource.build_auth_url(redirect_url, redirect_headers)
+
+        redirect_to(redirect_to_link)
       else
         # no user was found with that confirmation token.
         # provide a more helpful error than just redirecting them?
@@ -38,7 +42,7 @@ module Overrides
 
     def create
       @resource = resource_class.find_by_email(params[:email])
-      if @resource and @resource.id
+      if @resource&.id
         @resource.resend_confirmation_instructions
         render json: { success: true }
       else
@@ -67,13 +71,11 @@ module Overrides
     end
 
     def add_resource_token
-      @client_id  = SecureRandom.urlsafe_base64(nil, false)
-      @token      = SecureRandom.urlsafe_base64(nil, false)
-      @token_hash = BCrypt::Password.create(@token)
-      @expiry     = (Time.now + DeviseTokenAuth.token_lifespan).to_i
+      @token = @resource.create_token
+      @expiry = (Time.now + DeviseTokenAuth.token_lifespan).to_i
 
-      @resource.tokens[@client_id] = {
-        token:  @token_hash,
+      @resource.tokens[@token.client] = {
+        token:  @token.token_hash,
         'expiry' => @expiry,
       }
       @resource.save!
