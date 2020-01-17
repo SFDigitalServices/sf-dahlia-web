@@ -1,7 +1,8 @@
 module Overrides
   # Overrides to DeviseTokenAuth
   class ConfirmationsController < DeviseTokenAuth::ConfirmationsController
-    # method copied from original gem; refactored to please Rubocop
+    # We override this method for custom error handling, to set custom headers,
+    # and to remove requirement that user is signed in.
     def show
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
