@@ -39,7 +39,7 @@ describe Overrides::RegistrationsController do
         .and_return(salesforce_response)
 
       VCR.use_cassette('account/register') do
-        post :create, valid_user_params
+        post :create, params: valid_user_params
       end
 
       expect(assigns(:resource).salesforce_contact_id)

@@ -31,7 +31,7 @@ describe Api::V1::ListingsController do
       end
 
       it 'returns only rental listings' do
-        get :index, type: 'rental'
+        get :index, params: { type: 'rental' }
         resp = JSON.parse(response.body)['listings']
         expect(resp.all? { |l| l['Tenure'].exclude?('New sale') }).to be_truthy
         expect(resp.all? { |l| l['Tenure'].exclude?('Resale') }).to be_truthy
@@ -46,7 +46,7 @@ describe Api::V1::ListingsController do
       end
 
       it 'returns only sale listings' do
-        get :index, type: 'ownership'
+        get :index, params: { type: 'ownership' }
         resp = JSON.parse(response.body)['listings']
         expect(resp.all? { |l| l['Tenure'].exclude?('New rental') }).to be_truthy
         expect(resp.all? { |l| l['Tenure'].exclude?('Re-rental') }).to be_truthy

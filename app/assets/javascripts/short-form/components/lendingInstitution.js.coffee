@@ -9,6 +9,7 @@ angular.module('dahlia.components')
     (LendingInstitutionService, ShortFormApplicationService) ->
       ctrl = @
       @lendingInstitutions = LendingInstitutionService.lendingInstitutions
+      @lendingInstitutionsNames = _.orderBy(_.keys(@lendingInstitutions))
       @lotteryDate = ShortFormApplicationService.listing.Lottery_Date
       @selectedInstitution = ''
       @agents = []
@@ -18,7 +19,7 @@ angular.module('dahlia.components')
           @selectedInstitution = _.findKey(@lendingInstitutions, (agents) ->
             _.some(agents, {'Id': ctrl.application.lendingAgent})
           )
-          @agents = @lendingInstitutions[@selectedInstitution]
+          @agents = _.orderBy(@lendingInstitutions[@selectedInstitution], 'FirstName')
 
       @inputInvalid = (fieldName) ->
         form = @form.applicationForm
@@ -39,12 +40,9 @@ angular.module('dahlia.components')
         selectedAgent = _.find(@agents, { Id: id })
         selectedAgent.Lending_Agent_Inactive_Date
 
-      @lendingInstitutionsNames = ->
-        _.keys(@lendingInstitutions)
-
       @onChangeLendingInstitution = ->
         @application.lendingAgent = null
-        @agents = @lendingInstitutions[@selectedInstitution]
+        @agents = _.orderBy(@lendingInstitutions[@selectedInstitution], 'FirstName')
 
       @showLendingAgents = ->
         !_.isEmpty(@agents)

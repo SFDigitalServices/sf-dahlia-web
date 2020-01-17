@@ -10,7 +10,7 @@ describe 'Listings API' do
   describe 'index' do
     save_fixture do
       VCR.use_cassette('listings/rental_listings') do
-        get '/api/v1/listings.json', type: 'rental', subset: 'browse'
+        get '/api/v1/listings.json', params: { type: 'rental', subset: 'browse' }
       end
     end
   end
@@ -29,7 +29,7 @@ describe 'Listings API' do
           percent: %w[50 50 60],
           year: %w[2016 2016 2016],
         }
-        get '/api/v1/listings/ami.json', params
+        get '/api/v1/listings/ami.json', params: params
       end
     end
   end
@@ -48,7 +48,7 @@ describe 'Listings API' do
           incomelevel: 20_000,
           childrenUnder6: 1,
         }
-        get '/api/v1/listings/eligibility.json', params
+        get '/api/v1/listings/eligibility.json', params: params
       end
     end
   end
@@ -56,8 +56,7 @@ describe 'Listings API' do
     save_fixture do
       VCR.use_cassette('listings/lottery-ranking') do
         url = "/api/v1/listings/#{listing_id}/lottery_ranking.json"
-        params = { lottery_number: '00042084' }
-        get url, params
+        get url, params: { lottery_number: '00042084' }
       end
     end
   end
@@ -80,7 +79,7 @@ describe 'Listings API' do
 
   it 'sends a list of listings' do
     VCR.use_cassette('listings/rental_listings') do
-      get '/api/v1/listings.json', type: 'rental', subset: 'browse'
+      get '/api/v1/listings.json', params: { type: 'rental', subset: 'browse' }
     end
 
     json = JSON.parse(response.body)
@@ -114,7 +113,7 @@ describe 'Listings API' do
         childrenUnder6: 1,
         listingsType: 'rental',
       }
-      get '/api/v1/listings/eligibility.json', params
+      get '/api/v1/listings/eligibility.json', params: params
     end
 
     json = JSON.parse(response.body)
@@ -133,7 +132,7 @@ describe 'Listings API' do
         percent: %w[50 50 60],
         year: %w[2016 2016 2016],
       }
-      get '/api/v1/listings/ami.json', params
+      get '/api/v1/listings/ami.json', params: params
     end
 
     json = JSON.parse(response.body)
@@ -164,8 +163,7 @@ describe 'Listings API' do
   it 'returns lottery ranking for lottery number and listing id' do
     VCR.use_cassette('listings/lottery-ranking') do
       url = "/api/v1/listings/#{listing_id}/lottery_ranking.json"
-      params = { lottery_number: '00042084' }
-      get url, params
+      get url, params: { lottery_number: '00042084' }
     end
 
     json = JSON.parse(response.body)

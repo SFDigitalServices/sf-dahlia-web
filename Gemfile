@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.0.7'
+gem 'rails', '~> 5.1.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -21,7 +21,7 @@ gem 'coffee-rails'
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-gem 'puma'
+gem 'puma', '~> 4.3.1'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
@@ -45,7 +45,7 @@ gem 'rack', '>= 1.6.11'
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
 # for CORS requests (specifically for CDN handling)
-gem 'rack-cors', '~> 1.0.1'
+gem 'rack-cors', '~> 1.0.5'
 
 # address validation
 gem 'easypost', '>=3.0.1'
