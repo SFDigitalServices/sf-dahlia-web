@@ -25,13 +25,18 @@ module.exports = function(grunt) {
     translationsToTmp: {
       files: [
         {
-          src: 'app/assets/json/translations/locale-en.json',
-          dest: 'tmp/translations/locale-en.json'
+          dest: 'tmp/translations/locale-en.json',
+          src: 'app/assets/json/translations/locale-en.json'
+        },
+        {
+          dest: 'tmp/translations/locale-es.json',
+          src: 'app/assets/json/translations/locale-es.json'
         }
       ],
       options: {
         process: function (content, srcpath) {
-          return JSON.stringify(JSON.parse(content)['en'], null, 4);
+          let locale = srcpath.split('-')[1].split('.')[0]
+          return JSON.stringify(JSON.parse(content)[locale], null, 4);
         }
       }
     },
@@ -40,11 +45,17 @@ module.exports = function(grunt) {
         {
           src: 'tmp/translations/locale-en.json',
           dest: 'app/assets/json/translations/locale-en.json'
+        },
+        {
+          src: 'tmp/translations/locale-es.json',
+          dest: 'app/assets/json/translations/locale-es.json'
         }
       ],
       options: {
         process: function (content, srcpath) {
-          let body = {"en": JSON.parse(content)}
+          let locale = srcpath.split('-')[1].split('.')[0]
+          let body =  {}
+          body[locale] = JSON.parse(content)
           return JSON.stringify(body, null, 4);
         }
       }
@@ -107,7 +118,7 @@ module.exports = function(grunt) {
          'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
-      lang:     ['locale-en'],
+      lang:     ['locale-en', 'locale-es'],
       dest:     'tmp/translations'
     }
   },
