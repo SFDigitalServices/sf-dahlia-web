@@ -25,15 +25,26 @@ module.exports = function(grunt) {
     translationsToTmp: {
       files: [
         {
-          dest: 'tmp/translations/locale-en.json',
-          src: 'app/assets/json/translations/locale-en.json'
+          src: 'app/assets/json/translations/locale-en.json',
+          dest: 'tmp/translations/locale-en.json'
         },
         {
-          dest: 'tmp/translations/locale-es.json',
-          src: 'app/assets/json/translations/locale-es.json'
+          src: 'app/assets/json/translations/locale-es.json',
+          dest: 'tmp/translations/locale-es.json'
+        },
+        {
+          src: 'app/assets/json/translations/locale-tl.json',
+          dest: 'tmp/translations/locale-tl.json'
+        },
+        {
+          src: 'app/assets/json/translations/locale-zh.json',
+          dest: 'tmp/translations/locale-zh.json'
         }
       ],
       options: {
+        // the locale files are prefixed with a key indicating the language but we remove this prefixed key
+        // via the process function below so that it can run through i18nextract translation process
+        // e.g. {"es": {key: value}} just returns { key: value }
         process: function (content, srcpath) {
           let locale = srcpath.split('-')[1].split('.')[0]
           return JSON.stringify(JSON.parse(content)[locale], null, 4);
@@ -49,9 +60,19 @@ module.exports = function(grunt) {
         {
           src: 'tmp/translations/locale-es.json',
           dest: 'app/assets/json/translations/locale-es.json'
+        },
+        {
+          src: 'tmp/translations/locale-tl.json',
+          dest: 'app/assets/json/translations/locale-tl.json'
+        },
+        {
+          src: 'tmp/translations/locale-zh.json',
+          dest: 'app/assets/json/translations/locale-zh.json'
         }
       ],
       options: {
+        // Add back the prefixed key indicating the language
+        // e.g. { key: value } returns {"es": { key: value }}
         process: function (content, srcpath) {
           let locale = srcpath.split('-')[1].split('.')[0]
           let body =  {}
@@ -118,7 +139,7 @@ module.exports = function(grunt) {
          'flagForI18n.\'([A-Z0-9\.\-\_]*)\'' // search for flagForI18n([translation string]
        ],
       namespace: true,
-      lang:     ['locale-en', 'locale-es'],
+      lang:     ['locale-en', 'locale-es', 'locale-tl', 'locale-zh'],
       dest:     'tmp/translations'
     }
   },
