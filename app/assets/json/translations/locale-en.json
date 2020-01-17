@@ -7,6 +7,10 @@
             "title": "Let's get started on your application"
         },
         "a2_community_screening": {
+            "artist": {
+                "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
+                "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
+            },
             "senior": {
                 "you_and_everyone": "Are you and everyone on this application a senior?",
                 "you_and_everyone_desc": "This is a senior building and all applicants must be {{minAge}}+.",
@@ -18,10 +22,6 @@
             "veteran": {
                 "you_or_anyone": "Are you or anyone on this application a veteran?",
                 "you_or_anyone_desc": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
-            },
-            "artist": {
-                "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
-                "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
             }
         },
         "a4_overview": {
@@ -377,6 +377,7 @@
                 "timeout_please_try_again": "Oops! Looks like something went wrong. Please try again."
             },
             "alternate_contact": "Please select an alternate contact",
+            "artist_anyone": "At least one member of your household must have a business license related to your art.",
             "city": "Please enter a city",
             "complete_uploading_documents": "Please complete uploading documents above.",
             "confirmed_address": "Please confirm the suggested address.",
@@ -424,7 +425,6 @@
             "state": "Please enter a state",
             "terms": "You must agree to the terms in order to continue",
             "veteran_anyone": "At least one member of your household must be a Veteran",
-            "artist_anyone": "At least one member of your household must have a business license related to your art.",
             "zip": "Please enter a zipcode"
         },
         "f0_review_optional": {
