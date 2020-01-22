@@ -1,5 +1,5 @@
 .property-card ng-class="{last: $last, first: $first}"
-  h2.property-card_title.text-center.hide-for-medium-up.skiptranslate
+  h3.property-card_title.text-center.hide-for-medium-up.skiptranslate
     a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
   p.property-card_address.text-center.hide-for-medium-up.skiptranslate
     | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
@@ -12,7 +12,7 @@
         span.badge-label.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="listings.reserved_community_building" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
 
       figcaption.property-card_info.skiptranslate
-        h2.property-card_title.show-for-medium-up
+        h3.property-card_title.show-for-medium-up
           a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
         p.property-card_address.show-for-medium-up
           | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
@@ -43,7 +43,7 @@
 
   .property-card_content
     .property-card_stats
-      h2.t-base.t-alt-sans.t-semi.margin-bottom
+      h3.t-base.t-alt-sans.t-semi.margin-bottom
         span translate="listings.available_units" ng-if="::!$ctrl.listing.hasWaitlist"
         span translate="listings.open_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
         span translate="listings.available_and_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
