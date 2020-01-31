@@ -788,6 +788,11 @@ ShortFormApplicationController = (
     ).then (response) ->
       response.data
     .catch ->
+      # Verify source of errors in https://www.pivotaltracker.com/story/show/159802520
+      Raven.captureMessage('Error in getting previous app data (ShortFormApplicationController.getPrevAppData)', {
+        level: 'error',
+        extra: { sectionName: name, application: $scope.application }
+      })
       alert($translate.instant('error.alert.bad_request'))
       $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
 
