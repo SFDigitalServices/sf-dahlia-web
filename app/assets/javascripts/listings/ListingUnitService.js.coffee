@@ -60,7 +60,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
   Service.groupUnitDetails = (units) ->
     grouped = {}
     # Group by AMI
-    groupedByAmi = _.groupBy units, 'of_AMI_for_Pricing_Unit'
+    groupedByAmi = _.groupBy units, 'Max_AMI_for_Qualifying_Unit'
     _.forEach groupedByAmi, (unitsGroupedByAmi, percent) ->
       # Group by Unit Type
       groupedByType = _.groupBy unitsGroupedByAmi, 'Unit_Type'
