@@ -32,7 +32,7 @@ do ->
     describe 'Service.groupUnitDetails', ->
       it 'should return an object containing a list of units for each AMI level', ->
         fakeUnitsMultiAMI = {'units': [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]}
-        fakeUnitsMultiAMI.units[1]['of_AMI_for_Pricing_Unit'] = 40
+        fakeUnitsMultiAMI.units[1]['Max_AMI_for_Qualifying_Unit'] = 40
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsMultiAMI.units)
 
         expect(_.keys(grouped).length).toEqual 2
