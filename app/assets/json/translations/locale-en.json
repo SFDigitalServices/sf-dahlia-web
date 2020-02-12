@@ -802,9 +802,9 @@
             "expected_movein_date": "Expected move-in date",
             "features": {
                 "accessibility": "Accessibility",
-                "additional_fee": "Additional Fee",
                 "additional_fees": "Additional Fees",
                 "appliances": "Appliances",
+                "application_fee": "Application Fee",
                 "area": "Area",
                 "baths": "Baths",
                 "built": "Built",
