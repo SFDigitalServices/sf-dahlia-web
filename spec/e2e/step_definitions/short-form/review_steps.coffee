@@ -1,5 +1,6 @@
 Utils = require('../../utils')
 Pages = require('../../pages/short-form').Pages
+EC = protractor.ExpectedConditions
 { When, Then } = require('cucumber')
 
 When 'I fill out the optional survey', ->
@@ -14,6 +15,7 @@ When 'I agree to the terms and submit', ->
 
 When 'I click to view submitted application', ->
   viewApp = element(By.id('view-app'))
+  browser.wait(EC.presenceOf(viewApp), 5000)
   Utils.Page.scrollToElement(viewApp).then ->
     viewApp.click()
 
