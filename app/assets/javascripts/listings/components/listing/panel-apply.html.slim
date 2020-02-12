@@ -1,14 +1,14 @@
-.content-column ng-if="::$ctrl.parent.submittedApplication()"
+.content-column ng-if="::$ctrl.submittedApplication()"
   .content-group.has-divider
     h2.h-caps-lined
       | {{'label.my_application' | translate}}
-    button.button.primary.expand type="button" title="{{'label.view_application' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.parent.application.id})"
+    button.button.primary.expand type="button" title="{{'label.view_application' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.application.id})"
       | {{'label.view_application' | translate}}
     p.c-steel.t-small
       ' {{'t.application_submitted' | translate}}:
-      ' {{$ctrl.parent.application.applicationSubmittedDate | date : "MMM d, yyyy" }}
+      ' {{$ctrl.application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
-.content-column ng-if="::!$ctrl.parent.submittedApplication()"
+.content-column ng-if="::!$ctrl.submittedApplication()"
   / Apply Online button (if applicable)
   .content-group.has-divider ng-if="::$ctrl.parent.listing.Accepting_Online_Applications"
     ng-include src="'listings/templates/listing/_apply_online.html'"

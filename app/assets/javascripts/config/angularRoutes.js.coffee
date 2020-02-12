@@ -662,6 +662,8 @@
                 ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
                   $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true, lang: lang})
             ).catch( (response) ->
+              # Verify source of errors in https://www.pivotaltracker.com/story/show/159802520
+              console.error('Error getting my application for listing (angularRoutes, application)', $stateParams.id)
               deferred.reject(response)
             )
             return deferred.promise
