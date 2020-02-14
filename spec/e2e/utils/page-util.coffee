@@ -1,4 +1,5 @@
 remote = require('selenium-webdriver/remote')
+EC = protractor.ExpectedConditions
 
 PageUtil = {
   testListingId: 'a0W0P00000F8YG4UAN'
@@ -6,6 +7,7 @@ PageUtil = {
   saleListingId: process.env.TEST_SALE_LISTING_ID || 'a0W0P00000GlKfBUAV'
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
+    browser.wait(EC.presenceOf(checkbox), 5000)
     checkbox.isSelected().then (selected) ->
       checkbox.click() unless selected
       callback() if callback

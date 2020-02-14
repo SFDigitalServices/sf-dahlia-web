@@ -227,6 +227,8 @@ When 'I click the Live or Work in SF checkbox', ->
   Utils.Page.checkCheckbox('preferences-liveWorkInSf')
 
 When 'I open the Live or Work in SF dropdown', ->
+  viewApp = element(By.id('liveWorkPrefOption'))
+  browser.wait(EC.presenceOf(viewApp), 5000)
   Utils.Page.checkCheckbox('liveWorkPrefOption')
 
 When 'I select the Live in SF preference', ->

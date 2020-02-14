@@ -24,6 +24,7 @@ class AngularPage
 
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
+    browser.wait(EC.presenceOf(checkbox), 5000)
     checkbox.isSelected().then (selected) ->
       checkbox.click() unless selected
       callback() if callback
