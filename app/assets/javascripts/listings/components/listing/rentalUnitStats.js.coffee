@@ -4,4 +4,4 @@ angular.module('dahlia.components')
   require:
     parent: '^propertyHero'
   bindings:
-    unitGroups: '<'
+    unitGroup: '<'

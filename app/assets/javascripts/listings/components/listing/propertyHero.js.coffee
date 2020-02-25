@@ -33,6 +33,7 @@ angular.module('dahlia.components')
         # right now it's just an array of one
         [listing.imageURL]
 
+      # This will likely have to change.
       @hasMultipleAMIUnits = ->
         _.keys(this.parent.listing.groupedUnits).length > 1
 

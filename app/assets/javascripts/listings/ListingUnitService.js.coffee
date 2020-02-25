@@ -6,6 +6,12 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
+  # These get loaded after the listing is loaded.
+  Service.AMICharts = []
+
+  Service.resetData = () ->
+    angular.copy([], Service.AMICharts)
+
 
   Service._sortGroupedUnits = (units) ->
     # little hack to re-sort Studio to the top
@@ -29,47 +35,110 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     else
       min
 
+  # FIXME: This might be broken by the new format
   Service.combineUnitSummaries = (listing) ->
-    # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
+    # Combined unitSummary is useful e.g. for overall occupancy levels across the whole listing.
     listing.unitSummaries ?= {}
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     combined = _.omitBy(_.uniqBy(combined, 'unitType'), _.isNil)
-    # rename the unitType field to match how individual units are labeled
+    # Rename the unitType field to match how individual units are labeled/
     _.map(combined, (u) -> u.Unit_Type = u.unitType)
     Service._sortGroupedUnits(combined)
 
-  # Given ListingConstantsService.fieldsForUnitGrouping,
-  # combine similar units, and add up the number of available units
   Service._sumSimilarUnits = (units) ->
+    # Given ListingConstantsService.fieldsForUnitGrouping,
+    # combine similar units, and add up the number of available units.
     summaries = []
     # Create an identity function to group by unique price and income
     group = _.groupBy units, (unit) ->
       _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
     _.forEach group, (groupedUnits, id) ->
-      # Summarize each group by combining the unit details + # of units for that type/AMI combo
+      # Summarize each group by combining the unit details + # of units for that type/AMI combo.
       summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
       summary.total = groupedUnits.length
       summaries.push(summary)
     summaries
 
-  # Group units by AMI % and Unit type
-  # Returns an object of the form:
-  #  {'50 (percent ami)':
-  #     {'1br': [{rent/price, # of units, etc}, ...], '2br': [...]},
-  #   '40 (percent ami)': {...}}
-  Service.groupUnitDetails = (units) ->
-    grouped = {}
-    # Group by AMI
-    groupedByAmi = _.groupBy units, 'Max_AMI_for_Qualifying_Unit'
-    _.forEach groupedByAmi, (unitsGroupedByAmi, percent) ->
-      # Group by Unit Type
-      groupedByType = _.groupBy unitsGroupedByAmi, 'Unit_Type'
-      grouped[percent] = {}
-      _.forEach groupedByType, (groupedByAmiAndType, unitType) ->
-        summaries = Service._sumSimilarUnits(groupedByAmiAndType)
-        grouped[percent][unitType] = Service._sortGroupedUnits(summaries)
-    return grouped
+  Service._getAMIAmount = (incomeList, occupancy) ->
+    _.find(incomeList['values'], {'numOfHousehold': occupancy})['amount']
 
+  # Given a row of units grouped by size, AMI, price, etc, determine the
+  # min and max incomes for that range for every available occupancy size.
+  Service._getIncomeRangesByOccupancy = (unitGroup) ->
+    occupancyRange = [unitGroup.Min_Occupancy..unitGroup.Max_Occupancy]
+    maxAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Max_AMI_for_Qualifying_Unit.toString()})
+    # Determine whether min income is from AMI or fixed
+    if unitGroup.Min_AMI_for_Qualifying_Unit
+      minAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Min_AMI_for_Qualifying_Unit.toString()})
+
+    rows = []
+    _.forEach occupancyRange, (occupancy) ->
+      # Divide by 12 to go from annual to monthly income limits.
+      maxIncome =  (Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
+      if minAMIs
+        minIncome = (Service._getAMIAmount(minAMIs, occupancy)/12).toFixed(0)
+      else
+        minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed.toString()
+      row = {
+        'occupancy': occupancy,
+        'maxIncome': maxIncome,
+        'minIncome': minIncome
+      }
+      rows.push(row)
+    rows
+
+  Service.groupUnitDetails = (units) ->
+    ###
+    Group units by unit type, % AMI, and price
+
+    Returns an object of e.g. the form:
+    {
+    "type": "Studio",
+    "incomeLevels": [{
+      "incomeLevel": "65",
+      "priceGroups": [{
+          "BMR_Rent_Monthly": 1700,
+          "Status": "Available",
+          "total": 1,
+          ...,
+          "incomeLimits": [{
+              "occupancy": 1,
+              "min_income": "3400",
+              "max_income": "4671"
+          }, ...]
+        }, ...]
+      }, ...]
+    }
+    ###
+    # Group by unit type
+    typeGroups = []
+    groupedByType = _.groupBy units, 'Unit_Type'
+    _.forEach groupedByType, (unitsGroupedByType, type) ->
+      # Group by AMI
+      incomeLevels = []
+      groupedByAmi = _.groupBy unitsGroupedByType, 'Max_AMI_for_Qualifying_Unit'
+      _.forEach groupedByAmi, (groupedByAmiAndType, percent) ->
+        summaries = Service._sumSimilarUnits(groupedByAmiAndType)
+        # Expand data to include income ranges by occupancy
+        priceGroups = []
+        _.forEach summaries, (summary) ->
+          incomeLimits = Service._getIncomeRangesByOccupancy(summary)
+          priceGroups.push(_.merge(summary, {
+            'incomeLimits': Service._sortGroupedUnits(incomeLimits)
+          }))
+        incomeLevels.push({
+          'incomeLevel': percent,
+          'priceGroups': priceGroups
+        })
+      typeGroups.push({
+        'type': type,
+        'incomeLevels': incomeLevels
+      })
+    console.log('grouped units', typeGroups)
+    return typeGroups
+
+  # Group units types for displaying unit details
+  # in the features section.
   Service.groupUnitTypes = (units) ->
     # get a grouping of unit types across both "general" and "reserved"
     grouped = _.groupBy units, 'Unit_Type'
@@ -129,6 +198,46 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     combined = Service.combineUnitSummaries(listing)
     _.every(combined, { Unit_Type: 'SRO' })
 
+
+  Service.getListingAMI = (listing) ->
+    angular.copy([], Service.AMICharts)
+    Service.loading.ami = true
+    Service.error.ami = false
+    # shouldn't happen, but safe to have a guard clause
+    return $q.when() unless listing.chartTypes
+    allChartTypes = _.sortBy(listing.chartTypes, 'percent')
+    console.log('listing chart types', listing.chartTypes, 'allChartTypes', allChartTypes)
+
+    data =
+      'year[]': _.map(allChartTypes, 'year')
+      'chartType[]': _.map(allChartTypes, 'chartType')
+      'percent[]': _.map(allChartTypes, 'percent')
+    $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
+      if data && data.ami
+        angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
+      Service.loading.ami = false
+    ).error( (data, status, headers, config) ->
+      Service.loading.ami = false
+      Service.error.ami = true
+      return
+    )
+
+  Service._consolidatedAMICharts = (amiData) ->
+    charts = []
+    amiData.forEach (chart) ->
+      # look for an existing chart at the same percentage level
+      amiPercentChart = _.find charts, (c) -> c.percent == chart.percent
+      if !amiPercentChart
+        # only push chart if it has any values
+        charts.push(chart) if chart.values.length
+      else
+        # if it exists, modify it with the max values
+        i = 0
+        amiPercentChart.values.forEach (incomeLevel) ->
+          chartAmount = if chart.values[i] then chart.values[i].amount else 0
+          incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
+          i++
+    charts
   return Service
 
 ############################################################################################
