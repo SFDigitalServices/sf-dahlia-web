@@ -909,10 +909,16 @@
             "single_room_occupancy_description": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
             "special_notes": "Special Notes",
             "stats": {
+                "ami_tiers": {
+                    "low_income": "Low Income",
+                    "middle_income": "Middle Income",
+                    "moderate_income": "Moderate Income"
+                },
                 "availability": "Availability",
                 "available": "available",
                 "hoa_dues": "HOA dues",
                 "minimum_income": "Minimum Income",
+                "percent_ami": "{{amiPercent}}% AMI",
                 "price_without_parking": "Price without parking",
                 "prices_without_parking": "Prices without parking",
                 "rent": "Rent",

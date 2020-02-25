@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
+ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentityService) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -12,6 +12,8 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
   Service.resetData = () ->
     angular.copy([], Service.AMICharts)
 
+  # Identity function to flag translation strings for grunt translations.
+  flagForI18n = (str) -> str
 
   Service._sortGroupedUnits = (units) ->
     # little hack to re-sort Studio to the top
@@ -62,9 +64,9 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
   Service._getAMIAmount = (incomeList, occupancy) ->
     _.find(incomeList['values'], {'numOfHousehold': occupancy})['amount']
 
-  # Given a row of units grouped by size, AMI, price, etc, determine the
-  # min and max incomes for that range for every available occupancy size.
   Service._getIncomeRangesByOccupancy = (unitGroup) ->
+    # Given a row of units grouped by size, AMI, price, etc, determine the
+    # min and max incomes for that range for every available occupancy size.
     occupancyRange = [unitGroup.Min_Occupancy..unitGroup.Max_Occupancy]
     maxAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Max_AMI_for_Qualifying_Unit.toString()})
     # Determine whether min income is from AMI or fixed
@@ -86,6 +88,17 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
       }
       rows.push(row)
     rows
+
+  Service._incomeTierLabelMap = {
+    'Low Income': flagForI18n('listings.stats.ami_tiers.low_income'),
+    'Moderate Income': flagForI18n('listings.stats.ami_tiers.moderate_income'),
+    'Middle Income': flagForI18n('listings.stats.ami_tiers.middle_income')
+  }
+
+  Service._getIncomeLevelLabel = (unitSummary) ->
+    # If AMI Tier label is present, use that, otherwise, use the AMI percent
+    Service._incomeTierLabelMap[unitSummary.Planning_AMI_Tier] ||
+      $translate.instant('listings.stats.percent_ami', {'amiPercent': unitSummary.Max_AMI_for_Qualifying_Unit})
 
   Service.groupUnitDetails = (units) ->
     ###
@@ -127,7 +140,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
             'incomeLimits': Service._sortGroupedUnits(incomeLimits)
           }))
         incomeLevels.push({
-          'incomeLevel': percent,
+          'incomeLevel': Service._getIncomeLevelLabel(groupedByAmiAndType[0]),
           'priceGroups': priceGroups
         })
       typeGroups.push({
@@ -137,10 +150,9 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
     console.log('grouped units', typeGroups)
     return typeGroups
 
-  # Group units types for displaying unit details
-  # in the features section.
   Service.groupUnitTypes = (units) ->
-    # get a grouping of unit types across both "general" and "reserved"
+    # Get a grouping of unit types across both "general" and "reserved"
+    # for displaying unit details in the "features" section.
     grouped = _.groupBy units, 'Unit_Type'
     unitTypes = []
     _.forEach grouped, (groupedUnits, type) ->
@@ -244,7 +256,7 @@ ListingUnitService = ($http, ListingConstantsService, ListingIdentityService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingUnitService.$inject = ['$http', 'ListingConstantsService', 'ListingIdentityService']
+ListingUnitService.$inject = ['$translate', '$http', 'ListingConstantsService', 'ListingIdentityService']
 
 angular
   .module('dahlia.services')

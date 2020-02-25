@@ -1,6 +1,6 @@
 div.table-pricing-wrapper ng-repeat="incomeLevel in ::$ctrl.unitGroup.incomeLevels"
   h5.table-pricing-header
-   | {{ incomeLevel.incomeLevel }} % AMI
+   | {{ incomeLevel.incomeLevel | translate }}
   table.table-pricing.table-pricing-rent
     thead
       tr
