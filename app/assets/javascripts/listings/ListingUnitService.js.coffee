@@ -67,7 +67,10 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
   Service._getIncomeRangesByOccupancy = (unitGroup) ->
     # Given a row of units grouped by size, AMI, price, etc, determine the
     # min and max incomes for that range for every available occupancy size.
-    occupancyRange = [unitGroup.Min_Occupancy..unitGroup.Max_Occupancy]
+    # If a max occupancy isn't defined, as in the ownership case, default to showing up to 3
+    # occupancy options.
+    maxOccupancy = unitGroup.Max_Occupancy || unitGroup.Min_Occupancy + 2
+    occupancyRange = [unitGroup.Min_Occupancy..maxOccupancy]
     maxAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Max_AMI_for_Qualifying_Unit.toString()})
     # Determine whether min income is from AMI or fixed
     if unitGroup.Min_AMI_for_Qualifying_Unit
