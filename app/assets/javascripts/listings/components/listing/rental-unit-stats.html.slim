@@ -1,69 +1,70 @@
-div.table-pricing-wrapper ng-repeat="incomeLevel in ::$ctrl.unitGroup.incomeLevels"
-  h5.table-pricing-header
-   | {{ incomeLevel.incomeLevel | translate }}
-  table.table-pricing.table-pricing-rent
+div.table-pricing-wrapper
+  table.table-pricing.table-pricing-rent role="grid"
     thead
       tr
         th
-          span.show-for-sr
-            | {{'listings.stats.availability' | translate}}
+          span
+            | Units
         th
-          span ng-show="!$first"
-            | &nbsp;
-          span ng-class="{'show-for-sr': !$first}"
-            | Occupancy
+          span
+            | Income Range
         th
-          span ng-show="!$first"
-            | &nbsp;
-          span ng-class="{'show-for-sr': !$first}"
-            | {{'listings.stats.minimum_income' | translate}}
-        th
-          span ng-show="!$first"
-            | &nbsp;
-          span ng-class="{'show-for-sr': !$first}"
-            | Maximum Income
-        th
-          span ng-show="!$first"
-            | &nbsp;
-          span ng-class="{'show-for-sr': !$first}"
-            | {{'listings.stats.rent' | translate}}
+          span
+            | Rent
+    tbody
+        tr.income-level ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels"
+          td.income-level-label
+            | {{ incomeLevel.incomeLevel }}
+        tr ng-repeat-end="" ng-repeat="priceGroup in incomeLevel.priceGroups"
+          td.is-subtitled.has-nested-sibling data-th="Units"
+            small.pricing-table-waitlist ng-if="::priceGroup.Status == 'Occupied'"
+              | {{'listings.stats.waitlist' | translate}}
+            span ng-if="::priceGroup.Status != 'Occupied'"
+              i
+                | {{::priceGroup.total}}
+              small
+                | {{'listings.stats.available' | translate}}
+            span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
+                svg
+                  use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
 
-    tr ng-repeat="costGroup in ::incomeLevel.costGroups" ng-class="::{'is-reserved': row.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
-      td.is-subtitled.availability data-th="{{'listings.stats.availability' | translate}}"
-        small.pricing-table-waitlist ng-if="::incomeLevel.Status == 'Occupied' && $first"
-          | {{'listings.stats.waitlist' | translate}}
-        span ng-if="::incomeLevel.Status != 'Occupied' && $first"
-          i
-            | {{::incomeLevel.total}}
-          small
-            | {{'listings.stats.available' | translate}}
-        span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::row.Reserved_Type"
-            svg
-              use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, row.Reserved_Type)}}"
-      td.is-subtitled data-th="Occupancy"
-        span ng-if="::row.occupancy"
-          | {{::row.occupancy}}
-      td.is-subtitled data-th="Min. Income"
-        span ng-if="::row.minIncome"
-          | {{::row.minIncome | currency:"$":0}}
-          small
-           | {{'t.per_month' | translate}}
-        em ng-if="::!row.minIncome"
-          | {{'t.none' | translate}}
-      td.is-subtitled data-th="Max. Income"
-        span ng-if="::row.maxIncome"
-          | {{::row.maxIncome | currency:"$":0}}
-          small
-           | {{'t.per_month' | translate}}
-        em ng-if="::!row.maxIncome"
-          | {{'t.none' | translate}}
-      td.is-subtitled data-th="Rent" ng-if="$first"
-        span
-          | {{::incomeLevel.BMR_Rent_Monthly | currency:"$":0}}
-          small
-            | {{'t.per_month' | translate}}
-        span ng-if="::!row.BMR_Rent_Monthly && row.Rent_percent_of_income"
-          | {{::incomeLevel.Rent_percent_of_income}}%
-          small
-           | {{'t.income' | translate}}
+          td.is-supertitled data-th='Income Range'
+            table.table-nested-income
+              thead
+                tr
+                  th scope="col"
+                    | Household Size
+                  th scope="col"
+                    | Minimum
+                  th scope="col"
+                    | Maximum
+              tbody
+                tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
+                  td.is-subtitled-nested data-th="Household Size"
+                    | {{ incomeLimit.occupancy }}
+                  td.is-subtitled-nested data-th="Minimum"
+                    span ng-if="::incomeLimit.minIncome"
+                      | {{::incomeLimit.minIncome | currency:"$":0}}
+                      small
+                       | {{'t.per_month' | translate}}
+                    em ng-if="::!incomeLimit.minIncome"
+                      | {{'t.none' | translate}}
+                  td.is-subtitled-nested data-th="Maximum"
+                    span ng-if="::incomeLimit.maxIncome"
+                      | {{::incomeLimit.maxIncome | currency:"$":0}}
+                      small
+                       | {{'t.per_month' | translate}}
+                    em ng-if="::!incomeLimit.maxIncome"
+                      | {{'t.none' | translate}}
+          td.is-subtitled.has-nested-sibling data-th="Rent"
+            span
+              | {{::priceGroup.BMR_Rent_Monthly | currency:"$":0}}
+              small
+                | {{'t.per_month' | translate}}
+            span ng-if="::!row.BMR_Rent_Monthly && row.Rent_percent_of_income"
+              | {{::priceGroup.Rent_percent_of_income}}%
+              small
+               | {{'t.income' | translate}}
+
+
 

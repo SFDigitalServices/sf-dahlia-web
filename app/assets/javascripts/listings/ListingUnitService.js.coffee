@@ -91,11 +91,11 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
       }
       rows.push(row)
     rows
-
+  # TODO: try to i18 this
   Service._incomeTierLabelMap = {
-    'Low Income': flagForI18n('listings.stats.ami_tiers.low_income'),
-    'Moderate Income': flagForI18n('listings.stats.ami_tiers.moderate_income'),
-    'Middle Income': flagForI18n('listings.stats.ami_tiers.middle_income')
+    'Low Income': 'Low Income',
+    'Moderate Income': 'Moderate Income',
+    'Middle Income': 'Middle Income'
   }
 
   Service._getIncomeLevelLabel = (unitSummary) ->
