@@ -4,13 +4,13 @@ div.table-pricing-wrapper
       tr
         th
           span
-            | Units
+            | {{ 't.units' | translate }}
         th
           span
-            | Income Range
+            | {{ 'listings.stats.income_range' | translate }}
         th
           span
-            | Rent
+            | {{ 'listings.stats.rent' | translate }}
     tbody
         tr.income-level ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
           td.income-level-label
@@ -36,17 +36,17 @@ div.table-pricing-wrapper
                     span ng-show="incomeLevelIndex != 0"
                       | &nbsp;
                     span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
-                      | Household Size
+                      | {{ 'listings.stats.household_size' | translate }}
                   th scope="col"
                     span ng-show="incomeLevelIndex != 0"
                       | &nbsp;
                     span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
-                      | Minimum
+                      | {{ 'listings.stats.minimum' | translate }}
                   th scope="col"
                     span ng-show="incomeLevelIndex != 0"
                       | &nbsp;
                     span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
-                      | Maximum
+                      | {{ 'listings.stats.maximum' | translate }}
               tbody
                 tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
                   td.is-subtitled-nested data-th="Household Size"
