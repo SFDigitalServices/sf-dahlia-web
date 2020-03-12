@@ -11,7 +11,9 @@ angular.module('dahlia.components')
       @listingPaperAppURLs = ListingDataService.listingPaperAppURLs
 
       @application = ShortFormApplicationService.application
-
+      @acceptingPaperApplications = ->
+        console.log('acceptingPaperApplications', (ctrl.parent.listing.Accepting_applications_at_leasing_agent || ctrl.parent.listing.Accepting_applications_by_PO_Box))
+        (ctrl.parent.listing.Accepting_applications_at_leasing_agent || ctrl.parent.listing.Accepting_applications_by_PO_Box)
       @submittedApplication = ->
         @application &&
         @application.id &&
