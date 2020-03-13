@@ -26,3 +26,9 @@ body .goog-te-banner-frame {
 #google_translate_element {
   display: none;
 }
+
+
+.banner-bar a {
+  text-decoration: underline;
+  color: inherit
+}
