@@ -30,5 +30,6 @@ body .goog-te-banner-frame {
 
 .banner-bar a {
   text-decoration: underline;
-  color: inherit
+  color: inherit;
+  font-weight: 700;
 }
