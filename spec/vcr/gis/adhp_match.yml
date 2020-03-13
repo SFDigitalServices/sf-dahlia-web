@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
+    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
     body:
       encoding: US-ASCII
       string: ''
@@ -10,29 +10,24 @@ http_interactions:
       Connection:
       - close
       User-Agent:
-      - http.rb/2.0.2
+      - http.rb/2.0.3
   response:
     status:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Jul 2018 22:58:36 GMT
       Server:
-      - ''
-      Access-Control-Max-Age:
-      - '1440'
-      - '1440'
-      Access-Control-Allow-Headers:
-      - X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token,
-        Accept-Encoding
-      - X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token,
-        Accept-Encoding
-      Access-Control-Allow-Methods:
-      - POST, GET, OPTIONS, DELETE, PUT
-      - POST, GET, OPTIONS, DELETE, PUT
+      - nginx/1.16.1
+      Date:
+      - Fri, 13 Mar 2020 00:05:10 GMT
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '1162'
+      Connection:
+      - close
       Cache-Control:
-      - max-age=0,must-revalidate
+      - max-age=315360000
       Etag:
       - 1d5b3942
       X-Content-Type-Options:
@@ -40,13 +35,9 @@ http_interactions:
       Vary:
       - Origin
       Expires:
-      - Wed, 31 Dec 1969 16:00:00 PST
-      Content-Type:
-      - text/plain;charset=UTF-8
-      Content-Length:
-      - '1162'
-      Connection:
-      - close
+      - Thu, 31 Dec 2037 23:55:55 GMT
+      X-Xss-Protection:
+      - 1; mode=block
     body:
       encoding: UTF-8
       string: |-
@@ -110,10 +101,10 @@ http_interactions:
          ]
         }
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:40 GMT
+  recorded_at: Fri, 13 Mar 2020 00:05:15 GMT
 - request:
     method: get
-    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284002636,4547486.548391391&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%27ADHP%27
+    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284002636,4547486.548391391&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%27ADHP%27
     body:
       encoding: US-ASCII
       string: ''
@@ -121,43 +112,34 @@ http_interactions:
       Connection:
       - close
       User-Agent:
-      - http.rb/2.0.2
+      - http.rb/2.0.3
   response:
     status:
       code: 200
       message: OK
     headers:
-      Date:
-      - Tue, 10 Jul 2018 22:58:36 GMT
       Server:
-      - ''
-      Access-Control-Max-Age:
-      - '1440'
-      - '1440'
-      Access-Control-Allow-Headers:
-      - X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token,
-        Accept-Encoding
-      - X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token,
-        Accept-Encoding
-      Access-Control-Allow-Methods:
-      - POST, GET, OPTIONS, DELETE, PUT
-      - POST, GET, OPTIONS, DELETE, PUT
-      Cache-Control:
-      - max-age=0,must-revalidate
-      Etag:
-      - l9aPzlwaSZzDn3DK_1529527436
-      X-Content-Type-Options:
-      - nosniff
-      Vary:
-      - Origin
-      Expires:
-      - Wed, 31 Dec 1969 16:00:00 PST
+      - nginx/1.16.1
+      Date:
+      - Fri, 13 Mar 2020 00:05:10 GMT
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
       - '15'
       Connection:
       - close
+      Cache-Control:
+      - max-age=315360000
+      Etag:
+      - '1584036861'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
+      Expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+      X-Xss-Protection:
+      - 1; mode=block
     body:
       encoding: UTF-8
       string: |-
@@ -165,5 +147,5 @@ http_interactions:
          "count": 1
         }
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:40 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Fri, 13 Mar 2020 00:05:15 GMT
+recorded_with: VCR 5.0.0
