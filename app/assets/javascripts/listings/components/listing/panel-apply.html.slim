@@ -14,7 +14,7 @@
     ng-include src="'listings/templates/listing/_apply_online.html'"
 
   / Section 1: Get a Paper Application
-  .content-group.has-divider
+  .content-group.has-divider ng-if="::$ctrl.acceptingPaperApplications()"
     h2.h-caps-lined ng-if="::!$ctrl.parent.listing.Accepting_Online_Applications"
       | {{'listings.apply.how_to_apply' | translate}}
     .t-delta.t-serif.margin-bottom
@@ -33,7 +33,7 @@
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
 
   / Section 2: Submit a Paper Application
-  .content-group.bg-snow
+  .content-group.bg-snow ng-if="::$ctrl.acceptingPaperApplications()"
     .t-delta.t-serif ng-class="{'margin-bottom': $ctrl.parent.listing.SASE_Required_for_Lottery_Ticket}"
       span.c-primary
         ' 2
@@ -68,7 +68,7 @@
     p.c-charcoal.t-small ng-if="::!$ctrl.parent.listing.Accepting_applications_by_PO_Box"
       | {{'listings.apply.applications_must_be_received_by_deadline' | translate}}
 
-  .content-group.bg-snow
+  .content-group.bg-snow ng-if="::$ctrl.acceptingPaperApplications()"
     p.c-charcoal.t-small
       span ng-if="::$ctrl.parent.listing.Accepting_Online_Applications"
         ' {{'listings.apply.do_not_apply_online_and_paper' | translate}}
