@@ -83,14 +83,25 @@ div.table-pricing-wrapper
                     span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
                       | Parking
               tbody
-                tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
-                  td.is-subtitled-nested data-th="Sales Price"
+                tr
+                  td.is-subtitled-nested data-th="Sales Price" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
+                    | {{ ::priceGroup.Price_With_Parking | currency:"$": 0}}
+                  td.is-subtitled-nested data-th="HOA Dues" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
+                    span ng-if="::priceGroup.HOA_Dues_With_Parking"
+                      | {{::priceGroup.HOA_Dues_With_Parking | currency:"$":0}}
+                      small
+                       | {{'t.per_month' | translate}}
+                  td.is-subtitled-nested data-th="Parking" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
+                    span
+                      | Yes
+                tr
+                  td.is-subtitled-nested data-th="Sales Price" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     | {{ ::priceGroup.Price_Without_Parking | currency:"$": 0}}
-                  td.is-subtitled-nested data-th="HOA Dues"
+                  td.is-subtitled-nested data-th="HOA Dues" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     span ng-if="::priceGroup.HOA_Dues_Without_Parking"
                       | {{::priceGroup.HOA_Dues_Without_Parking | currency:"$":0}}
                       small
                        | {{'t.per_month' | translate}}
-                  td.is-subtitled-nested data-th="Parking"
+                  td.is-subtitled-nested data-th="Parking" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     span
-                      | {{::priceGroup.Price_Without_Parking | currency:"$":0}}
+                      | No
