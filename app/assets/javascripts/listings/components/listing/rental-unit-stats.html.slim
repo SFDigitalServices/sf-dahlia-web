@@ -32,21 +32,12 @@ div.table-pricing-wrapper
             table.table-nested-income
               thead
                 tr
-                  th scope="col"
-                    span ng-show="incomeLevelIndex != 0"
-                      | &nbsp;
-                    span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
+                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
                       | {{ 'listings.stats.household_size' | translate }}
-                  th scope="col"
-                    span ng-show="incomeLevelIndex != 0"
-                      | &nbsp;
-                    span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
+                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
                       | {{ 'listings.stats.minimum' | translate }}
-                  th scope="col"
-                    span ng-show="incomeLevelIndex != 0"
-                      | &nbsp;
-                    span ng-class="{'show-for-sr': (incomeLevelIndex != 0)}"
-                      | {{ 'listings.stats.maximum' | translate }}
+                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
+                    | {{ 'listings.stats.maximum' | translate }}
               tbody
                 tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
                   td.is-subtitled-nested data-th="Household Size"
