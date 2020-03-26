@@ -28,6 +28,7 @@ describe Force::ShortFormService do
       expect(autofilled[:status]).to eq('Draft')
       expect(autofilled[:answeredCommunityScreening]).to be_nil
       expect(autofilled[:shortFormPreferences]).to eq([])
+      expect(autofilled[:alternateContact][:appMemberId]).to be_nil
     end
   end
 
