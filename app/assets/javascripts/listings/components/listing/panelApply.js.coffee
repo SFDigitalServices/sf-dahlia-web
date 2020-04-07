@@ -16,7 +16,7 @@ angular.module('dahlia.components')
       @submittedApplication = ->
         @application &&
         @application.id &&
-        @application.status.toLowerCase() == 'submitted'
+        (@application.status.toLowerCase() == 'submitted' || @application.status.toLowerCase() == 'removed')
 
       @hasDraftApplication = ->
         @application &&
