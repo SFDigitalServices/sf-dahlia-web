@@ -8,9 +8,8 @@ Feature: Short Form Application
         And I select "Spanish" as my language
         And I continue past the welcome overview
         Then I should see "Español" selected in the translate bar language switcher
-        Then I go to the first page of the "Test Listing" application
         And I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page zch, and WorkInSF
+        And I fill out the Contact page in Español
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -28,12 +27,15 @@ Feature: Short Form Application
         And I confirm details on the review page
         And I agree to the terms and submit
         Then I should see my lottery number on the confirmation page
-        # now that we've submitted, also create an account
         When I click the Create Account button
         And I create an account for "Jane Doe" with my pre-filled application details
-        # And I submit the page and wait
         Then I should be on the login page with the email confirmation popup
+        And I have confirmed the account for "Jane Doe"
+        And I go to the Sign In page
+        And I sign in as "Jane Doe"
+        Given I go to the welcome page of the "Senior Test Listing" application
         And I select "Filipino" as my language
-        Then I go to the first page of the "Senior Test Listing" application
         And I continue past the welcome overview
+        When I answer "Yes" to the community screening question
+        And I hit the Next button "1" time
         Then I should see "Filipino" selected in the translate bar language switcher
