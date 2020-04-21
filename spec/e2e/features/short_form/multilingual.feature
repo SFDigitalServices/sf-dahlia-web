@@ -36,6 +36,7 @@ Feature: Short Form Application
         Given I go to the welcome page of the "Senior Test Listing" application
         And I select "Filipino" as my language
         And I continue past the welcome overview
+        When I wait "1" seconds
         When I answer "Yes" to the community screening question
         And I hit the Next button "1" time
         Then I should see "Filipino" selected in the translate bar language switcher
