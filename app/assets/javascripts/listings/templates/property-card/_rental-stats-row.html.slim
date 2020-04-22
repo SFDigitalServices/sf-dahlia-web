@@ -3,9 +3,14 @@ tr ng-repeat-start="unit_summary in ::summary"
   td.is-subtitled data-th="{{'t.unit_type' | translate}}"
     | {{::unit_summary.unitType}}
   td.is-subtitled data-th="{{'listings.stats.availability' | translate}}"
-    span
+    span ng-if="::unit_summary.availability > 0"
       span
-        | {{::unit_summary.availability }} {{'listings.stats.available' | translate}}
+        | {{::unit_summary.availability }}
+      small
+        | {{'listings.stats.available' | translate}}
+    span ng-if="::unit_summary.availability <= 0"
+      small
+        | {{'listings.stats.waitlist' | translate}}
   td.text-right.is-subtitled data-th="Rent"
     span
       | {{::unit_summary.minMonthlyRent | currency:"$":0}}
