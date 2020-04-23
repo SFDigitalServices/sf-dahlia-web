@@ -15,7 +15,7 @@ footer.bg-tuatara.padding-top--2x
       img.city-logo.margin-bottom--2x alt="City & County of San Francisco Logo" ng-src="{{::assetPaths['logo-city.png']}}"
     .clear
     .medium-8.medium-centered.columns.skiptranslate
-      div translate="footer.dahlia_description" translate-value-mohcd-url="http://sf-moh.org" translate-value-sf-dept-url="http://sfgov.org/dt/" translate-value-mayor-url="http://innovatesf.com/"
+      div translate="footer.dahlia_description" translate-value-mohcd-url="http://sf-moh.org" translate-value-sfds-url="https://digitalservices.sfgov.org/" translate-value-mayor-url="http://innovatesf.com/"
       p.t-small.c-iron.margin-top--2x
         | {{ "footer.listing_questions" | translate }}
         br
@@ -42,16 +42,3 @@ footer.bg-tuatara.padding-top--2x
           li
             a href="https://heapanalytics.com/?utm_source=badge" target="_blank" rel="nofollow"
               img style="width:108px;height:41px" ng-src="{{::assetPaths['heap.png']}}" alt="Heap | Mobile and Web Analytics"
-  section.footer-sole
-    span
-      | made with
-      span.ui-icon.ui-static.ui-small.i-color
-        svg
-          use xlink:href="#i-favorite"
-      ' by
-      a href="http://exygy.com" target="_blank"
-        | exygy
-      '
-      ' &amp;
-      a href="http://www.vertiba.com" target="_blank"
-        | vertiba
