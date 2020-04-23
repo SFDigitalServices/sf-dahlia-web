@@ -942,7 +942,7 @@
             },
             "header": {
                 "find_matching_listings": "Find matching listings",
-                "if_you_tell_us": "If you tell us your household size and income, we can highlight listings you may qualify for.",
+                "if_you_tell_us": "If you tell us your household size and income, we can show you listings you may qualify for.",
                 "or_get_help_calculating_income": "or <a ui-sref='{{sref}}'>get help calculating your income</a>"
             },
             "rental_assistance": {
