@@ -442,7 +442,7 @@
         "footer": {
             "city_county_of_sf": "Ciudad y condado de San Francisco",
             "contact": "Contacto",
-            "dahlia_description": "<p class='c-iron'>DAHLIA: El Portal de Vivienda de San Francisco es un proyecto de la <br/><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Oficina de Desarrollo Comunitario y de Viviendas del Alcalde</a></p><p class='t-small c-iron margin-top'>en colaboración con la<br/><a class='a-white' href='{{sfdsUrl}}' target='_blank'>Oficina de Innovación Cívica del Alcalde (Mayor's Office of Civic Innovation)</a>del<br/><a class='a-white' href='{{mayorUrl}}' target='_blank'>Departamento de Tecnología de San Francisco (San Francisco Department of Technology)</a></p>",
+            "dahlia_description": "<p class='c-iron'>DAHLIA: El Portal de Vivienda de San Francisco es un proyecto de la <br/><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Oficina de Desarrollo Comunitario y de Viviendas del Alcalde</a></p><p class='t-small c-iron margin-top'>en colaboración con la<br/><a class='a-white' href='{{sfdsUrl}}' target='_blank'>Departamento de Servicios Digitales de San Francisco (San Francisco Digital Services)</a><br/><a class='a-white' href='{{mayorUrl}}' target='_blank'>Oficina de Innovación Cívica del Alcalde (Mayor's Office of Civic Innovation)</a></p>",
             "disclaimer": "Aviso de responsabilidad",
             "for_general_questions": "Si desea hacer una consulta general sobre el programa, comuníquese con MOHCD al 415-701-5500.",
             "give_feedback": "Envíe sus comentarios",
