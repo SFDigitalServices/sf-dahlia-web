@@ -437,7 +437,7 @@ DEPENDENCIES
   memcachier
   mini_magick (~> 4.9.4)
   newrelic_rpm
-  nokogiri (>= 1.8.2)
+  nokogiri (>= 1.10.8)
   oj
   oj_mimic_json
   overcommit
@@ -475,4 +475,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
