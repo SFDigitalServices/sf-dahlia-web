@@ -5,5 +5,4 @@
         span.ui-icon.ui-medium.i-white
           svg
             use xlink:href="#i-warning"
-        p.offset-icon.c-white.t-small.t-semi
-          | {{ alertMessage }}
+        p.offset-icon.c-white.t-small.t-semi ng-bind-html="alertMessage"
