@@ -1,5 +1,4 @@
-tr ng-repeat-start="unit_summary in ::summary"
-  / Dollar based rent and min income
+tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minRentalMinIncome || unit_summary.maxRentalMinIncome || unit_summary.minPercentIncome"
   td.is-subtitled data-th="{{'t.unit_type' | translate}}"
     | {{::unit_summary.unitType}}
   td.is-subtitled data-th="{{'listings.stats.availability' | translate}}"
@@ -12,10 +11,17 @@ tr ng-repeat-start="unit_summary in ::summary"
       small
         | {{'listings.stats.waitlist' | translate}}
   td.text-right.is-subtitled data-th="Rent"
-    span
+    span ng-if="::unit_summary.minRentalMinIncome || unit_summary.maxRentalMinIncome"
       | {{::unit_summary.minMonthlyRent | currency:"$":0}}
       span ng-show="::unit_summary.maxMonthlyRent > unit_summary.minMonthlyRent"
         |  to {{::unit_summary.maxMonthlyRent | currency:"$":0}}
       small
         | {{'t.per_month' | translate}}
+    span ng-if="::unit_summary.minPercentIncome"
+      | {{::unit_summary.minPercentIncome}}
+      span ng-show="::unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
+        |  {{'t.to' | translate}} {{::unit_summary.maxPercentIncome}}
+      small
+        | % {{'t.income' | translate}}
+
 tr ng-repeat-end="true" ng-if="0"
