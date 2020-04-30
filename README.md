@@ -36,8 +36,8 @@ Before you install DAHLIA, your system should have the following:
 1. `git clone https://github.com/Exygy/sf-dahlia-web.git` to create the project directory
 1. `cd sf-dahlia-web` to open the directory
 1. `bundle install` to download all necessary gems
-    - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v 0.18.4 -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config
-`
+    - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
+    - if you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
 1. `npm install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 1. `overcommit --install` to install git hooks into the repo
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
