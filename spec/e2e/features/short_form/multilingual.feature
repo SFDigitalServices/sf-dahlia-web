@@ -8,7 +8,7 @@ Feature: Short Form Application
         And I select "Spanish" as my language
         And I continue past the welcome overview
         Then I should see "Español" selected in the translate bar language switcher
-        And I fill out the Name page as "Jane Doe"
+        And I fill out the Name page as "Janifer Doe"
         And I fill out the Contact page in Español
         And I confirm my address
         And I don't indicate an alternate contact
@@ -28,11 +28,11 @@ Feature: Short Form Application
         And I agree to the terms and submit
         Then I should see my lottery number on the confirmation page
         When I click the Create Account button
-        And I create an account for "Jane Doe" with my pre-filled application details
+        And I create an account for "Janifer Doe" with my pre-filled application details
         Then I should be on the login page with the email confirmation popup
-        And I have confirmed the account for "Jane Doe"
+        And I have confirmed the account for "Janifer Doe"
         And I go to the Sign In page
-        And I sign in as "Jane Doe"
+        And I sign in as "Janifer Doe"
         Given I go to the welcome page of the "Senior Test Listing" application
         And I select "Filipino" as my language
         And I continue past the welcome overview
