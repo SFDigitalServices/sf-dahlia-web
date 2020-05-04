@@ -40,5 +40,6 @@ Feature: Short Form Application
         When I answer "Yes" to the community screening question
         And I hit the Next button "1" time
         Then I should see "Filipino" selected in the translate bar language switcher
+        And I go to the welcome page of the "Senior Test Listing" application
         And I select "English" as my language
         And I sign out
