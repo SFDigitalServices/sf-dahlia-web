@@ -161,7 +161,6 @@ class Api::V1::ShortFormController < ApiController
 
   def send_attached_files(application_id)
     upload_params = uploaded_file_params.merge(
-      user_id: nil,
       listing_id: application_params[:listingID],
     )
     files = UploadedFile.where(upload_params)
