@@ -452,6 +452,8 @@ class Api::V1::ShortFormController < ApiController
       rent_burden_type: uploaded_file_params[:rent_burden_type],
       rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
+    # TODO: user_id is not used for UploadedFile look up any more. We are keeping it for
+    # debugging purposes. Consider removing in future.
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs
   end
