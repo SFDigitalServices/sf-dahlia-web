@@ -44,9 +44,10 @@ class Contact extends AngularPage
     opts.address1 ||= @defaults.homeAddress1
     opts.city ||= @defaults.homeAddressCity
     opts.workInSf ||= @defaults.workInSf
+    opts.phoneType ||= @defaults.phoneType
 
     @phone.clear().sendKeys(@defaults.phone)
-    @phoneType.sendKeys(@defaults.phoneType)
+    @phoneType.sendKeys(opts.phoneType)
 
     if opts.extra
       @addlPhone.click()
