@@ -653,7 +653,7 @@
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
-                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: lang})
+                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: $stateParams.lang})
               else if lang && lang != $stateParams.lang
                 # check if draft application language matches the lang set in the route, if not then redirect
                 $state.go('dahlia.short-form-application.name', { id: $stateParams.id, lang: lang })
