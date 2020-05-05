@@ -23,7 +23,7 @@ angular.module('dahlia.components')
         return $translate.instant('listings.person') if numberOfPeople == 1
         $translate.instant('listings.people')
 
-      # TODO: What is this? Maybe the "Show more" ;ink?
+      # TODO: What is this? Maybe the "Show more" link?
       @showAMItoggler = ->
         return false if _.isEmpty(ListingUnitService.AMICharts)
         amiLevel = _.last(ListingUnitService.AMICharts)
