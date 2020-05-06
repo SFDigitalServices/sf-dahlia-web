@@ -2,6 +2,8 @@
 
 When /^I select "([^"]*)" as my language$/, (language) ->
   switch language
+    when "Filipino"
+      element(By.id('submit-tl')).click()
     when "Spanish"
       element(By.id('submit-es')).click()
     when "English"

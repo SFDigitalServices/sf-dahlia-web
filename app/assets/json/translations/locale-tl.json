@@ -442,7 +442,7 @@
         "footer": {
             "city_county_of_sf": "Lungsod at County ng San Francisco",
             "contact": "Kontakin ",
-            "dahlia_description": "<p class='c-iron'>DAHLIA: Ang San Francisco Housing Portal ay proyekto ng  <br><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Opisina para sa Pabahay at Pagpapaunlad ng Komunidad (Housing and Community Development) ng Mayor </a></p><p class='t-small c-iron margin-top'>sa  pakikipagtulungan sa<br><a class='a-white' href='{{sfDeptUrl}}' target='_blank'>Departamento ng Teknolohiya (Department of Technology) ng San Francisco</a><br><a class='a-white' href='{{mayorUrl}}' target='_blank'>Opisina para sa mga Inobasyong Pangmamamayan (Office of Civic Innovation) ng Mayor</a></p>",
+            "dahlia_description": "<p class='c-iron'>DAHLIA: Ang San Francisco Housing Portal ay proyekto ng  <br><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Opisina para sa Pabahay at Pagpapaunlad ng Komunidad (Housing and Community Development) ng Mayor </a></p><p class='t-small c-iron margin-top'>sa  pakikipagtulungan sa<br><a class='a-white' href='{{sfdsUrl}}' target='_blank'>Serbisyong Pang-Digital ng San Francisco (San Francisco Digital Services)</a><br><a class='a-white' href='{{mayorUrl}}' target='_blank'>Opisina ng Meyor sa Sibikang Inobasyon (Office of Civic Innovation)</a></p>",
             "disclaimer": "Pagwawaksi ng Pananagutan (Disclaimer)",
             "for_general_questions": "Para sa mga tanong tungkol sa pangkalahatang programa, puwede ninyong tawagan ang MOHCD sa 415-701-5500.",
             "give_feedback": "Magbigay ng Opinyon ",
