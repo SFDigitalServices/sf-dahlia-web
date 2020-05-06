@@ -28,7 +28,7 @@ div.table-pricing-wrapper
                 svg
                   use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
 
-          td.is-supertitled data-th="{{ 'listings.stats.income_range' | translate }}"
+          td.is-supertitled.is-nested data-th="{{ 'listings.stats.income_range' | translate }}"
             table.table-nested-income
               thead
                 tr
