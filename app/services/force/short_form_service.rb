@@ -61,6 +61,7 @@ module Force
         name: nil,
         agreeToTerms: nil,
         shortFormPreferences: [],
+        alternateContact: { appMemberId: nil },
       }
       # reset income fields on apps > 30 days old
       if Date.parse(application[:applicationSubmittedDate]) < 30.days.ago

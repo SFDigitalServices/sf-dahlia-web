@@ -149,6 +149,9 @@ When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
 When 'I fill out the Contact page with an address, non-NRHP match, and WorkInSF', ->
   Pages.Contact.fill()
 
+When 'I fill out the Contact page in Español', ->
+  Pages.Contact.fill({phoneType: 'Particular'})
+
 When 'I fill out the Contact page with an address, NRHP match, and WorkInSF', ->
   Pages.Contact.fill({ address1: '1222 Harrison St.' })
 
