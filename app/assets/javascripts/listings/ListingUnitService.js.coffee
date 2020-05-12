@@ -150,7 +150,6 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
         'type': type,
         'incomeLevels': incomeLevels
       })
-    console.log('grouped units', typeGroups)
     return typeGroups
 
   Service.groupUnitTypes = (units) ->
@@ -221,7 +220,6 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     # shouldn't happen, but safe to have a guard clause
     return $q.when() unless listing.chartTypes
     allChartTypes = _.sortBy(listing.chartTypes, 'percent')
-    console.log('listing chart types', listing.chartTypes, 'allChartTypes', allChartTypes)
 
     data =
       'year[]': _.map(allChartTypes, 'year')
