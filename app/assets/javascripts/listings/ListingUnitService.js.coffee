@@ -12,9 +12,6 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
   Service.resetData = () ->
     angular.copy([], Service.AMICharts)
 
-  # Identity function to flag translation strings for grunt translations.
-  flagForI18n = (str) -> str
-
   Service._sortGroupedUnits = (units) ->
     # little hack to re-sort Studio to the top
     _.map units, (u) ->
