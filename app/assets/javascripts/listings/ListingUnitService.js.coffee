@@ -43,7 +43,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     listing.unitSummaries ?= {}
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     combined = _.omitBy(_.uniqBy(combined, 'unitType'), _.isNil)
-    # Rename the unitType field to match how individual units are labeled/
+    # Rename the unitType field to match how individual units are labeled.
     _.map(combined, (u) -> u.Unit_Type = u.unitType)
     Service._sortGroupedUnits(combined)
 
@@ -217,7 +217,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     angular.copy([], Service.AMICharts)
     Service.loading.ami = true
     Service.error.ami = false
-    # shouldn't happen, but safe to have a guard clause
+    # If chartTypes are not defined on the listing, exit early.
     return $q.when() unless listing.chartTypes
     allChartTypes = _.sortBy(listing.chartTypes, 'percent')
 
