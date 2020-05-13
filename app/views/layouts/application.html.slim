@@ -61,6 +61,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
     #google_translate_element
 
+    div.sr-only id="announce-text" aria-live="polite" {{$title || 'DAHLIA San Francisco Housing Portal'}}
+
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'t.skip_to_main_content' | translate}}
 
