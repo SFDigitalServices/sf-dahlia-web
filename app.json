@@ -85,6 +85,9 @@
     },
     "SHOW_SALE_LISTINGS": {
       "required":true
+    },
+    "SHOW_PRE_LOTTERY_INFO": {
+      "required":true
     }
   }
 }
