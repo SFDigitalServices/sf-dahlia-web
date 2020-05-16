@@ -1,0 +1,182 @@
+[
+  {
+    "type": "1 BR",
+    "incomeLevels": [
+      {
+        "incomeLevel": 55,
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_Without_Parking": 320000,
+            "Price_With_Parking": 380000,
+            "HOA_Dues_Without_Parking": 450,
+            "HOA_Dues_With_Parking": 650,
+            "Max_AMI_for_Qualifying_Unit": 55,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "incomeLimits": [
+              {
+                "occupancy": 1,
+                "maxIncome": "3800",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 2,
+                "maxIncome": "4342",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 3,
+                "maxIncome": "4883",
+                "minIncome": "0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "2 BR",
+    "incomeLevels": [
+      {
+        "incomeLevel": 60,
+        "priceGroups": [
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_Without_Parking": 420000,
+            "Price_With_Parking": 480000,
+            "HOA_Dues_Without_Parking": 550,
+            "HOA_Dues_With_Parking": 750,
+            "Max_AMI_for_Qualifying_Unit": 60,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "incomeLimits": [
+              {
+                "occupancy": 2,
+                "maxIncome": "5865",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 3,
+                "maxIncome": "6600",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 4,
+                "maxIncome": "7330",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 5,
+                "maxIncome": "7920",
+                "minIncome": "0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "3 BR",
+    "incomeLevels": [
+      {
+        "incomeLevel": 55,
+        "priceGroups": [
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_Without_Parking": 520000,
+            "Price_With_Parking": 580000,
+            "HOA_Dues_Without_Parking": 650,
+            "HOA_Dues_With_Parking": 850,
+            "Max_AMI_for_Qualifying_Unit": 55,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "incomeLimits": [
+              {
+                "occupancy": 3,
+                "maxIncome": "4883",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 4,
+                "maxIncome": "5425",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 5,
+                "maxIncome": "5858",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 6,
+                "maxIncome": "6296",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 7,
+                "maxIncome": "6729",
+                "minIncome": "0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "incomeLevel": 60,
+        "priceGroups": [
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_Without_Parking": 520000,
+            "Price_With_Parking": 580000,
+            "HOA_Dues_Without_Parking": 650,
+            "HOA_Dues_With_Parking": 850,
+            "Max_AMI_for_Qualifying_Unit": 60,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "incomeLimits": [
+              {
+                "occupancy": 3,
+                "maxIncome": "6600",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 4,
+                "maxIncome": "7330",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 5,
+                "maxIncome": "7920",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 6,
+                "maxIncome": "8505",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 7,
+                "maxIncome": "9090",
+                "minIncome": "0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
