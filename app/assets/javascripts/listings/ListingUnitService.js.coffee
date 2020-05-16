@@ -66,14 +66,19 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     # min and max incomes for that range for every available occupancy size.
     # If a max occupancy isn't defined, as in the ownership case, default to showing up to 3
     # occupancy options.
+    console.log('sample unit group', unitGroup)
     maxOccupancy = unitGroup.Max_Occupancy || unitGroup.Min_Occupancy + 2
     occupancyRange = [unitGroup.Min_Occupancy..maxOccupancy]
+    # FIXME: This does not handle cases where listings have multiple AMI charts.
+    console.log('AMI charts', Service.AMICharts)
+    console.log('unitGroup', unitGroup)
     maxAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Max_AMI_for_Qualifying_Unit.toString()})
     # Determine whether min income is from AMI or fixed
     if unitGroup.Min_AMI_for_Qualifying_Unit
       minAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Min_AMI_for_Qualifying_Unit.toString()})
 
     rows = []
+    console.log('max and min amis', maxAMIs, minAMIs)
     _.forEach occupancyRange, (occupancy) ->
       # Divide by 12 to go from annual to monthly income limits.
       maxIncome =  (Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
@@ -88,6 +93,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
       }
       rows.push(row)
     rows
+
   # TODO: try to i18 this
   Service._incomeTierLabelMap = {
     'Low Income': 'Low Income',
@@ -135,6 +141,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
         # Expand data to include income ranges by occupancy
         priceGroups = []
         _.forEach summaries, (summary) ->
+          console.log('summary in group by AMI', summary)
           incomeLimits = Service._getIncomeRangesByOccupancy(summary)
           priceGroups.push(_.merge(summary, {
             'incomeLimits': Service._sortGroupedUnits(incomeLimits)

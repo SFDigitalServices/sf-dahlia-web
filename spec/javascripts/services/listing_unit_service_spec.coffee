@@ -4,7 +4,11 @@ do ->
     ListingUnitService = undefined
     httpBackend = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeAMI = getJSONFixture('listings-api-ami.json')
+    fakeAmiAmiTiers = getJSONFixture('listings-api-ami-ami-tiers.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
+    fakeUnitsMinAmi = getJSONFixture('listings-api-units-min-ami.json')
+    fakeUnitsSales = getJSONFixture('listings-api-units-sales.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
     fakeListingAllSRO = angular.copy(fakeListing)
     fakeListingAllSRO.unitSummaries =
@@ -12,8 +16,12 @@ do ->
       general: [angular.copy(fakeListing.unitSummaries.general[0])]
     fakeListingAllSRO.unitSummaries.general[0].unitType = 'SRO'
     fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
+    $translate =
+      use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
+      instant: (str, variable ) -> variable['amiPercent']
 
     beforeEach module('dahlia.services', ($provide) ->
+      $provide.value '$translate', $translate
       return
     )
 
@@ -29,36 +37,192 @@ do ->
       it 'initializes property error as empty object', ->
         expect(ListingUnitService.error).toEqual {}
 
+    describe 'Service._getIncomeLevelLabel', ->
+      it 'returns AMI tier label for AMI tiers', ->
+        unitSummary = { 'Planning_AMI_Tier': 'Low Income'}
+        label = ListingUnitService._getIncomeLevelLabel(unitSummary)
+
+        expect(label).toEqual('Low Income')
+      it 'returns formatted AMI percentage if not an AMI tier', ->
+        unitSummary = { 'Max_AMI_for_Qualifying_Unit': 60 }
+        label = ListingUnitService._getIncomeLevelLabel(unitSummary)
+
+        expect(label).toEqual(60)
+
+
     describe 'Service.groupUnitDetails', ->
-      it 'should return an object containing a list of units for each AMI level', ->
-        fakeUnitsMultiAMI = {'units': [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]}
-        fakeUnitsMultiAMI.units[1]['Max_AMI_for_Qualifying_Unit'] = 40
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMultiAMI.units)
+      beforeEach ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
 
-        expect(_.keys(grouped).length).toEqual 2
-      it 'should group units by unit Type within AMI levels', ->
-        fakeUnitsMultiType = {'units': [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]}
-        fakeUnitsMultiType.units[1]['Unit_Type'] = '2 BR'
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMultiType.units)
+      it 'should group units by bedroom count', ->
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        expect(grouped.map((g) -> g.type)).toEqual(['Studio', '1 BR', '2 BR', '3 BR'])
 
-        expect(_.keys(grouped[100])).toEqual ['1 BR', '2 BR']
+      it 'should group units within bedroom type by AMI level for AMI tier listings', ->
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
+        expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(['Low Income', 'Moderate Income', 'Middle Income'])
+
+      it 'should group AMI tier units as expected', ->
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        expectedAmiTierUnitGroups = getJSONFixture('units-ami-tiers-grouped.json')
+        expect(grouped).toEqual(expectedAmiTierUnitGroups)
+
+      it 'should group sale units as expected', ->
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsSales.units)
+        expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
+        console.log('grouped', grouped, 'expected', expectedUnitGroups)
+        expect(grouped).toEqual(expectedUnitGroups)
+
+      it 'should group units with the bedroom count by AMI level for non-AMI-tier listings', ->
+        expect(true).toEqual(false)
+
+      it 'should group units within AMI tiers by price', ->
+        expect(true).toEqual(false)
+
+
     describe 'Service._sumSimilarUnits', ->
-      it 'should return availability that\'s the sum of sumilar units', ->
-        units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
-        summed = ListingUnitService._sumSimilarUnits(units)
-        expect(summed.length).toEqual 1
-        expect(summed[0].total).toEqual 2
-      it 'should not combine units with different rents', ->
-        units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
-        units[0]['BMR_Rent_Monthly'] = 1000
-        summed = ListingUnitService._sumSimilarUnits(units)
-        expect(summed.length).toEqual 2
-        expect(summed[0].total).toEqual 1
-        expect(summed[1].total).toEqual 1
+      describe 'for rental units', ->
+        it 'should return availability that\'s the sum of sumilar units', ->
+          units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 1
+          expect(summed[0].total).toEqual 2
+        it 'should not combine units with different rents', ->
+          units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
+          units[0]['BMR_Rent_Monthly'] = 1000
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 2
+          expect(summed[0].total).toEqual 1
+          expect(summed[1].total).toEqual 1
+
+      describe 'for sale units', ->
+        it 'should return availability that\'s the sum of similar units', ->
+          units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 1
+          expect(summed[0].total).toEqual 2
+
+        it 'should not combine units with different prices', ->
+          units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
+          units[0]['Price_Without_Parking'] = 300000
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 2
+          expect(summed[0].total).toEqual 1
+          expect(summed[1].total).toEqual 1
+
+          units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
+          units[0]['Price_With_Parking'] = 300000
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 2
+          expect(summed[0].total).toEqual 1
+          expect(summed[1].total).toEqual 1
+
+        it 'should not combine units with different HOA dues', ->
+          units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
+          units[0]['HOA_Dues_Without_Parking'] = 400
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 2
+          expect(summed[0].total).toEqual 1
+          expect(summed[1].total).toEqual 1
+
+          units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
+          units[0]['HOA_Dues_With_Parking'] = 400
+          summed = ListingUnitService._sumSimilarUnits(units)
+          expect(summed.length).toEqual 2
+          expect(summed[0].total).toEqual 1
+          expect(summed[1].total).toEqual 1
+
+    describe 'Service._getIncomeRangesByOccupancy', ->
+      beforeEach ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
+      it 'gets correct income range for units with min income', ->
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 3400.00,
+          'AMI_chart_year': 2019,
+          'Max_AMI_for_Qualifying_Unit': 65,
+          'Planning_AMI_Tier': 'Low Income',
+          'Min_Occupancy': 1,
+          'Max_Occupancy': 2,
+        }
+        expectedIncomeLimits = [
+          {
+            'occupancy': 1,
+            'maxIncome': '4671',
+            'minIncome': '3400'
+          },
+          {
+            'occupancy': 2,
+            'maxIncome': '5338',
+            'minIncome': '3400'
+          }
+        ]
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
+        expect(incomeLimits).toEqual(expectedIncomeLimits)
+
+      it 'gets correct income range for units with min AMI', ->
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 0.00,
+          'Max_AMI_for_Qualifying_Unit': 90,
+          'Min_AMI_for_Qualifying_Unit': 65,
+          'Planning_AMI_Tier': 'Moderate Income',
+          'Min_Occupancy': 1,
+          'Max_Occupancy': 3
+        }
+        expectedIncomeLimits = [
+          {
+            'occupancy': 1,
+            'maxIncome': '6467',
+            'minIncome': '4671'
+          },
+          {
+            'occupancy': 2,
+            'maxIncome': '7388',
+            'minIncome': '5338'
+          },
+          {
+            'occupancy': 3,
+            'maxIncome': '8313',
+            'minIncome': '6004'
+          }
+        ]
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
+        expect(incomeLimits).toEqual(expectedIncomeLimits)
+
+      it 'gets correct income range for units without minimum income', ->
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 0,
+          'Max_AMI_for_Qualifying_Unit': 55,
+          'Min_Occupancy': 1,
+          'Max_Occupancy': 3,
+        }
+        expectedIncomeLimits = [
+          {
+            'occupancy': 1,
+            'maxIncome': '3800',
+            'minIncome': '0'
+          },
+          {
+            'occupancy': 2,
+            'maxIncome': '4342',
+            'minIncome': '0'
+          },
+          {
+            'occupancy': 3,
+            'maxIncome': '4883',
+            'minIncome': '0'
+          }
+        ]
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
+        expect(incomeLimits).toEqual(expectedIncomeLimits)
+      it 'fails gracefully if AMIs cannot be found', ->
+        expect(true).toEqual(false)
+      it 'assumes max occupancy if not provided', ->
+        expect(true).toEqual(false)
 
     describe 'Service.getListingUnits', ->
       beforeEach ->
-        requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
+        requestURL = '/api/v1/listings/#{fakeListing.Id}/units'
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
         ListingUnitService.getListingUnits(fakeListing)
         httpBackend.flush()
