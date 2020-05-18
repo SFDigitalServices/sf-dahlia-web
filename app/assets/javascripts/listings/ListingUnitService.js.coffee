@@ -59,7 +59,10 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     summaries
 
   Service._getAMIAmount = (incomeList, occupancy) ->
-    _.find(incomeList['values'], {'numOfHousehold': occupancy})['amount']
+    if incomeList && incomeList.values?
+      _.find(incomeList['values'], {'numOfHousehold': occupancy})['amount']
+    else
+      console.error('Missing AMIs for occupancy', incomeList, occupancy)
 
   Service._getIncomeRangesByOccupancy = (unitGroup) ->
     # Given a row of units grouped by size, AMI, price, etc, determine the

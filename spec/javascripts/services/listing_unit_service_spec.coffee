@@ -146,16 +146,8 @@ do ->
           'Max_Occupancy': 2,
         }
         expectedIncomeLimits = [
-          {
-            'occupancy': 1,
-            'maxIncome': '4671',
-            'minIncome': '3400'
-          },
-          {
-            'occupancy': 2,
-            'maxIncome': '5338',
-            'minIncome': '3400'
-          }
+          { 'occupancy': 1, 'maxIncome': '4671', 'minIncome': '3400' },
+          { 'occupancy': 2, 'maxIncome': '5338', 'minIncome': '3400' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         expect(incomeLimits).toEqual(expectedIncomeLimits)
@@ -170,21 +162,9 @@ do ->
           'Max_Occupancy': 3
         }
         expectedIncomeLimits = [
-          {
-            'occupancy': 1,
-            'maxIncome': '6467',
-            'minIncome': '4671'
-          },
-          {
-            'occupancy': 2,
-            'maxIncome': '7388',
-            'minIncome': '5338'
-          },
-          {
-            'occupancy': 3,
-            'maxIncome': '8313',
-            'minIncome': '6004'
-          }
+          { 'occupancy': 1, 'maxIncome': '6467', 'minIncome': '4671' },
+          { 'occupancy': 2, 'maxIncome': '7388', 'minIncome': '5338' },
+          { 'occupancy': 3, 'maxIncome': '8313', 'minIncome': '6004' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         expect(incomeLimits).toEqual(expectedIncomeLimits)
@@ -197,28 +177,33 @@ do ->
           'Max_Occupancy': 3,
         }
         expectedIncomeLimits = [
-          {
-            'occupancy': 1,
-            'maxIncome': '3800',
-            'minIncome': '0'
-          },
-          {
-            'occupancy': 2,
-            'maxIncome': '4342',
-            'minIncome': '0'
-          },
-          {
-            'occupancy': 3,
-            'maxIncome': '4883',
-            'minIncome': '0'
-          }
+          { 'occupancy': 1, 'maxIncome': '3800', 'minIncome': '0' },
+          { 'occupancy': 2, 'maxIncome': '4342', 'minIncome': '0' },
+          { 'occupancy': 3, 'maxIncome': '4883', 'minIncome': '0' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         expect(incomeLimits).toEqual(expectedIncomeLimits)
+
       it 'fails gracefully if AMIs cannot be found', ->
-        expect(true).toEqual(false)
+        spyOn(console, 'error')
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts([])
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 0,
+          'Max_AMI_for_Qualifying_Unit': 55,
+          'Min_Occupancy': 1,
+        }
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
+        expect(console.error).toHaveBeenCalled()
+
       it 'assumes max occupancy if not provided', ->
-        expect(true).toEqual(false)
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 0,
+          'Max_AMI_for_Qualifying_Unit': 55,
+          'Min_Occupancy': 1,
+        }
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
+        occupancies = incomeLimits.map((l) -> l.occupancy)
+        expect(occupancies).toEqual([1, 2, 3])
 
     describe 'Service.getListingUnits', ->
       beforeEach ->
