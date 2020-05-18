@@ -61,8 +61,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
     #google_translate_element
 
-    div.sr-only id="announce-text" aria-live="polite" {{$title || 'DAHLIA San Francisco Housing Portal'}}
-
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'t.skip_to_main_content' | translate}}
 
@@ -74,7 +72,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         section(ui-view="version")
         section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
-        section#main-content.main-content(ui-view="container")
+        section#main-content.main-content(ui-view="container" aria-live="polite")
     .footer-section.skiptranslate
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
