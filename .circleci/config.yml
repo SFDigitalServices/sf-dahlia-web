@@ -1,15 +1,75 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
-
+  ruby: circleci/ruby@0.1.2
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/ruby:2.5.3-stretch
+      environment:
+        RAILS_ENV: test
+        PGHOST: 127.0.0.1
+        PGUSER: root
+    - image: circleci/node:6.11.1-browsers-legacy
+      environment:
+        - NODE_OPTIONS: --max_old_space_size=4096
+    - image: circleci/postgres:9.6-alpine
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_DB: sf_dahlia_test
+  executor: ruby/default
 jobs:
   build:
-    docker:
-      - image: circleci/ruby:2.6.3-stretch-node
-    executor: ruby/default
+    <<: *defaults
     steps:
       - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --deployment --path vendor/bundle
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ~/repo/vendor/bundle
+      - run: bundle install --deployment --path vendor/bundle
+      - run: bundle exec rake db:setup
+      - run: bundle exec rake db:test:prepare
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+        name: Setup e2e
+        command: |
+          mkdir -p tmp/
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+          chmod +x ./tmp/cc-test-reporter
+          ./tmp/cc-test-reporter before-build
+          ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
+          cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+          sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+          cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+          ./node_modules/protractor/bin/webdriver-manager status
+  backend:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle --path vendor/bundle
+      - run: bundle exec rake jasmine:ci
+      - run: bundle exec rake spec
+
+workflows:
+  version: 2.1
+  build-and-deploy:
+    jobs:
+      - build
+      - backend:
+          requires:
+            - build
