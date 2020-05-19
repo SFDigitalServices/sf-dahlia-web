@@ -9,7 +9,7 @@ defaults: &defaults
         RAILS_ENV: test
         PGHOST: 127.0.0.1
         PGUSER: root
-    - image: circleci/node:6.11.1-browsers-legacy
+    - image: circleci/node:6-browsers-legacy
       environment:
         - NODE_OPTIONS: --max_old_space_size=4096
     - image: circleci/postgres:9.6-alpine
