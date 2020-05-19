@@ -39,8 +39,7 @@ jobs:
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             echo 'nvm install v6.11.1' >> $BASH_ENV
             echo 'nvm alias default v6.11.1' >> $BASH_ENV
-      - run: npm -v
-      - run: node -v
+      - run: npm install
       - run:
           name: Upgrade bundler
           command: |
