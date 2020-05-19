@@ -1025,7 +1025,7 @@
             "buy": "Buy",
             "get_assistance": "Get Assistance",
             "get_feedback": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
-            "research": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Sign up</a> to provide feedback on City websites",
+            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Sign up</a> to provide feedback on City websites",
             "my_account": "My Account",
             "my_applications": "My Applications",
             "my_dashboard": "My Dashboard",
