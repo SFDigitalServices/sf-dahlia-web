@@ -40,6 +40,11 @@ jobs:
             echo 'nvm install v6.11.1' >> $BASH_ENV
             echo 'nvm alias default v6.11.1' >> $BASH_ENV
       - run: npm install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
       - run:
           name: Upgrade bundler
           command: |
@@ -68,6 +73,10 @@ jobs:
             sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             ./node_modules/protractor/bin/webdriver-manager status
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   backend:
     <<: *defaults
     steps:
