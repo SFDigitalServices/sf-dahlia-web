@@ -14,6 +14,20 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia_test
   executor: ruby/default
+aliases:
+  - &attach_workspace
+    attach_workspace:
+      at: ~/repo
+  - &restore_cache
+    restore_cache:
+        name: Restore Cache
+        keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
 jobs:
   build:
     <<: *defaults
@@ -55,7 +69,6 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/repo/vendor/bundle
-      - run: bundle install --deployment --path vendor/bundle
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
       - run:
@@ -80,12 +93,14 @@ jobs:
   backend:
     <<: *defaults
     steps:
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - checkout
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          name: Upgrade bundler
+          command: |
+            gem update --system
+            gem install bundler
       - run: bundle --path vendor/bundle
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
