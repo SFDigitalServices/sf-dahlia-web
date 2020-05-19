@@ -22,7 +22,7 @@ aliases:
     restore_cache:
         name: Restore Cache
         keys:
-            - npm-packages-{{ .Branch }}-{{ checksum "package.lock" }}
+            - npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
             - npm-packages-{{ .Branch }}
             - v1-bundle-{{ checksum "Gemfile.lock" }}
             - v1-bundle-
@@ -51,7 +51,7 @@ jobs:
       - run: npm install
       - save_cache:
           name: Save Yarn Package Cache
-          key: npm-packages-{{ .Branch }}-{{ checksum "package.lock" }}
+          key: npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - run:
