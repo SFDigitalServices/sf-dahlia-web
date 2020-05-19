@@ -77,9 +77,10 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 
+    div.sr-only id="announce-text" aria-live="polite" {{$title || 'DAHLIA San Francisco Housing Portal'}}
+
     / icon collection
     ng-include src="'shared/templates/icons.html'"
-
 
     / RAVEN: scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
     - if ENV['SENTRY_DSN']
