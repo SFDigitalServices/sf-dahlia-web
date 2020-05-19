@@ -9,6 +9,7 @@ do ->
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeUnitsMinAmi = getJSONFixture('listings-api-units-min-ami.json')
     fakeUnitsSales = getJSONFixture('listings-api-units-sales.json')
+    fakeUnitsNonMinAmi = getJSONFixture('listings-api-units-non-min-ami.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
     fakeListingAllSRO = angular.copy(fakeListing)
     fakeListingAllSRO.unitSummaries =
@@ -19,6 +20,8 @@ do ->
     $translate =
       use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
       instant: (str, variable ) -> variable['amiPercent']
+    requestURL = undefined
+
 
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
@@ -36,6 +39,12 @@ do ->
         expect(ListingUnitService.loading).toEqual {}
       it 'initializes property error as empty object', ->
         expect(ListingUnitService.error).toEqual {}
+
+    describe 'Service.resetData', ->
+      it 'resets the AMICharts', ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAMI.ami)
+        ListingUnitService.resetData()
+        expect(ListingUnitService.AMICharts).toEqual []
 
     describe 'Service._getIncomeLevelLabel', ->
       it 'returns AMI tier label for AMI tiers', ->
@@ -71,15 +80,12 @@ do ->
       it 'should group sale units as expected', ->
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsSales.units)
         expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
-        console.log('grouped', grouped, 'expected', expectedUnitGroups)
         expect(grouped).toEqual(expectedUnitGroups)
 
-      it 'should group units with the bedroom count by AMI level for non-AMI-tier listings', ->
-        expect(true).toEqual(false)
-
-      it 'should group units within AMI tiers by price', ->
-        expect(true).toEqual(false)
-
+      it 'should non-AMI-tier units as expected', ->
+        grouped = ListingUnitService.groupUnitDetails(fakeUnitsNonMinAmi.units)
+        expectedUnitGroups = getJSONFixture('units-non-ami-tiers-grouped.json')
+        expect(grouped).toEqual(expectedUnitGroups)
 
     describe 'Service._sumSimilarUnits', ->
       describe 'for rental units', ->
@@ -136,6 +142,10 @@ do ->
     describe 'Service._getIncomeRangesByOccupancy', ->
       beforeEach ->
         ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
+
+      afterEach ->
+        ListingUnitService.resetData()
+
       it 'gets correct income range for units with min income', ->
         summary = {
           'BMR_Rental_Minimum_Monthly_Income_Needed': 3400.00,
@@ -207,8 +217,9 @@ do ->
 
     describe 'Service.getListingUnits', ->
       beforeEach ->
-        requestURL = '/api/v1/listings/#{fakeListing.Id}/units'
+        requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+
         ListingUnitService.getListingUnits(fakeListing)
         httpBackend.flush()
       afterEach ->
@@ -226,3 +237,22 @@ do ->
         expect(ListingUnitService.listingHasOnlySROUnits(fakeListing)).toEqual(false)
       it 'returns true if all units are SROs', ->
         expect(ListingUnitService.listingHasOnlySROUnits(fakeListingAllSRO)).toEqual(true)
+
+
+    describe 'Service.getListingAMI', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'assigns Service.AMI with the consolidated AMI results', ->
+        requestURL = '/api/v1/listings/ami.json?chartType%5B%5D=Non-HERA&percent%5B%5D=50&year%5B%5D=2016'
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        listing = angular.copy(fakeListing)
+        listing.chartTypes = [{
+          year: 2016
+          percent: 50
+          chartType: "Non-HERA"
+        }]
+        ListingUnitService.getListingAMI(listing)
+        httpBackend.flush()
+        consolidated = ListingUnitService._consolidatedAMICharts(fakeAMI.ami)
+        expect(ListingUnitService.AMICharts).toEqual consolidated
