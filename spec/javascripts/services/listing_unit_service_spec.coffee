@@ -215,6 +215,7 @@ do ->
         occupancies = incomeLimits.map((l) -> l.occupancy)
         expect(occupancies).toEqual([1, 2, 3])
 
+    # FIXME: AMIs don't match the units so it can't find the AMIs
     describe 'Service.getListingUnits', ->
       beforeEach ->
         requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
