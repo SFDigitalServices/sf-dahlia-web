@@ -32,6 +32,8 @@ jobs:
       - restore_cache:
           keys:
             - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: npm -v
+      - run: node -v
       - run:
           name: Upgrade bundler
           command: |
