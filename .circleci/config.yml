@@ -9,9 +9,9 @@ defaults: &defaults
         RAILS_ENV: test
         PGHOST: 127.0.0.1
         PGUSER: root
-    # - image: circleci/node:6-browsers-legacy
-    #   environment:
-    #     - NODE_OPTIONS: --max_old_space_size=4096
+    - image: circleci/node:6.11.1-browsers
+      environment:
+        - NODE_OPTIONS: --max_old_space_size=4096
     - image: circleci/postgres:9.6-alpine
       environment:
         POSTGRES_USER: root
@@ -32,12 +32,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-bundle-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: Install nvm
-          command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install 6.11.1
       - run:
           name: Upgrade bundler
           command: |
