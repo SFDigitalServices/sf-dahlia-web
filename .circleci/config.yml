@@ -41,17 +41,20 @@ jobs:
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
       - run:
-        name: Setup e2e
-        command: |
-          mkdir -p tmp/
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
-          chmod +x ./tmp/cc-test-reporter
-          ./tmp/cc-test-reporter before-build
-          ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
-          cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
-          sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
-          cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
-          ./node_modules/protractor/bin/webdriver-manager status
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+            ./tmp/cc-test-reporter before-build
+      - run:
+          name: Setup e2e
+          command: |
+            ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
+            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            ./node_modules/protractor/bin/webdriver-manager status
   backend:
     <<: *defaults
     steps:
@@ -64,7 +67,6 @@ jobs:
       - run: bundle --path vendor/bundle
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
-
 workflows:
   version: 2.1
   build-and-deploy:
