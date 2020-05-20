@@ -22,11 +22,11 @@ aliases:
     restore_cache:
         name: Restore Cache
         keys:
-            - npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - npm-packages-{{ .Branch }}
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
-            - v1-bundle-
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - npm-packages-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - npm-packages-v1-{{ .Branch }}
+            - v2-bundle-{{ checksum "Gemfile.lock" }}
+            - v2-bundle-
+            - v2-repo-{{ .Environment.CIRCLE_SHA1 }}
 jobs:
   build:
     <<: *defaults
