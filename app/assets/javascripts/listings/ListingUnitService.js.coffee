@@ -77,21 +77,19 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     if unitGroup.Min_AMI_for_Qualifying_Unit
       minAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Min_AMI_for_Qualifying_Unit.toString()})
 
-    rows = []
-    _.forEach occupancyRange, (occupancy) ->
+    occupancyRange.map( (occupancy) ->
       # Divide by 12 to go from annual to monthly income limits.
       maxIncome =  (Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
       if minAMIs
         minIncome = (Service._getAMIAmount(minAMIs, occupancy)/12).toFixed(0)
       else
         minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed.toString()
-      row = {
+      return {
         'occupancy': occupancy,
         'maxIncome': maxIncome,
         'minIncome': minIncome
       }
-      rows.push(row)
-    rows
+    )
 
   # TODO: try to i18 this
   Service._incomeTierLabelMap = {
@@ -138,12 +136,11 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
       _.forEach groupedByAmi, (groupedByAmiAndType, percent) ->
         summaries = Service._sumSimilarUnits(groupedByAmiAndType)
         # Expand data to include income ranges by occupancy
-        priceGroups = []
-        _.forEach summaries, (summary) ->
-          incomeLimits = Service._getIncomeRangesByOccupancy(summary)
-          priceGroups.push(_.merge(summary, {
-            'incomeLimits': Service._sortGroupedUnits(incomeLimits)
-          }))
+        priceGroups = summaries.map((summary) ->
+          _.merge(summary, {
+            'incomeLimits': Service._sortGroupedUnits(Service._getIncomeRangesByOccupancy(summary))
+          })
+        )
         incomeLevels.push({
           'incomeLevel': Service._getIncomeLevelLabel(groupedByAmiAndType[0]),
           'priceGroups': priceGroups
