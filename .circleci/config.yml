@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: ~/web
   docker:
     - image: circleci/ruby:2.5.3-node-browsers
       environment:
@@ -17,32 +17,19 @@ defaults: &defaults
 aliases:
   - &attach_workspace
     attach_workspace:
-      at: ~/repo
+      at: ~/web
   - &restore_cache
     restore_cache:
         name: Restore Cache
         keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-{{ .Branch }}
-            - yarn-packages-master
-            - yarn-packages-
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            - v1-dependencies-
+            - yarn-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - bundle-v1-{{ checksum "Gemfile.lock" }}
 jobs:
   build:
     <<: *defaults
     steps:
       - checkout
-      - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - ~/repo
-      - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - *attach_workspace
       - run:
           name: Install node
           command: |
@@ -56,7 +43,7 @@ jobs:
       - run: npm install
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
       - run:
@@ -66,9 +53,9 @@ jobs:
             gem install bundler
       - run: bundle install --deployment --path vendor/bundle
       - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
-            - ~/repo/vendor/bundle
+            - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
       - run:
