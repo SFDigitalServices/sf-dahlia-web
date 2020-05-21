@@ -31,7 +31,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - *attach_workspace
+      # - *attach_workspace
       # - *restore_cache
       - run:
           name: Install node
@@ -59,7 +59,6 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev --fix-missing
-            apk add --no-cache build-base
       - run: gem install nokogiri -v '1.10.9'
       - run: bundle install --deployment --path vendor/bundle
       - save_cache:
