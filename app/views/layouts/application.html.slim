@@ -38,7 +38,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta property="og:type" content="website"
 
     javascript:
-      window.env = {showSaleListings: "#{ENV['SHOW_SALE_LISTINGS']}"}
+      window.env = {showSaleListings: "#{ENV['SHOW_SALE_LISTINGS']}", showPreLotteryInfo: "#{ENV['SHOW_PRE_LOTTERY_INFO']}"}
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
@@ -77,9 +77,10 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 
+    div.sr-only id="announce-text" aria-live="polite" {{$title || 'DAHLIA San Francisco Housing Portal'}}
+
     / icon collection
     ng-include src="'shared/templates/icons.html'"
-
 
     / RAVEN: scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
     - if ENV['SENTRY_DSN']
