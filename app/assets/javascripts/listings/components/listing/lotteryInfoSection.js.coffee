@@ -3,8 +3,10 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/listing/lottery-info-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingDataService', 'ListingLotteryService', (ListingDataService, ListingLotteryService) ->
+  controller: ['ListingDataService', 'ListingLotteryService', '$window', (ListingDataService, ListingLotteryService, $window) ->
     ctrl = @
+
+    @showPreLotteryInfo = $window.env.showPreLotteryInfo == 'true'
 
     @loading = ListingLotteryService.loading
 
