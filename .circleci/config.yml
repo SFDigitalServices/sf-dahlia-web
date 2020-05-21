@@ -26,7 +26,6 @@ aliases:
             - npm-packages-{{ .Branch }}
             - v1-bundle-{{ checksum "Gemfile.lock" }}
             - v1-bundle-
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 jobs:
   build:
     <<: *defaults
@@ -34,10 +33,6 @@ jobs:
       - checkout
       - *attach_workspace
       - *restore_cache
-      - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - ~/repo
       - run:
           name: Install node
           command: |
