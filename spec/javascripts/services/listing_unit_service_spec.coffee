@@ -87,6 +87,11 @@ do ->
         expectedUnitGroups = getJSONFixture('units-non-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
+      it 'should sort price groups with multiple rents by rent', ->
+        expect(false).toEqual(true)
+      it 'should sort price groups with multiple sales prices by price', ->
+        expect(false).toEqual(true)
+
     describe 'Service._sumSimilarUnits', ->
       describe 'for rental units', ->
         it 'should return availability that\'s the sum of sumilar units', ->
