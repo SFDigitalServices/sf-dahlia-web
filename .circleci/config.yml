@@ -56,7 +56,9 @@ jobs:
             gem install bundler
       - run:
           name: Install Nokogiri dependencies
-          command: sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev --fix-missing
+          command: |
+            sudo apt-get update
+            sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev --fix-missing
       - run: bundle install --deployment --path vendor/bundle
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
