@@ -4,7 +4,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/ruby:2.5.3-browsers
+    - image: circleci/ruby:2.5.3-node-browsers
       environment:
         RAILS_ENV: test
         PGHOST: 127.0.0.1
@@ -22,11 +22,11 @@ aliases:
     restore_cache:
         name: Restore Cache
         keys:
-            - npm-packages-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - npm-packages-v2-{{ .Branch }}
-            - v2-bundle-{{ checksum "Gemfile.lock" }}
-            - v2-bundle-
-            - v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - npm-packages-{{ .Branch }}
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+            - v1-bundle-
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 jobs:
   build:
     <<: *defaults
@@ -35,7 +35,7 @@ jobs:
       - *attach_workspace
       - *restore_cache
       - save_cache:
-          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/repo
       - run:
@@ -51,7 +51,7 @@ jobs:
       - run: npm install
       - save_cache:
           name: Save Yarn Package Cache
-          key: npm-packages-v2-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - run:
@@ -61,7 +61,7 @@ jobs:
             gem install bundler
       - run: bundle install --deployment --path vendor/bundle
       - save_cache:
-          key: v2-bundle-{{ checksum "Gemfile.lock" }}
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/repo/vendor/bundle
       - run: bundle exec rake db:setup
