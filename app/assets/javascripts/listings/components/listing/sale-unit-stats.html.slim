@@ -22,7 +22,7 @@ div.table-pricing-wrapper ng-repeat="group in ::$ctrl.unitGroups"
         small.pricing-table-waitlist ng-if="::row.Status == 'Occupied'"
           | {{'listings.stats.waitlist' | translate}}
         span ng-if="::row.Status != 'Occupied'"
-          i
+          i.notranslate
             | {{::row.total}}
           small
             | {{'listings.stats.available' | translate}}
