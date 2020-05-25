@@ -82,15 +82,30 @@ do ->
         expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
-      it 'should non-AMI-tier units as expected', ->
+      it 'should group non-AMI-tier units as expected', ->
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsNonMinAmi.units)
         expectedUnitGroups = getJSONFixture('units-non-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
       it 'should sort price groups with multiple rents by rent', ->
-        expect(false).toEqual(true)
+        unitWithOtherRent = angular.copy(fakeUnitsNonMinAmi.units[0])
+        unitWithOtherRent['BMR_Rent_Monthly'] = 1800.0
+
+        grouped = ListingUnitService.groupUnitDetails(
+            [unitWithOtherRent, fakeUnitsNonMinAmi.units[0]]
+          )
+        priceGroups = grouped[0].incomeLevels[0].priceGroups
+        expect(priceGroups[0]['BMR_Rent_Monthly']).toBeLessThan(priceGroups[1]['BMR_Rent_Monthly'])
+
       it 'should sort price groups with multiple sales prices by price', ->
-        expect(false).toEqual(true)
+        unitWithHigherPrice = angular.copy(fakeUnitsSales.units[0])
+        unitWithHigherPrice['Price_Without_Parking'] = 340000.0
+
+        grouped = ListingUnitService.groupUnitDetails(
+            [unitWithHigherPrice, fakeUnitsSales.units[0]]
+          )
+        priceGroups = grouped[0].incomeLevels[0].priceGroups
+        expect(priceGroups[0]['Price_Without_Parking']).toBeLessThan(priceGroups[1]['Price_Without_Parking'])
 
     describe 'Service._sumSimilarUnits', ->
       describe 'for rental units', ->

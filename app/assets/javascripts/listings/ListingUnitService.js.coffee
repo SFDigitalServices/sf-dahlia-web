@@ -143,7 +143,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
         )
         incomeLevels.push({
           'incomeLevel': Service._getIncomeLevelLabel(groupedByAmiAndType[0]),
-          'priceGroups': priceGroups
+          'priceGroups': Service._sortGroupedUnits(priceGroups)
         })
       typeGroups.push({
         'type': type,
