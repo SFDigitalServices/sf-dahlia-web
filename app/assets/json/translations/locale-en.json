@@ -926,6 +926,11 @@
                 "waitlist": "Waitlist",
                 "with_one_parking_space": "With one parking space"
             },
+            "ami_tiers": {
+                "low_income": "Low Income",
+                "moderate_income": "Moderate Income",
+                "middle_income": "Middle Income"
+            },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
             "upcoming_lotteries": {

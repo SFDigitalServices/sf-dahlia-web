@@ -19,7 +19,8 @@ do ->
     fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
     $translate =
       use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
-      instant: (str, variable ) -> variable['amiPercent']
+      instant: (str, variable ) ->
+        variable?.amiPercent || str
     requestURL = undefined
 
 
@@ -51,7 +52,7 @@ do ->
         unitSummary = { 'Planning_AMI_Tier': 'Low Income'}
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
 
-        expect(label).toEqual('Low Income')
+        expect(label).toEqual('listings.ami_tiers.low_income')
       it 'returns formatted AMI percentage if not an AMI tier', ->
         unitSummary = { 'Max_AMI_for_Qualifying_Unit': 60 }
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
@@ -70,7 +71,9 @@ do ->
       it 'should group units within bedroom type by AMI level for AMI tier listings', ->
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
         oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
-        expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(['Low Income', 'Moderate Income', 'Middle Income'])
+        expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
+          ['listings.ami_tiers.low_income', 'listings.ami_tiers.moderate_income', 'listings.ami_tiers.middle_income']
+        )
 
       it 'should group AMI tier units as expected', ->
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
