@@ -34,7 +34,6 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     else
       min
 
-  # FIXME: This might be broken by the new format
   Service.combineUnitSummaries = (listing) ->
     # Combined unitSummary is useful e.g. for overall occupancy levels across the whole listing.
     listing.unitSummaries ?= {}
