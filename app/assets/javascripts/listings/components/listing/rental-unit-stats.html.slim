@@ -57,11 +57,11 @@ div.table-pricing-wrapper
                     em ng-if="::!incomeLimit.maxIncome"
                       | {{'t.none' | translate}}
           td.is-subtitled.has-nested-sibling data-th="{{ 'listings.stats.rent' | translate }}"
-            span
+            span ng-if="::priceGroup.BMR_Rent_Monthly"
               | {{::priceGroup.BMR_Rent_Monthly | currency:"$":0}}
               small
                 | {{'t.per_month' | translate}}
-            span ng-if="::!row.BMR_Rent_Monthly && row.Rent_percent_of_income"
+            span ng-if="::!priceGroup.BMR_Rent_Monthly && priceGroup.Rent_percent_of_income"
               | {{::priceGroup.Rent_percent_of_income}}%
               small
                | {{'t.income' | translate}}
