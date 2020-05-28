@@ -24,14 +24,14 @@ angular.module('dahlia.components')
         $translate.instant('listings.people')
 
       @showAMItoggler = ->
-        return false if _.isEmpty(ListingDataService.AMICharts)
-        amiLevel = _.last(ListingDataService.AMICharts)
+        return false if _.isEmpty(ListingUnitService.AMICharts)
+        amiLevel = _.last(ListingUnitService.AMICharts)
         lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
         maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
         maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @hasMultipleAMICharts = ->
-        ListingDataService.AMICharts.length > 1
+        ListingUnitService.AMICharts.length > 1
 
       @listingHasPreferences = ->
         this.parent.listing.preferences && this.parent.listing.preferences.length > 0

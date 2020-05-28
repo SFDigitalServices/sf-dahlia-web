@@ -905,13 +905,9 @@
                 "availability": "可用情況",
                 "available": "可用",
                 "hoa_dues": "物業費",
-                "minimum_income": "最低收入",
-                "price_without_parking": "無停車位價格",
-                "prices_without_parking": "無停車位價格",
                 "rent": "租金",
                 "sales_price": "出售價格",
-                "waitlist": "輪候名單",
-                "with_one_parking_space": "有一個停車位"
+                "waitlist": "輪候名單"
             },
             "units_are_for": "這些單位適用於 {{type}}。",
             "units_have_accessibility_features_for": "這些單位擁有無障礙設備，可供 {{type}} 的人使用。",

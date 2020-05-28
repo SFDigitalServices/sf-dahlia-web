@@ -26,6 +26,7 @@ do ->
       getListingPreferences: jasmine.createSpy()
     }
     fakeListingUnitService =
+      AMICharts: []
       listingHasPriorityUnits: jasmine.createSpy()
       listingHasOnlySROUnits: jasmine.createSpy()
 
@@ -72,20 +73,20 @@ do ->
             expect($translate.instant).toHaveBeenCalledWith('listings.people')
 
       describe 'showAMItoggler', ->
+        beforeEach ->
+          fakeListingUnitService.AMICharts = fakeAMI
+
         it 'returns false for empty AMICharts', ->
           expect(ctrl.showAMItoggler()).toBe(false)
         it 'calls ListingEligibilityService.occupancyIncomeLevels', ->
-          fakeListingDataService.AMICharts = fakeAMI
           spyOn(fakeListingEligibilityService, 'occupancyIncomeLevels')
           ctrl.showAMItoggler()
           expect(fakeListingEligibilityService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, _.last(fakeAMI))
         it 'calls ListingEligibilityService.householdAMIChartCutoff', ->
-          fakeListingDataService.AMICharts = fakeAMI
           spyOn(fakeListingEligibilityService, 'householdAMIChartCutoff')
           ctrl.showAMItoggler()
           expect(fakeListingEligibilityService.householdAMIChartCutoff).toHaveBeenCalled()
         it 'returns true when maxNumOfHousehold is > householdAMIChartCutoff', ->
-          fakeListingDataService.AMICharts = fakeAMI
           fakeOccupancyIncomeLevel = {
             numOfHousehold: 5
           }
@@ -96,7 +97,6 @@ do ->
           spyOn(fakeListingEligibilityService, 'householdAMIChartCutoff').and.returnValue(4)
           expect(ctrl.showAMItoggler()).toEqual true
         it 'returns false when maxNumOfHousehold is < householdAMIChartCutoff', ->
-          fakeListingDataService.AMICharts = fakeAMI
           fakeOccupancyIncomeLevel = {
             numOfHousehold: 5
           }
@@ -109,10 +109,10 @@ do ->
 
       describe 'hasMultipleAMICharts', ->
         it 'returns true when there are 2 or more AMI charts', ->
-          fakeListingDataService.AMICharts = [1,2]
+          fakeListingUnitService.AMICharts = [1,2]
           expect(ctrl.hasMultipleAMICharts()).toEqual true
         it 'returns false when there is 1 or fewer AMI charts', ->
-          fakeListingDataService.AMICharts = [1]
+          fakeListingUnitService.AMICharts = [1]
           expect(ctrl.hasMultipleAMICharts()).toEqual false
 
       describe 'listingHasPreferences', ->

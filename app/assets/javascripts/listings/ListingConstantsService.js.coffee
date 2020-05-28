@@ -42,6 +42,11 @@ ListingConstantsService = () ->
     'Price_With_Parking',
     'HOA_Dues_Without_Parking',
     'HOA_Dues_With_Parking',
+    'Min_AMI_for_Qualifying_Unit',
+    'Max_AMI_for_Qualifying_Unit',
+    'Planning_AMI_Tier',
+    'Min_Occupancy',
+    'Max_Occupancy',
     'Status',
   ]
 

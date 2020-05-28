@@ -904,13 +904,9 @@
                 "availability": "Disponibilidad",
                 "available": "disponible",
                 "hoa_dues": "Cuotas de HOA",
-                "minimum_income": "Ingreso mínimo",
-                "price_without_parking": "Precio sin estacionamiento",
-                "prices_without_parking": "Precios sin estacionamiento",
                 "rent": "Alquiler",
                 "sales_price": "Precio de venta",
-                "waitlist": "Lista de espera",
-                "with_one_parking_space": "Con un lugar de estacionamiento"
+                "waitlist": "Lista de espera"
             },
             "units_are_for": "Estas unidades son para {{type}}.",
             "units_have_accessibility_features_for": "Estas unidades tienen características de accesibilidad para personas con {{type}}.",

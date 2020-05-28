@@ -14,7 +14,7 @@ angular.module('dahlia.components')
     @loading  = ListingDataService.loading
     @error = ListingDataService.error
     @toggleStates = ListingDataService.toggleStates
-    @AMICharts = ListingDataService.AMICharts
+    @AMICharts = ListingUnitService.AMICharts
     @favorites = ListingDataService.favorites
 
     @openListings = ListingDataService.openListings
@@ -48,7 +48,7 @@ angular.module('dahlia.components')
       ListingDataService.reservedLabel(listing, type, modifier)
 
     @getListingAMI =(listing) ->
-      ListingDataService.getListingAMI(listing)
+      ListingUnitService.getListingAMI(listing)
 
     @listingIsReservedCommunity = (listing) ->
       !! listing.Reserved_community_type

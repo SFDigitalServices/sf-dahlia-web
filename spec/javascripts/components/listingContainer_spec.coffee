@@ -42,7 +42,6 @@ do ->
       lotteryResultsListings: []
       listing: fakeListing
       favorites: fakeListingFavorites
-      AMICharts: []
       lotteryPreferences: []
       getLotteryRanking: () -> null
       hasEligibilityFilters: () -> null
@@ -52,7 +51,6 @@ do ->
       toggleFavoriteListing: jasmine.createSpy()
       isFavorited: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
-      getListingAMI: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
     fakeListingIdentityService =
       listingIs: jasmine.createSpy()
@@ -63,9 +61,11 @@ do ->
       listingHasLotteryResults: ->
       openLotteryResultsModal: jasmine.createSpy()
     fakeListingUnitService =
+      AMICharts: []
       getListingUnits: jasmine.createSpy()
       listingHasReservedUnits: jasmine.createSpy()
       listingHasSROUnits: jasmine.createSpy()
+      getListingAMI: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -188,9 +188,9 @@ do ->
           expect(fakeListingDataService.reservedLabel).toHaveBeenCalledWith(fakeListing, type, modifier)
 
       describe '$ctrl.getListingAMI', ->
-        it 'calls ListingDataService.getListingAMI with the given listing', ->
+        it 'calls ListingUnitService.getListingAMI with the given listing', ->
           ctrl.getListingAMI(fakeListing)
-          expect(fakeListingDataService.getListingAMI).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingUnitService.getListingAMI).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.listingIsReservedCommunity', ->
         it "returns true if the listing's Reserved_community_type property is truthy", ->

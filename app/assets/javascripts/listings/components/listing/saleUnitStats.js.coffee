@@ -4,14 +4,13 @@ angular.module('dahlia.components')
   require:
     parent: '^propertyHero'
   bindings:
-    unitGroups: '<'
+    unitGroup: '<'
   controller: () ->
     ctrl = @
 
-    @groupHasUnitsWithParking = (unitGroups) ->
-      _.some(unitGroups, 'Price_With_Parking')
-
-    @groupHasUnitsWithoutParking = (unitGroups) ->
-      _.some(unitGroups, 'Price_Without_Parking')
+    @priceGroupHasUnitsWithParking = (priceGroup) ->
+      priceGroup['Price_With_Parking'] != undefined
+    @priceGroupHasUnitsWithoutParking = (priceGroup) ->
+      priceGroup['Price_Without_Parking'] != undefined
 
     return ctrl

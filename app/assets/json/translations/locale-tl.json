@@ -904,13 +904,9 @@
                 "availability": "Kung puwedeng makuha o hindi ",
                 "available": "puwedeng makuha",
                 "hoa_dues": "mga singil ng HOA (HOA dues) ",
-                "minimum_income": "Pinakamababa nang posibleng kita",
-                "price_without_parking": "Presyo nang walang paradahan ",
-                "prices_without_parking": "Mga presyo nang walang paradahan",
                 "rent": "Upa",
                 "sales_price": "Presyo sa pagbebenta",
-                "waitlist": "Waitlist (Listahan ng mga Naghihintay)",
-                "with_one_parking_space": "May isang espasyo para sa pagparada"
+                "waitlist": "Waitlist (Listahan ng mga Naghihintay)"
             },
             "units_are_for": "Ang mga unit na ito ay para sa {{type}}. ",
             "units_have_accessibility_features_for": "Magagamit o mayroong mga daraanan ang mga unit na ito para sa may kapansanan kaugnay ng {{type}}. ",

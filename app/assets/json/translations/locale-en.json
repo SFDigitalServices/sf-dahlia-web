@@ -757,6 +757,11 @@
             },
             "all_units": "All Units",
             "all_units_reserved_for": "All units reserved for {{type}}",
+            "ami_tiers": {
+                "low_income": "Low Income",
+                "middle_income": "Middle Income",
+                "moderate_income": "Moderate Income"
+            },
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
@@ -912,13 +917,15 @@
                 "availability": "Availability",
                 "available": "available",
                 "hoa_dues": "HOA dues",
-                "minimum_income": "Minimum Income",
-                "price_without_parking": "Price without parking",
-                "prices_without_parking": "Prices without parking",
+                "household_size": "Household size",
+                "income_range": "Income Range",
+                "maximum": "Maximum",
+                "minimum": "Minimum",
+                "percent_ami": "{{amiPercent}}% AMI",
+                "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist",
-                "with_one_parking_space": "With one parking space"
+                "waitlist": "Waitlist"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",

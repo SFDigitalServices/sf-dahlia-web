@@ -1,0 +1,337 @@
+{
+  "ami": [
+    {
+      "percent": "65",
+      "values": [
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 1,
+          "chartType": "HUD Unadjusted",
+          "amount": 56050
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 2,
+          "chartType": "HUD Unadjusted",
+          "amount": 64050
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 3,
+          "chartType": "HUD Unadjusted",
+          "amount": 72050
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 4,
+          "chartType": "HUD Unadjusted",
+          "amount": 80050
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 5,
+          "chartType": "HUD Unadjusted",
+          "amount": 86450
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 6,
+          "chartType": "HUD Unadjusted",
+          "amount": 92850
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 7,
+          "chartType": "HUD Unadjusted",
+          "amount": 99250
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 8,
+          "chartType": "HUD Unadjusted",
+          "amount": 105650
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 9,
+          "chartType": "HUD Unadjusted",
+          "amount": 112050
+        }
+      ]
+    },
+    {
+      "percent": "90",
+      "values": [
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 1,
+          "chartType": "HUD Unadjusted",
+          "amount": 77600
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 2,
+          "chartType": "HUD Unadjusted",
+          "amount": 88650
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 3,
+          "chartType": "HUD Unadjusted",
+          "amount": 99750
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 4,
+          "chartType": "HUD Unadjusted",
+          "amount": 110850
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 5,
+          "chartType": "HUD Unadjusted",
+          "amount": 119700
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 6,
+          "chartType": "HUD Unadjusted",
+          "amount": 128550
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 7,
+          "chartType": "HUD Unadjusted",
+          "amount": 137450
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 8,
+          "chartType": "HUD Unadjusted",
+          "amount": 146300
+        },
+        {
+          "year": 2019,
+          "percent": 90,
+          "numOfHousehold": 9,
+          "chartType": "HUD Unadjusted",
+          "amount": 155150
+        }
+      ]
+    },
+    {
+      "percent": "130",
+      "values": [
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 1,
+          "chartType": "HUD Unadjusted",
+          "amount": 112050
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 2,
+          "chartType": "HUD Unadjusted",
+          "amount": 128050
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 3,
+          "chartType": "HUD Unadjusted",
+          "amount": 144100
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 4,
+          "chartType": "HUD Unadjusted",
+          "amount": 160100
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 5,
+          "chartType": "HUD Unadjusted",
+          "amount": 172900
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 6,
+          "chartType": "HUD Unadjusted",
+          "amount": 185700
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 7,
+          "chartType": "HUD Unadjusted",
+          "amount": 198500
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 8,
+          "chartType": "HUD Unadjusted",
+          "amount": 211300
+        },
+        {
+          "year": 2019,
+          "percent": 130,
+          "numOfHousehold": 9,
+          "chartType": "HUD Unadjusted",
+          "amount": 224100
+        }
+      ]
+    },
+    {
+      "percent": "55",
+      "values": [
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 4,
+          "chartType": "HUD Unadjusted",
+          "amount": 65100.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 3,
+          "chartType": "HUD Unadjusted",
+          "amount": 58600.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 1,
+          "chartType": "HUD Unadjusted",
+          "amount": 45600.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 5,
+          "chartType": "HUD Unadjusted",
+          "amount": 70300.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 9,
+          "chartType": "HUD Unadjusted",
+          "amount": 91150.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 6,
+          "chartType": "HUD Unadjusted",
+          "amount": 75550.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 2,
+          "chartType": "HUD Unadjusted",
+          "amount": 52100.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 8,
+          "chartType": "HUD Unadjusted",
+          "amount": 85950.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 7,
+          "chartType": "HUD Unadjusted",
+          "amount": 80750.00
+        }
+      ]
+    },
+    {
+      "percent": "60",
+      "values": [
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 4,
+          "chartType": "TCAC - HERA",
+          "amount": 87960.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 2,
+          "chartType": "TCAC - HERA",
+          "amount": 70380.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 5,
+          "chartType": "TCAC - HERA",
+          "amount": 95040.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 3,
+          "chartType": "TCAC - HERA",
+          "amount": 79200.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 7,
+          "chartType": "TCAC - HERA",
+          "amount": 109080.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 1,
+          "chartType": "TCAC - HERA",
+          "amount": 61620.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 6,
+          "chartType": "TCAC - HERA",
+          "amount": 102060.00
+        },
+        {
+          "year": 2018,
+          "percent": 60,
+          "numOfHousehold": 8,
+          "chartType": "TCAC - HERA",
+          "amount": 116160.00
+        }
+      ]
+    }
+  ]
+}
