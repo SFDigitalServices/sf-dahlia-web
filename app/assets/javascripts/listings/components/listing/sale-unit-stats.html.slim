@@ -41,11 +41,11 @@ div.table-pricing-wrapper
                   td.is-subtitled-nested data-th="{{ 'listings.stats.household_size' | translate }}"
                     | {{ incomeLimit.occupancy }}
                   td.is-subtitled-nested data-th="{{ 'listings.stats.minimum' | translate }}"
-                    span ng-if="::incomeLimit.minIncome"
+                    span ng-if="::incomeLimit.minIncome != 0"
                       | {{::incomeLimit.minIncome | currency:"$":0}}
                       small
                        | {{'t.per_month' | translate}}
-                    em ng-if="::!incomeLimit.minIncome"
+                    em ng-if="::incomeLimit.minIncome == 0"
                       | {{'t.none' | translate}}
                   td.is-subtitled-nested data-th="{{ 'listings.stats.maximum' | translate }}"
                     span ng-if="::incomeLimit.maxIncome"
