@@ -194,11 +194,6 @@ do ->
         ListingDataService.resetListingData()
         expect(ListingDataService.listing).toEqual {}
 
-      it 'resets the AMICharts', ->
-        ListingDataService.AMICharts = ListingDataService._consolidatedAMICharts(fakeAMI.ami)
-        ListingDataService.resetListingData()
-        expect(ListingDataService.AMICharts).toEqual []
-
       it 'resets the download URLs', ->
         ListingDataService.listingPaperAppURLs = angular.copy(fakeListingConstantsService.rentalPaperAppURLs)
         ListingDataService.resetListingData()
@@ -207,23 +202,6 @@ do ->
       it 'calls ListingLotteryService.resetData', ->
         ListingDataService.resetListingData()
         expect(fakeListingLotteryService.resetData).toHaveBeenCalled()
-
-    describe 'Service.getListingAMI', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.AMI with the consolidated AMI results', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
-        listing = angular.copy(fakeListing)
-        listing.chartTypes = [{
-          year: 2016
-          percent: 50
-          chartType: "Non-HERA"
-        }]
-        ListingDataService.getListingAMI(listing)
-        httpBackend.flush()
-        consolidated = ListingDataService._consolidatedAMICharts(fakeAMI.ami)
-        expect(ListingDataService.AMICharts).toEqual consolidated
 
     describe 'Service.isAcceptingOnlineApplications', ->
       it 'returns false if an empty listing is passed in', ->

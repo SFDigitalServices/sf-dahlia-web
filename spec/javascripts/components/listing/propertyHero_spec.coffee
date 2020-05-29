@@ -39,14 +39,6 @@ do ->
         it 'returns listing.imageURL wrapped in an array', ->
           expect(ctrl.listingImages(fakeListing)).toEqual([fakeListing.imageURL])
 
-      describe 'hasMultipleAMIUnits', ->
-        it 'returns true for more than 1 groupedUnits', ->
-          fakeListing.groupedUnits = {key: 1, hash: 2}
-          expect(ctrl.hasMultipleAMIUnits()).toEqual true
-        it 'returns false for less or exactly 1 groupedUnits', ->
-          fakeListing.groupedUnits = {key: 1}
-          expect(ctrl.hasMultipleAMIUnits()).toEqual false
-
       describe 'reservedDescriptorIcon', ->
         it 'calls $sce with right param', ->
           fakeListing.reservedDescriptor = [{name: 'fake'}, {name: 'true'}]

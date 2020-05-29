@@ -15,8 +15,6 @@ ListingDataService = (
   Service.openNotMatchListings = []
   Service.closedListings = []
   Service.lotteryResultsListings = []
-  # these get loaded after the listing is loaded
-  Service.AMICharts = []
   Service.loading = {}
   Service.error = {}
   Service.toggleStates = {}
@@ -81,9 +79,9 @@ ListingDataService = (
   # Remove the previous listing and all it's associated data
   Service.resetListingData = () ->
     angular.copy({}, Service.listing)
-    angular.copy([], Service.AMICharts)
     angular.copy([], Service.listingPaperAppURLs)
     ListingLotteryService.resetData()
+    ListingUnitService.resetData()
 
   Service.getListingResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
@@ -263,44 +261,6 @@ ListingDataService = (
       deferred.reject(response)
     )
     deferred.promise
-
-  Service.getListingAMI = (listing) ->
-    angular.copy([], Service.AMICharts)
-    Service.loading.ami = true
-    Service.error.ami = false
-    # shouldn't happen, but safe to have a guard clause
-    return $q.when() unless listing.chartTypes
-    allChartTypes = _.sortBy(listing.chartTypes, 'percent')
-    data =
-      'year[]': _.map(allChartTypes, 'year')
-      'chartType[]': _.map(allChartTypes, 'chartType')
-      'percent[]': _.map(allChartTypes, 'percent')
-    $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
-      if data && data.ami
-        angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
-      Service.loading.ami = false
-    ).error( (data, status, headers, config) ->
-      Service.loading.ami = false
-      Service.error.ami = true
-      return
-    )
-
-  Service._consolidatedAMICharts = (amiData) ->
-    charts = []
-    amiData.forEach (chart) ->
-      # look for an existing chart at the same percentage level
-      amiPercentChart = _.find charts, (c) -> c.percent == chart.percent
-      if !amiPercentChart
-        # only push chart if it has any values
-        charts.push(chart) if chart.values.length
-      else
-        # if it exists, modify it with the max values
-        i = 0
-        amiPercentChart.values.forEach (incomeLevel) ->
-          chartAmount = if chart.values[i] then chart.values[i].amount else 0
-          incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
-          i++
-    charts
 
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')

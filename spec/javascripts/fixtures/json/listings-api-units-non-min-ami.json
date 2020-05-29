@@ -1,0 +1,256 @@
+{
+  "units": [
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000yda0QAA"
+      },
+      "Unit_Type": "Studio",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 1700.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 3400.00,
+      "Unit_Number": "1",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 65,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 2,
+      "Id": "a0b1D000000yda0QAA"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaUQAQ"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3100.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 6200.0,
+      "Unit_Number": "5a",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 130,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000ydaUQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaPQAQ"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3100.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 6200.0,
+      "Unit_Number": "5",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 130,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000ydaPQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000yda6QAA"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 2600.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 5200.0,
+      "Unit_Number": "3",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 90,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000yda6QAA"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000yda5QAA"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 2000.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 4000.00,
+      "Unit_Number": "2",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 65,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000yda5QAA"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaAQAQ"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 2000.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 4000.00,
+      "Unit_Number": "2a",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 65,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000ydaAQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaFQAQ"
+      },
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 2600.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 5200.0,
+      "Unit_Number": "3a",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 90,
+      "Min_Occupancy": 1,
+      "Max_Occupancy": 3,
+      "Id": "a0b1D000000ydaFQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaGQAQ"
+      },
+      "Unit_Type": "2 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3000.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 6000.0,
+      "Unit_Number": "4",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 90,
+      "Min_Occupancy": 2,
+      "Max_Occupancy": 5,
+      "Id": "a0b1D000000ydaGQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaKQAQ"
+      },
+      "Unit_Type": "2 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3000.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 6000.0,
+      "Unit_Number": "4a",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 90,
+      "Min_Occupancy": 2,
+      "Max_Occupancy": 5,
+      "Id": "a0b1D000000ydaKQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaZQAQ"
+      },
+      "Unit_Type": "2 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3500.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 7000.0,
+      "Unit_Number": "6",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 130,
+      "Min_Occupancy": 2,
+      "Max_Occupancy": 5,
+      "Id": "a0b1D000000ydaZQAQ"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydaeQAA"
+      },
+      "Unit_Type": "2 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 3500.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 7000.0,
+      "Unit_Number": "6a",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 130,
+      "Min_Occupancy": 2,
+      "Max_Occupancy": 5,
+      "Id": "a0b1D000000ydaeQAA"
+    },
+    {
+      "attributes": {
+        "type": "Unit__c",
+        "url": "/services/data/v35.0/sobjects/Unit__c/a0b1D000000ydajQAA"
+      },
+      "Unit_Type": "3 BR",
+      "Availability": 1,
+      "BMR_Rent_Monthly": 4000.00,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 8000.0,
+      "Unit_Number": "7",
+      "Unit_Floor": "3",
+      "Number_of_Bathrooms": 1.00,
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "HUD Unadjusted",
+      "AMI_chart_year": 2019,
+      "Max_AMI_for_Qualifying_Unit": 130,
+      "Min_Occupancy": 3,
+      "Max_Occupancy": 7,
+      "Id": "a0b1D000000ydajQAA"
+    }
+  ]
+}
