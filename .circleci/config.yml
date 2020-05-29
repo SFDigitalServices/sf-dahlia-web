@@ -22,7 +22,7 @@ aliases:
     restore_cache:
         name: Restore Cache
         keys:
-            - yarn-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
             - bundle-v1-{{ checksum "Gemfile.lock" }}
 jobs:
   build:
@@ -42,8 +42,8 @@ jobs:
             echo 'nvm alias default v6.11.1' >> $BASH_ENV
       - run: npm install
       - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Save Npm Package Cache
+          key: npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - run:
