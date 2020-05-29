@@ -51,7 +51,12 @@ jobs:
           command: |
             gem update --system
             gem install bundler
-      - run: bundle install --deployment --path vendor/bundle
+      - run:
+          name: Bundle install
+          command: |
+            sudo apt-get install pkg-config
+            bundle config build.nokogiri --use-system-libraries
+            bundle install --deployment --path vendor/bundle
       - save_cache:
           key: bundle-v1-{{ checksum "Gemfile.lock" }}
           paths:
