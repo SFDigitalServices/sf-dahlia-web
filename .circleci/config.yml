@@ -37,6 +37,7 @@ commands:
             gem update --system
             gem install bundler
       - run: bundle --path vendor/bundle
+      - run: npm install
   start-server:
     description: "Start Rails in abackgroiund"
     steps:
@@ -121,6 +122,18 @@ jobs:
       - setup
       - start-server
       - run: npm run protractor -- --specs './spec/e2e/features/short_form/submitting_application.feature'
+  e2e-sign-in-apply:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: npm run protractor -- --specs './spec/e2e/features/short_form/sign_in_while_applying.feature'
+  e2e-other-short-form:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: npm run protractor -- --specs './spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature'
 workflows:
   version: 2.1
   build-and-deploy:
@@ -130,5 +143,11 @@ workflows:
           requires:
             - build
       - e2e-submit-application:
+          requires:
+            - build
+      - e2e-sign-in-apply:
+          requires:
+            - build
+      - e2e-other-short-form:
           requires:
             - build
