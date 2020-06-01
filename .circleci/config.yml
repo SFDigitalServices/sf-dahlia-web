@@ -42,6 +42,14 @@ commands:
     description: "Start Rails in abackgroiund"
     steps:
       - run:
+          name: Setup e2e
+          command: |
+            ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
+            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
+            ./node_modules/protractor/bin/webdriver-manager status
+      - run:
           name: Run rails server in background
           command: bundle exec rails server -p 3000
           background: true
