@@ -24,6 +24,33 @@ aliases:
         keys:
             - npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
             - bundle-v1-{{ checksum "Gemfile.lock" }}
+commands:
+  setup:
+    description: "Basic setup"
+    steps:
+      - checkout
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          name: Upgrade bundler
+          command: |
+            gem update --system
+            gem install bundler
+      - run: bundle --path vendor/bundle
+  start-server:
+    description: "Start Rails in abackgroiund"
+    steps:
+      - run:
+          name: Run rails server in background
+          command: bundle exec rails server -p 3000
+          background: true
+      - run:
+          name: Wait for server
+          command: |
+            until $(curl --retry 10 --output /dev/null --silent --head --fail http://127.0.0.1:3000); do
+                printf '.'
+                sleep 5
+            done
 jobs:
   build:
     <<: *defaults
@@ -85,22 +112,23 @@ jobs:
   backend:
     <<: *defaults
     steps:
-      - checkout
-      - *attach_workspace
-      - *restore_cache
-      - run:
-          name: Upgrade bundler
-          command: |
-            gem update --system
-            gem install bundler
-      - run: bundle --path vendor/bundle
+      - setup
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
+  e2e-submit-application:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: npm run protractor -- --specs './spec/e2e/features/short_form/submitting_application.feature'
 workflows:
   version: 2.1
   build-and-deploy:
     jobs:
       - build
       - backend:
+          requires:
+            - build
+      - e2e-submit-application:
           requires:
             - build
