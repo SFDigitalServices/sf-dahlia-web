@@ -37,6 +37,7 @@ commands:
             gem update --system
             gem install bundler
       - run: bundle --path vendor/bundle
+      - run: bundle exec rake assets:precompile
       - run: npm install
   start-server:
     description: "Start Rails in abackgroiund"
