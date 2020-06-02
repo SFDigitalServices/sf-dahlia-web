@@ -78,8 +78,8 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      # - run: sudo apt-get update
-      # - run: sudo apt-get install openjdk-8-jre
+      - run: sudo apt-get update
+      - run: sudo apt-get install openjdk-8-jre
       # - run: sudo apt-get install chromedriver
       - run:
           name: Install node
