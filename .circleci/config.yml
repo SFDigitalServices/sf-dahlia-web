@@ -13,6 +13,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia_test
+    - image: selenium/standalone-chrome:3.1.0
   executor: ruby/default
 aliases:
   - &attach_workspace
@@ -77,6 +78,9 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
+      # - run: sudo apt-get update
+      # - run: sudo apt-get install openjdk-8-jre
+      # - run: sudo apt-get install chromedriver
       - run:
           name: Install node
           command: |
