@@ -32,6 +32,8 @@ commands:
       - checkout
       - *attach_workspace
       - *restore_cache
+      - run: sudo apt-get update
+      - run: sudo apt-get install openjdk-8-jre
       - run:
           name: Install node 6.11.1
           command: |
