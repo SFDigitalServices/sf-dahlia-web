@@ -114,6 +114,7 @@ jobs:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
+      - run: bundle exec rake db:migrate
       - run:
           name:  Download cc-test-reporter
           command: |
