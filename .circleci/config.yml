@@ -4,7 +4,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: circleci/ruby:2.5.3
+    - image: circleci/ruby:2.5.3-browsers
       environment:
         RAILS_ENV: test
         PGHOST: 127.0.0.1
@@ -13,7 +13,6 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia_test
-    - image: selenium/standalone-chrome:3.1.0
   executor: ruby/default
 aliases:
   - &attach_workspace
@@ -50,7 +49,6 @@ commands:
             gem update --system
             gem install bundler
       - run: bundle --path vendor/bundle
-      - run: bundle exec rake assets:precompile
       - run: npm install
   start-server:
     description: "Start Rails in abackgroiund"
