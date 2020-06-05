@@ -4,7 +4,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: circleci/ruby:2.5.3
+    - image: circleci/ruby:2.5.3-browsers-legacy
       environment:
         RAILS_ENV: test
         PGHOST: 127.0.0.1
@@ -51,9 +51,9 @@ commands:
       - run: bundle --path vendor/bundle
       - run: npm install
   start-server:
-    description: "Start Rails in abackgroiund"
+    description: "Start Rails in a background"
     steps:
-      - run: sudo apt install ./google-chrome-stable_current_amd64.deb
+      # - run: sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Setup e2e
           command: |
@@ -125,11 +125,11 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
             ./tmp/cc-test-reporter before-build
-      - run:
-          name: Install Chrome
-          command: |
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo apt install ./google-chrome-stable_current_amd64.deb
+      # - run:
+      #     name: Install Chrome
+      #     command: |
+      #       wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #       sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Setup e2e
           command: |
