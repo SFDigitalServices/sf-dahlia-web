@@ -4,7 +4,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: circleci/ruby:2.5.3-browsers-legacy
+    - image: circleci/ruby:2.5.3
       environment:
         RAILS_ENV: test
         PGHOST: 127.0.0.1
@@ -13,6 +13,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia_test
+    - image: selenium/standalone-chrome:3.1.0
   executor: ruby/default
 aliases:
   - &attach_workspace
@@ -49,21 +50,19 @@ commands:
             gem update --system
             gem install bundler
       - run: bundle --path vendor/bundle
+      - run: bundle exec rake assets:precompile
       - run: npm install
   start-server:
-    description: "Start Rails in a background"
+    description: "Start Rails in abackgroiund"
     steps:
-      # - run: sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Setup e2e
           command: |
-            ./node_modules/protractor/bin/webdriver-manager clean
             ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
             cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             ./node_modules/protractor/bin/webdriver-manager status
-      - run: bundle exec rails db:migrate
       - run:
           name: Run rails server in background
           command: bundle exec rails server -p 3000
@@ -117,7 +116,6 @@ jobs:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
       - run: bundle exec rake db:test:prepare
-      - run: bundle exec rake db:migrate
       - run:
           name:  Download cc-test-reporter
           command: |
@@ -125,11 +123,6 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
             ./tmp/cc-test-reporter before-build
-      # - run:
-      #     name: Install Chrome
-      #     command: |
-      #       wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      #       sudo apt install ./google-chrome-stable_current_amd64.deb
       - run:
           name: Setup e2e
           command: |
