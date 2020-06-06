@@ -51,6 +51,7 @@ commands:
       - run: bundle --path vendor/bundle
       - run: bundle exec rake assets:precompile
       - run: npm install
+      - run: bundle exec rails db:migrate
   start-server:
     description: "Start Rails in abackgroiund"
     steps:
@@ -63,7 +64,6 @@ commands:
             sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             ./node_modules/protractor/bin/webdriver-manager status
-      - run: bundle exec rails db:migrate
       - run:
           name: Run rails server in background
           command: bundle exec rails server -p 3000
