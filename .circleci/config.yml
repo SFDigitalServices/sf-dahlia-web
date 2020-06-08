@@ -91,7 +91,7 @@ commands:
     steps:
       - setup
       - start-server
-      - run: npm run protractor -- --specs '<< parameters.feature-path >>'
+      - run: npm run protractor -- --specs '<< parameters.path >>'
 
 jobs:
   build:
