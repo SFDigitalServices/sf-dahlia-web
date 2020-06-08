@@ -53,7 +53,7 @@ commands:
       - run: npm install
       - run: bundle exec rails db:migrate
   start-server:
-    description: "Start Rails in abackgroiund"
+    description: "Start Rails server in background"
     steps:
       - run:
           name: Setup e2e
@@ -83,7 +83,6 @@ jobs:
       - *attach_workspace
       - run: sudo apt-get update
       - run: sudo apt-get install openjdk-8-jre
-      # - run: sudo apt-get install chromedriver
       - run:
           name: Install node
           command: |
