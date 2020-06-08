@@ -143,17 +143,17 @@ jobs:
     <<: *defaults
     steps:
       - run-e2e-tests-for-path:
-        path: "./spec/e2e/features/short_form/submitting_application.feature"
+          path: "./spec/e2e/features/short_form/submitting_application.feature"
   e2e-sign-in-apply:
     <<: *defaults
     steps:
       - run-e2e-tests-for-path:
-        path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
+          path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
   e2e-other-short-form:
     <<: *defaults
     steps:
       - run-e2e-tests-for-path:
-        path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
+          path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
 workflows:
   version: 2.1
   build-and-deploy:
