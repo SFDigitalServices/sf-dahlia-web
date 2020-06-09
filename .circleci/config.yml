@@ -37,6 +37,7 @@ commands:
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             echo 'nvm install v6.11.1' >> $BASH_ENV
             echo 'nvm alias default v6.11.1' >> $BASH_ENV
+      - run: npm install
   setup-webdriver:
     description: "Setup webdriver for e2e tests"
     steps:
@@ -53,23 +54,15 @@ commands:
     steps:
       - run: gem update --system
       - run: gem install bundler
-  update-and-install-packages:
-    description: Update and install packages
-    steps:
-      - run: sudo apt-get update
-      - run: sudo apt-get install openjdk-8-jre
-      - install-node
-      - run: npm install
   setup:
     description: "Basic setup"
     steps:
       - checkout
       - *attach_workspace
       - *restore_cache
-      - update-and-install-packages
+      - install-node
       - upgrade-bundler
       - run: bundle --path vendor/bundle
-      - run: bundle exec rake assets:precompile
       - run: bundle exec rails db:migrate
   start-server:
     description: "Start Rails server in background"
@@ -103,7 +96,7 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
-      - update-and-install-packages
+      - install-node
       - save_cache:
           name: Save Npm Package Cache
           key: npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
