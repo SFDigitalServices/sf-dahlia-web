@@ -68,7 +68,7 @@ gem 'hashie'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '>= 1.10.8'
+gem 'nokogiri', '>= 1.10.9'
 gem 'actionpack-page_caching', '~> 1.1.0'
 
 # image manipulation
