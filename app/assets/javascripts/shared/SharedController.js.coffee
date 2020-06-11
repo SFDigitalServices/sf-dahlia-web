@@ -25,7 +25,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
   $scope.feedbackUrl = 'https://docs.google.com/\
     forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
 
-  $scope.researchUrl = 'https://www.surveymonkey.com/r/JRH73K8'
+  $scope.researchUrl = $window.env.researchFormUrl
 
   $scope.listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
 
