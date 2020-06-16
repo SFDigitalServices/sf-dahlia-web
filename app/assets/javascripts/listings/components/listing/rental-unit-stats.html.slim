@@ -20,7 +20,7 @@ div.table-pricing-wrapper
             small.pricing-table-waitlist ng-if="::priceGroup.Status == 'Occupied'"
               | {{'listings.stats.waitlist' | translate}}
             span ng-if="::priceGroup.Status != 'Occupied'"
-              i
+              i.notranslate
                 | {{::priceGroup.total}}
               small
                 | {{'listings.stats.available' | translate}}
@@ -40,7 +40,7 @@ div.table-pricing-wrapper
                     | {{ 'listings.stats.maximum' | translate }}
               tbody
                 tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
-                  td.is-subtitled-nested data-th="{{ 'listings.stats.household_size' | translate }}"
+                  td.is-subtitled-nested.notranslate data-th="{{ 'listings.stats.household_size' | translate }}"
                     | {{ incomeLimit.occupancy }}
                   td.is-subtitled-nested data-th="{{ 'listings.stats.minimum' | translate }}"
                     span ng-if="::incomeLimit.minIncome != 0"
