@@ -1190,7 +1190,6 @@
         },
         "thank_you": "Gracias",
         "welcome": {
-            "all_application_closed": "Todas las solicitudes están cerradas en este momento, pero puede ver los anuncios cerrados.",
             "new_listing_email_alert": "Reciba un aviso por correo electrónico cuando se publiquen nuevos anuncios.",
             "see_rental_listings": "Alquilar",
             "see_sale_listings": "Comprar",

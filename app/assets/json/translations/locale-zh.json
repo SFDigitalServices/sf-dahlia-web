@@ -1191,7 +1191,6 @@
         },
         "thank_you": "謝謝",
         "welcome": {
-            "all_application_closed": "所有申請目前均已結束，但是您可以查看已結束的清單。",
             "new_listing_email_alert": "每當發佈新的物業項目時，將以電子郵件接收通知。",
             "see_rental_listings": "租賃",
             "see_sale_listings": "購買",
