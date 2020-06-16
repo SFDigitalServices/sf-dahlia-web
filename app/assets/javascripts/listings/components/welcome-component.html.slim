@@ -4,10 +4,6 @@ section.splash-header.bg-image
       h1.hero-title.c-white
         | {{'welcome.title' | translate}}
       .row
-        .medium-9.medium-centered.columns
-          p.delta.t-sans.t-shadow.c-white ng-if="$ctrl.parent.openListings.length == 0"
-            | {{'welcome.all_application_closed' | translate}}
-      .row
         .medium-6.medium-centered.columns
           .medium-6.columns ng-class="{'small-centered': !$ctrl.parent.showSaleListings}"
             a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
