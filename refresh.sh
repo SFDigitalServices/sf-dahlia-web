@@ -7,15 +7,14 @@
 
 # To use this script:
 #   1. Put the updated env vars in a file (.env generally)
-#   2. Add names of apps to update under webapp_apps
-#.  3. If you don't already have it installed, install the [Semaphore CLI](https://semaphoreci.com/docs/cli-overview.html) and login
+#   2. If you don't already have it installed, run `brew install jq` to install the jq tool
+#   3. Get a circleCI token by going to https://app.circleci.com/settings/user/tokens and adding a personal API token.
 #   3. Run the script, passing your path to env vars as an argument
 
-# TODO: Pull in heroku apps from files or at least review app numbers command line arg
+# TODO: add a qa flag to allow updates for QA.
 
 # Argument defaults
 env_file=".env"
-semaphore_secret="sf-dahlia-web-full"
 
 while getopts ":f::s::h" opt; do
   case $opt in
@@ -23,14 +22,14 @@ while getopts ":f::s::h" opt; do
       echo "Usage:"
       echo "    refresh.sh -h                           Display this help message."
       echo "    refresh.sh -f <environment file>        Specify an environment file to load from, defaults to .env."
-      echo "    refresh.sh -s <semaphore secret name>   Specify a Semaphore secret name to update, defaults to sf-dahlia-web-full."
+      echo "    refresh.sh -c <circle ci token>         Provide a CircleCI token."
       exit 0
       ;;
     f )
       env_file=$OPTARG
       ;;
-    s )
-      semaphore_secret=$OPTARG
+    c )
+      circle_ci_token=$OPTARG
       ;;
     \? ) echo "Usage: cmd [-h] [-f]"
       ;;
@@ -45,15 +44,11 @@ echo "loaded SALESFORCE_CLIENT_ID=$SALESFORCE_CLIENT_ID"
 echo "loaded SALESFORCE_INSTANCE_URL=$SALESFORCE_INSTANCE_URL"
 
 echo "Starting Heroku credential update for Webapp"
-# Get these app names from running "heroku apps"
-declare -a webapp_apps=(
-  "dahlia-full"
-  "dahlia-qa-translations"
-  "dahlia-full-pr-1268"
-  "dahlia-full-pr-1272"
-)
 
-for app in "${webapp_apps[@]}"
+# Get all apps that are dahlia-web-full apps.
+web_full_apps=$(heroku apps --team=sfdigitalservices --json | jq '.[].name | select(test("dahlia-web-full-*"))' )
+
+for app in $web_full_apps
   do
     echo "Updating credentials for $app"
     heroku config:set SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD --app $app
@@ -67,7 +62,8 @@ done
 echo "Heroku update complete"
 
 
-echo "Starting Semaphore credential update for $semaphore_secret"
+echo "Starting CircleCI credential update"
+BASE_CIRCLECI_URL="https://circleci.com/api/v1.1/project/github/SFDigitalServices/sf-dahlia-web/envvar"
 
 sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_PASSWORD
 sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_SECURITY_TOKEN
@@ -75,10 +71,18 @@ sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_CLIENT_SE
 sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_CLIENT_ID
 sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_INSTANCE_URL
 
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_PASSWORD --content "$SALESFORCE_PASSWORD"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_SECURITY_TOKEN --content "$SALESFORCE_SECURITY_TOKEN"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_CLIENT_SECRET --content "$SALESFORCE_CLIENT_SECRET"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_CLIENT_ID --content "$SALESFORCE_CLIENT_ID"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_INSTANCE_URL --content "$SALESFORCE_INSTANCE_URL"
+# Delete existing env vars
+curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_PASSWORD?circle-token=$circle_ci_token
+curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_SECURITY_TOKEN?circle-token=$circle_ci_token
+curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_CLIENT_SECRET?circle-token=$circle_ci_token
+curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_CLIENT_ID?circle-token=$circle_ci_token
+curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_INSTANCE_URL?circle-token=$circle_ci_token
 
-echo "Credentials updated for Semaphore"
+# Create new env vars
+curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_PASSWORD", "value": "$SALESFORCE_PASSWORD"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_SECURITY_TOKEN", "value": "$SALESFORCE_SECURITY_TOKEN"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_CLIENT_SECRET", "value": "$SALESFORCE_CLIENT_SECRET"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_CLIENT_ID", "value": "$SALESFORCE_CLIENT_ID"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_INSTANCE_URL", "value": "$SALESFORCE_INSTANCE_URL"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+
+echo "Credentials updated for CircleCI"
