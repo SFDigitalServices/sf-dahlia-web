@@ -47,10 +47,6 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome.html'
-      resolve:
-        listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: false})
-        ]
     })
     .state('dahlia.housing-counselors', {
       url: '/housing-counselors'
