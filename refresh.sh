@@ -84,11 +84,11 @@ if [ $env == "full" ]; then
   curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_INSTANCE_URL?circle-token=$circle_ci_token
 
   # Create new env vars
-  curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_PASSWORD", "value": "$SALESFORCE_PASSWORD"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_SECURITY_TOKEN", "value": "$SALESFORCE_SECURITY_TOKEN"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_CLIENT_SECRET", "value": "$SALESFORCE_CLIENT_SECRET"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_CLIENT_ID", "value": "$SALESFORCE_CLIENT_ID"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d '{"name": "SALESFORCE_INSTANCE_URL", "value": "$SALESFORCE_INSTANCE_URL"}' $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_PASSWORD\", \"value\": \"$SALESFORCE_PASSWORD\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_SECURITY_TOKEN\", \"value\": \"$SALESFORCE_SECURITY_TOKEN\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_CLIENT_SECRET\", \"value\": \"$SALESFORCE_CLIENT_SECRET\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_CLIENT_ID\", \"value\": \"$SALESFORCE_CLIENT_ID\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_INSTANCE_URL\", \"value\": \"$SALESFORCE_INSTANCE_URL\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
 
   echo "Credentials updated for CircleCI"
 fi
