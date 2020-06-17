@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=3%234icmT1bynM28L*<<SALESFORCE_SECURITY_TOKEN>>
@@ -45,8 +45,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--Full.cs68.my.salesforce.com","id":"https://test.salesforce.com/id/00D1D0000009nrYUAQ/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1575324769636","signature":"AmY6hJIjHxWvdsDM2eAcjqV8xyNVqohyKQpMG/ZEaiw="}'
-    http_version: 
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D1D0000009nrYUAQ/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1575324769636","signature":"AmY6hJIjHxWvdsDM2eAcjqV8xyNVqohyKQpMG/ZEaiw="}'
+    http_version:
   recorded_at: Mon, 02 Dec 2019 22:12:49 GMT
 - request:
     method: get
@@ -561,6 +561,6 @@ http_interactions:
         Complete","Publish_Lottery_Results__c":true,"Lottery_Results_Date__c":"2018-02-28","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":1,"LastModifiedDate":"2019-12-02T21:22:07.000+0000","Building_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/1400%20Mission.jpg","Allows_Realtor_Commission__c":false,"Building_Name__c":"1400
         Mission","Building_Street_Address__c":"1400 Mission","Building_City__c":"San
         Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94103","Building__c":"a0a0P00000EpgqFQAR","RecordTypeId":"0120P000000kPUSQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0P00000EpgqFQAR"},"Id":"a0a0P00000EpgqFQAR","Number_of_Parking_Spaces__c":0},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPUSQA2"},"Id":"0120P000000kPUSQA2","Name":"Rental"}},"doesMatch":null,"chartTypes":[{"year":2016,"percent":150,"numOfHousehold":null,"chartType":"HCD/TCAC","amount":null}]}]'
-    http_version: 
+    http_version:
   recorded_at: Mon, 02 Dec 2019 22:12:50 GMT
 recorded_with: VCR 5.0.0

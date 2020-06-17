@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545881199400","signature":"Fgn9Lzxx+6EjlI5+R8h0R1u6ZVFtuWlEOCjDYuIFK0Q="}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:26:39 GMT
 - request:
     method: get
@@ -100,7 +100,7 @@ http_interactions:
       string: '{"totalMonthlyRent":null,"status":"Draft","shortFormPreferences":[],"referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"race":null,"preferenceAddressMatch":null,"phoneType":"Home","phone":"2222222222","noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"appMemberType":"Primary
         Applicant","appMemberId":"a0n0P00000AwpInQAJ","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"otherHousingCounselingAgency":null,"name":"APP-00038758","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00038758","listingID":"a0WU000000ClNXGMA3","id":"a0o0P00000FEUwHQAX","housingCounselingAgency":null,"householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","race":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"candidateScore":null,"appMemberType":"Household
         Member","appMemberId":"a0n21000003kqntAAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"hasSenior":null,"hasPublicHousing":null,"hasMilitaryService":null,"hasDevelopmentalDisability":null,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":"No","appRTType":"Rental_Short_Form","applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false,"adaPrioritiesSelected":null}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:26:39 GMT
 - request:
     method: post
@@ -154,6 +154,6 @@ http_interactions:
       string: '{"totalMonthlyRent":null,"status":"Draft","shortFormPreferences":[],"referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"race":null,"preferenceAddressMatch":null,"phoneType":"Home","phone":"2222222222","noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"appMemberType":"Primary
         Applicant","appMemberId":"a0n0P00000AwpInQAJ","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"otherHousingCounselingAgency":null,"name":"APP-00038758","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00038758","listingID":"a0WU000000ClNXGMA3","id":"a0o0P00000FEUwHQAX","housingCounselingAgency":null,"householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","race":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"candidateScore":null,"appMemberType":"Household
         Member","appMemberId":"a0n21000003kqntAAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"hasSenior":null,"hasPublicHousing":null,"hasMilitaryService":null,"hasDevelopmentalDisability":null,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":null,"appRTType":"Rental_Short_Form","applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false,"adaPrioritiesSelected":null}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:26:41 GMT
 recorded_with: VCR 3.0.3

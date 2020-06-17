@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263513940","signature":"8ht8EC0urZbjOlwgooGMf/84JimlsrP9ujWabWASlI8="}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 10 Jul 2018 22:58:35 GMT
 - request:
     method: get
@@ -353,6 +353,6 @@ http_interactions:
         cnRUeXBlcyI6W3sieWVhciI6MjAxNiwicGVyY2VudCI6MTAwLCJudW1PZkhv
         dXNlaG9sZCI6bnVsbCwiY2hhcnRUeXBlIjoiSFVEIFVuYWRqdXN0ZWQiLCJh
         bW91bnQiOm51bGx9XX1d
-    http_version: 
+    http_version:
   recorded_at: Tue, 10 Jul 2018 22:58:36 GMT
 recorded_with: VCR 3.0.3
