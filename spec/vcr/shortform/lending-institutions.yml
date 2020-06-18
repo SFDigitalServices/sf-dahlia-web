@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -46,7 +46,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1560383190038","signature":"VmPiGaxMXIU//KTteBlS/i+nwuKNJN6ZJzS/nA8JmGc="}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 12 Jun 2019 23:46:30 GMT
 - request:
     method: get
@@ -163,6 +163,6 @@ http_interactions:
         Home Equity","Id":"0010P00001lSyoUQAS","RecordTypeId":"012U0000000A9j7IAC","Contacts":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Contact","url":"/services/data/v45.0/sobjects/Contact/0030P00001tR5NKQA0"},"AccountId":"0010P00001lSyoUQAS","Id":"0030P00001tR5NKQA0","FirstName":"John","LastName":"Ruiz","Email":"jruiz@peopleshomeequity.com","Phone":"(630)
         318-1696","NMLS__c":"560079","BMR_Certified__c":false,"DALP_Certified__c":false,"MCC_Certified__c":false,"Accepting_New_MOHCD_Clients__c":false,"RecordTypeId":"012U0000000A9jKIAS"}]}},{"attributes":{"type":"Account","url":"/services/data/v45.0/sobjects/Account/0010P00001lv96zQAA"},"Name":"SF
         Fire Credit Union","Id":"0010P00001lv96zQAA","RecordTypeId":"012U0000000A9j7IAC","Contacts":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Contact","url":"/services/data/v45.0/sobjects/Contact/0030P00001u2xLfQAI"},"AccountId":"0010P00001lv96zQAA","Id":"0030P00001u2xLfQAI","FirstName":"Vera","LastName":"Man","Email":"vman@sffirecu.org","BMR_Certified__c":false,"DALP_Certified__c":false,"MCC_Certified__c":false,"Accepting_New_MOHCD_Clients__c":false,"RecordTypeId":"012U0000000A9jKIAS"}]}}]'
-    http_version: 
+    http_version:
   recorded_at: Wed, 12 Jun 2019 23:46:30 GMT
 recorded_with: VCR 4.0.0

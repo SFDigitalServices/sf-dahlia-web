@@ -12,7 +12,7 @@ We use [JMeter](https://jmeter.apache.org/) to stress test our Salesforce API wh
 ## Running the Sharing Stress Test file
 
 ### Get a valid auth token
-1. Using e.g. Postman, setup a POST request to the ADMIN_TOKEN_URL (https://test.salesforce.com/services/oauth2/token)
+1. Using e.g. Postman, setup a POST request to the ADMIN_TOKEN_URL (https://sfhousing--full.my.salesforce.com/services/oauth2/token)
 1. Update the Body to have the following keys (values are in the .env file):
   ```
   grant_type:password
