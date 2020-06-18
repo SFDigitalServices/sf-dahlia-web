@@ -16,6 +16,23 @@
 # Argument defaults
 env_file=".env"
 
+VARS_TO_UPDATE_CIRCLE_CI=(
+  "SALESFORCE_HOST"
+  "SALESFORCE_PASSWORD"
+  "SALESFORCE_SECURITY_TOKEN"
+  "SALESFORCE_CLIENT_SECRET"
+  "SALESFORCE_CLIENT_ID"
+  "SALESFORCE_INSTANCE_URL"
+)
+
+VARS_TO_UPDATE_HEROKU=(
+  "SALESFORCE_PASSWORD"
+  "SALESFORCE_SECURITY_TOKEN"
+  "SALESFORCE_CLIENT_SECRET"
+  "SALESFORCE_CLIENT_ID"
+  "SALESFORCE_INSTANCE_URL"
+)
+
 while getopts ":h::e::c:" opt; do
   case $opt in
     h )
@@ -37,11 +54,11 @@ while getopts ":h::e::c:" opt; do
 done
 echo "Loading environment variables from file: $env_file"
 source $env_file
-echo "loaded SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD"
-echo "loaded SALESFORCE_SECURITY_TOKEN=$SALESFORCE_SECURITY_TOKEN"
-echo "loaded SALESFORCE_CLIENT_SECRET=$SALESFORCE_CLIENT_SECRET"
-echo "loaded SALESFORCE_CLIENT_ID=$SALESFORCE_CLIENT_ID"
-echo "loaded SALESFORCE_INSTANCE_URL=$SALESFORCE_INSTANCE_URL"
+
+for varname in ${VARS_TO_UPDATE_CIRCLE_CI[@]}; do
+  value="${!varname}"
+  echo "loaded $varname=$value"
+done
 
 echo "Starting Heroku credential update for Webapp $env"
 
@@ -62,11 +79,10 @@ for app in ${heroku_apps[@]}
     # Strip out double quotes from app names
     app=$(echo "$app" | tr -d '"')
     echo "Updating credentials for $app"
-    heroku config:set SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD --app $app
-    heroku config:set SALESFORCE_SECURITY_TOKEN=$SALESFORCE_SECURITY_TOKEN --app $app
-    heroku config:set SALESFORCE_CLIENT_SECRET=$SALESFORCE_CLIENT_SECRET --app $app
-    heroku config:set SALESFORCE_CLIENT_ID=$SALESFORCE_CLIENT_ID --app $app
-    heroku config:set SALESFORCE_INSTANCE_URL=$SALESFORCE_INSTANCE_URL --app $app
+    for varname in ${VARS_TO_UPDATE_HEROKU[@]}; do
+      value="${!varname}"
+      heroku config:set $varname=$value --app $app
+    done
     echo "echo 'User.destroy_all' | rails c  && exit" | heroku run bash --app $app
 done
 
@@ -76,19 +92,13 @@ if [ $env == "full" ]; then
   echo "Starting CircleCI credential update"
   BASE_CIRCLECI_URL="https://circleci.com/api/v1.1/project/github/SFDigitalServices/sf-dahlia-web/envvar"
 
-  # Delete existing env vars
-  curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_PASSWORD?circle-token=$circle_ci_token
-  curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_SECURITY_TOKEN?circle-token=$circle_ci_token
-  curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_CLIENT_SECRET?circle-token=$circle_ci_token
-  curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_CLIENT_ID?circle-token=$circle_ci_token
-  curl -X DELETE $BASE_CIRCLECI_URL/SALESFORCE_INSTANCE_URL?circle-token=$circle_ci_token
-
-  # Create new env vars
-  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_PASSWORD\", \"value\": \"$SALESFORCE_PASSWORD\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_SECURITY_TOKEN\", \"value\": \"$SALESFORCE_SECURITY_TOKEN\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_CLIENT_SECRET\", \"value\": \"$SALESFORCE_CLIENT_SECRET\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_CLIENT_ID\", \"value\": \"$SALESFORCE_CLIENT_ID\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
-  curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"SALESFORCE_INSTANCE_URL\", \"value\": \"$SALESFORCE_INSTANCE_URL\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  for varname in ${VARS_TO_UPDATE_CIRCLE_CI[@]}; do
+    value="${!varname}"
+    # Delete existing env var
+    curl -s -X DELETE $BASE_CIRCLECI_URL/$varname?circle-token=$circle_ci_token
+    # Create new env var
+    curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"$varname\", \"value\": \"$value\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  done
 
   echo "Credentials updated for CircleCI"
 fi
