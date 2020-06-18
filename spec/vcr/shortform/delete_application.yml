@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545881340987","signature":"cfWLGg6NK61poMsdAJBaq1lr+PGBRVTmx+A94W25c8c="}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:29:01 GMT
 - request:
     method: get
@@ -102,7 +102,7 @@ http_interactions:
         LEANDRO","mailingAddress":"1476 TROJAN AVE","lastName":"Alvarado","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Miguel","ethnicity":"Hispanic/Latino","email":"imogul@gmail.com","DOB":"1976-10-05","contactId":"0030P000020bdvhQAA","city":"SAN
         LEANDRO","candidateScore":null,"appMemberType":"Primary Applicant","appMemberId":"a0n0P00000AwpIPQAZ","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":"1476
         TROJAN AVE"},"otherHousingCounselingAgency":null,"name":"APP-00309238","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00309238","listingID":"a0W0P00000DZTkAUAX","id":"a0o210000027YtiAAE","housingCounselingAgency":null,"householdVouchersSubsidies":"false","householdMembers":[],"hasSenior":null,"hasPublicHousing":null,"hasMilitaryService":null,"hasDevelopmentalDisability":null,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":"No","appRTType":"Rental_Short_Form","applicationSubmittedDate":"2018-12-26","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":75000.00,"alternateContact":null,"agreeToTerms":true,"adaPrioritiesSelected":null}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:29:01 GMT
 - request:
     method: delete
@@ -148,6 +148,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 27 Dec 2018 03:29:02 GMT
 recorded_with: VCR 3.0.3

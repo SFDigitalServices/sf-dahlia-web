@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263540444","signature":"ARA5czQbKSnNk/3xAGCYDinuJhlqwH6Aihxjwi33Obo="}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 10 Jul 2018 22:59:02 GMT
 - request:
     method: post
@@ -102,6 +102,6 @@ http_interactions:
       string: '{"whichOne":null,"totalMonthlyRent":null,"status":"Submitted","shortFormPreferences":[],"referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"race":null,"preferenceAddressMatch":null,"phoneType":"Home","phone":"2222222222","noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"0030U00000KJYveQAH","city":null,"candidateScore":null,"appMemberType":"Primary
         Applicant","appMemberId":"a0n0U000008c4kfQAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"other":null,"name":"APP-00230667","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00230667","listingID":"a0WU000000ClNXGMA3","id":"a0o0U000000braWQAQ","householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","race":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"candidateScore":null,"appMemberType":"Household
         Member","appMemberId":"a0n0U000008c4keQAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"hasPublicHousing":null,"hasMilitaryService":null,"hasDevelopmentalDisability":null,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":null,"appRTType":"Rental_Short_Form","applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false,"adaPrioritiesSelected":null}'
-    http_version: 
+    http_version:
   recorded_at: Tue, 10 Jul 2018 22:59:04 GMT
 recorded_with: VCR 3.0.3

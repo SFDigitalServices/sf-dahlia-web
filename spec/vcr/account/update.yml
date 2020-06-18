@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -46,7 +46,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1567201629703","signature":"39CcwAgsaXLYTTrXddTkbSftAZR3Qn8zKS/hmFBTaVg="}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 30 Aug 2019 21:47:09 GMT
 - request:
     method: post
@@ -98,6 +98,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"race":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"otherLanguages":null,"noPhone":null,"noEmail":null,"noAddress":null,"MLSId":null,"middleName":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"lastName":"last","languageOther":null,"language":null,"hiv":null,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":null,"genderOther":null,"gender":null,"firstName":"first","ethnicity":null,"email":"test@test.com","DOB":null,"DALPCertified":null,"contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"BMRCertified":null,"appMemberType":null,"appMemberId":null,"alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null}'
-    http_version: 
+    http_version:
   recorded_at: Fri, 30 Aug 2019 21:47:10 GMT
 recorded_with: VCR 5.0.0
