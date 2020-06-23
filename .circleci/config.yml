@@ -198,7 +198,7 @@ workflows:
                 - production
                 - chores/circle-ci-on-production-#173302542
       - e2e-production:
-          context: webapp-production
+          context: webapp-prod
           requires:
             - build
           filters:
