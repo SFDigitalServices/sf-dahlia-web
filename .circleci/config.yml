@@ -151,6 +151,15 @@ jobs:
     steps:
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
+  e2e-production:
+    <<: *defaults
+    steps:
+      - run-e2e-tests-for-path:
+          path: "./spec/e2e/features/short_form/submitting_application.feature"
+      - run-e2e-tests-for-path:
+          path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
+      - run-e2e-tests-for-path:
+          path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
 workflows:
   version: 2.1
   build-and-deploy:
@@ -159,12 +168,41 @@ workflows:
       - backend:
           requires:
             - build
+          filters:
+            branches:
+              ignore:
+                - production
+                - chores/circle-ci-on-production-#173302542
       - e2e-submit-application:
           requires:
             - build
+          filters:
+            branches:
+              ignore:
+                - production
+                - chores/circle-ci-on-production-#173302542
       - e2e-sign-in-apply:
           requires:
             - build
+          filters:
+            branches:
+              ignore:
+                - production
+                - chores/circle-ci-on-production-#173302542
       - e2e-other-short-form:
           requires:
             - build
+          filters:
+            branches:
+              ignore:
+                - production
+                - chores/circle-ci-on-production-#173302542
+      - e2e-production:
+          context: webapp-production
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - chores/circle-ci-on-production-#173302542
+                - production
