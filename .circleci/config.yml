@@ -183,7 +183,6 @@ workflows:
             branches:
               ignore:
                 - production
-                - chores/circle-ci-on-production-#173302542
       - e2e-submit-application:
           requires:
             - build
@@ -191,7 +190,6 @@ workflows:
             branches:
               ignore:
                 - production
-                - chores/circle-ci-on-production-#173302542
       - e2e-sign-in-apply:
           requires:
             - build
@@ -199,7 +197,6 @@ workflows:
             branches:
               ignore:
                 - production
-                - chores/circle-ci-on-production-#173302542
       - e2e-other-short-form:
           requires:
             - build
@@ -207,7 +204,6 @@ workflows:
             branches:
               ignore:
                 - production
-                - chores/circle-ci-on-production-#173302542
       - e2e-production:
           context: webapp-prod
           requires:
@@ -215,5 +211,4 @@ workflows:
           filters:
             branches:
               only:
-                - chores/circle-ci-on-production-#173302542
                 - production
