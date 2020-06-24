@@ -18,13 +18,27 @@ aliases:
   - &attach_workspace
     attach_workspace:
       at: ~/web
-  - &restore_cache
+  - &restore_yarn_cache
     restore_cache:
-        name: Restore Cache
+        name: Restore Yarn Cache
         keys:
-            - npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - bundle-v1-{{ checksum "Gemfile.lock" }}
+          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}
+          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-main
+          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-
+  - &restore_bundler_cache
+    restore_cache:
+        name: Restore Bundler Cache
+        keys:
+          - web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
+          - web-{{ .Environment.CACHE_VERSION }}-dependencies-
 commands:
+  prepare_workspace:
+    description: "Attach workspace and restore cache"
+    steps:
+      - *attach_workspace
+      - *restore_yarn_cache
+      - *restore_bundler_cache
   install-node:
     description: "install node"
     steps:
@@ -58,8 +72,7 @@ commands:
     description: "Basic setup"
     steps:
       - checkout
-      - *attach_workspace
-      - *restore_cache
+      - prepare_workspace
       - install-node
       - upgrade-bundler
       - run: bundle --path vendor/bundle
@@ -95,7 +108,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - *attach_workspace
+      - prepare_workspace
       - install-node
       - save_cache:
           name: Save Npm Package Cache
