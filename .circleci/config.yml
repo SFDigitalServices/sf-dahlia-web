@@ -18,14 +18,14 @@ aliases:
   - &attach_workspace
     attach_workspace:
       at: ~/web
-  - &restore_yarn_cache
+  - &restore_npm_cache
     restore_cache:
-        name: Restore Yarn Cache
+        name: Restore NPM Cache
         keys:
-          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}
-          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-main
-          - web-{{ .Environment.CACHE_VERSION }}-yarn-packages-
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-main
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-
   - &restore_bundler_cache
     restore_cache:
         name: Restore Bundler Cache
@@ -37,7 +37,7 @@ commands:
     description: "Attach workspace and restore cache"
     steps:
       - *attach_workspace
-      - *restore_yarn_cache
+      - *restore_npm_cache
       - *restore_bundler_cache
   install-node:
     description: "install node"
