@@ -85,9 +85,15 @@ commands:
       path:
         type: string
         default: "./spec/e2e/test-feature-path.feature"
+      skip-setup:
+        type: boolean
+        default: false
     steps:
-      - setup
-      - start-server
+      - unless:
+          condition: << parameters.skip-setup >>
+          steps:
+            - setup
+            - start-server
       - run: npm run protractor -- --specs '<< parameters.path >>'
 
 jobs:
@@ -154,12 +160,17 @@ jobs:
   e2e-production:
     <<: *defaults
     steps:
+      - setup
+      - start-server
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/submitting_application.feature"
+          skip-setup: true
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
+          skip-setup: true
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
+          skip-setup: true
 workflows:
   version: 2.1
   build-and-deploy:
