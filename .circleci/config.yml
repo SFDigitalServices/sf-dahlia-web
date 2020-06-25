@@ -182,10 +182,10 @@ workflows:
           <<: *non_production_jobs
       - e2e-submit-application:
           <<: *prod_and_release_jobs
-          name: e2e-submit-application-prod
+          name: prod-e2e-submit-application
       - e2e-sign-in-apply:
           <<: *prod_and_release_jobs
-          name: e2e-sign-in-apply-prod
+          name: prod-e2e-sign-in-apply
       - e2e-other-short-form:
           <<: *prod_and_release_jobs
-          name: e2e-other-short-form-prod
+          name: prod-e2e-other-short-form
