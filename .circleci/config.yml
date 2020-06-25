@@ -14,6 +14,21 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
   executor: ruby/default
+non_production_jobs: &non_production_jobs
+  filters:
+    branches:
+      ignore: production
+  requires:
+    - build
+prod_and_release_jobs: &prod_and_release_jobs
+  context: webapp-prod
+  requires:
+    - build
+  filters:
+    branches:
+      only:
+        - /^release.*$/
+        - production
 aliases:
   - &attach_workspace
     attach_workspace:
@@ -169,8 +184,9 @@ workflows:
     jobs:
       - build
       - backend:
-          requires:
-            - build
+          <<: *non_production_jobs
       - e2e:
-          requires:
-            - build
+          <<: *non_production_jobs
+      - e2e:
+          <<: *prod_and_release_jobs
+          name: e2e-production
