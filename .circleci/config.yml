@@ -211,6 +211,5 @@ workflows:
           filters:
             branches:
               only:
-                - /^releases.*$/
                 - /^release.*$/
                 - production
