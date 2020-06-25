@@ -28,7 +28,6 @@ prod_and_release_jobs: &prod_and_release_jobs
     branches:
       only:
         - /^release.*$/
-        - chores/circle-ci-on-production-#173302542
         - production
 aliases:
   - &attach_workspace
