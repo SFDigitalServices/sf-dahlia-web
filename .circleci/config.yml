@@ -14,6 +14,21 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
   executor: ruby/default
+non_production_jobs: &non_production_jobs
+  filters:
+    branches:
+      ignore: production
+  requires:
+    - build
+prod_and_release_jobs: &prod_and_release_jobs
+  context: webapp-prod
+  requires:
+    - build
+  filters:
+    branches:
+      only:
+        - /^release.*$/
+        - production
 aliases:
   - &attach_workspace
     attach_workspace:
@@ -85,15 +100,9 @@ commands:
       path:
         type: string
         default: "./spec/e2e/test-feature-path.feature"
-      skip-setup:
-        type: boolean
-        default: false
     steps:
-      - unless:
-          condition: << parameters.skip-setup >>
-          steps:
-            - setup
-            - start-server
+      - setup
+      - start-server
       - run: npm run protractor -- --specs '<< parameters.path >>'
 
 jobs:
@@ -157,59 +166,26 @@ jobs:
     steps:
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
-  e2e-production:
-    <<: *defaults
-    steps:
-      - setup
-      - start-server
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/submitting_application.feature"
-          skip-setup: true
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
-          skip-setup: true
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
-          skip-setup: true
+
 workflows:
   version: 2.1
   build-and-deploy:
     jobs:
       - build
       - backend:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - production
+          <<: *non_production_jobs
       - e2e-submit-application:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - production
+          <<: *non_production_jobs
       - e2e-sign-in-apply:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - production
+          <<: *non_production_jobs
       - e2e-other-short-form:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - production
-      - e2e-production:
-          context: webapp-prod
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - /^release.*$/
-                - production
+          <<: *non_production_jobs
+      - e2e-submit-application:
+          <<: *prod_and_release_jobs
+          name: e2e-submit-application-prod
+      - e2e-sign-in-apply:
+          <<: *prod_and_release_jobs
+          name: e2e-sign-in-apply-prod
+      - e2e-other-short-form:
+          <<: *prod_and_release_jobs
+          name: e2e-other-short-form-prod
