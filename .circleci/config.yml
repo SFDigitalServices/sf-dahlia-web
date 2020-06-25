@@ -149,21 +149,18 @@ jobs:
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
-  e2e-submit-application:
+  e2e:
     <<: *defaults
+    parallelism: 4
     steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/submitting_application.feature"
-  e2e-sign-in-apply:
-    <<: *defaults
-    steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
-  e2e-other-short-form:
-    <<: *defaults
-    steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
+      - setup
+      - start-server
+      - run:
+          name: Run e2e tests using test splitting
+          command: |
+            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=filesize)
+            echo "$TESTFILES"
+            npm run protractor -- --specs $TESTFILES
 workflows:
   version: 2.1
   build-and-deploy:
@@ -172,12 +169,6 @@ workflows:
       - backend:
           requires:
             - build
-      - e2e-submit-application:
-          requires:
-            - build
-      - e2e-sign-in-apply:
-          requires:
-            - build
-      - e2e-other-short-form:
+      - e2e:
           requires:
             - build
