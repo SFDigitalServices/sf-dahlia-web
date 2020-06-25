@@ -14,6 +14,21 @@ defaults: &defaults
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
   executor: ruby/default
+non_production_jobs: &non_production_jobs
+  filters:
+    branches:
+      ignore: production
+  requires:
+    - build
+prod_and_release_jobs: &prod_and_release_jobs
+  context: webapp-prod
+  requires:
+    - build
+  filters:
+    branches:
+      only:
+        - /^release.*$/
+        - production
 aliases:
   - &attach_workspace
     attach_workspace:
@@ -151,20 +166,26 @@ jobs:
     steps:
       - run-e2e-tests-for-path:
           path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
+
 workflows:
   version: 2.1
   build-and-deploy:
     jobs:
       - build
       - backend:
-          requires:
-            - build
+          <<: *non_production_jobs
       - e2e-submit-application:
-          requires:
-            - build
+          <<: *non_production_jobs
       - e2e-sign-in-apply:
-          requires:
-            - build
+          <<: *non_production_jobs
       - e2e-other-short-form:
-          requires:
-            - build
+          <<: *non_production_jobs
+      - e2e-submit-application:
+          <<: *prod_and_release_jobs
+          name: prod-e2e-submit-application
+      - e2e-sign-in-apply:
+          <<: *prod_and_release_jobs
+          name: prod-e2e-sign-in-apply
+      - e2e-other-short-form:
+          <<: *prod_and_release_jobs
+          name: prod-e2e-other-short-form
