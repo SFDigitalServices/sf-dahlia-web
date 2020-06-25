@@ -5,7 +5,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
 
     Scenario: Using an address outside the NRHP area, I should not see the preference option
         Given I go to the first page of the "Test Listing" application
-        When I fill out the Name page as "Jane Doe"
+        When I fill out the Name page as "Jeremy Doe"
         And I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
@@ -21,7 +21,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
 
     Scenario: Using an address inside the NRHP area, I should see the preference option
         Given I go to the first page of the "Test Listing" application
-        When I fill out the Name page as "Jane Doe"
+        When I fill out the Name page as "Jeremy Doe"
         And I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
@@ -41,7 +41,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
 
         When I click the Live in the Neighborhood checkbox
         # members who live within the eligible area should be in the dropdown, others should not
-        Then I should see "Jane Doe, Jonny Doe" in the preference dropdown and not "Karen Lee"
+        Then I should see "Jeremy Doe, Jonny Doe" in the preference dropdown and not "Karen Lee"
 
         When I select "Jonny Doe" for "neighborhoodResidence" preference
         And I go back to the Household page
@@ -53,17 +53,17 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
         And I indicate living in public housing
         And I hit the Next button "4" times
         And I opt out of "Assisted Housing" preference
-        # now that Jonny changed his address, ensure that preference is un-checked but Jane is still eligible
+        # now that Jonny changed his address, ensure that preference is un-checked but Jeremy is still eligible
         Then I should see the "neighborhoodResidence" checkbox un-checked
         When I click the Live in the Neighborhood checkbox
-        Then I should see "Jane Doe" in the preference dropdown and not "Jonny Doe, Karen Lee"
+        Then I should see "Jeremy Doe" in the preference dropdown and not "Jonny Doe, Karen Lee"
 
         # have to unselect it because the next step clicks it again
         When I click the Live in the Neighborhood checkbox
-        When I select "Jane Doe" for "neighborhoodResidence" preference
+        When I select "Jeremy Doe" for "neighborhoodResidence" preference
         And I upload a "School record" as my proof of preference for "neighborhoodResidence"
         And I click the Next button on the Live in the Neighborhood page
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
         And I fill out the optional survey
-        Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jane Doe"
+        Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jeremy Doe"
