@@ -112,7 +112,7 @@ jobs:
       - install-node
       - save_cache:
           name: Save Npm Package Cache
-          key: npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - upgrade-bundler
@@ -123,7 +123,8 @@ jobs:
             bundle config build.nokogiri --use-system-libraries
             bundle install --deployment --path vendor/bundle
       - save_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}
+          name: Save Bundle cache
+          key: web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
