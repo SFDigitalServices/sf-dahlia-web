@@ -160,7 +160,9 @@ jobs:
           command: |
             TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=filesize)
             echo "$TESTFILES"
-            npm run protractor -- --specs $TESTFILES
+            LIST=$(printf ",%s" "${TESTFILES[@]}")
+            LIST=${LIST:1}
+            npm run protractor -- --specs $LIST
 workflows:
   version: 2.1
   build-and-deploy:
