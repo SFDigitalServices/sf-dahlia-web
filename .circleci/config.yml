@@ -28,7 +28,6 @@ prod_and_release_jobs: &prod_and_release_jobs
     branches:
       only:
         - /^release.*$/
-        - chores/optimize-circleci-#172869530
         - production
 aliases:
   - &attach_workspace
