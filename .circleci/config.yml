@@ -33,13 +33,27 @@ aliases:
   - &attach_workspace
     attach_workspace:
       at: ~/web
-  - &restore_cache
+  - &restore_npm_cache
     restore_cache:
-        name: Restore Cache
+        name: Restore NPM Cache
         keys:
-            - npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - bundle-v1-{{ checksum "Gemfile.lock" }}
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-main
+          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-
+  - &restore_bundler_cache
+    restore_cache:
+        name: Restore Bundler Cache
+        keys:
+          - web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
+          - web-{{ .Environment.CACHE_VERSION }}-dependencies-
 commands:
+  prepare_workspace:
+    description: "Attach workspace and restore cache"
+    steps:
+      - *attach_workspace
+      - *restore_npm_cache
+      - *restore_bundler_cache
   install-node:
     description: "install node"
     steps:
@@ -73,8 +87,7 @@ commands:
     description: "Basic setup"
     steps:
       - checkout
-      - *attach_workspace
-      - *restore_cache
+      - prepare_workspace
       - install-node
       - upgrade-bundler
       - run: bundle --path vendor/bundle
@@ -110,11 +123,11 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - *attach_workspace
+      - prepare_workspace
       - install-node
       - save_cache:
           name: Save Npm Package Cache
-          key: npm-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - node_modules/
       - upgrade-bundler
@@ -125,7 +138,8 @@ jobs:
             bundle config build.nokogiri --use-system-libraries
             bundle install --deployment --path vendor/bundle
       - save_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}
+          name: Save Bundle cache
+          key: web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
@@ -151,22 +165,19 @@ jobs:
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
-  e2e-submit-application:
+  e2e:
     <<: *defaults
+    parallelism: 4
     steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/submitting_application.feature"
-  e2e-sign-in-apply:
-    <<: *defaults
-    steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/sign_in_while_applying.feature"
-  e2e-other-short-form:
-    <<: *defaults
-    steps:
-      - run-e2e-tests-for-path:
-          path: "./spec/e2e/features/short_form/!(submitting_application|sign_in_while_applying).feature"
-
+      - setup
+      - start-server
+      - run:
+          name: Run e2e tests using test splitting
+          command: |
+            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
+            LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
+            echo $LIST
+            npm run protractor -- --specs $LIST
 workflows:
   version: 2.1
   build-and-deploy:
@@ -174,18 +185,8 @@ workflows:
       - build
       - backend:
           <<: *non_production_jobs
-      - e2e-submit-application:
+      - e2e:
           <<: *non_production_jobs
-      - e2e-sign-in-apply:
-          <<: *non_production_jobs
-      - e2e-other-short-form:
-          <<: *non_production_jobs
-      - e2e-submit-application:
+      - e2e:
           <<: *prod_and_release_jobs
-          name: prod-e2e-submit-application
-      - e2e-sign-in-apply:
-          <<: *prod_and_release_jobs
-          name: prod-e2e-sign-in-apply
-      - e2e-other-short-form:
-          <<: *prod_and_release_jobs
-          name: prod-e2e-other-short-form
+          name: e2e-production
