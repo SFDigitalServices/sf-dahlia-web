@@ -5,7 +5,7 @@ Feature: Short Form Application - Assisted Housing Preference
 
     Scenario: Claiming Assisted Housing preference
         Given I go to the first page of the "Test Listing" application
-        When I fill out the Name page as "Jane Doe"
+        When I fill out the Name page as "Jen Doe"
         And I fill out the Contact page with an address, non-NRHP match, no WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
@@ -23,7 +23,7 @@ Feature: Short Form Application - Assisted Housing Preference
         And I hit the Next button "1" time
         Then I should see an error about uploading proof
         # Successfully opt-in and upload lease proof
-        And I select "Jane Doe" for "assistedHousing" preference
+        And I select "Jen Doe" for "assistedHousing" preference
         And I upload a Copy of Lease as my proof for Assisted Housing
         And I hit the Next button "1" times
         And I opt out of "Live/Work" preference
