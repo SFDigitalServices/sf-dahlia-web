@@ -7,6 +7,10 @@
             "title": "Magsimula na tayo sa inyong aplikasyon\n"
         },
         "a2_community_screening": {
+            "artist": {
+                "you_or_anyone": "Mayroon ba kayo, o sinumang nasa aplikasyong ito, ng lisensiya sa negosyo na may kinalaman sa inyong sining?",
+                "you_or_anyone_desc": "Isa itong gusali kung saan nakatira/nagtatrabaho ang mga artist (artist live/work building). Kailangang artist kayo, o sinuman sa inyong kabahayan, at may lisensiya sa negosyo na may kinalaman sa inyong sining sa San Francisco.Kailangang gamitin ninyo ang bahagi ng bahay na ito sa paglikha, pagtuturo, o pagpapakita ng sining<br><br>Kapag napili ang aplikasyon ninyo, maging handa sa pagbibigay ng impormasyon tungkol sa inyong negosyo at sa inyong plano para sa espasyo."
+            },
             "senior": {
                 "you_and_everyone": "Senior o matanda na ba kayo o ang lahat ng tao na nasa aplikasyong ito?",
                 "you_and_everyone_desc": "Isa itong senior building (gusali para sa matatanda) at lahat ng aplikante ay kailangang nasa edad na {{minAge}}+.\n",
@@ -372,6 +376,7 @@
                 "timeout_please_try_again": "Naku! Nagkaroon na naman ng problema. Pakisubukang muli. "
             },
             "alternate_contact": "Mangyaring pumili ng kahaliling kontak",
+            "artist_anyone": "Kailangang may lisensiya sa negosyo na may kinalaman sa inyong sining ang isa o higit pang miyembro ng inyong kabahayan.",
             "city": "Pakilagay ang inyong lungsod.",
             "complete_uploading_documents": "Pakikumpleto ang pag-a-upload ng mga dokumentong nasa itaas.",
             "confirmed_address": "Pakikumpirma ang iminumungkahing address.",
@@ -522,6 +527,7 @@
             "application_has_completed_homebuyer_education": "Nakadalo na ako sa 10 oras na Edukasyon para sa Bumibili ng Bahay (Homebuyer Education).",
             "application_has_loan_pre_approval": "Mayroon na akong paunang pag-apruba sa pag-utang para sa pabahay mula sa Loan Officer (opisyal na namamahala sa pagpapautang) na Aprubado ng MOHCD.",
             "application_is_first_time_homebuyer": "Hindi ako nagmay-ari ng residensiyal na ari-arian nitong nakaraang 3 taon.",
+            "application_pre_approval_must_be_120_days": "Kailangang may petsa ang inyong liham ng paunang pag-apruba (pre-approval letter) na nasa loob ng nakaraang 120 araw",
             "application_visit_homeownership_calendar": "Kung hindi pa ninyo nagagawa ito, pakibasa ang <a href='{{url}}' target='_blank'>kalendaryo ng HomeownershipSF</a> at nang makapagpalista  para sa workshop o palihan.",
             "apply_online": "Mag-aplay Online ",
             "asian": "Asyano",
@@ -797,6 +803,7 @@
                 "accessibility": "Pagkakaroon ng daan papasok sa gusali ",
                 "additional_fees": "Mga Dagdag na Singil ",
                 "appliances": "Appliances",
+                "application_fee": "Singil para sa Pag-aaplay",
                 "area": "Lugar",
                 "baths": "Banyo",
                 "built": "Itinayo",
