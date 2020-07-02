@@ -56,15 +56,18 @@
   "b0_prerequisites": {
     "title": "首先，讓我們確定您是否符合申請資格。"
   },
+  "b1a_welcome_back": {
+    "continue_without_signing_in": "未登入並繼續",
+    "title": "歡迎回來！",
+    "you_already_have_an_account": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
+  },
   "b1_name": {
     "app_details_updated": "您的申請詳細資料已更新，以符合您的帳戶設定。",
     "name_editable_via": "請透過您的「帳戶設定」編輯這些欄位",
     "title": "您的姓名是？"
   },
-  "b1a_welcome_back": {
-    "continue_without_signing_in": "未登入並繼續",
-    "title": "歡迎回來！",
-    "you_already_have_an_account": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
+  "b2a_verify_address": {
+    "title": "我們已經找到以下地址。請確認是否正確。"
   },
   "b2_contact": {
     "applicant_address_desc": "我們需要您目前居住地點的地址。若您無家可歸，請輸入收容所地址或靠近您所在地點的地址。",
@@ -75,27 +78,24 @@
     "title": "{{name}}，謝謝您。現在我們需要知道如何能聯絡上您。",
     "work_in_sf_desc": "這代表您目前的工作時數中，至少有 75% 的時間都在舊金山工作。"
   },
-  "b2a_verify_address": {
-    "title": "我們已經找到以下地址。請確認是否正確。"
-  },
   "b3_alternate_contact_type": {
     "allowing_to_discuss": "提供其他人員的聯絡方式，即表明您允許我們與其討論您申請表中的資訊。",
     "title": "您是否願意提供合適人選，並能授權我們在聯絡不到您時，與該對象聯絡？"
-  },
-  "b4_alternate_contact_name": {
-    "title": "誰是您的備用聯絡人？"
   },
   "b4a_alternate_contact_phone_address": {
     "choose_an_address": "請選擇他們可收件的地址，以便寄送與申請相關的更新及資料。",
     "only_use_info": "該地址僅用於與您申請作業相關的聯絡用途。",
     "title": "請告訴我們如何聯絡您的備用聯絡人。"
   },
-  "c1_household_intro": {
-    "title": "接下來，我們想要知道將與您同住在同一單位的成員資料。"
+  "b4_alternate_contact_name": {
+    "title": "誰是您的備用聯絡人？"
   },
   "c1a_household_overview": {
     "title1": "在新增其他人之前，請確保他們並未在此清單的任何其他申請內列名。",
     "title2": "否則，您的所有申請皆會判定為喪失資格。"
+  },
+  "c1_household_intro": {
+    "title": "接下來，我們想要知道將與您同住在同一單位的成員資料。"
   },
   "c2_household_members": {
     "title": "請提供您家庭成員的相關資料。"
@@ -113,10 +113,10 @@
   },
   "c5_household_monthly_rent": {
     "description": "請輸入您個人支付的租金總額。",
+    "how_much_does_member_pay": "{{member}} 在 {{address}} 支付多少錢？",
     "how_much_do_members_pay": "{{members}} 在 {{address}} 支付多少錢？",
     "how_much_do_you_and_members_pay": "{{members}} 在 {{address}} 支付多少錢？",
     "how_much_do_you_pay": "您在 {{address}} 支付多少錢？",
-    "how_much_does_member_pay": "{{member}} 在 {{address}} 支付多少錢？",
     "title_household": "您家庭每月需支付多少租金？",
     "title_you": "您每月需支付多少租金？"
   },
@@ -246,10 +246,10 @@
   },
   "e1_preferences_intro": {
     "get_started": "由此開始",
+    "steps_title": "只需 3 個簡單步驟：",
     "step_1": "看看您是否符合這些抽籤優先權利。",
     "step_2": "根據您的情況勾選相應方塊，行使您的抽籤優先權利。",
     "step_3": "透過您的電腦或手機上傳所需的文件。",
-    "steps_title": "只需 3 個簡單步驟：",
     "title": "抽籤優先權利除了能賦予您參與資格，還能讓您獲得較高的抽籤順位。"
   },
   "e2a_neighborhood_preference": {
@@ -334,7 +334,6 @@
     "title": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。",
     "you_will_be_in_general_lottery": "您將會列入一般抽籤名單。"
   },
-  "email_signature": "三藩市市長住房與社區發展辦公室",
   "emailer": {
     "account_update": {
       "account_settings_link": "帳號設置",
@@ -345,7 +344,7 @@
     "draft_application_saved": {
       "applications_are_due_by": "該物業的申請截止日期為%{deadline}。",
       "complete_your_application": "完成您的申請",
-      "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的{listing_name}申請。",
+      "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的 %{listing_name}申請。",
       "reminder_do_not_submit_duplicate": "注意：如果您已經為該物業提交了另一份申請，切勿完成此申請。重複申請將導致兩份申請均被從抽籤中除名。",
       "subject": "在%{deadline}之前完成您的%{listing_name}申請"
     },
@@ -366,6 +365,7 @@
       "what_to_expect_next": "後續流程"
     }
   },
+  "email_signature": "三藩市市長住房與社區發展辦公室",
   "error": {
     "address": "請輸入地址",
     "address_validation_insufficient": "找不到這個地址。請檢查輸入的門牌號碼、街道和城市。請確定有輸入街道類型，例如「ST」或「AVE」。不允許使用郵政信箱。",
@@ -489,11 +489,11 @@
   },
   "label": {
     "ada_accessible_units": "ADA 無障礙設施單位",
-    "add_household_member": "新增家庭成員",
     "additional_phone": "其他電話",
     "address": "地址",
     "address_1": "街道地址",
     "address_2": "公寓或單位門牌號碼",
+    "add_household_member": "新增家庭成員",
     "agency": "機構",
     "alternate_contact": "備用聯絡人",
     "alternate_contact_agency": "您的個案經理或住房顧問在哪裡工作？",
@@ -562,8 +562,8 @@
     "done_with_this_address": "此地址已填寫完成",
     "dont_want_preference": "我不想要此抽籤優先權利",
     "download_application": "下載{{lang}}申請",
-    "edit_eligibility": "編輯資格",
     "edited": "已編輯",
+    "edit_eligibility": "編輯資格",
     "email_address": "電子郵件",
     "family_member": "家庭成員",
     "favorite": "收藏",
@@ -585,17 +585,17 @@
     "hispanic_latino": "西班牙裔/拉美裔",
     "household_details": "家庭詳細資料",
     "household_member": "家庭成員",
+    "household_members": "家庭成員",
     "household_member_cancel": "取消新增此對象",
     "household_member_delete": "刪除此對象",
     "household_member_name": "家庭成員的姓名",
     "household_member_relationship": "這些人與您的關係為何？",
     "household_member_save": "儲存家庭成員",
     "household_member_update": "更新家庭成員",
-    "household_members": "家庭成員",
     "how_did_you_hear_about_this": "您如何得知此出租項目？",
-    "in_law": "姻親",
     "income": "收入",
     "income_placeholder": "您所有收入來源的總額",
+    "in_law": "姻親",
     "last_name": "姓氏",
     "live_alone": "我會獨自生活",
     "live_in_public_housing_or_hud": "住在輔助住宅",
@@ -615,11 +615,11 @@
     "nephew": "侄子/外甥",
     "new_password": "新密碼",
     "niece": "侄女/外甥女",
-    "no_alternate_contact": "我沒有備用聯絡人",
-    "no_rent_paid": "沒有付租金",
     "not_a_match": "不匹配",
     "not_hispanic_latino": "非西班牙裔/拉美裔",
     "not_listed": "未列出",
+    "no_alternate_contact": "我沒有備用聯絡人",
+    "no_rent_paid": "沒有付租金",
     "old_password": "舊密碼",
     "on_the_listing": "在該清單上",
     "open_houses": "開放看房",
@@ -640,17 +640,17 @@
     "please_select_all_that_apply": "請選擇所有適用項。",
     "please_select_one": "請選擇一個項目。",
     "please_select_preference": "請選擇您所擁有的抽籤優先權利：",
-    "pre_lottery_info": "中簽者將通過公開抽籤搖號決定。您可自願選擇是否到場。",
     "preapproval_letter": "預先批准信",
+    "preferences": "優先權利",
     "preference_option_to_claim": "您想要行使哪一項優先權利？",
     "preference_proof_address_documents": "您想要上傳哪一類型的文件，以便證實您居住在該地址？",
     "preference_proof_documents": "您上傳了哪份文件來證實您的資格？",
-    "preferences": "優先權利",
+    "pre_lottery_info": "中簽者將通過公開抽籤搖號決定。您可自願選擇是否到場。",
     "primary_user": "主要申請人",
     "proof": {
-      "ca_license": "加州 ID 或駕駛執照",
       "cable_bill": "有線電視及網際網路帳單",
       "cancelled_check": "已取消的支票",
+      "ca_license": "加州 ID 或駕駛執照",
       "debit_from_bank": "您銀行帳戶的金融卡",
       "electric_bill": "電費帳單",
       "garbage_bill": "垃圾帳單",
@@ -669,13 +669,13 @@
     },
     "proof_of_rent": "租金證明",
     "questioning_unsure": "有疑問/不確定",
-    "re_enter_email_address": "重新輸入電子郵件地址",
-    "re_enter_password": "請重新輸入您的密碼以確認",
     "read_less": "閱讀更少資訊",
     "read_more": "閱讀更多資訊",
     "recent_application": "近期申請",
     "registered_domestic_partner": "已註冊的家庭伴侶",
     "rent_at_address": "在 {{address}} 租房",
+    "re_enter_email_address": "重新輸入電子郵件地址",
+    "re_enter_password": "請重新輸入您的密碼以確認",
     "see_details": "查看詳情",
     "see_listing": "查看該物業項目",
     "select_one": "選取一個",
@@ -698,6 +698,8 @@
     "uncle": "叔/伯/姨/舅父",
     "update": "更新",
     "updated_based_on_your_account_settings": "已根據您的帳戶設定進行更新。",
+    "uploaded": "已上傳",
+    "uploading": "正在上傳",
     "upload_additional_proof": "上傳其他證明",
     "upload_copy_of_lease": "上傳租約副本",
     "upload_lease_description": "請上傳第一頁，或是載明租金總額的頁面。",
@@ -709,8 +711,6 @@
     "upload_proof_of_rent_payment": "上傳租金付款證明",
     "upload_rent_description": "請提供您每月租金的證明。您聲稱您在此地址的租金是：{{rent}}。<br/><br/>若您的家庭以多張支票、匯票等方式支付，您可以上傳多份文件。",
     "upload_verification_letter": "上傳購屋教育證明信",
-    "uploaded": "已上傳",
-    "uploading": "正在上傳",
     "verification_letter": "核查書",
     "veterans_in_household": "家庭中的退伍軍人",
     "view_application": "檢視申請表",
@@ -725,12 +725,12 @@
     "what_type_of_number": "這是哪種類型的號碼？",
     "white": "白人",
     "work_in_sf": "您在舊金山工作嗎？",
-    "you_have_claimed": "您已行使：",
-    "you_have_confirmed": "您已经确认：",
     "your_dob": "您的出生日期",
     "your_gender": "請表明您的性別",
     "your_name": "您的姓名",
     "your_sexual_orientation": "請表明您的性取向",
+    "you_have_claimed": "您已行使：",
+    "you_have_confirmed": "您已经确认：",
     "zip": "郵遞區號",
     "zipcode": "郵遞區號"
   },
@@ -883,7 +883,6 @@
       "see_this_unit_on_mls": "在MLS上查看該單位",
       "subheader": "重要日期和聯絡資料"
     },
-    "re_pricing": "轉售價格限制",
     "realtor_commission": "買方的房地產經紀人須知",
     "realtor_commission_header": "您的佣金： ",
     "realtor_commission_how_to": "如何接收： ",
@@ -898,6 +897,7 @@
     "reserved_units": "保留的單位",
     "reserved_units_description": "為了符合入住這些單位的資格，您或家中的某成員必須符合以下其中一項條件：",
     "reserved_units_for_who_are": "已經為 {{reservedType}} 保留 {{communityType}}",
+    "re_pricing": "轉售價格限制",
     "sale_units": "出售單位",
     "see_maximum_income_information": "查看收入上限資訊",
     "see_preference_information": "查看優先權利資訊",
@@ -997,8 +997,8 @@
     "number_applicants_qualified_for_preference": "本名單中有 {{number}} 位申請人。",
     "rank": "順位",
     "ranking_order_note": "在這些名單中的順位會依照此處顯示的順序。",
-    "ranking_preference_consideration_note": "請注意，此單位會先考慮一些其他的優先權利。",
     "ranking_preferences_considered_over_general_note": "請注意，所有單位會先考慮擁有優先權利的持有人。",
+    "ranking_preference_consideration_note": "請注意，此單位會先考慮一些其他的優先權利。",
     "ranking_title": "您的優先權利順位",
     "read_about_preferences": "閱讀住房優先權利",
     "results_from": "{{date}} 的結果",
@@ -1127,18 +1127,18 @@
     "forgot_password": "忘記密碼？",
     "logged_out_due_to_inactivity": "我們關心您的安全。由於沒有使用活動，我們已經將您登出。請重新登入以繼續。",
     "resent_confirmation_message": "電子郵件已傳送。請檢查您的收件箱。",
-    "sign_in_required": "請登入您的帳戶以存取此頁面。",
     "signed_out_successfully": "您已經成功登出帳戶。",
+    "sign_in_required": "請登入您的帳戶以存取此頁面。",
     "user_token_validation_timeout": "我們關心您的安全。由於連線問題，我們已經將您登出。請登入以繼續。"
   },
   "t": {
     "ami": "區域收入中位數（AMI）",
+    "applications_closed": "申請結束",
     "application_closed": "申請結束",
     "application_deadline": "申請截止日期",
     "application_due": "申請到期日期",
     "application_for_listing": "{{listingName}} 申請",
     "application_submitted": "已提交申請",
-    "applications_closed": "申請結束",
     "are_you_sure_you_want_to_leave": "確定要離開此頁面嗎？您將會失去已輸入此物業申請表內但尚未儲存的所有資訊。若欲儲存您的資訊供日後完成申請，請點擊「儲存並稍後完成」。",
     "are_you_sure_you_want_to_leave_confirmation": "確定要離開此網頁嗎？若將您的申請與帳戶連結，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
     "are_you_sure_you_want_to_leave_sign_in": "確定要離開此網頁嗎？若您建立一個帳戶，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
@@ -1155,9 +1155,9 @@
     "delete_application": "刪除此申請？",
     "edit": "編輯",
     "household_size": "家庭人口",
-    "i_agree": "我同意並瞭解，一經提交就再也不能作任何變更。",
-    "in_progress": "進行中",
     "income": "收入",
+    "in_progress": "進行中",
+    "i_agree": "我同意並瞭解，一經提交就再也不能作任何變更。",
     "leave": "離開此頁",
     "leave_your_application": "離開您的申請表？",
     "listing_updated": "物業更新時間",
@@ -1168,8 +1168,8 @@
     "never_submitted": "未曾提交",
     "next": "下一步",
     "no": "否",
-    "no_parking": "無停車位",
     "none": "無",
+    "no_parking": "無停車位",
     "occupancy": "居住",
     "ok": "確定",
     "optional": "可選擇回答與否",
@@ -1189,8 +1189,8 @@
     "submit": "提交",
     "submitted": "已提交",
     "to": "至",
-    "unit_type": "單位類型",
     "units": "單位",
+    "unit_type": "單位類型",
     "with_parking": "有停車位",
     "yes": "是",
     "you": "您"

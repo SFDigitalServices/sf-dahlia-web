@@ -56,15 +56,18 @@
   "b0_prerequisites": {
     "title": "First, let’s make sure you’re eligible to apply."
   },
+  "b1a_welcome_back": {
+    "continue_without_signing_in": "Continue without signing in",
+    "title": "Welcome back!",
+    "you_already_have_an_account": "It looks like you already have an account. Signing in will save this application to your account, and allow you to check your application status at any time."
+  },
   "b1_name": {
     "app_details_updated": "Your application details were updated to match your account settings.",
     "name_editable_via": "These fields are editable via your",
     "title": "What's your name?"
   },
-  "b1a_welcome_back": {
-    "continue_without_signing_in": "Continue without signing in",
-    "title": "Welcome back!",
-    "you_already_have_an_account": "It looks like you already have an account. Signing in will save this application to your account, and allow you to check your application status at any time."
+  "b2a_verify_address": {
+    "title": "We have located the following address. Please confirm it's correct."
   },
   "b2_contact": {
     "applicant_address_desc": "We need the address where you currently live. If you are homeless, enter either the shelter address or an address close to where you stay.",
@@ -75,27 +78,24 @@
     "title": "Thanks, {{name}}. Now we need to know how to contact you.",
     "work_in_sf_desc": "This means you currently work in San Francisco at least 75% of your working hours."
   },
-  "b2a_verify_address": {
-    "title": "We have located the following address. Please confirm it's correct."
-  },
   "b3_alternate_contact_type": {
     "allowing_to_discuss": "By providing an alternate contact, you are allowing us to discuss information on your application with them.",
     "title": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
-  },
-  "b4_alternate_contact_name": {
-    "title": "Who is your alternate contact?"
   },
   "b4a_alternate_contact_phone_address": {
     "choose_an_address": "Choose an address where they can receive updates and materials about your application.",
     "only_use_info": "We'll only use this information to contact them about your application.",
     "title": "Let us know how to reach your alternate contact."
   },
-  "c1_household_intro": {
-    "title": "Next, we'd like to know about the others who will live with you in the unit."
+  "b4_alternate_contact_name": {
+    "title": "Who is your alternate contact?"
   },
   "c1a_household_overview": {
     "title1": "Before adding other people, make sure that they aren't named on any other application for this listing.",
     "title2": "If you include someone who has already applied, all of your applications will be disqualified."
+  },
+  "c1_household_intro": {
+    "title": "Next, we'd like to know about the others who will live with you in the unit."
   },
   "c2_household_members": {
     "title": "Tell us about your household."
@@ -113,10 +113,10 @@
   },
   "c5_household_monthly_rent": {
     "description": "Please enter the total amount that you personally pay toward rent.",
+    "how_much_does_member_pay": "How much does {{member}} pay at {{address}}?",
     "how_much_do_members_pay": "How much do {{members}} pay at {{address}}?",
     "how_much_do_you_and_members_pay": "How much do {{members}} pay at {{address}}?",
     "how_much_do_you_pay": "How much do You pay at {{address}}?",
-    "how_much_does_member_pay": "How much does {{member}} pay at {{address}}?",
     "title_household": "How much does your household pay in monthly rent?",
     "title_you": "How much do you pay in monthly rent?"
   },
@@ -246,10 +246,10 @@
   },
   "e1_preferences_intro": {
     "get_started": "Get started",
+    "steps_title": "Just 3 simple steps:",
     "step_1": "See if you qualify for each lottery preference.",
     "step_2": "Check each box to claim your lottery preference.",
     "step_3": "Upload the required documents from your computer or phone.",
-    "steps_title": "Just 3 simple steps:",
     "title": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
   },
   "e2a_neighborhood_preference": {
@@ -334,7 +334,6 @@
     "title": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
     "you_will_be_in_general_lottery": "You will be in the general lottery."
   },
-  "email_signature": "The San Francisco Mayor's Office of Housing and Community Development",
   "emailer": {
     "account_update": {
       "account_settings_link": "Account Settings",
@@ -366,6 +365,7 @@
       "what_to_expect_next": "What to expect next"
     }
   },
+  "email_signature": "The San Francisco Mayor's Office of Housing and Community Development",
   "error": {
     "address": "Please enter an address",
     "address_validation_insufficient": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
@@ -489,11 +489,11 @@
   },
   "label": {
     "ada_accessible_units": "ADA Accessible Units",
-    "add_household_member": "Add household member",
     "additional_phone": "Additional Phone",
     "address": "Address",
     "address_1": "Street Address",
     "address_2": "Apt or Unit #",
+    "add_household_member": "Add household member",
     "agency": "Agency",
     "alternate_contact": "Alternate Contact",
     "alternate_contact_agency": "Where does your case manager or housing counselor work?",
@@ -562,8 +562,8 @@
     "done_with_this_address": "Done with this address",
     "dont_want_preference": "I don't want this lottery preference",
     "download_application": "Download {{lang}} Application",
-    "edit_eligibility": "Edit Eligibility",
     "edited": "Edited",
+    "edit_eligibility": "Edit Eligibility",
     "email_address": "Email",
     "family_member": "Family member",
     "favorite": "Favorite",
@@ -585,17 +585,17 @@
     "hispanic_latino": "Hispanic/Latino",
     "household_details": "Household Details",
     "household_member": "Household Member",
+    "household_members": "Household Members",
     "household_member_cancel": "Cancel adding this person",
     "household_member_delete": "Delete this person",
     "household_member_name": "Household Member's Name",
     "household_member_relationship": "What is their relationship to you?",
     "household_member_save": "Save Household Member",
     "household_member_update": "Update Household Member",
-    "household_members": "Household Members",
     "how_did_you_hear_about_this": "How did you hear about this listing?",
-    "in_law": "In-Law",
     "income": "Income",
     "income_placeholder": "Total all of your income sources",
+    "in_law": "In-Law",
     "last_name": "Last Name",
     "live_alone": "I will live alone",
     "live_in_public_housing_or_hud": "Live in Assisted Housing",
@@ -615,11 +615,11 @@
     "nephew": "Nephew",
     "new_password": "New Password",
     "niece": "Niece",
-    "no_alternate_contact": "I don't have an alternate contact",
-    "no_rent_paid": "Don't pay rent",
     "not_a_match": "Not a Match",
     "not_hispanic_latino": "Not Hispanic/Latino",
     "not_listed": "Not Listed",
+    "no_alternate_contact": "I don't have an alternate contact",
+    "no_rent_paid": "Don't pay rent",
     "old_password": "Old Password",
     "on_the_listing": "on the listing",
     "open_houses": "Open Houses",
@@ -640,17 +640,17 @@
     "please_select_all_that_apply": "Please select all that apply.",
     "please_select_one": "Please select one.",
     "please_select_preference": "If you have one of these lottery preferences, select it below:",
-    "pre_lottery_info": "An open lottery will be held to draw numbers to determine selection. Attendance is optional.",
     "preapproval_letter": "Pre-approval letter",
+    "preferences": "Preferences",
     "preference_option_to_claim": "Which preference option would you like to claim?",
     "preference_proof_address_documents": "What type of document would you like to upload to show you live at that address?",
     "preference_proof_documents": "Which document are you uploading to prove eligibility?",
-    "preferences": "Preferences",
+    "pre_lottery_info": "An open lottery will be held to draw numbers to determine selection. Attendance is optional.",
     "primary_user": "Primary Applicant",
     "proof": {
-      "ca_license": "CA ID or Driver's License",
       "cable_bill": "Cable and internet bill",
       "cancelled_check": "Cancelled check",
+      "ca_license": "CA ID or Driver's License",
       "debit_from_bank": "Debit from your bank account",
       "electric_bill": "Electric bill",
       "garbage_bill": "Garbage bill",
@@ -669,13 +669,13 @@
     },
     "proof_of_rent": "Proof of Rent",
     "questioning_unsure": "Questioning/Unsure",
-    "re_enter_email_address": "Re-enter email address",
-    "re_enter_password": "Re-enter your password to confirm",
     "read_less": "read less",
     "read_more": "read more",
     "recent_application": "Recent Application",
     "registered_domestic_partner": "Registered Domestic Partner",
     "rent_at_address": "Rent at {{address}}",
+    "re_enter_email_address": "Re-enter email address",
+    "re_enter_password": "Re-enter your password to confirm",
     "see_details": "See Details",
     "see_listing": "See Listing",
     "select_one": "Select One",
@@ -698,6 +698,8 @@
     "uncle": "Uncle",
     "update": "Update",
     "updated_based_on_your_account_settings": "Updated based on your account settings.",
+    "uploaded": "Uploaded",
+    "uploading": "Uploading",
     "upload_additional_proof": "Upload Additional Proof",
     "upload_copy_of_lease": "Upload Copy of Lease",
     "upload_lease_description": "Please upload the first page, or whichever page shows the rent amount.",
@@ -709,8 +711,6 @@
     "upload_proof_of_rent_payment": "Upload proof of rent payment",
     "upload_rent_description": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
     "upload_verification_letter": "Upload verification letter",
-    "uploaded": "Uploaded",
-    "uploading": "Uploading",
     "verification_letter": "Verification Letter",
     "veterans_in_household": "Veterans in Household",
     "view_application": "View Application",
@@ -725,12 +725,12 @@
     "what_type_of_number": "What type of number is this?",
     "white": "White",
     "work_in_sf": "Do you work in San Francisco?",
-    "you_have_claimed": "You have claimed:",
-    "you_have_confirmed": "You have confirmed:",
     "your_dob": "Your Date of Birth",
     "your_gender": "Please specify your gender",
     "your_name": "Your Name",
     "your_sexual_orientation": "Please specify your sexual orientation",
+    "you_have_claimed": "You have claimed:",
+    "you_have_confirmed": "You have confirmed:",
     "zip": "Zip",
     "zipcode": "Zipcode"
   },
@@ -888,7 +888,6 @@
       "see_this_unit_on_mls": "See this unit on MLS",
       "subheader": "Important dates and contact information"
     },
-    "re_pricing": "Resale Price Restrictions",
     "realtor_commission": "For the Buyer's Realtor",
     "realtor_commission_header": "Your Commission: ",
     "realtor_commission_how_to": "How to receive it: ",
@@ -903,6 +902,7 @@
     "reserved_units": "Reserved Units",
     "reserved_units_description": "In order to qualify for these units one of the following must apply to you or someone in your household:",
     "reserved_units_for_who_are": "Reserved for {{communityType}} who are {{reservedType}}",
+    "re_pricing": "Resale Price Restrictions",
     "sale_units": "Sale Units",
     "see_maximum_income_information": "See Maximum Income Information",
     "see_preference_information": "See Preference Information",
@@ -1008,8 +1008,8 @@
     "number_applicants_qualified_for_preference": "{{number}} applicants are on this list.",
     "rank": "Rank",
     "ranking_order_note": "Ranking in these lists is considered in the order shown here.",
-    "ranking_preference_consideration_note": "Please note, there are other preferences that will be considered for units first.",
     "ranking_preferences_considered_over_general_note": "Please note, preference holders will be considered for all units first.",
+    "ranking_preference_consideration_note": "Please note, there are other preferences that will be considered for units first.",
     "ranking_title": "Your preference ranking",
     "read_about_preferences": "Read About Housing Preferences",
     "results_from": "Results from {{date}}",
@@ -1139,18 +1139,18 @@
     "forgot_password": "Forgot password?",
     "logged_out_due_to_inactivity": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
     "resent_confirmation_message": "Email sent. Please check your inbox.",
-    "sign_in_required": "Please sign in to your account to access this page.",
     "signed_out_successfully": "You have successfully logged out of your account.",
+    "sign_in_required": "Please sign in to your account to access this page.",
     "user_token_validation_timeout": "We care about your security. We logged you out due to a connection issue. Please sign in to continue."
   },
   "t": {
     "ami": "AMI",
+    "applications_closed": "Applications Closed",
     "application_closed": "Applications Closed",
     "application_deadline": "Application Deadline",
     "application_due": "Application Due",
     "application_for_listing": "{{listingName}} Application",
     "application_submitted": "Application Submitted",
-    "applications_closed": "Applications Closed",
     "are_you_sure_you_want_to_leave": "Are you sure you would like to navigate away from this page? You will lose any unsaved information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
     "are_you_sure_you_want_to_leave_confirmation": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
     "are_you_sure_you_want_to_leave_sign_in": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
@@ -1167,9 +1167,9 @@
     "delete_application": "Delete this application?",
     "edit": "Edit",
     "household_size": "household size",
-    "i_agree": "I agree and understand that I cannot change anything after I submit.",
-    "in_progress": "In Progress",
     "income": "income",
+    "in_progress": "In Progress",
+    "i_agree": "I agree and understand that I cannot change anything after I submit.",
     "leave": "Leave",
     "leave_your_application": "Leave your application?",
     "listing_updated": "Listing Updated",
@@ -1180,8 +1180,8 @@
     "never_submitted": "Never Submitted",
     "next": "Next",
     "no": "No",
-    "no_parking": "no parking",
     "none": "None",
+    "no_parking": "no parking",
     "occupancy": "Occupancy",
     "ok": "OK",
     "optional": "Optional",
@@ -1201,8 +1201,8 @@
     "submit": "Submit",
     "submitted": "Submitted",
     "to": "to",
-    "unit_type": "Unit Type",
     "units": "units",
+    "unit_type": "Unit Type",
     "with_parking": "with parking",
     "yes": "Yes",
     "you": "You"

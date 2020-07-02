@@ -55,15 +55,18 @@
   "b0_prerequisites": {
     "title": "Una, tiyakin natin na kuwalipikado kayo para mag-aplay. "
   },
+  "b1a_welcome_back": {
+    "continue_without_signing_in": "Magpatuloy nang hindi nagsa-sign in\n",
+    "title": "Maligayang pagbabalik!\n\n",
+    "you_already_have_an_account": "Mukhang may account na kayo. Kapag nag-sign in kayo, mase-save ang aplikasyon na ito sa inyong account at puwede ninyong ma-check ang estado ng inyong aplikasyon sa anumang panahon. \n"
+  },
   "b1_name": {
     "app_details_updated": "Nabago na ang mga detalye ng inyong aplikasyon para magtugma ito sa settings ng inyong account. \n",
     "name_editable_via": "Puwedeng ma-edit ang mga field (kahon o patlang na dapat punan) sa pamamagitan ng inyong",
     "title": "Ano ang pangalan ninyo?"
   },
-  "b1a_welcome_back": {
-    "continue_without_signing_in": "Magpatuloy nang hindi nagsa-sign in\n",
-    "title": "Maligayang pagbabalik!\n\n",
-    "you_already_have_an_account": "Mukhang may account na kayo. Kapag nag-sign in kayo, mase-save ang aplikasyon na ito sa inyong account at puwede ninyong ma-check ang estado ng inyong aplikasyon sa anumang panahon. \n"
+  "b2a_verify_address": {
+    "title": "Nahanap na namin ang sumusunod na address. Pakikumpirma kung tama ito."
   },
   "b2_contact": {
     "applicant_address_desc": "Kailangan namin ang address kung saan kayo kasalukuyang nakatira. Kung homeless kayo o walang tirahan, pakipasok ang address ng shelter o ang address na malapit kung saan kayo nakatira.",
@@ -71,30 +74,27 @@
     "email_editable_via": "Puwedeng ma-edit o mabago ang inyong email addres sa pamamagitan ng inyong",
     "only_use_your_email": "Gagamitin lamang namin ang inyong email address para makontak kayo tungkol sa inyong aplikasyon.",
     "provide_an_address": "Pakibigay ang address kung saan puwede kayong tumanggap ng bagong impormasyon at materyales tungkol sa inyong aplikasyon.",
-    "title": "Salamat, {{pangalan}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
+    "title": "Salamat, {{name}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
     "work_in_sf_desc": "Nangangahulugan ito na kasalukuyan kayong nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng inyong mga oras ng trabaho."
-  },
-  "b2a_verify_address": {
-    "title": "Nahanap na namin ang sumusunod na address. Pakikumpirma kung tama ito."
   },
   "b3_alternate_contact_type": {
     "allowing_to_discuss": "Sa pamamagitan ng pagbibigay ng kapalit na taong makokontak, pinapayagan niyo kaming talakayin sa kanya ang impormasyon na nasa inyong aplikasyon.",
     "title": "May iba pa bang tao na gusto ninyong bigyan ng awtorisasyon para makontak namin sakaling hindi namin kayo makausap o mapadalhan ng sulat?"
-  },
-  "b4_alternate_contact_name": {
-    "title": "Sino ang inyong kahaliling kontak?"
   },
   "b4a_alternate_contact_phone_address": {
     "choose_an_address": "Pumili ng address kung saan makatatanggap sila ng bagong impormasyon at materyales tungkol sa inyong aplikasyon.",
     "only_use_info": "Gagamitin lamang namin ang impormasyong ito sa pagkontak sa kanila kung tungkol sa inyong aplikasyon.",
     "title": "Ipagbigay-alam sa amin kung paano namin makakausap o masusulatan ang inyong kahaliling kontak."
   },
-  "c1_household_intro": {
-    "title": "Kasunod nito, gusto naming malaman ang tungkol sa iba pang tao na titira kasama ninyo sa unit."
+  "b4_alternate_contact_name": {
+    "title": "Sino ang inyong kahaliling kontak?"
   },
   "c1a_household_overview": {
     "title1": "Bago kayo magdagdag ng iba pang tao, tiyaking wala ang pangalan nila sa anumang iba pang aplikasyon para sa nakalistang pabahay na ito.",
     "title2": "Kapag nagsama kayo ng tao na nakapag-aplay na, ang lahat ng inyong aplikasyon ay hindi na magiging kuwalipikado."
+  },
+  "c1_household_intro": {
+    "title": "Kasunod nito, gusto naming malaman ang tungkol sa iba pang tao na titira kasama ninyo sa unit."
   },
   "c2_household_members": {
     "title": "Bigyan kami ng ilang impormasyon tungkol sa inyong kabahayan."
@@ -112,10 +112,10 @@
   },
   "c5_household_monthly_rent": {
     "description": "Pakilagay ang kabuuang halaga na personal ninyong binabayaran para sa upa. ",
+    "how_much_does_member_pay": "Magkano ang ibinibayad ni {{member}} sa {{address}}?",
     "how_much_do_members_pay": "Magkano ang ibinibayad nina {{members}} sa {{address}}?",
     "how_much_do_you_and_members_pay": "Magkano ang ibinibayad nina {{members}} sa {{address}}?",
     "how_much_do_you_pay": "Magkano ang ibinibayad Ninyo sa {{address}}?",
-    "how_much_does_member_pay": "Magkano ang ibinibayad ni {{member}} sa {{address}}?",
     "title_household": "Magkano ang ibinibayad ng inyong kabayahan para sa buwanang upa?",
     "title_you": "Magkano ang ibinibayad ninyo para sa buwanang upa?"
   },
@@ -245,15 +245,15 @@
   },
   "e1_preferences_intro": {
     "get_started": "Magsimula na",
+    "steps_title": "Mayroon lamang 3 simpleng hakbang:",
     "step_1": "Tingnan kung kuwalipikado kayo para sa bawat preperensiya para sa lottery.",
     "step_2": "I-tsek ang bawat kahon para magkaroon ng preperensiya para sa lottery.",
     "step_3": "I-upload ang mga kinakailangan dokumento mula sa inyong kompyuter o telepono.",
-    "steps_title": "Mayroon lamang 3 simpleng hakbang:",
     "title": "Ang mga Preperensiya para sa Lottery ang siyang maglalagay sa inyo sa unahan ng iba sa linya at magbibigay ng mas mataas na ranggo sa lottery."
   },
   "e2a_neighborhood_preference": {
-    "instructions_p1_plural": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
-    "instructions_p1_singular": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+    "instructions_p1_plural": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+    "instructions_p1_singular": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
     "instructions_p2": "Mag-upload lamang ng katanggap-tanggap na patunay ng address na ito at <strong> bibigyan din namin kayo ng Preperensiya para sa Nakatira sa San Francisco. </strong>",
     "preference": {
       "description": "Nangangahulugan ang <strong>Preperensiya para sa Nakatira sa Komunidad</strong>na nakatira ang isa o higit pang miyembro ng kabahayan sa parehong Supervisorial District (distritong pinamamahalaan ng Superbisor) o sa loob ng 1/2 milya na buffer o pambawas ng epekto ng proyekto.",
@@ -333,7 +333,6 @@
     "title": "Batay sa impormasyong ipinasok ninyo, wala pang kinukuhang anumang preperensiya para sa lottery sa pabahay ang inyong kabahayan.",
     "you_will_be_in_general_lottery": "Mapupunta kayo sa pangkalahatang lottery."
   },
-  "email_signature": "Ang Opisina ng Mayor para sa Pabahay at Pagpapaunlad sa Komunidad (Mayor's Office of Housing and Community Development) ng San Francisco",
   "emailer": {
     "account_update": {
       "account_settings_link": "Mga Setting ng Account",
@@ -365,6 +364,7 @@
       "what_to_expect_next": "Kung ano ang susunod ninyong maaasahan"
     }
   },
+  "email_signature": "Ang Opisina ng Mayor para sa Pabahay at Pagpapaunlad sa Komunidad (Mayor's Office of Housing and Community Development) ng San Francisco",
   "error": {
     "address": "Pakipasok ang inyong address",
     "address_validation_insufficient": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Tiyaking maisasama ninyo ang uri ng kalye, halimbawa, \"ST\" o \"AVE\". Hindi puwede ang mga P.O. Box. ",
@@ -488,11 +488,11 @@
   },
   "label": {
     "ada_accessible_units": "Mga Unit na ADA Accessible (may madaraanan ang may kapansanan)",
-    "add_household_member": "Magdagdag ng miyembro ng kabahayan",
     "additional_phone": "Iba pang Telepono",
     "address": "Address",
     "address_1": "Address ng Kalye",
     "address_2": "Numero ng Apt o Unit",
+    "add_household_member": "Magdagdag ng miyembro ng kabahayan",
     "agency": "Ahensiya",
     "alternate_contact": "Kahaliling kontak",
     "alternate_contact_agency": "Saan nagtatrabaho ang inyong tagapamahala ng kaso (case manager) o tagapayo para sa pabahay (housing counselor)?",
@@ -561,8 +561,8 @@
     "done_with_this_address": "Tapos na sa address na ito",
     "dont_want_preference": "Hindi ko gusto ang preperensiyang ito para sa lottery",
     "download_application": "I-download ang {{lang}} na Aplikasyon ",
-    "edit_eligibility": "I-edit ang Pagiging Kuwalipikado",
     "edited": "Na-edit na",
+    "edit_eligibility": "I-edit ang Pagiging Kuwalipikado",
     "email_address": "Email",
     "family_member": "Miyembro ng Pamilya",
     "favorite": "Paborito",
@@ -584,17 +584,17 @@
     "hispanic_latino": "Hispaniko/Latino",
     "household_details": "Mga Detalye tungkol sa Kabahayan",
     "household_member": "Miyembro ng Kabahayan",
+    "household_members": "Mga Miyembro ng Kabahayan",
     "household_member_cancel": "Kanselahin ang pagdaragdag sa taong ito",
     "household_member_delete": "I-delete ang taong ito",
     "household_member_name": "Pangalan ng Miyembro ng Kabahayan",
     "household_member_relationship": "Ano ang kanilang relasyon sa inyo?",
     "household_member_save": "I-save ang Miyembro ng Kabahayan",
     "household_member_update": "Baguhin o I-update ang Miyembro ng Kabahayan",
-    "household_members": "Mga Miyembro ng Kabahayan",
     "how_did_you_hear_about_this": "Paano ninyo nalaman ang tungkol sa nakalistang pabahay na ito?",
-    "in_law": "Manugang o Biyenan",
     "income": "Kita",
     "income_placeholder": "Kabuuan ng lahat ng inyong pinagkukunan ng kita",
+    "in_law": "Manugang o Biyenan",
     "last_name": "Apelyido",
     "live_alone": "Titira ako nang mag-isa",
     "live_in_public_housing_or_hud": "Nakatira sa May Tulong na Pabahay o Assisted Housing (may pangangalaga para sa matatanda o may kapansanan)",
@@ -614,11 +614,11 @@
     "nephew": "Pamangkin na Lalaki",
     "new_password": "Bagong Password",
     "niece": "Pamangkin na Babae",
-    "no_alternate_contact": "Wala akong kahaliling kontak",
-    "no_rent_paid": "Hindi nagbabayad ng upa ",
     "not_a_match": "Hindi Match o Katugma",
     "not_hispanic_latino": "Hindi Hispaniko/Latino",
     "not_listed": "Hindi Nakalista",
+    "no_alternate_contact": "Wala akong kahaliling kontak",
+    "no_rent_paid": "Hindi nagbabayad ng upa ",
     "old_password": "Lumang Password",
     "on_the_listing": "nasa nakalistang pabahay",
     "open_houses": "Mga Open House (Panahon na Bukas sa Lahat ang Lugar)",
@@ -639,17 +639,17 @@
     "please_select_all_that_apply": "Mangyaring piliin ang lahat ng naangkop.",
     "please_select_one": "Mangyaring pumili ng isa.",
     "please_select_preference": "Kung mayroon kayong isa sa mga preperensiyang ito sa lottery o palabunutan, piliin ito sa ibaba: ",
-    "pre_lottery_info": "Magsasagawa ng bukas para sa lahat na lottery para makabunot ng mga numero, at sa gayon, mapagdesisyunan ang pagpili. Opsiyonal ang pagdalo rito. ",
     "preapproval_letter": "Liham ng paunang pag-apruba (Pre-approval letter)",
+    "preferences": "Mga Preperensiya",
     "preference_option_to_claim": "Aling opsiyon para sa preperensiya ang gusto ninyong gamitin?",
     "preference_proof_address_documents": "Anong uri ng dokumento ang gusto ninyong i-upload upang maipakita na nakatira kayo sa address na iyon?",
     "preference_proof_documents": "Anong dokumento ang i-a-upload ninyo upang mapatunayan ang pagiging kuwalipikado?",
-    "preferences": "Mga Preperensiya",
+    "pre_lottery_info": "Magsasagawa ng bukas para sa lahat na lottery para makabunot ng mga numero, at sa gayon, mapagdesisyunan ang pagpili. Opsiyonal ang pagdalo rito. ",
     "primary_user": "Pangunahing Aplikante",
     "proof": {
-      "ca_license": "CA ID o Driver's License (Lisensiya ng Nagmamaneho) ",
       "cable_bill": "Singil para sa cable at internet",
       "cancelled_check": "Kanseladong tseke",
+      "ca_license": "CA ID o Driver's License (Lisensiya ng Nagmamaneho) ",
       "debit_from_bank": "Debit mula sa inyong account sa bangko",
       "electric_bill": "Singil para sa koryente",
       "garbage_bill": "Singil para sa basura",
@@ -668,13 +668,13 @@
     },
     "proof_of_rent": "Patunay ng Pag-upa",
     "questioning_unsure": "Pinag-iisipan/Hindi Tiyak",
-    "re_enter_email_address": "Pakilagay muli ang email address",
-    "re_enter_password": "Pakilagay muli ang inyong password para kumpirmain ito",
     "read_less": "magbasa ng mas kaunti",
     "read_more": "magbasa ng mas marami",
     "recent_application": "Ang Aplikasyon Kamakailan",
     "registered_domestic_partner": "Rehistradong Domestic Partner (katuwang sa buhay)",
     "rent_at_address": "Umuupa sa {{address}}",
+    "re_enter_email_address": "Pakilagay muli ang email address",
+    "re_enter_password": "Pakilagay muli ang inyong password para kumpirmain ito",
     "see_details": "Tingnan ang mga Detalye",
     "see_listing": "Tingnan ang Nakalistang Pabahay",
     "select_one": "Pumili ng Isa",
@@ -697,6 +697,8 @@
     "uncle": "Tiyuhin",
     "update": "I-update o Baguhin",
     "updated_based_on_your_account_settings": "Nabago na batay sa settings ng inyong account.",
+    "uploaded": "I-upload",
+    "uploading": "Nag-a-upload",
     "upload_additional_proof": "Mag-upload ng Iba pang Patunay",
     "upload_copy_of_lease": "Mag-upload ng Kopya ng Kasunduan sa Pag-upa (Lease)",
     "upload_lease_description": "Paki-upload ang unang pahina, o anumang pahina na nagpapakita ng halaga ng upa.",
@@ -708,8 +710,6 @@
     "upload_proof_of_rent_payment": "I-upload ang patunay ng pagbabayad ng upa.",
     "upload_rent_description": "Mangyaring magbigay ng patunay ng inyong buwanang upa. Sinabi ninyo na ang inyong upa sa address na ito ay: {{rent}} <br/><br/>Puwede kayong mag-upload ng mahigit sa isang dokumento, kung nagbabayad ang inyong kabahayan sa pamamagitan ng mahigit sa isang tseke, money order at iba pa.",
     "upload_verification_letter": "I-upload ang liham ng pagpapatunay (verification letter)",
-    "uploaded": "I-upload",
-    "uploading": "Nag-a-upload",
     "verification_letter": "Liham ng Pagpapatunay (Verification Letter)",
     "veterans_in_household": "Mga Beterano sa Inyong Kabahayan",
     "view_application": "Tingnan ang Aplikasyon ",
@@ -724,12 +724,12 @@
     "what_type_of_number": "Anong uri ng numero ito?",
     "white": "Puti",
     "work_in_sf": "Nagtatrabaho ba kayo sa San Francisco?",
-    "you_have_claimed": "Nasabi na ninyong gusto ninyong gamitin ang:",
-    "you_have_confirmed": "Nakumpirma na ninyo: ",
     "your_dob": "Ang Petsa ng Inyong Kapanganakan",
     "your_gender": "Pakitukoy ang inyong kasarian",
     "your_name": "Ang Inyong Pangalan",
     "your_sexual_orientation": "Pakitukoy ang inyong seksuwal na oryentasyon",
+    "you_have_claimed": "Nasabi na ninyong gusto ninyong gamitin ang:",
+    "you_have_confirmed": "Nakumpirma na ninyo: ",
     "zip": "Zip",
     "zipcode": "Zipcode"
   },
@@ -882,7 +882,6 @@
       "see_this_unit_on_mls": "Tingnan ang unit na ito sa MLS",
       "subheader": "Mahahalagang petsa at impormasyon sa pagkontak "
     },
-    "re_pricing": "Mga Restriksiyon sa Presyo sa Muling Pagbebenta",
     "realtor_commission": "Para sa Realtor (Ahente) ng Bumibili ",
     "realtor_commission_header": "Ang Inyong Komisyon:",
     "realtor_commission_how_to": "Kung paano ninyo matatanggap ito:",
@@ -897,6 +896,7 @@
     "reserved_units": "Mga Nakareserbang Unit ",
     "reserved_units_description": "Upang maging kuwalipikado para sa mga unit na ito, kailangang too ang isa sa mga sumusunod sa sitwasyon ninyo o ng sinuman sa inyong kabahayan. ",
     "reserved_units_for_who_are": "Nakareserba para sa {{communityType}} na interesado sa {{reservedType}}",
+    "re_pricing": "Mga Restriksiyon sa Presyo sa Muling Pagbebenta",
     "sale_units": "Mga Binebentang Unit",
     "see_maximum_income_information": "Tingnan ang Impormasyon Tungkol sa Maximum o Pinakamataas nang Posibleng Kita ",
     "see_preference_information": "Tingnan ang Impormasyon tungkol sa Preperensiya",
@@ -996,11 +996,11 @@
     "number_applicants_qualified_for_preference": "Mayroong {{number}} aplikante sa listahang ito.",
     "rank": "Ranggo ",
     "ranking_order_note": "Isasaalang-alang ang pagkakaranggo sa mga listahang ito ayon sa pagkakasunod-sunod na ipinapakita rito. ",
-    "ranking_preference_consideration_note": "Pakitandaan na may iba pang preperensiya na isasaalang-alang muna para mga unit. ",
     "ranking_preferences_considered_over_general_note": "Pakitandaan na isasaaalang-alang muna ang mga may preperensiya para sa lahat ng unit. ",
+    "ranking_preference_consideration_note": "Pakitandaan na may iba pang preperensiya na isasaalang-alang muna para mga unit. ",
     "ranking_title": "Ang ranggo ng inyong preperensiya",
     "read_about_preferences": "Magbasa Tungkol sa mga Preperensiya para sa Pabahay",
-    "results_from": "Mga Resulta mula sa {{petsa}}",
+    "results_from": "Mga Resulta mula sa {{date}}",
     "results_will_be_posted_on": "Ipapaskil ang kumpletong resulta ng lottery sa format na pdf sa {{date}}",
     "unsorted_results_note": "Naglalaman ang PDF na ito ng mga hindi pa napapangkat-pangkat na resulta ng lottery mula sa isinagawang lottery para sa pabahay noong {{date}}.",
     "up_to_x_units_available": "Hanggang sa {{units}} unit ",
@@ -1126,18 +1126,18 @@
     "forgot_password": "Nakalimutan ba ninyo ang inyong password?",
     "logged_out_due_to_inactivity": "Pinahahalagahan namin ang inyong seguridad.  Ni-log-out namin kayo dahil sa kawalan ng aktibidad. Mangyaring mag-sign in para magpatuloy.",
     "resent_confirmation_message": "Nakapagpadala na sa inyo ng email. Paki-tsek po ang inyong inbox. ",
-    "sign_in_required": "Mangyaring mag-sign in sa inyong account para makapunta sa page na ito. ",
     "signed_out_successfully": "Matagumpay na kayong nakapag-log out sa inyong account. ",
+    "sign_in_required": "Mangyaring mag-sign in sa inyong account para makapunta sa page na ito. ",
     "user_token_validation_timeout": "Mahalaga sa amin ang inyong seguridad. Ni-log out namin kayo dahil may problema sa koneksiyon. Mangyaring mag-sign in para makapagpatuloy. "
   },
   "t": {
     "ami": "AMI",
+    "applications_closed": "Sarado na ang mga Aplikasyon",
     "application_closed": "Sarado na ang mga Aplikasyon ",
     "application_deadline": "Huling Araw para sa Pagsusumite ng Aplikasyon",
     "application_due": "Huling Araw ng Pagsusumite ng Aplikasyon",
     "application_for_listing": "Aplikasyon para sa {{listingName}}",
     "application_submitted": "Naisumite na ang Aplikasyon",
-    "applications_closed": "Sarado na ang mga Aplikasyon",
     "are_you_sure_you_want_to_leave": "Sigurado ba kayong gusto ninyong umalis sa page na ito?  Mawawala sa inyo ang anumang hindi nai-save na impormasyon na nailagay na ninyo sa aplikasyon para sa nakalistang pabahay na ito. Kung gusto ninyong i-save ang inyong impormasyon para tapusin ang aplikasyon sa ibang panahon, paki-click ang a ‘I-save  at Tapusin sa ibang panahon (Save and Finish later)’ na button.",
     "are_you_sure_you_want_to_leave_confirmation": "Sigurado ba kayong gusto ninyong umalis sa page na ito? Kapag ni-link ninyo ang inyong aplikasyon sa isang account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",
     "are_you_sure_you_want_to_leave_sign_in": "Siguaro ba kayong gusto ninyong umalis sa page na ito? Kapag gumawa kayo ng account, magiging mas madali ang pagtingin sa estado ng inyong aplikasyon at pagkumpleto sa mga aplikasyon sa hinaharap.",
@@ -1154,9 +1154,9 @@
     "delete_application": "Gusto ba ninyong i-delete ang aplikasyong ito? ",
     "edit": "I-edit",
     "household_size": "laki ng kabahayan",
-    "i_agree": "Sinasang-ayunan ko at naiintindihan na wala na akong mababago matapos kong maisumite ito.",
-    "in_progress": "Ginagawa na",
     "income": "kita",
+    "in_progress": "Ginagawa na",
+    "i_agree": "Sinasang-ayunan ko at naiintindihan na wala na akong mababago matapos kong maisumite ito.",
     "leave": "Umalis ",
     "leave_your_application": "Aalisan na ba ninyo ang inyong aplikasyon?",
     "listing_updated": "Nabago na ang Nakalistang mga Pabahay ",
@@ -1167,8 +1167,8 @@
     "never_submitted": "Hindi Kailanman Nagsumite",
     "next": "Susunod",
     "no": "Hindi",
-    "no_parking": "walang paradahan",
     "none": "Wala",
+    "no_parking": "walang paradahan",
     "occupancy": "Bilang ng Nakatira",
     "ok": "Okay",
     "optional": "Opsiyonal",
@@ -1188,8 +1188,8 @@
     "submit": "Isumite",
     "submitted": "Nasumite na",
     "to": "upang",
-    "unit_type": "Uri ng Unit",
     "units": "mga unit ",
+    "unit_type": "Uri ng Unit",
     "with_parking": "may paradahan",
     "yes": "Oo",
     "you": "Kayo"

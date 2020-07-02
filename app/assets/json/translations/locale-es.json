@@ -55,15 +55,18 @@
   "b0_prerequisites": {
     "title": "Para empezar, asegurémonos de que usted sea elegible para presentar su solicitud."
   },
+  "b1a_welcome_back": {
+    "continue_without_signing_in": "Continuar sin iniciar sesión",
+    "title": "¡Bienvenido de nuevo!",
+    "you_already_have_an_account": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
+  },
   "b1_name": {
     "app_details_updated": "Se actualizaron los detalles de su solicitud para que coincidan con los ajustes de su cuenta.",
     "name_editable_via": "Estos campos pueden editarse mediante su",
     "title": "¿Cuál es su nombre?"
   },
-  "b1a_welcome_back": {
-    "continue_without_signing_in": "Continuar sin iniciar sesión",
-    "title": "¡Bienvenido de nuevo!",
-    "you_already_have_an_account": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
+  "b2a_verify_address": {
+    "title": "Hemos localizado la siguiente dirección. Confirme si es correcta."
   },
   "b2_contact": {
     "applicant_address_desc": "Necesitamos la dirección del lugar donde usted vive actualmente. Si no tiene vivienda, ingrese la dirección del refugio donde se aloja o una dirección cercana a su ubicación.",
@@ -74,27 +77,24 @@
     "title": "Gracias, {{name}}. Ahora necesitamos saber cómo comunicarnos con usted.",
     "work_in_sf_desc": "Esto significa que usted trabaja actualmente en San Francisco por lo menos el 75 % de sus horas laborales."
   },
-  "b2a_verify_address": {
-    "title": "Hemos localizado la siguiente dirección. Confirme si es correcta."
-  },
   "b3_alternate_contact_type": {
     "allowing_to_discuss": "Al proporcionar otra persona de contacto, nos autoriza a corroborar la información de su solicitud con esa persona.",
     "title": "¿Hay alguna otra persona que usted nos autorice a contactar en caso de que no podamos comunicarnos con usted?"
-  },
-  "b4_alternate_contact_name": {
-    "title": "¿Quién es su contacto alternativo?"
   },
   "b4a_alternate_contact_phone_address": {
     "choose_an_address": "Elija una dirección donde puedan recibir actualizaciones y materiales sobre su solicitud.",
     "only_use_info": "Solo utilizaremos esta información para comunicarnos con dichas personas en lo que respecta a su solicitud.",
     "title": "Díganos cómo podemos comunicarnos con su contacto alternativo."
   },
-  "c1_household_intro": {
-    "title": "A continuación, quisiéramos saber acerca de las demás personas que van a vivir con usted en la vivienda."
+  "b4_alternate_contact_name": {
+    "title": "¿Quién es su contacto alternativo?"
   },
   "c1a_household_overview": {
     "title1": "Antes de agregar a otras personas, asegúrese de que no figuren en otras solicitudes para este anuncio de vivienda.",
     "title2": "Si incluye a una persona que ya ha enviado una solicitud, se descalificarán todas sus solicitudes."
+  },
+  "c1_household_intro": {
+    "title": "A continuación, quisiéramos saber acerca de las demás personas que van a vivir con usted en la vivienda."
   },
   "c2_household_members": {
     "title": "Infórmenos acerca de su grupo familiar."
@@ -112,10 +112,10 @@
   },
   "c5_household_monthly_rent": {
     "description": "Ingrese la cantidad total que usted personalmente paga de alquiler.",
+    "how_much_does_member_pay": "¿Cuánto paga {{member}} en {{address}}?",
     "how_much_do_members_pay": "¿Cuánto pagan {{members}} en {{address}}?",
     "how_much_do_you_and_members_pay": "¿Cuánto pagan {{members}} en {{address}}?",
     "how_much_do_you_pay": "¿Cuánto paga Usted en {{address}}?",
-    "how_much_does_member_pay": "¿Cuánto paga {{member}} en {{address}}?",
     "title_household": "¿Cuánto paga de alquiler mensual su grupo familiar?",
     "title_you": "¿Cuánto paga usted de alquiler mensual?"
   },
@@ -245,10 +245,10 @@
   },
   "e1_preferences_intro": {
     "get_started": "Comience",
+    "steps_title": "Son solo 3 pasos sencillos:",
     "step_1": "Fíjese si cumple con los requisitos para cada preferencia del sorteo.",
     "step_2": "Marque las casillas para solicitar sus preferencias para el sorteo.",
     "step_3": "Cargue los documentos requeridos desde su computadora o teléfono.",
-    "steps_title": "Son solo 3 pasos sencillos:",
     "title": "Las preferencias para el sorteo lo posicionan más arriba en la lista y le permiten una clasificación más alta en el sorteo."
   },
   "e2a_neighborhood_preference": {
@@ -333,7 +333,6 @@
     "title": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda.",
     "you_will_be_in_general_lottery": "Usted participará en el sorteo general."
   },
-  "email_signature": "Oficina del Alcalde para la Vivienda y Desarrollo Comunitario de San Francisco",
   "emailer": {
     "account_update": {
       "account_settings_link": "Configuración de la cuenta",
@@ -365,6 +364,7 @@
       "what_to_expect_next": "Qué esperar a continuación"
     }
   },
+  "email_signature": "Oficina del Alcalde para la Vivienda y Desarrollo Comunitario de San Francisco",
   "error": {
     "address": "Ingrese una dirección",
     "address_validation_insufficient": "Esta direccion no fue encontrada. Verifique el número, la calle y la ciudad ingresados. Asegúrese de haber ingresado el tipo de calle (por ejemplo, “ST” o “AVE”). No se permiten apartados postales.",
@@ -488,11 +488,11 @@
   },
   "label": {
     "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
-    "add_household_member": "Agregar integrante de la familia",
     "additional_phone": "Teléfono adicional",
     "address": "Domicilio",
     "address_1": "Dirección",
     "address_2": "Apartamento o unidad n.º",
+    "add_household_member": "Agregar integrante de la familia",
     "agency": "Agencia",
     "alternate_contact": "Contacto alternativo",
     "alternate_contact_agency": "¿Dónde trabaja su trabajador social o su consejero de vivienda?",
@@ -561,8 +561,8 @@
     "done_with_this_address": "Ya he finalizado con esta dirección",
     "dont_want_preference": "No deseo esta preferencia para el sorteo",
     "download_application": "Descargar solicitud en {{lang}}",
-    "edit_eligibility": "Modifique la elegibilidad",
     "edited": "Editado",
+    "edit_eligibility": "Modifique la elegibilidad",
     "email_address": "Correo electrónico",
     "family_member": "Integrante de la familia",
     "favorite": "Agregar a favoritos",
@@ -584,17 +584,17 @@
     "hispanic_latino": "Hispano/Latino",
     "household_details": "Detalles del grupo familiar",
     "household_member": "Integrante del grupo familiar",
+    "household_members": "Integrantes del grupo familiar",
     "household_member_cancel": "Cancelar la incorporación de esta persona",
     "household_member_delete": "Borrar a esta persona",
     "household_member_name": "Nombre del integrante del grupo familiar",
     "household_member_relationship": "¿Qué parentesco tiene con usted?",
     "household_member_save": "Guardar al integrante del grupo familiar",
     "household_member_update": "Actualizar al integrante del grupo familiar",
-    "household_members": "Integrantes del grupo familiar",
     "how_did_you_hear_about_this": "¿Cómo se enteró sobre este aviso de vivienda?",
-    "in_law": "Pariente político",
     "income": "Ingresos",
     "income_placeholder": "Total de todas las fuentes de ingresos",
+    "in_law": "Pariente político",
     "last_name": "Apellido",
     "live_alone": "Viviré solo",
     "live_in_public_housing_or_hud": "Vive en vivienda asistencial",
@@ -614,11 +614,11 @@
     "nephew": "Sobrino",
     "new_password": "Nueva Contraseña",
     "niece": "Sobrina",
-    "no_alternate_contact": "No tengo un contacto alternativo",
-    "no_rent_paid": "No pago alquiler",
     "not_a_match": "No cumple los requisitos",
     "not_hispanic_latino": "No hispano/No latino",
     "not_listed": "No especificado en la lista",
+    "no_alternate_contact": "No tengo un contacto alternativo",
+    "no_rent_paid": "No pago alquiler",
     "old_password": "Contraseña anterior",
     "on_the_listing": "en el aviso de vivienda",
     "open_houses": "Casas en exhibición",
@@ -639,17 +639,17 @@
     "please_select_all_that_apply": "Marque todas las opciones que correspondan.",
     "please_select_one": "Seleccione una opción.",
     "please_select_preference": "Si tiene una de estas preferencias de sorteo, selecciónela a continuación: ",
-    "pre_lottery_info": "Se llevará a cabo un sorteo abierto al público para obtener los números y determinar la selección. La asistencia es opcional.",
     "preapproval_letter": "Carta de pre-aprobación ",
+    "preferences": "Preferencias",
     "preference_option_to_claim": "¿Qué preferencia desea solicitar?",
     "preference_proof_address_documents": "¿Qué tipo de documento desea cargar para demostrar que vive en esa dirección?",
     "preference_proof_documents": "¿Qué documento va a cargar para demostrar su elegibilidad?",
-    "preferences": "Preferencias",
+    "pre_lottery_info": "Se llevará a cabo un sorteo abierto al público para obtener los números y determinar la selección. La asistencia es opcional.",
     "primary_user": "Solicitante principal",
     "proof": {
-      "ca_license": "Id. o licencia de conducir emitida por el estado de CA",
       "cable_bill": "Factura de internet y de cable",
       "cancelled_check": "Cheque cancelado",
+      "ca_license": "Id. o licencia de conducir emitida por el estado de CA",
       "debit_from_bank": "Débito de su cuenta bancaria",
       "electric_bill": "Factura de electricidad",
       "garbage_bill": "Factura del servicio de recolección de basura",
@@ -668,13 +668,13 @@
     },
     "proof_of_rent": "Comprobante de alquiler",
     "questioning_unsure": "En duda/sin determinar",
-    "re_enter_email_address": "Vuelva a ingresar la dirección de correo electrónico",
-    "re_enter_password": "Vuelve a ingresar su contraseña para confirmar",
     "read_less": "leer menos",
     "read_more": "leer mas",
     "recent_application": "Solicitud reciente",
     "registered_domestic_partner": "Pareja doméstica registrada",
     "rent_at_address": "Alquila en {{address}}",
+    "re_enter_email_address": "Vuelva a ingresar la dirección de correo electrónico",
+    "re_enter_password": "Vuelve a ingresar su contraseña para confirmar",
     "see_details": "Ver detalles",
     "see_listing": "Vea los anuncios",
     "select_one": "Seleccione uno",
@@ -697,6 +697,8 @@
     "uncle": "Tío",
     "update": "Actualizar",
     "updated_based_on_your_account_settings": "Actualizados según los ajustes de su cuenta.",
+    "uploaded": "Cargado",
+    "uploading": "Cargando",
     "upload_additional_proof": "Cargar comprobante adicional",
     "upload_copy_of_lease": "Cargar copia del contrato de alquiler",
     "upload_lease_description": "Cargue la primera página o la página que muestre el monto del alquiler.",
@@ -708,8 +710,6 @@
     "upload_proof_of_rent_payment": "Cargar comprobante del pago del alquiler",
     "upload_rent_description": "Proporcione un comprobante de su alquiler mensual. Usted afirmó que su alquiler en esta dirección es de: {{rent}} <br/><br/>Puede cargar varios documentos si su grupo familiar paga con varios cheques, giros monetarios, etc.",
     "upload_verification_letter": "Cargue su carta de verificación",
-    "uploaded": "Cargado",
-    "uploading": "Cargando",
     "verification_letter": "Carta de verificación",
     "veterans_in_household": "Veteranos de guerra en el grupo familiar",
     "view_application": "Ver la Solicitud",
@@ -724,12 +724,12 @@
     "what_type_of_number": "¿Qué tipo de número es este?",
     "white": "Blanco",
     "work_in_sf": "¿Trabaja usted en San Francisco?",
-    "you_have_claimed": "Usted ha solicitado:",
-    "you_have_confirmed": "Usted ha confirmado:",
     "your_dob": "Su fecha de nacimiento",
     "your_gender": "Especifique su sexo",
     "your_name": "Su nombre",
     "your_sexual_orientation": "Especifique su orientación sexual",
+    "you_have_claimed": "Usted ha solicitado:",
+    "you_have_confirmed": "Usted ha confirmado:",
     "zip": "Código postal",
     "zipcode": "Código postal"
   },
@@ -882,7 +882,6 @@
       "see_this_unit_on_mls": "Ver esta unidad en MLS",
       "subheader": "Fechas importantes e información de contacto"
     },
-    "re_pricing": "Restricciones del precio de reventa",
     "realtor_commission": "Para el agente inmobiliario del comprador",
     "realtor_commission_header": "Su comisión: ",
     "realtor_commission_how_to": "Cómo cobrar su comisión:",
@@ -897,6 +896,7 @@
     "reserved_units": "Unidades reservadas",
     "reserved_units_description": "Para ser elegible para estas unidades, usted o algún miembro de su familia debe cumplir con alguno de los siguientes requisitos:",
     "reserved_units_for_who_are": "Reservada para {{communityType}} que {{reservedType}}",
+    "re_pricing": "Restricciones del precio de reventa",
     "sale_units": "Unidades a la venta",
     "see_maximum_income_information": "Consulte la información sobre ingresos máximos",
     "see_preference_information": "Consulte la información de preferencia",
@@ -996,8 +996,8 @@
     "number_applicants_qualified_for_preference": "Hay {{number}} solicitantes en esta lista.",
     "rank": "Clasificación",
     "ranking_order_note": "La clasificación en estas listas se considera en el orden que se muestra aquí.",
-    "ranking_preference_consideration_note": "Por favor tenga en cuenta que hay otras preferencias que se considerarán primero para las unidades.",
     "ranking_preferences_considered_over_general_note": "Por favor tenga en cuenta que las personas con preferencia se considerarán primero para todas las unidades.",
+    "ranking_preference_consideration_note": "Por favor tenga en cuenta que hay otras preferencias que se considerarán primero para las unidades.",
     "ranking_title": "Su orden de preferencia",
     "read_about_preferences": "Lea sobre las preferencias de vivienda",
     "results_from": "Resultados del {{date}}",
@@ -1126,18 +1126,18 @@
     "forgot_password": "¿Olvidó su contraseña?",
     "logged_out_due_to_inactivity": "Nos preocupa su seguridad. Cerramos su sesión por inactividad. Por favor inicie sesión para continuar.",
     "resent_confirmation_message": "Correo electrónico enviado. Revise su bandeja de entrada.",
-    "sign_in_required": "Inicie sesión para ingresar a esta página.",
     "signed_out_successfully": "Ha cerrado su sesión con éxito.",
+    "sign_in_required": "Inicie sesión para ingresar a esta página.",
     "user_token_validation_timeout": "Nos preocupa su seguridad. Cerramos su sesión por un problema de coneccion. Inicie sesión para continuar."
   },
   "t": {
     "ami": "AMI (Ingreso Promedio del Área)",
+    "applications_closed": "Las solicitudes están cerradas",
     "application_closed": "Las solicitudes están cerradas",
     "application_deadline": "Fecha límite para la presentación de la solicitud",
     "application_due": "Vencimiento de la solicitud",
     "application_for_listing": "Solicitud para {{listingName}}",
     "application_submitted": "Solicitud presentada",
-    "applications_closed": "Las solicitudes están cerradas",
     "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y terminar más tarde\". (Save and finish later)",
     "are_you_sure_you_want_to_leave_confirmation": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
     "are_you_sure_you_want_to_leave_sign_in": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
@@ -1154,9 +1154,9 @@
     "delete_application": "¿Desea eliminar esta solicitud?",
     "edit": "Editar",
     "household_size": "cantidad de personas en el hogar",
-    "i_agree": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
-    "in_progress": "En curso",
     "income": "ingreso",
+    "in_progress": "En curso",
+    "i_agree": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
     "leave": "Salir",
     "leave_your_application": "¿Desea salir de su solicitud?",
     "listing_updated": "Fecha de actualización del listado",
@@ -1167,8 +1167,8 @@
     "never_submitted": "Nunca se presentó",
     "next": "Siguiente",
     "no": "No",
-    "no_parking": "sin estacionamiento",
     "none": "Ninguno",
+    "no_parking": "sin estacionamiento",
     "occupancy": "Ocupación",
     "ok": "Aceptar",
     "optional": "Opcional",
@@ -1188,8 +1188,8 @@
     "submit": "Someter",
     "submitted": "Presentada",
     "to": "a",
-    "unit_type": "Tipo de Unidad",
     "units": "unidades",
+    "unit_type": "Tipo de Unidad",
     "with_parking": "con estacionamiento",
     "yes": "Sí",
     "you": "Usted"
