@@ -1,4 +1,4 @@
-{
+{ "en":
     "415-701-5500": "415-701-5500",
     "a1_intro": {
         "choose_your_language": "Choose your language",
@@ -1211,4 +1211,5 @@
         "sign_up_today": "Sign Up today",
         "title": "Apply for affordable housing"
     }
+}
 }
