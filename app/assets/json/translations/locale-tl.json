@@ -72,7 +72,7 @@
             "email_editable_via": "Puwedeng ma-edit o mabago ang inyong email addres sa pamamagitan ng inyong",
             "only_use_your_email": "Gagamitin lamang namin ang inyong email address para makontak kayo tungkol sa inyong aplikasyon.",
             "provide_an_address": "Pakibigay ang address kung saan puwede kayong tumanggap ng bagong impormasyon at materyales tungkol sa inyong aplikasyon.",
-            "title": "Salamat, {{pangalan}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
+            "title": "Salamat, {{name}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
             "work_in_sf_desc": "Nangangahulugan ito na kasalukuyan kayong nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng inyong mga oras ng trabaho."
         },
         "b2a_verify_address": {
@@ -253,8 +253,8 @@
             "title": "Ang mga Preperensiya para sa Lottery ang siyang maglalagay sa inyo sa unahan ng iba sa linya at magbibigay ng mas mataas na ranggo sa lottery."
         },
         "e2a_neighborhood_preference": {
-            "instructions_p1_plural": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
-            "instructions_p1_singular": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+            "instructions_p1_plural": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+            "instructions_p1_singular": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
             "instructions_p2": "Mag-upload lamang ng katanggap-tanggap na patunay ng address na ito at <strong> bibigyan din namin kayo ng Preperensiya para sa Nakatira sa San Francisco. </strong>",
             "preference": {
                 "description": "Nangangahulugan ang <strong>Preperensiya para sa Nakatira sa Komunidad</strong>na nakatira ang isa o higit pang miyembro ng kabahayan sa parehong Supervisorial District (distritong pinamamahalaan ng Superbisor) o sa loob ng 1/2 milya na buffer o pambawas ng epekto ng proyekto.",
@@ -1001,7 +1001,7 @@
             "ranking_preferences_considered_over_general_note": "Pakitandaan na isasaaalang-alang muna ang mga may preperensiya para sa lahat ng unit. ",
             "ranking_title": "Ang ranggo ng inyong preperensiya",
             "read_about_preferences": "Magbasa Tungkol sa mga Preperensiya para sa Pabahay",
-            "results_from": "Mga Resulta mula sa {{petsa}}",
+            "results_from": "Mga Resulta mula sa {{date}}",
             "results_will_be_posted_on": "Ipapaskil ang kumpletong resulta ng lottery sa format na pdf sa {{date}}",
             "unsorted_results_note": "Naglalaman ang PDF na ito ng mga hindi pa napapangkat-pangkat na resulta ng lottery mula sa isinagawang lottery para sa pabahay noong {{date}}.",
             "up_to_x_units_available": "Hanggang sa {{units}} unit ",

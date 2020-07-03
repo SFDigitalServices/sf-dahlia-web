@@ -346,7 +346,7 @@
             "draft_application_saved": {
                 "applications_are_due_by": "該物業的申請截止日期為%{deadline}。",
                 "complete_your_application": "完成您的申請",
-                "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的{listing_name}申請。",
+                "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的 %{listing_name}申請。",
                 "reminder_do_not_submit_duplicate": "注意：如果您已經為該物業提交了另一份申請，切勿完成此申請。重複申請將導致兩份申請均被從抽籤中除名。",
                 "subject": "在%{deadline}之前完成您的%{listing_name}申請"
             },
