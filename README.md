@@ -93,7 +93,7 @@ To run stress testing against the Salesforce instance, refer to the documentatio
 To get started working with our Phrase translations, you will need to:
 
 1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
-1. [Create and save a new access token](https://app.phrase.com/settings/oauth_access_tokens)
+1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in e.g. LastPass
 
 **To upload new strings or translations to Phrase**
 Run `grunt phrasePull --phraseAccessToken=[your access token]`
