@@ -22,23 +22,23 @@ module.exports = function(grunt) {
         }
       ],
     },
-    translationsToTmp: {
+    removeLanguageKey: {
       files: [
         {
           src: 'app/assets/json/translations/locale-en.json',
-          dest: 'tmp/translations/locale-en.json'
+          dest: 'app/assets/json/translations/locale-en.json'
         },
         {
           src: 'app/assets/json/translations/locale-es.json',
-          dest: 'tmp/translations/locale-es.json'
+          dest: 'app/assets/json/translations/locale-es.json'
         },
         {
           src: 'app/assets/json/translations/locale-tl.json',
-          dest: 'tmp/translations/locale-tl.json'
+          dest: 'app/assets/json/translations/locale-tl.json'
         },
         {
           src: 'app/assets/json/translations/locale-zh.json',
-          dest: 'tmp/translations/locale-zh.json'
+          dest: 'app/assets/json/translations/locale-zh.json'
         }
       ],
       options: {
@@ -51,22 +51,22 @@ module.exports = function(grunt) {
         }
       }
     },
-    translationsFromTmp: {
+    addBackLanguageKey: {
       files: [
         {
-          src: 'tmp/translations/locale-en.json',
+          src: 'app/assets/json/translations/locale-en.json',
           dest: 'app/assets/json/translations/locale-en.json'
         },
         {
-          src: 'tmp/translations/locale-es.json',
+          src: 'app/assets/json/translations/locale-es.json',
           dest: 'app/assets/json/translations/locale-es.json'
         },
         {
-          src: 'tmp/translations/locale-tl.json',
+          src: 'app/assets/json/translations/locale-tl.json',
           dest: 'app/assets/json/translations/locale-tl.json'
         },
         {
-          src: 'tmp/translations/locale-zh.json',
+          src: 'app/assets/json/translations/locale-zh.json',
           dest: 'app/assets/json/translations/locale-zh.json'
         }
       ],
@@ -140,7 +140,7 @@ module.exports = function(grunt) {
        ],
       namespace: true,
       lang:     ['locale-en', 'locale-es', 'locale-tl', 'locale-zh'],
-      dest:     'tmp/translations'
+      dest:     'app/assets/json/translations'
     }
   },
   json_remove_fields: {
@@ -184,12 +184,25 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
-    'copy:translationsToTmp',
+    'copy:removeLanguageKey',
     'i18nextract',
-    'copy:translationsFromTmp',
+    'copy:addBackLanguageKey',
     'json_remove_fields',
     'sortJSON',
   ]);
+
+  grunt.registerTask('translations-add-language-key', [
+    'copy:addBackLanguageKey',
+    'json_remove_fields',
+    'sortJSON',
+  ]);
+
+  grunt.registerTask('translations-remove-language-key', [
+    'copy:removeLanguageKey',
+    'json_remove_fields',
+    'sortJSON',
+  ]);
+
 
   grunt.registerTask('deploy', [
     'clean',
