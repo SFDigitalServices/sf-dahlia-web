@@ -166,9 +166,16 @@ module.exports = function(grunt) {
     // }
   },
   exec: {
-    pull_phrase: {
-      cmd: function(phraseAccessToken) {
-        return 'phrase pull --access_token ' + phraseAccessToken;
+    phrasePull: {
+      cmd: function() {
+        var token = grunt.option('phraseAccessToken')
+        return 'phrase pull --access_token ' + token;
+      }
+    },
+    phrasePush: {
+      cmd: function() {
+        var token = grunt.option('phraseAccessToken')
+        return 'phrase push --access_token ' + token;
       }
     }
   }
@@ -183,6 +190,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-json-remove-fields');
   grunt.loadNpmTasks('grunt-exec');
 
+  // Set this variable by appending --phraseAccessToken=[token] to any grunt command.
+  var phraseAccessToken = grunt.option('phraseAccessToken');
   // register task
   grunt.registerTask('default', [
     'clean',
@@ -198,17 +207,20 @@ module.exports = function(grunt) {
     'sortJSON',
   ]);
   grunt.registerTask('phrasePush', [
+    'copy:removeLanguageKey',
+    'exec:phrasePush',
     'copy:addBackLanguageKey',
     'json_remove_fields',
     'sortJSON',
   ]);
 
-  grunt.registerTask('translations-remove-language-key', [
+  grunt.registerTask('phrasePull', [
     'copy:removeLanguageKey',
+    'exec:phrasePull',
+    'copy:addBackLanguageKey',
     'json_remove_fields',
     'sortJSON',
   ]);
-
 
   grunt.registerTask('deploy', [
     'clean',
