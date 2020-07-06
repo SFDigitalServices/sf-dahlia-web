@@ -159,12 +159,18 @@ module.exports = function(grunt) {
       'app/assets/json/translations/locale-en.json',
       'app/assets/json/translations/locale-es.json',
       'app/assets/json/translations/locale-tl.json',
-      'app/assets/json/translations/locale-zh.json',
-      'tmp/translations/locale-en.json'
+      'app/assets/json/translations/locale-zh.json'
     ],
     // options: {
     //   spacing: 2
     // }
+  },
+  exec: {
+    pull_phrase: {
+      cmd: function(phraseAccessToken) {
+        return 'phrase pull --access_token ' + phraseAccessToken;
+      }
+    }
   }
 });
 
@@ -175,6 +181,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-angular-translate');
   grunt.loadNpmTasks('grunt-sort-json');
   grunt.loadNpmTasks('grunt-json-remove-fields');
+  grunt.loadNpmTasks('grunt-exec');
 
   // register task
   grunt.registerTask('default', [
@@ -190,8 +197,7 @@ module.exports = function(grunt) {
     'json_remove_fields',
     'sortJSON',
   ]);
-
-  grunt.registerTask('translations-add-language-key', [
+  grunt.registerTask('phrasePush', [
     'copy:addBackLanguageKey',
     'json_remove_fields',
     'sortJSON',
