@@ -1,0 +1,16 @@
+.form-group
+  label.form-label.caps for="user_primary_language"
+    | {{'label.primary_language.applicant_language_at_home' | translate}}
+
+  p.form-note.margin-bottom
+    | {{'label.primary_language.applicant_language_at_home_subtitle' | translate}}
+
+  select#user_primary_language ng-model="user.primaryLanguage" data-width="auto" name="primaryLanguage" ng-change="resetLanguageOther()"
+    option disabled="" selected="" value=""
+      | {{'label.select_one' | translate}}
+    option ng-repeat="option in primary_language_options" value="{{option[0]}}"
+      | {{option[1] | translate}}
+
+  .radio-block ng-if="languageNotListed()"
+    label.sr-only for="otherLanguage" translate="label.your_primary_language"
+    input#otherLanguage ng-model="user.otherLanguage" maxlength="{{::INPUT_MAX_LENGTH.otherLanguage}}" name="otherLanguage" placeholder="{{'label.primary_language.your_primary_language' | translate}}" type="text"
