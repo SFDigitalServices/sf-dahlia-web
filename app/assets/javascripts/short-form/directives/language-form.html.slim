@@ -12,5 +12,5 @@
       | {{option[1] | translate}}
 
   .radio-block ng-if="languageNotListed()"
-    label.sr-only for="otherLanguage" translate="label.your_primary_language"
+    label.sr-only for="otherLanguage" translate="label.primary_language.your_primary_language"
     input#otherLanguage ng-model="user.otherLanguage" maxlength="{{::INPUT_MAX_LENGTH.otherLanguage}}" name="otherLanguage" placeholder="{{'label.primary_language.your_primary_language' | translate}}" type="text"
