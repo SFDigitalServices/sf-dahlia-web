@@ -204,6 +204,7 @@ module.exports = function(grunt) {
     'i18nextract',
     'copy:addBackLanguageKey',
     'json_remove_fields',
+    'json_remove_fields',
     'sortJSON',
   ]);
   grunt.registerTask('phrasePush', [

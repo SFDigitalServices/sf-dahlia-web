@@ -11,6 +11,17 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Social Worker or Housing Counselor', Service.flagForI18n('label.social_worker_or_housing_counselor')]
     ['Other', Service.flagForI18n('label._other')]
   ]
+  Service.primary_language_options = [
+    ['Chinese – Cantonese', Service.flagForI18n('label.primary_language.options.chinese_cantonese')]
+    ['Chinese – Mandarin', Service.flagForI18n('label.primary_language.options.chinese_mandarin')]
+    ['English', Service.flagForI18n('label.primary_language.options.english')]
+    ['Filipino', Service.flagForI18n('label.primary_language.options.filipino')]
+    ['Russian', Service.flagForI18n('label.primary_language.options.russian')]
+    ['Spanish', Service.flagForI18n('label.primary_language.options.spanish')]
+    ['Vietnamese', Service.flagForI18n('label.primary_language.options.vietnamese')]
+    ['Not Listed', Service.flagForI18n('label.not_listed')]
+  ]
+
   Service.gender_options = [
     ['Female', Service.flagForI18n('label.female')]
     ['Male', Service.flagForI18n('label.male')]

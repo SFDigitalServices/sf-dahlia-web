@@ -340,6 +340,8 @@ class Api::V1::ShortFormController < ApiController
                 languageOther
                 gender
                 genderOther
+                primaryLanguage
+                otherLanguage
                 ethnicity
                 race
                 sexualOrientation

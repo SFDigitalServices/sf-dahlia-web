@@ -626,7 +626,6 @@
             "on_the_listing": "on the listing",
             "open_houses": "Open Houses",
             "original_application": "Original Application",
-            "other": "Other",
             "other_multiracial": "Other/Multiracial",
             "other_people": "Other people will live with me",
             "page_updating": "Page Updating",
@@ -648,6 +647,20 @@
             "preference_proof_address_documents": "What type of document would you like to upload to show you live at that address?",
             "preference_proof_documents": "Which document are you uploading to prove eligibility?",
             "preferences": "Preferences",
+            "primary_language": {
+                "applicant_language_at_home": "Language spoken at home",
+                "applicant_language_at_home_subtitle": "Select the language that is most commonly spoken in your home.",
+                "options": {
+                    "chinese_cantonese": "Chinese - Cantonese",
+                    "chinese_mandarin": "Chinese - Mandarin",
+                    "english": "English",
+                    "filipino": "Filipino",
+                    "russian": "Russian",
+                    "spanish": "Spanish",
+                    "vietnamese": "Vietnamese"
+                },
+                "your_primary_language": "Specify language spoken at home"
+            },
             "primary_user": "Primary Applicant",
             "proof": {
                 "ca_license": "CA ID or Driver's License",

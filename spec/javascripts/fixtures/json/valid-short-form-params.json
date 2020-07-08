@@ -31,7 +31,10 @@
          "hasAltMailingAddress": false,
          "noAddress": true,
          "workInSf": false,
-         "gender": "Male",
+         "gender": "Not Listed",
+         "genderOther": "other gender",
+         "primaryLanguage": "Not Listed",
+         "otherLanguage": "other language",
          "dob": "1990-2-2"
       }
    }
