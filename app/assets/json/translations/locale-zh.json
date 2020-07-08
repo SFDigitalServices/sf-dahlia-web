@@ -489,6 +489,7 @@
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
         },
         "label": {
+            "_other": "其他",
             "ada_accessible_units": "ADA 無障礙設施單位",
             "add_household_member": "新增家庭成員",
             "additional_phone": "其他電話",

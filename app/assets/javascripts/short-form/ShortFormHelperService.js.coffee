@@ -9,7 +9,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Family Member', Service.flagForI18n('label.family_member')]
     ['Friend', Service.flagForI18n('label.friend')]
     ['Social Worker or Housing Counselor', Service.flagForI18n('label.social_worker_or_housing_counselor')]
-    ['Other', Service.flagForI18n('label.other')]
+    ['Other', Service.flagForI18n('label._other')]
   ]
   Service.gender_options = [
     ['Female', Service.flagForI18n('label.female')]
@@ -35,7 +35,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Great Grandparent', Service.flagForI18n('label.great_grandparent')]
     ['In-Law', Service.flagForI18n('label.in_law')]
     ['Friend', Service.flagForI18n('label.friend')]
-    ['Other', Service.flagForI18n('label.other')]
+    ['Other', Service.flagForI18n('label._other')]
   ]
   Service.ethnicity_options = [
     ['Hispanic/Latino', Service.flagForI18n('label.hispanic_latino')]
@@ -113,7 +113,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Housing Counselor', Service.flagForI18n('referral.housing_counselor')]
     ['Radio Ad', Service.flagForI18n('referral.radio_ad')]
     ['Bus Ad', Service.flagForI18n('referral.bus_ad')]
-    ['Other', Service.flagForI18n('label.other')]
+    ['Other', Service.flagForI18n('label._other')]
   ]
 
   Service.proofOptions = (preference) ->
