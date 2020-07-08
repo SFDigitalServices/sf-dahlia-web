@@ -488,6 +488,7 @@
             "header": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon."
         },
         "label": {
+            "_other": "Iba pa",
             "ada_accessible_units": "Mga Unit na ADA Accessible (may madaraanan ang may kapansanan)",
             "add_household_member": "Magdagdag ng miyembro ng kabahayan",
             "additional_phone": "Iba pang Telepono",

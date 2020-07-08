@@ -488,6 +488,7 @@
             "header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones."
         },
         "label": {
+            "_other": "Otro",
             "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
             "add_household_member": "Agregar integrante de la familia",
             "additional_phone": "Teléfono adicional",
