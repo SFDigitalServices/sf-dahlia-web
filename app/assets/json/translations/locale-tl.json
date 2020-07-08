@@ -625,7 +625,6 @@
             "on_the_listing": "nasa nakalistang pabahay",
             "open_houses": "Mga Open House (Panahon na Bukas sa Lahat ang Lugar)",
             "original_application": "Orihinal na Aplikasyon",
-            "other": "Iba pa",
             "other_multiracial": "Iba pa/Multiracial (iba’t iba ang lahi)",
             "other_people": "May titirang ibang tao kasama ko",
             "page_updating": "Nag-a-update ang Page",
@@ -647,6 +646,7 @@
             "preference_proof_address_documents": "Anong uri ng dokumento ang gusto ninyong i-upload upang maipakita na nakatira kayo sa address na iyon?",
             "preference_proof_documents": "Anong dokumento ang i-a-upload ninyo upang mapatunayan ang pagiging kuwalipikado?",
             "preferences": "Mga Preperensiya",
+            "primary_language": {},
             "primary_user": "Pangunahing Aplikante",
             "proof": {
                 "ca_license": "CA ID o Driver's License (Lisensiya ng Nagmamaneho) ",

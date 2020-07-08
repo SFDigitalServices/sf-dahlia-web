@@ -625,7 +625,6 @@
             "on_the_listing": "en el aviso de vivienda",
             "open_houses": "Casas en exhibición",
             "original_application": "Solicitud original",
-            "other": "Otro",
             "other_multiracial": "Otro/Multirracial",
             "other_people": "Otras personas vivirán conmigo",
             "page_updating": "Actualización de la página",
@@ -647,6 +646,7 @@
             "preference_proof_address_documents": "¿Qué tipo de documento desea cargar para demostrar que vive en esa dirección?",
             "preference_proof_documents": "¿Qué documento va a cargar para demostrar su elegibilidad?",
             "preferences": "Preferencias",
+            "primary_language": {},
             "primary_user": "Solicitante principal",
             "proof": {
                 "ca_license": "Id. o licencia de conducir emitida por el estado de CA",
