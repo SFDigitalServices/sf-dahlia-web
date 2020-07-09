@@ -1,7 +1,6 @@
 do ->
   'use strict'
   describe 'NavController', ->
-
     fakeDocument = {}
     scope = undefined
     state = undefined
@@ -52,5 +51,4 @@ do ->
           expect(fakeAccountService.signOut).toHaveBeenCalled()
         it 'direct you to sign in page', ->
           expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {signedOut: true})
-
 
