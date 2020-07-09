@@ -14,10 +14,10 @@
             | {{'my_applications.no_applications' | translate}}
           .row
             .medium-12.large-8.medium-centered.columns
-              .margin-bottom ng-class="{'small-centered': !showSaleListings}"
+              .margin-bottom
                 a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
                   | Browse Rentals
-              .margin-bottom ng-if="showSaleListings"
+              .margin-bottom
                 a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
                   | Browse Sales
         article.feed-item ng-if="hasSaleAndRentalApplications(myApplications)"

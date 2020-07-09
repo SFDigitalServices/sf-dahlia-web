@@ -1,8 +1,7 @@
 do ->
   'use strict'
   describe 'NavController', ->
-    fakeWindow = {}
-    fakeWindow['env'] = {showSaleListings: 'true'}
+
     fakeDocument = {}
     scope = undefined
     state = undefined
@@ -21,7 +20,6 @@ do ->
       $provide.value 'AccountService', fakeAccountService
       $provide.value 'ModalService', fakeModalService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
-      $provide.value '$window', fakeWindow
       return
     )
 
