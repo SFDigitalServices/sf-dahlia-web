@@ -812,7 +812,6 @@ ShortFormApplicationService = (
         Service._sendApplication(submitMethod, submitPath, params)
 
   Service._sendApplication = (method, path, params) ->
-    console.log('sending application with Params', params)
     # TODO: remove this logging once the geocoding bug has been resolved:
     # (https://www.pivotaltracker.com/story/show/155672733)
     # logging to provide visibility into cases we have been seeing where an
