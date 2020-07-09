@@ -1,0 +1,11 @@
+.form-group
+  label.form-label.caps.padding-bottom--half id="referral_label"
+    | {{'label.how_did_you_hear_about_this' | translate}}
+  p.form-note.margin-bottom
+    | {{'label.how_did_you_hear_about_this_subtitle' | translate}}
+
+  select#referral data-width="auto" ng-model="user.referral" name="referral"
+    option disabled="" selected="" value=""
+      | {{'label.select_one' | translate}}
+    option ng-repeat="referralOption in listing_referral_options" value="{{referralOption[0]}}" label="{{referralOption[1] | translate}}"
+      | {{option[1] | translate}}
