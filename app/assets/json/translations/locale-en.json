@@ -188,9 +188,10 @@
         "d1_income_vouchers": {
             "p1": "<strong>Housing vouchers</strong> like Section 8",
             "p2": "<strong>Non-taxable income</strong> like SSI, SSDI, child support payments, or worker's compensation benefits",
-            "p3": "<strong>Rental subsidies</strong> like VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
+            "p3": "<strong>Rental subsidies</strong> like VASH, HSA, HOPWA, AIDS Foundation, Hamilton Families, Q Foundation, etc.",
             "title_household": "Do you or anyone on this application receive any of the following?",
-            "title_you": "Do you receive any of the following?"
+            "title_you": "Do you receive any of the following?",
+            "if_subsidy_warning": "If you have a subsidy, your income has to be two times the tenant portion of the rent. We will check this after the lottery."
         },
         "d2_income": {
             "p1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
