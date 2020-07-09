@@ -12,11 +12,11 @@ div.table-pricing-wrapper.with-mobile-pricing-on-tablet
           span
             | {{ 'listings.stats.rent' | translate }}
     tbody
-        tr.income-level.row-hide-large-up ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
+        tr.income-level.row-hide-xlarge-up ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
           td.income-level-label
             | {{ incomeLevel.incomeLevel }}
         tr ng-repeat-end="" ng-repeat="priceGroup in incomeLevel.priceGroups"
-          td.is-subtitled.has-nested-sibling.cell-hide-large-up data-th="{{ 't.units' | translate }}"
+          td.is-subtitled.has-nested-sibling.cell-hide-xlarge-up data-th="{{ 't.units' | translate }}"
             small.pricing-table-waitlist ng-if="::priceGroup.Status == 'Occupied'"
               | {{'listings.stats.waitlist' | translate}}
             span ng-if="::priceGroup.Status != 'Occupied'"
@@ -27,7 +27,7 @@ div.table-pricing-wrapper.with-mobile-pricing-on-tablet
             span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
                 svg
                   use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
-          td.is-nested.table-cell-units.cell-show-large-up  data-th="{{ 't.units' | translate }}"
+          td.is-nested.table-cell-units.cell-show-xlarge-up  data-th="{{ 't.units' | translate }}"
             table.table-nested-units
               thead
                 tr
@@ -73,7 +73,7 @@ div.table-pricing-wrapper.with-mobile-pricing-on-tablet
                        | {{'t.per_month' | translate}}
                     em ng-if="::!incomeLimit.maxIncome"
                       | {{'t.none' | translate}}
-          td.is-subtitled.has-nested-sibling.cell-hide-large-up data-th="{{ 'listings.stats.rent' | translate }}"
+          td.is-subtitled.has-nested-sibling.cell-hide-xlarge-up data-th="{{ 'listings.stats.rent' | translate }}"
             span ng-if="::priceGroup.BMR_Rent_Monthly"
               | {{::priceGroup.BMR_Rent_Monthly | currency:"$":0}}
               small
@@ -82,7 +82,7 @@ div.table-pricing-wrapper.with-mobile-pricing-on-tablet
               | {{::priceGroup.Rent_percent_of_income}}%
               small
                | {{'t.income' | translate}}
-          td.is-nested.cell-show-large-up data-th="{{ 'listings.stats.income_range' | translate }}"
+          td.is-nested.cell-show-xlarge-up data-th="{{ 'listings.stats.income_range' | translate }}"
             table.table-nested-rent
               thead
                 tr
