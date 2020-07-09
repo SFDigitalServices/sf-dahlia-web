@@ -602,7 +602,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       applicant.ethnicity,
       applicant.race,
       applicant.sexualOrientation,
-      if opts.skipReferral then true else _.some(applicant.referral),
+      if opts.skipReferral then true else applicant.referral,
     ]
     return _.every(responses)
 
