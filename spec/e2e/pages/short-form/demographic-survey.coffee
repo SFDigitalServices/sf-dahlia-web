@@ -34,7 +34,7 @@ class DemographicSurvey extends AngularPage
     @userPrimaryLanguage.sendKeys(@defaults.userPrimaryLanguage)
     @otherPrimaryLanguage.clear().sendKeys(@defaults.otherPrimaryLanguage)
 
-    @referral.clear().sendKeys(@defaults.referral)
+    @referral.sendKeys(@defaults.referral)
 
     @submitPage()
 
