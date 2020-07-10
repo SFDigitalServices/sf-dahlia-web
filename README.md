@@ -89,6 +89,18 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
+## Pulling and pushing translations from [our project on Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
+To get started working with our Phrase translations, you will need to:
+
+1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
+1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in e.g. LastPass
+
+**To upload new strings or translations to Phrase**
+Run `grunt phrasePull --phraseAccessToken=[your access token]`
+
+**To download new strings or translations from Phrase**
+Run `grunt phrasePush --phraseAccessToken=[your access token]`
+
 ## Contributing changes
 
 Use the engineering workflow and coding style standards established below. :smiley:

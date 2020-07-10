@@ -30,6 +30,11 @@ DeviseTokenAuth.setup do |config|
   # password is updated.
   config.check_current_password_before_update = :password
 
+  #  By default DeviseTokenAuth will not send confirmation email, even when
+  # including devise confirmable module. If you want to use devise confirmable
+  # module and send email, set it to true. (This is a setting for compatibility)
+  config.send_confirmation_email = true
+
   # By default, only Bearer Token authentication is implemented out of the box.
   # If you wish to integrate with legacy Devise authentication, you can
   # do so by enabling this flag. NOTE: This feature is highly experimental!

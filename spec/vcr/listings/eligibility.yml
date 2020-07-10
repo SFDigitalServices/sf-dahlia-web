@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
@@ -46,7 +46,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D0t0000000xVqEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1564096915051","signature":"Ggt5Nd/bYUf9IgnLXLqRtzYwNMXSqlRwWHA/0EvU6aw="}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 25 Jul 2019 23:21:55 GMT
 - request:
     method: get
@@ -420,6 +420,6 @@ http_interactions:
         Fell Street Apartments","Building_City__c":"San Francisco","Building_State__c":"CA","Building__c":"a0a0P00000ES1tPQAT","RecordTypeId":"0120P000000kPUSQA2","Building__r":{"attributes":{"type":"Building__c","url":"/services/data/v35.0/sobjects/Building__c/a0a0P00000ES1tPQAT"},"Id":"a0a0P00000ES1tPQAT"},"RecordType":{"attributes":{"type":"RecordType","url":"/services/data/v35.0/sobjects/RecordType/0120P000000kPUSQA2"},"Id":"0120P000000kPUSQA2","Name":"Listing
         Rental"},"Does_Match__c":false},"doesMatch":null,"chartTypes":[{"year":2016,"percent":100,"numOfHousehold":null,"chartType":"HUD
         Unadjusted","amount":null}]}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 25 Jul 2019 23:21:57 GMT
 recorded_with: VCR 5.0.0

@@ -7,6 +7,10 @@
             "title": "Magsimula na tayo sa inyong aplikasyon\n"
         },
         "a2_community_screening": {
+            "artist": {
+                "you_or_anyone": "Mayroon ba kayo, o sinumang nasa aplikasyong ito, ng lisensiya sa negosyo na may kinalaman sa inyong sining?",
+                "you_or_anyone_desc": "Isa itong gusali kung saan nakatira/nagtatrabaho ang mga artist (artist live/work building). Kailangang artist kayo, o sinuman sa inyong kabahayan, at may lisensiya sa negosyo na may kinalaman sa inyong sining sa San Francisco.Kailangang gamitin ninyo ang bahagi ng bahay na ito sa paglikha, pagtuturo, o pagpapakita ng sining<br><br>Kapag napili ang aplikasyon ninyo, maging handa sa pagbibigay ng impormasyon tungkol sa inyong negosyo at sa inyong plano para sa espasyo."
+            },
             "senior": {
                 "you_and_everyone": "Senior o matanda na ba kayo o ang lahat ng tao na nasa aplikasyong ito?",
                 "you_and_everyone_desc": "Isa itong senior building (gusali para sa matatanda) at lahat ng aplikante ay kailangang nasa edad na {{minAge}}+.\n",
@@ -68,7 +72,7 @@
             "email_editable_via": "Puwedeng ma-edit o mabago ang inyong email addres sa pamamagitan ng inyong",
             "only_use_your_email": "Gagamitin lamang namin ang inyong email address para makontak kayo tungkol sa inyong aplikasyon.",
             "provide_an_address": "Pakibigay ang address kung saan puwede kayong tumanggap ng bagong impormasyon at materyales tungkol sa inyong aplikasyon.",
-            "title": "Salamat, {{pangalan}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
+            "title": "Salamat, {{name}}. Ngayon, kailangan naming malaman kung paano kayo makokontak.",
             "work_in_sf_desc": "Nangangahulugan ito na kasalukuyan kayong nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng inyong mga oras ng trabaho."
         },
         "b2a_verify_address": {
@@ -249,8 +253,8 @@
             "title": "Ang mga Preperensiya para sa Lottery ang siyang maglalagay sa inyo sa unahan ng iba sa linya at magbibigay ng mas mataas na ranggo sa lottery."
         },
         "e2a_neighborhood_preference": {
-            "instructions_p1_plural": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
-            "instructions_p1_singular": "Ang {{address} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+            "instructions_p1_plural": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
+            "instructions_p1_singular": "Ang {{address}} ang magbibigay sa inyo ng kuwalipikasyon para sa mas magandang ranggo dahil malapit ang tinitirhan ninyo sa nakalistang pabahay.",
             "instructions_p2": "Mag-upload lamang ng katanggap-tanggap na patunay ng address na ito at <strong> bibigyan din namin kayo ng Preperensiya para sa Nakatira sa San Francisco. </strong>",
             "preference": {
                 "description": "Nangangahulugan ang <strong>Preperensiya para sa Nakatira sa Komunidad</strong>na nakatira ang isa o higit pang miyembro ng kabahayan sa parehong Supervisorial District (distritong pinamamahalaan ng Superbisor) o sa loob ng 1/2 milya na buffer o pambawas ng epekto ng proyekto.",
@@ -372,6 +376,7 @@
                 "timeout_please_try_again": "Naku! Nagkaroon na naman ng problema. Pakisubukang muli. "
             },
             "alternate_contact": "Mangyaring pumili ng kahaliling kontak",
+            "artist_anyone": "Kailangang may lisensiya sa negosyo na may kinalaman sa inyong sining ang isa o higit pang miyembro ng inyong kabahayan.",
             "city": "Pakilagay ang inyong lungsod.",
             "complete_uploading_documents": "Pakikumpleto ang pag-a-upload ng mga dokumentong nasa itaas.",
             "confirmed_address": "Pakikumpirma ang iminumungkahing address.",
@@ -483,6 +488,7 @@
             "header": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon."
         },
         "label": {
+            "_other": "Iba pa",
             "ada_accessible_units": "Mga Unit na ADA Accessible (may madaraanan ang may kapansanan)",
             "add_household_member": "Magdagdag ng miyembro ng kabahayan",
             "additional_phone": "Iba pang Telepono",
@@ -522,6 +528,7 @@
             "application_has_completed_homebuyer_education": "Nakadalo na ako sa 10 oras na Edukasyon para sa Bumibili ng Bahay (Homebuyer Education).",
             "application_has_loan_pre_approval": "Mayroon na akong paunang pag-apruba sa pag-utang para sa pabahay mula sa Loan Officer (opisyal na namamahala sa pagpapautang) na Aprubado ng MOHCD.",
             "application_is_first_time_homebuyer": "Hindi ako nagmay-ari ng residensiyal na ari-arian nitong nakaraang 3 taon.",
+            "application_pre_approval_must_be_120_days": "Kailangang may petsa ang inyong liham ng paunang pag-apruba (pre-approval letter) na nasa loob ng nakaraang 120 araw",
             "application_visit_homeownership_calendar": "Kung hindi pa ninyo nagagawa ito, pakibasa ang <a href='{{url}}' target='_blank'>kalendaryo ng HomeownershipSF</a> at nang makapagpalista  para sa workshop o palihan.",
             "apply_online": "Mag-aplay Online ",
             "asian": "Asyano",
@@ -618,7 +625,6 @@
             "on_the_listing": "nasa nakalistang pabahay",
             "open_houses": "Mga Open House (Panahon na Bukas sa Lahat ang Lugar)",
             "original_application": "Orihinal na Aplikasyon",
-            "other": "Iba pa",
             "other_multiracial": "Iba pa/Multiracial (iba’t iba ang lahi)",
             "other_people": "May titirang ibang tao kasama ko",
             "page_updating": "Nag-a-update ang Page",
@@ -797,6 +803,7 @@
                 "accessibility": "Pagkakaroon ng daan papasok sa gusali ",
                 "additional_fees": "Mga Dagdag na Singil ",
                 "appliances": "Appliances",
+                "application_fee": "Singil para sa Pag-aaplay",
                 "area": "Lugar",
                 "baths": "Banyo",
                 "built": "Itinayo",
@@ -994,7 +1001,7 @@
             "ranking_preferences_considered_over_general_note": "Pakitandaan na isasaaalang-alang muna ang mga may preperensiya para sa lahat ng unit. ",
             "ranking_title": "Ang ranggo ng inyong preperensiya",
             "read_about_preferences": "Magbasa Tungkol sa mga Preperensiya para sa Pabahay",
-            "results_from": "Mga Resulta mula sa {{petsa}}",
+            "results_from": "Mga Resulta mula sa {{date}}",
             "results_will_be_posted_on": "Ipapaskil ang kumpletong resulta ng lottery sa format na pdf sa {{date}}",
             "unsorted_results_note": "Naglalaman ang PDF na ito ng mga hindi pa napapangkat-pangkat na resulta ng lottery mula sa isinagawang lottery para sa pabahay noong {{date}}.",
             "up_to_x_units_available": "Hanggang sa {{units}} unit ",

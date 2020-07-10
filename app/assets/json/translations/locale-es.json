@@ -7,6 +7,10 @@
             "title": "Comencemos con su solicitud"
         },
         "a2_community_screening": {
+            "artist": {
+                "you_or_anyone": "¿Tiene usted o alguien en esta solicitud una licencia comercial relacionada con su arte?",
+                "you_or_anyone_desc": "Este es un edificio de uso mixto para artistas. Usted u otra persona que viva en la casa debe ser un artista y tener una licencia comercial de San Francisco relacionada con su arte. Debe usar parte de esta casa para crear, enseñar o exhibir arte. <br><br>En caso de que su solicitud sea elegida, prepárese para brindar información sobre su negocio y su plan para el espacio."
+            },
             "senior": {
                 "you_and_everyone": "¿Usted y todas las personas que figuran en esta solicitud son adultos mayores?",
                 "you_and_everyone_desc": "Este es un edificio para adultos mayores y todos los solicitantes deben tener {{minAge}}+ años.",
@@ -372,6 +376,7 @@
                 "timeout_please_try_again": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente."
             },
             "alternate_contact": "Indique un contacto alternativo",
+            "artist_anyone": "Al menos una persona de su casa debe tener una licencia comercial relacionada con su arte.",
             "city": "Ingrese una ciudad",
             "complete_uploading_documents": "Complete la carga de los documentos indicados anteriormente.",
             "confirmed_address": "Confirme la dirección sugerida.",
@@ -483,6 +488,7 @@
             "header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones."
         },
         "label": {
+            "_other": "Otro",
             "ada_accessible_units": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
             "add_household_member": "Agregar integrante de la familia",
             "additional_phone": "Teléfono adicional",
@@ -522,6 +528,7 @@
             "application_has_completed_homebuyer_education": "Yo completé 10 horas de capacitación para compradores de vivienda.",
             "application_has_loan_pre_approval": "Yo obtuve la pre-aprobación para obtener un préstamo hipotecario de un agente de préstamos aprobado por la Oficina de Desarrollo Comunitario y de Viviendas del Alcalde (Mayor's Office of Housing and Community Development, MOHCD).",
             "application_is_first_time_homebuyer": "Yo no he sido propietario de vivienda en los últimos 3 años.",
+            "application_pre_approval_must_be_120_days": "Su carta de aprobación previa debe estar fechada en los últimos 120 días.",
             "application_visit_homeownership_calendar": "Si todavía no lo ha hecho, ingrese al <a href='{{url}}' target='_blank'>calendario de HomeownershipSF</a> para inscribirse en un taller.",
             "apply_online": "Presente su solicitud en línea",
             "asian": "Asiático",
@@ -618,7 +625,6 @@
             "on_the_listing": "en el aviso de vivienda",
             "open_houses": "Casas en exhibición",
             "original_application": "Solicitud original",
-            "other": "Otro",
             "other_multiracial": "Otro/Multirracial",
             "other_people": "Otras personas vivirán conmigo",
             "page_updating": "Actualización de la página",
@@ -797,6 +803,7 @@
                 "accessibility": "Accesibilidad",
                 "additional_fees": "Cargos adicionales",
                 "appliances": "Electrodomésticos",
+                "application_fee": "Cargo de la solicitud",
                 "area": "Área",
                 "baths": "Baños",
                 "built": "Año de construcción",
@@ -1132,7 +1139,7 @@
             "application_for_listing": "Solicitud para {{listingName}}",
             "application_submitted": "Solicitud presentada",
             "applications_closed": "Las solicitudes están cerradas",
-            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y finalizar en otro momento\"",
+            "are_you_sure_you_want_to_leave": "¿Está seguro de que le gustaría salir de esta página? Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para terminar la solicitud más tarde, haga clic en el botón \"Guardar y terminar más tarde\". (Save and finish later)",
             "are_you_sure_you_want_to_leave_confirmation": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "are_you_sure_you_want_to_leave_sign_in": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
             "at": "al",

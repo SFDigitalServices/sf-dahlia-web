@@ -16,11 +16,11 @@ describe 'ShortForm API' do
   # logged-in user as primary applicant! That can cause a Salesforce
   # "APEX_ERROR: System.NullPointerException: Attempt to de-reference a null object"
   # error when we try to fetch the logged-in user's applications.
-  application_delete_id = 'a0o210000027Yti'
+  application_delete_id = 'a0o1F000001nyjx'
 
   # Application must have draft status
-  application_update_id = 'a0o0P00000FEUwH'
-  application_claim_id = 'a0o0P00000FEUwH'
+  application_update_id = 'a0o0P00000FEUwHQAX'
+  application_claim_id = 'a0o0P00000FEUwHQAX'
 
   ### generate Jasmine fixtures
   describe 'validate_household' do
@@ -163,7 +163,6 @@ describe 'ShortForm API' do
       params['application']['id'] = application_update_id
       params['application']['status'] = 'Draft'
       params = clean_json_for_vcr(params)
-
       VCR.use_cassette('shortform/update_application') do
         put url, params: params.merge(@auth_headers)
       end

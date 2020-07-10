@@ -34,7 +34,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
       'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'gender', 'genderOther', 'primaryLanguage', 'otherLanguage', 'race', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore'
     ]
     alternateContact: [
@@ -553,6 +553,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       # clear out demographics if you hadn't already completed them all
       data.applicant.gender = null
       data.applicant.genderOther = null
+      data.applicant.primaryLanguage = null
+      data.applicant.otherLanguage = null
       data.applicant.ethnicity = null
       data.applicant.race = null
       data.applicant.sexualOrientation = null

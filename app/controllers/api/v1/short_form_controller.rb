@@ -160,10 +160,18 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_attached_files(application_id)
-    upload_params = uploaded_file_params.merge(
-      listing_id: application_params[:listingID],
-    )
-    files = UploadedFile.where(upload_params)
+    if user_signed_in?
+      files = UploadedFile.where(
+        user_id: current_user.id,
+        listing_id: application_params[:listingID],
+      )
+    else
+      upload_params = uploaded_file_params.merge(
+        user_id: nil,
+        listing_id: application_params[:listingID],
+      )
+      files = UploadedFile.where(upload_params)
+    end
     Force::ShortFormService.queue_file_attachments(application_id, files)
   end
 
@@ -332,6 +340,8 @@ class Api::V1::ShortFormController < ApiController
                 languageOther
                 gender
                 genderOther
+                primaryLanguage
+                otherLanguage
                 ethnicity
                 race
                 sexualOrientation
@@ -452,8 +462,6 @@ class Api::V1::ShortFormController < ApiController
       rent_burden_type: uploaded_file_params[:rent_burden_type],
       rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
-    # TODO: user_id is not used for UploadedFile look up any more. We are keeping it for
-    # debugging purposes. Consider removing in future.
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs
   end
