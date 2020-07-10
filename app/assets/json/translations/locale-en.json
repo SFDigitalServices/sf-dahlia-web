@@ -489,6 +489,7 @@
             "header": "For more help, we suggest talking with a housing counselor to explore your options."
         },
         "label": {
+            "_other": "Other",
             "ada_accessible_units": "ADA Accessible Units",
             "add_household_member": "Add household member",
             "additional_phone": "Additional Phone",
@@ -625,7 +626,6 @@
             "on_the_listing": "on the listing",
             "open_houses": "Open Houses",
             "original_application": "Original Application",
-            "other": "Other",
             "other_multiracial": "Other/Multiracial",
             "other_people": "Other people will live with me",
             "page_updating": "Page Updating",
@@ -647,6 +647,20 @@
             "preference_proof_address_documents": "What type of document would you like to upload to show you live at that address?",
             "preference_proof_documents": "Which document are you uploading to prove eligibility?",
             "preferences": "Preferences",
+            "primary_language": {
+                "applicant_language_at_home": "Language spoken at home",
+                "applicant_language_at_home_subtitle": "Select the language that is most commonly spoken in your home.",
+                "options": {
+                    "chinese_cantonese": "Chinese - Cantonese",
+                    "chinese_mandarin": "Chinese - Mandarin",
+                    "english": "English",
+                    "filipino": "Filipino",
+                    "russian": "Russian",
+                    "spanish": "Spanish",
+                    "vietnamese": "Vietnamese"
+                },
+                "your_primary_language": "Specify language spoken at home"
+            },
             "primary_user": "Primary Applicant",
             "proof": {
                 "ca_license": "CA ID or Driver's License",
@@ -757,6 +771,11 @@
             },
             "all_units": "All Units",
             "all_units_reserved_for": "All units reserved for {{type}}",
+            "ami_tiers": {
+                "low_income": "Low Income",
+                "middle_income": "Middle Income",
+                "moderate_income": "Moderate Income"
+            },
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
@@ -909,16 +928,18 @@
             "single_room_occupancy_description": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
             "special_notes": "Special Notes",
             "stats": {
-                "available": "available",
                 "availability": "Availability",
+                "available": "available",
                 "hoa_dues": "HOA dues",
-                "minimum_income": "Minimum Income",
-                "price_without_parking": "Price without parking",
-                "prices_without_parking": "Prices without parking",
+                "household_size": "Household size",
+                "income_range": "Income Range",
+                "maximum": "Maximum",
+                "minimum": "Minimum",
+                "percent_ami": "{{amiPercent}}% AMI",
+                "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist",
-                "with_one_parking_space": "With one parking space"
+                "waitlist": "Waitlist"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
@@ -1024,12 +1045,12 @@
             "browse_properties": "Browse Properties",
             "buy": "Buy",
             "get_assistance": "Get Assistance",
-            "get_feedback": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
             "my_account": "My Account",
             "my_applications": "My Applications",
             "my_dashboard": "My Dashboard",
             "my_favorites": "My Favorites",
             "rent": "Rent",
+            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Sign up</a> to provide feedback on City websites",
             "sign_in": "Sign In",
             "sign_out": "Sign Out"
         },
@@ -1171,7 +1192,6 @@
             "maximum_income_month": "maximum income per month",
             "maximum_income_year": "maximum income per year",
             "menu": "Menu",
-            "min_income_short": "Min. Income",
             "never_submitted": "Never Submitted",
             "next": "Next",
             "no": "No",
@@ -1184,7 +1204,6 @@
             "or_more": "or more",
             "per_month": "per month",
             "per_year": "per year",
-            "rent": "Rent",
             "save_and_come_back_later": "Save and come back later",
             "save_and_finish_later": "Save and finish later",
             "session_expired": "Your session has expired.",
@@ -1205,7 +1224,6 @@
         },
         "thank_you": "Thank you",
         "welcome": {
-            "all_application_closed": "All applications are currently closed, but you can view closed listings.",
             "new_listing_email_alert": "Get emailed whenever a new listing is posted.",
             "see_rental_listings": "Rent",
             "see_sale_listings": "Buy",

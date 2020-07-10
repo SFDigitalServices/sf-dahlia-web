@@ -21,7 +21,7 @@ gem 'coffee-rails'
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-gem 'puma', '~> 4.3.1'
+gem 'puma', '~> 4.3.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
@@ -56,8 +56,9 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.7.1'
-gem 'devise_token_auth', '~> 1.1.3'
+# Note: devise 4.7.2 is unverified and causes undefined method `rails51?' errors.
+gem 'devise', '4.7.1'
+gem 'devise_token_auth', '~> 1.1.4'
 
 # postgresql database
 gem 'pg'
@@ -68,8 +69,9 @@ gem 'hashie'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '>= 1.10.8'
+gem 'nokogiri', '>= 1.10.9'
 gem 'actionpack-page_caching', '~> 1.2.1'
+
 
 # image manipulation
 gem 'mini_magick', '~> 4.9.4'

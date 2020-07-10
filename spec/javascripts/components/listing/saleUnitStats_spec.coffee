@@ -11,33 +11,37 @@ do ->
       locals = {}
     )
 
-    fakeUnitWithWithParkingPrice = {
-      'Price_With_Parking': 150000,
+
+    fakeGroupWithAndWithoutParking = {
+      'Price_Without_Parking': 520000,
+      'Price_With_Parking': 580000,
+    }
+
+    fakeGroupWithoutAnyPrice = {
       'Unit_Type': '2 BR',
     }
-    fakeUnitWithoutAnyPrice = {
-      'Unit_Type': '2 BR',
-    }
-    fakeUnitWithWithoutParkingPrice = {
+
+    fakeGroupWithOnlyWithoutParkingPrice = {
       'Price_Without_Parking': 150000,
-      'Unit_Type': '2 BR',
+    }
+
+    fakeGroupWithOnlyWithParkingPrice = {
+      'Price_With_Parking': 150000,
     }
 
     describe 'saleUnitStats', ->
       beforeEach ->
         ctrl = $componentController 'saleUnitStats', locals, {parent: fakeParent}
-      describe 'groupHasUnitsWithParking', ->
+      describe 'priceGroupHasUnitsWithParking', ->
         it 'returns true if group has a unit with parking', ->
-          fakeUnitGroup = [fakeUnitWithWithParkingPrice, fakeUnitWithoutAnyPrice]
-          expect(ctrl.groupHasUnitsWithParking(fakeUnitGroup)).toEqual true
+          expect(ctrl.priceGroupHasUnitsWithParking(fakeGroupWithAndWithoutParking)).toEqual true
+          expect(ctrl.priceGroupHasUnitsWithParking(fakeGroupWithOnlyWithParkingPrice)).toEqual true
         it 'returns false if group has no units with parking', ->
-          fakeUnitGroup = [fakeUnitWithoutAnyPrice, fakeUnitWithoutAnyPrice]
-          expect(ctrl.groupHasUnitsWithParking(fakeUnitGroup)).toEqual false
+          expect(ctrl.priceGroupHasUnitsWithParking(fakeGroupWithOnlyWithoutParkingPrice)).toEqual false
 
-      describe 'groupHasUnitsWithoutParking', ->
+      describe 'priceGroupHasUnitsWithoutParking', ->
         it 'returns true if group has a unit without parking', ->
-          fakeUnitGroup = [fakeUnitWithWithoutParkingPrice, fakeUnitWithoutAnyPrice]
-          expect(ctrl.groupHasUnitsWithoutParking(fakeUnitGroup)).toEqual true
+          expect(ctrl.priceGroupHasUnitsWithoutParking(fakeGroupWithAndWithoutParking)).toEqual true
+          expect(ctrl.priceGroupHasUnitsWithoutParking(fakeGroupWithOnlyWithoutParkingPrice)).toEqual true
         it 'returns false if group has no units without parking', ->
-          fakeUnitGroup = [fakeUnitWithoutAnyPrice, fakeUnitWithoutAnyPrice]
-          expect(ctrl.groupHasUnitsWithoutParking(fakeUnitGroup)).toEqual false
+          expect(ctrl.priceGroupHasUnitsWithoutParking(fakeGroupWithOnlyWithParkingPrice)).toEqual false

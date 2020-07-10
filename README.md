@@ -2,7 +2,7 @@
 
 [![Code Climate](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/gpa.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web)
 [![Test Coverage](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/coverage.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web/coverage)
-[![Build Status](https://semaphoreci.com/api/v1/exygy/sf-dahlia-web-full/branches/master/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web-full)
+[![Build Status](https://semaphoreci.com/api/v1/exygy/sf-dahlia-web-full/branches/main/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web-full)
 
 
 Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" height="30" ></a>
@@ -69,7 +69,7 @@ If you do not already have grunt installed, run `brew install grunt` to install 
 To update this app with the latest PL styles:
 
 1. [Clone the PL repository in the same parent directory as this one.](https://github.com/Exygy/sf-dahlia-pattern-library)
-2. Switch to the PL branch you want to import styles from, either master or a specific branch
+2. Switch to the PL branch you want to import styles from, either main or a specific branch
 3. Run `npm run-script build` in the pattern lib directory to compile the css
 5. `cd` to your `sf-dahlia-web` folder
 6. Run `grunt`
@@ -88,6 +88,18 @@ In order to test caching locally,
 ## Running stress testing against Salesforce
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
+
+## Pulling and pushing translations from [our project on Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
+To get started working with our Phrase translations, you will need to:
+
+1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
+1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in e.g. LastPass
+
+**To upload new strings or translations to Phrase**
+Run `grunt phrasePull --phraseAccessToken=[your access token]`
+
+**To download new strings or translations from Phrase**
+Run `grunt phrasePush --phraseAccessToken=[your access token]`
 
 ## Contributing changes
 

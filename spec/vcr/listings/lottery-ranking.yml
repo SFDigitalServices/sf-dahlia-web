@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://test.salesforce.com/services/oauth2/token
+    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=3%234icmT1bynM28L*<<SALESFORCE_SECURITY_TOKEN>>
@@ -45,8 +45,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--Full.cs68.my.salesforce.com","id":"https://test.salesforce.com/id/00D1D0000009nrYUAQ/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1575302505246","signature":"pRPQNtNJwo2VigLkahDoQiVOhwkoVgIWdANraYtLbgk="}'
-    http_version: 
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D1D0000009nrYUAQ/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1575302505246","signature":"pRPQNtNJwo2VigLkahDoQiVOhwkoVgIWdANraYtLbgk="}'
+    http_version:
   recorded_at: Mon, 02 Dec 2019 16:01:45 GMT
 - request:
     method: get
@@ -104,6 +104,6 @@ http_interactions:
         Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":270,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
         or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":705,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"},{"unitsAvailable":null,"totalSubmittedApps":104,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"Alice
         Griffith Housing Development Resident"}],"lotteryAppTotal":1126,"listingId":"a0W0P00000F8YG4UAN"}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 02 Dec 2019 16:01:45 GMT
 recorded_with: VCR 5.0.0

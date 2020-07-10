@@ -21,8 +21,13 @@ do ->
     $localStorage = undefined
     incomeLevels = undefined
     minMax = undefined
+    $translate =
+      use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
+      instant: ->
 
-    beforeEach module('dahlia.services', ->
+    beforeEach module('dahlia.services', ($provide) ->
+      $provide.value '$translate', $translate
+      return
     )
 
     beforeEach inject((_$localStorage_, _ListingEligibilityService_) ->

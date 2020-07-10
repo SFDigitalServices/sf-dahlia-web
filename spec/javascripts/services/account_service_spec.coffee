@@ -202,7 +202,7 @@ do ->
           email: 'testEmail'
         httpBackend.expectPOST('/api/v1/auth/confirmation', expectedParams)
         AccountService.resendConfirmationEmail()
-        httpBackend.flush()
+        expect(httpBackend.flush).not.toThrow()
 
     describe 'updateAccount', ->
       afterEach ->

@@ -47,10 +47,6 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome.html'
-      resolve:
-        listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: false})
-        ]
     })
     .state('dahlia.housing-counselors', {
       url: '/housing-counselors'
@@ -123,8 +119,9 @@
                 return deferred.promise
 
               # trigger this asynchronously, allowing the listing page to load first
-              setTimeout(ListingDataService.getListingAMI.bind(null, ListingDataService.listing))
-              setTimeout(ListingUnitService.getListingUnits.bind(null, ListingDataService.listing, forceRecache))
+              ListingUnitService.getListingAMI(ListingDataService.listing).then( ->
+                setTimeout(ListingUnitService.getListingUnits.bind(null, ListingDataService.listing, forceRecache))
+              )
               setTimeout(ListingPreferenceService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
               unless !ListingLotteryService.lotteryComplete(ListingDataService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingDataService.listing, forceRecache))

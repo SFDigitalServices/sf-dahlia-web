@@ -7,6 +7,10 @@
             "title": "立即開始您的申請作業"
         },
         "a2_community_screening": {
+            "artist": {
+                "you_or_anyone": "您本人或本申請中包含的任何人是否持有與您的藝術有關的商業牌照？",
+                "you_or_anyone_desc": "本大樓專供藝術家居住、創作使用。您或您的家庭成員必須是藝術家，且持有與您的藝術相關的三藩市商業牌照。您必須把本居所的部分空間用於藝術創作、教學或展示。<br><br>如果您的申請獲選，請準備好提供您的商業信息以及空間使用計劃。"
+            },
             "senior": {
                 "you_and_everyone": "您本人及本申請中的所有人皆是年長者嗎？",
                 "you_and_everyone_desc": "此為長者之家，所有申請者皆需超過 {{minAge}} 歲。",
@@ -342,7 +346,7 @@
             "draft_application_saved": {
                 "applications_are_due_by": "該物業的申請截止日期為%{deadline}。",
                 "complete_your_application": "完成您的申請",
-                "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的{listing_name}申請。",
+                "heres_link_to_complete": "請訪問此連結完成您在DAHLIA三藩市房屋網站暫存的 %{listing_name}申請。",
                 "reminder_do_not_submit_duplicate": "注意：如果您已經為該物業提交了另一份申請，切勿完成此申請。重複申請將導致兩份申請均被從抽籤中除名。",
                 "subject": "在%{deadline}之前完成您的%{listing_name}申請"
             },
@@ -373,6 +377,7 @@
                 "timeout_please_try_again": "糟糕！似乎發生了問題。請重試。"
             },
             "alternate_contact": "請選取備用聯絡人",
+            "artist_anyone": "您的家庭中必須有至少壹位成員持有與您的藝術相關的商業牌照。",
             "city": "請輸入城市",
             "complete_uploading_documents": "請完成上方的文件上傳作業。",
             "confirmed_address": "請確認建議的地址。",
@@ -484,6 +489,7 @@
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
         },
         "label": {
+            "_other": "其他",
             "ada_accessible_units": "ADA 無障礙設施單位",
             "add_household_member": "新增家庭成員",
             "additional_phone": "其他電話",
@@ -518,12 +524,13 @@
             "applicant_select_a_loan_officer": "請選擇一位貸款經紀人",
             "applicant_separate_address": "將我的郵件寄送到另一個地址",
             "applicant_sexual_orientation": "您如何描述自己的性傾向或性別認同？",
-            "application_all_applicants_are_required": "所有申請貸款及擁有產權的成人家庭成員必須完成購屋教育課程。但是，只有主要申請人才需要上傳抽籤時需要附上的購屋教育證明信。",
+            "application_all_applicants_are_required": "只有主要申請人才需要上傳抽籤時需要附上的購屋教育證明。該證明信件必須為過去一年內有效。",
             "application_cant_find_lender": "找不到您的貸款經紀人？您的預先批准信寄件人必須是<a target='_blank' href='{{url}}'>我們核准名單中的某經紀人</a>。",
-            "application_has_completed_homebuyer_education": "本人已經參加 10 小時的購屋教育證書班。",
+            "application_has_completed_homebuyer_education": "本人在過去一年內已經參加了 10 小時的購屋教育。",
             "application_has_loan_pre_approval": "本人已經獲得市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development, MOHCD) 核准的貸款經紀人的房貸預先批准。",
             "application_is_first_time_homebuyer": "本人在過去 3 年內並未擁有住宅物業。",
-            "application_visit_homeownership_calendar": "如果您尚未完成申請，請點擊 <a href='{{url}}' target='_blank'>HomeownershipSF 行事曆</a>以報名參加研討會。",
+            "application_pre_approval_must_be_120_days": "您的預批準函簽發日期必須為過去120天之內。",
+            "application_visit_homeownership_calendar": "如果您尚未完成申請，請點擊 <a href='{{url}}' target='_blank'>報名並完成購屋者教育</a>完成後你會得到一份證明信。",
             "apply_online": "網上申請",
             "asian": "亞洲人",
             "asian_white": "亞洲人與白人",
@@ -619,7 +626,6 @@
             "on_the_listing": "在該清單上",
             "open_houses": "開放看房",
             "original_application": "原始申請",
-            "other": "其他",
             "other_multiracial": "其他/多族裔",
             "other_people": "會有其他人與我同住",
             "page_updating": "頁面更新中",
@@ -798,6 +804,7 @@
                 "accessibility": "無障礙",
                 "additional_fees": "附加費用",
                 "appliances": "家用電器",
+                "application_fee": "申請費",
                 "area": "面積",
                 "baths": "浴室",
                 "built": "建築年份",
@@ -905,13 +912,9 @@
                 "availability": "可用情況",
                 "available": "可用",
                 "hoa_dues": "物業費",
-                "minimum_income": "最低收入",
-                "price_without_parking": "無停車位價格",
-                "prices_without_parking": "無停車位價格",
                 "rent": "租金",
                 "sales_price": "出售價格",
-                "waitlist": "輪候名單",
-                "with_one_parking_space": "有一個停車位"
+                "waitlist": "輪候名單"
             },
             "units_are_for": "這些單位適用於 {{type}}。",
             "units_have_accessibility_features_for": "這些單位擁有無障礙設備，可供 {{type}} 的人使用。",
@@ -1017,7 +1020,6 @@
             "browse_properties": "瀏覽物業",
             "buy": "購買",
             "get_assistance": "尋求協助",
-            "get_feedback": "我們希望能聽取<a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>您的意見。</a>",
             "my_account": "我的帳戶",
             "my_applications": "我的申請",
             "my_dashboard": "我的儀表板",
@@ -1164,7 +1166,6 @@
             "maximum_income_month": "最高月收入",
             "maximum_income_year": "最高年收入",
             "menu": "目錄",
-            "min_income_short": "最低收入",
             "never_submitted": "未曾提交",
             "next": "下一步",
             "no": "否",
@@ -1177,7 +1178,6 @@
             "or_more": "或更多",
             "per_month": "每月",
             "per_year": "每年",
-            "rent": "租金",
             "save_and_come_back_later": "儲存，並稍後返回",
             "save_and_finish_later": "儲存並稍後完成",
             "session_expired": "您使用本頁面的時限已過。",
@@ -1198,7 +1198,6 @@
         },
         "thank_you": "謝謝",
         "welcome": {
-            "all_application_closed": "所有申請目前均已結束，但是您可以查看已結束的清單。",
             "new_listing_email_alert": "每當發佈新的物業項目時，將以電子郵件接收通知。",
             "see_rental_listings": "租賃",
             "see_sale_listings": "購買",

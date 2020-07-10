@@ -25,6 +25,8 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
   $scope.feedbackUrl = 'https://docs.google.com/\
     forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
 
+  $scope.researchUrl = $window.env.researchFormUrl
+
   $scope.listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
 
   $scope.alertMessage = if $window.ALERT_MESSAGE then _.unescape($window.ALERT_MESSAGE) else ''

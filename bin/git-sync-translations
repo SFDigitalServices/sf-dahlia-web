@@ -8,15 +8,15 @@
 # the git operations.
 ######
 
-# 1. Locally reset the translations branch so it contains the latest from master. Push the new
+# 1. Locally reset the translations branch so it contains the latest from main. Push the new
 # translations branch to GitHub.
-git checkout master
+git checkout main
 git branch -D translations
 git checkout -b translations
 git push origin translations --force
 
 # 1.5 Check any new updates to existing strings in locale-en.json e.g. from a content update feature
-# that has been merged to master, and manually go into POEditor and update those terms in English. For
+# that has been merged to main, and manually go into POEditor and update those terms in English. For
 # any terms you manually update in English, mark the corresponding terms in each other language as "Fuzzy".
 
 # 2. Sync translation terms from the Github translations branch -> POE.
@@ -39,8 +39,8 @@ grunt translations
 git commit app/assets/json/translations/* -m '[translations] sorted translations after POEditor merge'
 git push origin translations
 
-# 5. Start the process of opening a PR from the translations branch to master on GitHub; view the diff.
-open https://github.com/Exygy/sf-dahlia-web/compare/master...translations?expand=1
+# 5. Start the process of opening a PR from the translations branch to main on GitHub; view the diff.
+open https://github.com/SFDigitalServices/sf-dahlia-web/compare/main...translations?expand=1
 
 # 6. Once you have examined the PR diff, merge the PR to bring the translations updates from the
-# translations branch into master.
+# translations branch into main.
