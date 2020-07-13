@@ -1,8 +1,6 @@
 do ->
   'use strict'
   describe 'NavController', ->
-    fakeWindow = {}
-    fakeWindow['env'] = {showSaleListings: 'true'}
     fakeDocument = {}
     scope = undefined
     state = undefined
@@ -21,7 +19,6 @@ do ->
       $provide.value 'AccountService', fakeAccountService
       $provide.value 'ModalService', fakeModalService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
-      $provide.value '$window', fakeWindow
       return
     )
 
@@ -54,5 +51,4 @@ do ->
           expect(fakeAccountService.signOut).toHaveBeenCalled()
         it 'direct you to sign in page', ->
           expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {signedOut: true})
-
 
