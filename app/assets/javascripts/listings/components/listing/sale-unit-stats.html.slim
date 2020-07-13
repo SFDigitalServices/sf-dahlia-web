@@ -1,4 +1,4 @@
-div.table-pricing-wrapper
+div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
   table.table-pricing.top-align role="grid"
     thead
       tr
@@ -12,11 +12,11 @@ div.table-pricing-wrapper
           span
             | {{ 'listings.stats.pricing' | translate }}
     tbody
-        tr.income-level.row-show-small-only ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
+        tr.income-level.row-hide-xlarge-up ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
           td.income-level-label
             | {{ incomeLevel.incomeLevel }}
         tr ng-repeat-end="" ng-repeat="priceGroup in incomeLevel.priceGroups"
-          td.is-subtitled.has-nested-sibling.cell-show-small-only data-th="{{ 't.units' | translate }}"
+          td.is-subtitled.has-nested-sibling.cell-hide-xlarge-up data-th="{{ 't.units' | translate }}"
             span
               i.notranslate
                 | {{::priceGroup.total}}
@@ -25,7 +25,7 @@ div.table-pricing-wrapper
             span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
                 svg
                   use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
-          td.is-nested.table-cell-units.cell-hide-small-only  data-th="{{ 't.units' | translate }}"
+          td.is-nested.table-cell-units.cell-show-xlarge-up  data-th="{{ 't.units' | translate }}"
             table.table-nested-units
               thead
                 tr
