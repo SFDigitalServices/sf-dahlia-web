@@ -22,8 +22,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
   $scope.isEnglish = ->
     $state.params.lang == 'en'
 
-  $scope.feedbackUrl = 'https://docs.google.com/\
-    forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
+  $scope.feedbackUrl = 'https://airtable.com/shrw64DubWTQfRkdo'
 
   $scope.researchUrl = $window.env.researchFormUrl
 
