@@ -7,78 +7,98 @@
 
 # To use this script:
 #   1. Put the updated env vars in a file (.env generally)
-#   2. Add names of apps to update under webapp_apps
-#.  3. If you don't already have it installed, install the [Semaphore CLI](https://semaphoreci.com/docs/cli-overview.html) and login
+#   2. If you don't already have it installed, run `brew install jq` to install the jq tool
+#   3. Get a circleCI token by going to https://app.circleci.com/settings/user/tokens and adding a personal API token.
 #   3. Run the script, passing your path to env vars as an argument
 
-# TODO: Pull in heroku apps from files or at least review app numbers command line arg
+# TODO: add a qa flag to allow updates for QA.
 
 # Argument defaults
 env_file=".env"
-semaphore_secret="sf-dahlia-web-full"
 
-while getopts ":f::s::h" opt; do
+VARS_TO_UPDATE_CIRCLE_CI=(
+  "SALESFORCE_HOST"
+  "SALESFORCE_PASSWORD"
+  "SALESFORCE_SECURITY_TOKEN"
+  "SALESFORCE_CLIENT_SECRET"
+  "SALESFORCE_CLIENT_ID"
+  "SALESFORCE_INSTANCE_URL"
+)
+
+VARS_TO_UPDATE_HEROKU=(
+  "SALESFORCE_PASSWORD"
+  "SALESFORCE_SECURITY_TOKEN"
+  "SALESFORCE_CLIENT_SECRET"
+  "SALESFORCE_CLIENT_ID"
+  "SALESFORCE_INSTANCE_URL"
+)
+
+while getopts ":h::e::c:" opt; do
   case $opt in
     h )
       echo "Usage:"
       echo "    refresh.sh -h                           Display this help message."
-      echo "    refresh.sh -f <environment file>        Specify an environment file to load from, defaults to .env."
-      echo "    refresh.sh -s <semaphore secret name>   Specify a Semaphore secret name to update, defaults to sf-dahlia-web-full."
+      echo "    refresh.sh -e <environment>             Specify an environment to update, either full or qa."
+      echo "    refresh.sh -c <circle ci token>         Provide a CircleCI token."
       exit 0
       ;;
-    f )
-      env_file=$OPTARG
+    e )
+      env=$OPTARG
       ;;
-    s )
-      semaphore_secret=$OPTARG
+    c )
+      circle_ci_token=$OPTARG
       ;;
-    \? ) echo "Usage: cmd [-h] [-f]"
+    \? ) echo "Usage: cmd [-h] [-e] [-c]"
       ;;
   esac
 done
 echo "Loading environment variables from file: $env_file"
 source $env_file
-echo "loaded SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD"
-echo "loaded SALESFORCE_SECURITY_TOKEN=$SALESFORCE_SECURITY_TOKEN"
-echo "loaded SALESFORCE_CLIENT_SECRET=$SALESFORCE_CLIENT_SECRET"
-echo "loaded SALESFORCE_CLIENT_ID=$SALESFORCE_CLIENT_ID"
-echo "loaded SALESFORCE_INSTANCE_URL=$SALESFORCE_INSTANCE_URL"
 
-echo "Starting Heroku credential update for Webapp"
-# Get these app names from running "heroku apps"
-declare -a webapp_apps=(
-  "dahlia-full"
-  "dahlia-qa-translations"
-  "dahlia-full-pr-1268"
-  "dahlia-full-pr-1272"
-)
+for varname in ${VARS_TO_UPDATE_CIRCLE_CI[@]}; do
+  value="${!varname}"
+  echo "loaded $varname=$value"
+done
 
-for app in "${webapp_apps[@]}"
+echo "Starting Heroku credential update for Webapp $env"
+
+if [ $env == "full" ]; then
+  # Get all apps that are dahlia-web-full apps.
+  heroku_apps=$(heroku apps --team=sfdigitalservices --json | jq '.[].name | select(test("dahlia-web-full-*"))')
+  heroku_apps=("dahlia-full" ${heroku_apps[@]})
+elif [ $env == "qa" ]; then
+  heroku_apps=('dahlia-qa')
+else
+  echo "Error: environment must be full or qa"
+  exit 1
+fi
+
+
+for app in ${heroku_apps[@]}
   do
+    # Strip out double quotes from app names
+    app=$(echo "$app" | tr -d '"')
     echo "Updating credentials for $app"
-    heroku config:set SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD --app $app
-    heroku config:set SALESFORCE_SECURITY_TOKEN=$SALESFORCE_SECURITY_TOKEN --app $app
-    heroku config:set SALESFORCE_CLIENT_SECRET=$SALESFORCE_CLIENT_SECRET --app $app
-    heroku config:set SALESFORCE_CLIENT_ID=$SALESFORCE_CLIENT_ID --app $app
-    heroku config:set SALESFORCE_INSTANCE_URL=$SALESFORCE_INSTANCE_URL --app $app
+    for varname in ${VARS_TO_UPDATE_HEROKU[@]}; do
+      value="${!varname}"
+      heroku config:set $varname=$value --app $app
+    done
     echo "echo 'User.destroy_all' | rails c  && exit" | heroku run bash --app $app
 done
 
 echo "Heroku update complete"
 
+if [ $env == "full" ]; then
+  echo "Starting CircleCI credential update"
+  BASE_CIRCLECI_URL="https://circleci.com/api/v1.1/project/github/SFDigitalServices/sf-dahlia-web/envvar"
 
-echo "Starting Semaphore credential update for $semaphore_secret"
+  for varname in ${VARS_TO_UPDATE_CIRCLE_CI[@]}; do
+    value="${!varname}"
+    # Delete existing env var
+    curl -s -X DELETE $BASE_CIRCLECI_URL/$varname?circle-token=$circle_ci_token
+    # Create new env var
+    curl -X POST --header "Content-Type: application/json" -d "{\"name\": \"$varname\", \"value\": \"$value\"}" $BASE_CIRCLECI_URL?circle-token=$circle_ci_token
+  done
 
-sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_PASSWORD
-sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_SECURITY_TOKEN
-sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_CLIENT_SECRET
-sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_CLIENT_ID
-sem secrets:env-vars:remove exygy/$semaphore_secret  --name SALESFORCE_INSTANCE_URL
-
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_PASSWORD --content "$SALESFORCE_PASSWORD"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_SECURITY_TOKEN --content "$SALESFORCE_SECURITY_TOKEN"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_CLIENT_SECRET --content "$SALESFORCE_CLIENT_SECRET"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_CLIENT_ID --content "$SALESFORCE_CLIENT_ID"
-sem secrets:env-vars:add exygy/$semaphore_secret  --name SALESFORCE_INSTANCE_URL --content "$SALESFORCE_INSTANCE_URL"
-
-echo "Credentials updated for Semaphore"
+  echo "Credentials updated for CircleCI"
+fi

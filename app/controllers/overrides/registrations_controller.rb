@@ -30,25 +30,6 @@ module Overrides
       end
     end
 
-    def update
-      if @resource
-        if user_params[:email].present?
-          # <SFDAHLIA> custom way to determine if we want to send reconfirmation
-          @resource.initiate_email_reconfirmation = true
-        end
-        if @resource.send(resource_update_method, account_update_params)
-          # <SFDAHLIA> turn off to disable any effects of after_save happening again
-          @resource.initiate_email_reconfirmation = false
-          yield @resource if block_given?
-          render_update_success
-        else
-          render_update_error
-        end
-      else
-        render_update_error_user_not_found
-      end
-    end
-
     private
 
     def error_checks_for_create

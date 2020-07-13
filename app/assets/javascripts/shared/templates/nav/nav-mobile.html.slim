@@ -6,13 +6,10 @@ pageslide ps-class="ng-pageslide hide-for-print" ps-open="showNavMobile" ps-side
           use xlink:href="#i-right"
 
   ul.nav-mobile.skiptranslate
-    li ng-if="!showSaleListings"
-      a.nav-mobile-focus ui-sref="dahlia.listings-for-rent" ng-blur="trapFocus($event)"
-        | {{ "nav.browse_properties" | translate}}
-    li ng-if-start="showSaleListings"
+    li
       a.nav-mobile-focus ui-sref="dahlia.listings-for-rent" ng-blur="trapFocus($event)"
         | {{ "nav.rent" | translate}}
-    li ng-if-end="true"
+    li
       a.nav-mobile-focus ui-sref="dahlia.listings-for-sale" ng-blur="trapFocus($event)"
         | {{ "nav.buy" | translate}}
     li

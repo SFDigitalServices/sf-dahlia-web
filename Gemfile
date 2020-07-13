@@ -56,8 +56,9 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.7.1'
-gem 'devise_token_auth', '~> 1.1.3'
+# Note: devise 4.7.2 is unverified and causes undefined method `rails51?' errors.
+gem 'devise', '4.7.1'
+gem 'devise_token_auth', '~> 1.1.4'
 
 # postgresql database
 gem 'pg'

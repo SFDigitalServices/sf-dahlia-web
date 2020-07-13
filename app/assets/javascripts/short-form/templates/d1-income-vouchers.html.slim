@@ -17,6 +17,9 @@
         radio-block-item value='No' user='application' name='householdVouchersSubsidies' aria-describedby="householdVouchersSubsidies_error" ng-required='true' on-change="invalidateIncomeForm"
           | {{'t.no' | translate}}
 
+      small.highlight ng-if="application.householdVouchersSubsidies == 'Yes'"
+        | {{'d1_income_vouchers.if_subsidy_warning' | translate}}
+
       small.error#householdVouchersSubsidies_error ng-show="inputInvalid('householdVouchersSubsidies')"
         | {{'error.please_select_an_option' | translate}}
 
