@@ -12,8 +12,6 @@ do ->
     fakeListingDataService = {}
     $translate =
       instant: jasmine.createSpy()
-    fakeWindow = {}
-    fakeWindow['env'] = {showSaleListings: 'true'}
     fakeSharedService = {}
     fakeShortFormApplicationService =
       getLanguageCode: jasmine.createSpy()
@@ -72,7 +70,6 @@ do ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
-        $window: fakeWindow
         ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
         ListingIdentityService: fakeListingIdentityService

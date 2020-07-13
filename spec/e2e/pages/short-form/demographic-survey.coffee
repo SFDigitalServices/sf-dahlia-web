@@ -10,9 +10,7 @@ class DemographicSurvey extends AngularPage
     @userRace = element(By.id('user_race'))
     @userPrimaryLanguage = element(By.id('user_primary_language'))
     @otherPrimaryLanguage = element(By.id('otherLanguage'))
-
-    @referralNewspaper = element(By.id('referral_newspaper'))
-    @referralMOHCD = element(By.id('referral_mohcd-website'))
+    @referral = element(By.id('referral'))
 
     @defaults =
       userGender: 'Not Listed'
@@ -23,6 +21,7 @@ class DemographicSurvey extends AngularPage
       userRace: 'Other/Multiracial'
       userPrimaryLanguage: 'Not Listed'
       otherPrimaryLanguage: 'other primary language'
+      referral: 'Bus Ad'
 
   fill: (opts = {}) ->
     @userGender.sendKeys(@defaults.userGender)
@@ -35,18 +34,14 @@ class DemographicSurvey extends AngularPage
     @userPrimaryLanguage.sendKeys(@defaults.userPrimaryLanguage)
     @otherPrimaryLanguage.clear().sendKeys(@defaults.otherPrimaryLanguage)
 
-    # choose two referral options
-    @referralNewspaper.click()
-    @referralMOHCD.click()
+    @referral.sendKeys(@defaults.referral)
 
     @submitPage()
 
   expectToMatch: (context, opts = {}) ->
-    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userRace', 'userPrimaryLanguage', 'otherPrimaryLanguage']
+    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userRace', 'userPrimaryLanguage', 'otherPrimaryLanguage', 'referral']
     fields.forEach (field) =>
       context.expect(this[field].getAttribute('value')).to.eventually.equal(@defaults[field])
-    context.expect(@referralNewspaper.isSelected()).to.eventually.equal(true)
-    context.expect(@referralMOHCD.isSelected()).to.eventually.equal(true)
 
     @submitPage()
 

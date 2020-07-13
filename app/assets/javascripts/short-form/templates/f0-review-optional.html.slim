@@ -18,11 +18,6 @@
     sexual-orientation-form user='applicant'
 
   .app-inner.inset
-    .form-group
-      label.form-label.caps.padding-bottom--half id="referral_label"
-        | {{'label.how_did_you_hear_about_this' | translate}}
-
-      .checkbox-group role="group"
-        checkbox-form-item ng-repeat="referralOption in listing_referral_options" name="referral" option="{{referralOption[0]}}" label="{{referralOption[1] | translate}}"
+    referral-form user='applicant'
 
   short-form-save-and-submit
