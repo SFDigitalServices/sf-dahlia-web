@@ -28,6 +28,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasLoanPreapproval'
       'lendingAgent'
       'homebuyerEducationAgency'
+      'referral'
     ]
     primaryApplicant: [
       'appMemberId', 'contactId',
@@ -77,7 +78,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
 
     # add other data
     sfApp.adaPrioritiesSelected = Service._formatPickList(application.adaPrioritiesSelected)
-    sfApp.referral = Service._formatPickList(application.applicant.referral)
+    sfApp.referral = application.applicant.referral
     sfApp.agreeToTerms = !!application.applicant.terms.yes
 
     # income
@@ -322,7 +323,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
     data.adaPrioritiesSelected = Service._reformatMultiSelect(sfApp.adaPrioritiesSelected)
-    data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
+    # FIXME: Since we switched from multi-select to single select in #173721318, we need to make sure we only get one value.
+    data.applicant.referral = sfApp.referral
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
@@ -559,7 +561,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       data.applicant.race = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
-      data.applicant.referral = {}
+      data.applicant.referral = null
 
     # reset fields that don't apply to this application
     LS = ListingDataService
@@ -600,7 +602,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       applicant.ethnicity,
       applicant.race,
       applicant.sexualOrientation,
-      if opts.skipReferral then true else _.some(applicant.referral),
+      if opts.skipReferral then true else applicant.referral,
     ]
     return _.every(responses)
 

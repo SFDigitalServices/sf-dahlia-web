@@ -74,20 +74,22 @@ do ->
         fakeApplicant.ethnicity = 'Fake'
         fakeApplicant.race = 'Fake'
         fakeApplicant.sexualOrientation = 'Fake'
-        fakeApplicant.referral = {FakeAnswer: true}
+        fakeApplicant.referral = 'Fake'
 
       it 'should check if survey is complete', ->
         expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual true
 
       it 'should check if survey is incomplete', ->
+        # Check if missing gender causes surveyComplete to be false
         fakeApplicant.gender = null
         expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
+        # Check if missing referral causes surveyComplete to be false
         fakeApplicant.gender = 'Fake'
-        fakeApplicant.referral = {FakeAnswer: false}
+        fakeApplicant.referral = null
         expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
 
       it 'should check if only demographics are complete, if skipReferral is true', ->
-        fakeApplicant.referral = {FakeAnswer: false}
+        fakeApplicant.referral = null
         expect(ShortFormDataService.checkSurveyComplete(fakeApplicant, {skipReferral: true})).toEqual true
 
     describe 'maxDOBDay', ->
