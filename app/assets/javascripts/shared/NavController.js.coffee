@@ -2,11 +2,9 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, AccountService, ModalService, ShortFormApplicationService,
-$window) ->
+NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, AccountService, ModalService, ShortFormApplicationService) ->
   $scope.loggedIn = AccountService.loggedIn
   $scope.showNavMobile = false
-  $scope.showSaleListings = $window.env.showSaleListings == 'true'
 
   $scope.signOut = ->
     if ShortFormApplicationService.isShortFormPage($state.current)
@@ -65,8 +63,7 @@ $window) ->
 
 NavController.$inject = [
   '$document', '$rootScope', '$scope', '$state', '$timeout', '$translate',
-  'AccountService', 'ModalService', 'ShortFormApplicationService', '$window'
-]
+  'AccountService', 'ModalService', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.controllers')

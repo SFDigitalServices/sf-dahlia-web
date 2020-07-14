@@ -157,7 +157,7 @@ jobs:
           root: .
           paths:
             - .
-  backend:
+  unit:
     <<: *defaults
     steps:
       - setup
@@ -183,7 +183,7 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - backend:
+      - unit:
           <<: *non_production_jobs
       - e2e:
           <<: *non_production_jobs

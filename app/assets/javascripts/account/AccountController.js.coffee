@@ -3,7 +3,6 @@ AccountController = (
   $scope,
   $state,
   $translate,
-  $window,
   AccountService,
   AnalyticsService,
   inputMaxLength,
@@ -36,7 +35,6 @@ AccountController = (
 
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
-  $scope.showSaleListings = $window.env.showSaleListings == 'true'
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -283,7 +281,7 @@ AccountController = (
       $translate.instant('error.password_confirmation')
 
 AccountController.$inject = [
-  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  '$document', '$scope', '$state', '$translate', 'AccountService', 'AnalyticsService', 'inputMaxLength',
   'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 
