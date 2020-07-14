@@ -12,5 +12,5 @@
                 input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" name="preferences" type="checkbox" value="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" /
                 label.checkbox-and-label for="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}"
                   | {{ suboption.checkbox_option[1] }}
-                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" name="Other text" placeholder=("Please specify...") type="text" value="" /
+                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" name="Other text" placeholder="{{ suboption.text_option[1] }}" type="text" value="" /
 
