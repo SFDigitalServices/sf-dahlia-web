@@ -635,6 +635,12 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
+  $scope.onDemographicHeaderSelect = (selectedOption) ->
+    if $scope.selectedDemographicHeader == selectedOption
+      $scope.selectedDemographicHeader = null
+    else
+      $scope.selectedDemographicHeader = selectedOption
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
