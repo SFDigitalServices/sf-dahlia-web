@@ -3,7 +3,7 @@
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.race_option[0] }"
         a.accordion-header draggable="false" ng-click="onDemographicHeaderSelect(option.race_option[0])"
-          | {{ option.race_option[1] }}
+          | {{ option.race_option[1] | translate }}
           icon-plus-minus active="false"
         div.content ng-attr-id="{{ 'panel-' + option.race_option[0] }}" ng-class="{'active' : selectedDemographicHeader == option.race_option[0] }"
           .checkbox-group role="group"
@@ -11,6 +11,6 @@
               .checkbox-block-accordion
                 input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" name="preferences" type="checkbox" value="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" /
                 label.checkbox-and-label for="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}"
-                  | {{ suboption.checkbox_option[1] }}
-                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" name="Other text" placeholder="{{ suboption.text_option[1] }}" type="text" value="" /
+                  | {{ suboption.checkbox_option[1] | translate }}
+                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" name="Other text" placeholder="{{ suboption.text_option[1] | translate }}" type="text" value="" /
 
