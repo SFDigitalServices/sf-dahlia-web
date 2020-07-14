@@ -198,6 +198,56 @@
             "p2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
             "title": "Let's move to income."
         },
+        "demographics_accordion": {
+            "options": {
+                "asian": "asian",
+                "asian_chinese": "asian_chinese",
+                "asian_filipino": "asian_filipino",
+                "asian_japanese": "asian_japanese",
+                "asian_korean": "asian_korean",
+                "asian_mongolian": "asian_mongolian",
+                "asian_central_asian": "asian_central_asian",
+                "asian_south_asian": "asian_south_asian",
+                "asian_southeast_asian": "asian_southeast_asian",
+                "asian_other": "asian_other",
+                "black": "black",
+                "black_african": "black_african",
+                "black_african_american": "black_african_american",
+                "south_central_american": "south_central_american",
+                "other": "other",
+                "indigenous": "indigenous",
+                "indigenous_american_indian": "indigenous_american_indian",
+                "indigenous_indigenous_mexico": "indigenous_indigenous_mexico",
+                "indigenous_other": "indigenous_other",
+                "latino": "latino",
+                "latino_caribbean": "latino_caribbean",
+                "latino_central_american": "latino_central_american",
+                "latino_mexican": "latino_mexican",
+                "latino_south_american": "latino_south_american",
+                "latino_other": "latino_other",
+                "middle_eastern": "middle_eastern",
+                "middle_eastern_north": "middle_eastern_north",
+                "middle_eastern_west": "middle_eastern_west",
+                "middle_eastern_other": "middle_eastern_other",
+                "pacific_islander": "pacific_islander",
+                "pacific_islander_chamorro": "pacific_islander_chamorro",
+                "pacific_islander_native": "pacific_islander_native",
+                "pacific_islander_samoan": "pacific_islander_samoan",
+                "pacific_islander_other": "pacific_islander_other",
+                "white": "white",
+                "white_european": "white_european",
+                "white_other": "white_other"
+            },
+            "text_input_placeholders": {
+                "asian_other_placeholder": "asian_other_placeholder",
+                "black_other_placeholder": "black_other_placeholder",
+                "indigenous_other_placeholder": "indigenous_other_placeholder",
+                "latino_other_placeholder": "latino_other_placeholder",
+                "middle_eastern_other_placeholder": "middle_eastern_other_placeholder",
+                "pacific_islander_other_placeholder": "pacific_islander_other_placeholder",
+                "white_other_placeholder": "white_other_placeholder"
+            }
+        },
         "devise": {
             "mailer": {
                 "confirmation_instructions": {

@@ -11,6 +11,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Social Worker or Housing Counselor', Service.flagForI18n('label.social_worker_or_housing_counselor')]
     ['Other', Service.flagForI18n('label._other')]
   ]
+
   Service.primary_language_options = [
     ['Chinese – Cantonese', Service.flagForI18n('label.primary_language.options.chinese_cantonese')]
     ['Chinese – Mandarin', Service.flagForI18n('label.primary_language.options.chinese_mandarin')]
@@ -20,6 +21,141 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Spanish', Service.flagForI18n('label.primary_language.options.spanish')]
     ['Vietnamese', Service.flagForI18n('label.primary_language.options.vietnamese')]
     ['Not Listed', Service.flagForI18n('label.not_listed')]
+  ]
+
+  Service.race_and_ethnicity_options = [
+    {
+      race_option: ['Asian', Service.flagForI18n('demographics_accordion.options.asian')],
+      race_suboptions: [
+        {
+          checkbox_option: ['Chinese', Service.flagForI18n('demographics_accordion.options.asian_chinese')]
+        },
+        {
+          checkbox_option: ['Filipino', Service.flagForI18n('demographics_accordion.options.asian_filipino')]
+        },
+        {
+          checkbox_option: ['Japanese', Service.flagForI18n('demographics_accordion.options.asian_japanese')]
+        },
+        {
+          checkbox_option: ['Korean', Service.flagForI18n('demographics_accordion.options.asian_korean')]
+        },
+        {
+          checkbox_option: ['Mongolian', Service.flagForI18n('demographics_accordion.options.asian_mongolian')]
+        },
+        {
+          checkbox_option: ['Central Asian', Service.flagForI18n('demographics_accordion.options.asian_central_asian')]
+        },
+        {
+          checkbox_option: ['South Asian', Service.flagForI18n('demographics_accordion.options.asian_south_asian')]
+        },
+        {
+          checkbox_option: ['Southeast Asian', Service.flagForI18n('demographics_accordion.options.asian_southeast_asian')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.asian_other')],
+          text_option: ['Asian - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.asian_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['Black', Service.flagForI18n('demographics_accordion.options.black')],
+      race_suboptions: [
+        {
+          checkbox_option: ['African', Service.flagForI18n('demographics_accordion.options.black_african')]
+        },
+        {
+          checkbox_option: ['African American', Service.flagForI18n('demographics_accordion.options.black_african_american')]
+        },
+        {
+          checkbox_option: ['Caribbean, Central American, South American or Mexican', Service.flagForI18n('demographics_accordion.options.south_central_american')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.other')]
+          text_option: ['Black - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.black_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['Indigenous', Service.flagForI18n('demographics_accordion.options.indigenous')],
+      race_suboptions: [
+        {
+          checkbox_option: ['American Indian/Native American', Service.flagForI18n('demographics_accordion.options.indigenous_american_indian')]
+        },
+        {
+          checkbox_option: ['Indigenous from Mexico, the Caribbean, Central America, or South America', Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.indigenous_other')]
+          text_option: ['Indigenous - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.indigenous_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['Latino', Service.flagForI18n('demographics_accordion.options.latino')],
+      race_suboptions: [
+        {
+          checkbox_option: ['Caribbean', Service.flagForI18n('demographics_accordion.options.latino_caribbean')],
+        }
+        {
+          checkbox_option: ['Central American', Service.flagForI18n('demographics_accordion.options.latino_central_american')]
+        },
+        {
+          checkbox_option: ['Mexican', Service.flagForI18n('demographics_accordion.options.latino_mexican')]
+        },
+        {
+          checkbox_option: ['South American', Service.flagForI18n('demographics_accordion.options.latino_south_american')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.latino_other')]
+          text_option: ['Latino - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.latino_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['Middle Eastern/West Asian or North African', Service.flagForI18n('demographics_accordion.options.middle_eastern')],
+      race_suboptions: [
+        {
+          checkbox_option: ['North African', Service.flagForI18n('demographics_accordion.options.middle_eastern_north african')]
+        },
+        {
+          checkbox_option: ['West Asian', Service.flagForI18n('demographics_accordion.options.middle_eastern_west asian')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.middle_eastern_other')]
+          text_option: ['MENA - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.middle_eastern_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['Pacific Islander', Service.flagForI18n('demographics_accordion.options.pacific_islander')],
+      race_suboptions: [
+        {
+          checkbox_option: ['Chamorro', Service.flagForI18n('demographics_accordion.options.pacific_islander_chamorro')]
+        },
+        {
+          checkbox_option: ['Native Hawaiian', Service.flagForI18n('demographics_accordion.options.pacific_islander_native hawaiian')]
+        },
+        {
+          checkbox_option: ['Samoan', Service.flagForI18n('demographics_accordion.options.pacific_islander_samoan')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.pacific_islander_other')]
+          text_option: ['Pacific Islander - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.pacific_islander_other_placeholder')]
+        },
+      ]
+    }
+    {
+      race_option: ['White', Service.flagForI18n('demographics_accordion.options.white')],
+      race_suboptions: [
+        {
+          checkbox_option: ['European', Service.flagForI18n('demographics_accordion.options.white_european')]
+        },
+        {
+          checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.white_other')]
+          text_option: ['White - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.white_other_placeholder')]
+        },
+      ]
+    }
   ]
 
   Service.gender_options = [

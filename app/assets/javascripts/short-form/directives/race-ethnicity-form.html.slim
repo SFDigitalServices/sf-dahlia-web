@@ -1,17 +1,77 @@
 .form-group
-  label.form-label.caps for="user_ethnicity"
-    | {{'label.applicant_ethnicity' | translate}}
+  dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
+    dd.accordion-navigation
+      a.accordion-header draggable="false" href="#panel-1-a"
+        | Accordion Selection 1
+        icon-plus-minus active="false"
+      #panel-1-a.content
+        .checkbox-group role="group"
+          .checkbox-block-accordion
+            input#panel-1-a-opt-1 name="preferences" type="checkbox" value="panel-1-a-opt-1" /
+            label.checkbox-and-label for="panel-1-a-opt-1"
+              | Option 1
+          .checkbox-block-accordion
+            input#panel-1-a-opt-2 name="preferences" type="checkbox" value="panel-1-a-opt-2" /
+            label.checkbox-and-label for="panel-1-a-opt-2"
+              | Option 2
+          .checkbox-block-accordion
+            input#panel-1-a-opt-3 name="preferences" type="checkbox" value="panel-1-a-opt-3" /
+            label.checkbox-and-label for="panel-1-a-opt-3"
+              | Option 3
+          .checkbox-block-accordion
+            input#panel-1-a-opt-4 name=("Other checkbox") type="checkbox" value="panel-1-a-opt-4" /
+            label.checkbox-and-label for="panel-1-a-opt-4"
+              | Other
+            input#panel-1-a-opt-4-text.checkbox-text-input name=("Other text") placeholder=("Please specify...") type="text" value="" /
+    dd.accordion-navigation
+      a.accordion-header draggable="false" href="#panel-1-b"
+        | Accordion Selection 2
+        icon-plus-minus active="false"
+      #panel-1-b.content
+        .checkbox-group role="group"
+          .checkbox-block-accordion
+            input#panel-1-b-opt-1 name="preferences" type="checkbox" value="panel-1-b-opt-1" /
+            label.checkbox-and-label for="panel-1-b-opt-1"
+              | Option 1
+          .checkbox-block-accordion
+            input#panel-1-b-opt-2 name="preferences" type="checkbox" value="panel-1-b-opt-2" /
+            label.checkbox-and-label for="panel-1-b-opt-2"
+              | Option with very long text that should wrap on small screens.
+          .checkbox-block-accordion
+            input#panel-1-b-opt-3 name="preferences" type="checkbox" value="panel-1-b-opt-3" /
+            label.checkbox-and-label for="panel-1-b-opt-3"
+              | Option 3
+          .checkbox-block-accordion
+            input#panel-1-b-opt-4 name="preferences" type="checkbox" value="panel-1-b-opt-4" /
+            label.checkbox-and-label for="panel-1-b-opt-4"
+              | Option 4
+          .checkbox-block-accordion
+            input#panel-1-b-opt-5 name="preferences" type="checkbox" value="panel-1-b-opt-5" /
+            label.checkbox-and-label for="panel-1-b-opt-5"
+              | Option 5
+          .checkbox-block-accordion
+            input#panel-1-b-opt-6 name="preferences" type="checkbox" value="panel-1-b-opt-6" /
+            label.checkbox-and-label for="panel-1-b-opt-6"
+              | Other option with very long label. To see if long label wraps properly.
+            input#panel-1-b-opt-6-text.checkbox-text-input name=("Other text") placeholder=("Please specify...") type="text" value="" /
+    dd.accordion-navigation
+      a.accordion-header draggable="false" href="#panel-1-c"
+        | Accordion Selection 3
+        icon-plus-minus active="false"
+      #panel-1-c.content
+        .checkbox-group role="group"
+          .checkbox-block-accordion
+            input#panel-1-c-opt-1 name="preferences" type="checkbox" value="panel-1-c-opt-1" /
+            label.checkbox-and-label for="panel-1-c-opt-1"
+              | Option 1
+    dd.accordion-navigation
+      a.accordion-header draggable="false" href="#panel-1-d"
+        | Accordion Selection 4
+        icon-plus-minus active="false"
+      #panel-1-d.content
+        .checkbox-group role="group"
+          .checkbox-block-accordion
+            input#panel-1-d-opt-1 name="preferences" type="checkbox" value="panel-1-d-opt-1" /
+            label.checkbox-and-label for="panel-1-d-opt-1"
+              | Option 1
 
-  select#user_ethnicity ng-model="user.ethnicity" data-width="auto" name="ethnicity"
-    option disabled="" selected="" value=""
-      | {{'label.select_one' | translate}}
-    option ng-repeat="option in ethnicity_options" value="{{option[0]}}"
-      | {{option[1] | translate}}
-
-  label.form-label.caps for="user_race"
-    | {{'label.applicant_race' | translate}}
-  select#user_race ng-model="user.race" data-width="auto" name="race"
-    option disabled="" selected="" value=""
-      | {{'label.select_one' | translate}}
-    option ng-repeat="option in race_options" value="{{option[0]}}"
-      | {{option[1] | translate}}
