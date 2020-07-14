@@ -41,7 +41,7 @@ gem 'restforce', '~>3.1.0', require: false
 # handy ruby extensions
 gem 'facets', require: false
 
-gem 'rack', '>= 1.6.11'
+gem 'rack', '>= 2.2.3'
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
 # for CORS requests (specifically for CDN handling)
@@ -69,7 +69,7 @@ gem 'hashie'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '>= 1.10.9'
+gem 'nokogiri', '>= 1.10.10'
 gem 'actionpack-page_caching', '~> 1.2.1'
 
 
