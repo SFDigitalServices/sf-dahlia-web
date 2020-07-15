@@ -641,6 +641,37 @@ ShortFormApplicationController = (
     else
       $scope.selectedDemographicHeader = selectedOption
 
+  DEMOGRAPHICS_KEY_DELIMITER = ' - '
+  $scope.getOptionKey = (parentOption, checkedSuboption) ->
+    parentOption.race_option[0] + DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.checkbox_option[0]
+
+  $scope.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
+    $translate.instant(parentOption.race_option[1]) + ': ' + $translate.instant(checkedSuboption.checkbox_option[1])
+
+  findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
+
+  getTopLevelDemographicOption = (optionKey) ->
+    findFirst($scope.race_and_ethnicity_options, (o) -> o.race_option[0] is optionKey)
+
+  getDemographicSuboption = (option, suboptionKey) ->
+    findFirst(option.race_suboptions, (suboption) -> suboption.checkbox_option[0] is suboptionKey)
+
+  demographicsKeyToOptions = (demographicsKey) ->
+    optionKeys = demographicsKey.split(DEMOGRAPHICS_KEY_DELIMITER)
+    optionKey = optionKeys[0]
+    suboptionKey = optionKeys[1]
+    parentOption = getTopLevelDemographicOption(optionKey)
+    suboption = getDemographicSuboption(parentOption, suboptionKey)
+    {
+      parent_option: parentOption,
+      checked_suboption: suboption
+    }
+
+  $scope.demographicsChecked = {}
+  $scope.accumulatorOptions = {}
+  $scope.onDemographicCheckedChanged = (parentOption, checkedSuboption) ->
+    $scope.accumulatorOptions = (demographicsKeyToOptions(k) for k, checked of $scope.demographicsChecked when checked)
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||

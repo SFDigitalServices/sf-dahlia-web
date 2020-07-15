@@ -240,6 +240,10 @@
             },
             "text_input_placeholders": {
                 "demographic_input_placeholder": "Please Specify..."
+            },
+            "accumulator": {
+                "title": "You selected...",
+                "action": "Clear All"
             }
         },
         "devise": {
