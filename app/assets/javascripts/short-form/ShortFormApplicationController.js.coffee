@@ -681,6 +681,8 @@ ShortFormApplicationController = (
     $scope.demographicsChecked = {}
     $scope.onDemographicCheckedChanged()
 
+  $scope.hasRaceOptionsSelected = -> Object.keys($scope.accumulatorOptions).length > 0
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||

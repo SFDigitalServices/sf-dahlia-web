@@ -243,7 +243,8 @@
             },
             "accumulator": {
                 "title": "You selected...",
-                "action": "Clear All"
+                "action": "Clear All",
+                "none_selected": "None"
             }
         },
         "devise": {
