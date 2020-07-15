@@ -669,8 +669,17 @@ ShortFormApplicationController = (
 
   $scope.demographicsChecked = {}
   $scope.accumulatorOptions = {}
-  $scope.onDemographicCheckedChanged = (parentOption, checkedSuboption) ->
+  $scope.onDemographicCheckedChanged = ->
     $scope.accumulatorOptions = (demographicsKeyToOptions(k) for k, checked of $scope.demographicsChecked when checked)
+
+  $scope.removeSuboption = (parentOption, checkedSuboption) ->
+    key = $scope.getOptionKey(parentOption, checkedSuboption)
+    delete $scope.demographicsChecked[key]
+    $scope.onDemographicCheckedChanged()
+
+  $scope.clearAllRaceOptions = ->
+    $scope.demographicsChecked = {}
+    $scope.onDemographicCheckedChanged()
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
