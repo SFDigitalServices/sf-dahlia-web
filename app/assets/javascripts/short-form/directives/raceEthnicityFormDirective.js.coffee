@@ -33,6 +33,7 @@ angular.module('dahlia.directives')
       for k, checked of scope.demographicsChecked when !checked
         freeTextKey = ShortFormRaceEthnicityService.getFreeTextKeyFromDemographicKey(k)
         if freeTextKey
+          # Delete by setting to empty string to make sure we set it to empty on submit
           scope.user[freeTextKey] = ''
 
     scope.isFreeformTextDisabled = (parentOption, suboption) ->
@@ -40,7 +41,8 @@ angular.module('dahlia.directives')
 
     scope.removeSuboption = (parentOption, checkedSuboption) ->
       key = scope.getOptionKey(parentOption, checkedSuboption)
-      scope.demographicsChecked[key] = false
+      # Delete by setting to false to make sure we know to clear the freetext associated.
+      delete scope.demographicsChecked[key] = false
       scope.onDemographicCheckedChanged()
 
     scope.clearAllRaceOptions = ->
