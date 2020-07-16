@@ -78,9 +78,9 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
 
     occupancyRange.map( (occupancy) ->
       # Divide by 12 to go from annual to monthly income limits.
-      maxIncome =  (Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
+      maxIncome =  Math.floor(Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
       if minAMIs
-        minIncome = (Service._getAMIAmount(minAMIs, occupancy)/12).toFixed(0)
+        minIncome = Math.ceil(Service._getAMIAmount(minAMIs, occupancy)/12).toFixed(0)
       else
         minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed.toString()
       return {

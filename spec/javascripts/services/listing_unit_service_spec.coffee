@@ -179,8 +179,8 @@ do ->
           'Max_Occupancy': 2,
         }
         expectedIncomeLimits = [
-          { 'occupancy': 1, 'maxIncome': '4671', 'minIncome': '3400' },
-          { 'occupancy': 2, 'maxIncome': '5338', 'minIncome': '3400' }
+          { 'occupancy': 1, 'maxIncome': '4670', 'minIncome': '3400' },
+          { 'occupancy': 2, 'maxIncome': '5337', 'minIncome': '3400' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         expect(incomeLimits).toEqual(expectedIncomeLimits)
@@ -195,9 +195,9 @@ do ->
           'Max_Occupancy': 3
         }
         expectedIncomeLimits = [
-          { 'occupancy': 1, 'maxIncome': '6467', 'minIncome': '4671' },
-          { 'occupancy': 2, 'maxIncome': '7388', 'minIncome': '5338' },
-          { 'occupancy': 3, 'maxIncome': '8313', 'minIncome': '6004' }
+          { 'occupancy': 1, 'maxIncome': '6466', 'minIncome': '4671' },
+          { 'occupancy': 2, 'maxIncome': '7387', 'minIncome': '5338' },
+          { 'occupancy': 3, 'maxIncome': '8312', 'minIncome': '6005' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         expect(incomeLimits).toEqual(expectedIncomeLimits)
@@ -211,7 +211,7 @@ do ->
         }
         expectedIncomeLimits = [
           { 'occupancy': 1, 'maxIncome': '3800', 'minIncome': '0' },
-          { 'occupancy': 2, 'maxIncome': '4342', 'minIncome': '0' },
+          { 'occupancy': 2, 'maxIncome': '4341', 'minIncome': '0' },
           { 'occupancy': 3, 'maxIncome': '4883', 'minIncome': '0' }
         ]
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)

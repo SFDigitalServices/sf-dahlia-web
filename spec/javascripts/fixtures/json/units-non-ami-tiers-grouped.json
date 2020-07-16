@@ -17,12 +17,12 @@
             "incomeLimits": [
               {
                 "occupancy": 1,
-                "maxIncome": "4671",
+                "maxIncome": "4670",
                 "minIncome": "3400"
               },
               {
                 "occupancy": 2,
-                "maxIncome": "5338",
+                "maxIncome": "5337",
                 "minIncome": "3400"
               }
             ]
@@ -49,12 +49,12 @@
             "incomeLimits": [
               {
                 "occupancy": 1,
-                "maxIncome": "4671",
+                "maxIncome": "4670",
                 "minIncome": "4000"
               },
               {
                 "occupancy": 2,
-                "maxIncome": "5338",
+                "maxIncome": "5337",
                 "minIncome": "4000"
               },
               {
@@ -81,17 +81,17 @@
             "incomeLimits": [
               {
                 "occupancy": 1,
-                "maxIncome": "6467",
+                "maxIncome": "6466",
                 "minIncome": "5200"
               },
               {
                 "occupancy": 2,
-                "maxIncome": "7388",
+                "maxIncome": "7387",
                 "minIncome": "5200"
               },
               {
                 "occupancy": 3,
-                "maxIncome": "8313",
+                "maxIncome": "8312",
                 "minIncome": "5200"
               }
             ]
@@ -113,12 +113,12 @@
             "incomeLimits": [
               {
                 "occupancy": 1,
-                "maxIncome": "9338",
+                "maxIncome": "9337",
                 "minIncome": "6200"
               },
               {
                 "occupancy": 2,
-                "maxIncome": "10671",
+                "maxIncome": "10670",
                 "minIncome": "6200"
               },
               {
@@ -150,17 +150,17 @@
             "incomeLimits": [
               {
                 "occupancy": 2,
-                "maxIncome": "7388",
+                "maxIncome": "7387",
                 "minIncome": "6000"
               },
               {
                 "occupancy": 3,
-                "maxIncome": "8313",
+                "maxIncome": "8312",
                 "minIncome": "6000"
               },
               {
                 "occupancy": 4,
-                "maxIncome": "9238",
+                "maxIncome": "9237",
                 "minIncome": "6000"
               },
               {
@@ -187,7 +187,7 @@
             "incomeLimits": [
               {
                 "occupancy": 2,
-                "maxIncome": "10671",
+                "maxIncome": "10670",
                 "minIncome": "7000"
               },
               {
@@ -197,7 +197,7 @@
               },
               {
                 "occupancy": 4,
-                "maxIncome": "13342",
+                "maxIncome": "13341",
                 "minIncome": "7000"
               },
               {
@@ -234,7 +234,7 @@
               },
               {
                 "occupancy": 4,
-                "maxIncome": "13342",
+                "maxIncome": "13341",
                 "minIncome": "8000"
               },
               {
@@ -249,7 +249,7 @@
               },
               {
                 "occupancy": 7,
-                "maxIncome": "16542",
+                "maxIncome": "16541",
                 "minIncome": "8000"
               }
             ]
