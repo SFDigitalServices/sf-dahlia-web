@@ -667,10 +667,25 @@ ShortFormApplicationController = (
       checked_suboption: suboption
     }
 
+  getTopLevelDemographicKey = (demographicsKey) -> demographicsKey.split(DEMOGRAPHICS_KEY_DELIMITER)[0]
+
+  # The model that checked options are assigned to
+  # Ex: { "White - European": true, "White - Other": false }
   $scope.demographicsChecked = {}
+
+  # Converted checked options for the accumulator
+  # Ex: [{ parent_option: <top level option object>, checked_suboption: ["suboption_key", "suboption_translation_string"]}]
   $scope.accumulatorOptions = {}
+
+  # Set of checked top level options ex: { "Asian", "White" }
+  $scope.topLevelOptionsChecked = new Set()
+
   $scope.onDemographicCheckedChanged = ->
-    $scope.accumulatorOptions = (demographicsKeyToOptions(k) for k, checked of $scope.demographicsChecked when checked)
+    checkedKeys = (k for k, checked of $scope.demographicsChecked when checked)
+    $scope.accumulatorOptions = (demographicsKeyToOptions(k) for k in checkedKeys)
+
+    $scope.topLevelOptionsChecked.clear()
+    $scope.topLevelOptionsChecked.add(getTopLevelDemographicKey(key)) for key in checkedKeys
 
   $scope.removeSuboption = (parentOption, checkedSuboption) ->
     key = $scope.getOptionKey(parentOption, checkedSuboption)
@@ -682,6 +697,9 @@ ShortFormApplicationController = (
     $scope.onDemographicCheckedChanged()
 
   $scope.hasRaceOptionsSelected = -> Object.keys($scope.accumulatorOptions).length > 0
+
+  $scope.hasAtLeastOneSuboptionChecked = (option) ->
+    $scope.topLevelOptionsChecked.has(option.race_option[0])
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
