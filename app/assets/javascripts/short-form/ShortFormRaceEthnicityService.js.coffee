@@ -4,6 +4,7 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   t = (translationKey) -> $translate.instant(translationKey)
 
   Service.DEMOGRAPHICS_KEY_DELIMITER = ' - '
+  Service.APPLICANT_RACE_ETHNICITY_DELIMITER = ';'
 
   Service.getTranslatedAccumulatorOption = (freeformText, parentOption, checkedSuboption) ->
     baseText = "#{t(parentOption.race_option[1])}: #{t(checkedSuboption.checkbox_option[1])}"
@@ -38,6 +39,20 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
     }
 
   Service.getTopLevelDemographicKey = (demographicsKey) -> demographicsKey.split(Service.DEMOGRAPHICS_KEY_DELIMITER)[0]
+
+  # Take a string like "Asian - Chinese;White - European" and turn it into { "Asian - Chinese": true, "White - European": true}
+  Service.convertUserFieldToCheckboxValues = (userRaceEthnicityString) ->
+    result = {}
+    if !userRaceEthnicityString
+      return result
+    result[k] = true for k in userRaceEthnicityString.split(Service.APPLICANT_RACE_ETHNICITY_DELIMITER)
+    result
+
+  # Take an object like { "Asian - Chinese": true, "White - European": true, "White - Other": false} and turn it into "Asian - Chinese;White - European"
+  Service.convertCheckboxValuesToUserField = (checkboxValues) ->
+    (k for k, checked of checkboxValues when checked).join(Service.APPLICANT_RACE_ETHNICITY_DELIMITER) || null
+
+  Service.convertCheckboxValuesToAccumulatorOptions
   return Service
 
 ShortFormRaceEthnicityService.$inject = [

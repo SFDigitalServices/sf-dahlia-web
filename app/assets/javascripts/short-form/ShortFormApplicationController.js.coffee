@@ -636,20 +636,6 @@ ShortFormApplicationController = (
   $scope.listingIsSale = ->
     ShortFormApplicationService.listingIsSale()
 
-  $scope.onDemographicHeaderSelect = (selectedOption) ->
-    if $scope.selectedDemographicHeader == selectedOption
-      $scope.selectedDemographicHeader = null
-    else
-      $scope.selectedDemographicHeader = selectedOption
-
-  #
-  # Race and ethnicity accordion and accumulator
-  #
-
-  # The model that checked options are assigned to
-  # Ex: { "White - European": true, "White - Other": false }
-  $scope.demographicsChecked = {}
-
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||

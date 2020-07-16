@@ -344,6 +344,14 @@ class Api::V1::ShortFormController < ApiController
                 otherLanguage
                 ethnicity
                 race
+                raceEthnicity
+                asianOther
+                blackOther
+                indigenousOther
+                latinoOther
+                menaOther
+                pacificIslanderOther
+                whiteOther
                 sexualOrientation
                 sexualOrientationOther
                 hiv

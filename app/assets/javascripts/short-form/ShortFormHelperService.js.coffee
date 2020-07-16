@@ -53,7 +53,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.asian_other')],
-          text_option: ['Asian - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['asianOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -71,7 +71,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.other')]
-          text_option: ['Black - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['blackOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -86,7 +86,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.indigenous_other')]
-          text_option: ['Indigenous - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['indigenousOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -107,7 +107,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.latino_other')]
-          text_option: ['Latino - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['latinoOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -122,7 +122,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.middle_eastern_other')]
-          text_option: ['MENA - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['menaOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -140,7 +140,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.pacific_islander_other')]
-          text_option: ['Pacific Islander - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['pacificIslanderOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
@@ -152,7 +152,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         },
         {
           checkbox_option: ['Other', Service.flagForI18n('demographics_accordion.options.white_other')]
-          text_option: ['White - Other', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
+          text_option: ['whiteOther', Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')]
         },
       ]
     }
