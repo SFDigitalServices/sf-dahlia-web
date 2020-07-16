@@ -646,47 +646,9 @@ ShortFormApplicationController = (
   # Race and ethnicity accordion and accumulator
   #
 
-  $scope.getOptionKey = ShortFormRaceEthnicityService.getOptionKey
-  $scope.getOtherFreeTextKey = ShortFormRaceEthnicityService.getOtherFreeTextKey
-  $scope.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
-    freeformText = $scope.demographicsOtherText[$scope.getOtherFreeTextKey(checkedSuboption)]
-    ShortFormRaceEthnicityService.getTranslatedAccumulatorOption(freeformText, parentOption, checkedSuboption)
-
-  # The model that "Other freeform responses are stored in"
-  # Ex: { "MENA - Other": "Some other middle eastern ethnicity" }
-  $scope.demographicsOtherText = {}
-
   # The model that checked options are assigned to
   # Ex: { "White - European": true, "White - Other": false }
   $scope.demographicsChecked = {}
-
-  # Converted checked options for the accumulator
-  # Ex: [{ parent_option: <top level option object>, checked_suboption: ["suboption_key", "suboption_translation_string"]}]
-  $scope.accumulatorOptions = {}
-
-  # Set of checked top level options ex: { "Asian", "White" }
-  $scope.topLevelOptionsChecked = new Set()
-
-  $scope.onDemographicCheckedChanged = ->
-    checkedKeys = (k for k, checked of $scope.demographicsChecked when checked)
-    $scope.accumulatorOptions = (ShortFormRaceEthnicityService.demographicsKeyToOptions(k) for k in checkedKeys)
-
-    $scope.topLevelOptionsChecked.clear()
-    $scope.topLevelOptionsChecked.add(ShortFormRaceEthnicityService.getTopLevelDemographicKey(key)) for key in checkedKeys
-
-  $scope.removeSuboption = (parentOption, checkedSuboption) ->
-    key = ShortFormRaceEthnicityService.getOptionKey(parentOption, checkedSuboption)
-    delete $scope.demographicsChecked[key]
-    $scope.onDemographicCheckedChanged()
-
-  $scope.clearAllRaceOptions = ->
-    $scope.demographicsChecked = {}
-    $scope.onDemographicCheckedChanged()
-
-  $scope.hasRaceOptionsSelected = -> Object.keys($scope.accumulatorOptions).length > 0
-
-  $scope.hasAtLeastOneSuboptionChecked = (option) ->
-    $scope.topLevelOptionsChecked.has(option.race_option[0])
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()

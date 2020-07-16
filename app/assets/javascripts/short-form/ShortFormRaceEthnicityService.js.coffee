@@ -14,6 +14,10 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
 
   Service.getOtherFreeTextKey = (checkedSuboption) -> if checkedSuboption.text_option then checkedSuboption.text_option[0] else ''
 
+  Service.getFreeTextKeyFromDemographicKey = (demographicKey) ->
+    options = Service.demographicsKeyToOptions(demographicKey)
+    Service.getOtherFreeTextKey(options.checked_suboption)
+
   Service.findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
 
   Service.getTopLevelDemographicOption = (optionKey) ->
