@@ -647,7 +647,14 @@ ShortFormApplicationController = (
   #
 
   $scope.getOptionKey = ShortFormRaceEthnicityService.getOptionKey
-  $scope.getTranslatedAccumulatorOption = ShortFormRaceEthnicityService.getTranslatedAccumulatorOption
+  $scope.getOtherFreeTextKey = ShortFormRaceEthnicityService.getOtherFreeTextKey
+  $scope.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
+    freeformText = $scope.demographicsOtherText[$scope.getOtherFreeTextKey(checkedSuboption)]
+    ShortFormRaceEthnicityService.getTranslatedAccumulatorOption(freeformText, parentOption, checkedSuboption)
+
+  # The model that "Other freeform responses are stored in"
+  # Ex: { "MENA - Other": "Some other middle eastern ethnicity" }
+  $scope.demographicsOtherText = {}
 
   # The model that checked options are assigned to
   # Ex: { "White - European": true, "White - Other": false }

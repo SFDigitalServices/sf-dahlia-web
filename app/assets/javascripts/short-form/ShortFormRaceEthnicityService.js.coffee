@@ -1,13 +1,18 @@
 ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   Service = {}
 
+  t = (translationKey) -> $translate.instant(translationKey)
+
   Service.DEMOGRAPHICS_KEY_DELIMITER = ' - '
 
-  Service.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
-    $translate.instant(parentOption.race_option[1]) + ': ' + $translate.instant(checkedSuboption.checkbox_option[1])
+  Service.getTranslatedAccumulatorOption = (freeformText, parentOption, checkedSuboption) ->
+    baseText = "#{t(parentOption.race_option[1])}: #{t(checkedSuboption.checkbox_option[1])}"
+    if freeformText then "#{baseText} (#{freeformText})" else baseText
 
   Service.getOptionKey = (parentOption, checkedSuboption) ->
-      parentOption.race_option[0] + Service.DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.checkbox_option[0]
+    parentOption.race_option[0] + Service.DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.checkbox_option[0]
+
+  Service.getOtherFreeTextKey = (checkedSuboption) -> if checkedSuboption.text_option then checkedSuboption.text_option[0] else ''
 
   Service.findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
 
