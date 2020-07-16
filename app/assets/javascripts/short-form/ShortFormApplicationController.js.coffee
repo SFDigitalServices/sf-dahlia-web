@@ -19,7 +19,8 @@ ShortFormApplicationController = (
   SharedService,
   ShortFormApplicationService,
   ShortFormHelperService,
-  ShortFormNavigationService
+  ShortFormNavigationService,
+  ShortFormRaceEthnicityService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -641,33 +642,12 @@ ShortFormApplicationController = (
     else
       $scope.selectedDemographicHeader = selectedOption
 
-  DEMOGRAPHICS_KEY_DELIMITER = ' - '
-  $scope.getOptionKey = (parentOption, checkedSuboption) ->
-    parentOption.race_option[0] + DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.checkbox_option[0]
+  #
+  # Race and ethnicity accordion and accumulator
+  #
 
-  $scope.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
-    $translate.instant(parentOption.race_option[1]) + ': ' + $translate.instant(checkedSuboption.checkbox_option[1])
-
-  findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
-
-  getTopLevelDemographicOption = (optionKey) ->
-    findFirst($scope.race_and_ethnicity_options, (o) -> o.race_option[0] is optionKey)
-
-  getDemographicSuboption = (option, suboptionKey) ->
-    findFirst(option.race_suboptions, (suboption) -> suboption.checkbox_option[0] is suboptionKey)
-
-  demographicsKeyToOptions = (demographicsKey) ->
-    optionKeys = demographicsKey.split(DEMOGRAPHICS_KEY_DELIMITER)
-    optionKey = optionKeys[0]
-    suboptionKey = optionKeys[1]
-    parentOption = getTopLevelDemographicOption(optionKey)
-    suboption = getDemographicSuboption(parentOption, suboptionKey)
-    {
-      parent_option: parentOption,
-      checked_suboption: suboption
-    }
-
-  getTopLevelDemographicKey = (demographicsKey) -> demographicsKey.split(DEMOGRAPHICS_KEY_DELIMITER)[0]
+  $scope.getOptionKey = ShortFormRaceEthnicityService.getOptionKey
+  $scope.getTranslatedAccumulatorOption = ShortFormRaceEthnicityService.getTranslatedAccumulatorOption
 
   # The model that checked options are assigned to
   # Ex: { "White - European": true, "White - Other": false }
@@ -682,13 +662,13 @@ ShortFormApplicationController = (
 
   $scope.onDemographicCheckedChanged = ->
     checkedKeys = (k for k, checked of $scope.demographicsChecked when checked)
-    $scope.accumulatorOptions = (demographicsKeyToOptions(k) for k in checkedKeys)
+    $scope.accumulatorOptions = (ShortFormRaceEthnicityService.demographicsKeyToOptions(k) for k in checkedKeys)
 
     $scope.topLevelOptionsChecked.clear()
-    $scope.topLevelOptionsChecked.add(getTopLevelDemographicKey(key)) for key in checkedKeys
+    $scope.topLevelOptionsChecked.add(ShortFormRaceEthnicityService.getTopLevelDemographicKey(key)) for key in checkedKeys
 
   $scope.removeSuboption = (parentOption, checkedSuboption) ->
-    key = $scope.getOptionKey(parentOption, checkedSuboption)
+    key = ShortFormRaceEthnicityService.getOptionKey(parentOption, checkedSuboption)
     delete $scope.demographicsChecked[key]
     $scope.onDemographicCheckedChanged()
 
@@ -1062,7 +1042,8 @@ ShortFormApplicationController.$inject = [
   'SharedService',
   'ShortFormApplicationService',
   'ShortFormHelperService',
-  'ShortFormNavigationService'
+  'ShortFormNavigationService',
+  'ShortFormRaceEthnicityService'
 ]
 
 angular
