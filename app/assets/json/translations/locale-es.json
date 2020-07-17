@@ -196,6 +196,55 @@
             "p2": "En este momento, solo debe indicar un monto total estimado. El total real se calculará si usted sale sorteado.",
             "title": "Pasemos a los ingresos."
         },
+        "demographics_accordion": {
+            "options": {
+                "asian": "Asiático",
+                "asian_chinese": "Chino",
+                "asian_filipino": "Filipino",
+                "asian_japanese": "Japonés",
+                "asian_korean": "Coreano",
+                "asian_mongolian": "Mongol",
+                "asian_central_asian": "Del Asia Central",
+                "asian_south_asian": "Del sur de Asia",
+                "asian_southeast_asian": "Del sureste asiático",
+                "asian_other": "Otro Asiático",
+                "black": "Negro",
+                "black_african": "Africano",
+                "black_african_american": "Afroamericano",
+                "south_central_american": "Del Caribe, América Central, América del Sur o mexicano",
+                "other": "Otro negro",
+                "indigenous": "Indígena",
+                "indigenous_american_indian": "Indio americano/nativo americano",
+                "indigenous_indigenous_mexico": "Indígena de México, el Caribe, América Central o América del Sur",
+                "indigenous_other": "Otro indígenao",
+                "latino": "Latino",
+                "latino_caribbean": "Caribeño",
+                "latino_central_american": "De América Central",
+                "latino_mexican": "Mexicano",
+                "latino_south_american": "De América del Sur",
+                "latino_other": "Otro Latino",
+                "middle_eastern": "Del Medio Oriente/Asia Occidental o de África del Norte",
+                "middle_eastern_north_african": "De África del Norte",
+                "middle_eastern_west_asian": "De Asia Occidental",
+                "middle_eastern_other": "Otro medio oriente o de África del Norte ",
+                "pacific_islander": "De las Islas del Pacífico",
+                "pacific_islander_chamorro": "Chamorro",
+                "pacific_islander_native_hawaiian": "Nativo hawaiano",
+                "pacific_islander_samoan": "Samoano",
+                "pacific_islander_other": "Otro de las islas del Pacífico",
+                "white": "Blanco",
+                "white_european": "Europeo",
+                "white_other": "Otro blanco"
+            },
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "Please Specify..."
+            },
+            "accumulator": {
+                "title": "You selected...",
+                "action": "Clear All",
+                "none_selected": "None"
+            }
+        },
         "devise": {
             "mailer": {
                 "confirmation_instructions": {
