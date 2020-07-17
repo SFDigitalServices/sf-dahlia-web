@@ -197,8 +197,6 @@
             "title": "Pasemos a los ingresos."
         },
         "demographics_accordion": {
-            "title": "Your race and ethnicity",
-            "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
             "options": {
                 "asian": "Asiático",
                 "asian_chinese": "Chino",
@@ -237,14 +235,6 @@
                 "white": "Blanco",
                 "white_european": "Europeo",
                 "white_other": "Otro blanco"
-            },
-            "text_input_placeholders": {
-                "demographic_input_placeholder": "Please Specify..."
-            },
-            "accumulator": {
-                "title": "You selected...",
-                "action": "Clear All",
-                "none_selected": "None"
             }
         },
         "devise": {
