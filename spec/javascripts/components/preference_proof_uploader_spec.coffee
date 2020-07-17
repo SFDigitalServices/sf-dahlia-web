@@ -22,6 +22,7 @@ do ->
         }
       ]
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeShortFormRaceEthnicityService = {}
     fakeShortFormApplicationService = {
       listing: fakeListing
     }
@@ -47,6 +48,7 @@ do ->
       deferred = $q.defer()
       locals =
         ShortFormApplicationService: fakeShortFormApplicationService
+        ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
         FileUploadService: fakeFileUploadService
         ShortFormHelperService: fakeShortFormHelperService
         SharedService: fakeSharedService

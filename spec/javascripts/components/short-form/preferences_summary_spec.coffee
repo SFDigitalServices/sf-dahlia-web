@@ -7,6 +7,7 @@ do ->
     $filter = undefined
     $translate = undefined
     fakeCustomPreference = listingPreferenceID: '123456'
+    fakeShortFormRaceEthnicityService = {}
     fakeShortFormApplicationService =
       listing: {
         'Lottery_Date': '2019-04-30',
@@ -29,6 +30,7 @@ do ->
       locals = {
         ListingConstantsService: fakeListingConstantsService
         ShortFormApplicationService: fakeShortFormApplicationService
+        ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
         ShortFormHelperService: fakeShortFormHelperService
         $state: {}
         $translate: $translate
