@@ -57,11 +57,19 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
       summaries.push(summary)
     summaries
 
-  Service._getAMIAmount = (incomeList, occupancy) ->
+  Service._getAnnualAMIAmount = (incomeList, occupancy) ->
     if incomeList && incomeList.values?
       _.find(incomeList['values'], {'numOfHousehold': occupancy})['amount']
     else
       console.error('Missing AMIs for occupancy', incomeList, occupancy)
+
+  Service._convertMaxAnnualToMonthly = (maxAnnualIncome) ->
+    # We round max incomes down to avoid users being surprised by being rejected.
+    Math.floor(maxAnnualIncome/12).toFixed(0)
+
+  Service._convertMinAnnualToMonthly = (minAnnualIncome) ->
+    # We round min incomes up to avoid users being surprised by being rejected.
+    Math.ceil(minAnnualIncome/12).toFixed(0)
 
   Service._getIncomeRangesByOccupancy = (unitGroup) ->
     # Given a row of units grouped by size, AMI, price, etc, determine the
@@ -77,10 +85,9 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
       minAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Min_AMI_for_Qualifying_Unit.toString()})
 
     occupancyRange.map( (occupancy) ->
-      # Divide by 12 to go from annual to monthly income limits.
-      maxIncome =  Math.floor(Service._getAMIAmount(maxAMIs, occupancy)/12).toFixed(0)
+      maxIncome = Service._convertMaxAnnualToMonthly(Service._getAnnualAMIAmount(maxAMIs, occupancy))
       if minAMIs
-        minIncome = Math.ceil(Service._getAMIAmount(minAMIs, occupancy)/12).toFixed(0)
+        minIncome = Service._convertMinAnnualToMonthly(Service._getAnnualAMIAmount(minAMIs, occupancy))
       else
         minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed.toString()
       return {

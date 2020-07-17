@@ -162,6 +162,16 @@ do ->
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
 
+    describe 'Service._convertMaxAnnualToMonthly', ->
+      it 'divides and rounds correctly', ->
+        expect(ListingUnitService._convertMaxAnnualToMonthly(120)).toEqual('10')
+        expect(ListingUnitService._convertMaxAnnualToMonthly(125)).toEqual('10')
+
+    describe 'Service._convertMinAnnualToMonthly', ->
+      it 'divides and rounds correctly', ->
+        expect(ListingUnitService._convertMinAnnualToMonthly(120)).toEqual('10')
+        expect(ListingUnitService._convertMinAnnualToMonthly(125)).toEqual('11')
+
     describe 'Service._getIncomeRangesByOccupancy', ->
       beforeEach ->
         ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
