@@ -23,23 +23,23 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   # Given a demographic key, get the associated field name for the free text on that option (ex: "Asian - Other" -> "asianOther")
   # Note if you pass a demographic key without a free text option, this will return an empty string (ex: "Asian - Chinese" -> '')
   Service.getFreeTextKeyFromDemographicKey = (demographicKey) ->
-    options = Service.demographicsKeyToOptions(demographicKey)
+    options = Service._demographicsKeyToOptions(demographicKey)
     Service.getOtherFreeTextKey(options.checked_suboption)
 
   # Get the first item in an array that matches the predicate
-  Service.findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
+  Service._findFirst = (arr, predicate) -> (i for i in arr when predicate(i))[0]
 
   # Get the parent demographic option object given the parent option key (ex: "Asian").
   Service.getTopLevelDemographicOption = (parentOptionKey) ->
-    Service.findFirst(ShortFormHelperService.race_and_ethnicity_options, (o) -> o.key is parentOptionKey)
+    Service._findFirst(ShortFormHelperService.race_and_ethnicity_options, (o) -> o.key is parentOptionKey)
 
   # Given a top level option, find the child option that matches the suboptionKey.
   Service.getDemographicSuboption = (parentOption, suboptionKey) ->
-    Service.findFirst(parentOption.suboptions, (suboption) -> suboption.key is suboptionKey)
+    Service._findFirst(parentOption.suboptions, (suboption) -> suboption.key is suboptionKey)
 
 
   # "Asian - Chinese" -> { parent_option: <parent_option_object>, checked_suboption: <suboption_object> }
-  Service.demographicsKeyToOptions = (demographicsKey) ->
+  Service._demographicsKeyToOptions = (demographicsKey) ->
     optionKeys = demographicsKey.split(Service.DEMOGRAPHICS_KEY_DELIMITER)
     optionKey = optionKeys[0]
     suboptionKey = optionKeys[1]
@@ -50,8 +50,8 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
       checked_suboption: suboption
     }
 
-  # Similar to demographicsKeyToOptions but for lists of keys
-  Service.demographicsKeysToOptionsList = (demographicsKeys) -> (Service.demographicsKeyToOptions(k) for k in demographicsKeys)
+  # Similar to _demographicsKeyToOptions but for lists of keys
+  Service.demographicsKeysToOptionsList = (demographicsKeys) -> (Service._demographicsKeyToOptions(k) for k in demographicsKeys)
 
   # Given a demographic key, return the top level demographic (ex: "Asian - Chinese" -> "Asian")
   Service.getTopLevelDemographicKey = (demographicsKey) -> demographicsKey.split(Service.DEMOGRAPHICS_KEY_DELIMITER)[0]
