@@ -697,6 +697,17 @@
             "preference_proof_address_documents": "¿Qué tipo de documento desea cargar para demostrar que vive en esa dirección?",
             "preference_proof_documents": "¿Qué documento va a cargar para demostrar su elegibilidad?",
             "preferences": "Preferencias",
+            "primary_language": {
+                "options": {
+                    "chinese_cantonese": "Chino - cantonés",
+                    "chinese_mandarin": "Chino - mandarín",
+                    "english": "Inglés",
+                    "filipino": "Filipino",
+                    "russian": "Ruso",
+                    "spanish": "Español",
+                    "vietnamese": "Vietnamita"
+                }
+            },
             "primary_user": "Solicitante principal",
             "proof": {
                 "ca_license": "Id. o licencia de conducir emitida por el estado de CA",
