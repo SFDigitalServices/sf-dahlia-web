@@ -228,18 +228,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Friend', Service.flagForI18n('label.friend')]
     ['Other', Service.flagForI18n('label._other')]
   ]
-  Service.race_options = [
-    ['American Indian/Alaskan Native', Service.flagForI18n('label.american_indian_alaskan_native')]
-    ['Asian', Service.flagForI18n('label.asian')]
-    ['Black/African American', Service.flagForI18n('label.black_african_american')]
-    ['Native Hawaiian/Other Pacific Islander', Service.flagForI18n('label.native_hawaiian_other_pacific_islander')]
-    ['White', Service.flagForI18n('label.white')]
-    ['American Indian/Alaskan Native and Black/African American', Service.flagForI18n('label.american_indian_alaskan_native_black')]
-    ['American Indian/Alaskan Native and White', Service.flagForI18n('label.american_indian_alaskan_native_white')]
-    ['Asian and White', Service.flagForI18n('label.asian_white')]
-    ['Black/African American and White', Service.flagForI18n('label.black_african_american_white')]
-    ['Other/Multiracial', Service.flagForI18n('label.other_multiracial')]
-  ]
   Service.sexual_orientation_options = [
     ['Bisexual', Service.flagForI18n('label.bisexual')]
     ['Gay/Lesbian/Same-Gender Loving', Service.flagForI18n('label.gay_lesbian_same_gender_loving')]
