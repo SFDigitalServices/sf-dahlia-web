@@ -199,6 +199,8 @@
             "title": "Let's move to income."
         },
         "demographics_accordion": {
+            "title": "Your race and ethnicity",
+            "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
             "options": {
                 "asian": "Asian",
                 "asian_chinese": "Chinese",

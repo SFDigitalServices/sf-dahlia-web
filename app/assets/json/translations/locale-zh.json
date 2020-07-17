@@ -198,6 +198,8 @@
             "title": "現在來談談收入。"
         },
         "demographics_accordion": {
+            "title": "Your race and ethnicity",
+            "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
             "options": {
                 "asian": "亞裔",
                 "asian_chinese": "華裔",

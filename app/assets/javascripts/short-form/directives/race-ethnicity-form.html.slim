@@ -1,4 +1,8 @@
 .form-group
+  label.form-label.caps.padding-bottom--half id="referral_label"
+    | {{'demographics_accordion.title' | translate}}
+  p.form-note.margin-bottom--2x
+    | {{'demographics_accordion.subtitle' | translate}}
   dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.race_option[0] }"
