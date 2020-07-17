@@ -57,11 +57,11 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   Service.getTopLevelDemographicKey = (demographicsKey) -> demographicsKey.split(Service.DEMOGRAPHICS_KEY_DELIMITER)[0]
 
   # "Asian - Chinese;White - European" -> { "Asian - Chinese": true, "White - European": true}
-  Service.convertUserFieldToCheckboxValues = (userRaceEthnicityString) ->
+  Service.convertUserFieldToCheckboxValues = (userCombinedRaceString) ->
     result = {}
-    if !userRaceEthnicityString
+    if !userCombinedRaceString
       return result
-    result[k] = true for k in userRaceEthnicityString.split(Service.APPLICANT_RACE_ETHNICITY_DELIMITER)
+    result[k] = true for k in userCombinedRaceString.split(Service.APPLICANT_RACE_ETHNICITY_DELIMITER)
     result
 
   # { "Asian - Chinese": true, "White - European": true, "White - Other": false} -> "Asian - Chinese;White - European"

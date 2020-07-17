@@ -184,10 +184,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Friend', Service.flagForI18n('label.friend')]
     ['Other', Service.flagForI18n('label._other')]
   ]
-  Service.ethnicity_options = [
-    ['Hispanic/Latino', Service.flagForI18n('label.hispanic_latino')]
-    ['Not Hispanic/Latino', Service.flagForI18n('label.not_hispanic_latino')]
-  ]
   Service.race_options = [
     ['American Indian/Alaskan Native', Service.flagForI18n('label.american_indian_alaskan_native')]
     ['Asian', Service.flagForI18n('label.asian')]

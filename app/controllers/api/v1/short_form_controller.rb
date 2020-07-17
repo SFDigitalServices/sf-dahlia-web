@@ -342,8 +342,6 @@ class Api::V1::ShortFormController < ApiController
                 genderOther
                 primaryLanguage
                 otherLanguage
-                ethnicity
-                race
                 raceEthnicity
                 asianOther
                 blackOther

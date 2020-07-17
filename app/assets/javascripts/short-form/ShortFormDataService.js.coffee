@@ -39,7 +39,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'candidateScore',
       'contactId',
       'email',
-      'ethnicity',
       'firstName',
       'gender',
       'genderOther',
@@ -58,7 +57,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'phoneType',
       'preferenceAddressMatch',
       'primaryLanguage',
-      'race',
       'raceEthnicity',
       'sexualOrientation',
       'sexualOrientationOther',
@@ -586,8 +584,14 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       data.applicant.genderOther = null
       data.applicant.primaryLanguage = null
       data.applicant.otherLanguage = null
-      data.applicant.ethnicity = null
-      data.applicant.race = null
+      data.applicant.raceEthnicity = null
+      data.applicant.asianOther = null
+      data.applicant.blackOther = null
+      data.applicant.indigenousOther = null
+      data.applicant.latinoOther = null
+      data.applicant.menaOther = null
+      data.applicant.pacificIslanderOther = null
+      data.applicant.whiteOther = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = null
@@ -626,10 +630,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   #############################################
 
   Service.checkSurveyComplete = (applicant, opts = {}) ->
+    # Race ethnicity not include because it's optional
     responses = [
       applicant.gender,
-      applicant.ethnicity,
-      applicant.race,
       applicant.sexualOrientation,
       if opts.skipReferral then true else applicant.referral,
     ]
