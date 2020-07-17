@@ -197,6 +197,55 @@
             "p2": "您目前只需提供預估總額。若您在抽籤時獲選，屆時會再計算實際總額。",
             "title": "現在來談談收入。"
         },
+        "demographics_accordion": {
+            "options": {
+                "asian": "亞裔",
+                "asian_chinese": "華裔",
+                "asian_filipino": "菲律賓裔",
+                "asian_japanese": "日裔",
+                "asian_korean": "韓裔",
+                "asian_mongolian": "蒙古裔",
+                "asian_central_asian": "中亞裔",
+                "asian_south_asian": "南亞裔",
+                "asian_southeast_asian": "東南亞裔",
+                "asian_other": "其他亞洲裔",
+                "black": "黑色人種",
+                "black_african": "非裔",
+                "black_african_american": "非裔美國人",
+                "south_central_american": "加勒比、中美洲、南美洲或墨西哥裔 ",
+                "other": "其他黑種人",
+                "indigenous": "原住民",
+                "indigenous_american_indian": "美國印第安人/美國原住民",
+                "indigenous_indigenous_mexico": "墨西哥、加勒比、中美洲或南美洲原住民",
+                "indigenous_other": "其他原住民族",
+                "latino": "拉丁裔",
+                "latino_caribbean": "加勒比裔",
+                "latino_central_american": "中美洲裔",
+                "latino_mexican": "墨西哥裔",
+                "latino_south_american": "南美洲裔",
+                "latino_other": "其他拉丁裔",
+                "middle_eastern": "中東/西亞或北非",
+                "middle_eastern_north_african": "北非裔",
+                "middle_eastern_west_asian": "西亞裔",
+                "middle_eastern_other": "其他中東或北非族裔",
+                "pacific_islander": "太平洋島民",
+                "pacific_islander_chamorro": "查莫羅人",
+                "pacific_islander_native_hawaiian": "夏威夷原住民",
+                "pacific_islander_samoan": "薩摩亞人",
+                "pacific_islander_other": "其他太平洋島民",
+                "white": "白種人",
+                "white_european": "歐洲裔",
+                "white_other": "其他白種人"
+            },
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "Please Specify..."
+            },
+            "accumulator": {
+                "title": "You selected...",
+                "action": "Clear All",
+                "none_selected": "None"
+            }
+        },
         "devise": {
             "mailer": {
                 "confirmation_instructions": {
