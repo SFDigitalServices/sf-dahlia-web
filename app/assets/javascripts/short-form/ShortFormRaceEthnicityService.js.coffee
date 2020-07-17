@@ -8,17 +8,17 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
 
   # Given an option, format it as a translated string to display in the accumulator.
   Service.getTranslatedAccumulatorOption = (parentOption, checkedSuboption, freeTextString) ->
-    baseText = "#{t(parentOption.race_option[1])}: #{t(checkedSuboption.checkbox_option[1])}"
+    baseText = "#{t(parentOption.translated_name)}: #{t(checkedSuboption.translated_name)}"
     if freeTextString then "#{baseText} (#{freeTextString})" else baseText
 
   # Given parent and suboption objects, return the demographic option key (ex: "Asian - Chinese")
   Service.getOptionKey = (parentOption, checkedSuboption) ->
-    parentOption.race_option[0] + Service.DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.checkbox_option[0]
+    parentOption.key + Service.DEMOGRAPHICS_KEY_DELIMITER + checkedSuboption.key
 
   # Given a suboption, get the associated field name for the free text on that option (ex: <asian-other-suboption-object> -> "asianOther")
   # Note if you pass a demographic key without a free text option, this will return an empty string (ex: <asian-chinese-suboption-object> -> '')
   Service.getOtherFreeTextKey = (checkedSuboption) ->
-    if checkedSuboption.text_option then checkedSuboption.text_option[0] else ''
+    if checkedSuboption.free_text_key then checkedSuboption.free_text_key else ''
 
   # Given a demographic key, get the associated field name for the free text on that option (ex: "Asian - Other" -> "asianOther")
   # Note if you pass a demographic key without a free text option, this will return an empty string (ex: "Asian - Chinese" -> '')
@@ -31,11 +31,11 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
 
   # Get the parent demographic option object given the parent option key (ex: "Asian").
   Service.getTopLevelDemographicOption = (parentOptionKey) ->
-    Service.findFirst(ShortFormHelperService.race_and_ethnicity_options, (o) -> o.race_option[0] is parentOptionKey)
+    Service.findFirst(ShortFormHelperService.race_and_ethnicity_options, (o) -> o.key is parentOptionKey)
 
   # Given a top level option, find the child option that matches the suboptionKey.
   Service.getDemographicSuboption = (parentOption, suboptionKey) ->
-    Service.findFirst(parentOption.race_suboptions, (suboption) -> suboption.checkbox_option[0] is suboptionKey)
+    Service.findFirst(parentOption.suboptions, (suboption) -> suboption.key is suboptionKey)
 
 
   # "Asian - Chinese" -> { parent_option: <parent_option_object>, checked_suboption: <suboption_object> }

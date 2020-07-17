@@ -63,7 +63,7 @@ angular.module('dahlia.directives')
 
     # Return true if the top level header (ex: "Asian") has any checked suboptions (Ex: "Chinese")
     scope.headerHasCheckedOption = (parentOption) ->
-      scope.topLevelOptionsChecked.has(parentOption.race_option[0])
+      scope.topLevelOptionsChecked.has(parentOption.key)
 
     scope.toggleSelectedHeader = (parentOptionKey) ->
         scope.selectedDemographicHeader = if scope.selectedDemographicHeader == parentOptionKey then null else parentOptionKey
