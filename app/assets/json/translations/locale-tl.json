@@ -196,6 +196,55 @@
             "p2": "Kailangan lamang ninyong magbigay ng tinatayang kabuuang kita sa ngayon. Kakalkulahin ang aktuwal na kabuuan kapag napili kayo sa lottery.",
             "title": "Pumunta naman tayo sa kita."
         },
+        "demographics_accordion": {
+            "options": {
+                "asian": "Asyano",
+                "asian_chinese": "Tsino",
+                "asian_filipino": "Filipino",
+                "asian_japanese": "Hapones",
+                "asian_korean": "Koreano",
+                "asian_mongolian": "Mongolian",
+                "asian_central_asian": "Taga-Gitnang Asya",
+                "asian_south_asian": "Taga-Timog Asya",
+                "asian_southeast_asian": "Taga-Timog Silangang Asya",
+                "asian_other": "Iba pang Asyano",
+                "black": "Itim",
+                "black_african": "Aprikano",
+                "black_african_american": "Aprikano Amerikano",
+                "south_central_american": "Taga-Caribbean, taga-Gitnang Amerika, taga-Timog Amerika o Mehikano",
+                "other": "Iba pang Itim",
+                "indigenous": "Katutubo",
+                "indigenous_american_indian": "Amerikanong Indian/Natibong Amerikano",
+                "indigenous_indigenous_mexico": "Katutubo mula sa Mehiko, Carribean, Gitnang Amerika, o Timog Amerika",
+                "indigenous_other": "Iba pang Katutubo",
+                "latino": "Latino",
+                "latino_caribbean": "Taga-Carribean",
+                "latino_central_american": "Taga-Gitnang Amerika",
+                "latino_mexican": "Mehikano",
+                "latino_south_american": "Taga-Timog Amerika",
+                "latino_other": "Iba pang Latino",
+                "middle_eastern": "Taga-Gitnang Silangan o Hilagang Aprika",
+                "middle_eastern_north_african": "Taga-Hilagang Aprika",
+                "middle_eastern_west_asian": "Taga-Kanlurang Asya",
+                "middle_eastern_other": "Arabo, Taga-Gitnang Silangan o Taga-Hilagang Aprika",
+                "pacific_islander": "Taga-Isla Pasipiko",
+                "pacific_islander_chamorro": "Chamorro",
+                "pacific_islander_native_hawaiian": "Katutubong Hawaiiano",
+                "pacific_islander_samoan": "Samoan",
+                "pacific_islander_other": "Iba pang Taga-Isla Pasipiko",
+                "white": "Puti",
+                "white_european": "Europeo",
+                "white_other": "Iba pang Puti"
+            },
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "Please Specify..."
+            },
+            "accumulator": {
+                "title": "You selected...",
+                "action": "Clear All",
+                "none_selected": "None"
+            }
+        },
         "devise": {
             "mailer": {
                 "confirmation_instructions": {
