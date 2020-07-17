@@ -6,7 +6,8 @@ div
       | {{'demographics_accordion.accumulator.action' | translate}}
   ul.accumulator
     li ng-repeat="checkedOption in accumulatorOptions"
-      | {{ getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption) }}
+      .accumulator-item-text
+        | {{ getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption) }}
       a.accumulator-x-icon aria-label="Delete" ng-click="uncheckSuboption(checkedOption.parent_option, checkedOption.checked_suboption)"
         span.ui-icon.ui-static.ui-medium.i-color
           svg

@@ -7,8 +7,9 @@
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.key }"
         a.accordion-header draggable="false" ng-click="toggleSelectedHeader(option.key)"
-          | {{ option.translated_name | translate }}
-          span.ui-icon.ui-static.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
+          .accordion-header-title
+            | {{ option.translated_name | translate }}
+          span.ui-icon.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
             svg.ui-check
               use xlink:href="#i-check"
           icon-plus-minus active="false"
