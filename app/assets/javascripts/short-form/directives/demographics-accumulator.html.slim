@@ -2,14 +2,14 @@ div
   .accumulator-label
     p.accumulator-title
       | {{'demographics_accordion.accumulator.title' | translate}}
-    a.accumulator-action aria-label="Clear All" ng-click="clearAllRaceOptions()" ng-if="hasRaceOptionsSelected()"
+    a.accumulator-action aria-label="Clear All" ng-click="uncheckAllRaceOptions()" ng-if="hasAnyOptionsSelected()"
       | {{'demographics_accordion.accumulator.action' | translate}}
   ul.accumulator
     li ng-repeat="checkedOption in accumulatorOptions"
       | {{ getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption) }}
-      a.accumulator-x-icon aria-label="Delete" ng-click="removeSuboption(checkedOption.parent_option, checkedOption.checked_suboption)"
+      a.accumulator-x-icon aria-label="Delete" ng-click="uncheckSuboption(checkedOption.parent_option, checkedOption.checked_suboption)"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-close"
-    li class="accumulator-empty-label" ng-if="!hasRaceOptionsSelected()"
+    li class="accumulator-empty-label" ng-if="!hasAnyOptionsSelected()"
       | {{'demographics_accordion.accumulator.none_selected' | translate}}

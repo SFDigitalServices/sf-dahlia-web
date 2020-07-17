@@ -2,9 +2,9 @@
   dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.race_option[0] }"
-        a.accordion-header draggable="false" ng-click="onDemographicHeaderSelect(option.race_option[0])"
+        a.accordion-header draggable="false" ng-click="toggleSelectedHeader(option.race_option[0])"
           | {{ option.race_option[1] | translate }}
-          span.ui-icon.ui-static.ui-medium.i-color ng-if="hasAtLeastOneSuboptionChecked(option)"
+          span.ui-icon.ui-static.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
             svg.ui-check
               use xlink:href="#i-check"
           icon-plus-minus active="false"
@@ -15,5 +15,5 @@
                 input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" name="preferences" type="checkbox" value="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}" ng-model="demographicsChecked[getOptionKey(option, suboption)]" ng-change="onDemographicCheckedChanged(option, suboption)" /
                 label.checkbox-and-label for="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] }}"
                   | {{ suboption.checkbox_option[1] | translate }}
-                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" ng-model="user[getOtherFreeTextKey(suboption)]" ng-disabled="isFreeformTextDisabled(option, suboption)" maxlength="{{::INPUT_MAX_LENGTH.raceEthnicityOther}}" name="Other text" placeholder="{{ suboption.text_option[1] | translate }}" type="text" value="" /
+                input.checkbox-text-input ng-attr-id="{{ 'panel-' + option.race_option[0] + '-' + suboption.checkbox_option[0] + '-text' }}" ng-if="suboption.text_option" ng-model="user[getOtherFreeTextKey(suboption)]" ng-disabled="isFreeTextInputDisabled(option, suboption)" maxlength="{{::INPUT_MAX_LENGTH.raceEthnicityOther}}" name="Other text" placeholder="{{ suboption.text_option[1] | translate }}" type="text" value="" /
   demographics-accumulator
