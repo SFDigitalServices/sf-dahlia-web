@@ -199,8 +199,16 @@
             "title": "Let's move to income."
         },
         "demographics_accordion": {
-            "title": "Your race and ethnicity",
+            "title": "YOUR RACE AND ETHNICITY",
             "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "Please specify..."
+            },
+            "accumulator": {
+                "title": "You selected...",
+                "action": "Clear All",
+                "none_selected": "None"
+            },
             "options": {
                 "asian": "Asian",
                 "asian_chinese": "Chinese",
@@ -239,14 +247,6 @@
                 "white": "White",
                 "white_european": "European",
                 "white_other": "Other White"
-            },
-            "text_input_placeholders": {
-                "demographic_input_placeholder": "Please Specify..."
-            },
-            "accumulator": {
-                "title": "You selected...",
-                "action": "Clear All",
-                "none_selected": "None"
             }
         },
         "devise": {

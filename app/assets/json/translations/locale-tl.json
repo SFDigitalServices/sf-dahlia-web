@@ -197,6 +197,15 @@
             "title": "Pumunta naman tayo sa kita."
         },
         "demographics_accordion": {
+            "title": "IYONG LAHI AT ETNISIDAD",
+            "subtitle": "Alin sa mga item sa ibaba na pinakamahusay na naglalarawan sa iyong lahi at etnisidad? Pumili ng kahit ilang item na nalalapat mula sa mga kategorya sa ibaba.",
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "Pakitukoy..."
+            },
+            "accumulator": {
+                "title": "Pinili mo ang...",
+                "none_selected": "Wala"
+            },
             "options": {
                 "asian": "Asyano",
                 "asian_chinese": "Tsino",

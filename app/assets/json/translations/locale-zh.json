@@ -198,6 +198,15 @@
             "title": "現在來談談收入。"
         },
         "demographics_accordion": {
+            "title": "您的種族和文化認同",
+            "subtitle": "以下哪幾項最能形容您的種族和文化認同？請選擇以下所有符合的項目。",
+            "text_input_placeholders": {
+                "demographic_input_placeholder": "請註明…"
+            },
+            "accumulator": {
+                "title": "您已選擇了…",
+                "none_selected": "無"
+            },
             "options": {
                 "asian": "亞裔",
                 "asian_chinese": "華裔",
