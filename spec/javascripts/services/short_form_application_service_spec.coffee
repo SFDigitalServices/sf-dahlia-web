@@ -41,7 +41,6 @@ do ->
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
       initRentBurdenDocs: jasmine.createSpy()
-      checkSurveyComplete: jasmine.createSpy()
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -744,12 +743,6 @@ do ->
         toParams = {timeout: true}
         ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
         expect(ShortFormApplicationService.resetApplicationData).not.toHaveBeenCalled()
-
-    describe 'checkSurveyComplete', ->
-      it 'should call function on ShortFormDataService', ->
-        ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.checkSurveyComplete()
-        expect(fakeDataService.checkSurveyComplete).toHaveBeenCalledWith(fakeApplicant)
 
     describe 'submitApplication', ->
       beforeEach ->

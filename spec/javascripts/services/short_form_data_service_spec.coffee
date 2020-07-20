@@ -1,4 +1,4 @@
-do ->
+ do ->
   'use strict'
   describe 'ShortFormDataService', ->
     ShortFormDataService = undefined
@@ -67,31 +67,6 @@ do ->
       it 'reformats stringified JSON formMetadata', ->
         expect(reformattedApp.completedSections.Intro).toEqual(true)
 
-    describe 'checkSurveyComplete', ->
-      beforeEach ->
-        fakeApplicant = angular.copy(fakeApplication.applicant)
-        fakeApplicant.gender = 'Fake'
-        fakeApplicant.ethnicity = 'Fake'
-        fakeApplicant.race = 'Fake'
-        fakeApplicant.sexualOrientation = 'Fake'
-        fakeApplicant.referral = 'Fake'
-
-      it 'should check if survey is complete', ->
-        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual true
-
-      it 'should check if survey is incomplete', ->
-        # Check if missing gender causes surveyComplete to be false
-        fakeApplicant.gender = null
-        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
-        # Check if missing referral causes surveyComplete to be false
-        fakeApplicant.gender = 'Fake'
-        fakeApplicant.referral = null
-        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
-
-      it 'should check if only demographics are complete, if skipReferral is true', ->
-        fakeApplicant.referral = null
-        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant, {skipReferral: true})).toEqual true
-
     describe 'maxDOBDay', ->
       it 'gives max of 30 for appropriate months', ->
         expect(ShortFormDataService.maxDOBDay(4, 2001)).toEqual(30)
@@ -106,14 +81,15 @@ do ->
       beforeEach ->
         spyOn(fakeListingUnitService, 'listingHasReservedUnitType').and.returnValue(false)
 
-      it 'should check if demographic survey was completed', ->
-        fakeApplication.surveyComplete = null
-        fakeApplication.applicant.gender = 'X'
-        fakeApplication.applicant.ethnicity = 'X'
-        fakeApplication.applicant.race = 'X'
-        fakeApplication.applicant.sexualOrientation = 'X'
+      it 'should reset referral if referral has > 1 response', ->
+        fakeApplication.applicant.referral = 'something;something else'
         ShortFormDataService._autofillReset(fakeApplication)
-        expect(fakeApplication.surveyComplete).toEqual true
+        expect(fakeApplication.applicant.referral).toBeNull()
+
+      it 'should not reset referral if referral has only 1 response', ->
+        fakeApplication.applicant.referral = 'something'
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.applicant.referral).toEqual('something')
 
       it 'should reset completed sections', ->
         sections = ['Intro', 'You', 'Household', 'Preferences', 'Income']

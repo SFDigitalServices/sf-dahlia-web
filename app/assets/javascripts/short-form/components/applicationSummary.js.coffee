@@ -11,8 +11,8 @@ angular.module('dahlia.components')
     listing: '<'
     preferences: '<'
   controller: [
-    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService',
-    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService) ->
+    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
+    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
       ctrl = @
 
       ctrl.$onInit = ->
@@ -95,5 +95,17 @@ angular.module('dahlia.components')
 
       ctrl.priority_options = ShortFormHelperService.priority_options
 
+      ctrl.getRaceEthnicity = ->
+        # FIXME: this isn't working yet
+        console.log('race ethnicity before', ctrl.applicant.raceEthnicity)
+        checkboxVals = ShortFormRaceEthnicityService.convertUserFieldToCheckboxValues(ctrl.applicant.raceEthnicity)
+        console.log('checkboxVals', checkboxVals)
+
+        checkedKeys = (k for k, checked of checkboxVals when checked)
+        console.log('checked keys', checkedKeys)
+        result = ShortFormRaceEthnicityService.demographicsKeysToOptionsList(checkedKeys)
+        getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption)
+        console.log('after', result)
+        result
       return ctrl
   ]

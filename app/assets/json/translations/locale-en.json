@@ -546,6 +546,7 @@
             "header": "For more help, we suggest talking with a housing counselor to explore your options."
         },
         "label": {
+            "more_about_you": "More About You",
             "_other": "Other",
             "ada_accessible_units": "ADA Accessible Units",
             "add_household_member": "Add household member",

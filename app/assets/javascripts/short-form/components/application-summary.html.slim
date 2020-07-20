@@ -138,3 +138,18 @@ div ng-if="::$ctrl.application.householdIncome.incomeTotal"
 div ng-if="::!$ctrl.atAutofillPreview"
   review-summary-section header="{{'label.preferences' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
   preferences-summary application="$ctrl.application" listing="$ctrl.listing" preferences="$ctrl.preferences"
+
+/ Demographics
+div
+  review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable"
+  .app-inner
+    review-summary-item label="Race and Ethnicity"
+      | {{::$ctrl.getRaceEthnicity()}}
+    review-summary-item label="Language Spoken at Home"
+      | {{::$ctrl.applicant.otherLanguage? $ctrl.applicant.otherLanguage : $ctrl.applicant.primaryLanguage }}
+    review-summary-item label="Gender"
+      | {{::$ctrl.applicant.genderOther ? $ctrl.applicant.genderOther : $ctrl.applicant.gender }}
+    review-summary-item label="Sexual Orientation or Sexual Identity"
+      | {{::$ctrl.applicant.sexualOrientationOther ? $ctrl.applicant.sexualOrientationOther : $ctrl.applicant.sexualOrientation }}
+    review-summary-item label="How you heard about this listing"
+      | {{::$ctrl.applicant.referral }}

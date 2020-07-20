@@ -32,10 +32,7 @@ ShortFormNavigationService = (
       when 'Preferences'
         'preferences-intro'
       when 'Review'
-        if application.surveyComplete
-          'review-summary'
-        else
-          'review-optional'
+        'review-optional'
       else
         section.pages[0]
 
@@ -159,9 +156,8 @@ ShortFormNavigationService = (
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'general-lottery-notice': {callbacks: [Service.goToSection.bind(null, 'Review')]}
     # review
-    'review-optional':
-      scopedCallbacks: [{func: 'checkSurveyComplete'}]
-      path: 'review-summary'
+    # TODO -> not sure what this does, just says the next page?
+    'review-optional': {path: 'review-summary'}
     'review-summary': {path: 'review-terms'}
     'review-terms': {scopedCallbacks: [{func: 'submitApplication'}]}
     # save + finish workflow
