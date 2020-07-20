@@ -22,6 +22,10 @@ angular.module('dahlia.directives')
       checkedKeys = (k for k, checked of scope.demographicsChecked when checked)
       scope.topLevelOptionsChecked = new Set(ShortFormRaceEthnicityService.getTopLevelDemographicKey(key) for key in checkedKeys)
 
+    scope.getRaceHeaderId = (option) -> "panel-#{option.key}"
+    scope.getRaceCheckboxId = (option, suboption) -> "panel-#{option.key}-#{suboption.key}"
+    scope.getRaceOtherTextInputId = (option, suboption) -> "#{scope.getRaceCheckboxId(option, suboption)}-text"
+
     scope.updateAccumulatorOptions()
     scope.updateTopLevelOptionsChecked()
 
