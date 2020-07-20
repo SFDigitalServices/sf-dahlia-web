@@ -54,7 +54,7 @@ To run javascript unit tests:
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run E2E tests:
-- Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update` to get the selenium webdriver installed
+- Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
 - On another tab, run `npm run protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 
