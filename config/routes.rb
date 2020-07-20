@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
         get 'application/:id' => 'short_form#show_application'
         post 'application' => 'short_form#submit_application'
+        get 'application/:id/files' => 'short_form#files'
         put 'application/:id' => 'short_form#update_application'
         put 'claim-application/:id' => 'short_form#claim_submitted_application'
         delete 'application/:id' => 'short_form#delete_application'

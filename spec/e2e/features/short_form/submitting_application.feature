@@ -145,8 +145,10 @@ Feature: Short Form Application
         And on the Review Page I should see my household member details
         And on the Review Page I should see my income details
         And on the Review Page I should see my preference details on my "submitted" application
+        Then I want to make sure that files where uploaded
 
     Scenario: Signing out
+        When I use the browser back button
         When I sign out
         Then I should land on the Sign In page
         And I should see the sign out success message

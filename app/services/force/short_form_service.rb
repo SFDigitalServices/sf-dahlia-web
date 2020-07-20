@@ -152,6 +152,12 @@ module Force
         institutions
       end
     end
+
+    def self.files(id)
+      Request.new.query("SELECT Id,CreatedDate,Document_Type__c,Name FROM Attachment__c
+                         WHERE Related_Application__c='#{CGI.escape(id)}'
+                         ORDER BY CreatedDate DESC")
+    end
     private_class_method :format_institutions
 
     def self.institution_agents(institution)

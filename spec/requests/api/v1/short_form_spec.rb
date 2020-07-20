@@ -6,6 +6,7 @@ require 'support/vcr_setup'
 require 'support/jasmine'
 
 describe 'ShortForm API' do
+  include ActiveJob::TestHelper
   login_user
   listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
   application_show_id = 'a0o0P00000FEUwC'
@@ -87,8 +88,6 @@ describe 'ShortForm API' do
   describe 'submit_application' do
     before do
       allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:attach_files_and_send_confirmation).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:delete_draft_application).and_return(true)
     end
 
@@ -96,10 +95,18 @@ describe 'ShortForm API' do
       url = '/api/v1/short-form/application'
       file = './spec/javascripts/fixtures/json/valid-short-form-params.json'
       params = JSON.parse(File.read(file))
-      params = clean_json_for_vcr(params)
-
+      uploaded_file = UploadedFile.create_and_resize(
+        listing_id: params['application']['listingID'],
+        session_uid: '123',
+        file: fixture_file_upload('./app/assets/images/logo-city.png', 'image/png'),
+        name: 'file_name',
+      )
+      params = clean_json_for_vcr(params.merge(uploaded_file: { session_uid: '123' }))
       VCR.use_cassette('shortform/submit_application') do
-        post url, params: params.merge(format: :json)
+        assert_enqueued_with(job: ShortFormAttachmentJob,
+                             args: [params['application']['id'], uploaded_file.id]) do
+          post url, params: params.merge(format: :json)
+        end
       end
       expect(response).to be_success
     end
