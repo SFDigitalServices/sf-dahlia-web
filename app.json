@@ -22,6 +22,16 @@
       "url": "https://github.com/bobbus/image-optim-buildpack"
     }
   ],
+  "environments": {
+    "review": {
+    "addons": [
+      "newrelic",
+      "papertrail",
+      "memcachier",
+      "heroku-postgresql"
+      ]
+    }
+  },
   "env":{
     "LANG":{
       "required":true
