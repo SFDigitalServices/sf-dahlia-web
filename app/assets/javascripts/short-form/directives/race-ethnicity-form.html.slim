@@ -6,14 +6,14 @@
   dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.key }"
-        a.accordion-header draggable="false" ng-click="toggleSelectedHeader(option.key)"
+        a.accordion-header ng-attr-id="{{ 'panel-' + option.key }}" draggable="false" ng-click="toggleSelectedHeader(option.key)"
           .accordion-header-title
             | {{ option.translated_name | translate }}
           span.ui-icon.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
             svg.ui-check
               use xlink:href="#i-check"
           icon-plus-minus active="false"
-        div.content ng-attr-id="{{ 'panel-' + option.key }}" ng-class="{'active' : selectedDemographicHeader == option.key }"
+        div.content ng-class="{'active' : selectedDemographicHeader == option.key }"
           .checkbox-group role="group"
             div.checkbox-block-accordion ng-repeat="suboption in option.suboptions"
               .checkbox-block-accordion
