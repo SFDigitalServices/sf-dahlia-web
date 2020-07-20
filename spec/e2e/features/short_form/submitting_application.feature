@@ -138,7 +138,6 @@ Feature: Short Form Application
         And I agree to the terms and submit
         Then I should see my lottery number on the confirmation page
         And I view the application from My Applications
-
         # then confirm one last time how things appear on the submitted app
         Then on the Review Page I should see my contact details for "Jane Valerie Doe"
         And on the Review Page I should see my alternate contact details

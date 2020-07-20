@@ -111,7 +111,8 @@ class Api::V1::ShortFormController < ApiController
   def files
     uploaded_files = Force::ShortFormService.files(params[:id])
     local_files = UploadedFile.where(application_id: params[:id])
-    render json: uploaded_files.size == local_files.size
+    status = uploaded_files.size == local_files.size ? 'uploaded' : 'missing'
+    render json: { status: status }
   end
 
   private

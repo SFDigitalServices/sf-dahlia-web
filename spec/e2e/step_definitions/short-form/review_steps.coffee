@@ -1,7 +1,27 @@
 Utils = require('../../utils')
 Pages = require('../../pages/short-form').Pages
+http = require('http')
+defer = protractor.promise.defer()
 EC = protractor.ExpectedConditions
 { When, Then } = require('cucumber')
+
+httpGet = (siteUrl) ->
+  http.get(siteUrl, (response) ->
+    bodyString = ''
+    response.setEncoding('utf8')
+
+    response.on "data", (chunk) ->
+      bodyString += chunk
+
+    response.on 'end', ->
+      defer.fulfill({
+        statusCode: response.statusCode,
+        bodyString: bodyString
+      })
+  ).on 'error', (e) ->
+    defer.reject("Got http.get error: " + e.message)
+
+  return defer.promise
 
 When 'I fill out the optional survey', ->
   Pages.DemographicSurvey.fill()
@@ -14,12 +34,15 @@ When 'I agree to the terms and submit', ->
     Utils.Page.submit()
 
 Then 'I want to make sure that files where uploaded', ->
+  that = @
   browser.getCurrentUrl().then (currentUrl) ->
+    currentUrl.replace
     applicationId = currentUrl.split('/').pop()
-    url = 'api/v1/short-form/application/' + applicationId + '/files'
-    Utils.Page.goTo(url)
-    viewApp = element(By.cssContainingText('pre', true))
-    browser.wait(EC.presenceOf(viewApp), 5000)
+    url = 'http://localhost:3000/api/v1/short-form/application/' + applicationId + '/files'
+    httpGet(url).then((result) ->
+      json_data = JSON.parse(result.bodyString)
+      that.expect(json_data.status).to.equal('uploaded')
+    )
 
 When 'I click to view submitted application', ->
   viewApp = element(By.id('view-app'))
