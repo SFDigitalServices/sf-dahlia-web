@@ -1,3 +1,6 @@
+KEYCODE_SPACE = 32
+KEYCODE_ENTER = 13
+
 angular.module('dahlia.directives')
 .directive 'raceEthnicityForm', ['ShortFormRaceEthnicityService', (ShortFormRaceEthnicityService) ->
   replace: true
@@ -69,6 +72,14 @@ angular.module('dahlia.directives')
     scope.headerHasCheckedOption = (parentOption) ->
       scope.topLevelOptionsChecked.has(parentOption.key)
 
-    scope.toggleSelectedHeader = (parentOptionKey) ->
-        scope.selectedDemographicHeader = if scope.selectedDemographicHeader == parentOptionKey then null else parentOptionKey
+    scope.toggleSelectedHeader = (parentOptionKey, keyPressEvent) ->
+      # Angular doesn't make keyboard navigation work by default with ng-click, so we have to manually do it.
+      if keyPressEvent
+        keyCode = if keyPressEvent.keyCode then keyPressEvent.keyCode else keyPressEvent.which;
+        if (keyCode != KEYCODE_SPACE && keyCode != KEYCODE_ENTER)
+          return
+
+        # ng-keypress doesn't override key press event like it should
+        keyPressEvent.preventDefault();
+      scope.selectedDemographicHeader = if scope.selectedDemographicHeader == parentOptionKey then null else parentOptionKey
 ]
