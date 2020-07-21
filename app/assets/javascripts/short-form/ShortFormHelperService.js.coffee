@@ -26,43 +26,43 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.race_and_ethnicity_options = [
     {
       key: 'Asian',
-      translated_name: Service.flagForI18n('demographics_accordion.options.asian'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.asian'),
       suboptions: [
         {
           key: 'Chinese',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_chinese')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_chinese')
         },
         {
           key: 'Filipino',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_filipino')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_filipino')
         },
         {
           key: 'Japanese',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_japanese')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_japanese')
         },
         {
           key: 'Korean',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_korean')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_korean')
         },
         {
           key: 'Mongolian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_mongolian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_mongolian')
         },
         {
           key: 'Central Asian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_central_asian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_central_asian')
         },
         {
           key: 'South Asian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_south_asian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_south_asian')
         },
         {
           key: 'Southeast Asian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_southeast_asian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_southeast_asian')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.asian_other'),
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_other'),
           free_text_key: 'asianOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -70,23 +70,23 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'Black',
-      translated_name: Service.flagForI18n('demographics_accordion.options.black'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.black'),
       suboptions: [
         {
           key: 'African',
-          translated_name: Service.flagForI18n('demographics_accordion.options.black_african')
+          translation_key: Service.flagForI18n('demographics_accordion.options.black_african')
         },
         {
           key: 'African American',
-          translated_name: Service.flagForI18n('demographics_accordion.options.black_african_american')
+          translation_key: Service.flagForI18n('demographics_accordion.options.black_african_american')
         },
         {
           key: 'Caribbean, Central American, South American or Mexican',
-          translated_name: Service.flagForI18n('demographics_accordion.options.south_central_american')
+          translation_key: Service.flagForI18n('demographics_accordion.options.south_central_american')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.other')
           free_text_key: 'blackOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -94,19 +94,19 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'Indigenous',
-      translated_name: Service.flagForI18n('demographics_accordion.options.indigenous'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.indigenous'),
       suboptions: [
         {
           key: 'American Indian/Native American',
-          translated_name: Service.flagForI18n('demographics_accordion.options.indigenous_american_indian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_american_indian')
         },
         {
           key: 'Indigenous from Mexico, the Caribbean, Central America, or South America',
-          translated_name: Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico')
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.indigenous_other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_other')
           free_text_key: 'indigenousOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -114,27 +114,27 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'Latino',
-      translated_name: Service.flagForI18n('demographics_accordion.options.latino'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.latino'),
       suboptions: [
         {
           key: 'Caribbean',
-          translated_name: Service.flagForI18n('demographics_accordion.options.latino_caribbean'),
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_caribbean'),
         }
         {
           key: 'Central American',
-          translated_name: Service.flagForI18n('demographics_accordion.options.latino_central_american')
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_central_american')
         },
         {
           key: 'Mexican',
-          translated_name: Service.flagForI18n('demographics_accordion.options.latino_mexican')
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_mexican')
         },
         {
           key: 'South American',
-          translated_name: Service.flagForI18n('demographics_accordion.options.latino_south_american')
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_south_american')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.latino_other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_other')
           free_text_key: 'latinoOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -142,19 +142,19 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'Middle Eastern/West Asian or North African',
-      translated_name: Service.flagForI18n('demographics_accordion.options.middle_eastern'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern'),
       suboptions: [
         {
           key: 'North African',
-          translated_name: Service.flagForI18n('demographics_accordion.options.middle_eastern_north_african')
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_north_african')
         },
         {
           key: 'West Asian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.middle_eastern_west_asian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_west_asian')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.middle_eastern_other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_other')
           free_text_key: 'menaOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -162,23 +162,23 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'Pacific Islander',
-      translated_name: Service.flagForI18n('demographics_accordion.options.pacific_islander'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander'),
       suboptions: [
         {
           key: 'Chamorro',
-          translated_name: Service.flagForI18n('demographics_accordion.options.pacific_islander_chamorro')
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_chamorro')
         },
         {
           key: 'Native Hawaiian',
-          translated_name: Service.flagForI18n('demographics_accordion.options.pacific_islander_native_hawaiian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_native_hawaiian')
         },
         {
           key: 'Samoan',
-          translated_name: Service.flagForI18n('demographics_accordion.options.pacific_islander_samoan')
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_samoan')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.pacific_islander_other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_other')
           free_text_key: 'pacificIslanderOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },
@@ -186,15 +186,15 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     }
     {
       key: 'White',
-      translated_name: Service.flagForI18n('demographics_accordion.options.white'),
+      translation_key: Service.flagForI18n('demographics_accordion.options.white'),
       suboptions: [
         {
           key: 'European',
-          translated_name: Service.flagForI18n('demographics_accordion.options.white_european')
+          translation_key: Service.flagForI18n('demographics_accordion.options.white_european')
         },
         {
           key: 'Other',
-          translated_name: Service.flagForI18n('demographics_accordion.options.white_other')
+          translation_key: Service.flagForI18n('demographics_accordion.options.white_other')
           free_text_key: 'whiteOther',
           free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
         },

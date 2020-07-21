@@ -8,7 +8,7 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
 
   # Given an option, format it as a translated string to display in the accumulator.
   Service.getTranslatedAccumulatorOption = (parentOption, checkedSuboption, freeTextString) ->
-    baseText = "#{t(parentOption.translated_name)}: #{t(checkedSuboption.translated_name)}"
+    baseText = "#{t(parentOption.translation_key)}: #{t(checkedSuboption.translation_key)}"
     if freeTextString then "#{baseText} (#{freeTextString})" else baseText
 
   # Given parent and suboption objects, return the demographic option key (ex: "Asian - Chinese")
@@ -69,7 +69,7 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
     (k for k, checked of checkboxValues when checked).join(Service.APPLICANT_RACE_ETHNICITY_DELIMITER) || null
 
   Service.labelForHeader = (option) ->
-    translatedCategoryName = $translate.instant(option.translated_name)
+    translatedCategoryName = $translate.instant(option.translation_key)
     $translate.instant('demographics_accordion.accessibility_labels.expand_category', { optionName: translatedCategoryName })
 
   Service.labelForClearSelectedOption = (parentOption, checkedSuboption) ->

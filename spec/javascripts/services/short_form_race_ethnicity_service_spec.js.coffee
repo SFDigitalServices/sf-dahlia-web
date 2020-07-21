@@ -8,25 +8,25 @@ do ->
     fakeOptions = [
       {
         key: 'option1'
-        translated_name: 'i18n_key_option_1'
+        translation_key: 'i18n_key_option_1'
         suboptions: [
           {
             key: 'suboption1',
-            translated_name: 'i18n_key_suboption_1'
+            translation_key: 'i18n_key_suboption_1'
           }
         ]
       }
       {
         key: 'option2'
-        translated_name: 'i18n_key_option_2'
+        translation_key: 'i18n_key_option_2'
         suboptions: [
           {
             key: 'suboption2',
-            translated_name: 'i18n_key_suboption_2'
+            translation_key: 'i18n_key_suboption_2'
           }
           {
             key: 'suboption3',
-            translated_name: 'i18n_key_suboption_3'
+            translation_key: 'i18n_key_suboption_3'
             free_text_key: 'suboption3Other'
             free_text_placeholder: 'i18n_key_suboption_3_placeholder'
           }
