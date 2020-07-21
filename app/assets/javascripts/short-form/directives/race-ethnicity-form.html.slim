@@ -6,7 +6,7 @@
   dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.key }"
-        a.accordion-header ng-attr-id="{{ getRaceHeaderId(option) }}" tabindex="0" draggable="false" ng-click="toggleSelectedHeader(option.key)" ng-keypress="toggleSelectedHeader(option.key, $event)"
+        a.accordion-header ng-attr-id="{{ getRaceHeaderId(option) }}" tabindex="0" draggable="false" ng-click="toggleSelectedHeader(option.key)" ng-keypress="toggleSelectedHeader(option.key, $event)" aria-label="{{ labelForHeader(option) }}"
           .accordion-header-title
             | {{ option.translated_name | translate }}
           span.ui-icon.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
@@ -18,7 +18,7 @@
             div.checkbox-block-accordion ng-repeat="suboption in option.suboptions"
               .checkbox-block-accordion
                 input ng-attr-id="{{ getRaceCheckboxId(option, suboption) }}" name="preferences" type="checkbox" value="{{ getRaceCheckboxId(option, suboption) }}" ng-model="demographicsChecked[getOptionKey(option, suboption)]" ng-change="onDemographicCheckedChanged()"
-                label.checkbox-and-label for="{{ getRaceCheckboxId(option, suboption) }}"
+                label.checkbox-and-label ng-attr-id="{{ getRaceCheckboxLabelId(option, suboption) }}" for="{{ getRaceCheckboxId(option, suboption) }}"
                   | {{ suboption.translated_name | translate }}
-                input.checkbox-text-input ng-attr-id="{{ getRaceOtherTextInputId(option, suboption) }}" ng-if="suboption.free_text_key" ng-model="user[getOtherFreeTextKey(suboption)]" ng-disabled="isFreeTextInputDisabled(option, suboption)" maxlength="{{::INPUT_MAX_LENGTH.raceEthnicityOther}}" placeholder="{{ suboption.free_text_placeholder | translate }}" type="text"
+                input.checkbox-text-input aria-labelledby="{{ getRaceCheckboxLabelId(option, suboption) }}" ng-attr-id="{{ getRaceOtherTextInputId(option, suboption) }}" ng-if="suboption.free_text_key" ng-model="user[getOtherFreeTextKey(suboption)]" ng-disabled="isFreeTextInputDisabled(option, suboption)" maxlength="{{::INPUT_MAX_LENGTH.raceEthnicityOther}}" placeholder="{{ suboption.free_text_placeholder | translate }}" type="text"
   demographics-accumulator

@@ -68,6 +68,14 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   Service.convertCheckboxValuesToUserField = (checkboxValues) ->
     (k for k, checked of checkboxValues when checked).join(Service.APPLICANT_RACE_ETHNICITY_DELIMITER) || null
 
+  Service.labelForHeader = (option) ->
+    translatedCategoryName = $translate.instant(option.translated_name)
+    $translate.instant('demographics_accordion.accessibility_labels.expand_category', { optionName: translatedCategoryName })
+
+  Service.labelForClearSelectedOption = (parentOption, checkedSuboption) ->
+    translatedOptionName = Service.getTranslatedAccumulatorOption(parentOption, checkedSuboption)
+    $translate.instant('demographics_accordion.accessibility_labels.clear_option', { nameOfOptionToClear: translatedOptionName })
+
   return Service
 
 ShortFormRaceEthnicityService.$inject = [

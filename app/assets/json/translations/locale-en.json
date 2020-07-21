@@ -209,6 +209,11 @@
                 "action": "Clear All",
                 "none_selected": "None"
             },
+            "accessibility_labels": {
+                "clear_all_label": "Clear all selected race and ethnicity options.",
+                "clear_option": "Clear selected option: {{nameOfOptionToClear}}",
+                "expand_category": "{{optionName}}: Click to expand category and view options"
+            },
             "options": {
                 "asian": "Asian",
                 "asian_chinese": "Chinese",

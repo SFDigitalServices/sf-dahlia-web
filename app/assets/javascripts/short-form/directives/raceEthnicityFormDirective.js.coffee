@@ -2,7 +2,7 @@ KEYCODE_SPACE = 32
 KEYCODE_ENTER = 13
 
 angular.module('dahlia.directives')
-.directive 'raceEthnicityForm', ['ShortFormRaceEthnicityService', (ShortFormRaceEthnicityService) ->
+.directive 'raceEthnicityForm', ['$translate', 'ShortFormRaceEthnicityService', ($translate, ShortFormRaceEthnicityService) ->
   replace: true
   scope: true
   templateUrl: 'short-form/directives/race-ethnicity-form.html'
@@ -27,11 +27,14 @@ angular.module('dahlia.directives')
 
     scope.getRaceHeaderId = (option) -> "panel-#{option.key}"
     scope.getRaceCheckboxId = (option, suboption) -> "panel-#{option.key}-#{suboption.key}"
+    scope.getRaceCheckboxLabelId = (option, suboption) -> "panel-label-#{option.key}-#{suboption.key}"
     scope.getRaceOtherTextInputId = (option, suboption) -> "#{scope.getRaceCheckboxId(option, suboption)}-text"
 
     scope.updateAccumulatorOptions()
     scope.updateTopLevelOptionsChecked()
 
+    scope.labelForHeader = ShortFormRaceEthnicityService.labelForHeader
+    scope.labelForClearSelectedOption = ShortFormRaceEthnicityService.labelForClearSelectedOption
     scope.getOptionKey = ShortFormRaceEthnicityService.getOptionKey
     scope.getOtherFreeTextKey = ShortFormRaceEthnicityService.getOtherFreeTextKey
     scope.getTranslatedAccumulatorOption = (parentOption, checkedSuboption) ->
