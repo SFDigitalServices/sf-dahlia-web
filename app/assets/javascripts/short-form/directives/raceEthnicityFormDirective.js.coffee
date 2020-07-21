@@ -2,7 +2,7 @@ KEYCODE_SPACE = 32
 KEYCODE_ENTER = 13
 
 angular.module('dahlia.directives')
-.directive 'raceEthnicityForm', ['$translate', 'ShortFormRaceEthnicityService', ($translate, ShortFormRaceEthnicityService) ->
+.directive 'raceEthnicityForm', ['ShortFormRaceEthnicityService', (ShortFormRaceEthnicityService) ->
   replace: true
   scope: true
   templateUrl: 'short-form/directives/race-ethnicity-form.html'
@@ -25,13 +25,13 @@ angular.module('dahlia.directives')
       checkedKeys = (k for k, checked of scope.demographicsChecked when checked)
       scope.topLevelOptionsChecked = new Set(ShortFormRaceEthnicityService.getTopLevelDemographicKey(key) for key in checkedKeys)
 
+    scope.updateAccumulatorOptions()
+    scope.updateTopLevelOptionsChecked()
+
     scope.getRaceHeaderId = (option) -> "panel-#{option.key}"
     scope.getRaceCheckboxId = (option, suboption) -> "panel-#{option.key}-#{suboption.key}"
     scope.getRaceCheckboxLabelId = (option, suboption) -> "panel-label-#{option.key}-#{suboption.key}"
     scope.getRaceOtherTextInputId = (option, suboption) -> "#{scope.getRaceCheckboxId(option, suboption)}-text"
-
-    scope.updateAccumulatorOptions()
-    scope.updateTopLevelOptionsChecked()
 
     scope.labelForHeader = ShortFormRaceEthnicityService.labelForHeader
     scope.labelForClearSelectedOption = ShortFormRaceEthnicityService.labelForClearSelectedOption
@@ -62,6 +62,8 @@ angular.module('dahlia.directives')
         event.preventDefault();
       func()
 
+    # After the scope.demographicsChecked model changes, we need to change other models
+    # that are calculated from it.
     scope.onDemographicCheckedChanged = (event) ->
       scope.updateAccumulatorOptions()
       scope.updateTopLevelOptionsChecked()
@@ -79,15 +81,16 @@ angular.module('dahlia.directives')
     scope.isFreeTextInputDisabled = (parentOption, suboption) ->
       !scope.demographicsChecked[scope.getOptionKey(parentOption, suboption)]
 
-    scope._updateSuboption = (parentOption, checkedSuboption, value) ->
+    # check or uncheck a suboption checkbox
+    scope._updateSuboption = (parentOption, checkedSuboption, checked) ->
       key = scope.getOptionKey(parentOption, checkedSuboption)
-      scope.demographicsChecked[key] = value
+      scope.demographicsChecked[key] = checked
       scope.onDemographicCheckedChanged()
 
-    scope.uncheckSuboption = (parentOption, checkedSuboption, event) ->
+    scope.onClearSingleRaceOptionClicked = (parentOption, checkedSuboption, event) ->
       scope._triggerOnClickOrKeypress(event, () -> scope._updateSuboption(parentOption, checkedSuboption, false))
 
-    scope.uncheckAllRaceOptions = (event) ->
+    scope.onClearAllRaceOptionsClicked = (event) ->
       uncheckAllFunc = ->
         # Delete by setting to false to make sure we know to clear the freetext associated.
         scope.demographicsChecked[key] = false for key in Object.keys(scope.demographicsChecked)
@@ -100,6 +103,7 @@ angular.module('dahlia.directives')
     scope.headerHasCheckedOption = (parentOption) ->
       scope.topLevelOptionsChecked.has(parentOption.key)
 
+    # Collapse or expand a race/ethnicity section
     scope.toggleSelectedHeader = (parentOptionKey, event) ->
       toggleSelectedHeaderFunc = ->
         isAlreadySelected = scope.selectedDemographicHeader == parentOptionKey

@@ -7,6 +7,7 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   Service.APPLICANT_RACE_ETHNICITY_DELIMITER = ';'
 
   # Given an option, format it as a translated string to display in the accumulator.
+  # Example result values: 'White: European', 'White: Other (German)'
   Service.getTranslatedAccumulatorOption = (parentOption, checkedSuboption, freeTextString) ->
     baseText = "#{t(parentOption.translation_key)}: #{t(checkedSuboption.translation_key)}"
     if freeTextString then "#{baseText} (#{freeTextString})" else baseText
@@ -36,7 +37,6 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
   # Given a top level option, find the child option that matches the suboptionKey.
   Service.getDemographicSuboption = (parentOption, suboptionKey) ->
     Service._findFirst(parentOption.suboptions, (suboption) -> suboption.key is suboptionKey)
-
 
   # "Asian - Chinese" -> { parent_option: <parent_option_object>, checked_suboption: <suboption_object> }
   Service._demographicsKeyToOptions = (demographicsKey) ->

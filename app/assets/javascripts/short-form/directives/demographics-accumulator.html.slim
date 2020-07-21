@@ -2,13 +2,13 @@ div
   .accumulator-label
     p.accumulator-title
       | {{'demographics_accordion.accumulator.title' | translate}}
-    a.accumulator-action aria-label="{{ 'demographics_accordion.accessibility_labels.clear_all_label' | translate }}" tabindex="0" ng-click="uncheckAllRaceOptions()" ng-keypress="uncheckAllRaceOptions($event)" ng-if="hasAnyOptionsSelected()"
+    a.accumulator-action aria-label="{{ 'demographics_accordion.accessibility_labels.clear_all_label' | translate }}" tabindex="0" ng-click="onClearAllRaceOptionsClicked()" ng-keypress="onClearAllRaceOptionsClicked($event)" ng-if="hasAnyOptionsSelected()"
       | {{'demographics_accordion.accumulator.action' | translate}}
   ul.accumulator
     li ng-repeat="checkedOption in accumulatorOptions"
       .accumulator-item-text
         | {{ getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption) }}
-      a.accumulator-x-icon aria-label="{{ labelForClearSelectedOption(checkedOption.parent_option, checkedOption.checked_suboption) }}" tabindex="0" ng-click="uncheckSuboption(checkedOption.parent_option, checkedOption.checked_suboption)" ng-keypress="uncheckSuboption(checkedOption.parent_option, checkedOption.checked_suboption, $event)"
+      a.accumulator-x-icon aria-label="{{ labelForClearSelectedOption(checkedOption.parent_option, checkedOption.checked_suboption) }}" tabindex="0" ng-click="onClearSingleRaceOptionClicked(checkedOption.parent_option, checkedOption.checked_suboption)" ng-keypress="onClearSingleRaceOptionClicked(checkedOption.parent_option, checkedOption.checked_suboption, $event)"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-close"
