@@ -123,7 +123,6 @@ do ->
     fakeShortFormNavigationService = undefined
     fakeShortFormHelperService =
       fileAttachmentsForRentBurden: jasmine.createSpy()
-    fakeShortFormRaceEthnicityService = {}
     fakeAccountService =
       signIn: ->
       signOut: ->
@@ -204,7 +203,6 @@ do ->
         RentBurdenFileService: fakeRentBurdenFileService
         SharedService: fakeSharedService
         ShortFormApplicationService: fakeShortFormApplicationService
-        ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
         ShortFormHelperService: fakeShortFormHelperService
         ShortFormNavigationService: fakeShortFormNavigationService
         Title: fakeTitle

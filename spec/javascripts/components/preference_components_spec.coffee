@@ -17,7 +17,6 @@ do ->
           members: []
         }
       ]
-    fakeShortFormRaceEthnicityService = {}
     fakeShortFormApplicationService =
       listing:
         Id: '1d11xc1'
@@ -50,7 +49,6 @@ do ->
       spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       locals =
         ShortFormApplicationService: fakeShortFormApplicationService
-        ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
         ShortFormHelperService: fakeShortFormHelperService
         RentBurdenFileService: fakeRentBurdenFileService
         $translate: $translate

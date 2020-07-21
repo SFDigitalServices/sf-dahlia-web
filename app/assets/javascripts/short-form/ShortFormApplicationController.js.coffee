@@ -19,8 +19,7 @@ ShortFormApplicationController = (
   SharedService,
   ShortFormApplicationService,
   ShortFormHelperService,
-  ShortFormNavigationService,
-  ShortFormRaceEthnicityService
+  ShortFormNavigationService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -995,8 +994,7 @@ ShortFormApplicationController.$inject = [
   'SharedService',
   'ShortFormApplicationService',
   'ShortFormHelperService',
-  'ShortFormNavigationService',
-  'ShortFormRaceEthnicityService'
+  'ShortFormNavigationService'
 ]
 
 angular
