@@ -38,7 +38,28 @@ angular.module('dahlia.directives')
       freeTextString = scope.user[scope.getOtherFreeTextKey(checkedSuboption)]
       ShortFormRaceEthnicityService.getTranslatedAccumulatorOption(parentOption, checkedSuboption, freeTextString)
 
-    scope.onDemographicCheckedChanged = ->
+    # Return true if the event is a keyboard event other than space or enter
+    scope._isKeyboardSelectEvent = (e) ->
+      if !event || e.type != 'keypress'
+        return false
+      keyCode = if e.keyCode then e.keyCode else e.which;
+      keyCode == KEYCODE_SPACE || keyCode == KEYCODE_ENTER
+
+    # Only call func if the event is 1) undefined or 2) a click or space/enter keypress event
+    # We have to manually check this because angular doesn't handle keyboard selection for links
+    # very well.
+    scope._triggerOnClickOrKeypress = (event, func) ->
+      isKeyboardEvent = event && event instanceof KeyboardEvent
+
+      if isKeyboardEvent
+        if !scope._isKeyboardSelectEvent(event)
+          return
+
+        # ng-keypress doesn't override key press event like it should
+        event.preventDefault();
+      func()
+
+    scope.onDemographicCheckedChanged = (event) ->
       scope.updateAccumulatorOptions()
       scope.updateTopLevelOptionsChecked()
 
@@ -55,16 +76,20 @@ angular.module('dahlia.directives')
     scope.isFreeTextInputDisabled = (parentOption, suboption) ->
       !scope.demographicsChecked[scope.getOptionKey(parentOption, suboption)]
 
-    scope.uncheckSuboption = (parentOption, checkedSuboption) ->
+    scope._updateSuboption = (parentOption, checkedSuboption, value) ->
       key = scope.getOptionKey(parentOption, checkedSuboption)
-      # Delete by setting to false to make sure we know to clear the freetext associated.
-      scope.demographicsChecked[key] = false
+      scope.demographicsChecked[key] = value
       scope.onDemographicCheckedChanged()
 
-    scope.uncheckAllRaceOptions = ->
-      # Delete by setting to false to make sure we know to clear the freetext associated.
-      scope.demographicsChecked[key] = false for key in Object.keys(scope.demographicsChecked)
-      scope.onDemographicCheckedChanged()
+    scope.uncheckSuboption = (parentOption, checkedSuboption, event) ->
+      scope._triggerOnClickOrKeypress(event, () -> scope._updateSuboption(parentOption, checkedSuboption, false))
+
+    scope.uncheckAllRaceOptions = (event) ->
+      uncheckAllFunc = ->
+        # Delete by setting to false to make sure we know to clear the freetext associated.
+        scope.demographicsChecked[key] = false for key in Object.keys(scope.demographicsChecked)
+        scope.onDemographicCheckedChanged()
+      scope._triggerOnClickOrKeypress(event, uncheckAllFunc)
 
     scope.hasAnyOptionsSelected = -> Object.keys(scope.accumulatorOptions).length > 0
 
@@ -72,14 +97,9 @@ angular.module('dahlia.directives')
     scope.headerHasCheckedOption = (parentOption) ->
       scope.topLevelOptionsChecked.has(parentOption.key)
 
-    scope.toggleSelectedHeader = (parentOptionKey, keyPressEvent) ->
-      # Angular doesn't make keyboard navigation work by default with ng-click, so we have to manually do it.
-      if keyPressEvent
-        keyCode = if keyPressEvent.keyCode then keyPressEvent.keyCode else keyPressEvent.which;
-        if (keyCode != KEYCODE_SPACE && keyCode != KEYCODE_ENTER)
-          return
-
-        # ng-keypress doesn't override key press event like it should
-        keyPressEvent.preventDefault();
-      scope.selectedDemographicHeader = if scope.selectedDemographicHeader == parentOptionKey then null else parentOptionKey
+    scope.toggleSelectedHeader = (parentOptionKey, event) ->
+      toggleSelectedHeaderFunc = ->
+        isAlreadySelected = scope.selectedDemographicHeader == parentOptionKey
+        scope.selectedDemographicHeader = if isAlreadySelected then null else parentOptionKey
+      scope._triggerOnClickOrKeypress(event, toggleSelectedHeaderFunc)
 ]
