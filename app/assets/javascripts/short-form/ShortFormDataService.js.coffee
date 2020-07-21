@@ -630,7 +630,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   #############################################
 
   Service.checkSurveyComplete = (applicant, opts = {}) ->
-    # Race ethnicity not include because it's optional
+    # Race ethnicity not included because it's optional
     responses = [
       applicant.gender,
       applicant.sexualOrientation,

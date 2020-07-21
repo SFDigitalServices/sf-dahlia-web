@@ -1,5 +1,10 @@
 AngularPage = require('../angular-page').AngularPage
 
+setCheckboxSelected = (checkboxElement, newSelectedValue) ->
+  checkboxElement.isSelected().then (selected) ->
+    if selected != newSelectedValue
+      checkboxElement.click()
+
 class DemographicSurvey extends AngularPage
   constructor: ->
     @userGender = element(By.id('user_gender'))
@@ -20,8 +25,6 @@ class DemographicSurvey extends AngularPage
     @defaults =
       userGender: 'Not Listed'
       genderOther: 'Dothraki'
-      userSex: 'Not listed'
-      userSexOther: 'Ziggy Stardust'
       whiteOther: 'German'
       userPrimaryLanguage: 'Not Listed'
       otherPrimaryLanguage: 'other primary language'
@@ -30,15 +33,17 @@ class DemographicSurvey extends AngularPage
   fill: (opts = {}) ->
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
-    @userSex.sendKeys(@defaults.userSex)
-    @userSexOther.clear().sendKeys(@defaults.userSexOther)
+    # Don't fill in sexual orientation so this form isn't skipped
+    # TODO: when making change to never skip demographic survey, add sexual orientation changes back.
     @blackAccordionHeader.click()
     browser.waitForAngular()
-    @blackAfricanCheckbox.click()
+    setCheckboxSelected(@blackAfricanCheckbox, true)
     @whiteAccordionHeader.click()
     browser.waitForAngular()
-    @whiteEuropeanCheckbox.click()
-    @whiteOtherCheckbox.click()
+    setCheckboxSelected(@whiteEuropeanCheckbox, true)
+    setCheckboxSelected(@whiteOtherCheckbox, true)
+    # have to wait for the text element to be enabled after checkbox changed
+    browser.waitForAngular()
     @whiteOther.clear().sendKeys(@defaults.whiteOther)
     @userPrimaryLanguage.sendKeys(@defaults.userPrimaryLanguage)
     @otherPrimaryLanguage.clear().sendKeys(@defaults.otherPrimaryLanguage)
