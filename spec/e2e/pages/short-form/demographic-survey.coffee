@@ -56,8 +56,6 @@ class DemographicSurvey extends AngularPage
     fields = [
       'userGender'
       'genderOther'
-      'userSex'
-      'userSexOther'
       'whiteOther'
       'userPrimaryLanguage'
       'otherPrimaryLanguage'
