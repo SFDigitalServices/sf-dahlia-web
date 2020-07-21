@@ -6,7 +6,7 @@
   dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
     div ng-repeat="option in race_and_ethnicity_options"
       dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.key }"
-        a.accordion-header ng-attr-id="{{ getRaceHeaderId(option) }}" tabindex="0" draggable="false" ng-click="toggleSelectedHeader(option.key)" ng-keypress="toggleSelectedHeader(option.key, $event)" aria-label="{{ labelForHeader(option) }}"
+        div.accordion-header ng-attr-id="{{ getRaceHeaderId(option) }}" tabindex="0" draggable="false" ng-click="toggleSelectedHeader(option.key)" ng-keypress="toggleSelectedHeader(option.key, $event)" aria-label="{{ labelForHeader(option) }}"
           .accordion-header-title
             | {{ option.translation_key | translate }}
           span.ui-icon.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
