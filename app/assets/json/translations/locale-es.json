@@ -197,7 +197,7 @@
             "title": "Pasemos a los ingresos."
         },
         "demographics_accordion": {
-            "title": "SU RAZA Y SU ETNIA",
+            "title": "Su raza y su etnia",
             "subtitle": "¿Cuáles de las siguientes opciones describen su raza y su etnia? De las siguientes categorías, elija todas las opciones que correspondan.",
             "text_input_placeholders": {
                 "demographic_input_placeholder": "Especifique..."
