@@ -147,7 +147,6 @@ Feature: Short Form Application
         Then I want to make sure that files where uploaded
 
     Scenario: Signing out
-        When I use the browser back button
         When I sign out
         Then I should land on the Sign In page
         And I should see the sign out success message

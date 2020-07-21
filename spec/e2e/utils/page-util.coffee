@@ -1,4 +1,6 @@
 remote = require('selenium-webdriver/remote')
+http = require('http')
+defer = protractor.promise.defer()
 EC = protractor.ExpectedConditions
 
 PageUtil = {
@@ -19,6 +21,23 @@ PageUtil = {
     ).first()
   goTo: (url) ->
     browser.get(url)
+  httpGet: (siteUrl) ->
+    http.get(siteUrl, (response) ->
+      bodyString = ''
+      response.setEncoding('utf8')
+
+      response.on "data", (chunk) ->
+        bodyString += chunk
+
+      response.on 'end', ->
+        defer.fulfill({
+          statusCode: response.statusCode,
+          bodyString: bodyString
+        })
+    ).on 'error', (e) ->
+      defer.reject("Got http.get error: " + e.message)
+
+    return defer.promise
   optOutAndSubmit: ->
     # opt out + submit preference page (e.g. NRHP, Live/Work)
     PageUtil.checkCheckbox('preference-optout', PageUtil.submit)
