@@ -1,6 +1,3 @@
-KEYCODE_SPACE = 32
-KEYCODE_ENTER = 13
-
 angular.module('dahlia.directives')
 .directive 'raceEthnicityForm', ['ShortFormRaceEthnicityService', (ShortFormRaceEthnicityService) ->
   replace: true
@@ -41,30 +38,9 @@ angular.module('dahlia.directives')
       freeTextString = scope.user[scope.getOtherFreeTextKey(checkedSuboption)]
       ShortFormRaceEthnicityService.getTranslatedAccumulatorOption(parentOption, checkedSuboption, freeTextString)
 
-    # Return true if the event is a keyboard event other than space or enter
-    scope._isKeyboardSelectEvent = (e) ->
-      if !event || e.type != 'keypress'
-        return false
-      keyCode = if e.keyCode then e.keyCode else e.which;
-      keyCode == KEYCODE_SPACE || keyCode == KEYCODE_ENTER
-
-    # Only call func if the event is 1) undefined or 2) a click or space/enter keypress event
-    # We have to manually check this because angular doesn't handle keyboard selection for links
-    # very well.
-    scope._triggerOnClickOrKeypress = (event, func) ->
-      isKeyboardEvent = event && event instanceof KeyboardEvent
-
-      if isKeyboardEvent
-        if !scope._isKeyboardSelectEvent(event)
-          return
-
-        # ng-keypress doesn't override key press event like it should
-        event.preventDefault();
-      func()
-
     # After the scope.demographicsChecked model changes, we need to change other models
     # that are calculated from it.
-    scope.onDemographicCheckedChanged = (event) ->
+    scope.onDemographicCheckedChanged = ->
       scope.updateAccumulatorOptions()
       scope.updateTopLevelOptionsChecked()
 
@@ -88,14 +64,14 @@ angular.module('dahlia.directives')
       scope.onDemographicCheckedChanged()
 
     scope.onClearSingleRaceOptionClicked = (parentOption, checkedSuboption, event) ->
-      scope._triggerOnClickOrKeypress(event, () -> scope._updateSuboption(parentOption, checkedSuboption, false))
+      scope._updateSuboption(parentOption, checkedSuboption, false)
+      event.preventDefault() if event
 
     scope.onClearAllRaceOptionsClicked = (event) ->
-      uncheckAllFunc = ->
-        # Delete by setting to false to make sure we know to clear the freetext associated.
-        scope.demographicsChecked[key] = false for key in Object.keys(scope.demographicsChecked)
-        scope.onDemographicCheckedChanged()
-      scope._triggerOnClickOrKeypress(event, uncheckAllFunc)
+      # Delete by setting to false to make sure we know to clear the freetext associated.
+      scope.demographicsChecked[key] = false for key in Object.keys(scope.demographicsChecked)
+      scope.onDemographicCheckedChanged()
+      event.preventDefault() if event
 
     scope.hasAnyOptionsSelected = -> Object.keys(scope.accumulatorOptions).length > 0
 
@@ -105,8 +81,7 @@ angular.module('dahlia.directives')
 
     # Collapse or expand a race/ethnicity section
     scope.toggleSelectedHeader = (parentOptionKey, event) ->
-      toggleSelectedHeaderFunc = ->
-        isAlreadySelected = scope.selectedDemographicHeader == parentOptionKey
-        scope.selectedDemographicHeader = if isAlreadySelected then null else parentOptionKey
-      scope._triggerOnClickOrKeypress(event, toggleSelectedHeaderFunc)
+      isAlreadySelected = scope.selectedDemographicHeader == parentOptionKey
+      scope.selectedDemographicHeader = if isAlreadySelected then null else parentOptionKey
+      event.preventDefault() if event
 ]
