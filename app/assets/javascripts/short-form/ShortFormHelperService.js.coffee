@@ -11,6 +11,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Social Worker or Housing Counselor', Service.flagForI18n('label.social_worker_or_housing_counselor')]
     ['Other', Service.flagForI18n('label._other')]
   ]
+
   Service.primary_language_options = [
     ['Chinese – Cantonese', Service.flagForI18n('label.primary_language.options.chinese_cantonese')]
     ['Chinese – Mandarin', Service.flagForI18n('label.primary_language.options.chinese_mandarin')]
@@ -20,6 +21,185 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Spanish', Service.flagForI18n('label.primary_language.options.spanish')]
     ['Vietnamese', Service.flagForI18n('label.primary_language.options.vietnamese')]
     ['Not Listed', Service.flagForI18n('label.not_listed')]
+  ]
+
+  Service.race_and_ethnicity_options = [
+    {
+      key: 'Asian',
+      translation_key: Service.flagForI18n('demographics_accordion.options.asian'),
+      suboptions: [
+        {
+          key: 'Chinese',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_chinese')
+        },
+        {
+          key: 'Filipino',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_filipino')
+        },
+        {
+          key: 'Japanese',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_japanese')
+        },
+        {
+          key: 'Korean',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_korean')
+        },
+        {
+          key: 'Mongolian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_mongolian')
+        },
+        {
+          key: 'Central Asian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_central_asian')
+        },
+        {
+          key: 'South Asian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_south_asian')
+        },
+        {
+          key: 'Southeast Asian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_southeast_asian')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.asian_other'),
+          free_text_key: 'asianOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'Black',
+      translation_key: Service.flagForI18n('demographics_accordion.options.black'),
+      suboptions: [
+        {
+          key: 'African',
+          translation_key: Service.flagForI18n('demographics_accordion.options.black_african')
+        },
+        {
+          key: 'African American',
+          translation_key: Service.flagForI18n('demographics_accordion.options.black_african_american')
+        },
+        {
+          key: 'Caribbean, Central American, South American or Mexican',
+          translation_key: Service.flagForI18n('demographics_accordion.options.south_central_american')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.other')
+          free_text_key: 'blackOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'Indigenous',
+      translation_key: Service.flagForI18n('demographics_accordion.options.indigenous'),
+      suboptions: [
+        {
+          key: 'American Indian/Native American',
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_american_indian')
+        },
+        {
+          key: 'Indigenous from Mexico, the Caribbean, Central America, or South America',
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_other')
+          free_text_key: 'indigenousOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'Latino',
+      translation_key: Service.flagForI18n('demographics_accordion.options.latino'),
+      suboptions: [
+        {
+          key: 'Caribbean',
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_caribbean'),
+        }
+        {
+          key: 'Central American',
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_central_american')
+        },
+        {
+          key: 'Mexican',
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_mexican')
+        },
+        {
+          key: 'South American',
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_south_american')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.latino_other')
+          free_text_key: 'latinoOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'Middle Eastern/West Asian or North African',
+      translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern'),
+      suboptions: [
+        {
+          key: 'North African',
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_north_african')
+        },
+        {
+          key: 'West Asian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_west_asian')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.middle_eastern_other')
+          free_text_key: 'menaOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'Pacific Islander',
+      translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander'),
+      suboptions: [
+        {
+          key: 'Chamorro',
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_chamorro')
+        },
+        {
+          key: 'Native Hawaiian',
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_native_hawaiian')
+        },
+        {
+          key: 'Samoan',
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_samoan')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.pacific_islander_other')
+          free_text_key: 'pacificIslanderOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
+    {
+      key: 'White',
+      translation_key: Service.flagForI18n('demographics_accordion.options.white'),
+      suboptions: [
+        {
+          key: 'European',
+          translation_key: Service.flagForI18n('demographics_accordion.options.white_european')
+        },
+        {
+          key: 'Other',
+          translation_key: Service.flagForI18n('demographics_accordion.options.white_other')
+          free_text_key: 'whiteOther',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.demographic_input_placeholder')
+        },
+      ]
+    }
   ]
 
   Service.gender_options = [
@@ -47,22 +227,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['In-Law', Service.flagForI18n('label.in_law')]
     ['Friend', Service.flagForI18n('label.friend')]
     ['Other', Service.flagForI18n('label._other')]
-  ]
-  Service.ethnicity_options = [
-    ['Hispanic/Latino', Service.flagForI18n('label.hispanic_latino')]
-    ['Not Hispanic/Latino', Service.flagForI18n('label.not_hispanic_latino')]
-  ]
-  Service.race_options = [
-    ['American Indian/Alaskan Native', Service.flagForI18n('label.american_indian_alaskan_native')]
-    ['Asian', Service.flagForI18n('label.asian')]
-    ['Black/African American', Service.flagForI18n('label.black_african_american')]
-    ['Native Hawaiian/Other Pacific Islander', Service.flagForI18n('label.native_hawaiian_other_pacific_islander')]
-    ['White', Service.flagForI18n('label.white')]
-    ['American Indian/Alaskan Native and Black/African American', Service.flagForI18n('label.american_indian_alaskan_native_black')]
-    ['American Indian/Alaskan Native and White', Service.flagForI18n('label.american_indian_alaskan_native_white')]
-    ['Asian and White', Service.flagForI18n('label.asian_white')]
-    ['Black/African American and White', Service.flagForI18n('label.black_african_american_white')]
-    ['Other/Multiracial', Service.flagForI18n('label.other_multiracial')]
   ]
   Service.sexual_orientation_options = [
     ['Bisexual', Service.flagForI18n('label.bisexual')]

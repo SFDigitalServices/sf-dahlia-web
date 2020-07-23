@@ -57,8 +57,7 @@ ShortFormApplicationController = (
   $scope.gender_options = ShortFormHelperService.gender_options
   $scope.primary_language_options = ShortFormHelperService.primary_language_options
   $scope.relationship_options = ShortFormHelperService.relationship_options
-  $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
-  $scope.race_options = ShortFormHelperService.race_options
+  $scope.race_and_ethnicity_options = ShortFormHelperService.race_and_ethnicity_options
   $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
   $scope.listing_referral_options = ShortFormHelperService.listing_referral_options
 

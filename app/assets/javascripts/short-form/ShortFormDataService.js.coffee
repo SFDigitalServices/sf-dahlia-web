@@ -31,12 +31,39 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'referral'
     ]
     primaryApplicant: [
-      'appMemberId', 'contactId',
-      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
-      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'primaryLanguage', 'otherLanguage', 'race', 'sexualOrientation', 'sexualOrientationOther',
-      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore'
+      'alternatePhone',
+      'alternatePhoneType',
+      'appMemberId',
+      'asianOther',
+      'blackOther',
+      'candidateScore',
+      'contactId',
+      'email',
+      'firstName',
+      'gender',
+      'genderOther',
+      'hasAltMailingAddress',
+      'indigenousOther',
+      'lastName',
+      'latinoOther',
+      'menaOther',
+      'middleName',
+      'noAddress',
+      'noEmail',
+      'noPhone',
+      'otherLanguage',
+      'pacificIslanderOther',
+      'phone',
+      'phoneType',
+      'preferenceAddressMatch',
+      'primaryLanguage',
+      'raceEthnicity',
+      'sexualOrientation',
+      'sexualOrientationOther',
+      'whichComponentOfLocatorWasUsed',
+      'whiteOther',
+      'xCoordinate',
+      'yCoordinate'
     ]
     alternateContact: [
       'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
@@ -557,8 +584,14 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       data.applicant.genderOther = null
       data.applicant.primaryLanguage = null
       data.applicant.otherLanguage = null
-      data.applicant.ethnicity = null
-      data.applicant.race = null
+      data.applicant.raceEthnicity = null
+      data.applicant.asianOther = null
+      data.applicant.blackOther = null
+      data.applicant.indigenousOther = null
+      data.applicant.latinoOther = null
+      data.applicant.menaOther = null
+      data.applicant.pacificIslanderOther = null
+      data.applicant.whiteOther = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = null
@@ -597,10 +630,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   #############################################
 
   Service.checkSurveyComplete = (applicant, opts = {}) ->
+    # Race ethnicity not included because it's optional
     responses = [
       applicant.gender,
-      applicant.ethnicity,
-      applicant.race,
       applicant.sexualOrientation,
       if opts.skipReferral then true else applicant.referral,
     ]

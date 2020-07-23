@@ -12,4 +12,5 @@
   genderOther: 50
   otherLanguage: 50
   sexualOrientationOther: 50
+  raceEthnicityOther: 50
 }
