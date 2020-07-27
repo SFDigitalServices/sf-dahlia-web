@@ -36,7 +36,8 @@ do ->
       flagForI18n: jasmine.createSpy()
     fakeShortFormNavigationService =
       getStartOfSection: jasmine.createSpy()
-
+    fakeShortFormRaceEthnicityService =
+      salesforceToHumanReadable: jasmine.createSpy()
     beforeEach module('dahlia.components')
     beforeEach module('customFilters', ($provide) ->)
 
@@ -53,6 +54,7 @@ do ->
         LendingInstitutionService: fakeLendingInstitutionService
         ShortFormHelperService: fakeShortFormHelperService
         ShortFormNavigationService: fakeShortFormNavigationService
+        ShortFormRaceEthnicityService: fakeShortFormRaceEthnicityService
     )
 
     beforeEach ->
@@ -136,8 +138,13 @@ do ->
       it 'should return true if hasPublicHousing is true', ->
         ctrl.application.hasPublicHousing = true
         expect(ctrl.showHouseholdDetails()).toEqual true
-
-
-
-
-
+    describe 'getRaceEthnicity', ->
+      it 'calls the ShortFormRaceEthnicityService with the applicant values', ->
+        ctrl.application = {
+          'applicant': {
+            'raceEthnicity': 'something'
+          }
+        }
+        ctrl.getRaceEthnicity()
+        expect(fakeShortFormRaceEthnicityService.salesforceToHumanReadable)
+          .toHaveBeenCalledWith(ctrl.application.applicant)

@@ -196,5 +196,30 @@ do ->
         expected = null
         expect(ShortFormRaceEthnicityService.convertCheckboxValuesToUserField(checkedFields)).toEqual expected
 
+    describe 'salesforceToHumanReadable', ->
+      it 'returns an empty list if no race/ethnicity is present', ->
+        applicant = { 'raceEthnicity': null }
+        expect(ShortFormRaceEthnicityService.salesforceToHumanReadable(applicant)).toEqual([])
+
+      it 'returns a list of properly formatted values for checkbox values', ->
+        applicant = { 'raceEthnicity': 'option1 - suboption1;option2 - suboption2' }
+        expectedValues = ['translated(i18n_key_option_1): translated(i18n_key_suboption_1)', 'translated(i18n_key_option_2): translated(i18n_key_suboption_2)']
+        expect(ShortFormRaceEthnicityService.salesforceToHumanReadable(applicant)).toEqual(expectedValues)
+
+      it 'gets user provided values when provided by users', ->
+        applicant = {
+          'raceEthnicity': 'option2 - suboption3;option2 - suboption2',
+          'suboption3Other': 'suboption3Other value'
+        }
+        expectedValues = ['translated(i18n_key_option_2): translated(i18n_key_suboption_3) (suboption3Other value)', 'translated(i18n_key_option_2): translated(i18n_key_suboption_2)']
+        expect(ShortFormRaceEthnicityService.salesforceToHumanReadable(applicant)).toEqual(expectedValues)
+
+      it 'formats values as expected if user did not provide other value', ->
+        applicant = {
+          'raceEthnicity': 'option2 - suboption3;option2 - suboption2',
+          'suboption3Other': null
+        }
+        expectedValues = ['translated(i18n_key_option_2): translated(i18n_key_suboption_3)', 'translated(i18n_key_option_2): translated(i18n_key_suboption_2)']
+        expect(ShortFormRaceEthnicityService.salesforceToHumanReadable(applicant)).toEqual(expectedValues)
 
 
