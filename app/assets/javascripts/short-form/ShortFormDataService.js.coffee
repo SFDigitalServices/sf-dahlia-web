@@ -577,23 +577,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     }
 
   Service._autofillReset = (data) ->
-    data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
-    unless data.surveyComplete
-      # clear out demographics if you hadn't already completed them all
-      data.applicant.gender = null
-      data.applicant.genderOther = null
-      data.applicant.primaryLanguage = null
-      data.applicant.otherLanguage = null
-      data.applicant.raceEthnicity = null
-      data.applicant.asianOther = null
-      data.applicant.blackOther = null
-      data.applicant.indigenousOther = null
-      data.applicant.latinoOther = null
-      data.applicant.menaOther = null
-      data.applicant.pacificIslanderOther = null
-      data.applicant.whiteOther = null
-      data.applicant.sexualOrientation = null
-      data.applicant.sexualOrientationOther = null
+    # If referral contains more than one option, reset it to work with single select.
+    if data?.applicant?.referral and ';' in data.applicant.referral
       data.applicant.referral = null
 
     # reset fields that don't apply to this application
@@ -628,15 +613,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   #############################################
   # Helper functions
   #############################################
-
-  Service.checkSurveyComplete = (applicant, opts = {}) ->
-    # Race ethnicity not included because it's optional
-    responses = [
-      applicant.gender,
-      applicant.sexualOrientation,
-      if opts.skipReferral then true else applicant.referral,
-    ]
-    return _.every(responses)
 
   Service.DOBValid = (field = 'day', values) ->
     month = values.month

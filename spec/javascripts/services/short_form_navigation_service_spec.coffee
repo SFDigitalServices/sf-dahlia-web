@@ -14,7 +14,6 @@ do ->
     fakeShortFormApplicationService =
       application:
         householdMembers: []
-        surveyComplete: false
       listingHasReservedUnitType: jasmine.createSpy()
       RESERVED_TYPES:
         VETERAN: 'Veteran'
@@ -103,15 +102,9 @@ do ->
         page = ShortFormNavigationService.getStartOfSection({name: 'Preferences'})
         expect(page).toEqual 'preferences-intro'
 
-      it 'gets review survey if survey is incomplete', ->
-        fakeShortFormApplicationService.application.surveyComplete = false
+      it 'goes to demographic survey review-optional as start of review', ->
         page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
         expect(page).toEqual 'review-optional'
-
-      it 'gets review summary if survey is complete', ->
-        fakeShortFormApplicationService.application.surveyComplete = true
-        page = ShortFormNavigationService.getStartOfSection({name: 'Review'})
-        expect(page).toEqual 'review-summary'
 
     describe 'goToSection', ->
       it 'calls Service.goToApplicationPage with the page path', ->

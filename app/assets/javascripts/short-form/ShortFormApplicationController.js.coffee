@@ -647,9 +647,6 @@ ShortFormApplicationController = (
   $scope.invalidateAltContactTypeForm = ->
     ShortFormApplicationService.invalidateAltContactTypeForm()
 
-  $scope.checkSurveyComplete = ->
-    ShortFormApplicationService.checkSurveyComplete()
-
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 

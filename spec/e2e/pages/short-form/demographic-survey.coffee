@@ -25,6 +25,8 @@ class DemographicSurvey extends AngularPage
     @defaults =
       userGender: 'Not Listed'
       genderOther: 'Dothraki'
+      userSex: 'Not listed'
+      userSexOther: 'Ziggy Stardust'
       whiteOther: 'German'
       userPrimaryLanguage: 'Not Listed'
       otherPrimaryLanguage: 'other primary language'
@@ -33,8 +35,8 @@ class DemographicSurvey extends AngularPage
   fill: (opts = {}) ->
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
-    # Don't fill in sexual orientation so this form isn't skipped
-    # TODO: when making change to never skip demographic survey, add sexual orientation changes back.
+    @userSex.sendKeys(@defaults.userSex)
+    @userSexOther.clear().sendKeys(@defaults.userSexOther)
     @blackAccordionHeader.click()
     browser.waitForAngular()
     setCheckboxSelected(@blackAfricanCheckbox, true)

@@ -76,6 +76,17 @@ ShortFormRaceEthnicityService = ($translate, ShortFormHelperService) ->
     translatedOptionName = Service.getTranslatedAccumulatorOption(parentOption, checkedSuboption)
     $translate.instant('demographics_accordion.accessibility_labels.clear_option', { nameOfOptionToClear: translatedOptionName })
 
+  # Given the Salesforce-formatted list of demographics keys, return a human-readable, translated list of values.
+  Service.salesforceToHumanReadable = (applicant) ->
+    checkboxVals = Service.convertUserFieldToCheckboxValues(applicant.raceEthnicity)
+    parentAndSubOptions = Service.demographicsKeysToOptionsList(Object.keys(checkboxVals))
+    result = parentAndSubOptions.map((checkedOption) ->
+      freeTextKey = Service.getOtherFreeTextKey(checkedOption.checked_suboption)
+      freeTextString = if freeTextKey then applicant[freeTextKey] else null
+      Service.getTranslatedAccumulatorOption(checkedOption.parent_option, checkedOption.checked_suboption, freeTextString)
+    )
+    result
+
   return Service
 
 ShortFormRaceEthnicityService.$inject = [

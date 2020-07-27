@@ -11,8 +11,8 @@ angular.module('dahlia.components')
     listing: '<'
     preferences: '<'
   controller: [
-    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService',
-    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService) ->
+    '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
+    ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
       ctrl = @
 
       ctrl.$onInit = ->
@@ -94,6 +94,17 @@ angular.module('dahlia.components')
         { user: $filter('listify')(members, "firstName")}
 
       ctrl.priority_options = ShortFormHelperService.priority_options
+
+      ctrl.getRaceEthnicity = ->
+        ShortFormRaceEthnicityService.salesforceToHumanReadable(ctrl.application.applicant)
+
+      ctrl.applicationHasDemographicInfo = ->
+        Boolean(ctrl.applicant.raceEthnicity or
+          ctrl.applicant.primaryLanguage or
+          ctrl.applicant.gender or
+          ctrl.applicant.sexualOrientation or
+          ctrl.applicant.referral
+        )
 
       return ctrl
   ]
