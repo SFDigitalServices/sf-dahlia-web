@@ -143,14 +143,14 @@ div ng-if="::!$ctrl.atAutofillPreview"
 div
   review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable"
   .app-inner
-    review-summary-item  label="Race and Ethnicity"
+    review-summary-item  label="{{'label.race_and_ethnicity' | translate}}"
       ul ng-repeat="raceEthnicity in ::$ctrl.getRaceEthnicity()"
         | {{ raceEthnicity }}
-    review-summary-item label="Language Spoken at Home"
+    review-summary-item label="{{'label.language_spoken_at_home'| translate}}"
       | {{::$ctrl.applicant.otherLanguage? $ctrl.applicant.otherLanguage : $ctrl.applicant.primaryLanguage }}
-    review-summary-item label="Gender"
+    review-summary-item label="{{'label.gender' | translate}}"
       | {{::$ctrl.applicant.genderOther ? $ctrl.applicant.genderOther : $ctrl.applicant.gender }}
-    review-summary-item label="Sexual Orientation or Sexual Identity"
+    review-summary-item label="{{'label.sexual_orientation_or_sexual_identity' | translate}}"
       | {{::$ctrl.applicant.sexualOrientationOther ? $ctrl.applicant.sexualOrientationOther : $ctrl.applicant.sexualOrientation }}
-    review-summary-item label="How you heard about this listing"
+    review-summary-item label="{{'label.how_you_heard_about_this_listing' | translate}}"
       | {{::$ctrl.applicant.referral }}
