@@ -148,3 +148,11 @@ do ->
         ctrl.getRaceEthnicity()
         expect(fakeShortFormRaceEthnicityService.salesforceToHumanReadable)
           .toHaveBeenCalledWith(ctrl.application.applicant)
+
+    describe 'applicationHasDemographicInfo', ->
+      it 'returns true if one of the review-optional values is present', ->
+        ctrl.applicant = {'gender': 'something'}
+        expect(ctrl.applicationHasDemographicInfo()).toEqual true
+      it 'returns false if none of the review-optional values are present', ->
+        ctrl.applicant = {}
+        expect(ctrl.applicationHasDemographicInfo()).toEqual false

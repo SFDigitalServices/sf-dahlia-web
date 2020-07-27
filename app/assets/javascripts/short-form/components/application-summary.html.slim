@@ -143,6 +143,9 @@ div ng-if="::!$ctrl.atAutofillPreview"
 div
   review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable"
   .app-inner
+    .info-item.margin-bottom ng-if="::!$ctrl.applicationHasDemographicInfo()"
+        h4.info-item_name
+          | {{'t.none' | translate}}
     review-summary-item  label="{{'label.race_and_ethnicity' | translate}}" ng-if="::$ctrl.applicant.raceEthnicity"
       ul ng-repeat="raceEthnicity in ::$ctrl.getRaceEthnicity()"
         | {{ raceEthnicity }}

@@ -97,5 +97,14 @@ angular.module('dahlia.components')
 
       ctrl.getRaceEthnicity = ->
         ShortFormRaceEthnicityService.salesforceToHumanReadable(ctrl.application.applicant)
+
+      ctrl.applicationHasDemographicInfo = ->
+        Boolean(ctrl.applicant.raceEthnicity or
+          ctrl.applicant.primaryLanguage or
+          ctrl.applicant.gender or
+          ctrl.applicant.sexualOrientation or
+          ctrl.applicant.referral
+        )
+
       return ctrl
   ]
