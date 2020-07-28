@@ -29,6 +29,7 @@ prod_and_release_jobs: &prod_and_release_jobs
       only:
         - /^release.*$/
         - production
+        - chores/attachment-upload-test-#173163945
 aliases:
   - &attach_workspace
     attach_workspace:
@@ -189,4 +190,4 @@ workflows:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
-          name: chores/attachment-upload-test-#173163945
+          name: e2e-production
