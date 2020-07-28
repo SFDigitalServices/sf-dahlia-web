@@ -49,11 +49,11 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
             table.table-nested-income
               thead
                 tr
-                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
+                  th scope="col"
                       | {{ 'listings.stats.household_size' | translate }}
-                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
+                  th scope="col"
                       | {{ 'listings.stats.minimum' | translate }}
-                  th scope="col" class='{{ incomeLevelIndex !=0 ? "whiteout" : ""}}'
+                  th scope="col"
                     | {{ 'listings.stats.maximum' | translate }}
               tbody
                 tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
