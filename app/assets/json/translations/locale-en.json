@@ -988,7 +988,9 @@
                 "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist"
+                "waitlist": "Waitlist",
+                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
+                "hoa_dues_label": "Hoa dues {{hoaPriceValue}} per month"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
