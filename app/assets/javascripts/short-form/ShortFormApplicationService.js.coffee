@@ -36,7 +36,6 @@ ShortFormApplicationService = (
     lotteryNumber: null
     status: 'draft'
     applicationSubmittedDate: null
-    surveyComplete: false
     answeredCommunityScreening: null
     applicationSubmissionType: 'Electronic'
     applicant:
@@ -908,9 +907,6 @@ ShortFormApplicationService = (
     return false if _.isEmpty(data.application)
     formattedApp = ShortFormDataService.reformatApplication(data.application)
     angular.copy(formattedApp, Service.accountApplication)
-
-  Service.checkSurveyComplete = ->
-    Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
     accountData = _.pick(loggedInUser, Service.applicantAccountFields)

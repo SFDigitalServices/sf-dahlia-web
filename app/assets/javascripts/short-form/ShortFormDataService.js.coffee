@@ -31,12 +31,39 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'referral'
     ]
     primaryApplicant: [
-      'appMemberId', 'contactId',
-      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
-      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'primaryLanguage', 'otherLanguage', 'race', 'sexualOrientation', 'sexualOrientationOther',
-      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore'
+      'alternatePhone',
+      'alternatePhoneType',
+      'appMemberId',
+      'asianOther',
+      'blackOther',
+      'candidateScore',
+      'contactId',
+      'email',
+      'firstName',
+      'gender',
+      'genderOther',
+      'hasAltMailingAddress',
+      'indigenousOther',
+      'lastName',
+      'latinoOther',
+      'menaOther',
+      'middleName',
+      'noAddress',
+      'noEmail',
+      'noPhone',
+      'otherLanguage',
+      'pacificIslanderOther',
+      'phone',
+      'phoneType',
+      'preferenceAddressMatch',
+      'primaryLanguage',
+      'raceEthnicity',
+      'sexualOrientation',
+      'sexualOrientationOther',
+      'whichComponentOfLocatorWasUsed',
+      'whiteOther',
+      'xCoordinate',
+      'yCoordinate'
     ]
     alternateContact: [
       'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
@@ -550,17 +577,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     }
 
   Service._autofillReset = (data) ->
-    data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
-    unless data.surveyComplete
-      # clear out demographics if you hadn't already completed them all
-      data.applicant.gender = null
-      data.applicant.genderOther = null
-      data.applicant.primaryLanguage = null
-      data.applicant.otherLanguage = null
-      data.applicant.ethnicity = null
-      data.applicant.race = null
-      data.applicant.sexualOrientation = null
-      data.applicant.sexualOrientationOther = null
+    # If referral contains more than one option, reset it to work with single select.
+    if data?.applicant?.referral and ';' in data.applicant.referral
       data.applicant.referral = null
 
     # reset fields that don't apply to this application
@@ -595,16 +613,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   #############################################
   # Helper functions
   #############################################
-
-  Service.checkSurveyComplete = (applicant, opts = {}) ->
-    responses = [
-      applicant.gender,
-      applicant.ethnicity,
-      applicant.race,
-      applicant.sexualOrientation,
-      if opts.skipReferral then true else applicant.referral,
-    ]
-    return _.every(responses)
 
   Service.DOBValid = (field = 'day', values) ->
     month = values.month

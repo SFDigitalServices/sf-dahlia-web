@@ -138,3 +138,22 @@ div ng-if="::$ctrl.application.householdIncome.incomeTotal"
 div ng-if="::!$ctrl.atAutofillPreview"
   review-summary-section header="{{'label.preferences' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
   preferences-summary application="$ctrl.application" listing="$ctrl.listing" preferences="$ctrl.preferences"
+
+/ Demographics
+div
+  review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable"
+  .app-inner
+    .info-item.margin-bottom ng-if="::!$ctrl.applicationHasDemographicInfo()"
+        h4.info-item_name
+          | {{'t.none' | translate}}
+    review-summary-item  label="{{'label.race_and_ethnicity' | translate}}" ng-if="::$ctrl.applicant.raceEthnicity"
+      ul ng-repeat="raceEthnicity in ::$ctrl.getRaceEthnicity()"
+        | {{ raceEthnicity }}
+    review-summary-item label="{{'label.language_spoken_at_home'| translate}}" ng-if="::$ctrl.applicant.otherLanguage"
+      | {{::$ctrl.applicant.otherLanguage? $ctrl.applicant.otherLanguage : $ctrl.applicant.primaryLanguage }}
+    review-summary-item label="{{'label.gender' | translate}}" ng-if="::$ctrl.applicant.genderOther"
+      | {{::$ctrl.applicant.genderOther ? $ctrl.applicant.genderOther : $ctrl.applicant.gender }}
+    review-summary-item label="{{'label.sexual_orientation_or_sexual_identity' | translate}}" ng-if="::$ctrl.applicant.sexualOrientationOther"
+      | {{::$ctrl.applicant.sexualOrientationOther ? $ctrl.applicant.sexualOrientationOther : $ctrl.applicant.sexualOrientation }}
+    review-summary-item label="{{'label.how_you_heard_about_this_listing' | translate}}" ng-if="::$ctrl.applicant.referral"
+      | {{::$ctrl.applicant.referral }}
