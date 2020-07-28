@@ -12,6 +12,8 @@ tr
   / Income range
   td.is-subtitled data-th="{{'listings.stats.income_range' | translate}}"
     | {{ $ctrl.incomeRangeString(unitSummary) }}
+    small
+      | {{'t.per_month' | translate}}
   / Sales price and HOA Dues
   td.text-right.is-subtitled data-th="{{ 'listings.stats.sales_price' | translate }}"
     | {{ $ctrl.salesPriceRangeString(unitSummary) }}
