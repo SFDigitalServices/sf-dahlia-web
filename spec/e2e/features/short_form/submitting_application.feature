@@ -138,13 +138,13 @@ Feature: Short Form Application
         And I agree to the terms and submit
         Then I should see my lottery number on the confirmation page
         And I view the application from My Applications
-
         # then confirm one last time how things appear on the submitted app
         Then on the Review Page I should see my contact details for "Jane Valerie Doe"
         And on the Review Page I should see my alternate contact details
         And on the Review Page I should see my household member details
         And on the Review Page I should see my income details
         And on the Review Page I should see my preference details on my "submitted" application
+        Then I want to make sure that files were uploaded
 
     Scenario: Signing out
         When I sign out

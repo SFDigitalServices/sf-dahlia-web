@@ -108,6 +108,13 @@ class Api::V1::ShortFormController < ApiController
     render json: lending_institutions
   end
 
+  def files
+    uploaded_files = Force::ShortFormService.files(params[:id])
+    local_files = UploadedFile.where(application_id: params[:id])
+    status = uploaded_files.size == local_files.size ? 'uploaded' : 'missing'
+    render json: { status: status }
+  end
+
   private
 
   def process_submit_app_response(response)

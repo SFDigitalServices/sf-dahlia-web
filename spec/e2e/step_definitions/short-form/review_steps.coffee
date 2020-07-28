@@ -13,6 +13,17 @@ When 'I agree to the terms and submit', ->
   element(By.id('terms_yes')).click().then ->
     Utils.Page.submit()
 
+Then 'I want to make sure that files were uploaded', ->
+  that = @
+  browser.getCurrentUrl().then (currentUrl) ->
+    currentUrl.replace
+    applicationId = currentUrl.split('/').pop()
+    url = 'http://localhost:3000/api/v1/short-form/application/' + applicationId + '/files'
+    Utils.Page.httpGet(url).then((result) ->
+      json_data = JSON.parse(result.bodyString)
+      that.expect(json_data.status).to.equal('uploaded')
+    )
+
 When 'I click to view submitted application', ->
   viewApp = element(By.id('view-app'))
   browser.wait(EC.presenceOf(viewApp), 5000)

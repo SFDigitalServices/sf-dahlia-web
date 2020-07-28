@@ -67,6 +67,10 @@ module Force
       oauth_token(true)
     end
 
+    def query(soql)
+      @client.query(soql)
+    end
+
     private
 
     def initialize_client
