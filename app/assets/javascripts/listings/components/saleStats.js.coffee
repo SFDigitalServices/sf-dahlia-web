@@ -35,7 +35,6 @@ angular.module('dahlia.components')
       @_getCurrencyString = (v) -> $filter('currency')(v, '$', 0)
 
       @_getCurrencyRange = (min, max) ->
-        console.log("Getting currency range between #{min} and #{max}")
         if min && max && min < max
           $translate.instant('listings.stats.currency_range', {
             currencyMinValue: @_getCurrencyString(min)
@@ -54,10 +53,7 @@ angular.module('dahlia.components')
       @_filterIntArrayByNull = (arr) -> arr.filter((i) -> i == 0 || !!i)
 
       @_getMin = (arr) ->
-        console.log('getting min', arr)
         filtered = @_filterIntArrayByNull(arr)
-        console.log('filtered', filtered)
-        console.log('filtered', filtered)
         if filtered.length then Math.min.apply(null, filtered) else null
 
       @_getMax = (arr) ->
