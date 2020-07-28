@@ -189,4 +189,4 @@ workflows:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
-          name: e2e-production
+          name: chores/attachment-upload-test-#173163945
