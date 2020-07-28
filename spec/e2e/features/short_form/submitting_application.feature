@@ -144,7 +144,7 @@ Feature: Short Form Application
         And on the Review Page I should see my household member details
         And on the Review Page I should see my income details
         And on the Review Page I should see my preference details on my "submitted" application
-        Then I want to make sure that files where uploaded
+        Then I want to make sure that files were uploaded
 
     Scenario: Signing out
         When I sign out

@@ -13,7 +13,7 @@ When 'I agree to the terms and submit', ->
   element(By.id('terms_yes')).click().then ->
     Utils.Page.submit()
 
-Then 'I want to make sure that files where uploaded', ->
+Then 'I want to make sure that files were uploaded', ->
   that = @
   browser.getCurrentUrl().then (currentUrl) ->
     currentUrl.replace
