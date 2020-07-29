@@ -58,6 +58,22 @@ do ->
     mockTranslateHoaString = (hoaPriceString) ->
       $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: hoaPriceString })
 
+    mockSummaryHoaPrices = (minWithParking = null, maxWithParking = null, minWithoutParking = null, maxWithoutParking = null) ->
+      {
+        minHoaDuesWithParking: minWithParking
+        maxHoaDuesWithParking: maxWithParking
+        minHoaDuesWithoutParking: minWithoutParking
+        maxHoaDuesWithoutParking: maxWithoutParking
+      }
+
+    mockSummarySalesPrices = (minWithParking = null, maxWithParking = null, minWithoutParking = null, maxWithoutParking = null) ->
+      {
+        minPriceWithParking: minWithParking
+        maxPriceWithParking: maxWithParking
+        minPriceWithoutParking: minWithoutParking
+        maxPriceWithoutParking: maxWithoutParking
+      }
+
     describe 'saleStats', ->
       beforeEach ->
         ctrl = $componentController 'saleStats', locals, { parent: fakeParent, listing: fakeListing }
@@ -169,280 +185,121 @@ do ->
       describe '$ctrl.incomeRangeString', ->
         it 'returns the correct string when only minIncome specified', ->
           fakeSummary = { minIncome: 1500 }
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "$1,500"
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$1,500'
 
         it 'returns the correct string when only maxIncome specified', ->
           fakeSummary = { maxIncome: 3500 }
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "$3,500"
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$3,500'
 
         it 'returns the correct string when both min and max incomes specified', ->
-          fakeSummary = {
-            minIncome: 1500
-            maxIncome: 3500
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$1,500"
-            currencyMaxValue: "$3,500"
-          }
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = { minIncome: 1500, maxIncome: 3500 }
+          expectedString = mockTranslateCurrencyRange('$1,500', '$3,500')
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when neither min or max income specified', ->
           fakeSummary = {}
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual ""
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual ''
 
       describe '$ctrl.salesPriceRangeString', ->
         it 'returns the correct string with only parking values specified', ->
-          fakeSummary = {
-            minPriceWithParking: 10000
-            maxPriceWithParking: 100000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$100,000"
-          }
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$100,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string with only non-parking values specified', ->
-          fakeSummary = {
-            minPriceWithoutParking: 10000
-            maxPriceWithoutParking: 100000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$100,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(null, null, 10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$100,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string when parking is more expensive', ->
-          fakeSummary = {
-            minPriceWithParking: 12000
-            maxPriceWithParking: 120000
-            minPriceWithoutParking: 10000
-            maxPriceWithoutParking: 100000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(12000, 120000, 10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string when without parking is more expensive', ->
-          fakeSummary = {
-            minPriceWithParking: 10000
-            maxPriceWithParking: 100000
-            minPriceWithoutParking: 12000
-            maxPriceWithoutParking: 120000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(10000, 100000, 12000, 120000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string when mix of with/without parking is more expensive', ->
-          fakeSummary = {
-            minPriceWithParking: 10000
-            maxPriceWithParking: 120000
-            minPriceWithoutParking: 12000
-            maxPriceWithoutParking: 100000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(10000, 120000, 12000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string when parking values are null', ->
-          fakeSummary = {
-            minPriceWithParking: null
-            maxPriceWithParking: null
-            minPriceWithoutParking: 12000
-            maxPriceWithoutParking: 100000
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$12,000"
-            currencyMaxValue: "$100,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          fakeSummary = mockSummarySalesPrices(null, null, 12000, 100000)
+          expectedString = mockTranslateCurrencyRange('$12,000', '$100,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns the correct string when non-parking values are null', ->
-          fakeSummary = {
-            minPriceWithParking: 12000
-            maxPriceWithParking: 120000
-            minPriceWithoutParking: null
-            maxPriceWithoutParking: null
-          }
-          expectedTranslationParams = {
-            currencyMinValue: "$12,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
-
-        it 'returns the correct string when min values are null', ->
-          fakeSummary = {
-            minPriceWithParking: null
-            maxPriceWithParking: 100000
-            minPriceWithoutParking: null
-            maxPriceWithoutParking: 120000
-          }
-
-          expectedString = "$120,000"
-          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
-
-        it 'returns the correct string when max values are null', ->
-          fakeSummary = {
-            minPriceWithParking: 100000
-            maxPriceWithParking: null
-            minPriceWithoutParking: 120000
-            maxPriceWithoutParking: null
-          }
-
-          expectedString = "$100,000"
+          fakeSummary = mockSummarySalesPrices(12000, 120000)
+          expectedString = mockTranslateCurrencyRange('$12,000', '$120,000')
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when all values are null', ->
-          fakeSummary = {
-            minPriceWithParking: null
-            maxPriceWithParking: null
-            minPriceWithoutParking: null
-            maxPriceWithoutParking: null
-          }
+          fakeSummary = mockSummarySalesPrices()
 
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when empty object is passed', ->
           fakeSummary = {}
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when null object is passed', ->
           fakeSummary = null
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
       describe '$ctrl.hoaDuesSubtitleString', ->
         it 'returns the correct string with only parking values specified', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: 800
-          }
-          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
+          fakeSummary = mockSummaryHoaPrices(500, 800)
+          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$800')
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string with only non-parking values specified', ->
-          fakeSummary = {
-            minHoaDuesWithoutParking: 500
-            maxHoaDuesWithoutParking: 800
-          }
-          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
+          fakeSummary = mockSummaryHoaPrices(null, null, 500, 800)
+          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$800')
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when parking is more expensive', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: 800
-            minHoaDuesWithoutParking: 400
-            maxHoaDuesWithoutParking: 700
-          }
-          expectedCurrencyString = mockTranslateCurrencyRange("$400","$800")
+          fakeSummary = mockSummaryHoaPrices(500, 800, 400, 700)
+          expectedCurrencyString = mockTranslateCurrencyRange('$400', '$800')
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when without parking is more expensive', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: 800
-            minHoaDuesWithoutParking: 600
-            maxHoaDuesWithoutParking: 900
-          }
-          expectedCurrencyString = mockTranslateCurrencyRange("$500","$900")
+          fakeSummary = mockSummaryHoaPrices(500, 800, 600, 900)
+          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$900')
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when mix of with/without parking is more expensive', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: 120000
-            minHoaDuesWithoutParking: 600
-            maxHoaDuesWithoutParking: 100000
-          }
+          fakeSummary = mockSummaryHoaPrices(500, 120000, 600, 100000)
 
-          expectedCurrencyString = mockTranslateCurrencyRange("$500","$120,000")
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when parking values are null', ->
-          fakeSummary = {
-            minHoaDuesWithParking: null
-            maxHoaDuesWithParking: null
-            minHoaDuesWithoutParking: 500
-            maxHoaDuesWithoutParking: 800
-          }
-          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when non-parking values are null', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: 800
-            minHoaDuesWithoutParking: null
-            maxHoaDuesWithoutParking: null
-          }
-
-          expectedCurrencyString = mockTranslateCurrencyRange("$500", "$800")
+          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$120,000')
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when min values are null', ->
-          fakeSummary = {
-            minHoaDuesWithParking: null
-            maxHoaDuesWithParking: 500
-            minHoaDuesWithoutParking: null
-            maxHoaDuesWithoutParking: 800
-          }
-
-          expectedCurrencyString = "$800"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
+          fakeSummary = mockSummaryHoaPrices(null, 500, null, 800)
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString('$800')
 
         it 'returns the correct string when max values are null', ->
-          fakeSummary = {
-            minHoaDuesWithParking: 500
-            maxHoaDuesWithParking: null
-            minHoaDuesWithoutParking: 600
-            maxHoaDuesWithoutParking: null
-          }
-
-          expectedCurrencyString = "$500"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
+          fakeSummary = mockSummaryHoaPrices(500, null, 600, null)
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString('$500')
 
         it 'returns empty string when all values are null', ->
-          fakeSummary = {
-            minHoaDuesWithParking: null
-            maxHoaDuesWithParking: null
-            minHoaDuesWithoutParking: null
-            maxHoaDuesWithoutParking: null
-          }
+          fakeSummary = mockSummaryHoaPrices()
 
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when empty object is passed', ->
           fakeSummary = {}
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
 
         it 'returns empty string when null object is passed', ->
           fakeSummary = null
-          expectedString = ""
+          expectedString = ''
           expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
 
