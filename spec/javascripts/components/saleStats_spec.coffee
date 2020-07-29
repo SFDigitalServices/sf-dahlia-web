@@ -4,36 +4,41 @@ do ->
     $componentController = undefined
     ctrl = undefined
     locals = undefined
-    $filter = undefined
     $translate = {
-      instant: (key) -> "translated(#{key})"
+      instant: (key, params) -> "translated(#{key}, #{JSON.stringify(params)})"
     }
     $filter =
       instant: jasmine.createSpy()
     fakeParent = {}
     beforeEach module('dahlia.components')
-    beforeEach inject((_$componentController_) ->
+    beforeEach inject((_$componentController_, _$filter_) ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
-        $filter: $filter
+        $filter: _$filter_
       }
     )
     summaryWithoutPrices = {
-      'unitType': '1 BR',
+      'unitType': '1 BR'
       'listingID': 'a0W0P00000F8YG4UAN'
+      'minIncome': 1300
+      'maxIncome': 3300
     }
 
     summaryWithMinWithoutParkingPrice = {
-      'unitType': '1 BR',
-      'minPriceWithoutParking': 4000,
+      'unitType': '1 BR'
+      'minPriceWithoutParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
+      'minIncome': 1400
+      'maxIncome': 3400
     }
 
     summaryWithMinWithParkingPrice = {
-      'unitType': '1 BR',
-      'minPriceWithParking': 4000,
+      'unitType': '1 BR'
+      'minPriceWithParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
+      'minIncome': 1500
+      'maxIncome': 3500
     }
 
     fakeListing = {
@@ -150,5 +155,29 @@ do ->
             'listingID': 'a0W0P00000F8YG4UAN'
           }
           expect(ctrl.hasRangeOfPricesWithParking(fakeSummary)).toEqual false
+
+      describe '$ctrl.incomeRangeString', ->
+        it 'returns the correct string when only minIncome specified', ->
+          fakeSummary = { minIncome: 1500 }
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "$1,500"
+
+        it 'returns the correct string when only maxIncome specified', ->
+          fakeSummary = { maxIncome: 3500 }
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "$3,500"
+
+        it 'returns the correct string when both min and max incomes specified', ->
+          fakeSummary = {
+            minIncome: 1500
+            maxIncome: 3500
+          }
+          expectedTranslationParams = {
+            currencyMinValue:"$1,500"
+            currencyMaxValue:"$3,500"
+          }
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+
+        it 'returns empty string when neith min or max income specified', ->
+          fakeSummary = {}
+          expect(ctrl.incomeRangeString(fakeSummary)).toEqual ""
 
 
