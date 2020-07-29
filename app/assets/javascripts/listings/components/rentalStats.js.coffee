@@ -5,16 +5,9 @@ angular.module('dahlia.components')
     listing: '<'
   require:
     listingContainer: '^propertyCard'
-  controller: ['$translate', ($translate) ->
+  controller: () ->
     ctrl = @
     for summary in _.concat(ctrl.listing.unitSummaries.general, ctrl.listing.unitSummaries.reserved)
       if summary
         summary['minIncome'] = 1500
         summary['maxIncome'] = 3500
-
-    @availabilityText = (unitSummary) ->
-      if unitSummary.availability > 0
-        return "#{unitSummary.availability} #{$translate.instant('listings.stats.available')}"
-      else
-        return $translate.instant('listings.stats.waitlist')
-  ]
