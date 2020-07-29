@@ -36,6 +36,13 @@
   "eol_last": {
     "level": "ignore"
   },
+  "forbidden_regex": {
+    "module": "coffeelint-forbidden-regex",
+    "level": "error",
+    "regexList": [
+      "[^_]\\.merge"
+    ]
+  },
   "indentation": {
     "value": 2,
     "level": "error"
