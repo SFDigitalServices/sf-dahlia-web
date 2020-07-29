@@ -48,6 +48,16 @@ do ->
       }
     }
 
+    mockTranslateCurrencyRange = (min, max) ->
+      params = {
+        currencyMinValue: min
+        currencyMaxValue: max
+      }
+      $translate.instant('listings.stats.currency_range', params)
+
+    mockTranslateHoaString = (hoaPriceString) ->
+      $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: hoaPriceString })
+
     describe 'saleStats', ->
       beforeEach ->
         ctrl = $componentController 'saleStats', locals, { parent: fakeParent, listing: fakeListing }
@@ -327,134 +337,93 @@ do ->
       describe '$ctrl.hoaDuesSubtitleString', ->
         it 'returns the correct string with only parking values specified', ->
           fakeSummary = {
-            minHoaDuesWithParking: 10000
-            maxHoaDuesWithParking: 100000
+            minHoaDuesWithParking: 500
+            maxHoaDuesWithParking: 800
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$100,000"
-          }
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string with only non-parking values specified', ->
           fakeSummary = {
-            minHoaDuesWithoutParking: 10000
-            maxHoaDuesWithoutParking: 100000
+            minHoaDuesWithoutParking: 500
+            maxHoaDuesWithoutParking: 800
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$100,000"
-          }
-
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when parking is more expensive', ->
           fakeSummary = {
-            minHoaDuesWithParking: 12000
-            maxHoaDuesWithParking: 120000
-            minHoaDuesWithoutParking: 10000
-            maxHoaDuesWithoutParking: 100000
+            minHoaDuesWithParking: 500
+            maxHoaDuesWithParking: 800
+            minHoaDuesWithoutParking: 400
+            maxHoaDuesWithoutParking: 700
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$400","$800")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when without parking is more expensive', ->
           fakeSummary = {
-            minHoaDuesWithParking: 10000
-            maxHoaDuesWithParking: 100000
-            minHoaDuesWithoutParking: 12000
-            maxHoaDuesWithoutParking: 120000
+            minHoaDuesWithParking: 500
+            maxHoaDuesWithParking: 800
+            minHoaDuesWithoutParking: 600
+            maxHoaDuesWithoutParking: 900
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
-
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500","$900")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when mix of with/without parking is more expensive', ->
           fakeSummary = {
-            minHoaDuesWithParking: 10000
+            minHoaDuesWithParking: 500
             maxHoaDuesWithParking: 120000
-            minHoaDuesWithoutParking: 12000
+            minHoaDuesWithoutParking: 600
             maxHoaDuesWithoutParking: 100000
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$10,000"
-            currencyMaxValue: "$120,000"
-          }
 
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500","$120,000")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when parking values are null', ->
           fakeSummary = {
             minHoaDuesWithParking: null
             maxHoaDuesWithParking: null
-            minHoaDuesWithoutParking: 12000
-            maxHoaDuesWithoutParking: 100000
+            minHoaDuesWithoutParking: 500
+            maxHoaDuesWithoutParking: 800
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$12,000"
-            currencyMaxValue: "$100,000"
-          }
-
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500","$800")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when non-parking values are null', ->
           fakeSummary = {
-            minHoaDuesWithParking: 12000
-            maxHoaDuesWithParking: 120000
+            minHoaDuesWithParking: 500
+            maxHoaDuesWithParking: 800
             minHoaDuesWithoutParking: null
             maxHoaDuesWithoutParking: null
           }
-          expectedTranslationParams = {
-            currencyMinValue: "$12,000"
-            currencyMaxValue: "$120,000"
-          }
 
-          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = mockTranslateCurrencyRange("$500", "$800")
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when min values are null', ->
           fakeSummary = {
             minHoaDuesWithParking: null
-            maxHoaDuesWithParking: 100000
+            maxHoaDuesWithParking: 500
             minHoaDuesWithoutParking: null
-            maxHoaDuesWithoutParking: 120000
+            maxHoaDuesWithoutParking: 800
           }
 
-          expectedCurrencyString = "$120,000"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = "$800"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns the correct string when max values are null', ->
           fakeSummary = {
-            minHoaDuesWithParking: 100000
+            minHoaDuesWithParking: 500
             maxHoaDuesWithParking: null
-            minHoaDuesWithoutParking: 120000
+            minHoaDuesWithoutParking: 600
             maxHoaDuesWithoutParking: null
           }
 
-          expectedCurrencyString = "$100,000"
-          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+          expectedCurrencyString = "$500"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
 
         it 'returns empty string when all values are null', ->
           fakeSummary = {
