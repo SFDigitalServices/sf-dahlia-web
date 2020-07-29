@@ -4,11 +4,20 @@ do ->
     $componentController = undefined
     ctrl = undefined
     locals = undefined
+    $filter = undefined
+    $translate = {
+      instant: (key) -> "translated(#{key})"
+    }
+    $filter =
+      instant: jasmine.createSpy()
     fakeParent = {}
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
-      locals = {}
+      locals = {
+        $translate: $translate
+        $filter: $filter
+      }
     )
     summaryWithoutPrices = {
       'unitType': '1 BR',
@@ -27,9 +36,16 @@ do ->
       'listingID': 'a0W0P00000F8YG4UAN'
     }
 
+    fakeListing = {
+      'unitSummaries': {
+        'general': [summaryWithoutPrices, summaryWithMinWithoutParkingPrice]
+        'reserved': null
+      }
+    }
+
     describe 'saleStats', ->
       beforeEach ->
-        ctrl = $componentController 'saleStats', locals, {parent: fakeParent}
+        ctrl = $componentController 'saleStats', locals, { parent: fakeParent, listing: fakeListing }
 
       describe '$ctrl.hasUnitsWithoutParking', ->
         it 'returns true if a listing has a general unit with a without-parking price', ->
