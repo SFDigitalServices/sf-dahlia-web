@@ -13,7 +13,6 @@ angular.module('dahlia.components')
         summary['maxIncome'] = 3500
 
     @availabilityText = (unitSummary) ->
-      console.log("HREREREREEREHR" + unitSummary)
       if unitSummary.availability > 0
         return "#{unitSummary.availability} #{$translate.instant('listings.stats.available')}"
       else
