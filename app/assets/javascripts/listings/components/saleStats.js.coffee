@@ -61,6 +61,7 @@ angular.module('dahlia.components')
         if filtered.length then Math.max.apply(null, filtered) else null
 
       @salesPriceRangeString = (unitSummary) ->
+        return "" if !unitSummary
         minPrice = @_getMin([
           unitSummary.minPriceWithoutParking
           unitSummary.minPriceWithParking

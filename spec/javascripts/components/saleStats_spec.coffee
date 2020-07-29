@@ -171,13 +171,156 @@ do ->
             maxIncome: 3500
           }
           expectedTranslationParams = {
-            currencyMinValue:"$1,500"
-            currencyMaxValue:"$3,500"
+            currencyMinValue: "$1,500"
+            currencyMaxValue: "$3,500"
           }
           expect(ctrl.incomeRangeString(fakeSummary)).toEqual "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
 
-        it 'returns empty string when neith min or max income specified', ->
+        it 'returns empty string when neither min or max income specified', ->
           fakeSummary = {}
           expect(ctrl.incomeRangeString(fakeSummary)).toEqual ""
 
+      describe '$ctrl.salesPriceRangeString', ->
+        it 'returns the correct string with only parking values specified', ->
+          fakeSummary = {
+            minPriceWithParking: 10000
+            maxPriceWithParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$100,000"
+          }
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string with only non-parking values specified', ->
+          fakeSummary = {
+            minPriceWithoutParking: 10000
+            maxPriceWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$100,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking is more expensive', ->
+          fakeSummary = {
+            minPriceWithParking: 12000
+            maxPriceWithParking: 120000
+            minPriceWithoutParking: 10000
+            maxPriceWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when without parking is more expensive', ->
+          fakeSummary = {
+            minPriceWithParking: 10000
+            maxPriceWithParking: 100000
+            minPriceWithoutParking: 12000
+            maxPriceWithoutParking: 120000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when mix of with/without parking is more expensive', ->
+          fakeSummary = {
+            minPriceWithParking: 10000
+            maxPriceWithParking: 120000
+            minPriceWithoutParking: 12000
+            maxPriceWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking values are null', ->
+          fakeSummary = {
+            minPriceWithParking: null
+            maxPriceWithParking: null
+            minPriceWithoutParking: 12000
+            maxPriceWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$12,000"
+            currencyMaxValue: "$100,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when non-parking values are null', ->
+          fakeSummary = {
+            minPriceWithParking: 12000
+            maxPriceWithParking: 120000
+            minPriceWithoutParking: null
+            maxPriceWithoutParking: null
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$12,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when min values are null', ->
+          fakeSummary = {
+            minPriceWithParking: null
+            maxPriceWithParking: 100000
+            minPriceWithoutParking: null
+            maxPriceWithoutParking: 120000
+          }
+
+          expectedString = "$120,000"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when max values are null', ->
+          fakeSummary = {
+            minPriceWithParking: 100000
+            maxPriceWithParking: null
+            minPriceWithoutParking: 120000
+            maxPriceWithoutParking: null
+          }
+
+          expectedString = "$100,000"
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when all values are null', ->
+          fakeSummary = {
+            minPriceWithParking: null
+            maxPriceWithParking: null
+            minPriceWithoutParking: null
+            maxPriceWithoutParking: null
+          }
+
+          expectedString = ""
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when empty object is passed', ->
+          fakeSummary = {}
+          expectedString = ""
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when null object is passed', ->
+          fakeSummary = null
+          expectedString = ""
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
