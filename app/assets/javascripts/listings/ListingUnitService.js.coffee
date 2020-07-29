@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentityService) ->
+ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIdentityService) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -261,7 +261,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingUnitService.$inject = ['$translate', '$http', 'ListingConstantsService', 'ListingIdentityService']
+ListingUnitService.$inject = ['$translate', '$http', '$q', 'ListingConstantsService', 'ListingIdentityService']
 
 angular
   .module('dahlia.services')
