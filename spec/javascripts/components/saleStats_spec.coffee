@@ -324,3 +324,156 @@ do ->
           expectedString = ""
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
+      describe '$ctrl.hoaDuesSubtitleString', ->
+        it 'returns the correct string with only parking values specified', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 10000
+            maxHoaDuesWithParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$100,000"
+          }
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string with only non-parking values specified', ->
+          fakeSummary = {
+            minHoaDuesWithoutParking: 10000
+            maxHoaDuesWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$100,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking is more expensive', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 12000
+            maxHoaDuesWithParking: 120000
+            minHoaDuesWithoutParking: 10000
+            maxHoaDuesWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when without parking is more expensive', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 10000
+            maxHoaDuesWithParking: 100000
+            minHoaDuesWithoutParking: 12000
+            maxHoaDuesWithoutParking: 120000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when mix of with/without parking is more expensive', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 10000
+            maxHoaDuesWithParking: 120000
+            minHoaDuesWithoutParking: 12000
+            maxHoaDuesWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$10,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking values are null', ->
+          fakeSummary = {
+            minHoaDuesWithParking: null
+            maxHoaDuesWithParking: null
+            minHoaDuesWithoutParking: 12000
+            maxHoaDuesWithoutParking: 100000
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$12,000"
+            currencyMaxValue: "$100,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when non-parking values are null', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 12000
+            maxHoaDuesWithParking: 120000
+            minHoaDuesWithoutParking: null
+            maxHoaDuesWithoutParking: null
+          }
+          expectedTranslationParams = {
+            currencyMinValue: "$12,000"
+            currencyMaxValue: "$120,000"
+          }
+
+          expectedCurrencyString = "translated(listings.stats.currency_range, #{JSON.stringify(expectedTranslationParams)})"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when min values are null', ->
+          fakeSummary = {
+            minHoaDuesWithParking: null
+            maxHoaDuesWithParking: 100000
+            minHoaDuesWithoutParking: null
+            maxHoaDuesWithoutParking: 120000
+          }
+
+          expectedCurrencyString = "$120,000"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when max values are null', ->
+          fakeSummary = {
+            minHoaDuesWithParking: 100000
+            maxHoaDuesWithParking: null
+            minHoaDuesWithoutParking: 120000
+            maxHoaDuesWithoutParking: null
+          }
+
+          expectedCurrencyString = "$100,000"
+          expectedString = "translated(listings.stats.hoa_dues_label, #{JSON.stringify({ hoaPriceValue: expectedCurrencyString })})"
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when all values are null', ->
+          fakeSummary = {
+            minHoaDuesWithParking: null
+            maxHoaDuesWithParking: null
+            minHoaDuesWithoutParking: null
+            maxHoaDuesWithoutParking: null
+          }
+
+          expectedString = ""
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when empty object is passed', ->
+          fakeSummary = {}
+          expectedString = ""
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when null object is passed', ->
+          fakeSummary = null
+          expectedString = ""
+          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
+

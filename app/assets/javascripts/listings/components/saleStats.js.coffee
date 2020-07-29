@@ -74,6 +74,7 @@ angular.module('dahlia.components')
         @_getCurrencyRange(minPrice, maxPrice)
 
       @hoaDuesSubtitleString = (unitSummary) ->
+        return "" if !unitSummary
         minHoa = @_getMin([
           unitSummary.minHoaDuesWithoutParking
           unitSummary.minHoaDuesWithParking
@@ -83,7 +84,11 @@ angular.module('dahlia.components')
           unitSummary.maxHoaDuesWithParking
         ])
 
-        $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: @_getCurrencyRange(minHoa, maxHoa) })
+        currencyRange = @_getCurrencyRange(minHoa, maxHoa)
+
+        return "" if !currencyRange
+
+        $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: currencyRange })
 
       return ctrl
   ]
