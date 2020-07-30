@@ -249,7 +249,8 @@
             },
             "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "Please specify..."
+                "demographic_input_placeholder": "Please specify...",
+                "indigenous_group_placeholder": "Specific group"
             },
             "title": "Your race and ethnicity"
         },

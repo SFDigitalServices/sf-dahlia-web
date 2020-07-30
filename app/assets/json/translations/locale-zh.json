@@ -242,7 +242,8 @@
             },
             "subtitle": "以下哪幾項最能形容您的種族和文化認同？請選擇以下所有符合的項目。",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "請註明…"
+                "demographic_input_placeholder": "請註明…",
+                "indigenous_group_placeholder": "具體部族"
             },
             "title": "您的種族和文化認同"
         },
