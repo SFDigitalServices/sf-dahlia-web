@@ -29,7 +29,7 @@ div.table-pricing-wrapper.hide-for-small-only
         th scope="col" translate="t.units"
         th scope="col" translate="listings.stats.income_range"
         th.text-right scope="col" translate="listings.stats.rent"
-    tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-desktop.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
     / Reserved
   table.table-pricing.table-pricing-hero.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
     caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
@@ -37,4 +37,4 @@ div.table-pricing-wrapper.hide-for-small-only
     caption ng-if="::!$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
       span translate="listings.reserved_for" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
 
-    tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-desktop.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
