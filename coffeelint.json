@@ -38,10 +38,11 @@
   },
   "forbidden_regex": {
     "module": "coffeelint-forbidden-regex",
-    "level": "error",
+    "level": "warn",
     "regexList": [
       "[^_]\\.merge"
-    ]
+    ],
+    "message": "Avoid using angular's merge function due to a security vulnerability"
   },
   "indentation": {
     "value": 2,
