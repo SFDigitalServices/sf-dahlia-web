@@ -12,6 +12,8 @@ section.app-container.focus-container ng-class="{'t-zh': application.application
           p.form-note.margin-bottom
             | {{'a4_overview.p1' | translate}}
           p.form-note.margin-bottom translate="a4_overview.p2" translate-value-sref="dahlia.document-checklist" translate-compile="true"
+          p.form-note.margin-bottom ng-if="listingIsSale()"
+            | {{'a4_overview.p2b-ownership' | translate}}
           p.form-note.margin-bottom
             | {{'a4_overview.p3' | translate}}
           p.form-note.margin-bottom
