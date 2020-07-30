@@ -5,12 +5,6 @@ setCheckboxSelected = (checkboxElement, newSelectedValue) ->
     if selected != newSelectedValue
       checkboxElement.click()
 
-setCheckBoxAndText = (checkboxElement, textElement, newText) ->
-  setCheckboxSelected(checkboxElement, true)
-  # have to wait for the text element to be enabled after checkbox changed
-  browser.waitForAngular()
-  textElement.clear().sendKeys(@defaults.indigenousNativeAmericanGroup)
-
 class DemographicSurvey extends AngularPage
   constructor: ->
     @userGender = element(By.id('user_gender'))
