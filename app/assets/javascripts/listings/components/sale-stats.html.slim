@@ -20,7 +20,7 @@ div.table-pricing-wrapper.show-for-small-only
 
     tbody ng-include="'listings/templates/property-card/_sale-stats-row-mobile.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
 
-/ Destop table
+/ Desktop table
 div.table-pricing-wrapper.hide-for-small-only
   table.table-pricing.table-pricing-hero role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
     caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
