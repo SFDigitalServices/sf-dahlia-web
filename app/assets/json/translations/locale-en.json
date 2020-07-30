@@ -1035,8 +1035,9 @@
                 "title": "Before applying"
             },
             "callout": {
-                "button": "See listings",
-                "title": "More listings are available on our website."
+                "first_come_first_served_button": "First Come, First Served",
+                "city_second_loan_button": "City Second Loan Program",
+                "title": "Find more listings on our website:"
             },
             "get_help": {
                 "other_groups_may_qualify": "Others, like San Francisco teachers and first responders, may qualify for loans.",
