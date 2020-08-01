@@ -20,10 +20,6 @@ phrase:
         locale_id: 6944eb9f935f10f3dd34aa5aa09747f6
   pull:
     targets:
-      - file: app/assets/json/translations/locale-en.json
-        params:
-          file_format: nested_json
-          locale_id: 135c7c6607b58892bf35088a7893050b
       - file: app/assets/json/translations/locale-tl.json
         params:
           file_format: nested_json
