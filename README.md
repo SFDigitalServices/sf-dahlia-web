@@ -93,12 +93,19 @@ To run stress testing against the Salesforce instance, refer to the documentatio
 To get started working with our Phrase translations, you will need to:
 
 1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
-1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in e.g. LastPass
+1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
 
-**To upload new strings or translations to Phrase**
+- Each time you add new strings to locale-en.json, push to Phrase to keep it up-to-date
+- If you delete keys from locale-en.json, run phrase push, then run phrase cleanup to delete unused keys
+```
+phrase uploads cleanup --id=[upload id from the response of phrase push]  --access_token=[your access token]
+```
+- If you want to make updates directly to non-english languages, you need to update them in phrase, then pull in the latest values.
+
+**To upload new strings to Phrase**
 Run `grunt phrasePull --phraseAccessToken=[your access token]`
 
-**To download new strings or translations from Phrase**
+**To download new translations from Phrase**
 Run `grunt phrasePush --phraseAccessToken=[your access token]`
 
 ## Contributing changes
