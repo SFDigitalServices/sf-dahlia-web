@@ -6,18 +6,6 @@ phrase:
       params:
         file_format: nested_json
         locale_id: 135c7c6607b58892bf35088a7893050b
-    - file: app/assets/json/translations/locale-tl.json
-      params:
-        file_format: nested_json
-        locale_id: 6ddd85f25418456343453dafb9f9cf34
-    - file: app/assets/json/translations/locale-es.json
-      params:
-        file_format: nested_json
-        locale_id: 0bf1b78c0d5627216f632e3ea763ae1c
-    - file: app/assets/json/translations/locale-zh.json
-      params:
-        file_format: nested_json
-        locale_id: 6944eb9f935f10f3dd34aa5aa09747f6
   pull:
     targets:
       - file: app/assets/json/translations/locale-tl.json
