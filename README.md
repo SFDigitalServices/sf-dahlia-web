@@ -89,24 +89,27 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
-## Pulling and pushing translations from [our project on Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
+## Translations process with [Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
 To get started working with our Phrase translations, you will need to:
 
 1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
 1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
+1. Save the access token as an env var so you don't have to pass it to the phrase commands `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
 
-- Each time you add new strings to locale-en.json, push to Phrase to keep it up-to-date
+### When strings are added to or deleted from locale-en.json
+
+Push to Phrase each time you add new strings to locale-en.json to keep it up-to-date
+- Run `grunt phrasePush`
 - If you delete keys from locale-en.json, run phrase push, then run phrase cleanup to delete unused keys
 ```
-phrase uploads cleanup --id=[upload id from the response of phrase push]  --access_token=[your access token]
+phrase uploads cleanup --id=[upload id from the response of phrase push]
 ```
-- If you want to make updates directly to non-english languages, you need to update them in phrase, then pull in the latest values.
 
-**To upload new strings to Phrase**
-Run `grunt phrasePull --phraseAccessToken=[your access token]`
+### To download new translations from Phrase
 
-**To download new translations from Phrase**
-Run `grunt phrasePush --phraseAccessToken=[your access token]`
+If you want to make updates directly to non-english languages, you need to update them in phrase, then pull in the latest values.
+
+Run `grunt phrasePull`
 
 ## Contributing changes
 
