@@ -185,7 +185,7 @@
             "password_short_instructions": "Kailangang mayroon itong 8 character"
         },
         "d1_income_vouchers": {
-            "if_subsidy_warning": "Kung nakakatanggap ka ng subsidy, ang kita mo ay dapat dalawang beses ng bahagi ng tenant sa renta. Titingnan namin ito pagkatapos ng lottery.",
+            "if_subsidy_warning": "Kung nakakatanggap ka ng subsidy, ang kita mo ay dapat dalawang beses (two times) ng bahagi ng tenant (tenant portion) sa renta. Titingnan namin ito pagkatapos ng lottery.",
             "p1": "<strong>Mga housing voucher (tulong sa pabahay)</strong> na tulad ng Section 8",
             "p2": "<strong>Hindi binubuwisang kita (non-taxable income)</strong> tulad ng SSI, SSDI, bayad bilang suporta sa anak, o benepisyong worker's compensation ((bayad pinsala para sa manggagawa)",
             "p3": "<strong>Mga subsidyo sa upa</strong> tulad ng VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, at iba pa",
@@ -574,13 +574,13 @@
             "applicant_select_a_loan_officer": "Mangyaring pumili ng loan officer (opisyal na namamahala sa pagpapautang)",
             "applicant_separate_address": "Ipadala ang aking sulat sa ibang address",
             "applicant_sexual_orientation": "Paano ninyo mailalarawanan ang inyong seksuwal na oryentasyon o kinikilalang kasarian?",
-            "application_all_applicants_are_required": "Ang pangunahing aplikante lang ang kailangang mag-upload ng liham ng pagpapatunay na isasama sa lottery. Ang liham ng pagpapatunay ay dapat nakapetsa sa nakalipas na taon.",
+            "application_all_applicants_are_required": "Ang pangunahing aplikante lang ang kailangang mag-upload ng liham ng pagpapatunay (verification letter) na isasama sa lottery. Ang liham ng pagpapatunay ay dapat nakapetsa sa nakalipas na taon.",
             "application_cant_find_lender": "Hindi ba ninyo mahanap ang inyong loan officer (opisyal na namamahala sa pagpapautang)? Dapat galing ang inyong sulat ng paunang pag-apruba (pre-approval letter) sa <a target='_blank' href='{{url}}'>taong nasa aming listahan</a>.",
             "application_has_completed_homebuyer_education": "Nakadalo na ako sa 10 oras na Edukasyon para sa Bumibili ng Bahay (Homebuyer Education).",
             "application_has_loan_pre_approval": "Mayroon na akong paunang pag-apruba sa pag-utang para sa pabahay mula sa Loan Officer (opisyal na namamahala sa pagpapautang) na Aprubado ng MOHCD.",
             "application_is_first_time_homebuyer": "Hindi ako nagmay-ari ng residensiyal na ari-arian nitong nakaraang 3 taon.",
             "application_pre_approval_must_be_120_days": "Kailangang may petsa ang inyong liham ng paunang pag-apruba (pre-approval letter) na nasa loob ng nakaraang 120 araw",
-            "application_visit_homeownership_calendar": "Kung hindi mo pa ito nagagawa, <a href='{{url}}' target='_blank'>mag-sign up para kumpletuhin ang edukasyon sa bumili ng bahay</a>. Makakatanggap ka ng liham ng pagpapatunay kapag natapos mo ito.",
+            "application_visit_homeownership_calendar": "Kung hindi mo pa ito nagagawa, <a href='{{url}}' target='_blank'>mag-sign up para kumpletuhin ang edukasyon sa bumili ng bahay (homebuyer education) </a>. Makakatanggap ka ng liham ng pagpapatunay kapag natapos mo ito.",
             "apply_online": "Mag-aplay Online ",
             "aunt": "Tiyahin",
             "back_to_homepage": "Bumalik sa Homepage",
@@ -660,7 +660,7 @@
             "middle_name": "Panggitnang Pangalan",
             "mobility_impairments": "Para sa Kapansanan sa Paglalakad o Paggalaw",
             "monthly_rent": "Buwanang Upa",
-            "more_about_you": "Higit pa Tungkol sa Iyo",
+            "more_about_you": "Higit pa Tungkol sa Iyo (More About You)",
             "my_application": "Ang Aking Aplikasyon",
             "name": "Pangalan",
             "nephew": "Pamangkin na Lalaki",
@@ -820,9 +820,9 @@
             "all_units": "Lahat ng Unit ",
             "all_units_reserved_for": "Nakareserba ang lahat ng unit para sa {{type}}",
             "ami_tiers": {
-                "low_income": "Mababang Kita",
-                "middle_income": "Kalagitnaang Kita",
-                "moderate_income": "Katamtamang Kita"
+                "low_income": "Mababang Kita (Low Income)",
+                "middle_income": "Kalagitnaang Kita (Middle Income)",
+                "moderate_income": "Katamtamang Kita (Moderate Income)"
             },
             "applications_closed": "Sarado na ang mga Aplikasyon {{date}}",
             "apply": {
@@ -980,11 +980,11 @@
                 "available": "puwedeng makuha",
                 "hoa_dues": "mga singil ng HOA (HOA dues) ",
                 "household_size": "Laki ng sambahayan",
-                "income_range": "Hanay ng Kita",
+                "income_range": "Hanay ng Kita (Income Range)",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
-                "percent_ami": "{{amiPercent}}% AMI",
-                "pricing": "Pagpepresyo",
+                "percent_ami": "{{amiPercent}}% AMI (Area Median Income) / Pangitnang Kita sa Lugar Ninyo ",
+                "pricing": "Presyo (Pricing)",
                 "rent": "Upa",
                 "sales_price": "Presyo sa pagbebenta",
                 "waitlist": "Waitlist (Listahan ng mga Naghihintay)"
@@ -1032,7 +1032,6 @@
                 "title": "Bago kayo mag-aplay"
             },
             "callout": {
-                "button": "Tingnan ang mga nakalistang pabahay",
                 "title": "Mas maraming matitingnang nakalistang pabahay sa aming website."
             },
             "get_help": {
