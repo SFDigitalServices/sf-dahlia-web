@@ -6,6 +6,7 @@ phrase:
       params:
         file_format: nested_json
         locale_id: 135c7c6607b58892bf35088a7893050b
+        update_translations: true
   pull:
     targets:
       - file: app/assets/json/translations/locale-tl.json

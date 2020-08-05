@@ -98,12 +98,17 @@ To get started working with our Phrase translations, you will need to:
 
 ### Push your changes to Phrase every time you update locale-en.json
 
-Run `grunt phrasePush` to push to Phrase each time you add new strings to locale-en.json to keep it up-to-date
+Run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
 
-If you deleted or renamed keys in locale-en.json, run phrase cleanup to delete now-unused keys `phrase uploads cleanup --id=[upload id from phrase push log]`
+Special cases:
+- If you changed the meaning or intent of an existing English string, you should delete the existing translations in Phrase and run `grunt phrasePull` so users don't get incorrect info. If your update doesn't change the meaning or intent of the string then you don't need to delete the existing translations.
+- If you deleted a key in locale-en.json, run phrase cleanup  after you push to delete the now-unused key `phrase uploads cleanup --id=[upload id from phrase push log]`
+- If you re-named a key, we treat that the same as deleting the old key and adding a new one. After you run `grunt phrasePush` and `phrase cleanup`, follow the instructions below to update the translations and pull them down.
 
 ### Make your updates in Phrase if you need to update non-English locale files
-If you want to update translations in a non-English locale file, you need to make your changes in Phrase, then pull down the updated translations. This includes if you renaming keys. If you renamed a key in locale-en.json, you need to push your change to Phrase, then update the translations for the new key in Phrase and pull those translations down.
+If you want to update translations in a non-English locale file, you need to make your changes in Phrase, then pull down the updated translations.
+
+You have to do this if you rename a key too. If you renamed a key in locale-en.json, you need to push your change to Phrase, then update the translations for the new key in Phrase and pull those translations down following the instructions below
 
 ### How to download new translations from Phrase
 
