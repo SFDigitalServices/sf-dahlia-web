@@ -101,7 +101,7 @@ To get started working with our Phrase translations, you will need to:
 Run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
 
 Special cases:
-- If you changed the meaning or intent of an existing English string, you should delete the existing translations in Phrase and run `grunt phrasePull` so users don't get incorrect info.
+- If you changed the meaning or intent of an existing English string, you should delete the existing non-English translations in Phrase and run `grunt phrasePull` so users don't get incorrect info.
 - If you updated an English string but it doesn't change the meaning or intent of the string then you don't need to delete the existing translations, but you need to mark the translations in other languages as "unverified" in Phrase. (TODO: Waiting for a response from Phrase on this to avoid having to do this manually)
 - If you deleted a key in locale-en.json, run phrase cleanup  after you push to delete the now-unused key `phrase uploads cleanup --id=[upload id from phrase push log]`
 - If you re-named a key, we treat that the same as deleting the old key and adding a new one. After you run `grunt phrasePush` and `phrase cleanup`, follow the instructions below to update the translations and pull them down.
