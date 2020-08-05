@@ -94,22 +94,20 @@ To get started working with our Phrase translations, you will need to:
 
 1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
 1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
-1. Save the access token as an env var so you don't have to pass it to the phrase commands `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
+1. Save the access token as an env var so you don't have to pass it to the phrase commands: `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
 
-### When strings are added to or deleted from locale-en.json
+### Push your changes to Phrase every time you update locale-en.json
 
-Push to Phrase each time you add new strings to locale-en.json to keep it up-to-date
-- Run `grunt phrasePush`
-- If you delete keys from locale-en.json, run phrase push, then run phrase cleanup to delete unused keys
-```
-phrase uploads cleanup --id=[upload id from the response of phrase push]
-```
+Run `grunt phrasePush` to push to Phrase each time you add new strings to locale-en.json to keep it up-to-date
 
-### To download new translations from Phrase
+If you deleted or renamed keys in locale-en.json, run phrase cleanup to delete now-unused keys `phrase uploads cleanup --id=[upload id from phrase push log]`
 
-If you want to make updates directly to non-english languages, you need to update them in phrase, then pull in the latest values.
+### Make your updates in Phrase if you need to update non-English locale files
+If you want to update translations in a non-English locale file, you need to make your changes in Phrase, then pull down the updated translations. This includes if you renaming keys. If you renamed a key in locale-en.json, you need to push your change to Phrase, then update the translations for the new key in Phrase and pull those translations down.
 
-Run `grunt phrasePull`
+### How to download new translations from Phrase
+
+If we have new verified translations in Phrase, run `grunt phrasePull` to get the latest translations
 
 ## Contributing changes
 
