@@ -833,9 +833,9 @@
                 "do_not_do_multiple_applications": "All applications containing any person who appears on more than one application will be removed from the lottery.",
                 "drop_off_application": "Drop Off Application",
                 "drop_off_application_or_mail": "Drop Off Application or Send by US Mail",
+                "eligibility_requirement_description": "Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.",
                 "find_a_housing_counselor": "Find a Housing Counselor",
                 "fulfill_eligibility_requirements": "Make sure you fulfill the <a href='{{url}}' target='_blank'>eligibility requirements</a> for this listing before you begin.",
-                "eligibility_requirement_description": "Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.",
                 "get_a_paper_application": "Get a Paper Application",
                 "how_to_apply": "How to Apply",
                 "include_an_envelope": "In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you.",
@@ -1035,8 +1035,8 @@
                 "title": "Before applying"
             },
             "callout": {
-                "first_come_first_served_button": "First Come, First Served",
                 "city_second_loan_button": "City Second Loan Program",
+                "first_come_first_served_button": "First Come, First Served",
                 "title": "Find more listings on our website:"
             },
             "get_help": {

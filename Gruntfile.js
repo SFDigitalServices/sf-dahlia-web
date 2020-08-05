@@ -168,14 +168,26 @@ module.exports = function(grunt) {
   exec: {
     phrasePull: {
       cmd: function() {
+        // If token is present, pass to phrase, otherwise phrase will look for
+        // the PHRASE_ACCESS_TOKEN env var.
         var token = grunt.option('phraseAccessToken')
-        return 'phrase pull --access_token ' + token;
+        if (token) {
+          return 'phrase pull --access_token ' + token
+        } else {
+          return 'phrase pull'
+        }
       }
     },
     phrasePush: {
       cmd: function() {
+        // If token is present, pass to phrase, otherwise phrase will look for
+        // the PHRASE_ACCESS_TOKEN env var.
         var token = grunt.option('phraseAccessToken')
-        return 'phrase push --access_token ' + token;
+        if (token) {
+          return 'phrase push --access_token ' + token;
+        } else {
+          return 'phrase push'
+        }
       }
     }
   }
