@@ -89,17 +89,31 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
-## Pulling and pushing translations from [our project on Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
+## Translations process with [Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
 To get started working with our Phrase translations, you will need to:
 
 1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
-1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in e.g. LastPass
+1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
+1. Save the access token as an env var so you don't have to pass it to the phrase commands: `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
 
-**To upload new strings or translations to Phrase**
-Run `grunt phrasePull --phraseAccessToken=[your access token]`
+### Push your changes to Phrase every time you update locale-en.json
 
-**To download new strings or translations from Phrase**
-Run `grunt phrasePush --phraseAccessToken=[your access token]`
+Run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
+
+Special cases:
+- If you changed the meaning or intent of an existing English string, you should delete the existing non-English translations in Phrase and run `grunt phrasePull` so users don't get incorrect info.
+- If you updated an English string but it doesn't change the meaning or intent of the string then you don't need to delete the existing translations. Phrase will automatically mark the translations in other languages as "unverified".
+- If you deleted a key in locale-en.json, run phrase cleanup  after you push to delete the now-unused key `phrase uploads cleanup --id=[upload id from phrase push log]`
+- If you re-named a key, we treat that the same as deleting the old key and adding a new one. After you run `grunt phrasePush` and `phrase cleanup`, follow the instructions below to update the translations and pull them down.
+
+### Make your updates in Phrase if you need to update non-English locale files
+If you want to update translations in a non-English locale file, you need to make your changes in Phrase, then pull down the updated translations.
+
+You have to do this if you rename a key too. If you renamed a key in locale-en.json, you need to push your change to Phrase, then update the translations for the new key in Phrase and pull those translations down following the instructions below
+
+### How to download new translations from Phrase
+
+If we have new verified translations in Phrase, run `grunt phrasePull` to get the latest translations
 
 ## Contributing changes
 
