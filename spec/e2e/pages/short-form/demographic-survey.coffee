@@ -16,9 +16,9 @@ class DemographicSurvey extends AngularPage
     @blackAfricanCheckbox = element(By.id('panel-Black-African'))
     @indigenousAccordionHeader = element(By.id('panel-Indigenous'))
     @indigenousNativeAmericanCheckbox = element(By.id('panel-Indigenous-American Indian/Native American'))
-    @indigenousNativeAmericanText = element(By.id('panel-Indigenous-American Indian/Native American-text'))
+    @indigenousNativeAmericanGroup = element(By.id('panel-Indigenous-American Indian/Native American-text'))
     @indigenousCentralSouthAmericaCheckbox = element(By.id('panel-Indigenous-Indigenous from Mexico, the Caribbean, Central America, or South America'))
-    @indigenousCentralSouthAmericaText = element(By.id('panel-Indigenous-Indigenous from Mexico, the Caribbean, Central America, or South America-text'))
+    @indigenousCentralSouthAmericaGroup = element(By.id('panel-Indigenous-Indigenous from Mexico, the Caribbean, Central America, or South America-text'))
     @whiteAccordionHeader = element(By.id('panel-White'))
     @whiteEuropeanCheckbox = element(By.id('panel-White-European'))
     @whiteOtherCheckbox = element(By.id('panel-White-Other'))
@@ -57,8 +57,8 @@ class DemographicSurvey extends AngularPage
     setCheckboxSelected(@indigenousCentralSouthAmericaCheckbox, true)
     # have to wait for the text element to be enabled after checkbox changed
     browser.waitForAngular()
-    @indigenousNativeAmericanText.clear().sendKeys(@defaults.indigenousNativeAmericanGroup)
-    @indigenousCentralSouthAmericaText.clear().sendKeys(@defaults.indigenousCentralSouthAmericaGroup)
+    @indigenousNativeAmericanGroup.clear().sendKeys(@defaults.indigenousNativeAmericanGroup)
+    @indigenousCentralSouthAmericaGroup.clear().sendKeys(@defaults.indigenousCentralSouthAmericaGroup)
 
     # Select White-European and White - Other and add other text
     @whiteAccordionHeader.click()
