@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentityService) ->
+ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIdentityService) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -222,7 +222,8 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
     angular.copy([], Service.AMICharts)
     Service.loading.ami = true
     Service.error.ami = false
-    # If chartTypes are not defined on the listing, exit early.
+    # If chartTypes are not defined on the listing
+    # e.g. if there are no units on the listing yet, exit early.
     return $q.when() unless listing.chartTypes
     allChartTypes = _.sortBy(listing.chartTypes, 'percent')
     data =
@@ -261,7 +262,7 @@ ListingUnitService = ($translate, $http, ListingConstantsService, ListingIdentit
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingUnitService.$inject = ['$translate', '$http', 'ListingConstantsService', 'ListingIdentityService']
+ListingUnitService.$inject = ['$translate', '$http', '$q', 'ListingConstantsService', 'ListingIdentityService']
 
 angular
   .module('dahlia.services')
