@@ -9,7 +9,6 @@
           | {{::session.Start_Time}}
           span ng-if="::session.End_Time"
             | &mdash;{{::session.End_Time}}
-      p.content-group_address.c-steel.no-margin.skiptranslate ng-if="::session.Venue"
-        | {{::session.Venue}}
+      p.content-group_address.c-steel.no-margin.skiptranslate ng-if="::session.Venue" ng-bind-html="::session.Venue | stripMostTags | nl2br"
       p.content-group_address.c-steel.skiptranslate ng-if="::session.Street_Address"
         | {{::session.Street_Address}}, {{::session.City}}
