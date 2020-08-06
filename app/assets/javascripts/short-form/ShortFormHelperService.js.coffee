@@ -98,11 +98,15 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       suboptions: [
         {
           key: 'American Indian/Native American',
-          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_american_indian')
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_american_indian'),
+          free_text_key: 'indigenousNativeAmericanGroup',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.indigenous_group_placeholder')
         },
         {
           key: 'Indigenous from Mexico, the Caribbean, Central America, or South America',
-          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico')
+          translation_key: Service.flagForI18n('demographics_accordion.options.indigenous_indigenous_mexico'),
+          free_text_key: 'indigenousCentralSouthAmericaGroup',
+          free_text_placeholder: Service.flagForI18n('demographics_accordion.text_input_placeholders.indigenous_group_placeholder')
         },
         {
           key: 'Other',

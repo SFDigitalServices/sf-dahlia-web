@@ -185,6 +185,7 @@
             "password_short_instructions": "Kailangang mayroon itong 8 character"
         },
         "d1_income_vouchers": {
+            "if_subsidy_warning": "Kung nakakatanggap ka ng subsidy, ang kita mo ay dapat dalawang beses (two times) ng bahagi ng tenant (tenant portion) sa renta. Titingnan namin ito pagkatapos ng lottery.",
             "p1": "<strong>Mga housing voucher (tulong sa pabahay)</strong> na tulad ng Section 8",
             "p2": "<strong>Hindi binubuwisang kita (non-taxable income)</strong> tulad ng SSI, SSDI, bayad bilang suporta sa anak, o benepisyong worker's compensation ((bayad pinsala para sa manggagawa)",
             "p3": "<strong>Mga subsidyo sa upa</strong> tulad ng VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, at iba pa",
@@ -197,7 +198,13 @@
             "title": "Pumunta naman tayo sa kita."
         },
         "demographics_accordion": {
+            "accessibility_labels": {
+                "clear_all_label": "I-clear ang lahat ng opsyon sa piniling lahi at etnisidad.",
+                "clear_option": "I-clear ang piniling opsyon: {{nameOfOptionToClear}}",
+                "expand_category": "{{optionName}}: I-click para i-expand ang mga opsyon sa kategorya at view"
+            },
             "accumulator": {
+                "action": "I-clear lahat",
                 "title": "Pinili mo ang..."
             },
             "options": {
@@ -241,7 +248,8 @@
             },
             "subtitle": "Alin sa mga item sa ibaba na pinakamahusay na naglalarawan sa iyong lahi at etnisidad? Pumili ng kahit ilang item na nalalapat mula sa mga kategorya sa ibaba.",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "Pakitukoy..."
+                "demographic_input_placeholder": "Pakitukoy...",
+                "indigenous_group_placeholder": "Espesipikong grupo"
             },
             "title": "Iyong lahi at etnisidad"
         },
@@ -567,13 +575,13 @@
             "applicant_select_a_loan_officer": "Mangyaring pumili ng loan officer (opisyal na namamahala sa pagpapautang)",
             "applicant_separate_address": "Ipadala ang aking sulat sa ibang address",
             "applicant_sexual_orientation": "Paano ninyo mailalarawanan ang inyong seksuwal na oryentasyon o kinikilalang kasarian?",
-            "application_all_applicants_are_required": "Itinatakda sa lahat ng miyembro ng kabahayan na nasa sapat na gulang at nasa papeles para sa pag-utang at nasa titulo, na makakompleto ng edukasyon para sa bumibili ng bahay (homebuyer education). Gayon pa man, iyong lamang pangunahing aplikante ang kailangang mag-upload ng liham ng pagpapatunay (verification letter) upang makasama sa lottery o palabunutan. ",
+            "application_all_applicants_are_required": "Ang pangunahing aplikante lang ang kailangang mag-upload ng liham ng pagpapatunay (verification letter) na isasama sa lottery. Ang liham ng pagpapatunay ay dapat nakapetsa sa nakalipas na taon.",
             "application_cant_find_lender": "Hindi ba ninyo mahanap ang inyong loan officer (opisyal na namamahala sa pagpapautang)? Dapat galing ang inyong sulat ng paunang pag-apruba (pre-approval letter) sa <a target='_blank' href='{{url}}'>taong nasa aming listahan</a>.",
             "application_has_completed_homebuyer_education": "Nakadalo na ako sa 10 oras na Edukasyon para sa Bumibili ng Bahay (Homebuyer Education).",
             "application_has_loan_pre_approval": "Mayroon na akong paunang pag-apruba sa pag-utang para sa pabahay mula sa Loan Officer (opisyal na namamahala sa pagpapautang) na Aprubado ng MOHCD.",
             "application_is_first_time_homebuyer": "Hindi ako nagmay-ari ng residensiyal na ari-arian nitong nakaraang 3 taon.",
             "application_pre_approval_must_be_120_days": "Kailangang may petsa ang inyong liham ng paunang pag-apruba (pre-approval letter) na nasa loob ng nakaraang 120 araw",
-            "application_visit_homeownership_calendar": "Kung hindi pa ninyo nagagawa ito, pakibasa ang <a href='{{url}}' target='_blank'>kalendaryo ng HomeownershipSF</a> at nang makapagpalista  para sa workshop o palihan.",
+            "application_visit_homeownership_calendar": "Kung hindi mo pa ito nagagawa, <a href='{{url}}' target='_blank'>mag-sign up para kumpletuhin ang edukasyon sa bumili ng bahay (homebuyer education) </a>. Makakatanggap ka ng liham ng pagpapatunay kapag natapos mo ito.",
             "apply_online": "Mag-aplay Online ",
             "aunt": "Tiyahin",
             "back_to_homepage": "Bumalik sa Homepage",
@@ -617,6 +625,7 @@
             "for_your_household": "para sa inyong kabahaya ",
             "friend": "Kaibigan",
             "gay_lesbian_same_gender_loving": "Gay/Lesbian/Nagkakagusto sa Kaparehas ng Kasarian",
+            "gender": "Kasarian",
             "genderqueer_non_binary": "Genderqueer/Gender Non-binary",
             "get_directions": "Kumuha ng mga Direksiyon ",
             "good_news_for_higher_ranking": "Magandang balita! Kuwalipikado kayo para sa mas mataas na ranggo sa lottery?",
@@ -633,9 +642,12 @@
             "household_member_update": "Baguhin o I-update ang Miyembro ng Kabahayan",
             "household_members": "Mga Miyembro ng Kabahayan",
             "how_did_you_hear_about_this": "Paano ninyo nalaman ang tungkol sa nakalistang pabahay na ito?",
+            "how_did_you_hear_about_this_subtitle": "Sabihin sa amin kung paano mo nalaman ang tungkol sa oportunidad na ito sa pabahay.",
+            "how_you_heard_about_this_listing": "Paano Mo Nalaman ang Tungkol sa Listing na Ito",
             "in_law": "Manugang o Biyenan",
             "income": "Kita",
             "income_placeholder": "Kabuuan ng lahat ng inyong pinagkukunan ng kita",
+            "language_spoken_at_home": "Wikang Ginagamit sa Bahay",
             "last_name": "Apelyido",
             "live_alone": "Titira ako nang mag-isa",
             "live_in_public_housing_or_hud": "Nakatira sa May Tulong na Pabahay o Assisted Housing (may pangangalaga para sa matatanda o may kapansanan)",
@@ -649,6 +661,7 @@
             "middle_name": "Panggitnang Pangalan",
             "mobility_impairments": "Para sa Kapansanan sa Paglalakad o Paggalaw",
             "monthly_rent": "Buwanang Upa",
+            "more_about_you": "Higit pa Tungkol sa Iyo (More About You)",
             "my_application": "Ang Aking Aplikasyon",
             "name": "Pangalan",
             "nephew": "Pamangkin na Lalaki",
@@ -683,6 +696,8 @@
             "preference_proof_documents": "Anong dokumento ang i-a-upload ninyo upang mapatunayan ang pagiging kuwalipikado?",
             "preferences": "Mga Preperensiya",
             "primary_language": {
+                "applicant_language_at_home": "Wikang ginagamit sa bahay",
+                "applicant_language_at_home_subtitle": "Piliin ang wikang pinakakaraniwang ginagamit sa iyong bahay.",
                 "options": {
                     "chinese_cantonese": "Tsino - Cantonese",
                     "chinese_mandarin": "Tsino - Mandarin",
@@ -691,7 +706,8 @@
                     "russian": "Ruso",
                     "spanish": "Espanyol",
                     "vietnamese": "Vietnamese"
-                }
+                },
+                "your_primary_language": "Tukuyin ang wikang ginagamit sa bahay"
             },
             "primary_user": "Pangunahing Aplikante",
             "proof": {
@@ -716,6 +732,7 @@
             },
             "proof_of_rent": "Patunay ng Pag-upa",
             "questioning_unsure": "Pinag-iisipan/Hindi Tiyak",
+            "race_and_ethnicity": "Lahi at Etnisidad",
             "re_enter_email_address": "Pakilagay muli ang email address",
             "re_enter_password": "Pakilagay muli ang inyong password para kumpirmain ito",
             "read_less": "magbasa ng mas kaunti",
@@ -727,6 +744,7 @@
             "see_listing": "Tingnan ang Nakalistang Pabahay",
             "select_one": "Pumili ng Isa",
             "send_email": "Magpadala ng email",
+            "sexual_orientation_or_sexual_identity": "Sekswal na Oryentasyon o Sekswal na Pagkakakilanlan",
             "share": "I-share",
             "show_less": "mas kaunti ang ipakita",
             "show_more": "mas marami ang ipakita",
@@ -802,6 +820,11 @@
             },
             "all_units": "Lahat ng Unit ",
             "all_units_reserved_for": "Nakareserba ang lahat ng unit para sa {{type}}",
+            "ami_tiers": {
+                "low_income": "Mababang Kita (Low Income)",
+                "middle_income": "Kalagitnaang Kita (Middle Income)",
+                "moderate_income": "Katamtamang Kita (Moderate Income)"
+            },
             "applications_closed": "Sarado na ang mga Aplikasyon {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Kailangang matanggap ang mga aplikasyon bago ang huling araw ng pagsusumite at hindi isasaalang-alang ang mga tatak sa koreo. ",
@@ -957,6 +980,12 @@
                 "availability": "Kung puwedeng makuha o hindi ",
                 "available": "puwedeng makuha",
                 "hoa_dues": "mga singil ng HOA (HOA dues) ",
+                "household_size": "Laki ng sambahayan",
+                "income_range": "Hanay ng Kita (Income Range)",
+                "maximum": "Maximum",
+                "minimum": "Minimum",
+                "percent_ami": "{{amiPercent}}% AMI (Area Median Income) / Pangitnang Kita sa Lugar Ninyo ",
+                "pricing": "Presyo (Pricing)",
                 "rent": "Upa",
                 "sales_price": "Presyo sa pagbebenta",
                 "waitlist": "Waitlist (Listahan ng mga Naghihintay)"
@@ -983,7 +1012,7 @@
             },
             "header": {
                 "find_matching_listings": "Humanap ng mga nagtutugmang nakalistang pabahay",
-                "if_you_tell_us": "Kapag sinabi ninyo sa amin ang laki at ang kita ng inyong kabahayan, puwede naming itampok ang mga nakalistang pabahay kung saan posibleng kuwalipikado kayo. ",
+                "if_you_tell_us": "Kung sasabihin mo sa amin ang laki at kita ng iyong sambahayan, puwede naming ipakita sa iyo ang mga listing kung saan posible kang kwalipikado.",
                 "or_get_help_calculating_income": "o <a ui-sref='{{sref}}'>kumuha ng tulong sa pagkalkula sa inyong kita</a>"
             },
             "rental_assistance": {
@@ -1004,7 +1033,6 @@
                 "title": "Bago kayo mag-aplay"
             },
             "callout": {
-                "button": "Tingnan ang mga nakalistang pabahay",
                 "title": "Mas maraming matitingnang nakalistang pabahay sa aming website."
             },
             "get_help": {
@@ -1069,6 +1097,7 @@
             "my_dashboard": "Ang Aking Dashboard ",
             "my_favorites": "Ang Aking mga Paborito ",
             "rent": "Umupa",
+            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Mag-sign up</a> para magbigay ng feedback sa mga website ng Lungsod",
             "sign_in": "Mag-sign In ",
             "sign_out": "Mag-sign Out "
         },

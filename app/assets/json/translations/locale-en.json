@@ -27,6 +27,7 @@
         "a4_overview": {
             "p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>See our checklist</a> for information about required documents and claiming preferences.",
+            "p2b-ownership": "Make sure your documents are up to date. Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification form must be dated within the past year.",
             "p3": "You may also start the application now and save it and upload documents later.",
             "p4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
             "subtitle": "DO NOT TRANSLATE - Chinese-only",
@@ -249,7 +250,8 @@
             },
             "subtitle": "Which items below best describe your race and ethnicity? Choose as many items as apply from the categories below.",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "Please specify..."
+                "demographic_input_placeholder": "Please specify...",
+                "indigenous_group_placeholder": "Specific group"
             },
             "title": "Your race and ethnicity"
         },
@@ -281,9 +283,9 @@
             "assisted_housing_title": "Assisted Housing Preference",
             "header": "This list outlines the documents your household might need to provide when applying for housing.",
             "homebuyer_desc": "You'll need the following documents in order to apply for units for sale:",
-            "homebuyer_education_desc": "Verification of Homebuyer Education Completion",
+            "homebuyer_education_desc": "Verification of Homebuyer Education Completion, dated within the last year.",
             "homebuyer_header": "For Homebuyers",
-            "homebuyer_loan_desc": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>",
+            "homebuyer_loan_desc": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>, dated within the last 120 days.",
             "p1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
             "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
             "preference_header": "For Claiming Preferences",
@@ -832,6 +834,7 @@
                 "do_not_do_multiple_applications": "All applications containing any person who appears on more than one application will be removed from the lottery.",
                 "drop_off_application": "Drop Off Application",
                 "drop_off_application_or_mail": "Drop Off Application or Send by US Mail",
+                "eligibility_requirement_description": "Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.",
                 "find_a_housing_counselor": "Find a Housing Counselor",
                 "fulfill_eligibility_requirements": "Make sure you fulfill the <a href='{{url}}' target='_blank'>eligibility requirements</a> for this listing before you begin.",
                 "get_a_paper_application": "Get a Paper Application",
@@ -1035,8 +1038,8 @@
                 "title": "Before applying"
             },
             "callout": {
-                "first_come_first_served_button": "First Come, First Served",
                 "city_second_loan_button": "City Second Loan Program",
+                "first_come_first_served_button": "First Come, First Served",
                 "title": "Find more listings on our website:"
             },
             "get_help": {

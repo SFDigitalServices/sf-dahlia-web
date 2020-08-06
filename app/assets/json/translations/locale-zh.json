@@ -186,6 +186,7 @@
             "password_short_instructions": "必須有 8 個字元"
         },
         "d1_income_vouchers": {
+            "if_subsidy_warning": "如果您有補助，則您的收入必須為承租人繳交租金的兩倍。我們將在抽籤後對此進行核對。",
             "p1": "例如第8類<strong>房屋補助券</strong> (Section 8)",
             "p2": "<strong>非應稅收入</strong>，例如社會安全生活補助金 (Supplemental Security Income, SSI)、社會安全殘障保險 (Social Security Disability Insurance, SSDI)、子女撫養費或是勞工賠償福利金",
             "p3": "<strong>房租補貼</strong>，例如退伍軍人事務支持性住房 (Veterans Affairs Supportive Housing, VASH)、人⺠服務部 (Human Services Agency, HSA) 愛滋病患者住房機會 (Housing Opportunities for Persons with AIDS, HOPWA)、天主教慈善會 (Catholic Charities)、愛滋病基金會 (AIDS Foundation) 等。",
@@ -198,7 +199,13 @@
             "title": "現在來談談收入。"
         },
         "demographics_accordion": {
+            "accessibility_labels": {
+                "clear_all_label": "清除所有選定的種族和族裔選項。",
+                "clear_option": "清除選定項：{{nameOfOptionToClear}}",
+                "expand_category": "{{optionName}}：點擊以展開類別並查看選項"
+            },
             "accumulator": {
+                "action": "清除全部",
                 "title": "您已選擇了…"
             },
             "options": {
@@ -242,7 +249,8 @@
             },
             "subtitle": "以下哪幾項最能形容您的種族和文化認同？請選擇以下所有符合的項目。",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "請註明…"
+                "demographic_input_placeholder": "請註明…",
+                "indigenous_group_placeholder": "具體部族"
             },
             "title": "您的種族和文化認同"
         },
@@ -568,13 +576,13 @@
             "applicant_select_a_loan_officer": "請選擇一位貸款經紀人",
             "applicant_separate_address": "將我的郵件寄送到另一個地址",
             "applicant_sexual_orientation": "您如何描述自己的性傾向或性別認同？",
-            "application_all_applicants_are_required": "只有主要申請人才需要上傳抽籤時需要附上的購屋教育證明。該證明信件必須為過去一年內有效。",
+            "application_all_applicants_are_required": "只有主要申請人需要上傳核查書，以參與抽籤。該核查書註明的日期需要在過去一年內。",
             "application_cant_find_lender": "找不到您的貸款經紀人？您的預先批准信寄件人必須是<a target='_blank' href='{{url}}'>我們核准名單中的某經紀人</a>。",
             "application_has_completed_homebuyer_education": "本人在過去一年內已經參加了 10 小時的購屋教育。",
             "application_has_loan_pre_approval": "本人已經獲得市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development, MOHCD) 核准的貸款經紀人的房貸預先批准。",
             "application_is_first_time_homebuyer": "本人在過去 3 年內並未擁有住宅物業。",
             "application_pre_approval_must_be_120_days": "您的預批準函簽發日期必須為過去120天之內。",
-            "application_visit_homeownership_calendar": "如果您尚未完成申請，請點擊 <a href='{{url}}' target='_blank'>報名並完成購屋者教育</a>完成後你會得到一份證明信。",
+            "application_visit_homeownership_calendar": "如果您還沒完成購屋者教育，請<a href='{{url}}' target='_blank'>先註冊並完成購屋者教育</a>。完成後，您會取得一份核查書。",
             "apply_online": "網上申請",
             "aunt": "阿姨",
             "back_to_homepage": "返回首頁",
@@ -618,6 +626,7 @@
             "for_your_household": "您的家庭",
             "friend": "朋友",
             "gay_lesbian_same_gender_loving": "男同性戀/女同性戀/同性戀愛",
+            "gender": "性別",
             "genderqueer_non_binary": "性別酷兒/非二元性別",
             "get_directions": "路線指引",
             "good_news_for_higher_ranking": "好消息！您符合較高抽籤順位的資格。",
@@ -634,9 +643,12 @@
             "household_member_update": "更新家庭成員",
             "household_members": "家庭成員",
             "how_did_you_hear_about_this": "您如何得知此出租項目？",
+            "how_did_you_hear_about_this_subtitle": "請告知我們您是如何得知這一住房機會的。",
+            "how_you_heard_about_this_listing": "您得知此房源的途徑",
             "in_law": "姻親",
             "income": "收入",
             "income_placeholder": "您所有收入來源的總額",
+            "language_spoken_at_home": "在家使用的語言",
             "last_name": "姓氏",
             "live_alone": "我會獨自生活",
             "live_in_public_housing_or_hud": "住在輔助住宅",
@@ -650,6 +662,7 @@
             "middle_name": "中間名",
             "mobility_impairments": "針對行動障礙",
             "monthly_rent": "每月租金",
+            "more_about_you": "關於您的更多資料",
             "my_application": "我的申請",
             "name": "姓名",
             "nephew": "侄子/外甥",
@@ -684,6 +697,8 @@
             "preference_proof_documents": "您上傳了哪份文件來證實您的資格？",
             "preferences": "優先權利",
             "primary_language": {
+                "applicant_language_at_home": "在家使用的語言",
+                "applicant_language_at_home_subtitle": "請選擇您在家中最常使用的語言。",
                 "options": {
                     "chinese_cantonese": "中文-粵語",
                     "chinese_mandarin": "中文-國語",
@@ -692,7 +707,8 @@
                     "russian": "俄語",
                     "spanish": "西班牙語",
                     "vietnamese": "越南語"
-                }
+                },
+                "your_primary_language": "請說明在家使用的語言"
             },
             "primary_user": "主要申請人",
             "proof": {
@@ -717,6 +733,7 @@
             },
             "proof_of_rent": "租金證明",
             "questioning_unsure": "有疑問/不確定",
+            "race_and_ethnicity": "種族和族裔",
             "re_enter_email_address": "重新輸入電子郵件地址",
             "re_enter_password": "請重新輸入您的密碼以確認",
             "read_less": "閱讀更少資訊",
@@ -728,6 +745,7 @@
             "see_listing": "查看該物業項目",
             "select_one": "選取一個",
             "send_email": "寄送電子郵件",
+            "sexual_orientation_or_sexual_identity": "性取向或性別認同",
             "share": "分享",
             "show_less": "顯示更少資訊",
             "show_more": "顯示更多資訊",
@@ -803,6 +821,11 @@
             },
             "all_units": "所有單位",
             "all_units_reserved_for": "為 {{type}} 保留的所有單位",
+            "ami_tiers": {
+                "low_income": "低收入",
+                "middle_income": "中等偏上收入",
+                "moderate_income": "中等偏下收入"
+            },
             "applications_closed": "申請已於 {{date}} 結束",
             "apply": {
                 "applications_must_be_received_by_deadline": "必須於截止期限前收到申請表，不會考慮郵戳日期。",
@@ -958,6 +981,12 @@
                 "availability": "可用情況",
                 "available": "可用",
                 "hoa_dues": "物業費",
+                "household_size": "家庭人數",
+                "income_range": "收入範圍",
+                "maximum": "最高",
+                "minimum": "最低",
+                "percent_ami": "{{amiPercent}}% 地區收入中位數 (Area Median Income, AMI)",
+                "pricing": "價格",
                 "rent": "租金",
                 "sales_price": "出售價格",
                 "waitlist": "輪候名單"
@@ -984,7 +1013,7 @@
             },
             "header": {
                 "find_matching_listings": "尋找符合的物業項目",
-                "if_you_tell_us": "如果您告知家庭人數以及收入，我們可以篩選並例出您可能符合資格的物業項目。",
+                "if_you_tell_us": "如果您告知我們您的家庭人數以及收入，我們可以列出您可能符合資格的房源。",
                 "or_get_help_calculating_income": "或者<a ui-sref='{{sref}}'>尋求協助如何計算您的收入</a>"
             },
             "rental_assistance": {
@@ -1005,7 +1034,6 @@
                 "title": "申請之前"
             },
             "callout": {
-                "button": "查看該物業項目",
                 "title": "我們的網站提供更多的物業名單。"
             },
             "get_help": {
@@ -1070,6 +1098,7 @@
             "my_dashboard": "我的儀表板",
             "my_favorites": "我的最愛",
             "rent": "租賃",
+            "research_feedback": "請<a target='_blank' class='a-white lined' href='{{researchUrl}}'>註冊</a>以提供您對於市府網站的意見",
             "sign_in": "登入",
             "sign_out": "登出"
         },

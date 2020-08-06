@@ -185,6 +185,7 @@
             "password_short_instructions": "Debe tener 8 caracteres"
         },
         "d1_income_vouchers": {
+            "if_subsidy_warning": "Si cuenta con un subsidio, su ingreso tiene que ser el doble del monto de la renta del arrendatario. Revisaremos esto después del sorteo.",
             "p1": "<strong>Vales de vivienda</strong> como la Sección 8",
             "p2": "<strong>Ingresos no gravables</strong>, como Ingreso de Seguro Suplementario (Supplemental Security Income, SSI), Ingreso de Seguro por Incapacidad (Social Security Disability Income, SSDI), pagos de manutención de menores o beneficios de indemnización laboral",
             "p3": "<strong>Subsidios para el alquiler</strong>, como subsidios de los programas de Apoyo a la Vivienda del Departamento de Asuntos de Veteranos (Veterans Affairs Supportive Housing, VASH), de Agencias de Servicios Humanos (Human Services Agencies, HSA), del Programa de Oportunidades de Vivienda para Personas con Sida (Housing Opportunities for Persons with AIDS, HOPWA), de Grupos de Caridad Católicos (Catholic Charities), de la Fundación para el Sida (AIDS Foundation), entre otros.",
@@ -197,7 +198,13 @@
             "title": "Pasemos a los ingresos."
         },
         "demographics_accordion": {
+            "accessibility_labels": {
+                "clear_all_label": "Desmarcar todas las opciones seleccionadas de raza y etnia.",
+                "clear_option": "Desmarcar la opción seleccionada: {{nameOfOptionToClear}}",
+                "expand_category": "{{optionName}}: haga clic para expandir la categoría y ver opciones."
+            },
             "accumulator": {
+                "action": "Desmarcar todo",
                 "title": "Usted seleccionó..."
             },
             "options": {
@@ -241,7 +248,8 @@
             },
             "subtitle": "¿Cuáles de las siguientes opciones describen su raza y su etnia? De las siguientes categorías, elija todas las opciones que correspondan.",
             "text_input_placeholders": {
-                "demographic_input_placeholder": "Especifique..."
+                "demographic_input_placeholder": "Especifique...",
+                "indigenous_group_placeholder": "Especifique el grupo"
             },
             "title": "Su raza y su etnia"
         },
@@ -567,13 +575,13 @@
             "applicant_select_a_loan_officer": "Indique su agente de préstamos",
             "applicant_separate_address": "Envíen mi correspondencia a una dirección diferente",
             "applicant_sexual_orientation": "¿Cómo describiría su orientación sexual o identidad sexual?",
-            "application_all_applicants_are_required": "Se exige que todos los miembros adultos del grupo familiar cuyos nombres estarán en el préstamo y el título completen la capacitación para compradores de vivienda. Sin embargo, solo el solicitante principal tiene que cargar la carta de verificación para que se le incluya en el sorteo.",
+            "application_all_applicants_are_required": "Únicamente el solicitante principal debe subir o cargar la carta de verificación que se incluirá en el sorteo. La carta de verificación debe tener una fecha del año pasado.",
             "application_cant_find_lender": "¿No encuentra a su agente de préstamos? Su carta de pre-aprobación debe ser de <a target='_blank' href='{{url}}'>un agente de nuestra lista</a>.",
             "application_has_completed_homebuyer_education": "Yo completé 10 horas de capacitación para compradores de vivienda.",
             "application_has_loan_pre_approval": "Yo obtuve la pre-aprobación para obtener un préstamo hipotecario de un agente de préstamos aprobado por la Oficina de Desarrollo Comunitario y de Viviendas del Alcalde (Mayor's Office of Housing and Community Development, MOHCD).",
             "application_is_first_time_homebuyer": "Yo no he sido propietario de vivienda en los últimos 3 años.",
             "application_pre_approval_must_be_120_days": "Su carta de aprobación previa debe estar fechada en los últimos 120 días.",
-            "application_visit_homeownership_calendar": "Si todavía no lo ha hecho, ingrese al <a href='{{url}}' target='_blank'>calendario de HomeownershipSF</a> para inscribirse en un taller.",
+            "application_visit_homeownership_calendar": "Si aún no lo ha hecho, <a href='{{url}}' target='_blank'>regístrese para tomar la capacitación para compradores de vivienda</a>. Recibirá una carta de verificación al terminar.",
             "apply_online": "Presente su solicitud en línea",
             "aunt": "Tía",
             "back_to_homepage": "Volver a la página de inicio",
@@ -617,6 +625,7 @@
             "for_your_household": "para su grupo familiar",
             "friend": "Amigo(a)",
             "gay_lesbian_same_gender_loving": "Gay/lesbiana/amor del mismo género",
+            "gender": "Género",
             "genderqueer_non_binary": "Género variante/Género binario",
             "get_directions": "Cómo llegar",
             "good_news_for_higher_ranking": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
@@ -633,9 +642,12 @@
             "household_member_update": "Actualizar al integrante del grupo familiar",
             "household_members": "Integrantes del grupo familiar",
             "how_did_you_hear_about_this": "¿Cómo se enteró sobre este aviso de vivienda?",
+            "how_did_you_hear_about_this_subtitle": "Díganos cómo se enteró de esta oportunidad de vivienda.",
+            "how_you_heard_about_this_listing": "Cómo se enteró de este anuncio.",
             "in_law": "Pariente político",
             "income": "Ingresos",
             "income_placeholder": "Total de todas las fuentes de ingresos",
+            "language_spoken_at_home": "Idioma que se habla en casa",
             "last_name": "Apellido",
             "live_alone": "Viviré solo",
             "live_in_public_housing_or_hud": "Vive en vivienda asistencial",
@@ -649,6 +661,7 @@
             "middle_name": "Segundo nombre",
             "mobility_impairments": "Para personas con problemas de movilidad",
             "monthly_rent": "Alquiler mensual",
+            "more_about_you": "Información adicional sobre usted",
             "my_application": "Mi solicitud",
             "name": "Nombre",
             "nephew": "Sobrino",
@@ -683,6 +696,8 @@
             "preference_proof_documents": "¿Qué documento va a cargar para demostrar su elegibilidad?",
             "preferences": "Preferencias",
             "primary_language": {
+                "applicant_language_at_home": "Idioma que se habla en su casa",
+                "applicant_language_at_home_subtitle": "Seleccione el idioma que se habla con mayor frecuencia en su casa.",
                 "options": {
                     "chinese_cantonese": "Chino - cantonés",
                     "chinese_mandarin": "Chino - mandarín",
@@ -691,7 +706,8 @@
                     "russian": "Ruso",
                     "spanish": "Español",
                     "vietnamese": "Vietnamita"
-                }
+                },
+                "your_primary_language": "Especifique el idioma que se habla en su casa."
             },
             "primary_user": "Solicitante principal",
             "proof": {
@@ -716,6 +732,7 @@
             },
             "proof_of_rent": "Comprobante de alquiler",
             "questioning_unsure": "En duda/sin determinar",
+            "race_and_ethnicity": "Raza y etnia",
             "re_enter_email_address": "Vuelva a ingresar la dirección de correo electrónico",
             "re_enter_password": "Vuelve a ingresar su contraseña para confirmar",
             "read_less": "leer menos",
@@ -727,6 +744,7 @@
             "see_listing": "Vea los anuncios",
             "select_one": "Seleccione uno",
             "send_email": "Envíe un correo electrónico",
+            "sexual_orientation_or_sexual_identity": "Orientación o identidad sexual",
             "share": "Compartir",
             "show_less": "ver menos",
             "show_more": "ver mas",
@@ -802,6 +820,11 @@
             },
             "all_units": "Todas las unidades",
             "all_units_reserved_for": "Todas las unidades reservadas para {{type}}",
+            "ami_tiers": {
+                "low_income": "Ingreso bajo",
+                "middle_income": "Ingreso medio",
+                "moderate_income": "Ingreso moderado"
+            },
             "applications_closed": "Las solicitudes cerraron el {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Las solicitudes deben recibirse antes de la fecha límite y no se tendrá en cuenta la fecha de los sellos del correo.",
@@ -957,6 +980,12 @@
                 "availability": "Disponibilidad",
                 "available": "disponible",
                 "hoa_dues": "Cuotas de HOA",
+                "household_size": "Número de personas que viven con usted",
+                "income_range": "Rango de ingresos",
+                "maximum": "Máximo",
+                "minimum": "Mínimo",
+                "percent_ami": "{{amiPercent}} % de Ingreso promedio del área (AMI, siglas en inglés)",
+                "pricing": "Precio",
                 "rent": "Alquiler",
                 "sales_price": "Precio de venta",
                 "waitlist": "Lista de espera"
@@ -983,7 +1012,7 @@
             },
             "header": {
                 "find_matching_listings": "Encuentre anuncios compatibles",
-                "if_you_tell_us": "Si nos informa el tamaño y los ingresos del grupo familiar, podemos destacar los anuncios de vivienda para los que sería elegible.",
+                "if_you_tell_us": "Si nos dice el número de personas que viven con usted y sus ingresos, podemos mostrarle viviendas para las que podría ser elegible.",
                 "or_get_help_calculating_income": "u <a ui-sref='{{sref}}'>obtenga ayuda para calcular sus ingresos</a>"
             },
             "rental_assistance": {
@@ -1004,7 +1033,6 @@
                 "title": "Antes de presentar la solicitud"
             },
             "callout": {
-                "button": "Vea los anuncios",
                 "title": "Hay más anuncios disponibles en nuestro sitio web."
             },
             "get_help": {
@@ -1069,6 +1097,7 @@
             "my_dashboard": "Mi Panel",
             "my_favorites": "Mis Favoritos",
             "rent": "Alquilar",
+            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Regístrese</a> para darnos su opinión sobre los sitios web de la Ciudad.",
             "sign_in": "Inicie sesión",
             "sign_out": "Cierre sesión"
         },
