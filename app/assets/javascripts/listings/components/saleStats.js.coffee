@@ -7,10 +7,6 @@ angular.module('dahlia.components')
     listingContainer: '^propertyCard'
   controller: ['$filter', '$translate', ($filter, $translate) ->
     ctrl = @
-    for summary in _.concat(ctrl.listing.unitSummaries.general, ctrl.listing.unitSummaries.reserved)
-      if summary
-        summary['minIncome'] = 1500
-        summary['maxIncome'] = 3500
 
     @hasUnitsWithoutParking = (listing) ->
       allUnitSummaries = _.concat(listing.unitSummaries.general, listing.unitSummaries.reserved)
@@ -48,7 +44,7 @@ angular.module('dahlia.components')
         ""
 
     @incomeRangeString = (unitSummary) ->
-      @_getCurrencyRange(unitSummary.minIncome, unitSummary.maxIncome)
+      @_getCurrencyRange(unitSummary.absoluteMinIncome, unitSummary.absoluteMaxIncome)
 
     @_filterIntArrayByNull = (arr) -> arr.filter((i) -> i == 0 || !!i)
 

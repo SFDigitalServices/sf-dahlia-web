@@ -21,24 +21,24 @@ do ->
     summaryWithoutPrices = {
       'unitType': '1 BR'
       'listingID': 'a0W0P00000F8YG4UAN'
-      'minIncome': 1300
-      'maxIncome': 3300
+      'absoluteMinIncome': 1300
+      'absoluteMaxIncome': 3300
     }
 
     summaryWithMinWithoutParkingPrice = {
       'unitType': '1 BR'
       'minPriceWithoutParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
-      'minIncome': 1400
-      'maxIncome': 3400
+      'absoluteMinIncome': 1400
+      'absoluteMaxIncome': 3400
     }
 
     summaryWithMinWithParkingPrice = {
       'unitType': '1 BR'
       'minPriceWithParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
-      'minIncome': 1500
-      'maxIncome': 3500
+      'absoluteMinIncome': 1500
+      'absoluteMaxIncome': 3500
     }
 
     fakeListing = {
@@ -183,16 +183,16 @@ do ->
           expect(ctrl.hasRangeOfPricesWithParking(fakeSummary)).toEqual false
 
       describe '$ctrl.incomeRangeString', ->
-        it 'returns the correct string when only minIncome specified', ->
-          fakeSummary = { minIncome: 1500 }
+        it 'returns the correct string when only absoluteMinIncome specified', ->
+          fakeSummary = { absoluteMinIncome: 1500 }
           expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$1,500'
 
-        it 'returns the correct string when only maxIncome specified', ->
-          fakeSummary = { maxIncome: 3500 }
+        it 'returns the correct string when only absoluteMaxIncome specified', ->
+          fakeSummary = { absoluteMaxIncome: 3500 }
           expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$3,500'
 
         it 'returns the correct string when both min and max incomes specified', ->
-          fakeSummary = { minIncome: 1500, maxIncome: 3500 }
+          fakeSummary = { absoluteMinIncome: 1500, absoluteMaxIncome: 3500 }
           expectedString = mockTranslateCurrencyRange('$1,500', '$3,500')
           expect(ctrl.incomeRangeString(fakeSummary)).toEqual expectedString
 

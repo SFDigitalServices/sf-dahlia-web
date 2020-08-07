@@ -9,9 +9,9 @@ tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minMonthlyR
       span ng-if="::unit_summary.availability <= 0"
         | {{'listings.stats.waitlist' | translate}}
   td.is-subtitled data-th="{{'listings.stats.income_range' | translate}}"
-    | {{::unit_summary.minIncome | currency:"$":0}}
-    span ng-show="::unit_summary.maxIncome > unit_summary.minIncome"
-      |  to {{::unit_summary.maxIncome | currency:"$":0}}
+    | {{::unit_summary.absoluteMinIncome | currency:"$":0}}
+    span ng-show="::unit_summary.absoluteMaxIncome > unit_summary.absoluteMinIncome"
+      |  to {{::unit_summary.absoluteMaxIncome | currency:"$":0}}
     small
       | {{'t.per_month' | translate}}
   td.text-right.is-subtitled data-th="Rent"
