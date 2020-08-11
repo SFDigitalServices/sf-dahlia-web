@@ -90,7 +90,8 @@ ListingConstantsService = () ->
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
     'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
-    'a0W0P00000FIuv3UAD': '1335 Folsom Street'
+    'a0W0P00000FIuv3UAD': '1335 Folsom Street',
+    'a0W4U00000HlZ0qUAF': 'Antonia Manor'
   }
 
   return Service
