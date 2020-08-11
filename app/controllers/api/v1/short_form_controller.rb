@@ -359,6 +359,8 @@ class Api::V1::ShortFormController < ApiController
                 whiteOther
                 sexualOrientation
                 sexualOrientationOther
+                indigenousCentralSouthAmericaGroup
+                indigenousNativeAmericanGroup
                 hiv
                 dob
                 address
