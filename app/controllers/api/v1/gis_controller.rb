@@ -18,9 +18,9 @@ class Api::V1::GisController < ApiController
   # Otherwise, always return at least a nil boundary match so users can move on
   # with the application.
   def geocoding_data
+    # begin
     geocoded_addresses = GeocodingService.new(address_params).geocode
     address = GeocodingService.select_best_candidate(geocoded_addresses[:candidates])
-
     if address.present?
       proj_id = params[:project_id]
       match = proj_id ? address_within_boundary?(address, proj_id) : nil
@@ -28,15 +28,12 @@ class Api::V1::GisController < ApiController
     else
       logger.error '<< GeocodingService.geocode candidates empty >> ' \
         "#{geocoded_addresses}, LOG PARAMS: #{log_params}"
-      send_geocoding_error_notification(geocoded_addresses)
-
       { boundary_match: nil }
     end
   end
 
   def address_within_boundary?(address, project_id)
     return nil unless project_id.present? && address.present?
-
     x = address[:location][:x]
     y = address[:location][:y]
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
@@ -46,38 +43,7 @@ class Api::V1::GisController < ApiController
 
     logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
       "#{matching_errors}, LOG PARAMS: #{log_params}"
-    send_boundary_match_error_notification(matching_errors)
-
     nil
-  end
-
-  def send_geocoding_error_notification(geocoded_addresses)
-    notifications_sent = ArcGISNotificationService.new(
-      geocoded_addresses.merge(service_name: GeocodingService::NAME),
-      log_params,
-    ).send_notifications
-
-    return if notifications_sent
-
-    log_msg = '<< GISController ' \
-      'send_geocoding_error_notification attempted but notifications not sent >>'
-    logger.error log_msg
-  end
-
-  def send_boundary_match_error_notification(matching_errors)
-    notifications_sent = ArcGISNotificationService.new(
-      {
-        errors: matching_errors,
-        service_name: NeighborhoodBoundaryService::NAME,
-      },
-      log_params,
-    ).send_notifications
-
-    return if notifications_sent
-
-    log_msg = '<< GISController ' \
-      'send_boundary_match_error_notification attempted but notifications not sent >>'
-    logger.error log_msg
   end
 
   def address_params
