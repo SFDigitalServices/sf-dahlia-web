@@ -182,24 +182,6 @@ do ->
           }
           expect(ctrl.hasRangeOfPricesWithParking(fakeSummary)).toEqual false
 
-      describe '$ctrl.incomeRangeString', ->
-        it 'returns the correct string when only absoluteMinIncome specified', ->
-          fakeSummary = { absoluteMinIncome: 1500 }
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$1,500'
-
-        it 'returns the correct string when only absoluteMaxIncome specified', ->
-          fakeSummary = { absoluteMaxIncome: 3500 }
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual '$3,500'
-
-        it 'returns the correct string when both min and max incomes specified', ->
-          fakeSummary = { absoluteMinIncome: 1500, absoluteMaxIncome: 3500 }
-          expectedString = mockTranslateCurrencyRange('$1,500', '$3,500')
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual expectedString
-
-        it 'returns empty string when neither min or max income specified', ->
-          fakeSummary = {}
-          expect(ctrl.incomeRangeString(fakeSummary)).toEqual ''
-
       describe '$ctrl.salesPriceRangeString', ->
         it 'returns the correct string with only parking values specified', ->
           fakeSummary = mockSummarySalesPrices(10000, 100000)
@@ -251,55 +233,3 @@ do ->
           fakeSummary = null
           expectedString = ''
           expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
-
-      describe '$ctrl.hoaDuesSubtitleString', ->
-        it 'returns the correct string with only parking values specified', ->
-          fakeSummary = mockSummaryHoaPrices(500, 800)
-          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$800')
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string with only non-parking values specified', ->
-          fakeSummary = mockSummaryHoaPrices(null, null, 500, 800)
-          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$800')
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when parking is more expensive', ->
-          fakeSummary = mockSummaryHoaPrices(500, 800, 400, 700)
-          expectedCurrencyString = mockTranslateCurrencyRange('$400', '$800')
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when without parking is more expensive', ->
-          fakeSummary = mockSummaryHoaPrices(500, 800, 600, 900)
-          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$900')
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when mix of with/without parking is more expensive', ->
-          fakeSummary = mockSummaryHoaPrices(500, 120000, 600, 100000)
-
-          expectedCurrencyString = mockTranslateCurrencyRange('$500', '$120,000')
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString(expectedCurrencyString)
-
-        it 'returns the correct string when min values are null', ->
-          fakeSummary = mockSummaryHoaPrices(null, 500, null, 800)
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString('$800')
-
-        it 'returns the correct string when max values are null', ->
-          fakeSummary = mockSummaryHoaPrices(500, null, 600, null)
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual mockTranslateHoaString('$500')
-
-        it 'returns empty string when all values are null', ->
-          fakeSummary = mockSummaryHoaPrices()
-
-          expectedString = ''
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
-
-        it 'returns empty string when empty object is passed', ->
-          fakeSummary = {}
-          expectedString = ''
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
-
-        it 'returns empty string when null object is passed', ->
-          fakeSummary = null
-          expectedString = ''
-          expect(ctrl.hoaDuesSubtitleString(fakeSummary)).toEqual expectedString
-

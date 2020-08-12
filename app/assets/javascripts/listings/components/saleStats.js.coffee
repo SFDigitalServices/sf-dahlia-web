@@ -31,20 +31,17 @@ angular.module('dahlia.components')
     @_getCurrencyString = (v) -> $filter('currency')(v, '$', 0)
 
     @_getCurrencyRange = (min, max) ->
-      if min && max && min < max
+      if min? && max? && min < max
         $translate.instant('listings.stats.currency_range', {
           currencyMinValue: @_getCurrencyString(min)
           currencyMaxValue: @_getCurrencyString(max)
         })
-      else if min
+      else if min?
         @_getCurrencyString(min)
-      else if max
+      else if max?
         @_getCurrencyString(max)
       else
         ""
-
-    @incomeRangeString = (unitSummary) ->
-      @_getCurrencyRange(unitSummary.absoluteMinIncome, unitSummary.absoluteMaxIncome)
 
     @_filterIntArrayByNull = (arr) -> arr.filter((i) -> i == 0 || !!i)
 
@@ -81,14 +78,6 @@ angular.module('dahlia.components')
       ])
 
       @_getCurrencyRange(minHoa, maxHoa)
-
-    @hoaDuesSubtitleString = (unitSummary) ->
-      currencyRange = @hoaDuesPriceRange(unitSummary)
-
-      return "" if !currencyRange
-
-      $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: currencyRange })
-
 
     return ctrl
   ]

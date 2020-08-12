@@ -9,14 +9,11 @@ tr
         | {{::unitSummary.availability }} {{'listings.stats.available' | translate}}
       span ng-if="::unitSummary.availability <= 0"
         | {{'listings.stats.waitlist' | translate}}
-  / Income range
-  td.is-subtitled data-th="{{'listings.stats.income_range' | translate}}"
-    | {{ $ctrl.incomeRangeString(unitSummary) }}
+  td.is-subtitled data-th="{{'listings.stats.hoa_dues' | translate}}"
+    | {{ $ctrl.hoaDuesPriceRange(unitSummary) }}
     small
       | {{'t.per_month' | translate}}
-  / Sales price and HOA Dues
+  / Sales price
   td.text-right.is-subtitled data-th="{{ 'listings.stats.sales_price' | translate }}"
     | {{ $ctrl.salesPriceRangeString(unitSummary) }}
-    small
-      | {{ $ctrl.hoaDuesSubtitleString(unitSummary) }}
 tr ng-repeat-end="true" ng-if="0"
