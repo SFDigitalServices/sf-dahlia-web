@@ -119,12 +119,6 @@ If we have new verified translations in Phrase, run `grunt phrasePull` to get th
 
 Use the engineering workflow and coding style standards established below. :smiley:
 
-### Engineering Workflow Overview
-
-Dahlia's current engineering workflow has been fully documented and can be found [here](https://docs.google.com/a/exygy.com/presentation/d/1Y5yAVUcKMFoNobutOH_Sehm69ZCZoTZzJZewupR-5KI/edit?usp=sharing).
-
-Dahlia's project backlog is in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1405352).
-
 ### Acceptance/Feature Apps
 
 Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.
