@@ -31,7 +31,7 @@
         "heroku-postgresql"
       ],
       "scripts": {
-        "postdeploy": "rake db:schema:load && rake db:migrate && rake listing_images:process_images"
+        "postdeploy": "rake db:migrate && rake listing_images:process_images"
       }
     }
   },
