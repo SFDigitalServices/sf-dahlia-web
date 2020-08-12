@@ -3,12 +3,6 @@ div.table-pricing-wrapper.show-for-small-only
   table.table-pricing.table-pricing-hero  role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
     caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
       span translate="listings.reserved_for" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
-    thead
-      tr
-        th scope="col" translate="t.unit_type"
-        th scope="col" translate="listings.stats.availability"
-        th scope="col" translate="listings.stats.income_range"
-        th.text-right scope="col" translate="listings.stats.rent"
     tbody ng-include="'listings/templates/property-card/_rental-stats-row-mobile.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
     / Reserved
   table.table-pricing.table-pricing-hero.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
