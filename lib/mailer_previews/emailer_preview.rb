@@ -52,35 +52,6 @@ class EmailerPreview < ActionMailer::Preview
     Emailer.confirmation_instructions(u, token)
   end
 
-  def geocoding_log_notification
-    Emailer.geocoding_log_notification(log_params)
-  end
-
-  def geocoding_error_notification
-    Emailer.geocoding_error_notification(service_data, log_params)
-  end
-
-  private
-
-  def service_data
-    {
-      service_name: ArcGISService::GeocodingService::NAME,
-      errors: [{ type: :connection_error }],
-    }
-  end
-
-  def log_params
-    {
-      address: '123 Main St',
-      city: 'San Francisco',
-      zip: '94123',
-      listing_id: 'xyz',
-      listing_name: 'Test Listing',
-      member: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
-      applicant: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
-    }
-  end
-
   # Set the value of the locale to preview all emails in
   # a specific language (:es, :zh, :tl, :en)
   def locale

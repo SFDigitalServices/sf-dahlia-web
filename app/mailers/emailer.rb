@@ -51,54 +51,6 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log_id)
-    @log = GeocodingLog.find(log_id)
-    setup_geocoding_notification
-
-    @listing_url = "#{base_url}/listings/#{@log.listing_id}"
-
-    subject = '[SF-DAHLIA] Address not found in ArcGIS service'
-    mail(to: admin_email, subject: subject) do |format|
-      format.html do
-        render(
-          'arc_gis_log_notification',
-          locals: {
-            log: @log,
-            applicant: @applicant,
-            member: @member,
-            listing_url: @listing_url,
-          },
-        )
-      end
-    end
-  end
-
-  def geocoding_error_notification(data, log)
-    @data = Hashie::Mash.new(data)
-    @log = Hashie::Mash.new(log)
-    @error = Hashie::Mash.new(@data[:errors].first)
-    setup_geocoding_notification
-
-    @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
-
-    subject = "[SF-DAHLIA] ArcGIS #{@data[:service_name]} service error"
-    mail(to: admin_email, subject: subject) do |format|
-      format.html do
-        render(
-          'arc_gis_error_notification',
-          locals: {
-            data: @data,
-            log: @log,
-            error: @error,
-            applicant: @applicant,
-            member: @member,
-            listing_url: @listing_url,
-          },
-        )
-      end
-    end
-  end
-
   def draft_application_saved(params)
     # set language based on params
     I18n.locale = params[:locale]
@@ -143,13 +95,6 @@ class Emailer < Devise::Mailer
     @applicant = Hashie::Mash.new(@log[:applicant])
     @member = Hashie::Mash.new(@log[:member])
     @name = 'DAHLIA Admins'
-  end
-
-  def admin_email
-    # all heroku apps have Rails.env.production
-    # but ENV['PRODUCTION'] is only on dahlia-production
-    production = Rails.env.production? and ENV['PRODUCTION']
-    production ? 'dahlia-admins@exygy.com' : 'dahlia-test@exygy.com'
   end
 
   def load_salesforce_contact(record)

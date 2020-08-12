@@ -6,7 +6,6 @@ module ArcGISService
   #
   class NeighborhoodBoundaryService < ArcGISService::Base
     API_URL = ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'].freeze
-    NAME = 'NRHP Boundary Check'.freeze
 
     def initialize(project_id, x, y)
       super()
@@ -28,7 +27,7 @@ module ArcGISService
 
     def in_boundary?
       count = json_data.try(:[], :count)
-      count.present? && count > 0
+      count.present? && count.positive?
     end
   end
 end
