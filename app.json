@@ -24,12 +24,15 @@
   ],
   "environments": {
     "review": {
-    "addons": [
-      "newrelic",
-      "papertrail",
-      "memcachier",
-      "heroku-postgresql"
-      ]
+      "addons": [
+        "newrelic",
+        "papertrail",
+        "memcachier",
+        "heroku-postgresql"
+      ],
+      "scripts": {
+        "postdeploy": "rake db:migrate"
+      }
     }
   },
   "env":{

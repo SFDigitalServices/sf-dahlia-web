@@ -58,6 +58,7 @@ Feature: Autofill application
         And I opt out of "Live/Work" preference
         And I don't choose COP-DTHP preferences
         And I continue past the general lottery notice page
+        And I wait "2" seconds
         Then I should land on the optional survey page
         And on the optional survey page I should see my correct info
         And I confirm details on the review page
