@@ -74,7 +74,8 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
       Service.preferences.documents[opts.prefType] ?= {}
 
   Service._processProofFile = (file, proofDocument, uploadedFileParams) ->
-    if file.size > 5 * 1000 * 1000 # 5MB
+    file_limit_for_resize = 2 * 1000 * 1000 # 2MB
+    if file.size > file_limit_for_resize && file.type != 'image/heic'
       options =
         width: 2112,
         height: 2112,
