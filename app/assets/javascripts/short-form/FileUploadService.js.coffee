@@ -74,7 +74,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
       Service.preferences.documents[opts.prefType] ?= {}
 
   Service._processProofFile = (file, proofDocument, uploadedFileParams) ->
-    if file.size > 2 * 1000 * 1000 # 2MB
+    if file.size > 5 * 1000 * 1000 # 5MB
       options =
         width: 2112,
         height: 2112,
