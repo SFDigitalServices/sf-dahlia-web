@@ -10,7 +10,7 @@
       ng-model="$ctrl.document.file"
       ng-required="$ctrl.required"
       ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf, image/heic'"
-      ngf-pattern="'.pdf,.jpg,.jpeg,.HEIC'"
+      ngf-pattern="'.png,.pdf,.jpg,.jpeg,.HEIC'"
       ngf-select="$ctrl.uploadFile($file, $ctrl.opts)"
       ngf-validate-fn="$ctrl.validateFile($file)"
     ]

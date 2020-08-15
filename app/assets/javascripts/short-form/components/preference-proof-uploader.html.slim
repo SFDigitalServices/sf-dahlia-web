@@ -42,7 +42,7 @@
         ng-required="$ctrl.application.preferences[$ctrl.preference]"
         ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf, image/HEIC'"
         ngf-max-size="20MB"
-        ngf-pattern="'.pdf,.jpg,.jpeg,.HEIC'"
+        ngf-pattern="'.png,.pdf,.jpg,.jpeg,.HEIC'"
         ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)"
         ngf-validate-fn="$ctrl.validateFileNameLength($file)"
     ]
