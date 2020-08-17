@@ -13,6 +13,6 @@ tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minMonthlyR
   td.text-right.is-subtitled data-th="{{'listings.stats.rent' | translate}}"
     | {{::$ctrl.rentRangeString(unit_summary)}}
     small
-      | {{'t.per_month' | translate}}
+      | {{::$ctrl.rentRangeSubtitle(unit_summary)}}
 
 tr ng-repeat-end="true" ng-if="0"

@@ -39,10 +39,12 @@ do ->
         absoluteMaxIncome: max
       }
 
-    mockSummaryRent = (min, max) ->
+    mockSummaryRent = (min, max, minPercent = null, maxPercent = null) ->
       {
         minMonthlyRent: min
         maxMonthlyRent: max
+        minPercentIncome: minPercent
+        maxPercentIncome: maxPercent
       }
 
     describe 'rentalStats', ->
@@ -72,6 +74,37 @@ do ->
           fakeSummary = mockSummaryRent(100, 10)
           expectedString = '$100'
           expect(ctrl.rentRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns currency values when both currency and percent rent provided', ->
+          fakeSummary = mockSummaryRent(null, 100, 30, null)
+          expectedString = '$100'
+          expect(ctrl.rentRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns percent values when only percent rent provided', ->
+          fakeSummary = mockSummaryRent(null, null, 30, null)
+          expectedString = '30%'
+          expect(ctrl.rentRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns percent range when min and max percent rent provided', ->
+          fakeSummary = mockSummaryRent(null, null, 30, 40)
+          expectedString = mockTranslateCurrencyRange('30%', '40%')
+          expect(ctrl.rentRangeString(fakeSummary)).toEqual expectedString
+
+      describe '$ctrl.rentRangeSubtitle', ->
+        it 'returns empty if unit summary is null', ->
+          expect(ctrl.rentRangeSubtitle(null)).toEqual ""
+
+        it 'returns income if only percent values provided', ->
+          expectedString = $translate.instant('t.income')
+          expect(ctrl.rentRangeSubtitle(mockSummaryRent(null, null, 30, 40))).toEqual expectedString
+
+        it 'returns per_month if only rent values provided', ->
+          expectedString = $translate.instant('t.per_month')
+          expect(ctrl.rentRangeSubtitle(mockSummaryRent(30, 40, null, null))).toEqual expectedString
+
+        it 'returns per_month if rent and percent values provided', ->
+          expectedString = $translate.instant('t.per_month')
+          expect(ctrl.rentRangeSubtitle(mockSummaryRent(30, 40, 50, 60))).toEqual expectedString
 
       describe '$ctrl.incomeRangeString', ->
         it 'returns empty if unit summary is null', ->
