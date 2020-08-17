@@ -1,13 +1,9 @@
-div.table-pricing-wrapper
+/ Mobile table
+div.table-pricing-wrapper.show-for-small-only
   table.table-pricing.table-pricing-hero  role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
     caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
       span translate="listings.reserved_for" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
-    thead
-      tr
-        th scope="col" translate="t.unit_type"
-        th scope="col" translate="listings.stats.availability"
-        th.text-right scope="col" translate="listings.stats.rent"
-    tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-mobile.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
     / Reserved
   table.table-pricing.table-pricing-hero.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
     caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
@@ -15,4 +11,24 @@ div.table-pricing-wrapper
     caption ng-if="::!$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
       span translate="listings.reserved_for" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
 
-    tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-mobile.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
+
+/ Desktop table
+div.table-pricing-wrapper.hide-for-small-only
+  table.table-pricing.table-pricing-hero  role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
+    caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
+      span translate="listings.reserved_for" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
+    thead
+      tr
+        th scope="col" translate="t.units"
+        th scope="col" translate="listings.stats.income_range"
+        th.text-right scope="col" translate="listings.stats.rent"
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-desktop.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
+    / Reserved
+  table.table-pricing.table-pricing-hero.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
+    caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
+      span translate="listings.reserved_units_for_who_are"  translate-value-community-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
+    caption ng-if="::!$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
+      span translate="listings.reserved_for" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
+
+    tbody ng-include="'listings/templates/property-card/_rental-stats-row-desktop.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
