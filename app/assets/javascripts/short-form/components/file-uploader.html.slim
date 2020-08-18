@@ -1,7 +1,18 @@
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-hide="$ctrl.hasFile()"
   / type="button" tells it not to act as a submit button
   / The ngf-max-size attr is set to 20MB, which is different from the 5MB limit in FileUploadService, because we try to resize the file in  _processProofFile to see if we can get it under 5MB
-  button.button.secondary ng-class="{error: $ctrl.inputInvalid($ctrl.fileInputName), 'ghost-white': !$ctrl.inputInvalid($ctrl.fileInputName)}" type="button" ngf-select="$ctrl.uploadFile($file, $ctrl.opts)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="{{$ctrl.fileInputName}}" ng-required="$ctrl.required" aria-describedby="{{$ctrl.fileInputName}}_error" ng-model="$ctrl.document.file" id="{{$ctrl.fileInputName}}" ngf-validate-fn="$ctrl.validateFile($file)"
+  button.button.secondary[
+      ng-class="{error: $ctrl.inputInvalid($ctrl.fileInputName), 'ghost-white': !$ctrl.inputInvalid($ctrl.fileInputName)}"
+      type="button"
+      id="{{$ctrl.fileInputName}}"
+      name="{{$ctrl.fileInputName}}"
+      aria-describedby="{{$ctrl.fileInputName}}_error"
+      ng-model="$ctrl.document.file"
+      ng-required="$ctrl.required"
+      ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf, image/heic'"
+      ngf-select="$ctrl.uploadFile($file, $ctrl.opts)"
+      ngf-validate-fn="$ctrl.validateFile($file)"
+    ]
     | {{$ctrl.buttonLabel}}
   small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.inputInvalid($ctrl.fileInputName) && !$ctrl.document.error"
     | {{'error.file_missing' | translate}}
