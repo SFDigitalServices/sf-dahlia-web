@@ -28,7 +28,7 @@
       "languages":["English", "Spanish", "Arabic"],
       "address": "1360 Mission Street #400",
       "citystate": "San Francisco, CA 94103",
-      "phone": "(415) 513-5177 ext. 402",
+      "phone": "(415) 513-5177,402",
       "website": "http://bishopsf.org"
     },
     {
@@ -37,7 +37,7 @@
       "address": "2500 18th Street",
       "citystate": "San Francisco, CA 94110",
       "phone": "(415) 546-6756",
-      "website": "https://www.homelessprenatal.org/"
+      "website": "http://www.homelessprenatal.org/"
     },
     {
       "name": "HomeownershipSF",
