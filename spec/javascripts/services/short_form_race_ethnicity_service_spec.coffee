@@ -40,7 +40,7 @@ do ->
       raceEthnicity: "option2 - suboption2;option2 - suboption3"
       suboption3Other: "suboption3OtherValue"
 
-    beforeEach module('dahlia.services', ($provide)->
+    beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
       $provide.value 'ShortFormHelperService', fakeShortFormHelperService
       return

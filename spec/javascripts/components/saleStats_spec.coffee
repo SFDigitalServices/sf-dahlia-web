@@ -4,32 +4,79 @@ do ->
     $componentController = undefined
     ctrl = undefined
     locals = undefined
+    $translate = {
+      instant: (key, params) -> "translated(#{key}, #{JSON.stringify(params)})"
+    }
+    $filter =
+      instant: jasmine.createSpy()
     fakeParent = {}
     beforeEach module('dahlia.components')
-    beforeEach inject((_$componentController_) ->
+    beforeEach inject((_$componentController_, _$filter_) ->
       $componentController = _$componentController_
-      locals = {}
+      locals = {
+        $translate: $translate
+        $filter: _$filter_
+      }
     )
     summaryWithoutPrices = {
-      'unitType': '1 BR',
+      'unitType': '1 BR'
       'listingID': 'a0W0P00000F8YG4UAN'
+      'absoluteMinIncome': 1300
+      'absoluteMaxIncome': 3300
     }
 
     summaryWithMinWithoutParkingPrice = {
-      'unitType': '1 BR',
-      'minPriceWithoutParking': 4000,
+      'unitType': '1 BR'
+      'minPriceWithoutParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
+      'absoluteMinIncome': 1400
+      'absoluteMaxIncome': 3400
     }
 
     summaryWithMinWithParkingPrice = {
-      'unitType': '1 BR',
-      'minPriceWithParking': 4000,
+      'unitType': '1 BR'
+      'minPriceWithParking': 4000
       'listingID': 'a0W0P00000F8YG4UAN'
+      'absoluteMinIncome': 1500
+      'absoluteMaxIncome': 3500
     }
+
+    fakeListing = {
+      'unitSummaries': {
+        'general': [summaryWithoutPrices, summaryWithMinWithoutParkingPrice]
+        'reserved': null
+      }
+    }
+
+    mockTranslateCurrencyRange = (min, max) ->
+      params = {
+        currencyMinValue: min
+        currencyMaxValue: max
+      }
+      $translate.instant('listings.stats.currency_range', params)
+
+    mockTranslateHoaString = (hoaPriceString) ->
+      $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: hoaPriceString })
+
+    mockSummaryHoaPrices = (minWithParking = null, maxWithParking = null, minWithoutParking = null, maxWithoutParking = null) ->
+      {
+        minHoaDuesWithParking: minWithParking
+        maxHoaDuesWithParking: maxWithParking
+        minHoaDuesWithoutParking: minWithoutParking
+        maxHoaDuesWithoutParking: maxWithoutParking
+      }
+
+    mockSummarySalesPrices = (minWithParking = null, maxWithParking = null, minWithoutParking = null, maxWithoutParking = null) ->
+      {
+        minPriceWithParking: minWithParking
+        maxPriceWithParking: maxWithParking
+        minPriceWithoutParking: minWithoutParking
+        maxPriceWithoutParking: maxWithoutParking
+      }
 
     describe 'saleStats', ->
       beforeEach ->
-        ctrl = $componentController 'saleStats', locals, {parent: fakeParent}
+        ctrl = $componentController 'saleStats', locals, { parent: fakeParent, listing: fakeListing }
 
       describe '$ctrl.hasUnitsWithoutParking', ->
         it 'returns true if a listing has a general unit with a without-parking price', ->
@@ -135,4 +182,54 @@ do ->
           }
           expect(ctrl.hasRangeOfPricesWithParking(fakeSummary)).toEqual false
 
+      describe '$ctrl.salesPriceRangeString', ->
+        it 'returns the correct string with only parking values specified', ->
+          fakeSummary = mockSummarySalesPrices(10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$100,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
 
+        it 'returns the correct string with only non-parking values specified', ->
+          fakeSummary = mockSummarySalesPrices(null, null, 10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$100,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking is more expensive', ->
+          fakeSummary = mockSummarySalesPrices(12000, 120000, 10000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when without parking is more expensive', ->
+          fakeSummary = mockSummarySalesPrices(10000, 100000, 12000, 120000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when mix of with/without parking is more expensive', ->
+          fakeSummary = mockSummarySalesPrices(10000, 120000, 12000, 100000)
+          expectedString = mockTranslateCurrencyRange('$10,000', '$120,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when parking values are null', ->
+          fakeSummary = mockSummarySalesPrices(null, null, 12000, 100000)
+          expectedString = mockTranslateCurrencyRange('$12,000', '$100,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns the correct string when non-parking values are null', ->
+          fakeSummary = mockSummarySalesPrices(12000, 120000)
+          expectedString = mockTranslateCurrencyRange('$12,000', '$120,000')
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when all values are null', ->
+          fakeSummary = mockSummarySalesPrices()
+
+          expectedString = ''
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when empty object is passed', ->
+          fakeSummary = {}
+          expectedString = ''
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString
+
+        it 'returns empty string when null object is passed', ->
+          fakeSummary = null
+          expectedString = ''
+          expect(ctrl.salesPriceRangeString(fakeSummary)).toEqual expectedString

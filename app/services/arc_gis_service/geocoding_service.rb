@@ -8,7 +8,6 @@ module ArcGISService
     attr_reader :address
 
     API_URL = ENV['GEOCODING_SERVICE_URL']
-    NAME = 'Composite Geocoder'
     EAS_CANDIDATE_SCORE_MIN = 93
     STCLINES_CANDIDATE_SCORE_MIN = 85
     OTHER_CANDIDATE_SCORE_MIN = 75
