@@ -115,6 +115,17 @@ You have to do this if you rename a key too. If you renamed a key in locale-en.j
 
 If we have new verified translations in Phrase, run `grunt phrasePull` to get the latest translations
 
+## Releases
+Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/1851752601/Webapp+Release+Template) page on Confluence for the full release guide.
+
+### Release script: create_release_branch
+Command: `bash create_release_branch.sh` from the webapp repo root.
+
+This script will:
+- Create a new branch named `release-<todays-date>`
+- Merge it with the latest main
+- Open a PR in a browser window
+
 ## Contributing changes
 
 Use the engineering workflow and coding style standards established below. :smiley:
