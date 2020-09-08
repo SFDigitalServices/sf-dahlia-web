@@ -13,8 +13,8 @@ jobs:
         uses: SFDigitalServices/wait-for-deployment-action@v1
         with:
           github-token: ${{ github.token }}
-          interval: 5
-          timeout: 300
+          interval: 300
+          timeout: 5000
 
       - uses: treosh/lighthouse-ci-action@v3
         with:
