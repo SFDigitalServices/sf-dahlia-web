@@ -4,13 +4,11 @@ on: [push]
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    env:
-      DEPLOY_ENV: Preview
     steps:
       - uses: actions/checkout@v2
 
       - id: deployment
-        uses: SFDigitalServices/wait-for-deployment-action@v1
+        uses: SFDigitalServices/wait-for-deployment-action@v1.0.1
         with:
           github-token: ${{ github.token }}
           interval: 300
