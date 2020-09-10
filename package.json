@@ -10,8 +10,8 @@
         "chai-as-promised": "7.1.1",
         "chance": "1.0.10",
         "coffee-script": "1.12.7",
-        "coffeelint-forbidden-regex": "0.1.1",
         "coffeelint": "^2.1.0",
+        "coffeelint-forbidden-regex": "0.1.1",
         "cucumber": "^2.3.1",
         "dotenv": "2.0.0",
         "grunt": "^1.0.4",
@@ -23,7 +23,8 @@
         "grunt-replace-regex": "^1.0.3",
         "grunt-sort-json": "0.0.5",
         "protractor": "^5.4.2",
-        "protractor-cucumber-framework": "3.1.2"
+        "protractor-cucumber-framework": "3.1.2",
+        "url-join": "^4.0.1"
     },
     "engines": {
         "node": "10.15.3",
