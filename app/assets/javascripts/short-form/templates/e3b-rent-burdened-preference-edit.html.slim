@@ -1,7 +1,7 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question translate="e3b_rent_burden_preference.upload_documents_for_address" translate-value-address="{{currentRentBurdenAddress.address}}"
-    p.form-note.margin-bottom
+    p.margin-bottom
       | {{currentRentBurdenAddress.members | listify : 'fullName'}}
 
   .app-inner
