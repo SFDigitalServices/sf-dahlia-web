@@ -1,0 +1,24 @@
+name: Lighthouse
+on: [push]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm ci
+      - id: deployment
+        uses: SFDigitalServices/wait-for-deployment-action@v2
+        with:
+          github-token: ${{ github.token }}
+          interval: 300
+          timeout: 600
+
+      - uses: treosh/lighthouse-ci-action@v3
+        with:
+          serverToken: ${{ secrets.LHCI_BUILD_TOKEN }}
+          serverBaseUrl: https://lighthouse-ci-sfgov.herokuapp.com
+        env:
+          LHCI_GITHUB_TOKEN: ${{ github.token }}
+          LHCI_COLLECT_BASE_URL: ${{ steps.deployment.outputs.url }}
