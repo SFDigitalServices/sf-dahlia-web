@@ -22,4 +22,4 @@ jobs:
         env:
           LHCI_BUILD_CONTEXT__CURRENT_BRANCH: ${{ env.GIT_BRANCH }}
           LHCI_GITHUB_TOKEN: ${{ github.token }}
-          LHCI_COLLECT_BASE_URL: ${{ github.event.deployment_status.payload.web_url }}
+          LHCI_COLLECT_BASE_URL: ${{ github.event.deployment.payload.web_url }}
