@@ -46,12 +46,14 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
   Service.householdMinMaxForMaxIncomeTable = (listing, amiCharts) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0] || 1
-    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy. Unless it's max
-    maxAllowed = if _.isNumber(occupancyMinMax[1]) then occupancyMinMax[1] + 2 else 1
     maxesForAmiCharts = amiCharts.map (amiLevel) -> Service.maxAmiNumHousehold(amiLevel)
     maxHhAvailable = Math.max(maxesForAmiCharts...)
+    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
+    # If occupancyMax is null (in the case of Sale listings) we show all available AMI rows.
+    maxAllowed = if _.isNumber(occupancyMinMax[1]) then occupancyMinMax[1] + 2 else maxHhAvailable
     max = Math.min(maxAllowed, maxHhAvailable)
-    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+
+    # TO DO: Create long-term fix for some SRO units that allow 2 people.
     if (
       ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
       ListingIdentityService.listingIs('1335 Folsom Street', listing)
@@ -64,10 +66,7 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
   Service.occupancyIncomeLevels = (listing, amiChart) ->
     return [] unless amiChart
     minMax = Service.householdMinMaxForMaxIncomeTable(listing, [amiChart])
-    # if ListingIdentityService.isSale(listing)
-    #   max = _.max(_.map(amiChart.values, (v) -> v.numOfHousehold))
     _.filter amiChart.values, (value) ->
-      # where numOfHousehold >= min && <= max
       value.numOfHousehold >= minMax.min && value.numOfHousehold <= minMax.max
 
   Service.hhSizesToShowInMaxIncomeTable = (listing, amiCharts) ->

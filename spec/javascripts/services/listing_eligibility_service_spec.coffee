@@ -80,6 +80,14 @@ do ->
         ]}
         minMax = ListingEligibilityService.occupancyMinMax(listing)
         expect(minMax).toEqual [2, 7]
+      it 'returns null for max if the listing is a sale unit and has no maxOccupancy', ->
+        listing = {'unitSummary': [
+          {'minOccupancy':2},
+          {'minOccupancy':3},
+          {'minOccupancy':4}
+        ]}
+        minMax = ListingEligibilityService.occupancyMinMax(listing)
+        expect(minMax).toEqual [2, null]
 
     describe 'Service.householdMinMaxForMaxIncomeTable', ->
       beforeEach ->
@@ -95,6 +103,11 @@ do ->
       it 'should return a max of the max occupancy plus 2 if available on the AMI chart', ->
         minMax = ListingEligibilityService.householdMinMaxForMaxIncomeTable(fakeListing, fakeAMI.ami)
         expect(minMax.max).toEqual 5
+      it 'should return all available values from the AMI table if the listing has no max occupancy', ->
+        fakeSaleListing = {'unitSummary': [{'minOccupancy': 1}]}
+        minMax = ListingEligibilityService.householdMinMaxForMaxIncomeTable(fakeSaleListing, fakeAMI.ami)
+        expect(minMax.max).toEqual 8
+
       describe 'when limited by what\'s available from the AMI charts', ->
         it 'should return the max available AMI value if it\'s smaller than the max occupancy plus 2', ->
           fakeBigUnitListing = {'unitSummary': [{'minOccupancy': 1, 'maxOccupancy': 8}]}
