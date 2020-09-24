@@ -127,6 +127,14 @@ do ->
           incomeLevels = ListingEligibilityService.occupancyIncomeLevels(fakeListing.listing, fakeAMI.ami[0])
           expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual 5
 
+    describe 'Service.hhSizesToShowInMaxIncomeTable', ->
+      it 'should return an array with values from the min to max available hh sizes', ->
+          spyOn(
+            ListingEligibilityService,'householdMinMaxForMaxIncomeTable'
+          ).and.returnValue({'min': 2, 'max': 5})
+          range = ListingEligibilityService.hhSizesToShowInMaxIncomeTable(fakeListing.listing, fakeAMI.ami[0])
+          expect(range).toEqual [2, 3, 4, 5]
+
     describe 'Service.householdAMIChartCutoff', ->
       it 'returns 1 if all units are SROs', ->
         expect(ListingEligibilityService.householdAMIChartCutoff(fakeListingAllSRO)).toEqual(1)
