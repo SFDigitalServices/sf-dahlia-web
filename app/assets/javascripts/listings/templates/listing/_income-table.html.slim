@@ -10,6 +10,6 @@
         td scope="row"
           | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::$ctrl.occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
         td
-          | <span class="notranslate">{{::householdIncomeLevel.amount | divideAndRoundDown : 12 | currency : $ : 0}}</span><small>/month</small>
+          | {{::$ctrl.formatIncomePerMonth(householdIncomeLevel.amount)}}
         td
-          | <span class="notranslate">{{::householdIncomeLevel.amount | currency : $ : 0}}</span><small>/year</small>
+          | {{::$ctrl.formatIncomePerYear(householdIncomeLevel.amount)}}

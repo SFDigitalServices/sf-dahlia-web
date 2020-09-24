@@ -19,4 +19,4 @@
         td scope="row"
           | {{::householdSize}} <small>{{ ::$ctrl.occupancyLabel(householdSize) }}</small>
         td ng-repeat="amiChart in $ctrl.parent.AMICharts"
-          | <span class="notranslate">{{ $ctrl.formatIncomeForHouseholdSize(amiChart, householdSize) }}</span><small>/year</small>
+          | {{ $ctrl.getMultiAmiIncomeString(amiChart, householdSize) }}

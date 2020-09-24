@@ -55,10 +55,17 @@ angular.module('dahlia.components')
       @householdAMIChartCutoff = ->
         ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
-      @formatIncomeForHouseholdSize = (amiChart, numOfHousehold) ->
+      @getMultiAmiIncomeString = (amiChart, numOfHousehold) ->
         income = ListingEligibilityService.incomeForHouseholdSize(amiChart, numOfHousehold)
         if income
-          $filter('currency')(income, '$', 0)
+          @formatIncomePerYear income
+
+      @formatIncomePerYear = (income) ->
+        $filter('currency')(income, '$', 0) + ' ' + $translate.instant('label.per_year')
+
+      @formatIncomePerMonth = (income) ->
+        per_month = $filter('divideAndRoundDown')(income, 12)
+        $filter('currency')(per_month, '$', 0) + ' ' + $translate.instant('label.per_month')
 
       return ctrl
   ]
