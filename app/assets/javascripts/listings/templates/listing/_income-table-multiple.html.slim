@@ -18,5 +18,5 @@
       tr ng-repeat="householdSize in $ctrl.hhSizesToShowInMaxIncomeTable($ctrl.parent.AMICharts)" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdSize <= $ctrl.householdAMIChartCutoff()"
         td scope="row"
           | {{::householdSize}} <small>{{ ::$ctrl.occupancyLabel(householdSize) }}</small>
-        td ng-repeat="amiChart in $ctrl.parent.AMICharts"
+        td ng-repeat="amiChart in $ctrl.parent.AMICharts" class="notranslate"
           | {{ $ctrl.getMultiAmiIncomeString(amiChart, householdSize) }}

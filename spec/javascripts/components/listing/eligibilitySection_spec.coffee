@@ -14,7 +14,7 @@ do ->
     }
     fakeListingEligibilityService = {
       occupancyIncomeLevels: ->
-      incomeForHouseholdSize: jasmine.createSpy()
+      incomeForHouseholdSize: ->
       householdAMIChartCutoff: ->
       householdMinMaxForMaxIncomeTable: ->
     }
@@ -152,7 +152,25 @@ do ->
           ctrl.householdAMIChartCutoff()
           expect(fakeListingEligibilityService.householdAMIChartCutoff).toHaveBeenCalled()
 
-      describe 'formatIncomeForHouseholdSize', ->
+      describe 'getMultiAmiIncomeString', ->
         it 'calls ListingEligibilityService.incomeForHouseholdSize with the given arguments', ->
-          ctrl.formatIncomeForHouseholdSize(1, 2)
+          spyOn(fakeListingEligibilityService, 'incomeForHouseholdSize')
+          ctrl.getMultiAmiIncomeString(1, 2)
           expect(fakeListingEligibilityService.incomeForHouseholdSize).toHaveBeenCalledWith(1, 2)
+        it 'calls formatIncomePerYear if income is available', ->
+          spyOn(ctrl, 'formatIncomePerYear')
+          spyOn(fakeListingEligibilityService, 'incomeForHouseholdSize').and.returnValue(1234)
+          ctrl.getMultiAmiIncomeString(fakeAMI.ami[0], 2)
+          expect(ctrl.formatIncomePerYear).toHaveBeenCalledWith(1234)
+
+      describe 'formatIncomePerYear', ->
+        it 'formats floats to currency per year as expected', ->
+          spyOn($translate, 'instant').and.returnValue('per year')
+          result = ctrl.formatIncomePerYear(123.456)
+          expect(result).toEqual('$123 per year')
+
+      describe 'formatIncomePerMonth', ->
+        it 'divides and formats incomes as expected', ->
+          spyOn($translate, 'instant').and.returnValue('per month')
+          result = ctrl.formatIncomePerMonth(49)
+          expect(result).toEqual('$4 per month')
