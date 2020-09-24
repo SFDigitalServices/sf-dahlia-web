@@ -7,12 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.deployment.sha }}
+
+      - name: determine branch
+        uses: SFDigitalServices/git-the-branch@v1
+
       - uses: treosh/lighthouse-ci-action@v3
         with:
           serverToken: ${{ secrets.LHCI_BUILD_TOKEN }}
           serverBaseUrl: https://lighthouse-ci-sfgov.herokuapp.com
         env:
+          LHCI_BUILD_CONTEXT__CURRENT_BRANCH: ${{ env.GIT_BRANCH }}
           LHCI_GITHUB_TOKEN: ${{ github.token }}
           LHCI_COLLECT_BASE_URL: ${{ github.event.deployment_status.payload.web_url }}
