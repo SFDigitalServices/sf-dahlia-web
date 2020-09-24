@@ -1,9 +1,3 @@
-try {
-  require('dotenv').config()
-} catch (error) {
-  // this can fail in CI, where there is no .env
-}
-
 const join = require('url-join')
 
 const {
