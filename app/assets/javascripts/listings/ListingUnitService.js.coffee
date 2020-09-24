@@ -215,8 +215,8 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
 
   Service.listingHasOnlySROUnits = (listing) ->
     combined = Service.combineUnitSummaries(listing)
+    return false unless combined.length
     _.every(combined, { Unit_Type: 'SRO' })
-
 
   Service.getListingAMI = (listing) ->
     angular.copy([], Service.AMICharts)

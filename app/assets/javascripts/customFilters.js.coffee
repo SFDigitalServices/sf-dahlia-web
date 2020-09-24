@@ -82,9 +82,6 @@ angular.module('customFilters', [])
     s = ['th', 'st', 'nd', 'rd']
     v = n % 100
     (s[(v - 20) % 10] or s[v] or s[0])
-.filter 'divideAndRoundDown', ->
-  (input, divider) ->
-    Math.floor(input / divider)
 .filter 'listify', ->
   # will turn an array of items into a comma separated list, ending with "and" e.g.
   # ['john', 'jane', 'joe', 'dana'] | listify
