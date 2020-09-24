@@ -16,6 +16,7 @@ do ->
       occupancyIncomeLevels: ->
       incomeForHouseholdSize: jasmine.createSpy()
       householdAMIChartCutoff: ->
+      householdMinMaxForMaxIncomeTable: ->
     }
     fakeListingDataService =
       AMICharts: []
@@ -77,33 +78,29 @@ do ->
           fakeListingUnitService.AMICharts = fakeAMI
 
         it 'returns false for empty AMICharts', ->
+          fakeListingUnitService.AMICharts = {}
           expect(ctrl.showAMItoggler()).toBe(false)
-        it 'calls ListingEligibilityService.occupancyIncomeLevels', ->
-          spyOn(fakeListingEligibilityService, 'occupancyIncomeLevels')
+        it 'calls ListingEligibilityService.householdMinMaxForMaxIncomeTable', ->
+          spyOn(fakeListingEligibilityService, 'householdMinMaxForMaxIncomeTable').and.returnValue(
+            {'min': 1, 'max': 1}
+          )
           ctrl.showAMItoggler()
-          expect(fakeListingEligibilityService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, _.last(fakeAMI))
+          expect(fakeListingEligibilityService.householdMinMaxForMaxIncomeTable).toHaveBeenCalledWith(fakeListing, fakeAMI)
         it 'calls ListingEligibilityService.householdAMIChartCutoff', ->
+          spyOn(fakeListingEligibilityService, 'householdMinMaxForMaxIncomeTable').and.returnValue(
+            {'min': 1, 'max': 1}
+          )
           spyOn(fakeListingEligibilityService, 'householdAMIChartCutoff')
           ctrl.showAMItoggler()
           expect(fakeListingEligibilityService.householdAMIChartCutoff).toHaveBeenCalled()
         it 'returns true when maxNumOfHousehold is > householdAMIChartCutoff', ->
-          fakeOccupancyIncomeLevel = {
-            numOfHousehold: 5
-          }
-          fakeOccupancyIncomeLevel2 = {
-            numOfHousehold: 3
-          }
-          spyOn(fakeListingEligibilityService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          fakeMinMaxForIncomeTable = {'min': 3, 'max': 5}
+          spyOn(fakeListingEligibilityService, 'householdMinMaxForMaxIncomeTable').and.returnValue(fakeMinMaxForIncomeTable)
           spyOn(fakeListingEligibilityService, 'householdAMIChartCutoff').and.returnValue(4)
           expect(ctrl.showAMItoggler()).toEqual true
         it 'returns false when maxNumOfHousehold is < householdAMIChartCutoff', ->
-          fakeOccupancyIncomeLevel = {
-            numOfHousehold: 5
-          }
-          fakeOccupancyIncomeLevel2 = {
-            numOfHousehold: 3
-          }
-          spyOn(fakeListingEligibilityService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          fakeMinMaxForIncomeTable = {'min': 3, 'max': 5}
+          spyOn(fakeListingEligibilityService, 'householdMinMaxForMaxIncomeTable').and.returnValue(fakeMinMaxForIncomeTable)
           spyOn(fakeListingEligibilityService, 'householdAMIChartCutoff').and.returnValue(6)
           expect(ctrl.showAMItoggler()).toEqual false
 

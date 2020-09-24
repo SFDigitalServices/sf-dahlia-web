@@ -25,10 +25,8 @@ angular.module('dahlia.components')
 
       @showAMItoggler = ->
         return false if _.isEmpty(ListingUnitService.AMICharts)
-        amiLevel = _.last(ListingUnitService.AMICharts)
-        lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
-        maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
+        minMax = ListingEligibilityService.householdMinMaxForMaxIncomeTable(this.parent.listing, ListingUnitService.AMICharts)
+        minMax.max > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @hasMultipleAMICharts = ->
         ListingUnitService.AMICharts.length > 1
@@ -48,14 +46,17 @@ angular.module('dahlia.components')
       @priorityLabel = (priority, modifier) ->
         ListingDataService.priorityLabel(priority, modifier)
 
-      @occupancyIncomeLevels = (amiLevel) ->
-        ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+      @occupancyIncomeLevels = (amiCharts) ->
+        ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiCharts)
+
+      @hhSizesToShowInMaxIncomeTable = (amiCharts) ->
+        ListingEligibilityService.hhSizesToShowInMaxIncomeTable(this.parent.listing, amiCharts)
 
       @householdAMIChartCutoff = ->
         ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
-      @formatIncomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-        income = ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+      @formatIncomeForHouseholdSize = (amiChart, numOfHousehold) ->
+        income = ListingEligibilityService.incomeForHouseholdSize(amiChart, numOfHousehold)
         if income
           $filter('currency')(income, '$', 0)
 
