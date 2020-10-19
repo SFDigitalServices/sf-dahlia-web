@@ -287,7 +287,7 @@
             "homebuyer_header": "For Homebuyers",
             "homebuyer_loan_desc": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>, dated within the last 120 days.",
             "p1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
-            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
+            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your lottery application.",
             "preference_header": "For Claiming Preferences",
             "rent_burden_doc_1": "You'll need a Copy of Lease showing the address where you live.",
             "rent_burden_doc_2": "You'll also need to show last month's rent with one of the following:",
