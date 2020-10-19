@@ -982,7 +982,9 @@
             "stats": {
                 "availability": "Availability",
                 "available": "available",
+                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
                 "hoa_dues": "HOA dues",
+                "hoa_dues_label": "HOA dues {{hoaPriceValue}} per month",
                 "household_size": "Household size",
                 "income_range": "Income Range",
                 "maximum": "Maximum",
@@ -991,9 +993,7 @@
                 "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist",
-                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
-                "hoa_dues_label": "HOA dues {{hoaPriceValue}} per month"
+                "waitlist": "Waitlist"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
