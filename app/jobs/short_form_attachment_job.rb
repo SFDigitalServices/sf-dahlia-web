@@ -16,7 +16,7 @@ class ShortFormAttachmentJob < ApplicationJob
       response =
         Force::ShortFormService.attach_file(application, file, file.descriptive_name)
       if response.status == 200
-        update_file_on_success(file, application_id)
+        ShortFormAttachmentJob.update_file_on_success(file, application_id)
         return
       else
         error_message = "status: #{response.status}; #{response.body}"
