@@ -16,12 +16,7 @@ class ShortFormAttachmentJob < ApplicationJob
       response =
         Force::ShortFormService.attach_file(application, file, file.descriptive_name)
       if response.status == 200
-        # now that file is saved in SF, remove file binary and mark as delivered
-        file.update(
-          file: nil,
-          application_id: application_id,
-          delivered_at: Time.now,
-        )
+        ShortFormAttachmentJob.update_file_on_success(file, application_id)
         return
       else
         error_message = "status: #{response.status}; #{response.body}"
@@ -33,6 +28,16 @@ class ShortFormAttachmentJob < ApplicationJob
     file.update(
       application_id: application_id,
       error: error_message,
+    )
+  end
+
+  # now that file is saved in SF, remove file binary and mark as delivered
+  def self.update_file_on_success(file, application_id)
+    file.update(
+      file: nil,
+      error: nil,
+      application_id: application_id,
+      delivered_at: Time.now,
     )
   end
 end
