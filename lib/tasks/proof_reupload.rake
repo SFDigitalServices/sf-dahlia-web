@@ -67,6 +67,7 @@ namespace :proof do # rubocop:disable Metrics/BlockLength
       Force::ShortFormService.attach_file(application, record, record.descriptive_name)
 
     if response.status != 200
+      puts response.body.to_s
       log_error(id, 'attach_file failed', :with_upload_to_salesforce_error)
       return
     end
@@ -106,10 +107,11 @@ namespace :proof do # rubocop:disable Metrics/BlockLength
     @result_ids[id_list_sym].append(id)
   end
 
-  def for_each_line_in_file(filename, func)
+  def for_each_id_in_file(filename, func)
     fpath = File.expand_path(filename)
     File.readlines(fpath).each do |line|
-      method(func).call(line.gsub(/\s+/, ''))
+      line_stripped = line.gsub(/\s+/, '')
+      method(func).call(line_stripped) if !line_stripped.empty? && line_stripped != 'id'
     end
   end
 
