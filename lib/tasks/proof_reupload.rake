@@ -16,9 +16,20 @@ namespace :proof do # rubocop:disable Metrics/BlockLength
       with_upload_to_salesforce_error: [],
     }
 
-    for_each_line_in_file(options[:filename], :process_id)
+    if options[:is_dry_run]
+      for_each_id_in_file(options[:filename], :dry_run_process_id)
+    else
+      for_each_id_in_file(options[:filename], :process_id)
+    end
 
     puts
+    print_results
+    exit
+  end
+
+  private
+
+  def print_results
     puts 'Processed all IDs.' \
     "\n  Successful: #{@result_ids[:successful]}" \
     "\n  No record found: #{@result_ids[:with_no_record]}" \
@@ -27,10 +38,13 @@ namespace :proof do # rubocop:disable Metrics/BlockLength
     "\n  Record error is null: #{@result_ids[:with_null_error]}" \
     "\n  Application fetch failed: #{@result_ids[:failed_fetch_application]}" \
     "\n  Salesforce error: #{@result_ids[:with_upload_to_salesforce_error]}"
-    exit
   end
 
-  private
+  def dry_run_process_id(id)
+    puts "Processing id #{id} (dry run)"
+
+    @result_ids[:successful].append(id)
+  end
 
   def process_id(id)
     puts "Processing id #{id}"
@@ -100,10 +114,19 @@ namespace :proof do # rubocop:disable Metrics/BlockLength
   end
 
   def get_args(cmd_args)
-    options = {}
+    options = { is_dry_run: true }
 
     o = OptionParser.new
     o.banner = 'Usage: rake proof:reupload -- [options]'
+
+    o.on(
+      '-d',
+      '--dry-run [FLAG]',
+      TrueClass,
+      'When dry-run is off, we actually upload the proofs. Defaults to true.',
+    ) do |is_dry_run|
+      options[:is_dry_run] = is_dry_run.nil? ? true : is_dry_run
+    end
 
     o.on('-f', '--failedProofsFile ARG', String) do |filename|
       options[:filename] = filename
