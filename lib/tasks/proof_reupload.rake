@@ -2,6 +2,18 @@ require 'optparse'
 
 namespace :proof do # rubocop:disable Metrics/BlockLength
   desc 'Re-upload provided failed proof uploads'
+
+  # This one-off task re-tries proof uploads that have failed in the past.
+  # It takes a file with proof IDs to retry as input and processes them
+  #   by doing the following:
+  # 1. Finding the postgres record with that ID
+  # 2. Checking that the record has an error and a file binary attached
+  # 3. Re-attaching the record via salesforce
+  # 4. On success, updating the DB to remove the error and file binary
+  #    from the postgres record.
+  #
+  # See https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2252439625/Guide+Re-uploading+failed+preference+proofs
+  #   for a step-by-step guide on how to run this script in production.
   task reupload: :environment do
     puts 'performing reupload task'
     options = get_args(ARGV)
