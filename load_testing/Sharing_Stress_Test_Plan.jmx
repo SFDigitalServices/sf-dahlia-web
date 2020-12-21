@@ -132,7 +132,7 @@ Connect to 5s</stringProp>
     &quot;yCoordinate&quot;: 4561404.646837029,&#xd;
     &quot;whichComponentOfLocatorWasUsed&quot;: &quot;city&quot;,&#xd;
     &quot;candidateScore&quot;: 100,&#xd;
-    &quot;contactId&quot;: &quot;0031F00000ZPCiDQAX&quot;,&#xd;
+    &quot;contactId&quot;: null,&#xd;
     &quot;webAppID&quot;: null&#xd;
   },&#xd;
     &quot;householdMembers&quot;: [&#xd;
