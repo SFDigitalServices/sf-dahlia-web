@@ -822,11 +822,6 @@
             },
             "all_units": "All Units",
             "all_units_reserved_for": "All units reserved for {{type}}",
-            "ami_tiers": {
-                "low_income": "Low Income",
-                "middle_income": "Middle Income",
-                "moderate_income": "Moderate Income"
-            },
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
@@ -989,7 +984,8 @@
                 "income_range": "Income Range",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
-                "percent_ami": "{{amiPercent}}% AMI",
+                "up_to_percent_ami":  "Up to {{amiPercent}}% AMI",
+                "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",
                 "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
