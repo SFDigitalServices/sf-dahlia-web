@@ -55,9 +55,6 @@ do ->
       }
       $translate.instant('listings.stats.currency_range', params)
 
-    mockTranslateHoaString = (hoaPriceString) ->
-      $translate.instant('listings.stats.hoa_dues_label', { hoaPriceValue: hoaPriceString })
-
     mockSummaryHoaPrices = (minWithParking = null, maxWithParking = null, minWithoutParking = null, maxWithoutParking = null) ->
       {
         minHoaDuesWithParking: minWithParking

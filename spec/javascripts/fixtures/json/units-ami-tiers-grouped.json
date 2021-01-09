@@ -3,7 +3,7 @@
     "type": "Studio",
     "incomeLevels": [
       {
-        "incomeLevel": "listings.ami_tiers.low_income",
+        "incomeLevel": "65",
         "priceGroups": [
           {
             "Unit_Type": "Studio",
@@ -36,7 +36,7 @@
     "type": "1 BR",
     "incomeLevels": [
       {
-        "incomeLevel": "listings.ami_tiers.low_income",
+        "incomeLevel": "65",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -69,7 +69,7 @@
         ]
       },
       {
-        "incomeLevel": "listings.ami_tiers.moderate_income",
+        "incomeLevel": "65-90",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -103,7 +103,7 @@
         ]
       },
       {
-        "incomeLevel": "listings.ami_tiers.middle_income",
+        "incomeLevel": "90-130",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -142,7 +142,7 @@
     "type": "2 BR",
     "incomeLevels": [
       {
-        "incomeLevel": "listings.ami_tiers.moderate_income",
+        "incomeLevel": "65-90",
         "priceGroups": [
           {
             "Unit_Type": "2 BR",
@@ -181,7 +181,7 @@
         ]
       },
       {
-        "incomeLevel": "listings.ami_tiers.middle_income",
+        "incomeLevel": "90-130",
         "priceGroups": [
           {
             "Unit_Type": "2 BR",
@@ -225,7 +225,7 @@
     "type": "3 BR",
     "incomeLevels": [
       {
-        "incomeLevel": "listings.ami_tiers.middle_income",
+        "incomeLevel": "90-130",
         "priceGroups": [
           {
             "Unit_Type": "3 BR",
