@@ -5,13 +5,15 @@ angular.module('dahlia.components')
     parent: '^listingContainer'
   bindings:
     tenureType: '@'
-  controller: ['$filter', '$sce', '$state', '$translate', 'IncomeCalculatorService', 'ListingDataService', 'ListingEligibilityService',
-  ($filter, $sce, $state, $translate, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
+  controller: ['$filter', '$sce', '$state', '$translate', '$window', 'IncomeCalculatorService', 'ListingDataService',
+  'ListingEligibilityService',
+  ($filter, $sce, $state, $translate, $window, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
     ctrl = @
 
     @eligibilityFilters = ListingEligibilityService.eligibility_filters
     @openMatchListings = ListingDataService.openMatchListings
     @href = $state.href
+    @advertiseDALP = $window.env.advertiseDALP == 'true'
 
     @clearEligibilityFilters = ->
       ListingEligibilityService.resetEligibilityFilters()
