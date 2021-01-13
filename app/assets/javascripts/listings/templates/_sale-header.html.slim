@@ -14,7 +14,7 @@ header.directory-header#listings_header
       .directory-header_sidebar ng-if="$ctrl.advertiseDALP"
         h2.h-caps-lined translate="listings_for_sale.get_help.help_with_downpayment"
         p
-          ' {{'listings_for_sale.get_help.dalp_program_info' | translate}}
+          ' {{ $ctrl.dalpProgramInfo() }}
           a href="https://sf.gov/apply-downpayment-loan-buy-market-rate-home" translate="listings_for_sale.get_help.learn_more_and_how_to_apply"
         h2.h-caps-lined translate="listings_for_sale.get_help.more_resources"
         p
