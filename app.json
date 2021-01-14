@@ -98,6 +98,12 @@
     },
     "SHOW_PRE_LOTTERY_INFO": {
       "required":true
+    },
+    "ADVERTISE_DALP": {
+      "required": true
+    },
+    "DALP_PROGRAM_INFO": {
+      "required": true
     }
   }
 }

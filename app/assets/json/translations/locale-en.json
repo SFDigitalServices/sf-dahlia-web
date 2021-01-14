@@ -1038,10 +1038,16 @@
                 "title": "Find more listings on our website:"
             },
             "get_help": {
+                "dalp_program_info": "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021.",
+                "help_with_downpayment": "Help with downpayments",
+                "learn_more_and_how_to_apply": "Learn more about DALP and how to apply on SF.gov",
+                "mohcd_programs": "The Mayor's Office of Housing and Community Development (MOHCD) offers a number of programs to help homebuyers in San Francisco.",
+                "more_resources": "More resources",
                 "other_groups_may_qualify": "Others, like San Francisco teachers and first responders, may qualify for loans.",
                 "some_people_may_qualify": "Some people may qualify for downpayment assistance.",
                 "title": "Get help",
-                "view_full_list_of_programs": "View the full list of programs"
+                "view_full_list_of_programs": "View the full list of programs",
+                "visit_mohcd_programs": "Visit the MOHCD Affordable Homebuyer Programs page to learn more."
             },
             "lottery_preferences": {
                 "has_preferences": "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.",

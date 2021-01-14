@@ -7,6 +7,8 @@ do ->
     state = {current: {name: undefined}}
     $translate =
       instant: ->
+    fakeWindow = {}
+    fakeWindow['env'] = {advertiseDALP: 'true'}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeIncomeCalculatorService = {
@@ -37,6 +39,7 @@ do ->
         IncomeCalculatorService: fakeIncomeCalculatorService
         $state: state
         $translate: $translate
+        $window: fakeWindow
         ListingEligibilityService: fakeListingEligibilityService
       }
     )
