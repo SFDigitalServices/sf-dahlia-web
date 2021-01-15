@@ -72,33 +72,33 @@ do ->
           {'amiPercent': 60}
         )
 
-    describe 'Service.groupUnitDetails', ->
+    describe 'Service.groupSaleUnits', ->
       beforeEach ->
         ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
 
       it 'should group units by bedroom count', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsMinAmi.units)
         expect(grouped.map((g) -> g.type)).toEqual(['Studio', '1 BR', '2 BR', '3 BR'])
 
       it 'should group units within bedroom type by AMI level for AMI tier listings', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsMinAmi.units)
         oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
         expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
           ['65','65-90', '90-130']
         )
 
       it 'should group AMI tier units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsMinAmi.units)
         expectedAmiTierUnitGroups = getJSONFixture('units-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedAmiTierUnitGroups)
 
       it 'should group sale units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsSales.units)
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsSales.units)
         expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
       it 'should group non-AMI-tier units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsNonMinAmi.units)
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsNonMinAmi.units)
         expectedUnitGroups = getJSONFixture('units-non-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
@@ -106,7 +106,7 @@ do ->
         unitWithOtherRent = angular.copy(fakeUnitsNonMinAmi.units[0])
         unitWithOtherRent['BMR_Rent_Monthly'] = 1800.0
 
-        grouped = ListingUnitService.groupUnitDetails(
+        grouped = ListingUnitService.groupSaleUnits(
             [unitWithOtherRent, fakeUnitsNonMinAmi.units[0]]
           )
         priceGroups = grouped[0].incomeLevels[0].priceGroups
@@ -116,7 +116,7 @@ do ->
         unitWithHigherPrice = angular.copy(fakeUnitsSales.units[0])
         unitWithHigherPrice['Price_Without_Parking'] = 340000.0
 
-        grouped = ListingUnitService.groupUnitDetails(
+        grouped = ListingUnitService.groupSaleUnits(
             [unitWithHigherPrice, fakeUnitsSales.units[0]]
           )
         priceGroups = grouped[0].incomeLevels[0].priceGroups
@@ -274,7 +274,7 @@ do ->
       it 'assigns the given listing.Units with the unit results', ->
         expect(fakeListing.Units).toEqual fakeUnits.units
       it 'assigns the given listing.groupedUnits with the grouped unit results', ->
-        expect(fakeListing.groupedUnits).toEqual ListingUnitService.groupUnitDetails(fakeUnits.units)
+        expect(fakeListing.groupedUnits).toEqual ListingUnitService.groupSaleUnits(fakeUnits.units)
 
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns false if not all units are SROs', ->
