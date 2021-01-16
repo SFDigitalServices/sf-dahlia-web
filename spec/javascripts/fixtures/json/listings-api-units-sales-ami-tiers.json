@@ -1,0 +1,48 @@
+{
+  "units": [
+    {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0b1F000002PEOYQA4"
+      },
+      "Price_With_Parking": 460000.0,
+      "HOA_Dues_With_Parking": 450.0,
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 0.0,
+      "Unit_Number": "11",
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "MOHCD Adjusted HUD Unadjusted",
+      "AMI_chart_year": 2020,
+      "Max_AMI_for_Qualifying_Unit": 90,
+      "Min_AMI_for_Qualifying_Unit": 65,
+      "Planning_AMI_Tier": "Moderate Income",
+      "Min_Occupancy": 1,
+      "Id": "a0b1F000002PEOYQA4"
+    },
+    {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0b1F000002PEOTQA4"
+      },
+      "Price_Without_Parking": 300000.0,
+      "Price_With_Parking": 340000.0,
+      "HOA_Dues_Without_Parking": 300.0,
+      "HOA_Dues_With_Parking": 350.0,
+      "Unit_Type": "1 BR",
+      "Availability": 1,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 0.0,
+      "Unit_Number": "10",
+      "Unit_Floor": "2",
+      "Status": "Available",
+      "isReservedCommunity": false,
+      "AMI_chart_type": "MOHCD Adjusted HUD Unadjusted",
+      "AMI_chart_year": 2020,
+      "Max_AMI_for_Qualifying_Unit": 65,
+      "Planning_AMI_Tier": "Low Income",
+      "Min_Occupancy": 1,
+      "Id": "a0b1F000002PEOTQA4"
+    }
+  ]
+}
