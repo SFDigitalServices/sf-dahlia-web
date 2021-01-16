@@ -127,7 +127,6 @@ do ->
 
       it 'should group AMI tier units as expected', ->
         grouped = ListingUnitService.groupSaleUnits(fakeUnitsSalesAmiTiers.units)
-        console.log('ami sales', grouped)
         expectedAmiTierUnitGroups = getJSONFixture('units-sale-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedAmiTierUnitGroups)
 
