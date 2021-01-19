@@ -98,7 +98,7 @@ To get started working with our Phrase translations, you will need to:
 
 ### Push your changes to Phrase every time you update locale-en.json
 
-Run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
+After running `grunt translations`, run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
 
 Special cases:
 - If you changed the meaning or intent of an existing English string, you should delete the existing non-English translations in Phrase and run `grunt phrasePull` so users don't get incorrect info.
@@ -125,6 +125,11 @@ This script will:
 - Create a new branch named `release-<todays-date>`
 - Merge it with the latest main
 - Open a PR in a browser window
+
+## Environment variable configurations
+### DALP Advertising
+ - ADVERTISE_DALP -> If set to 'true', the Sales directory page will display info about applying to DALP in a "Help with downpayments" section. Otherwise it'll show the plain "Get help" section
+ - DALP_PROGRAM_INFO -> If provided, we will override the default DALP text of "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021." with whatever is in this env var.
 
 ## Contributing changes
 

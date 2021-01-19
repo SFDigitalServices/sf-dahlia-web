@@ -3,7 +3,7 @@
     "type": "1 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 55,
+        "incomeLevel": "55",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -43,7 +43,7 @@
     "type": "2 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 60,
+        "incomeLevel": "60",
         "priceGroups": [
           {
             "Unit_Type": "2 BR",
@@ -88,7 +88,7 @@
     "type": "3 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 55,
+        "incomeLevel": "55",
         "priceGroups": [
           {
             "Unit_Type": "3 BR",
@@ -133,7 +133,7 @@
         ]
       },
       {
-        "incomeLevel": 60,
+        "incomeLevel": "60",
         "priceGroups": [
           {
             "Unit_Type": "3 BR",

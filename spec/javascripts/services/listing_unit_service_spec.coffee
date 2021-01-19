@@ -19,8 +19,12 @@ do ->
     fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
     $translate =
       use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
-      instant: (str, variable ) ->
-        variable?.amiPercent || str
+      instant: jasmine.createSpy('$translate.instant').and.callFake(
+        # If just max AMI, return it, else return the range as min-max
+        (str, variable ) ->
+          variable?.amiPercent?.toString() || if variable?.minAmiPercent then "#{variable.minAmiPercent}-#{variable.maxAmiPercent}" else str
+      )
+
     requestURL = undefined
 
 
@@ -48,17 +52,25 @@ do ->
         expect(ListingUnitService.AMICharts).toEqual []
 
     describe 'Service._getIncomeLevelLabel', ->
-      it 'returns AMI tier label for AMI tiers', ->
-        unitSummary = { 'Planning_AMI_Tier': 'Low Income'}
+      it 'returns range if min ami is present', ->
+        unitSummary = {
+          'Max_AMI_for_Qualifying_Unit': 60,
+          'Min_AMI_for_Qualifying_Unit': 40,
+        }
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
+        expect($translate.instant).toHaveBeenCalledWith(
+          'listings.stats.percent_ami_range',
+          {'minAmiPercent': 40, 'maxAmiPercent': 60}
+        )
 
-        expect(label).toEqual('listings.ami_tiers.low_income')
-      it 'returns formatted AMI percentage if not an AMI tier', ->
+      it 'returns "up to" formatted label if there is not a min AMI', ->
         unitSummary = { 'Max_AMI_for_Qualifying_Unit': 60 }
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
 
-        expect(label).toEqual(60)
-
+        expect($translate.instant).toHaveBeenCalledWith(
+          'listings.stats.up_to_percent_ami',
+          {'amiPercent': 60}
+        )
 
     describe 'Service.groupUnitDetails', ->
       beforeEach ->
@@ -72,7 +84,7 @@ do ->
         grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
         oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
         expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
-          ['listings.ami_tiers.low_income', 'listings.ami_tiers.moderate_income', 'listings.ami_tiers.middle_income']
+          ['65','65-90', '90-130']
         )
 
       it 'should group AMI tier units as expected', ->

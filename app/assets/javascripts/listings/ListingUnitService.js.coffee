@@ -97,17 +97,22 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       }
     )
 
-  Service._incomeTierLabelMap = (amiTier) ->
-    switch amiTier
-      when 'Low Income' then $translate.instant("listings.ami_tiers.low_income")
-      when 'Moderate Income' then $translate.instant("listings.ami_tiers.moderate_income")
-      when 'Middle Income' then $translate.instant("listings.ami_tiers.middle_income")
-      else null
-
   Service._getIncomeLevelLabel = (unitSummary) ->
-    # If AMI Tier label is present, use that, otherwise, use the AMI percent
-    Service._incomeTierLabelMap(unitSummary.Planning_AMI_Tier) ||
-      $translate.instant('listings.stats.percent_ami', {'amiPercent': unitSummary.Max_AMI_for_Qualifying_Unit})
+    # If a min AMI is present, show a range, otherwise show "up to X %"
+    if unitSummary.Min_AMI_for_Qualifying_Unit
+      label = $translate.instant(
+        'listings.stats.percent_ami_range',
+        {
+          'minAmiPercent': unitSummary.Min_AMI_for_Qualifying_Unit,
+          'maxAmiPercent': unitSummary.Max_AMI_for_Qualifying_Unit
+        }
+      )
+    else
+      label = $translate.instant(
+        'listings.stats.up_to_percent_ami',
+        {'amiPercent': unitSummary.Max_AMI_for_Qualifying_Unit}
+      )
+    label
 
   Service.groupUnitDetails = (units) ->
     ###
