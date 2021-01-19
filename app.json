@@ -100,10 +100,10 @@
       "required":true
     },
     "ADVERTISE_DALP": {
-      "required": true
+      "required": false
     },
     "DALP_PROGRAM_INFO": {
-      "required": true
+      "required": false
     }
   }
 }
