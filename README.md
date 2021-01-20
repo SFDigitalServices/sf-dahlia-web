@@ -130,7 +130,8 @@ This script will:
 ### DALP Advertising
  - ADVERTISE_DALP -> If set to 'true', the Sales directory page will display info about applying to DALP in a "Help with downpayments" section. Otherwise it'll show the plain "Get help" section
  - DALP_PROGRAM_INFO -> If provided, we will override the default DALP text of "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021." with whatever is in this env var.
-
+### Other
+ - COVID_UPDATE -> If set to 'true', shows COVID-19 update info in the apply section
 ## Contributing changes
 
 Use the engineering workflow and coding style standards established below. :smiley:

@@ -825,6 +825,9 @@
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
+                "covid_update": "COVID-19 update:",
+                "covid_update_info": "As of March 16, 2020 paper applications are not included in lotteries. Currently, applications are only accepted online.",
+                "covid_update_lotteries": "Lotteries are not currently being held in-person due to COVID-19. They are still happening on the specified date. Please check back for lottery results.",
                 "do_not_apply_online_and_paper": "Do not apply online and also send in a paper application.",
                 "do_not_do_multiple_applications": "All applications containing any person who appears on more than one application will be removed from the lottery.",
                 "drop_off_application": "Drop Off Application",

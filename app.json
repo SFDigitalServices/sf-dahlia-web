@@ -104,6 +104,9 @@
     },
     "DALP_PROGRAM_INFO": {
       "required": false
+    },
+    "COVID_UPDATE": {
+      "required": false
     }
   }
 }

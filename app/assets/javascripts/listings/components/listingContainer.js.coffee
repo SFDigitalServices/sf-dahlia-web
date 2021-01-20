@@ -2,9 +2,9 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingIdentityService',
+  controller: ['$translate', '$window','ListingDataService', 'ListingEligibilityService', 'ListingIdentityService',
   'ListingUnitService', 'SharedService',
-  ($translate, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
+  ($translate, $window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
@@ -22,6 +22,8 @@ angular.module('dahlia.components')
     @openNotMatchListings = ListingDataService.openNotMatchListings
     @closedListings = ListingDataService.closedListings
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
+
+    @showCovidUpdate = $window.env.covidUpdate
 
     @isRental = (listing) ->
       ListingIdentityService.isRental(listing)
