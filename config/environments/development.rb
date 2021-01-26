@@ -55,7 +55,12 @@ Rails.application.configure do
     config.public_file_server.headers = {
       'Cache-Control' => 'public, max-age=172800',
     }
-    config.cache_store = :dalli_store
+
+    # These numbers are from the recommended dalli config: https://devcenter.heroku.com/articles/memcachier#ruby
+    config.cache_store = :dalli_store, nil, {
+      socket_timeout: 1.5,       # default is 0.5
+      socket_failure_delay: 0.2, # default is 0.01
+    }
   else
     config.action_controller.perform_caching = false
     config.cache_store = :null_store
