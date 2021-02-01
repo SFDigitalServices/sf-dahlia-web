@@ -121,6 +121,8 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
     Returns an object of e.g. the form:
     [{
       "occupancy": "1",
+      "minIncome": "2154",
+      "maxIncome": "2154",
       "incomeLevels": [{
         "incomeLevel": "Up to 65% AMI",
         "priceGroups": [{
@@ -157,15 +159,23 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
     for occupancy, rows of byHHSize
       groupedByAmi = _.groupBy rows, 'Max_AMI_for_Qualifying_Unit'
       incomeLevels = []
+      unitGroupMinIncomes = []
+      unitGroupMaxIncomes = []
       for ami, priceGroups of groupedByAmi
         incomeLevels.push({
           'incomeLevel': Service._getIncomeLevelLabel(priceGroups[0]),
           'priceGroups': Service._sortGroupedUnits(priceGroups)
         })
+        unitGroupMinIncomes = unitGroupMinIncomes.concat(priceGroups.map((group) -> group.minIncome))
+        unitGroupMaxIncomes = unitGroupMaxIncomes.concat(priceGroups.map((group) -> group.maxIncome))
+
       groupedByHHSizeAndAmi.push({
         occupancy: occupancy,
+        minIncome: Math.min.apply(null, unitGroupMinIncomes),
+        maxIncome: Math.max.apply(null, unitGroupMaxIncomes),
         incomeLevels: incomeLevels
       })
+    console.log(groupedByHHSizeAndAmi)
     groupedByHHSizeAndAmi
 
   Service.groupSaleUnits = (units) ->

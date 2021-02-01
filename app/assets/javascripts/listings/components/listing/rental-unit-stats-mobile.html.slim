@@ -1,0 +1,42 @@
+dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion=""
+  dd.accordion-navigation.active ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
+    .accordion-header draggable="false"
+      .accordion-header-title.pricing-header-text-container--mobile role="text"
+        span.header-number
+          | {{unitGroup.occupancy}}
+        | {{ ::$ctrl.getHouseholdTextFromOccupancy(unitGroup.occupancy) }}
+        .pricing-header-spacer
+      icon-plus-minus active="false"
+
+    .content.mobile-table-padding
+
+      div ng-if="0" ng-repeat-start="incomeLevel in ::unitGroup.incomeLevels"
+
+      div.mobile-ami-header
+        | {{ ::incomeLevel.incomeLevel }}
+
+      table.accordion-pricing-table aria-label="Pricing table for 2 people in household"
+        tr.mobile-table-row.unit-row ng-repeat-start="priceGroup in ::incomeLevel.priceGroups"
+          th scope="row"
+            | {{ ::priceGroup.Unit_Type }}
+          td
+            | {{ ::priceGroup.occupancy }}
+            span.cell-subtitle
+              | {{ 'listings.stats.available' | translate }}
+        tr.mobile-table-row
+          th.indented-header scope="row"
+            | {{ 'listings.stats.income' | translate }}
+          td
+            | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
+            span.cell-subtitle
+              | {{'t.per_month' | translate}}
+        tr.mobile-table-row
+          th.indented-header scope="row"
+            | {{ 'listings.stats.rent' | translate }}
+          td
+            | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
+            span.cell-subtitle
+              | {{'t.per_month' | translate}}
+        tr ng-if="0" ng-repeat-end="true"
+
+      div ng-if="0" ng-repeat-end="true"
