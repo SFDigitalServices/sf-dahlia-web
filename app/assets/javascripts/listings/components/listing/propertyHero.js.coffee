@@ -66,5 +66,16 @@ angular.module('dahlia.components')
 
       @numAvailableString = (priceGroup) -> priceGroup.occupancy + " " + $translate.instant('listings.stats.available')
 
+      occupanciesToIsExpanded = {}
+
+      @isExpanded = (priceGroup) -> !!occupanciesToIsExpanded[priceGroup.occupancy]
+      @toggleExpanded = (priceGroup) ->
+        occupanciesToIsExpanded[priceGroup.occupancy] =
+          if (occupanciesToIsExpanded[priceGroup.occupancy] == undefined)
+            true
+          else
+            !occupanciesToIsExpanded[priceGroup.occupancy]
+
+
       return ctrl
   ]

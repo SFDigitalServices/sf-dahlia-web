@@ -1,5 +1,5 @@
 dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion=""
-  dd.accordion-navigation.active ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
+  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)" ng-class="{active: $ctrl.isExpanded(unitGroup)}" ng-click="$ctrl.toggleExpanded(unitGroup)"
     .accordion-header tabindex="0" draggable="false"
       .accordion-header-title.pricing-header-text-container
         .vertically-centered-text role="text"
