@@ -15,7 +15,7 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
       div.mobile-ami-header
         | {{ ::incomeLevel.incomeLevel }}
 
-      table.accordion-pricing-table aria-label="Pricing table for 2 people in household"
+      table.mobile-units-table.accordion-pricing-table aria-label="Pricing table for 2 people in household"
         tr.mobile-table-row.unit-row ng-repeat-start="priceGroup in ::incomeLevel.priceGroups"
           th scope="row"
             | {{ ::priceGroup.Unit_Type }}
@@ -23,15 +23,15 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
             | {{ ::priceGroup.occupancy }}
             span.cell-subtitle
               | {{ 'listings.stats.available' | translate }}
-        tr.mobile-table-row
-          th.indented-header scope="row"
+        tr.mobile-table-row.indented-row
+          th scope="row"
             | {{ 'listings.stats.income' | translate }}
           td
             | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
             span.cell-subtitle
               | {{'t.per_month' | translate}}
-        tr.mobile-table-row
-          th.indented-header scope="row"
+        tr.mobile-table-row.indented-row
+          th scope="row"
             | {{ 'listings.stats.rent' | translate }}
           td
             | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
