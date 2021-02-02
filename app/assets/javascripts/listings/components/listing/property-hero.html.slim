@@ -75,8 +75,9 @@
           | {{'listings.see_unit_information' | translate}}
 
     .margin-top--2x ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
-      div.show-for-large-down ng-include="'listings/components/listing/rental-unit-stats-mobile.html'"
-      div.hide-for-large-down ng-include="'listings/components/listing/rental-unit-stats.html'"
+      .margin-left.margin-right.show-for-small-down ng-include="'listings/components/listing/rental-unit-stats-mobile.html'"
+      .margin-left.hide-for-small-down.show-for-medium-down ng-include="'listings/components/listing/rental-unit-stats.html'"
+      .hide-for-medium-down ng-include="'listings/components/listing/rental-unit-stats.html'"
 
     .property-hero_stat.margin-top--2x.margin-left.margin-right ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)" ng-repeat="unitGroup in $ctrl.parent.listing.groupedUnits"
       h2.table-pricing-ami ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
