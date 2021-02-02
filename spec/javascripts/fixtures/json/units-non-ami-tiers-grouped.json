@@ -3,7 +3,7 @@
     "type": "Studio",
     "incomeLevels": [
       {
-        "incomeLevel": 65,
+        "incomeLevel": "65",
         "priceGroups": [
           {
             "Unit_Type": "Studio",
@@ -35,7 +35,7 @@
     "type": "1 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 65,
+        "incomeLevel": "65",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -67,7 +67,7 @@
         ]
       },
       {
-        "incomeLevel": 90,
+        "incomeLevel": "90",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -99,7 +99,7 @@
         ]
       },
       {
-        "incomeLevel": 130,
+        "incomeLevel": "130",
         "priceGroups": [
           {
             "Unit_Type": "1 BR",
@@ -136,7 +136,7 @@
     "type": "2 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 90,
+        "incomeLevel": "90",
         "priceGroups": [
           {
             "Unit_Type": "2 BR",
@@ -173,7 +173,7 @@
         ]
       },
       {
-        "incomeLevel": 130,
+        "incomeLevel": "130",
         "priceGroups": [
           {
             "Unit_Type": "2 BR",
@@ -215,7 +215,7 @@
     "type": "3 BR",
     "incomeLevels": [
       {
-        "incomeLevel": 130,
+        "incomeLevel": "130",
         "priceGroups": [
           {
             "Unit_Type": "3 BR",

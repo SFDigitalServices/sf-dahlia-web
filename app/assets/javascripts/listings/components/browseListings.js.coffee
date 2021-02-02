@@ -5,13 +5,16 @@ angular.module('dahlia.components')
     parent: '^listingContainer'
   bindings:
     tenureType: '@'
-  controller: ['$filter', '$sce', '$state', '$translate', 'IncomeCalculatorService', 'ListingDataService', 'ListingEligibilityService',
-  ($filter, $sce, $state, $translate, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
+  controller: ['$filter', '$sce', '$state', '$translate', '$window', 'IncomeCalculatorService', 'ListingDataService',
+  'ListingEligibilityService',
+  ($filter, $sce, $state, $translate, $window, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
     ctrl = @
 
     @eligibilityFilters = ListingEligibilityService.eligibility_filters
     @openMatchListings = ListingDataService.openMatchListings
     @href = $state.href
+    @advertiseDALP = $window.env.advertiseDALP == 'true'
+    @dalpProgramInfo = $window.env.dalpProgramInfo
 
     @clearEligibilityFilters = ->
       ListingEligibilityService.resetEligibilityFilters()
@@ -28,6 +31,12 @@ angular.module('dahlia.components')
         $translate.instant('listings.you_dont_match_any_sale')
       else if @tenureType == 'rental'
         $translate.instant('listings.you_dont_match_any_rent')
+
+    @dalpProgramInfo = () ->
+      if $window.env.dalpProgramInfo
+        $window.env.dalpProgramInfo
+      else
+        $translate.instant('listings_for_sale.get_help.dalp_program_info')
 
     @resultsHeader = () ->
       people = $translate.instant(if @eligibilityFilters.household_size == '1' then 'listings.person' else 'listings.people')

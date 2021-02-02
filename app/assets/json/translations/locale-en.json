@@ -287,7 +287,7 @@
             "homebuyer_header": "For Homebuyers",
             "homebuyer_loan_desc": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>, dated within the last 120 days.",
             "p1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
-            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
+            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your lottery application.",
             "preference_header": "For Claiming Preferences",
             "rent_burden_doc_1": "You'll need a Copy of Lease showing the address where you live.",
             "rent_burden_doc_2": "You'll also need to show last month's rent with one of the following:",
@@ -822,11 +822,6 @@
             },
             "all_units": "All Units",
             "all_units_reserved_for": "All units reserved for {{type}}",
-            "ami_tiers": {
-                "low_income": "Low Income",
-                "middle_income": "Middle Income",
-                "moderate_income": "Moderate Income"
-            },
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
@@ -982,18 +977,18 @@
             "stats": {
                 "availability": "Availability",
                 "available": "available",
+                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
                 "hoa_dues": "HOA dues",
                 "household_size": "Household size",
                 "income_range": "Income Range",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
-                "percent_ami": "{{amiPercent}}% AMI",
+                "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",
                 "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist",
-                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
-                "hoa_dues_label": "HOA dues {{hoaPriceValue}} per month"
+                "up_to_percent_ami": "Up to {{amiPercent}}% AMI",
+                "waitlist": "Waitlist"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
@@ -1043,10 +1038,16 @@
                 "title": "Find more listings on our website:"
             },
             "get_help": {
+                "dalp_program_info": "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021.",
+                "help_with_downpayment": "Help with downpayments",
+                "learn_more_and_how_to_apply": "Learn more about DALP and how to apply on SF.gov",
+                "mohcd_programs": "The Mayor's Office of Housing and Community Development (MOHCD) offers a number of programs to help homebuyers in San Francisco.",
+                "more_resources": "More resources",
                 "other_groups_may_qualify": "Others, like San Francisco teachers and first responders, may qualify for loans.",
                 "some_people_may_qualify": "Some people may qualify for downpayment assistance.",
                 "title": "Get help",
-                "view_full_list_of_programs": "View the full list of programs"
+                "view_full_list_of_programs": "View the full list of programs",
+                "visit_mohcd_programs": "Visit the MOHCD Affordable Homebuyer Programs page to learn more."
             },
             "lottery_preferences": {
                 "has_preferences": "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.",
@@ -1249,13 +1250,11 @@
             "never_submitted": "Never Submitted",
             "next": "Next",
             "no": "No",
-            "no_parking": "no parking",
             "none": "None",
             "occupancy": "Occupancy",
             "ok": "OK",
             "optional": "Optional",
             "or": "or",
-            "or_more": "or more",
             "per_month": "per month",
             "per_year": "per year",
             "save_and_come_back_later": "Save and come back later",
@@ -1269,10 +1268,8 @@
             "stay": "Stay",
             "submit": "Submit",
             "submitted": "Submitted",
-            "to": "to",
             "unit_type": "Unit Type",
             "units": "units",
-            "with_parking": "with parking",
             "yes": "Yes",
             "you": "You"
         },
