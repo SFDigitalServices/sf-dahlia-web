@@ -23,7 +23,7 @@ angular.module('dahlia.components')
     @closedListings = ListingDataService.closedListings
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
-    @showCovidUpdate = $window.env.covidUpdate
+    @showCovidUpdate = $window.env.covidUpdate == 'true'
 
     @isRental = (listing) ->
       ListingIdentityService.isRental(listing)

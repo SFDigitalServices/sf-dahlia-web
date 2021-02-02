@@ -2,7 +2,6 @@ do ->
   'use strict'
   describe 'Lottery Info Section Component', ->
     fakeWindow = {}
-    fakeWindow['env'] = {showPreLotteryInfo: 'true'}
     $componentController = undefined
     ctrl = undefined
     locals = undefined
