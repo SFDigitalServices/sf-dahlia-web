@@ -22,21 +22,21 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
           td
             | {{ ::priceGroup.occupancy }}
             span.cell-subtitle
-              | {{ 'listings.stats.available' | translate }}
+              | &nbsp;{{ 'listings.stats.available' | translate }}
         tr.mobile-table-row.indented-row
           th scope="row"
             | {{ 'listings.stats.income' | translate }}
           td
             | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
             span.cell-subtitle
-              | {{'t.per_month' | translate}}
+              | &nbsp;{{'t.per_month' | translate}}
         tr.mobile-table-row.indented-row
           th scope="row"
             | {{ 'listings.stats.rent' | translate }}
           td
             | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
             span.cell-subtitle
-              | {{'t.per_month' | translate}}
+              | &nbsp;{{'t.per_month' | translate}}
         tr ng-if="0" ng-repeat-end="true"
 
       div ng-if="0" ng-repeat-end="true"
