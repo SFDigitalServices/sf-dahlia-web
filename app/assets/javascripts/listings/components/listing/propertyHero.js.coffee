@@ -80,8 +80,18 @@ angular.module('dahlia.components')
           amiPercentString: incomeLevelString
         })
 
+      @_rowId = (prefix, unitGroup, incomeLevelIndex, priceGroupIndex) =>
+        "#{prefix}__occupancy_#{unitGroup.occupancy}__income_#{incomeLevelIndex}__price_group_#{priceGroupIndex}"
+
+
       @unitTypeId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
-        return "unit_type_occupancy_#{unitGroupIndex}__income_#{incomelevel}__price_group_#{priceGroupIndex}"
+        return @_rowId('unit_type', unitGroup, incomeLevelIndex, priceGroupIndex)
+
+      @incomeRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
+        return @_rowId('income', unitGroup, incomeLevelIndex, priceGroupIndex)
+
+      @rentRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
+        return @_rowId('rent', unitGroup, incomeLevelIndex, priceGroupIndex)
 
       return ctrl
   ]
