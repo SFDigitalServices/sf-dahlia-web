@@ -175,7 +175,6 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
         maxIncome: Math.max.apply(null, unitGroupMaxIncomes),
         incomeLevels: incomeLevels
       })
-    console.log(groupedByHHSizeAndAmi)
     groupedByHHSizeAndAmi
 
   Service.groupSaleUnits = (units) ->
