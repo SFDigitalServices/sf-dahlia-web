@@ -37,8 +37,6 @@ angular.module('dahlia.components')
         index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
         @reservedUnitIcons[index]
 
-      @groupedUnitsTest = (listing) -> listing.groupedUnits
-
       @getCurrencyString = (v) -> $filter('currency')(v, '$', 0)
 
       @getCurrencyRange = (min, max) ->

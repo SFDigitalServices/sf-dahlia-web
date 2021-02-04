@@ -1,6 +1,6 @@
 dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion=""
-  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)" ng-class="{active: $ctrl.isExpanded(unitGroup)}"
-    .accordion-header tabindex="0" draggable="false" ng-click="$ctrl.toggleExpanded(unitGroup)" aria-expanded="::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
+  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.parent.listing.groupedUnits" ng-class="{active: $ctrl.isExpanded(unitGroup)}"
+    .accordion-header tabindex="0" draggable="false" ng-click="$ctrl.toggleExpanded(unitGroup)" aria-expanded="::$ctrl.isExpanded($ctrl.parent.listing)"
       .accordion-header-title.pricing-header-text-container
         .vertically-centered-text role="text"
           span.header-number
