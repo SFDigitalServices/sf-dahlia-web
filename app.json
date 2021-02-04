@@ -96,13 +96,13 @@
     "S3_ACCESS_KEY_ID":{
       "required":true
     },
-    "SHOW_PRE_LOTTERY_INFO": {
-      "required":true
-    },
     "ADVERTISE_DALP": {
       "required": false
     },
     "DALP_PROGRAM_INFO": {
+      "required": false
+    },
+    "COVID_UPDATE": {
       "required": false
     }
   }
