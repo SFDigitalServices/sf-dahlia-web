@@ -1,6 +1,6 @@
 dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion=""
-  dd.accordion-navigation ng-class="{active: $ctrl.isExpanded(unitGroup)}" ng-click="$ctrl.toggleExpanded(unitGroup)" ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
-    .accordion-header draggable="false"
+  dd.accordion-navigation ng-class="{active: $ctrl.isExpanded(unitGroup)}" ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
+    .accordion-header draggable="false" ng-click="$ctrl.toggleExpanded(unitGroup)" aria-expanded="::$ctrl.isExpanded(unitGroup)"
       .accordion-header-title.pricing-header-text-container--mobile role="text"
         span.header-number
           | {{unitGroup.occupancy}}
@@ -10,28 +10,28 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
 
     .content.mobile-table-padding
 
-      div ng-if="0" ng-repeat-start="incomeLevel in ::unitGroup.incomeLevels"
+      div ng-if="0" ng-repeat-start="incomeLevel in ::unitGroup.incomeLevels track by $incomeLevelIndex"
 
       div.mobile-ami-header
         | {{ ::incomeLevel.incomeLevel }}
 
-      table.mobile-units-table.accordion-pricing-table aria-label="Pricing table for 2 people in household"
-        tr.mobile-table-row.unit-row ng-repeat-start="priceGroup in ::incomeLevel.priceGroups"
-          th scope="row"
+      table.mobile-units-table.accordion-pricing-table aria-label="{{::$ctrl.labelForIncomeLevelTable(unitGroup.occupancy, incomeLevel.incomeLevel)}}"
+        tr.mobile-table-row.unit-row ng-repeat-start="priceGroup in ::incomeLevel.priceGroups track by $priceGroupIndex"
+          th scope="row" id="{{::$ctrl.unitTypeId(unitGroup, incomeLevelIndex, priceGroupIndex)}}"
             | {{ ::priceGroup.Unit_Type }}
           td
             | {{ ::priceGroup.occupancy }}
             span.cell-subtitle
               | &nbsp;{{ 'listings.stats.available' | translate }}
         tr.mobile-table-row.indented-row
-          th scope="row"
+          th scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, incomeLevelIndex, priceGroupIndex)}}"  aria-label="{{ ::priceGroup.Unit_Type }}"
             | {{ 'listings.stats.income' | translate }}
           td
             | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
             span.cell-subtitle
               | &nbsp;{{'t.per_month' | translate}}
         tr.mobile-table-row.indented-row
-          th scope="row"
+          th scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, incomeLevelIndex, priceGroupIndex)}}" aria-label="{{ ::priceGroup.Unit_Type }}"
             | {{ 'listings.stats.rent' | translate }}
           td
             | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}

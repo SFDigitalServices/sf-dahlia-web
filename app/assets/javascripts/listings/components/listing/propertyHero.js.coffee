@@ -76,6 +76,14 @@ angular.module('dahlia.components')
           else
             !occupanciesToIsExpanded[priceGroup.occupancy]
 
+      @labelForIncomeLevelTable = (occupancy, incomeLevelString) =>
+        $translate.instant('listings.stats.table_label', {
+          numInHouseholdString: "#{occupancy} #{@getHouseholdTextFromOccupancy(occupancy)}",
+          amiPercentString: incomeLevelString
+        })
+
+      @unitTypeId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
+        return "unit_type_occupancy_#{unitGroupIndex}__income_#{incomelevel}__price_group_#{priceGroupIndex}"
 
       return ctrl
   ]

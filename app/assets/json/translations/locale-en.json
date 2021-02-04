@@ -991,7 +991,8 @@
                 "rent": "Rent",
                 "sales_price": "Sales price",
                 "up_to_percent_ami": "Up to {{amiPercent}}% AMI",
-                "waitlist": "Waitlist"
+                "waitlist": "Waitlist",
+                "table_label": "Pricing table for {{numInHouseholdString}}, {{amiPercentString}}"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",

@@ -1,6 +1,6 @@
 dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion=""
-  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)" ng-class="{active: $ctrl.isExpanded(unitGroup)}" ng-click="$ctrl.toggleExpanded(unitGroup)"
-    .accordion-header tabindex="0" draggable="false"
+  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.groupedUnitsTest($ctrl.parent.listing)" ng-class="{active: $ctrl.isExpanded(unitGroup)}"
+    .accordion-header tabindex="0" draggable="false" ng-click="$ctrl.toggleExpanded(unitGroup)" aria-expanded="::$ctrl.groupedUnitsTest($ctrl.parent.listing)"
       .accordion-header-title.pricing-header-text-container
         .vertically-centered-text role="text"
           span.header-number
@@ -31,16 +31,16 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
             th.span.ami-subheader id="::incomeLevel.incomeLevel" colspan="3" scope="col"
               | {{ ::incomeLevel.incomeLevel }}
           tr ng-repeat="priceGroup in ::incomeLevel.priceGroups"
-            td.pricing-table-cell headers="::incomeLevel.incomeLevelunits" id="{{rowid}}"
+            td.pricing-table-cell aria-label="{{ ::incomeLevel.incomeLevel }}"
               | {{ ::priceGroup.Unit_Type }}
               .cell-subtitle
                 | {{ ::$ctrl.numAvailableString(priceGroup) }}
-            td.pricing-table-cell headers="::incomeLevel.incomeLevel income-range"
+            td.pricing-table-cell aria-label="{{ 'listings.stats.income_range' | translate }}"
               div role="text"
                 | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
                 .cell-subtitle
                   | {{'t.per_month' | translate}}
-            td.pricing-table-cell headers="::incomeLevel.incomeLevel rent"
+            td.pricing-table-cell aria-label="{{ 'listings.stats.rent' | translate }}"
               div role="text"
                 | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
                 .cell-subtitle
