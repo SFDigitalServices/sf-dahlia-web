@@ -131,7 +131,7 @@ This script will:
  - ADVERTISE_DALP -> If set to 'true', the Sales directory page will display info about applying to DALP in a "Help with downpayments" section. Otherwise it'll show the plain "Get help" section
  - DALP_PROGRAM_INFO -> If provided, we will override the default DALP text of "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021." with whatever is in this env var.
  ### Other
- - SHOW_VERSION_SECTION - boolean var. shows/ hides version section.
+ - SHOW_RESEARCH_BANNER - If set to 'true', it displays research banner.
 
 ## Contributing changes
 

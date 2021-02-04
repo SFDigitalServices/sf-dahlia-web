@@ -105,7 +105,7 @@
     "DALP_PROGRAM_INFO": {
       "required": false
     },
-    "SHOW_VERSION_SECTION": {
+    "SHOW_RESEARCH_BANNER": {
       "required": false
     }
   }
