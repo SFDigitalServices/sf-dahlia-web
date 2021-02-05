@@ -40,15 +40,18 @@ angular.module('dahlia.components')
       @getCurrencyString = (v) -> $filter('currency')(v, '$', 0)
 
       @getCurrencyRange = (min, max) ->
-        if min? && max? && min < max
+        if min? && max?
           $translate.instant('listings.stats.currency_range', {
             currencyMinValue: @getCurrencyString(min)
             currencyMaxValue: @getCurrencyString(max)
           })
+        else if max?
+          $translate.instant('listings.stats.currency_range', {
+            currencyMinValue: @getCurrencyString(0)
+            currencyMaxValue: @getCurrencyString(max)
+          })
         else if min?
           @getCurrencyString(min)
-        else if max?
-          @getCurrencyString(max)
         else
           ""
 
