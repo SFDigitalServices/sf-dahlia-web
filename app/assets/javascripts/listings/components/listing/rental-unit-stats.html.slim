@@ -11,7 +11,7 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
         .pricing-accordion-income-container
           .pricing-accordion-income role="text"
             span.header-light-text
-              | Income
+              | {{ 'listings.stats.income' | translate }}
             | &nbsp;{{ ::$ctrl.getIncomeRangeFromUnitGroup(unitGroup) }}&nbsp;
             span.header-light-text
               | {{'t.per_month' | translate}}
