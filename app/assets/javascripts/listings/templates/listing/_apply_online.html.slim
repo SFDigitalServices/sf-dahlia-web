@@ -7,6 +7,9 @@ button.button.primary.expand.no-margin type="button" data-event="gtm-apply" titl
   | {{'t.at' | translate}} housing.sfgov.org
 button.button.primary.expand.no-margin type="button" data-event="gtm-continue-application" title="{{'label.continue_application' | translate}}" ui-sref="dahlia.short-form-application.name({id: $ctrl.parent.listing.Id, lang: $ctrl.parent.getLanguageCode($ctrl.parent.application)})" ng-if="::$ctrl.parent.hasDraftApplication()" ng-disabled="$ctrl.parent.lotteryComplete($ctrl.parent.listing)"
   | {{'label.continue_application' | translate}}
+div.padding-top ng-if="::$ctrl.parent.showCovidUpdate"
+  p.t-sans.margin-bottom--half translate="listings.apply.covid_update"
+  p.c-steel translate="listings.apply.covid_update_info"
 .option-divider
   span.or ng-if="::$ctrl.acceptingPaperApplications()"
     | {{'t.or' | translate}}

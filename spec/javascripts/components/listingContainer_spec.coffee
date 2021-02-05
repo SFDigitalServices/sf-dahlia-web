@@ -19,6 +19,8 @@ do ->
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
+    fakeWindow = {}
+    fakeWindow['env'] = {covidUpdate: 'false'}
     eligibilityFilterDefaults =
       'household_size': ''
       'income_timeframe': ''
@@ -70,6 +72,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
+        $window: fakeWindow
         ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
         ListingIdentityService: fakeListingIdentityService
