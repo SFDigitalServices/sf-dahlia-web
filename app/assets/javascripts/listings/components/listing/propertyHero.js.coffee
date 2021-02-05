@@ -37,6 +37,8 @@ angular.module('dahlia.components')
         index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
         @reservedUnitIcons[index]
 
+      @_getPercentString = (v) -> "#{v}%"
+
       @getCurrencyString = (v) -> $filter('currency')(v, '$', 0)
 
       @getCurrencyRange = (min, max) ->
@@ -64,8 +66,13 @@ angular.module('dahlia.components')
         else
           $translate.instant('listings.stats.num_in_household_plural')
 
+      @isWaitlist = (priceGroup) -> priceGroup.Status == "Occupied"
 
-      @numAvailableString = (priceGroup) -> priceGroup.occupancy + " " + $translate.instant('listings.stats.available')
+      @numAvailableString = (priceGroup) ->
+        if @isWaitlist(priceGroup)
+          $translate.instant('listings.stats.waitlist')
+        else
+          priceGroup.total + " " + $translate.instant('listings.stats.available')
 
       occupanciesToIsExpanded = {}
 
@@ -77,24 +84,39 @@ angular.module('dahlia.components')
           else
             !occupanciesToIsExpanded[priceGroup.occupancy]
 
-      @labelForIncomeLevelTable = (occupancy, incomeLevelString) =>
+      @labelForIncomeLevelTable = (occupancy, incomeLevelString) ->
         $translate.instant('listings.stats.table_label', {
           numInHouseholdString: "#{occupancy} #{@getHouseholdTextFromOccupancy(occupancy)}",
           amiPercentString: incomeLevelString
         })
 
-      @_rowId = (prefix, unitGroup, incomeLevelIndex, priceGroupIndex) =>
+      @_rowId = (prefix, unitGroup, incomeLevelIndex, priceGroupIndex) ->
         "#{prefix}__occupancy_#{unitGroup.occupancy}__income_#{incomeLevelIndex}__price_group_#{priceGroupIndex}"
 
 
-      @unitTypeId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
-        return @_rowId('unit_type', unitGroup, incomeLevelIndex, priceGroupIndex)
+      @unitTypeId = (unitGroup, incomeLevelIndex, priceGroupIndex) ->
+        @_rowId('unit_type', unitGroup, incomeLevelIndex, priceGroupIndex)
 
-      @incomeRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
-        return @_rowId('income', unitGroup, incomeLevelIndex, priceGroupIndex)
+      @incomeRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) ->
+        @_rowId('income', unitGroup, incomeLevelIndex, priceGroupIndex)
 
-      @rentRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) =>
-        return @_rowId('rent', unitGroup, incomeLevelIndex, priceGroupIndex)
+      @rentRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) ->
+        @_rowId('rent', unitGroup, incomeLevelIndex, priceGroupIndex)
+
+
+      @_isRentAsPercentOfIncome = (priceGroup) -> priceGroup.Rent_percent_of_income != undefined
+
+      @getRentRowValue = (priceGroup) ->
+        if @_isRentAsPercentOfIncome(priceGroup)
+          @_getPercentString(priceGroup.Rent_percent_of_income)
+        else
+          @getCurrencyString(priceGroup.BMR_Rent_Monthly)
+
+      @getRentRowSubtitle = (priceGroup) ->
+        if @_isRentAsPercentOfIncome(priceGroup)
+          $translate.instant('t.income')
+        else
+          $translate.instant('t.per_month')
 
       return ctrl
   ]

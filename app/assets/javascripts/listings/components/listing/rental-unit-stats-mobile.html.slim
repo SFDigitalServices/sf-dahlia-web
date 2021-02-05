@@ -19,8 +19,11 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
         tr.mobile-table-row.unit-row ng-repeat-start="priceGroup in ::incomeLevel.priceGroups track by $index"
           th scope="row" id="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ ::priceGroup.Unit_Type }}
-          td
-            | {{ ::priceGroup.occupancy }}
+          td ng-if="::$ctrl.isWaitlist(priceGroup)"
+            span.cell-subtitle
+              | {{ 'listings.stats.waitlist' | translate }}
+          td ng-if="::!$ctrl.isWaitlist(priceGroup)"
+            | {{ ::priceGroup.total }}
             span.cell-subtitle
               | &nbsp;{{ 'listings.stats.available' | translate }}
         tr.mobile-table-row.indented-row
@@ -34,6 +37,6 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
           th id="{{::$ctrl.rentRowId(unitGroup, $parent.$index, $index)}}" scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ 'listings.stats.rent' | translate }}
           td headers="{{::$ctrl.rentRowId(unitGroup, $parent.$index, $index)}}"
-            | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
+            | {{ ::$ctrl.getRentRowValue(priceGroup) }}
             span.cell-subtitle
-              | &nbsp;{{'t.per_month' | translate}}
+              | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}

@@ -42,6 +42,6 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
                   | {{'t.per_month' | translate}}
             td.pricing-table-cell aria-label="{{ 'listings.stats.rent' | translate }}"
               div role="text"
-                | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
+                | {{ ::$ctrl.getRentRowValue(priceGroup) }}
                 .cell-subtitle
-                  | {{'t.per_month' | translate}}
+                  | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}
