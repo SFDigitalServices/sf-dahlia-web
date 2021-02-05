@@ -30,7 +30,7 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
           tr ng-repeat-start="incomeLevel in ::unitGroup.incomeLevels"
             th.span.ami-subheader id="::incomeLevel.incomeLevel" colspan="3" scope="col"
               | {{ ::incomeLevel.incomeLevel }}
-          tr ng-repeat="priceGroup in ::incomeLevel.priceGroups"
+          tr ng-repeat="priceGroup in ::incomeLevel.priceGroups" ng-repeat-end="true"
             td.pricing-table-cell aria-label="{{ ::incomeLevel.incomeLevel }}"
               | {{ ::priceGroup.Unit_Type }}
               .cell-subtitle
@@ -45,4 +45,3 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
                 | {{ ::$ctrl.getCurrencyString(priceGroup.BMR_Rent_Monthly) }}
                 .cell-subtitle
                   | {{'t.per_month' | translate}}
-          tr ng-repeat-end="true" ng-if="1"
