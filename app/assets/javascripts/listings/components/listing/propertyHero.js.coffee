@@ -76,13 +76,18 @@ angular.module('dahlia.components')
 
       occupanciesToIsExpanded = {}
 
-      @isExpanded = (priceGroup) -> !!occupanciesToIsExpanded[priceGroup.occupancy]
+      @isExpanded = (priceGroup) ->
+        hasOnlyOneAccordionGroup = this.parent.listing.groupedUnits.length == 1
+        groupNotToggledYet = occupanciesToIsExpanded[priceGroup.occupancy] == undefined
+
+        # Start with group expanded if there's only one group.
+        if hasOnlyOneAccordionGroup && groupNotToggledYet
+          true
+        else
+          !!occupanciesToIsExpanded[priceGroup.occupancy]
+
       @toggleExpanded = (priceGroup) ->
-        occupanciesToIsExpanded[priceGroup.occupancy] =
-          if (occupanciesToIsExpanded[priceGroup.occupancy] == undefined)
-            true
-          else
-            !occupanciesToIsExpanded[priceGroup.occupancy]
+        occupanciesToIsExpanded[priceGroup.occupancy] = !@isExpanded(priceGroup)
 
       @labelForIncomeLevelTable = (occupancy, incomeLevelString) ->
         $translate.instant('listings.stats.table_label', {
@@ -93,7 +98,6 @@ angular.module('dahlia.components')
       @_rowId = (prefix, unitGroup, incomeLevelIndex, priceGroupIndex) ->
         "#{prefix}__occupancy_#{unitGroup.occupancy}__income_#{incomeLevelIndex}__price_group_#{priceGroupIndex}"
 
-
       @unitTypeId = (unitGroup, incomeLevelIndex, priceGroupIndex) ->
         @_rowId('unit_type', unitGroup, incomeLevelIndex, priceGroupIndex)
 
@@ -102,7 +106,6 @@ angular.module('dahlia.components')
 
       @rentRowId = (unitGroup, incomeLevelIndex, priceGroupIndex) ->
         @_rowId('rent', unitGroup, incomeLevelIndex, priceGroupIndex)
-
 
       @_isRentAsPercentOfIncome = (priceGroup) -> priceGroup.Rent_percent_of_income != undefined
 
