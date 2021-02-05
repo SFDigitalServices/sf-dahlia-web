@@ -171,8 +171,8 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
 
       groupedByHHSizeAndAmi.push({
         occupancy: occupancy,
-        minIncome: Math.min.apply(null, unitGroupMinIncomes),
-        maxIncome: Math.max.apply(null, unitGroupMaxIncomes),
+        minIncome: "#{Math.min.apply(null, unitGroupMinIncomes)}",
+        maxIncome: "#{Math.max.apply(null, unitGroupMaxIncomes)}",
         incomeLevels: incomeLevels
       })
     groupedByHHSizeAndAmi

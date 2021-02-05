@@ -1,6 +1,8 @@
 [
   {
     "occupancy": "1",
+    "minIncome": "3400",
+    "maxIncome": "9337",
     "incomeLevels": [
       {
         "incomeLevel": "65",
@@ -73,6 +75,8 @@
   },
   {
     "occupancy": "2",
+    "minIncome": "3400",
+    "maxIncome": "10670",
     "incomeLevels": [
       {
         "incomeLevel": "65",
@@ -171,6 +175,8 @@
   },
   {
     "occupancy": "3",
+    "minIncome": "4000",
+    "maxIncome": "12008",
     "incomeLevels": [
       {
         "incomeLevel": "65",
@@ -269,6 +275,8 @@
   },
   {
     "occupancy": "4",
+    "minIncome": "6000",
+    "maxIncome": "13341",
     "incomeLevels": [
       {
         "incomeLevel": "90",
@@ -323,6 +331,8 @@
   },
   {
     "occupancy": "5",
+    "minIncome": "6000",
+    "maxIncome": "14408",
     "incomeLevels": [
       {
         "incomeLevel": "90",
@@ -377,6 +387,8 @@
   },
   {
     "occupancy": "6",
+    "minIncome": "8000",
+    "maxIncome": "15475",
     "incomeLevels": [
       {
         "incomeLevel": "130",
@@ -400,6 +412,8 @@
   },
   {
     "occupancy": "7",
+    "minIncome": "8000",
+    "maxIncome": "16541",
     "incomeLevels": [
       {
         "incomeLevel": "130",
