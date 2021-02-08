@@ -20,23 +20,22 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
           th scope="row" id="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ ::priceGroup.Unit_Type }}
           td ng-if="::$ctrl.isWaitlist(priceGroup)"
-            span.cell-subtitle
-              | {{ 'listings.stats.waitlist' | translate }}
+            | {{ 'listings.stats.waitlist' | translate }}
           td ng-if="::!$ctrl.isWaitlist(priceGroup)"
             | {{ ::priceGroup.total }}
             span.cell-subtitle
-              | &nbsp;{{ 'listings.stats.available' | translate }}
+              |  {{ 'listings.stats.available' | translate }}
         tr.mobile-table-row.indented-row
           th id="{{::$ctrl.incomeRowId(unitGroup, $parent.$index, $index)}}" scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ 'listings.stats.income' | translate }}
           td headers="{{::$ctrl.incomeRowId(unitGroup, $parent.$index, $index)}}"
             | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
             span.cell-subtitle
-              | &nbsp;{{'t.per_month' | translate}}
+              |  {{'t.per_month' | translate}}
         tr.mobile-table-row.indented-row ng-repeat-end="true"
           th id="{{::$ctrl.rentRowId(unitGroup, $parent.$index, $index)}}" scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ 'listings.stats.rent' | translate }}
           td headers="{{::$ctrl.rentRowId(unitGroup, $parent.$index, $index)}}"
             | {{ ::$ctrl.getRentRowValue(priceGroup) }}
             span.cell-subtitle
-              | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}
+              |  {{ ::$ctrl.getRentRowSubtitle(priceGroup) }}

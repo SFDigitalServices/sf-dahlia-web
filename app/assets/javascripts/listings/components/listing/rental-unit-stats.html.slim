@@ -4,17 +4,18 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
       .accordion-header-title.pricing-header-text-container
         .vertically-centered-text role="text"
           span.header-number
-            | {{unitGroup.occupancy}}
+            | {{unitGroup.occupancy}}&nbsp;
           | {{ ::$ctrl.getHouseholdTextFromOccupancy(unitGroup.occupancy) }}
         .pricing-header-spacer
 
-        .pricing-accordion-income-container
-          .pricing-accordion-income role="text"
-            span.header-light-text
-              | {{ 'listings.stats.income' | translate }}
-            | &nbsp;{{ ::$ctrl.getIncomeRangeFromUnitGroup(unitGroup) }}&nbsp;
-            span.header-light-text
-              | {{'t.per_month' | translate}}
+        .pricing-accordion-income-container role="text"
+          span.header-light-text
+            | {{ 'listings.stats.income' | translate }}
+          | {{" "}}
+          | {{ ::$ctrl.getIncomeRangeFromUnitGroup(unitGroup) }}
+          | {{" "}}
+          span.header-light-text
+            | {{'t.per_month' | translate}}
       icon-plus-minus active="false"
     .content.no-padding
       table.accordion-pricing-table
@@ -44,4 +45,4 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
               div role="text"
                 | {{ ::$ctrl.getRentRowValue(priceGroup) }}
                 .cell-subtitle
-                  | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}
+                    | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}
