@@ -130,7 +130,7 @@ do ->
         expectedAmiTierUnitGroups = getJSONFixture('units-sale-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedAmiTierUnitGroups)
 
-      it 'should non-ami tier sale units as expected', ->
+      it 'should group non-ami tier sale units as expected', ->
         grouped = ListingUnitService.groupSaleUnits(fakeUnitsSales.units)
         expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
