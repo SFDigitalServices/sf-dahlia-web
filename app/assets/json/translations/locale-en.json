@@ -986,7 +986,6 @@
                 "hoa_dues": "HOA dues",
                 "household_size": "Household size",
                 "income_range": "Income Range",
-                "income": "Income",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
                 "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",

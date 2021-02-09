@@ -27,7 +27,7 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right data-accordion
               |  {{ 'listings.stats.available' | translate }}
         tr.mobile-table-row.indented-row
           th id="{{::$ctrl.incomeRowId(unitGroup, $parent.$index, $index)}}" scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
-            | {{ 'listings.stats.income' | translate }}
+            | {{ 'label.income' | translate }}
           td headers="{{::$ctrl.incomeRowId(unitGroup, $parent.$index, $index)}}"
             | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
             span.cell-subtitle
