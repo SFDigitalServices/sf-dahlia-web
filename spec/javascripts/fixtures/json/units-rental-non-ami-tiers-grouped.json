@@ -1,0 +1,438 @@
+[
+  {
+    "occupancy": "1",
+    "minIncome": "3400",
+    "maxIncome": "9337",
+    "incomeLevels": [
+      {
+        "incomeLevel": "65",
+        "priceGroups": [
+          {
+            "Unit_Type": "Studio",
+            "BMR_Rent_Monthly": 1700,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 3400,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 2,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 1,
+            "maxIncome": "4670",
+            "minIncome": "3400"
+          },
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 4000,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 1,
+            "maxIncome": "4670",
+            "minIncome": "4000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "90",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2600,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 5200,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 1,
+            "maxIncome": "6466",
+            "minIncome": "5200"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 3100,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6200,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 1,
+            "maxIncome": "9337",
+            "minIncome": "6200"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "2",
+    "minIncome": "3400",
+    "maxIncome": "10670",
+    "incomeLevels": [
+      {
+        "incomeLevel": "65",
+        "priceGroups": [
+          {
+            "Unit_Type": "Studio",
+            "BMR_Rent_Monthly": 1700,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 3400,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 2,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 2,
+            "maxIncome": "5337",
+            "minIncome": "3400"
+          },
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 4000,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 2,
+            "maxIncome": "5337",
+            "minIncome": "4000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "90",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2600,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 5200,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 2,
+            "maxIncome": "7387",
+            "minIncome": "5200"
+          },
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6000,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 2,
+            "maxIncome": "7387",
+            "minIncome": "6000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 3100,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6200,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 2,
+            "maxIncome": "10670",
+            "minIncome": "6200"
+          },
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3500,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 7000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 2,
+            "maxIncome": "10670",
+            "minIncome": "7000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "3",
+    "minIncome": "4000",
+    "maxIncome": "12008",
+    "incomeLevels": [
+      {
+        "incomeLevel": "65",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 4000,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 3,
+            "maxIncome": "6004",
+            "minIncome": "4000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "90",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 2600,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 5200,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 3,
+            "maxIncome": "8312",
+            "minIncome": "5200"
+          },
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6000,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 3,
+            "maxIncome": "8312",
+            "minIncome": "6000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rent_Monthly": 3100,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6200,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 1,
+            "Max_Occupancy": 3,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 3,
+            "maxIncome": "12008",
+            "minIncome": "6200"
+          },
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3500,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 7000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 3,
+            "maxIncome": "12008",
+            "minIncome": "7000"
+          },
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rent_Monthly": 4000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 8000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 3,
+            "maxIncome": "12008",
+            "minIncome": "8000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "4",
+    "minIncome": "6000",
+    "maxIncome": "13341",
+    "incomeLevels": [
+      {
+        "incomeLevel": "90",
+        "priceGroups": [
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6000,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 4,
+            "maxIncome": "9237",
+            "minIncome": "6000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3500,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 7000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 4,
+            "maxIncome": "13341",
+            "minIncome": "7000"
+          },
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rent_Monthly": 4000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 8000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 4,
+            "maxIncome": "13341",
+            "minIncome": "8000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "5",
+    "minIncome": "6000",
+    "maxIncome": "14408",
+    "incomeLevels": [
+      {
+        "incomeLevel": "90",
+        "priceGroups": [
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 6000,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 5,
+            "maxIncome": "9975",
+            "minIncome": "6000"
+          }
+        ]
+      },
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "2 BR",
+            "BMR_Rent_Monthly": 3500,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 7000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 2,
+            "Max_Occupancy": 5,
+            "Status": "Available",
+            "total": 2,
+            "occupancy": 5,
+            "maxIncome": "14408",
+            "minIncome": "7000"
+          },
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rent_Monthly": 4000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 8000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 5,
+            "maxIncome": "14408",
+            "minIncome": "8000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "6",
+    "minIncome": "8000",
+    "maxIncome": "15475",
+    "incomeLevels": [
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rent_Monthly": 4000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 8000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 6,
+            "maxIncome": "15475",
+            "minIncome": "8000"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "occupancy": "7",
+    "minIncome": "8000",
+    "maxIncome": "16541",
+    "incomeLevels": [
+      {
+        "incomeLevel": "130",
+        "priceGroups": [
+          {
+            "Unit_Type": "3 BR",
+            "BMR_Rent_Monthly": 4000,
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 8000,
+            "Max_AMI_for_Qualifying_Unit": 130,
+            "Min_Occupancy": 3,
+            "Max_Occupancy": 7,
+            "Status": "Available",
+            "total": 1,
+            "occupancy": 7,
+            "maxIncome": "16541",
+            "minIncome": "8000"
+          }
+        ]
+      }
+    ]
+  }
+]
