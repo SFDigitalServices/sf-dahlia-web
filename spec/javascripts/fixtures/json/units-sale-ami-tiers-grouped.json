@@ -1,0 +1,76 @@
+[
+  {
+    "type": "1 BR",
+    "incomeLevels": [
+      {
+        "incomeLevel": "65",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_Without_Parking": 300000,
+            "Price_With_Parking": 340000,
+            "HOA_Dues_Without_Parking": 300,
+            "HOA_Dues_With_Parking": 350,
+            "Max_AMI_for_Qualifying_Unit": 65,
+            "Planning_AMI_Tier": "Low Income",
+            "Min_Occupancy": 1,
+            "Status": "Available",
+            "total": 1,
+            "incomeLimits": [
+              {
+                "occupancy": 1,
+                "maxIncome": "4670",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 2,
+                "maxIncome": "5337",
+                "minIncome": "0"
+              },
+              {
+                "occupancy": 3,
+                "maxIncome": "6004",
+                "minIncome": "0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "incomeLevel": "65-90",
+        "priceGroups": [
+          {
+            "Unit_Type": "1 BR",
+            "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+            "Price_With_Parking": 460000,
+            "HOA_Dues_With_Parking": 450,
+            "Min_AMI_for_Qualifying_Unit": 65,
+            "Max_AMI_for_Qualifying_Unit": 90,
+            "Planning_AMI_Tier": "Moderate Income",
+            "Min_Occupancy": 1,
+            "Status": "Available",
+            "total": 1,
+            "incomeLimits": [
+              {
+                "occupancy": 1,
+                "maxIncome": "6466",
+                "minIncome": "4671"
+              },
+              {
+                "occupancy": 2,
+                "maxIncome": "7387",
+                "minIncome": "5338"
+              },
+              {
+                "occupancy": 3,
+                "maxIncome": "8312",
+                "minIncome": "6005"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

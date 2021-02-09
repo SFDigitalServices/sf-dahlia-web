@@ -16,6 +16,9 @@ do ->
     $sce = {
       trustAsResourceUrl: jasmine.createSpy()
     }
+    $translate = {
+      instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
+    }
 
     $timeout = {}
     $window = {}
@@ -27,6 +30,7 @@ do ->
         ListingUnitService: fakeUnitService
         $sce: $sce
         $window: $window
+        $translate: $translate
         $timeout: $timeout
       }
     )
