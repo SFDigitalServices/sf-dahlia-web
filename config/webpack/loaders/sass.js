@@ -1,14 +1,36 @@
+const path = require("path")
 const bloomTheme = require("../../../tailwind.config.js")
 const tailwindVars = require("@bloom-housing/ui-components/tailwind.tosass.js")(bloomTheme)
 
+// module.exports = {
+//   test: /\.s[ac]ss$/i,
+//   use: [
+//     // Creates `style` nodes from JS strings
+//     "style-loader",
+//     // Translates CSS into CommonJS
+//     "css-loader",
+//     // Compiles Sass to CSS
+//     {
+//       loader: "sass-loader",
+//       options: {
+//         additionalData: tailwindVars,
+//       },
+//     },
+//   ],
+// }
+
+
 module.exports = {
-  test: /\.s[ac]ss$/i,
+  test: /\.s[ac]ss$/,
   use: [
-    // Creates `style` nodes from JS strings
     "style-loader",
-    // Translates CSS into CommonJS
-    "css-loader",
-    // Compiles Sass to CSS
+    {
+      loader: "postcss-loader",
+      options: {
+        ident: "postcss",
+        plugins: [require("tailwindcss"), require("autoprefixer")],
+      },
+    },
     {
       loader: "sass-loader",
       options: {
@@ -16,4 +38,5 @@ module.exports = {
       },
     },
   ],
+  include: path.resolve(__dirname, "../"),
 }

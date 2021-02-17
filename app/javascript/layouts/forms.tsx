@@ -1,10 +1,11 @@
+import React from "react"
 import Layout from "./application"
-import { ApplicationTimeout } from "../src/forms/applications/ApplicationTimeout"
+// import { ApplicationTimeout } from "../src/forms/applications/ApplicationTimeout"
 
 const FormLayout = (props) => {
   return (
     <>
-      <ApplicationTimeout />
+      {/* <ApplicationTimeout /> */}
       <Layout>
         <section className="p-px bg-gray-300">
           <div className="md:mb-20 md:mt-12 mx-auto max-w-lg print:my-0 print:max-w-full">

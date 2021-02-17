@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 5.2.4.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.8.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Javascript packages pre-processor
-gem "webpacker", "~> 4.0"
+gem "webpacker", "~> 5.2.1"
 gem "webpacker-react", "~> 0.3.2"
 
 # salesforce

@@ -1,22 +1,41 @@
+// {
+//   "compilerOptions": {
+//     "allowSyntheticDefaultImports": true,
+//     "declaration": false,
+//     "emitDecoratorMetadata": true,
+//     "experimentalDecorators": true,
+//     "lib": ["es6", "dom"],
+//     "module": "commonjs",
+//     "moduleResolution": "node",
+//     "sourceMap": true,
+//     "strict": false,
+//     "target": "es5",
+//     "jsx": "react"
+//   },
+//   "exclude": [
+//     "**/*.spec.ts",
+//     "node_modules",
+//     "vendor",
+//     "public"
+//   ],
+//   "compileOnSave": false
+// }
+
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
-    "module": "commonjs",
+    "module": "esnext",
+    "esModuleInterop": true,
+    "target": "es5",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "moduleResolution": "node",
     "sourceMap": true,
-    "strict": false,
-    "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "noEmit": false
   },
-  "exclude": [
-    "**/*.spec.ts",
-    "node_modules",
-    "vendor",
-    "public"
-  ],
+  "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
 }
