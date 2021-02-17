@@ -65,10 +65,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
-    angular-rails-templates (1.0.2)
-      railties (>= 4.2, < 6)
-      sprockets (>= 3.0, < 5)
-      tilt
     arel (8.0.0)
     ast (2.4.0)
     awesome_print (1.8.0)
@@ -79,7 +75,6 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bower-rails (0.11.0)
     builder (3.2.4)
     byebug (11.0.1)
     childprocess (0.9.0)
@@ -248,6 +243,8 @@ GEM
       rack (>= 1.6.0)
     rack-protection (2.0.5)
       rack
+    rack-proxy (0.6.5)
+      rack
     rack-rewrite (1.5.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -400,6 +397,12 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    webpacker (4.3.0)
+      activesupport (>= 4.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 4.2)
+    webpacker-react (0.3.2)
+      webpacker
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -411,11 +414,9 @@ DEPENDENCIES
   StreetAddress!
   actionmailer-text
   actionpack-page_caching (~> 1.2.2)
-  angular-rails-templates
   awesome_print
   better_errors
   binding_of_caller
-  bower-rails
   codeclimate-test-reporter (= 0.6.0)
   coffee-rails
   dalli
@@ -473,6 +474,8 @@ DEPENDENCIES
   uglifier (~> 3.2)
   vcr
   webmock
+  webpacker (~> 4.0)
+  webpacker-react (~> 0.3.2)
 
 RUBY VERSION
    ruby 2.5.3p105

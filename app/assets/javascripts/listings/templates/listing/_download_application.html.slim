@@ -1,9 +1,0 @@
-button#download-application.button.has-icon.has-icon--right.small.expand.no-margin data-event="gtm-download-application" title="{{'label.download_application' | translate}}" ng-click="$ctrl.toggleApplicationOptions()" ng-class="{primary: !$ctrl.parent.listing.Accepting_Online_Applications, secondary: $ctrl.parent.listing.Accepting_Online_Applications}"
-  | {{'label.download_application' | translate}}
-  span.ui-icon.ui-small
-    svg
-      use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-.text-center.margin-top.t-small ng-show="$ctrl.showApplicationOptions"
-  p ng-repeat="url in $ctrl.listingPaperAppURLs"
-    a.paper-application-download target="_blank" title="{{'label.download_application' | translate: {'lang': url.language} }}" ng-href="{{::url.url}}" ng-class="{'t-ch': url.language == 'Traditional Chinese'}"
-      | {{url.label}}

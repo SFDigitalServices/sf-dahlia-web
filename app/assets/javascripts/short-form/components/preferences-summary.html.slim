@@ -1,6 +1,0 @@
-.app-inner
-  p.info-item_name.sentence ng-if="::$ctrl.applicantHasNoPreferences()"
-    | {{'review_application.general_lottery_notice' | translate}}
-
-  review-summary-item ng-repeat="pref in $ctrl.sortedApplicationPrefs" identifier="{{pref.identifier}}" label="{{'label.you_have_claimed' | translate}}" sub-label="{{pref.subLabel}}" bold-sub-label="{{pref.boldSubLabel}}" rent-burden-sub-labels="pref.rentBurdenSubLabels"
-    | {{pref.displayName}}

@@ -1,8 +1,0 @@
-p.content-group_address.c-steel.skiptranslate
-  | {{ ::$ctrl.parent.listing.Leasing_Agent_Street }}
-  br
-  | {{ ::$ctrl.parent.listing.Leasing_Agent_City }} {{ ::$ctrl.parent.listing.Leasing_Agent_State }} {{ ::$ctrl.parent.listing.Leasing_Agent_Zip }}
-a.t-small.d-block.ui-link.margin-bottom.hide-for-print translate="label.view_map" title="{{ 'label.view_map' | translate }}" target="_blank" ng-href="https://www.google.com/maps/place/{{$ctrl.parent.formattedLeasingAgentAddress($ctrl.parent.listing)}}"
-.content-group_hours ng-if="$ctrl.parent.listing.Office_Hours"
-  h3.content-group_title translate="contact_agent.office_hours"
-  .content-group_days.inline ng-bind-html="$ctrl.parent.listing.Office_Hours"

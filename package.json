@@ -1,54 +1,48 @@
 {
-    "author": "Exygy",
-    "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
-    "license": "GPL-3.0",
-    "dependencies": {
-        "bower": "1.8.8"
-    },
-    "devDependencies": {
-        "chai": "4.0.2",
-        "chai-as-promised": "7.1.1",
-        "chance": "1.0.10",
-        "coffee-script": "1.12.7",
-        "coffeelint": "^2.1.0",
-        "coffeelint-forbidden-regex": "0.1.1",
-        "cucumber": "^2.3.1",
-        "dotenv": "2.0.0",
-        "grunt": "^1.0.4",
-        "grunt-angular-translate": "^1.0.0",
-        "grunt-contrib-clean": "2.0.0",
-        "grunt-contrib-copy": "0.8.1",
-        "grunt-exec": "3.0.0",
-        "grunt-json-remove-fields": "github:SFDigitalServices/grunt-json-remove-fields#4f9ef75",
-        "grunt-replace-regex": "^1.0.3",
-        "grunt-sort-json": "0.0.5",
-        "protractor": "^5.4.2",
-        "protractor-cucumber-framework": "3.1.2",
-        "url-join": "^4.0.1"
-    },
-    "engines": {
-        "node": "10.15.3",
-        "npm": "5.3.0"
-    },
-    "scripts": {
-        "postinstall": "bower install",
-        "webdriver-start": "./node_modules/protractor/bin/webdriver-manager start",
-        "webdriver-update": "./node_modules/protractor/bin/webdriver-manager update",
-        "protractor": "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
-        "saucelabs": "./node_modules/protractor/bin/protractor spec/e2e/conf-saucelabs.js"
-    },
-    "cacheDirectories": [
-        "node_modules",
-        "lib/assets/bower_components"
-    ],
-    "keywords": [
-        "angular",
-        "rails"
-    ],
-    "name": "sf-dahlia-web",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Exygy/sf-dahlia-web"
-    },
-    "version": "1.0.0"
+  "author": "Exygy",
+  "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "@bloom-housing/ui-components": "^0.3.8",
+    "@rails/webpacker": "4.3.0",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
+    "axios": "^0.21.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "next": "^10.0.6",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^6.15.1",
+    "react-inlinesvg": "^2.2.2",
+    "tailwindcss": "^2.0.3",
+    "ts-loader": "^8.0.16",
+    "typescript": "^4.1.4",
+    "webpacker-react": "^0.3.2"
+  },
+  "devDependencies": {
+    "postcss": "^8.2.6",
+    "postcss-loader": "^5.0.0",
+    "postcss-nested": "^5.0.3",
+    "sass": "^1.32.7",
+    "sass-loader": "7.3.1",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "engines": {
+    "node": "12.16.x",
+    "yarn": "1.x.x"
+  },
+  "scripts": {},
+  "keywords": [
+    "react",
+    "rails"
+  ],
+  "name": "sf-dahlia-web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Exygy/sf-dahlia-web"
+  },
+  "version": "1.0.0"
 }

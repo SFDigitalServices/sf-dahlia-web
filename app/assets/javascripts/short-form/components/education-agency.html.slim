@@ -1,8 +1,0 @@
-.form-group.margin-left--2x.margin-right--2x
-  label.form-label for="homebuyerEducationAgency" ng-class="{ error: $ctrl.inputInvalid('homebuyerEducationAgency') }"
-    strong.form-label.caps translate="label.applicant_homebuyer_education_agency"
-  select#homebuyerEducationAgency data-width="auto" name="homebuyerEducationAgency" ng-required="true" ng-model="$ctrl.application.homebuyerEducationAgency" ng-class="{ error: $ctrl.inputInvalid('homebuyerEducationAgency')}"
-    option value="" {{'label.please_select_one' | translate}}
-    option ng-repeat="agency in $ctrl.agencies" value="{{agency}}" {{agency}}
-  small.error id="homebuyerEducationAgencyError" ng-show="$ctrl.inputInvalid('homebuyerEducationAgency')"
-    | {{'label.applicant_select_a_homebuyer_education_agency' | translate}}
