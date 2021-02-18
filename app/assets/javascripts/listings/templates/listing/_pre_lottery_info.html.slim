@@ -6,7 +6,7 @@
       | {{ $ctrl.parent.listing.Lottery_Date | date : 'longDate' }}
     span.content-group_time
       | {{ $ctrl.parent.listing.Lottery_Date | date : 'shortTime' | lowercase }}
-  p.content-group_address.c-steel.skiptranslate
+  p.content-group_address.c-steel.skiptranslate ng-if="!$ctrl.parent.lotteryVenueAvailable()"
     | {{ $ctrl.parent.listing.Lottery_Venue }}
     br
     | {{ $ctrl.parent.listing.Lottery_Street_Address }}

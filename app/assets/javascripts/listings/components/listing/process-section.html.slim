@@ -38,22 +38,22 @@ accordion-heading
 
   .content-group
     h4.h-caps-lined translate="listings.process.public_lottery"
-    ul ng-if="::$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)"
+    ul ng-if="::$ctrl.parent.lotteryDateAvailable($ctrl.parent.listing)"
       li
         p.content-group_date
           span.content-group_day
             | {{ ::$ctrl.parent.listing.Lottery_Date | date : 'longDate' }}
           span.content-group_time
             | {{ ::$ctrl.parent.listing.Lottery_Date | date : 'shortTime' | lowercase }}
-        div.margin-top ng-if="::$ctrl.parent.showCovidUpdate"
+        div.margin-top ng-if="$ctrl.parent.showCovidUpdate"
           p.t-sans.margin-bottom--half translate="listings.apply.covid_update"
           p.c-steel translate="listings.apply.covid_update_lotteries"
-        div ng-if="::!$ctrl.parent.showCovidUpdate"
+        div ng-if="!$ctrl.parent.showCovidUpdate && $ctrl.parent.lotteryVenueAvailable($ctrl.parent.listing)"
           p.content-group_address.no-margin.skiptranslate
             |  {{ ::$ctrl.parent.listing.Lottery_Venue }}
           p.content-group_address.c-steel.skiptranslate
             | {{ ::$ctrl.parent.listing.Lottery_Street_Address }} {{ ::$ctrl.parent.listing.Lottery_City }}
-    p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)" translate="listings.process.lottery_date_time_and_venue_to_be_scheduled"
+    p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateAvailable($ctrl.parent.listing)" translate="listings.process.lottery_date_time_and_venue_to_be_scheduled"
 
   ng-include src="'listings/templates/listing/_additional_sidebar_info.html'"
 
