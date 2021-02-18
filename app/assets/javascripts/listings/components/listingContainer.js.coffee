@@ -81,9 +81,11 @@ angular.module('dahlia.components')
     @hasEligibilityFilters = ->
       ListingEligibilityService.hasEligibilityFilters()
 
-    @lotteryDateVenueAvailable = (listing) ->
-      (listing.Lottery_Date != undefined &&
-        listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+    @lotteryDateAvailable = (listing) ->
+      listing.Lottery_Date != undefined
+
+    @lotteryVenueAvailable = (listing) ->
+      (listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
     @agentInfoAvailable = (listing) ->
       listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street
