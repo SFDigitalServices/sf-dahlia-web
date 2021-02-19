@@ -1,3 +1,8 @@
+
+
+const bloomTheme = require("../../../tailwind.config.js")
+const tailwindVars = require("@bloom-housing/ui-components/tailwind.tosass.js")(bloomTheme)
+
 module.exports = {
   test: /\.s[ac]ss$/i,
   use: [
@@ -6,6 +11,11 @@ module.exports = {
     // Translates CSS into CommonJS
     "css-loader",
     // Compiles Sass to CSS
-    "sass-loader",
+    {
+      loader: 'sass-loader',
+      options: {
+        additionalData: tailwindVars,
+       }
+    }
   ],
 };

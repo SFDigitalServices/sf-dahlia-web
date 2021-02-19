@@ -1,8 +1,8 @@
 const { environment } = require('@rails/webpacker')
-const typescript =  require('./loaders/typescript')
 const sass = require('./loaders/sass')
+const babel = require('./loaders/babel')
+environment.loaders.prepend('babel', babel)
 environment.loaders.prepend('sass', sass)
-environment.loaders.prepend('typescript', typescript)
 
 environment.loaders.keys().forEach(loaderName => {
   let loader = environment.loaders.get(loaderName);

@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import {
   LocalizedLink,
   SiteHeader,
@@ -10,11 +10,14 @@ import {
   t,
   UserContext,
   setSiteAlertMessage,
+  LangItem,
 } from "@bloom-housing/ui-components"
 import SVG from "react-inlinesvg"
 
 const Layout = (props) => {
-  const { profile, signOut } = useContext(UserContext)
+  // TODO: get these from auth provider
+  const signedIn = false
+  const signOut = () => {}
 
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({
@@ -45,11 +48,11 @@ const Layout = (props) => {
             </LocalizedLink>
           )}
           <UserNav
-            signedIn={!!profile}
+            signedIn={signedIn}
             signOut={async () => {
               setSiteAlertMessage(t(`authentication.signOut.success`), "notice")
               // await router.push("/sign-in")
-              // signOut()
+              signOut()
               window.scrollTo(0, 0)
             }}
           >
