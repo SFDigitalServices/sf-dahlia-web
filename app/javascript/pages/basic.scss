@@ -1,0 +1,10 @@
+@tailwind base;
+
+.logo {
+  @apply text-black;
+  @apply block;
+  @apply text-center;
+  @apply z-10;
+  @apply items-center;
+  @apply justify-center;
+}
