@@ -22,7 +22,8 @@ module.exports = function(api) {
         {
           targets: {
             node: 'current'
-          }
+          },
+          modules: 'commonjs'
         }
       ],
       (isProductionEnv || isDevelopmentEnv) && [
@@ -31,7 +32,7 @@ module.exports = function(api) {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           corejs: 3,
-          modules: false,
+          modules: 'commonjs',
           exclude: ['transform-typeof-symbol']
         }
       ],
@@ -72,7 +73,8 @@ module.exports = function(api) {
         {
           async: false
         }
-      ]
+      ],
+      ["@babel/plugin-transform-modules-commonjs"],
     ].filter(Boolean)
   }
 }

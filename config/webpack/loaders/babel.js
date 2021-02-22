@@ -7,8 +7,8 @@ module.exports = {
       {
         presets: [
             ['@babel/preset-env', {loose: true, modules: false}],
-            '@babel/react',
-            '@babel/typescript'
+            '@babel/preset-react',
+            '@babel/preset-typescript'
         ],
         sourceType: 'unambiguous'
       }

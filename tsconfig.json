@@ -27,7 +27,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "commonjs",
     "esModuleInterop": true,
     "target": "es5",
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
