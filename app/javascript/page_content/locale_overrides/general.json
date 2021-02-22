@@ -1,5 +1,35 @@
 {
-  "welcome": {
-    "seeRentalListings": "Browse Rentals"
+  "footer": {
+    "copyRight": "San Francisco © 2020 • All Rights Reserved",
+    "disclaimer": "Disclaimer",
+    "getAssistance": "Get Assistance",
+    "giveFeedback": "Give Feedback",
+    "header": "San Francisco Housing Portal is a project of the",
+    "headerUrl": "https://www.acgov.org/cda/hcd/",
+    "headerLink": "San Francisco - Mayor's Office of Housing and Community Development",
+    "forAdditionalOpportunities": "For additional Bay Area opportunities, please visit:",
+    "forGeneralInquiries": "For general program inquiries, or to access translation services for content on this website by phone, you may call San Francisco MOHCD at 510-670-5404.",
+    "forListingQuestions": "For listing and application questions, please contact the Property Agent displayed on each listing.",
+    "privacyPolicy": "Privacy Policy",
+    "SFHousingPortal": "San Francisco Housing Portal",
+    "SFHousingUrl": "https://housing.sfgov.org"
+  },
+  "nav": {
+    "siteTitle": "San FranciscoHousing Portal",
+    "getFeedback": "We'd love to get ",
+    "yourFeedback": "your feedback!",
+    "bonusFeedback": ""
+  },
+  "pageTitle": {
+    "additionalResources": "Additional Housing Opportunities and Resources"
+  },
+  "pageDescription": {
+    "additionalResources": "We encourage you to browse other affordable housing resources."
+  },
+  "region": {
+    "name": "San Francisco"
+  },
+  "listings": {
+    "depositOrMonthsRent": ""
   }
 }

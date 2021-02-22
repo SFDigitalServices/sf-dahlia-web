@@ -9,7 +9,7 @@
 //     "moduleResolution": "node",
 //     "sourceMap": true,
 //     "strict": false,
-//     "target": "es5",
+//     "target"es2017"17"s5",
 //     "jsx": "react"
 //   },
 //   "exclude": [
@@ -34,7 +34,8 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "jsx": "react",
-    "noEmit": false
+    "noEmit": false,
+    "resolveJsonModule": true
   },
   "exclude": ["**/*.spec.ts", "node_modules", "vendor", "public"],
   "compileOnSave": false
