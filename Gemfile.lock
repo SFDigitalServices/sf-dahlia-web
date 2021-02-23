@@ -69,6 +69,10 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    angular-rails-templates (1.1.0)
+      railties (>= 4.2, < 7)
+      sprockets (>= 3.0, < 5)
+      tilt
     arel (9.0.0)
     ast (2.4.0)
     awesome_print (1.8.0)
@@ -79,6 +83,7 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
+    bower-rails (0.12.0)
     builder (3.2.4)
     byebug (11.0.1)
     childprocess (0.9.0)
@@ -424,9 +429,11 @@ DEPENDENCIES
   StreetAddress!
   actionmailer-text
   actionpack-page_caching (~> 1.2.2)
+  angular-rails-templates
   awesome_print
   better_errors
   binding_of_caller
+  bower-rails
   codeclimate-test-reporter (= 0.6.0)
   coffee-rails
   dalli

@@ -28,6 +28,14 @@ gem 'jbuilder', '~> 2.8.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# takes care of importing javascript dependencies
+# see /bower.json for more info
+gem 'bower-rails'
+# Adds HTML templates into Angular's $templateCache using asset pipeline.
+
+# angular-rails-templates > 1.0.0 now compatible with sprockets > 3.0
+gem 'angular-rails-templates'
+
 # Javascript packages pre-processor
 gem "webpacker", "~> 5.2.1"
 gem "webpacker-react", "~> 0.3.2"
