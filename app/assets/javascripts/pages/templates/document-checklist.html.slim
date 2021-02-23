@@ -1,0 +1,102 @@
+header.lead-header.bg-image
+  .row
+    .large-12.columns
+      hgroup.lead-header_group
+        h1.lead-header_title.serif.c-white
+          | {{ 'document_checklist.title' | translate }}
+        .medium-8.columns.no-padding.show-for-medium-up
+          p.t-epsilon.t-serif.c-white
+            | {{ 'document_checklist.header' | translate }}
+
+section.row
+  .medium-8.columns
+    article.page-content
+      hr.tall
+      h1
+        | {{ 'document_checklist.preference_header' | translate }}
+      .content-section
+        p
+          | {{ 'document_checklist.p1' | translate }}
+        p
+          | {{ 'document_checklist.p2' | translate }}
+      hr.tall#resident
+      .content-section
+        h3
+          | {{ 'document_checklist.resident_title' | translate }}
+        p
+          | {{ 'document_checklist.resident_desc' | translate }}
+        ul
+          li translate="label.proof.telephone_bill"
+          li translate="label.proof.cable_bill"
+          li translate="label.proof.electric_bill"
+          li translate="label.proof.gas_bill"
+          li translate="label.proof.water_bill"
+          li translate="label.proof.paystub_home"
+          li translate="label.proof.public_benefits"
+          li translate="label.proof.school_record"
+          li translate="label.proof.homelessness"
+      hr.tall
+      .content-section
+        h3
+          | {{ 'document_checklist.work_sf_title' | translate }}
+        p
+          | {{ 'document_checklist.work_sf_desc' | translate }}
+        ul
+          li translate="label.proof.paystub_employer"
+          li translate="label.proof.letter_from_employer"
+      hr.tall#assisted-housing
+      .content-section
+        h3
+          | {{ 'document_checklist.assisted_housing_title' | translate }}
+        p
+          | {{ 'document_checklist.assisted_housing_desc' | translate }}
+      hr.tall
+      .content-section
+        h3
+          | {{ 'document_checklist.rent_burden_title' | translate }}
+        p
+          | {{ 'document_checklist.rent_burden_doc_1' | translate }}
+        p
+          | {{ 'document_checklist.rent_burden_doc_2' | translate }}
+        ul
+          li translate="label.proof.money_order"
+          li translate="label.proof.cancelled_check"
+          li translate="label.proof.debit_from_bank"
+          li translate="label.proof.online_payment"
+      hr.tall#alice-griffith
+      .content-section
+        h3
+          | {{ 'preferences.alice_griffith.title' | translate }}
+        p
+          | {{ 'preferences.alice_griffith.proof_desc' | translate }}
+        ul
+          li translate="label.proof.telephone_bill"
+          li translate="label.proof.cable_bill"
+          li translate="label.proof.paystub_home"
+          li translate="label.proof.public_benefits"
+          li translate="label.proof.school_record"
+          li translate="label.proof.ca_license"
+          li translate="preferences.alice_griffith.sfha_letter_instructions"
+      hr.tall#homebuyers
+      h1
+        | {{ 'document_checklist.homebuyer_header' | translate }}
+      .content-section
+        p
+          | {{ 'document_checklist.homebuyer_desc' | translate }}
+        ol
+          li translate="document_checklist.homebuyer_education_desc"
+          li translate="document_checklist.homebuyer_loan_desc" translate-value-lender-list-url="https://sfmohcd.org/lender-list"
+        br
+        p
+          | {{ 'label.application_all_applicants_are_required' | translate }}
+      hr.tall#resident
+section.row.margin-bottom--2x
+  .medium-12.columns
+    .bg-dust
+      .tall-block
+        figure.block-icon
+          img ng-src="{{assetPaths['icon-mail.png']}}" alt="Mail Icon"
+        h2.t-delta.t-serif.c-oil.no-margin
+          | {{ 'welcome.new_listing_email_alert' | translate }}
+        a.button.ghost-white.margin-top href="{{listingEmailAlertUrl}}"
+          | {{ 'welcome.sign_up_today' | translate }}

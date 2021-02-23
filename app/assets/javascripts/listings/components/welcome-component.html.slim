@@ -1,0 +1,20 @@
+section.splash-header.bg-image
+  .row
+    header.hero-header.text-center
+      h1.hero-title.c-white
+        | {{'welcome.title' | translate}}
+      .row
+        .medium-6.medium-centered.columns
+          .medium-6.columns
+            a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
+              | {{'welcome.see_rental_listings' | translate}}
+          .medium-6.columns
+            a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
+              | {{'welcome.see_sale_listings' | translate}}
+.row
+  .columns
+    .welcome-block.text-center
+      h2.delta.t-alt-sans.c-oil
+        | {{'welcome.new_listing_email_alert' | translate}}
+      a.button.radius.margin-bottom-none href="{{$ctrl.parent.listingEmailAlertUrl}}"
+        | {{'welcome.sign_up_today' | translate}}

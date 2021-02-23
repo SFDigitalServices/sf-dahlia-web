@@ -1,0 +1,31 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'d2_income.title' | translate}}
+    p.margin-bottom
+      | {{'d2_income.p1' | translate}}
+    p.margin-bottom
+      | {{'d2_income.p2' | translate}}
+
+  .app-inner.inset
+    .form-group ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"
+      label.form-label.margin-bottom--half
+        | {{'label.applicant_income_total' | translate}}
+      .form-income
+        label.sr-only for="incomeTotal"
+          | {{'label.income' | translate}}
+        span.label-dollar $
+        input#incomeTotal.form-income_input ng-model="application.householdIncome.incomeTotal" name="incomeTotal" ng-required="true" placeholder="{{'label.income_placeholder' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('incomeTotal') }" ng-change="onIncomeValueChange()" aria-describedby="incomeTotal_error"
+        small.error#incomeTotal_error ng-show="inputInvalid('incomeTotal')"
+            | {{'error.income' | translate}}
+
+      .radio-group role="radiogroup" aria-label="{{'label.income' | translate}}"
+        radio-block-item value='per_month' user='householdIncome' name='incomeTimeframe' aria-describedby="incomeTimeframe_error" ng-required='true' on-change="onIncomeValueChange"
+          | {{'label.per_month' | translate}}
+        radio-block-item value='per_year' user='householdIncome' name='incomeTimeframe' aria-describedby="incomeTimeframe_error" ng-required='true' on-change="onIncomeValueChange"
+          | {{'label.per_year' | translate}}
+
+      small.error#incomeTimeframe_error ng-show="inputInvalid('incomeTimeframe')"
+        | {{'error.please_select_an_option' | translate}}
+
+  short-form-save-and-submit

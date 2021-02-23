@@ -1,0 +1,7 @@
+div
+  label.form-label.caps for="{{$ctrl.preference}}-certificate"
+    | {{ $ctrl.label }}
+
+  p.form-note.margin-bottom translate="e7_preferences_programs.need_certificate_for_preference"
+
+  input id="{{$ctrl.preference}}-certificate" ng-model="$ctrl.application.preferences[$ctrl.preferenceCertificateNumber]" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.certificateNumber}}" name="{{$ctrl.preferenceCertificateNumber}}" placeholder="{{'label.certificate_number' | translate}}" type="text"

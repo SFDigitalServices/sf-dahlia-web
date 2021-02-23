@@ -1,0 +1,26 @@
+.app-card.form-card
+  short-form-header featured-leader="{{eligibleForAssistedHousingOrRentBurden() ? '' : 'true'}}"
+    h2.app-card_question translate="label.good_news_for_higher_ranking" ng-if="!eligibleForAssistedHousingOrRentBurden()"
+    h2.app-card_question ng-if="eligibleForAssistedHousingOrRentBurden()"
+      span translate="e2a_neighborhood_preference.instructions_p1_singular" translate-value-address="{{liveInTheNeighborhoodAddress()}}" ng-if="liveInTheNeighborhoodAddresses().length == 1"
+      span translate="e2a_neighborhood_preference.instructions_p1_plural" translate-value-address="{{liveInTheNeighborhoodAddress()}}" ng-if="liveInTheNeighborhoodAddresses().length > 1"
+
+    .form-group
+      div ng-if="!eligibleForAssistedHousingOrRentBurden()"
+        p.form-note.t-regular.margin-bottom translate="e2a_neighborhood_preference.instructions_p1_singular" translate-value-address="{{liveInTheNeighborhoodAddress({strong: true})}}" ng-if="liveInTheNeighborhoodAddresses().length == 1"
+        p.form-note.t-regular.margin-bottom translate="e2a_neighborhood_preference.instructions_p1_plural" translate-value-address="{{liveInTheNeighborhoodAddress({strong: true})}}" ng-if="liveInTheNeighborhoodAddresses().length > 1"
+      p.form-note.t-regular.margin-bottom translate="e2a_neighborhood_preference.instructions_p2"
+
+  .app-inner
+    .form-group ng-class="{ error: inputInvalid('neighborhoodResidence') }"
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+
+        preference(preference="neighborhoodResidence" has-proof="true" application="application" title="{{'e2a_neighborhood_preference.preference.title' | translate}}" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="e2a_neighborhood_preference.preference.description" translated-short-description="e2a_neighborhood_preference.preference.short_description" required="preferenceRequired('neighborhoodResidence')")
+
+      preference-opt-out preference="neighborhoodResidence" application="application" invalid="inputInvalid('neighborhoodResidence')" cancel-preference="cancelPreference('neighborhoodResidence')"
+
+      small.error ng-if="inputInvalid('neighborhoodResidence')"
+        | {{'error.please_select_an_option' | translate}}
+
+  short-form-save-and-submit

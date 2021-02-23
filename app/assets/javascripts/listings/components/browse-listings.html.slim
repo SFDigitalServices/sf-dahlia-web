@@ -1,0 +1,95 @@
+ng-include src="'listings/templates/_rental-header.html'" ng-if="$ctrl.tenureType == 'rental'"
+ng-include src="'listings/templates/_sale-header.html'" ng-if="$ctrl.tenureType == 'ownership'"
+
+/// Matches results bar
+header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
+  .row
+    .medium-12.columns
+      h1.lead-header_title.serif.margin-bottom-none
+        | {{ $ctrl.headerText() }}
+      .results-header
+        p.results-header_values ng-bind-html="$ctrl.resultsHeader()"
+        .results-header_actions
+          a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator({listingsType: $ctrl.tenureType})"
+            | {{'label.edit_eligibility' | translate}}
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-arrow-down"
+
+          button.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="$ctrl.clearEligibilityFilters()"
+            | {{'label.clear' | translate}}
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-close"
+
+/ Notification: No listings with Open Applications
+section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length"
+  .row
+    .large-12.columns
+      .block--short.bg-dust
+        h2.t-delta.t-serif.c-oil.no-margin translate="listings.no_open_listings"
+
+/ Listings:
+/   * Open (doesn't have a header)
+/   * Before Eligibility filter
+.results-section#listing-results ng-if="!$ctrl.parent.hasEligibilityFilters() && $ctrl.parent.openListings.length"
+  .row
+    .large-12.columns
+      property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
+
+/ Listings:
+/   * After Eligibility filter
+.has-eligibility-filters ng-if="$ctrl.parent.hasEligibilityFilters()"
+
+  / No Matches Section Heading
+  section.results-section.no-match.border-top#listing-results ng-if="!$ctrl.openMatchListings.length"
+    / Notification: No Matches based on Eligibility
+    .row
+      .large-12.columns
+        header.status-header.status--not-matched
+          h2.status-header_title.gamma
+            | {{'listings.no_matches' | translate}}
+          p.margin-bottom--half
+            | {{ $ctrl.noMatchesLabel() }}
+          p.t-small.c-steel.no-margin translate="listings.click_for_other_lisitings" translate-value-url="{{$ctrl.href('dahlia.additional-resources')}}"
+
+    .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
+
+  / Notification: Matched listings
+  section.results-section#listing-results ng-if="$ctrl.openMatchListings.length"
+    .row
+      .large-12.columns
+        header.status-header.status--matched
+          .status-header_icon
+            span.ui-icon.ui-large
+              svg
+                use xlink:href="#i-check"
+          hgroup.status-header_group
+            h2.status-header_title
+              | {{'label.matched' | translate}}
+            p.no-margin
+              | {{'listings.you_may_be_eligible' | translate}}
+
+    / Listings: Open Matched Listings
+    .row.margin-top--2x
+      .large-12.columns
+        property-card listing='listing' ng-repeat="listing in $ctrl.parent.openMatchListings"
+
+ng-include src="'listings/templates/_rental-callout.html'" ng-if="$ctrl.tenureType == 'rental' && (!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length)"
+ng-include src="'listings/templates/_sale-callout.html'" ng-if="$ctrl.tenureType == 'ownership' && (!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length)"
+
+/ Notification: Not Matched listings
+section.margin-top--2x.margin-bottom--2x ng-if="$ctrl.openMatchListings.length && $ctrl.parent.openNotMatchListings.length"
+  ng-include src="'listings/templates/_housing-counselor.html'"
+
+/ Listings: Not Matched
+listing-results-toggler listing-results="$ctrl.parent.openNotMatchListings" section-name="notMatched" icon="#i-building" ng-if="$ctrl.parent.hasEligibilityFilters() && $ctrl.parent.openNotMatchListings.length"
+
+/ Listings: Upcoming Lotteries (Closed Listings)
+listing-results-toggler listing-results="$ctrl.parent.closedListings" section-name="upcomingLotteries" icon="#i-clock"
+
+/ Listings: Lottery Results
+listing-results-toggler listing-results="$ctrl.parent.lotteryResultsListings" section-name="lotteryResults" icon="#i-result"
+
+/ email updates callout
+ng-include src="'pages/templates/_email-updates.html'"

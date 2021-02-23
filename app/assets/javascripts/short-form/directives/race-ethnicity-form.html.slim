@@ -1,0 +1,24 @@
+.form-group
+  label.form-label.caps.padding-bottom--half id="referral_label"
+    | {{'demographics_accordion.title' | translate}}
+  p.form-note.margin-bottom--2x
+    | {{'demographics_accordion.subtitle' | translate}}
+  dl.accordion-plus-minus.accordion.trigger-right data-accordion=""
+    div ng-repeat="option in race_and_ethnicity_options"
+      dd.accordion-navigation ng-class="{'active' : selectedDemographicHeader == option.key }"
+        div.accordion-header ng-attr-id="{{ getRaceHeaderId(option) }}" tabindex="0" draggable="false" ng-click="toggleSelectedHeader(option.key, $event)" aria-label="{{ labelForHeader(option) }}"
+          .accordion-header-title
+            | {{ option.translation_key | translate }}
+          span.ui-icon.ui-medium.i-color ng-if="headerHasCheckedOption(option)"
+            svg.ui-check
+              use xlink:href="#i-check"
+          icon-plus-minus active="false"
+        div.content ng-class="{'active' : selectedDemographicHeader == option.key }"
+          .checkbox-group role="group"
+            div.checkbox-block-accordion ng-repeat="suboption in option.suboptions"
+              .checkbox-block-accordion
+                input ng-attr-id="{{ getRaceCheckboxId(option, suboption) }}" name="preferences" type="checkbox" value="{{ getRaceCheckboxId(option, suboption) }}" ng-model="demographicsChecked[getOptionKey(option, suboption)]" ng-change="onDemographicCheckedChanged()"
+                label.checkbox-and-label ng-attr-id="{{ getRaceCheckboxLabelId(option, suboption) }}" for="{{ getRaceCheckboxId(option, suboption) }}"
+                  | {{ suboption.translation_key | translate }}
+                input.checkbox-text-input aria-labelledby="{{ getRaceCheckboxLabelId(option, suboption) }}" ng-attr-id="{{ getRaceOtherTextInputId(option, suboption) }}" ng-if="suboption.free_text_key" ng-model="user[getOtherFreeTextKey(suboption)]" ng-disabled="isFreeTextInputDisabled(option, suboption)" maxlength="{{::INPUT_MAX_LENGTH.raceEthnicityOther}}" placeholder="{{ suboption.free_text_placeholder | translate }}" type="text"
+  demographics-accumulator

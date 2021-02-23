@@ -1,0 +1,40 @@
+.dash-container.tall
+  section.row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      back-to-application-link
+
+      form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
+        header.dash-header
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile"
+          h1.dash-title.no-margin Sign In
+
+        alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.redirect" ng-if="accountSuccess.messages.redirect")
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.signedOut" ng-if="accountSuccess.messages.signedOut")
+        alert-box(primary="true" info="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.userTokenValidationTimeout" ng-if="accountSuccess.messages.userTokenValidationTimeout")
+
+        .alert-box.primary.no-margin.no-close.alert-box ng-if="accountError.messages.timeout"
+          span.alert-icon.ui-icon.ui-medium.ng-scope
+            svg
+              use xlink:href="#i-info"
+          p.alert-body translate="sign_in.logged_out_due_to_inactivity"
+
+
+        .dash-card-inner.inset.border-bottom
+
+          sign-in-fields
+
+          .form-group
+            p.t-small.c-steel.text-center.padding-top.no-margin
+              input.button.no-margin.primary#sign-in type="submit" data-event="gtm-sign-in" value="{{'label.sign_in' | translate}}" ng-disabled="submitDisabled"
+        footer.dash-header
+          h2.dash-title
+            | {{'sign_in.dont_have_account' | translate}}
+          p.t-small.c-steel
+            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" data-event="gtm-create-account" ng-if="rememberedShortFormState"
+              | {{'label.create_account' | translate}}
+            a.button.no-margin ui-sref="dahlia.create-account" data-event="gtm-create-account" ng-if="!rememberedShortFormState"
+              | {{'label.create_account' | translate}}

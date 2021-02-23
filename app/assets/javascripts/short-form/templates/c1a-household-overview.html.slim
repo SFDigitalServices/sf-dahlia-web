@@ -1,0 +1,12 @@
+.app-card.form-card
+  short-form-header no-border="true"
+    h2.app-card_question
+      | {{'c1a_household_overview.title1' | translate}}
+    h2.app-card_question
+      | {{'c1a_household_overview.title2' | translate}}
+
+  / this page has a somewhat unique case where there is no "save and finish" or "submit" button
+  .button-pager
+    .button-pager_row.primary
+      button#submit.button.primary.expand-small ui-sref="dahlia.short-form-application.household-members"
+        | {{'t.next' | translate}}

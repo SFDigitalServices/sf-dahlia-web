@@ -1,0 +1,34 @@
+div ng-show="showAlert()"
+  .alert-box.alert ng-class="getStyles()" role="alert"
+    span.alert-icon ng-if="!primary"
+      span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
+        svg
+          use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
+    span.alert-icon ng-if="info"
+      span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
+        svg
+          use xlink:href="#i-info" xmlns:xlink="http://www.w3.org/1999/xlink"
+    button.button-link.close ng-click="close($event)" aria-label="Close Alert Box"
+      | &times;
+    p.alert-body ng-bind-html="alertText()"
+
+  .alert-notice.alert.invert ng-show="preferenceWarning"
+    p.alert-notice_title translate="error.please_complete_preference_content" ng-if="preferenceWarning == 'preferenceIncomplete'"
+    p.alert-notice_title translate="error.please_select_preference_content" ng-if="preferenceWarning == 'preferenceNotSelected'"
+
+  .alert-notice.alert.invert ng-show="customSubMessage"
+    p.alert-notice_title
+      | {{customSubMessage}}
+
+  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length"
+    p.t-tiny.c-alert ng-repeat="error in eligibilityErrors" ng-class="{ 'margin-bottom': !shortEligibilityError }"
+      | {{error}}
+
+    / shortEligibilityError is used by choose-applicant-details page
+    / when you encounter the senior error we just want to show a short eligibility error message
+    div ng-hide="shortEligibilityError"
+      / otherwise we display the further message about not being eligible and the link to Get Assistance
+      p.t-tiny.margin-bottom translate="error.not_eligible_description"
+
+      p.t-tiny.c-alert.margin-bottom
+        a ui-sref="dahlia.additional-resources" translate="error.get_assistance"

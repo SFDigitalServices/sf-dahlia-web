@@ -1,0 +1,14 @@
+.form-group
+  label.form-label.caps id="sexual_orientation_form_label" for="user_sexual_orientation"
+    | {{'label.applicant_sexual_orientation' | translate}}
+
+  select#user_sexual_orientation ng-model="user.sexualOrientation" data-width="auto" name="sexualOrientation" ng-change="user.sexualOrientationOther = null"
+    option disabled="" selected="" value=""
+      | {{'label.select_one' | translate}}
+    option ng-repeat="orientation in sexual_orientation_options" value="{{orientation[0]}}"
+      | {{ orientation[1] | translate }}
+
+  label.sr-only for="user_sexual_orientation_other" translate="label.your_sexual_orientation"
+  input#user_sexual_orientation_other ng-model="user.sexualOrientationOther" maxlength="{{::INPUT_MAX_LENGTH.sexualOrientationOther}}" name="sexualOrientationOther" placeholder="{{'label.your_sexual_orientation' | translate}}" type="text" ng-class="{ error: inputInvalid('sexualOrientationOther') }" ng-if="user.sexualOrientation == 'Not listed'" aria-describedby="user_sexual_orientation_other_error"
+  small.error#user_sexual_orientation_other_error ng-if="inputInvalid('sexualOrientationOther')"
+    | {{'error.sexual_orientation' | translate}}

@@ -1,0 +1,23 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'f0_review_optional.title' | translate}}
+    p.margin-bottom
+      | {{'f0_review_optional.p1' | translate}}
+
+  .app-inner.border-bottom
+    race-ethnicity-form user='applicant'
+
+  .app-inner.border-bottom
+    language-form user='applicant'
+
+  .app-inner.border-bottom
+    gender-form user='applicant'
+
+  .app-inner.border-bottom
+    sexual-orientation-form user='applicant'
+
+  .app-inner
+    referral-form user='applicant'
+
+  short-form-save-and-submit

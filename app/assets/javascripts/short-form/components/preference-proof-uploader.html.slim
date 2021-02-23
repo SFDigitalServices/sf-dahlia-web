@@ -1,0 +1,83 @@
+/ checkbox for proof options for this preference
+.form-group.margin-bottom-none ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-hide="$ctrl.uploaded"
+
+  label.form-label.caps for="{{$ctrl.selectorName}}"
+    | {{$ctrl.proofOptionLabel}}
+
+  p.form-note.margin-bottom ng-if="$ctrl.liveOrNeighborhoodPreference()"
+    | {{'e2c_live_work_preference.document_must_show_correct_name' | translate}}
+  p.form-note.margin-bottom ng-if="$ctrl.preference == 'workInSf'"
+    | {{'e2c_live_work_preference.document_must_show_correct_name_for_work' | translate}}
+  p.form-note.margin-bottom ng-if="$ctrl.preference == 'aliceGriffith'"
+    | {{'preferences.alice_griffith.proof_desc' | translate}}
+  p.form-note.margin-bottom ng-if="$ctrl.proofType == 'Copy of Lease'"
+    | {{'label.upload_lease_description' | translate}}
+
+  div ng-if="$ctrl.showProofOptionSelector()"
+    select id="{{$ctrl.selectorName}}" ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]" ng-change="$ctrl.saveProofOptionToPref()"
+      option value=""
+        | {{'label.select_one' | translate}}
+      option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
+        | {{ option[1] | translate }}
+    small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
+      | {{'error.please_select_an_option' | translate}}
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
+      | {{'e2c_live_work_preference.letter_from_employer_instructions' | translate}}
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
+      | {{'e2c_live_work_preference.letter_for_homelessness_instructions' | translate}}
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from SFHA verifying address'"
+      | {{'preferences.alice_griffith.sfha_letter_instructions' | translate}}
+
+.form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
+  / type="button" tells it not to act as a submit button
+  / The ngf-max-size attr is set to 20MB, which is different from the 5MB limit in FileUploadService, because we try to resize the file in  _processProofFile to see if we can get it under 5MB
+  button.button.secondary[
+        ng-class="{expand: ($ctrl.proofType != 'Copy of Lease'), disabled: $ctrl.uploaderDisabled(), error: $ctrl.inputInvalid($ctrl.fileInputName), 'ghost-white': !$ctrl.inputInvalid($ctrl.fileInputName)}"
+        type="button"
+        name="{{$ctrl.fileInputName}}"
+        id="{{$ctrl.fileInputName}}"
+        aria-describedby="{{$ctrl.fileInputName}}_error"
+        ng-disabled="$ctrl.uploaderDisabled()"
+        ng-model="$ctrl.proofDocument.file.name"
+        ng-required="$ctrl.application.preferences[$ctrl.preference]"
+        ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf, image/HEIC'"
+        ngf-max-size="20MB"
+        ngf-pattern="'.png,.pdf,.jpg,.jpeg,.HEIC'"
+        ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)"
+        ngf-validate-fn="$ctrl.validateFileNameLength($file)"
+    ]
+    | {{$ctrl.buttonLabel}}
+  small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.inputInvalid($ctrl.fileInputName) && !$ctrl.proofDocument.error"
+    | {{'error.file_missing' | translate}}
+  small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.proofDocument.error"
+    | {{$ctrl.proofDocument.error | translate}}
+  p.form-note.micro.input-inset.margin-bottom translate="label.upload_proof_instructions_1"
+  p.form-note.micro.input-inset translate="label.upload_proof_instructions_2"
+  p.form-note.micro.input-inset translate="label.upload_proof_instructions_3"
+
+.form-group ng-if="$ctrl.proofDocument.loading"
+  article.attachment.is-loading.media
+    figure.attachment-img.media-img
+      div ng-include="'shared/templates/spinner.html'"
+    .media-body
+      strong
+        | {{$ctrl.proofDocument.proofOption}}
+      br
+      span
+        | {{'label.uploading' | translate}}...
+
+.form-group ng-if="$ctrl.hasPreferenceFile()"
+  article.attachment.media.margin-bottom id="uploaded-{{$ctrl.fileInputName}}"
+    figure.media-img
+      img ng-src="{{$ctrl.assetPaths['image_file.png']}}" style="height:80px; margin-right: 6px;"   alt="Uploaded File"
+    .media-body
+      strong
+        | {{$ctrl.proofDocument.proofOption}}
+      p.t-micro
+        | {{$ctrl.proofDocument.file.name | limitTo: 25 }}
+        | {{$ctrl.proofDocument.file.name.length > 25 ? '...' : ''}}
+      p.t-small
+        ' {{'label.uploaded' | translate}}:
+        | {{$ctrl.proofDocument.file.created_at | dateSuffix}}
+      button.button-link.attachment-action.a-alert-dark type="button" ng-click="$ctrl.deletePreferenceFile($ctrl.opts)"
+        | Delete

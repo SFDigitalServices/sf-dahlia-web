@@ -1,0 +1,11 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'f1_review_summary.title' | translate}}
+
+  application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()"
+
+  .app-inner.text-center.border-top
+    p.t-small.no-margin.c-charcoal.t-bold translate="f1_review_summary.note"
+
+  short-form-save-and-submit submit-value="{{'t.confirm' | translate}}" secondary-button="true"

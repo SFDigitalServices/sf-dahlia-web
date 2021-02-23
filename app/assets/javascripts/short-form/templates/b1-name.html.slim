@@ -1,0 +1,70 @@
+.app-card.form-card
+  short-form-header logged-in-message="{{translateLoggedInMessage('b1-name')}}"
+    h2.app-card_question
+      | {{'b1_name.title' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName') || inputInvalid('middleName'))}"
+      h3.form-label.caps
+        ' {{'label.your_name' | translate}}
+        lock-icon ng-if="loggedIn()"
+
+      label.sr-only for="applicantFirstName"
+        | {{'label.first_name' | translate}}
+      input#applicant_first_name(ng-model="applicant.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
+
+      label.sr-only for="applicantMiddleName"
+        | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+      input#applicant_middle_name(ng-model="applicant.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
+
+      label.sr-only for="applicantLastName"
+        | {{'label.last_name' | translate}}
+      input#applicant_last_name(ng-model="applicant.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error" ng-pattern="latinRegex" translated-error="error.last_name" input-error)
+
+    .form-group ng-class="{ error: applicantDOB_hasError() }"
+      h3.form-label.caps
+        ' {{'label.your_dob' | translate}}
+        lock-icon ng-if="loggedIn()"
+
+      .form-date-of-birth.row.collapse
+        .form-group-month.large-2.columns
+          label.sr-only for="date_of_birth_month"
+            | {{'label.dob_month' | translate}}
+          input#date_of_birth_month.no-margin(ng-model="applicant.dob_month" maxlength="2" name="date_of_birth_month" ng-required="true" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
+        .form-group-day.large-2.columns
+          label.sr-only for="date_of_birth_day"
+            | {{'label.dob_day' | translate}}
+          input#date_of_birth_day.no-margin(ng-model="applicant.dob_day" maxlength="2" name="date_of_birth_day" ng-required="true" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
+        .form-group-year.large-2.columns.end
+          label.sr-only for="date_of_birth_year"
+            | {{'label.dob_year' | translate}}
+          input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length  }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
+      small.error#date_of_birth_error ng-if="applicantDOB_hasError()"
+        span ng-if="!primaryApplicantUnder18()" translate="error.dob"
+        span ng-if="primaryApplicantUnder18()" translate="error.dob_primary_applicant_age"
+
+  .app-inner.inset
+    .form-group.has-option ng-class="{ error: inputInvalid('email'), 'is-locked': loggedIn() }"
+      label.form-label.caps for="applicant_email"
+        ' {{'label.applicant_email' | translate}}
+        lock-icon ng-if="loggedIn()"
+      p.form-note.margin-bottom
+        | {{'b2_contact.only_use_your_email' | translate}}
+      .form-email
+        input#applicant_email ng-model="applicant.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-pattern="emailRegex" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
+      small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
+      small.error#applicant_email_error ng-if="inputInvalid('email')"
+        | {{'error.email' | translate}}
+      .form-item.padding-bottom
+        .checkbox
+          input#applicant_no_email name="applicant_no_email" type="checkbox" data-event="gtm-applicant-no-email" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
+          label for="applicant_no_email"
+            | {{'label.applicant_no_email' | translate}}
+
+  / this first page just has a "next" button but no "save and finish later"
+  .button-pager
+    .button-pager_row.primary
+      input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="isLoading()"

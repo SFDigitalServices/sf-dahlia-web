@@ -1,0 +1,24 @@
+section.app-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+
+      short-form-nav
+
+      form(novalidate="" name="form.applicationForm")
+        #short-form-wrapper.focus-container
+          .app-card.form-card
+            .app-inner.leader
+              h2.app-card_question
+                | {{'continue_previous_draft.title' | translate}}
+              p.form-note.margin-bottom
+                | {{'continue_previous_draft.description' | translate}}
+
+            application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()"
+
+            .button-pager
+              .button-pager_row.primary
+                button#continue-previous-draft.button.primary type="button" ui-sref="dahlia.short-form-application.contact" ng-click="trackContinuePreviousDraft()"
+                  | {{'continue_previous_draft.continue_with_these_details' | translate}}
+              .button-pager_row
+                button#start-from-scratch.button.button-link.button-lined.small-text-center.expand-small type="button" ng-click="resetAndReplaceApp()"
+                  | {{'b0_autofill_preview.start_from_scratch' | translate}}

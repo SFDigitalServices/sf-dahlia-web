@@ -1,0 +1,15 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question translate="e7_preferences_programs.title"
+    p.margin-bottom translate="e7_preferences_programs.have_not_heard_of_preferences"
+
+  .app-inner
+    .form-group
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
+      .checkbox-group role="group"
+        preference(application="application" title="{{'e7_preferences_programs.cert_of_preference' | translate}}" preference="certOfPreference" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="e7_preferences_programs.cert_of_preference_desc" has-certificate="true" margin-bottom="true" ng-if="showPreference('certOfPreference')" )
+
+        preference(application="application" title="{{'e7_preferences_programs.displaced' | translate}}" preference="displaced" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="e7_preferences_programs.displaced_tenants_desc" has-certificate="true" ng-if="showPreference('displaced')" )
+
+
+  short-form-save-and-submit

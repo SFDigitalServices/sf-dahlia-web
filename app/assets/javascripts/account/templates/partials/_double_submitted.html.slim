@@ -1,0 +1,9 @@
+div ng-controller="AccountController"
+  header.modal-header
+    h1.modal-title.t-gamma.no-margin
+      | {{'double_submitted.title' | translate}}
+  section.modal-inner.bg-dust
+    p.c-steel translate="double_submitted.p1"
+    p.c-steel translate="double_submitted.p2" translate-values="dahliaContactEmail()"
+
+  ng-include src="'account/templates/partials/_modal_close.html'"

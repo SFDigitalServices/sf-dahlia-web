@@ -1,0 +1,15 @@
+p.text-center.t-small.padding--3halves.no-margin.bg-dust
+  a.a-dark href="http://sfmohcd.org/housing-preference-programs" target="_blank" data-event="gtm-read-about-lottery-preferences"
+    | {{'lottery.read_about_preferences' | translate}}
+
+footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingInfo[listing.Id].submitted"
+
+  span ng-if="!lotteryBucketInfo[listing.Id].lotteryResultsURL"
+    p.t-small translate="lottery.results_will_be_posted_on" translate-value-date="{{listing.Lottery_Results_Date | date : 'MMM d, yyyy' }}"
+
+  span ng-if="lotteryBucketInfo[listing.Id].lotteryResultsURL"
+    p.t-small translate="lottery.results_from" translate-value-date="{{listing.Lottery_Results_Date | date : 'MMM d, yyyy' }}"
+    p.t-small ng-if="lotteryBucketInfo[listing.Id].lotteryResultsURL"
+      a.a-dark ng-href="{{lotteryBucketInfo[listing.Id].lotteryResultsURL}}" target="_blank" data-event="gtm-download-lottery-results"
+        | {{'lottery.lottery_results_pdf_link' | translate}}
+  p.t-small.c-steel translate="lottery.unsorted_results_note"  translate-value-date="{{lotteryBucketInfo[listing.Id].lotteryDate | date : 'MMM d, yyyy' }}"

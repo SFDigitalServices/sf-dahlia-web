@@ -1,0 +1,24 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question translate="e2c_live_work_preference.title"
+    p.margin-bottom translate="e2c_live_work_preference.instructions"
+
+  .app-inner
+    .form-group ng-class="{ error: inputInvalid(form.currentPreferenceType) }"
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
+
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+
+        preference(preference="liveInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.live_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_address_documents' | translate}}"  translated-description="e2c_live_work_preference.live_sf_preference.description" required="preferenceRequired('liveInSf')" ng-if="showPreference('liveInSf')")
+
+        preference(preference="workInSf" has-proof="true" application="application" title="{{'e2c_live_work_preference.work_sf_preference.title' | translate}}" proof-option-label="{{'label.preference_proof_documents' | translate}}" translated-description="e2c_live_work_preference.work_sf_preference.description"  required="preferenceRequired('workInSf')" ng-if="showPreference('workInSf')")
+
+        live-work-combo-preference(application="application" title="{{'e2c_live_work_preference.live_work_sf_preference.title' | translate}}"  translated-description="e2c_live_work_preference.live_work_sf_preference.description" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" ng-if="showPreference('liveWorkInSf')")
+
+
+      preference-opt-out preference="{{form.currentPreferenceType}}" application="application" invalid="inputInvalid(form.currentPreferenceType)" cancel-preference="cancelPreference(form.currentPreferenceType)"
+
+      small.error ng-if="inputInvalid(form.currentPreferenceType)"
+        | {{'error.please_select_an_option' | translate}}
+
+  short-form-save-and-submit

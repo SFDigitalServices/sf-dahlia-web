@@ -10,5 +10,45 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
+//= require lodash/lodash
+//= require angular
+//= require angular-foundation
+//= require angular-ui-router
+//= require angular-ui-router-title
+//= require angular-rails-templates
+//= require angular-pageslide-directive
+//= require ngstorage
+//= require angular-sanitize
+//= require angular-clipboard
+//= require angular-filter
+//= require angular-translate
+//= require angular-translate-loader-static-files
+//= require lifely-angular-carousel
+//= require angular-ui-mask
+//= require hammerjs
+//= require ng-currency
+//= require ng-text-truncate/ng-text-truncate.js
+//= require moment
+//= require moment-timezone
+//= require js-yaml
+//= require ng-file-upload
+//= require angular-aria
+//= require angular-scroll
+//= require ng-idle
+//= require angular-cookie
+//= require ng-token-auth
+//= require angular-ui-validate
+//= require angular-uuids
+//= require angular-linkify
+//= require angular-messages
+//= require angular-loading-overlay
+//= require angular-http-etag
+//= require ngMeta
+//= require raven-js/dist/raven
+//= require raven-js/dist/plugins/angular
+//= require config/angularModules.js
+//= require config/angularRoutes.js
+//= require config/angularProviders.js
+//= require config/angularInitialize.js
+//= require config/angularConstants.js
 //= require_tree .

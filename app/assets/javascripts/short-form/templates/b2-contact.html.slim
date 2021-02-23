@@ -1,0 +1,99 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question translate="b2_contact.title" translate-value-name="{{applicant.firstName}}"
+
+  .app-inner.inset.border-bottom
+    .form-group.has-option ng-class="{ error: inputInvalid('phone') || inputInvalid('phoneType') }"
+      .form-tel
+        label.caps for="applicant_phone"
+          | {{'label.applicant_phone' | translate}}
+
+        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="uncheckNoOption('phone')" ui-mask="(999) 999-9999" placeholder="{{applicant.noPhone ? 'None' : '(555) 555-5555'}}" ng-disabled="applicant.noPhone" aria-describedby="applicant_phone_error" ui-mask-placeholder)
+      small.error#applicant_phone_error ng-if="inputInvalid('phone')"
+        | {{'error.phone_number' | translate}}
+      label.sr-only for="applicant_phone_type" translate="label.what_type_of_number"
+      select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }" ng-disabled="applicant.noPhone" aria-describedby="applicant_phone_type_error"
+        option value="" translate="label.what_type_of_number"
+        option value="Home" translate="label.phone_home"
+        option value="Work" translate="label.phone_work"
+        option value="Cell" translate="label.phone_cell"
+
+      small.error#applicant_phone_type_error ng-if="inputInvalid('phoneType')"
+        | {{'error.phone_number_type' | translate}}
+
+      div
+        .form-item.padding-bottom
+          .checkbox
+            input#applicant_no_phone name="applicant_no_phone" type="checkbox" data-event="gtm-applicant-no-phone" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
+            label for="applicant_no_phone"
+              | {{'label.applicant_no_phone' | translate}}
+
+        .form-item.padding-bottom
+          / this checkbox unchecks the other checkbox; only one can be selected
+          .checkbox
+            input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone" ng-disabled="applicant.noPhone" ng-click="clearPhoneData('alternate')"
+            label for="applicant_additional_phone"
+              | {{'label.applicant_additional_phone' | translate}}
+
+      div ng-if="applicant.additionalPhone && !applicant.noPhone"
+        .form-tel
+          label.caps for="applicant_alternate_phone"
+            | {{'label.applicant_second_phone' | translate}}
+          input#applicant_alternate_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" aria-describedby="applicant_alternate_phone_error" ui-mask-placeholder)
+        small.error#applicant_alternate_phone_error ng-if="inputInvalid('alternatePhone')"
+          | {{'error.phone_number' | translate}}
+        label.sr-only for="applicant_alternate_phone_type" translate="label.what_type_of_number"
+        select#applicant_alternate_phone_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }" aria-describedby="applicant_alternate_phone_type_error"
+          option value="" translate="label.what_type_of_number"
+          option value="Home" translate="label.phone_home"
+          option value="Work" translate="label.phone_work"
+          option value="Cell" translate="label.phone_cell"
+        small.error#applicant_alternate_phone_type_error ng-if="inputInvalid('alternatePhoneType')"
+          | {{'error.phone_number_type' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
+      label.form-label.caps
+        | {{'label.address' | translate}}
+      p.form-note.margin-bottom
+        | {{'b2_contact.applicant_address_desc' | translate}}
+
+      address-form address-type="home_address" model='applicant' model-name='applicant' is-required="true" on-change="addressChange('applicant')"
+
+      address-error error="addressValidationError('home_address')"
+
+      .form-item.padding-bottom
+        .checkbox
+          input#applicant_separate_address(ng-model="applicant.hasAltMailingAddress" name="separate_address" type="checkbox" ng-change="resetAndCheckMailingAddress()")
+          label for="applicant_separate_address"
+            | {{'label.applicant_separate_address' | translate}}
+
+  .app-inner.inset.border-bottom ng-if="applicant.hasAltMailingAddress"
+    .form-group.row ng-class="{ error: addressInputInvalid('mailing_address')}"
+      label.form-label.caps
+        | {{'label.mailing_address' | translate}}
+      p.form-note.margin-bottom
+        | {{'b2_contact.provide_an_address' | translate}}
+
+      address-form address-type="mailing_address" model='applicant' model-name='applicant' is-required="true" on-change="addressChange('applicant')" hide-address2="true"
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('workInSf') }"
+      label.form-label.caps
+        | {{'label.work_in_sf' | translate}}
+      p.form-note.margin-bottom
+        | {{'b2_contact.work_in_sf_desc' | translate}}
+
+      .radio-group-inline.double role="radiogroup" aria-label="{{'label.work_in_sf' | translate}}"
+        radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error" on-change="checkPreferenceEligibility"
+          | {{'t.yes' | translate}}
+        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error" on-change="checkPreferenceEligibility"
+          | {{'t.no' | translate}}
+
+      small.error#workInSf_error ng-show="inputInvalid('workInSf')"
+        | {{'error.please_select_an_option' | translate}}
+
+      small.highlight ng-if="applicant.workInSf == 'Yes'"
+        | {{'b2_contact.claim_work_in_sf' | translate}}
+
+  short-form-save-and-submit

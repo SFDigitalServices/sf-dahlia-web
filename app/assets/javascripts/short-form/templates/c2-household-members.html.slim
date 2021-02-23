@@ -1,0 +1,31 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'c2_household_members.title' | translate}}
+
+  .app-inner.short.focus-container
+    .form-group
+      .info-item.tall.border-bottom id="household-primary"
+        p.info-item_name
+          | {{ applicant.firstName }} {{ applicant.lastName }}
+        p.info-item_value
+          | {{'label.primary_user' | translate}}
+        a.edit-link.info-item_link ui-sref="dahlia.short-form-application.name"
+          | {{'t.edit' | translate}}
+
+      .info-item.tall.border-bottom ng-repeat="member in householdMembers" id="household-member-{{$index}}"
+        p.info-item_name
+          | {{ member.firstName }} {{ member.lastName }}
+        p.info-item_value
+          | {{'label.household_member' | translate}}
+        a.edit-link.info-item_link ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
+          | {{'t.edit' | translate}}
+
+      .text-center.padding--2x
+        button#add-household-member.has-icon.no-margin ui-sref="dahlia.short-form-application.household-member-form"
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-plus"
+          | {{'label.add_household_member' | translate}}
+
+  short-form-save-and-submit(submit-value="{{'label.done_adding_people' | translate}}")

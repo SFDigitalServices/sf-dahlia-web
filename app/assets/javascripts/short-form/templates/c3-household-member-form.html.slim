@@ -1,0 +1,105 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'c3_household_member_form.title' | translate}}
+    p.margin-bottom
+      | {{'c3_household_member_form.p1' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName') || inputInvalid('middleName')) }"
+      h3.form-label.caps
+        | {{'label.household_member_name' | translate}}
+      label.sr-only for="houshold_member_first_name"
+        | {{'label.first_name' | translate}}
+      input#houshold_member_first_name(ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'label.first_name' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="error.first_name" input-error)
+
+      label.sr-only for="household_member_middle_name"
+        | {{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})
+      input#household_member_middle_name(ng-model="householdMember.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'label.middle_name' | translate}} ({{'t.optional' | translate | lowercase}})" type="text" ng-class="{ error: inputInvalid('middleName') }" ng-pattern="latinRegex" input-error)
+
+      label.sr-only for="household_member_last_name"
+        | {{'label.last_name' | translate}}
+      input#household_member_last_name(ng-model="householdMember.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'label.last_name' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error" ng-pattern="latinRegex" translated-error="error.last_name" input-error)
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: applicantDOB_hasError() }"
+      h3.form-label.caps
+        | {{'label.dob' | translate}}
+      .form-date-of-birth.row.collapse
+        .form-group-month.large-2.columns
+          label.sr-only for="date_of_birth_month"
+            | {{'label.dob_month' | translate}}
+          input#date_of_birth_month.no-margin(ng-model="householdMember.dob_month" maxlength="2" name="date_of_birth_month" ng-required="true" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" pattern="\d*" ui-validate="'DOBValid(\'month\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+
+        .form-group-day.large-2.columns
+          label.sr-only for="date_of_birth_day"
+            | {{'label.dob_day' | translate}}
+          input#date_of_birth_day.no-margin(ng-model="householdMember.dob_day" maxlength="2" name="date_of_birth_day" ng-required="true" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" pattern="\d*" ui-validate="'DOBValid(\'day\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+        .form-group-year.large-2.columns.end
+          label.sr-only for="date_of_birth_year"
+            | {{'label.dob_year' | translate}}
+          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length}" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\') && !householdMemberUnder0()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+      small.error#date_of_birth_error ng-show="applicantDOB_hasError()"
+        | {{'error.dob' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('hasSameAddressAsApplicant') }"
+      label.form-label.caps id="hasSameAddressAsApplicant_label"
+        | {{'label.member_same_address' | translate}}
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
+          | {{'t.yes' | translate}}
+        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
+          | {{'t.no' | translate}}
+
+        small.error#household_member_same_address_error ng-show="inputInvalid('hasSameAddressAsApplicant')"
+         | {{'error.please_select_an_option' | translate}}
+
+    .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
+      p.form-note.margin-bottom
+        | {{'c3_household_member_form.member_address_desc' | translate}}
+
+      address-form address-type="home_address" model='householdMember' model-name='householdMember' is-required="true" on-change="addressChange('householdMember')"
+
+      address-error error="addressValidationError('home_address')"
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('workInSf') }"
+      label.form-label.caps id="workInSf_label"
+        | {{'label.member_work_in_sf' | translate}}
+      p.form-note.margin-bottom
+        | {{'c3_household_member_form.work_in_sf_desc' | translate}}
+      .radio-group role="radiogroup" aria-labelledby="workInSf_label"
+        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
+          | {{'t.yes' | translate}}
+        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
+          | {{'t.no' | translate}}
+
+      small.error#household_member_workInSf_error ng-show="inputInvalid('workInSf')"
+       | {{'error.please_select_an_option' | translate}}
+
+      small.highlight ng-if="householdMember.workInSf == 'Yes'"
+        | {{'b2_contact.claim_work_in_sf' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('relationship') }"
+      label.form-label.caps for="household_member_relationship"
+        | {{'label.household_member_relationship' | translate}}
+      select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" ng-required="true" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
+        option value=""
+          | {{'label.select_one' | translate}}
+        option ng-repeat="relationship in relationship_options" value="{{relationship[0]}}"
+          | {{relationship[1] | translate}}
+      small.error#household_member_relationship_error ng-show="inputInvalid('relationship')"
+       | {{'error.household_member_relationship' | translate}}
+
+  .button-pager
+    .button-pager_row.primary
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'label.household_member_update' | translate}}" ng-if="householdMember.id"
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'label.household_member_save' | translate}}" ng-if="!householdMember.id"
+    .button-pager_row
+      button#cancel-member.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
+        span ng-if="!householdMember.id"
+          | {{'label.household_member_cancel' | translate}}
+        span ng-if="householdMember.id"
+          | {{'label.household_member_delete' | translate}}

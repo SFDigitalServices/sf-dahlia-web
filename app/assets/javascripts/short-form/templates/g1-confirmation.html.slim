@@ -1,0 +1,72 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'g1_confirmation.title' | translate}}
+      br.skiptranslate
+        | {{listing.Name}}
+  figure.full-figure
+    img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.imageURL}}"
+
+  .app-inner.inset.border-bottom
+    .form-group.text-center
+      label.form-label.caps
+        | {{'g1_confirmation.lottery_number' | translate}}
+      p#lottery_number.beta.t-serif.margin-bottom--half
+        | &#35;{{ application.lotteryNumber }}
+      p.form-note
+        | {{'g1_confirmation.please_write_down_your_number' | translate}}
+
+  .app-inner.inset.border-bottom
+    label.form-label.caps
+      | {{'g1_confirmation.next_steps_title' | translate}}
+    p.form-note
+      span translate="g1_confirmation.next_steps_body1"
+      '
+      ' {{ listing.Lottery_Date | date : 'longDate'}}.
+      span translate="g1_confirmation.next_steps_body2_rental" ng-if='listingIsRental()' translate-values="listingLink()"
+      span translate="g1_confirmation.next_steps_body2_sale" ng-if='listingIsSale()' translate-values="listingLink()" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery"
+
+  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && accountExists()) }"
+    .form-group
+      h3.form-label.caps
+        | {{'g1_confirmation.dont_submit_another_app_title' | translate}}
+      p.form-note.margin-bottom ng-if="applicant.email"
+        | {{'g1_confirmation.dont_submit_another_app_p1_email' | translate}}
+      p.form-note.margin-bottom ng-if="!applicant.email"
+        | {{'g1_confirmation.dont_submit_another_app_p1_no_email' | translate}}
+
+      p.form-note.skiptranslate
+        | {{ listing.Leasing_Agent_Name }}
+        br
+          | {{ listing.Application_Organization }}
+        br
+          | {{ listing.Leasing_Agent_Phone }}
+
+  div ng-show="!loggedIn() && !accountExists()"
+    .app-inner.inset
+      label.form-label.caps translate="g1_confirmation.create_account_title"
+      p.form-note translate="g1_confirmation.create_account_body"
+
+    .button-pager
+      .button-pager_row.primary
+        a.button.primary.radius#create-account ui-sref="dahlia.short-form-application.create-account"
+          | {{'create_account.create_an_account' | translate}}
+      .button-pager_row
+        button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
+          | {{'g1_confirmation.no_thanks_im_done' | translate}}
+
+  .button-pager
+    .button-pager_row.primary ng-if="loggedIn()"
+      a.button.primary.radius ui-sref="dahlia.my-applications"
+        | {{'g1_confirmation.go_to_my_applications' | translate}}
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listings-for-rent" ng-if="::listingIsRental()"
+        | {{'g1_confirmation.browse_more_listings' | translate}}
+      button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listings-for-sale" ng-if="::listingIsSale()"
+        | {{'g1_confirmation.browse_more_listings' | translate}}
+
+  .padding--2x.text-center.border-top.hide-for-print
+    a.t-small.lined#view-app  ui-sref="dahlia.short-form-application.review-submitted" ng-if="!loggedIn()"
+      | {{'g1_confirmation.view_and_print_a_copy' | translate}}
+    a.t-small.lined#view-app  ui-sref="dahlia.short-form-review({id: application.id})" ng-if="loggedIn()"
+      | {{'g1_confirmation.view_and_print_a_copy' | translate}}

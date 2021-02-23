@@ -1,0 +1,35 @@
+.app-card.form-card
+  / because this page has some custom errors we don't include the usual 'short-form-header'
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'b3_alternate_contact_type.title' | translate}}
+    p.margin-bottom translate="b3_alternate_contact_type.allowing_to_discuss"
+  #short-form-alerts
+    alert-box short-form="true"
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
+      label.form-label.caps
+        | {{'label.alternate_contact' | translate}}
+      p.form-note.margin-bottom
+        | {{'label.please_select_one' | translate}}
+      .radio-group role="radiogroup" aria-label="{{'label.alternate_contact' | translate}}"
+
+        radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true' on-change='invalidateAltContactTypeForm' aria-describedby="alternateContactType_error"
+          | {{option[1] | translate}}
+
+        .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
+          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="{{'label.what_is_your_relationship' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.alternateContactTypeOther}}" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'" aria-describedby="alternate_contact_type_other_error"
+          small.error#alternate_contact_type_other_error ng-show="inputInvalid('alternateContactTypeOther')"
+            | {{'error.relationship' | translate}}
+
+        .radio-block
+          input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="alternateContactType" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
+          label.radio-block_label for="alternate_contact_none"
+           | {{'label.no_alternate_contact' | translate}}
+
+      small.error#alternateContactType_error ng-show="inputInvalid('alternateContactType')"
+        | {{'error.alternate_contact' | translate}}
+
+  short-form-save-and-submit

@@ -1,0 +1,78 @@
+.dash-container.tall#short-form-wrapper
+  section.row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      form.dash-card.ng-pristine.ng-valid(novalidate="" name="form.applicationForm" ng-submit="submitForm()")
+        header.dash-header
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile" xmlns:xlink="http://www.w3.org/1999/xlink"
+          h1.dash-title.no-margin ng-if="eligibilityErrors.length"
+            | {{'choose_applicant_details.title_disqualified' | translate}}
+          h1.dash-title.no-margin ng-if="!eligibilityErrors.length"
+            | {{'choose_applicant_details.title' | translate}}
+
+        / this alert box displays "You'll need to resolve..." if there are form errors
+        alert-box short-form="true" custom-sub-message="'choose_applicant_details.alert_message' | translate" ng-if="!eligibilityErrors.length && inputInvalid('chooseApplicantDetails')"
+
+        alert-box(custom-message="notEligibleErrorMessage" eligibility-errors="eligibilityErrors" short-eligibility-error="true" hide-alert="hideAlert" ng-if="eligibilityErrors.length" invert="true")
+
+        .form-group ng-class="{ error: inputInvalid('chooseApplicantDetails')}"
+          .dash-card-inner.inset ng-class="{ 'padding-bottom-none': eligibilityErrors.length }"
+            h3.form-label.caps
+              | {{'choose_applicant_details.your_options' | translate}}:
+            p.form-note.margin-bottom
+              | {{'label.please_select_one' | translate}}
+
+
+          / this option is only relevant for choosing account details, not for senior community disqualification
+          / NOTE: ng-show is used here because ng-if was causing issues with the radio input form
+          .dash-card-inner.full.bg-dust ng-show="!eligibilityErrors.length"
+            .form-item
+              .radio-block
+                input#choose-applicant-details(name="chooseApplicantDetails" type="radio" value="overwriteWithAccountInfo"  ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
+                label.radio-block_label.margin-bottom-none for="choose-applicant-details"
+                  p.form-label.caps
+                    | {{'label.change_application_details' | translate}}
+                  div.radio-block_note.margin-bottom-none
+                    p.c-deep
+                      | {{'choose_applicant_details.select_change_note' | translate}}
+
+                    p.t-bold
+                      | {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+                      br
+                      ' {{'label.dob' | translate}}:
+                      | {{loggedInUser.dob_month}}/{{loggedInUser.dob_day}}/{{loggedInUser.dob_year}}
+
+                    p
+                      span.t-italic
+                        | {{'choose_applicant_details.will_replace' | translate}}:
+                      br
+                      | {{applicantFullName(applicant)}}
+                      span ng-if="applicant.dob_month && applicant.dob_day && applicant.dob_year"
+                        br
+                        ' {{'label.dob' | translate}}:
+                        | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+
+          .dash-card-inner.inset
+            .form-item.margin-bottom--2x
+              .radio-block
+                input#create-account(name="chooseApplicantDetails" type="radio" value="createAccount" ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
+                label.radio-block_label for="create-account"
+                  p.form-label.caps
+                    | {{'choose_applicant_details.create_new_account' | translate}}
+                  span.radio-block_note
+                    | {{'choose_applicant_details.create_account_note' | translate}}
+
+            .form-item
+              .radio-block
+                input#continue-as-guest(name="chooseApplicantDetails" type="radio" value="continueAsGuest" ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
+                label.radio-block_label for="continue-as-guest"
+                  p.form-label.caps
+                    | {{'choose_applicant_details.continue_anon' | translate}}
+                  span.radio-block_note
+                    | {{'choose_applicant_details.continue_anon_note' | translate}}
+
+          .button-pager
+            .button-pager_row.primary
+              input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}"

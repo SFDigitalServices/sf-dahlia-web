@@ -1,0 +1,23 @@
+div ng-controller="AccountController"
+  header.modal-header
+    h1.modal-title.t-gamma.no-margin ng-if="createdAccount.confirmed"
+      | {{'confirm_account.account_already_confirmed' | translate}}
+    h1.modal-title.t-gamma.no-margin ng-if="!createdAccount.confirmed"
+      | {{'confirm_account.confirmation_link_expired' | translate}}
+
+  section.modal-inner
+    p.c-steel ng-if="createdAccount.confirmed"
+      | {{'confirm_account.please_login' | translate}}
+    p.c-steel ng-if="!createdAccount.confirmed"
+      | {{confirmEmailExpiredMessage()}}
+
+  footer.modal-footer.bg-dust
+    .modal-button-group.row
+      .modal-button_item ng-if="!createdAccount.confirmed"
+        button.tertiary ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+          | {{'confirm_account.resend_email' | translate}}
+      .modal-button_item ng-if="createdAccount.confirmed"
+        button.button.primary.min-width ng-click="closeModal()"
+          | {{'t.ok' | translate}}
+
+  ng-include src="'account/templates/partials/_modal_close.html'"

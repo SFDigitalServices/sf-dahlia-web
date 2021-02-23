@@ -1,0 +1,14 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | This listing has other special lottery preferences
+    p.margin-bottom translate="t.optional"
+
+  .app-inner
+    .form-group
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
+      .checkbox-group role="group"
+        preference(application="application" title="{{preference.preferenceName}}" preference="{{preference.listingPreferenceID}}" custom-description="{{preference.description}}" margin-bottom="true" ng-repeat="preference in listing.customPreferences")
+
+
+  short-form-save-and-submit

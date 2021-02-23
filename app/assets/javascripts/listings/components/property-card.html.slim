@@ -1,0 +1,73 @@
+.property-card ng-class="{last: $last, first: $first}"
+  h2.property-card_title.text-center.hide-for-medium-up.skiptranslate
+    a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
+  p.property-card_address.text-center.hide-for-medium-up.skiptranslate
+    | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
+    br.show-for-small-only
+    | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
+  .property-card_figure-wrapper
+    figure.property-card_figure
+      a.property-card_overlay ui-sref="dahlia.listing({id: $ctrl.listing.Id})" tabindex="-1"
+        img.property-card_thumb alt="Listing Name:{{::$ctrl.listing.Name}}, Address:{{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing)}}" ng-src="{{::$ctrl.listing.imageURL}}" role="link"
+        span.badge-label.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="listings.reserved_community_building" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
+
+      figcaption.property-card_info.skiptranslate
+        h2.property-card_title.show-for-medium-up
+          a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
+        p.property-card_address.show-for-medium-up
+          | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
+          | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
+
+    / Matched & Not Matched Labels
+    span.status-label.label.label--flag.success ng-if="$ctrl.showMatches() && $ctrl.listingContainer.isOpenMatchListing($ctrl.listing)"
+      span.ui-icon.ui-static.ui-medium.i-white
+        svg
+          use xlink:href="#i-check"
+      | {{'label.matched' | translate}}
+    span.status-label.label.label--flag ng-if="$ctrl.showMatches() && $ctrl.isOpenNotMatchListing($ctrl.listing)"
+      | {{'label.not_a_match' | translate}}
+
+    / Application Deadline & Lottery Results Date Labels
+    span.application-label.label.label--flag.primary ng-if="::$ctrl.isOpenListing($ctrl.listing)"
+      span.ui-icon.ui-static.ui-medium.i-white
+        svg
+          use xlink:href="#i-clock"
+      span
+        | {{'t.application_deadline' | translate}}: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+    span.application-label.label.label--flag.alert ng-if="::$ctrl.isClosedListing($ctrl.listing)"
+      | {{'t.application_closed' | translate}}: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+    span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+      | {{'t.lottery_results_posted' | translate}}: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
+    span.application-label.label.label--flag ng-if="::$ctrl.isLotteryResultsListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+      | {{'t.lottery_results_posted' | translate}}: {{::$ctrl.listing.Lottery_Results_Date | dateSuffixOrShortDate}}
+
+  .property-card_content
+    .property-card_stats
+      h3.t-base.t-alt-sans.t-semi.margin-bottom
+        span translate="listings.available_units" ng-if="::!$ctrl.listing.hasWaitlist"
+        span translate="listings.open_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
+        span translate="listings.available_and_waitlist" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
+      p.property-card_subheader translate="listings.includes_priority_units" translate-value-priorities="{{::$ctrl.priorityTypeNames($ctrl.listing)}}" ng-if="::$ctrl.priorityTypes($ctrl.listing).length"
+
+      // -- Unit Summary Table(s)
+      / General
+      .scrollable-table-container
+        rental-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isRental($ctrl.listing)"
+        sale-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isSale($ctrl.listing)"
+
+      .property-card_action.small-only-text-center
+        button.button.round-icon.has-label data-event="gtm-favorite" ng-click="$ctrl.listingContainer.toggleFavoriteListing($ctrl.listing.Id)"
+          span.ui-icon
+            svg
+              use xlink:href="#i-like" ng-show="!$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
+              use xlink:href="#i-like-fill" ng-show="$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
+          span.inline translate="label.favorite"
+
+        button.button.round-icon.has-label.i-block data-event="gtm-share" ng-show="$ctrl.showSharing()" ui-sref="dahlia.share({id: $ctrl.listing.Id})"
+          span.ui-icon
+            svg
+              use xlink:href="#i-forward"
+              use style="display:none" xlink:href="#i-forward-fill"
+          span.inline translate="label.share"
+
+        a.button.ghost-white.right.expand-small.no-margin ui-sref="dahlia.listing({id: $ctrl.listing.Id})" translate="label.see_details"

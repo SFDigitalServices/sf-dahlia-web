@@ -1,0 +1,22 @@
+/ columns
+/   loop through each amiChart to get 30%, 50%, 70%
+/
+/ rows
+/   loop through each householdSize
+/   row
+/     show household_size
+/     loop through each amiChart to get $30k/yr, $35k/yr, $40k/yr
+
+.scrollable-table-container
+  table role="grid"
+    thead
+      tr
+        th scope="col" translate="t.household_size"
+        th scope="col" ng-repeat="amiChart in $ctrl.parent.AMICharts"
+          | {{::amiChart.percent}}% {{'t.ami' | translate}} {{'t.units' | translate}}
+    tbody
+      tr ng-repeat="householdSize in $ctrl.hhSizesToShowInMaxIncomeTable($ctrl.parent.AMICharts)" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdSize <= $ctrl.householdAMIChartCutoff()"
+        td scope="row"
+          | {{::householdSize}} <small>{{ ::$ctrl.occupancyLabel(householdSize) }}</small>
+        td ng-repeat="amiChart in $ctrl.parent.AMICharts" class="notranslate"
+          | {{ $ctrl.getMultiAmiIncomeString(amiChart, householdSize) }}
