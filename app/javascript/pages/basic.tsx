@@ -19,6 +19,7 @@ const Hello = (props: IndexProps) => {
 
   return(
     <Layout>
+      <a style={{height: '200px', width: '100%', fontSize:"30px"}} href="/angular">Click here to navigate to Angular page</a>
       <Head>
         <title>{t("nav.siteTitle")}</title>
       </Head>

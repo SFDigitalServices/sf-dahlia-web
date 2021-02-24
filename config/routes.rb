@@ -81,5 +81,6 @@ Rails.application.routes.draw do
   get '/translations/:locale.json', to: 'application#asset_redirect'
 
   # catch all to send all HTML requests to Angular (html5mode)
+  get '/angular', to: 'angular#index'
   get '*path', to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end
