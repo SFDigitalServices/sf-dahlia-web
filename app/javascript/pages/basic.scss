@@ -1,10 +1,73 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.logo {
-  @apply text-black;
-  @apply block;
-  @apply text-center;
-  @apply z-10;
-  @apply items-center;
-  @apply justify-center;
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,900,700");
+@import url("https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic");
+
+html {
+  @apply antialiased;
 }
+
+body {
+  @apply font-sans;
+  @apply bg-white;
+  @apply text-gray-900;
+}
+
+.-top {
+  top: -0.8rem;
+}
+
+main {
+}
+
+.site-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    > section {
+      flex: 1;
+    }
+  }
+}
+
+.site-content--wide-content {
+  .navbar,
+  .page-header__group {
+    @apply max-w-screen-xl;
+  }
+}
+
+@import "@bloom-housing/ui-components/src/global/mixins.scss";
+@import "@bloom-housing/ui-components/src/global/markdown.scss";
+// @import "@bloom-housing/ui-components/src/global/navbar.scss";
+@import "@bloom-housing/ui-components/src/global/text.scss";
+@import "@bloom-housing/ui-components/src/global/headers.scss";
+@import "@bloom-housing/ui-components/src/global/blocks.scss";
+@import "@bloom-housing/ui-components/src/global/accordion.scss";
+@import "@bloom-housing/ui-components/src/global/custom_counter.scss";
+@import "@bloom-housing/ui-components/src/global/forms.scss";
+@import "@bloom-housing/ui-components/src/global/lists.scss";
+@import "@bloom-housing/ui-components/src/global/tables.scss";
+@import "@bloom-housing/ui-components/src/global/homepage.scss";
+@import "@bloom-housing/ui-components/src/global/print.scss";
+// @import "@bloom-housing/ui-components/src/global/vendor/ag_grid.scss";
+// /* ***********/
+// /* Additional stylesheets are contained within individual component folders */
+// /* ***********/
+
+@import "tailwindcss/utilities";

@@ -26,6 +26,8 @@
 // })
 
 import WebpackerReact from 'webpacker-react'
+// import "@bloom-housing/ui-components/src/global/index.scss"
+import '../pages/basic.scss'
 
 import index from '../pages/basic'
 

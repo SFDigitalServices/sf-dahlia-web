@@ -57,7 +57,8 @@ html lang="en"
     / TODO: This is loading legacy dahlia css, without it, there is no styling on the react components at all,
     / which means that the sass loaders in our react app aren't working.
     / include toolkit.css and other CSS overrides
-    == stylesheet_link_tag "application", :media => 'all'
+    / == stylesheet_link_tag "application", :media => 'all'
+    == stylesheet_pack_tag 'react_application'
     == csrf_meta_tags
 
   body
