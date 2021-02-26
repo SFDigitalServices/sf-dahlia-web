@@ -13,6 +13,7 @@ import {
   LangItem,
 } from "@bloom-housing/ui-components"
 import SVG from "react-inlinesvg"
+import Head from 'next/head'
 
 const Layout = (props) => {
   // TODO: get these from auth provider
@@ -28,9 +29,9 @@ const Layout = (props) => {
   return (
     <div className="site-wrapper">
       <div className="site-content">
-        {/* <Head>
+        <Head>
           <title>{t("nav.siteTitle")}</title>
-        </Head> */}
+        </Head>
         <SiteHeader
           skip={t("nav.skip")}
           logoSrc="/images/logo_glyph.svg"
