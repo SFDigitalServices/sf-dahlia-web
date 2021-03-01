@@ -38,7 +38,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta property="og:type" content="website"
 
     javascript:
-      window.env = {showPreLotteryInfo: "#{ENV['SHOW_PRE_LOTTERY_INFO']}", researchFormUrl: "#{ENV['RESEARCH_FORM_URL']}", advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}"}
+      window.env = {researchFormUrl: "#{ENV['RESEARCH_FORM_URL']}", advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}", covidUpdate: "#{ENV['COVID_UPDATE']}"}
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
@@ -69,7 +69,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       .skiptranslate
         section(ui-view="alert")
         section(ui-view="translate")
-        section(ui-view="version")
+        - if ENV['SHOW_RESEARCH_BANNER'] == 'true'
+          section(ui-view="version")
         section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
         section#main-content.main-content(ui-view="container")

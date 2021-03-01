@@ -6,8 +6,6 @@ angular.module('dahlia.components')
   controller: ['ListingDataService', 'ListingLotteryService', '$window', (ListingDataService, ListingLotteryService, $window) ->
     ctrl = @
 
-    @showPreLotteryInfo = $window.env.showPreLotteryInfo == 'true'
-
     @loading = ListingLotteryService.loading
 
     @listingHasLotteryResults = ->
