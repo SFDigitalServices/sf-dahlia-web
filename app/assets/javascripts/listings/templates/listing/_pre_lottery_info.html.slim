@@ -9,7 +9,7 @@
   div.margin-top ng-if="$ctrl.parent.showCovidUpdate"
           p.t-sans.margin-bottom--half translate="listings.apply.covid_update"
           p.c-steel translate="listings.apply.covid_update_lotteries"
-  p.content-group_address.c-steel.skiptranslate ng-if="!$ctrl.parent.showCovidUpdate && $ctrl.parent.lotteryVenueAvailable()"
+  p.content-group_address.c-steel.skiptranslate ng-if="!$ctrl.parent.showCovidUpdate && $ctrl.parent.lotteryVenueAvailable($ctrl.parent.listing)"
     | {{ $ctrl.parent.listing.Lottery_Venue }}
     br
     | {{ $ctrl.parent.listing.Lottery_Street_Address }}
