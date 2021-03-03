@@ -1,6 +1,6 @@
 {
   "footer": {
-    "copyRight": "San Francisco © 2020 • All Rights Reserved",
+    "copyright": "San Francisco © 2020 • All Rights Reserved",
     "disclaimer": "Disclaimer",
     "getAssistance": "Get Assistance",
     "giveFeedback": "Give Feedback",
@@ -15,21 +15,39 @@
     "SFHousingUrl": "https://housing.sfgov.org"
   },
   "nav": {
-    "siteTitle": "San FranciscoHousing Portal",
+    "accountSettings": "Account Settings",
+    "listings": "Listings",
+    "myApplications": "My Applications",
+    "myDashboard": "Dashboard",
+    "siteTitle": "San Francisco Housing Portal",
+    "skip": "Skip",
     "getFeedback": "We'd love to get ",
     "yourFeedback": "your feedback!",
-    "bonusFeedback": ""
+    "bonusFeedback": "",
+    "signIn": "Sign In"
   },
   "pageTitle": {
-    "additionalResources": "Additional Housing Opportunities and Resources"
+    "additionalResources": "Additional Housing Opportunities and Resources",
+    "disclaimer": "Disclaimer",
+    "privacy": "Privacy"
   },
   "pageDescription": {
-    "additionalResources": "We encourage you to browse other affordable housing resources."
+    "additionalResources": "We encourage you to browse other affordable housing resources.",
+    "welcome": "Search and apply for affordable housing on %{regionName}'s Housing Portal"
   },
   "region": {
     "name": "San Francisco"
   },
   "listings": {
     "depositOrMonthsRent": ""
+  },
+  "config": {
+    "routePrefix": ""
+  },
+  "welcome": {
+    "seeMoreOpportunities": "See More Opportunities",
+    "seeRentalListings": "See Rental Listings",
+    "title": "Apply for affordable housing in",
+    "viewAdditionalHousing": "View Additional Housing"
   }
 }
