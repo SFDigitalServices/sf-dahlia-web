@@ -35,6 +35,7 @@ ssl.sh
 certs
 public/sitemap*
 public/robots*
+public/assets/
 
 # VS Code
 TAGS
