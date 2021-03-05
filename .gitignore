@@ -36,6 +36,8 @@ certs
 public/sitemap*
 public/robots*
 public/assets/
+public/packs
+public/packs-test
 
 # VS Code
 TAGS
@@ -43,8 +45,7 @@ TAGS
 # Byebug command history
 .byebug_history
 
-/public/packs
-/public/packs-test
+
 /node_modules
 /yarn-error.log
 yarn-debug.log*
