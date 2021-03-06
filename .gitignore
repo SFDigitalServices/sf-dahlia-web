@@ -45,7 +45,6 @@ TAGS
 # Byebug command history
 .byebug_history
 
-
 /node_modules
 /yarn-error.log
 yarn-debug.log*

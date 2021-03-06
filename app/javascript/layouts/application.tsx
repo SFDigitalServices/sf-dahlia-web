@@ -73,8 +73,6 @@ const Layout = (props) => {
 
       <SiteFooter>
         <FooterNav copyright={t("footer.copyright")}>
-          <LocalizedLink href="/privacy">{t("pageTitle.privacy")}</LocalizedLink>
-          <LocalizedLink href="/disclaimer">{t("pageTitle.disclaimer")}</LocalizedLink>
         </FooterNav>
         <FooterSection className="bg-black" small>
           <ExygyFooter />

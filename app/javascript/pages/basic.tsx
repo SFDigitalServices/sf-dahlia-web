@@ -1,6 +1,4 @@
 import React from 'react'
-// import ReactDOM from 'react-dom'
-// import PropTypes from 'prop-types'
 import Layout from "../layouts/application"
 import './basic.scss'
 import { MarkdownSection, t, MetaTags, SiteAlert } from '@bloom-housing/ui-components'
