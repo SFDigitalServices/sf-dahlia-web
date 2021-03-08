@@ -1,21 +1,20 @@
 import React from 'react'
-import Layout from "../layouts/application"
-import './basic.scss'
+import Layout from "../layouts/Layout"
 import { MarkdownSection, t, MetaTags, SiteAlert } from '@bloom-housing/ui-components'
 import { Listing } from "@bloom-housing/backend-core/types"
 import { LinkButton } from '@bloom-housing/ui-components'
 import { Hero } from '@bloom-housing/ui-components'
 import Head from 'next/head'
 
-export interface IndexProps {
+export interface WelcomePageProps {
   listings?: Listing[]
 }
 
-const Hello = (props: IndexProps) => {
+const WelcomePage = (props: WelcomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
 
-  return(
+  return (
     <Layout>
       <a style={{height: '200px', width: '100%', fontSize:"30px"}} href="/angular">Click here to navigate to Angular page</a>
       <Head>
@@ -54,4 +53,4 @@ const Hello = (props: IndexProps) => {
   )
 }
 
-export default Hello
+export default WelcomePage

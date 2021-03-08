@@ -71,6 +71,7 @@ const Layout = (props) => {
         <main id="main-content">{props.children}</main>
       </div>
 
+
       <SiteFooter>
         <FooterNav copyright={t("footer.copyright")}>
         </FooterNav>

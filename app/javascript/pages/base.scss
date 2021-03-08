@@ -20,9 +20,6 @@ body {
   top: -0.8rem;
 }
 
-main {
-}
-
 .site-wrapper {
   display: flex;
   min-height: 100vh;
@@ -99,10 +96,10 @@ $colors: (
 @import "@bloom-housing/ui-components/src/global/tables.scss";
 @import "@bloom-housing/ui-components/src/global/homepage.scss";
 @import "@bloom-housing/ui-components/src/global/print.scss";
+
 // /* ***********/
 // /* Additional stylesheets are contained within individual component folders */
 // /* ***********/
-
 
 // AG Grid
 @import "~ag-grid-community/src/styles/ag-grid.scss";
@@ -232,10 +229,6 @@ $colors: (
       @apply bg-white;
     }
   }
-}
-
-.data-pager__previous {
-
 }
 
 .data-pager__control-group {
