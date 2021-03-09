@@ -1,5 +1,5 @@
 {
-  "author": "Exygy",
+  "author": "San Francisco Digital Services",
   "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
   "license": "GPL-3.0",
   "dependencies": {
@@ -86,7 +86,7 @@
   "name": "sf-dahlia-web",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Exygy/sf-dahlia-web"
+    "url": "https://github.com/SFDigitalServices/sf-dahlia-web"
   },
   "version": "1.0.0"
 }

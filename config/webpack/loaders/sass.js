@@ -1,5 +1,3 @@
-
-
 const bloomTheme = require("../../../tailwind.config.js")
 const tailwindVars = require("@bloom-housing/ui-components/tailwind.tosass.js")(bloomTheme)
 

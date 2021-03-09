@@ -1,13 +1,13 @@
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
-import Hello from "../../pages/basic"
+import WelcomePage from "../../pages/WelcomePage"
 
 afterEach(cleanup)
 
-describe("<Hello>", () => {
+describe("<WelcomePage />", () => {
   it("shows right header text", () => {
     const { getByText } = render(
-      <Hello />
+      <WelcomePage />
     )
 
     expect(getByText("San Francisco Housing Portal")).not.toBeNull()
