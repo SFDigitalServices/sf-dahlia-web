@@ -230,6 +230,6 @@
         if toState.name == 'dahlia.listing' && error.status == 404
           return $state.go('dahlia.listings-for-rent')
         else
-          return $state.go('dahlia.welcome')
+          return $window.location.href = '/'
 
 ]

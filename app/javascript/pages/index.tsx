@@ -1,7 +1,7 @@
 import React from 'react'
 
-import WelcomePage from './WelcomePage'
+import HomePage from './WelcomePage'
 
-const Index = (props) => <WelcomePage {...props} />
+const Index = (props) => <HomePage {...props} />
 
 export default Index

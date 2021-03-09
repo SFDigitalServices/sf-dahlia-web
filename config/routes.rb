@@ -80,7 +80,9 @@ Rails.application.routes.draw do
   # Redirect translations file requests to new location
   get '/translations/:locale.json', to: 'application#asset_redirect'
 
-  # catch all to send all HTML requests to Angular (html5mode)
-  get '/angular', to: 'angular#index'
-  get '*path', to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
+  # React routes each use their own controllers (currently there's just one for the homepage)
+  get '/', to: 'home#index'
+
+  # fallback to Angular-only controller for all un-migrated pages.
+  get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

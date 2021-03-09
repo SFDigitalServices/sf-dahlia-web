@@ -3,7 +3,7 @@
 ############################################################################################
 
 ListingDataService = (
-  $http, $localStorage, $q, $state, $translate, $timeout,
+  $http, $localStorage, $q, $state, $translate, $timeout, $window,
   ExternalTranslateService, ListingConstantsService, ListingEligibilityService, ListingIdentityService,
   ListingLotteryService, ListingPreferenceService, ListingUnitService, SharedService, IncomeCalculatorService) ->
   Service = {}
@@ -253,7 +253,8 @@ ListingDataService = (
       deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
-        return $state.go('dahlia.welcome')
+        $window.location.href = "/"
+        return ""
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
@@ -390,7 +391,7 @@ ListingDataService = (
 ############################################################################################
 
 ListingDataService.$inject = [
-  '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
+  '$http', '$localStorage', '$q', '$state', '$translate', '$timeout', '$window',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingEligibilityService', 'ListingIdentityService',
   'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService', 'SharedService', 'IncomeCalculatorService'
 ]
