@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
+  cypress: cypress-io/cypress@1.26.0
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -13,6 +14,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
+    - image: "cypress/base:12.18.2"
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:
@@ -35,12 +37,9 @@ aliases:
       at: ~/web
   - &restore_npm_cache
     restore_cache:
-        name: Restore NPM Cache
+        name: Restore Yarn Cache
         keys:
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-main
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-
+          key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
   - &restore_bundler_cache
     restore_cache:
         name: Restore Bundler Cache
@@ -66,7 +65,7 @@ commands:
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
             echo 'nvm install v6.11.1' >> $BASH_ENV
             echo 'nvm alias default v6.11.1' >> $BASH_ENV
-      - run: npm install
+      - run: yarn install
   setup-webdriver:
     description: "Setup webdriver for e2e tests"
     steps:
@@ -116,7 +115,7 @@ commands:
     steps:
       - setup
       - start-server
-      - run: npm run protractor -- --specs '<< parameters.path >>'
+      - run: yarn run protractor -- --specs '<< parameters.path >>'
 
 jobs:
   build:
@@ -126,8 +125,8 @@ jobs:
       - prepare_workspace
       - install-node
       - save_cache:
-          name: Save Npm Package Cache
-          key: web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          name: Save Yarn Package Cache
+          key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - node_modules/
       - upgrade-bundler
