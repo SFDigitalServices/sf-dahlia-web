@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true,
-    // "baseUrl": "../../../node_modules",
-    "target": "es5",
-    "lib": ["es5", "dom"],
+    "baseUrl": "http://localhost:3000/",
+    "noEmit": true,
+    // be explicit about types included
+    // to avoid clashing with Jest types
     "types": ["cypress"]
   },
   "include": ["**/*.ts"]
