@@ -30,6 +30,7 @@ prod_and_release_jobs: &prod_and_release_jobs
     branches:
       only:
         - /^release.*$/
+        - /^hotfix.*$/
         - production
 aliases:
   - &attach_workspace
