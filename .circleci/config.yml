@@ -38,8 +38,7 @@ aliases:
   - &restore_npm_cache
     restore_cache:
         name: Restore Yarn Cache
-        keys:
-          key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
+        key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
   - &restore_bundler_cache
     restore_cache:
         name: Restore Bundler Cache
