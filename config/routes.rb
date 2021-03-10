@@ -65,9 +65,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # non-dahlia page
-  get '/mohcd-plus-housing' => 'home#plus_housing'
-
   # sitemap generator
   get 'sitemap.xml' => 'sitemaps#generate'
 

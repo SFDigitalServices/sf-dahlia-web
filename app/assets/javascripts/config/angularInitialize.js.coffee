@@ -231,5 +231,4 @@
           return $state.go('dahlia.listings-for-rent')
         else
           return $window.location.href = '/'
-
 ]

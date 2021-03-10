@@ -36,7 +36,7 @@ aliases:
   - &attach_workspace
     attach_workspace:
       at: ~/web
-  - &restore_npm_cache
+  - &restore_yarn_cache
     restore_cache:
         name: Restore Yarn Cache
         key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
@@ -51,7 +51,7 @@ commands:
     description: "Attach workspace and restore cache"
     steps:
       - *attach_workspace
-      - *restore_npm_cache
+      - *restore_yarn_cache
       - *restore_bundler_cache
   install-node:
     description: "install node"
