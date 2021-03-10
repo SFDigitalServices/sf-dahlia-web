@@ -72,7 +72,7 @@
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
     "test": "jest",
-    "test:e2e": "cypress open"
+    "test:e2e": "cypress run"
   },
   "cacheDirectories": [
     "node_modules",
