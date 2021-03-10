@@ -170,6 +170,13 @@ jobs:
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
       - run: bundle exec rake spec
+      - run: yarn test
+  e2e-react:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: yarn test:e2e
   e2e:
     <<: *defaults
     parallelism: 4
@@ -191,6 +198,8 @@ workflows:
       - unit:
           <<: *non_production_jobs
       - e2e:
+          <<: *non_production_jobs
+      - e2e-react:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
