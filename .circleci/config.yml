@@ -135,6 +135,7 @@ jobs:
           key: webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
+            - /home/circleci/.cache/Cypress
       - upgrade-bundler
       - run:
           name: Bundle install
