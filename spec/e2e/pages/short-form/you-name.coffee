@@ -2,6 +2,7 @@ AngularPage = require('../angular-page').AngularPage
 
 class Name extends AngularPage
   constructor: ->
+    super()
     @firstName = element(By.model('applicant.firstName'))
     @middleName = element(By.model('applicant.middleName'))
     @lastName = element(By.model('applicant.lastName'))

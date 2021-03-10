@@ -2,6 +2,7 @@ AngularPage = require('../angular-page').AngularPage
 
 class HouseholdMemberForm extends AngularPage
   constructor: ->
+    super()
     @firstName = element(By.model('householdMember.firstName'))
     @lastName = element(By.model('householdMember.lastName'))
     @dobMonth = element(By.model('householdMember.dob_month'))

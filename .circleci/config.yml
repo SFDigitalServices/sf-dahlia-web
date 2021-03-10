@@ -114,7 +114,7 @@ commands:
     steps:
       - setup
       - start-server
-      - run: yarn run protractor -- --specs '<< parameters.path >>'
+      - run: yarn run protractor spec/e2e/conf.js --specs '<< parameters.path >>'
 
 jobs:
   build:

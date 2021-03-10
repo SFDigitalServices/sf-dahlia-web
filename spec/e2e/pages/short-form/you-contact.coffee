@@ -2,6 +2,7 @@ AngularPage = require('../angular-page').AngularPage
 
 class Contact extends AngularPage
   constructor: ->
+    super()
     @phone = element(By.model('applicant.phone'))
     @phoneType = element(By.model('applicant.phoneType'))
     @addlPhone = element(By.model('applicant.additionalPhone'))
