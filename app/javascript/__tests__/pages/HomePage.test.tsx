@@ -6,9 +6,7 @@ afterEach(cleanup)
 
 describe("<HomePage />", () => {
   it("shows right header text", () => {
-    const { getByText } = render(
-      <HomePage />
-    )
+    const { getByText } = render(<HomePage />)
 
     expect(getByText("San Francisco Housing Portal")).not.toBeNull()
   })

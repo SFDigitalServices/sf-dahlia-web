@@ -8,17 +8,17 @@ import {
   ExygyFooter,
   UserNav,
   t,
-  UserContext,
   setSiteAlertMessage,
-  LangItem,
 } from "@bloom-housing/ui-components"
 import SVG from "react-inlinesvg"
-import Head from 'next/head'
+import Head from "next/head"
 
 const Layout = (props) => {
   // TODO: get these from auth provider
   const signedIn = false
-  const signOut = () => {}
+  const signOut = () => {
+    console.log("signOut")
+  }
 
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({
@@ -50,7 +50,7 @@ const Layout = (props) => {
           )}
           <UserNav
             signedIn={signedIn}
-            signOut={async () => {
+            signOut={() => {
               setSiteAlertMessage(t(`authentication.signOut.success`), "notice")
               // await router.push("/sign-in")
               signOut()
@@ -71,10 +71,8 @@ const Layout = (props) => {
         <main id="main-content">{props.children}</main>
       </div>
 
-
       <SiteFooter>
-        <FooterNav copyright={t("footer.copyright")}>
-        </FooterNav>
+        <FooterNav copyright={t("footer.copyright")}></FooterNav>
         <FooterSection className="bg-black" small>
           <ExygyFooter />
         </FooterSection>

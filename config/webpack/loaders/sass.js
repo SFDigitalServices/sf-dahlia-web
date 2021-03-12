@@ -14,10 +14,10 @@ module.exports = {
     "postcss-loader",
     // Compiles Sass to CSS
     {
-      loader: 'sass-loader',
+      loader: "sass-loader",
       options: {
         additionalData: tailwindVars,
-       }
+      },
     },
   ],
-};
+}
