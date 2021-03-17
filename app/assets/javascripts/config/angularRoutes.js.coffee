@@ -48,13 +48,6 @@
         'container@':
           templateUrl: 'pages/templates/welcome.html'
     })
-    # Home page
-    .state('dahlia.angular', {
-      url: '/angular'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome.html'
-    })
     .state('dahlia.housing-counselors', {
       url: '/housing-counselors'
       views:
