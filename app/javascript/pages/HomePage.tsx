@@ -1,16 +1,15 @@
-import React from "react"
-import Layout from "../layouts/Layout"
+import { Listing } from "@bloom-housing/backend-core/types"
 import {
   MarkdownSection,
   t,
   MetaTags,
   SiteAlert,
   LinkButton,
-  Hero,
+  Hero
 } from "@bloom-housing/ui-components"
-import { Listing } from "@bloom-housing/backend-core/types"
-
 import Head from "next/head"
+import React from "react"
+import Layout from "../layouts/Layout"
 
 export interface HomePageProps {
   listings?: Listing[]

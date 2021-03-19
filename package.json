@@ -34,6 +34,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
+    "@trivago/prettier-plugin-sort-imports": "^2.0.1",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
@@ -51,8 +52,12 @@
     "enzyme-to-json": "^3.6.1",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.1.2",
     "grunt": "^1.0.4",
@@ -101,9 +106,11 @@
   },
   "version": "1.0.0",
   "prettier": {
-    "singleQuote": false,
     "printWidth": 100,
-    "semi": false
+    "singleQuote": false,
+    "semi": false,
+    "trailingComma": "none",
+    "importOrder": ["^react", "^[./]" ]
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --max-warnings 0"

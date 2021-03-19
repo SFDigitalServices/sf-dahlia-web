@@ -7,105 +7,105 @@ module.exports = function (grunt) {
 
     // Delete the old toolkit.css
     clean: {
-      css: ["<%= applicationAssetsPath %>/stylesheets/toolkit.css"],
+      css: ["<%= applicationAssetsPath %>/stylesheets/toolkit.css"]
     },
 
-    //Copy the latest compiled toolkit.css file from the pattern library into our app
+    // Copy the latest compiled toolkit.css file from the pattern library into our app
     copy: {
       main: {
         files: [
           {
             src: "<%= patternLibraryPath %>/dist/toolkit/styles/toolkit.css",
-            dest: "<%= applicationAssetsPath %>/stylesheets/toolkit.scss",
-          },
-        ],
+            dest: "<%= applicationAssetsPath %>/stylesheets/toolkit.scss"
+          }
+        ]
       },
       removeLanguageKey: {
         files: [
           {
             src: "app/assets/json/translations/locale-en.json",
-            dest: "app/assets/json/translations/locale-en.json",
+            dest: "app/assets/json/translations/locale-en.json"
           },
           {
             src: "app/assets/json/translations/locale-es.json",
-            dest: "app/assets/json/translations/locale-es.json",
+            dest: "app/assets/json/translations/locale-es.json"
           },
           {
             src: "app/assets/json/translations/locale-tl.json",
-            dest: "app/assets/json/translations/locale-tl.json",
+            dest: "app/assets/json/translations/locale-tl.json"
           },
           {
             src: "app/assets/json/translations/locale-zh.json",
-            dest: "app/assets/json/translations/locale-zh.json",
-          },
+            dest: "app/assets/json/translations/locale-zh.json"
+          }
         ],
         options: {
           // the locale files are prefixed with a key indicating the language but we remove this prefixed key
           // via the process function below so that it can run through i18nextract translation process
           // e.g. {"es": {key: value}} just returns { key: value }
           process: function (content, srcpath) {
-            let locale = srcpath.split("-")[1].split(".")[0]
+            const locale = srcpath.split("-")[1].split(".")[0]
             return JSON.stringify(JSON.parse(content)[locale], null, 4)
-          },
-        },
+          }
+        }
       },
       addBackLanguageKey: {
         files: [
           {
             src: "app/assets/json/translations/locale-en.json",
-            dest: "app/assets/json/translations/locale-en.json",
+            dest: "app/assets/json/translations/locale-en.json"
           },
           {
             src: "app/assets/json/translations/locale-es.json",
-            dest: "app/assets/json/translations/locale-es.json",
+            dest: "app/assets/json/translations/locale-es.json"
           },
           {
             src: "app/assets/json/translations/locale-tl.json",
-            dest: "app/assets/json/translations/locale-tl.json",
+            dest: "app/assets/json/translations/locale-tl.json"
           },
           {
             src: "app/assets/json/translations/locale-zh.json",
-            dest: "app/assets/json/translations/locale-zh.json",
-          },
+            dest: "app/assets/json/translations/locale-zh.json"
+          }
         ],
         options: {
           // Add back the prefixed key indicating the language
           // e.g. { key: value } returns {"es": { key: value }}
           process: function (content, srcpath) {
-            let locale = srcpath.split("-")[1].split(".")[0]
-            let body = {}
+            const locale = srcpath.split("-")[1].split(".")[0]
+            const body = {}
             body[locale] = JSON.parse(content)
             return JSON.stringify(body, null, 4)
-          },
-        },
-      },
+          }
+        }
+      }
     },
 
-    //Make any string replacements that are needed when transfering assets to app.
+    // Make any string replacements that are needed when transfering assets to app.
     replace: {
       dist: {
         options: {
           patterns: [
             {
               match: "http://fonts.googleapis.com",
-              replacement: "//fonts.googleapis.com",
+              replacement: "//fonts.googleapis.com"
             },
             {
               match: /\.\.\/images\/([a-zA-Z0-9\-_@]*\.(png|jpg|svg))/g,
-              replacement: "asset-path('$1')",
-            },
+              replacement: "asset-path('$1')"
+            }
           ],
-          usePrefix: false,
+          usePrefix: false
         },
         files: [
           {
             expand: true,
             flatten: true,
             src: ["<%= applicationAssetsPath %>/stylesheets/toolkit.scss"],
-            dest: "<%= applicationAssetsPath %>/stylesheets/",
-          },
-        ],
-      },
+            dest: "<%= applicationAssetsPath %>/stylesheets/"
+          }
+        ]
+      }
     },
 
     i18nextract: {
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
           "app/views/devise/mailer/*.html.slim",
           "app/views/emailer/*.html.slim",
           "app/views/layouts/email.html.slim",
-          "app/mailers/**/*.rb",
+          "app/mailers/**/*.rb"
         ],
         customRegex: [
           "{{\\s*(?:::)?'((?:\\\\.|[^'\\\\])*)'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?}}",
@@ -135,31 +135,31 @@ module.exports = function (grunt) {
           "\\(t\\('([A-Z.-_]*)'",
           "#{t\\('([A-Z.-_]*)'",
           "I18n.translate\\(\n?[ ]*'([A-Z.-_]*)'", // emailer.rb usages
-          "flagForI18n.'([A-Z0-9.-_]*)'", // search for flagForI18n([translation string]
+          "flagForI18n.'([A-Z0-9.-_]*)'" // search for flagForI18n([translation string]
         ],
         namespace: true,
         lang: ["locale-en", "locale-es", "locale-tl", "locale-zh"],
-        dest: "app/assets/json/translations",
-      },
+        dest: "app/assets/json/translations"
+      }
     },
     json_remove_fields: {
       locale_es: {
-        src: "app/assets/json/translations/locale-es.json",
+        src: "app/assets/json/translations/locale-es.json"
       },
       locale_tl: {
-        src: "app/assets/json/translations/locale-tl.json",
+        src: "app/assets/json/translations/locale-tl.json"
       },
       locale_zh: {
-        src: "app/assets/json/translations/locale-zh.json",
-      },
+        src: "app/assets/json/translations/locale-zh.json"
+      }
     },
     sortJSON: {
       src: [
         "app/assets/json/translations/locale-en.json",
         "app/assets/json/translations/locale-es.json",
         "app/assets/json/translations/locale-tl.json",
-        "app/assets/json/translations/locale-zh.json",
-      ],
+        "app/assets/json/translations/locale-zh.json"
+      ]
       // options: {
       //   spacing: 2
       // }
@@ -169,27 +169,27 @@ module.exports = function (grunt) {
         cmd: function () {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
-          var token = grunt.option("phraseAccessToken")
+          const token = grunt.option("phraseAccessToken")
           if (token) {
             return `phrase pull --access_token ${token}`
           } else {
             return "phrase pull"
           }
-        },
+        }
       },
       phrasePush: {
         cmd: function () {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
-          var token = grunt.option("phraseAccessToken")
+          const token = grunt.option("phraseAccessToken")
           if (token) {
             return `phrase push --access_token ${token}`
           } else {
             return "phrase push"
           }
-        },
-      },
-    },
+        }
+      }
+    }
   })
 
   // load tasks
@@ -212,14 +212,14 @@ module.exports = function (grunt) {
     "copy:addBackLanguageKey",
     "json_remove_fields",
     "json_remove_fields",
-    "sortJSON",
+    "sortJSON"
   ])
   grunt.registerTask("phrasePush", [
     "copy:removeLanguageKey",
     "exec:phrasePush",
     "copy:addBackLanguageKey",
     "json_remove_fields",
-    "sortJSON",
+    "sortJSON"
   ])
 
   grunt.registerTask("phrasePull", [
@@ -227,7 +227,7 @@ module.exports = function (grunt) {
     "exec:phrasePull",
     "copy:addBackLanguageKey",
     "json_remove_fields",
-    "sortJSON",
+    "sortJSON"
   ])
 
   grunt.registerTask("deploy", ["clean", "copy", "replace"])

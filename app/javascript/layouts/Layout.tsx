@@ -1,17 +1,17 @@
-import React from "react"
 import {
-  LocalizedLink,
-  SiteHeader,
-  SiteFooter,
+  ExygyFooter,
   FooterNav,
   FooterSection,
-  ExygyFooter,
-  UserNav,
-  t,
+  LocalizedLink,
   setSiteAlertMessage,
+  SiteFooter,
+  SiteHeader,
+  t,
+  UserNav
 } from "@bloom-housing/ui-components"
-import SVG from "react-inlinesvg"
 import Head from "next/head"
+import React from "react"
+import SVG from "react-inlinesvg"
 
 const Layout = (props) => {
   // TODO: get these from auth provider
@@ -23,7 +23,7 @@ const Layout = (props) => {
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({
       prefix: item === "en" ? "" : item,
-      label: t(`languages.${item}`),
+      label: t(`languages.${item}`)
     })) || []
 
   return (
@@ -72,7 +72,7 @@ const Layout = (props) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.copyright")}></FooterNav>
+        <FooterNav copyright={t("footer.copyright")} />
         <FooterSection className="bg-black" small>
           <ExygyFooter />
         </FooterSection>
