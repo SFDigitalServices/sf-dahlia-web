@@ -1,10 +1,10 @@
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
-import HomePage from "../../pages/WelcomePage"
+import HomePage from "../../pages/HomePage"
 
 afterEach(cleanup)
 
-describe("<WelcomePage />", () => {
+describe("<HomePage />", () => {
   it("shows right header text", () => {
     const { getByText } = render(
       <HomePage />

@@ -1,26 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "allowSyntheticDefaultImports": true,
-//     "declaration": false,
-//     "emitDecoratorMetadata": true,
-//     "experimentalDecorators": true,
-//     "lib": ["es6", "dom"],
-//     "module": "commonjs",
-//     "moduleResolution": "node",
-//     "sourceMap": true,
-//     "strict": false,
-//     "target"es2017"17"s5",
-//     "jsx": "react"
-//   },
-//   "exclude": [
-//     "**/*.spec.ts",
-//     "node_modules",
-//     "vendor",
-//     "public"
-//   ],
-//   "compileOnSave": false
-// }
-
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,

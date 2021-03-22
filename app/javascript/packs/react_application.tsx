@@ -1,7 +1,7 @@
 import WebpackerReact from 'webpacker-react'
 import '../pages/base.scss'
 
-import index from '../pages/index'
+import HomePage from '../pages/HomePage'
 
 import * as translation from "@bloom-housing/ui-components/src/locales/general.json"
 import * as customTranslations from "../page_content/locale_overrides/general.json"
@@ -12,4 +12,7 @@ if (customTranslations) {
   addTranslation(customTranslations)
 }
 
-WebpackerReact.setup({ index })
+WebpackerReact.setup({
+  // Add additional components here for each react component entrypoint
+  HomePage,
+})
