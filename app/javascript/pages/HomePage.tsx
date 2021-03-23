@@ -1,3 +1,5 @@
+import React from "react"
+
 import { Listing } from "@bloom-housing/backend-core/types"
 import {
   MarkdownSection,
@@ -5,10 +7,10 @@ import {
   MetaTags,
   SiteAlert,
   LinkButton,
-  Hero
+  Hero,
 } from "@bloom-housing/ui-components"
 import Head from "next/head"
-import React from "react"
+
 import Layout from "../layouts/Layout"
 
 export interface HomePageProps {

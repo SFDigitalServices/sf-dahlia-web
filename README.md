@@ -239,7 +239,7 @@ You can turn on format-on-save on a per-language basis by scoping the setting:
 }
 ```
 
-Recomended extensions:
+Recommended extensions:
 
 - Auto Import
 - Auto Import - ES6, TS, JSX, TSX

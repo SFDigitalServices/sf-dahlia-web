@@ -34,7 +34,6 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
-    "@trivago/prettier-plugin-sort-imports": "^2.0.1",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
@@ -109,8 +108,7 @@
     "printWidth": 100,
     "singleQuote": false,
     "semi": false,
-    "trailingComma": "none",
-    "importOrder": ["^react", "^[./]" ]
+    "trailingComma": "es5"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --max-warnings 0"

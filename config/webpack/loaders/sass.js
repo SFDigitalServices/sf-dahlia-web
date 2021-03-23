@@ -18,8 +18,8 @@ module.exports = {
     {
       loader: "sass-loader",
       options: {
-        additionalData: tailwindVars
-      }
-    }
-  ]
+        additionalData: tailwindVars,
+      },
+    },
+  ],
 }

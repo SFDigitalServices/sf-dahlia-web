@@ -1,3 +1,5 @@
+import React from "react"
+
 import {
   ExygyFooter,
   FooterNav,
@@ -7,13 +9,16 @@ import {
   SiteFooter,
   SiteHeader,
   t,
-  UserNav
+  UserNav,
 } from "@bloom-housing/ui-components"
 import Head from "next/head"
-import React from "react"
 import SVG from "react-inlinesvg"
 
-const Layout = (props) => {
+export interface LayoutProps {
+  children: React.ReactNode
+}
+
+const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
   const signOut = () => {
@@ -23,7 +28,7 @@ const Layout = (props) => {
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({
       prefix: item === "en" ? "" : item,
-      label: t(`languages.${item}`)
+      label: t(`languages.${item}`),
     })) || []
 
   return (
