@@ -62,5 +62,6 @@ PreCommit:
 
   EsLint:
     required_executable: "yarn"
+    description: "Checking for linting errors"
     enabled: true
     command: ["yarn", "eslint", "'**/*.ts'", "'**/*.tsx'", "'**/*.js'"]
