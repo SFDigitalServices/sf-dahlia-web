@@ -15,7 +15,7 @@ section.content-wrap
             use xlink:href="#i-clock"
         span translate="listings.applications_closed" translate-value-date="{{::$ctrl.parent.listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
 
-  span ng-if="$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing) && !$ctrl.lotteryComplete()"
+  span ng-if="$ctrl.parent.lotteryDateAvailable($ctrl.parent.listing) && !$ctrl.lotteryComplete()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
   .content-group ng-if='!$ctrl.lotteryComplete()'
