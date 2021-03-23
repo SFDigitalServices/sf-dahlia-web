@@ -2,7 +2,7 @@ const bloomTheme = require("../../../tailwind.config.js")
 const tailwindVars = require("@bloom-housing/ui-components/tailwind.tosass.js")(bloomTheme)
 
 module.exports = {
-  test: /\.s[ac]ss$/i,
+  test: /\.(scss|sass)$/,
   use: [
     // Creates `style` nodes from JS strings
     "style-loader",
