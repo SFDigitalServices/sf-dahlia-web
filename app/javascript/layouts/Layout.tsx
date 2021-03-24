@@ -76,7 +76,9 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.copyright")} />
+        <FooterNav copyright={t("footer.copyright")}>
+          <div />
+        </FooterNav>
         <FooterSection className="bg-black" small>
           <ExygyFooter />
         </FooterSection>
