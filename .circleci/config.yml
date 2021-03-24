@@ -163,22 +163,32 @@ jobs:
           root: .
           paths:
             - .
-  unit:
+  unit-react:
+    <<: *defaults
+    steps:
+      - setup
+      - run: yarn test
+  unit-rspec:
+    <<: *defaults
+    steps:
+      - setup
+      - run: RAILS_ENV=test bundle exec rails db:create
+      - run: RAILS_ENV=test bundle exec rails db:test:prepare
+      - run: bundle exec rake spec
+  unit-angular:
     <<: *defaults
     steps:
       - setup
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
-      - run: bundle exec rake spec
-      - run: yarn test
-  e2e-react:
+  e2e:
     <<: *defaults
     steps:
       - setup
       - start-server
       - run: yarn test:e2e
-  e2e:
+  e2e-legacy:
     <<: *defaults
     parallelism: 4
     steps:
@@ -196,12 +206,19 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - unit:
+      - unit-react:
+          <<: *non_production_jobs
+      - unit-rspec:
+          <<: *non_production_jobs
+      - unit-angular:
           <<: *non_production_jobs
       - e2e:
           <<: *non_production_jobs
-      - e2e-react:
+      - e2e-legacy:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
+      - e2e-legacy:
+          <<: *prod_and_release_jobs
+          name: e2e-production-legacy
