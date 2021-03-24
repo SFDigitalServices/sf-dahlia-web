@@ -15,6 +15,7 @@
     "resolveJsonModule": true,
     "allowJs": true
   },
+  "include": ["app/javascript/**/*.(ts|tsx)"],
   "exclude": ["app/javascript/**/*.test.tsx", "node_modules", "vendor", "public"],
   "compileOnSave": false
 }

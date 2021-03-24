@@ -25,7 +25,7 @@ module.exports = {
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
   transform: {
-    "^.+\\.[t|j]sx?$": "ts-jest",
+    "^.+\\.(ts|tsx)$": "ts-jest",
   },
   setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>/.jest/setup-tests.ts"],
