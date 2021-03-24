@@ -6,5 +6,6 @@
     // to avoid clashing with Jest types
     "types": ["cypress"]
   },
+  "exclude": ["app/javascript/**/*.test.tsx"],
   "include": ["**/*.ts"]
 }
