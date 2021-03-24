@@ -227,24 +227,9 @@ Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a gro
 
 ### VS Code Setup
 
-To take full advantage of javascript/ typescript linting you can make VS Code format code on save. First install `Prettier - Code formatter` extension.
-You can turn on format-on-save on a per-language basis by scoping the setting:
+Be sure to install all recommended extensions (under [.vscode/extensions](.vscode/extensions)).
 
-```
-// Set the default
-"editor.formatOnSave": false,
-// Enable per-language
-"[javascript]": {
-    "editor.formatOnSave": true
-}
-```
-
-Recommended extensions:
-
-- Auto Import
-- Auto Import - ES6, TS, JSX, TSX
-- ESLint
-- Prettier - Code formatter
+Also double check that your user settings aren't overriding the [workspace editor settings](.vscode/settings).
 
 ### Credits
 

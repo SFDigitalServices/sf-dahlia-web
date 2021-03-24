@@ -1,0 +1,13 @@
+{
+  "javascript.validate.enable": true,
+  "editor.codeActionsOnSave": {
+      // For ESLint
+      "source.fixAll.eslint": true,
+  },
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.packageManager": "yarn",
+  "autoimport.sourceRoot": "./app/javascript",
+  "autoimport.semicolon": false,
+  "autoimport.absolute": true,
+}
