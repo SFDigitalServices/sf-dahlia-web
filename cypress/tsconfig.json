@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "http://localhost:3000/",
     "noEmit": true,
     // be explicit about types included
     // to avoid clashing with Jest types
