@@ -1,5 +1,5 @@
-describe("Navigating around the site", () => {
-  it("Loads the homepage directly", () => {
+describe("Homepage integration tests", () => {
+  it("Loads the homepage", () => {
     cy.visit("/")
 
     // Check that the homepage banner text is present on the page
