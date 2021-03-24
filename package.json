@@ -87,7 +87,7 @@
     "protractor": "protractor ./spec/e2e/conf.js",
     "test": "jest",
     "test:e2e": "cypress run",
-    "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'"
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}'"
   },
   "cacheDirectories": [
     "node_modules",
@@ -111,6 +111,6 @@
     "trailingComma": "es5"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --max-warnings 0"
+    "*.{js,jsx,ts,tsx}": "eslint --max-warnings 0"
   }
 }

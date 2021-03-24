@@ -61,7 +61,12 @@ PreCommit:
     required_executable: "./bin/overcommit-pre-commit"
 
   EsLint:
-    required_executable: "yarn"
-    description: "Checking for linting errors"
+    command: ["yarn"]
+    flags: ["eslint", "--quiet", "--format=compact"]
+    description: "Ensure eslint is used to lint JS"
     enabled: true
-    command: ["yarn", "eslint", "'**/*.ts'", "'**/*.tsx'", "'**/*.js'"]
+    include:
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"

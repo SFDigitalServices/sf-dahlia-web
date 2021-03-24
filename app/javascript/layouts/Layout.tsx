@@ -17,7 +17,6 @@ import SVG from "react-inlinesvg"
 export interface LayoutProps {
   children: React.ReactNode
 }
-
 const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
