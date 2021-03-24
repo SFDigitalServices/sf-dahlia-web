@@ -4,8 +4,7 @@ import WebpackerReact from "webpacker-react"
 
 import * as customTranslations from "../page_content/locale_overrides/general.json"
 import "../pages/base.scss"
-
-import HomePage from '../pages/HomePage'
+import HomePage from "../pages/HomePage"
 
 addTranslation(translation)
 if (customTranslations) {

@@ -63,7 +63,7 @@ PreCommit:
   EsLint:
     command: ["yarn"]
     flags: ["eslint", "--quiet", "--format=compact"]
-    description: "Ensure eslint is used to lint JS"
+    description: "Linting React with Eslint"
     enabled: true
     include:
       - "**/*.ts"
