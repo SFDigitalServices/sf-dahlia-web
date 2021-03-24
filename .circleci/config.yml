@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
-  cypress: cypress-io/cypress@1.26.0
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -14,7 +13,6 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
-    - image: "cypress/base:12.18.2"
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:
