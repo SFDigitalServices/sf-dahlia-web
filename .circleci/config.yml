@@ -163,6 +163,11 @@ jobs:
           root: .
           paths:
             - .
+  lint:
+    <<: *defaults
+    steps:
+      - setup
+      - run: yarn lint
   unit-react:
     <<: *defaults
     steps:
@@ -206,6 +211,8 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - lint:
+          <<: *non_production_jobs
       - unit-react:
           <<: *non_production_jobs
       - unit-rspec:
