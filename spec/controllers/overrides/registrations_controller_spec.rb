@@ -44,20 +44,6 @@ describe Overrides::RegistrationsController do
       expect(assigns(:resource).salesforce_contact_id)
         .to eq('0036C000001sI5oQAE')
     end
-
-    it 'sends one confirmation email on create' do
-      allow(Force::AccountService)
-        .to receive(:create_or_update)
-        .and_return(salesforce_response)
-
-      message_delivery = instance_double(ActionMailer::MessageDelivery)
-      expect(Emailer)
-        .to receive(:confirmation_instructions)
-        .and_return(message_delivery)
-      allow(message_delivery).to receive(:deliver_later)
-
-      post :create, params: valid_user_params
-    end
   end
 
   describe '#update' do
