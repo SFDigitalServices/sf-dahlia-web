@@ -37,13 +37,19 @@ aliases:
   - &restore_yarn_cache
     restore_cache:
         name: Restore Yarn Cache
-        key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
+        keys:
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
   - &restore_bundler_cache
     restore_cache:
         name: Restore Bundler Cache
         keys:
-          - web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
-          - web-{{ .Environment.CACHE_VERSION }}-dependencies-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
 commands:
   prepare_workspace:
     description: "Attach workspace and restore cache"
@@ -124,7 +130,7 @@ jobs:
       - install-node
       - save_cache:
           name: Save Yarn Package Cache
-          key: build-cache-{{ .Environment.CIRCLE_SHA1 }}
+          key: webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
       - upgrade-bundler
@@ -136,7 +142,7 @@ jobs:
             bundle install --deployment --path vendor/bundle
       - save_cache:
           name: Save Bundle cache
-          key: web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
+          key: webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
