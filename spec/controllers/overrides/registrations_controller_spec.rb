@@ -61,13 +61,31 @@ describe Overrides::RegistrationsController do
   end
 
   describe '#update' do
+    let(:user_create_params) do
+      {
+        user: {
+          id: 2,
+          email: 'jack@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'Jack',
+          lastName: 'Doe',
+          DOB: '1985-07-23',
+          email: 'jack@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
+    end
+
     # We no longer override the update method, but we want to confirm that email
     # change confirmation emails are being sent.
     let(:user_update_params) do
       {
         user: {
-          id: 1,
-          email: 'jane2@doe.com',
+          id: 2,
+          email: 'jack2@doe.com',
         },
       }
     end
@@ -87,8 +105,7 @@ describe Overrides::RegistrationsController do
       allow(message_delivery).to receive(:deliver_later)
 
       # First, create the valid user
-      post :create, params: valid_user_params
-      @resource = assigns(:resource)
+      post :create, params: user_create_params
       # Then update the user
       put :update, params: user_update_params
     end
