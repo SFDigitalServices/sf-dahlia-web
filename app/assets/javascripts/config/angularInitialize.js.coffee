@@ -8,6 +8,7 @@
   SharedService, ExternalTranslateService, ModalService) ->
     timeoutRetries = 2
     ngMeta.init()
+    isFirstLoad = true
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -46,6 +47,18 @@
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      if (toState.name == 'dahlia.welcome' && !isFirstLoad)
+        isFirstLoad = false
+
+        # stop the state transition event from propagating
+        e.preventDefault()
+        langString = if toParams.lang == 'en' then '' else toParams.lang
+        $window.location.href = '/' + langString
+
+        return
+
+      isFirstLoad = false
+
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
@@ -230,5 +243,5 @@
         if toState.name == 'dahlia.listing' && error.status == 404
           return $state.go('dahlia.listings-for-rent')
         else
-          return $window.location.href = '/'
+          return $state.go('dahlia.welcome')
 ]

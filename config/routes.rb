@@ -79,6 +79,10 @@ Rails.application.routes.draw do
 
   # React routes each use their own controllers (currently there's just one for the homepage)
   get '/', to: 'home#index'
+  get '/es', to: 'home#index'
+  get '/en', to: 'home#index'
+  get '/zh', to: 'home#index'
+  get '/tl', to: 'home#index'
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }

@@ -106,15 +106,15 @@
               'listings/templates/listing.html'
       resolve:
         listing: [
-          '$window', '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService',
-          ($window, $stateParams, $state, $q, ListingDataService, ListingLotteryService, ListingPreferenceService, ListingUnitService) ->
+          '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService',
+          ($stateParams, $state, $q, ListingDataService, ListingLotteryService, ListingPreferenceService, ListingUnitService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
             ListingDataService.getListing($stateParams.id, forceRecache, true).then( ->
               deferred.resolve(ListingDataService.listing)
               if _.isEmpty(ListingDataService.listing)
                 # kick them out unless there's a real listing
-                $window.location.href = '/'
+                return $state.go('dahlia.welcome')
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 
@@ -604,8 +604,8 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$window', '$state', '$stateParams', '$q', 'ListingDataService', 'ListingPreferenceService',
-          ($window, $state, $stateParams, $q, ListingDataService, ListingPreferenceService) ->
+          '$state', '$stateParams', '$q', 'ListingDataService', 'ListingPreferenceService',
+          ($state, $stateParams, $q, ListingDataService, ListingPreferenceService) ->
             # store the listing in ListingDataService and kick out if it's not open for applications
             deferred = $q.defer()
             ListingDataService.getListingAndCheckIfOpen($stateParams.id).then( ->
@@ -613,7 +613,7 @@
                 deferred.resolve(ListingDataService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage
-              $window.location.href = '/' unless ListingDataService.listing
+              $state.go('dahlia.welcome') unless ListingDataService.listing
               deferred.reject(response)
             )
             return deferred.promise
@@ -679,11 +679,11 @@
         infoChanged:
           squash: true
       onEnter: [
-        '$window', '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
-        ($window, $stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           # If applicant tries to go to this page on a rental listing, redirect them back to homepage
           if !ShortFormApplicationService.listingIsSale()
-            $window.location.href = '/'
+            $state.go('dahlia.welcome')
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
