@@ -109,13 +109,13 @@ Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/gith
 
 ## Importing pattern library styles
 
-We currently manually transfer the application's CSS from [our pattern library](https://github.com/Exygy/sf-dahlia-pattern-library) using Grunt.
+We currently manually transfer the application's CSS from [our pattern library](https://github.com/SFDigitalServices/sf-dahlia-pattern-library) using Grunt.
 
 If you do not already have grunt installed, run `brew install grunt` to install it before proceeding.
 
 To update this app with the latest PL styles:
 
-1. [Clone the PL repository in the same parent directory as this one.](https://github.com/Exygy/sf-dahlia-pattern-library)
+1. [Clone the PL repository in the same parent directory as this one.](https://github.com/SFDigitalServices/sf-dahlia-pattern-library)
 2. Switch to the PL branch you want to import styles from, either main or a specific branch
 3. Run `npm run-script build` in the pattern lib directory to compile the css
 4. `cd` to your `sf-dahlia-web` folder
