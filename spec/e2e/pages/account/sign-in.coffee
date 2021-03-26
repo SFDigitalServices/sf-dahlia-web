@@ -2,7 +2,6 @@ AngularPage = require('../angular-page').AngularPage
 
 class SignInPage extends AngularPage
   constructor: ->
-    super()
     @email = element(By.id('auth_email'))
     @password = element(By.id('auth_password'))
     @signInButton = element(By.id('sign-in'))

@@ -82,6 +82,8 @@ describe Overrides::RegistrationsController do
         .and_return(message_delivery)
       expect(message_delivery).to receive(:deliver_later).once
 
+      expect(assigns(:resource).uid).to eq 'jack@doe.com'
+
       put :update, params: user_update_params
 
       expect(assigns(:resource).uid).to eq 'jack2@doe.com'

@@ -2,7 +2,6 @@ AngularPage = require('../angular-page').AngularPage
 
 class CreateAccountPage extends AngularPage
   constructor: ->
-    super()
     @firstName = element(By.model('userAuth.contact.firstName'))
     @middleName = element(By.model('userAuth.contact.middleName'))
     @lastName = element(By.model('userAuth.contact.lastName'))

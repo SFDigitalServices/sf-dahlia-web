@@ -2,7 +2,6 @@ AngularPage = require('../angular-page').AngularPage
 
 class AlternateContact extends AngularPage
   constructor: ->
-    super()
     @typeOther = element(By.id('alternateContactType_other'))
     @typeOtherInput = element(By.model('alternateContact.alternateContactTypeOther'))
 
