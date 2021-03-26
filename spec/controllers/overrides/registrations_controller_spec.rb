@@ -29,6 +29,14 @@ describe Overrides::RegistrationsController do
     }
   end
 
+  let!(:user) do
+    @user ||= User.create(
+      email: 'jack@doe.com',
+      password: 'somepassword',
+      password_confirmation: 'somepassword',
+    )
+  end
+
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
@@ -70,30 +78,33 @@ describe Overrides::RegistrationsController do
     let(:user_update_params) do
       {
         user: {
-          id: 2,
           email: 'jack2@doe.com',
         },
       }
     end
 
+    before(:each) do
+      user.update(allow_password_change: true)
+
+      # Mocking for token authentication
+      allow(controller).to receive(:update_auth_header).and_return(true)
+      allow(controller).to receive(:set_user_by_token).and_return(user)
+      allow(controller).to receive(:set_request_start).and_return(true)
+      controller.instance_variable_set(:@resource, user)
+    end
+
     it 'sends a reconfirmation email when email address is updated' do
-      allow(Force::AccountService)
-        .to receive(:create_or_update)
-        .and_return(salesforce_response)
-
       message_delivery = instance_double(ActionMailer::MessageDelivery)
-
-      # Expect 2 emails, once for original confirmation, and once for email change.
-      expect(Emailer)
-        .to receive(:confirmation_instructions)
-        .twice
+      expect(Emailer).to receive(:confirmation_instructions)
+        .once
         .and_return(message_delivery)
-      allow(message_delivery).to receive(:deliver_later)
+      expect(message_delivery).to receive(:deliver_later).once
 
-      # First, create the valid user
-      post :create, params: user_create_params
-      # Then update the user
       put :update, params: user_update_params
+
+      expect(assigns(:resource).uid).to eq 'jack2@doe.com'
+
+      expect(response.status).to eq 200
     end
   end
 end
