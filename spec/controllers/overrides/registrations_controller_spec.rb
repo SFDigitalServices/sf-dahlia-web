@@ -55,26 +55,6 @@ describe Overrides::RegistrationsController do
   end
 
   describe '#update' do
-    let(:user_create_params) do
-      {
-        user: {
-          id: 2,
-          email: 'jack@doe.com',
-          password: 'somepassword',
-          password_confirmation: 'somepassword',
-        },
-        contact: {
-          firstName: 'Jack',
-          lastName: 'Doe',
-          DOB: '1985-07-23',
-          email: 'jack@doe.com',
-        },
-        confirm_success_url: 'http://localhost/my-account',
-      }
-    end
-
-    # We no longer override the update method, but we want to confirm that email
-    # change confirmation emails are being sent.
     let(:user_update_params) do
       {
         user: {
@@ -93,6 +73,8 @@ describe Overrides::RegistrationsController do
       controller.instance_variable_set(:@resource, user)
     end
 
+    # We no longer override the update method, but we want to confirm that email
+    # change confirmation emails are being sent.
     it 'sends a reconfirmation email when email address is updated' do
       message_delivery = instance_double(ActionMailer::MessageDelivery)
       expect(Emailer).to receive(:confirmation_instructions)
