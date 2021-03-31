@@ -7,6 +7,7 @@ setCheckboxSelected = (checkboxElement, newSelectedValue) ->
 
 class DemographicSurvey extends AngularPage
   constructor: ->
+    super()
     @userGender = element(By.id('user_gender'))
     @genderOther = element(By.id('genderOther'))
     @userSex = element(By.id('user_sexual_orientation'))

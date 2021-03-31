@@ -1,0 +1,38 @@
+doctype html
+html lang="en"
+  head
+    title DAHLIA San Francisco Housing Portal
+
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    meta content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg" name="google-site-verification"
+
+    - if ENV['GOOGLE_TAG_MANAGER_KEY']
+      /! Google Tag Manager
+      javascript:
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
+    == javascript_pack_tag 'react_application'
+
+    == stylesheet_pack_tag 'react_application'
+    == csrf_meta_tags
+
+  body
+    - if ENV['GOOGLE_TAG_MANAGER_KEY']
+      noscript
+        iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
+    #google_translate_element
+
+    #root
+      == yield
+
+    / TODO: move all JS globals below into a React constant
+    javascript:
+      var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
+      var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+      var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"
+      var AUTOSAVE = "#{ENV['AUTOSAVE']}"

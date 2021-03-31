@@ -1,9 +1,5 @@
 # Dahlia
-
-[![Code Climate](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/gpa.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web)
-[![Test Coverage](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/coverage.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web/coverage)
-[![Build Status](https://semaphoreci.com/api/v1/exygy/sf-dahlia-web-full/branches/main/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web-full)
-
+[![CircleCi Builds](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web)
 
 Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" height="30" ></a>
 
@@ -12,6 +8,14 @@ Cross-browser testing done with <a href="https://www.browserstack.com/"><img src
 DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created by the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
 
 ## Technical Architecture
+
+### In-progress technical migration
+We are currently in the process of migrating our app from AngularJS to React/TS.
+
+The new, React codebase lives under app/javascript. Pages are routed via rails to load either react or angular versions of each page.
+
+React pages will be released behind feature flags, see the **Rewrite feature flags** section of the readme for more information. On any page that has an in-progress react version, you can override the rewrite feature flag behavior by adding `?react=true` or `?react=false` to the url to force React or Angular rendering, respectively.
+### Pre-migration
 
 This repository contains the source code for [housing.sfgov.org](https://housing.sfgov.org), which is the user-facing web application of the DAHLIA platform. It is a [Ruby on Rails](http://rubyonrails.org/) application that serves up a single page [AngularJS](https://angularjs.org/) app. The web application connects to a Salesforce backend (you can find the source code for that [here](https://github.com/Exygy/sf-dahlia-salesforce)), which is where the listings are actually created and administered. The primary purpose of the PostgreSQL database on the web application is to serve as user authentication (using [Devise](https://github.com/plataformatec/devise) + [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth)), with every user in the database getting a `salesforce_contact_id` which corresponds to their record in the Salesforce database.
 
@@ -26,23 +30,60 @@ Before you install DAHLIA, your system should have the following:
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 6.11.1
-  - can use installer from [nodejs.org](https://nodejs.org/en/) or see: [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495)
+- [Node.js](https://nodejs.org/en/) 12.16.x
+  - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
+- [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
+  - After node is installed, you can install yarn with `npm install --global yarn`
 
 ## Getting started
 
 1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
 1. Open a terminal window
-1. `git clone https://github.com/Exygy/sf-dahlia-web.git` to create the project directory
+1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
 1. `cd sf-dahlia-web` to open the directory
 1. `bundle install` to download all necessary gems
     - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
     - if you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
-1. `npm install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
+1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 1. `overcommit --install` to install git hooks into the repo
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
-1. `rails s` to start the server, which will now be running at http://localhost:3000 by default
+1. `./bin/webpack-dev-server` to start the webpack dev server
+    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
+
+## How to migrate a page from AngularJS to React
+### Adding rails routes and react components
+1. Create a new controller file (ex: [home_controller.rb](app/controllers/home_controller.rb)) and override the `use_react_app` method to do an environment variable check
+    ```
+    def use_react_app
+      ENV['YOUR_ENV_VAR_NAME'].to_s.casecmp('true').zero?
+    end
+    ```
+1. Add a new view for that controller (ex: [home/index.html.slim](app/views/home/index.html.slim)) under app/views/<your-controller-name>/index.html.slim
+    - The view should just be a single line to render a React page component
+    ```
+    == react_component 'YourPageComponentName', { prop1: "prop1", prop2: "prop2" }
+    ```
+1. Add a route to [routes.rb](config/routes.rb) for your new url. Before, that route would fall back to the angular controller, but you're telling rails to load your new controller instead.
+    - **Important:** you must add this line _before_ the fallback route at the very end of the routes file.
+    - This url should be the same as the angular url you're replacing
+1. Add a new react component file at `app/javascript/pages/YourPageComponentName.tsx` (ex [pages/HomePage.tsx](app/javascript/pages/HomePage.tsx))
+1. Tell Webpack that component is an entrypoint by importing and adding the component to the `WebpackerReact.setup({})` object in [react_application.tsx](app/javascript/packs/react_application.tsx)
+1. Visit your url and append the `?react=true` option to it. This will force render the react view, check to make sure your react page component is rendering as expected.
+1. Visit your url and append the `?react=false` option to it. This will force render the Angular view, check to make sure the legacy page is rendering as expected.
+1. Update your local `~/.env` file to include YOUR_ENV_VAR_NAME=true
+    - For now, this just makes it easier to test routing between pages, since the ?react=true param won't persist when you click a link.
+
+### Update Angular to route between React and AngularJS correctly
+Because our legacy code is frontend-routed in AngularJS, links from one angular page to our new react page won't work properly, they'll always render the AngularJS version of the linked page. So, we need to tell Angular to revert to rails routing when navigating to our new page.
+1. Each Angular page corresponds to a state name. For example the home page state name is `dahlia.welcome`. Find which state name corresponds to the url you're replacing by going to [angularRoutes.js.coffee](app/assets/javascripts/config/angularRoutes.js.coffee) and finding the case that matches your url.
+1. Search for all usages of that state in the repo and update them in different ways depending on the usage:
+    - **Case:** In an `html.slim` file as a `ui-sref` attr. Replace `ui-sref="state.name"` with `href="your/relative/url"` and add a new attr `target="_self"`
+      - Setting the target is a hacky way to ignore the angular router/state transitions and treat it as an external link.
+    - **Case:** In a `$state.go('new.state')` call. Replace `$state.go('new.state')` with `$window.location.href = 'your/relative/url'`
+      - You may need to inject $window in whatever service you're in if it's not already present.
+1. Test that the new routing works by starting on an angular page, and navigate to your new page via a link in Angular. Verify the react page loads correctly.
 
 ## Running Tests
 
@@ -56,9 +97,9 @@ To run javascript unit tests:
 To run E2E tests:
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
-- On another tab, run `npm run protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
+- On another tab, run `yarn protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 
-Note: These tests will run on Semaphore (our CI) as well for every review app and QA deploy.
+Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
 ## Importing pattern library styles
 
@@ -130,6 +171,10 @@ This script will:
 ### DALP Advertising
  - ADVERTISE_DALP -> If set to 'true', the Sales directory page will display info about applying to DALP in a "Help with downpayments" section. Otherwise it'll show the plain "Get help" section
  - DALP_PROGRAM_INFO -> If provided, we will override the default DALP text of "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021." with whatever is in this env var.
+
+ ### Rewrite feature flags
+ We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. This can be overridden with
+ - HOME_PAGE_REACT='true'
 ### Other
  - SHOW_RESEARCH_BANNER - If set to 'true', it displays research banner.
  - COVID_UPDATE -> If set to 'true', shows COVID-19 update info in the apply section and hides pre lottery info

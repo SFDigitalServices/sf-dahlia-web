@@ -35,9 +35,17 @@ ssl.sh
 certs
 public/sitemap*
 public/robots*
+public/assets/
+public/packs
+public/packs-test
 
 # VS Code
 TAGS
 
 # Byebug command history
 .byebug_history
+
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
