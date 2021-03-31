@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
+  cypress: cypress-io/cypress@1.26.0
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -13,6 +14,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
+    - image: "cypress/base:12.18.2"
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:
@@ -133,6 +135,7 @@ jobs:
           key: webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
+            - /home/circleci/.cache/Cypress
       - upgrade-bundler
       - run:
           name: Bundle install
@@ -160,15 +163,32 @@ jobs:
           root: .
           paths:
             - .
-  unit:
+  unit-react:
+    <<: *defaults
+    steps:
+      - setup
+      - run: yarn test
+  unit-rspec:
+    <<: *defaults
+    steps:
+      - setup
+      - run: RAILS_ENV=test bundle exec rails db:create
+      - run: RAILS_ENV=test bundle exec rails db:test:prepare
+      - run: bundle exec rake spec
+  unit-angular:
     <<: *defaults
     steps:
       - setup
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
-      - run: bundle exec rake spec
   e2e:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: yarn test:e2e
+  e2e-legacy:
     <<: *defaults
     parallelism: 4
     steps:
@@ -186,10 +206,19 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - unit:
+      - unit-react:
+          <<: *non_production_jobs
+      - unit-rspec:
+          <<: *non_production_jobs
+      - unit-angular:
           <<: *non_production_jobs
       - e2e:
+          <<: *non_production_jobs
+      - e2e-legacy:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
+      - e2e-legacy:
+          <<: *prod_and_release_jobs
+          name: e2e-production-legacy
