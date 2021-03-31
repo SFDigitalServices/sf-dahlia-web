@@ -10,7 +10,6 @@ CommitMsg:
 
 # Custom options for Dahlia repository
 PreCommit:
-
   BundleCheck:
     enabled: true
 
@@ -22,41 +21,52 @@ PreCommit:
   # Enable explicitly each desired pre commit check
   RuboCop:
     enabled: true
-    description: 'Analyzing with Rubocop'
-    required_executable: 'rubocop'
+    description: "Analyzing with Rubocop"
+    required_executable: "rubocop"
 
   RailsSchemaUpToDate:
     enabled: true
-    description: 'Checking if database schema is up to date'
+    description: "Checking if database schema is up to date"
     include:
-      - 'db/migrate/*.rb'
-      - 'db/schema.rb'
-      - 'db/structure.sql'
+      - "db/migrate/*.rb"
+      - "db/schema.rb"
+      - "db/structure.sql"
 
   YamlSyntax:
     enabled: true
-    description: 'Checking YAML syntax'
+    description: "Checking YAML syntax"
 
   RailsBestPractices:
     enabled: true
-    description: 'Checking Rails best practices'
+    description: "Checking Rails best practices"
 
   CoffeeLint:
     enabled: true
-    description: 'Analyzing with CoffeeLint'
-    install_command: 'npm install'
-    required_executable: 'npm'
-    command: ['npm', 'run', 'coffeelint']
+    description: "Analyzing with CoffeeLint"
+    install_command: "npm install"
+    required_executable: "npm"
+    command: ["npm", "run", "coffeelint"]
 
   TrailingWhitespace:
     enabled: true
-    description: 'Checking for trailing whitespace'
+    description: "Checking for trailing whitespace"
     exclude:
-      - 'spec/vcr/**/*.yml'
-      - 'app/assets/**/*.svg'
-      - 'public/images/**/*.svg'
-      - 'lib/assets/bower_components/**/*'
+      - "spec/vcr/**/*.yml"
+      - "app/assets/**/*.svg"
+      - "public/images/**/*.svg"
+      - "lib/assets/bower_components/**/*"
 
   CustomScript:
     enabled: true
-    required_executable: './bin/overcommit-pre-commit'
+    required_executable: "./bin/overcommit-pre-commit"
+
+  EsLint:
+    command: ["yarn"]
+    flags: ["eslint", "--quiet", "--format=compact"]
+    description: "Linting React with Eslint"
+    enabled: true
+    include:
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"

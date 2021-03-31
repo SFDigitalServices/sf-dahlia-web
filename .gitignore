@@ -30,7 +30,6 @@ lib/assets/bower_components
 
 dump.rdb
 
-.vscode/*
 ssl.sh
 certs
 public/sitemap*
