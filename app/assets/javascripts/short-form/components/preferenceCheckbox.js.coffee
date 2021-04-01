@@ -15,7 +15,6 @@ angular.module('dahlia.components')
   controller: ['ListingDataService', 'ListingPreferenceService', (ListingDataService, ListingPreferenceService) ->
     ctrl = @
 
-    @showDescription = false
     listingPreference = ListingPreferenceService.getPreference(@preference, ListingDataService.listing)
     if listingPreference
       @moreInfoLink = listingPreference.readMoreUrl

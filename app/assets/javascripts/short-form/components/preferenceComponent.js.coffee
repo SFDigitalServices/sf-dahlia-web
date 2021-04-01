@@ -39,6 +39,7 @@ angular.module('dahlia.components')
         @proofOptions = ShortFormHelperService.proofOptions(@preference)
 
       @resetPreference = =>
+        console.log('preference from reset preference', @preference)
         if !@application.preferences[@preference]
           # unchecking the box
           ShortFormApplicationService.cancelPreference(@preference)
@@ -48,6 +49,13 @@ angular.module('dahlia.components')
 
       @onChange = =>
         @resetPreference()
+
+      @preferenceId = =>
+        id = if @is588() then 'five88' else @preference
+        return id
+      @is588 = =>
+        is588Pref = @title == 'Employment/Disability Preference'
+        return is588Pref
 
       @initVariables()
 

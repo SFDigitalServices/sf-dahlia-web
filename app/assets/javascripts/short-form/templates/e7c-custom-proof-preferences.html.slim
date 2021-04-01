@@ -1,13 +1,14 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-     | {{ currentCustomProofPreference.preferenceName }}
+     | Something else {{ currentCustomProofPreference.preferenceName }}
     p.margin-bottom translate="t.optional"
 
   .app-inner
     .form-group
       p.form-note.margin-bottom--2x translate="label.please_select_preference"
+      p.form-note.margin-bottom--2x
+        | full pref? {{currentCustomProofPreference}}
       .checkbox-group role="group"
-        preference(application="application" title="{{currentCustomProofPreference.preferenceName}}" preference="{{currentCustomProofPreference.listingPreferenceID}}" custom-description="{{currentCustomProofPreference.description}}"  has-proof="true" proof-option-label="{{'label.preference_proof_address_documents' | translate}}")
-
+        preference(application="application" title="{{currentCustomProofPreference.preferenceName}}" preference="{{currentCustomProofPreference.listingPreferenceID}}" custom-description="{{currentCustomProofPreference.description}}"  has-proof="true" proof-option-label="{{'label.preference_proof_address_documents' | translate}}" full-preference="{{currentCustomProofPreference}}")
   short-form-save-and-submit
