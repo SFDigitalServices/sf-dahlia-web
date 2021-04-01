@@ -2,8 +2,6 @@
 #
 # This file contains migration options to ease your Rails 5.2 upgrade.
 #
-# Once upgraded flip defaults one by one to migrate to the new default.
-#
 # Read the Guide for Upgrading Ruby on Rails for more info on each option.
 
 # Make Active Record use stable #cache_key alongside new #cache_version method.
