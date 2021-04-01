@@ -6,10 +6,10 @@
     preference-member-selector(application="$ctrl.application" preference="{{::$ctrl.preferenceId()}}" eligible-members="$ctrl.eligibleMembers" label="{{$ctrl.memberSelectorLabel}}")
 
     / individual preference
-    div ng-if='::$ctrl.is588()'
+    div ng-if='::$ctrl.is588()' ng-class="{ error: $ctrl.inputInvalid('five88_preference') }"
       label.form-label.caps for="five88PrefOption"
         | {{'label.preference_option_to_claim' | translate}}
-      select id="five88PrefOption" ng-class="{ error: $ctrl.inputInvalid('five88_preference') }" ng-model="$ctrl.application.preferences.five88_preference" data-width="auto" name="five88_preference" ng-required="$ctrl.application.preferences.liveWorkInSf" ng-change="$ctrl.selectLiveOrWorkPreference()" aria-describedby="liveWorkInSf_preference_error"
+      select id="five88PrefOption" ng-class="{ error: $ctrl.inputInvalid('five88_preference') }" ng-model="$ctrl.application.preferences.five88_preference" data-width="auto" name="five88_preference" ng-required="$ctrl.application.preferences.five88" ng-change="$ctrl.selectLiveOrWorkPreference()" aria-describedby="liveWorkInSf_preference_error"
         option value="" translate="label.select_one"
         option value="Works in public education" translate="e7b_custom_preferences.five88_mission.work_in_education"
         option value="Works in public healthcare" translate="e7b_custom_preferences.five88_mission.work_in_healthcare"

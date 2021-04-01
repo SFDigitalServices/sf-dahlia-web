@@ -128,7 +128,7 @@ ShortFormApplicationService = (
     # console.log('inputInvalid', fieldName, form)
     return false unless form
     field = form[fieldName]
-    # console.log('inputInvalid field ', field)
+    console.log('inputInvalid field Name: ', fieldName, ', field: ', field)
     if form && field
       # special case: set "invalid email" error instead of "provide answers in english" when failing ng-pattern
       if fieldName == 'email' && field.$error.pattern
