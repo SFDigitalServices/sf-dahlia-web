@@ -8,6 +8,7 @@ angular.module('dahlia.components')
     title: '@'
     translatedDescription: '@'
     customDescription: '@'
+    readMoreUrl: '@'
     translatedShortDescription: '@'
     proofOptionLabel: '@'
     buttonLabel: '@'
@@ -39,7 +40,6 @@ angular.module('dahlia.components')
         @proofOptions = ShortFormHelperService.proofOptions(@preference)
 
       @resetPreference = =>
-        console.log('preference from reset preference', @preference)
         if !@application.preferences[@preference]
           # unchecking the box
           ShortFormApplicationService.cancelPreference(@preference)
@@ -50,6 +50,7 @@ angular.module('dahlia.components')
       @onChange = =>
         @resetPreference()
 
+      # For 588 Mission preference, we need to override some defaults.
       @is588 = =>
         @title == 'Employment/Disability Preference'
 

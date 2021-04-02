@@ -1,5 +1,15 @@
 .checkbox-block ng-class="{'margin-bottom': $ctrl.marginBottom}"
-  preference-checkbox(application="$ctrl.application" preference="{{::$ctrl.preferenceId()}}" invalid="$ctrl.inputInvalid($ctrl.preferenceId())" title="{{$ctrl.title}}" translated-description="{{$ctrl.descriptionToTranslate()}}" custom-description="{{$ctrl.customDescription}}" short-description="{{$ctrl.translatedShortDescription}}" on-change="$ctrl.onChange()" required="$ctrl.required()")
+  preference-checkbox(
+    application="$ctrl.application"
+    preference="{{::$ctrl.preferenceId()}}"
+    invalid="$ctrl.inputInvalid($ctrl.preferenceId())"
+    title="{{$ctrl.title}}"
+    translated-description="{{$ctrl.descriptionToTranslate()}}"
+    custom-description="{{$ctrl.customDescription}}"
+    short-description="{{$ctrl.translatedShortDescription}}"
+    read-more-url="{{::$ctrl.readMoreUrl}}"
+    on-change="$ctrl.onChange()" required="$ctrl.required()"
+  )
 
   .form-group.input-inset ng-if="$ctrl.application.preferences[$ctrl.preferenceId()]"
     / member selector

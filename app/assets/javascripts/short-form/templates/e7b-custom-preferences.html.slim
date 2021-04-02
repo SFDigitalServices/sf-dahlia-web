@@ -7,12 +7,13 @@
       p.form-note.margin-bottom--2x translate="label.please_select_preference"
       .checkbox-group role="group"
         / default to custom-description
-        / for 588 we will override it in preference-component
+        / for 588 Mission we will override it in preference-component
         preference(
           application="application"
           title="{{preference.preferenceName}}"
-          preference="{{$ctrl.prefId(preference)}}"
+          preference="{{preference.listingPreferenceID}}"
           custom-description="{{preference.description}}"
+          read-more-url="{{preference.readMoreUrl}}"
           margin-bottom="true"
           ng-repeat="preference in listing.customPreferences"
           full-preference="{{preference}}"

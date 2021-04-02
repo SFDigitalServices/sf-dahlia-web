@@ -9,6 +9,7 @@ angular.module('dahlia.components')
     translatedDescription: '@'
     customDescription: '@'
     shortDescription: '@'
+    readMoreUrl: '@'
     onChange: '&'
   templateUrl: 'short-form/components/preference-checkbox.html'
 
@@ -18,6 +19,10 @@ angular.module('dahlia.components')
     listingPreference = ListingPreferenceService.getPreference(@preference, ListingDataService.listing)
     if listingPreference
       @moreInfoLink = listingPreference.readMoreUrl
+    else
+      # If you can't find the moreInfo link, for example, with a custom preference
+      # like 588 Mission, look for a passed readMoreUrl value
+      @moreInfoLink = @readMoreUrl
 
     gtmTags = {
       certOfPreference: 'cop'
