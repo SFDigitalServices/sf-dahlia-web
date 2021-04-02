@@ -1,11 +1,11 @@
 .checkbox-block ng-class="{'margin-bottom': $ctrl.marginBottom}"
-  preference-checkbox(application="$ctrl.application" preference="{{::$ctrl.preferenceId()}}" invalid="$ctrl.inputInvalid($ctrl.preferenceId())" title="{{$ctrl.title}}" translated-description="{{$ctrl.translatedDescription}}" custom-description="{{$ctrl.customDescription}}" short-description="{{$ctrl.translatedShortDescription}}" on-change="$ctrl.onChange()" required="$ctrl.required()")
+  preference-checkbox(application="$ctrl.application" preference="{{::$ctrl.preferenceId()}}" invalid="$ctrl.inputInvalid($ctrl.preferenceId())" title="{{$ctrl.title}}" translated-description="{{$ctrl.descriptionToTranslate()}}" custom-description="{{$ctrl.customDescription}}" short-description="{{$ctrl.translatedShortDescription}}" on-change="$ctrl.onChange()" required="$ctrl.required()")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences[$ctrl.preferenceId()]"
     / member selector
     preference-member-selector(application="$ctrl.application" preference="{{::$ctrl.preferenceId()}}" eligible-members="$ctrl.eligibleMembers" label="{{$ctrl.memberSelectorLabel}}")
 
-    / individual preference
+    / individual preference for 588 mission
     div ng-if='::$ctrl.is588()' ng-class="{ error: $ctrl.inputInvalid('five88_preference') }"
       label.form-label.caps for="five88PrefOption"
         | {{'label.preference_option_to_claim' | translate}}

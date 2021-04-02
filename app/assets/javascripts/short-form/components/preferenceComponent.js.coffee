@@ -50,12 +50,14 @@ angular.module('dahlia.components')
       @onChange = =>
         @resetPreference()
 
-      @preferenceId = =>
-        id = if @is588() then 'five88' else @preference
-        return id
       @is588 = =>
-        is588Pref = @title == 'Employment/Disability Preference'
-        return is588Pref
+        @title == 'Employment/Disability Preference'
+
+      @preferenceId = =>
+        if @is588() then 'five88' else @preference
+
+      @descriptionToTranslate = =>
+        if @is588() then "e7b_custom_preferences.five88_mission.description" else @translatedDescription
 
       @initVariables()
 

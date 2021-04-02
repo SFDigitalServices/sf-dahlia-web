@@ -7,7 +7,7 @@
 
   .checkbox-block_note-inner ng-if="$ctrl.translatedDescription || $ctrl.customDescription || $ctrl.moreInfoLink"
     p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-if="$ctrl.translatedDescription" translate='{{$ctrl.translatedDescription}}'
-    p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-if="$ctrl.customDescription"
+    p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-if="$ctrl.customDescription && !$ctrl.translatedDescription"
       | {{$ctrl.customDescription}}
 
     p.show-for-print.checkbox-block_more ng-show="$ctrl.moreInfoLink"
