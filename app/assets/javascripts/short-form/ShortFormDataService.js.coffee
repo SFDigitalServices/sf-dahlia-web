@@ -235,6 +235,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         # pref_certificateNumber may or may not exist, which is ok
         certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
         prefAddress = appPrefs[prefKey + '_address']
+        # If the preference (e.g. for 588 mission) has an individual preference, add it
+        individualPref = appPrefs[prefKey + '_preference']
 
       if prefAddress
         address = prefAddress.address1
