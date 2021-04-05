@@ -54,9 +54,9 @@ angular.module('dahlia.components')
       @is588 = =>
         @title == 'Employment/Disability Preference'
 
-      # @preferenceId = =>
-      #   # if @is588() then 'five88' else @preference
-      #   @preference
+      @preferenceId = =>
+        # if @is588() then 'five88' else @preference
+        @preference
 
       @descriptionToTranslate = =>
         if @is588() then "e7b_custom_preferences.five88_mission.description" else @translatedDescription
