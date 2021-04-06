@@ -21,7 +21,7 @@
     )
 
     / individual preference for 588 mission
-  .form-group.input-inset ng-if='::$ctrl.is588()' ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
+  .form-group.input-inset ng-if='$ctrl.is588() && $ctrl.application.preferences[$ctrl.preferenceId()]' ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
     div
       label.form-label.caps for="{{$ctrl.individualPrefFieldId()}}"
         | {{'label.preference_option_to_claim' | translate}}
