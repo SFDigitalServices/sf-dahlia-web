@@ -449,7 +449,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       return unless listingPref
 
       member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
-
+      isCustom = false
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
       if listingPref.preferenceName == ListingDataService.preferenceMap.liveWorkInSf
         preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
@@ -470,6 +470,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         unless prefKey
           # must be a customPreference... just identify by ID much like on e7b-custom-preferences
           prefKey = listingPref.listingPreferenceID
+          isCustom = true
         preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
 
       preferences.optOut[prefKey] = shortFormPref.optOut
@@ -489,7 +490,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
             state: shortFormPref.state
             zip: shortFormPref.zip
           }
-
+        # If a custom pref (e.g. 588 mission), add individualPreference if present
+        if shortFormPref.individualPreference && isCustom
+            preferences["#{prefKey}_preference"] = shortFormPref.individualPreference
         preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
 
     )
