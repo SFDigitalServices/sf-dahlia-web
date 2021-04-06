@@ -51,15 +51,15 @@ angular.module('dahlia.components')
         @resetPreference()
 
       # For 588 Mission preference, we need to override some defaults.
-      @is588 = =>
+      @isEmploymentDisability = =>
         @title == 'Employment/Disability Preference'
 
       @preferenceId = =>
-        # if @is588() then 'five88' else @preference
+        # if @isEmploymentDisability() then 'five88' else @preference
         @preference
 
       @descriptionToTranslate = =>
-        if @is588() then "e7b_custom_preferences.five88_mission.description" else @translatedDescription
+        if @isEmploymentDisability() then "e7b_custom_preferences.employment_disability.description" else @translatedDescription
 
       @individualPrefFieldId = =>
         @preference.concat('_preference')

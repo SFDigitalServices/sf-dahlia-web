@@ -391,7 +391,7 @@
         },
         "e7b_custom_preferences": {
             "title": "This listing has other special lottery preferences",
-            "five88_mission": {
+            "employment_disability": {
                 "description": "You can get this preference if one adult in the household: <ul><li>Works at a public higher education institution located in San Francisco</li><li>Works at a public healthcare institution located in San Francisco</li><li>Is unable to work because of a disability</li></ul>",
                 "work_in_education": "SF public higher education worker",
                 "work_in_healthcare": "SF public healthcare worker",

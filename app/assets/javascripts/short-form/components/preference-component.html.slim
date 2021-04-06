@@ -21,7 +21,7 @@
     )
 
     / individual preference for 588 mission
-  .form-group.input-inset ng-if='$ctrl.is588() && $ctrl.application.preferences[$ctrl.preferenceId()]' ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
+  .form-group.input-inset ng-if='$ctrl.isEmploymentDisability() && $ctrl.application.preferences[$ctrl.preferenceId()]' ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
     div
       label.form-label.caps for="{{$ctrl.individualPrefFieldId()}}"
         | {{'label.preference_option_to_claim' | translate}}
@@ -39,15 +39,15 @@
         )
         option(
           value="Works in public education"
-          translate="e7b_custom_preferences.five88_mission.work_in_education"
+          translate="e7b_custom_preferences.employment_disability.work_in_education"
         )
         option(
           value="Works in public healthcare"
-          translate="e7b_custom_preferences.five88_mission.work_in_healthcare"
+          translate="e7b_custom_preferences.employment_disability.work_in_healthcare"
         )
         option(
           value="Cannot work due to disability"
-          translate="e7b_custom_preferences.five88_mission.cannot_work_disability"
+          translate="e7b_custom_preferences.employment_disability.cannot_work_disability"
         )
       small.error id="five88_preference_error" ng-if="$ctrl.inputInvalid($ctrl.individualPrefFieldId())"
         | {{'error.please_select_an_option' | translate}}
