@@ -54,10 +54,6 @@ angular.module('dahlia.components')
       @isEmploymentDisability = =>
         @title == 'Employment/Disability Preference'
 
-      @preferenceId = =>
-        # if @isEmploymentDisability() then 'five88' else @preference
-        @preference
-
       @descriptionToTranslate = =>
         if @isEmploymentDisability() then "e7b_custom_preferences.employment_disability.description" else @translatedDescription
 
