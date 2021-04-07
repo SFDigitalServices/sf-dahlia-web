@@ -17,12 +17,12 @@ angular.module('dahlia.components')
     ctrl = @
 
     listingPreference = ListingPreferenceService.getPreference(@preference, ListingDataService.listing)
-    if listingPreference
-      @moreInfoLink = listingPreference.readMoreUrl
-    else
+    if @readMoreUrl
       # If you can't find the moreInfo link, for example, with a custom preference
       # like 588 Mission, look for a passed readMoreUrl value
       @moreInfoLink = @readMoreUrl
+    else if listingPreference
+      @moreInfoLink = listingPreference.readMoreUrl
 
     gtmTags = {
       certOfPreference: 'cop'
