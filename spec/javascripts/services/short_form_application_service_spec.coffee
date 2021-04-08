@@ -1131,6 +1131,13 @@ do ->
         expect(ShortFormApplicationService.preferences.aliceGriffith_address)
           .toEqual null
 
+      it 'should clear individual preference fields for custom prefs', ->
+        ShortFormApplicationService.preferences['12345_preference'] =
+          'Works in public healthcare'
+        ShortFormApplicationService.unsetPreferenceFields('12345')
+        expect(ShortFormApplicationService.preferences['12345_preference'])
+          .toEqual null
+
     describe 'cancelOptOut', ->
       it 'should clear preference opt out', ->
         ShortFormApplicationService.preferences.optOut.liveInSf = true
