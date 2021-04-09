@@ -52,7 +52,7 @@ angular.module('dahlia.components')
 
       # For 588 Mission preference, we need to override some defaults.
       @isEmploymentDisability = =>
-        @title == 'Employment/Disability Preference'
+        @title == 'Employment or Disability Preference'
 
       @descriptionToTranslate = =>
         if @isEmploymentDisability() then "e7b_custom_preferences.employment_disability.description" else @translatedDescription
