@@ -3,7 +3,7 @@ import React, { createContext, useReducer, FunctionComponent, useEffect, useCont
 import { ConfigContext } from "@bloom-housing/ui-components"
 import { createAction, createReducer } from "typesafe-actions"
 
-import { createAxiosInstance, getProfile, signIn, scheduleTokenRefresh } from "./api_requests"
+import { createAxiosInstance, getProfile, signIn } from "./api_requests"
 import { AuthHeaders, clearHeaders, getHeaders, getTokenTtl, setHeaders } from "./token"
 import { User } from "./user"
 
@@ -25,7 +25,6 @@ type UserState = {
   storageType: string
   headers?: AuthHeaders
   profile?: User
-  refreshTimer?: number
 }
 
 type DispatchType = (...arg: [unknown]) => void
@@ -45,24 +44,14 @@ const reducer = createReducer(
   { loading: false, initialStateLoaded: false, storageType: "session" } as UserState,
   {
     SAVE_TOKEN: (state, { payload }) => {
-      const { refreshTimer: oldRefresh, ...rest } = state
-      const { headers, apiUrl, dispatch } = payload
-
-      // If an existing refresh timer has been defined, remove it as the access token has changed
-      if (oldRefresh) {
-        clearTimeout(oldRefresh)
-      }
+      const { ...rest } = state
+      const { headers } = payload
 
       // Save off the token in local storage for persistence across reloads.
       setHeaders(headers)
 
-      const refreshTimer = scheduleTokenRefresh(apiUrl, headers, (newHeaders) =>
-        dispatch(saveToken({ apiUrl, headers: newHeaders, dispatch }))
-      )
-
       return {
         ...rest,
-        ...(refreshTimer && { refreshTimer }),
         headers: headers,
       }
     },
@@ -94,14 +83,13 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
   // Load our profile as soon as we have an access token available
   useEffect(() => {
     if (!state.profile && state.headers) {
-      console.log("UserProvider")
       const client = createAxiosInstance(apiUrl, state.headers)
       const loadProfile = async () => {
         dispatch(startLoading())
         try {
           const data = await getProfile(client)
-          dispatch(saveToken({ headers: data.headers, apiUrl, dispatch }))
           dispatch(saveProfile(data.profile))
+          dispatch(saveToken({ headers: data.headers, apiUrl, dispatch }))
         } catch (err) {
           dispatch(signOut())
         } finally {
@@ -129,8 +117,6 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
     }
   }, [apiUrl, storageType])
 
-  console.log("Context Props")
-
   const contextValues: ContextProps = {
     loading: state.loading,
     profile: state.profile,
@@ -142,7 +128,6 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
       try {
         const headers = await signIn(apiUrl, email, password)
         dispatch(saveToken({ headers, apiUrl, dispatch }))
-        console.log("SignIn")
 
         const client = createAxiosInstance(apiUrl, headers)
         const data = await getProfile(client)
@@ -155,7 +140,6 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
     },
     signOut: () => dispatch(signOut()),
   }
-  console.log(contextValues)
   return <UserContext.Provider value={contextValues}>{props.children}</UserContext.Provider>
 }
 

@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios"
 
-import { AuthHeaders, getTokenTtl } from "./token"
-import { User } from "./user"
+import { AuthHeaders } from "./token"
+import { User, UserData } from "./user"
 
 const getHeaders = (res) => {
   const { expiry, client, uid } = res.headers
@@ -12,7 +12,6 @@ const getHeaders = (res) => {
     "access-token": res.headers["access-token"],
     "token-type": res.headers["token-type"],
   }
-  console.log(res)
   return headers
 }
 
@@ -41,8 +40,8 @@ export const signIn = async (apiBase: string, email: string, password: string) =
 }
 
 export const getProfile = async (client: AxiosInstance) => {
-  const res = await client.get<User>("/api/v1/auth/validate_token")
-  return { profile: res.data, headers: getHeaders(res) }
+  const res = await client.get<UserData>("/api/v1/auth/validate_token")
+  return { profile: res.data.data, headers: getHeaders(res) }
 }
 
 export const createAxiosInstance = (apiUrl: string, headers: AuthHeaders) =>
@@ -50,34 +49,6 @@ export const createAxiosInstance = (apiUrl: string, headers: AuthHeaders) =>
     baseURL: apiUrl,
     headers: headers,
   })
-
-export const scheduleTokenRefresh = (
-  apiUrl: string,
-  headers: AuthHeaders,
-  onRefresh: (headers: AuthHeaders) => void
-) => {
-  const ttl = getTokenTtl()
-
-  if (ttl < 0) {
-    // If ttl is negative, then our token is already expired, we'll have to re-login to get a new token.
-    // dispatch(signOut())
-    return null
-  } else {
-    console.log("timeout")
-    // Queue up a refresh for ~1 minute before the token expires
-    return (setTimeout(() => {
-      const run = async () => {
-        const client = createAxiosInstance(apiUrl, headers)
-        const newHeaders = await validateToken(client)
-        if (newHeaders) {
-          onRefresh(newHeaders)
-        }
-      }
-      // eslint-disable-next-line no-void
-      void run()
-    }, Math.max(ttl - 60000, 0)) as unknown) as number
-  }
-}
 
 export const forgotPassword = async (apiUrl: string, email: string) => {
   const res = await axios.put<{ message: string }>(`${apiUrl}/user/forgot-password`, {

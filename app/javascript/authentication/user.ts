@@ -12,4 +12,9 @@ interface User {
   updated_at: Date
 }
 
-export { User }
+interface UserData {
+  data: User
+  sucess: string
+}
+
+export { User, UserData }
