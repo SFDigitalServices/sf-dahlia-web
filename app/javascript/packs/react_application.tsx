@@ -1,14 +1,23 @@
-import { addTranslation } from "@bloom-housing/ui-components"
-import * as translation from "@bloom-housing/ui-components/src/locales/general.json"
+import { addTranslation } from "@sf-digital-services/ui-components"
 import WebpackerReact from "webpacker-react"
 
-import * as customTranslations from "../page_content/locale_overrides/general.json"
+import en from "../../assets/json/translations/locale-en.json"
+import es from "../../assets/json/translations/locale-es.json"
+import tl from "../../assets/json/translations/locale-tl.json"
+import zh from "../../assets/json/translations/locale-zh.json"
 import "../pages/base.scss"
 import HomePage from "../pages/HomePage"
+import { getCurrentLanguage } from "../util/languageUtil"
 
-addTranslation(translation)
-if (customTranslations) {
-  addTranslation(customTranslations)
+const currentLanguage = getCurrentLanguage()
+
+addTranslation(en.en)
+if (currentLanguage === "es") {
+  addTranslation(es.es)
+} else if (currentLanguage === "zh") {
+  addTranslation(zh.zh)
+} else if (currentLanguage === "tl") {
+  addTranslation(tl.tl)
 }
 
 WebpackerReact.setup({

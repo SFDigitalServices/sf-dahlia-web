@@ -12,12 +12,12 @@ module.exports = {
   // Specifies the ESLint parser
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: ["./tsconfig.lint.json"],
+    tsconfigRootDir: __dirname,
+    project: ["tsconfig.lint.json"],
     // Allows for the parsing of modern ECMAScript features
     ecmaVersion: 2020,
     // Allows for the use of imports
     sourceType: "module",
-    tsconfigRootDir: ".",
   },
   plugins: ["react", "@typescript-eslint", "prettier", "import"],
   extends: [
@@ -56,6 +56,12 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/no-var-requires": "off",
     "no-use-before-define": "off",
+    "no-void": [
+      "error",
+      {
+        allowAsStatement: true,
+      }
+    ],
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-uses-vars": "error",
     "react/jsx-uses-react": "error",

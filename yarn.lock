@@ -1124,10 +1124,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-0.3.9.tgz#7ef5170afff8561b2ee787bd273b67b54f691047"
-  integrity sha512-+sQKfWZjnafFyW4Yxwk9pnwRrjNGsEEw4iSzQY1kzxkR84lE27wcxewzRKiHYpLqwrx3Nd2F6xcBxxZb7xw6cw==
+"@bloom-housing/backend-core@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-0.3.10.tgz#0888dec07bdc273bb14eeb2231b0592172ea49e3"
+  integrity sha512-mIaCyDlYsIiAFKJcCkAetr7di/lB80gNfe2YMG5p1iUvAr8aLn5TkyoGGVvYey3cOlahm/842XMLcp31/s8bfQ==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@nestjs/cli" "^7.5.1"
@@ -1150,6 +1150,8 @@
     handlebars "^4.7.6"
     joi "^17.3.0"
     jsonpath "^1.0.2"
+    jwt-simple "^0.5.6"
+    moment "^2.29.1"
     nanoid "^3.1.12"
     nestjs-typeorm-paginate "^2.2.1"
     node-polyglot "^2.4.0"
@@ -1165,39 +1167,6 @@
     typeorm "^0.2.29"
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
-
-"@bloom-housing/ui-components@^0.3.8":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-0.3.9.tgz#531cdd21d03ee6c8d477a5b9ea59f0a2a117bf13"
-  integrity sha512-eiCbLKxYMLZK/0NivpoC5jgQp7J+Fkt4Kzib8N4ODfYxU9RoxHvZtr1ef0yXO5iS161VlpoZWr5hNuoVSdIXyw==
-  dependencies:
-    "@bloom-housing/backend-core" "^0.3.9"
-    "@types/body-scroll-lock" "^2.6.1"
-    "@types/jwt-decode" "^2.2.1"
-    "@types/markdown-to-jsx" "^6.11.2"
-    "@types/node" "^12.12.67"
-    "@types/node-polyglot" "^2.4.1"
-    "@types/react-dom" "^16.9.5"
-    "@types/react-text-mask" "^5.4.6"
-    "@types/react-transition-group" "^4.4.0"
-    axios "^0.21.1"
-    body-scroll-lock "^3.1.5"
-    bulma "^0.9.1"
-    jwt-decode "^2.2.0"
-    markdown-to-jsx "^6.11.4"
-    moment "^2.29.1"
-    nanoid "^3.1.12"
-    react "^16.13.1"
-    react-accessible-accordion "^3.3.3"
-    react-dom "^16.13.1"
-    react-focus-lock "^2.4.1"
-    react-inlinesvg "^2.1.1"
-    react-map-gl "^5.2.9"
-    react-media "^1.10.0"
-    react-text-mask "^5.4.3"
-    react-transition-group "^4.4.1"
-    tailwindcss "^1.8.12"
-    typesafe-actions "^5.1.0"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
@@ -1831,6 +1800,39 @@
   dependencies:
     "@sendgrid/client" "^7.4.0"
     "@sendgrid/helpers" "^7.4.0"
+
+"@sf-digital-services/ui-components@0.3.10-test":
+  version "0.3.10-test"
+  resolved "https://registry.yarnpkg.com/@sf-digital-services/ui-components/-/ui-components-0.3.10-test.tgz#0284219cf949f1327529c6bcbaa88418298a772e"
+  integrity sha512-y3UScfFUNNF/wqDu0vuN8j7c+lKTzz7vfC3Ft7OYwG5++IKoWgcYJtGjmW/O2s09mmvJFItIoW0u542YtBEo8g==
+  dependencies:
+    "@bloom-housing/backend-core" "^0.3.10"
+    "@types/body-scroll-lock" "^2.6.1"
+    "@types/jwt-decode" "^2.2.1"
+    "@types/markdown-to-jsx" "^6.11.2"
+    "@types/node" "^12.12.67"
+    "@types/node-polyglot" "^2.4.1"
+    "@types/react-dom" "^16.9.5"
+    "@types/react-text-mask" "^5.4.6"
+    "@types/react-transition-group" "^4.4.0"
+    axios "^0.21.1"
+    body-scroll-lock "^3.1.5"
+    bulma "^0.9.1"
+    jwt-decode "^2.2.0"
+    markdown-to-jsx "^6.11.4"
+    moment "^2.29.1"
+    nanoid "^3.1.12"
+    react "^16.13.1"
+    react-accessible-accordion "^3.3.3"
+    react-dom "^16.13.1"
+    react-focus-lock "^2.4.1"
+    react-inlinesvg "^2.1.1"
+    react-map-gl "^5.2.9"
+    react-media "^1.10.0"
+    react-text-mask "^5.4.3"
+    react-transition-group "^4.4.1"
+    tailwindcss "^1.8.12"
+    typesafe-actions "^5.1.0"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
@@ -8932,6 +8934,11 @@ jwt-decode@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
   integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+
+jwt-simple@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jwt-simple/-/jwt-simple-0.5.6.tgz#3357adec55b26547114157be66748995b75b333a"
+  integrity sha512-40aUybvhH9t2h71ncA1/1SbtTNCVZHgsTsTgqPUxGWDmUDrXyDf2wMNQKEbdBjbf4AI+fQhbECNTV6lWxQKUzg==
 
 kdbush@^3.0.0:
   version "3.0.0"
