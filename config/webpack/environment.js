@@ -1,4 +1,18 @@
 const { environment } = require("@rails/webpacker")
+const dotenv = require("dotenv")
+const webpack = require("webpack")
+
+const dotenvFiles = [".env"]
+dotenvFiles.forEach((dotenvFile) => {
+  dotenv.config({ path: dotenvFile, silent: true })
+})
+
+environment.plugins.prepend(
+  "Environment",
+  new webpack.DefinePlugin({
+    "process.env": { BACKEND_URL: "'http://localhost:3000'" },
+  })
+)
 
 const babel = require("./loaders/babel")
 const sass = require("./loaders/sass")
