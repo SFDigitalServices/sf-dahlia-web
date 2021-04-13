@@ -4,15 +4,28 @@ import {
   ExygyFooter,
   FooterNav,
   FooterSection,
+  LanguageNav,
   LocalizedLink,
   setSiteAlertMessage,
   SiteFooter,
   SiteHeader,
   t,
   UserNav,
-} from "@bloom-housing/ui-components"
+} from "@sf-digital-services/ui-components"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
+
+import { getCurrentLanguagePrefix, getLanguageOptions } from "../util/languageUtil"
+import {
+  getAssistancePath,
+  getFavoritesPath,
+  getMyAccountSettingsPath,
+  getMyDashboardPath,
+  getMyApplicationsPath,
+  getRentalDirectoryPath,
+  getSaleDirectoryPath,
+  getNewLanguagePath,
+} from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -24,34 +37,37 @@ const Layout = (props: LayoutProps) => {
     console.log("signOut")
   }
 
-  const LANGUAGES =
-    process.env.languages?.split(",")?.map((item) => ({
-      prefix: item === "en" ? "" : item,
-      label: t(`languages.${item}`),
-    })) || []
-
   return (
     <div className="site-wrapper">
       <div className="site-content">
         <Head>
-          <title>{t("nav.siteTitle")}</title>
+          <title>{t("t.dahlia_san_francisco_housing_portal")}</title>
         </Head>
+        <LanguageNav
+          currentLanguagePrefix={getCurrentLanguagePrefix() || "en"}
+          items={getLanguageOptions()}
+          onChangeLanguage={(newLangConfig) => {
+            window.location.href = getNewLanguagePath(newLangConfig.prefix)
+          }}
+        />
         <SiteHeader
           skip={t("nav.skip")}
           logoSrc="/images/logo_glyph.svg"
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
-          title={t("nav.siteTitle")}
-          languages={LANGUAGES}
+          title={t("t.dahlia_san_francisco_housing_portal")}
         >
-          <LocalizedLink href="/listings" className="navbar-item">
-            {t("nav.listings")}
-          </LocalizedLink>
-          {/* Only show Get Assistance if housing counselor data is available */}
-          {process.env.housingCounselorServiceUrl && (
-            <LocalizedLink href="/housing-counselors" className="navbar-item">
-              {t("nav.getAssistance")}
-            </LocalizedLink>
-          )}
+          <a href={getRentalDirectoryPath()} className="navbar-item">
+            {t("nav.rent")}
+          </a>
+          <a href={getSaleDirectoryPath()} className="navbar-item">
+            {t("nav.buy")}
+          </a>
+          <a href={getFavoritesPath()} className="navbar-item">
+            {t("nav.my_favorites")}
+          </a>
+          <a href={getAssistancePath()} className="navbar-item">
+            {t("nav.get_assistance")}
+          </a>
           <UserNav
             signedIn={signedIn}
             signOut={() => {
@@ -61,14 +77,14 @@ const Layout = (props: LayoutProps) => {
               window.scrollTo(0, 0)
             }}
           >
-            <LocalizedLink href="/account/dashboard" className="navbar-item">
-              {t("nav.myDashboard")}
+            <LocalizedLink href={getMyDashboardPath()} className="navbar-item">
+              {t("nav.my_dashboard")}
             </LocalizedLink>
-            <LocalizedLink href="/account/applications" className="navbar-item">
-              {t("nav.myApplications")}
+            <LocalizedLink href={getMyApplicationsPath()} className="navbar-item">
+              {t("nav.my_applications")}
             </LocalizedLink>
-            <LocalizedLink href="/account/settings" className="navbar-item">
-              {t("nav.accountSettings")}
+            <LocalizedLink href={getMyAccountSettingsPath()} className="navbar-item">
+              {t("nav.account_settings")}
             </LocalizedLink>
           </UserNav>
         </SiteHeader>
@@ -76,7 +92,7 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.copyright")}>
+        <FooterNav copyright={t("footer.city_county_of_sf")}>
           <div />
         </FooterNav>
         <FooterSection className="bg-black" small>

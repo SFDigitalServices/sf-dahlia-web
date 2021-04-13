@@ -2,7 +2,7 @@ import "@testing-library/jest-dom/extend-expect"
 
 import { configure } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
-import { addTranslation } from "@bloom-housing/ui-components"
+import { addTranslation } from "@sf-digital-services/ui-components"
 import * as general from "../page_content/locale_overrides/general.json"
 
 configure({ adapter: new Adapter() })
