@@ -393,8 +393,9 @@
             "title": "This listing has other special lottery preferences",
             "employment_disability": {
                 "description": "You can get this preference if any adult in the household: <ul><li>Works at a public higher education institution located in San Francisco</li><li>Works at a public healthcare institution located in San Francisco</li><li>Is unable to work because of a disability</li></ul>",
-                "work_in_education": "Employee of a SF public higher education institution",
-                "work_in_healthcare": "Employee of a SF public healthcare institution",
+                "individual_preference_question": "Preference as an employee",
+                "work_in_education": "SF public higher education institution",
+                "work_in_healthcare": "SF public healthcare institution",
                 "cannot_work_disability": "Cannot work due to disability"
             }
         },
