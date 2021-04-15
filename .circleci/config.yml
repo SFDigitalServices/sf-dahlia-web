@@ -189,6 +189,8 @@ jobs:
       - run: bundle exec rake jasmine:ci
   e2e:
     <<: *defaults
+    environment:
+      HOME_PAGE_REACT: 'true'
     steps:
       - setup
       - start-server

@@ -56,16 +56,20 @@ const Layout = (props: LayoutProps) => {
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahlia_san_francisco_housing_portal")}
         >
-          <a href={getRentalDirectoryPath()} className="navbar-item">
+          <a data-testid="nav-button--rent" href={getRentalDirectoryPath()} className="navbar-item">
             {t("nav.rent")}
           </a>
-          <a href={getSaleDirectoryPath()} className="navbar-item">
+          <a data-testid="nav-button--buy" href={getSaleDirectoryPath()} className="navbar-item">
             {t("nav.buy")}
           </a>
-          <a href={getFavoritesPath()} className="navbar-item">
+          <a data-testid="nav-button--favorites" href={getFavoritesPath()} className="navbar-item">
             {t("nav.my_favorites")}
           </a>
-          <a href={getAssistancePath()} className="navbar-item">
+          <a
+            data-testid="nav-button--assistance"
+            href={getAssistancePath()}
+            className="navbar-item"
+          >
             {t("nav.get_assistance")}
           </a>
           <UserNav
