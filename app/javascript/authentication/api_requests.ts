@@ -1,57 +1,55 @@
-import axios, { AxiosInstance } from "axios"
+import axios from "axios"
 
-import { AuthHeaders } from "./token"
-import { User, UserData } from "./user"
+import { setHeaders, getHeaders } from "../authentication/token"
+import { UserData } from "./user"
 
-const getHeaders = (res) => {
-  const { expiry, client, uid } = res.headers
+const apiBase = process.env.BACKEND_URL
+
+const loadHeaders = (header) => {
+  const { expiry, client, uid } = header
   const headers = {
     expiry,
     client,
     uid,
-    "access-token": res.headers["access-token"],
-    "token-type": res.headers["token-type"],
+    "access-token": header["access-token"],
+    "token-type": header["token-type"],
   }
   return headers
 }
 
-export const validateToken = async (axiosClient: AxiosInstance) => {
-  const res = await axiosClient.get<User>("/api/v1/auth/validate_token")
-
-  return getHeaders(res)
-}
-
-export const login = async (apiBase: string, email: string, password: string) => {
-  const res = await axios.post<{ accessToken: string }>(`${apiBase}/auth/login`, {
+export const signIn = async (email: string, password: string) => {
+  const res = await axios.post<UserData>(`${apiBase}/api/v1/auth/sign_in`, {
     email: email,
     password,
   })
-  const { accessToken } = res.data
-  return accessToken
+  setHeaders(loadHeaders(res.headers))
+
+  return res.data.data
 }
 
-export const signIn = async (apiBase: string, email: string, password: string) => {
-  const res = await axios.post<{ accessToken: string }>(`${apiBase}/api/v1/auth/sign_in`, {
-    email: email,
-    password,
+// Use this function for authenticated calls
+export const createAxiosInstance = () => {
+  if (!getHeaders()) {
+    throw new Error("Unauthorized. Sign in first")
+  }
+  return axios.create({
+    baseURL: apiBase,
+    headers: getHeaders(),
+    transformResponse: (res, headers) => {
+      setHeaders(loadHeaders(headers))
+      return res
+    },
   })
-
-  return getHeaders(res)
 }
 
-export const getProfile = async (client: AxiosInstance) => {
-  const res = await client.get<UserData>("/api/v1/auth/validate_token")
-  return { profile: res.data.data, headers: getHeaders(res) }
+export const getProfile = async () => {
+  const res = await createAxiosInstance().get<UserData>("/api/v1/auth/validate_token")
+
+  return res.data.data
 }
 
-export const createAxiosInstance = (apiUrl: string, headers: AuthHeaders) =>
-  axios.create({
-    baseURL: apiUrl,
-    headers: headers,
-  })
-
-export const forgotPassword = async (apiUrl: string, email: string) => {
-  const res = await axios.put<{ message: string }>(`${apiUrl}/user/forgot-password`, {
+export const forgotPassword = async (email: string) => {
+  const res = await axios.put<{ message: string }>(`${apiBase}/user/forgot-password`, {
     appUrl: window.location.origin,
     email: email,
   })
@@ -60,12 +58,11 @@ export const forgotPassword = async (apiUrl: string, email: string) => {
 }
 
 export const updatePassword = async (
-  apiUrl: string,
   token: string,
   password: string,
   passwordConfirmation: string
 ) => {
-  const res = await axios.put<{ accessToken: string }>(`${apiUrl}/user/update-password`, {
+  const res = await axios.put<{ accessToken: string }>(`${apiBase}/user/update-password`, {
     password: password,
     passwordConfirmation: passwordConfirmation,
     token: token,

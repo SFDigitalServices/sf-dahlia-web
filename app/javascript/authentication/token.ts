@@ -1,11 +1,22 @@
 export const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
+const getStorage = () => {
+  switch (process.env.TOKEN_STORAGE) {
+    case "session":
+      return sessionStorage
+    case "local":
+      return localStorage
+    default:
+      return sessionStorage
+  }
+}
+
 const getAuthHeaders = () => {
-  const headers = sessionStorage[ACCESS_TOKEN_LOCAL_STORAGE_KEY]
+  const headers = getStorage()[ACCESS_TOKEN_LOCAL_STORAGE_KEY]
   if (!headers) {
     return null
   }
-  return JSON.parse(sessionStorage[ACCESS_TOKEN_LOCAL_STORAGE_KEY])
+  return JSON.parse(getStorage()[ACCESS_TOKEN_LOCAL_STORAGE_KEY])
 }
 
 export interface AuthHeaders {
@@ -17,13 +28,13 @@ export interface AuthHeaders {
 }
 
 export const setHeaders = (headers: AuthHeaders) => {
-  sessionStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headers))
+  getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headers))
 }
 
 export const getHeaders = () => {
   return getAuthHeaders()
 }
-export const clearHeaders = () => sessionStorage.removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
+export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 
 export const getTokenTtl = () => {
   return parseInt(getAuthHeaders().expiry) * 1000 - new Date().valueOf()

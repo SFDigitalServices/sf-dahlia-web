@@ -1,10 +1,9 @@
 import React, { createContext, useReducer, FunctionComponent, useEffect, useContext } from "react"
 
-import { ConfigContext } from "@bloom-housing/ui-components"
 import { createAction, createReducer } from "typesafe-actions"
 
-import { createAxiosInstance, getProfile, signIn } from "./api_requests"
-import { AuthHeaders, clearHeaders, getHeaders, getTokenTtl, setHeaders } from "./token"
+import { getProfile, signIn } from "./api_requests"
+import { clearHeaders, getHeaders, getTokenTtl } from "./token"
 import { User } from "./user"
 
 // External interface this context provides
@@ -14,7 +13,6 @@ type ContextProps = {
   // True when an API request is processing
   loading: boolean
   profile?: User
-  headers?: AuthHeaders
   initialStateLoaded: boolean
 }
 
@@ -22,49 +20,25 @@ type ContextProps = {
 type UserState = {
   loading: boolean
   initialStateLoaded: boolean
-  storageType: string
-  headers?: AuthHeaders
   profile?: User
 }
 
-type DispatchType = (...arg: [unknown]) => void
-
 // State Mutation Actions
-const saveToken = createAction("SAVE_TOKEN")<{
-  apiUrl: string
-  headers: AuthHeaders
-  dispatch: DispatchType
-}>()
 const startLoading = createAction("START_LOADING")()
 const stopLoading = createAction("STOP_LOADING")()
 const saveProfile = createAction("SAVE_PROFILE")<User>()
 const signOut = createAction("SIGN_OUT")()
 
-const reducer = createReducer(
-  { loading: false, initialStateLoaded: false, storageType: "session" } as UserState,
-  {
-    SAVE_TOKEN: (state, { payload }) => {
-      const { ...rest } = state
-      const { headers } = payload
-
-      // Save off the token in local storage for persistence across reloads.
-      setHeaders(headers)
-
-      return {
-        ...rest,
-        headers: headers,
-      }
-    },
-    START_LOADING: (state) => ({ ...state, loading: true }),
-    END_LOADING: (state) => ({ ...state, loading: false }),
-    SAVE_PROFILE: (state, { payload: user }) => ({ ...state, profile: user }),
-    SIGN_OUT: ({ storageType }) => {
-      clearHeaders()
-      // Clear out all existing state other than the storage type
-      return { loading: false, storageType, initialStateLoaded: true }
-    },
-  }
-)
+const reducer = createReducer({ loading: false, initialStateLoaded: false } as UserState, {
+  START_LOADING: (state) => ({ ...state, loading: true }),
+  END_LOADING: (state) => ({ ...state, loading: false }),
+  SAVE_PROFILE: (state, { payload: user }) => ({ ...state, profile: user }),
+  SIGN_OUT: () => {
+    clearHeaders()
+    // Clear out all existing state other than the storage type
+    return { loading: false, initialStateLoaded: true }
+  },
+})
 
 export const UserContext = createContext<Partial<ContextProps>>({})
 
@@ -73,23 +47,19 @@ export interface UserProviderProps {
 }
 
 export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
-  const { apiUrl, storageType } = useContext(ConfigContext)
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
     initialStateLoaded: false,
-    storageType,
   })
 
   // Load our profile as soon as we have an access token available
   useEffect(() => {
-    if (!state.profile && state.headers) {
-      const client = createAxiosInstance(apiUrl, state.headers)
+    if (!state.profile) {
       const loadProfile = async () => {
         dispatch(startLoading())
         try {
-          const data = await getProfile(client)
-          dispatch(saveProfile(data.profile))
-          dispatch(saveToken({ headers: data.headers, apiUrl, dispatch }))
+          const profile = await getProfile()
+          dispatch(saveProfile(profile))
         } catch (err) {
           dispatch(signOut())
         } finally {
@@ -99,7 +69,7 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
       // eslint-disable-next-line no-void
       void loadProfile()
     }
-  }, [state.profile, state.headers, apiUrl])
+  }, [state.profile])
 
   // On initial load/reload, check localStorage to see if we have a token available
   useEffect(() => {
@@ -107,33 +77,26 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
     if (headers) {
       const ttl = getTokenTtl()
 
-      if (ttl > 0) {
-        dispatch(saveToken({ headers, apiUrl, dispatch }))
-      } else {
+      if (ttl <= 0) {
         dispatch(signOut())
       }
     } else {
       dispatch(signOut())
     }
-  }, [apiUrl, storageType])
+  }, [])
 
   const contextValues: ContextProps = {
     loading: state.loading,
     profile: state.profile,
-    headers: state.headers,
     initialStateLoaded: state.initialStateLoaded,
     signIn: async (email, password) => {
       dispatch(signOut())
       dispatch(startLoading())
       try {
-        const headers = await signIn(apiUrl, email, password)
-        dispatch(saveToken({ headers, apiUrl, dispatch }))
+        const profile = await signIn(email, password)
 
-        const client = createAxiosInstance(apiUrl, headers)
-        const data = await getProfile(client)
-        dispatch(saveToken({ headers: data.headers, apiUrl, dispatch }))
-        dispatch(saveProfile(data.profile))
-        return data.profile
+        dispatch(saveProfile(profile))
+        return profile
       } finally {
         dispatch(stopLoading())
       }
