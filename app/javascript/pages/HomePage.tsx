@@ -11,13 +11,14 @@ import {
 } from "@bloom-housing/ui-components"
 import Head from "next/head"
 
+import { withAppSetup } from "../layouts/app_settings"
 import Layout from "../layouts/Layout"
 
 export interface HomePageProps {
   listings?: Listing[]
 }
 
-const HomePage = (props: HomePageProps) => {
+const component = (props: HomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
 
@@ -59,4 +60,6 @@ const HomePage = (props: HomePageProps) => {
   )
 }
 
-export default HomePage
+const HomePage = withAppSetup(component)
+
+export { HomePage as default, HomePage }

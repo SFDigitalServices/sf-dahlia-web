@@ -32,7 +32,8 @@ const SignInForm = () => {
     try {
       const user = await signIn(email, password)
       setSiteAlertMessage(t(`authentication.signIn.success`, { name: user.email }), "success")
-      // await router.push("/account/dashboard")
+      // TODO replace with proper router
+      window.location.href = "/?react=true"
       window.scrollTo(0, 0)
     } catch (err) {
       const { status } = err.response || {}
@@ -46,7 +47,6 @@ const SignInForm = () => {
       }
     }
   }
-  // sessionStorage.setItem("test", "value")
 
   return (
     <FormCard>
@@ -72,6 +72,7 @@ const SignInForm = () => {
             register={register}
           />
 
+          {/* TODO: Add /forgot-password link */}
           <aside className="float-right font-bold">
             {/* <Link href="/forgot-password">
                 <a>{t("authentication.signIn.forgotPassword")}</a>
