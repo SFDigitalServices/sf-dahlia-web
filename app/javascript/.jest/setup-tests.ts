@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/extend-expect"
 import { configure } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
 import { addTranslation } from "@sf-digital-services/ui-components"
-import * as general from "../page_content/locale_overrides/general.json"
+import enPhrases from "../../assets/json/translations/locale-en.json"
 
 configure({ adapter: new Adapter() })
 
@@ -21,4 +21,4 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   }
 })
 
-addTranslation(general)
+addTranslation(enPhrases.en)

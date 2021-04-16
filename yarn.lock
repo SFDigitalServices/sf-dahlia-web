@@ -1801,10 +1801,10 @@
     "@sendgrid/client" "^7.4.0"
     "@sendgrid/helpers" "^7.4.0"
 
-"@sf-digital-services/ui-components@0.3.10-test":
-  version "0.3.10-test"
-  resolved "https://registry.yarnpkg.com/@sf-digital-services/ui-components/-/ui-components-0.3.10-test.tgz#0284219cf949f1327529c6bcbaa88418298a772e"
-  integrity sha512-y3UScfFUNNF/wqDu0vuN8j7c+lKTzz7vfC3Ft7OYwG5++IKoWgcYJtGjmW/O2s09mmvJFItIoW0u542YtBEo8g==
+"@sf-digital-services/ui-components@0.3.10-sf1":
+  version "0.3.10-sf1"
+  resolved "https://registry.yarnpkg.com/@sf-digital-services/ui-components/-/ui-components-0.3.10-sf1.tgz#33a734322ccc33b7c5ebed3b2eb809f69dc0d9b8"
+  integrity sha512-VI5a7LAAWPIV2mx9C2sIBT24VDSS8gB+DHhqandx9+93twn0hPFtlENu7xLsKMArnornKFp23DMATYYiPdgxkA==
   dependencies:
     "@bloom-housing/backend-core" "^0.3.10"
     "@types/body-scroll-lock" "^2.6.1"

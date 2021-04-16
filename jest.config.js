@@ -2,6 +2,7 @@
 /*eslint-env node*/
 
 process.env.TZ = "UTC"
+process.env.NODE_ENV = "test"
 
 module.exports = {
   testRegex: "/*.test.tsx$",

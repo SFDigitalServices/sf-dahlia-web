@@ -51,7 +51,7 @@ const Layout = (props: LayoutProps) => {
           }}
         />
         <SiteHeader
-          skip={t("nav.skip")}
+          skip={t("t.skip_to_main_content")}
           logoSrc="/images/logo_glyph.svg"
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahlia_san_francisco_housing_portal")}
@@ -75,7 +75,7 @@ const Layout = (props: LayoutProps) => {
           <UserNav
             signedIn={signedIn}
             signOut={() => {
-              setSiteAlertMessage(t(`authentication.signOut.success`), "notice")
+              setSiteAlertMessage(t(`sign_in.signed_out_successfully`), "notice")
               // await router.push("/sign-in")
               signOut()
               window.scrollTo(0, 0)
