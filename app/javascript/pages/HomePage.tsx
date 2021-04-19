@@ -18,7 +18,7 @@ export interface HomePageProps {
   listings?: Listing[]
 }
 
-const component = (props: HomePageProps) => {
+const HomePage = (props: HomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
 
@@ -60,6 +60,4 @@ const component = (props: HomePageProps) => {
   )
 }
 
-const HomePage = withAppSetup(component)
-
-export { HomePage as default, HomePage }
+export default withAppSetup(HomePage)

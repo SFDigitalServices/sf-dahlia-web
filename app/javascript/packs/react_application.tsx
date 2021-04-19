@@ -5,7 +5,7 @@ import WebpackerReact from "webpacker-react"
 import * as customTranslations from "../page_content/locale_overrides/general.json"
 import "../pages/base.scss"
 import HomePage from "../pages/HomePage"
-import { SignIn } from "../pages/SignIn"
+import SignIn from "../pages/SignIn"
 
 addTranslation(translation)
 if (customTranslations) {

@@ -6,7 +6,7 @@ import { UserProvider } from "../authentication/UserContext"
 import { withAppSetup } from "../layouts/app_settings"
 import FormsLayout from "../layouts/FormLayout"
 
-const component = () => {
+const SignIn = () => {
   return (
     <FormsLayout>
       <UserProvider>
@@ -17,6 +17,4 @@ const component = () => {
   )
 }
 
-const SignIn = withAppSetup(component)
-
-export { SignIn as default, SignIn }
+export default withAppSetup(SignIn)
