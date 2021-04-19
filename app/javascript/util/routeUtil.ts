@@ -3,26 +3,42 @@ import {
   getCurrentLanguage,
   LANGUAGE_CONFIGS,
   LangConfig,
+  LanguagePrefix,
+  toLanguagePrefix,
 } from "./languageUtil"
+import { cleanPath } from "./urlUtil"
 
-export const getLocalizedPath = (path: string, languageOverride?: string): string => {
-  const config: LangConfig = LANGUAGE_CONFIGS[languageOverride || getCurrentLanguage()]
+/**
+ * Given a path string, get the same path with the correct localized prefix appended to it.
+ *
+ * ex getLocalizedPath("/sign-in", LanguagePrefix.Spanish) -> "/es/sign-in"
+ */
+const getLocalizedPath = (newPath: string, newLanguage: LanguagePrefix): string => {
+  const newPathWithoutLanguage = getPathWithoutLanguagePrefix(newPath)
+  const config: LangConfig = LANGUAGE_CONFIGS[newLanguage]
 
-  if (config.isDefault) {
-    return path
-  } else {
-    return `/${config.prefix}${path}`
-  }
+  return cleanPath(
+    config.isDefault ? newPathWithoutLanguage : `${config.prefix}${newPathWithoutLanguage}`
+  )
 }
 
-export const getRentalDirectoryPath = (): string => getLocalizedPath("/listings/for-rent")
-export const getSaleDirectoryPath = (): string => getLocalizedPath("/listings/for-sale")
-export const getAssistancePath = (): string => getLocalizedPath("/get-assistance")
-export const getSignInPath = (): string => getLocalizedPath("/sign-in")
-export const getFavoritesPath = (): string => getLocalizedPath("/favorites")
-export const getMyDashboardPath = (): string => getLocalizedPath("/account/dashboard")
-export const getMyApplicationsPath = (): string => getLocalizedPath("/account/dashboard")
-export const getMyAccountSettingsPath = (): string => getLocalizedPath("/account/settings")
+const localizedPathGetter = (newPathNonLocalized: string) => (
+  currentPath: string | undefined
+): string => getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
 
-export const getNewLanguagePath = (newLanguagePrefix: string): string =>
-  getLocalizedPath(getPathWithoutLanguagePrefix(), newLanguagePrefix || "en")
+/**
+ * Get new path after switching languages
+ */
+export const getNewLanguagePath = (
+  currentPath: string | undefined,
+  newLanguagePrefix: string
+): string => getLocalizedPath(currentPath, toLanguagePrefix(newLanguagePrefix))
+
+export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")
+export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
+export const getAssistancePath = localizedPathGetter("/get-assistance")
+export const getSignInPath = localizedPathGetter("/sign-in")
+export const getFavoritesPath = localizedPathGetter("/favorites")
+export const getMyDashboardPath = localizedPathGetter("/account/dashboard")
+export const getMyApplicationsPath = localizedPathGetter("/account/applications")
+export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")

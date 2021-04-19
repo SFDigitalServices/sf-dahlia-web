@@ -15,7 +15,7 @@ import {
 import Head from "next/head"
 import SVG from "react-inlinesvg"
 
-import { getCurrentLanguagePrefix, getLanguageOptions } from "../util/languageUtil"
+import { getRoutePrefix, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getAssistancePath,
   getFavoritesPath,
@@ -37,6 +37,13 @@ const Layout = (props: LayoutProps) => {
     console.log("signOut")
   }
 
+  const langItems = Object.values(LANGUAGE_CONFIGS).map((item) => ({
+    prefix: item.isDefault ? "" : item.prefix,
+    label: item.getLabel(),
+  }))
+
+  const currentPath = window.location.pathname
+
   return (
     <div className="site-wrapper">
       <div className="site-content">
@@ -44,10 +51,13 @@ const Layout = (props: LayoutProps) => {
           <title>{t("t.dahlia_san_francisco_housing_portal")}</title>
         </Head>
         <LanguageNav
-          currentLanguagePrefix={getCurrentLanguagePrefix() || "en"}
-          items={getLanguageOptions()}
+          currentLanguagePrefix={getRoutePrefix(currentPath) || "en"}
+          items={langItems}
           onChangeLanguage={(newLangConfig) => {
-            window.location.href = getNewLanguagePath(newLangConfig.prefix)
+            window.location.href = getNewLanguagePath(
+              window.location.pathname,
+              newLangConfig.prefix
+            )
           }}
         />
         <SiteHeader
@@ -56,18 +66,30 @@ const Layout = (props: LayoutProps) => {
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahlia_san_francisco_housing_portal")}
         >
-          <a data-testid="nav-button--rent" href={getRentalDirectoryPath()} className="navbar-item">
+          <a
+            data-testid="nav-button--rent"
+            href={getRentalDirectoryPath(currentPath)}
+            className="navbar-item"
+          >
             {t("nav.rent")}
           </a>
-          <a data-testid="nav-button--buy" href={getSaleDirectoryPath()} className="navbar-item">
+          <a
+            data-testid="nav-button--buy"
+            href={getSaleDirectoryPath(currentPath)}
+            className="navbar-item"
+          >
             {t("nav.buy")}
           </a>
-          <a data-testid="nav-button--favorites" href={getFavoritesPath()} className="navbar-item">
+          <a
+            data-testid="nav-button--favorites"
+            href={getFavoritesPath(currentPath)}
+            className="navbar-item"
+          >
             {t("nav.my_favorites")}
           </a>
           <a
             data-testid="nav-button--assistance"
-            href={getAssistancePath()}
+            href={getAssistancePath(currentPath)}
             className="navbar-item"
           >
             {t("nav.get_assistance")}
@@ -81,13 +103,13 @@ const Layout = (props: LayoutProps) => {
               window.scrollTo(0, 0)
             }}
           >
-            <LocalizedLink href={getMyDashboardPath()} className="navbar-item">
+            <LocalizedLink href={getMyDashboardPath(currentPath)} className="navbar-item">
               {t("nav.my_dashboard")}
             </LocalizedLink>
-            <LocalizedLink href={getMyApplicationsPath()} className="navbar-item">
+            <LocalizedLink href={getMyApplicationsPath(currentPath)} className="navbar-item">
               {t("nav.my_applications")}
             </LocalizedLink>
-            <LocalizedLink href={getMyAccountSettingsPath()} className="navbar-item">
+            <LocalizedLink href={getMyAccountSettingsPath(currentPath)} className="navbar-item">
               {t("nav.account_settings")}
             </LocalizedLink>
           </UserNav>
