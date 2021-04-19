@@ -1,83 +1,115 @@
-import { LangItem, t } from "@sf-digital-services/ui-components"
+import { t, addTranslation } from "@sf-digital-services/ui-components"
+
+import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
-  prefix: string
+  prefix: LanguagePrefix
   isDefault: boolean
   getLabel: () => string
-  load: () => Promise<Record<string, unknown>>
+  load: () => Promise<PhraseBundle>
 }
 
-export const LANGUAGE_CONFIGS: { [key: string]: LangConfig } = {
-  en: {
-    prefix: "en",
+export enum LanguagePrefix {
+  English = "en",
+  Spanish = "es",
+  Chinese = "zh",
+  Tagalog = "tl",
+}
+
+export const LANGUAGE_CONFIGS: Record<LanguagePrefix, LangConfig> = {
+  [LanguagePrefix.English]: {
+    prefix: LanguagePrefix.English,
     isDefault: true,
     getLabel: () => t("languages.en"),
     load: async () => (await import("../../assets/json/translations/locale-en.json")).en,
   },
-  es: {
-    prefix: "es",
+  [LanguagePrefix.Spanish]: {
+    prefix: LanguagePrefix.Spanish,
     isDefault: false,
     getLabel: () => t("languages.es"),
     load: async () => (await import("../../assets/json/translations/locale-es.json")).es,
   },
-  tl: {
-    prefix: "tl",
-    isDefault: false,
-    getLabel: () => t("languages.tl"),
-    load: async () => (await import("../../assets/json/translations/locale-tl.json")).tl,
-  },
-  zh: {
-    prefix: "zh",
+  [LanguagePrefix.Chinese]: {
+    prefix: LanguagePrefix.Chinese,
     isDefault: false,
     getLabel: () => t("languages.zh"),
     load: async () => (await import("../../assets/json/translations/locale-zh.json")).zh,
   },
+  [LanguagePrefix.Tagalog]: {
+    prefix: LanguagePrefix.Tagalog,
+    isDefault: false,
+    getLabel: () => t("languages.tl"),
+    load: async () => (await import("../../assets/json/translations/locale-tl.json")).tl,
+  },
 }
 
-export const getLanguageOptions = (): LangItem[] =>
-  Object.values(LANGUAGE_CONFIGS).map((item) => ({
-    prefix: item.isDefault ? "" : item.prefix,
-    label: item.getLabel(),
-  }))
+const loadDefaultTranslation = async (): Promise<PhraseBundle> =>
+  await Object.values(LANGUAGE_CONFIGS)
+    .find((config) => config.isDefault)
+    .load()
+
+/**
+ * Load the required translation phrases for the given language prefix.
+ *
+ * Ex: prefix="es" will load Spanish phrases with English as backup
+ *
+ * @param prefix is a string, cannot be blank or null.
+ */
+export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> => {
+  addTranslation(await loadDefaultTranslation())
+
+  const config = LANGUAGE_CONFIGS[prefix]
+
+  if (!config.isDefault) {
+    addTranslation(await config.load())
+  }
+}
+
+export const toLanguagePrefix = (routePrefix: string | undefined): LanguagePrefix => {
+  switch (routePrefix) {
+    case LanguagePrefix.Spanish:
+      return LanguagePrefix.Spanish
+    case LanguagePrefix.Chinese:
+      return LanguagePrefix.Chinese
+    case LanguagePrefix.Tagalog:
+      return LanguagePrefix.Tagalog
+    default:
+      return LanguagePrefix.English
+  }
+}
 
 /**
  * Get the language prefix from the url. Or null if no prefix is on the path
  */
-export const getCurrentLanguagePrefix = (): string | null => {
-  const path = window.location.pathname
-
+export const getRoutePrefix = (path: string): LanguagePrefix | null => {
+  const pathWithoutLeadingSlash = getPathWithoutLeadingSlash(path)
   const langConfig = Object.values(LANGUAGE_CONFIGS).find(
     (languageConfig) =>
-      path === `/${languageConfig.prefix}` || path.startsWith(`/${languageConfig.prefix}/`)
+      pathWithoutLeadingSlash === `${languageConfig.prefix}` ||
+      pathWithoutLeadingSlash.startsWith(`${languageConfig.prefix}/`)
   )
 
   return langConfig?.prefix
 }
 
 /**
- * Get the language prefix from the url. Or null if no prefix is on the path
+ * Get the current path minus the language prefix
+ *
+ * ex: /es/sign-in -> /sign-in, /sign-in -> /sign-in
  */
-export const getPathWithoutLanguagePrefix = (): string => {
-  const path = window.location.pathname
-  const prefix = getCurrentLanguagePrefix()
-  if (!prefix) return path
+export const getPathWithoutLanguagePrefix = (path: string): string => {
+  const cleanedPath = cleanPath(path)
+  const prefix = getRoutePrefix(cleanedPath)
+  if (!prefix) return cleanedPath
 
-  const pathWithoutLeadingSlash = path.replace("/", "")
   const langConfig = Object.values(LANGUAGE_CONFIGS).find((config) => config.prefix === prefix)
-  return `/${pathWithoutLeadingSlash.replace(langConfig.prefix, "")}`
+  return cleanPath(`${cleanedPath.replace(langConfig.prefix, "")}`)
 }
 
-export const getCurrentLanguage = (): string =>
-  getCurrentLanguagePrefix() || LANGUAGE_CONFIGS.en.prefix
-
-export const loadTranslations = async (): Promise<{ [key: string]: PhraseBundle }> => {
-  const phrases: { [key: string]: PhraseBundle } = {}
-
-  for (const key in LANGUAGE_CONFIGS) {
-    const config = LANGUAGE_CONFIGS[key]
-    phrases[key] = await config.load()
-  }
-
-  return phrases
-}
+/**
+ * Get the current language prefix, or default to the english prefix if there is no explicit prefix in
+ * the path.
+ */
+export const getCurrentLanguage = (path: string | undefined): LanguagePrefix =>
+  getRoutePrefix(path || "") || LanguagePrefix.English
