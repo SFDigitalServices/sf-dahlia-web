@@ -374,6 +374,7 @@ ShortFormApplicationService = (
     else
       Service.preferences["#{prefType}_household_member"] = null
       Service.preferences["#{prefType}_proofOption"] = null
+      Service.preferences["#{prefType}_preference"] = null
       opts = {prefType: prefType}
       FileUploadService.deleteFile(Service.listing, opts)
       if prefType == 'certOfPreference' || prefType == 'displaced'
