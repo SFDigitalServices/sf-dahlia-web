@@ -545,11 +545,6 @@
             "title": "Thanks. We have received your application for",
             "view_and_print_a_copy": "View submitted application and print a copy"
         },
-        "header": {
-            "learn_more": "Learn more.",
-            "translate_bar_expert_notice": "This page has been translated by a native speaker.",
-            "translate_bar_google_notice": "This page has been translated with Google Translate."
-        },
         "hello": "Hello %{name}",
         "housing_counselor": {
             "find_a_housing_counselor": "Find a Housing Counselor",
