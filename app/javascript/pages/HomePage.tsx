@@ -34,7 +34,7 @@ const HomePage = (props: HomePageProps) => {
       />
       <div className="flex absolute w-full flex-col items-center">
         <SiteAlert type="alert" className={alertClasses} />
-        <SiteAlert type="success" className={alertClasses} timeout={30000} />
+        <SiteAlert type="success" className={alertClasses} timeout={30_000} />
       </div>
       <Hero
         title={

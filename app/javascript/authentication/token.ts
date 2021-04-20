@@ -28,11 +28,7 @@ export const setHeaders = (headers: AuthHeaders) => {
   getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headers))
 }
 
-export const getHeaders = () => {
-  return getAuthHeaders()
-}
+export const getHeaders = () => getAuthHeaders()
 export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 
-export const getTokenTtl = () => {
-  return Number.parseInt(getAuthHeaders().expiry) * 1000 - Date.now()
-}
+export const getTokenTtl = () => Number.parseInt(getAuthHeaders().expiry) * 1000 - Date.now()

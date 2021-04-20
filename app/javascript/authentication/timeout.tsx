@@ -8,7 +8,7 @@ import {
   setSiteAlertMessage,
 } from "@bloom-housing/ui-components"
 
-import { UserContext } from "./UserContext"
+import UserContext from "./context/UserContext"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
@@ -60,7 +60,7 @@ export const IdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTime
   } = props
 
   // 5 minutes
-  const idleTimeout = 5 * 60 * 1000
+  const idleTimeout = 1 * 10 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {

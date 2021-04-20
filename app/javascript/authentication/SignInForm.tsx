@@ -15,7 +15,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 
-import { UserContext } from "./UserContext"
+import UserContext from "./context/UserContext"
 
 const SignInForm = () => {
   const { signIn } = useContext(UserContext)
