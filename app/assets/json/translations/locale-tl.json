@@ -534,11 +534,6 @@
             "title": "Salamat. Natanggap na namin ang inyong aplikasyon para sa",
             "view_and_print_a_copy": "Tingnan ang isinumiteng aplikasyon at mag-print ng kopya"
         },
-        "header": {
-            "learn_more": "Alamin pa ang tungkol dito. ",
-            "translate_bar_expert_notice": "Isinalin ang page na ito ng katutubong nagsasalita ng wikang ito. ",
-            "translate_bar_google_notice": "Isinalin ang pahinang ito ng Google Translate. "
-        },
         "hello": "Kumusta %{name}",
         "housing_counselor": {
             "find_a_housing_counselor": "Humanap ng Tagapayo sa Pabahay (Housing Counselor). ",

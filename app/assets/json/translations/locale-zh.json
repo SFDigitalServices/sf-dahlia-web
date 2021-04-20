@@ -536,11 +536,6 @@
             "title": "謝謝。我們已收到您針對以下清單的申請：",
             "view_and_print_a_copy": "檢視已提交的申請並列印副本"
         },
-        "header": {
-            "learn_more": "深入了解。",
-            "translate_bar_expert_notice": "此頁由母語人員翻譯。",
-            "translate_bar_google_notice": "本頁由 Google 翻譯。"
-        },
         "hello": "%{name}，您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
