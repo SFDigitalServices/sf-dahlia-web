@@ -17,12 +17,14 @@ import SVG from "react-inlinesvg"
 export interface LayoutProps {
   children: React.ReactNode
 }
+
+const signOut = () => {
+  console.log("signOut")
+}
+
 const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
-  const signOut = () => {
-    console.log("signOut")
-  }
 
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({

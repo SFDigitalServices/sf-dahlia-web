@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios"
 
-import { setHeaders, getHeaders, AuthHeaders } from "../authentication/token"
+import { setHeaders, getHeaders, AuthHeaders } from "./token"
 import { User, UserData } from "./user"
 
 const loadHeaders = (header: Record<string, string>): AuthHeaders => {

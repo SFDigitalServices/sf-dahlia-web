@@ -2,7 +2,7 @@ import React, { createContext, useReducer, FunctionComponent, useEffect, useCont
 
 import { createAction, createReducer } from "typesafe-actions"
 
-import { getProfile, signIn } from "./api_requests"
+import { getProfile, signIn } from "./apiService"
 import { clearHeaders, getHeaders, getTokenTtl } from "./token"
 import { User } from "./user"
 
@@ -60,7 +60,7 @@ export const UserProvider: FunctionComponent = (props: UserProviderProps) => {
         try {
           const profile = await getProfile()
           dispatch(saveProfile(profile))
-        } catch (err) {
+        } catch {
           dispatch(signOut())
         } finally {
           dispatch(stopLoading())

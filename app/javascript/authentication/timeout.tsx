@@ -69,18 +69,18 @@ export const IdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTime
       clearTimeout(promptTimeout)
     }
 
+    const timeoutAction = async () => {
+      setPromptTimeout(undefined)
+      await onTimeout()
+      setSiteAlertMessage(alertMessage, alertType)
+
+      // replace this with proper react router when we have one
+      return (window.location.href = redirectPath)
+    }
+
     // Give the user 1 minute to respond to the prompt before the onTimeout action
     setPromptTimeout(
       (setTimeout(() => {
-        const timeoutAction = async () => {
-          setPromptTimeout(undefined)
-          await onTimeout()
-          setSiteAlertMessage(alertMessage, alertType)
-
-          // replace this with proper react router when we have one
-          return (window.location.href = redirectPath)
-        }
-        // eslint-disable-next-line no-void
         void timeoutAction()
       }, PROMPT_TIMEOUT) as unknown) as number
     )

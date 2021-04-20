@@ -35,12 +35,12 @@ const SignInForm = () => {
       // TODO replace with proper router
       window.location.href = "/?react=true"
       window.scrollTo(0, 0)
-    } catch (err) {
-      const { status } = err.response || {}
+    } catch (error) {
+      const { status } = error.response || {}
       if (status === 401) {
-        setRequestError(`${t("authentication.signIn.error")}: ${err.message}`)
+        setRequestError(`${t("authentication.signIn.error")}: ${error.message}`)
       } else {
-        console.error(err)
+        console.error(error)
         setRequestError(
           `${t("authentication.signIn.error")}. ${t("authentication.signIn.errorGenericMessage")}`
         )
