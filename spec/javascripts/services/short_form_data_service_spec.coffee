@@ -26,6 +26,7 @@
         neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
     fakeListingPreferenceService =
       hasPreference: ->
+      getPreferenceById: ->
     fakeListingUnitService =
       listingHasReservedUnitType: ->
 
@@ -54,6 +55,20 @@
       it 'sends stringified JSON for formMetadata', ->
         expect(formattedApp.formMetadata).toContain('"completedSections"')
 
+      it 'adds an individual pref for custom preferences if present', ->
+        fakeAppWithCustomPrefs = angular.copy(fakeApplication)
+        # Fake listing has custom listing id w/ id a0l0P00001PsqDoQAJ
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ'] = true
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_preference'] = 'Works in Public Ed'
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_household_member'] = 1
+        formattedApp = ShortFormDataService.formatApplication(fakeListingId, fakeAppWithCustomPrefs)
+        expectedCustomPref = {
+          recordTypeDevName: 'Custom',
+          listingPreferenceID: 'a0l0P00001PsqDoQAJ',
+          individualPreference: 'Works in Public Ed'
+        }
+        expect(formattedApp.shortFormPreferences).toContain(expectedCustomPref)
+
     describe 'reformatApplication', ->
       beforeEach ->
         reformattedApp = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
@@ -66,6 +81,27 @@
 
       it 'reformats stringified JSON formMetadata', ->
         expect(reformattedApp.completedSections.Intro).toEqual(true)
+
+      it 'reformats custom preferences to include individual preferences', ->
+        salesforceAppWithCustomPrefs = angular.copy(fakeSalesforceApplication)
+        customPref = {
+          'recordTypeDevName': 'Custom',
+          'listingPreferenceID': 'listingPrefId',
+          'individualPreference': 'Works in Public Ed',
+          'shortformPreferenceID': 'shortFormPreferenceID',
+          'appMemberID': 'a0pf00000029IWsAAM'
+          'optOut': false
+        }
+        salesforceAppWithCustomPrefs.shortFormPreferences = [customPref]
+        fakeListingPref = {
+          'preferenceName': 'Employment/Disability Preference',
+          'listingPreferenceID': 'listingPrefId',
+        }
+        spyOn(fakeListingPreferenceService, 'getPreferenceById').and.returnValue(fakeListingPref)
+        reformattedApp = ShortFormDataService.reformatApplication(salesforceAppWithCustomPrefs)
+
+        expect(reformattedApp.preferences['listingPrefId_preference']).toEqual('Works in Public Ed')
+
 
     describe 'maxDOBDay', ->
       it 'gives max of 30 for appropriate months', ->
