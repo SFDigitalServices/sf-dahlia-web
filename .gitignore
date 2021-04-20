@@ -40,6 +40,8 @@ public/packs-test
 
 # VS Code
 TAGS
+.vscode/*
+!.vscode-default/*
 
 # Byebug command history
 .byebug_history
