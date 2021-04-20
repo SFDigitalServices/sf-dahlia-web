@@ -12,12 +12,12 @@ module.exports = {
   // Specifies the ESLint parser
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    project: ["./tsconfig.lint.json"],
+    tsconfigRootDir: __dirname,
+    project: ["tsconfig.lint.json"],
     // Allows for the parsing of modern ECMAScript features
     ecmaVersion: 2020,
     // Allows for the use of imports
     sourceType: "module",
-    tsconfigRootDir: ".",
   },
   plugins: ["react", "@typescript-eslint", "prettier", "import"],
   extends: [

@@ -11,8 +11,8 @@ import {
 } from "@bloom-housing/ui-components"
 import Head from "next/head"
 
-import { withAppSetup } from "../layouts/app_settings"
 import Layout from "../layouts/Layout"
+import withAppSetup from "../layouts/withAppSetup"
 
 export interface HomePageProps {
   listings?: Listing[]
