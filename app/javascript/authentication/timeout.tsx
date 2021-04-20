@@ -60,7 +60,7 @@ export const IdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTime
   } = props
 
   // 5 minutes
-  const idleTimeout = 1 * 10 * 1000
+  const idleTimeout = 5 * 60 * 1000
   const [promptTimeout, setPromptTimeout] = useState<number | undefined>()
 
   useIdleTimeout(idleTimeout, () => {
