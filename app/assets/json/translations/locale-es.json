@@ -534,11 +534,6 @@
             "title": "Gracias. Hemos recibido su solicitud para",
             "view_and_print_a_copy": "Ver la solicitud presentada e imprimir una copia"
         },
-        "header": {
-            "learn_more": "Conozca más.",
-            "translate_bar_expert_notice": "Esta página fue traducida por un hablante nativo.",
-            "translate_bar_google_notice": "Esta página ha sido traducida por Google Translate."
-        },
         "hello": "Hola, %{name}",
         "housing_counselor": {
             "find_a_housing_counselor": "Encuentre un consejero de vivienda",
