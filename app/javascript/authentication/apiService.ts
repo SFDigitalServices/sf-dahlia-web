@@ -34,7 +34,9 @@ export const createAxiosInstance = (): AxiosInstance => {
   return axios.create({
     headers: getHeaders(),
     transformResponse: (res, headers) => {
-      setHeaders(loadHeaders(headers))
+      if (headers["access-token"]) {
+        setHeaders(loadHeaders(headers))
+      }
       return JSON.parse(res)
     },
   })
