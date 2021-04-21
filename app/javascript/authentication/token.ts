@@ -1,4 +1,4 @@
-export const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
+const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
 const getStorage = () => {
   switch (process.env.TOKEN_STORAGE) {
@@ -11,7 +11,7 @@ const getStorage = () => {
   }
 }
 
-const getAuthHeaders = () => {
+const getAuthHeaders = (): AuthHeaders | undefined => {
   const headers = getStorage()[ACCESS_TOKEN_LOCAL_STORAGE_KEY]
   return headers && JSON.parse(headers)
 }
@@ -28,7 +28,8 @@ export const setHeaders = (headers: AuthHeaders) => {
   getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headers))
 }
 
-export const getHeaders = () => getAuthHeaders()
+export const getHeaders = (): AuthHeaders | undefined => getAuthHeaders()
 export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 
-export const getTokenTtl = () => Number.parseInt(getAuthHeaders().expiry) * 1000 - Date.now()
+const getTokenTtl = (): number => Number.parseInt(getAuthHeaders()?.expiry) * 1000 - Date.now()
+export const isTokenValid = (): boolean => getAuthHeaders() && getTokenTtl() > 0

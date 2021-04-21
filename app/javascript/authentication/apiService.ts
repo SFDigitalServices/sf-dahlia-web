@@ -14,15 +14,16 @@ const loadHeaders = (header: Record<string, string>): AuthHeaders => {
   }
 }
 
-export const signIn = async (email: string, password: string): Promise<User> => {
-  const res = await axios.post<UserData>("/api/v1/auth/sign_in", {
-    email,
-    password,
-  })
-  setHeaders(loadHeaders(res.headers))
-
-  return res.data.data
-}
+export const signIn = async (email: string, password: string): Promise<User> =>
+  axios
+    .post<UserData>("/api/v1/auth/sign_in", {
+      email,
+      password,
+    })
+    .then(({ data, headers }) => {
+      setHeaders(loadHeaders(headers))
+      return data.data
+    })
 
 // Use this function for authenticated calls
 export const createAxiosInstance = (): AxiosInstance => {
@@ -34,34 +35,33 @@ export const createAxiosInstance = (): AxiosInstance => {
     headers: getHeaders(),
     transformResponse: (res, headers) => {
       setHeaders(loadHeaders(headers))
-      return res
+      return JSON.parse(res)
     },
   })
 }
 
-export const getProfile = async (): Promise<User> => {
-  const res = await createAxiosInstance().get<UserData>("/api/v1/auth/validate_token")
+export const getProfile = async (): Promise<User> =>
+  createAxiosInstance()
+    .get<UserData>("/api/v1/auth/validate_token")
+    .then((res) => res.data.data)
 
-  return res.data.data
-}
-
-export const forgotPassword = async (email: string): Promise<string> => {
-  const res = await axios.put<{ message: string }>("/user/forgot-password", {
-    appUrl: window.location.origin,
-    email: email,
-  })
-  return res.data.message
-}
+export const forgotPassword = async (email: string): Promise<string> =>
+  axios
+    .put<{ message: string }>("/user/forgot-password", {
+      appUrl: window.location.origin,
+      email: email,
+    })
+    .then(({ data }) => data.message)
 
 export const updatePassword = async (
   token: string,
   password: string,
   passwordConfirmation: string
-): Promise<string> => {
-  const res = await axios.put<{ accessToken: string }>("/user/update-password", {
-    password: password,
-    passwordConfirmation: passwordConfirmation,
-    token: token,
-  })
-  return res.data.accessToken
-}
+): Promise<string> =>
+  axios
+    .put<{ accessToken: string }>("/user/update-password", {
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      token: token,
+    })
+    .then(({ data }) => data.accessToken)

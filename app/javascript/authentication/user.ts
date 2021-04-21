@@ -14,7 +14,7 @@ interface User {
 
 interface UserData {
   data: User
-  sucess: string
+  success: boolean
 }
 
 export { User, UserData }

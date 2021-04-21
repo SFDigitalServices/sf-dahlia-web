@@ -14,7 +14,7 @@ import Head from "next/head"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 
-export interface HomePageProps {
+interface HomePageProps {
   listings?: Listing[]
 }
 
