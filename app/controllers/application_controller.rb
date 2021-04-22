@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+
   def layout_name
     force_react = params['react'].to_s.casecmp('true').zero?
     force_angular = params['react'].to_s.casecmp('false').zero?
