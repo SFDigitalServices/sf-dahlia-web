@@ -50,7 +50,7 @@ const Layout = (props: LayoutProps) => {
     <div className="site-wrapper">
       <div className="site-content">
         <Head>
-          <title>{t("t.dahlia_san_francisco_housing_portal")}</title>
+          <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
         <LanguageNav
           currentLanguagePrefix={getRoutePrefix(currentPath) || "en"}
@@ -63,10 +63,10 @@ const Layout = (props: LayoutProps) => {
           }}
         />
         <SiteHeader
-          skip={t("t.skip_to_main_content")}
+          skip={t("t.skipToMainContent")}
           logoSrc="/images/logo_glyph.svg"
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
-          title={t("t.dahlia_san_francisco_housing_portal")}
+          title={t("t.dahliaSanFranciscoHousingPortal")}
         >
           <a
             data-testid="nav-button--rent"
@@ -87,32 +87,32 @@ const Layout = (props: LayoutProps) => {
             href={getFavoritesPath(currentPath)}
             className="navbar-item"
           >
-            {t("nav.my_favorites")}
+            {t("nav.myFavorites")}
           </a>
           <a
             data-testid="nav-button--assistance"
             href={getAssistancePath(currentPath)}
             className="navbar-item"
           >
-            {t("nav.get_assistance")}
+            {t("nav.getAssistance")}
           </a>
           <UserNav
             signedIn={signedIn}
             signOut={() => {
-              setSiteAlertMessage(t(`sign_in.signed_out_successfully`), "notice")
+              setSiteAlertMessage(t(`signIn.signedOutSuccessfully`), "notice")
               // await router.push("/sign-in")
               signOut()
               window.scrollTo(0, 0)
             }}
           >
             <LocalizedLink href={getMyAccountPath(currentPath)} className="navbar-item">
-              {t("nav.my_dashboard")}
+              {t("nav.myDashboard")}
             </LocalizedLink>
             <LocalizedLink href={getMyApplicationsPath(currentPath)} className="navbar-item">
-              {t("nav.my_applications")}
+              {t("nav.myApplications")}
             </LocalizedLink>
             <LocalizedLink href={getMyAccountSettingsPath(currentPath)} className="navbar-item">
-              {t("nav.account_settings")}
+              {t("nav.accountSettings")}
             </LocalizedLink>
           </UserNav>
         </SiteHeader>
@@ -120,7 +120,7 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.city_county_of_sf")}>
+        <FooterNav copyright={t("footer.cityCountyOfSf")}>
           <div />
         </FooterNav>
         <FooterSection className="bg-black" small>

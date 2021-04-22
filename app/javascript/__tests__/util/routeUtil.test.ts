@@ -22,7 +22,7 @@ describe("routeUtil", () => {
       expect(getSaleDirectoryPath("")).toBe("/listings/for-sale")
     })
 
-    it("returns the correct path for get_assistancePath", () => {
+    it("returns the correct path for getAssistancePath", () => {
       expect(getAssistancePath("/es/sign-in")).toBe("/es/get-assistance")
       expect(getAssistancePath("")).toBe("/get-assistance")
     })
@@ -42,12 +42,12 @@ describe("routeUtil", () => {
       expect(getMyAccountPath("")).toBe("/account/dashboard")
     })
 
-    it("returns the correct path for getmy_applicationsPath", () => {
+    it("returns the correct path for getmyApplicationsPath", () => {
       expect(getMyApplicationsPath("/es/sign-in")).toBe("/es/account/applications")
       expect(getMyApplicationsPath("")).toBe("/account/applications")
     })
 
-    it("returns the correct path for getMyaccount_settingsPath", () => {
+    it("returns the correct path for getMyaccountSettingsPath", () => {
       expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account/settings")
       expect(getMyAccountSettingsPath("")).toBe("/account/settings")
     })

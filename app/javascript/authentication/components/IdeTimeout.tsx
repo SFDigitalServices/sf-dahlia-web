@@ -23,11 +23,11 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
   if (profile && signOut) {
     return (
       <BaseIdleTimeout
-        promptTitle={t("t.continue_with_your_application")}
-        promptText={t("t.session_inactivity_logged_in")}
+        promptTitle={t("t.continueWithYourApplication")}
+        promptText={t("t.sessionInactivityLoggedIn")}
         promptAction={t("t.continue")}
         redirectPath={getSignInPath(window.location.pathname)}
-        alertMessage={t("sign_in.user_token_validation_timeout")}
+        alertMessage={t("signIn.userTokenValidationTimeout")}
         alertType={useFormTimeout ? "alert" : "notice"}
         onTimeout={() => handleTimeout(true)}
       />
@@ -37,11 +37,11 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
   if (useFormTimeout) {
     return (
       <BaseIdleTimeout
-        promptTitle={t("t.continue_with_your_application")}
-        promptText={t("t.session_inactivity")}
+        promptTitle={t("t.continueWithYourApplication")}
+        promptText={t("t.sessionInactivity")}
         promptAction={t("t.continue")}
         redirectPath={getHomepagePath(window.location.pathname)}
-        alertMessage={t("t.session_expired")}
+        alertMessage={t("t.sessionExpired")}
         alertType={"alert"}
         onTimeout={() => handleTimeout(false)}
       />

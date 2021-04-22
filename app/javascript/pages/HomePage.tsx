@@ -25,10 +25,10 @@ const HomePage = (props: HomePageProps) => {
   return (
     <Layout>
       <Head>
-        <title>{t("t.dahlia_san_francisco_housing_portal")}</title>
+        <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
       </Head>
       <MetaTags
-        title={t("t.dahlia_san_francisco_housing_portal")}
+        title={t("t.dahliaSanFranciscoHousingPortal")}
         image={metaImage}
         description={t("welcome.title")}
       />
@@ -38,14 +38,14 @@ const HomePage = (props: HomePageProps) => {
       </div>
       <Hero
         title={t("welcome.title")}
-        buttonTitle={t("welcome.see_rental_listings")}
+        buttonTitle={t("welcome.seeRentalListings")}
         buttonLink={getRentalDirectoryPath(window.location.pathname)}
         listings={props.listings}
       />
       <div className="homepage-extra">
         <MarkdownSection fullwidth>
-          <p>{t("welcome.new_listing_email_alert")}</p>
-          <LinkButton href="http://eepurl.com/dkBd2n">{t("welcome.sign_up_today")}</LinkButton>
+          <p>{t("welcome.newListingEmailAlert")}</p>
+          <LinkButton href="http://eepurl.com/dkBd2n">{t("welcome.signUpToday")}</LinkButton>
         </MarkdownSection>
       </div>
     </Layout>

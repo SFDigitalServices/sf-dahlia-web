@@ -36,7 +36,7 @@ const SignInForm = () => {
       })
       .catch(() => {
         // TODO: handle sign-in error states
-        setRequestError(`${t("sign_in.bad_credentials")}`)
+        setRequestError(`${t("signIn.badCredentials")}`)
       })
   }
 
@@ -67,7 +67,7 @@ const SignInForm = () => {
           {/* TODO: Add /forgot-password link */}
           <aside className="float-right font-bold">
             {/* <Link href="/forgot-password">
-                <a>{t("sign_in.forgot_password")}</a>
+                <a>{t("signIn.forgotPassword")}</a>
               </Link> */}
           </aside>
 
