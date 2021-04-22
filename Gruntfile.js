@@ -91,7 +91,7 @@ module.exports = function (grunt) {
               replacement: "//fonts.googleapis.com",
             },
             {
-              match: /\.\.\/images\/([a-zA-Z0-9\-_@]*\.(png|jpg|svg))/g,
+              match: /\.\.\/images\/([\w@-]*\.(png|jpg|svg))/g,
               replacement: "asset-path('$1')",
             },
           ],
@@ -161,9 +161,6 @@ module.exports = function (grunt) {
         "app/assets/json/translations/locale-tl.json",
         "app/assets/json/translations/locale-zh.json",
       ],
-      // options: {
-      //   spacing: 2
-      // }
     },
     exec: {
       phrasePull: {
@@ -171,11 +168,7 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          if (token) {
-            return `phrase pull --access_token ${token}`
-          } else {
-            return "phrase pull"
-          }
+          return token ? `phrase pull --access_token ${token}` : "phrase pull"
         },
       },
       phrasePush: {
@@ -183,11 +176,7 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          if (token) {
-            return `phrase push --access_token ${token}`
-          } else {
-            return "phrase push"
-          }
+          return token ? `phrase push --access_token ${token}` : "phrase push"
         },
       },
     },
