@@ -804,12 +804,6 @@
             "zip": "Zip",
             "zipcode": "Zipcode"
         },
-        "languages": {
-            "en": "English",
-            "es": "Español",
-            "zh": "中文",
-            "tl": "Filipino"
-        },
         "listings": {
             "additional_eligibility_rules": {
                 "credit_history": "Credit History",

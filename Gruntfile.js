@@ -20,6 +20,7 @@ module.exports = function (grunt) {
           },
         ],
       },
+      // TODO: remove this when angular is deleted
       removeLanguageKey: {
         files: [
           {
@@ -49,6 +50,7 @@ module.exports = function (grunt) {
           },
         },
       },
+      // TODO: remove this when angular is deleted
       addBackLanguageKey: {
         files: [
           {
@@ -80,7 +82,7 @@ module.exports = function (grunt) {
         },
       },
     },
-
+    // TODO: remove this when angular is deleted
     // Make any string replacements that are needed when transferring assets to app.
     replace: {
       dist: {
@@ -136,7 +138,7 @@ module.exports = function (grunt) {
         },
       },
     },
-    // legacy, for angular only
+    // TODO: remove this when angular is deleted
     i18nextract: {
       default_options: {
         src: [
@@ -192,7 +194,7 @@ module.exports = function (grunt) {
         src: "app/assets/json/translations/i18n/zh.json",
       },
     },
-    // legacy, for angular only
+    // TODO: remove this when angular is deleted
     sortJSON: {
       src: [
         "app/assets/json/translations/locale-en.json",
@@ -237,15 +239,13 @@ module.exports = function (grunt) {
   grunt.registerTask("default", ["clean", "copy", "replace"])
 
   grunt.registerTask("translations", [
-    "copy:removeLanguageKey",
-    "i18nextract",
-    "copy:addBackLanguageKey",
-    "json_remove_fields",
-    "json_remove_fields",
-    "sortJSON",
+    "copy:removeLanguageKey", // only relevant for angular
+    "i18nextract", // extract angular phrases
+    "i18next", // extract react phrases
+    "copy:addBackLanguageKey", // only relevant for angular
+    "json_remove_fields", // necessary for react and angular
+    "sortJSON", // only relevant for angular
   ])
-
-  grunt.registerTask("reactTranslations", ["i18next", "json_remove_fields"])
 
   grunt.registerTask("phrasePush", [
     "copy:removeLanguageKey",
