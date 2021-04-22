@@ -81,7 +81,7 @@ module.exports = function (grunt) {
       },
     },
 
-    // Make any string replacements that are needed when transfering assets to app.
+    // Make any string replacements that are needed when transferring assets to app.
     replace: {
       dist: {
         options: {
