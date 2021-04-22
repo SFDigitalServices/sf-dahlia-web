@@ -19,7 +19,7 @@ module.exports = {
     // Allows for the use of imports
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "prettier", "import"],
+  plugins: ["react", "@typescript-eslint", "prettier", "import", "unicorn"],
   extends: [
     "standard",
     "plugin:jest/recommended",
@@ -32,6 +32,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     // additional rules that take a little longer to run
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:unicorn/recommended",
     // check for imports not resolving correctly
     "plugin:import/errors",
     "plugin:import/warnings",
@@ -50,7 +51,18 @@ module.exports = {
   ],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    "arrow-body-style": ["error", "as-needed"],
     "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+      }
+    ],
+
+    // This is already covered (and more) with naming-convention
+    "camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unused-vars": "warn",
@@ -108,10 +120,22 @@ module.exports = {
     "react/display-name": "off",
     "react/state-in-constructor": 0,
     "react/self-closing-comp": "error",
-
-    // eventually I"d like to turn the camelcase rule on for properties,
-    // but for now there is enough snake case in our app that this will be a pain.
-    camelcase: "off",
+    "unicorn/no-null": "off",
+    "unicorn/no-useless-undefined": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/filename-case": [
+      "error",
+      {
+        "cases": {
+          "camelCase": true,
+          "pascalCase": true
+        },
+        "ignore": [
+          "^react_application.tsx"
+        ]
+      }
+    ],
+    "unicorn/prevent-abbreviations": "off",
     "import/order": [
       "error",
       {
