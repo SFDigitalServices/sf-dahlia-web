@@ -1,4 +1,4 @@
-import React, { createElement, FunctionComponent, useContext, useEffect, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 
 import {
   AlertTypes,
@@ -7,8 +7,6 @@ import {
   Modal,
   setSiteAlertMessage,
 } from "@sf-digital-services/ui-components"
-
-import UserContext from "./context/UserContext"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
@@ -48,7 +46,7 @@ type IdleTimeoutProps = {
   onTimeout: () => unknown
 }
 
-export const IdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeoutProps) => {
+const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeoutProps) => {
   const {
     promptTitle,
     promptAction,
@@ -111,24 +109,4 @@ export const IdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTime
   )
 }
 
-export const LoggedInUserIdleTimeout = ({ onTimeout }: { onTimeout?: () => unknown }) => {
-  const { profile, signOut } = useContext(UserContext)
-
-  const timeoutFxn = async () => {
-    onTimeout && (await onTimeout())
-    signOut && signOut()
-  }
-
-  // Only render the IdleTimeout component if the user is logged in
-  return profile && signOut
-    ? createElement(IdleTimeout, {
-        promptTitle: "t.areYouStillWorking",
-        promptText: "authentication.timeout.text",
-        promptAction: "authentication.timeout.action",
-        redirectPath: `/sign-in`,
-        alertMessage: "authentication.timeout.signOutMessage",
-        alertType: "notice",
-        onTimeout: timeoutFxn,
-      })
-    : null
-}
+export default BaseIdleTimeout

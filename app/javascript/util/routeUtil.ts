@@ -34,11 +34,12 @@ export const getNewLanguagePath = (
   newLanguagePrefix: string
 ): string => getLocalizedPath(currentPath, toLanguagePrefix(newLanguagePrefix))
 
+export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")
 export const getSaleDirectoryPath = localizedPathGetter("/listings/for-sale")
 export const getAssistancePath = localizedPathGetter("/get-assistance")
 export const getSignInPath = localizedPathGetter("/sign-in")
 export const getFavoritesPath = localizedPathGetter("/favorites")
-export const getMyDashboardPath = localizedPathGetter("/account/dashboard")
-export const getMyApplicationsPath = localizedPathGetter("/account/applications")
-export const getMyAccountSettingsPath = localizedPathGetter("/account/settings")
+export const getMyAccountPath = localizedPathGetter("/my-account")
+export const getMyApplicationsPath = localizedPathGetter("/my-applications")
+export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")

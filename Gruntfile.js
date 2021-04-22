@@ -108,6 +108,35 @@ module.exports = function (grunt) {
       },
     },
 
+    // Parse react code for t() translation calls
+    i18next: {
+      dev: {
+        src: "app/javascript/**/*.{js,jsx,ts,tsx}",
+        dest: "app/assets/json/translations/i18n",
+        options: {
+          sort: true,
+          func: {
+            list: ["t"],
+            extensions: [".js", ".jsx", ".ts", ".tsx"],
+          },
+          // we only want to put found keys in 'en.json', since the other language files
+          // should be populated via phrasePull
+          lngs: ["en", "es", "tl", "zh"],
+          defaultLng: "en",
+          defaultValue: "",
+          removeUnusedKeys: true,
+          resource: {
+            loadPath: "app/assets/json/translations/i18n/{{lng}}.json",
+            savePath: "{{lng}}.json",
+            jsonIndent: 2,
+            lineEnding: "\n",
+          },
+          nsSeparator: false, // namespace separator
+          keySeparator: false,
+        },
+      },
+    },
+    // legacy, for angular only
     i18nextract: {
       default_options: {
         src: [
@@ -153,7 +182,17 @@ module.exports = function (grunt) {
       locale_zh: {
         src: "app/assets/json/translations/locale-zh.json",
       },
+      es: {
+        src: "app/assets/json/translations/i18n/es.json",
+      },
+      tl: {
+        src: "app/assets/json/translations/i18n/tl.json",
+      },
+      zh: {
+        src: "app/assets/json/translations/i18n/zh.json",
+      },
     },
+    // legacy, for angular only
     sortJSON: {
       src: [
         "app/assets/json/translations/locale-en.json",
@@ -190,6 +229,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-sort-json")
   grunt.loadNpmTasks("grunt-json-remove-fields")
   grunt.loadNpmTasks("grunt-exec")
+  grunt.loadNpmTasks("i18next-scanner")
 
   // Set this variable by appending --phraseAccessToken=[token] to any grunt command.
   // var phraseAccessToken = grunt.option("phraseAccessToken")
@@ -204,6 +244,9 @@ module.exports = function (grunt) {
     "json_remove_fields",
     "sortJSON",
   ])
+
+  grunt.registerTask("reactTranslations", ["i18next", "json_remove_fields"])
+
   grunt.registerTask("phrasePush", [
     "copy:removeLanguageKey",
     "exec:phrasePush",

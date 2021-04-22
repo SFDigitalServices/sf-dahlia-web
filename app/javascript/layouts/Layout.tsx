@@ -20,7 +20,7 @@ import {
   getAssistancePath,
   getFavoritesPath,
   getMyAccountSettingsPath,
-  getMyDashboardPath,
+  getMyAccountPath,
   getMyApplicationsPath,
   getRentalDirectoryPath,
   getSaleDirectoryPath,
@@ -105,7 +105,7 @@ const Layout = (props: LayoutProps) => {
               window.scrollTo(0, 0)
             }}
           >
-            <LocalizedLink href={getMyDashboardPath(currentPath)} className="navbar-item">
+            <LocalizedLink href={getMyAccountPath(currentPath)} className="navbar-item">
               {t("nav.my_dashboard")}
             </LocalizedLink>
             <LocalizedLink href={getMyApplicationsPath(currentPath)} className="navbar-item">

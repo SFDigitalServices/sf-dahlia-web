@@ -3,7 +3,7 @@ import {
   getFavoritesPath,
   getMyAccountSettingsPath,
   getMyApplicationsPath,
-  getMyDashboardPath,
+  getMyAccountPath,
   getNewLanguagePath,
   getRentalDirectoryPath,
   getSaleDirectoryPath,
@@ -22,7 +22,7 @@ describe("routeUtil", () => {
       expect(getSaleDirectoryPath("")).toBe("/listings/for-sale")
     })
 
-    it("returns the correct path for getAssistancePath", () => {
+    it("returns the correct path for get_assistancePath", () => {
       expect(getAssistancePath("/es/sign-in")).toBe("/es/get-assistance")
       expect(getAssistancePath("")).toBe("/get-assistance")
     })
@@ -37,17 +37,17 @@ describe("routeUtil", () => {
       expect(getFavoritesPath("")).toBe("/favorites")
     })
 
-    it("returns the correct path for getMyDashboardPath", () => {
-      expect(getMyDashboardPath("/es/sign-in")).toBe("/es/account/dashboard")
-      expect(getMyDashboardPath("")).toBe("/account/dashboard")
+    it("returns the correct path for getMyAccountPath", () => {
+      expect(getMyAccountPath("/es/sign-in")).toBe("/es/account/dashboard")
+      expect(getMyAccountPath("")).toBe("/account/dashboard")
     })
 
-    it("returns the correct path for getMyApplicationsPath", () => {
+    it("returns the correct path for getmy_applicationsPath", () => {
       expect(getMyApplicationsPath("/es/sign-in")).toBe("/es/account/applications")
       expect(getMyApplicationsPath("")).toBe("/account/applications")
     })
 
-    it("returns the correct path for getMyAccountSettingsPath", () => {
+    it("returns the correct path for getMyaccount_settingsPath", () => {
       expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account/settings")
       expect(getMyAccountSettingsPath("")).toBe("/account/settings")
     })
