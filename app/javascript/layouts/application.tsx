@@ -1,30 +1,26 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import {
-  ExygyFooter,
+  LocalizedLink,
+  SiteHeader,
+  SiteFooter,
   FooterNav,
   FooterSection,
-  LocalizedLink,
-  setSiteAlertMessage,
-  SiteFooter,
-  SiteHeader,
-  t,
+  ExygyFooter,
   UserNav,
+  t,
+  UserContext,
+  setSiteAlertMessage,
 } from "@bloom-housing/ui-components"
 import Head from "next/head"
+import { useRouter } from "next/router"
 import SVG from "react-inlinesvg"
 
-export interface LayoutProps {
-  children: React.ReactNode
-}
-
-const signOut = () => {
-  console.log("signOut")
-}
+import { LayoutProps } from "./Layout"
 
 const Layout = (props: LayoutProps) => {
-  // TODO: get these from auth provider
-  const signedIn = false
+  const { profile, signOut } = useContext(UserContext)
+  const router = useRouter()
 
   const LANGUAGES =
     process.env.languages?.split(",")?.map((item) => ({
@@ -55,10 +51,10 @@ const Layout = (props: LayoutProps) => {
             </LocalizedLink>
           )}
           <UserNav
-            signedIn={signedIn}
-            signOut={() => {
+            signedIn={!!profile}
+            signOut={async () => {
               setSiteAlertMessage(t(`authentication.signOut.success`), "notice")
-              // await router.push("/sign-in")
+              await router.push("/sign-in")
               signOut()
               window.scrollTo(0, 0)
             }}
@@ -79,7 +75,8 @@ const Layout = (props: LayoutProps) => {
 
       <SiteFooter>
         <FooterNav copyright={t("footer.copyright")}>
-          <div />
+          <LocalizedLink href="/privacy">{t("pageTitle.privacy")}</LocalizedLink>
+          <LocalizedLink href="/disclaimer">{t("pageTitle.disclaimer")}</LocalizedLink>
         </FooterNav>
         <FooterSection className="bg-black" small>
           <ExygyFooter />

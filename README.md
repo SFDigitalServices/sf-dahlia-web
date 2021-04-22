@@ -227,10 +227,10 @@ Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a gro
 
 ### VS Code Setup
 
-Be sure to install all recommended extensions (under [.vscode/extensions](.vscode/extensions)).
-
-Also double check that your user settings aren't overriding the [workspace editor settings](.vscode/settings).
-
+1. Copy `.vscode-default` to `.vscode` like `cp -r .vscode-default .vscode`
+  a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
+2. Install recommended extensions (under [.vscode-default/extensions](.vscode-default/extensions)).
+3. Double check your user settings aren't overriding the [workspace editor settings](.vscode-default/settings)
 ### Credits
 
 ### License

@@ -390,13 +390,13 @@
             "title": "There are lottery preferences for people who already have special certificates."
         },
         "e7b_custom_preferences": {
-            "title": "This listing has other special lottery preferences",
             "employment_disability": {
+                "cannot_work_disability": "Cannot work due to disability",
                 "description": "You can get this preference if one adult in the household: <ul><li>Works at a public higher education institution located in San Francisco</li><li>Works at a public healthcare institution located in San Francisco</li><li>Is unable to work because of a disability</li></ul>",
                 "work_in_education": "SF public higher education worker",
-                "work_in_healthcare": "SF public healthcare worker",
-                "cannot_work_disability": "Cannot work due to disability"
-            }
+                "work_in_healthcare": "SF public healthcare worker"
+            },
+            "title": "This listing has other special lottery preferences"
         },
         "e8_general_lottery_notice": {
             "title": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -544,11 +544,6 @@
             "please_write_down_your_number": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",
             "title": "Thanks. We have received your application for",
             "view_and_print_a_copy": "View submitted application and print a copy"
-        },
-        "header": {
-            "learn_more": "Learn more.",
-            "translate_bar_expert_notice": "This page has been translated by a native speaker.",
-            "translate_bar_google_notice": "This page has been translated with Google Translate."
         },
         "hello": "Hello %{name}",
         "housing_counselor": {

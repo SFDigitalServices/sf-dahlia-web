@@ -12,8 +12,9 @@ import {
 import Head from "next/head"
 
 import Layout from "../layouts/Layout"
+import withAppSetup from "../layouts/withAppSetup"
 
-export interface HomePageProps {
+interface HomePageProps {
   listings?: Listing[]
 }
 
@@ -33,7 +34,7 @@ const HomePage = (props: HomePageProps) => {
       />
       <div className="flex absolute w-full flex-col items-center">
         <SiteAlert type="alert" className={alertClasses} />
-        <SiteAlert type="success" className={alertClasses} timeout={30000} />
+        <SiteAlert type="success" className={alertClasses} timeout={30_000} />
       </div>
       <Hero
         title={
@@ -59,4 +60,4 @@ const HomePage = (props: HomePageProps) => {
   )
 }
 
-export default HomePage
+export default withAppSetup(HomePage)
