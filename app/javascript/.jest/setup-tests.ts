@@ -26,3 +26,12 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
 })
 
 loadTranslations(LanguagePrefix.English)
+
+// fail on console errors. This allows us to catch missing
+// translations warnings in our code. Snippet from
+// https://stackoverflow.com/a/50584643
+const error = console.error
+console.error = function (message: Error | string) {
+  error.apply(console, arguments) // keep default behaviour
+  throw (message instanceof Error ? message : new Error(message))
+}

@@ -1,4 +1,5 @@
 {
+  "config.routePrefix": "en",
   "footer.cityCountyOfSf": "City & County of San Francisco",
   "languages.en": "English",
   "languages.es": "Español",
@@ -11,6 +12,7 @@
   "nav.myDashboard": "My Dashboard",
   "nav.myFavorites": "My Favorites",
   "nav.rent": "Rent",
+  "nav.signIn": "Sign In",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
   "signIn.forgotPassword": "Forgot password?",
   "signIn.signedOutSuccessfully": "You have successfully logged out of your account.",

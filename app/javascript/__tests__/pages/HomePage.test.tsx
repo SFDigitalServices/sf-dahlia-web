@@ -1,7 +1,7 @@
 import React from "react"
 
 import HomePage from "../../pages/HomePage"
-import { renderAndLoadAsync } from "../__util__/actUtils"
+import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<HomePage />", () => {
   it("shows the correct header text", async () => {

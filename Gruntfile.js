@@ -121,12 +121,10 @@ module.exports = function (grunt) {
             list: ["t"],
             extensions: [".js", ".jsx", ".ts", ".tsx"],
           },
-          // we only want to put found keys in 'en.json', since the other language files
-          // should be populated via phrasePull
-          lngs: ["en"],
+          lngs: ["en", "es", "tl", "zh"],
           defaultLng: "en",
           defaultValue: "",
-          removeUnusedKeys: true,
+          removeUnusedKeys: false,
           resource: {
             loadPath: "app/assets/json/translations/react/{{lng}}.json",
             savePath: "{{lng}}.json",

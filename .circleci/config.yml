@@ -191,6 +191,7 @@ jobs:
     <<: *defaults
     environment:
       HOME_PAGE_REACT: 'true'
+      SIGN_IN_PAGE_REACT: 'true'
     steps:
       - setup
       - start-server

@@ -1,4 +1,5 @@
 {
+  "config.routePrefix": "es",
   "footer.cityCountyOfSf": "Ciudad y condado de San Francisco",
   "nav.accountSettings": "Configuraciones de la cuenta",
   "nav.buy": "Comprar",
@@ -7,6 +8,7 @@
   "nav.myDashboard": "Mi Panel",
   "nav.myFavorites": "Mis Favoritos",
   "nav.rent": "Alquilar",
+  "nav.signIn": "Inicie sesión",
   "signIn.badCredentials": "Credenciales de inicio de sesión incorrectas. Intente nuevamente.",
   "signIn.forgotPassword": "¿Olvidó su contraseña?",
   "signIn.signedOutSuccessfully": "Ha cerrado su sesión con éxito.",

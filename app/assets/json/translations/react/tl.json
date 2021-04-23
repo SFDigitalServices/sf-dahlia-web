@@ -1,4 +1,5 @@
 {
+  "config.routePrefix": "tl",
   "footer.cityCountyOfSf": "Lungsod at County ng San Francisco",
   "nav.accountSettings": "Mga Setting ng Account ",
   "nav.buy": "Bumili",
@@ -7,6 +8,7 @@
   "nav.myDashboard": "Ang Aking Dashboard ",
   "nav.myFavorites": "Ang Aking mga Paborito ",
   "nav.rent": "Umupa",
+  "nav.signIn": "Mag-sign In ",
   "signIn.badCredentials": "Hindi tama ang mga inilagay ninyo para sa pag-la-login. Pakisubukang muli. ",
   "signIn.forgotPassword": "Nakalimutan ba ninyo ang inyong password?",
   "signIn.signedOutSuccessfully": "Matagumpay na kayong nakapag-log out sa inyong account. ",

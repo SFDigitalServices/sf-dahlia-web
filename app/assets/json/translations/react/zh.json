@@ -1,4 +1,5 @@
 {
+  "config.routePrefix": "zh",
   "footer.cityCountyOfSf": "舊金山市和郡",
   "nav.accountSettings": "帳戶設定",
   "nav.buy": "購買",
@@ -7,6 +8,7 @@
   "nav.myDashboard": "我的儀表板",
   "nav.myFavorites": "我的最愛",
   "nav.rent": "租賃",
+  "nav.signIn": "登入",
   "signIn.badCredentials": "登入憑證無效。請重試。",
   "signIn.forgotPassword": "忘記密碼？",
   "signIn.signedOutSuccessfully": "您已經成功登出帳戶。",
