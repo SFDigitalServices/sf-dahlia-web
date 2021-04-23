@@ -4,6 +4,7 @@ import { configure } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
 import { addTranslation } from "@sf-digital-services/ui-components"
 import enPhrases from "../../assets/json/translations/react/en.json"
+import { LanguagePrefix, loadTranslations } from "../util/languageUtil"
 
 configure({ adapter: new Adapter() })
 
@@ -21,4 +22,4 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   }
 })
 
-addTranslation(enPhrases)
+loadTranslations(LanguagePrefix.English)
