@@ -38,18 +38,18 @@ describe("routeUtil", () => {
     })
 
     it("returns the correct path for getMyAccountPath", () => {
-      expect(getMyAccountPath("/es/sign-in")).toBe("/es/account/dashboard")
-      expect(getMyAccountPath("")).toBe("/account/dashboard")
+      expect(getMyAccountPath("/es/sign-in")).toBe("/es/my-account")
+      expect(getMyAccountPath("")).toBe("/my-account")
     })
 
     it("returns the correct path for getmyApplicationsPath", () => {
-      expect(getMyApplicationsPath("/es/sign-in")).toBe("/es/account/applications")
-      expect(getMyApplicationsPath("")).toBe("/account/applications")
+      expect(getMyApplicationsPath("/es/sign-in")).toBe("/es/my-applications")
+      expect(getMyApplicationsPath("")).toBe("/my-applications")
     })
 
     it("returns the correct path for getMyaccountSettingsPath", () => {
-      expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account/settings")
-      expect(getMyAccountSettingsPath("")).toBe("/account/settings")
+      expect(getMyAccountSettingsPath("/es/sign-in")).toBe("/es/account-settings")
+      expect(getMyAccountSettingsPath("")).toBe("/account-settings")
     })
   })
 
