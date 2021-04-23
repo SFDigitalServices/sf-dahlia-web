@@ -7,6 +7,22 @@ phrase:
       params:
         locale_id: 42b4d36671be4574dd4721c37e479732
         file_format: react_simple_json
+        update_translations: true
+    - file: app/assets/json/translations/i18n/tl.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: 5cb7e93cf65a739b17b46a2830e45da2
+        file_format: react_simple_json
+    - file: app/assets/json/translations/i18n/es.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: d0b4139822e16557e0b6873fdf3603a1
+        file_format: react_simple_json
+    - file: app/assets/json/translations/i18n/zh.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: 06904cd3eca0f01b264901657c43b5c8
+        file_format: react_simple_json
 
     # angular
     - file: app/assets/json/translations/locale-en.json
@@ -36,6 +52,7 @@ phrase:
 
       # angular
       - file: app/assets/json/translations/locale-tl.json
+        project_id: 6c45c3e10cf91075e0b4d294f69c21e7
         params:
           file_format: nested_json
           locale_id: 6ddd85f25418456343453dafb9f9cf34
