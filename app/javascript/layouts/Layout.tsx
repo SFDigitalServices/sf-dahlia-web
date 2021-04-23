@@ -53,7 +53,7 @@ const Layout = (props: LayoutProps) => {
           <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
         <LanguageNav
-          currentLanguagePrefix={getRoutePrefix(currentPath) || "en"}
+          currentLanguagePrefix={getRoutePrefix(currentPath) || ""}
           items={langItems}
           onChangeLanguage={(newLangConfig) => {
             window.location.href = getNewLanguagePath(
