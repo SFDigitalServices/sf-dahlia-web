@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Listing } from "@bloom-housing/backend-core/types"
 import {
@@ -21,6 +21,12 @@ interface HomePageProps {
 const HomePage = (props: HomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
+  useEffect(() => {
+    if (window.location.pathname !== "/") {
+      // TODO replace this path override with router when we have one.
+      window.history.replaceState(null, document.title, "/")
+    }
+  }, [])
 
   return (
     <Layout>
