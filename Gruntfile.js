@@ -114,7 +114,7 @@ module.exports = function (grunt) {
     i18next: {
       dev: {
         src: "app/javascript/**/*.{js,jsx,ts,tsx}",
-        dest: "app/assets/json/translations/i18n",
+        dest: "app/assets/json/translations/react",
         options: {
           sort: true,
           func: {
@@ -123,12 +123,12 @@ module.exports = function (grunt) {
           },
           // we only want to put found keys in 'en.json', since the other language files
           // should be populated via phrasePull
-          lngs: ["en", "es", "tl", "zh"],
+          lngs: ["en"],
           defaultLng: "en",
           defaultValue: "",
           removeUnusedKeys: true,
           resource: {
-            loadPath: "app/assets/json/translations/i18n/{{lng}}.json",
+            loadPath: "app/assets/json/translations/react/{{lng}}.json",
             savePath: "{{lng}}.json",
             jsonIndent: 2,
             lineEnding: "\n",
@@ -185,13 +185,13 @@ module.exports = function (grunt) {
         src: "app/assets/json/translations/locale-zh.json",
       },
       es: {
-        src: "app/assets/json/translations/i18n/es.json",
+        src: "app/assets/json/translations/react/es.json",
       },
       tl: {
-        src: "app/assets/json/translations/i18n/tl.json",
+        src: "app/assets/json/translations/react/tl.json",
       },
       zh: {
-        src: "app/assets/json/translations/i18n/zh.json",
+        src: "app/assets/json/translations/react/zh.json",
       },
     },
     // TODO: remove this when angular is deleted
