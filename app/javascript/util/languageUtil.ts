@@ -22,25 +22,25 @@ export const LANGUAGE_CONFIGS: Record<LanguagePrefix, LangConfig> = {
     prefix: LanguagePrefix.English,
     isDefault: true,
     getLabel: () => t("languages.en"),
-    load: async () => (await import("../../assets/json/translations/locale-en.json")).en,
+    load: async () => await import("../../assets/json/translations/react/en.json"),
   },
   [LanguagePrefix.Spanish]: {
     prefix: LanguagePrefix.Spanish,
     isDefault: false,
     getLabel: () => t("languages.es"),
-    load: async () => (await import("../../assets/json/translations/locale-es.json")).es,
+    load: async () => await import("../../assets/json/translations/react/es.json"),
   },
   [LanguagePrefix.Chinese]: {
     prefix: LanguagePrefix.Chinese,
     isDefault: false,
     getLabel: () => t("languages.zh"),
-    load: async () => (await import("../../assets/json/translations/locale-zh.json")).zh,
+    load: async () => await import("../../assets/json/translations/react/zh.json"),
   },
   [LanguagePrefix.Tagalog]: {
     prefix: LanguagePrefix.Tagalog,
     isDefault: false,
     getLabel: () => t("languages.tl"),
-    load: async () => (await import("../../assets/json/translations/locale-tl.json")).tl,
+    load: async () => await import("../../assets/json/translations/react/tl.json"),
   },
 }
 
