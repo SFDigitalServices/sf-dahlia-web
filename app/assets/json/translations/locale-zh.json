@@ -974,7 +974,8 @@
             "special_notes": "特別注意",
             "stats": {
                 "availability": "可用情況",
-                "available": "可用",
+                "available_rental": "間待租",
+                "available_sales": "間待售",
                 "currency_range": "{{currencyMinValue}} 到 {{currencyMaxValue}}",
                 "hoa_dues": "物業費",
                 "household_size": "家庭人數",
@@ -983,6 +984,8 @@
                 "minimum": "最低",
                 "num_in_household_plural": "同住人",
                 "num_in_household_singular": "同住人",
+                "parking_no": "無",
+                "parking_yes": "有",
                 "percent_ami_range": "{{minAmiPercent}}% 到 {{maxAmiPercent}}% AMI",
                 "pricing": "價格",
                 "rent": "租金",
