@@ -392,7 +392,7 @@
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "Cannot work due to disability",
-                "description": "You can get this preference if someone in your household is: <ul><li>An employee of a public higher education institution in San Francisco</li><li>An employee of a public health institution in San Francisco</li><li>An adult who currently has a disability that has kept them from working for at least a year</li></ul>",
+                "description": "You can get this preference if someone in your household is: <ul><li>an employee of a public higher education institution in San Francisco</li><li>an employee of a public health institution in San Francisco</li><li>an adult who currently has a disability that has kept them from working for at least a year</li></ul>",
                 "individual_preference_question": "Preference as an employee",
                 "work_in_education": "SF public higher education institution",
                 "work_in_healthcare": "SF public healthcare institution"
