@@ -84,6 +84,8 @@ Rails.application.routes.draw do
   get '/zh', to: 'home#index'
   get '/tl', to: 'home#index'
 
+  get '(:lang)/sign-in', to: 'auth#sign_in', lang: /(en|es|zh|tl)/
+
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

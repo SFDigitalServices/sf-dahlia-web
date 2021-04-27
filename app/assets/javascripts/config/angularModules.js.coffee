@@ -6,7 +6,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 angular.module('dahlia.components', [])
 
 # Raven must be configured before including `ngRaven` module below
-# SENTRY_JS_URL is defined globally in application.html.slim
+# SENTRY_JS_URL is defined globally in application-angular.html.slim
 if SENTRY_JS_URL?
   Raven
     .config(SENTRY_JS_URL)
