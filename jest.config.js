@@ -29,7 +29,7 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
   setupFiles: ["dotenv/config"],
-  setupFilesAfterEnv: ["<rootDir>/.jest/setup-tests.ts"],
+  setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less)$": "identity-obj-proxy",
   },
