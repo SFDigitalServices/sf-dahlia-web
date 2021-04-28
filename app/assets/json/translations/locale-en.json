@@ -984,7 +984,8 @@
             "special_notes": "Special Notes",
             "stats": {
                 "availability": "Availability",
-                "available": "available",
+                "available_rental": "available",
+                "available_sales": "available",
                 "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
                 "hoa_dues": "HOA dues",
                 "household_size": "Household size",
@@ -993,6 +994,8 @@
                 "minimum": "Minimum",
                 "num_in_household_plural": "people in household",
                 "num_in_household_singular": "person in household",
+                "parking_no": "No",
+                "parking_yes": "Yes",
                 "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",
                 "pricing": "Pricing",
                 "rent": "Rent",

@@ -5,7 +5,7 @@ tr ng-repeat-start="unit_summary in ::summary" ng-if="::unit_summary.minMonthlyR
       span ng-if="::unit_summary.availability > 0"
         | {{::unit_summary.availability }}
         small
-          | {{'listings.stats.available' | translate}}
+          | {{'listings.stats.available_rental' | translate}}
       span ng-if="::unit_summary.availability <= 0"
         | {{'listings.stats.waitlist' | translate}}
   td.is-subtitled data-th="{{'listings.stats.income_range' | translate}}"
