@@ -392,9 +392,10 @@
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "Cannot work due to disability",
-                "description": "You can get this preference if one adult in the household: <ul><li>Works at a public higher education institution located in San Francisco</li><li>Works at a public healthcare institution located in San Francisco</li><li>Is unable to work because of a disability</li></ul>",
-                "work_in_education": "SF public higher education worker",
-                "work_in_healthcare": "SF public healthcare worker"
+                "description": "You can get this preference if someone in your household is: <ul><li>an employee of a public higher education institution in San Francisco</li><li>an employee of a public health institution in San Francisco</li><li>an adult who currently has a disability that has kept them from working for at least a year</li></ul>",
+                "individual_preference_question": "Preference as an employee",
+                "work_in_education": "SF public higher education institution",
+                "work_in_healthcare": "SF public healthcare institution"
             },
             "title": "This listing has other special lottery preferences"
         },
@@ -983,7 +984,8 @@
             "special_notes": "Special Notes",
             "stats": {
                 "availability": "Availability",
-                "available": "available",
+                "available_rental": "available",
+                "available_sales": "available",
                 "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
                 "hoa_dues": "HOA dues",
                 "household_size": "Household size",
@@ -992,6 +994,8 @@
                 "minimum": "Minimum",
                 "num_in_household_plural": "people in household",
                 "num_in_household_singular": "person in household",
+                "parking_no": "No",
+                "parking_yes": "Yes",
                 "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",
                 "pricing": "Pricing",
                 "rent": "Rent",

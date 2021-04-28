@@ -24,7 +24,7 @@ dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right.skiptranslate 
           td ng-if="::!$ctrl.isWaitlist(priceGroup)"
             | {{ ::priceGroup.total }}
             span.cell-subtitle
-              |  {{ 'listings.stats.available' | translate }}
+              |  {{ 'listings.stats.available_rental' | translate }}
         tr.mobile-table-row.indented-row
           th id="{{::$ctrl.incomeRowId(unitGroup, $parent.$index, $index)}}" scope="row" headers="{{::$ctrl.unitTypeId(unitGroup, $parent.$index, $index)}}"
             | {{ 'label.income' | translate }}
