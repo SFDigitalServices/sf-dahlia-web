@@ -24,7 +24,7 @@
   .form-group.input-inset ng-if='$ctrl.isEmploymentDisability() && $ctrl.application.preferences[$ctrl.preference]' ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
     div
       label.form-label.caps for="{{$ctrl.individualPrefFieldId()}}"
-        | {{'label.preference_option_to_claim' | translate}}
+        | {{'e7b_custom_preferences.employment_disability.individual_preference_question' | translate}}
       select(
         id="{{$ctrl.individualPrefFieldId()}}"
         ng-class="{ error: $ctrl.inputInvalid($ctrl.individualPrefFieldId()) }"
