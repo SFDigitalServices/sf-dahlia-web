@@ -87,5 +87,5 @@ Rails.application.routes.draw do
   get '(:lang)/sign-in', to: 'auth#sign_in', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
-  get '*path', to: "#{ENV['HOME_PAGE_REACT'] ? 'home' : 'angular'}#index", constraints: ->(req) { req.format == :html || req.format == '*/*' }
+  get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

@@ -1163,8 +1163,15 @@
           $auth.validateUser()
         ]
     })
+    .state('dahlia.unknown-url', {
+      # actual redirect occurs in onStateChangeStart in angularInitialize.js
+      url: '/redirect-home'
+    })
 
-    $urlRouterProvider.otherwise('/') # default to welcome screen
+    $urlRouterProvider.otherwise(($injector, $location) ->
+      $state = $injector.get('$state')
+      $state.go("dahlia.unknown-url")
+    ) # default to welcome screen
 
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
     if !!(window.history && history.pushState)
