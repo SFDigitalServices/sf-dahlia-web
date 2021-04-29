@@ -6,7 +6,7 @@ tr
       | {{::unitSummary.unitType}}
     small
       span ng-if="::unitSummary.availability > 0"
-        | {{::unitSummary.availability }} {{'listings.stats.available' | translate}}
+        | {{::unitSummary.availability }} {{'listings.stats.available_sales' | translate}}
       span ng-if="::unitSummary.availability <= 0"
         | {{'listings.stats.waitlist' | translate}}
   td.is-subtitled data-th="{{'listings.stats.hoa_dues' | translate}}"

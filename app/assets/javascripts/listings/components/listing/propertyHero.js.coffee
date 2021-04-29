@@ -72,7 +72,8 @@ angular.module('dahlia.components')
         if @isWaitlist(priceGroup)
           $translate.instant('listings.stats.waitlist')
         else
-          priceGroup.total + " " + $translate.instant('listings.stats.available')
+          # Only used for rental listings, so we can use the rental chinese translation
+          priceGroup.total + " " + $translate.instant('listings.stats.available_rental')
 
       occupanciesToIsExpanded = {}
 
