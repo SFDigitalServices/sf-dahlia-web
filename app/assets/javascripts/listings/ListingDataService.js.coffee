@@ -317,6 +317,7 @@ ListingDataService = (
         listingPreferenceID: lotteryPref.Id
         preferenceName: lotteryPref.Lottery_Preference.Name
       }
+    ListingPreferenceService._extractCustomPreferences(listing)
     angular.copy(listing, Service.listing)
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
