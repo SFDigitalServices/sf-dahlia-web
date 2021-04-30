@@ -17,13 +17,14 @@ import { getRentalDirectoryPath } from "../util/routeUtil"
 
 interface HomePageProps {
   listings?: Listing[]
+  assetPaths: unknown
 }
 
 const HomePage = (props: HomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   return (
-    <Layout>
+    <Layout assetPaths={props.assetPaths}>
       <Head>
         <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
       </Head>

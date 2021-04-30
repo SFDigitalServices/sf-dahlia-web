@@ -1,7 +1,6 @@
 import React from "react"
 
 import {
-  ExygyFooter,
   FooterNav,
   FooterSection,
   LanguageNav,
@@ -12,6 +11,7 @@ import {
   t,
   UserNav,
 } from "@sf-digital-services/ui-components"
+import Markdown from "markdown-to-jsx"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
 
@@ -29,6 +29,7 @@ import {
 
 export interface LayoutProps {
   children: React.ReactNode
+  assetPaths: unknown
 }
 
 const signOut = () => {
@@ -65,7 +66,7 @@ const Layout = (props: LayoutProps) => {
         />
         <SiteHeader
           skip={t("t.skipToMainContent")}
-          logoSrc="/images/logo_glyph.svg"
+          logoSrc={props.assetPaths["logo-portal.png"]}
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahliaSanFranciscoHousingPortal")}
         >
@@ -121,12 +122,66 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.cityCountyOfSf")}>
-          <div />
-        </FooterNav>
-        <FooterSection className="bg-black" small>
-          <ExygyFooter />
+        <FooterSection>
+          <ul className="inline-list">
+            <li className="border-white border-r-2 px-10 font-semibold">
+              <a href="/es/welcome-spanish">Bienvenido</a>
+            </li>
+            <li className="border-white border-r-2 px-10 font-semibold">
+              <a href="/zh/welcome-chinese">歡迎</a>
+            </li>
+            <li className="px-10 font-semibold">
+              <a href="/tl/welcome-filipino">Maligayang pagdating</a>
+            </li>
+          </ul>
         </FooterSection>
+        <FooterSection>
+          <img src={props.assetPaths["logo-city.png"]} />
+        </FooterSection>
+        <FooterSection small>
+          <Markdown options={{ disableParsingRawHTML: false }}>
+            {t("footer.dahliaDescription", {
+              mohcdUrl: "http://sf-moh.org",
+              sfdsUrl: "https://digitalservices.sfgov.org/",
+              mayorUrl: "https://www.innovation.sfgov.org/",
+            })}
+          </Markdown>
+        </FooterSection>
+        <FooterSection>
+          <p className="text-tiny">
+            {t("footer.forListingQuestions")} <br />
+            {t("footer.forGeneralQuestions")}
+          </p>
+        </FooterSection>
+        <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
+          <a
+            className="text-gray-500"
+            href="https://airtable.com/shrw64DubWTQfRkdo"
+            target="_blank"
+          >
+            {t("footer.giveFeedback")}
+          </a>
+          <a className="text-gray-500" href="mailto:sfhousinginfo@sfgov.org">
+            {t("footer.contact")}
+          </a>
+          <a
+            className="text-gray-500"
+            href="https://www.acgov.org/government/legal.htm"
+            target="_blank"
+          >
+            {t("footer.disclaimer")}
+          </a>
+          <a className="text-gray-500" href="/privacy">
+            {t("footer.privacyPolicy")}
+          </a>
+          <a href="https://heapanalytics.com/?utm_source=badge" target="_blank" rel="nofollow">
+            <img
+              src={props.assetPaths["heap.png"]}
+              style={{ width: "108px", height: "41px" }}
+              alt="Heap | Mobile and Web Analytics"
+            />
+          </a>
+        </FooterNav>
       </SiteFooter>
       <SVG src="/images/icons.svg" />
     </div>
