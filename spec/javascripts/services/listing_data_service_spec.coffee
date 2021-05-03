@@ -5,6 +5,7 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
+    fakeListingFromApplication = getJSONFixture('listing-from-application.json')
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeEligibilityFilters =
@@ -326,15 +327,21 @@ do ->
 
     describe 'Service.loadListing', ->
       beforeEach ->
-        ListingDataService.loadListing(fakeListing.listing)
+        ListingDataService.loadListing(fakeListingFromApplication)
 
       it 'should populate Service.listing', ->
-        expect(ListingDataService.listing.Id).toEqual fakeListing.listing.Id
+        expect(ListingDataService.listing.Id).toEqual fakeListingFromApplication.Id
       it 'should populate Service.listing.preferences', ->
-        count = fakeListing.listing.Listing_Lottery_Preferences.length
+        count = fakeListingFromApplication.Listing_Lottery_Preferences.length
         expect(ListingDataService.listing.preferences.length).toEqual count
-        prefId = fakeListing.listing.Listing_Lottery_Preferences[0].Id
+        prefId = fakeListingFromApplication.Listing_Lottery_Preferences[0].Id
         expect(ListingDataService.listing.preferences[0].listingPreferenceID).toEqual prefId
+      it 'should populate Service.listing.customPreferences', ->
+        expectedCustomPref = {
+          listingPreferenceID: 'a0l6s000000CJ80AAG', preferenceName: 'Employment or Disability Preference'
+        }
+        expect(ListingDataService.listing.customPreferences).
+        toContain(jasmine.objectContaining(expectedCustomPref))
 
     describe 'Service.getListingPaperAppURLs', ->
       describe 'for a rental listing', ->
