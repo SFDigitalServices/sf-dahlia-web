@@ -130,6 +130,10 @@ module.exports = {
     "react/display-name": "off",
     "react/state-in-constructor": 0,
     "react/self-closing-comp": "error",
+    // this rule auto-corrects regex to make it simpler. Unfortunately, we
+    // can't depend on all regex parsers to work the same, so we're turning
+    // it off.
+    "unicorn/better-regex": "off",
     "unicorn/no-null": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/no-array-for-each": "off",
