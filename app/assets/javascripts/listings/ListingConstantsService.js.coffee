@@ -78,6 +78,7 @@ ListingConstantsService = () ->
     rentBurden: "Rent Burdened / Assisted Housing Preference"
     antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
     aliceGriffith: "Alice Griffith Housing Development Resident"
+    # Add new RTR pref here
 
   # Create a mapping to Salesforce naming conventions
   Service.RESERVED_TYPES = {

@@ -80,6 +80,7 @@ angular.module('dahlia.components')
               when 'workInSf' then flagForI18n('e2c_live_work_preference.work_sf_preference.title')
               when 'assistedHousing' then flagForI18n('e3a_assisted_housing_preference.preference.title')
               when 'rentBurden' then flagForI18n('e3b_rent_burden_preference.rent_burden_preference')
+              # Add new RTR pref here
               when 'aliceGriffith' then flagForI18n('preferences.alice_griffith.title')
 
             # If we didn't find a display name for this key, skip over it

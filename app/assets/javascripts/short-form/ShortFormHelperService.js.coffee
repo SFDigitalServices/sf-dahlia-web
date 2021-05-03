@@ -305,6 +305,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         Service.preference_proof_options_live
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
+      # Change this to call new isRTRPreference() function instead
       when 'aliceGriffith'
         Service.preference_proof_options_alice_griffith
       else

@@ -59,6 +59,7 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       aliceGriffith: null
+      # add new pref here
       optOut: {}
       documents:
         rentBurden: {}

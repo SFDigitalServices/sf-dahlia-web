@@ -285,6 +285,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     switch preference.preferenceName
       when PREFS.certOfPreference
         'COP'
+      # Change next line to call new isRTRPref() function instead
       when PREFS.aliceGriffith
         'AG'
       when PREFS.displaced

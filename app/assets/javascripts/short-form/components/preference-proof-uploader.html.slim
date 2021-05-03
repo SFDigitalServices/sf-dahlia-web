@@ -8,6 +8,7 @@
     | {{'e2c_live_work_preference.document_must_show_correct_name' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.preference == 'workInSf'"
     | {{'e2c_live_work_preference.document_must_show_correct_name_for_work' | translate}}
+  // Add option here for RTR preference
   p.form-note.margin-bottom ng-if="$ctrl.preference == 'aliceGriffith'"
     | {{'preferences.alice_griffith.proof_desc' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.proofType == 'Copy of Lease'"
@@ -25,6 +26,8 @@
       | {{'e2c_live_work_preference.letter_from_employer_instructions' | translate}}
     p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
       | {{'e2c_live_work_preference.letter_for_homelessness_instructions' | translate}}
+    // add a new check below so the logic is "proofOption == 'Letter from SFHA...' && $ctrl.preference == 'rtrPreference'"
+    // change the check below so the logic is "proofOption == 'Letter from SFHA...' && $ctrl.preference == 'aliceGriffith'"
     p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from SFHA verifying address'"
       | {{'preferences.alice_griffith.sfha_letter_instructions' | translate}}
 

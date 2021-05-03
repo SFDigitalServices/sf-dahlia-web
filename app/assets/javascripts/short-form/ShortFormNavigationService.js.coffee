@@ -358,6 +358,7 @@ ShortFormNavigationService = (
       when 'alice-griffith-preference'
         Service.goBackToLiveWorkNeighborhood()
       when 'preferences-programs'
+        # Change this to call new isRTRPreference() function
         if ShortFormApplicationService.listingHasPreference('aliceGriffith')
           'alice-griffith-preference'
         else
