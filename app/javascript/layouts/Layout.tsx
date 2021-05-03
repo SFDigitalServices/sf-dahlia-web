@@ -58,7 +58,8 @@ const Layout = (props: LayoutProps) => {
           onChangeLanguage={(newLangConfig) => {
             window.location.href = getNewLanguagePath(
               window.location.pathname,
-              newLangConfig.prefix
+              newLangConfig.prefix,
+              window.location.search
             )
           }}
         />

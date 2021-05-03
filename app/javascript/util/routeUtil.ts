@@ -13,13 +13,19 @@ import { cleanPath } from "./urlUtil"
  *
  * ex getLocalizedPath("/sign-in", LanguagePrefix.Spanish) -> "/es/sign-in"
  */
-const getLocalizedPath = (newPath: string, newLanguage: LanguagePrefix): string => {
+const getLocalizedPath = (
+  newPath: string,
+  newLanguage: LanguagePrefix,
+  queryString: string | undefined = undefined
+): string => {
   const newPathWithoutLanguage = getPathWithoutLanguagePrefix(newPath)
   const config: LangConfig = LANGUAGE_CONFIGS[newLanguage]
 
-  return cleanPath(
+  const cleanedPath = cleanPath(
     config.isDefault ? newPathWithoutLanguage : `${config.prefix}${newPathWithoutLanguage}`
   )
+
+  return `${cleanedPath}${queryString || ""}`
 }
 
 const localizedPathGetter = (newPathNonLocalized: string) => (
@@ -31,8 +37,9 @@ const localizedPathGetter = (newPathNonLocalized: string) => (
  */
 export const getNewLanguagePath = (
   currentPath: string | undefined,
-  newLanguagePrefix: string
-): string => getLocalizedPath(currentPath, toLanguagePrefix(newLanguagePrefix))
+  newLanguagePrefix: string,
+  queryString: string | undefined
+): string => getLocalizedPath(currentPath, toLanguagePrefix(newLanguagePrefix), queryString)
 
 export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")

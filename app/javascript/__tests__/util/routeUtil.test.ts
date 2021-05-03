@@ -55,19 +55,29 @@ describe("routeUtil", () => {
 
   describe("getNewLanguagePath", () => {
     it("returns the correct path", () => {
-      expect(getNewLanguagePath("/", "en")).toBe("/")
-      expect(getNewLanguagePath("/", "es")).toBe("/es")
-      expect(getNewLanguagePath("/es", "zh")).toBe("/zh")
-      expect(getNewLanguagePath("/", "invalid-language-prefix")).toBe("/")
-      expect(getNewLanguagePath("/", "")).toBe("/")
+      expect(getNewLanguagePath("/", "en", "")).toBe("/")
+      expect(getNewLanguagePath("/", "es", "")).toBe("/es")
+      expect(getNewLanguagePath("/es", "zh", "")).toBe("/zh")
+      expect(getNewLanguagePath("/", "invalid-language-prefix", "")).toBe("/")
+      expect(getNewLanguagePath("/", "", "")).toBe("/")
     })
 
     it("returns the correct path when not on the homepage", () => {
-      expect(getNewLanguagePath("/sign-in", "en")).toBe("/sign-in")
-      expect(getNewLanguagePath("/sign-in", "es")).toBe("/es/sign-in")
-      expect(getNewLanguagePath("/es/sign-in", "zh")).toBe("/zh/sign-in")
-      expect(getNewLanguagePath("/sign-in", "invalid-language-prefix")).toBe("/sign-in")
-      expect(getNewLanguagePath("/sign-in", "")).toBe("/sign-in")
+      expect(getNewLanguagePath("/sign-in", "en", "")).toBe("/sign-in")
+      expect(getNewLanguagePath("/sign-in", "es", "")).toBe("/es/sign-in")
+      expect(getNewLanguagePath("/es/sign-in", "zh", "")).toBe("/zh/sign-in")
+      expect(getNewLanguagePath("/sign-in", "invalid-language-prefix", "")).toBe("/sign-in")
+      expect(getNewLanguagePath("/sign-in", "", "")).toBe("/sign-in")
+    })
+
+    it("returns the correct path with a query string", () => {
+      expect(getNewLanguagePath("/sign-in", "en", "?react=true")).toBe("/sign-in?react=true")
+      expect(getNewLanguagePath("/sign-in", "es", "?react=true")).toBe("/es/sign-in?react=true")
+      expect(getNewLanguagePath("/es/sign-in", "zh", "?react=true")).toBe("/zh/sign-in?react=true")
+      expect(getNewLanguagePath("/sign-in", "invalid-language-prefix", "?react=true")).toBe(
+        "/sign-in?react=true"
+      )
+      expect(getNewLanguagePath("/sign-in", "", "?react=true")).toBe("/sign-in?react=true")
     })
   })
 })
