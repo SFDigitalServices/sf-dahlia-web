@@ -1,15 +1,12 @@
 import React from "react"
 
-import { render, cleanup } from "@testing-library/react"
-
 import HomePage from "../../pages/HomePage"
-
-afterEach(cleanup)
+import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<HomePage />", () => {
-  it("shows right header text", () => {
-    const { getByText } = render(<HomePage />)
+  it("shows the correct header text", async () => {
+    const { getByText } = await renderAndLoadAsync(<HomePage />)
 
-    expect(getByText("San Francisco Housing Portal")).not.toBeNull()
+    expect(getByText("Apply for affordable housing")).not.toBeNull()
   })
 })
