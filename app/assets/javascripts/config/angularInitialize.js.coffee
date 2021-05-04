@@ -47,7 +47,7 @@
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-      if (toState.name == 'dahlia.welcome' && !isFirstLoad)
+      if (toState.name == 'dahlia.unknown-url' || (toState.name == 'dahlia.welcome' && !isFirstLoad))
         isFirstLoad = false
 
         # stop the state transition event from propagating
