@@ -4,15 +4,28 @@ import {
   ExygyFooter,
   FooterNav,
   FooterSection,
+  LanguageNav,
   LocalizedLink,
   setSiteAlertMessage,
   SiteFooter,
   SiteHeader,
   t,
   UserNav,
-} from "@bloom-housing/ui-components"
+} from "@sf-digital-services/ui-components"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
+
+import { getRoutePrefix, LANGUAGE_CONFIGS } from "../util/languageUtil"
+import {
+  getAssistancePath,
+  getFavoritesPath,
+  getMyAccountSettingsPath,
+  getMyAccountPath,
+  getMyApplicationsPath,
+  getRentalDirectoryPath,
+  getSaleDirectoryPath,
+  getNewLanguagePath,
+} from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -26,50 +39,80 @@ const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
 
-  const LANGUAGES =
-    process.env.languages?.split(",")?.map((item) => ({
-      prefix: item === "en" ? "" : item,
-      label: t(`languages.${item}`),
-    })) || []
+  const langItems = Object.values(LANGUAGE_CONFIGS).map((item) => ({
+    prefix: item.isDefault ? "" : item.prefix,
+    label: item.getLabel(),
+  }))
+
+  const currentPath = window.location.pathname
 
   return (
     <div className="site-wrapper">
       <div className="site-content">
         <Head>
-          <title>{t("nav.siteTitle")}</title>
+          <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
+        <LanguageNav
+          currentLanguagePrefix={getRoutePrefix(currentPath) || ""}
+          items={langItems}
+          onChangeLanguage={(newLangConfig) => {
+            window.location.href = getNewLanguagePath(
+              window.location.pathname,
+              newLangConfig.prefix,
+              window.location.search
+            )
+          }}
+        />
         <SiteHeader
-          skip={t("nav.skip")}
+          skip={t("t.skipToMainContent")}
           logoSrc="/images/logo_glyph.svg"
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
-          title={t("nav.siteTitle")}
-          languages={LANGUAGES}
+          title={t("t.dahliaSanFranciscoHousingPortal")}
         >
-          <LocalizedLink href="/listings" className="navbar-item">
-            {t("nav.listings")}
-          </LocalizedLink>
-          {/* Only show Get Assistance if housing counselor data is available */}
-          {process.env.housingCounselorServiceUrl && (
-            <LocalizedLink href="/housing-counselors" className="navbar-item">
-              {t("nav.getAssistance")}
-            </LocalizedLink>
-          )}
+          <a
+            data-testid="nav-button--rent"
+            href={getRentalDirectoryPath(currentPath)}
+            className="navbar-item"
+          >
+            {t("nav.rent")}
+          </a>
+          <a
+            data-testid="nav-button--buy"
+            href={getSaleDirectoryPath(currentPath)}
+            className="navbar-item"
+          >
+            {t("nav.buy")}
+          </a>
+          <a
+            data-testid="nav-button--favorites"
+            href={getFavoritesPath(currentPath)}
+            className="navbar-item"
+          >
+            {t("nav.myFavorites")}
+          </a>
+          <a
+            data-testid="nav-button--assistance"
+            href={getAssistancePath(currentPath)}
+            className="navbar-item"
+          >
+            {t("nav.getAssistance")}
+          </a>
           <UserNav
             signedIn={signedIn}
             signOut={() => {
-              setSiteAlertMessage(t(`authentication.signOut.success`), "notice")
+              setSiteAlertMessage(t(`signIn.signedOutSuccessfully`), "notice")
               // await router.push("/sign-in")
               signOut()
               window.scrollTo(0, 0)
             }}
           >
-            <LocalizedLink href="/account/dashboard" className="navbar-item">
+            <LocalizedLink href={getMyAccountPath(currentPath)} className="navbar-item">
               {t("nav.myDashboard")}
             </LocalizedLink>
-            <LocalizedLink href="/account/applications" className="navbar-item">
+            <LocalizedLink href={getMyApplicationsPath(currentPath)} className="navbar-item">
               {t("nav.myApplications")}
             </LocalizedLink>
-            <LocalizedLink href="/account/settings" className="navbar-item">
+            <LocalizedLink href={getMyAccountSettingsPath(currentPath)} className="navbar-item">
               {t("nav.accountSettings")}
             </LocalizedLink>
           </UserNav>
@@ -78,7 +121,7 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.copyright")}>
+        <FooterNav copyright={t("footer.cityCountyOfSf")}>
           <div />
         </FooterNav>
         <FooterSection className="bg-black" small>

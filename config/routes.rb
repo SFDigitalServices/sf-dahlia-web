@@ -78,13 +78,9 @@ Rails.application.routes.draw do
   get '/translations/:locale.json', to: 'application#asset_redirect'
 
   # React routes each use their own controllers (currently there's just one for the homepage)
-  get '/', to: 'home#index'
-  get '/es', to: 'home#index'
-  get '/en', to: 'home#index'
-  get '/zh', to: 'home#index'
-  get '/tl', to: 'home#index'
+  get '(:lang)' => 'home#index', lang: /(en|es|zh|tl)/
 
-  get '(:lang)/sign-in', to: 'auth#sign_in', lang: /(en|es|zh|tl)/
+  get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }

@@ -25,9 +25,11 @@ ExternalTranslateService = ($q, $timeout, $window) ->
     document.getElementsByTagName('head')[0].appendChild(node)
 
   Service.setLanguage = (language) ->
+    console.log("Setting language to " + language)
     Service.language = if language == 'zh' then 'zh-TW' else language
 
   Service.translatePageContent = (iterationCount=15) ->
+    console.log("Translating page content to " + Service.language)
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{Service.language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true

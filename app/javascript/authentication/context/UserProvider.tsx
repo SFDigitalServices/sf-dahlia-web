@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react"
 
 import { getProfile, signIn } from "../apiService"
-import { getHeaders, isTokenValid } from "../token"
+import { isTokenValid } from "../token"
 import { saveProfile, signOut, startLoading, stopLoading } from "./userActions"
 import UserContext, { ContextProps } from "./UserContext"
 import UserReducer from "./UserReducer"
