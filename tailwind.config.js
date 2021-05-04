@@ -7,8 +7,6 @@ const bloomTheme = cloneDeep(require("@bloom-housing/ui-components/tailwind.conf
 
 // tailwind will automatically purge unused styles when `NODE_ENV` is set to `production`
 bloomTheme.purge = [
-  './src/**/*.tsx',
-  __dirname + '/app/assets/javascripts/**/*.html.slim',
   __dirname + '/app/javascript/**/*.tsx'
 ]
 
