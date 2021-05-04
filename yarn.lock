@@ -5029,6 +5029,14 @@ cssnano-util-same-parent@^4.0.0:
   resolved "https://registry.yarnpkg.com/cssnano-util-same-parent/-/cssnano-util-same-parent-4.0.1.tgz#574082fb2859d2db433855835d9a8456ea18bbf3"
   integrity sha512-WcKx5OY+KoSIAxBW6UBBRay1U6vkYheCdjyVNDm85zt5K9mHoGOfsOsqIszfAqrQQFIIKgjh2+FDgIj/zsl21Q==
 
+cssnano-webpack-plugin@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cssnano-webpack-plugin/-/cssnano-webpack-plugin-1.0.3.tgz#13f8322c22211adf8f12667034632c1db41146f6"
+  integrity sha512-OkxkOR6WlTBdIbPObCTWuUuZCr3bDPYClm5gquo2LEkOCvM1mbI9MAUstqS2+u6pImnd2f6dNgmmcvVbmYJ7fg==
+  dependencies:
+    cssnano "^4.1.10"
+    webpack-sources "^1.4.3"
+
 cssnano@^4.1.10:
   version "4.1.10"
   resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-4.1.10.tgz#0ac41f0b13d13d465487e111b778d42da631b8b2"
