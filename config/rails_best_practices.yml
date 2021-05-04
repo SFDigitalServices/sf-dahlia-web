@@ -17,7 +17,7 @@ NeedlessDeepNestingCheck: { nested_count: 2 }
 NotRescueExceptionCheck: {}
 NotUseDefaultRouteCheck: {}
 NotUseTimeAgoInWordsCheck: {}
-# OveruseRouteCustomizationsCheck: { customize_count: 3 }
+OveruseRouteCustomizationsCheck: {}
 ProtectMassAssignmentCheck: {}
 RemoveEmptyHelpersCheck: {}
 #RemoveTabCheck: { }

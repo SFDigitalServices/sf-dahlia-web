@@ -146,7 +146,7 @@ To get started working with our Phrase translations, you will need to:
 1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
 1. Save the access token as an env var so you don't have to pass it to the phrase commands: `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
 
-### Push your changes to Phrase every time you update locale-en.json
+### Push your changes to Phrase every time you update locale-en.json or en.json
 
 After running `grunt translations`, run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
 

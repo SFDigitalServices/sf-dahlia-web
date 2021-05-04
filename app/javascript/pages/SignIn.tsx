@@ -10,4 +10,4 @@ const SignIn = () => (
   </FormsLayout>
 )
 
-export default withAppSetup(SignIn)
+export default withAppSetup(SignIn, true)

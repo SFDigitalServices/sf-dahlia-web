@@ -6,15 +6,15 @@ import {
   Field,
   Form,
   t,
-  setSiteAlertMessage,
   FormCard,
   Icon,
   AlertBox,
   SiteAlert,
   LinkButton,
-} from "@bloom-housing/ui-components"
+} from "@sf-digital-services/ui-components"
 import { useForm } from "react-hook-form"
 
+import { getMyAccountPath } from "../util/routeUtil"
 import UserContext from "./context/UserContext"
 
 const SignInForm = () => {
@@ -26,26 +26,18 @@ const SignInForm = () => {
   const { register, handleSubmit, errors } = useForm()
   const [requestError, setRequestError] = useState<string>()
 
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = (data: { email: string; password: string }) => {
     const { email, password } = data
 
-    try {
-      const user = await signIn(email, password)
-      setSiteAlertMessage(t(`authentication.signIn.success`, { name: user.email }), "success")
-      // TODO replace with proper router
-      window.location.href = "/?react=true"
-      window.scrollTo(0, 0)
-    } catch (error) {
-      const { status } = error.response || {}
-      if (status === 401) {
-        setRequestError(`${t("authentication.signIn.error")}: ${error.message}`)
-      } else {
-        console.error(error)
-        setRequestError(
-          `${t("authentication.signIn.error")}. ${t("authentication.signIn.errorGenericMessage")}`
-        )
-      }
-    }
+    signIn(email, password)
+      .then(() => {
+        window.location.href = getMyAccountPath(window.location.pathname)
+        window.scrollTo(0, 0)
+      })
+      .catch(() => {
+        // TODO: handle sign-in error states
+        setRequestError(`${t("signIn.badCredentials")}`)
+      })
   }
 
   return (
@@ -55,7 +47,7 @@ const SignInForm = () => {
         <h2 className="form-card__title">Sign In</h2>
       </div>
       {requestError && (
-        <AlertBox className="" onClose={() => setRequestError(undefined)} type="alert">
+        <AlertBox onClose={() => setRequestError(undefined)} type="alert">
           {requestError}
         </AlertBox>
       )}
@@ -75,7 +67,7 @@ const SignInForm = () => {
           {/* TODO: Add /forgot-password link */}
           <aside className="float-right font-bold">
             {/* <Link href="/forgot-password">
-                <a>{t("authentication.signIn.forgotPassword")}</a>
+                <a>{t("signIn.forgotPassword")}</a>
               </Link> */}
           </aside>
 

@@ -19,7 +19,7 @@ module.exports = {
     // Allows for the use of imports
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "prettier", "import", "unicorn"],
+  plugins: ["react", "@typescript-eslint", "prettier", "import", "unicorn", "unused-imports"],
   extends: [
     "standard",
     "plugin:jest/recommended",
@@ -65,7 +65,17 @@ module.exports = {
     "camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
+
+    // Unused imports is the same as no-unused-vars except it splits imports
+    // and vars into two separate rules, and has autofix, so here we turn on
+    // both of the unused-imports rules and turn off the no-unused-vars rule.
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": ["error", {
+      "vars": "all", "varsIgnorePattern": "^_",
+      "args": "after-used", "argsIgnorePattern": "^_"
+    }],
+    "@typescript-eslint/no-unused-vars": "off",
+
     "@typescript-eslint/no-var-requires": "off",
     "no-use-before-define": "off",
     "no-void": [
@@ -120,6 +130,10 @@ module.exports = {
     "react/display-name": "off",
     "react/state-in-constructor": 0,
     "react/self-closing-comp": "error",
+    // this rule auto-corrects regex to make it simpler. Unfortunately, we
+    // can't depend on all regex parsers to work the same, so we're turning
+    // it off.
+    "unicorn/better-regex": "off",
     "unicorn/no-null": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/no-array-for-each": "off",
@@ -156,6 +170,16 @@ module.exports = {
       },
     ],
   },
+  "overrides": [
+    {
+      "files": [ "cypress/integration/*e2e.ts", "cypress/integration/*e2e.js" ],
+      "rules": {
+        // e2e files use chai-expect, not jest-expect, linter gets confused so we
+        // turn off jest linting for these files.
+        "jest/valid-expect": 0,
+      }
+    }
+  ],
   ignorePatterns: [
     "app/assets",
     "lib",

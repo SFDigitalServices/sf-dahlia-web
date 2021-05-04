@@ -20,6 +20,7 @@ module.exports = function (grunt) {
           },
         ],
       },
+      // TODO: remove this when angular is deleted
       removeLanguageKey: {
         files: [
           {
@@ -49,6 +50,7 @@ module.exports = function (grunt) {
           },
         },
       },
+      // TODO: remove this when angular is deleted
       addBackLanguageKey: {
         files: [
           {
@@ -80,8 +82,8 @@ module.exports = function (grunt) {
         },
       },
     },
-
-    // Make any string replacements that are needed when transfering assets to app.
+    // TODO: remove this when angular is deleted
+    // Make any string replacements that are needed when transferring assets to app.
     replace: {
       dist: {
         options: {
@@ -108,6 +110,33 @@ module.exports = function (grunt) {
       },
     },
 
+    // Parse react code for t() translation calls
+    i18next: {
+      dev: {
+        src: "app/javascript/**/*.{js,jsx,ts,tsx}",
+        dest: "app/assets/json/translations/react",
+        options: {
+          sort: true,
+          func: {
+            list: ["t"],
+            extensions: [".js", ".jsx", ".ts", ".tsx"],
+          },
+          lngs: ["en", "es", "tl", "zh"],
+          defaultLng: "en",
+          defaultValue: "",
+          removeUnusedKeys: false,
+          resource: {
+            loadPath: "app/assets/json/translations/react/{{lng}}.json",
+            savePath: "{{lng}}.json",
+            jsonIndent: 2,
+            lineEnding: "\n",
+          },
+          nsSeparator: false, // namespace separator
+          keySeparator: false,
+        },
+      },
+    },
+    // TODO: remove this when angular is deleted
     i18nextract: {
       default_options: {
         src: [
@@ -153,7 +182,17 @@ module.exports = function (grunt) {
       locale_zh: {
         src: "app/assets/json/translations/locale-zh.json",
       },
+      es: {
+        src: "app/assets/json/translations/react/es.json",
+      },
+      tl: {
+        src: "app/assets/json/translations/react/tl.json",
+      },
+      zh: {
+        src: "app/assets/json/translations/react/zh.json",
+      },
     },
+    // TODO: remove this when angular is deleted
     sortJSON: {
       src: [
         "app/assets/json/translations/locale-en.json",
@@ -161,9 +200,6 @@ module.exports = function (grunt) {
         "app/assets/json/translations/locale-tl.json",
         "app/assets/json/translations/locale-zh.json",
       ],
-      // options: {
-      //   spacing: 2
-      // }
     },
     exec: {
       phrasePull: {
@@ -171,11 +207,7 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          if (token) {
-            return `phrase pull --access_token ${token}`
-          } else {
-            return "phrase pull"
-          }
+          return token ? `phrase pull --access_token ${token}` : "phrase pull"
         },
       },
       phrasePush: {
@@ -183,11 +215,7 @@ module.exports = function (grunt) {
           // If token is present, pass to phrase, otherwise phrase will look for
           // the PHRASE_ACCESS_TOKEN env var.
           const token = grunt.option("phraseAccessToken")
-          if (token) {
-            return `phrase push --access_token ${token}`
-          } else {
-            return "phrase push"
-          }
+          return token ? `phrase push --access_token ${token}` : "phrase push"
         },
       },
     },
@@ -201,6 +229,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-sort-json")
   grunt.loadNpmTasks("grunt-json-remove-fields")
   grunt.loadNpmTasks("grunt-exec")
+  grunt.loadNpmTasks("i18next-scanner")
 
   // Set this variable by appending --phraseAccessToken=[token] to any grunt command.
   // var phraseAccessToken = grunt.option("phraseAccessToken")
@@ -208,13 +237,14 @@ module.exports = function (grunt) {
   grunt.registerTask("default", ["clean", "copy", "replace"])
 
   grunt.registerTask("translations", [
-    "copy:removeLanguageKey",
-    "i18nextract",
-    "copy:addBackLanguageKey",
-    "json_remove_fields",
-    "json_remove_fields",
-    "sortJSON",
+    "copy:removeLanguageKey", // only relevant for angular
+    "i18nextract", // extract angular phrases
+    "i18next", // extract react phrases
+    "copy:addBackLanguageKey", // only relevant for angular
+    "json_remove_fields", // necessary for react and angular
+    "sortJSON", // only relevant for angular
   ])
+
   grunt.registerTask("phrasePush", [
     "copy:removeLanguageKey",
     "exec:phrasePush",
