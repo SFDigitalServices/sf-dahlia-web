@@ -30,7 +30,7 @@ environment.loaders.keys().forEach((loaderName) => {
   })
 })
 
-environment.optimization = {
+environment.config.set("optimization.minimizer", {
   minimizer: [
     new CssnanoPlugin({
       sourceMap: true,
@@ -39,6 +39,6 @@ environment.optimization = {
       },
     }),
   ],
-}
+})
 
 module.exports = environment
