@@ -7,8 +7,8 @@ interface SignInProps {
   assetPaths: unknown
 }
 
-const SignIn = (props: SignInProps) => (
-  <FormsLayout assetPaths={props.assetPaths}>
+const SignIn = (_props: SignInProps) => (
+  <FormsLayout>
     <SignInForm />
   </FormsLayout>
 )

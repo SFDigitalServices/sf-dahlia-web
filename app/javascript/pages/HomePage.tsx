@@ -24,7 +24,7 @@ const HomePage = (props: HomePageProps) => {
   const metaImage = "" // TODO: replace with hero image
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   return (
-    <Layout assetPaths={props.assetPaths}>
+    <Layout>
       <Head>
         <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
       </Head>

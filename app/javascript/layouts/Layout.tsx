@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import {
   FooterNav,
@@ -15,6 +15,7 @@ import Markdown from "markdown-to-jsx"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
 
+import ConfigContext from "../lib/ConfigContext"
 import { getRoutePrefix, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getAssistancePath,
@@ -29,7 +30,6 @@ import {
 
 export interface LayoutProps {
   children: React.ReactNode
-  assetPaths: unknown
 }
 
 const signOut = () => {
@@ -39,6 +39,7 @@ const signOut = () => {
 const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
+  const { getAssetPath } = useContext(ConfigContext)
 
   const langItems = Object.values(LANGUAGE_CONFIGS).map((item) => ({
     prefix: item.isDefault ? "" : item.prefix,
@@ -66,7 +67,7 @@ const Layout = (props: LayoutProps) => {
         />
         <SiteHeader
           skip={t("t.skipToMainContent")}
-          logoSrc={props.assetPaths["logo-portal.png"]}
+          logoSrc={getAssetPath("logo-portal.png")}
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahliaSanFranciscoHousingPortal")}
         >
@@ -123,20 +124,7 @@ const Layout = (props: LayoutProps) => {
 
       <SiteFooter>
         <FooterSection>
-          <ul className="inline-list">
-            <li className="border-white border-r-2 px-10 font-semibold">
-              <a href="/es/welcome-spanish">Bienvenido</a>
-            </li>
-            <li className="border-white border-r-2 px-10 font-semibold">
-              <a href="/zh/welcome-chinese">歡迎</a>
-            </li>
-            <li className="px-10 font-semibold">
-              <a href="/tl/welcome-filipino">Maligayang pagdating</a>
-            </li>
-          </ul>
-        </FooterSection>
-        <FooterSection>
-          <img src={props.assetPaths["logo-city.png"]} />
+          <img src={getAssetPath("logo-city.png")} />
         </FooterSection>
         <FooterSection small>
           <Markdown options={{ disableParsingRawHTML: false }}>
@@ -173,13 +161,6 @@ const Layout = (props: LayoutProps) => {
           </a>
           <a className="text-gray-500" href="/privacy">
             {t("footer.privacyPolicy")}
-          </a>
-          <a href="https://heapanalytics.com/?utm_source=badge" target="_blank" rel="nofollow">
-            <img
-              src={props.assetPaths["heap.png"]}
-              style={{ width: "108px", height: "41px" }}
-              alt="Heap | Mobile and Web Analytics"
-            />
           </a>
         </FooterNav>
       </SiteFooter>
