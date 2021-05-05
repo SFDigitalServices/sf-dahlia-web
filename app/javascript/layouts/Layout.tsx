@@ -129,7 +129,7 @@ const Layout = (props: LayoutProps) => {
         <FooterSection small>
           <Markdown options={{ disableParsingRawHTML: false }}>
             {t("footer.dahliaDescription", {
-              mohcdUrl: "http://sf-moh.org",
+              mohcdUrl: "https://sf.gov/mohcd",
               sfdsUrl: "https://digitalservices.sfgov.org/",
               mayorUrl: "https://www.innovation.sfgov.org/",
             })}
