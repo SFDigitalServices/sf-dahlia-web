@@ -1,5 +1,3 @@
-const CssnanoPlugin = require("cssnano-webpack-plugin")
-
 module.exports = {
   plugins: [
     require("postcss-import"),
@@ -11,18 +9,5 @@ module.exports = {
       },
       stage: 3
     })
-  ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new CssnanoPlugin({
-        sourceMap: true,
-        cssnanoOptions: {
-          preset: ['default', {
-            discardComments: { removeAll: true }
-          }]
-        }
-      })
-    ]
-  }
+  ]
 }

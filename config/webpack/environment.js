@@ -1,4 +1,5 @@
 const { environment } = require("@rails/webpacker")
+const CssnanoPlugin = require("cssnano-webpack-plugin")
 const dotenv = require("dotenv")
 const webpack = require("webpack")
 
@@ -28,5 +29,16 @@ environment.loaders.keys().forEach((loaderName) => {
     }
   })
 })
+
+environment.optimization = {
+  minimizer: [
+    new CssnanoPlugin({
+      sourceMap: true,
+      cssnanoOptions: {
+        preset: ["default", { discardComments: { removeAll: true } }],
+      },
+    }),
+  ],
+}
 
 module.exports = environment
