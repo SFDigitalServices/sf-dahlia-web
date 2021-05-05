@@ -30,15 +30,13 @@ environment.loaders.keys().forEach((loaderName) => {
   })
 })
 
-environment.config.set("optimization.minimizer", {
-  minimizer: [
-    new CssnanoPlugin({
-      sourceMap: true,
-      cssnanoOptions: {
-        preset: ["default", { discardComments: { removeAll: true } }],
-      },
-    }),
-  ],
-})
+environment.config.set("optimization.minimizer", [
+  new CssnanoPlugin({
+    sourceMap: true,
+    cssnanoOptions: {
+      preset: ["default", { discardComments: { removeAll: true } }],
+    },
+  }),
+])
 
 module.exports = environment
