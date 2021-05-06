@@ -17,6 +17,7 @@ import { getRentalDirectoryPath } from "../util/routeUtil"
 
 interface HomePageProps {
   listings?: Listing[]
+  assetPaths: unknown
 }
 
 const HomePage = (props: HomePageProps) => {

@@ -1,7 +1,6 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import {
-  ExygyFooter,
   FooterNav,
   FooterSection,
   LanguageNav,
@@ -12,9 +11,11 @@ import {
   t,
   UserNav,
 } from "@sf-digital-services/ui-components"
+import Markdown from "markdown-to-jsx"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
 
+import { ConfigContext } from "../lib/ConfigContext"
 import { getRoutePrefix, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getAssistancePath,
@@ -38,6 +39,7 @@ const signOut = () => {
 const Layout = (props: LayoutProps) => {
   // TODO: get these from auth provider
   const signedIn = false
+  const { getAssetPath } = useContext(ConfigContext)
 
   const langItems = Object.values(LANGUAGE_CONFIGS).map((item) => ({
     prefix: item.isDefault ? "" : item.prefix,
@@ -65,7 +67,7 @@ const Layout = (props: LayoutProps) => {
         />
         <SiteHeader
           skip={t("t.skipToMainContent")}
-          logoSrc="/images/logo_glyph.svg"
+          logoSrc={getAssetPath("logo-portal.png")}
           notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
           title={t("t.dahliaSanFranciscoHousingPortal")}
         >
@@ -121,12 +123,55 @@ const Layout = (props: LayoutProps) => {
       </div>
 
       <SiteFooter>
-        <FooterNav copyright={t("footer.cityCountyOfSf")}>
-          <div />
-        </FooterNav>
-        <FooterSection className="bg-black" small>
-          <ExygyFooter />
+        <FooterSection>
+          <img src={getAssetPath("logo-city.png")} />
         </FooterSection>
+        <FooterSection small>
+          <p className="text-gray-500">
+            <Markdown>
+              {t("footer.dahliaDescription", {
+                mohcdUrl: "https://sf.gov/mohcd",
+              })}
+            </Markdown>
+          </p>
+          <p className="text-sm mt-4 text-gray-500">
+            <Markdown>
+              {t("footer.inPartnershipWith", {
+                sfdsUrl: "https://digitalservices.sfgov.org/",
+                mayorUrl: "https://www.innovation.sfgov.org/",
+              })}
+            </Markdown>
+          </p>
+        </FooterSection>
+
+        <FooterSection>
+          <p className="text-tiny">
+            {t("footer.forListingQuestions")} <br />
+            {t("footer.forGeneralQuestions")}
+          </p>
+        </FooterSection>
+        <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
+          <a
+            className="text-gray-500"
+            href="https://airtable.com/shrw64DubWTQfRkdo"
+            target="_blank"
+          >
+            {t("footer.giveFeedback")}
+          </a>
+          <a className="text-gray-500" href="mailto:sfhousinginfo@sfgov.org">
+            {t("footer.contact")}
+          </a>
+          <a
+            className="text-gray-500"
+            href="https://www.acgov.org/government/legal.htm"
+            target="_blank"
+          >
+            {t("footer.disclaimer")}
+          </a>
+          <a className="text-gray-500" href="/privacy">
+            {t("footer.privacyPolicy")}
+          </a>
+        </FooterNav>
       </SiteFooter>
       <SVG src="/images/icons.svg" />
     </div>
