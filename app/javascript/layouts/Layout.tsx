@@ -15,7 +15,7 @@ import Markdown from "markdown-to-jsx"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
 
-import ConfigContext from "../lib/ConfigContext"
+import { ConfigContext } from "../lib/ConfigContext"
 import { getRoutePrefix, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getAssistancePath,
@@ -127,14 +127,23 @@ const Layout = (props: LayoutProps) => {
           <img src={getAssetPath("logo-city.png")} />
         </FooterSection>
         <FooterSection small>
-          <Markdown options={{ disableParsingRawHTML: false }}>
-            {t("footer.dahliaDescription", {
-              mohcdUrl: "https://sf.gov/mohcd",
-              sfdsUrl: "https://digitalservices.sfgov.org/",
-              mayorUrl: "https://www.innovation.sfgov.org/",
-            })}
-          </Markdown>
+          <p className="text-gray-500">
+            <Markdown>
+              {t("footer.dahliaDescription", {
+                mohcdUrl: "https://sf.gov/mohcd",
+              })}
+            </Markdown>
+          </p>
+          <p className="text-sm mt-4 text-gray-500">
+            <Markdown>
+              {t("footer.inPartnershipWith", {
+                sfdsUrl: "https://digitalservices.sfgov.org/",
+                mayorUrl: "https://www.innovation.sfgov.org/",
+              })}
+            </Markdown>
+          </p>
         </FooterSection>
+
         <FooterSection>
           <p className="text-tiny">
             {t("footer.forListingQuestions")} <br />

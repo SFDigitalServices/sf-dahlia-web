@@ -5,7 +5,7 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<SignIn />", () => {
   it("shows the correct form text", async () => {
-    const { getAllByText, getByText } = await renderAndLoadAsync(<SignIn />)
+    const { getAllByText, getByText } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
     expect(getAllByText("Sign In")).toHaveLength(3)
     expect(getByText("Email")).not.toBeNull()
     expect(getByText("Password")).not.toBeNull()
