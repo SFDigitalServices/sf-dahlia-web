@@ -253,7 +253,7 @@ ListingDataService = (
       deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
-        return $state.go('dahlia.welcome')
+        return $state.go('dahlia.redirect-home')
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})

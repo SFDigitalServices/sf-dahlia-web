@@ -114,7 +114,7 @@
               deferred.resolve(ListingDataService.listing)
               if _.isEmpty(ListingDataService.listing)
                 # kick them out unless there's a real listing
-                return $state.go('dahlia.welcome')
+                return $state.go("dahlia.redirect-home")
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 
@@ -613,7 +613,7 @@
                 deferred.resolve(ListingDataService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage
-              $state.go('dahlia.welcome') unless ListingDataService.listing
+              $state.go('dahlia.redirect-home') unless ListingDataService.listing
               deferred.reject(response)
             )
             return deferred.promise
@@ -1163,14 +1163,17 @@
           $auth.validateUser()
         ]
     })
-    .state('dahlia.unknown-url', {
+    .state('dahlia.redirect-home', {
       # actual redirect occurs in onStateChangeStart in angularInitialize.js
       url: '/redirect-home'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/blank.html'
     })
 
     $urlRouterProvider.otherwise(($injector, $location) ->
       $state = $injector.get('$state')
-      $state.go("dahlia.unknown-url")
+      $state.go("dahlia.redirect-home")
     ) # default to welcome screen
 
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
