@@ -47,20 +47,21 @@
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-      if (toState.name == 'dahlia.unknown-url' || (toState.name == 'dahlia.welcome' && !isFirstLoad))
+      # always start the loading overlay
+      bsLoadingOverlayService.start()
+
+      if (toState.name == 'dahlia.redirect-home' || (toState.name == 'dahlia.welcome' && !isFirstLoad))
         isFirstLoad = false
 
         # stop the state transition event from propagating
-        e.preventDefault()
+        if (toState.name != 'dahlia.redirect-home')
+          e.preventDefault()
         langString = if toParams.lang == 'en' then '' else toParams.lang
         $window.location.href = '/' + langString
 
         return
 
       isFirstLoad = false
-
-      # always start the loading overlay
-      bsLoadingOverlayService.start()
 
       # close any open modals
       ModalService.closeModal()
@@ -243,5 +244,5 @@
         if toState.name == 'dahlia.listing' && error.status == 404
           return $state.go('dahlia.listings-for-rent')
         else
-          return $state.go('dahlia.welcome')
+          return $state.go('dahlia.redirect-home')
 ]
