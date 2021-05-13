@@ -11,6 +11,7 @@ import {
   getMyApplicationsPath,
   getRentalDirectoryPath,
   getSaleDirectoryPath,
+  getSignInPath,
 } from "../util/routeUtil"
 
 const MainNav = () => {
