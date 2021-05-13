@@ -6,6 +6,7 @@ import UserContext from "../authentication/context/UserContext"
 import {
   getAssistancePath,
   getFavoritesPath,
+  getMyAccountPath,
   getMyAccountSettingsPath,
   getMyApplicationsPath,
   getRentalDirectoryPath,
@@ -54,7 +55,7 @@ const MainNav = () => {
           window.location.href = getSignInPath(currentPath)
         }}
       >
-        <a href={getMyAccountSettingsPath(currentPath)} className="navbar-item">
+        <a href={getMyAccountPath(currentPath)} className="navbar-item">
           {t("nav.myDashboard")}
         </a>
         <a href={getMyApplicationsPath(currentPath)} className="navbar-item">

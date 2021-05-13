@@ -1,11 +1,8 @@
 import React from "react"
 
-import { cleanup } from "@testing-library/react"
-
 import HomePage from "../../pages/HomePage"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
-afterEach(cleanup)
 describe("<HomePage />", () => {
   it("shows the correct header text", async () => {
     const { getByText } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
