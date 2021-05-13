@@ -49,9 +49,9 @@ const MainNav = () => {
         signedIn={!!profile}
         signOut={() => {
           setSiteAlertMessage(t(`signIn.signedOutSuccessfully`), "notice")
-          // await router.push("/sign-in")
           signOut()
-          window.scrollTo(0, 0)
+          // TODO: convert this to use react router when SPA routing is added
+          window.location.href = getSignInPath(currentPath)
         }}
       >
         <a href={getMyAccountSettingsPath(currentPath)} className="navbar-item">
