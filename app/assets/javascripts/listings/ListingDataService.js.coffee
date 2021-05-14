@@ -253,7 +253,7 @@ ListingDataService = (
       deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
-        return $state.go('dahlia.welcome')
+        return $state.go('dahlia.redirect-home')
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
@@ -317,6 +317,7 @@ ListingDataService = (
         listingPreferenceID: lotteryPref.Id
         preferenceName: lotteryPref.Lottery_Preference.Name
       }
+    ListingPreferenceService._extractCustomPreferences(listing)
     angular.copy(listing, Service.listing)
 
   Service.formattedAddress = (listing, type='Building', display='full') ->

@@ -47,7 +47,7 @@ ExternalTranslateService = ($q, $timeout, $window) ->
       # Default to 15 recursive calls, break the loop if it's not working.
       if iterationCount > 0
         Service.init()
-        $timeout Service.translatePageContent(iterationCount-1), 25, false
+        $timeout((() -> Service.translatePageContent(iterationCount - 1)), 50)
       else
         return false
 
