@@ -358,7 +358,8 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    if ShortFormApplicationService.listingHasPreference('aliceGriffith')
+    if ShortFormApplicationService.listingHasRTRPreference()
+      console.log('checkAfterLiveWork says listing has RTR preference')
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.alice-griffith-preference')
     else
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
@@ -467,6 +468,15 @@ ShortFormApplicationController = (
   $scope.preferenceRequired = (preference) ->
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
+
+  ##### Right to return Preferences Logic ####
+  $scope.getRTRPreference = ->
+    # pref = ListingPreferenceService.getRTRPreference($scope.listing)
+    pref = 'rightToReturnSunnydale'
+    console.log('getRTRPreference', pref)
+    pref
+  $scope.getRTRTranslationKey = ->
+    'rtr_sunnydale'
 
   $scope.checkAliceGriffithAddress = ->
     preferenceAddressVerified =

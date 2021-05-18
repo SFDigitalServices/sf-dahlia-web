@@ -285,7 +285,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     switch preference.preferenceName
       when PREFS.certOfPreference
         'COP'
-      when PREFS.aliceGriffith
+      # FIXME: this might not be how switch statements work
+      when ListingConstantsService.rightToReturnPreferences
         'AG'
       when PREFS.displaced
         'DTHP'

@@ -59,6 +59,7 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       aliceGriffith: null
+      rightToReturnSunnydale: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -520,6 +521,9 @@ ShortFormApplicationService = (
 
   Service.listingHasPreference = (preference) ->
     ListingPreferenceService.hasPreference(preference, ListingDataService.listing)
+
+  Service.listingHasRTRPreference = () ->
+    ListingPreferenceService.hasRTRPreference(ListingDataService.listing)
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')

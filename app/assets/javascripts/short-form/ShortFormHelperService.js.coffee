@@ -1,4 +1,4 @@
-ShortFormHelperService = ($translate, $filter, $sce, $state) ->
+ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceService) ->
   Service = {}
 
   # the 'flagForI18n' identity function is purely so that the Gruntfile can know where to look
@@ -305,7 +305,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         Service.preference_proof_options_live
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
-      when 'aliceGriffith'
+      # FIXME: update to make this automatic.
+      when 'aliceGriffith', 'rightToReturnSunnydale'
         Service.preference_proof_options_alice_griffith
       else
         Service.preference_proof_options_default

@@ -1152,6 +1152,12 @@
                 "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
                 "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
                 "title": "Alice Griffith Housing Development Resident Preference"
+            },
+            "rtr_sunnydale": {
+                "desc": "sunnydale desc",
+                "proof_desc": "sunnydale proof desc",
+                "sfha_letter_instructions": "sfha letter instructions?",
+                "title": "Right to Return - Sunnydale Preference"
             }
         },
         "privacy_policy": {

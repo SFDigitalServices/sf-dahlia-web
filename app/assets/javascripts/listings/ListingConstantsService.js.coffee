@@ -78,6 +78,11 @@ ListingConstantsService = () ->
     rentBurden: "Rent Burdened / Assisted Housing Preference"
     antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
     aliceGriffith: "Alice Griffith Housing Development Resident"
+    rightToReturnSunnydale: "Right to Return - Sunnydale"
+
+  # List if preferences that follow the right to return pattern.
+  Service.rightToReturnPreferences =
+    ['aliceGriffith', 'rightToReturnSunnydale']
 
   # Create a mapping to Salesforce naming conventions
   Service.RESERVED_TYPES = {
