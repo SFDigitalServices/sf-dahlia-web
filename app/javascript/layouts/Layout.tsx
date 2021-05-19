@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 
 import {
+  AlertBox,
   FooterNav,
   FooterSection,
   LanguageNav,
@@ -10,6 +11,7 @@ import {
   SiteHeader,
   t,
   UserNav,
+  AlertTypes,
 } from "@sf-digital-services/ui-components"
 import Markdown from "markdown-to-jsx"
 import Head from "next/head"
@@ -48,12 +50,31 @@ const Layout = (props: LayoutProps) => {
 
   const currentPath = window.location.pathname
 
+  let notice = null
+  console.log("banner", process.env.SHOW_RESEARCH_BANNER)
+  if (process.env.SHOW_RESEARCH_BANNER) {
+    notice = (
+      <Markdown>
+        {t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}
+      </Markdown>
+    )
+  }
+  let topAlert = null
+  if (process.env.TOP_MESSAGE) {
+    topAlert = (
+      <AlertBox type={(process.env.TOP_MESSAGE_TYPE as AlertTypes) || "alert"} inverted>
+        <Markdown>{process.env.TOP_MESSAGE}</Markdown>
+      </AlertBox>
+    )
+  }
+
   return (
     <div className="site-wrapper">
       <div className="site-content">
         <Head>
           <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
+        {topAlert}
         <LanguageNav
           currentLanguagePrefix={getRoutePrefix(currentPath) || ""}
           items={langItems}
@@ -68,7 +89,7 @@ const Layout = (props: LayoutProps) => {
         <SiteHeader
           skip={t("t.skipToMainContent")}
           logoSrc={getAssetPath("logo-portal.png")}
-          notice="This is a preview of our new website. We're just getting started. We'd love to get your feedback."
+          notice={notice}
           title={t("t.dahliaSanFranciscoHousingPortal")}
         >
           <a

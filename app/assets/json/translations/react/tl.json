@@ -20,6 +20,7 @@
   "nav.myDashboard": "Ang Aking Dashboard ",
   "nav.myFavorites": "Ang Aking mga Paborito ",
   "nav.rent": "Umupa",
+  "nav.researchFeedback": "<a target='_blank' href='%{researchUrl}'>Mag-sign up</a> para magbigay ng feedback sa mga website ng Lungsod",
   "nav.signIn": "Mag-sign In ",
   "signIn.badCredentials": "Hindi tama ang mga inilagay ninyo para sa pag-la-login. Pakisubukang muli. ",
   "signIn.forgotPassword": "Nakalimutan ba ninyo ang inyong password?",
