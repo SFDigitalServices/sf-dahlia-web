@@ -1,6 +1,6 @@
 const { environment } = require("@rails/webpacker")
-const CssnanoPlugin = require("cssnano-webpack-plugin")
 const dotenv = require("dotenv")
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const webpack = require("webpack")
 
 const dotenvFiles = [".env"]
@@ -30,10 +30,19 @@ environment.loaders.keys().forEach((loaderName) => {
   })
 })
 
-environment.plugins.append("CssnanoPlugin", new CssnanoPlugin())
+environment.plugins.append("OptimizeCssAssetsPlugin", new OptimizeCssAssetsPlugin())
 
 environment.config.set("optimization", {
-  minimize: true,
+  minimizer: [
+    new OptimizeCssAssetsPlugin({
+      cssProcessorOptions: {
+        safe: true,
+        discardComments: {
+          removeAll: true,
+        },
+      },
+    }),
+  ],
 })
 
 module.exports = environment
