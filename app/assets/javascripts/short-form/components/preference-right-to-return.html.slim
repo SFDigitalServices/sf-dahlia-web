@@ -1,10 +1,4 @@
 .row.form-group ng-class="{ error: inputInvalid('$ctrl.preferenceKey') }"
-  p
-    | Preferences {{$ctrl.application.preferences}}
-  p
-    | Preference value? {{$ctrl.application.preferences[$ctrl.preferenceKey]}}
-  p
-    | Preference key? {{$ctrl.preferenceKey}}
   p.form-note.margin-bottom--2x translate="label.please_select_preference"
   .checkbox-group.border-bottom.margin-bottom--2x role="group"
     preference(

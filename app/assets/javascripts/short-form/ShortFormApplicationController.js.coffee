@@ -471,11 +471,12 @@ ShortFormApplicationController = (
 
   ##### Right to return Preferences Logic ####
   $scope.getRTRPreference = ->
+    # FIXME: this shouldn't be hardcoded
     # pref = ListingPreferenceService.getRTRPreference($scope.listing)
     pref = 'rightToReturnSunnydale'
-    console.log('getRTRPreference', pref)
     pref
   $scope.getRTRTranslationKey = ->
+    # FIXME: this isn't in use yet
     'rtr_sunnydale'
 
   $scope.checkAliceGriffithAddress = ->

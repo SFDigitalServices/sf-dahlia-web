@@ -280,23 +280,22 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
 
   Service._getPreferenceRecordType = (preference) ->
     return preference.recordTypeDevName if preference.recordTypeDevName
-
     PREFS = ListingDataService.preferenceMap
-    switch preference.preferenceName
-      when PREFS.certOfPreference
+    prefName = preference.preferenceName
+    switch
+      when prefName is PREFS.certOfPreference
         'COP'
-      # FIXME: this might not be how switch statements work
-      when ListingConstantsService.rightToReturnPreferences
+      when prefName in (PREFS[key] for key in ListingConstantsService.rightToReturnPreferences)
         'AG'
-      when PREFS.displaced
+      when prefName is PREFS.displaced
         'DTHP'
-      when PREFS.liveWorkInSf, PREFS.liveInSf, PREFS.workInSf
+      when (prefName is PREFS.liveWorkInSf || prefName is PREFS.liveInSf || prefName is PREFS.workInSf)
         'L_W'
-      when PREFS.neighborhoodResidence
+      when prefName is PREFS.neighborhoodResidence
         'NRHP'
-      when PREFS.assistedHousing, PREFS.rentBurden
+      when (prefName is PREFS.assistedHousing || prefName is PREFS.rentBurden)
         'RB_AHP'
-      when PREFS.antiDisplacement
+      when prefName is PREFS.antiDisplacement
         'ADHP'
       else 'Custom'
 
