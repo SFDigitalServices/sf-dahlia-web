@@ -13,7 +13,7 @@ angular.module('dahlia.components')
     onChange: '&'
   templateUrl: 'short-form/components/preference-right-to-return.html'
 
-  controller: ['ListingDataService', 'ListingPreferenceService', (ListingDataService, ListingPreferenceService) ->
+  controller: ['$translate', 'ListingDataService', 'ListingPreferenceService', ($translate, ListingDataService, ListingPreferenceService) ->
     ctrl = @
 
     # Try to find the listing preference.
@@ -23,6 +23,17 @@ angular.module('dahlia.components')
     )
     @addressType = @preferenceKey + '_address'
 
+    rtrTranslationKey =
+      switch @preferenceKey
+        when 'rightToReturnSunnydale'
+          'rtr_sunnydale'
+        when 'aliceGriffith'
+          'alice_griffith'
 
+
+    @preferenceDesc = $translate.instant("preferences.#{rtrTranslationKey}.desc")
+    @preferenceTitle = $translate.instant("preferences.#{rtrTranslationKey}.title")
+    @preferenceAddressTitle = $translate.instant("preferences.#{rtrTranslationKey}.address")
+    @preferenceAddressDesc = $translate.instant("preferences.#{rtrTranslationKey}.address_desc")
     return ctrl
   ]

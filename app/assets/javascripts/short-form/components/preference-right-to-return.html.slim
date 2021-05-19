@@ -4,18 +4,18 @@
     preference(
       application="$ctrl.application"
       has-proof="true"
-      title="{{'preferences.alice_griffith.title' | translate}}"
+      title="{{$ctrl.preferenceTitle}}"
       preference="{{$ctrl.preferenceKey}}"
-      proof-option-label="{{'e6_alice_griffith_preference.address_documents' | translate}}"
-      translated-description="preferences.alice_griffith.desc"
+      proof-option-label="{{'e6_right_to_return.address_proof_document' | translate}}"
+      translated-description="{{$ctrl.preferenceDesc}}"
       required="preferenceRequired('{{$ctrl.preferenceKey}}')"
     )
 
     div.form-group.input-inset ng-if="$ctrl.application.preferences[$ctrl.preferenceKey]" ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
-        | {{'e6_alice_griffith_preference.address' | translate}}
+        | {{$ctrl.preferenceAddressTitle}}
       p.form-note.margin-bottom
-        | {{'e6_alice_griffith_preference.address_desc' | translate}}
+        | {{$ctrl.preferenceAddressDesc}}
 
       address-form address-type="$ctrl.addressType" model="$ctrl.application.preferences" model-name='$ctrl.preferenceKey' is-required="true" on-change="$ctrl.application.aliceGriffith_address_verified = false"
 

@@ -371,10 +371,8 @@
             "upload_documents_for_address": "Upload documents for {{address}}",
             "upload_for_each_address": "Upload Documents for Each Address"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Alice Griffith Address",
-            "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
-            "address_documents": "Which one of the following documents would you like to upload in order to prove eligibility?",
+        "e6_right_to_return": {
+            "address_proof_document": "Which one of the following documents would you like to upload in order to prove eligibility?",
             "instructions": "Just provide a valid address and upload proof to get a higher ranking in the lottery.",
             "title": "Your household may qualify for the following lottery preference."
         },
@@ -1151,13 +1149,17 @@
                 "desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
                 "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
                 "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
-                "title": "Alice Griffith Housing Development Resident Preference"
+                "title": "Alice Griffith Housing Development Resident Preference",
+                "address": "Alice Griffith Address",
+                "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010"
             },
             "rtr_sunnydale": {
-                "desc": "sunnydale desc",
-                "proof_desc": "sunnydale proof desc",
+                "desc": "For households in which at least one person is a former or current resident of Sunnydale public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
+                "proof_desc": "You'll need one of the following documents showing your address at Sunnydale Housing Development.",
                 "sfha_letter_instructions": "sfha letter instructions?",
-                "title": "Right to Return - Sunnydale Preference"
+                "title": "Right to Return - Sunnydale Preference",
+                "address": "Sunnydale Address",
+                "address_desc": "Your address at Sunnydale public housing development"
             }
         },
         "privacy_policy": {
