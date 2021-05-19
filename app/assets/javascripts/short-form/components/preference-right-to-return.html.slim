@@ -1,21 +1,35 @@
-.row.form-group ng-class="{ error: inputInvalid('aliceGriffith') }"
+.row.form-group ng-class="{ error: inputInvalid('$ctrl.preferenceKey') }"
+  p
+    | Preferences {{$ctrl.application.preferences}}
+  p
+    | Preference value? {{$ctrl.application.preferences[$ctrl.preferenceKey]}}
+  p
+    | Preference key? {{$ctrl.preferenceKey}}
   p.form-note.margin-bottom--2x translate="label.please_select_preference"
   .checkbox-group.border-bottom.margin-bottom--2x role="group"
-    preference(application="$ctrl.application" has-proof="true" title="{{'preferences.alice_griffith.title' | translate}}" preference="aliceGriffith" proof-option-label="{{'e6_alice_griffith_preference.address_documents' | translate}}" translated-description="preferences.alice_griffith.desc" required="preferenceRequired('aliceGriffith')")
+    preference(
+      application="$ctrl.application"
+      has-proof="true"
+      title="{{'preferences.alice_griffith.title' | translate}}"
+      preference="{{$ctrl.preferenceKey}}"
+      proof-option-label="{{'e6_alice_griffith_preference.address_documents' | translate}}"
+      translated-description="preferences.alice_griffith.desc"
+      required="preferenceRequired('{{$ctrl.preferenceKey}}')"
+    )
 
-    div.form-group.input-inset ng-if="$ctrl.application.preferences.aliceGriffith" ng-class="{error: addressInputInvalid('home_address')}"
+    div.form-group.input-inset ng-if="$ctrl.application.preferences[$ctrl.preferenceKey]" ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
         | {{'e6_alice_griffith_preference.address' | translate}}
       p.form-note.margin-bottom
         | {{'e6_alice_griffith_preference.address_desc' | translate}}
 
-      address-form address-type="aliceGriffith_address" model="$ctrl.application.preferences" model-name='aliceGriffith' is-required="true" on-change="$ctrl.application.aliceGriffith_address_verified = false"
+      address-form address-type="aliceGriffith_address" model="$ctrl.application.preferences" model-name='$ctrl.preferenceKey' is-required="true" on-change="$ctrl.application.aliceGriffith_address_verified = false"
 
       / Address validation service has home and mailing address, so we use home for preference
       / address validation
       address-error error="addressValidationError('home_address')"
 
-  preference-opt-out preference="aliceGriffith" application="$ctrl.application" invalid="inputInvalid('aliceGriffith')" cancel-preference="cancelPreference('aliceGriffith')"
+  preference-opt-out preference="::$ctrl.preferenceKey" application="$ctrl.application" invalid="inputInvalid('$ctrl.preferenceKey')" cancel-preference="cancelPreference('$ctrl.preferenceKey')"
 
-  small.error ng-if="inputInvalid('aliceGriffith')"
+  small.error ng-if="inputInvalid('$ctrl.preferenceKey')"
     | {{'error.please_select_an_option' | translate}}

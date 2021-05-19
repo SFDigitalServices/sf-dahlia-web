@@ -6,6 +6,7 @@ angular.module('dahlia.components')
     invalid: '&'
     title: '@'
     preference: '@'
+    preferenceKey: '<'
     translatedDescription: '@'
     customDescription: '@'
     shortDescription: '@'
