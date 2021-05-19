@@ -30,9 +30,10 @@ environment.loaders.keys().forEach((loaderName) => {
   })
 })
 
+environment.plugins.append("CssnanoPlugin", new CssnanoPlugin())
+
 environment.config.set("optimization", {
   minimize: true,
-  minimizer: [new CssnanoPlugin()],
 })
 
 module.exports = environment
