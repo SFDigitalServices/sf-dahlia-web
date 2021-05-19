@@ -17,7 +17,7 @@
       p.form-note.margin-bottom
         | {{'e6_alice_griffith_preference.address_desc' | translate}}
 
-      address-form address-type="aliceGriffith_address" model="$ctrl.application.preferences" model-name='$ctrl.preferenceKey' is-required="true" on-change="$ctrl.application.aliceGriffith_address_verified = false"
+      address-form address-type="$ctrl.addressType" model="$ctrl.application.preferences" model-name='$ctrl.preferenceKey' is-required="true" on-change="$ctrl.application.aliceGriffith_address_verified = false"
 
       / Address validation service has home and mailing address, so we use home for preference
       / address validation

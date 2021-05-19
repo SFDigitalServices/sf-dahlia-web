@@ -21,9 +21,8 @@ angular.module('dahlia.components')
       ListingPreferenceService.getPreference(@preference, ListingDataService.listing) ||
       ListingPreferenceService.getPreferenceById(@preference, ListingDataService.listing)
     )
+    @addressType = @preferenceKey + '_address'
 
-    if listingPreference
-      @moreInfoLink = listingPreference.readMoreUrl
 
     return ctrl
   ]

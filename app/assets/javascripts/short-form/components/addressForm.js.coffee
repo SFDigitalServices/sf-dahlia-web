@@ -1,10 +1,10 @@
 angular.module('dahlia.components')
 .component 'addressForm',
   bindings:
-    addressType: '@'
+    addressType: '<'
     isRequired: '@'
     model: '<'
-    modelName: '@'
+    modelName: '<'
     onChange: '&'
     hideAddress2: '@'
   templateUrl: 'short-form/components/address-form.html'
