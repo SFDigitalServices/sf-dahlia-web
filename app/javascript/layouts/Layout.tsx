@@ -194,7 +194,7 @@ const Layout = (props: LayoutProps) => {
           </a>
         </FooterNav>
       </SiteFooter>
-      <SVG src="/images/icons.svg" />
+      <SVG src={getAssetPath("icons.svg")} />
     </div>
   )
 }
