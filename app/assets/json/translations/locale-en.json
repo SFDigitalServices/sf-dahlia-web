@@ -293,6 +293,8 @@
             "rent_burden_doc_2": "You'll also need to show last month's rent with one of the following:",
             "rent_burden_title": "Rent Burdened Preference",
             "resident_desc": "You'll need one of the following documents showing the address where you live in San Francisco:",
+            "right_to_return_title": "HOPE SF Right to Return Preference",
+            "right_to_return_desc": "You'll need one of the following documents showing your address at Sunnydale Housing Development.",
             "resident_title": "Live in San Francisco and Neighborhood Resident Housing Preferences",
             "title": "Document Checklist",
             "work_sf_desc": "You'll need one of the following documents showing the address where you work in San Francisco:",
@@ -732,7 +734,9 @@
                 "public_benefits": "Public benefits record",
                 "school_record": "School record",
                 "sfha_letter": "Letter from SFHA verifying address",
+                "sfha_residency_letter": "Letter from SFHA verifying residency",
                 "sfha_lease": "SFHA Lease",
+                "sf_city_id": "SF City ID",
                 "telephone_bill": "Telephone bill (land line only)",
                 "water_bill": "Water bill"
             },
