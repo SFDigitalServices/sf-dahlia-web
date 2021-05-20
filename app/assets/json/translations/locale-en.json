@@ -732,6 +732,7 @@
                 "public_benefits": "Public benefits record",
                 "school_record": "School record",
                 "sfha_letter": "Letter from SFHA verifying address",
+                "sfha_lease": "SFHA Lease",
                 "telephone_bill": "Telephone bill (land line only)",
                 "water_bill": "Water bill"
             },

@@ -276,6 +276,17 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
     ['School record', Service.flagForI18n('label.proof.school_record')]
   ]
 
+  Service.preference_proof_options_right_to_return = [
+    ['Letter from SFHA verifying address', Service.flagForI18n('label.proof.sfha_letter')]
+    ['SFHA Lease', Service.flagForI18n('label.proof.sfha_lease')]
+    ['CA ID or Driver\'s License', Service.flagForI18n('label.proof.ca_license')]
+    ['Telephone bill (landline only)', Service.flagForI18n('label.proof.telephone_bill')]
+    ['Cable and internet bill', Service.flagForI18n('label.proof.cable_bill')]
+    ['Paystub (listing home address)', Service.flagForI18n('label.proof.paystub_home')]
+    ['Public benefits record', Service.flagForI18n('label.proof.public_benefits')]
+    ['School record', Service.flagForI18n('label.proof.school_record')]
+  ]
+
   Service.priority_options = [
     ['Mobility impairments', Service.flagForI18n('label.mobility_impairments')]
     ['Vision impairments', Service.flagForI18n('label.vision_impairments')]
@@ -306,8 +317,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
       # FIXME: update to make this automatic.
-      when 'aliceGriffith', 'rightToReturnSunnydale'
+      when 'aliceGriffith'
         Service.preference_proof_options_alice_griffith
+      when 'rightToReturnSunnydale'
+        Service.preference_proof_options_right_to_return
       else
         Service.preference_proof_options_default
 
