@@ -49,10 +49,7 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
   Service.hasRTRPreference = (listing) ->
     # Determine if the listing has a right to return preference
     hasRTRMap = _.map(ListingConstantsService.rightToReturnPreferences, (pref) -> Service.hasPreference(pref, listing))
-    console.log('hasRtrmap', hasRTRMap)
-    hasRTR = _.some(hasRTRMap)
-    console.log('hasRtR', hasRTR)
-    hasRTR
+    _.some(hasRTRMap)
 
   Service.getRTRPreference = (listing) ->
     # If there's a right to return preference, return the key for it.
