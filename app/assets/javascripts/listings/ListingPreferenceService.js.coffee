@@ -55,7 +55,7 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
     # If there's a right to return preference, return the key for it.
     # if not, return null
     for prefKey in ListingConstantsService.rightToReturnPreferences
-      return prefKey if Service.hasPreference(prefKey)
+      return prefKey if Service.hasPreference(prefKey, listing)
 
   # TODO: Replace with `requiresProof` listing preference setting (#154784101)
   Service.hardcodeCustomProofPrefs = []

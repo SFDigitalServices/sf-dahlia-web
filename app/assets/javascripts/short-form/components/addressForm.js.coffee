@@ -1,10 +1,10 @@
 angular.module('dahlia.components')
 .component 'addressForm',
   bindings:
-    addressType: '<'
+    addressType: '@'
     isRequired: '@'
     model: '<'
-    modelName: '<'
+    modelName: '@'
     onChange: '&'
     hideAddress2: '@'
   templateUrl: 'short-form/components/address-form.html'
@@ -14,7 +14,6 @@ angular.module('dahlia.components')
     (ShortFormApplicationService, inputMaxLength, $scope) ->
       ctrl = @
       @latinRegex = ShortFormApplicationService.latinRegex
-
       @inputInvalid = (fieldName) =>
         fieldName = "#{@addressType}_#{fieldName}"
         ShortFormApplicationService.inputInvalid(fieldName)

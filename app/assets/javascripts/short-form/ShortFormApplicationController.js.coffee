@@ -359,7 +359,6 @@ ShortFormApplicationController = (
 
   $scope.checkAfterLiveWork = ->
     if ShortFormApplicationService.listingHasRTRPreference()
-      console.log('checkAfterLiveWork says listing has RTR preference')
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.alice-griffith-preference')
     else
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
@@ -471,13 +470,29 @@ ShortFormApplicationController = (
 
   ##### Right to return Preferences Logic ####
   $scope.getRTRPreference = ->
-    # FIXME: this shouldn't be hardcoded
-    # pref = ListingPreferenceService.getRTRPreference($scope.listing)
-    pref = 'rightToReturnSunnydale'
-    pref
-  $scope.getRTRTranslationKey = ->
-    # FIXME: this isn't in use yet
-    'rtr_sunnydale'
+    ShortFormApplicationService.getRTRPreference($scope.listing)
+
+  $scope.addressType = ->
+    $scope.getRTRPreference() + '_address'
+
+  $scope.rtrTranslationKey =
+    switch $scope.getRTRPreference()
+      when 'rightToReturnSunnydale'
+        'rtr_sunnydale'
+      when 'aliceGriffith'
+        'alice_griffith'
+
+
+  $scope.preferenceDesc = $translate.instant("preferences.#{$scope.rtrTranslationKey}.desc")
+  $scope.preferenceTitle = $translate.instant("preferences.#{$scope.rtrTranslationKey}.title")
+  $scope.preferenceAddressTitle = $translate.instant("preferences.#{$scope.rtrTranslationKey}.address")
+  $scope.preferenceAddressDesc = $translate.instant("preferences.#{$scope.rtrTranslationKey}.address_desc")
+
+  $scope.rtrInputInvalid = ->
+    $scope.inputInvalid($scope.getRTRPreference())
+
+  $scope.showRtrAddressForm = ->
+    $scope.application.preferences[$scope.getRTRPreference()]
 
   $scope.checkAliceGriffithAddress = ->
     preferenceAddressVerified =
