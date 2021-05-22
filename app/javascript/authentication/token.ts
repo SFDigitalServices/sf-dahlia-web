@@ -1,7 +1,6 @@
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
 const getStorage = () => {
-  console.log(process.env)
   switch (process.env.TOKEN_STORAGE) {
     case "session":
       return sessionStorage
