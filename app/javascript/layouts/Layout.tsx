@@ -10,6 +10,7 @@ import {
   t,
   AlertTypes,
 } from "@sf-digital-services/ui-components"
+import icons from "@sf-digital-services/ui-components/public/images/icons.svg"
 import Markdown from "markdown-to-jsx"
 import Head from "next/head"
 import SVG from "react-inlinesvg"
@@ -45,7 +46,10 @@ const Layout = (props: LayoutProps) => {
   let topAlert = null
   if (process.env.TOP_MESSAGE) {
     topAlert = (
-      <AlertBox type={(process.env.TOP_MESSAGE_TYPE as AlertTypes) || "alert"} inverted>
+      <AlertBox
+        type={(process.env.TOP_MESSAGE_TYPE as AlertTypes) || "alert"}
+        inverted={process.env.TOP_MESSAGE_INVERTED === "true" || false}
+      >
         <Markdown>{process.env.TOP_MESSAGE}</Markdown>
       </AlertBox>
     )
@@ -131,7 +135,7 @@ const Layout = (props: LayoutProps) => {
           </a>
         </FooterNav>
       </SiteFooter>
-      <SVG src={getAssetPath("icons.svg")} />
+      <SVG src={icons} />
     </div>
   )
 }

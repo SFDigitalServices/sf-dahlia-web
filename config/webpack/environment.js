@@ -7,17 +7,15 @@ dotenvFiles.forEach((dotenvFile) => {
   dotenv.config({ path: dotenvFile, silent: true })
 })
 
-// Strings needs to be interpolated and single quoted
-const parseStringEnv = (value) => (value ? `'${value}'` : null)
-
 environment.plugins.prepend(
   "Environment",
   new webpack.DefinePlugin({
     "process.env": {
-      TOP_MESSAGE: parseStringEnv(process.env.TOP_MESSAGE),
-      TOP_MESSAGE_TYPE: parseStringEnv(process.env.TOP_MESSAGE_TYPE),
+      TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
+      TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
+      TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
       SHOW_RESEARCH_BANNER: process.env.SHOW_RESEARCH_BANNER,
-      RESEARCH_FORM_URL: parseStringEnv(process.env.RESEARCH_FORM_URL),
+      RESEARCH_FORM_URL: JSON.stringify(process.env.RESEARCH_FORM_URL),
     },
   })
 )
