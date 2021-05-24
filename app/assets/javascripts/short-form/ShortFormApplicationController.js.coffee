@@ -501,6 +501,8 @@ ShortFormApplicationController = (
     if preferenceAddressVerified || !$scope.preferences.aliceGriffith
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
     else
+      # Only validate the address if they have claimed alice griffith,
+      # and it hasn't already been validated.
       AddressValidationService.validate {
         address: ShortFormApplicationService.preferences.aliceGriffith_address
         type: 'home'
