@@ -210,7 +210,7 @@ ShortFormApplicationService = (
     else if lastPage == 'household-member-verify-address'
       lastPage = 'household-members'
     else if lastPage == 'alice-griffith-verify-address'
-      lastPage = 'alice-griffith-preference'
+      lastPage = 'right-to-return-preference'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->

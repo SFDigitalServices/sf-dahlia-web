@@ -586,7 +586,7 @@ do ->
         beforeEach ->
           spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
 
-        it 'goes to alice-griffith-preference', ->
+        it 'goes to right-to-return-preference', ->
           scope.checkAfterLiveWork()
 
           path = 'dahlia.short-form-application.preferences-programs'

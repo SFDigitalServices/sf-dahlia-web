@@ -359,7 +359,7 @@ ShortFormApplicationController = (
 
   $scope.checkAfterLiveWork = ->
     if ShortFormApplicationService.listingHasRTRPreference()
-      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.alice-griffith-preference')
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.right-to-return-preference')
     else
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
 
