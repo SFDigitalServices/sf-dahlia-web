@@ -1161,11 +1161,10 @@
             "rtr_sunnydale": {
                 "desc": "For households in which at least one person is a former or current resident of Sunnydale public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
                 "proof_desc": "You'll need one of the following documents showing your address at Sunnydale Housing Development.",
-                "sfha_letter_instructions": "sfha letter instructions?",
-                "sfha_lease_instructions": "sfha lease instructions?",
                 "title": "Right to Return - Sunnydale Preference",
+                "title_with_hope_sf": "Hope SF Right to Return - Sunnydale",
                 "address": "Sunnydale Address",
-                "address_desc": "Your address at Sunnydale public housing development"
+                "address_desc": "Your current or former address at the Sunnydale public housing development"
             }
         },
         "privacy_policy": {
