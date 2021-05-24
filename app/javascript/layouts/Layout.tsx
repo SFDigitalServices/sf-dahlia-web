@@ -35,7 +35,6 @@ const Layout = (props: LayoutProps) => {
   const currentPath = window.location.pathname
 
   let notice = null
-  console.log("banner", process.env.SHOW_RESEARCH_BANNER)
   if (process.env.SHOW_RESEARCH_BANNER) {
     notice = (
       <Markdown>
