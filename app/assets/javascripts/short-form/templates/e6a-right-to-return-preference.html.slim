@@ -25,7 +25,7 @@
           p.form-note.margin-bottom
             | {{preferenceAddressDesc}}
 
-          address-form address-type="{{addressType()}}" model="application.preferences" model-name='getRTRPreference()' is-required="true" on-change="application.aliceGriffith_address_verified = false"
+          address-form address-type="{{addressType()}}" model="application.preferences" model-name='{{getRTRPreference()}}' is-required="true" on-change="application.aliceGriffith_address_verified = false"
 
           / Address validation service has home and mailing address, so we use home for preference
           / address validation
