@@ -317,7 +317,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
         Service.preference_proof_options_live
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
-      # FIXME: update to make this automatic.
       when 'aliceGriffith'
         Service.preference_proof_options_alice_griffith
       when 'rightToReturnSunnydale'

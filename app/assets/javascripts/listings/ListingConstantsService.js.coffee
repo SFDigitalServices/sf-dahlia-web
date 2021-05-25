@@ -80,7 +80,7 @@ ListingConstantsService = () ->
     aliceGriffith: "Alice Griffith Housing Development Resident"
     rightToReturnSunnydale: "Right to Return - Sunnydale"
 
-  # List if preferences that follow the right to return pattern.
+  # List of preferences that follow the right to return pattern.
   Service.rightToReturnPreferences =
     ['aliceGriffith', 'rightToReturnSunnydale']
 
