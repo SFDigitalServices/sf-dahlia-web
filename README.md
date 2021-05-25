@@ -52,40 +52,44 @@ Before you install DAHLIA, your system should have the following:
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
 1. `./bin/webpack-dev-server` to start the webpack dev server
-    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+   - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
 1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
 
 ## How to migrate a page from AngularJS to React
+
 ### Adding rails routes and react components
+
 1. Create a new controller file (ex: [home_controller.rb](app/controllers/home_controller.rb)) and override the `use_react_app` method to do an environment variable check
-    ```
-    def use_react_app
-      ENV['YOUR_ENV_VAR_NAME'].to_s.casecmp('true').zero?
-    end
-    ```
+   ```
+   def use_react_app
+     ENV['YOUR_ENV_VAR_NAME'].to_s.casecmp('true').zero?
+   end
+   ```
 1. Add a new view for that controller (ex: [home/index.html.slim](app/views/home/index.html.slim)) under app/views/<your-controller-name>/index.html.slim
-    - The view should just be a single line to render a React page component
-    ```
-    == react_component 'YourPageComponentName', { prop1: "prop1", prop2: "prop2" }
-    ```
+   - The view should just be a single line to render a React page component
+   ```
+   == react_component 'YourPageComponentName', { prop1: "prop1", prop2: "prop2" }
+   ```
 1. Add a route to [routes.rb](config/routes.rb) for your new url. Before, that route would fall back to the angular controller, but you're telling rails to load your new controller instead.
-    - **Important:** you must add this line _before_ the fallback route at the very end of the routes file.
-    - This url should be the same as the angular url you're replacing
+   - **Important:** you must add this line _before_ the fallback route at the very end of the routes file.
+   - This url should be the same as the angular url you're replacing
 1. Add a new react component file at `app/javascript/pages/YourPageComponentName.tsx` (ex [pages/HomePage.tsx](app/javascript/pages/HomePage.tsx))
 1. Tell Webpack that component is an entrypoint by importing and adding the component to the `WebpackerReact.setup({})` object in [react_application.tsx](app/javascript/packs/react_application.tsx)
 1. Visit your url and append the `?react=true` option to it. This will force render the react view, check to make sure your react page component is rendering as expected.
 1. Visit your url and append the `?react=false` option to it. This will force render the Angular view, check to make sure the legacy page is rendering as expected.
 1. Update your local `~/.env` file to include YOUR_ENV_VAR_NAME=true
-    - For now, this just makes it easier to test routing between pages, since the ?react=true param won't persist when you click a link.
+   - For now, this just makes it easier to test routing between pages, since the ?react=true param won't persist when you click a link.
 
 ### Update Angular to route between React and AngularJS correctly
+
 Because our legacy code is frontend-routed in AngularJS, links from one angular page to our new react page won't work properly, they'll always render the AngularJS version of the linked page. So, we need to tell Angular to revert to rails routing when navigating to our new page.
+
 1. Each Angular page corresponds to a state name. For example the home page state name is `dahlia.welcome`. Find which state name corresponds to the url you're replacing by going to [angularRoutes.js.coffee](app/assets/javascripts/config/angularRoutes.js.coffee) and finding the case that matches your url.
 1. Search for all usages of that state in the repo and update them in different ways depending on the usage:
-    - **Case:** In an `html.slim` file as a `ui-sref` attr. Replace `ui-sref="state.name"` with `href="your/relative/url"` and add a new attr `target="_self"`
-      - Setting the target is a hacky way to ignore the angular router/state transitions and treat it as an external link.
-    - **Case:** In a `$state.go('new.state')` call. Replace `$state.go('new.state')` with `$window.location.href = 'your/relative/url'`
-      - You may need to inject $window in whatever service you're in if it's not already present.
+   - **Case:** In an `html.slim` file as a `ui-sref` attr. Replace `ui-sref="state.name"` with `href="your/relative/url"` and add a new attr `target="_self"`
+     - Setting the target is a hacky way to ignore the angular router/state transitions and treat it as an external link.
+   - **Case:** In a `$state.go('new.state')` call. Replace `$state.go('new.state')` with `$window.location.href = 'your/relative/url'`
+     - You may need to inject $window in whatever service you're in if it's not already present.
 1. Test that the new routing works by starting on an angular page, and navigate to your new page via a link in Angular. Verify the react page loads correctly.
 
 ## Running Tests
@@ -194,6 +198,14 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 
+### React homepage env variables
+
+- TOP_MESSAGE string, turn top message on
+- TOP_MESSAGE_TYPE defaults to `alert`, other options: [`primary`, `success`]
+- TOP_MESSAGE_INVERTED default to `false`, when set to `true` sets AlertBox prop to inverted
+
+- SHOW_RESEARCH_BANNER controls visibility of the research banner
+
 ### Other
 
 - SHOW_RESEARCH_BANNER - If set to 'true', it displays research banner.
@@ -228,9 +240,10 @@ Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a gro
 ### VS Code Setup
 
 1. Copy `.vscode-default` to `.vscode` like `cp -r .vscode-default .vscode`
-  a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
+   a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
 2. Install recommended extensions (under [.vscode-default/extensions](.vscode-default/extensions)).
 3. Double check your user settings aren't overriding the [workspace editor settings](.vscode-default/settings)
+
 ### Credits
 
 ### License
