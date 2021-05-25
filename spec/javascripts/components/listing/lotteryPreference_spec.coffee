@@ -18,12 +18,16 @@ do ->
       isSale: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
-    beforeEach inject((_$componentController_) ->
+    beforeEach module('dahlia.services')
+    beforeEach inject((_$componentController_, _ListingConstantsService_) ->
       $componentController = _$componentController_
+
       locals = {
         ListingDataService: fakeListingDataService
         ListingIdentityService: fakeListingIdentityService
       }
+      locals.ListingDataService.preferenceMap = _ListingConstantsService_.preferenceMap
+      return
     )
 
     describe 'lotteryPreference with correct reference', ->
