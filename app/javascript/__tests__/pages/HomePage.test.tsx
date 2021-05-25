@@ -21,7 +21,7 @@ describe("<HomePage />", () => {
     expect(sfLogo).toHaveAttribute("src", "/public/logo.png")
   })
 
-  describe("Rent and buy links", () => {
+  describe("Main page content", () => {
     const getLinkByText = (container: HTMLElement, text: string) =>
       within(container).getByRole("link", { name: text })
 
