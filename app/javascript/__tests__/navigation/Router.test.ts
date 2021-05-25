@@ -58,5 +58,11 @@ describe("Router", () => {
       Router.push("/es/new/href?with=searchparam", null, { locale: "zh" })
       expect(window.location.href).toEqual("/zh/new/href?with=searchparam")
     })
+
+    it("does not change url if locale param is same language as url", () => {
+      expect(window.location.href).toEqual(MOCK_LOCATION.href)
+      Router.push("/zh/new/href?with=searchparam", null, { locale: "zh" })
+      expect(window.location.href).toEqual("/zh/new/href?with=searchparam")
+    })
   })
 })
