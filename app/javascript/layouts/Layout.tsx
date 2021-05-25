@@ -63,7 +63,9 @@ const Layout = (props: LayoutProps) => {
         >
           <MainNav />
         </SiteHeader>
-        <main id="main-content">{props.children}</main>
+        <main data-testid="main-content-test-id" id="main-content">
+          {props.children}
+        </main>
       </div>
 
       <SiteFooter>

@@ -3,11 +3,11 @@
   "footer.cityCountyOfSf": "舊金山市和郡",
   "footer.contact": "聯絡資訊 ",
   "footer.dahliaDescription": "可負擔房屋項目名單、資訊和申請表資料庫 (Database of Affordable Housing Listings, Information, and Applications, DAHLIA)：三藩市房屋網站 (San Francisco Housing Portal) 是<br/><a class='text-white' href='%{mohcdUrl}' target='_blank'>市長住房與社區發展辦公室的一項專案</a>",
-  "footer.inPartnershipWith": "<a class='text-white' href='%{sfdsUrl}' target='_blank'>本專案與三藩市數碼服務部和 (San Francisco Digital Services) </a><br/><a class='text-white' href='%{mayorUrl}' target='_blank'>市長市政創新辦公室 (Mayor's Office of Civic Innovation)</a> 合作。",
   "footer.disclaimer": "免責聲明",
   "footer.forGeneralQuestions": "有關一般計畫詢問，可以致電 MOHCD，電話是 415-701-5500。",
   "footer.forListingQuestions": "如需瞭解有關房屋項目和申請方面的問題，請與名單中例出的機構聯絡。",
   "footer.giveFeedback": "提供意見",
+  "footer.inPartnershipWith": "<a class='text-white' href='%{sfdsUrl}' target='_blank'>本專案與三藩市數碼服務部和 (San Francisco Digital Services) </a><br/><a class='text-white' href='%{mayorUrl}' target='_blank'>市長市政創新辦公室 (Mayor's Office of Civic Innovation)</a> 合作。",
   "footer.privacyPolicy": "隱私政策",
   "languages.en": "English",
   "languages.es": "Español",
@@ -36,6 +36,7 @@
   "t.skipToMainContent": "跳到主要內容",
   "welcome.newListingEmailAlert": "每當發佈新的物業項目時，將以電子郵件接收通知。",
   "welcome.seeRentalListings": "租賃",
+  "welcome.seeSaleListings": "購買",
   "welcome.signUpToday": "立即註冊",
   "welcome.title": "申請可負擔房屋"
 }
