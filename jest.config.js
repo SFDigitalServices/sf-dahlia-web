@@ -27,13 +27,12 @@ module.exports = {
   roots: ["<rootDir>/"],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
+    ".+\\.svg$": "jest-transform-stub",
   },
   setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less)$": "identity-obj-proxy",
   },
-  "transformIgnorePatterns": [
-    "node_modules/?!(@sf-digital-services/ui-components)"
-  ]
+  transformIgnorePatterns: ["node_modules/?!(@sf-digital-services/ui-components)"],
 }
