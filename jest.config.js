@@ -34,6 +34,6 @@ module.exports = {
     "\\.(scss|css|less)$": "identity-obj-proxy",
   },
   "transformIgnorePatterns": [
-    "node_modules/?!(@sf-digital-services/ui-components)"
+    "node_modules/?!(@bloom-housing/ui-components)"
   ]
 }

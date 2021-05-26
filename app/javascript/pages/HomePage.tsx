@@ -1,16 +1,10 @@
 import React from "react"
 
 import { Listing } from "@bloom-housing/backend-core/types"
-import {
-  MarkdownSection,
-  t,
-  MetaTags,
-  SiteAlert,
-  LinkButton,
-  Hero,
-} from "@sf-digital-services/ui-components"
+import { MarkdownSection, t, SiteAlert, LinkButton, Hero } from "@bloom-housing/ui-components"
 import Head from "next/head"
 
+import MetaTags from "../components/MetaTags"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { getRentalDirectoryPath } from "../util/routeUtil"
@@ -40,7 +34,7 @@ const HomePage = (props: HomePageProps) => {
       <Hero
         title={t("welcome.title")}
         buttonTitle={t("welcome.seeRentalListings")}
-        buttonLink={getRentalDirectoryPath(window.location.pathname)}
+        buttonLink={getRentalDirectoryPath()}
         listings={props.listings}
       />
       <div className="homepage-extra">
