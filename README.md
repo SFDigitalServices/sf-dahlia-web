@@ -198,7 +198,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 
-### React homepage env variables
+### React env variables
 
 - TOP_MESSAGE string, turn top message on
 - TOP_MESSAGE_TYPE defaults to `alert`, other options: [`primary`, `success`]
