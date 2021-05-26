@@ -24,6 +24,18 @@ export interface LayoutProps {
   children: React.ReactNode
 }
 
+const asAlertType = (alertType: string): AlertTypes => {
+  switch (alertType) {
+    case "notice":
+      return "notice"
+    case "success":
+      return "success"
+    case "alert":
+    default:
+      return "alert"
+  }
+}
+
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
 
@@ -34,25 +46,18 @@ const Layout = (props: LayoutProps) => {
 
   const currentPath = window.location.pathname
 
-  let notice = null
-  if (process.env.SHOW_RESEARCH_BANNER) {
-    notice = (
-      <Markdown>
-        {t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}
-      </Markdown>
-    )
-  }
-  let topAlert = null
-  if (process.env.TOP_MESSAGE) {
-    topAlert = (
-      <AlertBox
-        type={(process.env.TOP_MESSAGE_TYPE as AlertTypes) || "alert"}
-        inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
-      >
-        <Markdown>{process.env.TOP_MESSAGE}</Markdown>
-      </AlertBox>
-    )
-  }
+  const notice = (
+    <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
+  )
+
+  const topAlert = (
+    <AlertBox
+      type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
+      inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
+    >
+      <Markdown>{process.env.TOP_MESSAGE}</Markdown>
+    </AlertBox>
+  )
 
   return (
     <div className="site-wrapper">
@@ -60,7 +65,7 @@ const Layout = (props: LayoutProps) => {
         <Head>
           <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
-        {topAlert}
+        {process.env.TOP_MESSAGE && topAlert}
         <LanguageNav
           currentLanguagePrefix={getRoutePrefix(currentPath) || ""}
           items={langItems}
@@ -75,7 +80,7 @@ const Layout = (props: LayoutProps) => {
         <SiteHeader
           skip={t("t.skipToMainContent")}
           logoSrc={getAssetPath("logo-portal.png")}
-          notice={notice}
+          notice={process.env.SHOW_RESEARCH_BANNER && notice}
           title={t("t.dahliaSanFranciscoHousingPortal")}
         >
           <MainNav />
