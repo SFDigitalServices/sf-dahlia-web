@@ -370,13 +370,6 @@
             "upload_documents_for_address": "Mag-upload ng mga dokumento para sa {{address}}",
             "upload_for_each_address": "Mag-upload ng mga Dokumento para sa Bawat Address"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Address sa Alice Griffith",
-            "address_desc": "Ang inyong address sa Alice Griffith Housing Development sa petsang Oktubre 26, 2010 o matapos ang petsang ito",
-            "address_documents": "Alin sa mga sumusunod na dokumento ang gusto ninyong i-upload para patunayan na kuwalipikado kayo?\n",
-            "instructions": "Magbigay lang ng tinatanggap na address at mag-upload ng patunay para makakuha ng mas mataas na ranggo sa lottery. ",
-            "title": "Posibleng kuwalipikado ang inyong kabahayan para sa sumusunod na preperensiya para sa lottery o palabunutan. "
-        },
         "e7_preferences_programs": {
             "cert_of_preference": "Sertipiko na Nagbibigay ng Preperensiya (Certificate of Preference, COP)",
             "cert_of_preference_certificate": "Ano ang inyong Numero ng Sertipiko para sa COP? ",

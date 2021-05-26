@@ -371,13 +371,6 @@
             "upload_documents_for_address": "上傳 {{address}} 的相關文件",
             "upload_for_each_address": "上傳各個地址的相關文件"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Alice Griffith 地址",
-            "address_desc": "您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區",
-            "address_documents": "您希望上傳以下哪個文件以證明您符合相關資格？",
-            "instructions": "只需提供有效的地址並上傳相關證明，即可獲得更高等級的抽籤優先權利。",
-            "title": "您的家庭可能符合獲得以下抽籤優先權利的資格。"
-        },
         "e7_preferences_programs": {
             "cert_of_preference": "Certificate of Preference (COP)",
             "cert_of_preference_certificate": "您的優先權利憑證 (Certificate of Preference, COP) 憑證號碼是多少？",
