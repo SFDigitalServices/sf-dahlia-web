@@ -24,6 +24,25 @@ SharedService = ($http, $state, $window, $document) ->
     tl: 'Filipino'
     zh: 'Chinese'
 
+  Service._addLanguageAndParamsToUrl = (languageCode, url) ->
+    langString = if languageCode == 'en' then '' else '/' + languageCode
+    # TODO: When implementing any page with url search params, that should be handled here.
+    langString + url
+
+  Service.railsRoutedPages =
+    'dahlia.welcome':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.HOME_PAGE_REACT is "true"
+    'dahlia.listings-for-rent':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/for-rent")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.DIRECTORY_PAGE_REACT is "true"
+    'dahlia.listings-for-sale':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/for-sale")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.DIRECTORY_PAGE_REACT is "true"
+    'dahlia.redirect-home':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
+      shouldRailsRoute: (isFirstLoad) -> true
+
   Service.getLanguageCode = (langName) ->
     # will take "English" and return "en", for example
     if langName
@@ -38,6 +57,14 @@ SharedService = ($http, $state, $window, $document) ->
       !!state.name.match /^dahlia\.welcome-[a-z]+$/
     else
       $state.includes('dahlia.welcome-chinese') || $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-filipino')
+
+  Service.shouldRouteViaRails = (stateName, isFirstLoad) ->
+    return false if Object.keys(Service.railsRoutedPages).indexOf(stateName) is -1
+
+    return Service.railsRoutedPages[stateName].shouldRailsRoute(isFirstLoad)
+
+  Service.buildUrl = (state, params) ->
+    Service.railsRoutedPages[state.name].buildUrl(state, params)
 
   Service.getWelcomePageLanguage = (stateName) ->
     welcomePageLanguage =
