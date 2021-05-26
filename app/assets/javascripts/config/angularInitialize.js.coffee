@@ -50,11 +50,6 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      console.log("toParams",toParams )
-      console.log("toState",toState)
-      console.log("fromParams",fromParams)
-      console.log("fromState",fromState)
-
       if (SharedService.shouldRouteViaRails(toState.name, isFirstLoad))
         isFirstLoad = false
 

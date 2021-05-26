@@ -6,7 +6,6 @@ import { ConfigProvider } from "../lib/ConfigContext"
 
 interface ObjectWithAssets {
   assetPaths: unknown
-  [key: string]: unknown
 }
 
 // Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
