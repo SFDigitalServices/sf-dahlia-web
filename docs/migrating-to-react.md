@@ -25,10 +25,12 @@
 
 ## Update Angular to route to your new page
 Because our legacy code is frontend-routed in AngularJS, links from one angular page to our new react page won't work properly, they'll always render the AngularJS version of the linked page. So, we need to tell Angular to revert to rails routing when navigating to our new page.
+1. Pass `YOUR_ENV_VAR_NAME` to the AngularJS frontend in [application-angular.html.slim](app/views/layouts/application-angular.html.slim).
 1. Each Angular page corresponds to a state name. For example the home page state name is `dahlia.welcome`. Find which state name corresponds to the url you're replacing by going to [angularRoutes.js.coffee](app/assets/javascripts/config/angularRoutes.js.coffee) and finding the case that matches your url.
-1. Search for all usages of that state in the repo and update them in different ways depending on the usage:
-    - **Case:** In an `html.slim` file as a `ui-sref` attr. Replace `ui-sref="state.name"` with `href="your/relative/url"` and add a new attr `target="_self"`
-      - Setting the target is a hacky way to ignore the angular router/state transitions and treat it as an external link.
-    - **Case:** In a `$state.go('new.state')` call. Replace `$state.go('new.state')` with `$window.location.href = 'your/relative/url'`
-      - You may need to inject $window in whatever service you're in if it's not already present.
+    - Pay attention to any additional query parameters that are supported, you'll have to be sure not to break those!
+1. Update the `railsRoutedPages` object to add support for the state you just added
+    - The key should be the state name (ex: `dahlia.welcome`)
+    - The `buildUrl` field should be a function that builds the new href url. Note that you'll need to support the language path and any query params here!
+    - The `shouldRailsRoute` field should be a function that returns true only if `YOUR_ENV_VAR_NAME` flag is true and it is not the first page load.
+      - *Why do we do a check for isFirstPageLoad?* We only do this to make sure `?react=false` properly renders the angular page even if the env flag is set to "true".
 1. Test that the new routing works by starting on an angular page, and navigate to your new page via a link in Angular. Verify the react page loads correctly.
