@@ -51,7 +51,7 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
     hasRTRMap = _.map(ListingConstantsService.rightToReturnPreferences, (pref) -> Service.hasPreference(pref, listing))
     _.some(hasRTRMap)
 
-  Service.getRTRPreference = (listing) ->
+  Service.getRTRPreferenceKey = (listing) ->
     # If there's a right to return preference, return the key for it.
     # if not, return null
     for prefKey in ListingConstantsService.rightToReturnPreferences

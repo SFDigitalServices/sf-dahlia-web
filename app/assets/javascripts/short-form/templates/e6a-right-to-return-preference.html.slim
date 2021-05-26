@@ -13,25 +13,25 @@
           application="application"
           has-proof="true"
           title="{{preferenceTitle}}"
-          preference="{{getRTRPreference()}}"
+          preference="{{getRTRPreferenceKey()}}"
           proof-option-label="{{'e6_right_to_return.address_proof_document' | translate}}"
           translated-description="{{preferenceDesc}}"
-          required="preferenceRequired(getRTRPreference())"
+          required="preferenceRequired(getRTRPreferenceKey())"
         )
 
-        div.form-group.input-inset ng-if="application.preferences[getRTRPreference()]" ng-class="{error: addressInputInvalid('home_address')}"
+        div.form-group.input-inset ng-if="application.preferences[getRTRPreferenceKey()]" ng-class="{error: addressInputInvalid('home_address')}"
           label.form-label.caps
             | {{preferenceAddressTitle}}
           p.form-note.margin-bottom
             | {{preferenceAddressDesc}}
 
-          address-form address-type="{{addressType()}}" model="application.preferences" model-name='{{getRTRPreference()}}' is-required="true" on-change="application.aliceGriffith_address_verified = false"
+          address-form address-type="{{addressType()}}" model="application.preferences" model-name='{{getRTRPreferenceKey()}}' is-required="true" on-change="application.aliceGriffith_address_verified = false"
 
           / Address validation service has home and mailing address, so we use home for preference
           / address validation
           address-error error="addressValidationError('home_address')"
 
-      preference-opt-out preference="{{getRTRPreference()}}" application="application" invalid="rtrInputInvalid()" cancel-preference="cancelPreference(getRTRPreference())"
+      preference-opt-out preference="{{getRTRPreferenceKey()}}" application="application" invalid="rtrInputInvalid()" cancel-preference="cancelPreference(getRTRPreferenceKey())"
 
       small.error ng-if="rtrInputInvalid()"
         | {{'error.please_select_an_option' | translate}}

@@ -348,7 +348,7 @@ ShortFormApplicationService = (
     angular.copy(Service.application.groupedHouseholdAddresses[index], Service.currentRentBurdenAddress)
     Service.currentRentBurdenAddress.index = index
 
-  Service.getRTRPreference = (listing) ->
+  Service.getRTRPreferenceKey= (listing) ->
     ListingPreferenceService.getRTRPreference(listing)
 
   Service.cancelPreference = (preference) ->

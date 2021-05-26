@@ -469,14 +469,14 @@ ShortFormApplicationController = (
     ShortFormApplicationService.preferenceRequired(preference)
 
   ##### Right to return Preferences Logic ####
-  $scope.getRTRPreference = ->
+  $scope.getRTRPreferenceKey= ->
     ShortFormApplicationService.getRTRPreference($scope.listing)
 
   $scope.addressType = ->
-    $scope.getRTRPreference() + '_address'
+    $scope.getRTRPreferenceKey() + '_address'
 
   $scope.rtrTranslationKey =
-    switch $scope.getRTRPreference()
+    switch $scope.getRTRPreferenceKey()
       when 'rightToReturnSunnydale'
         'rtr_sunnydale'
       when 'aliceGriffith'
@@ -489,10 +489,10 @@ ShortFormApplicationController = (
   $scope.preferenceAddressDesc = $translate.instant("preferences.#{$scope.rtrTranslationKey}.address_desc")
 
   $scope.rtrInputInvalid = ->
-    $scope.inputInvalid($scope.getRTRPreference())
+    $scope.inputInvalid($scope.getRTRPreferenceKey())
 
   $scope.showRtrAddressForm = ->
-    $scope.application.preferences[$scope.getRTRPreference()]
+    $scope.application.preferences[$scope.getRTRPreferenceKey()]
 
   $scope.checkAliceGriffithAddress = ->
     preferenceAddressVerified =
