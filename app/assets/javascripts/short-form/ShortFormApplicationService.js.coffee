@@ -349,7 +349,7 @@ ShortFormApplicationService = (
     Service.currentRentBurdenAddress.index = index
 
   Service.getRTRPreferenceKey= (listing) ->
-    ListingPreferenceService.getRTRPreference(listing)
+    ListingPreferenceService.getRTRPreferenceKey(listing)
 
   Service.cancelPreference = (preference) ->
     if (

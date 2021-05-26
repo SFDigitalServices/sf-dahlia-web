@@ -470,23 +470,27 @@ ShortFormApplicationController = (
 
   ##### Right to return Preferences Logic ####
   $scope.getRTRPreferenceKey= ->
-    ShortFormApplicationService.getRTRPreference($scope.listing)
+    ShortFormApplicationService.getRTRPreferenceKey($scope.listing)
 
   $scope.addressType = ->
     $scope.getRTRPreferenceKey() + '_address'
 
-  $scope.rtrTranslationKey =
+  $scope.rtrTranslationKeys = ->
     switch $scope.getRTRPreferenceKey()
       when 'rightToReturnSunnydale'
-        'rtr_sunnydale'
+        return key =
+          desc: $translate.instant("preferences.rtr_sunnydale.desc")
+          title: $translate.instant("preferences.rtr_sunnydale.title")
+          addressTitle: $translate.instant("preferences.rtr_sunnydale.address")
+          addressDesc: $translate.instant("preferences.rtr_sunnydale.address_desc")
       when 'aliceGriffith'
-        'alice_griffith'
+        return key =
+          desc: $translate.instant("preferences.alice_griffith.desc")
+          title: $translate.instant("preferences.alice_griffith.title")
+          addressTitle: $translate.instant("preferences.alice_griffith.address")
+          addressDesc: $translate.instant("preferences.alice_griffith.address_desc")
 
 
-  $scope.preferenceDesc = $translate.instant("preferences.#{$scope.rtrTranslationKey}.desc")
-  $scope.preferenceTitle = $translate.instant("preferences.#{$scope.rtrTranslationKey}.title")
-  $scope.preferenceAddressTitle = $translate.instant("preferences.#{$scope.rtrTranslationKey}.address")
-  $scope.preferenceAddressDesc = $translate.instant("preferences.#{$scope.rtrTranslationKey}.address_desc")
 
   $scope.rtrInputInvalid = ->
     $scope.inputInvalid($scope.getRTRPreferenceKey())

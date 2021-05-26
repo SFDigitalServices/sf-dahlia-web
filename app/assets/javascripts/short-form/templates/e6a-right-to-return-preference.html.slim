@@ -12,18 +12,18 @@
         preference(
           application="application"
           has-proof="true"
-          title="{{preferenceTitle}}"
+          title="{{rtrTranslationKeys()['title']}}"
           preference="{{getRTRPreferenceKey()}}"
           proof-option-label="{{'e6_right_to_return.address_proof_document' | translate}}"
-          translated-description="{{preferenceDesc}}"
+          translated-description="{{rtrTranslationKeys()['desc']}}"
           required="preferenceRequired(getRTRPreferenceKey())"
         )
 
         div.form-group.input-inset ng-if="application.preferences[getRTRPreferenceKey()]" ng-class="{error: addressInputInvalid('home_address')}"
           label.form-label.caps
-            | {{preferenceAddressTitle}}
+            | {{rtrTranslationKeys()['addressTitle']}}
           p.form-note.margin-bottom
-            | {{preferenceAddressDesc}}
+            | {{rtrTranslationKeys()['addressDesc']}}
 
           address-form address-type="{{addressType()}}" model="application.preferences" model-name='{{getRTRPreferenceKey()}}' is-required="true" on-change="application.aliceGriffith_address_verified = false"
 
