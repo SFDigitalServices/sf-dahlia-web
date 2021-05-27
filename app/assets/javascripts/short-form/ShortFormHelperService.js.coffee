@@ -280,7 +280,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
     ['Letter from SFHA verifying address', Service.flagForI18n('label.proof.sfha_residency_letter')]
     ['SFHA Lease', Service.flagForI18n('label.proof.sfha_lease')]
     ['SF City ID', Service.flagForI18n('label.proof.sf_city_id')]
-    ['CA ID or Driver\'s License', Service.flagForI18n('label.proof.ca_license')]
     ['Telephone bill (landline only)', Service.flagForI18n('label.proof.telephone_bill')]
     ['Cable and internet bill', Service.flagForI18n('label.proof.cable_bill')]
     ['Paystub (listing home address)', Service.flagForI18n('label.proof.paystub_home')]

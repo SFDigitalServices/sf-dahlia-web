@@ -371,7 +371,7 @@
             "upload_for_each_address": "Mag-upload ng mga Dokumento para sa Bawat Address"
         },
         "e6_right_to_return": {
-            "address_proof_document": "Alin sa mga sumusunod na dokumento ang gusto ninyong i-upload para patunayan na kuwalipikado kayo?\n",
+            "address_proof_document": "Alin sa mga sumusunod na dokumento ang gusto ninyong i-upload para patunayan na kuwalipikado kayo?",
             "instructions": "Magbigay lang ng tinatanggap na address at mag-upload ng patunay para makakuha ng mas mataas na ranggo sa lottery.",
             "title": "Posibleng kuwalipikado ang inyong kabahayan para sa sumusunod na preperensiya para sa lottery o palabunutan."
         },
