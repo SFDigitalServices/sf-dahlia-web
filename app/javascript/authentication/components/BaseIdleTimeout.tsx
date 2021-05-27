@@ -6,7 +6,7 @@ import {
   Button,
   Modal,
   setSiteAlertMessage,
-} from "@sf-digital-services/ui-components"
+} from "@bloom-housing/ui-components"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]

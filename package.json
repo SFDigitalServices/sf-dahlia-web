@@ -8,7 +8,7 @@
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
     "@rails/webpacker": "5.2.1",
-    "@sf-digital-services/ui-components": "0.3.10-sf1",
+    "@bloom-housing/ui-components": "1.0.0",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
     "ag-grid-community": "^24.1.0",

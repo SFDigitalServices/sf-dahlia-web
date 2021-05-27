@@ -11,7 +11,7 @@ import {
   AlertBox,
   SiteAlert,
   LinkButton,
-} from "@sf-digital-services/ui-components"
+} from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 
 import { getMyAccountPath } from "../util/routeUtil"
@@ -31,7 +31,7 @@ const SignInForm = () => {
 
     signIn(email, password)
       .then(() => {
-        window.location.href = getMyAccountPath(window.location.pathname)
+        window.location.href = getMyAccountPath()
         window.scrollTo(0, 0)
       })
       .catch(() => {
@@ -67,7 +67,7 @@ const SignInForm = () => {
           {/* TODO: Add /forgot-password link */}
           <aside className="float-right font-bold">
             {/* <Link href="/forgot-password">
-                <a>{t("signIn.forgotPassword")}</a>
+                {t("signIn.forgotPassword")}
               </Link> */}
           </aside>
 
