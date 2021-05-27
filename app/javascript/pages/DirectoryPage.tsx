@@ -1,6 +1,6 @@
 import React from "react"
 
-import { t } from "@sf-digital-services/ui-components"
+import { t } from "@bloom-housing/ui-components"
 import Head from "next/head"
 
 import Layout from "../layouts/Layout"
