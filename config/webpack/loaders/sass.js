@@ -1,7 +1,7 @@
 const bloomTheme = require("../../../tailwind.config.js")
 
 // eslint-disable-next-line import/order
-const tailwindVars = require("@sf-digital-services/ui-components/tailwind.tosass.js")(bloomTheme)
+const tailwindVars = require("@bloom-housing/ui-components/tailwind.tosass.js")(bloomTheme)
 
 module.exports = {
   test: /\.(scss|sass)$/,

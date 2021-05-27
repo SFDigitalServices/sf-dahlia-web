@@ -1,4 +1,4 @@
-import { t, addTranslation } from "@sf-digital-services/ui-components"
+import { t, addTranslation } from "@bloom-housing/ui-components"
 
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 
