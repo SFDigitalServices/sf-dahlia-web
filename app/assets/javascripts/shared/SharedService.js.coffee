@@ -24,10 +24,13 @@ SharedService = ($http, $state, $window, $document) ->
     tl: 'Filipino'
     zh: 'Chinese'
 
+  Service._appendLeadingSlash = (path) ->
+    if path.startsWith("/") then path else "/" + path
+
   Service._addLanguageAndParamsToUrl = (languageCode, url) ->
-    langString = if languageCode == 'en' then '' else '/' + languageCode
+    langString = if languageCode == "en" then "" else languageCode
     # TODO: When implementing any page with url search params, that should be handled here.
-    langString + url
+    Service._appendLeadingSlash(langString + url)
 
   Service.railsRoutedPages =
     'dahlia.welcome':
