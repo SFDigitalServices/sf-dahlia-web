@@ -14,7 +14,6 @@ angular.module('dahlia.components')
     (ShortFormApplicationService, inputMaxLength, $scope) ->
       ctrl = @
       @latinRegex = ShortFormApplicationService.latinRegex
-
       @inputInvalid = (fieldName) =>
         fieldName = "#{@addressType}_#{fieldName}"
         ShortFormApplicationService.inputInvalid(fieldName)
