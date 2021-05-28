@@ -994,11 +994,11 @@
             ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
         ]
     })
-    .state('dahlia.short-form-application.alice-griffith-preference', {
-      url: '/alice-griffith-preference'
+    .state('dahlia.short-form-application.right-to-return-preference', {
+      url: '/right-to-return-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e6a-alice-griffith-preference.html'
+          templateUrl: 'short-form/templates/e6a-right-to-return-preference.html'
     })
     .state('dahlia.short-form-application.alice-griffith-verify-address', {
       url: '/alice-griffith-verify-address'

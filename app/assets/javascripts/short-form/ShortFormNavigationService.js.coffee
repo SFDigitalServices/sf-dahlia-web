@@ -149,7 +149,7 @@ ShortFormNavigationService = (
         param: 'antiDisplacement'
       }]
     'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
-    'alice-griffith-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
+    'right-to-return-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
     'preferences-programs': {scopedCallbacks: [{func: 'checkForCustomPreferences'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
@@ -221,7 +221,7 @@ ShortFormNavigationService = (
           'neighborhood-preference'
           'adhp-preference'
           'live-work-preference'
-          'alice-griffith-preference'
+          'right-to-return-preference'
           'alice-griffith-verify-address'
           'preferences-programs'
           'custom-preferences'
@@ -355,11 +355,11 @@ ShortFormNavigationService = (
           'adhp-preference'
         else
           Service.goBackToRentBurden()
-      when 'alice-griffith-preference'
+      when 'right-to-return-preference'
         Service.goBackToLiveWorkNeighborhood()
       when 'preferences-programs'
-        if ShortFormApplicationService.listingHasPreference('aliceGriffith')
-          'alice-griffith-preference'
+        if ShortFormApplicationService.listingHasRTRPreference()
+          'right-to-return-preference'
         else
           Service.goBackToLiveWorkNeighborhood()
       when 'custom-preferences'
