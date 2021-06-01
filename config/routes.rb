@@ -80,6 +80,9 @@ Rails.application.routes.draw do
   # React routes each use their own controllers (currently there's just one for the homepage)
   get '(:lang)' => 'home#index', lang: /(en|es|zh|tl)/
 
+  get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
+
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
