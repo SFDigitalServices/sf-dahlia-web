@@ -18,6 +18,7 @@ import { MainNav } from "../components/MainNav"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { LANGUAGE_CONFIGS } from "../util/languageUtil"
+import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -63,7 +64,9 @@ const Layout = (props: LayoutProps) => {
         >
           <MainNav />
         </SiteHeader>
-        <main id="main-content">{props.children}</main>
+        <main data-testid="main-content-test-id" id="main-content">
+          {props.children}
+        </main>
       </div>
 
       <SiteFooter>
@@ -105,14 +108,10 @@ const Layout = (props: LayoutProps) => {
           <Link className="text-gray-500" href="mailto:sfhousinginfo@sfgov.org">
             {t("footer.contact")}
           </Link>
-          <Link
-            className="text-gray-500"
-            href="https://www.acgov.org/government/legal.htm"
-            target="_blank"
-          >
+          <Link className="text-gray-500" href={getDisclaimerPath()}>
             {t("footer.disclaimer")}
           </Link>
-          <Link className="text-gray-500" href="/privacy">
+          <Link className="text-gray-500" href={getPrivacyPolicyPath()}>
             {t("footer.privacyPolicy")}
           </Link>
         </FooterNav>
