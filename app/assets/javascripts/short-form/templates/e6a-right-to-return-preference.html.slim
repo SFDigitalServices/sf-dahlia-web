@@ -1,0 +1,39 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'e6_right_to_return.title' | translate}}
+    p.margin-bottom
+      | {{'e6_right_to_return.instructions' | translate }}
+
+  .app-inner
+    .row.form-group ng-class="{ error: rtrInputInvalid() }"
+      p.form-note.margin-bottom--2x translate="label.please_select_preference"
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+        preference(
+          application="application"
+          has-proof="true"
+          title="{{rtrTranslationKeys()['title']}}"
+          preference="{{getRTRPreferenceKey()}}"
+          proof-option-label="{{'e6_right_to_return.address_proof_document' | translate}}"
+          translated-description="{{rtrTranslationKeys()['desc']}}"
+          required="preferenceRequired(getRTRPreferenceKey())"
+        )
+
+        div.form-group.input-inset ng-if="application.preferences[getRTRPreferenceKey()]" ng-class="{error: addressInputInvalid('home_address')}"
+          label.form-label.caps
+            | {{rtrTranslationKeys()['addressTitle']}}
+          p.form-note.margin-bottom
+            | {{rtrTranslationKeys()['addressDesc']}}
+
+          address-form address-type="{{addressType()}}" model="application.preferences" model-name='{{getRTRPreferenceKey()}}' is-required="true" on-change="application.aliceGriffith_address_verified = false"
+
+          / Address validation service has home and mailing address, so we use home for preference
+          / address validation
+          address-error error="addressValidationError('home_address')"
+
+      preference-opt-out preference="{{getRTRPreferenceKey()}}" application="application" invalid="rtrInputInvalid()" cancel-preference="cancelPreference(getRTRPreferenceKey())"
+
+      small.error ng-if="rtrInputInvalid()"
+        | {{'error.please_select_an_option' | translate}}
+
+  short-form-save-and-submit

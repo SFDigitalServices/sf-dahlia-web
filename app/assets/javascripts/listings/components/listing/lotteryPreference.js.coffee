@@ -8,12 +8,14 @@ angular.module('dahlia.components')
   controller: ['ListingDataService', (ListingDataService) ->
     ctrl = @
 
+    prefMap = ListingDataService.preferenceMap
     docSectionMap = {
-      "Live or Work in San Francisco Preference": 'resident'
-      "Neighborhood Resident Housing Preference (NRHP)": 'resident'
-      "Anti-Displacement Housing Preference (ADHP)": 'resident'
-      "Rent Burdened / Assisted Housing Preference": 'assisted-housing'
-      "Alice Griffith Housing Development Resident": 'alice-griffith'
+      "#{prefMap['liveWorkInSf']}": 'resident',
+      "#{prefMap['neighborhoodResidence']}": 'resident',
+      "#{prefMap['antiDisplacement']}": 'resident',
+      "#{prefMap['assistedHousing']}": 'assisted-housing',
+      "#{prefMap['aliceGriffith']}": 'alice-griffith',
+      "#{prefMap['rightToReturnSunnydale']}": 'right-to-return'
     }
 
     @isPrefWithProof = ->
