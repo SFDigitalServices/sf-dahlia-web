@@ -11,16 +11,19 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
-import Head from "next/head"
 import SVG from "react-inlinesvg"
 
 import { MainNav } from "../components/MainNav"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { LANGUAGE_CONFIGS } from "../util/languageUtil"
+import MetaTags from "./MetaTags"
 
 export interface LayoutProps {
   children: React.ReactNode
+  title?: string
+  description?: string
+  image?: string
 }
 
 const getLanguageItems = (): LanguageNavLang => {
@@ -51,9 +54,7 @@ const Layout = (props: LayoutProps) => {
   return (
     <div className="site-wrapper">
       <div className="site-content">
-        <Head>
-          <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
-        </Head>
+        <MetaTags title={props.title} description={props.description} image={props.image} />
         <LanguageNav language={langItems} />
         <SiteHeader
           skip={t("t.skipToMainContent")}
