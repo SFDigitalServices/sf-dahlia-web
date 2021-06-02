@@ -67,12 +67,16 @@ const Layout = (props: LayoutProps) => {
   )
 
   const topAlert = (
-    <AlertBox
-      type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
-      inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
-    >
-      <Markdown>{process.env.TOP_MESSAGE}</Markdown>
-    </AlertBox>
+    <>
+      {process.env.TOP_MESSAGE && (
+        <AlertBox
+          type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
+          inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
+        >
+          <Markdown>{process.env.TOP_MESSAGE}</Markdown>
+        </AlertBox>
+      )}
+    </>
   )
 
   return (
@@ -81,7 +85,7 @@ const Layout = (props: LayoutProps) => {
         <Head>
           <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
         </Head>
-        {process.env.TOP_MESSAGE && topAlert}
+        {topAlert}
         <LanguageNav language={langItems} />
         <SiteHeader
           skip={t("t.skipToMainContent")}
