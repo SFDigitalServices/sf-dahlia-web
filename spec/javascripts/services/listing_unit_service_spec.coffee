@@ -4,11 +4,14 @@ do ->
     ListingUnitService = undefined
     httpBackend = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeSaleListing = _.cloneDeep(fakeListing)
+    fakeSaleListing.Tenure = 'New sale'
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeAmiAmiTiers = getJSONFixture('listings-api-ami-ami-tiers.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeUnitsMinAmi = getJSONFixture('listings-api-units-min-ami.json')
     fakeUnitsSales = getJSONFixture('listings-api-units-sales.json')
+    fakeUnitsSalesAmiTiers = getJSONFixture('listings-api-units-sales-ami-tiers.json')
     fakeUnitsNonMinAmi = getJSONFixture('listings-api-units-non-min-ami.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
     fakeListingAllSRO = angular.copy(fakeListing)
@@ -19,8 +22,12 @@ do ->
     fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
     $translate =
       use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
-      instant: (str, variable ) ->
-        variable?.amiPercent || str
+      instant: jasmine.createSpy('$translate.instant').and.callFake(
+        # If just max AMI, return it, else return the range as min-max
+        (str, variable ) ->
+          variable?.amiPercent?.toString() || if variable?.minAmiPercent then "#{variable.minAmiPercent}-#{variable.maxAmiPercent}" else str
+      )
+
     requestURL = undefined
 
 
@@ -48,63 +55,91 @@ do ->
         expect(ListingUnitService.AMICharts).toEqual []
 
     describe 'Service._getIncomeLevelLabel', ->
-      it 'returns AMI tier label for AMI tiers', ->
-        unitSummary = { 'Planning_AMI_Tier': 'Low Income'}
+      it 'returns range if min ami is present', ->
+        unitSummary = {
+          'Max_AMI_for_Qualifying_Unit': 60,
+          'Min_AMI_for_Qualifying_Unit': 40,
+        }
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
+        expect($translate.instant).toHaveBeenCalledWith(
+          'listings.stats.percent_ami_range',
+          {'minAmiPercent': 40, 'maxAmiPercent': 60}
+        )
 
-        expect(label).toEqual('listings.ami_tiers.low_income')
-      it 'returns formatted AMI percentage if not an AMI tier', ->
+      it 'returns "up to" formatted label if there is not a min AMI', ->
         unitSummary = { 'Max_AMI_for_Qualifying_Unit': 60 }
         label = ListingUnitService._getIncomeLevelLabel(unitSummary)
 
-        expect(label).toEqual(60)
+        expect($translate.instant).toHaveBeenCalledWith(
+          'listings.stats.up_to_percent_ami',
+          {'amiPercent': 60}
+        )
 
-
-    describe 'Service.groupUnitDetails', ->
+    describe 'Service.groupRentalUnits', ->
       beforeEach ->
         ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
 
-      it 'should group units by bedroom count', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
-        expect(grouped.map((g) -> g.type)).toEqual(['Studio', '1 BR', '2 BR', '3 BR'])
+      it 'should group units by occupancy', ->
+        grouped = ListingUnitService.groupRentalUnits(fakeUnitsMinAmi.units)
+        expect(grouped.map((g) -> g.occupancy)).toEqual(['1', '2', '3', '4', '5', '6', '7'])
 
-      it 'should group units within bedroom type by AMI level for AMI tier listings', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
-        oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
-        expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
-          ['listings.ami_tiers.low_income', 'listings.ami_tiers.moderate_income', 'listings.ami_tiers.middle_income']
+      it 'should group units within occupancy by AMI level for AMI tier listings', ->
+        grouped = ListingUnitService.groupRentalUnits(fakeUnitsMinAmi.units)
+        onePersonIncomeLevels = grouped.filter((g) -> g.occupancy == '1')[0].incomeLevels
+        expect(onePersonIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
+          ['65','65-90', '90-130']
         )
 
       it 'should group AMI tier units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsMinAmi.units)
-        expectedAmiTierUnitGroups = getJSONFixture('units-ami-tiers-grouped.json')
+        grouped = ListingUnitService.groupRentalUnits(fakeUnitsMinAmi.units)
+        expectedAmiTierUnitGroups = getJSONFixture('units-rental-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedAmiTierUnitGroups)
 
-      it 'should group sale units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsSales.units)
-        expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
-        expect(grouped).toEqual(expectedUnitGroups)
-
       it 'should group non-AMI-tier units as expected', ->
-        grouped = ListingUnitService.groupUnitDetails(fakeUnitsNonMinAmi.units)
-        expectedUnitGroups = getJSONFixture('units-non-ami-tiers-grouped.json')
+        grouped = ListingUnitService.groupRentalUnits(fakeUnitsNonMinAmi.units)
+        expectedUnitGroups = getJSONFixture('units-rental-non-ami-tiers-grouped.json')
         expect(grouped).toEqual(expectedUnitGroups)
 
       it 'should sort price groups with multiple rents by rent', ->
         unitWithOtherRent = angular.copy(fakeUnitsNonMinAmi.units[0])
         unitWithOtherRent['BMR_Rent_Monthly'] = 1800.0
 
-        grouped = ListingUnitService.groupUnitDetails(
+        grouped = ListingUnitService.groupRentalUnits(
             [unitWithOtherRent, fakeUnitsNonMinAmi.units[0]]
           )
         priceGroups = grouped[0].incomeLevels[0].priceGroups
         expect(priceGroups[0]['BMR_Rent_Monthly']).toBeLessThan(priceGroups[1]['BMR_Rent_Monthly'])
 
+    describe 'Service.groupSaleUnits', ->
+      beforeEach ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
+
+      it 'should group units by bedroom count', ->
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsMinAmi.units)
+        expect(grouped.map((g) -> g.type)).toEqual(['Studio', '1 BR', '2 BR', '3 BR'])
+
+      it 'should group units within bedroom type by AMI level for AMI tier listings', ->
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsMinAmi.units)
+        oneBrIncomeLevels = grouped.filter((g) -> g.type == '1 BR')[0].incomeLevels
+        expect(oneBrIncomeLevels.map((l) -> l.incomeLevel)).toEqual(
+          ['65','65-90', '90-130']
+        )
+
+      it 'should group AMI tier units as expected', ->
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsSalesAmiTiers.units)
+        expectedAmiTierUnitGroups = getJSONFixture('units-sale-ami-tiers-grouped.json')
+        expect(grouped).toEqual(expectedAmiTierUnitGroups)
+
+      it 'should group non-ami tier sale units as expected', ->
+        grouped = ListingUnitService.groupSaleUnits(fakeUnitsSales.units)
+        expectedUnitGroups = getJSONFixture('units-sale-test-listing-grouped.json')
+        expect(grouped).toEqual(expectedUnitGroups)
+
       it 'should sort price groups with multiple sales prices by price', ->
         unitWithHigherPrice = angular.copy(fakeUnitsSales.units[0])
         unitWithHigherPrice['Price_Without_Parking'] = 340000.0
 
-        grouped = ListingUnitService.groupUnitDetails(
+        grouped = ListingUnitService.groupSaleUnits(
             [unitWithHigherPrice, fakeUnitsSales.units[0]]
           )
         priceGroups = grouped[0].incomeLevels[0].priceGroups
@@ -249,20 +284,38 @@ do ->
         expect(occupancies).toEqual([1, 2, 3])
 
     describe 'Service.getListingUnits', ->
-      beforeEach ->
-        requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
-        stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+      describe 'for rental listings', ->
+        beforeEach ->
+          requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
+          stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
 
-        ListingUnitService.getListingUnits(fakeListing)
-        httpBackend.flush()
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
+          ListingUnitService.getListingUnits(fakeListing)
+          httpBackend.flush()
 
-      it 'assigns the given listing.Units with the unit results', ->
-        expect(fakeListing.Units).toEqual fakeUnits.units
-      it 'assigns the given listing.groupedUnits with the grouped unit results', ->
-        expect(fakeListing.groupedUnits).toEqual ListingUnitService.groupUnitDetails(fakeUnits.units)
+        afterEach ->
+          httpBackend.verifyNoOutstandingExpectation()
+          httpBackend.verifyNoOutstandingRequest()
+
+        it 'assigns the given listing.Units with the unit results', ->
+          expect(fakeListing.Units).toEqual fakeUnits.units
+
+        it 'assigns the given listing.groupedUnits with the grouped rental unit results', ->
+          expect(fakeListing.groupedUnits).toEqual ListingUnitService.groupRentalUnits(fakeUnits.units)
+
+      describe 'for sale listings', ->
+        beforeEach ->
+          fakeSaleListing = _.cloneDeep(fakeListing)
+          fakeSaleListing.Tenure = 'New sale'
+          requestURL = "/api/v1/listings/#{fakeSaleListing.Id}/units"
+          stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+          ListingUnitService.getListingUnits(fakeSaleListing)
+          httpBackend.flush()
+
+        afterEach ->
+          httpBackend.verifyNoOutstandingExpectation()
+          httpBackend.verifyNoOutstandingRequest()
+        it 'assigns the given listing.groupedUnits with the grouped sale unit results', ->
+          expect(fakeSaleListing.groupedUnits).toEqual ListingUnitService.groupSaleUnits(fakeUnits.units)
 
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns false if not all units are SROs', ->

@@ -63,7 +63,11 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  config.cache_store = :dalli_store
+  # These numbers are from the recommended dalli config: https://devcenter.heroku.com/articles/memcachier#ruby
+  config.cache_store = :dalli_store, nil, {
+    socket_timeout: 1.5,       # default is 0.5
+    socket_failure_delay: 0.2, # default is 0.01
+  }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   if ENV['ASSET_HOST']

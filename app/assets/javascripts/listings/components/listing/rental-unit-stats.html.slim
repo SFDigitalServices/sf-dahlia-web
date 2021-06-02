@@ -1,102 +1,48 @@
-div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
-  table.table-pricing.table-pricing-rent.top-align role="grid"
-    thead
-      tr
-        th
-          span
-            | {{ 't.units' | translate }}
-        th
-          span
-            | {{ 'listings.stats.income_range' | translate }}
-        th
-          span
-            | {{ 'listings.stats.rent' | translate }}
-    tbody
-        tr.income-level.row-hide-xlarge-up ng-repeat-start="incomeLevel in ::$ctrl.unitGroup.incomeLevels" ng-init="incomeLevelIndex = $index"
-          td.income-level-label
-            | {{ incomeLevel.incomeLevel }}
-        tr ng-repeat-end="" ng-repeat="priceGroup in incomeLevel.priceGroups"
-          td.is-subtitled.has-nested-sibling.cell-hide-xlarge-up data-th="{{ 't.units' | translate }}"
-            small.pricing-table-waitlist ng-if="::priceGroup.Status == 'Occupied'"
-              | {{'listings.stats.waitlist' | translate}}
-            span ng-if="::priceGroup.Status != 'Occupied'"
-              i.notranslate
-                | {{::priceGroup.total}}
-              small
-                | {{'listings.stats.available' | translate}}
-            span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
-                svg
-                  use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
-          td.is-nested.table-cell-units.cell-show-xlarge-up  data-th="{{ 't.units' | translate }}"
-            table.table-nested-units
-              thead
-                tr
-                  th
-                    | {{ incomeLevel.incomeLevel }}
-              tbody
-                  tr
-                    td
-                      small.pricing-table-waitlist ng-if="::priceGroup.Status == 'Occupied'"
-                        | {{'listings.stats.waitlist' | translate}}
-                      span ng-if="::priceGroup.Status != 'Occupied'"
-                        i.notranslate
-                          | {{::priceGroup.total}}
-                        small
-                          | {{'listings.stats.available' | translate}}
+dl.accordion-plus-minus.pricing-accordion.accordion.trigger-right.skiptranslate data-accordion=""
+  dd.accordion-navigation ng-repeat="unitGroup in ::$ctrl.parent.listing.groupedUnits" ng-class="{active: $ctrl.isExpanded(unitGroup)}"
+    .accordion-header tabindex="0" draggable="false" ng-click="$ctrl.toggleExpanded(unitGroup)" aria-expanded="{{$ctrl.isExpanded(unitGroup)}}"
+      .accordion-header-title.pricing-header-text-container
+        .vertically-centered-text role="text"
+          span.header-number
+            | {{unitGroup.occupancy}}&nbsp;
+          | {{ ::$ctrl.getHouseholdTextFromOccupancy(unitGroup.occupancy) }}
+        .pricing-header-spacer
 
-
-          td.is-supertitled.is-nested data-th="{{ 'listings.stats.income_range' | translate }}"
-            table.table-nested-income
-              thead
-                tr
-                  th scope="col"
-                      | {{ 'listings.stats.household_size' | translate }}
-                  th scope="col"
-                      | {{ 'listings.stats.minimum' | translate }}
-                  th scope="col"
-                    | {{ 'listings.stats.maximum' | translate }}
-              tbody
-                tr ng-repeat="incomeLimit in ::priceGroup.incomeLimits"
-                  td.is-subtitled-nested.notranslate data-th="{{ 'listings.stats.household_size' | translate }}"
-                    | {{ incomeLimit.occupancy }}
-                  td.is-subtitled-nested data-th="{{ 'listings.stats.minimum' | translate }}"
-                    span ng-if="::incomeLimit.minIncome != 0"
-                      | {{::incomeLimit.minIncome | currency:"$":0}}
-                      small
-                       | {{'t.per_month' | translate}}
-                    em ng-if="::incomeLimit.minIncome == 0"
-                      | {{'t.none' | translate}}
-                  td.is-subtitled-nested data-th="{{ 'listings.stats.maximum' | translate }}"
-                    span ng-if="::incomeLimit.maxIncome"
-                      | {{::incomeLimit.maxIncome | currency:"$":0}}
-                      small
-                       | {{'t.per_month' | translate}}
-                    em ng-if="::!incomeLimit.maxIncome"
-                      | {{'t.none' | translate}}
-          td.is-subtitled.has-nested-sibling.cell-hide-xlarge-up data-th="{{ 'listings.stats.rent' | translate }}"
-            span ng-if="::priceGroup.BMR_Rent_Monthly"
-              | {{::priceGroup.BMR_Rent_Monthly | currency:"$":0}}
-              small
-                | {{'t.per_month' | translate}}
-            span ng-if="::!priceGroup.BMR_Rent_Monthly && priceGroup.Rent_percent_of_income"
-              | {{::priceGroup.Rent_percent_of_income}}%
-              small
-               | {{'t.income' | translate}}
-          td.is-nested.cell-show-xlarge-up data-th="{{ 'listings.stats.income_range' | translate }}"
-            table.table-nested-rent
-              thead
-                tr
-                  th scope="col"
-                      | {{ 'listings.stats.rent' | translate }}
-              tbody
-                tr
-                  td.text-right
-                    span ng-if="::priceGroup.BMR_Rent_Monthly"
-                      | {{::priceGroup.BMR_Rent_Monthly | currency:"$":0}}
-                      small
-                        | {{'t.per_month' | translate}}
-                    span ng-if="::!priceGroup.BMR_Rent_Monthly && priceGroup.Rent_percent_of_income"
-                      | {{::priceGroup.Rent_percent_of_income}}%
-                      small
-                        | {{'t.income' | translate}}
-
+        .pricing-accordion-income-container role="text"
+          span.header-light-text
+            | {{ 'label.income' | translate }}
+          | {{" "}}
+          | {{ ::$ctrl.getIncomeRangeFromUnitGroup(unitGroup) }}
+          | {{" "}}
+          span.header-light-text
+            | {{'t.per_month' | translate}}
+      icon-plus-minus active="false"
+    .content.no-padding
+      table.accordion-pricing-table
+        thead
+          tr
+            th.column-header id="units" scope="col"
+              | {{ 't.units' | translate }}
+            th.column-header id="income-range" scope="col"
+              | {{ 'listings.stats.income_range' | translate }}
+            th.column-header id="rent" scope="col"
+              | {{ 'listings.stats.rent' | translate }}
+        tbody
+          tr ng-repeat-start="incomeLevel in ::unitGroup.incomeLevels"
+            th.span.ami-subheader id="::incomeLevel.incomeLevel" colspan="3" scope="col"
+              | {{ ::incomeLevel.incomeLevel }}
+          tr ng-repeat="priceGroup in ::incomeLevel.priceGroups" ng-repeat-end="true"
+            td.pricing-table-cell aria-label="{{ ::incomeLevel.incomeLevel }}"
+              | {{ ::priceGroup.Unit_Type }}
+              .cell-subtitle
+                | {{ ::$ctrl.numAvailableString(priceGroup) }}
+            td.pricing-table-cell aria-label="{{ 'listings.stats.income_range' | translate }}"
+              div role="text"
+                | {{ ::$ctrl.getIncomeRangeFromPriceGroup(priceGroup) }}
+                .cell-subtitle
+                  | {{'t.per_month' | translate}}
+            td.pricing-table-cell aria-label="{{ 'listings.stats.rent' | translate }}"
+              div role="text"
+                | {{ ::$ctrl.getRentRowValue(priceGroup) }}
+                .cell-subtitle
+                    | &nbsp;{{ ::$ctrl.getRentRowSubtitle(priceGroup) }}

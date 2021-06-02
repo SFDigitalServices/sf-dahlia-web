@@ -11,8 +11,8 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
   Service.hasPreference = (preference, listing) ->
     preferenceNames = _.map(listing.preferences, (pref) -> pref.preferenceName)
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
-    preferenceName = Service.preferenceMap[preference]
-    return _.includes(preferenceNames, preferenceName)
+    _.includes(preferenceNames, Service.preferenceMap[preference])
+
 
   Service.getPreference = (preference, listing) ->
     # looks up full preference object via the short name e.g. 'liveInSf'
@@ -41,6 +41,21 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
       Service.loading.preferences = false
       Service.error.preferences = true
     )
+
+  Service.isRTRPreference = (preferenceName) ->
+    # Determine if preference is one of the right to return preferences
+    return _.includes(ListingConstantsService.rightToReturnPreferences, preferenceName)
+
+  Service.hasRTRPreference = (listing) ->
+    # Determine if the listing has a right to return preference
+    hasRTRMap = _.map(ListingConstantsService.rightToReturnPreferences, (pref) -> Service.hasPreference(pref, listing))
+    _.some(hasRTRMap)
+
+  Service.getRTRPreferenceKey = (listing) ->
+    # If there's a right to return preference, return the key for it.
+    # if not, return null
+    for prefKey in ListingConstantsService.rightToReturnPreferences
+      return prefKey if Service.hasPreference(prefKey, listing)
 
   # TODO: Replace with `requiresProof` listing preference setting (#154784101)
   Service.hardcodeCustomProofPrefs = []

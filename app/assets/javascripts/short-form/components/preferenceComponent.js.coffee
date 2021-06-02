@@ -8,6 +8,7 @@ angular.module('dahlia.components')
     title: '@'
     translatedDescription: '@'
     customDescription: '@'
+    readMoreUrl: '@'
     translatedShortDescription: '@'
     proofOptionLabel: '@'
     buttonLabel: '@'
@@ -25,6 +26,8 @@ angular.module('dahlia.components')
 
       @eligibleMembers = []
       @memberSelectorLabel = ''
+
+      @flagForI18n = (str) => str
 
       @initVariables = =>
         @buttonLabel ?= $translate.instant('label.upload_proof_of_preference')
@@ -48,6 +51,19 @@ angular.module('dahlia.components')
 
       @onChange = =>
         @resetPreference()
+
+      # For 588 Mission preference, we need to override some defaults.
+      @isEmploymentDisability = =>
+        @title == 'Employment or Disability Preference'
+
+      @descriptionToTranslate = =>
+        if @isEmploymentDisability()
+          @flagForI18n('e7b_custom_preferences.employment_disability.description')
+        else
+          @translatedDescription
+
+      @individualPrefFieldId = =>
+        @preference.concat('_preference')
 
       @initVariables()
 

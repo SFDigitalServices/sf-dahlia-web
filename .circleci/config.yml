@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
+  cypress: cypress-io/cypress@1.26.0
 defaults: &defaults
   working_directory: ~/web
   docker:
@@ -13,6 +14,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
+    - image: "cypress/base:12.18.2"
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:
@@ -28,31 +30,34 @@ prod_and_release_jobs: &prod_and_release_jobs
     branches:
       only:
         - /^release.*$/
+        - /^hotfix.*$/
         - production
 aliases:
   - &attach_workspace
     attach_workspace:
       at: ~/web
-  - &restore_npm_cache
+  - &restore_yarn_cache
     restore_cache:
-        name: Restore NPM Cache
+        name: Restore Yarn Cache
         keys:
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-main
-          - web-{{ .Environment.CACHE_VERSION }}-npm-packages-
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
+          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
   - &restore_bundler_cache
     restore_cache:
         name: Restore Bundler Cache
         keys:
-          - web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
-          - web-{{ .Environment.CACHE_VERSION }}-dependencies-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
+          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
 commands:
   prepare_workspace:
     description: "Attach workspace and restore cache"
     steps:
       - *attach_workspace
-      - *restore_npm_cache
+      - *restore_yarn_cache
       - *restore_bundler_cache
   install-node:
     description: "install node"
@@ -64,9 +69,12 @@ commands:
             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
             echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
             echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            echo 'nvm install v6.11.1' >> $BASH_ENV
-            echo 'nvm alias default v6.11.1' >> $BASH_ENV
-      - run: npm install
+            echo 'nvm install v12.16.1' >> $BASH_ENV
+            echo 'nvm alias default v12.16.1' >> $BASH_ENV
+      - run: |
+          curl -o- -L https://yarnpkg.com/install.sh | bash
+          echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+      - run: yarn install
   setup-webdriver:
     description: "Setup webdriver for e2e tests"
     steps:
@@ -74,9 +82,6 @@ commands:
           command: |
             ./node_modules/protractor/bin/webdriver-manager clean
             ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59
-            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
-            sed -i 's/2\.45/2\.41/g' node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
-            cat node_modules/protractor/node_modules/webdriver-manager/selenium/update-config.json
             ./node_modules/protractor/bin/webdriver-manager status
   upgrade-bundler:
     description: Upgrade bundler
@@ -116,7 +121,7 @@ commands:
     steps:
       - setup
       - start-server
-      - run: npm run protractor -- --specs '<< parameters.path >>'
+      - run: yarn run protractor spec/e2e/conf.js --specs '<< parameters.path >>'
 
 jobs:
   build:
@@ -126,10 +131,11 @@ jobs:
       - prepare_workspace
       - install-node
       - save_cache:
-          name: Save Npm Package Cache
-          key: web-{{ .Environment.CACHE_VERSION }}-npm-packages-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          name: Save Yarn Package Cache
+          key: webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
+            - /home/circleci/.cache/Cypress
       - upgrade-bundler
       - run:
           name: Bundle install
@@ -139,7 +145,7 @@ jobs:
             bundle install --deployment --path vendor/bundle
       - save_cache:
           name: Save Bundle cache
-          key: web-{{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "Gemfile.lock" }}
+          key: webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - ~/web/vendor/bundle
       - run: bundle exec rake db:setup
@@ -157,15 +163,40 @@ jobs:
           root: .
           paths:
             - .
-  unit:
+  lint:
+    <<: *defaults
+    steps:
+      - setup
+      - run: yarn lint
+  unit-react:
+    <<: *defaults
+    steps:
+      - setup
+      - run: yarn test
+  unit-rspec:
+    <<: *defaults
+    steps:
+      - setup
+      - run: RAILS_ENV=test bundle exec rails db:create
+      - run: RAILS_ENV=test bundle exec rails db:test:prepare
+      - run: bundle exec rake spec
+  unit-angular:
     <<: *defaults
     steps:
       - setup
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake jasmine:ci
-      - run: bundle exec rake spec
   e2e:
+    <<: *defaults
+    environment:
+      HOME_PAGE_REACT: 'true'
+      SIGN_IN_PAGE_REACT: 'true'
+    steps:
+      - setup
+      - start-server
+      - run: yarn test:e2e
+  e2e-legacy:
     <<: *defaults
     parallelism: 4
     steps:
@@ -183,10 +214,21 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - unit:
+      - lint:
+          <<: *non_production_jobs
+      - unit-react:
+          <<: *non_production_jobs
+      - unit-rspec:
+          <<: *non_production_jobs
+      - unit-angular:
           <<: *non_production_jobs
       - e2e:
+          <<: *non_production_jobs
+      - e2e-legacy:
           <<: *non_production_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
+      - e2e-legacy:
+          <<: *prod_and_release_jobs
+          name: e2e-production-legacy

@@ -149,7 +149,7 @@ ShortFormNavigationService = (
         param: 'antiDisplacement'
       }]
     'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
-    'alice-griffith-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
+    'right-to-return-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
     'preferences-programs': {scopedCallbacks: [{func: 'checkForCustomPreferences'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
@@ -221,7 +221,7 @@ ShortFormNavigationService = (
           'neighborhood-preference'
           'adhp-preference'
           'live-work-preference'
-          'alice-griffith-preference'
+          'right-to-return-preference'
           'alice-griffith-verify-address'
           'preferences-programs'
           'custom-preferences'
@@ -355,11 +355,11 @@ ShortFormNavigationService = (
           'adhp-preference'
         else
           Service.goBackToRentBurden()
-      when 'alice-griffith-preference'
+      when 'right-to-return-preference'
         Service.goBackToLiveWorkNeighborhood()
       when 'preferences-programs'
-        if ShortFormApplicationService.listingHasPreference('aliceGriffith')
-          'alice-griffith-preference'
+        if ShortFormApplicationService.listingHasRTRPreference()
+          'right-to-return-preference'
         else
           Service.goBackToLiveWorkNeighborhood()
       when 'custom-preferences'
@@ -372,6 +372,8 @@ ShortFormNavigationService = (
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
+        else if Service.hasCustomPreferences()
+          'custom-preferences'
         else
           'preferences-programs'
       when 'review-submitted'
@@ -443,21 +445,19 @@ ShortFormNavigationService = (
       Service.goBackToRentBurden()
 
   Service.getPrevPageOfCustomProofPref = ->
-    hasCustomPreferences = !!ShortFormApplicationService.listing.customPreferences.length
     currentIndex = parseInt($state.params.prefIdx)
-    if currentIndex == 0 && hasCustomPreferences
+    if currentIndex == 0 && Service.hasCustomPreferences()
       'custom-preferences'
-    else if currentIndex == 0 && !hasCustomPreferences
+    else if currentIndex == 0 && !Service.hasCustomPreferences()
       'preferences-programs'
     else if currentIndex > 0
       "custom-proof-preferences({prefIdx: #{currentIndex - 1}})"
 
   Service.getPrevPageOfGeneralLottery = ->
     customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
-    hasCustomPreferences = !!ShortFormApplicationService.listing.customPreferences.length
     if customProofPreferences.length
       "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
-    else if hasCustomPreferences
+    else if Service.hasCustomPreferences()
       'custom-preferences'
     else
       'preferences-programs'
@@ -515,6 +515,8 @@ ShortFormNavigationService = (
   Service._sectionNames = () ->
     Service.sections().map (section) ->
       return section.name
+  Service.hasCustomPreferences = () ->
+    !!ShortFormApplicationService.listing.customPreferences.length
 
   Service.initialState = () ->
     if ListingIdentityService.isSale(ShortFormApplicationService.listing)

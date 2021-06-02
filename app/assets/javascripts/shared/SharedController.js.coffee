@@ -10,9 +10,6 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
   $scope.doNotGoogleTranslate = ->
     $scope.isShortFormPage() || $scope.isWelcomePage() || $scope.isEnglish()
 
-  $scope.showTranslationExpertMessage = ->
-    $scope.isShortFormPage() || $scope.isWelcomePage()
-
   $scope.isShortFormPage = ->
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 

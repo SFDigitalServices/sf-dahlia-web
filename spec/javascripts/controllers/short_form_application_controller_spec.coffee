@@ -116,6 +116,8 @@ do ->
       completeSection: jasmine.createSpy()
       listingIsRental: jasmine.createSpy()
       listingIsSale: jasmine.createSpy()
+      getRTRPreference: jasmine.createSpy().and.returnValue('aliceGriffith')
+      listingHasRTRPreference: ->
     fakeFunctions =
       fakeIsLoading: -> false
       foo1: jasmine.createSpy()
@@ -585,16 +587,18 @@ do ->
       describe 'when listing has Alice Griffith preference', ->
         beforeEach ->
           spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
+          spyOn(fakeShortFormApplicationService, 'listingHasRTRPreference').and.returnValue(true)
 
-        it 'goes to alice-griffith-preference', ->
+        it 'goes to right-to-return-preference', ->
           scope.checkAfterLiveWork()
 
-          path = 'dahlia.short-form-application.preferences-programs'
+          path = 'dahlia.short-form-application.right-to-return-preference'
           expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
 
       describe 'when listing does not have Alice Griffith preference', ->
         beforeEach ->
           spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
+          spyOn(fakeShortFormApplicationService, 'listingHasRTRPreference').and.returnValue(false)
 
         it 'goes to preferences-programs page', ->
           scope.checkAfterLiveWork()

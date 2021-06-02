@@ -10,6 +10,8 @@
     | {{'e2c_live_work_preference.document_must_show_correct_name_for_work' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.preference == 'aliceGriffith'"
     | {{'preferences.alice_griffith.proof_desc' | translate}}
+  p.form-note.margin-bottom ng-if="$ctrl.preference == 'rightToReturnSunnydale'"
+    | {{'preferences.rtr_sunnydale.proof_desc' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.proofType == 'Copy of Lease'"
     | {{'label.upload_lease_description' | translate}}
 
@@ -25,7 +27,7 @@
       | {{'e2c_live_work_preference.letter_from_employer_instructions' | translate}}
     p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
       | {{'e2c_live_work_preference.letter_for_homelessness_instructions' | translate}}
-    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from SFHA verifying address'"
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from SFHA verifying address' && $ctrl.preference == 'aliceGriffith'"
       | {{'preferences.alice_griffith.sfha_letter_instructions' | translate}}
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"

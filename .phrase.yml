@@ -1,23 +1,68 @@
 phrase:
-  project_id: 6c45c3e10cf91075e0b4d294f69c21e7
   push:
     sources:
+    # react
+    - file: app/assets/json/translations/react/en.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: 42b4d36671be4574dd4721c37e479732
+        file_format: react_simple_json
+        update_translations: true
+    - file: app/assets/json/translations/react/tl.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: 5cb7e93cf65a739b17b46a2830e45da2
+        file_format: react_simple_json
+    - file: app/assets/json/translations/react/es.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: d0b4139822e16557e0b6873fdf3603a1
+        file_format: react_simple_json
+    - file: app/assets/json/translations/react/zh.json
+      project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+      params:
+        locale_id: 06904cd3eca0f01b264901657c43b5c8
+        file_format: react_simple_json
+
+    # angular
     - file: app/assets/json/translations/locale-en.json
+      project_id: 6c45c3e10cf91075e0b4d294f69c21e7
       params:
         file_format: nested_json
         locale_id: 135c7c6607b58892bf35088a7893050b
         update_translations: true
   pull:
     targets:
+      # react
+      - file: app/assets/json/translations/react/tl.json
+        project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+        params:
+          locale_id: 5cb7e93cf65a739b17b46a2830e45da2
+          file_format: react_simple_json
+      - file: app/assets/json/translations/react/es.json
+        project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+        params:
+          locale_id: d0b4139822e16557e0b6873fdf3603a1
+          file_format: react_simple_json
+      - file: app/assets/json/translations/react/zh.json
+        project_id: 4beb3d4e8d2271dacf5d519fdff7349c
+        params:
+          locale_id: 06904cd3eca0f01b264901657c43b5c8
+          file_format: react_simple_json
+
+      # angular
       - file: app/assets/json/translations/locale-tl.json
+        project_id: 6c45c3e10cf91075e0b4d294f69c21e7
         params:
           file_format: nested_json
           locale_id: 6ddd85f25418456343453dafb9f9cf34
       - file: app/assets/json/translations/locale-es.json
+        project_id: 6c45c3e10cf91075e0b4d294f69c21e7
         params:
           file_format: nested_json
           locale_id: 0bf1b78c0d5627216f632e3ea763ae1c
       - file: app/assets/json/translations/locale-zh.json
+        project_id: 6c45c3e10cf91075e0b4d294f69c21e7
         params:
           file_format: nested_json
           locale_id: 6944eb9f935f10f3dd34aa5aa09747f6

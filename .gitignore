@@ -30,14 +30,25 @@ lib/assets/bower_components
 
 dump.rdb
 
-.vscode/*
 ssl.sh
 certs
 public/sitemap*
 public/robots*
+public/assets/
+public/packs
+public/packs-test
 
 # VS Code
 TAGS
+.vscode/*
+!.vscode-default/*
 
 # Byebug command history
 .byebug_history
+
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+.DS_Store

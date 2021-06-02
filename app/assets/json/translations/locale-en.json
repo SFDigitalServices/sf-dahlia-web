@@ -287,7 +287,7 @@
             "homebuyer_header": "For Homebuyers",
             "homebuyer_loan_desc": "Mortgage loan pre-approval letter from a <a href='{{lenderListUrl}}' target='_blank'>MOHCD-Approved lender</a>, dated within the last 120 days.",
             "p1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
-            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
+            "p2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your lottery application.",
             "preference_header": "For Claiming Preferences",
             "rent_burden_doc_1": "You'll need a Copy of Lease showing the address where you live.",
             "rent_burden_doc_2": "You'll also need to show last month's rent with one of the following:",
@@ -371,10 +371,8 @@
             "upload_documents_for_address": "Upload documents for {{address}}",
             "upload_for_each_address": "Upload Documents for Each Address"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Alice Griffith Address",
-            "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
-            "address_documents": "Which one of the following documents would you like to upload in order to prove eligibility?",
+        "e6_right_to_return": {
+            "address_proof_document": "Which one of the following documents would you like to upload in order to prove eligibility?",
             "instructions": "Just provide a valid address and upload proof to get a higher ranking in the lottery.",
             "title": "Your household may qualify for the following lottery preference."
         },
@@ -388,6 +386,16 @@
             "have_not_heard_of_preferences": "If you have not heard of these preferences, you most likely do not have one.",
             "need_certificate_for_preference": "You need a certificate to get this preference. If you don't know your certificate number <a href='https://sfmohcd.org/contact-us' target='_blank'>contact MOHCD</a>.",
             "title": "There are lottery preferences for people who already have special certificates."
+        },
+        "e7b_custom_preferences": {
+            "employment_disability": {
+                "cannot_work_disability": "Cannot work due to disability",
+                "description": "You can get this preference if someone in your household is: <ul><li>an employee of a public higher education institution in San Francisco</li><li>an employee of a public health institution in San Francisco</li><li>an adult who currently has a disability that has kept them from working for at least a year</li></ul>",
+                "individual_preference_question": "Preference as an employee",
+                "work_in_education": "SF public higher education institution",
+                "work_in_healthcare": "SF public healthcare institution"
+            },
+            "title": "This listing has other special lottery preferences"
         },
         "e8_general_lottery_notice": {
             "title": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -535,11 +543,6 @@
             "please_write_down_your_number": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",
             "title": "Thanks. We have received your application for",
             "view_and_print_a_copy": "View submitted application and print a copy"
-        },
-        "header": {
-            "learn_more": "Learn more.",
-            "translate_bar_expert_notice": "This page has been translated by a native speaker.",
-            "translate_bar_google_notice": "This page has been translated with Google Translate."
         },
         "hello": "Hello %{name}",
         "housing_counselor": {
@@ -728,7 +731,10 @@
                 "paystub_home": "Paystub (listing home address)",
                 "public_benefits": "Public benefits record",
                 "school_record": "School record",
+                "sf_city_id": "SF City ID",
+                "sfha_lease": "SFHA Lease",
                 "sfha_letter": "Letter from SFHA verifying address",
+                "sfha_residency_letter": "Letter from SFHA verifying residency",
                 "telephone_bill": "Telephone bill (land line only)",
                 "water_bill": "Water bill"
             },
@@ -822,14 +828,12 @@
             },
             "all_units": "All Units",
             "all_units_reserved_for": "All units reserved for {{type}}",
-            "ami_tiers": {
-                "low_income": "Low Income",
-                "middle_income": "Middle Income",
-                "moderate_income": "Moderate Income"
-            },
             "applications_closed": "Applications Closed {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Applications must be received by the deadline and postmarks will not be considered.",
+                "covid_update": "COVID-19 update:",
+                "covid_update_info": "Paper applications are not currently being accepted due to COVID-19. All applications must be submitted online via the link above",
+                "covid_update_lotteries": "Lotteries are not currently being held in-person due to COVID-19. They are still happening on the specified date. Please check back for lottery results.",
                 "do_not_apply_online_and_paper": "Do not apply online and also send in a paper application.",
                 "do_not_do_multiple_applications": "All applications containing any person who appears on more than one application will be removed from the lottery.",
                 "drop_off_application": "Drop Off Application",
@@ -981,19 +985,25 @@
             "special_notes": "Special Notes",
             "stats": {
                 "availability": "Availability",
-                "available": "available",
+                "available_rental": "available",
+                "available_sales": "available",
+                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
                 "hoa_dues": "HOA dues",
                 "household_size": "Household size",
                 "income_range": "Income Range",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
-                "percent_ami": "{{amiPercent}}% AMI",
+                "num_in_household_plural": "people in household",
+                "num_in_household_singular": "person in household",
+                "parking_no": "No",
+                "parking_yes": "Yes",
+                "percent_ami_range": "{{minAmiPercent}}% to {{maxAmiPercent}}% AMI",
                 "pricing": "Pricing",
                 "rent": "Rent",
                 "sales_price": "Sales price",
-                "waitlist": "Waitlist",
-                "currency_range": "{{currencyMinValue}} to {{currencyMaxValue}}",
-                "hoa_dues_label": "HOA dues {{hoaPriceValue}} per month"
+                "table_label": "Pricing table for {{numInHouseholdString}}, {{amiPercentString}}",
+                "up_to_percent_ami": "Up to {{amiPercent}}% AMI",
+                "waitlist": "Waitlist"
             },
             "units_are_for": "These units are for {{type}}.",
             "units_have_accessibility_features_for": "These units have accessibility features for people with {{type}}.",
@@ -1043,10 +1053,16 @@
                 "title": "Find more listings on our website:"
             },
             "get_help": {
+                "dalp_program_info": "The 2021 Downpayment Assistance Loan Program (DALP) will begin accepting applications on February 26, 2021.",
+                "help_with_downpayment": "Help with downpayments",
+                "learn_more_and_how_to_apply": "Learn more about DALP and how to apply on SF.gov",
+                "mohcd_programs": "The Mayor's Office of Housing and Community Development (MOHCD) offers a number of programs to help homebuyers in San Francisco.",
+                "more_resources": "More resources",
                 "other_groups_may_qualify": "Others, like San Francisco teachers and first responders, may qualify for loans.",
                 "some_people_may_qualify": "Some people may qualify for downpayment assistance.",
                 "title": "Get help",
-                "view_full_list_of_programs": "View the full list of programs"
+                "view_full_list_of_programs": "View the full list of programs",
+                "visit_mohcd_programs": "Visit the MOHCD Affordable Homebuyer Programs page to learn more."
             },
             "lottery_preferences": {
                 "has_preferences": "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.",
@@ -1133,10 +1149,20 @@
         },
         "preferences": {
             "alice_griffith": {
+                "address": "Alice Griffith Address",
+                "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
                 "desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
                 "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
                 "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
                 "title": "Alice Griffith Housing Development Resident Preference"
+            },
+            "rtr_sunnydale": {
+                "address": "Sunnydale Address",
+                "address_desc": "Your current or former address at the Sunnydale public housing development",
+                "desc": "For households in which at least one person is a former or current resident of Sunnydale public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
+                "proof_desc": "You'll need one of the following documents showing your address at Sunnydale Housing Development.",
+                "title": "Right to Return - Sunnydale Preference",
+                "title_with_hope_sf": "Hope SF Right to Return - Sunnydale"
             }
         },
         "privacy_policy": {
@@ -1249,13 +1275,11 @@
             "never_submitted": "Never Submitted",
             "next": "Next",
             "no": "No",
-            "no_parking": "no parking",
             "none": "None",
             "occupancy": "Occupancy",
             "ok": "OK",
             "optional": "Optional",
             "or": "or",
-            "or_more": "or more",
             "per_month": "per month",
             "per_year": "per year",
             "save_and_come_back_later": "Save and come back later",
@@ -1269,10 +1293,8 @@
             "stay": "Stay",
             "submit": "Submit",
             "submitted": "Submitted",
-            "to": "to",
             "unit_type": "Unit Type",
             "units": "units",
-            "with_parking": "with parking",
             "yes": "Yes",
             "you": "You"
         },

@@ -19,6 +19,8 @@ do ->
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
+    fakeWindow = {}
+    fakeWindow['env'] = {covidUpdate: 'false'}
     eligibilityFilterDefaults =
       'household_size': ''
       'income_timeframe': ''
@@ -70,6 +72,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
+        $window: fakeWindow
         ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
         ListingIdentityService: fakeListingIdentityService
@@ -226,7 +229,7 @@ do ->
           ctrl.listingApplicationClosed(fakeListing)
           expect(fakeListingIdentityService.isOpen).toHaveBeenCalled()
 
-      describe '$ctrl.lotteryDateVenueAvailable', ->
+      describe '$ctrl.lotteryDateAvailable', ->
         beforeEach ->
           listing = fakeListing
           listing.Lottery_Date = new Date()
@@ -235,22 +238,22 @@ do ->
 
         describe 'listing lottery date, venue and lottery address all have values', ->
           it 'returns true', ->
-            expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual true
+            expect(ctrl.lotteryDateAvailable(listing)).toEqual true
 
         describe 'listing lottery date missing', ->
           it 'returns false', ->
             listing.Lottery_Date = undefined
-            expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual false
+            expect(ctrl.lotteryDateAvailable(listing)).toEqual false
 
         describe 'listing venue missing', ->
           it 'returns false', ->
             listing.Lottery_Venue = undefined
-            expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual false
+            expect(ctrl.lotteryDateAvailable(listing)).toEqual true
 
         describe 'listing lottery address missing', ->
           it 'returns false', ->
             listing.Lottery_Street_Address = undefined
-            expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual false
+            expect(ctrl.lotteryDateAvailable(listing)).toEqual true
 
       describe '$ctrl.formattedBuildingAddress', ->
         it 'expects ListingDataService.formattedAddress to be called', ->

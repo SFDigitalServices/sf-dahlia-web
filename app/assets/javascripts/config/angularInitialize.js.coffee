@@ -8,6 +8,7 @@
   SharedService, ExternalTranslateService, ModalService) ->
     timeoutRetries = 2
     ngMeta.init()
+    isFirstLoad = true
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -48,6 +49,19 @@
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
       bsLoadingOverlayService.start()
+
+      if (SharedService.shouldRouteViaRails(toState.name, isFirstLoad))
+        isFirstLoad = false
+
+        # stop the state transition event from propagating
+        if (toState.name != 'dahlia.redirect-home')
+          e.preventDefault()
+
+        $window.location.href = SharedService.buildUrl(toState, toParams)
+
+        return
+
+      isFirstLoad = false
 
       # close any open modals
       ModalService.closeModal()
@@ -230,6 +244,5 @@
         if toState.name == 'dahlia.listing' && error.status == 404
           return $state.go('dahlia.listings-for-rent')
         else
-          return $state.go('dahlia.welcome')
-
+          return $state.go('dahlia.redirect-home')
 ]

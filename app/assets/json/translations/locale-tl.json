@@ -27,6 +27,7 @@
         "a4_overview": {
             "p1": "Una, magtatanong kami tungkol sa inyo at sa mga taong pinaplano ninyong makasama sa pagtira sa bahay. Pagkatapos, tatanungin namin kayo tungkol sa inyong kita. Panghuli, titingnan namin kung kuwalipikado kayo para sa anumang preperensiya sa lottery o palabunutan sa abot-kayang pabahay (affordable housing).",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>Tingnan ang aming checklist</a> o listahang gabay para sa impormasyon tungkol sa kinakailangang mga dokumento at paggamit n gmga preperensiya.",
+            "p2b-ownership": "Tiyaking napapanahon ang iyong mga dokumento. Ang iyong liham ng paunang pahintulot sa loan ay may petsa dapat na mula sa nakalipas na 120 araw, at ang iyong form sa pag-verify ng Homebuyer Education ay may petsa dapat na mula sa nakalipas na taon.",
             "p3": "Puwede rin ninyong simulan ngayon ang inyong aplikasyon at i-save ito, at mag-upload ng mga dokumento sa ibang panahon.",
             "p4": "Kailangang alam ninyo na puwede lamang makasali ang bawat miyembro ng inyong kabahayan sa  iisang aplikasyon para sa bawat nakalistang pabahay. Kung may mga miyembro ng inyong kabahayan na nasa inyong aplikasyon at naroon din sa iba pang aplikasyon para sa nakalistang pabahay, hindi na magiging kuwalipikado ang lahat sa kanila. ",
             "title": "Heto ang maaasahan ninyo para sa aplikasyong ito.",
@@ -285,7 +286,7 @@
             "homebuyer_header": "Para sa Bumibili ng Bahay (Homebuyers)",
             "homebuyer_loan_desc": "Liham ng paunang pag-apruba (pre-approval letter) ng utang sa bahay, na mula sa <a href='{{lenderListUrl}}' target='_blank'>nagpapautang na Aprubado ng MOHCD</a>",
             "p1": "Opsiyonal ang paggamit ng preperensiya sa inyong aplikasyon para sa pabahay. Sa pamamagitan ng mga preperensiya, magiging kuwalipikado kayo para sa mas mataas na ranggo sa lottery. ",
-            "p2": "Kailangang maipakita ng lahat ng dokumento ang tamang pangalan at kasalukuyang address. Bukod sa lease o kasunduan sa pag-upa, kailangang nagpapakita ang lahat ng dokumento ng petsa na nasa loob ng 45 araw bago ang petsa ng inyong aplikasyon. ",
+            "p2": "Dapat ay ipinapakita sa lahat ng dokumento ang wastong pangalan at kasalukuyang address. Ang lahat ng dokumento bukod sa lease ay may petsa dapat na mula sa 45 araw pagkatapos ng iyong aplikasyon sa loterya.",
             "preference_header": "Para sa mga Preperensiya sa Paghahabol (Claim)",
             "rent_burden_doc_1": "Kailangan ninyo ng Kopya ng Lease o Kasunduan sa Pag-upa na nagpapakita ng address kung saan kayo nakatira. ",
             "rent_burden_doc_2": "Kakailanganin din ninyong ipakita ang pag-upa ninyo nitong nakaraang buwan kasama ang isa sa mga sumusunod: ",
@@ -369,12 +370,10 @@
             "upload_documents_for_address": "Mag-upload ng mga dokumento para sa {{address}}",
             "upload_for_each_address": "Mag-upload ng mga Dokumento para sa Bawat Address"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Address sa Alice Griffith",
-            "address_desc": "Ang inyong address sa Alice Griffith Housing Development sa petsang Oktubre 26, 2010 o matapos ang petsang ito",
-            "address_documents": "Alin sa mga sumusunod na dokumento ang gusto ninyong i-upload para patunayan na kuwalipikado kayo?\n",
-            "instructions": "Magbigay lang ng tinatanggap na address at mag-upload ng patunay para makakuha ng mas mataas na ranggo sa lottery. ",
-            "title": "Posibleng kuwalipikado ang inyong kabahayan para sa sumusunod na preperensiya para sa lottery o palabunutan. "
+        "e6_right_to_return": {
+            "address_proof_document": "Alin sa mga sumusunod na dokumento ang gusto ninyong i-upload para patunayan na kuwalipikado kayo?",
+            "instructions": "Magbigay lang ng tinatanggap na address at mag-upload ng patunay para makakuha ng mas mataas na ranggo sa lottery.",
+            "title": "Posibleng kuwalipikado ang inyong kabahayan para sa sumusunod na preperensiya para sa lottery o palabunutan."
         },
         "e7_preferences_programs": {
             "cert_of_preference": "Sertipiko na Nagbibigay ng Preperensiya (Certificate of Preference, COP)",
@@ -386,6 +385,16 @@
             "have_not_heard_of_preferences": "Kung hindi pa ninyo naririnig ang tungkol sa mga pagbibigay ng preperensiyang ito, malamang na wala kayong magagamit na pagbibigay ng preperensiya sa inyo.",
             "need_certificate_for_preference": "Kailangan ninyo ng sertipiko para makuha ang preperensiya na ito. Kung hindi ninyo alam ang numero ng inyong sertipiko  <a href='https://sfmohcd.org/contact-us' target='_blank'>kontakin ang MOHCD</a>.",
             "title": "May mga preperensiya para sa mga tao na mayroon nang mga espesyal na sertipiko."
+        },
+        "e7b_custom_preferences": {
+            "employment_disability": {
+                "cannot_work_disability": "Hindi makapagtrabaho dahil sa kapansanan",
+                "description": "Makukuha mo ang pagtatangi na ito kung may isang tao sa iyong sambahayan na: <ul><li>isang empleyado ng pampublikong institusyon para sa mas mataas na edukasyon sa San Francisco</li><li>isang empleyado ng pampublikong institusyon para sa kalusugan sa San Francisco</li><li>isang nasa hustong gulang na kasalukuyang may kapansanan na nakahadlang sa kanyang magtrabaho sa loob ng hindi bababa sa isang taon</li></ul>",
+                "individual_preference_question": "Pagtatangi bilang isang empleyado",
+                "work_in_education": "Pampublikong institusyon para sa mas mataas na edukasyon sa SF",
+                "work_in_healthcare": "Pampublikong institusyon para sa pangangalagang pangkalusugan sa SF"
+            },
+            "title": "May iba pang espesyal na pagtatangi sa loterya ang listing na ito"
         },
         "e8_general_lottery_notice": {
             "title": "Batay sa impormasyong ipinasok ninyo, wala pang kinukuhang anumang preperensiya para sa lottery sa pabahay ang inyong kabahayan.",
@@ -533,11 +542,6 @@
             "please_write_down_your_number": "Pakisulat ang numero ninyo sa lottery at ilagay ito sa ligtas na lugar. In-email na rin namin ang numerong ito sa inyo kung nagbigay kayo ng email address.",
             "title": "Salamat. Natanggap na namin ang inyong aplikasyon para sa",
             "view_and_print_a_copy": "Tingnan ang isinumiteng aplikasyon at mag-print ng kopya"
-        },
-        "header": {
-            "learn_more": "Alamin pa ang tungkol dito. ",
-            "translate_bar_expert_notice": "Isinalin ang page na ito ng katutubong nagsasalita ng wikang ito. ",
-            "translate_bar_google_notice": "Isinalin ang pahinang ito ng Google Translate. "
         },
         "hello": "Kumusta %{name}",
         "housing_counselor": {
@@ -768,7 +772,7 @@
             "upload_lease_description": "Paki-upload ang unang pahina, o anumang pahina na nagpapakita ng halaga ng upa.",
             "upload_preapproval_letter": "I-upload ang liham ng paunang pag-apruba (pre-approval letter)",
             "upload_proof_instructions_1": "Kung gumagamit kayo ng smartphone, kumuha ng larawan.",
-            "upload_proof_instructions_2": "5MB ang pinakamalaki nang file na puwedeng ma-upload.<b>Mga sinusuportahan o puwedeng gamitin na uri ng file: PDF, JPG, PNG.",
+            "upload_proof_instructions_2": "Ang maximum na laki ng file ay 5MB.<br>Mga uri ng sinusuportahang file: PDF, JPG, PNG, HEIC.",
             "upload_proof_instructions_3": "80 character ang pinakahaba nang pwedeng pangalan sa file",
             "upload_proof_of_preference": "I-upload ang patunay para sa preperensiya",
             "upload_proof_of_rent_payment": "I-upload ang patunay ng pagbabayad ng upa.",
@@ -820,18 +824,17 @@
             },
             "all_units": "Lahat ng Unit ",
             "all_units_reserved_for": "Nakareserba ang lahat ng unit para sa {{type}}",
-            "ami_tiers": {
-                "low_income": "Mababang Kita (Low Income)",
-                "middle_income": "Kalagitnaang Kita (Middle Income)",
-                "moderate_income": "Katamtamang Kita (Moderate Income)"
-            },
             "applications_closed": "Sarado na ang mga Aplikasyon {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Kailangang matanggap ang mga aplikasyon bago ang huling araw ng pagsusumite at hindi isasaalang-alang ang mga tatak sa koreo. ",
+                "covid_update": "Update sa COVID-19:",
+                "covid_update_info": "Hindi tumatanggap ng mga aplikasyon sa papel sa kasalukuyan dahil sa COVID-19. Dapat isumite ang lahat ng aplikasyon online sa pamamagitan ng link sa itaas",
+                "covid_update_lotteries": "Hindi pisikal na isinasagawa ang mga loterya sa kasalukuyan dahil sa COVID-19. May mga ganito pa ring kaganapan sa tinukoy na petsa. Mangyaring bumalik para sa mga resulta ng loterya.",
                 "do_not_apply_online_and_paper": "Huwag mag-aplay online at pagkatapos nito, magpadala rin ng papel na aplikasyon.",
                 "do_not_do_multiple_applications": "Tatanggalin mula sa lottery ang lahat ng aplikasyong nagtataglay ng sinumang tao na nasa mahigit sa isang aplikasyon. ",
                 "drop_off_application": "I-drop off ang Aplikasyon ",
                 "drop_off_application_or_mail": "I-drop off ang Aplikasyon o Ipadala sa pamamagitan ng US Mail ",
+                "eligibility_requirement_description": "Ang iyong liham ng paunang pahintulot sa loan ay may petsa dapat na mula sa nakalipas na 120 araw, at ang iyong pag-verify ng Homebuyer Education ay may petsa dapat na mula sa nakalipas na taon.",
                 "find_a_housing_counselor": "Maghanap ng Housing Counselor (tagapayo para sa pabahay)",
                 "fulfill_eligibility_requirements": "Tiyakin na matutugunan ninyo ang<a href='{{url}}' target='_blank'>mga itinatakda para maging kuwalipikado</a> sa nakalistang pahabay na ito bago kayo magsimula.",
                 "get_a_paper_application": "Kumuha ng Papel na Aplikasyon",
@@ -978,16 +981,24 @@
             "special_notes": "Mga Espesyal na Tala",
             "stats": {
                 "availability": "Kung puwedeng makuha o hindi ",
-                "available": "puwedeng makuha",
+                "available_rental": "puwedeng makuha",
+                "available_sales": "puwedeng makuha",
+                "currency_range": "{{currencyMinValue}} hanggang {{currencyMaxValue}}",
                 "hoa_dues": "mga singil ng HOA (HOA dues) ",
                 "household_size": "Laki ng sambahayan",
                 "income_range": "Hanay ng Kita (Income Range)",
                 "maximum": "Maximum",
                 "minimum": "Minimum",
-                "percent_ami": "{{amiPercent}}% AMI (Area Median Income) / Pangitnang Kita sa Lugar Ninyo ",
+                "num_in_household_plural": "mga tao sa sambahayan",
+                "num_in_household_singular": "tao sa sambahayan",
+                "parking_no": "Hindi",
+                "parking_yes": "Oo",
+                "percent_ami_range": "{{minAmiPercent}}% hanggang {{maxAmiPercent}}% AMI",
                 "pricing": "Presyo (Pricing)",
                 "rent": "Upa",
                 "sales_price": "Presyo sa pagbebenta",
+                "table_label": "Talahanayan ng pagpepresyo para sa {{numInHouseholdString}}, {{amiPercentString}}",
+                "up_to_percent_ami": "Hanggang {{amiPercent}}% AMI",
                 "waitlist": "Waitlist (Listahan ng mga Naghihintay)"
             },
             "units_are_for": "Ang mga unit na ito ay para sa {{type}}. ",
@@ -1033,13 +1044,21 @@
                 "title": "Bago kayo mag-aplay"
             },
             "callout": {
+                "city_second_loan_button": "Pangalawang Programa sa Loan ng Lungsod",
+                "first_come_first_served_button": "Ang Unang Dumating ang Unang Pagsisilbihan",
                 "title": "Mas maraming matitingnang nakalistang pabahay sa aming website."
             },
             "get_help": {
+                "dalp_program_info": "Magsisimulang tumanggap ng mga aplikasyon sa Pebrero 26, 2021 ang Programang Loan na Tulong sa Downpayment (Downpayment Assistance Loan Program o DALP) para sa 2021.",
+                "help_with_downpayment": "Tulong sa mga downpayment",
+                "learn_more_and_how_to_apply": "Alamin pa ang tungkol sa DALP at kung paano mag-apply sa SF.gov",
+                "mohcd_programs": "Ang Opisina ng Meyor para sa Pabahay at Pag-unlad ng Komunidad (Mayor's Office of Housing and Community Development o MOHCD) ay nag-aalok ng maraming programa na makakatulong sa mga homebuyer sa San Francisco.",
+                "more_resources": "Higit pang mapagkukunan",
                 "other_groups_may_qualify": "Posibleng kuwalipikado para sa pag-utang ang ibang tao, tulad ng mga guro at first responder (tumutugon sa emergency). ",
                 "some_people_may_qualify": "Posibleng kuwalipikado ang ilang tao para sa tulong sa paunang bayad (downpayment). ",
                 "title": "Kumuha ng tulong",
-                "view_full_list_of_programs": "Tingnan ang buong listahan ng mga programa"
+                "view_full_list_of_programs": "Tingnan ang buong listahan ng mga programa",
+                "visit_mohcd_programs": "Bumisita sa page na Mga Abot-kayang Programa para sa Homebuyer ng MOHCD para matuto pa."
             },
             "lottery_preferences": {
                 "has_preferences": "Puwedeng sumali ang sinuman sa lottery o palabunutan sa pabahay para sa nakalistang pabahay na ito. Kung mayroong isa sa mga sumusunod na preperensiya ang inyong kabahayan, isasaalang-alang kayo ayon sa pagkakasuod-sunod na ipinapakita rito. Pag-aaralan ang bawat mayroong preperensiya ayon sa pagkakasunod-sunod ng ranggo sa lottery. ",
@@ -1126,6 +1145,8 @@
         },
         "preferences": {
             "alice_griffith": {
+                "address": "Address sa Alice Griffith",
+                "address_desc": "Ang inyong address sa Alice Griffith Housing Development sa petsang Oktubre 26, 2010 o matapos ang petsang ito",
                 "desc": "Para sa mga kabahayan na may kahit na isang miyembro na naging residente ng Alice Griffith housing development. Kasama rito ang baseline (pinagsisimulan) at kasalukuyang residente na tumira sa tinatarget na lugar para sa redevelopment sa panahon ng aplikasyon para sa Choice Neighborhoods noong Oktubre 26, 2010, o matapos ang petsang ito. ",
                 "proof_desc": "Kailangan ninyo ng isa sa mga sumusunod na dokumento na nagpapakita ng inyong address sa Alice Griffith Housing Development, na may petsang Oktubre 26, 2010, o matapos ang petsang ito:",
                 "sfha_letter_instructions": "Sulat mula sa San Francisco Housing Authority na nagpapatunay na nakatira ang aplikante sa address ng Alice Griffith noong Oktubre 26, 2010 o matapos ang petsang ito",
@@ -1242,13 +1263,11 @@
             "never_submitted": "Hindi Kailanman Nagsumite",
             "next": "Susunod",
             "no": "Hindi",
-            "no_parking": "walang paradahan",
             "none": "Wala",
             "occupancy": "Bilang ng Nakatira",
             "ok": "Okay",
             "optional": "Opsiyonal",
             "or": "o",
-            "or_more": "o higit pa",
             "per_month": "kada buwan",
             "per_year": "kada taon",
             "save_and_come_back_later": "I-save at bumalik sa ibang panahon",
@@ -1262,10 +1281,8 @@
             "stay": "Manatili rito",
             "submit": "Isumite",
             "submitted": "Nasumite na",
-            "to": "upang",
             "unit_type": "Uri ng Unit",
             "units": "mga unit ",
-            "with_parking": "may paradahan",
             "yes": "Oo",
             "you": "Kayo"
         },

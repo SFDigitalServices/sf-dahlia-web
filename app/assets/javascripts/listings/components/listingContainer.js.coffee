@@ -2,9 +2,9 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingIdentityService',
+  controller: ['$translate', '$window','ListingDataService', 'ListingEligibilityService', 'ListingIdentityService',
   'ListingUnitService', 'SharedService',
-  ($translate, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
+  ($translate, $window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
@@ -22,6 +22,8 @@ angular.module('dahlia.components')
     @openNotMatchListings = ListingDataService.openNotMatchListings
     @closedListings = ListingDataService.closedListings
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
+
+    @showCovidUpdate = $window.env.covidUpdate == 'true'
 
     @isRental = (listing) ->
       ListingIdentityService.isRental(listing)
@@ -79,9 +81,11 @@ angular.module('dahlia.components')
     @hasEligibilityFilters = ->
       ListingEligibilityService.hasEligibilityFilters()
 
-    @lotteryDateVenueAvailable = (listing) ->
-      (listing.Lottery_Date != undefined &&
-        listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+    @lotteryDateAvailable = (listing) ->
+      listing.Lottery_Date != undefined
+
+    @lotteryVenueAvailable = (listing) ->
+      (listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
     @agentInfoAvailable = (listing) ->
       listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street

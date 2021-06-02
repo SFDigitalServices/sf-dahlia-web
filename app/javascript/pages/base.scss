@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,900,700");
+@import url("https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic");
+
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply font-sans;
+  @apply bg-white;
+  @apply text-gray-900;
+}
+
+.-top {
+  top: -0.8rem;
+}
+
+.site-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    > section {
+      flex: 1;
+    }
+  }
+}
+
+.site-content--wide-content {
+  .navbar,
+  .page-header__group {
+    @apply max-w-screen-xl;
+  }
+}
+
+// Set up Bulma-specific variables and mixins
+$white: $tailwind-white;
+$background: #eee;
+$link: $tailwind-primary;
+$grey-dark: $link;
+$white-bis: #eee;
+$black: $tailwind-black;
+$text: $black;
+$border: 2px solid #ccc; // not sure how this gets used -JW
+$radius-large: 8px;
+$radius: 4px;
+$desktop: $tailwind-screens-md;
+$speed: 86ms;
+$easing: ease-out;
+
+$scheme-main: $white;
+$scheme-main-bis: $white-bis;
+$scheme-invert: $black;
+$colors: (
+  "white": (
+    $white,
+    $black,
+  ),
+  "black": (
+    $black,
+    $white,
+  ),
+);
+
+@import "~bulma/sass/utilities/functions.sass";
+@import "~bulma/sass/utilities/controls.sass";
+@import "~bulma/sass/utilities/extends.sass";
+@import "~bulma/sass/components/navbar.sass";
+
+@import "@bloom-housing/ui-components/src/global/mixins.scss";
+@import "@bloom-housing/ui-components/src/global/markdown.scss";
+@import "@bloom-housing/ui-components/src/global/navbar.scss";
+@import "@bloom-housing/ui-components/src/global/text.scss";
+@import "@bloom-housing/ui-components/src/global/headers.scss";
+@import "@bloom-housing/ui-components/src/global/blocks.scss";
+@import "@bloom-housing/ui-components/src/global/accordion.scss";
+@import "@bloom-housing/ui-components/src/global/custom_counter.scss";
+@import "@bloom-housing/ui-components/src/global/forms.scss";
+@import "@bloom-housing/ui-components/src/global/lists.scss";
+@import "@bloom-housing/ui-components/src/global/tables.scss";
+@import "@bloom-housing/ui-components/src/global/homepage.scss";
+@import "@bloom-housing/ui-components/src/global/print.scss";
+
+// /* ***********/
+// /* Additional stylesheets are contained within individual component folders */
+// /* ***********/
+
+// AG Grid
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+
+.ag-theme-alpine.ag-theme-bloom {
+  // would like to remove the local theme class
+  @include ag-theme-alpine(
+    (
+      // use theme parameters where possible
+      header-height: 83px,
+      row-height: 58px
+    )
+  );
+
+  .ag-row {
+    height: ag-param(row-height);
+  }
+
+  .ag-header {
+    @apply whitespace-normal;
+    text-overflow: unset;
+  }
+
+  .ag-header-cell {
+    @apply px-0;
+  }
+
+  .ag-cell-label-container {
+    @apply px-4;
+  }
+
+  .ag-header-cell-sorted-asc,
+  .ag-header-cell-sorted-desc {
+    box-shadow: inset 0px -3px 0px 0px $tailwind-primary;
+  }
+
+  .ag-header-icon .ag-icon.ag-icon-none {
+    @apply text-gray-600;
+  }
+
+  .ag-header-cell-text {
+    @apply whitespace-normal;
+    text-overflow: unset;
+  }
+
+  .ag-header-cell-text {
+    @apply uppercase;
+    @apply font-sans;
+    @apply font-semibold;
+    @apply tracking-wider;
+  }
+
+  .ag-header-cell-resize::after {
+    height: 100%;
+    top: 0;
+    @apply bg-gray-400;
+  }
+
+  .ag-right-aligned-header {
+    text-align: right;
+  }
+
+  .ag-pinned-left-header,
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+    @apply border-gray-450;
+    @apply border-r-4;
+    @apply border-t-0;
+    @apply border-l-0;
+    @apply border-b-0;
+  }
+
+  .ag-row {
+    @apply border-t-0;
+    @apply border-l-0;
+    @apply border-r-0;
+  }
+
+  .ag-cell-value {
+    @apply text-gray-750;
+    @apply font-sans;
+  }
+
+  .ag-body-viewport {
+    ::-webkit-scrollbar {
+      // -webkit-appearance: none;
+      height: 8px;
+      @apply bg-gray-600;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      @apply bg-gray-600;
+    }
+
+    ::-webkit-scrollbar-track {
+      @apply bg-gray-100;
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  .ag-root-wrapper {
+    @apply border-b-0;
+    @apply rounded-t-md;
+    @apply rounded-b-none;
+    overflow: visible;
+  }
+}
+
+.data-pager {
+  @apply p-4;
+  @apply flex;
+  @apply items-center;
+  @apply border;
+  @apply border-t-0;
+  @apply rounded-b-md;
+  @apply border-gray-500;
+  @apply bg-gray-200;
+}
+
+.data-pager__control {
+  @apply px-4;
+
+  .field-label {
+    @apply mr-2;
+  }
+
+  &.field {
+    select {
+      @apply bg-white;
+    }
+  }
+}
+
+.data-pager__control-group {
+  margin-left: auto;
+}
+
+.inline-list {
+  li {
+    display: inline;
+  }
+}
+
+@import "tailwindcss/utilities";

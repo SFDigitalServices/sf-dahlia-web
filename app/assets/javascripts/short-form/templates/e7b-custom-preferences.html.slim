@@ -1,14 +1,20 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | This listing has other special lottery preferences
-    p.form-note.margin-bottom translate="t.optional"
+    h2.app-card_question translate="e7b_custom_preferences.title"
 
   .app-inner
     .form-group
       p.form-note.margin-bottom--2x translate="label.please_select_preference"
       .checkbox-group role="group"
-        preference(application="application" title="{{preference.preferenceName}}" preference="{{preference.listingPreferenceID}}" custom-description="{{preference.description}}" margin-bottom="true" ng-repeat="preference in listing.customPreferences")
-
-
+        / default to custom-description
+        / for 588 Mission we will override it in preference-component
+        preference(
+          application="application"
+          title="{{preference.preferenceName}}"
+          preference="{{preference.listingPreferenceID}}"
+          custom-description="{{preference.description}}"
+          margin-bottom="true"
+          ng-repeat="preference in listing.customPreferences"
+          full-preference="{{preference}}"
+        )
   short-form-save-and-submit

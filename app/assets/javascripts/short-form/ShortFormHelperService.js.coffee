@@ -1,4 +1,4 @@
-ShortFormHelperService = ($translate, $filter, $sce, $state) ->
+ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceService) ->
   Service = {}
 
   # the 'flagForI18n' identity function is purely so that the Gruntfile can know where to look
@@ -276,6 +276,17 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['School record', Service.flagForI18n('label.proof.school_record')]
   ]
 
+  Service.preference_proof_options_right_to_return = [
+    ['Letter from SFHA verifying address', Service.flagForI18n('label.proof.sfha_residency_letter')]
+    ['SFHA Lease', Service.flagForI18n('label.proof.sfha_lease')]
+    ['SF City ID', Service.flagForI18n('label.proof.sf_city_id')]
+    ['Telephone bill (landline only)', Service.flagForI18n('label.proof.telephone_bill')]
+    ['Cable and internet bill', Service.flagForI18n('label.proof.cable_bill')]
+    ['Paystub (listing home address)', Service.flagForI18n('label.proof.paystub_home')]
+    ['Public benefits record', Service.flagForI18n('label.proof.public_benefits')]
+    ['School record', Service.flagForI18n('label.proof.school_record')]
+  ]
+
   Service.priority_options = [
     ['Mobility impairments', Service.flagForI18n('label.mobility_impairments')]
     ['Vision impairments', Service.flagForI18n('label.vision_impairments')]
@@ -307,6 +318,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         Service.preference_proof_options_rent_burden
       when 'aliceGriffith'
         Service.preference_proof_options_alice_griffith
+      when 'rightToReturnSunnydale'
+        Service.preference_proof_options_right_to_return
       else
         Service.preference_proof_options_default
 

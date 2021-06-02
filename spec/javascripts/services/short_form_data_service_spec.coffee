@@ -8,36 +8,40 @@
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
     fakeApplicant = undefined
-    fakeListingDataService =
-      listing:
-        preferences: getJSONFixture('listings-api-listing-preferences.json').preferences
-      getPreference: jasmine.createSpy()
-      getPreferenceById: jasmine.createSpy()
-      RESERVED_TYPES:
-        VETERAN: 'Veteran'
-        DISABLED: 'Developmental disabilities'
-        SENIOR: 'Senior'
-      preferenceMap:
-        certOfPreference: "Certificate of Preference (COP)"
-        displaced: "Displaced Tenant Housing Preference (DTHP)"
-        liveWorkInSf: "Live or Work in San Francisco Preference"
-        liveInSf: "Live or Work in San Francisco Preference"
-        workInSf: "Live or Work in San Francisco Preference"
-        neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
     fakeListingPreferenceService =
       hasPreference: ->
+      getPreferenceById: ->
     fakeListingUnitService =
       listingHasReservedUnitType: ->
+    $state = undefined
+    $translate = {}
+    $localStorage = undefined
 
+    beforeEach module('ui.router')
+    # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
+    beforeEach module('http-etag')
     beforeEach module('dahlia.services', ($provide) ->
-      $provide.value 'ListingDataService', fakeListingDataService
+      $provide.value '$translate', $translate
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       $provide.value 'ListingUnitService', fakeListingUnitService
+      $provide.value 'ListingIdentityService', jasmine.createSpy()
+      $provide.value 'SharedService', jasmine.createSpy()
+      $provide.value 'ListingLotteryService', jasmine.createSpy()
+      $provide.value 'ExternalTranslateService', jasmine.createSpy()
+      $provide.value 'ListingEligibilityService', jasmine.createSpy()
+      $provide.value 'IncomeCalculatorService', jasmine.createSpy()
       return
     )
 
-    beforeEach inject((_ShortFormDataService_) ->
+    beforeEach inject((_ShortFormDataService_, _ListingDataService_, _ListingConstantsService_, _$state_, _$httpBackend_, _$localStorage_) ->
       ShortFormDataService = _ShortFormDataService_
+      ListingDataService = _ListingDataService_
+      ListingConstantsService = _ListingConstantsService_
+      ListingDataService.listing.preferences = getJSONFixture('listings-api-listing-preferences.json').preferences
+      httpBackend = _$httpBackend_
+      $localStorage = _$localStorage_
+      $state = _$state_
+      $state.go = jasmine.createSpy()
       return
     )
 
@@ -54,6 +58,20 @@
       it 'sends stringified JSON for formMetadata', ->
         expect(formattedApp.formMetadata).toContain('"completedSections"')
 
+      it 'adds an individual pref for custom preferences if present', ->
+        fakeAppWithCustomPrefs = angular.copy(fakeApplication)
+        # Fake listing has custom listing id w/ id a0l0P00001PsqDoQAJ
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ'] = true
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_preference'] = 'Works in Public Ed'
+        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_household_member'] = 1
+        formattedApp = ShortFormDataService.formatApplication(fakeListingId, fakeAppWithCustomPrefs)
+        expectedCustomPref = {
+          recordTypeDevName: 'Custom',
+          listingPreferenceID: 'a0l0P00001PsqDoQAJ',
+          individualPreference: 'Works in Public Ed'
+        }
+        expect(formattedApp.shortFormPreferences).toContain(expectedCustomPref)
+
     describe 'reformatApplication', ->
       beforeEach ->
         reformattedApp = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
@@ -66,6 +84,27 @@
 
       it 'reformats stringified JSON formMetadata', ->
         expect(reformattedApp.completedSections.Intro).toEqual(true)
+
+      it 'reformats custom preferences to include individual preferences', ->
+        salesforceAppWithCustomPrefs = angular.copy(fakeSalesforceApplication)
+        customPref = {
+          'recordTypeDevName': 'Custom',
+          'listingPreferenceID': 'listingPrefId',
+          'individualPreference': 'Works in Public Ed',
+          'shortformPreferenceID': 'shortFormPreferenceID',
+          'appMemberID': 'a0pf00000029IWsAAM'
+          'optOut': false
+        }
+        salesforceAppWithCustomPrefs.shortFormPreferences = [customPref]
+        fakeListingPref = {
+          'preferenceName': 'Employment/Disability Preference',
+          'listingPreferenceID': 'listingPrefId',
+        }
+        spyOn(fakeListingPreferenceService, 'getPreferenceById').and.returnValue(fakeListingPref)
+        reformattedApp = ShortFormDataService.reformatApplication(salesforceAppWithCustomPrefs)
+
+        expect(reformattedApp.preferences['listingPrefId_preference']).toEqual('Works in Public Ed')
+
 
     describe 'maxDOBDay', ->
       it 'gives max of 30 for appropriate months', ->
@@ -133,3 +172,26 @@
         ]
         totalMonthlyRent = ShortFormDataService._calculateTotalMonthlyRent(fakeApplication)
         expect(totalMonthlyRent).toEqual(1750)
+
+    describe '_getPreferenceRecordType', ->
+      it 'returns AG when the preference is right to return', ->
+        recordType = ShortFormDataService._getPreferenceRecordType(
+          {'preferenceName': 'Right to Return - Sunnydale'}
+          )
+        expect(recordType).toEqual('AG')
+        recordType = ShortFormDataService._getPreferenceRecordType(
+          {'preferenceName': 'Alice Griffith Housing Development Resident'}
+        )
+        expect(recordType).toEqual('AG')
+
+      it 'defaults to custom with an unknown preference name', ->
+        recordType = ShortFormDataService._getPreferenceRecordType(
+          {'preferenceName': 'custom preference'}
+        )
+        expect(recordType).toEqual('Custom')
+
+      it 'give L_W for live/work preferences', ->
+        recordType = ShortFormDataService._getPreferenceRecordType(
+          {'preferenceName': 'Live or Work in San Francisco Preference'}
+        )
+        expect(recordType).toEqual('L_W')

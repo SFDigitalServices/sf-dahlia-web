@@ -1,4 +1,4 @@
-div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
+div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint.skiptranslate
   table.table-pricing.top-align role="grid"
     thead
       tr
@@ -21,7 +21,7 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
               i.notranslate
                 | {{::priceGroup.total}}
               small
-                | {{'listings.stats.available' | translate}}
+                | {{'listings.stats.available_sales' | translate}}
             span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
                 svg
                   use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
@@ -38,7 +38,7 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
                         i.notranslate
                           | {{::priceGroup.total}}
                         small
-                          | {{'listings.stats.available' | translate}}
+                          | {{'listings.stats.available_sales' | translate}}
                       span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::priceGroup.Reserved_Type"
                           svg
                             use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, priceGroup.Reserved_Type)}}"
@@ -92,7 +92,7 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
                        | {{'t.per_month' | translate}}
                   td.is-subtitled-nested data-th="{{ 'listings.features.parking' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
                     span
-                      | {{ 't.yes' | translate }}
+                      | {{ 'listings.stats.parking_yes' | translate }}
                 tr
                   td.is-subtitled-nested data-th="{{ 'listings.stats.sales_price' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     | {{ ::priceGroup.Price_Without_Parking | currency:"$": 0}}
@@ -103,4 +103,4 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint
                        | {{'t.per_month' | translate}}
                   td.is-subtitled-nested data-th="{{ 'listings.features.parking' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     span
-                      | {{ 't.no' | translate }}
+                      | {{ 'listings.stats.parking_no' | translate }}

@@ -358,8 +358,8 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    if ShortFormApplicationService.listingHasPreference('aliceGriffith')
-      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.alice-griffith-preference')
+    if ShortFormApplicationService.listingHasRTRPreference()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.right-to-return-preference')
     else
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
 
@@ -468,6 +468,36 @@ ShortFormApplicationController = (
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
 
+  ##### Right to return Preferences Logic ####
+  $scope.getRTRPreferenceKey= ->
+    ShortFormApplicationService.getRTRPreferenceKey($scope.listing)
+
+  $scope.addressType = ->
+    $scope.getRTRPreferenceKey() + '_address'
+
+  $scope.rtrTranslationKeys = ->
+    switch $scope.getRTRPreferenceKey()
+      when 'rightToReturnSunnydale'
+        return key =
+          desc: $translate.instant("preferences.rtr_sunnydale.desc")
+          title: $translate.instant("preferences.rtr_sunnydale.title")
+          addressTitle: $translate.instant("preferences.rtr_sunnydale.address")
+          addressDesc: $translate.instant("preferences.rtr_sunnydale.address_desc")
+      when 'aliceGriffith'
+        return key =
+          desc: $translate.instant("preferences.alice_griffith.desc")
+          title: $translate.instant("preferences.alice_griffith.title")
+          addressTitle: $translate.instant("preferences.alice_griffith.address")
+          addressDesc: $translate.instant("preferences.alice_griffith.address_desc")
+
+
+
+  $scope.rtrInputInvalid = ->
+    $scope.inputInvalid($scope.getRTRPreferenceKey())
+
+  $scope.showRtrAddressForm = ->
+    $scope.application.preferences[$scope.getRTRPreferenceKey()]
+
   $scope.checkAliceGriffithAddress = ->
     preferenceAddressVerified =
       $scope.application.aliceGriffith_address_verified &&
@@ -475,6 +505,8 @@ ShortFormApplicationController = (
     if preferenceAddressVerified || !$scope.preferences.aliceGriffith
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
     else
+      # Only validate the address if they have claimed alice griffith,
+      # and it hasn't already been validated.
       AddressValidationService.validate {
         address: ShortFormApplicationService.preferences.aliceGriffith_address
         type: 'home'

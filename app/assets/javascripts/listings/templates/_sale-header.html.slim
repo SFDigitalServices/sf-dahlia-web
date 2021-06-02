@@ -11,7 +11,16 @@ header.directory-header#listings_header
       ng-include src="'listings/templates/_before-applying-list.html'"
       p translate="listings_for_sale.before_applying.read_full_list" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
     .directory-header_secondary.medium-5.columns
-      .directory-header_sidebar
+      .directory-header_sidebar ng-if="$ctrl.advertiseDALP"
+        h2.h-caps-lined translate="listings_for_sale.get_help.help_with_downpayment"
+        p
+          ' {{ $ctrl.dalpProgramInfo() }}
+          a href="https://sf.gov/apply-downpayment-loan-buy-market-rate-home" translate="listings_for_sale.get_help.learn_more_and_how_to_apply"
+        h2.h-caps-lined translate="listings_for_sale.get_help.more_resources"
+        p
+          ' {{'listings_for_sale.get_help.mohcd_programs' | translate}}
+          a href="https://sfmohcd.org/affordable-homebuyer-programs" translate="listings_for_sale.get_help.visit_mohcd_programs"
+      .directory-header_sidebar ng-if="!$ctrl.advertiseDALP"
         h2.h-caps-lined translate="listings_for_sale.get_help.title"
         p translate="listings_for_sale.get_help.some_people_may_qualify"
         p translate="listings_for_sale.get_help.other_groups_may_qualify"

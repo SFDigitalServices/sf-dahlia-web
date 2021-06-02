@@ -114,7 +114,7 @@
               deferred.resolve(ListingDataService.listing)
               if _.isEmpty(ListingDataService.listing)
                 # kick them out unless there's a real listing
-                return $state.go('dahlia.welcome')
+                return $state.go("dahlia.redirect-home")
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 
@@ -613,7 +613,7 @@
                 deferred.resolve(ListingDataService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage
-              $state.go('dahlia.welcome') unless ListingDataService.listing
+              $state.go('dahlia.redirect-home') unless ListingDataService.listing
               deferred.reject(response)
             )
             return deferred.promise
@@ -994,11 +994,11 @@
             ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
         ]
     })
-    .state('dahlia.short-form-application.alice-griffith-preference', {
-      url: '/alice-griffith-preference'
+    .state('dahlia.short-form-application.right-to-return-preference', {
+      url: '/right-to-return-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e6a-alice-griffith-preference.html'
+          templateUrl: 'short-form/templates/e6a-right-to-return-preference.html'
     })
     .state('dahlia.short-form-application.alice-griffith-verify-address', {
       url: '/alice-griffith-verify-address'
@@ -1163,8 +1163,18 @@
           $auth.validateUser()
         ]
     })
+    .state('dahlia.redirect-home', {
+      # actual redirect occurs in onStateChangeStart in angularInitialize.js
+      url: '/redirect-home'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/blank.html'
+    })
 
-    $urlRouterProvider.otherwise('/') # default to welcome screen
+    $urlRouterProvider.otherwise(($injector, $location) ->
+      $state = $injector.get('$state')
+      $state.go("dahlia.redirect-home")
+    ) # default to welcome screen
 
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
     if !!(window.history && history.pushState)

@@ -27,6 +27,7 @@
         "a4_overview": {
             "p1": "En primer lugar, haremos preguntas sobre usted y las personas con las que planea vivir. Luego, haremos preguntas sobre sus ingresos. Finalmente, veremos si cumple con los requisitos necesarios para alguna de las preferencias de sorteo de viviendas asequibles, y, si es así, le pediremos que suba una prueba de dichas preferencias.",
             "p2": "<a ui-sref='{{sref}}' target='_blank'>Consulte nuestra lista de control</a> para obtener información sobre los documentos requeridos y las preferencias de reclamo.",
+            "p2b-ownership": "Asegúrese de que sus documentos estén actualizados. Su carta de aprobación previa al préstamo debe estar fechada en los últimos 120 días y su formulario de verificación de Educación para Compradores de Vivienda (Homebuyer Education) debe estar fechado dentro del año pasado.",
             "p3": "También puede iniciar la solicitud ahora, guardarla y cargar los documentos más tarde.",
             "p4": "Tenga en cuenta que cada miembro del hogar solo puede aparecer en una solicitud para cada listado. Si su solicitud contiene miembros del hogar que se encuentran en otras solicitudes para el mismo listado, todas las solicitudes serán descalificados.",
             "title": "En qué consiste esta solicitud.",
@@ -285,7 +286,7 @@
             "homebuyer_header": "Para Compradores de Vivienda",
             "homebuyer_loan_desc": "Carta de pre-aprobación de préstamo hipotecario de un <a href='{{lenderListUrl}}' target='_blank'>prestamista aprobado por MOHCD</a>",
             "p1": "Solicitar una preferencia en su solicitud de vivienda es opcional. Las preferencias lo posicionan en una clasificación más alta en el sorteo.",
-            "p2": "Todos los documentos deben tener el nombre correcto y el domicilio actual. Todos los documentos, excepto los contratos de alquiler, deben tener una fecha dentro de los 45 días anteriores a la fecha de su solicitud.",
+            "p2": "Todos los documentos deben mostrar el nombre y la dirección actuales correctos. Todos los documentos que no sean un contrato de arrendamiento deben mostrar una fecha dentro de los 45 días de su solicitud de sorteo.",
             "preference_header": "Cómo Solicitar Preferencias",
             "rent_burden_doc_1": "Necesitará una copia del contrato de alquiler que demuestre su domicilio actual.",
             "rent_burden_doc_2": "También deberá presentar el recibo de alquiler del último mes junto con alguna de las siguientes opciones:",
@@ -369,10 +370,8 @@
             "upload_documents_for_address": "Cargar documentos para {{address}}",
             "upload_for_each_address": "Cargar documentos para cada dirección"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Dirección en Alice Griffith",
-            "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
-            "address_documents": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
+        "e6_right_to_return": {
+            "address_proof_document": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
             "instructions": "Proporcione una dirección válida y cargue un comprobante para tener una clasificación más alta en el sorteo.",
             "title": "Su grupo familiar podría cumplir con los requisitos para la siguiente preferencia de sorteo."
         },
@@ -386,6 +385,16 @@
             "have_not_heard_of_preferences": "Si no está enterado de estas preferencias, es probable que no tenga ninguna.",
             "need_certificate_for_preference": "Necesita un certificado para obtener esta preferencia. Si no conoce su número de certificado, <a href='https://sfmohcd.org/contact-us' target='_blank'>comuniquese con la MOHCD</a>.",
             "title": "Existen preferencias de sorteo para personas que ya tienen certificados especiales."
+        },
+        "e7b_custom_preferences": {
+            "employment_disability": {
+                "cannot_work_disability": "No puede trabajar debido a discapacidad",
+                "description": "Usted puede obtener esta preferencia si alguien en su hogar es: <ul><li>Un empleado de una institución pública de educación superior en San Francisco</li><li>Un empleado de una institución de salud pública en San Francisco</li><li>Un adulto que actualmente tiene una discapacidad que le ha impedido trabajar durante al menos un año</li></ul>",
+                "individual_preference_question": "Preferencia como empleado",
+                "work_in_education": "Institución pública de educación superior de SF",
+                "work_in_healthcare": "Institución de salud pública de SF"
+            },
+            "title": "Este listado tiene otras preferencias especiales de sorteo"
         },
         "e8_general_lottery_notice": {
             "title": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda.",
@@ -533,11 +542,6 @@
             "please_write_down_your_number": "Anote su número del sorteo y manténgalo en un lugar seguro. También le enviaremos dicho número a su casilla de correo electrónico, en caso de que la haya proporcionado.",
             "title": "Gracias. Hemos recibido su solicitud para",
             "view_and_print_a_copy": "Ver la solicitud presentada e imprimir una copia"
-        },
-        "header": {
-            "learn_more": "Conozca más.",
-            "translate_bar_expert_notice": "Esta página fue traducida por un hablante nativo.",
-            "translate_bar_google_notice": "Esta página ha sido traducida por Google Translate."
         },
         "hello": "Hola, %{name}",
         "housing_counselor": {
@@ -768,7 +772,7 @@
             "upload_lease_description": "Cargue la primera página o la página que muestre el monto del alquiler.",
             "upload_preapproval_letter": "Cargue su carta de pre-aprobación",
             "upload_proof_instructions_1": "Si está utilizando un teléfono inteligente, puede tomar una fotografía.",
-            "upload_proof_instructions_2": "El tamaño máximo del archivo es 5 MB.<br>Tipos de archivo admitidos: PDF, JPG, PNG.",
+            "upload_proof_instructions_2": "El tamaño máximo del archivo es 5 MB.<br>Tipos de archivos compatibles: PDF, JPG, PNG, HEIC.",
             "upload_proof_instructions_3": "El nombre del archivo puede tener una longitud máxima de 80 caracteres",
             "upload_proof_of_preference": "Cargar comprobante de la preferencia",
             "upload_proof_of_rent_payment": "Cargar comprobante del pago del alquiler",
@@ -820,18 +824,17 @@
             },
             "all_units": "Todas las unidades",
             "all_units_reserved_for": "Todas las unidades reservadas para {{type}}",
-            "ami_tiers": {
-                "low_income": "Ingreso bajo",
-                "middle_income": "Ingreso medio",
-                "moderate_income": "Ingreso moderado"
-            },
             "applications_closed": "Las solicitudes cerraron el {{date}}",
             "apply": {
                 "applications_must_be_received_by_deadline": "Las solicitudes deben recibirse antes de la fecha límite y no se tendrá en cuenta la fecha de los sellos del correo.",
+                "covid_update": "Actualización de la COVID-19:",
+                "covid_update_info": "Las solicitudes en papel no se están aceptando actualmente debido a la COVID-19. Todas las solicitudes deben presentarse en línea a través del enlace anterior",
+                "covid_update_lotteries": "Los sorteos no se realizan actualmente en persona debido a la COVID-19. Todavía se realizan en la fecha especificada. Por favor, vuelva a consultar los resultados del sorteo.",
                 "do_not_apply_online_and_paper": "No envíe su solicitud impresa si ya completó una solicitud en línea.",
                 "do_not_do_multiple_applications": "Se eliminarán del sorteo todas las solicitudes que incluyan a cualquier persona que aparezca en más de una solicitud.",
                 "drop_off_application": "Presentar la solicitud en persona",
                 "drop_off_application_or_mail": "Presentar la solicitud en persona o enviarla por correo",
+                "eligibility_requirement_description": "Su carta de aprobación previa al préstamo debe estar fechada en los últimos 120 días y su formulario de verificación de Educación para Compradores de Vivienda (Homebuyer Education) debe estar fechado dentro del año pasado.",
                 "find_a_housing_counselor": "Encuentre un consejero de vivienda",
                 "fulfill_eligibility_requirements": "Antes de comenzar, asegúrese de que cumpla con los <a href='{{url}}' target='_blank'>requisitos de elegibilidad</a> para este anuncio de vivienda.",
                 "get_a_paper_application": "Obtenga una solicitud impresa",
@@ -978,16 +981,24 @@
             "special_notes": "Notas Especiales",
             "stats": {
                 "availability": "Disponibilidad",
-                "available": "disponible",
+                "available_rental": "disponible",
+                "available_sales": "disponible",
+                "currency_range": "{{currencyMinValue}} a {{currencyMaxValue}}",
                 "hoa_dues": "Cuotas de HOA",
                 "household_size": "Número de personas que viven con usted",
                 "income_range": "Rango de ingresos",
                 "maximum": "Máximo",
                 "minimum": "Mínimo",
-                "percent_ami": "{{amiPercent}} % de Ingreso promedio del área (AMI, siglas en inglés)",
+                "num_in_household_plural": "Personas en el hogar",
+                "num_in_household_singular": "Persona en el hogar",
+                "parking_no": "No",
+                "parking_yes": "Sí",
+                "percent_ami_range": "{{minAmiPercent}}% a {{maxAmiPercent}} % del Ingreso promedio del área (AMI)",
                 "pricing": "Precio",
                 "rent": "Alquiler",
                 "sales_price": "Precio de venta",
+                "table_label": "Tabla de precios para {{numInHouseholdString}}, {{amiPercentString}}",
+                "up_to_percent_ami": "Hasta {{amiPercent}} % del AMI",
                 "waitlist": "Lista de espera"
             },
             "units_are_for": "Estas unidades son para {{type}}.",
@@ -1033,13 +1044,21 @@
                 "title": "Antes de presentar la solicitud"
             },
             "callout": {
+                "city_second_loan_button": "Segundo Programa de Préstamos de la Ciudad de San Francisco",
+                "first_come_first_served_button": "Por orden de llegada",
                 "title": "Hay más anuncios disponibles en nuestro sitio web."
             },
             "get_help": {
+                "dalp_program_info": "El Programa de Préstamos para Apoyo en el Pago Inicial (DALP) de 2021 comenzará a aceptar solicitudes el 26 de febrero de 2021.",
+                "help_with_downpayment": "Ayuda con los pagos iniciales",
+                "learn_more_and_how_to_apply": "Obtenga más información sobre el DALP y cómo presentar la solicitud en SF.gov",
+                "mohcd_programs": "La Oficina de Vivienda y Desarrollo Comunitario de la Alcaldía (MOHCD) ofrece una serie de programas para ayudar a los compradores de vivienda en San Francisco.",
+                "more_resources": "Más recursos",
                 "other_groups_may_qualify": "Otras personas, como maestros y socorristas de San Francisco, podrían ser elegibles para recibir préstamos.",
                 "some_people_may_qualify": "Algunas personas podrían ser elegibles para recibir asistencia para el pago inicial.",
                 "title": "Obtenga ayuda",
-                "view_full_list_of_programs": "Ver la lista completa de programas."
+                "view_full_list_of_programs": "Ver la lista completa de programas.",
+                "visit_mohcd_programs": "Visite la página Programas para compradores de vivienda asequibles de la MOHCD para obtener más información."
             },
             "lottery_preferences": {
                 "has_preferences": "Cualquier persona puede participar en el sorteo de viviendas para este listado. Si las personas que viven con usted tienen una de las siguientes preferencias, se le considerará en el orden que se muestra aquí. Cada poseedor de preferencias será revisado de acuerdo al orden en que haya salido en el sorteo.",
@@ -1126,6 +1145,8 @@
         },
         "preferences": {
             "alice_griffith": {
+                "address": "Dirección en Alice Griffith",
+                "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
                 "desc": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
                 "proof_desc": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
                 "sfha_letter_instructions": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
@@ -1242,13 +1263,11 @@
             "never_submitted": "Nunca se presentó",
             "next": "Siguiente",
             "no": "No",
-            "no_parking": "sin estacionamiento",
             "none": "Ninguno",
             "occupancy": "Ocupación",
             "ok": "Aceptar",
             "optional": "Opcional",
             "or": "o",
-            "or_more": "o más",
             "per_month": "por mes",
             "per_year": "por año",
             "save_and_come_back_later": "Guardar y regresar luego",
@@ -1262,10 +1281,8 @@
             "stay": "Quédese",
             "submit": "Someter",
             "submitted": "Presentada",
-            "to": "a",
             "unit_type": "Tipo de Unidad",
             "units": "unidades",
-            "with_parking": "con estacionamiento",
             "yes": "Sí",
             "you": "Usted"
         },

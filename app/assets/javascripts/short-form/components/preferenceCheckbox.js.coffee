@@ -15,8 +15,13 @@ angular.module('dahlia.components')
   controller: ['ListingDataService', 'ListingPreferenceService', (ListingDataService, ListingPreferenceService) ->
     ctrl = @
 
-    @showDescription = false
-    listingPreference = ListingPreferenceService.getPreference(@preference, ListingDataService.listing)
+    # Try to find the listing preference. If we can't find it by our custom name (e.g. for 588 Mission),
+    # try to find it by custom preference ID.
+    listingPreference = (
+      ListingPreferenceService.getPreference(@preference, ListingDataService.listing) ||
+      ListingPreferenceService.getPreferenceById(@preference, ListingDataService.listing)
+    )
+
     if listingPreference
       @moreInfoLink = listingPreference.readMoreUrl
 

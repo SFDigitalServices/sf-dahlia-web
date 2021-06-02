@@ -9,7 +9,7 @@
       tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff()"
         td scope="row"
           | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::$ctrl.occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
-        td
-          | <span class="notranslate">{{::householdIncomeLevel.amount | divideAndRoundDown : 12 | currency : $ : 0}}</span><small>/month</small>
-        td
-          | <span class="notranslate">{{::householdIncomeLevel.amount | currency : $ : 0}}</span><small>/year</small>
+        td class="notranslate"
+          | {{::$ctrl.formatIncomePerMonth(householdIncomeLevel.amount)}}
+        td class="notranslate"
+          | {{::$ctrl.formatIncomePerYear(householdIncomeLevel.amount)}}

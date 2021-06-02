@@ -74,18 +74,14 @@
         button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'listings.see_unit_information' | translate}}
 
-    .property-hero_stat.margin-top--2x.margin-left.margin-right ng-repeat="unitGroup in $ctrl.parent.listing.groupedUnits"
-      h2.table-pricing-ami
+    .margin-top--2x ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
+      .margin-left.margin-right.show-for-small-down ng-include="'listings/components/listing/rental-unit-stats-mobile.html'"
+      .margin-left-large-down.hide-for-small-down ng-include="'listings/components/listing/rental-unit-stats.html'"
+
+    .property-hero_stat.margin-top--2x.margin-left.margin-right ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)" ng-repeat="unitGroup in $ctrl.parent.listing.groupedUnits"
+      h2.table-pricing-ami.notranslate ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
         ' {{unitGroup.type}}
         ng-pluralize count="unitGroup.length" when="{'1': ' Unit', 'other': ' Units'}"
-
-        / TODO: will fully implement this More Info popup link in a later story
-        / a.property-hero_stat-info href="#"
-        /   span.ui-icon.ui-static.ui-medium.i-primary
-        /     svg
-        /       use xlink:href="#i-info"
-        /   |  More Info
-      rental-unit-stats unit-group="::unitGroup" ng-if="::$ctrl.parent.isRental($ctrl.parent.listing)"
       sale-unit-stats unit-group="::unitGroup" ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
 
 

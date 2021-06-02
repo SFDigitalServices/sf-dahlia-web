@@ -97,19 +97,87 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       }
     )
 
-  Service._incomeTierLabelMap = (amiTier) ->
-    switch amiTier
-      when 'Low Income' then $translate.instant("listings.ami_tiers.low_income")
-      when 'Moderate Income' then $translate.instant("listings.ami_tiers.moderate_income")
-      when 'Middle Income' then $translate.instant("listings.ami_tiers.middle_income")
-      else null
-
   Service._getIncomeLevelLabel = (unitSummary) ->
-    # If AMI Tier label is present, use that, otherwise, use the AMI percent
-    Service._incomeTierLabelMap(unitSummary.Planning_AMI_Tier) ||
-      $translate.instant('listings.stats.percent_ami', {'amiPercent': unitSummary.Max_AMI_for_Qualifying_Unit})
+    # If a min AMI is present, show a range, otherwise show "up to X %"
+    if unitSummary.Min_AMI_for_Qualifying_Unit
+      label = $translate.instant(
+        'listings.stats.percent_ami_range',
+        {
+          'minAmiPercent': unitSummary.Min_AMI_for_Qualifying_Unit,
+          'maxAmiPercent': unitSummary.Max_AMI_for_Qualifying_Unit
+        }
+      )
+    else
+      label = $translate.instant(
+        'listings.stats.up_to_percent_ami',
+        {'amiPercent': unitSummary.Max_AMI_for_Qualifying_Unit}
+      )
+    label
 
-  Service.groupUnitDetails = (units) ->
+  Service.groupRentalUnits = (units) ->
+    ###
+    Group rental units by number of people in houshold, % AMI, and unit type/price
+
+    Returns an object of e.g. the form:
+    [{
+      "occupancy": "1",
+      "minIncome": "2154",
+      "maxIncome": "2154",
+      "incomeLevels": [{
+        "incomeLevel": "Up to 65% AMI",
+        "priceGroups": [{
+          "Unit_Type": "1 BR",
+          "BMR_Rent_Monthly": 1170,
+          "BMR_Rental_Minimum_Monthly_Income_Needed": 2340,
+          "Max_AMI_for_Qualifying_Unit": 30,
+          "Min_Occupancy": 1,
+          "Max_Occupancy": 3,
+          "Status": "Available",
+          "total": 1,
+          "occupancy": 1,
+          "maxIncome": "2154",
+          "minIncome": "2340"
+        }, ...]
+      }, ...]
+    }, ...]
+
+    ###
+    # Sum similar units into individual rows
+    similarUnits = Service._sumSimilarUnits(units)
+    # Assign units to different household sizes + add income ranges
+    byHHSize = {}
+    # Get income ranges for rows and distribute into object by hh size.
+    for row in similarUnits
+      incomesByOccupancy = Service._getIncomeRangesByOccupancy(row)
+      for incomeByOccupancy in incomesByOccupancy
+        withIncomes = _.merge({}, row, incomeByOccupancy)
+        occ = incomeByOccupancy['occupancy']
+        byHHSize[occ] = _.concat(byHHSize[occ] || [], withIncomes)
+
+    # Within each occupancy, group by AMI and sort
+    groupedByHHSizeAndAmi = []
+    for occupancy, rows of byHHSize
+      groupedByAmi = _.groupBy rows, 'Max_AMI_for_Qualifying_Unit'
+      incomeLevels = []
+      unitGroupMinIncomes = []
+      unitGroupMaxIncomes = []
+      for ami, priceGroups of groupedByAmi
+        incomeLevels.push({
+          'incomeLevel': Service._getIncomeLevelLabel(priceGroups[0]),
+          'priceGroups': Service._sortGroupedUnits(priceGroups)
+        })
+        unitGroupMinIncomes = unitGroupMinIncomes.concat(priceGroups.map((group) -> group.minIncome))
+        unitGroupMaxIncomes = unitGroupMaxIncomes.concat(priceGroups.map((group) -> group.maxIncome))
+
+      groupedByHHSizeAndAmi.push({
+        occupancy: occupancy,
+        minIncome: "#{Math.min.apply(null, unitGroupMinIncomes)}",
+        maxIncome: "#{Math.max.apply(null, unitGroupMaxIncomes)}",
+        incomeLevels: incomeLevels
+      })
+    groupedByHHSizeAndAmi
+
+  Service.groupSaleUnits = (units) ->
     ###
     Group units by unit type, % AMI, and price
 
@@ -187,7 +255,8 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       if data && data.units
         units = data.units
         listing.Units = units
-        listing.groupedUnits = Service.groupUnitDetails(units)
+        # We group sale + rental units differently
+        listing.groupedUnits = if ListingIdentityService.isSale(listing) then Service.groupSaleUnits(units) else Service.groupRentalUnits(units)
         listing.unitTypes = Service.groupUnitTypes(units)
         listing.priorityUnits = Service.groupSpecialUnits(listing.Units, 'Priority_Type')
         listing.reservedUnits = Service.groupSpecialUnits(listing.Units, 'Reserved_Type')
@@ -215,8 +284,8 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
 
   Service.listingHasOnlySROUnits = (listing) ->
     combined = Service.combineUnitSummaries(listing)
+    return false unless combined.length
     _.every(combined, { Unit_Type: 'SRO' })
-
 
   Service.getListingAMI = (listing) ->
     angular.copy([], Service.AMICharts)

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es5",
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "jsx": "react",
+    "noEmit": false,
+    "resolveJsonModule": true,
+    "allowJs": true
+  },
+  "include": ["app/javascript/**/*"],
+  "exclude": ["app/javascript/__tests__/**", "node_modules", "vendor", "public"],
+  "compileOnSave": false
+}
