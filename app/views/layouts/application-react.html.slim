@@ -34,5 +34,4 @@ html lang="en"
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
-      var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"
