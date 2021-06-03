@@ -21,6 +21,7 @@
   "nav.myDashboard": "My Dashboard",
   "nav.myFavorites": "My Favorites",
   "nav.rent": "Rent",
+  "nav.researchFeedback": "<a target='_blank' href='%{researchUrl}'>Sign up</a> to provide feedback on City websites",
   "nav.signIn": "Sign In",
   "nav.signOut": "Sign Out",
   "signIn.badCredentials": "Invalid login credentials. Please try again.",
@@ -36,6 +37,7 @@
   "t.skipToMainContent": "Skip to main content",
   "welcome.newListingEmailAlert": "Get emailed whenever a new listing is posted.",
   "welcome.seeRentalListings": "Rent",
+  "welcome.seeSaleListings": "Buy",
   "welcome.signUpToday": "Sign Up today",
   "welcome.title": "Apply for affordable housing"
 }

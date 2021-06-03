@@ -50,14 +50,14 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if (toState.name == 'dahlia.redirect-home' || (toState.name == 'dahlia.welcome' && !isFirstLoad))
+      if (SharedService.shouldRouteViaRails(toState.name, isFirstLoad))
         isFirstLoad = false
 
         # stop the state transition event from propagating
         if (toState.name != 'dahlia.redirect-home')
           e.preventDefault()
-        langString = if toParams.lang == 'en' then '' else toParams.lang
-        $window.location.href = '/' + langString
+
+        $window.location.href = SharedService.buildUrl(toState, toParams)
 
         return
 

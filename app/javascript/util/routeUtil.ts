@@ -50,3 +50,7 @@ export const getFavoritesPath = localizedPathGetter("/favorites")
 export const getMyAccountPath = localizedPathGetter("/my-account")
 export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
+
+// Footer
+export const getDisclaimerPath = localizedPathGetter("/disclaimer")
+export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
