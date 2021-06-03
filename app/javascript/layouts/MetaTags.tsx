@@ -13,7 +13,6 @@ export interface MetaTagsProps {
 
 const MetaTags = (props: MetaTagsProps) => {
   const { getAssetPath } = useContext(ConfigContext)
-  console.log(getAssetPath("apple-icon-57x57.png"))
   return (
     <Helmet>
       <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
