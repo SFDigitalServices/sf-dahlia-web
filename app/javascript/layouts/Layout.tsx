@@ -13,16 +13,19 @@ import {
   AlertTypes,
 } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
-import Head from "next/head"
 
 import { MainNav } from "../components/MainNav"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { LANGUAGE_CONFIGS } from "../util/languageUtil"
 import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
+import MetaTags from "./MetaTags"
 
 export interface LayoutProps {
   children: React.ReactNode
+  title?: string
+  description?: string
+  image?: string
 }
 
 const asAlertType = (alertType: string): AlertTypes => {
@@ -82,9 +85,7 @@ const Layout = (props: LayoutProps) => {
   return (
     <div className="site-wrapper">
       <div className="site-content">
-        <Head>
-          <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
-        </Head>
+        <MetaTags title={props.title} description={props.description} image={props.image} />
         {topAlert}
         <LanguageNav language={langItems} />
         <SiteHeader
