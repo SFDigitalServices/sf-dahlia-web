@@ -1,6 +1,6 @@
-import { authenticatedGet, post, put } from "../api/apiService"
-import { setHeaders } from "./token"
-import { User, UserData } from "./user"
+import { setHeaders } from "../authentication/token"
+import { User, UserData } from "../authentication/user"
+import { authenticatedGet, post, put } from "./apiService"
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
