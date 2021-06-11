@@ -23,7 +23,7 @@ SharedController = ($scope, $state, $stateParams, $window, SharedService, Extern
 
   $scope.researchUrl = $window.env.researchFormUrl
 
-  $scope.listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
+  $scope.listingEmailAlertUrl = "https://confirmsubscription.com/h/y/1AAC815753301F39"
 
   $scope.alertMessage = if $window.ALERT_MESSAGE then _.unescape($window.ALERT_MESSAGE) else ''
 
