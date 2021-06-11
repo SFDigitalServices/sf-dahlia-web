@@ -19,13 +19,19 @@ module.exports = {
     // Allows for the use of imports
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "prettier", "import", "unicorn", "unused-imports"],
+  plugins: [
+    "sfgov",
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "import",
+    "unicorn",
+    "unused-imports"
+  ],
   extends: [
-    "standard",
+    "plugin:sfgov/recommended",
     "plugin:jest/recommended",
     "plugin:jest/style",
-    // the set of rules which are recommended for all projects by the ESLint Team
-    "eslint:recommended",
     // conflict resolution between above and below rulesets.
     "plugin:@typescript-eslint/eslint-recommended",
     // Uses the recommended rules from the @typescript-eslint/eslint-plugin
@@ -118,6 +124,11 @@ module.exports = {
 
     // Ensure you"re actually asserting something when calling expect
     "jest/valid-expect": "error",
+
+    // Promises sometimes have side effects rather than resolving with a value,
+    // especially in hooks-heavy React code
+    "promise/always-return": 0,
+    "promise/catch-or-return": 0,
 
     // Ensure we don"t cause infinite state update loops with useEffect hooks.
     "react-hooks/exhaustive-deps": "error",
