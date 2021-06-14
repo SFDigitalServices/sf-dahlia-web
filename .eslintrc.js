@@ -24,7 +24,6 @@ module.exports = {
     "react",
     "@typescript-eslint",
     "prettier",
-    "import",
     "unicorn",
     "unused-imports"
   ],
