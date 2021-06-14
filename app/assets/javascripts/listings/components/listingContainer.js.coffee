@@ -7,7 +7,7 @@ angular.module('dahlia.components')
   ($translate, $window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
-    @listingEmailAlertUrl = "https://confirmsubscription.com/h/y/1AAC815753301F39"
+    @listingEmailAlertUrl = "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
     @assetPaths = SharedService.assetPaths
     @listing = ListingDataService.listing
     @listings = ListingDataService.listings
