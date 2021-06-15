@@ -48,7 +48,10 @@ describe("<HomePage />", () => {
 
     it("renders the email sign up link", () => {
       const signUpLink = getLinkByText(mainContentContainer, "Sign Up today")
-      expect(signUpLink).toHaveAttribute("href", "http://eepurl.com/dkBd2n")
+      expect(signUpLink).toHaveAttribute(
+        "href",
+        "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+      )
     })
   })
 })

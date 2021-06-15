@@ -43,7 +43,7 @@ const HomePage = (_props: HomePageProps) => {
       <div className="homepage-extra">
         <MarkdownSection fullwidth>
           <p>{t("welcome.newListingEmailAlert")}</p>
-          <Link className="button" href="http://eepurl.com/dkBd2n">
+          <Link className="button" href="https://confirmsubscription.com/h/y/C3BAFCD742D47910">
             {t("welcome.signUpToday")}
           </Link>
         </MarkdownSection>
