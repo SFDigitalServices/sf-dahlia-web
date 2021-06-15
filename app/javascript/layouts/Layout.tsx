@@ -93,6 +93,8 @@ const Layout = (props: LayoutProps) => {
           logoSrc={getAssetPath("logo-portal.png")}
           notice={process.env.SHOW_RESEARCH_BANNER && notice}
           title={t("t.dahliaSanFranciscoHousingPortal")}
+          imageOnly={true}
+          logoWidth={"medium"}
         >
           <MainNav />
         </SiteHeader>
