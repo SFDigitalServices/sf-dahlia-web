@@ -65,8 +65,14 @@ const langItems = getLanguageItems()
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
 
-  const notice = (
+  const researchBanner = (
     <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
+  )
+
+  const feedbackBanner = (
+    <Markdown>
+      {t("nav.getFeedback", { feedbackUrl: "https://airtable.com/shrw64DubWTQfRkdo" })}
+    </Markdown>
   )
 
   const topAlert = (
@@ -91,7 +97,7 @@ const Layout = (props: LayoutProps) => {
         <SiteHeader
           skip={t("t.skipToMainContent")}
           logoSrc={getAssetPath("logo-portal.png")}
-          notice={process.env.SHOW_RESEARCH_BANNER && notice}
+          notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
           title={t("t.dahliaSanFranciscoHousingPortal")}
           imageOnly={true}
           logoWidth={"medium"}
