@@ -12,6 +12,7 @@
   "nav.accountSettings": "Configuraciones de la cuenta",
   "nav.buy": "Comprar",
   "nav.getAssistance": "Obtener asistencia",
+  "nav.getFeedback": "Nos encantaría recibir <a target='_blank'  href='%{feedbackUrl}'>sus comentarios.</a>",
   "nav.myAccount": "Mi Cuenta",
   "nav.myApplications": "Mis solicitudes",
   "nav.myDashboard": "Mi Panel",
