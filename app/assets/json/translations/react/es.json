@@ -17,6 +17,7 @@
   "nav.myDashboard": "Mi Panel",
   "nav.myFavorites": "Mis Favoritos",
   "nav.rent": "Alquilar",
+  "nav.researchFeedback": "<a target='_blank' href='%{researchUrl}'>Regístrese</a> para darnos su opinión sobre los sitios web de la Ciudad.",
   "nav.signIn": "Inicie sesión",
   "nav.signOut": "Cierre sesión",
   "signIn.badCredentials": "Credenciales de inicio de sesión incorrectas. Intente nuevamente.",

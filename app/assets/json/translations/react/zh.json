@@ -17,6 +17,7 @@
   "nav.myDashboard": "我的儀表板",
   "nav.myFavorites": "我的最愛",
   "nav.rent": "租賃",
+  "nav.researchFeedback": "請<a target='_blank' href='%{researchUrl}'>註冊</a>以提供您對於市府網站的意見",
   "nav.signIn": "登入",
   "nav.signOut": "登出",
   "signIn.badCredentials": "登入憑證無效。請重試。",
