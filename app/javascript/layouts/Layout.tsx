@@ -81,6 +81,8 @@ const Layout = (props: LayoutProps) => {
         <AlertBox
           type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
           inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
+          narrow
+          boundToLayoutWidth
         >
           <Markdown>{process.env.TOP_MESSAGE}</Markdown>
         </AlertBox>
