@@ -1,4 +1,5 @@
 const cloneDeep = require("clone-deep")
+const { node } = require("prop-types")
 const bloomTheme = cloneDeep(require("@bloom-housing/ui-components/tailwind.config.js"))
 
 // Modify bloomTheme to override any Tailwind vars
@@ -7,7 +8,8 @@ const bloomTheme = cloneDeep(require("@bloom-housing/ui-components/tailwind.conf
 
 // tailwind will automatically purge unused styles when `NODE_ENV` is set to `production`
 bloomTheme.purge = [
-  __dirname + '/app/javascript/**/*.tsx'
+  "app/javascript/**/*.tsx",
+  "node_modules/@bloom-housing/ui-components/src/**/*.tsx",
 ]
 
 module.exports = bloomTheme
