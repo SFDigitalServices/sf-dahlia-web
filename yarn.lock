@@ -1268,10 +1268,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-1.0.0.tgz#1a8f318e88e10435c10f1ba8667ccf2f78f50b00"
-  integrity sha512-0KLZn0O7aSihCnK8scMo06a3XlW+HB++ncdj7UiQS8m5NM0aQzIRSQjYf9VFC0FPPqq2SOMdMazQl4V3g7nfGA==
+"@bloom-housing/backend-core@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-1.0.3.tgz#041d67184330eb572945d54062ebee9a8a476396"
+  integrity sha512-HFBU4UhUH3uLUaH/dQsKO3tjSHry3QEvuPSh1Q4UPFoCLas6Pd5o2qTY2Kb5aFlVbVi2UJQZngRRP+mwOE5X1Q==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@nestjs/cli" "^7.5.1"
@@ -1290,6 +1290,7 @@
     casbin "^5.1.6"
     class-transformer "0.3.1"
     class-validator "^0.12.2"
+    cloudinary "^1.25.2"
     dotenv "^8.2.0"
     express "^4.17.1"
     handlebars "^4.7.6"
@@ -1315,12 +1316,12 @@
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
 
-"@bloom-housing/ui-components@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-1.0.0.tgz#936dc43ec6f7662fc57b00a4bb72f6c0a6981663"
-  integrity sha512-z0dJ7nrMxD/JIY7Jc55sx4FqY+uLjIbb/NGsLaiONjUWfJnMlNAyNQ4sydcUcDojSyH2nxF2+vnjBpEWxcIR/Q==
+"@bloom-housing/ui-components@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-1.0.3.tgz#f04ce1ca217e9f25931f634cf6ad426a5f1fd598"
+  integrity sha512-0SuWnYMrjvGc7EiiwzG2nrifhT8oP6Z3VBkxGst+BtJnrCpwEOQMY54RYRj4IWX8SKd3FVkc2SGBXL/np8NVPA==
   dependencies:
-    "@bloom-housing/backend-core" "^1.0.0"
+    "@bloom-housing/backend-core" "^1.0.3"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
     "@types/markdown-to-jsx" "^6.11.2"
@@ -1342,6 +1343,7 @@
     react-focus-lock "^2.4.1"
     react-map-gl "^5.2.9"
     react-media "^1.10.0"
+    react-tabs "^3.2.2"
     react-text-mask "^5.4.3"
     react-transition-group "^4.4.1"
     tailwindcss "^1.8.12"
@@ -4479,6 +4481,26 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
+cloudinary-core@^2.10.2:
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/cloudinary-core/-/cloudinary-core-2.11.4.tgz#1d191935bcdcd412d499a91b928a94b266fee49d"
+  integrity sha512-F1BZczD6f5mB73D0c8gl/iuacVQQO+UhckNZxeeS9ZIVeIHbsfqwWiAZMQmIvEb7Wti/9MLU0xVwaWOak2THHA==
+
+cloudinary@^1.25.2:
+  version "1.26.0"
+  resolved "https://registry.yarnpkg.com/cloudinary/-/cloudinary-1.26.0.tgz#c19ac03ea2b23b4c66e15f5b2614507f497d5c87"
+  integrity sha512-IMXXthfGKr8WOK6Ja2ixjoMLwEZwYZpomp/WTgsyYvhVxNw1RlszFBevaY5pzwTMRVlUL4/LfgQpMh/GxDe8uw==
+  dependencies:
+    cloudinary-core "^2.10.2"
+    core-js "3.6.5"
+    lodash "^4.17.11"
+    q "^1.5.1"
+
+clsx@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 cluster-key-slot@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/cluster-key-slot/-/cluster-key-slot-1.1.0.tgz#30474b2a981fb12172695833052bc0d01336d10d"
@@ -4789,6 +4811,11 @@ core-js-pure@^3.0.0:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.9.1.tgz#677b322267172bd490e4464696f790cbc355bec5"
   integrity sha512-laz3Zx0avrw9a4QEIdmIblnVuJz8W51leY9iLThatCsFawWxC3sE4guASC78JbCin+DkwMpCdp1AVAuzL/GN7A==
+
+core-js@3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
 core-js@^2.4.0:
   version "2.6.12"
@@ -12565,7 +12592,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -12699,7 +12726,7 @@ q@1.4.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
   integrity sha1-VXBbzZPF82c1MMLCy8DCs63cKG4=
 
-q@^1.1.2, q@^1.4.1:
+q@^1.1.2, q@^1.4.1, q@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
@@ -12937,6 +12964,14 @@ react-side-effect@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
   integrity sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==
+
+react-tabs@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.2.2.tgz#07bdc3cdb17bdffedd02627f32a93cd4b3d6e4d0"
+  integrity sha512-/o52eGKxFHRa+ssuTEgSM8qORnV4+k7ibW+aNQzKe+5gifeVz8nLxCrsI9xdRhfb0wCLdgIambIpb1qCxaMN+A==
+  dependencies:
+    clsx "^1.1.0"
+    prop-types "^15.5.0"
 
 react-test-renderer@^16.0.0-0:
   version "16.14.0"

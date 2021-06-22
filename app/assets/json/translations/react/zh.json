@@ -12,6 +12,7 @@
   "nav.accountSettings": "帳戶設定",
   "nav.buy": "購買",
   "nav.getAssistance": "尋求協助",
+  "nav.getFeedback": "我們希望能聽取<a target='_blank' href='%{feedbackUrl}'>您的意見。</a>",
   "nav.myAccount": "我的帳戶",
   "nav.myApplications": "我的申請",
   "nav.myDashboard": "我的儀表板",
