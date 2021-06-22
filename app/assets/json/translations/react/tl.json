@@ -12,6 +12,7 @@
   "nav.accountSettings": "Mga Setting ng Account ",
   "nav.buy": "Bumili",
   "nav.getAssistance": "Kumuha ng Tulong ",
+  "nav.getFeedback": "Ikatutuwa naming makuha <a target='_blank' href='%{feedbackUrl}'>ang inyong opinyon.</a>",
   "nav.myAccount": "Ang Aking Account ",
   "nav.myApplications": "Ang Aking mga Aplikasyon ",
   "nav.myDashboard": "Ang Aking Dashboard ",

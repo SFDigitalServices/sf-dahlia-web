@@ -6,8 +6,8 @@ const bloomTheme = cloneDeep(require("@bloom-housing/ui-components/tailwind.conf
 // bloomTheme.theme.colors.white = "#f0f0e9"
 
 // tailwind will automatically purge unused styles when `NODE_ENV` is set to `production`
-bloomTheme.purge = [
-  __dirname + '/app/javascript/**/*.tsx'
-]
+// bloomTheme.purge = [
+//   __dirname + '/app/javascript/**/*.tsx'
+// ]
 
 module.exports = bloomTheme
