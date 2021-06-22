@@ -24,11 +24,13 @@ window.matchMedia = jest.fn().mockImplementation((query) => ({
 
 void loadTranslations(LanguagePrefix.English)
 
-// fail on console errors. This allows us to catch missing
-// translations warnings in our code. Snippet from
-// https://stackoverflow.com/a/50584643
-const error = console.error
-console.error = function (message: Error | string, ...args: unknown[]) {
-  error.apply(console, args) // keep default behaviour
-  throw message instanceof Error ? message : new Error(message)
-}
+// FIXME: Re-enable when this issue is deployed
+// https://github.com/bloom-housing/bloom/issues/1378
+// // fail on console warnings. This allows us to catch missing
+// // translations warnings in our code. Snippet from
+// // https://stackoverflow.com/a/50584643
+// const error = console.error
+// console.error = function (message: Error | string, ...args: unknown[]) {
+//   error.apply(console, args) // keep default behaviour
+//   throw message instanceof Error ? message : new Error(message)
+// }
