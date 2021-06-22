@@ -1,5 +1,4 @@
 const cloneDeep = require("clone-deep")
-const { node } = require("prop-types")
 const bloomTheme = cloneDeep(require("@bloom-housing/ui-components/tailwind.config.js"))
 
 // Modify bloomTheme to override any Tailwind vars
