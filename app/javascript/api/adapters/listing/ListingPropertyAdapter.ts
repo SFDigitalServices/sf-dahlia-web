@@ -5,9 +5,14 @@ import { Adapter } from "../adapter"
 import ListingAddressAdapter from "./ListingAddressAdapter"
 import UnitSummariesAdapter from "./UnitSummariesAdapter"
 
-const getMinAndMaxHouseholdSize = (_listing: RailsRentalListing): [number, number] | undefined =>
-  // todo: implement
-  [1, 5]
+const getMinAndMaxHouseholdSize = (listing: RailsRentalListing): [number, number] | undefined => {
+  const minOccupancy = listing.unitSummaries.general.map((unit) => unit.minOccupancy).sort()[0]
+  const maxOccupancy = listing.unitSummaries.general
+    .map((unit) => unit.maxOccupancy)
+    .sort()
+    .pop()
+  return [minOccupancy, maxOccupancy]
+}
 
 const ListingPropertyAdapter: Adapter<RailsRentalListing, Property> = (
   listing: RailsRentalListing

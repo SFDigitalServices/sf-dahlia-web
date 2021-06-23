@@ -28,7 +28,15 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
   createdAt: null, // todo: update this field
   updatedAt: null, // todo: update this field
   applicationMethods: [],
-  assets: [],
+  assets: [
+    {
+      id: "",
+      createdAt: null,
+      updatedAt: null,
+      label: "building",
+      fileId: item.imageURL,
+    },
+  ],
   events: [],
   applicationDueDate: toDate(item.Application_Due_Date),
   applicationOpenDate: null, // todo: update this field

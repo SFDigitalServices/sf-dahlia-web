@@ -11,9 +11,9 @@ const ListingAddressAdapter: Adapter<RailsRentalListing, Address> = (item: Rails
   city: item.Building_City,
   county: "San Francisco",
   state: item.Building_State,
-  street: null,
+  street: item.Building_Street_Address,
   street2: null,
-  zipCode: null,
+  zipCode: item.Building_Zip_Code,
   latitude: null,
   longitude: null,
 })

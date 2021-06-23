@@ -17,6 +17,8 @@ type BaseRailsListing = {
   Building_Name: string
   Building_City?: string
   Building_State?: string
+  Building_Street_Address?: string
+  Building_Zip_Code?: string
   Publish_Lottery_Results: boolean
   Lottery_Status: string
   RecordTypeId: string
