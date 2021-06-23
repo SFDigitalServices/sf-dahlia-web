@@ -12,12 +12,15 @@ const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
 
 function useIdleTimeout(timeoutMs: number, onTimeout: () => void) {
+  console.log("Start timeout of:", timeoutMs)
   useEffect(() => {
     let timer: number
     const restartTimer = () => {
       if (timer) {
         clearTimeout(timer)
       }
+      const d = new Date()
+      console.log("Reset timeout:", d.getMinutes(), ":", d.getSeconds())
       timer = (setTimeout(onTimeout, timeoutMs) as unknown) as number
     }
 
@@ -79,6 +82,8 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
     // Give the user 1 minute to respond to the prompt before the onTimeout action
     setPromptTimeout(
       (setTimeout(() => {
+        const d = new Date()
+        console.log("Sign out:", d.getMinutes(), ":", d.getSeconds())
         void timeoutAction()
       }, PROMPT_TIMEOUT) as unknown) as number
     )
@@ -95,6 +100,11 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
       {promptAction}
     </Button>,
   ]
+
+  if (promptTimeout) {
+    const d = new Date()
+    console.log("Show modal:", d.getMinutes(), ":", d.getSeconds())
+  }
 
   return (
     <Modal
