@@ -1,5 +1,6 @@
 import {
   Listing,
+  ListingEventType,
   ListingStatus,
   CSVFormattingType,
   CountyCode,
@@ -12,7 +13,8 @@ import ListingPropertyAdapter from "./ListingPropertyAdapter"
 const toDate = (s: string): Date => new Date(s) // todo: handle different formats, actually implement this properly
 
 const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalListing) => ({
-  status: ListingStatus.active,
+  status:
+    toDate(item.Application_Due_Date) > new Date() ? ListingStatus.active : ListingStatus.closed,
   urlSlug: "", // todo: populate this field
   displayWaitlistSize: false,
   CSVFormattingType: CSVFormattingType.basic,
@@ -37,7 +39,13 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
       fileId: item.imageURL,
     },
   ],
-  events: [],
+  events: [
+    item.Lottery_Results_Date && {
+      type: ListingEventType.publicLottery,
+      startTime: toDate(item.Lottery_Results_Date),
+      endTime: null,
+    },
+  ],
   applicationDueDate: toDate(item.Application_Due_Date),
   applicationOpenDate: null, // todo: update this field
   applicationFee: null,

@@ -46,11 +46,12 @@ const UnitSummariesAdapter: Adapter<RailsRentalListing, UnitsSummarized> = (
   return {
     unitTypes: allSummaries.map((summary) => summary.unitType),
     reservedTypes: reservedSummaries.map((summary) => summary.unitType),
-    priorityTypes: [], // todo: populate this field
+    priorityTypes: listing.prioritiesDescriptor.map((priority) => priority.name),
     amiPercentages: [], // todo: populate this field
     byUnitType: allSummaries,
     byNonReservedUnitType: generalSummaries,
     byReservedType: [], // todo: populate this field
+    byUnitTypeAndRent: [],
     byAMI: [], // todo: populate this field
     hmi: null, // todo: populate this field
   }
