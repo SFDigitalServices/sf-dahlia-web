@@ -13,7 +13,7 @@ const events = ["mousemove", "keypress", "scroll"]
 
 function useIdleTimeout(timeoutMs: number, onTimeout: () => void) {
   useEffect(() => {
-    let timer: number
+    let timer: number = (setTimeout(onTimeout, timeoutMs) as unknown) as number
     const restartTimer = () => {
       if (timer) {
         clearTimeout(timer)
