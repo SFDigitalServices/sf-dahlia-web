@@ -23,6 +23,7 @@ const UnitSummaryAdapter: Adapter<RailsRentalUnitSummary, UnitSummary> = (
   s: RailsRentalUnitSummary
 ) => ({
   unitType: s.unitType,
+  // TODO: name minIncomeRange is incorrect, discuss with Bloom renaming it.
   minIncomeRange: getMinMaxCurrency(s.absoluteMinIncome, s.absoluteMaxIncome),
   occupancyRange: getMinMax(s.minOccupancy, s.maxOccupancy),
   rentAsPercentIncomeRange: getMinMax(s.minPercentIncome, s.maxPercentIncome),
@@ -46,7 +47,8 @@ const UnitSummariesAdapter: Adapter<RailsRentalListing, UnitsSummarized> = (
   return {
     unitTypes: allSummaries.map((summary) => summary.unitType),
     reservedTypes: reservedSummaries.map((summary) => summary.unitType),
-    priorityTypes: listing.prioritiesDescriptor.map((priority) => priority.name),
+    priorityTypes:
+      listing.prioritiesDescriptor && listing.prioritiesDescriptor.map((priority) => priority.name),
     amiPercentages: [], // todo: populate this field
     byUnitType: allSummaries,
     byNonReservedUnitType: generalSummaries,

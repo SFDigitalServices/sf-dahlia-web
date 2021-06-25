@@ -40,6 +40,8 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
     },
   ],
   events: [
+    // TODO: Solve how to clearly communicate about lotteries. This is a temporary solution to be able to display lottery results data on
+    // the listing directory page, but the lottery results date is not the same as the lottery start date.
     item.Lottery_Results_Date && {
       type: ListingEventType.publicLottery,
       startTime: toDate(item.Lottery_Results_Date),
