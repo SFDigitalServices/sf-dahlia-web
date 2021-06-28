@@ -29,7 +29,7 @@ module.exports = {
   ],
   extends: [
     "plugin:sfgov/recommended",
-    "plugin:jest/recommended",
+    "plugin:sfgov/jest",
     "plugin:jest/style",
     // conflict resolution between above and below rulesets.
     "plugin:@typescript-eslint/eslint-recommended",
