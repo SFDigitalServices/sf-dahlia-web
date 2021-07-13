@@ -46,7 +46,8 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
       type: ListingEventType.lotteryResults,
       startTime: toDate(item.Lottery_Results_Date),
       // TODO: To temporary differenciate upcoming from complete I'm addind endTime to completed listings
-      endTime: item.Lottery_Status === "Lottery Complete",
+      endTime:
+        item.Lottery_Status === "Lottery Complete" ? toDate(item.Lottery_Results_Date) : null,
     },
   ],
   applicationDueDate: toDate(item.Application_Due_Date),
