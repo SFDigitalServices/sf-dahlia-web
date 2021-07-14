@@ -52,7 +52,6 @@ const DirectoryPage = (_props: DirectoryProps) => {
   const [listings, setListings] = useState<ListingsGroup>({ open: [], upcoming: [], results: [] })
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
-    // todo: remove this. it's just for display purposes
     void getRentalListings().then((listings) => {
       const currentDate = new Date()
       const open = []
