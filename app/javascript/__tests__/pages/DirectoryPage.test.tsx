@@ -7,6 +7,6 @@ describe("<DirectoryPage />", () => {
   it("renders successfully", async () => {
     const { getByText } = await renderAndLoadAsync(<DirectoryPage assetPaths={{}} isRental />)
 
-    expect(getByText("Is Rental: true")).not.toBeNull()
+    expect(getByText("DAHLIA: San Francisco Housing Portal is a project of the")).not.toBeNull()
   })
 })
