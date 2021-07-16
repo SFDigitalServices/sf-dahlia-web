@@ -10,7 +10,13 @@ dotenvFiles.forEach((dotenvFile) => {
 environment.plugins.prepend(
   "Environment",
   new webpack.DefinePlugin({
-    "process.env": {},
+    "process.env": {
+      TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
+      TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
+      TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
+      SHOW_RESEARCH_BANNER: process.env.SHOW_RESEARCH_BANNER,
+      RESEARCH_FORM_URL: JSON.stringify(process.env.RESEARCH_FORM_URL),
+    },
   })
 )
 

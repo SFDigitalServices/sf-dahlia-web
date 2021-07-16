@@ -52,7 +52,7 @@ Before you install DAHLIA, your system should have the following:
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
 1. `./bin/webpack-dev-server` to start the webpack dev server
-    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+   - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
 1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
 
 ## How to migrate a page from AngularJS to React
@@ -163,6 +163,14 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 
+### React env variables
+
+- TOP_MESSAGE string, turn top message on
+- TOP_MESSAGE_TYPE defaults to `alert`, other options: [`primary`, `success`]
+- TOP_MESSAGE_INVERTED default to `false`, when set to `true` sets AlertBox prop to inverted
+
+- SHOW_RESEARCH_BANNER controls visibility of the research banner
+
 ### Other
 
 - SHOW_RESEARCH_BANNER - If set to 'true', it displays research banner.
@@ -197,9 +205,10 @@ Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a gro
 ### VS Code Setup
 
 1. Copy `.vscode-default` to `.vscode` like `cp -r .vscode-default .vscode`
-  a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
+   a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
 2. Install recommended extensions (under [.vscode-default/extensions](.vscode-default/extensions)).
 3. Double check your user settings aren't overriding the [workspace editor settings](.vscode-default/settings)
+
 ### Credits
 
 ### License

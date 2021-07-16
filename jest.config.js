@@ -33,7 +33,5 @@ module.exports = {
   moduleNameMapper: {
     "\\.(scss|css|less)$": "identity-obj-proxy",
   },
-  "transformIgnorePatterns": [
-    "node_modules/?!(@bloom-housing/ui-components)"
-  ]
+  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"]
 }

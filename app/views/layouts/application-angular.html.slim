@@ -30,7 +30,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}" ng-if="isShortFormPage()"
 
     / prerender.io + metatags
-    meta name="fragment" content="!"
     meta property="og:title" content="{{$title || 'DAHLIA San Francisco Housing Portal'}}"
     meta property="og:image" content="{{ngMeta['og:image']}}"
     meta property="og:description" content="{{ngMeta.description}}"
@@ -102,7 +101,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
-      var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"
+      var TOP_MESSAGE = "#{ENV['TOP_MESSAGE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"
       // Add react feature flags below this line
       var HOME_PAGE_REACT = "#{ENV['HOME_PAGE_REACT']}"

@@ -408,45 +408,6 @@
           $translate('page_title.favorites')
         ]
     })
-    .state('dahlia.welcome-chinese', {
-      url: '/welcome-chinese'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-chinese.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_chinese')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
-    .state('dahlia.welcome-spanish', {
-      url: '/welcome-spanish'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-spanish.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_spanish')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
-    .state('dahlia.welcome-filipino', {
-      url: '/welcome-filipino'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-filipino.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_filipino')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
     .state('dahlia.disclaimer', {
       url: '/disclaimer'
       views:
