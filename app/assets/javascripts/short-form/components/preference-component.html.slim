@@ -66,8 +66,10 @@
       )
 
     / certificate number entry
-    div ng-if="$ctrl.hasCertificate"
+    div ng-if="$ctrl.hasCertificate || $ctrl.isTida()"
       preference-certificate-input(
         application="$ctrl.application"
         preference="{{$ctrl.preference}}"
+        label-key="$ctrl.certificateLabelKey"
+        caption-key="$ctrl.certificateCaptionKey"
     )

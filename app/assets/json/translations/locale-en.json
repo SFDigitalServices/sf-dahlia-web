@@ -395,6 +395,10 @@
                 "work_in_education": "SF public higher education institution",
                 "work_in_healthcare": "SF public healthcare institution"
             },
+            "tida": {
+                "certificate_label": "What is your TIR certificate number?",
+                "certificate_caption": "You need a TIR Certificate number to get this preference. If you don’t know your TIR Certificate number contact your TI Advisor at TIAdvisor@arws.com or 415-650-6078."
+            },
             "title": "This listing has other special lottery preferences"
         },
         "e8_general_lottery_notice": {
