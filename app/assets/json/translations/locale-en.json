@@ -397,7 +397,7 @@
             },
             "tida": {
                 "certificate_label": "What is your TIR certificate number?",
-                "certificate_caption": "You need a TIR Certificate number to get this preference. If you don’t know your TIR Certificate number contact your TI Advisor at TIAdvisor@arws.com or 415-650-6078."
+                "certificate_caption": "You need a TIR Certificate number to get this preference. If you don’t know your TIR Certificate number contact your TI Advisor at <a href='mailto:TIAdvisor@arws.com'>TIAdvisor@arws.com</a> or <a href='tel:415-650-6078'>415-650-6078</a>."
             },
             "title": "This listing has other special lottery preferences"
         },
