@@ -117,12 +117,17 @@ angular.module('dahlia.components')
         # info for each selected custom pref to the list of selected prefs.
         _.each ctrl.listing.customPreferences, (pref) ->
           if ctrl.claimedCustomPreference(pref)
+            key = pref.listingPreferenceID
+            if ctrl.application.preferences["#{key}_certificateNumber"]
+              boldSubLabel = ctrl.certificateNumberForPreference(key)
+            else
+              boldSubLabel = ctrl.fileAttachmentForPreference(key)
             selectedPrefInfo = {
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
               subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
-              boldSubLabel: null,
+              boldSubLabel: boldSubLabel,
               rentBurdenSubLabels: null
             }
             selectedApplicationPrefs.push(selectedPrefInfo)
