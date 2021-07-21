@@ -1142,7 +1142,10 @@
             "rental_listings": "租賃名單",
             "sale_listings": "銷售名單",
             "share_listing": "分享 {{listing}}",
-            "sign_in": "登入"
+            "sign_in": "登入",
+            "welcome_chinese": "中文",
+            "welcome_filipino": "Filipino",
+            "welcome_spanish": "Español"
         },
         "preferences": {
             "alice_griffith": {

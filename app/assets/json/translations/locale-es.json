@@ -1141,7 +1141,10 @@
             "rental_listings": "Anuncios de viviendas en alquiler",
             "sale_listings": "Anuncios de venta",
             "share_listing": "Comparta {{listing}}",
-            "sign_in": "Inicie sesión"
+            "sign_in": "Inicie sesión",
+            "welcome_chinese": "中文",
+            "welcome_filipino": "Filipino",
+            "welcome_spanish": "Español"
         },
         "preferences": {
             "alice_griffith": {
