@@ -69,6 +69,7 @@ angular.module('dahlia.components')
       if @isTida()
         @certificateLabelKey = @flagForI18n('e7b_custom_preferences.tida.certificate_label')
         @certificateCaptionKey = @flagForI18n('e7b_custom_preferences.tida.certificate_caption')
+
       @individualPrefFieldId = =>
         @preference.concat('_preference')
 
