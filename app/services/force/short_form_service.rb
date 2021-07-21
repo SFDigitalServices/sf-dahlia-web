@@ -16,6 +16,8 @@ module Force
 
     def self.create_or_update(params, contact_attrs)
       params[:primaryApplicant].merge!(contact_attrs)
+      puts 'REQUEST TO SALESFORCE'
+      puts JSON.pretty_generate(params)
       Request.new(retries: 0, timeout: 20).post('/shortForm', params)
     end
 
