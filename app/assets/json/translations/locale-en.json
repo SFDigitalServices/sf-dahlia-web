@@ -1142,10 +1142,7 @@
             "rental_listings": "Rental Listings",
             "sale_listings": "Sale Listings",
             "share_listing": "Share {{listing}}",
-            "sign_in": "Sign In",
-            "welcome_chinese": "中文",
-            "welcome_filipino": "Filipino",
-            "welcome_spanish": "Español"
+            "sign_in": "Sign In"
         },
         "preferences": {
             "alice_griffith": {
