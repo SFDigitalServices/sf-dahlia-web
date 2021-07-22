@@ -23,7 +23,10 @@ do ->
     beforeEach inject((_$componentController_, _$filter_) ->
       $componentController = _$componentController_
       $translate = {
-        instant: jasmine.createSpy('$translate.instant').and.callFake((val) -> 'translated:' + val)
+        instant: jasmine.createSpy('$translate.instant').and.callFake((key, params) ->
+          result = "translated:#{key}"
+          if params then result + ", #{JSON.stringify(params)}" else result
+        )
       }
       $filter =  _$filter_
       locals = {
@@ -75,14 +78,14 @@ do ->
           ctrl.application.status = 'submitted'
           expectedLabels = [{
             subLabel: 'translated:label.for_your_household',
-            boldSubLabel: 'translated:label.file_attached'
+            boldSubLabel: 'translated:label.file_attached, {"file":"Lease and rent proof"}'
           }]
           expect(ctrl.fileAttachmentsForRentBurden()).toEqual expectedLabels
       describe 'when application is not submitted', ->
         it 'returns appropriate labels if one address is provided with multiple rent docs', ->
           expectedLabels = [{
-            subLabel: 'translated:label.for_user',
-            boldSubLabel: 'translated:label.file_attached'
+            subLabel: 'translated:label.for_user, {"user":"123 Address St."}',
+            boldSubLabel: 'translated:label.file_attached, {"file":"Copy of Lease, rentProof1 and rentProof2"}'
           }]
           expect(ctrl.fileAttachmentsForRentBurden()).toEqual expectedLabels
 
@@ -105,3 +108,35 @@ do ->
             ['label.for_user', { user: '456 Address St.' }],
             ['label.file_attached', { file: 'Copy of Lease and rentProof2' }]
           ])
+    describe 'formatAndSortPrefs', ->
+      beforeEach ->
+        fakeShortFormApplicationService.preferences = {
+          'sample_pref_id': true
+        }
+        ctrl.application =
+          householdMembers: []
+          applicant:
+            id: 1,
+            firstName: 'Jane',
+            lastName: 'Doe',
+        ctrl.application.preferences =
+          sample_pref_id: true
+          sample_pref_id_household_member: 1
+          sample_pref_id_shortformPreferenceID: "a0w3K000000fmPIQAY"
+          documents: {}
+        ctrl.listing =
+          customPreferences: [{
+            preferenceName: "Custom Pref with Certificate",
+            order: 4,
+            listingPreferenceID: "sample_pref_id",
+          }]
+
+      it 'includes certificate number for custom prefs with cert numbers', ->
+        ctrl.application.preferences['sample_pref_id_certificateNumber'] = "tida_cert"
+        result = ctrl.formatAndSortPrefs()
+        expect(result[0].boldSubLabel).toEqual('translated:label.certificate_number: tida_cert')
+        expect(result[0].subLabel).toEqual('translated:label.for_user, {"user":"Jane Doe"}')
+
+      it 'does not include cert number for custom prefs w/o cert number', ->
+        result = ctrl.formatAndSortPrefs()
+        expect(result[0].boldSubLabel).toEqual('')

@@ -395,6 +395,10 @@
                 "work_in_education": "SF public higher education institution",
                 "work_in_healthcare": "SF public healthcare institution"
             },
+            "tida": {
+                "certificate_caption": "You need a TIR Certificate number to get this preference. If you don’t know your TIR Certificate number contact your TI Advisor at <a href='mailto:TIAdvisor@arws.com'>TIAdvisor@arws.com</a> or <a href='tel:415-650-6078'>415-650-6078</a>.",
+                "certificate_label": "What is your TIR certificate number?"
+            },
             "title": "This listing has other special lottery preferences"
         },
         "e8_general_lottery_notice": {
@@ -1142,10 +1146,7 @@
             "rental_listings": "Rental Listings",
             "sale_listings": "Sale Listings",
             "share_listing": "Share {{listing}}",
-            "sign_in": "Sign In",
-            "welcome_chinese": "中文",
-            "welcome_filipino": "Filipino",
-            "welcome_spanish": "Español"
+            "sign_in": "Sign In"
         },
         "preferences": {
             "alice_griffith": {
