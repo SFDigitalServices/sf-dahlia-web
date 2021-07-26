@@ -7,8 +7,8 @@
     "@babel/plugin-transform-react-jsx": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
+    "@bloom-housing/ui-components": "1.0.3",
     "@rails/webpacker": "5.2.1",
-    "@bloom-housing/ui-components": "1.0.0",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
     "ag-grid-community": "^24.1.0",
@@ -24,18 +24,20 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-helmet": "^6.1.0",
     "react-hook-form": "^6.15.1",
     "react-inlinesvg": "^2.2.2",
     "sass-loader": "^10.1.1",
     "tailwindcss": "^1.8.12",
     "ts-loader": "^8.0.16",
-    "typescript": "^4.1.5",
+    "typescript": "^4.3.2",
     "webpacker-react": "^0.3.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
+    "@types/react-helmet": "^6.1.1",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "chai": "4.0.2",
@@ -59,6 +61,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.21.4",
     "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-sfgov": "^1.0.0",
     "eslint-plugin-unicorn": "^30.0.0",
     "eslint-plugin-unused-imports": "^1.1.1",
     "grunt": "^1.0.4",
@@ -78,6 +81,7 @@
     "protractor-cucumber-framework": "3.1.2",
     "ts-jest": "^26.5.2",
     "url-join": "^4.0.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-server": "^3.11.2"
   },
   "engines": {
@@ -91,7 +95,10 @@
     "test": "jest",
     "test:e2e": "cypress run",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
-    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress"
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",
+    "webpack:analyze": "yarn webpack:build_json && yarn webpack:analyze_json",
+    "webpack:build_json": "RAILS_ENV=${RAILS_ENV:-production} NODE_ENV=${NODE_ENV:-production} bin/webpack --profile --json > tmp/webpack-stats.json",
+    "webpack:analyze_json": "webpack-bundle-analyzer tmp/webpack-stats.json public/packs"
   },
   "cacheDirectories": [
     "node_modules",

@@ -1138,10 +1138,7 @@
             "rental_listings": "Mga Nakalistang Pabahay na Pinauupahan ",
             "sale_listings": "Mga Nakalistang Pabahay na Ipinagbibili",
             "share_listing": "I-share ang {{listing}}",
-            "sign_in": "Mag-sign In ",
-            "welcome_chinese": "中文",
-            "welcome_filipino": "Filipino",
-            "welcome_spanish": "Espanyol "
+            "sign_in": "Mag-sign In "
         },
         "preferences": {
             "alice_griffith": {

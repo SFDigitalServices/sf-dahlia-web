@@ -1,8 +1,6 @@
 doctype html
 html lang="en"
   head
-    title DAHLIA San Francisco Housing Portal
-
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1"
@@ -26,13 +24,12 @@ html lang="en"
       noscript
         iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
     #google_translate_element
-
-    #root
+    / Bloom Overlay component uses #__next to insert css overlay. It's required for modals
+    #__next
       == yield
 
     / TODO: move all JS globals below into a React constant
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
-      var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"
