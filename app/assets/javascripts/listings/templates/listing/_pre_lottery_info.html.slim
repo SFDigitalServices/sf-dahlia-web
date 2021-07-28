@@ -10,5 +10,5 @@
     | {{ $ctrl.parent.listing.Lottery_Venue }}
     br
     | {{ $ctrl.parent.listing.Lottery_Street_Address }}
-  p.c-steel.t-small
+  p.c-steel.t-small ng-if="!$ctrl.parent.showCovidUpdate"
     | {{'label.pre_lottery_info' | translate}}
