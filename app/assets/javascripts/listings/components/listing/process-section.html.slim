@@ -15,7 +15,7 @@ accordion-heading
       span
         | {{'t.application_deadline' | translate}} {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
-  .content-group ng-if="::$ctrl.parent.listing.Information_Sessions && ::$ctrl.parent.listing.Information_Sessions.length > 0"
+  .content-group ng-if="::$ctrl.parent.listing.Information_Sessions && $ctrl.parent.listing.Information_Sessions.length > 0"
     h4.content-group_title translate="listings.process.information_sessions"
     ul.content-list
       li.margin-bottom ng-repeat="session in $ctrl.sortedInformationSessions()"
