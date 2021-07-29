@@ -33,3 +33,10 @@ body .goog-te-banner-frame {
   color: inherit;
   font-weight: 700;
 }
+
+.name-logo {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
