@@ -30,6 +30,8 @@
   "idleTimeout.sessionExpired": "您使用本頁面的時限已過。",
   "idleTimeout.sessionInactivity": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將會失去已輸入此物業申請表但尚未儲存的所有資訊。",
   "idleTimeout.sessionInactivityLoggedIn": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將會失去尚未儲存的所有資訊且被強行登出。",
+  "pageTitle.rentalListings": "租賃名單",
+  "pageTitle.signIn": "登入",
   "nav.accountSettings": "帳戶設定",
   "nav.buy": "購買",
   "nav.getAssistance": "尋求協助",

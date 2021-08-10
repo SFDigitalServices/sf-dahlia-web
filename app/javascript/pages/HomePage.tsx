@@ -1,9 +1,7 @@
 import React, { useContext } from "react"
 
 import { MarkdownSection, t, SiteAlert, Hero } from "@bloom-housing/ui-components"
-import Head from "next/head"
 
-import MetaTags from "../components/MetaTags"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
@@ -19,15 +17,11 @@ const HomePage = (_props: HomePageProps) => {
   const { getAssetPath } = useContext(ConfigContext)
 
   return (
-    <Layout>
-      <Head>
-        <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
-      </Head>
-      <MetaTags
-        title={t("t.dahliaSanFranciscoHousingPortal")}
-        image={getAssetPath("bg@1200.jpg")}
-        description={t("welcome.title")}
-      />
+    <Layout
+      title={t("t.dahliaSanFranciscoHousingPortal")}
+      image={getAssetPath("bg@1200.jpg")}
+      description={t("welcome.title")}
+    >
       <div className="flex absolute w-full flex-col items-center">
         <SiteAlert type="alert" className={alertClasses} />
         <SiteAlert type="success" className={alertClasses} timeout={30_000} />

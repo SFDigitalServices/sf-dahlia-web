@@ -13,6 +13,7 @@ export interface MetaTagsProps {
 
 const MetaTags = (props: MetaTagsProps) => {
   const { getAssetPath } = useContext(ConfigContext)
+  // Description is separeted into two check as Helmet can't handle nested elements
   return (
     <Helmet>
       <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
@@ -21,12 +22,8 @@ const MetaTags = (props: MetaTagsProps) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg" name="google-site-verification" />
       <meta property="og:title" content={props.title || t("t.dahliaSanFranciscoHousingPortal")} />
-      {props.description && (
-        <>
-          <meta property="og:description" content={props.description} />
-          <meta name="description" content={props.description} />
-        </>
-      )}
+      {props.description && <meta property="og:description" content={props.description} />}
+      {props.description && <meta name="description" content={props.description} />}
       <meta
         property="og:image"
         content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
