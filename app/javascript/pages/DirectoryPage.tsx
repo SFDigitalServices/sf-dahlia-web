@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 
 import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
 import { ListingsGroup, ListingsList, LoadingOverlay, t } from "@bloom-housing/ui-components"
-import Head from "next/head"
 
 import { getRentalListings } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
@@ -82,10 +81,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
 
   return (
     <LoadingOverlay isLoading={loading}>
-      <Layout>
-        <Head>
-          <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
-        </Head>
+      <Layout title={t("pageTitle.rentalListings")}>
         <div>
           {!loading && (
             <>

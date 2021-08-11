@@ -30,6 +30,8 @@
   "idleTimeout.sessionExpired": "Su sesión ha caducado.",
   "idleTimeout.sessionInactivity": "Para proteger su identidad, su sesión finalizará tras un minuto de inactividad. Perderá toda la información no guardada que haya ingresado en la solicitud para este anuncio de vivienda si decide no responder.",
   "idleTimeout.sessionInactivityLoggedIn": "Para proteger su identidad, su sesión finalizará tras un minuto de inactividad. Perderá toda la información que no haya guardado y se cerrará la sesión si decide no responder.",
+  "pageTitle.rentalListings": "Anuncios de viviendas en alquiler",
+  "pageTitle.signIn": "Inicie sesión",
   "nav.accountSettings": "Configuraciones de la cuenta",
   "nav.buy": "Comprar",
   "nav.getAssistance": "Obtener asistencia",
