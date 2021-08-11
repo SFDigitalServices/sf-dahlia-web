@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react"
 
 import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
-import { ListingsGroup, ListingsList, LoadingOverlay, t } from "@bloom-housing/ui-components"
+import {
+  ActionBlock,
+  Icon,
+  ListingsGroup,
+  ListingsList,
+  LoadingOverlay,
+  t,
+} from "@bloom-housing/ui-components"
 
 import { getRentalListings } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
+import Link from "../navigation/Link"
 
 interface DirectoryProps {
   isRental: boolean
@@ -91,6 +99,20 @@ const DirectoryPage = (_props: DirectoryProps) => {
             </>
           )}
         </div>
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          background="primary-lighter"
+          icon={<Icon size="3xl" symbol="mail" />}
+          actions={[
+            <Link
+              className="button"
+              key="action-1"
+              href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+            >
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
       </Layout>
     </LoadingOverlay>
   )

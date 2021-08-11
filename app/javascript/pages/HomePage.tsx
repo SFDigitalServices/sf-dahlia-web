@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { MarkdownSection, t, SiteAlert, Hero } from "@bloom-housing/ui-components"
+import { t, SiteAlert, Hero, ActionBlock, Icon } from "@bloom-housing/ui-components"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -35,12 +35,20 @@ const HomePage = (_props: HomePageProps) => {
         secondaryButtonTitle={t("welcome.seeSaleListings")}
       />
       <div className="homepage-extra">
-        <MarkdownSection fullwidth>
-          <p>{t("welcome.newListingEmailAlert")}</p>
-          <Link className="button" href="https://confirmsubscription.com/h/y/C3BAFCD742D47910">
-            {t("welcome.signUpToday")}
-          </Link>
-        </MarkdownSection>
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          background="primary-lighter"
+          icon={<Icon size="3xl" symbol="mail" />}
+          actions={[
+            <Link
+              className="button"
+              key="action-1"
+              href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+            >
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
       </div>
     </Layout>
   )
