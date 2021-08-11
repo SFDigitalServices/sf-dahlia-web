@@ -13,7 +13,7 @@ export interface MetaTagsProps {
 
 const MetaTags = (props: MetaTagsProps) => {
   const { getAssetPath } = useContext(ConfigContext)
-  // Description is separeted into two check as Helmet can't handle nested elements
+  // Description is separated into two check as Helmet can't handle nested elements
   return (
     <Helmet>
       <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
