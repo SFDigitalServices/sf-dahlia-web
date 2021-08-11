@@ -1,5 +1,5 @@
 {
-  "config.routePrefix": "en",
+  "config.routePrefix": "",
   "footer.cityCountyOfSf": "City & County of San Francisco",
   "footer.contact": "Contact",
   "footer.dahliaDescription": "DAHLIA: San Francisco Housing Portal is a project of the <br /><a className='text-white' href='%{mohcdUrl}' target='_blank'>Mayor's Office of Housing and Community Development</a>",
