@@ -6,8 +6,7 @@
         | {{'lottery.lottery_results' | translate}}
       h2#modalTitle.t-caps.t-small.t-alt-sans.t-bold.skiptranslate
         | {{listing.Name}}
-      p.t-small.c-steel.t-semi.padding-horizontal--3halves
-        | {{listing.Lottery_Summary | stripMostTags | nl2br}}
+      p.t-small.c-steel.t-semi.padding-horizontal--3halves ng-bind-html="::listing.Lottery_Summary | stripMostTags | nl2br"
 
     .modal-inner.bg-dust
       / NOTE: using ng-if instead of ng-show here breaks the form submit action
