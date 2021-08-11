@@ -104,11 +104,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
           background="primary-lighter"
           icon={<Icon size="3xl" symbol="mail" />}
           actions={[
-            <Link
-              className="button"
-              key="action-1"
-              href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-            >
+            <Link className="button" key="action-1" href={process.env.LISTINGS_ALERT_URL}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}
