@@ -172,7 +172,6 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - TOP_MESSAGE_INVERTED default to `false`, when set to `true` sets AlertBox prop to inverted
 
 - SHOW_RESEARCH_BANNER controls visibility of the research banner
-- LISTING_ALERTS_URL New listing alert subscription url
 
 ### Other
 

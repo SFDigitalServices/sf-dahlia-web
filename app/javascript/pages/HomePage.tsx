@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t, SiteAlert, Hero, ActionBlock, Icon } from "@bloom-housing/ui-components"
+import { t, SiteAlert, Hero, ActionBlock } from "@bloom-housing/ui-components"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -14,7 +14,7 @@ interface HomePageProps {
 
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  const { getAssetPath } = useContext(ConfigContext)
+  const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
 
   return (
     <Layout
@@ -38,9 +38,8 @@ const HomePage = (_props: HomePageProps) => {
         <ActionBlock
           header={t("welcome.newListingEmailAlert")}
           background="primary-lighter"
-          icon={<Icon size="3xl" symbol="mail" />}
           actions={[
-            <Link className="button" key="action-1" href={process.env.LISTINGS_ALERT_URL}>
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}

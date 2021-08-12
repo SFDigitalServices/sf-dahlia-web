@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
 import {
@@ -13,6 +13,7 @@ import {
 import { getRentalListings } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
+import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 
 interface DirectoryProps {
@@ -56,6 +57,7 @@ const lotteryResultsView = (listings) =>
   )
 
 const DirectoryPage = (_props: DirectoryProps) => {
+  const { listingsAlertUrl } = useContext(ConfigContext)
   const [listings, setListings] = useState<ListingsGroup>({ open: [], upcoming: [], results: [] })
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
@@ -104,7 +106,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
           background="primary-lighter"
           icon={<Icon size="3xl" symbol="mail" />}
           actions={[
-            <Link className="button" key="action-1" href={process.env.LISTINGS_ALERT_URL}>
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}
