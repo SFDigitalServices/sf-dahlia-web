@@ -1,9 +1,7 @@
 import React, { useContext } from "react"
 
-import { MarkdownSection, t, SiteAlert, Hero } from "@bloom-housing/ui-components"
-import Head from "next/head"
+import { t, SiteAlert, Hero, ActionBlock } from "@bloom-housing/ui-components"
 
-import MetaTags from "../components/MetaTags"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
@@ -16,18 +14,14 @@ interface HomePageProps {
 
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  const { getAssetPath } = useContext(ConfigContext)
+  const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
 
   return (
-    <Layout>
-      <Head>
-        <title>{t("t.dahliaSanFranciscoHousingPortal")}</title>
-      </Head>
-      <MetaTags
-        title={t("t.dahliaSanFranciscoHousingPortal")}
-        image={getAssetPath("bg@1200.jpg")}
-        description={t("welcome.title")}
-      />
+    <Layout
+      title={t("t.dahliaSanFranciscoHousingPortal")}
+      image={getAssetPath("bg@1200.jpg")}
+      description={t("welcome.title")}
+    >
       <div className="flex absolute w-full flex-col items-center">
         <SiteAlert type="alert" className={alertClasses} />
         <SiteAlert type="success" className={alertClasses} timeout={30_000} />
@@ -40,13 +34,15 @@ const HomePage = (_props: HomePageProps) => {
         secondaryButtonLink={getSaleDirectoryPath()}
         secondaryButtonTitle={t("welcome.seeSaleListings")}
       />
-      <div className="homepage-extra">
-        <MarkdownSection fullwidth>
-          <p>{t("welcome.newListingEmailAlert")}</p>
-          <Link className="button" href="https://confirmsubscription.com/h/y/C3BAFCD742D47910">
-            {t("welcome.signUpToday")}
-          </Link>
-        </MarkdownSection>
+      <div className="homepage-extra mt-2">
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          actions={[
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
       </div>
     </Layout>
   )
