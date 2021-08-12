@@ -3,11 +3,13 @@ import { createContext, createElement, FunctionComponent } from "react"
 type ConfigContextProps = {
   assetPaths: unknown
   getAssetPath: (key: string) => string
+  listingsAlertUrl: string
 }
 
 export const ConfigContext = createContext<ConfigContextProps>({
   assetPaths: {},
   getAssetPath: () => undefined,
+  listingsAlertUrl: "",
 })
 
 export const ConfigProvider: FunctionComponent<{
@@ -23,6 +25,7 @@ export const ConfigProvider: FunctionComponent<{
       value: {
         assetPaths,
         getAssetPath,
+        listingsAlertUrl: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
       },
     },
     children

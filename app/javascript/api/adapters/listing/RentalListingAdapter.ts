@@ -4,11 +4,14 @@ import {
   ListingStatus,
   CSVFormattingType,
   CountyCode,
+  EnumListingReviewOrderType,
 } from "@bloom-housing/backend-core/types"
 
 import RailsRentalListing from "../../types/rails/listings/RailsRentalListing"
 import { Adapter } from "../adapter"
+import ListingAddressAdapter from "./ListingAddressAdapter"
 import ListingPropertyAdapter from "./ListingPropertyAdapter"
+import UnitSummariesAdapter from "./UnitSummariesAdapter"
 
 const toDate = (s: string): Date => new Date(s) // todo: handle different formats, actually implement this properly
 
@@ -48,6 +51,9 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
       // TODO: To temporarily differentiate upcoming from complete I'm adding endTime to completed listings
       endTime:
         item.Lottery_Status === "Lottery Complete" ? toDate(item.Lottery_Results_Date) : null,
+      id: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
   ],
   applicationDueDate: toDate(item.Application_Due_Date),
@@ -78,6 +84,12 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
   waitlistMaxSize: 0, // todo: populate this field
   whatToExpect: null, // todo: populate this field
   applicationConfig: null, // todo: populate this field
+  reviewOrderType: EnumListingReviewOrderType.lottery,
+  applicationDropOffAddress: null,
+  applicationMailingAddress: null,
+  unitsSummarized: UnitSummariesAdapter(item),
+  units: [], // todo: populate this field
+  buildingAddress: ListingAddressAdapter(item),
 })
 
 export default ListingAdapter

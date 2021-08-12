@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { MarkdownSection, t, SiteAlert, Hero } from "@bloom-housing/ui-components"
+import { t, SiteAlert, Hero, ActionBlock } from "@bloom-housing/ui-components"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -14,7 +14,7 @@ interface HomePageProps {
 
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  const { getAssetPath } = useContext(ConfigContext)
+  const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
 
   return (
     <Layout
@@ -34,13 +34,15 @@ const HomePage = (_props: HomePageProps) => {
         secondaryButtonLink={getSaleDirectoryPath()}
         secondaryButtonTitle={t("welcome.seeSaleListings")}
       />
-      <div className="homepage-extra">
-        <MarkdownSection fullwidth>
-          <p>{t("welcome.newListingEmailAlert")}</p>
-          <Link className="button" href="https://confirmsubscription.com/h/y/C3BAFCD742D47910">
-            {t("welcome.signUpToday")}
-          </Link>
-        </MarkdownSection>
+      <div className="homepage-extra mt-2">
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          actions={[
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
       </div>
     </Layout>
   )
