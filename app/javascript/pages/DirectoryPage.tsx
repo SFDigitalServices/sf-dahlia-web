@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
 import {
   ActionBlock,
+  ActionBlockLayout,
   Icon,
   ListingsGroup,
   ListingsList,
@@ -15,6 +16,7 @@ import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
+import { getAdditionalResourcesPath } from "../util/routeUtil"
 
 interface DirectoryProps {
   isRental: boolean
@@ -96,6 +98,20 @@ const DirectoryPage = (_props: DirectoryProps) => {
           {!loading && (
             <>
               {openListingsView(listings.open)}
+              <div className="bg-primary-darker">
+                <div className="max-w-5xl mx-auto p-2 md:p-4">
+                  <ActionBlock
+                    header={t("listingsForRent.callout.title")}
+                    background="primary-darker"
+                    layout={ActionBlockLayout.inline}
+                    actions={[
+                      <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+                        {t("listingsForRent.callout.button")}
+                      </Link>,
+                    ]}
+                  />
+                </div>
+              </div>
               {upcomingLotteriesView(listings.upcoming)}
               {lotteryResultsView(listings.results)}
             </>
