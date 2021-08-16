@@ -17,7 +17,6 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bower": "1.8.8",
     "dotenv": "2.0.0",
-    "next": "^10.0.6",
     "postcss": "^8.2.6",
     "postcss-loader": "^4.2.0",
     "postcss-nested": "^5.0.3",
