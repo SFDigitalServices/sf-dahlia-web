@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
-import { ListingsGroup, ListingsList, LoadingOverlay, t } from "@bloom-housing/ui-components"
+import {
+  ActionBlock,
+  ActionBlockLayout,
+  Icon,
+  ListingsGroup,
+  ListingsList,
+  LoadingOverlay,
+  t,
+} from "@bloom-housing/ui-components"
 
 import { getRentalListings } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
+import { ConfigContext } from "../lib/ConfigContext"
+import Link from "../navigation/Link"
+import { getAdditionalResourcesPath } from "../util/routeUtil"
 
 interface DirectoryProps {
   isRental: boolean
@@ -48,6 +59,7 @@ const lotteryResultsView = (listings) =>
   )
 
 const DirectoryPage = (_props: DirectoryProps) => {
+  const { listingsAlertUrl } = useContext(ConfigContext)
   const [listings, setListings] = useState<ListingsGroup>({ open: [], upcoming: [], results: [] })
   const [loading, setLoading] = useState<boolean>(true)
   useEffect(() => {
@@ -86,11 +98,35 @@ const DirectoryPage = (_props: DirectoryProps) => {
           {!loading && (
             <>
               {openListingsView(listings.open)}
+              <div className="bg-primary-darker">
+                <div className="max-w-5xl mx-auto p-2 md:p-4">
+                  <ActionBlock
+                    header={t("listingsForRent.callout.title")}
+                    background="primary-darker"
+                    layout={ActionBlockLayout.inline}
+                    actions={[
+                      <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+                        {t("listingsForRent.callout.button")}
+                      </Link>,
+                    ]}
+                  />
+                </div>
+              </div>
               {upcomingLotteriesView(listings.upcoming)}
               {lotteryResultsView(listings.results)}
             </>
           )}
         </div>
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          background="primary-lighter"
+          icon={<Icon size="3xl" symbol="mail" />}
+          actions={[
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
       </Layout>
     </LoadingOverlay>
   )
