@@ -244,4 +244,9 @@ $colors: (
   }
 }
 
+// Override bloom styles so that navbar doesn't overflow on medium screens.
+.navbar-item.logo.navbar-width-med {
+  max-width: 270px;
+}
+
 @import "tailwindcss/utilities";

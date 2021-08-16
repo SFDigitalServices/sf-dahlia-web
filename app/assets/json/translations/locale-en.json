@@ -1124,6 +1124,7 @@
             "my_favorites": "My Favorites",
             "rent": "Rent",
             "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Sign up</a> to provide feedback on City websites",
+            "get_feedback": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
             "sign_in": "Sign In",
             "sign_out": "Sign Out"
         },
