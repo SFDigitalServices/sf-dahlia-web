@@ -7,7 +7,7 @@ angular.module('dahlia.components')
   ($translate, $window, ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
-    @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
+    @listingEmailAlertUrl = "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
     @assetPaths = SharedService.assetPaths
     @listing = ListingDataService.listing
     @listings = ListingDataService.listings
@@ -85,7 +85,7 @@ angular.module('dahlia.components')
       listing.Lottery_Date != undefined
 
     @lotteryVenueAvailable = (listing) ->
-      (listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+      listing.Lottery_Venue != undefined
 
     @agentInfoAvailable = (listing) ->
       listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street

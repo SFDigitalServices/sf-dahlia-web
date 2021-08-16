@@ -408,45 +408,6 @@
           $translate('page_title.favorites')
         ]
     })
-    .state('dahlia.welcome-chinese', {
-      url: '/welcome-chinese'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-chinese.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_chinese')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
-    .state('dahlia.welcome-spanish', {
-      url: '/welcome-spanish'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-spanish.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_spanish')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
-    .state('dahlia.welcome-filipino', {
-      url: '/welcome-filipino'
-      views:
-        'container@':
-          templateUrl: 'pages/templates/welcome-filipino.html'
-      resolve:
-        $title: ['$translate', ($translate) ->
-          $translate('page_title.welcome_filipino')
-        ]
-        counselors: ['SharedService', (SharedService) ->
-          SharedService.getHousingCounselors()
-        ]
-    })
     .state('dahlia.disclaimer', {
       url: '/disclaimer'
       views:
@@ -994,11 +955,11 @@
             ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
         ]
     })
-    .state('dahlia.short-form-application.alice-griffith-preference', {
-      url: '/alice-griffith-preference'
+    .state('dahlia.short-form-application.right-to-return-preference', {
+      url: '/right-to-return-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e6a-alice-griffith-preference.html'
+          templateUrl: 'short-form/templates/e6a-right-to-return-preference.html'
     })
     .state('dahlia.short-form-application.alice-griffith-verify-address', {
       url: '/alice-griffith-verify-address'

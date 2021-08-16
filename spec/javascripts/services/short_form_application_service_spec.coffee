@@ -1117,6 +1117,13 @@ do ->
         expect(ShortFormApplicationService.preferences.displaced_certificateNumber)
           .toEqual null
 
+      it 'should clear certificate number if present for other preference', ->
+        ShortFormApplicationService.preferences.custom_certificateNumber =
+          '12345'
+        ShortFormApplicationService.unsetPreferenceFields('custom')
+        expect(ShortFormApplicationService.preferences.custom_certificateNumber)
+          .toEqual null
+
       it 'should clear preference address fields', ->
         ShortFormApplicationService.preferences.aliceGriffith_address =
           {

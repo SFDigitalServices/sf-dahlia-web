@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t } from "@sf-digital-services/ui-components"
+import { t } from "@bloom-housing/ui-components"
 
 import { getHomepagePath, getSignInPath } from "../../util/routeUtil"
 import UserContext from "../context/UserContext"
@@ -23,10 +23,10 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
   if (profile && signOut) {
     return (
       <BaseIdleTimeout
-        promptTitle={t("t.continueWithYourApplication")}
-        promptText={t("t.sessionInactivityLoggedIn")}
+        promptTitle={t("idleTimeout.stayLoggedIn")}
+        promptText={t("idleTimeout.sessionInactivityLoggedIn")}
         promptAction={t("t.continue")}
-        redirectPath={getSignInPath(window.location.pathname)}
+        redirectPath={getSignInPath()}
         alertMessage={t("signIn.userTokenValidationTimeout")}
         alertType={useFormTimeout ? "alert" : "notice"}
         onTimeout={() => handleTimeout(true)}
@@ -37,11 +37,11 @@ const IdleTimeout = ({ onTimeout, useFormTimeout = false }: IdleTimeoutProps) =>
   if (useFormTimeout) {
     return (
       <BaseIdleTimeout
-        promptTitle={t("t.continueWithYourApplication")}
-        promptText={t("t.sessionInactivity")}
+        promptTitle={t("idleTimeout.stayLoggedIn")}
+        promptText={t("idleTimeout.sessionInactivity")}
         promptAction={t("t.continue")}
-        redirectPath={getHomepagePath(window.location.pathname)}
-        alertMessage={t("t.sessionExpired")}
+        redirectPath={getHomepagePath()}
+        alertMessage={t("idleTimeout.sessionExpired")}
         alertType={"alert"}
         onTimeout={() => handleTimeout(false)}
       />

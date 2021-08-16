@@ -81,6 +81,7 @@ angular.module('dahlia.components')
               when 'assistedHousing' then flagForI18n('e3a_assisted_housing_preference.preference.title')
               when 'rentBurden' then flagForI18n('e3b_rent_burden_preference.rent_burden_preference')
               when 'aliceGriffith' then flagForI18n('preferences.alice_griffith.title')
+              when 'rightToReturnSunnydale' then flagForI18n('preferences.rtr_sunnydale.title')
 
             # If we didn't find a display name for this key, skip over it
             return unless displayNameTranslateKey
@@ -116,12 +117,17 @@ angular.module('dahlia.components')
         # info for each selected custom pref to the list of selected prefs.
         _.each ctrl.listing.customPreferences, (pref) ->
           if ctrl.claimedCustomPreference(pref)
+            key = pref.listingPreferenceID
+            if ctrl.application.preferences["#{key}_certificateNumber"]
+              boldSubLabel = ctrl.certificateNumberForPreference(key)
+            else
+              boldSubLabel = ctrl.fileAttachmentForPreference(key)
             selectedPrefInfo = {
               identifier: null,
               displayName: pref.preferenceName,
               order: pref.order,
               subLabel: $translate.instant('label.for_user', ctrl.householdMemberForPreference(pref.listingPreferenceID))
-              boldSubLabel: null,
+              boldSubLabel: boldSubLabel,
               rentBurdenSubLabels: null
             }
             selectedApplicationPrefs.push(selectedPrefInfo)

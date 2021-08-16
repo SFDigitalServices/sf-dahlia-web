@@ -6,14 +6,14 @@ import {
   Button,
   Modal,
   setSiteAlertMessage,
-} from "@sf-digital-services/ui-components"
+} from "@bloom-housing/ui-components"
 
 const PROMPT_TIMEOUT = 60000
 const events = ["mousemove", "keypress", "scroll"]
 
 function useIdleTimeout(timeoutMs: number, onTimeout: () => void) {
   useEffect(() => {
-    let timer: number
+    let timer: number = (setTimeout(onTimeout, timeoutMs) as unknown) as number
     const restartTimer = () => {
       if (timer) {
         clearTimeout(timer)

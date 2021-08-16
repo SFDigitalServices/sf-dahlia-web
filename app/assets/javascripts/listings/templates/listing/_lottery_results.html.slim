@@ -2,8 +2,7 @@ h4.t-gamma.t-serif Lottery Results
 p.content-group_day.margin-bottom
   | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
 .padding.bg-dust
-  p.c-steel.t-small.margin-bottom ng-if="$ctrl.parent.listing.Lottery_Summary"
-    | {{$ctrl.parent.listing.Lottery_Summary}}
+  p.c-steel.t-small.margin-bottom ng-if="$ctrl.parent.listing.Lottery_Summary" ng-bind-html="::$ctrl.parent.listing.Lottery_Summary | stripMostTags | nl2br"
 
   button.primary.expand.no-margin ng-click="$ctrl.openLotteryResultsModal()" ng-if="$ctrl.showLotteryResultsModalButton()" ng-disabled="$ctrl.loading.lotteryResults" data-event="gtm-view-lottery-results"
     | {{'listings.view_lottery_results' | translate}}

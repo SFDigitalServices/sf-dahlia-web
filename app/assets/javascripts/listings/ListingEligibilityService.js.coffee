@@ -56,7 +56,8 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
     # TO DO: Create long-term fix for some SRO units that allow 2 people.
     if (
       ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
-      ListingIdentityService.listingIs('1335 Folsom Street', listing)
+      ListingIdentityService.listingIs('1335 Folsom Street', listing) ||
+      ListingIdentityService.listingIs('750 Harrison', listing)
     )
       max = 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)

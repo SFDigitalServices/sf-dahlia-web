@@ -59,6 +59,7 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       aliceGriffith: null
+      rightToReturnSunnydale: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -209,7 +210,7 @@ ShortFormApplicationService = (
     else if lastPage == 'household-member-verify-address'
       lastPage = 'household-members'
     else if lastPage == 'alice-griffith-verify-address'
-      lastPage = 'alice-griffith-preference'
+      lastPage = 'right-to-return-preference'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -347,6 +348,9 @@ ShortFormApplicationService = (
     angular.copy(Service.application.groupedHouseholdAddresses[index], Service.currentRentBurdenAddress)
     Service.currentRentBurdenAddress.index = index
 
+  Service.getRTRPreferenceKey= (listing) ->
+    ListingPreferenceService.getRTRPreferenceKey(listing)
+
   Service.cancelPreference = (preference) ->
     if (
       (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
@@ -377,7 +381,7 @@ ShortFormApplicationService = (
       Service.preferences["#{prefType}_preference"] = null
       opts = {prefType: prefType}
       FileUploadService.deleteFile(Service.listing, opts)
-      if prefType == 'certOfPreference' || prefType == 'displaced'
+      if Service.preferences["#{prefType}_certificateNumber"]
         Service.preferences["#{prefType}_certificateNumber"] = null
       if Service.preferences["#{prefType}_address"]
         Service.preferences["#{prefType}_address"] = null
@@ -520,6 +524,9 @@ ShortFormApplicationService = (
 
   Service.listingHasPreference = (preference) ->
     ListingPreferenceService.hasPreference(preference, ListingDataService.listing)
+
+  Service.listingHasRTRPreference = () ->
+    ListingPreferenceService.hasRTRPreference(ListingDataService.listing)
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')

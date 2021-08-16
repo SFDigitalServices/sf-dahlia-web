@@ -63,8 +63,16 @@ do ->
 
       it 'assigns Service.listing.customPreferences with the customPreferences without proof', ->
         httpBackend.flush()
-        expect(listing.customPreferences[0].preferenceName).toEqual 'DACA Fund'
-        expect(listing.customPreferences.length).toEqual 2
+        customPrefNames = listing.customPreferences.map (pref) -> pref.preferenceName
+        expectedPrefs = [
+          'Works in Public Ed',
+          'DACA Fund',
+          'Households with Pet Zebras'
+        ]
+        expect(customPrefNames).toEqual(
+          jasmine.arrayWithExactContents(expectedPrefs)
+        )
+        expect(listing.customPreferences.length).toEqual 3
         expect(ListingPreferenceService.loading.preferences).toEqual false
 
       it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->

@@ -1,0 +1,135 @@
+import React, { useContext, useEffect, useState } from "react"
+
+import { ListingEventType, Listing } from "@bloom-housing/backend-core/types"
+import {
+  ActionBlock,
+  ActionBlockLayout,
+  Icon,
+  ListingsGroup,
+  ListingsList,
+  LoadingOverlay,
+  t,
+} from "@bloom-housing/ui-components"
+
+import { getRentalListings } from "../api/listingsApiService"
+import Layout from "../layouts/Layout"
+import withAppSetup from "../layouts/withAppSetup"
+import { ConfigContext } from "../lib/ConfigContext"
+import Link from "../navigation/Link"
+import { getAdditionalResourcesPath } from "../util/routeUtil"
+
+interface DirectoryProps {
+  isRental: boolean
+  assetPaths: unknown
+}
+
+interface ListingsGroup {
+  open: Listing[]
+  upcoming: Listing[]
+  results: Listing[]
+}
+
+const openListingsView = (listings) =>
+  listings.length > 0 ? (
+    <ListingsList listings={listings} />
+  ) : (
+    <div className="notice-block">
+      <h3 className="m-auto text-gray-800">{t("listings.noOpenListings")}</h3>
+    </div>
+  )
+
+const upcomingLotteriesView = (listings) =>
+  listings.length > 0 && (
+    <ListingsGroup
+      listings={listings}
+      header={t("listings.upcomingLotteries.title")}
+      hideButtonText={t("listings.upcomingLotteries.hide")}
+      showButtonText={t("listings.upcomingLotteries.show")}
+    />
+  )
+
+const lotteryResultsView = (listings) =>
+  listings.length > 0 && (
+    <ListingsGroup
+      listings={listings}
+      header={t("listings.lotteryResults.title")}
+      hideButtonText={t("listings.lotteryResults.hide")}
+      showButtonText={t("listings.lotteryResults.show")}
+    />
+  )
+
+const DirectoryPage = (_props: DirectoryProps) => {
+  const { listingsAlertUrl } = useContext(ConfigContext)
+  const [listings, setListings] = useState<ListingsGroup>({ open: [], upcoming: [], results: [] })
+  const [loading, setLoading] = useState<boolean>(true)
+  useEffect(() => {
+    void getRentalListings().then((listings) => {
+      const currentDate = new Date()
+      const open = []
+      const upcoming = []
+      const results = []
+      listings.forEach((listing) => {
+        if (listing.applicationDueDate > currentDate) {
+          open.push(listing)
+        } else {
+          if (
+            listing.events.some(
+              (event) =>
+                event.type === ListingEventType.lotteryResults &&
+                event.startTime < currentDate &&
+                event.endTime
+            )
+          ) {
+            results.push(listing)
+          } else {
+            upcoming.push(listing)
+          }
+        }
+      })
+      setListings({ open, upcoming, results })
+      setLoading(false)
+    })
+  }, [])
+
+  return (
+    <LoadingOverlay isLoading={loading}>
+      <Layout title={t("pageTitle.rentalListings")}>
+        <div>
+          {!loading && (
+            <>
+              {openListingsView(listings.open)}
+              <div className="bg-primary-darker">
+                <div className="max-w-5xl mx-auto p-2 md:p-4">
+                  <ActionBlock
+                    header={t("listingsForRent.callout.title")}
+                    background="primary-darker"
+                    layout={ActionBlockLayout.inline}
+                    actions={[
+                      <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+                        {t("listingsForRent.callout.button")}
+                      </Link>,
+                    ]}
+                  />
+                </div>
+              </div>
+              {upcomingLotteriesView(listings.upcoming)}
+              {lotteryResultsView(listings.results)}
+            </>
+          )}
+        </div>
+        <ActionBlock
+          header={t("welcome.newListingEmailAlert")}
+          background="primary-lighter"
+          icon={<Icon size="3xl" symbol="mail" />}
+          actions={[
+            <Link className="button" key="action-1" href={listingsAlertUrl}>
+              {t("welcome.signUpToday")}
+            </Link>,
+          ]}
+        />
+      </Layout>
+    </LoadingOverlay>
+  )
+}
+
+export default withAppSetup(DirectoryPage)

@@ -371,10 +371,8 @@
             "upload_documents_for_address": "上傳 {{address}} 的相關文件",
             "upload_for_each_address": "上傳各個地址的相關文件"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Alice Griffith 地址",
-            "address_desc": "您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區",
-            "address_documents": "您希望上傳以下哪個文件以證明您符合相關資格？",
+        "e6_right_to_return": {
+            "address_proof_document": "您希望上傳以下哪個文件以證明您符合相關資格？",
             "instructions": "只需提供有效的地址並上傳相關證明，即可獲得更高等級的抽籤優先權利。",
             "title": "您的家庭可能符合獲得以下抽籤優先權利的資格。"
         },
@@ -396,7 +394,8 @@
                 "individual_preference_question": "員工優先權利",
                 "work_in_education": "三藩市公立高等教育機構",
                 "work_in_healthcare": "三藩市公共衛生機構"
-            }
+            },
+            "title": "此房源有其他特殊的抽籤優先順序"
         },
         "e8_general_lottery_notice": {
             "title": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。",
@@ -732,7 +731,10 @@
                 "paystub_home": "薪資單 (列出住家地址)",
                 "public_benefits": "公共福利記錄",
                 "school_record": "學校證明",
-                "sfha_letter": "SFHA 地址驗證信函",
+                "sf_city_id": "三藩市城市身份證",
+                "sfha_lease": "三藩市房屋署 (SFHA) 租約",
+                "sfha_letter": "三藩市房屋署(SFHA)的地址證明信函",
+                "sfha_residency_letter": "三藩市房屋署 (SFHA) 的住所證明信函",
                 "telephone_bill": "電話帳單 (僅限市話)",
                 "water_bill": "水費帳單"
             },
@@ -831,7 +833,6 @@
                 "applications_must_be_received_by_deadline": "必須於截止期限前收到申請表，不會考慮郵戳日期。",
                 "covid_update": "新型冠狀病毒肺炎（COVID-19）更新：",
                 "covid_update_info": "新型冠狀病毒肺炎（COVID-19）期間，不接受書面申請。所有申請都必須透過上述連結線上提交",
-                "covid_update_lotteries": "新型冠狀病毒肺炎（COVID-19）期間，不開放現場抽籤，但仍會在指定日期舉行抽籤。請回本網站查詢抽籤結果。",
                 "do_not_apply_online_and_paper": "請勿同時遞交網上和書面的申請表。",
                 "do_not_do_multiple_applications": "如果申請人同時被例入多於一份申請表中，該份申請表將會失去其抽籤資格。",
                 "drop_off_application": "投遞申請表",
@@ -1140,17 +1141,23 @@
             "rental_listings": "租賃名單",
             "sale_listings": "銷售名單",
             "share_listing": "分享 {{listing}}",
-            "sign_in": "登入",
-            "welcome_chinese": "中文",
-            "welcome_filipino": "Filipino",
-            "welcome_spanish": "Español"
+            "sign_in": "登入"
         },
         "preferences": {
             "alice_griffith": {
+                "address": "Alice Griffith 地址",
+                "address_desc": "您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區",
                 "desc": "針對至少有一名成員居住在 Alice Griffith 住宅區中的家庭。這包括於「鄰里選擇」(Choice Neighborhoods) 計畫申請時間，即 2010 年 10 月 26 日（或之後）居住在目標重建地點的基線和目前居民。",
                 "proof_desc": "您需要提供以下任一文件，證明您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區：",
-                "sfha_letter_instructions": "來自舊金山住房管理局 (San Francisco Housing Authority) 的信函，確認申請人於 2010 年 10 月 26 日（或之後）居住在 Alice Griffith 住宅區",
+                "sfha_letter_instructions": "三藩市房屋署(SFHA) 的信函，證明申請人於 2010 年 10 月 26 日（或之後）居住在 Alice Griffith 住宅區",
                 "title": "Alice Griffith 住宅區居民優先權利"
+            },
+            "rtr_sunnydale": {
+                "address": "Sunnydale 住址",
+                "address_desc": "您目前或從前在Sunnydale公共住宅建築的住址。",
+                "desc": "適用於家庭中至少有一位是曾經或現在居住在Sunnydale公共住宅的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
+                "proof_desc": "您需要準備以下其中一項的文件來證明您在Sunnydale住宅建築的地址。",
+                "title": "回歸權 - Sunnydale 優先權"
             }
         },
         "privacy_policy": {

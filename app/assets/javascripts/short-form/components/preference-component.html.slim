@@ -53,7 +53,7 @@
       small.error id="five88_preference_error" ng-if="$ctrl.inputInvalid($ctrl.individualPrefFieldId())"
         | {{'error.please_select_an_option' | translate}}
   / proof uploader
-  .form-group.input-inset
+  .form-group.input-inset ng-if='$ctrl.application.preferences[$ctrl.preference]'
     div ng-if="$ctrl.hasProof"
       preference-proof-uploader(
         application="$ctrl.application"
@@ -66,8 +66,10 @@
       )
 
     / certificate number entry
-    div ng-if="$ctrl.hasCertificate"
+    div ng-if="$ctrl.hasCertificate || $ctrl.isTida()"
       preference-certificate-input(
         application="$ctrl.application"
         preference="{{$ctrl.preference}}"
+        label-key="$ctrl.certificateLabelKey"
+        caption-key="$ctrl.certificateCaptionKey"
     )

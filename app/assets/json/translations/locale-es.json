@@ -15,7 +15,7 @@
                 "you_and_everyone": "¿Usted y todas las personas que figuran en esta solicitud son adultos mayores?",
                 "you_and_everyone_desc": "Este es un edificio para adultos mayores y todos los solicitantes deben tener {{minAge}}+ años.",
                 "you_and_everyone_label": "Sí, todas las personas tienen {{minAge}}+ años.",
-                "you_or_anyone": "¿Usted o alguna de las personas que figuran en esta solicitud son adultos mayores?",
+                "you_or_anyone": "¿Usted o alguna de las personas en esta solicitud son adultos mayores?",
                 "you_or_anyone_desc": "Este es un edificio para adultos mayores y al menos un solicitante debe tener {{minAge}}+ años.",
                 "you_or_anyone_label": "Sí, al menos una persona tiene {{minAge}}+ años."
             },
@@ -109,14 +109,14 @@
         },
         "c4_household_public_housing": {
             "p1": "Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).",
-            "title_household": "¿Usted o alguna de las personas que figuran en esta solicitud viven actualmente en una vivienda pública o de un proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD)?",
+            "title_household": "¿Usted o alguna de las personas en esta solicitud viven actualmente en una vivienda pública o de un proyecto del Departamento de Vivienda y Desarrollo Urbano (Department of Housing and Urban Development, HUD)?",
             "title_you": "¿Usted vive actualmente en una vivienda pública o de un proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD)?"
         },
         "c5_household_monthly_rent": {
             "description": "Ingrese la cantidad total que usted personalmente paga de alquiler.",
             "how_much_do_members_pay": "¿Cuánto pagan {{members}} en {{address}}?",
             "how_much_do_you_and_members_pay": "¿Cuánto pagan {{members}} en {{address}}?",
-            "how_much_do_you_pay": "¿Cuánto paga Usted en {{address}}?",
+            "how_much_do_you_pay": "¿Cuánto paga usted en {{address}}?",
             "how_much_does_member_pay": "¿Cuánto paga {{member}} en {{address}}?",
             "title_household": "¿Cuánto paga de alquiler mensual su grupo familiar?",
             "title_you": "¿Cuánto paga usted de alquiler mensual?"
@@ -135,7 +135,7 @@
         "c7_household_priorities": {
             "p1": "Si usted es seleccionado para una unidad, la propiedad se adaptará a sus necesidades de la mejor manera posible.",
             "title_household": "¿Usted o alguna de las personas que figuran en esta solicitud necesitan alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?",
-            "title_you": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?"
+            "title_you": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Ley de Estadounidenses con Discapacidades (Americans with Disabilities Act, ADA)?"
         },
         "choose_applicant_details": {
             "alert_message": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
@@ -370,10 +370,8 @@
             "upload_documents_for_address": "Cargar documentos para {{address}}",
             "upload_for_each_address": "Cargar documentos para cada dirección"
         },
-        "e6_alice_griffith_preference": {
-            "address": "Dirección en Alice Griffith",
-            "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
-            "address_documents": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
+        "e6_right_to_return": {
+            "address_proof_document": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
             "instructions": "Proporcione una dirección válida y cargue un comprobante para tener una clasificación más alta en el sorteo.",
             "title": "Su grupo familiar podría cumplir con los requisitos para la siguiente preferencia de sorteo."
         },
@@ -732,7 +730,10 @@
                 "paystub_home": "Recibo de sueldo (con la dirección de la vivienda)",
                 "public_benefits": "Registro de beneficios públicos",
                 "school_record": "Registro escolar",
-                "sfha_letter": "Carta de la SFHA donde se verifica la dirección",
+                "sf_city_id": "Identificación de SF (SF City ID)",
+                "sfha_lease": "Contrato de renta de SFHA",
+                "sfha_letter": "Carta de la SFHA que verifique su dirección",
+                "sfha_residency_letter": "Carta de la SFHA que verifique su dirección",
                 "telephone_bill": "Factura telefónica (solamente del teléfono fijo)",
                 "water_bill": "Factura del servicio de agua"
             },
@@ -831,7 +832,6 @@
                 "applications_must_be_received_by_deadline": "Las solicitudes deben recibirse antes de la fecha límite y no se tendrá en cuenta la fecha de los sellos del correo.",
                 "covid_update": "Actualización de la COVID-19:",
                 "covid_update_info": "Las solicitudes en papel no se están aceptando actualmente debido a la COVID-19. Todas las solicitudes deben presentarse en línea a través del enlace anterior",
-                "covid_update_lotteries": "Los sorteos no se realizan actualmente en persona debido a la COVID-19. Todavía se realizan en la fecha especificada. Por favor, vuelva a consultar los resultados del sorteo.",
                 "do_not_apply_online_and_paper": "No envíe su solicitud impresa si ya completó una solicitud en línea.",
                 "do_not_do_multiple_applications": "Se eliminarán del sorteo todas las solicitudes que incluyan a cualquier persona que aparezca en más de una solicitud.",
                 "drop_off_application": "Presentar la solicitud en persona",
@@ -1140,17 +1140,23 @@
             "rental_listings": "Anuncios de viviendas en alquiler",
             "sale_listings": "Anuncios de venta",
             "share_listing": "Comparta {{listing}}",
-            "sign_in": "Inicie sesión",
-            "welcome_chinese": "中文",
-            "welcome_filipino": "Filipino",
-            "welcome_spanish": "Español"
+            "sign_in": "Inicie sesión"
         },
         "preferences": {
             "alice_griffith": {
+                "address": "Dirección en Alice Griffith",
+                "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
                 "desc": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
                 "proof_desc": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
-                "sfha_letter_instructions": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
+                "sfha_letter_instructions": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority, SFHA) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
                 "title": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
+            },
+            "rtr_sunnydale": {
+                "address": "Dirección en Sunnydale",
+                "address_desc": "Su dirección actual o anterior en el desarrollo de vivienda pública Sunnydale",
+                "desc": "Para hogares en donde por lo menos una persona es o era residente de la vivienda pública de Sunnydale. Por favor tome nota de que estas unidades no son subsidiadas, la renta no cambiará si su su ingreso cambia. ",
+                "proof_desc": "Necesitará uno de los siguientes documentos que incluyan su dirección en el desarrollo de vivienda pública de Sunnydale.",
+                "title": "Derecho a regresar - preferencia de vivienda en Sunnydale"
             }
         },
         "privacy_policy": {

@@ -1,10 +1,10 @@
 import {
   getPathWithoutLanguagePrefix,
-  getCurrentLanguage,
   LANGUAGE_CONFIGS,
   LangConfig,
   LanguagePrefix,
   toLanguagePrefix,
+  getCurrentLanguage,
 } from "./languageUtil"
 import { cleanPath } from "./urlUtil"
 
@@ -13,7 +13,7 @@ import { cleanPath } from "./urlUtil"
  *
  * ex getLocalizedPath("/sign-in", LanguagePrefix.Spanish) -> "/es/sign-in"
  */
-const getLocalizedPath = (
+export const getLocalizedPath = (
   newPath: string,
   newLanguage: LanguagePrefix,
   queryString: string | undefined = undefined
@@ -29,7 +29,7 @@ const getLocalizedPath = (
 }
 
 const localizedPathGetter = (newPathNonLocalized: string) => (
-  currentPath: string | undefined
+  currentPath: string | undefined = window.location.pathname
 ): string => getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
 
 /**
@@ -50,3 +50,8 @@ export const getFavoritesPath = localizedPathGetter("/favorites")
 export const getMyAccountPath = localizedPathGetter("/my-account")
 export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
+export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
+
+// Footer
+export const getDisclaimerPath = localizedPathGetter("/disclaimer")
+export const getPrivacyPolicyPath = localizedPathGetter("/privacy")
