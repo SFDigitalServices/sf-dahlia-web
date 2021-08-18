@@ -11,6 +11,7 @@ type BaseRailsListing = {
   Application_Due_Date: string
   Lottery_Results_Date: string
   Reserved_community_minimum_age: number
+  Reserved_community_type: string
   hasWaitlist: boolean
   Units_Available: number
   Building_URL?: string

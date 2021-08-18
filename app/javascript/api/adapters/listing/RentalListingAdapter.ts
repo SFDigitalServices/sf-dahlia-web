@@ -79,6 +79,12 @@ const ListingAdapter: Adapter<RailsRentalListing, Listing> = (item: RailsRentalL
   rentalAssistance: null,
   rentalHistory: null,
   requiredDocuments: null,
+  reservedCommunityType: item.Reserved_community_type && {
+    id: null,
+    name: item.Reserved_community_type,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
   specialNotes: null,
   waitlistCurrentSize: 0, // todo: populate this field
   waitlistMaxSize: 0, // todo: populate this field
