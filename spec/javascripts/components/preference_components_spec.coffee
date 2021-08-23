@@ -98,7 +98,7 @@ do ->
 
       describe 'isTida', ->
         it 'should determine if the preference is employment/disability based on the title', ->
-          fakeBindings.title = 'TIDA Treasure Island Resident (TIR) Preference'
+          fakeBindings.title = 'Treasure Island Resident (TIR) Preference'
           ctrl = $componentController 'preference', locals, fakeBindings
           expect(ctrl.isTida()).toBe(true)
           fakeBindings.title = 'Something else'
@@ -117,7 +117,7 @@ do ->
           expect(ctrl.descriptionToTranslate()).toEqual('translated_description_key')
 
       it 'sets expected translation keys for TIDA', ->
-          fakeBindings.title = 'TIDA Treasure Island Resident (TIR) Preference'
+          fakeBindings.title = 'Treasure Island Resident (TIR) Preference'
           ctrl = $componentController 'preference', locals, fakeBindings
           expect(ctrl.certificateLabelKey).toContain('tida')
           expect(ctrl.certificateCaptionKey).toContain('tida')
