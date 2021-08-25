@@ -58,7 +58,7 @@ angular.module('dahlia.components')
 
       # For TIDA pref, we need to be able to show certificate
       @isTida = =>
-        @title == 'TIDA Treasure Island Resident (TIR) Preference'
+        @title == 'Treasure Island Resident (TIR) Preference'
 
       @descriptionToTranslate = =>
         if @isEmploymentDisability()
