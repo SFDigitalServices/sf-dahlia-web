@@ -22,7 +22,7 @@ const getMinMax = (min: number, max: number): MinMax => ({ min, max })
 const UnitSummaryAdapter: Adapter<RailsRentalUnitSummary, UnitSummary> = (
   s: RailsRentalUnitSummary
 ) => ({
-  unitType: s.unitType,
+  unitType: { name: s.unitType, id: null, createdAt: null, updatedAt: null },
   // TODO: name minIncomeRange is incorrect, discuss with Bloom renaming it.
   minIncomeRange: getMinMaxCurrency(s.absoluteMinIncome, s.absoluteMaxIncome),
   occupancyRange: getMinMax(s.minOccupancy, s.maxOccupancy),
@@ -48,12 +48,18 @@ const UnitSummariesAdapter: Adapter<RailsRentalListing, UnitsSummarized> = (
     unitTypes: allSummaries.map((summary) => summary.unitType),
     reservedTypes: reservedSummaries.map((summary) => summary.unitType),
     priorityTypes:
-      listing.prioritiesDescriptor && listing.prioritiesDescriptor.map((priority) => priority.name),
+      listing.prioritiesDescriptor &&
+      listing.prioritiesDescriptor.map((priority) => ({
+        name: priority.name,
+        id: null,
+        createdAt: null,
+        updatedAt: null,
+      })),
     amiPercentages: [], // todo: populate this field
     byUnitType: allSummaries,
     byNonReservedUnitType: generalSummaries,
     byReservedType: [], // todo: populate this field
-    byUnitTypeAndRent: [],
+    byUnitTypeAndRent: allSummaries,
     byAMI: [], // todo: populate this field
     hmi: null, // todo: populate this field
   }

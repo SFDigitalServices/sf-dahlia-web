@@ -82,7 +82,10 @@ Rails.application.routes.draw do
 
   get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
   get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
-
+  # TODO: Paths on Bloom needs to be configurable
+  get '(:lang)/listing/:id', lang: /(en|es|zh|tl)/, to: redirect { |params, _|
+    "#{params[:lang] ? params[:lang] + '/' : ''}/listings/#{params[:id]}"
+  }
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.

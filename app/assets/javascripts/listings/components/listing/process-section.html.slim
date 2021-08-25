@@ -45,10 +45,7 @@ accordion-heading
             | {{ ::$ctrl.parent.listing.Lottery_Date | date : 'longDate' }}
           span.content-group_time
             | {{ ::$ctrl.parent.listing.Lottery_Date | date : 'shortTime' | lowercase }}
-        div.margin-top ng-if="$ctrl.parent.showCovidUpdate"
-          p.t-sans.margin-bottom--half translate="listings.apply.covid_update"
-          p.c-steel translate="listings.apply.covid_update_lotteries"
-        div ng-if="!$ctrl.parent.showCovidUpdate && $ctrl.parent.lotteryVenueAvailable($ctrl.parent.listing)"
+        div ng-if="$ctrl.parent.lotteryVenueAvailable($ctrl.parent.listing)"
           p.content-group_address.no-margin.skiptranslate
             |  {{ ::$ctrl.parent.listing.Lottery_Venue }}
           p.content-group_address.c-steel.skiptranslate

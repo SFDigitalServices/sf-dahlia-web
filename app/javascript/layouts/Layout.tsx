@@ -98,7 +98,7 @@ const Layout = (props: LayoutProps) => {
         <LanguageNav language={langItems} />
         <SiteHeader
           skip={t("t.skipToMainContent")}
-          logoSrc={getAssetPath("logo-portal.png")}
+          logoSrc={getAssetPath("DAHLIA-logo.svg")}
           notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
           title={t("t.dahliaSanFranciscoHousingPortal")}
           imageOnly={true}

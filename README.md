@@ -56,7 +56,9 @@ Before you install DAHLIA, your system should have the following:
 1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
 
 ## How to migrate a page from AngularJS to React
+
 See [docs/migrating-to-react](docs/migrating-to-react.md) for a step-by-step guide.
+
 ## Running Tests
 
 To run ruby tests:

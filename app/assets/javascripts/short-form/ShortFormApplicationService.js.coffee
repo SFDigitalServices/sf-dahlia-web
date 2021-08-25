@@ -381,7 +381,7 @@ ShortFormApplicationService = (
       Service.preferences["#{prefType}_preference"] = null
       opts = {prefType: prefType}
       FileUploadService.deleteFile(Service.listing, opts)
-      if prefType == 'certOfPreference' || prefType == 'displaced'
+      if Service.preferences["#{prefType}_certificateNumber"]
         Service.preferences["#{prefType}_certificateNumber"] = null
       if Service.preferences["#{prefType}_address"]
         Service.preferences["#{prefType}_address"] = null

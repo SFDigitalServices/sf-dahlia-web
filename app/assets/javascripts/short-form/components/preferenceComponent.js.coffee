@@ -56,11 +56,19 @@ angular.module('dahlia.components')
       @isEmploymentDisability = =>
         @title == 'Employment or Disability Preference'
 
+      # For TIDA pref, we need to be able to show certificate
+      @isTida = =>
+        @title == 'Treasure Island Resident (TIR) Preference'
+
       @descriptionToTranslate = =>
         if @isEmploymentDisability()
           @flagForI18n('e7b_custom_preferences.employment_disability.description')
         else
           @translatedDescription
+
+      if @isTida()
+        @certificateLabelKey = @flagForI18n('e7b_custom_preferences.tida.certificate_label')
+        @certificateCaptionKey = @flagForI18n('e7b_custom_preferences.tida.certificate_caption')
 
       @individualPrefFieldId = =>
         @preference.concat('_preference')

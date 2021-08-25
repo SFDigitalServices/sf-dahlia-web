@@ -87,6 +87,46 @@ do ->
           ctrl.resetPreference()
           expect(fakeShortFormApplicationService.cancelOptOut).toHaveBeenCalledWith(pref)
 
+      describe 'isEmploymentDisability', ->
+        it 'should determine if the preference is employment/disability based on the title', ->
+          fakeBindings.title = 'Employment or Disability Preference'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.isEmploymentDisability()).toBe(true)
+          fakeBindings.title = 'Something else'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.isEmploymentDisability()).toBe(false)
+
+      describe 'isTida', ->
+        it 'should determine if the preference is employment/disability based on the title', ->
+          fakeBindings.title = 'Treasure Island Resident (TIR) Preference'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.isTida()).toBe(true)
+          fakeBindings.title = 'Something else'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.isTida()).toBe(false)
+
+      describe 'descriptionToTranslate', ->
+        it 'uses the employment or disability key for  Employement or Disability Preference', ->
+          fakeBindings.title = 'Employment or Disability Preference'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.descriptionToTranslate()).toContain('employment_disability')
+        it 'defaults to the translatedDescription binding if not employment/disability', ->
+          fakeBindings.title = 'Not employment or disability'
+          fakeBindings.translatedDescription = 'translated_description_key'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.descriptionToTranslate()).toEqual('translated_description_key')
+
+      it 'sets expected translation keys for TIDA', ->
+          fakeBindings.title = 'Treasure Island Resident (TIR) Preference'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.certificateLabelKey).toContain('tida')
+          expect(ctrl.certificateCaptionKey).toContain('tida')
+
+      it 'does not set certificate translation keys for non-TIDA preferences', ->
+          fakeBindings.title = 'not-tida'
+          ctrl = $componentController 'preference', locals, fakeBindings
+          expect(ctrl.certificateLabelKey).toBeUndefined()
+          expect(ctrl.certificateCaptionKey).toBeUndefined()
 
 # ==============================================
     describe 'liveWorkComboPreference', ->
