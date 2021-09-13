@@ -33,6 +33,7 @@
     "webpacker-react": "^0.3.2"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.2.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
