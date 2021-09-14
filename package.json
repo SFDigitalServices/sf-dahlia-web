@@ -3,6 +3,7 @@
   "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
   "license": "GPL-3.0",
   "dependencies": {
+    "@axe-core/react": "^4.2.2",
     "@babel/plugin-transform-modules-commonjs": "^7.12.13",
     "@babel/plugin-transform-react-jsx": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
@@ -33,7 +34,6 @@
     "webpacker-react": "^0.3.2"
   },
   "devDependencies": {
-    "@axe-core/react": "^4.2.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
