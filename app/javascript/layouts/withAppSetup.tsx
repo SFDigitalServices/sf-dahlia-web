@@ -1,5 +1,8 @@
 import React from "react"
 
+import axe from "@axe-core/react"
+import ReactDOM from "react-dom"
+
 import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
@@ -14,15 +17,20 @@ interface ObjectWithAssets {
 const withAppSetup = <P extends ObjectWithAssets>(
   Component: React.ComponentType<P>,
   useFormTimeout?: boolean
-) => (props: P) => (
-  <NavigationProvider>
-    <ConfigProvider assetPaths={props.assetPaths}>
-      <UserProvider>
-        <IdleTimeout onTimeout={() => console.log("Logout")} useFormTimeout={useFormTimeout} />
-        <Component {...props} />
-      </UserProvider>
-    </ConfigProvider>
-  </NavigationProvider>
-)
+) => (props: P) => {
+  if (process.env.NODE_ENV !== "production") {
+    void axe(React, ReactDOM, 1000)
+  }
+  return (
+    <NavigationProvider>
+      <ConfigProvider assetPaths={props.assetPaths}>
+        <UserProvider>
+          <IdleTimeout onTimeout={() => console.log("Logout")} useFormTimeout={useFormTimeout} />
+          <Component {...props} />
+        </UserProvider>
+      </ConfigProvider>
+    </NavigationProvider>
+  )
+}
 
 export default withAppSetup

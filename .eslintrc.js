@@ -25,7 +25,8 @@ module.exports = {
     "@typescript-eslint",
     "prettier",
     "unicorn",
-    "unused-imports"
+    "unused-imports",
+    "jsx-a11y",
   ],
   extends: [
     "plugin:sfgov/recommended",
@@ -53,6 +54,7 @@ module.exports = {
     "prettier/react",
     "prettier/standard",
     "prettier",
+    "plugin:jsx-a11y/recommended",
   ],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
@@ -61,13 +63,13 @@ module.exports = {
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "selector": "variable",
-        "format": ["camelCase", "PascalCase", "UPPER_CASE"]
-      }
+        selector: "variable",
+        format: ["camelCase", "PascalCase", "UPPER_CASE"],
+      },
     ],
 
     // This is already covered (and more) with naming-convention
-    "camelcase": "off",
+    camelcase: "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
 
@@ -75,10 +77,15 @@ module.exports = {
     // and vars into two separate rules, and has autofix, so here we turn on
     // both of the unused-imports rules and turn off the no-unused-vars rule.
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": ["error", {
-      "vars": "all", "varsIgnorePattern": "^_",
-      "args": "after-used", "argsIgnorePattern": "^_"
-    }],
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        vars: "all",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        argsIgnorePattern: "^_",
+      },
+    ],
     "@typescript-eslint/no-unused-vars": "off",
 
     "@typescript-eslint/no-var-requires": "off",
@@ -87,7 +94,7 @@ module.exports = {
       "error",
       {
         allowAsStatement: true,
-      }
+      },
     ],
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-uses-vars": "error",
@@ -150,14 +157,12 @@ module.exports = {
     "unicorn/filename-case": [
       "error",
       {
-        "cases": {
-          "camelCase": true,
-          "pascalCase": true
+        cases: {
+          camelCase: true,
+          pascalCase: true,
         },
-        "ignore": [
-          "^react_application.tsx"
-        ]
-      }
+        ignore: ["^react_application.tsx"],
+      },
     ],
     "unicorn/prevent-abbreviations": "off",
     "import/order": [
@@ -180,15 +185,15 @@ module.exports = {
       },
     ],
   },
-  "overrides": [
+  overrides: [
     {
-      "files": [ "cypress/integration/*e2e.ts", "cypress/integration/*e2e.js" ],
-      "rules": {
+      files: ["cypress/integration/*e2e.ts", "cypress/integration/*e2e.js"],
+      rules: {
         // e2e files use chai-expect, not jest-expect, linter gets confused so we
         // turn off jest linting for these files.
         "jest/valid-expect": 0,
-      }
-    }
+      },
+    },
   ],
   ignorePatterns: [
     "app/assets",
