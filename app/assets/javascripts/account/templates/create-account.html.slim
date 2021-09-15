@@ -51,20 +51,65 @@
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_month"
                   | {{'label.dob_month' | translate}}
-                input(ng-model="userAuth.contact.dob_month" ng-required="true" maxlength="2" name="date_of_birth_month" placeholder="MM" type="text" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
+                input(
+                  ng-model="userAuth.contact.dob_month"
+                  ng-required="true"
+                  maxlength="2"
+                  name="date_of_birth_month"
+                  placeholder="MM"
+                  type="text"
+                  ng-class="{ error: inputInvalid('date_of_birth_month') }"
+                  ng-disabled="isLocked('dob')"
+                  pattern="\d*"
+                  ui-validate="'DOBValid(\'month\', $value)'"
+                  numeric-only=""
+                  autocomplete="off"
+                  ng-change="recheckDOB()"
+                  aria-describedby="date_of_birth_error"
+                )
 
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_day"
                   | {{'label.dob_day' | translate}}
-                input(ng-model="userAuth.contact.dob_day" ng-required="true" maxlength="2" name="date_of_birth_day" placeholder="DD" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
+                input(
+                  ng-model="userAuth.contact.dob_day"
+                  ng-required="true"
+                  maxlength="2"
+                  name="date_of_birth_day"
+                  placeholder="DD"
+                  type="text"
+                  pattern="\d*"
+                  ng-class="{ error: inputInvalid('date_of_birth_day') }"
+                  ng-disabled="isLocked('dob')"
+                  ui-validate="'DOBValid(\'day\', $value)'"
+                  numeric-only="" autocomplete="off"
+                  ng-change="recheckDOB()"
+                  aria-describedby="date_of_birth_error"
+                )
 
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_year"
                   | {{'label.dob_year' | translate}}
-                input(ng-model="userAuth.contact.dob_year" ng-required="true" maxlength="4" name="date_of_birth_year" placeholder="YYYY" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'year\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
+                input(
+                  ng-model="userAuth.contact.dob_year"
+                  ng-required="true"
+                  maxlength="4"
+                  name="date_of_birth_year"
+                  placeholder="YYYY"
+                  type="text"
+                  pattern="\d*"
+                  ng-class="{ error: inputInvalid('date_of_birth_year') }"
+                  ng-disabled="isLocked('dob')"
+                  ui-validate="'DOBValid(\'year\', $value) && DOBOver18($value)'"
+                  numeric-only=""
+                  autocomplete="off"
+                  ng-change="recheckDOB()"
+                  aria-describedby="date_of_birth_error"
+                )
 
-            small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
-              | {{'error.dob' | translate}}
+            small.error#date_of_birth_error ng-if="DOBHasError()"
+              span ng-if="DOBOver18()" translate="error.dob"
+              span ng-if="!DOBOver18()" translate="create_account.must_be_over_18"
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"

@@ -191,6 +191,9 @@ AccountController = (
   $scope.chooseDifferentEmailMessage = ->
     $translate.instant('create_account.choose_diff_email')
 
+  $scope.mustBeOver18Message = ->
+    $translate.instant('create_account.must_be_over_18')
+
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true
     $scope.resentConfirmationMessage = null
@@ -245,10 +248,14 @@ AccountController = (
     ShortFormApplicationService.DOBValid(field, values)
 
   $scope.recheckDOBDay = (formName = '') ->
+    console.log('scope userauth', $scope.userAuth)
+    # year = parseInt($scope.userAuth.contact.dob_year)
+    console.log('called DOB over18', month, day, year)
     if formName
       form = $scope.form[formName]
     else
       form = $scope.accountForm()
+    console.log('called recheck DOB', form)
     day = form['date_of_birth_day']
     # have to "reset" the dob_day form input by setting it to its current value
     # which will auto-trigger its ui-validation
