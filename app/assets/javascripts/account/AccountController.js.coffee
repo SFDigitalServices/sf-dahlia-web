@@ -247,8 +247,11 @@ AccountController = (
     values[field] = parseInt(value)
     ShortFormApplicationService.DOBValid(field, values)
 
-  $scope.DOBUnder18 = ->
-    form = $scope.accountForm()
+  $scope.DOBUnder18 = (formName = '') ->
+    if formName
+      form = $scope.form[formName]
+    else
+      form = $scope.accountForm()
     year = form['date_of_birth_year'].$viewValue
     month = form['date_of_birth_month'].$viewValue
     day = form['date_of_birth_day'].$viewValue
@@ -269,10 +272,10 @@ AccountController = (
     day = form['date_of_birth_day']
     day.$setViewValue(day.$viewValue + ' ')
 
-  $scope.DOBHasError = ->
-    $scope.inputInvalid('date_of_birth_day') ||
-    $scope.inputInvalid('date_of_birth_month') ||
-    $scope.inputInvalid('date_of_birth_year')
+  $scope.DOBHasError = (form = null) ->
+    $scope.inputInvalid('date_of_birth_day', '', form) ||
+    $scope.inputInvalid('date_of_birth_month', '', form) ||
+    $scope.inputInvalid('date_of_birth_year', '', form)
 
   $scope.isRental = (listing) ->
     ListingIdentityService.isRental(listing)
