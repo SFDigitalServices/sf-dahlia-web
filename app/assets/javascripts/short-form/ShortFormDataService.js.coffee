@@ -636,6 +636,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       when 'year'
         year >= 1900 && year <= validYear
 
+  # FIXME: this will fail in the year 2100
   Service.maxDOBDay = (month, year) ->
     month = parseInt(month)
     year = parseInt(year)
@@ -646,6 +647,13 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       max = 30
     return max
 
+  Service.DOBtoMoment = (year, month, day) ->
+    return false unless month && day && year >= 1900
+    moment("#{year}-#{month}-#{day}", 'YYYY-MM-DD')
+
+  Service.DOBtoAge = (dobMoment) ->
+    return unless dobMoment
+    moment().diff(dobMoment, 'years')
 
   return Service
 
