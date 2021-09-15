@@ -100,7 +100,7 @@
                   pattern="\d*"
                   ng-class="{ error: inputInvalid('date_of_birth_year') }"
                   ng-disabled="isLocked('dob')"
-                  ui-validate="'DOBValid(\'year\', $value) && DOBOver18($value)'"
+                  ui-validate="'DOBValid(\'year\', $value) && !DOBUnder18()'"
                   numeric-only=""
                   autocomplete="off"
                   ng-change="recheckDOB()"
@@ -108,8 +108,8 @@
                 )
 
             small.error#date_of_birth_error ng-if="DOBHasError()"
-              span ng-if="DOBOver18()" translate="error.dob"
-              span ng-if="!DOBOver18()" translate="create_account.must_be_over_18"
+              span ng-if="!DOBUnder18()" translate="error.dob"
+              span ng-if="DOBUnder18()" translate="create_account.must_be_over_18"
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"

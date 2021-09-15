@@ -302,10 +302,11 @@ AccountService = (
 
   Service.DOBValid = ShortFormDataService.DOBValid
 
-  Service.DOBOver18 = (year, month, day) ->
+  Service.DOBUnder18 = (year, month, day) ->
     dob = ShortFormDataService.DOBtoMoment(year, month, day)
     age = ShortFormDataService.DOBtoAge(dob)
-    age >= 18
+    return unless age
+    age < 18
 
   # run on page load
   Service.unlockFields()
