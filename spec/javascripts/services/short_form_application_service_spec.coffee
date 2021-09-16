@@ -1304,6 +1304,7 @@ do ->
     describe 'loadAccountApplication', ->
       beforeEach ->
         spyOn(ShortFormDataService, 'reformatApplication').and.returnValue({application: 'someapp'})
+        spyOn(ShortFormDataService, 'formatApplication').and.returnValue(fakeShortForm)
 
       it 'reformats the application', ->
         data =
