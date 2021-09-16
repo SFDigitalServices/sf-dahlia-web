@@ -46,8 +46,7 @@ accordion-heading
           span.content-group_time
             | {{ ::$ctrl.parent.listing.Lottery_Date | date : 'shortTime' | lowercase }}
         div ng-if="$ctrl.parent.lotteryVenueAvailable($ctrl.parent.listing)"
-          p.content-group_address.no-margin.skiptranslate
-            |  {{ ::$ctrl.parent.listing.Lottery_Venue }}
+          p.content-group_address.no-margin.skiptranslate ng-bind-html="::$ctrl.parent.listing.Lottery_Venue | stripMostTags | nl2br"
           p.content-group_address.c-steel.skiptranslate
             | {{ ::$ctrl.parent.listing.Lottery_Street_Address }} {{ ::$ctrl.parent.listing.Lottery_City }}
     p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateAvailable($ctrl.parent.listing)" translate="listings.process.lottery_date_time_and_venue_to_be_scheduled"
