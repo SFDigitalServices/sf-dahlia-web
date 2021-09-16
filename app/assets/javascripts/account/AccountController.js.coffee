@@ -255,7 +255,6 @@ AccountController = (
     year = form['date_of_birth_year'].$viewValue
     month = form['date_of_birth_month'].$viewValue
     day = form['date_of_birth_day'].$viewValue
-
     AccountService.DOBUnder18(year, month, day)
 
   $scope.recheckDOB = (formName = '') ->

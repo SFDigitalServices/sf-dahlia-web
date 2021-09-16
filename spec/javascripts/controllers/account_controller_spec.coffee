@@ -29,6 +29,7 @@ do ->
         firstName: 'X'
         lastName: 'Y'
         email: 'x@y.com'
+      DOBUnder18: ->
     fakeShortFormApplicationService =
       importUserData: -> null
       submitApplication: -> null
@@ -225,6 +226,18 @@ do ->
       it 'calls ShortFormApplicationService.importUserData', ->
         scope._createAccountSubmitApplication()
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
+
+    describe '$scope.DOBUnder18', ->
+      it 'calls AccountService.DOBUnder18 with expected values', ->
+        fakeAccountForm = {
+          'date_of_birth_year': {$viewValue: 'year'},
+          'date_of_birth_month': {$viewValue: 'month'},
+          'date_of_birth_day': {$viewValue: 'day'},
+        }
+        spyOn(scope, 'accountForm').and.returnValue(fakeAccountForm)
+        spyOn(fakeAccountService, 'DOBUnder18')
+        scope.DOBUnder18()
+        expect(fakeAccountService.DOBUnder18).toHaveBeenCalledWith('year', 'month', 'day')
 
     describe '$scope.isSale', ->
       it 'calls ListingIdentityService.isSale', ->
