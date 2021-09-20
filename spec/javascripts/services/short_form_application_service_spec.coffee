@@ -4,6 +4,7 @@ do ->
     $q = undefined
     $rootScope = undefined
     ShortFormApplicationService = undefined
+    ShortFormDataService = undefined
     httpBackend = undefined
     fakeListing = undefined
     fakeCustomPreference = {}
@@ -36,11 +37,6 @@ do ->
       listing:
         Id: ''
       loadListing: ->
-    fakeDataService =
-      formatApplication: -> fakeSalesforceApplication
-      reformatApplication: -> fakeShortForm
-      formatUserDOB: ->
-      initRentBurdenDocs: jasmine.createSpy()
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -99,7 +95,6 @@ do ->
       $provide.value 'uuid', uuid
       $provide.value 'ListingDataService', fakeListingDataService
       $provide.value 'ListingIdentityService', fakeListingIdentityService
-      $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
       $provide.value 'RentBurdenFileService', fakeRentBurdenFileService
@@ -108,11 +103,12 @@ do ->
       return
     )
 
-    beforeEach inject((_$q_, _$rootScope_, _$httpBackend_, _ShortFormApplicationService_) ->
+    beforeEach inject((_$q_, _$rootScope_, _$httpBackend_, _ShortFormApplicationService_, _ShortFormDataService_) ->
       $q = _$q_
       $rootScope = _$rootScope_
       httpBackend = _$httpBackend_
       ShortFormApplicationService = _ShortFormApplicationService_
+      ShortFormDataService = _ShortFormDataService_
       requestURL = ShortFormApplicationService.requestURL
     )
 
@@ -765,20 +761,20 @@ do ->
 
       it 'should call formatApplication on ShortFormDataService when preferences are defined', ->
         fakeListingDataService.listing.preferences = [{id: 1}]
-        spyOn(fakeDataService, 'formatApplication').and.returnValue({id: 12345})
+        spyOn(ShortFormDataService, 'formatApplication').and.returnValue({id: 12345})
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         $rootScope.$apply()
         expect(fakeListingPreferenceService.getListingPreferences).not.toHaveBeenCalled()
-        expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormDataService.formatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
       it 'should call formatApplication on ShortFormDataService when preferences are undefined', ->
         fakeListingDataService.listing.preferences = null
-        spyOn(fakeDataService, 'formatApplication').and.callThrough()
+        spyOn(ShortFormDataService, 'formatApplication').and.returnValue(fakeSalesforceApplication)
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         $rootScope.$apply()
         expect(fakeListingPreferenceService.getListingPreferences).toHaveBeenCalled()
-        expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormDataService.formatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
       it 'should indicate app date submitted to be date today', ->
@@ -792,11 +788,11 @@ do ->
         httpBackend.verifyNoOutstandingRequest()
 
       it 'should call reformatApplication on ShortFormDataService', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
         ShortFormApplicationService.getApplication 'xyz'
         httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormDataService.reformatApplication).toHaveBeenCalled()
 
     describe 'getMyApplicationForListing', ->
       afterEach ->
@@ -804,18 +800,19 @@ do ->
         httpBackend.verifyNoOutstandingRequest()
 
       it 'should call reformatApplication on ShortFormDataService', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.callThrough()
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+
         ShortFormApplicationService.getMyApplicationForListing 'xyz'
         httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormDataService.reformatApplication).toHaveBeenCalled()
 
       it 'should load accountApplication if forComparison opt is passed', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
         ShortFormApplicationService.getMyApplicationForListing 'xyz', {forComparison: true}
         httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormDataService.reformatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService.accountApplication.id).toEqual(fakeShortForm.id)
 
     describe 'keepCurrentDraftApplication', ->
@@ -1278,15 +1275,16 @@ do ->
 
     describe 'loadApplication', ->
       it 'reformats the application', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(fakeDataService.reformatApplication)
+        expect(ShortFormDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application, [])
 
       it 'loads the listing into Service.listing for viewing submitted applications', ->
         spyOn(fakeListingDataService, 'loadListing').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
         data =
           application: fakeShortForm
         data.application.status = 'Submitted'
@@ -1297,6 +1295,7 @@ do ->
 
       it 'resets user data', ->
         spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
@@ -1304,13 +1303,14 @@ do ->
 
     describe 'loadAccountApplication', ->
       beforeEach ->
-        spyOn(fakeDataService, 'reformatApplication').and.returnValue({application: 'someapp'})
+        spyOn(ShortFormDataService, 'reformatApplication').and.returnValue({application: 'someapp'})
+        spyOn(ShortFormDataService, 'formatApplication').and.returnValue(fakeShortForm)
 
       it 'reformats the application', ->
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadAccountApplication(data)
-        expect(fakeDataService.reformatApplication)
+        expect(ShortFormDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application)
 
       it 'assigns accountApplication to formatted app', ->
