@@ -191,6 +191,9 @@ AccountController = (
   $scope.chooseDifferentEmailMessage = ->
     $translate.instant('create_account.choose_diff_email')
 
+  $scope.mustBeOver18Message = ->
+    $translate.instant('create_account.must_be_over_18')
+
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true
     $scope.resentConfirmationMessage = null
@@ -244,15 +247,34 @@ AccountController = (
     values[field] = parseInt(value)
     ShortFormApplicationService.DOBValid(field, values)
 
-  $scope.recheckDOBDay = (formName = '') ->
+  $scope.DOBUnder18 = (formName = '') ->
     if formName
       form = $scope.form[formName]
     else
       form = $scope.accountForm()
+    year = form['date_of_birth_year'].$viewValue
+    month = form['date_of_birth_month'].$viewValue
+    day = form['date_of_birth_day'].$viewValue
+    AccountService.DOBUnder18(year, month, day)
+
+  $scope.recheckDOB = (formName = '') ->
+    if formName
+      form = $scope.form[formName]
+    else
+      form = $scope.accountForm()
+    # have to "reset" the day, month, and year form input by setting it to
+    # its current value which will auto-trigger its ui-validation
+    year = form['date_of_birth_year']
+    year.$setViewValue(year.$viewValue + ' ')
+    month = form['date_of_birth_month']
+    month.$setViewValue(month.$viewValue + ' ')
     day = form['date_of_birth_day']
-    # have to "reset" the dob_day form input by setting it to its current value
-    # which will auto-trigger its ui-validation
     day.$setViewValue(day.$viewValue + ' ')
+
+  $scope.DOBHasError = (form = null) ->
+    $scope.inputInvalid('date_of_birth_day', '', form) ||
+    $scope.inputInvalid('date_of_birth_month', '', form) ||
+    $scope.inputInvalid('date_of_birth_year', '', form)
 
   $scope.isRental = (listing) ->
     ListingIdentityService.isRental(listing)

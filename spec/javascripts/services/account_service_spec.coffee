@@ -3,6 +3,7 @@ do ->
   describe 'AccountService', ->
     AccountService = undefined
     ShortFormApplicationService = undefined
+    ShortFormDataService = undefined
     $translate =
       use: jasmine.createSpy('$translate.use').and.returnValue('currentLocale')
       instant: ->
@@ -16,11 +17,6 @@ do ->
       start: jasmine.createSpy()
       stop: jasmine.createSpy()
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
-    fakeShortFormDataService =
-      formatApplication: -> fakeShortForm
-      reformatApplication: -> fakeShortForm
-      formatUserDOB: jasmine.createSpy().and.returnValue('fakeDOB')
-      removeDOBFields: jasmine.createSpy().and.returnValue('contactWithoutDOBs')
     fakeModalService =
       openModal: jasmine.createSpy()
       closeModal: jasmine.createSpy()
@@ -68,12 +64,11 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
-      $provide.value 'ShortFormDataService', fakeShortFormDataService
       $provide.value 'ModalService', fakeModalService
       return
     )
 
-    beforeEach inject((_AccountService_, _$state_, _$auth_, _$q_, _$httpBackend_) ->
+    beforeEach inject((_AccountService_, _ShortFormDataService_, _$state_, _$auth_, _$q_, _$httpBackend_) ->
       $state = _$state_
       $state.go = jasmine.createSpy()
       $auth = _$auth_
@@ -93,8 +88,15 @@ do ->
       spyOn($auth, 'validateUser').and.callFake -> fakeHttp
       spyOn($auth, 'requestPasswordReset').and.callFake -> fakeHttp
       spyOn($auth, 'updatePassword').and.callFake -> fakeHttp
+
       AccountService = _AccountService_
       requestURL = AccountService.requestURL
+
+      ShortFormDataService = _ShortFormDataService_
+      spyOn(ShortFormDataService, 'formatApplication').and.returnValue(fakeShortForm)
+      spyOn(ShortFormDataService, 'reformatApplication').and.returnValue(fakeShortForm)
+      spyOn(ShortFormDataService, 'formatUserDOB').and.returnValue('fakeDOB')
+      spyOn(ShortFormDataService, 'removeDOBFields').and.returnValue('contactWithoutDOBs')
       return
     )
 
@@ -273,9 +275,9 @@ do ->
           email: 'a@b.c'
 
         expect(contact).toEqual 'contactWithoutDOBs'
-        expect(fakeShortFormDataService.formatUserDOB).toHaveBeenCalledWith expectedContact
+        expect(ShortFormDataService.formatUserDOB).toHaveBeenCalledWith expectedContact
         expectedContact.DOB = 'fakeDOB'
-        expect(fakeShortFormDataService.removeDOBFields).toHaveBeenCalledWith expectedContact
+        expect(ShortFormDataService.removeDOBFields).toHaveBeenCalledWith expectedContact
 
 
     describe 'lockCompletedFields', ->
@@ -336,3 +338,26 @@ do ->
         AccountService.clearAccountMessages()
         expect(AccountService.accountError.messages).toEqual {}
         expect(AccountService.accountSuccess.messages).toEqual {}
+
+    describe 'DOBUnder18', ->
+      beforeEach ->
+        # Set a fixed current date for age calculations
+        fakeToday = moment('2018-01-30').toDate()
+        jasmine.clock().mockDate(fakeToday)
+
+      afterEach ->
+        jasmine.clock().uninstall()
+      it 'returns undefined for an invalid date', ->
+        expect(AccountService.DOBUnder18(1990, 2, 32)).toBe(undefined)
+        expect(AccountService.DOBUnder18(1899, 2, 20)).toBe(undefined)
+        expect(AccountService.DOBUnder18(1990, 13, 20)).toBe(undefined)
+
+      it 'returns false for an age over 18', ->
+        expect(AccountService.DOBUnder18(1990, 1, 20)).toBe(false)
+        expect(AccountService.DOBUnder18(2000, 1, 30)).toBe(false)
+
+      it 'returns true for an age under 18', ->
+        expect(AccountService.DOBUnder18(2000, 1, 31)).toBe(true)
+        expect(AccountService.DOBUnder18(2001, 1, 31)).toBe(true)
+
+
