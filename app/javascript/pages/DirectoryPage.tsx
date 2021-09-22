@@ -96,25 +96,15 @@ const getRentRangeString = (summary: RailsRentalUnitSummary) => {
 const getUnitSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
-    .map((summary) => {
-      if (summary.minPercentIncome || summary.maxPercentIncome) {
-        console.log(summary)
-      }
-      return {
-        unitType: <>{summary.unitType}</>,
-        minimumIncome: (
-          <>
-            {getRangeString(
-              summary.absoluteMinIncome,
-              summary.absoluteMaxIncome,
-              " per month",
-              "$"
-            )}
-          </>
-        ),
-        rent: <>{getRentRangeString(summary)}</>,
-      }
-    })
+    .map((summary) => ({
+      unitType: <>{summary.unitType}</>,
+      minimumIncome: (
+        <>
+          {getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, " per month", "$")}
+        </>
+      ),
+      rent: <>{getRentRangeString(summary)}</>,
+    }))
 
 const getTableHeader = (listing: RailsRentalListing) => {
   let header = null
@@ -209,9 +199,6 @@ const DirectoryPage = (_props: DirectoryProps) => {
           } else {
             upcoming.push(listing)
           }
-        }
-        if (listing.Name === "Parkview Terraces") {
-          console.log(listing)
         }
       })
       open.sort((a: RailsRentalListing, b: RailsRentalListing) =>
