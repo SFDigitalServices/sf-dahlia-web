@@ -1020,16 +1020,14 @@ ShortFormApplicationService = (
   # been typed into the form, vs. what is stored in an application member object
   Service.memberAgeOnForm = (member = 'applicant') ->
     dob = Service.memberDOBMoment(member)
-    return unless dob
-    moment().diff(dob, 'years')
+    ShortFormDataService.DOBtoAge(dob)
 
   Service.memberDOBMoment = (member = 'applicant') ->
     values = Service.DOBValues(member)
     form = Service.form.applicationForm
     # have to grab viewValue because if the field is in error state the model will be undefined
     year = parseInt(form['date_of_birth_year'].$viewValue)
-    return false unless values.month && values.day && year >= 1900
-    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+    ShortFormDataService.DOBtoMoment(year, values.month, values.day)
 
   Service.DOBValues = (member = 'applicant') ->
     {

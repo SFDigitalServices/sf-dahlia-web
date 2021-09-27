@@ -7,7 +7,7 @@ Feature: Short Form Application - Sale Listing
         Given I go to the first page of the "Sale Test Listing" application
         When I hit the Next button "1" time
         # This e2e test was repeatedly timing out.
-        And I wait "2" seconds
+        And I wait "5" seconds
         Then I should be on the "Prerequisites" page of the application
         And I check complete homebuyers education
         Then I should see an error on the prerequisites form
