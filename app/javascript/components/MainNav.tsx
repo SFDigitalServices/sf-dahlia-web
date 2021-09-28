@@ -68,7 +68,8 @@ const MainNav = () => {
       <UserNav
         signedIn={!!profile}
         signOut={() => {
-          setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
+          // FIXME: Setup Site alert message for logging out DAH-974
+          // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
           signOut()
           // TODO: convert this to use react router when SPA routing is added
           window.location.href = getSignInPath()
