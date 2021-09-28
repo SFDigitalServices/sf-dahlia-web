@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { setSiteAlertMessage, t, NavbarDropdown } from "@bloom-housing/ui-components"
+import { t, NavbarDropdown } from "@bloom-housing/ui-components"
 
 import UserContext from "../authentication/context/UserContext"
 import Link from "../navigation/Link"
@@ -35,9 +35,9 @@ const UserNav = (props: UserNavProps) => {
         <Link href={getMyAccountSettingsPath()} className="navbar-item">
           {t("nav.accountSettings")}
         </Link>
-        <button className="navbar-item" onClick={signOut}>
+        <Link className="navbar-item" href="#" onClick={signOut}>
           {t("nav.signOut")}
-        </button>
+        </Link>
       </NavbarDropdown>
     </>
   ) : (
