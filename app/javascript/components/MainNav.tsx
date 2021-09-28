@@ -42,7 +42,7 @@ const UserNav = (props: UserNavProps) => {
     </>
   ) : (
     <>
-      <Link className="navbar-item" href={getSignInPath()}>
+      <Link data-testid="nav-button--signin" className="navbar-item" href={getSignInPath()}>
         {t("nav.signIn")}
       </Link>
     </>
