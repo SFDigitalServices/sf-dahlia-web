@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { setSiteAlertMessage, t, UserNav } from "@bloom-housing/ui-components"
+import { t, NavbarDropdown } from "@bloom-housing/ui-components"
 
 import UserContext from "../authentication/context/UserContext"
 import Link from "../navigation/Link"
@@ -14,6 +14,40 @@ import {
   getSaleDirectoryPath,
   getSignInPath,
 } from "../util/routeUtil"
+
+interface UserNavProps {
+  signedIn: boolean
+  signOut: () => void
+}
+
+const UserNav = (props: UserNavProps) => {
+  const { signedIn, signOut } = props
+
+  return signedIn ? (
+    <>
+      <NavbarDropdown menuTitle={t("nav.myAccount")}>
+        <Link href={getMyAccountPath()} className="navbar-item">
+          {t("nav.myDashboard")}
+        </Link>
+        <Link href={getMyApplicationsPath()} className="navbar-item">
+          {t("nav.myApplications")}
+        </Link>
+        <Link href={getMyAccountSettingsPath()} className="navbar-item">
+          {t("nav.accountSettings")}
+        </Link>
+        <Link className="navbar-item" href="#" onClick={signOut}>
+          {t("nav.signOut")}
+        </Link>
+      </NavbarDropdown>
+    </>
+  ) : (
+    <>
+      <Link data-testid="nav-button--signin" className="navbar-item" href={getSignInPath()}>
+        {t("nav.signIn")}
+      </Link>
+    </>
+  )
+}
 
 const MainNav = () => {
   const { profile, signOut } = useContext(UserContext)
@@ -34,22 +68,13 @@ const MainNav = () => {
       <UserNav
         signedIn={!!profile}
         signOut={() => {
-          setSiteAlertMessage(t(`signIn.signedOutSuccessfully`), "notice")
+          // FIXME: Setup Site alert message for logging out DAH-974
+          // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
           signOut()
           // TODO: convert this to use react router when SPA routing is added
           window.location.href = getSignInPath()
         }}
-      >
-        <Link href={getMyAccountPath()} className="navbar-item">
-          {t("nav.myDashboard")}
-        </Link>
-        <Link href={getMyApplicationsPath()} className="navbar-item">
-          {t("nav.myApplications")}
-        </Link>
-        <Link href={getMyAccountSettingsPath()} className="navbar-item">
-          {t("nav.accountSettings")}
-        </Link>
-      </UserNav>
+      />
     </>
   )
 }
