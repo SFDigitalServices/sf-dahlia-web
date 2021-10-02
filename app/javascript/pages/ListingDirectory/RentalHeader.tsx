@@ -5,7 +5,7 @@ import Markdown from "markdown-to-jsx"
 
 const RentalHeader = () => (
   <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
-    <p className="mt-8 mb-2">
+    <p className="mt-4 md:mt-8 mb-2">
       <LinkButton href={getEligibilityEstimatorLink()}>
         {t("rentalDirectory.findMatchingListings")}
       </LinkButton>

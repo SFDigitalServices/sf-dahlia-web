@@ -249,4 +249,9 @@ $colors: (
   max-width: 270px;
 }
 
+// Override bloom styles for page header until we can make updates in their code
+.page-header__group > h1.page-header__title {
+  text-align: left;
+}
+
 @import "tailwindcss/utilities";
