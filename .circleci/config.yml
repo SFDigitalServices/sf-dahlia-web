@@ -5,7 +5,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: circleci/ruby:2.5.3-browsers-legacy
+    - image: cimg/ruby:2.5.8-browsers
       environment:
         RAILS_ENV: development
         PGHOST: 127.0.0.1
@@ -93,7 +93,6 @@ commands:
     steps:
       - checkout
       - prepare_workspace
-      - install-node
       - upgrade-bundler
       - run: bundle --path vendor/bundle
       - run: bundle exec rails db:migrate
