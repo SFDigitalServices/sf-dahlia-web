@@ -18,13 +18,16 @@ class ListingImageService
 
   def process_image
     unless raw_image_url
+      puts 'Error, no image provided for listing'
       add_error("No image provided for listing #{listing_id}")
       return self
     end
 
     if !resized_image?
+      puts 'Not resized image, going to try to resize first'
       create_or_update_listing_image if resize_and_upload_image
     elsif !listing_image_current?
+      puts '!listing_image_current, going to just create_or_update_listing_image'
       create_or_update_listing_image
     end
 
@@ -69,6 +72,7 @@ class ListingImageService
     if resize_image(raw_image_url)
       uploaded = false
       File.open(tmp_image_path) do |file|
+        puts 'resize_and_upload_image file open about to call upload'
         # cache images for 1 yr since we change the filename when image changes
         uploaded = FileStorageService.upload(
           remote_image_path,
