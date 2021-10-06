@@ -34,7 +34,7 @@ interface ListingsGroups {
   results: RailsRentalListing[]
 }
 
-const getListingImageCardStatuses = (listing: RailsRentalListing): StatusBarType[] => {
+export const getListingImageCardStatuses = (listing: RailsRentalListing): StatusBarType[] => {
   const statuses: StatusBarType[] = []
 
   const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
@@ -51,7 +51,7 @@ const getListingImageCardStatuses = (listing: RailsRentalListing): StatusBarType
     if (!listing.Publish_Lottery_Results) {
       statuses.push({
         status: ApplicationStatusType.Closed,
-        content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
+        content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
         hideIcon: true,
       })
     }
@@ -65,20 +65,22 @@ const getListingImageCardStatuses = (listing: RailsRentalListing): StatusBarType
   return statuses
 }
 
-const getNumberString = (currencyNumber: number) =>
+export const getNumberString = (currencyNumber: number) =>
   currencyNumber ? currencyNumber.toLocaleString() : null
 
-const getRangeString = (min: number, max: number, suffix: string, prefix?: string) => {
+export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
-    return `${prefix ?? ""}${getNumberString(min)} to ${prefix}${getNumberString(max)}${suffix}`
+    return `${prefix ?? ""}${getNumberString(min)} to ${prefix ?? ""}${getNumberString(max)}${
+      suffix ?? ""
+    }`
   }
   if (min || max) {
-    return `${prefix ?? ""}${getNumberString(min ?? max)}${suffix}`
+    return `${prefix ?? ""}${getNumberString(min ?? max)}${suffix ?? ""}`
   }
   return null
 }
 
-const getRentRangeString = (summary: RailsRentalUnitSummary) => {
+export const getRentRangeString = (summary: RailsRentalUnitSummary) => {
   const rentRangeString = getRangeString(
     summary.minMonthlyRent,
     summary.maxMonthlyRent,
@@ -106,7 +108,7 @@ const getUnitSummaryTable = (listing: RailsRentalListing) =>
       rent: <>{getRentRangeString(summary)}</>,
     }))
 
-const getTableHeader = (listing: RailsRentalListing) => {
+export const getTableHeader = (listing: RailsRentalListing) => {
   let header = null
   if (listing.Units_Available > 0) {
     header = "Available Units"
