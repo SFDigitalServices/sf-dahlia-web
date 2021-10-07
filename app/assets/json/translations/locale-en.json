@@ -1125,7 +1125,6 @@
             "my_dashboard": "My Dashboard",
             "my_favorites": "My Favorites",
             "rent": "Rent",
-            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Sign up</a> to provide feedback on City websites",
             "sign_in": "Sign In",
             "sign_out": "Sign Out"
         },
