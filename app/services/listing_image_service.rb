@@ -90,8 +90,10 @@ class ListingImageService
   end
 
   def resize_image(image)
+    puts 'In Resize image, TMP_DIR = ', TMP_DIR, ' and it exists? ', Dir.exist?(TMP_DIR)
     Dir.mkdir(TMP_DIR) unless Dir.exist?(TMP_DIR)
     image = MiniMagick::Image.open(image)
+    puts '. Minimagick opened the image, and image is valid? ', image.valid?
     throw MiniMagick::Invalid unless image.valid?
     # set width only and height is adjusted to maintain aspect ratio
     image.resize(IMAGE_WIDTH.to_s)
@@ -100,6 +102,7 @@ class ListingImageService
     ImageOptimizer.new(tmp_image_path, quality: 75).optimize
     true
   rescue MiniMagick::Invalid
+    puts 'MiniMagick is Invalid. '
     add_error("Image for listing #{listing_id} is unreadable")
     false
   end
