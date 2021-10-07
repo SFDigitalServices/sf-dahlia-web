@@ -184,6 +184,7 @@ jobs:
     <<: *defaults
     steps:
       - setup
+      - run: sudo apt-get install imagemagick libmagickcore-dev libmagickwand-dev
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake spec
