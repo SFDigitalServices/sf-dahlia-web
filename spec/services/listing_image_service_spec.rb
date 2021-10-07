@@ -41,7 +41,9 @@ describe ListingImageService do
     end
 
     it 'should upload a listing image' do
+      puts 'Starting: should upload a listing image. '
       ListingImageService.new(listing).process_image
+      puts 'in theory, image was procesed. '
 
       expect(FileStorageService).to have_received(:upload)
     end
