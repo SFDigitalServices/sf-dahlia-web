@@ -101,10 +101,10 @@ class ListingImageService
     image.write(tmp_image_path)
     ImageOptimizer.new(tmp_image_path, quality: 75).optimize
     true
-  rescue MiniMagick::Invalid
-    puts 'MiniMagick is Invalid. '
-    add_error("Image for listing #{listing_id} is unreadable")
-    false
+  # rescue MiniMagick::Invalid
+  #   puts 'MiniMagick is Invalid. '
+  #   add_error("Image for listing #{listing_id} is unreadable")
+  #   false
   end
 
   def create_or_update_listing_image
