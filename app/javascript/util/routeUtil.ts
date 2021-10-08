@@ -52,6 +52,10 @@ export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
 export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
 
+// Rental Listing Directory
+export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
+export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
+
 // Footer
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")
 export const getPrivacyPolicyPath = localizedPathGetter("/privacy")

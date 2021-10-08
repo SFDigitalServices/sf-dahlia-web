@@ -1119,7 +1119,6 @@
             "my_dashboard": "我的儀表板",
             "my_favorites": "我的最愛",
             "rent": "租賃",
-            "research_feedback": "請<a target='_blank' class='a-white lined' href='{{researchUrl}}'>註冊</a>以提供您對於市府網站的意見",
             "sign_in": "登入",
             "sign_out": "登出"
         },

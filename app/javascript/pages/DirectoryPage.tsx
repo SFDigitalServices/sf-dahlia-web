@@ -22,6 +22,7 @@ import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getAdditionalResourcesPath } from "../util/routeUtil"
+import RentalHeader from "./ListingDirectory/RentalHeader"
 
 interface DirectoryProps {
   isRental: boolean
@@ -223,6 +224,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
         <div>
           {!loading && (
             <>
+              <RentalHeader />
               {openListingsView(listings.open)}
               <div className="bg-primary-darker">
                 <div className="max-w-5xl mx-auto p-2 md:p-4">
