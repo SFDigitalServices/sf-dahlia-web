@@ -78,14 +78,8 @@ $colors: (
   ),
 );
 
-@import "~bulma/sass/utilities/functions.sass";
-@import "~bulma/sass/utilities/controls.sass";
-@import "~bulma/sass/utilities/extends.sass";
-@import "~bulma/sass/components/navbar.sass";
-
 @import "@bloom-housing/ui-components/src/global/mixins.scss";
 @import "@bloom-housing/ui-components/src/global/markdown.scss";
-@import "@bloom-housing/ui-components/src/global/navbar.scss";
 @import "@bloom-housing/ui-components/src/global/text.scss";
 @import "@bloom-housing/ui-components/src/global/headers.scss";
 @import "@bloom-housing/ui-components/src/global/blocks.scss";
@@ -109,9 +103,8 @@ $colors: (
   // would like to remove the local theme class
   @include ag-theme-alpine(
     (
-      // use theme parameters where possible
       header-height: 83px,
-      row-height: 58px
+      row-height: 58px,
     )
   );
 
