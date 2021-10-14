@@ -15,10 +15,10 @@ import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
-import { LANGUAGE_CONFIGS } from "../util/languageUtil"
+import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
-import { getSignInPath } from "../util/routeUtil"
+import { getSignInPath, getLocalizedPath } from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -43,9 +43,11 @@ const getLanguageItems = () => {
   const languageItems: LangItem[] = []
   for (const item of Object.values(LANGUAGE_CONFIGS)) {
     languageItems.push({
-      active: item.isDefault,
+      active: getCurrentLanguage(window.location.pathname) === item.prefix,
       label: item.getLabel(),
-      onClick: () => {},
+      onClick: () => {
+        window.location.href = getLocalizedPath(window.location.pathname, item.prefix)
+      },
     })
   }
 

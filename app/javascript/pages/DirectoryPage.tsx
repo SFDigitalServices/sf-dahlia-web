@@ -147,7 +147,9 @@ const getListings = (listings) =>
         cellClassName: "px-5 py-3",
       }}
       seeDetailsLink={`/listings/${listing.listingID}`}
-      tableHeader={getTableHeader(listing)}
+      tableHeaderProps={{
+        tableHeader: getTableHeader(listing),
+      }}
     />
   ))
 
