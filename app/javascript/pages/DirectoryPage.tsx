@@ -82,31 +82,56 @@ export const getRangeString = (min: number, max: number, suffix?: string, prefix
 }
 
 export const getRentRangeString = (summary: RailsRentalUnitSummary) => {
-  const rentRangeString = getRangeString(
-    summary.minMonthlyRent,
-    summary.maxMonthlyRent,
-    " per month",
-    "$"
-  )
+  const rentRangeString = getRangeString(summary.minMonthlyRent, summary.maxMonthlyRent, null, "$")
   const percentIncomeRangeString = getRangeString(
     summary.minPercentIncome,
     summary.maxPercentIncome,
-    "% income"
+    "%"
   )
   return rentRangeString ?? percentIncomeRangeString ?? ""
 }
+
+export const getRentSubText = (summary: RailsRentalUnitSummary) => {
+  if (summary?.minMonthlyRent && summary?.maxMonthlyRent) {
+    return t("t.perMonth")
+  } else if (summary?.minPercentIncome) {
+    return t("t.income")
+  }
+  return null
+}
+
+export const getAvailabilityString = (
+  listing: RailsRentalListing,
+  summary: RailsRentalUnitSummary,
+  mobile?: boolean
+) =>
+  listing.hasWaitlist && summary.availability <= 0
+    ? t("t.waitlist")
+    : `${summary.availability}${!mobile ? " " + t("t.available") : ""}`
+
+export const getAvailabilityCellSubText = (
+  listing: RailsRentalListing,
+  summary: RailsRentalUnitSummary
+) => (listing.hasWaitlist && summary.availability <= 0 ? null : t("t.available"))
 
 const getUnitSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
-      unitType: <>{summary.unitType}</>,
-      minimumIncome: (
-        <>
-          {getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, " per month", "$")}
-        </>
-      ),
-      rent: <>{getRentRangeString(summary)}</>,
+      unitType: {
+        cellText: summary.unitType,
+        cellSubText: getAvailabilityString(listing, summary, false),
+        hideMobile: true,
+      },
+      availability: {
+        cellText: getAvailabilityString(listing, summary, true),
+        cellSubText: getAvailabilityCellSubText(listing, summary),
+      },
+      income: {
+        cellText: getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, null, "$"),
+        cellSubText: t("t.perMonth"),
+      },
+      rent: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
     }))
 
 export const getTableHeader = (listing: RailsRentalListing) => {
@@ -118,6 +143,15 @@ export const getTableHeader = (listing: RailsRentalListing) => {
     header = header ? `${header} & Open Waitlist` : "Open Waitlist"
   }
   return header
+}
+
+export const getTableSubHeader = (listing: RailsRentalListing) => {
+  if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
+    const priorityNames = listing.prioritiesDescriptor.map((priority) => priority.name)
+    // TODO: Translate the priority descriptor names.
+    return t("listings.includesPriorityUnits", { priorities: priorityNames.join(", ") })
+  }
+  return null
 }
 
 type Listing = RailsRentalListing & {
@@ -136,20 +170,24 @@ const getListings = (listings) =>
         tagLabel: listing.Reserved_community_type ?? undefined,
         statuses: getListingImageCardStatuses(listing),
       }}
+      tableHeaderProps={{
+        tableHeader: getTableHeader(listing),
+        tableSubHeader: getTableSubHeader(listing),
+        stackedTable: true,
+      }}
       tableProps={{
         headers: {
           unitType: t("t.unitType"),
-          minimumIncome: t("t.minimumIncome"),
-          rent: t("t.rent"),
+          availability: { name: t("t.available") },
+          income: { name: t("t.incomeRange") },
+          rent: { name: t("t.rent") },
         },
-        data: [{ data: getUnitSummaryTable(listing) }],
         responsiveCollapse: true,
         cellClassName: "px-5 py-3",
+        headersHiddenDesktop: ["availability"],
+        stackedData: getUnitSummaryTable(listing),
       }}
       seeDetailsLink={`/listings/${listing.listingID}`}
-      tableHeaderProps={{
-        tableHeader: getTableHeader(listing),
-      }}
     />
   ))
 
