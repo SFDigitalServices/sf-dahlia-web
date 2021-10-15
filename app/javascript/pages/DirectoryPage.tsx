@@ -71,6 +71,7 @@ export const getNumberString = (currencyNumber: number) =>
 
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
+    // FIXME: translate this.
     return `${prefix ?? ""}${getNumberString(min)} to ${prefix ?? ""}${getNumberString(max)}${
       suffix ?? ""
     }`
@@ -92,27 +93,25 @@ export const getRentRangeString = (summary: RailsRentalUnitSummary) => {
 }
 
 export const getRentSubText = (summary: RailsRentalUnitSummary) => {
-  if (summary?.minMonthlyRent && summary?.maxMonthlyRent) {
+  if (summary?.minMonthlyRent || summary?.maxMonthlyRent) {
     return t("t.perMonth")
-  } else if (summary?.minPercentIncome) {
+  } else if (summary?.minPercentIncome || summary?.maxPercentIncome) {
     return t("t.income")
   }
   return null
 }
+
+export const showWaitlist = (listing: RailsRentalListing, summary: RailsRentalUnitSummary) =>
+  listing.hasWaitlist && summary.availability <= 0
 
 export const getAvailabilityString = (
   listing: RailsRentalListing,
   summary: RailsRentalUnitSummary,
   mobile?: boolean
 ) =>
-  listing.hasWaitlist && summary.availability <= 0
+  showWaitlist(listing, summary)
     ? t("t.waitlist")
     : `${summary.availability}${!mobile ? " " + t("t.available") : ""}`
-
-export const getAvailabilityCellSubText = (
-  listing: RailsRentalListing,
-  summary: RailsRentalUnitSummary
-) => (listing.hasWaitlist && summary.availability <= 0 ? null : t("t.available"))
 
 const getUnitSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
@@ -125,7 +124,7 @@ const getUnitSummaryTable = (listing: RailsRentalListing) =>
       },
       availability: {
         cellText: getAvailabilityString(listing, summary, true),
-        cellSubText: getAvailabilityCellSubText(listing, summary),
+        cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
       },
       income: {
         cellText: getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, null, "$"),
