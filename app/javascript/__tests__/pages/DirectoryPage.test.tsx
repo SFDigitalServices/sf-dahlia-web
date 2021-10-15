@@ -79,17 +79,13 @@ describe("<DirectoryPage />", () => {
       minPercentIncome: 10,
       maxPercentIncome: 20,
     }
-    expect(getRentRangeString(testUnitSummaryRange as RailsRentalUnitSummary)).toBe(
-      "$100 to $200 per month"
-    )
+    expect(getRentRangeString(testUnitSummaryRange as RailsRentalUnitSummary)).toBe("$100 to $200")
     const testUnitSummaryConstant = {
       maxMonthlyRent: 200,
       minPercentIncome: 10,
       maxPercentIncome: 20,
     }
-    expect(getRentRangeString(testUnitSummaryConstant as RailsRentalUnitSummary)).toBe(
-      "$200 per month"
-    )
+    expect(getRentRangeString(testUnitSummaryConstant as RailsRentalUnitSummary)).toBe("$200")
   })
 
   it("getRentRangeString returns income if rent does not exist", () => {
@@ -97,9 +93,7 @@ describe("<DirectoryPage />", () => {
       minPercentIncome: 10,
       maxPercentIncome: 20,
     }
-    expect(getRentRangeString(testUnitSummaryRange as RailsRentalUnitSummary)).toBe(
-      "10 to 20% income"
-    )
+    expect(getRentRangeString(testUnitSummaryRange as RailsRentalUnitSummary)).toBe("10 to 20%")
     const testUnitSummaryConstant = {
       minPercentIncome: 10,
     }
