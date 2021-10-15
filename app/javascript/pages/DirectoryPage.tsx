@@ -177,10 +177,10 @@ const getListings = (listings) =>
       }}
       tableProps={{
         headers: {
-          unitType: t("t.unitType"),
-          availability: { name: t("t.available") },
-          income: { name: t("t.incomeRange") },
-          rent: { name: t("t.rent") },
+          unitType: "t.units",
+          availability: { name: "t.available" },
+          income: { name: "t.incomeRange" },
+          rent: { name: "t.rent" },
         },
         responsiveCollapse: true,
         cellClassName: "px-5 py-3",
