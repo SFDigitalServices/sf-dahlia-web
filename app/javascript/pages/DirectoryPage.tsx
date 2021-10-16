@@ -71,10 +71,11 @@ export const getNumberString = (currencyNumber: number) =>
 
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
-    // FIXME: translate this.
-    return `${prefix ?? ""}${getNumberString(min)} to ${prefix ?? ""}${getNumberString(max)}${
-      suffix ?? ""
-    }`
+    const range = t("numberRange", {
+      minValue: `${prefix ?? ""}${getNumberString(min)}`,
+      maxValue: `${prefix ?? ""}${getNumberString(max)}`,
+    })
+    return `${range}${suffix ?? ""}`
   }
   if (min || max) {
     return `${prefix ?? ""}${getNumberString(min ?? max)}${suffix ?? ""}`
@@ -136,10 +137,10 @@ const getUnitSummaryTable = (listing: RailsRentalListing) =>
 export const getTableHeader = (listing: RailsRentalListing) => {
   let header = null
   if (listing.Units_Available > 0) {
-    header = "Available Units"
+    header = t("listings.availableUnits")
   }
   if (listing.hasWaitlist) {
-    header = header ? `${header} & Open Waitlist` : "Open Waitlist"
+    header = header ? t("listings.availableUnitsAndOpenWaitlist") : t("listings.openWaitlist")
   }
   return header
 }
@@ -176,7 +177,7 @@ const getListings = (listings) =>
       }}
       tableProps={{
         headers: {
-          unitType: "t.units",
+          unitType: { name: "t.units" },
           availability: { name: "t.available" },
           income: { name: "t.incomeRange" },
           rent: { name: "t.rent" },
@@ -268,12 +269,12 @@ const DirectoryPage = (_props: DirectoryProps) => {
               <div className="bg-primary-darker">
                 <div className="max-w-5xl mx-auto p-2 md:p-4">
                   <ActionBlock
-                    header={t("listingsForRent.callout.title")}
+                    header={t("rentalDirectory.callouttitle")}
                     background="primary-darker"
                     layout={ActionBlockLayout.inline}
                     actions={[
                       <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
-                        {t("listingsForRent.callout.button")}
+                        {t("rentalDirectory.calloutbutton")}
                       </Link>,
                     ]}
                   />
