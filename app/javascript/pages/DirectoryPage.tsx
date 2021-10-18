@@ -23,6 +23,7 @@ import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getAdditionalResourcesPath } from "../util/routeUtil"
 import RentalHeader from "./ListingDirectory/RentalHeader"
+import { areLotteryResultsShareable } from "../util/listingStatusUtil"
 
 interface DirectoryProps {
   isRental: boolean
@@ -49,7 +50,7 @@ export const getListingImageCardStatuses = (listing: RailsRentalListing): Status
       },
     ]
   } else {
-    if (!listing.Publish_Lottery_Results) {
+    if (!areLotteryResultsShareable(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
         content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
@@ -71,7 +72,7 @@ export const getNumberString = (currencyNumber: number) =>
 
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
-    const range = t("numberRange", {
+    const range = t("t.numberRange", {
       minValue: `${prefix ?? ""}${getNumberString(min)}`,
       maxValue: `${prefix ?? ""}${getNumberString(max)}`,
     })
@@ -237,7 +238,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
         if (dayjs(listing.Application_Due_Date) > dayjs()) {
           open.push(listing)
         } else {
-          if (listing.Publish_Lottery_Results) {
+          if (areLotteryResultsShareable(listing)) {
             results.push(listing)
           } else {
             upcoming.push(listing)
@@ -248,7 +249,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
         new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
       )
       upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-        new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
+        new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
       )
       results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
         new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
