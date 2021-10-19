@@ -1317,12 +1317,12 @@
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
 
-"@bloom-housing/ui-components@^2.0.0-alpha.0":
-  version "2.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-2.0.0-alpha.0.tgz#57888034deafd0a97a92bba5514475de7b935136"
-  integrity sha512-ucXS/dApv/ZBP3kv2TpdnwNHM+wP3xivkQU3voFiZQW3O7UyOiZRsKvZgxKquXkbba2lsvANM9JL20w4qmbLBw==
+"@bloom-housing/ui-components@^2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-2.0.0-alpha.2.tgz#9700c0f220397e0e2af25698b31def5015d0a18b"
+  integrity sha512-o4xt3bPt4DdSsMlJWuLt1lOOzb5xxaOqUsnO55PUcIsCQMcjebHhhLGKL8zuwqOmXEOQFSCTgnC0yvsnShZaWQ==
   dependencies:
-    "@bloom-housing/backend-core" "^1.0.5"
+     "@bloom-housing/backend-core" "^1.0.5"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1762,7 +1762,7 @@
 
 "@nestjs/common@^7.4.4":
   version "7.6.18"
-  resolved "https://registry.npmjs.org/@nestjs/common/-/common-7.6.18.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.6.18.tgz#d89e6d248985eec13af60507a8725cb2142d660a"
   integrity sha512-BUJQHNhWzwWOkS4Ryndzd4HTeRObcAWV2Fh+ermyo3q3xYQQzNoEWclJVL/wZec8AONELwIJ+PSpWI53VP0leg==
   dependencies:
     axios "0.21.1"
@@ -1783,7 +1783,7 @@
 
 "@nestjs/core@^7.4.4":
   version "7.6.18"
-  resolved "https://registry.npmjs.org/@nestjs/core/-/core-7.6.18.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-7.6.18.tgz#36448f0ae7f7d08f032e1e7e53b4a4c82ae844d7"
   integrity sha512-CGu20OjIxgFDY7RJT5t1TDGL8wSlTSlbZEkn8U5OlICZEB3WIpi98G7ajJpnRWmEgW8S4aDJmRKGjT+Ntj5U4A==
   dependencies:
     "@nuxtjs/opencollective" "0.3.2"
@@ -1814,7 +1814,7 @@
 
 "@nestjs/platform-express@^7.4.4":
   version "7.6.18"
-  resolved "https://registry.npmjs.org/@nestjs/platform-express/-/platform-express-7.6.18.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-7.6.18.tgz#cdf442dfd85948fc7b67bbc4007dddef83cdd4b9"
   integrity sha512-Dty2bBhsW7EInMRPS1pkXKJ3GBBusEj6fnEpb0UfkaT3E7asay9c64kCmZE+8hU430qQjY+fhBb1RNWWPnUiwQ==
   dependencies:
     body-parser "1.19.0"

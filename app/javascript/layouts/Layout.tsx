@@ -81,25 +81,17 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
         {
           title: t("nav.myDashboard"),
           href: "/my-account",
-          iconSrc: "https://bit.ly/2YoHrxA",
-          iconClassName: "w-6 pr-2",
         },
         {
           title: t("nav.myApplications"),
           href: "/my-applications",
-          iconSrc: "https://bit.ly/2YoHrxA",
-          iconClassName: "w-6 pr-2",
         },
         {
           title: t("nav.accountSettings"),
           href: "/account-settings",
-          iconSrc: "https://bit.ly/2YoHrxA",
-          iconClassName: "w-6 pr-2",
         },
         {
           title: t("nav.signOut"),
-          iconClassName: "w-6 pr-2",
-          iconSrc: "https://bit.ly/2YoHrxA",
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974
             // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")

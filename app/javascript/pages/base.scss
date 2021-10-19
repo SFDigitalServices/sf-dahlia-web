@@ -42,13 +42,6 @@ body {
   }
 }
 
-.site-content--wide-content {
-  .navbar,
-  .page-header__group {
-    @apply max-w-screen-xl;
-  }
-}
-
 // Set up Bulma-specific variables and mixins
 $white: $tailwind-white;
 $background: #eee;
@@ -235,11 +228,6 @@ $colors: (
   li {
     display: inline;
   }
-}
-
-// Override bloom styles so that navbar doesn't overflow on medium screens.
-.navbar-item.logo.navbar-width-med {
-  max-width: 270px;
 }
 
 // Override bloom styles for page header until we can make updates in their code
