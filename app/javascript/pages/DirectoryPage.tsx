@@ -154,6 +154,7 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
   }
   return null
 }
+const headerClassNames = "text-base text-gray-700 border-b"
 
 type Listing = RailsRentalListing & {
   Reserved_community_type: string
@@ -178,10 +179,10 @@ const getListings = (listings) =>
       }}
       tableProps={{
         headers: {
-          unitType: { name: "t.units" },
-          availability: { name: "t.available" },
-          income: { name: "t.incomeRange" },
-          rent: { name: "t.rent" },
+          unitType: { name: "t.units", className: headerClassNames },
+          availability: { name: "t.available", className: headerClassNames },
+          income: { name: "t.incomeRange", className: headerClassNames },
+          rent: { name: "t.rent", className: headerClassNames },
         },
         responsiveCollapse: true,
         cellClassName: "px-5 py-3",
