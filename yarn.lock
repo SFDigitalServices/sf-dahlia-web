@@ -7915,9 +7915,9 @@ grunt-exec@3.0.0:
   resolved "https://registry.npmjs.org/grunt-exec/-/grunt-exec-3.0.0.tgz"
   integrity sha512-cgAlreXf3muSYS5LzW0Cc4xHK03BjFOYk0MqCQ/MZ3k1Xz2GU7D+IAJg4UKicxpO+XdONJdx/NJ6kpy2wI+uHg==
 
-"grunt-json-remove-fields@github:SFDigitalServices/grunt-json-remove-fields#4f9ef75":
+"grunt-json-remove-fields@https://github.com/SFDigitalServices/grunt-json-remove-fields#4f9ef75":
   version "0.1.2"
-  resolved "git+ssh://git@github.com/SFDigitalServices/grunt-json-remove-fields.git#4f9ef75865cc0ff5fbf7fc55037d19e4f4edda62"
+  resolved "https://github.com/SFDigitalServices/grunt-json-remove-fields#4f9ef75865cc0ff5fbf7fc55037d19e4f4edda62"
 
 grunt-known-options@~1.1.0:
   version "1.1.1"
