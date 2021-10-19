@@ -15,7 +15,7 @@ defaults: &defaults
       environment:
         POSTGRES_USER: root
         POSTGRES_DB: sf_dahlia
-    - image: "cypress/base:12.18.2"
+    - image: "cypress/base:14.7.0"
   executor: ruby/default
 non_production_jobs: &non_production_jobs
   filters:

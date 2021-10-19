@@ -1267,7 +1267,7 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@2.0.0-pre-tailwind.1":
+"@bloom-housing/backend-core@^2.0.0-pre-tailwind.1":
   version "2.0.0-pre-tailwind.1"
   resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-2.0.0-pre-tailwind.1.tgz#6e5ed85794b27a7df240e863075c63eb6dfdd323"
   integrity sha512-vUFo6Ghf9EVVrhbiPJSEqitCT46yC375p2hghkc87zpFBSg/w842CR0eSCbfoCGPfFDqz+nLigsfafWrDSDt4A==
