@@ -91,7 +91,6 @@
   },
   "engines": {
     "node": "14.17.6",
-    "npm": "5.3.0",
     "yarn": "1.x.x"
   },
   "scripts": {
