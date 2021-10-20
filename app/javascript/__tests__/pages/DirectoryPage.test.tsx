@@ -48,6 +48,7 @@ describe("<DirectoryPage />", () => {
       Application_Due_Date: "2000-10-30T00:00:00.000+0000",
       Lottery_Results_Date: "2000-10-31T00:00:00.000+0000",
       Publish_Lottery_Results: true,
+      Lottery_Status: "Lottery Complete",
     }
     expect(getListingImageCardStatuses(testListing as RailsRentalListing)).toStrictEqual([
       { status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true },
