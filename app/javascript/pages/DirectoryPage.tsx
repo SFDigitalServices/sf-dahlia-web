@@ -23,6 +23,7 @@ import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getAdditionalResourcesPath } from "../util/routeUtil"
 import RentalHeader from "./ListingDirectory/RentalHeader"
+import { areLotteryResultsShareable } from "../util/listingStatusUtil"
 
 interface DirectoryProps {
   isRental: boolean
@@ -49,7 +50,7 @@ export const getListingImageCardStatuses = (listing: RailsRentalListing): Status
       },
     ]
   } else {
-    if (!listing.Publish_Lottery_Results) {
+    if (!areLotteryResultsShareable(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
         content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
@@ -71,9 +72,11 @@ export const getNumberString = (currencyNumber: number) =>
 
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
-    return `${prefix ?? ""}${getNumberString(min)} to ${prefix ?? ""}${getNumberString(max)}${
-      suffix ?? ""
-    }`
+    const range = t("t.numberRange", {
+      minValue: `${prefix ?? ""}${getNumberString(min)}`,
+      maxValue: `${prefix ?? ""}${getNumberString(max)}`,
+    })
+    return `${range}${suffix ?? ""}`
   }
   if (min || max) {
     return `${prefix ?? ""}${getNumberString(min ?? max)}${suffix ?? ""}`
@@ -82,43 +85,76 @@ export const getRangeString = (min: number, max: number, suffix?: string, prefix
 }
 
 export const getRentRangeString = (summary: RailsRentalUnitSummary) => {
-  const rentRangeString = getRangeString(
-    summary.minMonthlyRent,
-    summary.maxMonthlyRent,
-    " per month",
-    "$"
-  )
+  const rentRangeString = getRangeString(summary.minMonthlyRent, summary.maxMonthlyRent, null, "$")
   const percentIncomeRangeString = getRangeString(
     summary.minPercentIncome,
     summary.maxPercentIncome,
-    "% income"
+    "%"
   )
   return rentRangeString ?? percentIncomeRangeString ?? ""
 }
+
+export const getRentSubText = (summary: RailsRentalUnitSummary) => {
+  if (summary?.minMonthlyRent || summary?.maxMonthlyRent) {
+    return t("t.perMonth")
+  } else if (summary?.minPercentIncome || summary?.maxPercentIncome) {
+    return t("t.income")
+  }
+  return null
+}
+
+export const showWaitlist = (listing: RailsRentalListing, summary: RailsRentalUnitSummary) =>
+  listing.hasWaitlist && summary.availability <= 0
+
+export const getAvailabilityString = (
+  listing: RailsRentalListing,
+  summary: RailsRentalUnitSummary,
+  mobile?: boolean
+) =>
+  showWaitlist(listing, summary)
+    ? t("t.waitlist")
+    : `${summary.availability}${!mobile ? " " + t("t.available") : ""}`
 
 const getUnitSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
-      unitType: <>{summary.unitType}</>,
-      minimumIncome: (
-        <>
-          {getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, " per month", "$")}
-        </>
-      ),
-      rent: <>{getRentRangeString(summary)}</>,
+      unitType: {
+        cellText: summary.unitType,
+        cellSubText: getAvailabilityString(listing, summary, false),
+        hideMobile: true,
+      },
+      availability: {
+        cellText: getAvailabilityString(listing, summary, true),
+        cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
+      },
+      income: {
+        cellText: getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, null, "$"),
+        cellSubText: t("t.perMonth"),
+      },
+      rent: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
     }))
 
 export const getTableHeader = (listing: RailsRentalListing) => {
   let header = null
   if (listing.Units_Available > 0) {
-    header = "Available Units"
+    header = t("listings.availableUnits")
   }
   if (listing.hasWaitlist) {
-    header = header ? `${header} & Open Waitlist` : "Open Waitlist"
+    header = header ? t("listings.availableUnitsAndOpenWaitlist") : t("listings.openWaitlist")
   }
   return header
 }
+
+export const getTableSubHeader = (listing: RailsRentalListing) => {
+  if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
+    const priorityNames = listing.prioritiesDescriptor.map((priority) => priority.name)
+    // TODO: Translate the priority descriptor names.
+    return t("listings.includesPriorityUnits", { priorities: priorityNames.join(", ") })
+  }
+  return null
+}
+const headerClassNames = "text-base text-gray-700 border-b"
 
 type Listing = RailsRentalListing & {
   Reserved_community_type: string
@@ -136,20 +172,24 @@ const getListings = (listings) =>
         tagLabel: listing.Reserved_community_type ?? undefined,
         statuses: getListingImageCardStatuses(listing),
       }}
-      tableProps={{
-        headers: {
-          unitType: t("t.unitType"),
-          minimumIncome: t("t.minimumIncome"),
-          rent: t("t.rent"),
-        },
-        data: [{ data: getUnitSummaryTable(listing) }],
-        responsiveCollapse: true,
-        cellClassName: "px-5 py-3",
-      }}
-      seeDetailsLink={`/listings/${listing.listingID}`}
       tableHeaderProps={{
         tableHeader: getTableHeader(listing),
+        tableSubHeader: getTableSubHeader(listing),
+        stackedTable: true,
       }}
+      tableProps={{
+        headers: {
+          unitType: { name: "t.units", className: headerClassNames },
+          availability: { name: "t.available", className: headerClassNames },
+          income: { name: "t.incomeRange", className: headerClassNames },
+          rent: { name: "t.rent", className: headerClassNames },
+        },
+        responsiveCollapse: true,
+        cellClassName: "px-5 py-3",
+        headersHiddenDesktop: ["availability"],
+        stackedData: getUnitSummaryTable(listing),
+      }}
+      seeDetailsLink={`/listings/${listing.listingID}`}
     />
   ))
 
@@ -199,7 +239,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
         if (dayjs(listing.Application_Due_Date) > dayjs()) {
           open.push(listing)
         } else {
-          if (listing.Publish_Lottery_Results) {
+          if (areLotteryResultsShareable(listing)) {
             results.push(listing)
           } else {
             upcoming.push(listing)
@@ -210,7 +250,7 @@ const DirectoryPage = (_props: DirectoryProps) => {
         new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
       )
       upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-        new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
+        new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
       )
       results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
         new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
@@ -231,12 +271,12 @@ const DirectoryPage = (_props: DirectoryProps) => {
               <div className="bg-primary-darker">
                 <div className="max-w-5xl mx-auto p-2 md:p-4">
                   <ActionBlock
-                    header={t("listingsForRent.callout.title")}
+                    header={t("rentalDirectory.callouttitle")}
                     background="primary-darker"
                     layout={ActionBlockLayout.inline}
                     actions={[
                       <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
-                        {t("listingsForRent.callout.button")}
+                        {t("rentalDirectory.calloutbutton")}
                       </Link>,
                     ]}
                   />
