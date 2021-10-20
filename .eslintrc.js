@@ -87,7 +87,6 @@ module.exports = {
       },
     ],
     "@typescript-eslint/no-unused-vars": "off",
-
     "@typescript-eslint/no-var-requires": "off",
     "no-use-before-define": "off",
     "no-void": [
@@ -166,6 +165,7 @@ module.exports = {
     ],
     "unicorn/prevent-abbreviations": "off",
     "import/order": "off",
+    "@typescript-eslint/no-empty-function": "off",
   },
   overrides: [
     {

@@ -39,20 +39,20 @@ aliases:
       at: ~/web
   - &restore_yarn_cache
     restore_cache:
-        name: Restore Yarn Cache
-        keys:
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
+      name: Restore Yarn Cache
+      keys:
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
   - &restore_bundler_cache
     restore_cache:
-        name: Restore Bundler Cache
-        keys:
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
+      name: Restore Bundler Cache
+      keys:
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
 commands:
   prepare_workspace:
     description: "Attach workspace and restore cache"
@@ -159,7 +159,7 @@ jobs:
       - run: bundle exec rake db:test:prepare
       - run: bundle exec rake db:migrate
       - run:
-          name:  Download cc-test-reporter
+          name: Download cc-test-reporter
           command: |
             mkdir -p tmp/
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
@@ -199,8 +199,8 @@ jobs:
   e2e:
     <<: *defaults
     environment:
-      HOME_PAGE_REACT: 'true'
-      SIGN_IN_PAGE_REACT: 'true'
+      HOME_PAGE_REACT: "true"
+      SIGN_IN_PAGE_REACT: "true"
     steps:
       - setup
       - start-server

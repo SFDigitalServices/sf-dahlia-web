@@ -92,11 +92,11 @@ describe("Homepage integration tests", () => {
   describe("using the nav bar", () => {
     beforeEach(() => {
       cy.visit("/")
-      cy.get("[data-testid=nav-button--rent]").as("NavBarRentButton")
-      cy.get("[data-testid=nav-button--buy]").as("NavBarBuyButton")
-      cy.get("[data-testid=nav-button--favorites]").as("NavBarFavoritesButton")
-      cy.get("[data-testid=nav-button--assistance]").as("NavBarAssistanceButton")
-      cy.get("[data-testid=nav-button--signin]").as("SignInButton")
+      cy.get("div.navbar-menu > a:nth-child(1)").as("NavBarRentButton")
+      cy.get("div.navbar-menu > a:nth-child(2)").as("NavBarBuyButton")
+      cy.get("div.navbar-menu > a:nth-child(3)").as("NavBarFavoritesButton")
+      cy.get("div.navbar-menu > a:nth-child(4)").as("NavBarAssistanceButton")
+      cy.get("div.navbar-menu > a:nth-child(5)").as("SignInButton")
     })
 
     describe("navigating to the for-rent page", () => {
