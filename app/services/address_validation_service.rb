@@ -27,8 +27,7 @@ class AddressValidationService
     # we don't treat timeouts as "invalid" since we want to allow them to proceed
     return false if timeout?
     return false unless @validation.present?
-    !@validation.verifications.delivery.success ||
-      @validation.street1.include?('PO BOX')
+    @validation.street1.include?('PO BOX')
   end
 
   def error
