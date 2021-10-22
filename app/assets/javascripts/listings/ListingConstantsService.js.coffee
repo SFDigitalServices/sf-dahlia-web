@@ -32,51 +32,36 @@ ListingConstantsService = () ->
     url: Service._mohcdSalePaperAppTemplate.replace('{lang}', l.slug || l.language)
   })
 
-  Service.fieldsForUnitSorting = [
+  Service.baseUnitFieldsForGrouping = [
     'Unit_Type',
     'Reserved_Type',
-    'BMR_Rent_Monthly',
     'BMR_Rental_Minimum_Monthly_Income_Needed',
-    'Rent_percent_of_income',
-    'Price_Without_Parking',
-    'Price_With_Parking',
-    'HOA_Dues_Without_Parking',
-    'HOA_Dues_With_Parking',
     'Min_AMI_for_Qualifying_Unit',
     'Max_AMI_for_Qualifying_Unit',
     'Planning_AMI_Tier',
     'Min_Occupancy',
     'Max_Occupancy',
-    'Status',
   ]
 
   Service.fieldsForRentalUnitGrouping = [
-    'Unit_Type',
-    'Reserved_Type',
+    Service.baseUnitFieldsForGrouping...,
     'BMR_Rent_Monthly',
-    'BMR_Rental_Minimum_Monthly_Income_Needed',
     'Rent_percent_of_income',
-    'Min_AMI_for_Qualifying_Unit',
-    'Max_AMI_for_Qualifying_Unit',
-    'Planning_AMI_Tier',
-    'Min_Occupancy',
-    'Max_Occupancy',
     'Status',
   ]
 
   Service.fieldsForSaleUnitGrouping = [
-    'Unit_Type',
-    'Reserved_Type',
+    Service.baseUnitFieldsForGrouping...,
     'Price_Without_Parking',
     'Price_With_Parking',
     'HOA_Dues_Without_Parking',
     'HOA_Dues_With_Parking',
-    'Min_AMI_for_Qualifying_Unit',
-    'Max_AMI_for_Qualifying_Unit',
-    'Planning_AMI_Tier',
-    'Min_Occupancy',
-    'Max_Occupancy',
   ]
+
+  Service.fieldsForUnitSorting = _.uniq([
+    Service.fieldsForRentalUnitGrouping...,
+    Service.fieldsForSaleUnitGrouping...
+  ])
 
   Service.priorityLabelMap =
     'Vision impairments':

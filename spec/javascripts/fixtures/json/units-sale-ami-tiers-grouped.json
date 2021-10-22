@@ -15,7 +15,6 @@
             "Max_AMI_for_Qualifying_Unit": 65,
             "Planning_AMI_Tier": "Low Income",
             "Min_Occupancy": 1,
-            "Status": "Available",
             "total": 1,
             "incomeLimits": [
               {
@@ -49,7 +48,6 @@
             "Max_AMI_for_Qualifying_Unit": 90,
             "Planning_AMI_Tier": "Moderate Income",
             "Min_Occupancy": 1,
-            "Status": "Available",
             "total": 1,
             "incomeLimits": [
               {
