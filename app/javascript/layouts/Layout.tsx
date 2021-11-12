@@ -157,7 +157,7 @@ const Layout = (props: LayoutProps) => {
           flattenSubMenus={true}
           imageOnly={true}
           mobileText={true}
-          logoWidth={"base"}
+          logoWidth={"medium"}
           menuLinks={getMenuLinks(!!profile, signOut)}
         />
 
