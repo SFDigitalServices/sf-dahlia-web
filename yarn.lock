@@ -1288,7 +1288,7 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@3.0.1-alpha.10":
+"@bloom-housing/backend-core@^3.0.1-alpha.10":
   version "3.0.1-alpha.10"
   resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.10.tgz#46b2c211ec92949f993a10dad292226e3e173d79"
   integrity sha512-uCemNLg8WHhuuZ1NEEOyGWRQzqI3qYV8DpUVnvYU+1hWpjq40+pslaq55MTo0Cjzd0zygKRpyncRWq2L+eH0gw==
