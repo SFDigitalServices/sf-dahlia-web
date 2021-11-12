@@ -33,7 +33,7 @@ Before you install DAHLIA, your system should have the following:
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 12.16.x
+- [Node.js](https://nodejs.org/en/) 14.7.0
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
