@@ -1,6 +1,4 @@
-import React from "react"
-
-import DirectoryPage, {
+import {
   getListingImageCardStatuses,
   getNumberString,
   getRangeString,
@@ -8,18 +6,11 @@ import DirectoryPage, {
   getRentSubText,
   getTableHeader,
   showWaitlist,
-} from "../../pages/DirectoryPage"
+} from "../../pages/ListingDirectory/DirectoryPage"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
-import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<DirectoryPage />", () => {
-  it("renders successfully", async () => {
-    const { getByText } = await renderAndLoadAsync(<DirectoryPage assetPaths={{}} isRental />)
-
-    expect(getByText("DAHLIA: San Francisco Housing Portal is a project of the")).not.toBeNull()
-  })
-
   it("getListingImageCardStatuses renders as open application", () => {
     const testListing = {
       Application_Due_Date: "2100-10-30T00:00:00.000+0000",
