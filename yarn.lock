@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.1-alpha.10":
-  version "3.0.1-alpha.10"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.10.tgz#46b2c211ec92949f993a10dad292226e3e173d79"
-  integrity sha512-uCemNLg8WHhuuZ1NEEOyGWRQzqI3qYV8DpUVnvYU+1hWpjq40+pslaq55MTo0Cjzd0zygKRpyncRWq2L+eH0gw==
+"@bloom-housing/backend-core@^3.0.1-alpha.15":
+  version "3.0.1-alpha.15"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.15.tgz#54595b51d170a36a5c417236220d4f66281a540e"
+  integrity sha512-NbBYByHDsi3vhW0W5ipwTc0eJJhVhd0JangLKU/7r5BlbFXtertd4OX0Pg+13jh47yWMUqlcN+wm47rJ4q5y4Q==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
