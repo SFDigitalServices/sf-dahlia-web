@@ -1341,10 +1341,10 @@
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
 
-"@bloom-housing/ui-components@^3.0.1-alpha.8":
-  version "3.0.1-alpha.8"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.8.tgz#92996d01c6e78b398d59d89a68c9ad6820223282"
-  integrity sha512-eDFO8VQu2A58T5hYiqxo30szyqUpMVxsKUPjhbl+BPX+2rgVjCjiq4x47hqGZnnkDu3Kg59qvEZiAxpQvebgew==
+"@bloom-housing/ui-components@^3.0.1-alpha.13":
+  version "3.0.1-alpha.13"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.13.tgz#e1f0669e3010623d9674f09a889a293f4910a63c"
+  integrity sha512-cK8jw6s5HqYNP0fuhd1icoNvRwvySGCCFNmHzCzWqKSbCFP4dCopIOrazSxAmNthjPiRkMYgy8IUwuF3a4X46Q==
   dependencies:
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
@@ -2210,6 +2210,13 @@
   version "4.2.1"
   resolved "https://registry.npmjs.org/@types/aria-query/-/aria-query-4.2.1.tgz"
   integrity sha512-S6oPal772qJZHoRZLFc/XoZW2gFvwXusYUmXPXkgxJLuEk2vOt7jc4Yo6z/vtI0EBkbPBVrJJ0B+prLIKiWqHg==
+
+"@types/axios@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"
+  integrity sha1-7CMA++fX3d1+udOr+HmZlkyvzkY=
+  dependencies:
+    axios "*"
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.12"
@@ -3639,6 +3646,13 @@ axe-core@^4.0.2, axe-core@^4.2.3:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
   integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
+
+axios@*:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axios@0.21.1, axios@^0.21.1:
   version "0.21.1"
@@ -7386,7 +7400,7 @@ follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.2.tgz"
   integrity sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
 
-follow-redirects@^1.14.0:
+follow-redirects@^1.14.0, follow-redirects@^1.14.4:
   version "1.14.5"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
