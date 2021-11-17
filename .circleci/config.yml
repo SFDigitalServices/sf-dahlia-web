@@ -195,6 +195,7 @@ jobs:
       - setup
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
+      - run: yarn install
       - run: bundle exec rake jasmine:ci
   e2e:
     <<: *defaults

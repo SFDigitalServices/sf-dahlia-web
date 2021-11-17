@@ -15,7 +15,6 @@
             "Max_AMI_for_Qualifying_Unit": 55,
             "Min_Occupancy": 1,
             "Max_Occupancy": 3,
-            "Status": "Available",
             "total": 2,
             "incomeLimits": [
               {
@@ -55,7 +54,6 @@
             "Max_AMI_for_Qualifying_Unit": 60,
             "Min_Occupancy": 2,
             "Max_Occupancy": 5,
-            "Status": "Available",
             "total": 2,
             "incomeLimits": [
               {
@@ -100,7 +98,6 @@
             "Max_AMI_for_Qualifying_Unit": 55,
             "Min_Occupancy": 3,
             "Max_Occupancy": 7,
-            "Status": "Available",
             "total": 1,
             "incomeLimits": [
               {
@@ -145,7 +142,6 @@
             "Max_AMI_for_Qualifying_Unit": 60,
             "Min_Occupancy": 3,
             "Max_Occupancy": 7,
-            "Status": "Available",
             "total": 1,
             "incomeLimits": [
               {
