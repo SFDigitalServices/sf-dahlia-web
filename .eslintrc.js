@@ -58,7 +58,6 @@ module.exports = {
   ],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    "arrow-body-style": ["error", "as-needed"],
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/naming-convention": [
       "error",

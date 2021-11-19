@@ -19,7 +19,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       u.Unit_Type = '000SRO' if u.Unit_Type == 'SRO'
       return u
     # sort everything based on the order presented in pickList
-    units = _.sortBy units, ListingConstantsService.fieldsForUnitGrouping
+    units = _.sortBy units, ListingConstantsService.fieldsForUnitSorting
     # put "Studio" back to normal
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
@@ -43,16 +43,16 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
     _.map(combined, (u) -> u.Unit_Type = u.unitType)
     Service._sortGroupedUnits(combined)
 
-  Service._sumSimilarUnits = (units) ->
+  Service._sumSimilarUnits = (units, fieldsForGrouping) ->
     # Given ListingConstantsService.fieldsForUnitGrouping,
     # combine similar units, and add up the number of available units.
     summaries = []
     # Create an identity function to group by unique price and income
     group = _.groupBy units, (unit) ->
-      _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
+      _.flatten(_.toPairs(_.pick(unit, fieldsForGrouping)))
     _.forEach group, (groupedUnits, id) ->
       # Summarize each group by combining the unit details + # of units for that type/AMI combo.
-      summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
+      summary = _.pick(groupedUnits[0], fieldsForGrouping)
       summary.total = groupedUnits.length
       summaries.push(summary)
     summaries
@@ -89,7 +89,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       if minAMIs
         minIncome = Service._convertMinAnnualToMonthly(Service._getAnnualAMIAmount(minAMIs, occupancy))
       else
-        minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed.toString()
+        minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed?.toString()
       return {
         'occupancy': occupancy,
         'maxIncome': maxIncome,
@@ -143,7 +143,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
 
     ###
     # Sum similar units into individual rows
-    similarUnits = Service._sumSimilarUnits(units)
+    similarUnits = Service._sumSimilarUnits(units, ListingConstantsService.fieldsForRentalUnitGrouping)
     # Assign units to different household sizes + add income ranges
     byHHSize = {}
     # Get income ranges for rows and distribute into object by hh size.
@@ -208,7 +208,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       incomeLevels = []
       groupedByAmi = _.groupBy unitsGroupedByType, 'Max_AMI_for_Qualifying_Unit'
       _.forEach groupedByAmi, (groupedByAmiAndType, percent) ->
-        summaries = Service._sumSimilarUnits(groupedByAmiAndType)
+        summaries = Service._sumSimilarUnits(groupedByAmiAndType, ListingConstantsService.fieldsForSaleUnitGrouping)
         # Expand data to include income ranges by occupancy
         priceGroups = summaries.map((summary) ->
           _.merge(summary, {
