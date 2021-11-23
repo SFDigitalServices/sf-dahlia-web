@@ -28,9 +28,14 @@ export const getLocalizedPath = (
   return `${cleanedPath}${queryString || ""}`
 }
 
-const localizedPathGetter = (newPathNonLocalized: string) => (
+export const localizedPathGetter = (newPathNonLocalized: string) => (
   currentPath: string | undefined = window.location.pathname
 ): string => getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
+
+export const localizedPath = (newPathNonLocalized: string) => {
+  const currentPath: string | undefined = window.location.pathname
+  return getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
+}
 
 /**
  * Get new path after switching languages
@@ -51,6 +56,10 @@ export const getMyAccountPath = localizedPathGetter("/my-account")
 export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
 export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
+
+// Rental Listing Directory
+export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
+export const getEligibilityEstimatorLink = localizedPathGetter("/eligibility-estimator/rental")
 
 // Footer
 export const getDisclaimerPath = localizedPathGetter("/disclaimer")

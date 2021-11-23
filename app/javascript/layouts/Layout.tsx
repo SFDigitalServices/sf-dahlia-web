@@ -5,21 +5,20 @@ import {
   FooterNav,
   FooterSection,
   LangItem,
-  LanguageNav,
-  LanguageNavLang,
   SiteFooter,
   SiteHeader,
   t,
   AlertTypes,
+  MenuLink,
 } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
-
-import { MainNav } from "../components/MainNav"
+import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
-import { LANGUAGE_CONFIGS } from "../util/languageUtil"
+import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
+import { getSignInPath, getLocalizedPath } from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -40,30 +39,81 @@ const asAlertType = (alertType: string): AlertTypes => {
   }
 }
 
-const getLanguageItems = (): LanguageNavLang => {
+const getLanguageItems = () => {
   const languageItems: LangItem[] = []
-  const languageCodes: string[] = []
   for (const item of Object.values(LANGUAGE_CONFIGS)) {
     languageItems.push({
-      prefix: item.isDefault ? "" : item.prefix,
-      get label() {
-        return item.getLabel()
+      active: getCurrentLanguage(window.location.pathname) === item.prefix,
+      label: item.getLabel(),
+      onClick: () => {
+        window.location.href = getLocalizedPath(window.location.pathname, item.prefix)
       },
     })
-
-    languageCodes.push(item.prefix)
   }
 
-  return {
-    list: languageItems,
-    codes: languageCodes,
-  }
+  return languageItems
 }
 
-const langItems = getLanguageItems()
+const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
+  const menuLinks: MenuLink[] = [
+    {
+      title: t("nav.rent"),
+      href: "/listings/for-rent",
+    },
+    {
+      title: t("nav.buy"),
+      href: "/listings/for-sale",
+    },
+    {
+      title: t("nav.myFavorites"),
+      href: "/favorites",
+    },
+    {
+      title: t("nav.getAssistance"),
+      href: "/get-assistance",
+    },
+  ]
+
+  if (signedIn) {
+    menuLinks.push({
+      title: t("nav.myAccount"),
+      subMenuLinks: [
+        {
+          title: t("nav.myDashboard"),
+          href: "/my-account",
+        },
+        {
+          title: t("nav.myApplications"),
+          href: "/my-applications",
+        },
+        {
+          title: t("nav.accountSettings"),
+          href: "/account-settings",
+        },
+        {
+          title: t("nav.signOut"),
+          onClick: () => {
+            // FIXME: Setup Site alert message for logging out DAH-974
+            // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
+            signOut()
+            // TODO: convert this to use react router when SPA routing is added
+            window.location.href = getSignInPath()
+          },
+        },
+      ],
+    })
+  } else {
+    menuLinks.push({
+      title: t("nav.signIn"),
+      href: "/sign-in",
+    })
+  }
+  return menuLinks
+}
 
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
+  const { profile, signOut } = useContext(UserContext)
 
   const researchBanner = (
     <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
@@ -95,17 +145,22 @@ const Layout = (props: LayoutProps) => {
       <div className="site-content">
         <MetaTags title={props.title} description={props.description} image={props.image} />
         {topAlert}
-        <LanguageNav language={langItems} />
         <SiteHeader
-          skip={t("t.skipToMainContent")}
+          homeURL={"/"}
+          dropdownItemClassName={"text-xs"}
+          menuItemClassName={"pb-4 pt-1 flex items-end"}
+          languages={getLanguageItems()}
           logoSrc={getAssetPath("DAHLIA-logo.svg")}
           notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
-          title={t("t.dahliaSanFranciscoHousingPortal")}
+          noticeMobile={true}
+          mobileDrawer={true}
+          flattenSubMenus={true}
           imageOnly={true}
+          mobileText={true}
           logoWidth={"medium"}
-        >
-          <MainNav />
-        </SiteHeader>
+          menuLinks={getMenuLinks(!!profile, signOut)}
+        />
+
         <main data-testid="main-content-test-id" id="main-content">
           {props.children}
         </main>

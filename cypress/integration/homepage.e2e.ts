@@ -92,10 +92,11 @@ describe("Homepage integration tests", () => {
   describe("using the nav bar", () => {
     beforeEach(() => {
       cy.visit("/")
-      cy.get("[data-testid=nav-button--rent]").as("NavBarRentButton")
-      cy.get("[data-testid=nav-button--buy]").as("NavBarBuyButton")
-      cy.get("[data-testid=nav-button--favorites]").as("NavBarFavoritesButton")
-      cy.get("[data-testid=nav-button--assistance]").as("NavBarAssistanceButton")
+      cy.get("div.navbar-menu > a:nth-child(1)").as("NavBarRentButton")
+      cy.get("div.navbar-menu > a:nth-child(2)").as("NavBarBuyButton")
+      cy.get("div.navbar-menu > a:nth-child(3)").as("NavBarFavoritesButton")
+      cy.get("div.navbar-menu > a:nth-child(4)").as("NavBarAssistanceButton")
+      cy.get("div.navbar-menu > a:nth-child(5)").as("SignInButton")
     })
 
     describe("navigating to the for-rent page", () => {
@@ -169,6 +170,19 @@ describe("Homepage integration tests", () => {
         cy.visit("/es")
         cy.get("@NavBarAssistanceButton").click()
         cy.location("pathname").should("eq", "/es/get-assistance")
+      })
+    })
+    describe("navigating to the sign-in page", () => {
+      it("navigates to the sign-in page in english by default", () => {
+        cy.visit("/")
+        cy.get("@SignInButton").click()
+        cy.location("pathname").should("eq", "/sign-in")
+      })
+
+      it("navigates to the sign-in page in spanish", () => {
+        cy.visit("/es")
+        cy.get("@SignInButton").click()
+        cy.location("pathname").should("eq", "/es/sign-in")
       })
     })
   })

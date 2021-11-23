@@ -1115,7 +1115,6 @@
             "my_dashboard": "Ang Aking Dashboard ",
             "my_favorites": "Ang Aking mga Paborito ",
             "rent": "Umupa",
-            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Mag-sign up</a> para magbigay ng feedback sa mga website ng Lungsod",
             "sign_in": "Mag-sign In ",
             "sign_out": "Mag-sign Out "
         },

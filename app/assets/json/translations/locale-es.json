@@ -1118,7 +1118,6 @@
             "my_dashboard": "Mi Panel",
             "my_favorites": "Mis Favoritos",
             "rent": "Alquilar",
-            "research_feedback": "<a target='_blank' class='a-white lined' href='{{researchUrl}}'>Regístrese</a> para darnos su opinión sobre los sitios web de la Ciudad.",
             "sign_in": "Inicie sesión",
             "sign_out": "Cierre sesión"
         },

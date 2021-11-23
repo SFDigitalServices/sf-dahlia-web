@@ -2,10 +2,11 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2
   cypress: cypress-io/cypress@1.26.0
+  browser-tools: circleci/browser-tools@1.2.2
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: circleci/ruby:2.5.3-browsers-legacy
+    - image: cimg/ruby:2.5.8-browsers
       environment:
         RAILS_ENV: development
         PGHOST: 127.0.0.1
@@ -38,20 +39,20 @@ aliases:
       at: ~/web
   - &restore_yarn_cache
     restore_cache:
-        name: Restore Yarn Cache
-        keys:
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
-          - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
+      name: Restore Yarn Cache
+      keys:
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-{{ .Branch }}-
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-main-
+        - webapp-{{ .Environment.CACHE_VERSION }}-yarn-packages-
   - &restore_bundler_cache
     restore_cache:
-        name: Restore Bundler Cache
-        keys:
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
-          - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
+      name: Restore Bundler Cache
+      keys:
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-{{ .Branch }}-
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-main-
+        - webapp-{{ .Environment.CACHE_VERSION }}-bundle-dependencies-
 commands:
   prepare_workspace:
     description: "Attach workspace and restore cache"
@@ -78,6 +79,13 @@ commands:
   setup-webdriver:
     description: "Setup webdriver for e2e tests"
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          command: |
+            google-chrome --version
+            chromedriver --version
+          name: Check install
       - run:
           command: |
             ./node_modules/protractor/bin/webdriver-manager clean
@@ -93,7 +101,6 @@ commands:
     steps:
       - checkout
       - prepare_workspace
-      - install-node
       - upgrade-bundler
       - run: bundle --path vendor/bundle
       - run: bundle exec rails db:migrate
@@ -152,7 +159,7 @@ jobs:
       - run: bundle exec rake db:test:prepare
       - run: bundle exec rake db:migrate
       - run:
-          name:  Download cc-test-reporter
+          name: Download cc-test-reporter
           command: |
             mkdir -p tmp/
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
@@ -177,6 +184,8 @@ jobs:
     <<: *defaults
     steps:
       - setup
+      - run: sudo apt-get update -y
+      - run: sudo apt-get install graphicsmagick
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake spec
@@ -190,8 +199,8 @@ jobs:
   e2e:
     <<: *defaults
     environment:
-      HOME_PAGE_REACT: 'true'
-      SIGN_IN_PAGE_REACT: 'true'
+      HOME_PAGE_REACT: "true"
+      SIGN_IN_PAGE_REACT: "true"
     steps:
       - setup
       - start-server
