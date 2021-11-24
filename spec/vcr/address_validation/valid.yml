@@ -2,17 +2,17 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.easypost.com/v2/addresses?verify%5B%5D=delivery&verify%5B%5D=zip4
+    uri: https://api.easypost.com/v2/addresses?verify%5B%5D=delivery
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: address[street1]=4053%2018th%20St.&address[city]=San%20Francisco&address[state]=CA&address[zip]=94114
     headers:
       Accept:
-      - "*/*; q=0.5, application/xml"
+      - "*/*"
       Accept-Encoding:
       - gzip, deflate
       User-Agent:
-      - EasyPost/v2 RubyClient/2.1.11
+      - EasyPost/v2 RubyClient/3.0.1
       Authorization:
       - "<<ACCESS_TOKEN>>"
       Content-Type:
@@ -30,49 +30,50 @@ http_interactions:
       - 1; mode=block
       X-Content-Type-Options:
       - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
       X-Ep-Request-Uuid:
-      - a24f60b5-4062-47a8-8c5a-d7982998260e
+      - '0907aa02619eb05df81bd2db00e2d0d1'
       Cache-Control:
-      - no-cache, no-store, must-revalidate, private
+      - no-cache, no-store
       Pragma:
       - no-cache
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_ccb98e4308484a02961b09cca1e3576c"
+      - "/api/v2/addresses/adr_958c67a34d6e11ec8de5ac1f6bc72124"
       Content-Type:
       - application/json; charset=utf-8
+      Etag:
+      - W/"1b5e565754673cbdb44eec8044967c64"
+      X-Request-Id:
+      - 19d7e5fa-5222-47ee-aab7-f521c94216d5
       X-Runtime:
-      - '0.124533'
+      - '0.048481'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - 719bbe6e00
-      - bigweb7sj
-      - easypost
+      - bigweb3nuq
+      X-Version-Label:
+      - easypost-202111240232-a8ce959d25-master
       X-Backend:
       - easypost
-      X-Canary:
-      - direct
       X-Proxied:
-      - intlb1sj 41c8ad07c9
-      - lb4sj 41c8ad07c9
+      - extlb1wdc d40607e4ab
+      - intlb2nuq d40607e4ab
+      - intlb2wdc d40607e4ab
       Strict-Transport-Security:
-      - max-age=15768000; includeSubDomains; preload
+      - max-age=31536000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA4xRQU7DMBD8SuVzCrHjNGluUSUEEioSLRcQilx7C0aOXdkO
-        oqD8nXWgHLjAzTM7szu7/iBakYYI5Tspd8saeJHXvOYiZ8sF3eVLKQWFoqwW
-        kmTE7V5ARtS3SnkIASnpQURQnUg0y2k9z6s5zbeMNWXdFNU9aoaD+lNjRQ+k
-        sYMx2NP1B2GPJxiiB4gUvTwvixmtt5ezzZacCgwLKYiO6CCbdj27uG3Xq6vN
-        6mbS4GjkVy2Cd33A55JTyuesLMpkc4ONPjnvNggPz87+5IBeaHMCvVOpT4QQ
-        k014r8F3eyG1mSZ/qfAqWoGNWqBxL0yAjOxBgRemi+KtS9c+bYXBfnGv4PVe
-        SxG1s4E0H0SB0Uge0zsMUqabN9EP2BW8dx7Rw2OGsohJJ4dBcxxS1KI6qxb4
-        mRkxzj59k3PK2BkvOFtkJOoeuvdpX9L2OFqK82sXutY+gYFAxnG6GP/v8LTD
-        OI6fAAAA//8DAJq6SfZTAgAA
+        H4sIAAAAAAAAA4xQy07DMBD8lcpX0hI7rya3qBICCRWJlhNCkWtvipFjV7aDaCv+nXWgHDjhk2d2Znd2z0RJ0hAuXVcXS1FWPMtlCZSCWEoouKB9uRMVoywnCbG7NxAB9a2UDrxHSjjgAWTHI81SRueUzlm+ZbTJyobVV2napCkKx4P8n9DwAUhjRq2xux0O3Bwv0AcHECg2yNMim9Hl9na22ZJLgWEhRlIBHWTTrmc3j+16dbdZPUwanI/8qkVwUgf81jml+ZwVWRFtdjTBRefTBuHh1ZrfHDBwpS9gsDL2CeBDtHHnFLiu50LpafK3Cu+jJJigOBp7rj0kpAcJjusu8I8u3v2yFQb7w72DU70SPChrPGnORIJWSB7j349CxOs3wY3YFZyzDtHzS4KygEknh0ZzGGPUrFpUZVoXCdHW7H/IOWVskWdZnSckqAG607QvaQccLfj1vfVda/agwZNPfF8AAAD//wMAnPZb7CoCAAA=
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:39 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Wed, 24 Nov 2021 21:36:29 GMT
+recorded_with: VCR 5.0.0

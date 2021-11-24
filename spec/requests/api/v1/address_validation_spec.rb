@@ -59,7 +59,7 @@ describe 'Address Validation API' do
     expect(json['address']['verifications']['delivery']['success']).to eq(true)
   end
 
-  it 'validates invalid address with success == false' do
+  it 'allows invalid addresses to continue through' do
     VCR.use_cassette('address_validation/invalid') do
       params = {
         address: {
@@ -73,11 +73,48 @@ describe 'Address Validation API' do
     end
 
     json = JSON.parse(response.body)
+    # test for the 422 error status
+    expect(response.status).to eq(200)
 
+    # Check that we got a status of 200 even though the address was invalid
+    expect(json['address']['verifications']['delivery']['success']).to eq(false)
+  end
+
+  it 'raises an error for valid PO Boxes' do
+    VCR.use_cassette('address_validation/po_box_valid') do
+      params = {
+        address: {
+          street1: 'P.O. Box 37176',
+          city: 'San Francisco',
+          state: 'CA',
+          zip: '94137',
+        },
+      }
+      post '/api/v1/addresses/validate.json', params: params
+    end
+
+    json = JSON.parse(response.body)
     # test for the 422 error status
     expect(response.status).to eq(422)
+    expect(json['error']).to eq('PO BOX')
+  end
 
-    # check to make sure the delivery verification == 'success'
-    expect(json['address']['verifications']['delivery']['success']).to eq(false)
+  it 'raises an error for invalid PO Boxes' do
+    VCR.use_cassette('address_validation/po_box_invalid') do
+      params = {
+        address: {
+          street1: 'P.O. Box 123',
+          city: 'San Francisco',
+          state: 'CA',
+          zip: '94137',
+        },
+      }
+      post '/api/v1/addresses/validate.json', params: params
+    end
+
+    json = JSON.parse(response.body)
+    # test for the 422 error status
+    expect(response.status).to eq(422)
+    expect(json['error']).to eq('PO BOX')
   end
 end
