@@ -179,6 +179,7 @@ jobs:
     <<: *defaults
     steps:
       - setup
+      - run: yarn cache clean
       - run: yarn install
       - run: yarn test
   unit-rspec:
