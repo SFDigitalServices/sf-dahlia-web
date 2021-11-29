@@ -35,6 +35,23 @@ describe 'Address Validation API' do
       end
     end
   end
+
+  describe 'valid PO Box' do
+    save_fixture do
+      VCR.use_cassette('address_validation/po_box_valid') do
+        params = {
+          address: {
+            street1: 'P.O. Box 37176',
+            city: 'San Francisco',
+            state: 'CA',
+            zip: '94137',
+          },
+        }
+        post '/api/v1/addresses/validate.json', params: params
+      end
+    end
+  end
+
   # ---- end Jasmine fixtures
 
   it 'validates valid address with success == true' do
