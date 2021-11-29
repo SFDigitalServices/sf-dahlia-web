@@ -128,5 +128,5 @@ Then 'I should see an error about selecting an option', ->
 
 Then 'I should see an address not found error', ->
   Utils.Expect.alertBox(@)
-  Utils.Expect.error(@, 'This address was not found.')
+  Utils.Expect.error(@, 'PO Boxes are not allowed.')
 
