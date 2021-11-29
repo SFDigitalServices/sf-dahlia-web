@@ -8,7 +8,8 @@
     "@babel/plugin-transform-react-jsx": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
-    "@bloom-housing/ui-components": "^2.0.0-alpha.2",
+    "@bloom-housing/ui-components": "^3.0.1-alpha.22",
+    "@bloom-housing/backend-core": "^3.0.1-alpha.24",
     "@rails/webpacker": "5.2.1",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
@@ -90,7 +91,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "engines": {
-    "node": "12.16.x",
     "npm": "5.3.0",
     "yarn": "1.x.x"
   },
