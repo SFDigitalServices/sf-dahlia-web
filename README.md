@@ -29,11 +29,11 @@ See [here](https://www.lucidchart.com/documents/view/53cd191b-3ca5-4b23-832d-28a
 
 Before you install DAHLIA, your system should have the following:
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.3 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.9 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 12.16.x
+- [Node.js](https://nodejs.org/en/) 14.7.0
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
