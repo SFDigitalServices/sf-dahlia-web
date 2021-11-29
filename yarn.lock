@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.1-alpha.24":
-  version "3.0.1-alpha.24"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.24.tgz#07ae09c04565252585cab8dfb5a16a0f1c62b657"
-  integrity sha512-13jM210ijU7S6ziwYuaJ/Kg89H9XtGKS0It/2Tf//r1yN2c/7rzr7gwto30vOPTFuvg0UQqBoJLtrhtZG2AKmw==
+"@bloom-housing/backend-core@^3.0.1-alpha.25":
+  version "3.0.1-alpha.25"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.25.tgz#ae971c052807469f18504015b57c546bbb8a2f43"
+  integrity sha512-v8OsuRYdohhrrzpDoNgePvG7kwuiUODm2VstR+yHOvHO3v5a9fZl+5XBffXCREcRnpO+klxGSpJiYyEHiqpKfQ==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1307,7 +1307,7 @@
     "@nestjs/typeorm" "^7.1.0"
     "@types/cache-manager" "^3.4.0"
     async-retry "^1.3.1"
-    axios "^0.21.0"
+    axios "0.21.1"
     cache-manager "^3.4.0"
     cache-manager-redis-store "^2.0.0"
     casbin "^5.1.6"
@@ -1340,11 +1340,12 @@
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
 
-"@bloom-housing/ui-components@^3.0.1-alpha.22":
-  version "3.0.1-alpha.22"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.22.tgz#967d42d0fc594cba0a236ba345ffab318c475d0d"
-  integrity sha512-HoZB79YlWnAcrO3+x92XmGKa+s1gfcz0ZNAco5FPf0GdsBYf4R6zfxUyjUTQ3S5TEv2Zt22tHWhZwaKothUQtw==
+"@bloom-housing/ui-components@^3.0.1-alpha.23":
+  version "3.0.1-alpha.23"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.23.tgz#fdbdff5a66189e946b18a0c5e4bfa14faf04dd8e"
+  integrity sha512-h39qz4Oiyxg0qLL+MJj8FeSGLRTWDXGSVi3wmC6CQZdgmdEyIZIaintiPfzzAOHi50oybdSxT8mLzdvcAC2hew==
   dependencies:
+    "@bloom-housing/backend-core" "^3.0.1-alpha.25"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1355,7 +1356,7 @@
     "@types/react-dom" "^16.9.5"
     "@types/react-text-mask" "^5.4.6"
     "@types/react-transition-group" "^4.4.0"
-    axios "^0.21.1"
+    axios "0.21.1"
     body-scroll-lock "^3.1.5"
     jwt-decode "^2.2.0"
     markdown-to-jsx "^6.11.4"
@@ -3646,7 +3647,7 @@ axios@0.21.1, axios@^0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
-axios@^0.21.0, axios@^0.21.4:
+axios@^0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
