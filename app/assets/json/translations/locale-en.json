@@ -7,6 +7,10 @@
             "title": "Let's get started on your application"
         },
         "a2_community_screening": {
+            "accessible_only": {
+                "you_or_anyone": "Do you or anyone in your household need an accessible unit?",
+                "you_or_anyone_desc": "All units are reserved for people who need an accessible unit. Accessible units have features that help people with mobility, vision and hearing impairments.<br><br>Should your application be chosen, you must provide supporting information."
+            },
             "artist": {
                 "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
                 "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
@@ -448,7 +452,7 @@
                 "timeout_please_try_again": "Oops! Looks like something went wrong. Please try again."
             },
             "alternate_contact": "Please select an alternate contact",
-            "artist_anyone": "At least one member of your household must have a business license related to your art.",
+            "artist_anyone": "At least one member of your household must need an accessible unit.",
             "city": "Please enter a city",
             "complete_uploading_documents": "Please complete uploading documents above.",
             "confirmed_address": "Please confirm the suggested address.",

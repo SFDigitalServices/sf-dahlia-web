@@ -103,6 +103,7 @@ ListingConstantsService = () ->
     DISABLED: 'Developmental disabilities'
     SENIOR: 'Senior'
     ARTIST: 'Artist Live/Work'
+    ACCESSIBLE_ONLY: 'Accessible Units Only'
   }
 
   # TODO: -- REMOVE HARDCODED FEATURES --
