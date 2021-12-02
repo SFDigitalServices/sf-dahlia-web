@@ -27,7 +27,10 @@ body {
   flex-direction: column;
 }
 
-_:-ms-fullscreen, :root .site-content { min-height:1500px !important; }
+// Stop footer rom overlapping with main content on IE11.
+_:-ms-fullscreen, :root .site-content {
+  min-height:600px !important;
+}
 
 .site-content {
   flex: 1;
