@@ -452,7 +452,8 @@
                 "timeout_please_try_again": "Oops! Looks like something went wrong. Please try again."
             },
             "alternate_contact": "Please select an alternate contact",
-            "artist_anyone": "At least one member of your household must need an accessible unit.",
+            "artist_anyone": "At least one member of your household must have a business license related to your art.",
+            "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "city": "Please enter a city",
             "complete_uploading_documents": "Please complete uploading documents above.",
             "confirmed_address": "Please confirm the suggested address.",
