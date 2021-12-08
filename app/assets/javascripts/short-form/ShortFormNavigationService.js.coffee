@@ -44,7 +44,7 @@ ShortFormNavigationService = (
   # We show it for all rentals, and for Sale listings that are
   # accessible units only.
   Service.showHouseholdPrioritiesPage = (listing) ->
-    ListingIdentityService.isRental(listing) || (listing.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY)
+    ListingIdentityService.isRental(listing) || (listing?.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY)
 
   Service.showIncomeVouchersPage = (listing) ->
     ListingIdentityService.isRental(listing)
