@@ -247,6 +247,7 @@ do ->
     describe 'getPrevPageOfIncomePage', ->
       describe 'for a sale listing', ->
         it 'returns household-priorities if showHouseholdPrioritiesPage is true', ->
+          fakeListingIdentityService.isRental.and.returnValue(false)
           ShortFormNavigationService.showHouseholdPrioritiesPage = jasmine.createSpy()
           ShortFormNavigationService.showHouseholdPrioritiesPage.and.returnValue(true)
           expect(ShortFormNavigationService.getPrevPageOfIncomePage()).toEqual('household-priorities')
