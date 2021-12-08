@@ -48,8 +48,7 @@ ShortFormNavigationService = (
 
   Service.showIncomeVouchersPage = (listing) ->
     ListingIdentityService.isRental(listing)
-  # Only rental listing applications have the ADA priorities page after the
-  # reserved pages
+
   Service.getPostReservedPage = (listing) ->
     # Don't show ADA priorities on Sale listings unless they
     # are reserved for accessible units only.

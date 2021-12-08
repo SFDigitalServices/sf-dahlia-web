@@ -115,18 +115,49 @@ do ->
         expect(ShortFormNavigationService.goToApplicationPage)
           .toHaveBeenCalledWith("dahlia.short-form-application.#{page}")
 
+    describe 'showHouseholdPrioritiesPage', ->
+      it 'returns true for rental listings', ->
+        listing = {id: 'foo'}
+        fakeListingIdentityService.isRental.and.returnValue(true)
+        expect(ShortFormNavigationService.showHouseholdPrioritiesPage(listing)).toEqual(true)
+
+      it 'returns true for sale listings that are ACCESSIBLE_ONLY', ->
+        listing = {id: 'foo', 'Reserved_community_type': 'Accessible Units Only'}
+        fakeListingIdentityService.isRental.and.returnValue(false)
+        expect(ShortFormNavigationService.showHouseholdPrioritiesPage(listing)).toEqual(true)
+
+      it 'returns false for sale listings that are not ACCESSIBLE_ONLY', ->
+        listing = {id: 'foo'}
+        fakeListingIdentityService.isRental.and.returnValue(false)
+        expect(ShortFormNavigationService.showHouseholdPrioritiesPage(listing)).toEqual(false)
+
     describe 'getPostReservedPage', ->
       describe 'when given a sale listing', ->
         it 'returns "income"', ->
           listing = {id: 'foo'}
           fakeListingIdentityService.isRental.and.returnValue(false)
           expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('income')
+        describe 'that is an accessible units only listing', ->
+          it 'returns "household-priorities"', ->
+            listing = {id: 'foo', 'Reserved_community_type': 'Accessible Units Only'}
+            fakeListingIdentityService.isRental.and.returnValue(false)
+            expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('household-priorities')
 
       describe 'when given a rental listing', ->
         it 'returns "household-priorities"', ->
           listing = {id: 'foo'}
           fakeListingIdentityService.isRental.and.returnValue(true)
           expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('household-priorities')
+
+    describe 'getPostHouseholdPrioritiesPage', ->
+      it 'returns income-vouchers for rentals', ->
+          listing = {id: 'foo'}
+          fakeListingIdentityService.isRental.and.returnValue(true)
+          expect(ShortFormNavigationService.getPostHouseholdPrioritiesPage(listing)).toEqual('income-vouchers')
+      it 'returns income if for non-rentals', ->
+          listing = {id: 'foo'}
+          fakeListingIdentityService.isRental.and.returnValue(false)
+          expect(ShortFormNavigationService.getPostHouseholdPrioritiesPage(listing)).toEqual('income')
 
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->
@@ -215,6 +246,11 @@ do ->
 
     describe 'getPrevPageOfIncomePage', ->
       describe 'for a sale listing', ->
+        it 'returns household-priorities if showHouseholdPrioritiesPage is true', ->
+          ShortFormNavigationService.showHouseholdPrioritiesPage = jasmine.createSpy()
+          ShortFormNavigationService.showHouseholdPrioritiesPage.and.returnValue(true)
+          expect(ShortFormNavigationService.getPrevPageOfIncomePage()).toEqual('household-priorities')
+
         it 'calls Service.getNextReservedPageIfAvailable with Service.RESERVED_TYPES.DISABLED and "prev"', ->
           fakeListingIdentityService.isRental.and.returnValue(false)
           ShortFormNavigationService.getNextReservedPageIfAvailable = jasmine.createSpy()
