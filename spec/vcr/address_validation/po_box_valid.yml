@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.easypost.com/v2/addresses?verify%5B%5D=delivery
     body:
       encoding: UTF-8
-      string: address[street1]=1299191%20Blahblah%20st.&address[city]=San%20Francisco&address[state]=CA&address[zip]=12345
+      string: address[street1]=P.O.%20Box%2037176&address[city]=San%20Francisco&address[state]=CA&address[zip]=94137
     headers:
       Accept:
       - "*/*"
@@ -18,7 +18,7 @@ http_interactions:
       Content-Type:
       - application/x-www-form-urlencoded
       Content-Length:
-      - '108'
+      - '102'
   response:
     status:
       code: 201
@@ -37,7 +37,7 @@ http_interactions:
       Referrer-Policy:
       - strict-origin-when-cross-origin
       X-Ep-Request-Uuid:
-      - '0907aa03619eafb4f81bd24f00e29649'
+      - '0907aa02619eaf3cf81bcef700e26c70'
       Cache-Control:
       - no-cache, no-store
       Pragma:
@@ -45,21 +45,21 @@ http_interactions:
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_30f4bd2a4d6e11ecaf32ac1f6bc72124"
+      - "/api/v2/addresses/adr_e9b5e3784d6d11ecb372ac1f6bc7bdc6"
       Content-Type:
       - application/json; charset=utf-8
       Etag:
-      - W/"e67db32e5a6d2a85a69ed3a25b9d332d"
+      - W/"6e825716f4edb3b454835227b502906d"
       X-Request-Id:
-      - 84a53a4c-16df-4fd3-a3b4-975854da2f2c
+      - 730afb2b-da7e-472b-a2b0-8124eac9c0c8
       X-Runtime:
-      - '0.047981'
+      - '0.099639'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - bigweb5nuq
+      - bigweb2nuq
       X-Version-Label:
       - easypost-202111240232-a8ce959d25-master
       X-Backend:
@@ -73,7 +73,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA4xRQU7DMBD8SuQrtIqdAGpuhZYjSISeEIq29roYOXZkOwio+nfWrVIkTliK7B3NbGZn98wo1jBQoatKXW+VgFpdI+coQVcCJNfXW3kjuKjZJfPbd5SJ+EulAsZIkAwICVUHGRal4DPOZ6J+FrypqqYuL8qyKUsijoP6H9FBj6xxo7XU3fcDuK+pjCkgJk4NuFgs+IIXtxbetvQVMc3ZRBBnuUmkZS244j6AkyZKf2SRE8LvllR8m+HYr6qv8jh+dClk0aalcnjz7mwGezB2KnqvcouEMWUZhGAwdBqkscefnlgUklHokoGzUKPCALZL8Nnl7KfJyNIf7AOD0UZCMt5F1uyZQmsI/MrvOEqZN9BosBHJXAg+UPmypxmO1tbz5Wr1tG7b+cPjc3f/uHlYkVNt0J42Pm2wpwt2+LvVwvlUaApC5azG3Y5mJAsnW4fXS/KRKIls6UDnBwAA//8DACbdWmBDAgAA
+        H4sIAAAAAAAAA4xQ0UrDMBT9lZFX25mkdXV9qwNBkE2cgiBS0uR2RtJkpKm4Df/dm27zwSfzlHNyzrkn90C0IiURytcwb64gK65zNVOMgWyyggvJ2lkji0bJGUmIaz5ABtRXSnnoe6SkBxFA1SLSnHKWMpby/ImzMmNlTi8oLSlF4bBV/xNa0QEp7WAMprtuK+zuDPvgAQLDgIfV5Gb1MskKVsRixweOD7GSDugg62o5uX2slou79WI1anA+8osKwV5v8TrPWVak9Jgh3WCDj87nNcLtu7O/PaAT2pxB51TMCdCHaBPea/B1K6Q24+SjCvejFdigBRqDHyAhLSjwwtRBfNVx7edPYa8/3Cd43Wopgna2J+WBKDAayV2894OUcfmnVPDeeUSvbwnKAhYdHQbNYYhNs2JazDOWJ8Q4uzmRKeN8mtM84wkJuoN6P36XVB2OluLy3vV1ZTdgoCffeH4AAAD//wMAcQaHBykCAAA=
     http_version: 
-  recorded_at: Wed, 24 Nov 2021 21:33:40 GMT
+  recorded_at: Wed, 24 Nov 2021 21:31:41 GMT
 recorded_with: VCR 5.0.0

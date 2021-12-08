@@ -26,9 +26,9 @@ Feature: Short Form Application
 
         When I navigate to the "You" section
         And I fill out the Name page as "Jane Doe"
-        # error: address not found
-        And I fill out the Contact page with an address that isn't found
-        Then I should see an address not found error
+        # error: PO Box not allowed
+        And I fill out the Contact page with an address that's a PO Box
+        Then I should see a PO Boxes not allowed error
 
         When I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
@@ -95,6 +95,6 @@ Feature: Short Form Application
 
         # error: address not found for Alice Griffith
         And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
-        And I fill out an address for Alice Griffith that isn't found
+        And I fill out an address for Alice Griffith that's a PO Box
         When I hit the Next button "1" time
-        Then I should see an address not found error
+        Then I should see a PO Boxes not allowed error

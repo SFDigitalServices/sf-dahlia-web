@@ -13,11 +13,8 @@ angular.module('dahlia.components')
           @errorMessage = ''
           return
         @errorMessage = switch @error
-          when 'Insufficient/incorrect address data'
-            ,'Multiple response due to magnet street syndrome'
-              $translate.instant('error.address_validation_insufficient')
-          when 'Missing secondary information(Apt/Suite#)'
-              $translate.instant('error.address_validation_secondary')
+          when 'PO BOX'
+              $translate.instant('error.address_validation_po_box')
           else
               $translate.instant('error.address_validation_not_found')
 
