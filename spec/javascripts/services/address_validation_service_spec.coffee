@@ -9,13 +9,13 @@ do ->
       city: 'San Francisco'
       state: 'CA'
       zip: '94114'
-    fakeInvalidAddress =
-      address1: '123123 Blah'
+    fakePOBoxAddress =
+      address1: 'P.O. Box 37176'
       city: 'San Francisco'
       state: 'CA'
-      zip: '12345'
+      zip: '94137'
     fakeValidResult = getJSONFixture('address-validation-api-valid-address.json')
-    fakeInvalidResult = getJSONFixture('address-validation-api-invalid-address.json')
+    fakePOBoxResult = getJSONFixture('address-validation-api-valid-po-box.json')
 
     requestURL = undefined
 
@@ -60,12 +60,12 @@ do ->
         result = AddressValidationService.isDeliverable(AddressValidationService.validated_home_address)
         expect(result).toEqual true
 
-      it 'determines if invalid address failed validation', ->
-        stubAngularAjaxErrorRequest httpBackend, requestURL, fakeInvalidResult
+      it 'determines if PO box address failed validation', ->
+        stubAngularAjaxErrorRequest httpBackend, requestURL, fakePOBoxResult
         AddressValidationService.validate({
-          address: fakeInvalidAddress
+          address: fakePOBoxAddress
           type: 'home'
         })
         httpBackend.flush()
         result = AddressValidationService.validationError(AddressValidationService.validated_home_address)
-        expect(result).toEqual 'Address not found'
+        expect(result).toEqual 'PO BOX'

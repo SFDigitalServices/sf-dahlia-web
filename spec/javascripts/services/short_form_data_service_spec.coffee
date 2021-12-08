@@ -2,6 +2,7 @@
   'use strict'
   describe 'ShortFormDataService', ->
     ShortFormDataService = undefined
+    ListingDataService = undefined
     formattedApp = undefined
     reformattedApp = undefined
     fakeListingId = 'a0WU000000CkiM3MAJ'
@@ -37,7 +38,24 @@
       ShortFormDataService = _ShortFormDataService_
       ListingDataService = _ListingDataService_
       ListingConstantsService = _ListingConstantsService_
-      ListingDataService.listing.preferences = getJSONFixture('listings-api-listing-preferences.json').preferences
+
+
+      fakePreferences = getJSONFixture('listings-api-listing-preferences.json').preferences
+      # Add a fake custom preference to the automated test listing.
+      fakePreferences = fakePreferences.concat([{
+            "unitsAvailable": null,
+            "requiresProof": false,
+            "readMoreUrl": null,
+            "preferenceProofRequirementDescription": null,
+            "preferenceName": "Works in Public Ed",
+            "order": null,
+            "name": "LP-340429",
+            "listingPreferenceID": "a0l3K000000KpkhQAC",
+            "listingId": "a0W4U00000KKtXyUAL",
+            "description": "You can get this preference if someone...",
+            "appTotal": null
+        }])
+      ListingDataService.listing.preferences = fakePreferences
       httpBackend = _$httpBackend_
       $localStorage = _$localStorage_
       $state = _$state_
@@ -60,14 +78,14 @@
 
       it 'adds an individual pref for custom preferences if present', ->
         fakeAppWithCustomPrefs = angular.copy(fakeApplication)
-        # Fake listing has custom listing id w/ id a0l0P00001PsqDoQAJ
-        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ'] = true
-        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_preference'] = 'Works in Public Ed'
-        fakeAppWithCustomPrefs.preferences['a0l0P00001PsqDoQAJ_household_member'] = 1
+        # Fake listing has custom listing id w/ id a0l3K000000KpkhQAC
+        fakeAppWithCustomPrefs.preferences['a0l3K000000KpkhQAC'] = true
+        fakeAppWithCustomPrefs.preferences['a0l3K000000KpkhQAC_preference'] = 'Works in Public Ed'
+        fakeAppWithCustomPrefs.preferences['a0l3K000000KpkhQAC_household_member'] = 1
         formattedApp = ShortFormDataService.formatApplication(fakeListingId, fakeAppWithCustomPrefs)
         expectedCustomPref = {
           recordTypeDevName: 'Custom',
-          listingPreferenceID: 'a0l0P00001PsqDoQAJ',
+          listingPreferenceID: 'a0l3K000000KpkhQAC',
           individualPreference: 'Works in Public Ed'
         }
         expect(formattedApp.shortFormPreferences).toContain(expectedCustomPref)

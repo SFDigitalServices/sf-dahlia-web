@@ -73,7 +73,7 @@
             "you_already_have_an_account": "It looks like you already have an account. Signing in will save this application to your account, and allow you to check your application status at any time."
         },
         "b2_contact": {
-            "applicant_address_desc": "We need the address where you currently live. If you are homeless, enter either the shelter address or an address close to where you stay.",
+            "applicant_address_desc": "We need the address where you currently live. If you are homeless, enter either the shelter address or an address close to where you stay. PO Boxes are not allowed.",
             "claim_work_in_sf": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
             "email_editable_via": "Your email address is editable via your",
             "only_use_your_email": "We will only use your email address to contact you about your application.",
@@ -444,9 +444,8 @@
         },
         "error": {
             "address": "Please enter an address",
-            "address_validation_insufficient": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
             "address_validation_not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
-            "address_validation_secondary": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
+            "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
             "alert": {
                 "bad_request": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
                 "timeout_please_try_again": "Oops! Looks like something went wrong. Please try again."

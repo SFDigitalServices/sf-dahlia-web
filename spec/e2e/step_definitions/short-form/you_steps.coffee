@@ -168,8 +168,8 @@ When /^I change WorkInSF to "([^"]*)"$/, (workInSf) ->
   else
     element(By.id('workInSf_no')).click()
 
-When "I fill out the Contact page with an address that isn't found", ->
-  Pages.Contact.fill({ address1: '38383 Philz Way' })
+When "I fill out the Contact page with an address that's a PO Box", ->
+  Pages.Contact.fill({ address1: 'P.O. Box 37176' })
 
 Then 'I should see my address, NRHP match, on the Contact page', ->
   Pages.Contact.expectToMatch(@, { address1: '1222 HARRISON ST' })
