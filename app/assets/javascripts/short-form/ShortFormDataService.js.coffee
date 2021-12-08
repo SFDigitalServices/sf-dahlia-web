@@ -28,7 +28,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasLoanPreapproval'
       'lendingAgent'
       'homebuyerEducationAgency'
-      'referral'
+      'referral',
+      'isNonPrimaryMemberVeteran'
     ]
     primaryApplicant: [
       'alternatePhone',
@@ -46,6 +47,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'indigenousCentralSouthAmericaGroup',
       'indigenousNativeAmericanGroup',
       'indigenousOther',
+      'isDisabled',
+      'isVeteran',
       'lastName',
       'latinoOther',
       'menaOther',
@@ -77,8 +80,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
 
+  # Format application for Salesforce Processing.
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
+    console.log('application before formatting', application)
     sfApp = _.pick application, Service.WHITELIST_FIELDS.application
     sfApp.listingID = listingId
 
@@ -94,6 +99,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant = _.pick application.applicant, Service.WHITELIST_FIELDS.primaryApplicant
     sfApp.primaryApplicant.dob = Service.formatUserDOB(application.applicant)
     sfApp.primaryApplicant.workInSf = Service._formatBoolean(application.applicant.workInSf)
+    # sfApp.primaryApplicant.isVeteran = Service._formatBoolean(application.applicant.isVeteran)
     _.merge sfApp.primaryApplicant, Service._formatGeocodingData(application.applicant)
     home_address = Service._formatAddress(application.applicant, 'home_address')
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
@@ -157,10 +163,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       addressData.mailingAddress += ' ' + address2 if address2
 
     if opts.householdMember
-      if member.hasSameAddressAsApplicant == 'Yes'
-        addressData.hasSameAddressAsApplicant = true
-      else
-        addressData.hasSameAddressAsApplicant = false
+      addressData.hasSameAddressAsApplicant = Service._formatBoolean(addressData.hasSameAddressAsApplicant)
 
     return addressData
 
@@ -397,6 +400,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
     return contact
 
+  # Convert from Salesforce back to DAHLIA format
   Service._reformatPrimaryApplicant = (contact, altContact) ->
     applicant = _.pick contact, Service.WHITELIST_FIELDS.primaryApplicant
     applicant.mailing_address = Service._reformatMailingAddress(contact)
@@ -406,6 +410,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     # we use this tempId to identify people in the preference dropdown
     applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
+
+    # TODO: convert SF isVeteran to radio format
     return applicant
 
   Service._reformatHousehold = (contacts) ->
