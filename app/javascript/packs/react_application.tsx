@@ -1,6 +1,9 @@
 import WebpackerReact from "webpacker-react"
 
 import "../pages/base.scss"
+import "core-js/stable"
+import "regenerator-runtime/runtime"
+
 import RentDirectory from "../pages/RentDirectory"
 import BuyDirectory from "../pages/BuyDirectory"
 import HomePage from "../pages/HomePage"
