@@ -111,7 +111,7 @@ angular.module('dahlia.components')
           $translate.instant('t.yes')
         else if val == 'No'
           $translate.instant('t.no')
-        else if 'Decline to state'
+        else if val == 'Decline to state'
           $translate.instant('t.prefer_not_to_answer')
 
       ctrl.getIsVeteran = ->
