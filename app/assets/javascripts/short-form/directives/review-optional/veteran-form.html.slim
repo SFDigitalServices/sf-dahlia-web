@@ -8,6 +8,8 @@
         | {{'t.yes' | translate}}
       radio-block-item value='No' user='applicant' name='isVeteran' ng-required='false'
         | {{'t.no' | translate}}
+      radio-block-item value='Decline to state' user='applicant' name='isVeteran' ng-required='false'
+        | {{'t.prefer_not_to_answer' | translate}}
 
   label.form-label.caps id="veteran_hh_form_label" for="user_veteran"
     | {{'label.household_veteran' | translate}}
@@ -18,3 +20,5 @@
         | {{'t.yes' | translate}}
       radio-block-item value='No' user='application' name='isNonPrimaryMemberVeteran' ng-required='false'
         | {{'t.no' | translate}}
+      radio-block-item value='Decline to state' user='application' name='isNonPrimaryMemberVeteran' ng-required='false'
+        | {{'t.prefer_not_to_answer' | translate}}

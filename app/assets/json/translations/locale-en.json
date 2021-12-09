@@ -1284,6 +1284,7 @@
             "or": "or",
             "per_month": "per month",
             "per_year": "per year",
+            "prefer_not_to_answer": "Prefer not to answer",
             "save_and_come_back_later": "Save and come back later",
             "save_and_finish_later": "Save and finish later",
             "session_expired": "Your session has expired.",
