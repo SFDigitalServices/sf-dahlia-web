@@ -106,5 +106,22 @@ angular.module('dahlia.components')
           ctrl.applicant.referral
         )
 
+      ctrl.translatedYesNoNoAnswer = (val) ->
+        if val == 'Yes'
+          $translate.instant('t.yes')
+        else if val == 'No'
+          $translate.instant('t.no')
+        else if 'Decline to state'
+          $translate.instant('t.prefer_not_to_answer')
+
+      ctrl.getIsVeteran = ->
+        ctrl.translatedYesNoNoAnswer(ctrl.applicant.isVeteran)
+
+      ctrl.getIsNonPrimaryMemberVeteran = ->
+        ctrl.translatedYesNoNoAnswer(ctrl.application.isNonPrimaryMemberVeteran)
+
+      ctrl.getHasDisability = ->
+        ctrl.translatedYesNoNoAnswer(ctrl.applicant.hasDisability)
+
       return ctrl
   ]
