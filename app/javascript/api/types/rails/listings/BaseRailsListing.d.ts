@@ -23,6 +23,7 @@ type BaseRailsListing = {
   Lottery_Status: string
   RecordTypeId: string
   imageURL?: string
+  Does_Match?: boolean
 }
 
 export default BaseRailsListing

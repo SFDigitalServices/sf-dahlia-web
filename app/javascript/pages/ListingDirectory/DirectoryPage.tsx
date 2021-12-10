@@ -22,6 +22,7 @@ import { getAdditionalResourcesPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
+import { EligibilityFilters } from "../../api/listingsApiService"
 
 type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -36,7 +37,7 @@ interface ListingsGroups {
 }
 
 interface DirectoryProps {
-  listingsAPI: () => Promise<RailsListing[]>
+  listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
   directoryType: DirectoryType
 }
 
@@ -286,18 +287,23 @@ export const DirectoryPage = (props: DirectoryProps) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    void props.listingsAPI().then((listings) => {
+    const eligibilityFilters: EligibilityFilters = JSON.parse(
+      localStorage.getItem("ngStorage-eligibility_filters")
+    )
+    void props.listingsAPI(eligibilityFilters).then((listings) => {
       const open = []
       const upcoming = []
       const results = []
       listings.forEach((listing) => {
-        if (dayjs(listing.Application_Due_Date) > dayjs()) {
-          open.push(listing)
-        } else {
-          if (areLotteryResultsShareable(listing)) {
-            results.push(listing)
+        if (listing.Does_Match === undefined || listing.Does_Match) {
+          if (dayjs(listing.Application_Due_Date) > dayjs()) {
+            open.push(listing)
           } else {
-            upcoming.push(listing)
+            if (areLotteryResultsShareable(listing)) {
+              results.push(listing)
+            } else {
+              upcoming.push(listing)
+            }
           }
         }
       })
