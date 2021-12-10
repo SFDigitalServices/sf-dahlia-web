@@ -298,7 +298,12 @@ ListingDataService = (
         eligibility: 'Artist lofts'
         reservedFor: 'artists to live and work in'
         reservedForWhoAre: 'professional artists'
-
+      "#{ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY}":
+        building: 'Accessible Units'
+        eligibility: 'Accessible units'
+        reservedFor: 'people who need accessibility features'
+        # This is only for listings with reserved units, not fully reserved communities
+        reservedForWhoAre: ''
     return type unless labelMap[type]
     return labelMap[type][modifier]
 

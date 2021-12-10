@@ -31,5 +31,10 @@ angular.module('dahlia.directives')
         scope.description = $translate.instant('a2_community_screening.artist.you_or_anyone_desc')
         scope.labels.communityScreeningYes = $translate.instant('t.yes')
         scope.communityEligibilityErrorMsg.push($translate.instant('error.artist_anyone'))
+      when 'Accessible Units Only'
+        scope.title = $translate.instant('a2_community_screening.accessible_only.you_or_anyone')
+        scope.description = $translate.instant('a2_community_screening.accessible_only.you_or_anyone_desc')
+        scope.labels.communityScreeningYes = $translate.instant('t.yes')
+        scope.communityEligibilityErrorMsg.push($translate.instant('error.accessible_only_anyone'))
 
 ]

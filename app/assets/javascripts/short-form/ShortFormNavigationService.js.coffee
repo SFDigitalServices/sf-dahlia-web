@@ -25,10 +25,10 @@ ShortFormNavigationService = (
         else
           'household-intro'
       when 'Income'
-        if ListingIdentityService.isSale(ShortFormApplicationService.listing)
-          'income'
-        else
+        if Service.showIncomeVouchersPage(ShortFormApplicationService.listing)
           'income-vouchers'
+        else
+          'income'
       when 'Preferences'
         'preferences-intro'
       when 'Review'
@@ -40,13 +40,28 @@ ShortFormNavigationService = (
     page = Service.getStartOfSection({name: section})
     Service.goToApplicationPage("dahlia.short-form-application.#{page}")
 
-  # Only rental listing applications have the ADA priorities page after the
-  # reserved pages
+  # Logic for whether household-priorities page should show.
+  # We show it for all rentals, and for Sale listings that are
+  # accessible units only.
+  Service.showHouseholdPrioritiesPage = (listing) ->
+    ListingIdentityService.isRental(listing) || (listing?.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY)
+
+  Service.showIncomeVouchersPage = (listing) ->
+    ListingIdentityService.isRental(listing)
+
   Service.getPostReservedPage = (listing) ->
-    if ListingIdentityService.isSale(listing)
-      'income'
-    else
+    # Don't show ADA priorities on Sale listings unless they
+    # are reserved for accessible units only.
+    if Service.showHouseholdPrioritiesPage(listing)
       'household-priorities'
+    else
+      'income'
+
+  Service.getPostHouseholdPrioritiesPage = (listing) ->
+    if Service.showIncomeVouchersPage(listing)
+      'income-vouchers'
+    else
+      'income'
 
   # TODO: Refactor the way we handle post-submit actions for short form pages
   # so that this submitActions function is not so closely coupled to the
@@ -124,8 +139,12 @@ ShortFormNavigationService = (
         param: Service.RESERVED_TYPES.DISABLED
       }]
     'household-reserved-units-disabled':
+      # FIXME: This won't work because it gets called when this file is loaded and doesn't have the right scope.
       path: Service.getPostReservedPage(ShortFormApplicationService.listing)
-    'household-priorities': {path: 'income-vouchers'}
+    'household-priorities': {
+      # This needs to be a callback to call with the right listing
+      scopedCallbacks: [{func: 'goToPostHouseholdPrioritiesPage'}]
+    }
     # income
     'income-vouchers': {path: 'income'}
     'income':
@@ -421,10 +440,12 @@ ShortFormNavigationService = (
 
   Service.getPrevPageOfIncomePage = ->
     listing = ShortFormApplicationService.listing
-    if ListingIdentityService.isSale(listing)
+    if !Service.showHouseholdPrioritiesPage(listing)
       Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
-    else
+    else if Service.showIncomeVouchersPage(listing)
       'income-vouchers'
+    else
+      'household-priorities'
 
   Service.goBackToRentBurden = ->
     if ShortFormApplicationService.eligibleForAssistedHousing()
@@ -474,7 +495,7 @@ ShortFormNavigationService = (
       'household-reserved-units-veteran'
     else if ShortFormApplicationService.listingHasReservedUnitType(Service.RESERVED_TYPES.DISABLED)
       'household-reserved-units-disabled'
-    else if ListingIdentityService.isSale(ShortFormApplicationService.listing)
+    else if !Service.showHouseholdPrioritiesPage(listing)
       ''
     else
       'household-priorities'
