@@ -8,6 +8,7 @@ pageUrls = {
   'My Applications': 'my-applications'
   Name: 'name'
   Prerequisites: 'prerequisites'
+  Priorities: 'household-priorities'
 }
 
 Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->
