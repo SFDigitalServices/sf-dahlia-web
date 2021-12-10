@@ -290,35 +290,47 @@ export const DirectoryPage = (props: DirectoryProps) => {
     const eligibilityFilters: EligibilityFilters = JSON.parse(
       localStorage.getItem("ngStorage-eligibility_filters")
     )
-    void props.listingsAPI(eligibilityFilters).then((listings) => {
-      const open = []
-      const upcoming = []
-      const results = []
-      listings.forEach((listing) => {
-        if (listing.Does_Match === undefined || listing.Does_Match) {
-          if (dayjs(listing.Application_Due_Date) > dayjs()) {
-            open.push(listing)
-          } else {
-            if (areLotteryResultsShareable(listing)) {
-              results.push(listing)
+
+    const hasSetEligibilityFilters = () => {
+      return (
+        eligibilityFilters.children_under_6 ||
+        eligibilityFilters.household_size ||
+        eligibilityFilters.include_children_under_6 !== false ||
+        eligibilityFilters.income_timeframe ||
+        eligibilityFilters.income_total
+      )
+    }
+    void props
+      .listingsAPI(hasSetEligibilityFilters ? eligibilityFilters : null)
+      .then((listings) => {
+        const open = []
+        const upcoming = []
+        const results = []
+        listings.forEach((listing) => {
+          if (!hasSetEligibilityFilters() || listing.Does_Match) {
+            if (dayjs(listing.Application_Due_Date) > dayjs()) {
+              open.push(listing)
             } else {
-              upcoming.push(listing)
+              if (areLotteryResultsShareable(listing)) {
+                results.push(listing)
+              } else {
+                upcoming.push(listing)
+              }
             }
           }
-        }
+        })
+        open.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+          new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
+        )
+        upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+          new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
+        )
+        results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+          new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
+        )
+        setListings({ open, upcoming, results })
+        setLoading(false)
       })
-      open.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-        new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
-      )
-      upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-        new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
-      )
-      results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-        new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
-      )
-      setListings({ open, upcoming, results })
-      setLoading(false)
-    })
   }, [props])
 
   return (
