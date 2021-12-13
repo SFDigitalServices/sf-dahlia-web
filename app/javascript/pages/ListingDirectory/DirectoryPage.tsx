@@ -362,7 +362,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
           background="primary-lighter"
           icon={<Icon size="3xl" symbol="mail" />}
           actions={[
-            <Link className="button" key="action-1" href={listingsAlertUrl}>
+            <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}
