@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.1-alpha.25":
-  version "3.0.1-alpha.25"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.25.tgz#ae971c052807469f18504015b57c546bbb8a2f43"
-  integrity sha512-v8OsuRYdohhrrzpDoNgePvG7kwuiUODm2VstR+yHOvHO3v5a9fZl+5XBffXCREcRnpO+klxGSpJiYyEHiqpKfQ==
+"@bloom-housing/backend-core@^3.0.1-alpha.38":
+  version "3.0.1-alpha.38"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.38.tgz#65ee83a85f60b12c4115482c174d925392f1fadd"
+  integrity sha512-u6FSFCNivjs1s1Uq7kOsD5MBstosIVRRTeCrt5qB2WY5Ojp3CnqLz8nP3stfwG1YZdaPTGAKNS/5LNb5SEA3Yw==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1302,10 +1302,12 @@
     "@nestjs/jwt" "^7.1.0"
     "@nestjs/passport" "^7.1.0"
     "@nestjs/platform-express" "^7.6.18"
+    "@nestjs/schedule" "^1.0.2"
     "@nestjs/swagger" "4.7.3"
     "@nestjs/throttler" "^1.1.2"
     "@nestjs/typeorm" "^7.1.0"
     "@types/cache-manager" "^3.4.0"
+    "@types/cron" "^1.7.3"
     async-retry "^1.3.1"
     axios "0.21.1"
     cache-manager "^3.4.0"
@@ -1339,13 +1341,14 @@
     typeorm "0.2.34"
     typeorm-naming-strategies "^1.1.0"
     typescript "^3.9.7"
+    uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^3.0.1-alpha.23":
-  version "3.0.1-alpha.23"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.23.tgz#fdbdff5a66189e946b18a0c5e4bfa14faf04dd8e"
-  integrity sha512-h39qz4Oiyxg0qLL+MJj8FeSGLRTWDXGSVi3wmC6CQZdgmdEyIZIaintiPfzzAOHi50oybdSxT8mLzdvcAC2hew==
+"@bloom-housing/ui-components@^3.0.1-alpha.44":
+  version "3.0.1-alpha.44"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.44.tgz#f427197683c605e348dd1f4513c3c70b7e3ee0c3"
+  integrity sha512-1Z7F39BzgmNLpHyf2RfRdC2J58KgdRy1JZxizK/zv94xhb0+sKvElzeYyW8DQ//XSjADgUSrR6Wjcp2wH25c+w==
   dependencies:
-    "@bloom-housing/backend-core" "^3.0.1-alpha.25"
+    "@bloom-housing/backend-core" "^3.0.1-alpha.38"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1885,6 +1888,14 @@
     multer "1.4.2"
     tslib "2.2.0"
 
+"@nestjs/schedule@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/schedule/-/schedule-1.0.2.tgz#9c921105deabf91274479888c9b1df284bb3c38b"
+  integrity sha512-GGRehpSm0nCthYNxAGdTzondPrRvurtKnkQCzIb3Tccqq6PhfS2QiHMwDaCel5/4jhYbR/lZR9UsVr6KSJc2Xg==
+  dependencies:
+    cron "1.7.2"
+    uuid "8.3.2"
+
 "@nestjs/schematics@^7.3.0":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-7.3.1.tgz#68b559d2e6a8a9ecf6c984f87eaa7d4e37a910be"
@@ -2270,6 +2281,14 @@
   integrity sha512-iKXt/cwltGvN06Dd6zwQG1U35edPwId9lmcSeYfcxSNvvNg4vysnFB+iBQNjj06tSVV7MBj0GWMQ7dwb4Z+p8Q==
   dependencies:
     "@types/node" "*"
+
+"@types/cron@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@types/cron/-/cron-1.7.3.tgz#993db7d54646f61128c851607b64ba4495deae93"
+  integrity sha512-iPmUXyIJG1Js+ldPYhOQcYU3kCAQ2FWrSkm1FJPoii2eYSn6wEW6onPukNTT0bfiflexNSRPl6KWmAIqS+36YA==
+  dependencies:
+    "@types/node" "*"
+    moment ">=2.14.0"
 
 "@types/eslint-scope@^3.7.0":
   version "3.7.1"
@@ -5192,6 +5211,13 @@ create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
+
+cron@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/cron/-/cron-1.7.2.tgz#2ea1f35c138a07edac2ac5af5084ed6fee5723db"
+  integrity sha512-+SaJ2OfeRvfQqwXQ2kgr0Y5pzBR/lijf5OpnnaruwWnmI799JfWr2jN2ItOV9s3A/+TFOt6mxvKzQq5F0Jp6VQ==
+  dependencies:
+    moment-timezone "^0.5.x"
 
 cross-spawn@^3.0.0:
   version "3.0.1"
@@ -11013,7 +11039,14 @@ modern-normalize@^1.1.0:
   resolved "https://registry.yarnpkg.com/modern-normalize/-/modern-normalize-1.1.0.tgz#da8e80140d9221426bd4f725c6e11283d34f90b7"
   integrity sha512-2lMlY1Yc1+CUy0gw4H95uNN7vjbpoED7NNRSBHE25nWfLBdmMzFCsPshlzbxHz+gYMcBEUN8V4pU16prcdPSgA==
 
-moment@^2.29.1:
+moment-timezone@^0.5.x:
+  version "0.5.34"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.34.tgz#a75938f7476b88f155d3504a9343f7519d9a405c"
+  integrity sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg==
+  dependencies:
+    moment ">= 2.9.0"
+
+"moment@>= 2.9.0", moment@>=2.14.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
