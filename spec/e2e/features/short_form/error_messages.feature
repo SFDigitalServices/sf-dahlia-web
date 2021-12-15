@@ -98,3 +98,29 @@ Feature: Short Form Application
         And I fill out an address for Alice Griffith that's a PO Box
         When I hit the Next button "1" time
         Then I should see a PO Boxes not allowed error
+
+    Scenario: Seeing errors while filling out a senior listing with a birthday that makes you too young.
+        Given I go to the first page of the "Senior Test Listing" application
+        When I answer "Yes" to the community screening question
+        And I hit the Next button "1" time
+        # Jane Doe has a DOB with 1990
+        And I fill out the Name page as "Alice Youngblood" with birth date "1/1/2000"
+        And I hit the Next button "1" time
+        Then I should see a form notice that says "Everyone in your household must be a Senior"
+        # Now move on to test adding a too-young household member
+        Then I fill out the Name page as "Alice Oldblood" with birth date "1/1/1950"
+        And I hit the Next button "1" time
+        Then I should be on the "Contact" page of the application
+        Then I fill out the Contact page with an address, non-NRHP match, and WorkInSF
+        And I confirm my address
+        And I don't indicate an alternate contact
+        # Household member who is too young should raise an error
+        And I indicate living with other people
+        And I add another household member named "Younger sibling" with same address as primary and with birth date "1/1/2000"
+        And I hit the Next button "1" time
+        Then I should see a form notice that says "Everyone in your household must be a Senior"
+        # Household member that is old enough should not have an error
+        When I cancel the household member
+        And I add another household member named "Older sibling" with same address as primary and with birth date "1/1/1945"
+        And I indicate being done adding people
+        Then I should be on the "Priorities" page

@@ -530,7 +530,7 @@ ShortFormApplicationController = (
   $scope.addHouseholdMember = ->
     noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
     if $scope.applicantDoesNotmeetAllSeniorBuildingRequirements('householdMember')
-      Service.addSeniorEligibilityError()
+      ShortFormApplicationService.addSeniorEligibilityError()
       $scope.handleErrorState()
       return
     else
@@ -893,7 +893,7 @@ ShortFormApplicationController = (
   $scope.checkAfterNamePage = ->
     if $scope.applicantDoesNotmeetAllSeniorBuildingRequirements()
       ShortFormNavigationService.isLoading(false)
-      Service.addSeniorEligibilityError()
+      ShortFormApplicationService.addSeniorEligibilityError()
       $scope.handleErrorState()
     else
       if $scope.loggedIn()

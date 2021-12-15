@@ -199,10 +199,11 @@ const Layout = (props: LayoutProps) => {
             className="text-gray-500"
             href="https://airtable.com/shrw64DubWTQfRkdo"
             target="_blank"
+            external={true}
           >
             {t("footer.giveFeedback")}
           </Link>
-          <Link className="text-gray-500" href="mailto:sfhousinginfo@sfgov.org">
+          <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
             {t("footer.contact")}
           </Link>
           <Link className="text-gray-500" href={getDisclaimerPath()}>

@@ -26,6 +26,12 @@ class HouseholdMemberForm extends AngularPage
 
       @firstName.clear().sendKeys(firstName)
       @lastName.clear().sendKeys(lastName)
+    if opts.birthDate
+      { month, day, year } = @extractDateParts(opts.birthDate)
+      @dobMonth.clear().sendKeys(month)
+      @dobDay.clear().sendKeys(day)
+      @dobYear.clear().sendKeys(year)
+    else
       @dobMonth.clear().sendKeys('10')
       @dobDay.clear().sendKeys('15')
       @dobYear.clear().sendKeys('1985')
