@@ -435,9 +435,7 @@
         },
         "error": {
             "address": "請輸入地址",
-            "address_validation_insufficient": "找不到這個地址。請檢查輸入的門牌號碼、街道和城市。請確定有輸入街道類型，例如「ST」或「AVE」。不允許使用郵政信箱。",
             "address_validation_not_found": "找不到此地址。請檢查輸入的城市、街道和住家號碼是否正確。不接受郵政信箱。",
-            "address_validation_secondary": "找不到這個地址。請檢查輸入的門牌號碼、街道和城市。請確定有輸入公寓或是套房號碼（如果是地址的一部分）。不允許使用郵政信箱。",
             "alert": {
                 "bad_request": "糟糕！似乎發生了問題。請重試。 \n\n如果您仍然遇到問題，請聯絡 sfhousing.info@sfgov.org。",
                 "timeout_please_try_again": "糟糕！似乎發生了問題。請重試。"

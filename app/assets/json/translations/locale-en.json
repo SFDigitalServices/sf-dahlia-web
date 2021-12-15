@@ -443,6 +443,7 @@
             }
         },
         "error": {
+            "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "address": "Please enter an address",
             "address_validation_not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
             "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
@@ -452,7 +453,6 @@
             },
             "alternate_contact": "Please select an alternate contact",
             "artist_anyone": "At least one member of your household must have a business license related to your art.",
-            "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "city": "Please enter a city",
             "complete_uploading_documents": "Please complete uploading documents above.",
             "confirmed_address": "Please confirm the suggested address.",
