@@ -14,29 +14,33 @@ import {
 
 import dayjs from "dayjs"
 
-import { getRentalListings } from "../api/listingsApiService"
-import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
-import RailsRentalUnitSummary from "../api/types/rails/listings/RailsRentalUnitSummary"
-import Layout from "../layouts/Layout"
-import withAppSetup from "../layouts/withAppSetup"
-import { ConfigContext } from "../lib/ConfigContext"
-import Link from "../navigation/Link"
-import { getAdditionalResourcesPath } from "../util/routeUtil"
-import RentalHeader from "./ListingDirectory/RentalHeader"
-import { areLotteryResultsShareable } from "../util/listingStatusUtil"
+import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
+import { ConfigContext } from "../../lib/ConfigContext"
+import Link from "../../navigation/Link"
+import { getAdditionalResourcesPath } from "../../util/routeUtil"
+import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 
-interface DirectoryProps {
-  isRental: boolean
-  assetPaths: unknown
-}
+type RailsListing = RailsSaleListing | RailsRentalListing
+
+type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
+
+type DirectoryType = "forRent" | "forSale"
 
 interface ListingsGroups {
-  open: RailsRentalListing[]
-  upcoming: RailsRentalListing[]
-  results: RailsRentalListing[]
+  open: RailsListing[]
+  upcoming: RailsListing[]
+  results: RailsListing[]
 }
 
-export const getListingImageCardStatuses = (listing: RailsRentalListing): StatusBarType[] => {
+interface DirectoryProps {
+  listingsAPI: () => Promise<RailsListing[]>
+  directoryType: DirectoryType
+}
+
+export const getListingImageCardStatuses = (listing: RailsListing): StatusBarType[] => {
   const statuses: StatusBarType[] = []
 
   const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
@@ -103,19 +107,28 @@ export const getRentSubText = (summary: RailsRentalUnitSummary) => {
   return null
 }
 
-export const showWaitlist = (listing: RailsRentalListing, summary: RailsRentalUnitSummary) =>
+export const showWaitlist = (listing: RailsListing, summary: RailsUnitSummary) =>
   listing.hasWaitlist && summary.availability <= 0
 
 export const getAvailabilityString = (
-  listing: RailsRentalListing,
-  summary: RailsRentalUnitSummary,
+  listing: RailsListing,
+  summary: RailsUnitSummary,
   mobile?: boolean
 ) =>
   showWaitlist(listing, summary)
     ? t("t.waitlist")
     : `${summary.availability}${!mobile ? " " + t("t.available") : ""}`
 
-const getUnitSummaryTable = (listing: RailsRentalListing) =>
+type minMax = "min" | "max"
+const getMinMax = (num1: number | null, num2: number | null, rangeType: minMax) => {
+  if (num1 && num2) {
+    return rangeType === "min" ? Math.min(num1, num2) : Math.max(num1, num2)
+  } else {
+    return num1 ?? num2
+  }
+}
+
+const getForRentSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
@@ -128,11 +141,43 @@ const getUnitSummaryTable = (listing: RailsRentalListing) =>
         cellText: getAvailabilityString(listing, summary, true),
         cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
       },
-      income: {
+      colThree: {
         cellText: getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, null, "$"),
         cellSubText: t("t.perMonth"),
       },
-      rent: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
+      colFour: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
+    }))
+
+const getForSaleSummaryTable = (listing: RailsSaleListing) =>
+  listing.unitSummaries.general
+    .filter((summary) => !!summary.unitType)
+    .map((summary) => ({
+      unitType: {
+        cellText: summary.unitType,
+        cellSubText: getAvailabilityString(listing, summary, false),
+        hideMobile: true,
+      },
+      availability: {
+        cellText: getAvailabilityString(listing, summary, true),
+        cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
+      },
+      colThree: {
+        cellText: getRangeString(
+          getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min"),
+          getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max"),
+          null,
+          "$"
+        ),
+        cellSubText: t("t.perMonth"),
+      },
+      colFour: {
+        cellText: getRangeString(
+          getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min"),
+          getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max"),
+          null,
+          "$"
+        ),
+      },
     }))
 
 export const getTableHeader = (listing: RailsRentalListing) => {
@@ -160,7 +205,7 @@ type Listing = RailsRentalListing & {
   Reserved_community_type: string
 }
 
-const getListings = (listings) =>
+const getListings = (listings, directoryType) =>
   listings.map((listing: Listing, index) => (
     <ListingCard
       key={index}
@@ -181,28 +226,37 @@ const getListings = (listings) =>
         headers: {
           unitType: { name: "t.units", className: headerClassNames },
           availability: { name: "t.available", className: headerClassNames },
-          income: { name: "t.incomeRange", className: headerClassNames },
-          rent: { name: "t.rent", className: headerClassNames },
+          colThree: {
+            name: directoryType === "forRent" ? "t.incomeRange" : "saleDirectory.hoaDues",
+            className: headerClassNames,
+          },
+          colFour: {
+            name: directoryType === "forRent" ? "t.rent" : "saleDirectory.price",
+            className: headerClassNames,
+          },
         },
         responsiveCollapse: true,
         cellClassName: "px-5 py-3",
         headersHiddenDesktop: ["availability"],
-        stackedData: getUnitSummaryTable(listing),
+        stackedData:
+          directoryType === "forRent"
+            ? getForRentSummaryTable(listing)
+            : getForSaleSummaryTable(listing),
       }}
       seeDetailsLink={`/listings/${listing.listingID}`}
     />
   ))
 
-const openListingsView = (listings) =>
+const openListingsView = (listings, directoryType) =>
   listings.length > 0 ? (
-    getListings(listings)
+    getListings(listings, directoryType)
   ) : (
     <div className="notice-block">
       <h3 className="m-auto text-gray-800">{t("listings.noOpenListings")}</h3>
     </div>
   )
 
-const upcomingLotteriesView = (listings) =>
+const upcomingLotteriesView = (listings, directoryType) =>
   listings.length > 0 && (
     <ListingsGroup
       listingsCount={listings.length}
@@ -210,11 +264,11 @@ const upcomingLotteriesView = (listings) =>
       hideButtonText={t("listings.upcomingLotteries.hide")}
       showButtonText={t("listings.upcomingLotteries.show")}
     >
-      {getListings(listings)}
+      {getListings(listings, directoryType)}
     </ListingsGroup>
   )
 
-const lotteryResultsView = (listings) =>
+const lotteryResultsView = (listings, directoryType) =>
   listings.length > 0 && (
     <ListingsGroup
       listingsCount={listings.length}
@@ -222,16 +276,17 @@ const lotteryResultsView = (listings) =>
       hideButtonText={t("listings.lotteryResults.hide")}
       showButtonText={t("listings.lotteryResults.show")}
     >
-      {getListings(listings)}
+      {getListings(listings, directoryType)}
     </ListingsGroup>
   )
 
-const DirectoryPage = (_props: DirectoryProps) => {
+export const DirectoryPage = (props: DirectoryProps) => {
   const { listingsAlertUrl } = useContext(ConfigContext)
   const [listings, setListings] = useState<ListingsGroups>({ open: [], upcoming: [], results: [] })
   const [loading, setLoading] = useState<boolean>(true)
+
   useEffect(() => {
-    void getRentalListings().then((listings) => {
+    void props.listingsAPI().then((listings) => {
       const open = []
       const upcoming = []
       const results = []
@@ -258,32 +313,57 @@ const DirectoryPage = (_props: DirectoryProps) => {
       setListings({ open, upcoming, results })
       setLoading(false)
     })
-  }, [])
+  }, [props])
 
   return (
     <LoadingOverlay isLoading={loading}>
-      <Layout title={t("pageTitle.rentalListings")}>
+      <div>
         <div>
           {!loading && (
             <>
-              <RentalHeader />
-              {openListingsView(listings.open)}
+              {openListingsView(listings.open, props.directoryType)}
               <div className="bg-primary-darker">
                 <div className="max-w-5xl mx-auto p-2 md:p-4">
-                  <ActionBlock
-                    header={t("rentalDirectory.callouttitle")}
-                    background="primary-darker"
-                    layout={ActionBlockLayout.inline}
-                    actions={[
-                      <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
-                        {t("rentalDirectory.calloutbutton")}
-                      </Link>,
-                    ]}
-                  />
+                  {props.directoryType === "forRent" ? (
+                    <ActionBlock
+                      header={t("rentalDirectory.callouttitle")}
+                      background="primary-darker"
+                      layout={ActionBlockLayout.inline}
+                      actions={[
+                        <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+                          {t("rentalDirectory.calloutbutton")}
+                        </Link>,
+                      ]}
+                    />
+                  ) : (
+                    <ActionBlock
+                      header={t("saleDirectory.callout.title")}
+                      background="primary-darker"
+                      layout={ActionBlockLayout.inline}
+                      actions={[
+                        <Link
+                          className="button"
+                          key="action-1"
+                          external
+                          href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
+                        >
+                          {t("saleDirectory.callout.firstComeFirstServed")}
+                        </Link>,
+                        <Link
+                          className="button"
+                          key="action-2"
+                          external
+                          href={"https://sfmohcd.org/current-listings-city-second-program"}
+                        >
+                          {t("saleDirectory.callout.citySecondLoan")}
+                        </Link>,
+                      ]}
+                    />
+                  )}
                 </div>
               </div>
-              {upcomingLotteriesView(listings.upcoming)}
-              {lotteryResultsView(listings.results)}
+              {upcomingLotteriesView(listings.upcoming, props.directoryType)}
+              {lotteryResultsView(listings.results, props.directoryType)}
             </>
           )}
         </div>
@@ -292,14 +372,14 @@ const DirectoryPage = (_props: DirectoryProps) => {
           background="primary-lighter"
           icon={<Icon size="3xl" symbol="mail" />}
           actions={[
-            <Link className="button" key="action-1" href={listingsAlertUrl}>
+            <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}
         />
-      </Layout>
+      </div>
     </LoadingOverlay>
   )
 }
 
-export default withAppSetup(DirectoryPage)
+export default DirectoryPage

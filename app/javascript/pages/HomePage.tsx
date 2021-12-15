@@ -38,7 +38,7 @@ const HomePage = (_props: HomePageProps) => {
         <ActionBlock
           header={t("welcome.newListingEmailAlert")}
           actions={[
-            <Link className="button" key="action-1" external href={listingsAlertUrl}>
+            <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
             </Link>,
           ]}

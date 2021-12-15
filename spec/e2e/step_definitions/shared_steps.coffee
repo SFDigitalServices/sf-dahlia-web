@@ -8,6 +8,7 @@ pageUrls = {
   'My Applications': 'my-applications'
   Name: 'name'
   Prerequisites: 'prerequisites'
+  Priorities: 'household-priorities'
 }
 
 Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->
@@ -126,7 +127,7 @@ Then 'I should see an error about selecting an option', ->
     'Please select and complete one of the options below in order to continue')
   Utils.Expect.error(@, 'Please select one of the options above')
 
-Then 'I should see an address not found error', ->
+Then 'I should see a PO Boxes not allowed error', ->
   Utils.Expect.alertBox(@)
-  Utils.Expect.error(@, 'This address was not found.')
+  Utils.Expect.error(@, 'PO Boxes are not allowed.')
 

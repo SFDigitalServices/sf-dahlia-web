@@ -1,8 +1,6 @@
 .form
   .app-inner.inset
     .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('confirmed_home_address')}"
-      label.form-label.caps
-        | {{'label.suggested_address' | translate}}:
       .form-item.has-edit
         .radio-group.left role="radiogroup" aria-label="{{'label.suggested_address' | translate}}"
           radio-block-item value='Yes' user='user' name='confirmed_home_address' ng-required='true' aria-describedby="confirmed_home_address_error"

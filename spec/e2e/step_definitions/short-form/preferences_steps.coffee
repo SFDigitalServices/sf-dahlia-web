@@ -285,9 +285,9 @@ When 'I fill out my address for Alice Griffith', ->
   element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
   element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
 
-When "I fill out an address for Alice Griffith that isn't found", ->
+When "I fill out an address for Alice Griffith that's a PO Box", ->
   element(By.id('aliceGriffith_aliceGriffith_address_address1'))
-    .clear().sendKeys('Mission')
+    .clear().sendKeys('P.O. Box 37176')
   element(By.id('aliceGriffith_aliceGriffith_address_city')).clear().sendKeys('San Francisco')
   element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
   element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')

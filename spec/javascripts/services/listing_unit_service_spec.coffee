@@ -2,6 +2,7 @@ do ->
   'use strict'
   describe 'ListingUnitService', ->
     ListingUnitService = undefined
+    ListingConstantsService = undefined
     httpBackend = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeSaleListing = _.cloneDeep(fakeListing)
@@ -36,9 +37,10 @@ do ->
       return
     )
 
-    beforeEach inject((_$httpBackend_, _ListingUnitService_) ->
+    beforeEach inject((_$httpBackend_, _ListingUnitService_, _ListingConstantsService_) ->
       httpBackend = _$httpBackend_
       ListingUnitService = _ListingUnitService_
+      ListingConstantsService = _ListingConstantsService_
       return
     )
 
@@ -149,13 +151,13 @@ do ->
       describe 'for rental units', ->
         it 'should return availability that\'s the sum of sumilar units', ->
           units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForRentalUnitGrouping)
           expect(summed.length).toEqual 1
           expect(summed[0].total).toEqual 2
         it 'should not combine units with different rents', ->
           units = [angular.copy(fakeUnits.units[0]), angular.copy(fakeUnits.units[0])]
           units[0]['BMR_Rent_Monthly'] = 1000
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForRentalUnitGrouping)
           expect(summed.length).toEqual 2
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
@@ -163,21 +165,21 @@ do ->
       describe 'for sale units', ->
         it 'should return availability that\'s the sum of similar units', ->
           units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForRentalUnitGrouping)
           expect(summed.length).toEqual 1
           expect(summed[0].total).toEqual 2
 
         it 'should not combine units with different prices', ->
           units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
           units[0]['Price_Without_Parking'] = 300000
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForSaleUnitGrouping)
           expect(summed.length).toEqual 2
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
 
           units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
           units[0]['Price_With_Parking'] = 300000
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForSaleUnitGrouping)
           expect(summed.length).toEqual 2
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
@@ -185,14 +187,14 @@ do ->
         it 'should not combine units with different HOA dues', ->
           units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
           units[0]['HOA_Dues_Without_Parking'] = 400
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForSaleUnitGrouping)
           expect(summed.length).toEqual 2
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
 
           units = [angular.copy(fakeUnitsSales.units[0]), angular.copy(fakeUnitsSales.units[0])]
           units[0]['HOA_Dues_With_Parking'] = 400
-          summed = ListingUnitService._sumSimilarUnits(units)
+          summed = ListingUnitService._sumSimilarUnits(units, ListingConstantsService.fieldsForSaleUnitGrouping)
           expect(summed.length).toEqual 2
           expect(summed[0].total).toEqual 1
           expect(summed[1].total).toEqual 1
