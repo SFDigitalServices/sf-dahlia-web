@@ -372,7 +372,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
         <ActionBlock
           header={t("welcome.newListingEmailAlert")}
           background="primary-lighter"
-          icon={<Icon size="3xl" symbol="mail" />}
+          icon={<Icon size="3xl" symbol="mailThin" fill="transparent" />}
           actions={[
             <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
               {t("welcome.signUpToday")}
