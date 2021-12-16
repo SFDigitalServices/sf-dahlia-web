@@ -6,7 +6,6 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,900,700");
 @import url("https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic");
 
-
 html {
   @apply antialiased;
 }
@@ -28,8 +27,9 @@ body {
 }
 
 // Stop footer rom overlapping with main content on IE11.
-_:-ms-fullscreen, :root .site-content {
-  min-height:600px !important;
+_:-ms-fullscreen,
+:root .site-content {
+  min-height: 600px !important;
 }
 
 .site-content {

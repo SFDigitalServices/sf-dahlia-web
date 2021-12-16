@@ -34,11 +34,13 @@ interface ListingsGroups {
   open: RailsListing[]
   upcoming: RailsListing[]
   results: RailsListing[]
+  additional: RailsListing[]
 }
 
 interface DirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
   directoryType: DirectoryType
+  filters: EligibilityFilters
 }
 
 export const getListingImageCardStatuses = (listing: RailsListing): StatusBarType[] => {
@@ -46,6 +48,16 @@ export const getListingImageCardStatuses = (listing: RailsListing): StatusBarTyp
 
   const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
   const lotteryResultsDateString = dayjs(listing.Lottery_Results_Date).format("MMMM DD, YYYY")
+
+  if (listing.Does_Match) {
+    return [
+      {
+        status: ApplicationStatusType.Open,
+        content: `Matched`,
+        hideIcon: true,
+      },
+    ]
+  }
 
   if (new Date(listing.Application_Due_Date) > new Date()) {
     return [
@@ -281,56 +293,72 @@ const lotteryResultsView = (listings, directoryType) =>
     </ListingsGroup>
   )
 
+const additionalView = (listings, directoryType) => {
+  console.log({ listings })
+  return (
+    listings.length > 0 && (
+      <ListingsGroup
+        listingsCount={listings.length}
+        header={"Additional Listings"}
+        hideButtonText={t("listings.upcomingLotteries.hide")}
+        showButtonText={t("listings.upcomingLotteries.show")}
+      >
+        {getListings(listings, directoryType)}
+      </ListingsGroup>
+    )
+  )
+}
+
 export const DirectoryPage = (props: DirectoryProps) => {
   const { listingsAlertUrl } = useContext(ConfigContext)
-  const [listings, setListings] = useState<ListingsGroups>({ open: [], upcoming: [], results: [] })
+  const [listings, setListings] = useState<ListingsGroups>({
+    open: [],
+    upcoming: [],
+    results: [],
+    additional: [],
+  })
   const [loading, setLoading] = useState<boolean>(true)
+  const [match, setMatch] = useState<boolean>(false)
 
   useEffect(() => {
-    const eligibilityFilters: EligibilityFilters = JSON.parse(
-      localStorage.getItem("ngStorage-eligibility_filters")
-    )
-
-    const hasSetEligibilityFilters = () => {
-      return (
-        eligibilityFilters.children_under_6 ||
-        eligibilityFilters.household_size ||
-        eligibilityFilters.include_children_under_6 !== false ||
-        eligibilityFilters.income_timeframe ||
-        eligibilityFilters.income_total
-      )
-    }
-    void props
-      .listingsAPI(hasSetEligibilityFilters ? eligibilityFilters : null)
-      .then((listings) => {
-        const open = []
-        const upcoming = []
-        const results = []
-        listings.forEach((listing) => {
-          if (!hasSetEligibilityFilters() || listing.Does_Match) {
-            if (dayjs(listing.Application_Due_Date) > dayjs()) {
-              open.push(listing)
-            } else {
-              if (areLotteryResultsShareable(listing)) {
-                results.push(listing)
-              } else {
-                upcoming.push(listing)
-              }
-            }
+    void props.listingsAPI(props.filters).then((listings) => {
+      setLoading(true)
+      const open = []
+      const upcoming = []
+      const results = []
+      const additional = []
+      listings.forEach((listing) => {
+        if (dayjs(listing.Application_Due_Date) > dayjs()) {
+          if (!props.filters || listing.Does_Match) {
+            setMatch(true)
+            open.push(listing)
+          } else {
+            additional.push(listing)
           }
-        })
-        open.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-          new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
-        )
-        upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-          new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
-        )
-        results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
-          new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
-        )
-        setListings({ open, upcoming, results })
-        setLoading(false)
+        } else {
+          if (areLotteryResultsShareable(listing)) {
+            results.push(listing)
+          } else {
+            upcoming.push(listing)
+          }
+        }
       })
+      console.log({ additional })
+      open.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+        new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
+      )
+      additional.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+        new Date(a.Application_Due_Date) > new Date(b.Application_Due_Date) ? 1 : -1
+      )
+      upcoming.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+        new Date(a.Application_Due_Date) < new Date(b.Application_Due_Date) ? 1 : -1
+      )
+      results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
+        new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
+      )
+      setListings({ open, upcoming, results, additional })
+      setLoading(false)
+    })
   }, [props])
 
   return (
@@ -380,6 +408,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
                   )}
                 </div>
               </div>
+              {additionalView(listings.additional, props.directoryType)}
               {upcomingLotteriesView(listings.upcoming, props.directoryType)}
               {lotteryResultsView(listings.results, props.directoryType)}
             </>

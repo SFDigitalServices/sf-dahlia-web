@@ -11,7 +11,7 @@ const RentDirectory = () => {
   return (
     <Layout title={t("pageTitle.saleListings")}>
       <BuyHeader />
-      <DirectoryPage listingsAPI={getSaleListings} directoryType={"forSale"} />
+      <DirectoryPage listingsAPI={getSaleListings} directoryType={"forSale"} filters={null} />
     </Layout>
   )
 }

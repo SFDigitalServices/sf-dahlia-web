@@ -1,0 +1,28 @@
+.text-banner {
+  display: flex;
+  align-items: center;
+  margin-top: 5rem;
+  .text-banner-icon {
+    @screen md {
+      display: block;
+    }
+    display: none;
+    padding-right: 1rem;
+  }
+  .text-banner-content {
+    border-left: 3px solid green;
+    padding-left: 1rem;
+    .text-banner-header {
+      font-family: "Lato", sans-serif;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.12rem;
+      margin-bottom: 0.5rem;
+    }
+    .text-banner-text {
+      color: #555;
+      font-size: 1rem;
+    }
+  }
+}
