@@ -6,7 +6,7 @@ import {
   getRentSubText,
   getTableHeader,
   showWaitlist,
-} from "../../pages/ListingDirectory/DirectoryPage"
+} from "../../pages/ListingDirectory/DirectoryHelpers"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 

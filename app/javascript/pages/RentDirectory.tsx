@@ -55,8 +55,6 @@ const getRentalHeader = (
   setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
   match: boolean
 ) => {
-  console.log({ filters })
-
   return filters ? (
     <>
       {eligibilityHeader(filters, setFilters, "Showing matching units for rent")}
