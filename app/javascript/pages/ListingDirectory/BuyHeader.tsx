@@ -1,10 +1,4 @@
-import {
-  AppearanceStyleType,
-  Heading,
-  LinkButton,
-  PageHeader,
-  t,
-} from "@bloom-housing/ui-components"
+import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
 import Markdown from "markdown-to-jsx"
 import Link from "../../navigation/Link"
@@ -67,10 +61,10 @@ const BuyHeader = () => (
         {t("saleDirectory.title")}
       </Heading>
       <div className="mb-8 md:col-span-5 md:col-start-8">
-        {/* FIXME: Make this anchor link work */}
-        <LinkButton href="#listing-results" fullWidth styleType={AppearanceStyleType.primary}>
+        {/* TODO: Switch this back to LinkButton or button once this issue is resolvedhttps://github.com/bloom-housing/bloom/issues/2324 */}
+        <a href="#listing-results" className="button is-primary is-fullwidth">
           {t("saleDirectory.seeTheListings")}
-        </LinkButton>
+        </a>
       </div>
       <div className="md:col-span-7">
         <BeforeApplying />

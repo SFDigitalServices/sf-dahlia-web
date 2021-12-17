@@ -320,7 +320,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
-        <div>
+        <div id="listing-results">
           {!loading && (
             <>
               {openListingsView(listings.open, props.directoryType)}
