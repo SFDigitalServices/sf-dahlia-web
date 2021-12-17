@@ -263,24 +263,7 @@ const getListings = (listings, directoryType) =>
   ))
 
 const openListingsView = (listings, directoryType) =>
-  listings.length > 0 ? (
-    getListings(listings, directoryType)
-  ) : (
-    <div className={"flex items-center justify-center"}>
-      <ActionBlock
-        header={
-          "For more help, we suggest talking with a housing counselor to explore your options."
-        }
-        background="primary-lighter"
-        actions={[
-          <Link className="button" key="action-1" href={"#"}>
-            Find a housing counselor
-          </Link>,
-        ]}
-        className={"m-5 p-6 max-w-5xl"}
-      />
-    </div>
-  )
+  listings.length > 0 && getListings(listings, directoryType)
 
 const upcomingLotteriesView = (listings, directoryType) =>
   listings.length > 0 && (
@@ -384,24 +367,32 @@ export const DirectoryPage = (props: DirectoryProps) => {
             {!loading && (
               <>
                 {openListingsView(listings.open, props.directoryType)}
-                <div className="bg-primary-darker">
-                  <div className="max-w-5xl mx-auto p-2 md:p-4">
-                    {props.directoryType === "forRent" ? (
-                      <ActionBlock
-                        header={t("rentalDirectory.callouttitle")}
-                        background="primary-darker"
-                        layout={ActionBlockLayout.inline}
-                        actions={[
-                          <Link
-                            className="button"
-                            key="action-1"
-                            href={getAdditionalResourcesPath()}
-                          >
-                            {t("rentalDirectory.calloutbutton")}
-                          </Link>,
-                        ]}
-                      />
-                    ) : (
+                {props.directoryType === "forRent" ? (
+                  <>
+                    {(!filters || match) && (
+                      <div className="bg-primary-darker">
+                        <div className="max-w-5xl mx-auto p-2 md:p-4">
+                          <ActionBlock
+                            header={t("rentalDirectory.callouttitle")}
+                            background="primary-darker"
+                            layout={ActionBlockLayout.inline}
+                            actions={[
+                              <Link
+                                className="button"
+                                key="action-1"
+                                href={getAdditionalResourcesPath()}
+                              >
+                                {t("rentalDirectory.calloutbutton")}
+                              </Link>,
+                            ]}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="bg-primary-darker">
+                    <div className="max-w-5xl mx-auto p-2 md:p-4">
                       <ActionBlock
                         header={t("saleDirectory.callout.title")}
                         background="primary-darker"
@@ -425,9 +416,27 @@ export const DirectoryPage = (props: DirectoryProps) => {
                           </Link>,
                         ]}
                       />
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {filters && (
+                  <div className={"flex items-center justify-center"}>
+                    <ActionBlock
+                      header={
+                        "For more help, we suggest talking with a housing counselor to explore your options."
+                      }
+                      background="primary-lighter"
+                      actions={[
+                        <Link className="button" key="action-1" href={"#"}>
+                          Find a housing counselor
+                        </Link>,
+                      ]}
+                      className={"m-5 p-6 max-w-5xl text-center"}
+                    />
+                  </div>
+                )}
+
                 {additionalView(listings.additional, props.directoryType)}
                 {upcomingLotteriesView(listings.upcoming, props.directoryType)}
                 {lotteryResultsView(listings.results, props.directoryType)}

@@ -55,16 +55,17 @@ const RentalHeader = (props: DirectoryProps) => {
         </p>
       </PageHeader>
       <hr />
-      <div className={"flex justify-center"}>
-        <div className={"flex px-8 pb-8 max-w-5xl"}>
-          {props.match ? (
-            <TextBanner
-              header={"Matched"}
-              content={
-                "Based on information you entered, you may be eligible for units at the following property."
-              }
-            />
-          ) : (
+
+      {props.match ? (
+        <TextBanner
+          header={"Matched"}
+          content={
+            "Based on information you entered, you may be eligible for units at the following property."
+          }
+        />
+      ) : (
+        <div className={"flex justify-center"}>
+          <div className={"flex px-8 pb-8 max-w-5xl"}>
             <div className={"mt-10 max-w-5xl flex flex-col items-start match-container"}>
               <h2 className={"page-header-subheader"}>No Matches</h2>
               <p className={"page-header-text-block"}>
@@ -74,9 +75,9 @@ const RentalHeader = (props: DirectoryProps) => {
                 Click Here for other rental and ownership affordable housing opportunities.
               </p>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   ) : (
     <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>
