@@ -10,6 +10,7 @@ import {
   t,
   StatusBarType,
   ApplicationStatusType,
+  Button,
 } from "@bloom-housing/ui-components"
 
 import dayjs from "dayjs"
@@ -23,6 +24,7 @@ import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
+import RentalHeader from "./RentalHeader"
 
 type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -264,8 +266,19 @@ const openListingsView = (listings, directoryType) =>
   listings.length > 0 ? (
     getListings(listings, directoryType)
   ) : (
-    <div className="notice-block">
-      <h3 className="m-auto text-gray-800">{t("listings.noOpenListings")}</h3>
+    <div className={"flex items-center justify-center"}>
+      <ActionBlock
+        header={
+          "For more help, we suggest talking with a housing counselor to explore your options."
+        }
+        background="primary-lighter"
+        actions={[
+          <Link className="button" key="action-1" href={"#"}>
+            Find a housing counselor
+          </Link>,
+        ]}
+        className={"m-5 p-6 max-w-5xl"}
+      />
     </div>
   )
 
@@ -319,6 +332,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
   })
   const [loading, setLoading] = useState<boolean>(true)
   const [match, setMatch] = useState<boolean>(false)
+  const [filters, setFilters] = useState(props.filters ?? null)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
@@ -362,58 +376,76 @@ export const DirectoryPage = (props: DirectoryProps) => {
   }, [props])
 
   return (
-    <LoadingOverlay isLoading={loading}>
-      <div>
+    <>
+      <RentalHeader filters={props.filters} setFilters={setFilters} match={match} />
+      <LoadingOverlay isLoading={loading}>
         <div>
-          {!loading && (
-            <>
-              {openListingsView(listings.open, props.directoryType)}
-              <div className="bg-primary-darker">
-                <div className="max-w-5xl mx-auto p-2 md:p-4">
-                  {props.directoryType === "forRent" ? (
-                    <ActionBlock
-                      header={t("rentalDirectory.callouttitle")}
-                      background="primary-darker"
-                      layout={ActionBlockLayout.inline}
-                      actions={[
-                        <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
-                          {t("rentalDirectory.calloutbutton")}
-                        </Link>,
-                      ]}
-                    />
-                  ) : (
-                    <ActionBlock
-                      header={t("saleDirectory.callout.title")}
-                      background="primary-darker"
-                      layout={ActionBlockLayout.inline}
-                      actions={[
-                        <Link
-                          className="button"
-                          key="action-1"
-                          external
+          <div>
+            {!loading && (
+              <>
+                {openListingsView(listings.open, props.directoryType)}
+                <div className="bg-primary-darker">
+                  <div className="max-w-5xl mx-auto p-2 md:p-4">
+                    {props.directoryType === "forRent" ? (
+                      <ActionBlock
+                        header={t("rentalDirectory.callouttitle")}
+                        background="primary-darker"
+                        layout={ActionBlockLayout.inline}
+                        actions={[
+                          <Link
+                            className="button"
+                            key="action-1"
+                            href={getAdditionalResourcesPath()}
+                          >
+                            {t("rentalDirectory.calloutbutton")}
+                          </Link>,
+                        ]}
+                      />
+                    ) : (
+                      <ActionBlock
+                        header={t("saleDirectory.callout.title")}
+                        background="primary-darker"
+                        layout={ActionBlockLayout.inline}
+                        actions={[
+                          <Link
+                            className="button"
+                            key="action-1"
+                            external
                           href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
-                        >
-                          {t("saleDirectory.callout.firstComeFirstServed")}
-                        </Link>,
-                        <Link
-                          className="button"
-                          key="action-2"
-                          external
+                          >
+                            {t("saleDirectory.callout.firstComeFirstServed")}
+                          </Link>,
+                          <Link
+                            className="button"
+                            key="action-2"
+                            external
                           href={"https://sfmohcd.org/current-listings-city-second-program"}
-                        >
-                          {t("saleDirectory.callout.citySecondLoan")}
-                        </Link>,
-                      ]}
-                    />
-                  )}
+                          >
+                            {t("saleDirectory.callout.citySecondLoan")}
+                          </Link>,
+                        ]}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-              {additionalView(listings.additional, props.directoryType)}
-              {upcomingLotteriesView(listings.upcoming, props.directoryType)}
-              {lotteryResultsView(listings.results, props.directoryType)}
-            </>
-          )}
+                {additionalView(listings.additional, props.directoryType)}
+                {upcomingLotteriesView(listings.upcoming, props.directoryType)}
+                {lotteryResultsView(listings.results, props.directoryType)}
+              </>
+            )}
+          </div>
+          <ActionBlock
+            header={t("welcome.newListingEmailAlert")}
+            background="primary-lighter"
+            icon={<Icon size="3xl" symbol="mail" />}
+            actions={[
+              <Link className="button" key="action-1" href={listingsAlertUrl}>
+                {t("welcome.signUpToday")}
+              </Link>,
+            ]}
+          />
         </div>
+<<<<<<< HEAD
         <ActionBlock
           header={t("welcome.newListingEmailAlert")}
           background="primary-lighter"
@@ -426,6 +458,10 @@ export const DirectoryPage = (props: DirectoryProps) => {
         />
       </div>
     </LoadingOverlay>
+=======
+      </LoadingOverlay>
+    </>
+>>>>>>> feat: no match banner
   )
 }
 

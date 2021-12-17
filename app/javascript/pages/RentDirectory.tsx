@@ -23,15 +23,12 @@ const RentDirectory = () => {
     )
   }
 
-  const [filters, setFilters] = useState(eligibilityFilters ?? null)
-
   return (
     <Layout title={t("pageTitle.rentalListings")}>
-      <RentalHeader filters={hasSetEligibilityFilters() ? filters : null} setFilters={setFilters} />
       <DirectoryPage
         listingsAPI={getRentalListings}
         directoryType={"forRent"}
-        filters={hasSetEligibilityFilters() ? filters : null}
+        filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
       />
     </Layout>
   )
