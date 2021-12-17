@@ -7,7 +7,6 @@ import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import Link from "../navigation/Link"
-import { getAdditionalResourcesPath } from "../util/routeUtil"
 import { EligibilityFilters } from "../api/listingsApiService"
 
 import { GenericDirectory } from "./ListingDirectory/GenericDirectory"
