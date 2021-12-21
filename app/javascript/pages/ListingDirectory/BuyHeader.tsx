@@ -2,6 +2,7 @@ import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
 import Markdown from "markdown-to-jsx"
 import Link from "../../navigation/Link"
+import "./BuyHeader.scss"
 
 const BeforeApplying = () => (
   <div className="mb-8">
@@ -55,21 +56,19 @@ const GetHelp = () => (
   </div>
 )
 const BuyHeader = () => (
-  <PageHeader className="py-6 px-4 md:py-16 md:px-8">
-    <div className="md:grid md:grid-cols-12">
-      <Heading className="mb-8 md:col-span-7 text-4xl md:text-5xl">
-        {t("saleDirectory.title")}
-      </Heading>
-      <div className="mb-8 md:col-span-5 md:col-start-8">
+  <PageHeader className="buy-header">
+    <div className="buy-header_columns">
+      <Heading className="buy-header_title buy-header_left_col">{t("saleDirectory.title")}</Heading>
+      <div className="mb-8 buy-header_right_col">
         {/* TODO: Switch this back to LinkButton or button once this issue is resolvedhttps://github.com/bloom-housing/bloom/issues/2324 */}
         <a href="#listing-results" className="button is-primary is-fullwidth">
           {t("saleDirectory.seeTheListings")}
         </a>
       </div>
-      <div className="md:col-span-7">
+      <div className="buy-header_left_col">
         <BeforeApplying />
       </div>
-      <div className="md:col-span-5 md:col-start-8">
+      <div className="buy-header_right_col">
         <GetHelp />
       </div>
     </div>

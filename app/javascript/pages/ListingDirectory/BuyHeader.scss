@@ -1,0 +1,30 @@
+.buy-header {
+  @apply py-6;
+  @apply px-4;
+  @apply md:py-16;
+  @apply md:px-8;
+}
+
+.buy-header_title {
+  @apply mb-8;
+  @apply text-4xl;
+  @apply md:text-5xl;
+}
+
+.buy-header_columns {
+  @apply md:grid;
+  @apply md:grid-cols-12;
+}
+.buy-header_left_col,
+.buy-header_right_col {
+  @apply text-tiny;
+  @apply md:text-base;
+  @apply px-4;
+}
+.buy-header_left_col {
+  @apply md:col-span-7;
+}
+.buy-header_right_col {
+  @apply md:col-span-5;
+  @apply md:col-start-8;
+}

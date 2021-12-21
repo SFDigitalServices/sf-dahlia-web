@@ -11,5 +11,10 @@ bloomTheme.purge = [
   "app/javascript/**/*.tsx",
   "node_modules/@bloom-housing/ui-components/src/**/*.tsx",
 ]
-
+bloomTheme.theme.fontSize["4xl"] = ['2rem', {
+  lineHeight: '1.25',
+}]
+bloomTheme.theme.fontSize["5xl"] = ['2.5rem', {
+  lineHeight: '1.25',
+}]
 module.exports = bloomTheme
