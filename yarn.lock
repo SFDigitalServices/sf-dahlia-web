@@ -1343,10 +1343,10 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^3.0.1-alpha.48":
-  version "3.0.1-alpha.48"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.48.tgz#d37af8062bb98dba9fb0fb374fb5057e6333617b"
-  integrity sha512-Bke+BKI9DGUcrEx0JSzUMKkAX+c8TGqIA7i3CSPDNkX7L1jGMoTQ3hLqDJg0E7dCH5z/YsfexPN9WOwzLMpN7w==
+"@bloom-housing/ui-components@^3.0.1-alpha.50":
+  version "3.0.1-alpha.50"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.50.tgz#baebd415c8fc0a0c740adffe72bfcd970e8a97a1"
+  integrity sha512-PGZA9+GjLGGUNpyZKu/1PKeps1Nti1062GgnMS20ZaiLP+a5NmVFhHrjzJyTaSMDgTQt6/GJwhvSFQzvxB4/mQ==
   dependencies:
     "@bloom-housing/backend-core" "^3.0.1-alpha.40"
     "@mapbox/mapbox-sdk" "^0.13.0"
