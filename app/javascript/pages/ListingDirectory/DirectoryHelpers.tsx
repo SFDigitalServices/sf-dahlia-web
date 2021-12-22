@@ -18,12 +18,12 @@ import dayjs from "dayjs"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import Link from "../../navigation/Link"
-import { getAdditionalResourcesPath } from "../../util/routeUtil"
+import { getAdditionalResourcesPath, getEligibilityEstimatorLink } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
-import { getEligibilityEstimatorLink } from "../../util/routeUtil"
+
 import TextBanner from "./TextBanner"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
@@ -48,29 +48,15 @@ type Listing = RailsRentalListing & {
 const headerClassNames = "text-base text-gray-700 border-b"
 
 // Returns every status bar under the image card for one listing
-export const getListingImageCardStatuses = (listing: RailsListing): StatusBarType[] => {
+export const getListingImageCardStatuses = (
+  listing: RailsListing,
+  hasFiltersSet: boolean
+): StatusBarType[] => {
   const statuses: StatusBarType[] = []
   const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
   const lotteryResultsDateString = dayjs(listing.Lottery_Results_Date).format("MMMM DD, YYYY")
 
-  if (listing.Does_Match) {
-    return [
-      {
-        status: ApplicationStatusType.Open,
-        content: `Matched`,
-        hideIcon: true,
-      },
-    ]
-  }
-
-  if (new Date(listing.Application_Due_Date) > new Date()) {
-    return [
-      {
-        status: ApplicationStatusType.Open,
-        content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
-      },
-    ]
-  } else {
+  if (new Date(listing.Application_Due_Date) < new Date()) {
     if (!areLotteryResultsShareable(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
@@ -83,8 +69,32 @@ export const getListingImageCardStatuses = (listing: RailsListing): StatusBarTyp
       content: `${t("listings.lotteryResults.cardTitle")}: ${lotteryResultsDateString}`,
       hideIcon: true,
     })
+  } else {
+    if (hasFiltersSet && listing.Does_Match) {
+      return [
+        {
+          status: ApplicationStatusType.Open,
+          content: `Matched`,
+          hideIcon: true,
+        },
+      ]
+    } else if (hasFiltersSet && !listing.Does_Match) {
+      return [
+        {
+          status: ApplicationStatusType.PostLottery,
+          content: "Not a match",
+          hideIcon: true,
+        },
+      ]
+    } else {
+      return [
+        {
+          status: ApplicationStatusType.Open,
+          content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
+        },
+      ]
+    }
   }
-
   return statuses
 }
 
@@ -176,7 +186,7 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
 }
 
 // Get a set of Listing Cards for an array of listings, which includes both the image and summary table
-export const getListings = (listings, directoryType, stackedDataFxn) =>
+export const getListingCards = (listings, directoryType, stackedDataFxn, hasFiltersSet?: boolean) =>
   listings.map((listing: Listing, index) => (
     <ListingCard
       key={index}
@@ -186,7 +196,7 @@ export const getListings = (listings, directoryType, stackedDataFxn) =>
         title: listing.Name,
         href: `/listings/${listing.listingID}`,
         tagLabel: listing.Reserved_community_type ?? undefined,
-        statuses: getListingImageCardStatuses(listing),
+        statuses: getListingImageCardStatuses(listing, hasFiltersSet),
       }}
       tableHeaderProps={{
         tableHeader: getTableHeader(listing),
@@ -215,11 +225,19 @@ export const getListings = (listings, directoryType, stackedDataFxn) =>
     />
   ))
 
-export const openListingsView = (listings, directoryType, stackedDataFxn) =>
-  listings.length > 0 && getListings(listings, directoryType, stackedDataFxn)
+export const openListingsView = (listings, directoryType, stackedDataFxn, filtersSet?) =>
+  listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
 
 // Get an expandable group of listings
-export const getListingGroup = (listings, directoryType, stackedDataFxn, header, hide, show) => {
+export const getListingGroup = (
+  listings,
+  directoryType,
+  stackedDataFxn,
+  header,
+  hide,
+  show,
+  hasFiltersSet?: boolean
+) => {
   return (
     listings.length > 0 && (
       <ListingsGroup
@@ -228,7 +246,7 @@ export const getListingGroup = (listings, directoryType, stackedDataFxn, header,
         hideButtonText={hide}
         showButtonText={show}
       >
-        {getListings(listings, directoryType, stackedDataFxn)}
+        {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
     )
   )
@@ -256,14 +274,15 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn) => {
   )
 }
 
-export const additionalView = (listings, directoryType, stackedDataFxn) => {
+export const additionalView = (listings, directoryType, stackedDataFxn, filtersSet?: boolean) => {
   return getListingGroup(
     listings,
     directoryType,
     stackedDataFxn,
     "Additional Listings",
     "Hide additional listings",
-    "Show additional listings"
+    "Show additional listings",
+    filtersSet
   )
 }
 

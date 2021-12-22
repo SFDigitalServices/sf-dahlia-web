@@ -40,6 +40,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     additional: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
+  // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
 
@@ -52,6 +53,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     })
   }, [props, filters])
 
+  const hasFiltersSet = filters !== null
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -59,12 +61,23 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
           {!loading && (
             <>
               {props.getPageHeader(filters, setFilters, match)}
-              {openListingsView(listings.open, props.directoryType, props.getSummaryTable)}
+              {openListingsView(
+                listings.open,
+                props.directoryType,
+                props.getSummaryTable,
+                hasFiltersSet
+              )}
 
               {props.findMoreActionBlock(filters, match)}
 
               {filters && housingCounselorActionBlock()}
-              {additionalView(listings.additional, props.directoryType, props.getSummaryTable)}
+              {filters &&
+                additionalView(
+                  listings.additional,
+                  props.directoryType,
+                  props.getSummaryTable,
+                  hasFiltersSet
+                )}
               {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
               {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
             </>
