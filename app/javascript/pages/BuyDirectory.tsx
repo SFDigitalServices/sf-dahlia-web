@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ActionBlock, ActionBlockLayout, t, PageHeader } from "@bloom-housing/ui-components"
+import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
 
 import { getSaleListings } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
@@ -19,6 +19,7 @@ import {
   eligibilityHeader,
   getMinMax,
 } from "./ListingDirectory/DirectoryHelpers"
+import BuyHeader from "./ListingDirectory/BuyHeader"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) =>
   listing.unitSummaries.general
@@ -69,8 +70,7 @@ const getBuyHeader = (
           )}
     </>
   ) : (
-    // TODO: Buy housing detailed heading goes here
-    <PageHeader title={t("saleDirectory.title")} />
+    <BuyHeader />
   )
 }
 
