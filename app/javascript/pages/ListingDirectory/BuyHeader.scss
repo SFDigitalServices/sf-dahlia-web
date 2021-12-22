@@ -5,11 +5,6 @@
   @apply md:px-8;
 }
 
-.buy-header_title {
-  @apply mb-8;
-  @apply text-4xl;
-  @apply md:text-5xl;
-}
 
 .buy-header_columns {
   @apply md:grid;
@@ -27,4 +22,10 @@
 .buy-header_right_col {
   @apply md:col-span-5;
   @apply md:col-start-8;
+}
+
+.buy-header_title {
+  @apply mb-8;
+  @apply text-4xl;
+  @apply md:text-5xl;
 }
