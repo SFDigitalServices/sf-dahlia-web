@@ -14,7 +14,9 @@ export type EligibilityFilters = {
 
 export type QueryParams = { [key: string]: string | boolean | number }
 
-const formatQueryString = (params: QueryParams) => {
+type ListingsType = "rental" | "ownership"
+
+export const formatQueryString = (params: QueryParams) => {
   return Object.keys(params)
     .map((key) => {
       return encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
@@ -22,9 +24,10 @@ const formatQueryString = (params: QueryParams) => {
     .join("&")
 }
 
-export const getRentalListings = async (
-  filters?: EligibilityFilters
-): Promise<RailsRentalListing[]> => {
+export const getEligibilityQueryString = (
+  filters: EligibilityFilters,
+  listingsType: ListingsType
+) => {
   const getIncomeLevel = () => {
     return filters?.income_timeframe === "per_month"
       ? filters?.income_total * 12
@@ -36,15 +39,27 @@ export const getRentalListings = async (
     incomelevel: getIncomeLevel() ?? "",
     includeChildrenUnder6: filters?.include_children_under_6 ?? false,
     childrenUnder6: filters?.children_under_6 ?? "",
-    listingsType: "rental",
+    listingsType: listingsType,
   }
-
-  return filters && Object.keys(filters).length > 0
-    ? get<ListingsResponse>(
-        `/api/v1/listings/eligibility.json?${formatQueryString(appliedFilters)}`
-      ).then(({ data }) => data.listings)
-    : get<ListingsResponse>("/api/v1/listings.json?type=rental").then(({ data }) => data.listings)
+  return formatQueryString(appliedFilters)
 }
 
-export const getSaleListings = async (): Promise<RailsRentalListing[]> =>
-  get<ListingsResponse>("/api/v1/listings.json?type=ownership").then(({ data }) => data.listings)
+export const getListings = async (
+  listingType: ListingsType,
+  filters?: EligibilityFilters
+): Promise<RailsRentalListing[]> =>
+  filters && Object.keys(filters).length > 0
+    ? get<ListingsResponse>(
+        `/api/v1/listings/eligibility.json?${getEligibilityQueryString(filters, listingType)}`
+      ).then(({ data }) => data.listings)
+    : get<ListingsResponse>(`/api/v1/listings.json?type=${listingType}&subset=browse`).then(
+        ({ data }) => data.listings
+      )
+
+export const getRentalListings = async (
+  filters?: EligibilityFilters
+): Promise<RailsRentalListing[]> => getListings("rental", filters)
+
+export const getSaleListings = async (
+  filters?: EligibilityFilters
+): Promise<RailsRentalListing[]> => getListings("ownership", filters)
