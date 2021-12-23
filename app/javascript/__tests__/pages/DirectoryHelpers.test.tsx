@@ -10,40 +10,92 @@ import {
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 
-describe("<DirectoryPage />", () => {
-  it("getListingImageCardStatuses renders as open application", () => {
-    const testListing = {
-      Application_Due_Date: "2100-10-30T00:00:00.000+0000",
-      Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-      Publish_Lottery_Results: false,
-    }
-    expect(getListingImageCardStatuses(testListing as RailsRentalListing)).toStrictEqual([
-      { status: 0, content: "Application Deadline: October 30, 2100" },
-    ])
-  })
-
-  it("getListingImageCardStatuses renders as upcoming lottery", () => {
-    const testListing = {
-      Application_Due_Date: "2000-10-30T00:00:00.000+0000",
-      Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-      Publish_Lottery_Results: false,
-    }
-    expect(getListingImageCardStatuses(testListing as RailsRentalListing)).toStrictEqual([
-      { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
-      { status: 3, content: "Lottery Results Posted: October 31, 2100", hideIcon: true },
-    ])
-  })
-
-  it("getListingImageCardStatuses renders as results posted", () => {
-    const testListing = {
-      Application_Due_Date: "2000-10-30T00:00:00.000+0000",
-      Lottery_Results_Date: "2000-10-31T00:00:00.000+0000",
-      Publish_Lottery_Results: true,
-      Lottery_Status: "Lottery Complete",
-    }
-    expect(getListingImageCardStatuses(testListing as RailsRentalListing)).toStrictEqual([
-      { status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true },
-    ])
+describe("DirectoryHelpers", () => {
+  describe("getListingImageCardStatuses", () => {
+    describe("with no eligibility filters", () => {
+      it("renders as open application", () => {
+        const testListing = {
+          Application_Due_Date: "2100-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+        }
+        expect(
+          getListingImageCardStatuses(testListing as RailsRentalListing, false)
+        ).toStrictEqual([{ status: 0, content: "Application Deadline: October 30, 2100" }])
+      })
+      it("renders as upcoming lottery", () => {
+        const testListing = {
+          Application_Due_Date: "2000-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+        }
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
+          [
+            { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
+            { status: 3, content: "Lottery Results Posted: October 31, 2100", hideIcon: true },
+          ]
+        )
+      })
+      it("renders as results posted", () => {
+        const testListing = {
+          Application_Due_Date: "2000-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2000-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: true,
+          Lottery_Status: "Lottery Complete",
+        }
+        expect(
+          getListingImageCardStatuses(testListing as RailsRentalListing, false)
+        ).toStrictEqual([
+          { status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true },
+        ])
+      })
+      it("does not render listing as matched", () => {
+        const testListing = {
+          Application_Due_Date: "2100-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+          Does_Match: true,
+        }
+        expect(
+          getListingImageCardStatuses(testListing as RailsRentalListing, false)
+        ).toStrictEqual([{ status: 0, content: "Application Deadline: October 30, 2100" }])
+      })
+    })
+    describe("with eligibility filters", () => {
+      it("renders a matched open listing as 'matched'", () => {
+        const testListing = {
+          Application_Due_Date: "2100-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+          Does_Match: true,
+        }
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
+          { status: 0, hideIcon: true, content: "Matched" },
+        ])
+      })
+      it("renders a non-match open listing as 'not a match'", () => {
+        const testListing = {
+          Application_Due_Date: "2100-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+          Does_Match: false,
+        }
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
+          { status: 3, hideIcon: true, content: "Not a Match" },
+        ])
+      })
+      it("does not affect listings with closed applications", () => {
+        const testListing = {
+          Application_Due_Date: "2000-10-30T00:00:00.000+0000",
+          Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
+          Publish_Lottery_Results: false,
+        }
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
+          { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
+          { status: 3, content: "Lottery Results Posted: October 31, 2100", hideIcon: true },
+        ])
+      })
+    })
   })
 
   it("getNumberString adds commas where appropriate", () => {
