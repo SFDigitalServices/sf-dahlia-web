@@ -1,8 +1,8 @@
 import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
-import Markdown from "markdown-to-jsx"
 import Link from "../../navigation/Link"
 import "./BuyHeader.scss"
+import { renderWithInnerHTML } from "../../util/languageUtil"
 
 const BeforeApplying = () => (
   <div className="mb-8">
@@ -13,31 +13,31 @@ const BeforeApplying = () => (
     <ol className="numbered-list my-6">
       <li>{t("saleDirectory.beforeApplying.step1")}</li>
       <li>
-        <Markdown>
-          {t("saleDirectory.beforeApplying.step2", {
+        {renderWithInnerHTML(
+          `${t("saleDirectory.beforeApplying.step2", {
             url: "https://sfmohcd.org/homebuyer-program-eligibility",
-          })}
-        </Markdown>
+          })}`
+        )}
       </li>
       <li>
-        <Markdown>
-          {t("saleDirectory.beforeApplying.step3", {
+        {renderWithInnerHTML(
+          `${t("saleDirectory.beforeApplying.step3", {
             url: "https://sfmohcd.org/homebuyer-application-requirements#education",
-          })}
-        </Markdown>
+          })}`
+        )}
       </li>
       <li>
-        <Markdown>
-          {t("saleDirectory.beforeApplying.step4", { url: "https://sfmohcd.org/lender-list" })}
-        </Markdown>
+        {renderWithInnerHTML(
+          `${t("saleDirectory.beforeApplying.step4", { url: "https://sfmohcd.org/lender-list" })}`
+        )}
       </li>
       <li>{t("saleDirectory.beforeApplying.step5")}</li>
     </ol>
-    <Markdown>
-      {t("saleDirectory.beforeApplying.readFullList", {
+    {renderWithInnerHTML(
+      `${t("saleDirectory.beforeApplying.readFullList", {
         url: "https://sfmohcd.org/homebuyer-program-eligibility",
-      })}
-    </Markdown>
+      })}`
+    )}
   </div>
 )
 
