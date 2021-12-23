@@ -60,14 +60,16 @@ const getBuyHeader = (
 ) => {
   return filters ? (
     <>
-      {eligibilityHeader(filters, setFilters, "Showing matching units for sale")}
+      {eligibilityHeader(
+        filters,
+        setFilters,
+        `${t("listings.eligibilityCalculator.sale.showingMatchingUnits")}`
+      )}
       <hr />
 
       {match
         ? matchedTextBanner()
-        : noMatchesTextBanner(
-            `Based on information you entered, you don't match any current listings for rent.`
-          )}
+        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.sale.noMatchingUnits")}`)}
     </>
   ) : (
     <BuyHeader />

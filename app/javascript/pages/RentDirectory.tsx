@@ -9,15 +9,17 @@ import {
   PageHeader,
 } from "@bloom-housing/ui-components"
 
-import { getRentalListings } from "../api/listingsApiService"
+import { getRentalListings, EligibilityFilters } from "../api/listingsApiService"
 import { GenericDirectory } from "./ListingDirectory/GenericDirectory"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import Link from "../navigation/Link"
-import { getAdditionalResourcesPath } from "../util/routeUtil"
-import { EligibilityFilters } from "../api/listingsApiService"
-import { getEligibilityEstimatorLink, getHelpCalculatingIncomeLink } from "../util/routeUtil"
+import {
+  getAdditionalResourcesPath,
+  getEligibilityEstimatorLink,
+  getHelpCalculatingIncomeLink,
+} from "../util/routeUtil"
 
 import {
   getRangeString,
@@ -57,14 +59,16 @@ const getRentalHeader = (
 ) => {
   return filters ? (
     <>
-      {eligibilityHeader(filters, setFilters, "Showing matching units for rent")}
+      {eligibilityHeader(
+        filters,
+        setFilters,
+        `${t("listings.eligibilityCalculator.rent.showingMatchingUnits")}`
+      )}
       <hr />
 
       {match
         ? matchedTextBanner()
-        : noMatchesTextBanner(
-            `Based on information you entered, you don't match any current listings for rent.`
-          )}
+        : noMatchesTextBanner(`${t("listings.eligibilityCalculator.rent.noMatchingUnits")}`)}
     </>
   ) : (
     <PageHeader title={t("rentalDirectory.title")} subtitle={t("rentalDirectory.ifYouTellUs")}>

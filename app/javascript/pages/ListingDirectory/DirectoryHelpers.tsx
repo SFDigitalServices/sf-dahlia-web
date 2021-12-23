@@ -74,7 +74,7 @@ export const getListingImageCardStatuses = (
       return [
         {
           status: ApplicationStatusType.Open,
-          content: `Matched`,
+          content: `${t("listings.eligibilityCalculator.matched")}`,
           hideIcon: true,
         },
       ]
@@ -82,7 +82,7 @@ export const getListingImageCardStatuses = (
       return [
         {
           status: ApplicationStatusType.PostLottery,
-          content: "Not a match",
+          content: `${t("listings.eligibilityCalculator.notAMatch")}`,
           hideIcon: true,
         },
       ]
@@ -107,9 +107,11 @@ export const getNumberString = (currencyNumber: number) =>
 // 100, 100, "%" --> 100%
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
+    const minString = `${prefix ?? ""}${getNumberString(min)}`
+    const maxString = `${prefix ?? ""}${getNumberString(max)}`
     const range = t("t.numberRange", {
-      minValue: `${prefix ?? ""}${getNumberString(min)}`,
-      maxValue: `${prefix ?? ""}${getNumberString(max)}`,
+      minValue: minString,
+      maxValue: maxString,
     })
     return `${range}${suffix ?? ""}`
   }
@@ -279,9 +281,9 @@ export const additionalView = (listings, directoryType, stackedDataFxn, filtersS
     listings,
     directoryType,
     stackedDataFxn,
-    "Additional Listings",
-    "Hide additional listings",
-    "Show additional listings",
+    `${t("listings.additional.title")}`,
+    `${t("listings.additional.hide")}`,
+    `${t("listings.additional.show")}`,
     filtersSet
   )
 }
@@ -306,13 +308,11 @@ export const housingCounselorActionBlock = () => {
   return (
     <div className={"flex items-center justify-center"}>
       <ActionBlock
-        header={
-          "For more help, we suggest talking with a housing counselor to explore your options."
-        }
+        header={`${t("listings.findHousingCounselor.weSuggestTalking")}`}
         background="primary-lighter"
         actions={[
           <Link className="button" key="action-1" href={"#"}>
-            Find a housing counselor
+            {`${t("listings.findHousingCounselor.action")}`}
           </Link>,
         ]}
         className={"m-5 p-6 max-w-5xl text-center"}
@@ -365,10 +365,8 @@ export const sortListings = (
 export const matchedTextBanner = () => {
   return (
     <TextBanner
-      header={"Matched"}
-      content={
-        "Based on information you entered, you may be eligible for units at the following property."
-      }
+      header={`${t("listings.eligibilityCalculator.matched")}`}
+      content={`${t("listings.eligibilityCalculator.youMayBeEligible")}`}
     />
   )
 }
