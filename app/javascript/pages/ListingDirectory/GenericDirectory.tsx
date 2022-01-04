@@ -33,6 +33,7 @@ interface RentalDirectoryProps {
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
   const { listingsAlertUrl } = useContext(ConfigContext)
+  const [rawListings, setRawListings] = useState([])
   const [listings, setListings] = useState<ListingsGroups>({
     open: [],
     upcoming: [],
@@ -47,11 +48,17 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
       setLoading(true)
+      setRawListings(listings)
       const sortedListings = sortListings(listings, filters, setMatch)
       setListings(sortedListings)
       setLoading(false)
     })
-  }, [props, filters])
+  }, [props])
+
+  useEffect(() => {
+    const sortedListings = sortListings(rawListings, filters, setMatch)
+    setListings(sortedListings)
+  }, [filters])
 
   const hasFiltersSet = filters !== null
   return (
