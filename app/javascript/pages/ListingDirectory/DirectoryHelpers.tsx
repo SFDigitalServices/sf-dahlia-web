@@ -73,9 +73,10 @@ export const getListingImageCardStatuses = (
     if (hasFiltersSet && listing.Does_Match) {
       return [
         {
-          status: ApplicationStatusType.Open,
+          status: ApplicationStatusType.Matched,
           content: `${t("listings.eligibilityCalculator.matched")}`,
-          hideIcon: true,
+          hideIcon: false,
+          iconType: "check",
         },
       ]
     } else if (hasFiltersSet && !listing.Does_Match) {
