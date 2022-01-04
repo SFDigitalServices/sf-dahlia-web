@@ -1,4 +1,5 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
+import React from "react"
 
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 
@@ -113,3 +114,16 @@ export const getPathWithoutLanguagePrefix = (path: string): string => {
  */
 export const getCurrentLanguage = (path: string | undefined): LanguagePrefix =>
   getRoutePrefix(path || "") || LanguagePrefix.English
+
+/**
+ * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
+ */
+export function renderWithInnerHTML(translatedString: string) {
+  return (
+    <div
+      dangerouslySetInnerHTML={{
+        __html: translatedString,
+      }}
+    />
+  )
+}

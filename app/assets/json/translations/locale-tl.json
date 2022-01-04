@@ -434,9 +434,7 @@
         },
         "error": {
             "address": "Pakipasok ang inyong address",
-            "address_validation_insufficient": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Tiyaking maisasama ninyo ang uri ng kalye, halimbawa, \"ST\" o \"AVE\". Hindi puwede ang mga P.O. Box. ",
             "address_validation_not_found": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Hindi puwede ang mga P.O. Box.",
-            "address_validation_secondary": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Tiyaking isasama ninyo ang numero ng Apt o Suite kung bahagi ito ng inyong address. Hindi puwede ang mga P.O. Box. ",
             "alert": {
                 "bad_request": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
                 "timeout_please_try_again": "Naku! Nagkaroon na naman ng problema. Pakisubukang muli. "
