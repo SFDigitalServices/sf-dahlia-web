@@ -434,9 +434,7 @@
         },
         "error": {
             "address": "Ingrese una dirección",
-            "address_validation_insufficient": "Esta direccion no fue encontrada. Verifique el número, la calle y la ciudad ingresados. Asegúrese de haber ingresado el tipo de calle (por ejemplo, “ST” o “AVE”). No se permiten apartados postales.",
             "address_validation_not_found": "Esta direccion no fue encontrada.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
-            "address_validation_secondary": "Esta direccion no fue encontrada. Verifique el número, la calle y la ciudad ingresados. Asegúrese de incluir el número de apartamento o habitación si es parte de la dirección. No se permiten apartados postales.",
             "alert": {
                 "bad_request": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente. \n\nContacte a sfhousing.info@sfgov.org si continúa teniendo problemas.",
                 "timeout_please_try_again": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente."

@@ -76,9 +76,11 @@ export const getNumberString = (currencyNumber: number) =>
 
 export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
   if (min && max && min !== max) {
+    const minString = `${prefix ?? ""}${getNumberString(min)}`
+    const maxString = `${prefix ?? ""}${getNumberString(max)}`
     const range = t("t.numberRange", {
-      minValue: `${prefix ?? ""}${getNumberString(min)}`,
-      maxValue: `${prefix ?? ""}${getNumberString(max)}`,
+      minValue: minString,
+      maxValue: maxString,
     })
     return `${range}${suffix ?? ""}`
   }
@@ -318,7 +320,7 @@ export const DirectoryPage = (props: DirectoryProps) => {
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
-        <div>
+        <div id="listing-results">
           {!loading && (
             <>
               {openListingsView(listings.open, props.directoryType)}
