@@ -2,12 +2,11 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
 
-import { getSaleListings } from "../api/listingsApiService"
+import { getSaleListings, EligibilityFilters } from "../api/listingsApiService"
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import Link from "../navigation/Link"
-import { EligibilityFilters } from "../api/listingsApiService"
 
 import { GenericDirectory } from "./ListingDirectory/GenericDirectory"
 import {

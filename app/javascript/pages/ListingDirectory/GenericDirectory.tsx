@@ -53,11 +53,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
       setListings(sortedListings)
       setLoading(false)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props])
 
   useEffect(() => {
     const sortedListings = sortListings(rawListings, filters, setMatch)
     setListings(sortedListings)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
   const hasFiltersSet = filters !== null
