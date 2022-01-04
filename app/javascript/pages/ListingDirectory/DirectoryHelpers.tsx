@@ -397,13 +397,29 @@ export const eligibilityHeader = (
   const getYearString = () => {
     return filters?.income_timeframe === "per_year" ? "per year" : "per month"
   }
-  return (
-    <PageHeader title={header}>
-      <h2 className={"eligibility-subheader"}>
-        for <span className={"eligibility-subtext"}>{filters.household_size}</span> people at{" "}
+
+  const getSubHeader = () => {
+    const getChildrenSection = () => {
+      return (
+        <span>
+          (including{" "}
+          <span className={"eligibility-subtext"}>{filters.children_under_6} children</span> under
+          6)
+        </span>
+      )
+    }
+    return (
+      <>
+        for <span className={"eligibility-subtext"}>{filters.household_size}</span> people{" "}
+        {filters.include_children_under_6 && getChildrenSection()} at{" "}
         <span className={"eligibility-subtext"}>${filters.income_total.toLocaleString()}</span>{" "}
         {getYearString()}
-      </h2>
+      </>
+    )
+  }
+  return (
+    <PageHeader title={header}>
+      <h2 className={"eligibility-subheader"}>{getSubHeader()}</h2>
       <p className="mt-2 md:mt-4">
         <LinkButton
           href={getEligibilityEstimatorLink()}

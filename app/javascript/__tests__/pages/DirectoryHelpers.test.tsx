@@ -70,7 +70,7 @@ describe("DirectoryHelpers", () => {
           Does_Match: true,
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
-          { status: 0, hideIcon: true, content: "Matched" },
+          { status: 0, iconType: "check", content: "Matched" },
         ])
       })
       it("renders a non-match open listing as 'not a match'", () => {
