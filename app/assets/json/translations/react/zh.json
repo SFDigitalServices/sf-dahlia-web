@@ -14,7 +14,7 @@
   "idleTimeout.sessionInactivityLoggedIn": "為了保護您的身分，若一分鐘內無使用活動，此頁面將會過期。若選擇不回應，您將會失去尚未儲存的所有資訊且被強行登出。",
   "listings.applicationDeadline": "申請截止日期",
   "listings.applicationsClosed": "申請結束",
-  "listings.atTotalIncome": "總收入：<span class='eligibility-subtext'>%{income}</span> %{per}",
+  "listings.atTotalIncome": "總收入：<span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableUnits": "可用單位",
   "listings.availableUnitsAndOpenWaitlist": "現有單位與開放等候名單",
   "listings.forHouseholdSize": "人數：<span class='eligibility-subtext'>%{size}</span> %{people}",

@@ -14,7 +14,7 @@
   "idleTimeout.sessionInactivityLoggedIn": "Upang maprotektahan ang inyong identidad, mag-eexpire o matatapos na ang inyong sesyon sa loob ng isang minuto dahil hindi na kayo aktibo. Kapag pinili ninyong huwag sumagot, mawawala sa inyo ang anumang hindi nai-save na impromasyon, at mala-log-out kayo.",
   "listings.applicationDeadline": "Huling Araw para sa Pagsusumite ng Aplikasyon",
   "listings.applicationsClosed": "Sarado na ang mga Aplikasyon ",
-  "listings.atTotalIncome": "sa <span class='eligibility-subtext'>%{income}</span> %{per}",
+  "listings.atTotalIncome": "sa <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableUnits": "Mga Makukuhang Unit ",
   "listings.availableUnitsAndOpenWaitlist": "Mga Makukuhang Unit at Bukas na Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
   "listings.forHouseholdSize": "para sa <span class='eligibility-subtext'>%{size}</span> %{people}",

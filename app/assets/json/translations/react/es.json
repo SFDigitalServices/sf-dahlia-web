@@ -14,7 +14,7 @@
   "idleTimeout.sessionInactivityLoggedIn": "Para proteger su identidad, su sesión finalizará tras un minuto de inactividad. Perderá toda la información que no haya guardado y se cerrará la sesión si decide no responder.",
   "listings.applicationDeadline": "Fecha límite para la presentación de la solicitud",
   "listings.applicationsClosed": "Las solicitudes están cerradas",
-  "listings.atTotalIncome": "a <span class='eligibility-subtext'>%{income}</span> %{per}",
+  "listings.atTotalIncome": "a <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableUnits": "Unidades disponibles",
   "listings.availableUnitsAndOpenWaitlist": "Unidades disponibles y lista de espera abierta",
   "listings.forHouseholdSize": "para <span class='eligibility-subtext'>%{size}</span> %{people}",

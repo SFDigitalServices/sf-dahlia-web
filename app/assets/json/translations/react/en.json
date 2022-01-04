@@ -24,7 +24,7 @@
   "listings.additional.hide": "Hide additional listings",
   "listings.applicationDeadline": "Application Deadline",
   "listings.applicationsClosed": "Applications Closed",
-  "listings.atTotalIncome": "at <span class='eligibility-subtext'>%{income}</span> %{per}",
+  "listings.atTotalIncome": "at <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableUnits": "Available Units",
   "listings.availableUnitsAndOpenWaitlist": "Available Units & Open Waitlist",
   "listings.buildingImageAltText": "A picture of the building",
