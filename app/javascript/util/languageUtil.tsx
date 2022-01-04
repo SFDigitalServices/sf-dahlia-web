@@ -127,3 +127,13 @@ export function renderWithInnerHTML(translatedString: string) {
     />
   )
 }
+
+export function renderInlineWithInnerHTML(translatedString: string) {
+  return (
+    <span
+      dangerouslySetInnerHTML={{
+        __html: translatedString,
+      }}
+    />
+  )
+}

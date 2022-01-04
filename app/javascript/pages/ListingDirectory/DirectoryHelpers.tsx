@@ -23,6 +23,7 @@ import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
+import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "./TextBanner"
 
@@ -377,11 +378,12 @@ export const noMatchesTextBanner = (content: string) => {
     <div className={"flex justify-center"}>
       <div className={"flex px-8 pb-8 max-w-5xl"}>
         <div className={"mt-10 max-w-5xl flex flex-col items-start match-container"}>
-          <h2 className={"page-header-subheader"}>No Matches</h2>
+          <h2 className={"page-header-subheader"}>{t("listings.noMatches")}</h2>
           <p className={"page-header-text-block"}>{content}</p>
           <p className={"page-header-text-block"}>
-            <Link href={getAdditionalResourcesPath()}>Click here</Link> for other rental and
-            ownership affordable housing opportunities.
+            {renderInlineWithInnerHTML(
+              t("listings.clickForOtherListings", { url: getAdditionalResourcesPath() })
+            )}
           </p>
         </div>
       </div>
@@ -395,25 +397,27 @@ export const eligibilityHeader = (
   header: string
 ) => {
   const getYearString = () => {
-    return filters?.income_timeframe === "per_year" ? "per year" : "per month"
+    return filters?.income_timeframe === "per_year" ? t("t.perYear") : t("t.perMonth")
   }
 
   const getSubHeader = () => {
-    const getChildrenSection = () => {
-      return (
-        <span>
-          (including{" "}
-          <span className={"eligibility-subtext"}>{filters.children_under_6} children</span> under
-          6)
-        </span>
-      )
-    }
+    const householdSizeContent = t("listings.forHouseholdSize", {
+      size: filters.household_size,
+      people: filters.household_size === "1" ? t("listings.person") : t("listings.people"),
+    })
+    const childrenContent = ` ${t("listings.includingChildren", {
+      number: filters.children_under_6,
+      children: filters.children_under_6 === "1" ? t("t.child") : t("t.children"),
+    })}`
+    const incomeContent = ` ${t("listings.atTotalIncome", {
+      income: filters.income_total.toLocaleString(),
+      per: getYearString(),
+    })}`
     return (
       <>
-        for <span className={"eligibility-subtext"}>{filters.household_size}</span> people{" "}
-        {filters.include_children_under_6 && getChildrenSection()} at{" "}
-        <span className={"eligibility-subtext"}>${filters.income_total.toLocaleString()}</span>{" "}
-        {getYearString()}
+        {renderInlineWithInnerHTML(householdSizeContent)}
+        {filters.include_children_under_6 && renderInlineWithInnerHTML(childrenContent)}
+        {renderInlineWithInnerHTML(incomeContent)}
       </>
     )
   }
@@ -426,7 +430,8 @@ export const eligibilityHeader = (
           size={AppearanceSizeType.small}
           className={"mr-1"}
         >
-          Edit Eligibility <Icon symbol={"arrowDown"} size={"small"} className={"ml-1"} />
+          {`${t("label.editEligbility")} `}
+          <Icon symbol={"arrowDown"} size={"small"} className={"ml-1"} />
         </LinkButton>
         <Button
           onClick={() => {
@@ -435,7 +440,8 @@ export const eligibilityHeader = (
           }}
           size={AppearanceSizeType.small}
         >
-          Clear <Icon symbol={"close"} size={"small"} className={"ml-1"} />
+          {`${t("label.clear")} `}
+          <Icon symbol={"close"} size={"small"} className={"ml-1"} />
         </Button>
       </p>
     </PageHeader>
