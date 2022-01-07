@@ -33,6 +33,14 @@ When /^I add another household member named "([^"]*)" with same address as prima
     element(By.id('add-household-member')).click().then ->
       Pages.HouseholdMemberForm.fill({ fullName })
 
+When /^I add another household member named "([^"]*)" with same address as primary and with birth date "([^"]*)"$/,
+  (fullName, birthDate) ->
+    browser.waitForAngular()
+    element(By.id('add-household-member')).click().then ->
+      Pages.HouseholdMemberForm.fill(
+        { fullName: fullName, birthDate:birthDate }
+      )
+
 When /^I add another household member named "([^"]*)" who lives at "([^"]*)"$/,
   (fullName, address1) ->
     browser.waitForAngular()

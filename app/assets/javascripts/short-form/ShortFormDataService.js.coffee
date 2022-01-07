@@ -183,6 +183,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
+    PREFS = ListingDataService.preferenceMap
+    appPrefs = application.preferences
 
     angular.copy(ListingDataService.listing.preferences).forEach( (listingPref) ->
       # prefKey is the short name like liveInSf
@@ -192,14 +194,11 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       optOut = false
       shortformPreferenceID = null
       certificateNumber = null
-      appPrefs = application.preferences
       proofOption = null
       address = null
       city = null
       state = null
       zip = null
-      PREFS = ListingDataService.preferenceMap
-
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
         # default prefKey and optOut for Live/Work, in case individual live or work

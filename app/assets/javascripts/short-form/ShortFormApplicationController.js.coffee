@@ -530,7 +530,7 @@ ShortFormApplicationController = (
   $scope.addHouseholdMember = ->
     noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
     if $scope.applicantDoesNotmeetAllSeniorBuildingRequirements('householdMember')
-      Service.addSeniorEligibilityError()
+      ShortFormApplicationService.addSeniorEligibilityError()
       $scope.handleErrorState()
       return
     else
@@ -641,6 +641,11 @@ ShortFormApplicationController = (
   # Check for need to ask about reserved units on the listing
   $scope.goToNextReservedPageIfAvailable = (type) ->
     page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
+    ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
+
+  # Go to income-vouchers or income based on what type of listing it is
+  $scope.goToPostHouseholdPrioritiesPage = ->
+    page = ShortFormNavigationService.getPostHouseholdPrioritiesPage($scope.listing)
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
   $scope.publicHousingYes = ->
@@ -888,7 +893,7 @@ ShortFormApplicationController = (
   $scope.checkAfterNamePage = ->
     if $scope.applicantDoesNotmeetAllSeniorBuildingRequirements()
       ShortFormNavigationService.isLoading(false)
-      Service.addSeniorEligibilityError()
+      ShortFormApplicationService.addSeniorEligibilityError()
       $scope.handleErrorState()
     else
       if $scope.loggedIn()

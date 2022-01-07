@@ -16,9 +16,13 @@ import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
-import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
+import {
+  getDisclaimerPath,
+  getPrivacyPolicyPath,
+  getSignInPath,
+  getLocalizedPath,
+} from "../util/routeUtil"
 import MetaTags from "./MetaTags"
-import { getSignInPath, getLocalizedPath } from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -199,10 +203,11 @@ const Layout = (props: LayoutProps) => {
             className="text-gray-500"
             href="https://airtable.com/shrw64DubWTQfRkdo"
             target="_blank"
+            external={true}
           >
             {t("footer.giveFeedback")}
           </Link>
-          <Link className="text-gray-500" href="mailto:sfhousinginfo@sfgov.org">
+          <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
             {t("footer.contact")}
           </Link>
           <Link className="text-gray-500" href={getDisclaimerPath()}>
