@@ -12,6 +12,7 @@ import {
   PageHeader,
   LinkButton,
   AppearanceSizeType,
+  IconTypes,
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 
@@ -240,7 +241,9 @@ export const getListingGroup = (
   header,
   hide,
   show,
-  hasFiltersSet?: boolean
+  hasFiltersSet?: boolean,
+  subtitle?: string,
+  icon?: IconTypes
 ) => {
   return (
     listings.length > 0 && (
@@ -249,6 +252,8 @@ export const getListingGroup = (
         header={header}
         hideButtonText={hide}
         showButtonText={show}
+        info={subtitle}
+        icon={icon}
       >
         {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
       </ListingsGroup>
@@ -263,7 +268,9 @@ export const upcomingLotteriesView = (listings, directoryType, stackedDataFxn) =
     stackedDataFxn,
     t("listings.upcomingLotteries.title"),
     t("listings.upcomingLotteries.hide"),
-    t("listings.upcomingLotteries.show")
+    t("listings.upcomingLotteries.show"),
+    undefined,
+    t("listings.upcomingLotteries.subtitle")
   )
 }
 
@@ -274,7 +281,10 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn) => {
     stackedDataFxn,
     t("listings.lotteryResults.title"),
     t("listings.lotteryResults.hide"),
-    t("listings.lotteryResults.show")
+    t("listings.lotteryResults.show"),
+    undefined,
+    t("listings.lotteryResults.subtitle"),
+    "result"
   )
 }
 
@@ -286,7 +296,9 @@ export const additionalView = (listings, directoryType, stackedDataFxn, filtersS
     `${t("listings.additional.title")}`,
     `${t("listings.additional.hide")}`,
     `${t("listings.additional.show")}`,
-    filtersSet
+    filtersSet,
+    t("listings.additional.subtitle"),
+    "doubleHouse"
   )
 }
 
