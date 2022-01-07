@@ -47,7 +47,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'indigenousCentralSouthAmericaGroup',
       'indigenousNativeAmericanGroup',
       'indigenousOther',
-      'isDisabled',
+      'hasDisability',
       'isVeteran',
       'lastName',
       'latinoOther',
@@ -83,7 +83,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
   # Format application for Salesforce Processing.
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
-    console.log('application before formatting', application)
     sfApp = _.pick application, Service.WHITELIST_FIELDS.application
     sfApp.listingID = listingId
 
@@ -99,7 +98,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant = _.pick application.applicant, Service.WHITELIST_FIELDS.primaryApplicant
     sfApp.primaryApplicant.dob = Service.formatUserDOB(application.applicant)
     sfApp.primaryApplicant.workInSf = Service._formatBoolean(application.applicant.workInSf)
-    # sfApp.primaryApplicant.isVeteran = Service._formatBoolean(application.applicant.isVeteran)
     _.merge sfApp.primaryApplicant, Service._formatGeocodingData(application.applicant)
     home_address = Service._formatAddress(application.applicant, 'home_address')
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
@@ -410,7 +408,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
 
-    # TODO: convert SF isVeteran to radio format
     return applicant
 
   Service._reformatHousehold = (contacts) ->
