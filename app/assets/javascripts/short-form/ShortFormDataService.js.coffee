@@ -161,7 +161,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       addressData.mailingAddress += ' ' + address2 if address2
 
     if opts.householdMember
-      addressData.hasSameAddressAsApplicant = Service._formatBoolean(addressData.hasSameAddressAsApplicant)
+      addressData.hasSameAddressAsApplicant = Service._formatBoolean(member.hasSameAddressAsApplicant)
 
     return addressData
 
