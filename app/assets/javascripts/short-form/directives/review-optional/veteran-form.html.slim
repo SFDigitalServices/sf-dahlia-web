@@ -1,0 +1,24 @@
+.form-group
+  label.form-label.caps id="veteran_form_label" for="user_veteran"
+    | {{'label.applicant_veteran' | translate}}
+
+  .form-group
+    .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
+      radio-block-item value='Yes' user='applicant' name='isVeteran' ng-required=false
+        | {{'t.yes' | translate}}
+      radio-block-item value='No' user='applicant' name='isVeteran' ng-required=false
+        | {{'t.no' | translate}}
+      radio-block-item value='Decline to state' user='applicant' name='isVeteran' ng-required=false
+        | {{'t.prefer_not_to_answer' | translate}}
+
+  label.form-label.caps id="veteran_hh_form_label" for="user_veteran"
+    | {{'label.household_veteran' | translate}}
+
+  .form-group
+    .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
+      radio-block-item value='Yes' user='application' name='isNonPrimaryMemberVeteran' ng-required=false
+        | {{'t.yes' | translate}}
+      radio-block-item value='No' user='application' name='isNonPrimaryMemberVeteran' ng-required=false
+        | {{'t.no' | translate}}
+      radio-block-item value='Decline to state' user='application' name='isNonPrimaryMemberVeteran' ng-required=false
+        | {{'t.prefer_not_to_answer' | translate}}
