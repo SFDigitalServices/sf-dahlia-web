@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.2-alpha.10":
-  version "3.0.2-alpha.10"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.10.tgz#a0fb94a39ff97e7c18174bac798b9ca7b20e3830"
-  integrity sha512-3q8YIkJmWKvlLVgflFtAbqOnT+jHSnnoW4dTBPUr2jMUK3mc37UcdRjJwvOjOkvA7V11STq6ZJ7vySg02WCCwQ==
+"@bloom-housing/backend-core@^3.0.2-alpha.12":
+  version "3.0.2-alpha.12"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.12.tgz#2f7a86f2119716b513f4e338be2db64bd3951b1c"
+  integrity sha512-QEK4Nf1DL6PEiOT+K5c2cMciyox+dCpIuUvyEez5nTiXE3Vi4OQFWJyHlKlLS/4FRm/Y6u2aq9R9/6Jjkn3bQg==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1323,7 +1323,6 @@
     ioredis "^4.24.4"
     joi "^17.3.0"
     jwt-simple "^0.5.6"
-    moment "^2.29.1"
     nanoid "^3.1.12"
     nestjs-throttler-storage-redis "^0.1.11"
     nestjs-typeorm-paginate "^3.1.3"
@@ -1343,12 +1342,12 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^4.0.1-alpha.14":
-  version "4.0.1-alpha.14"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.14.tgz#ce8ee00133241df4635c3e057edfe3e15d2677ea"
-  integrity sha512-6sFTEJeps7i6Vw7wAwr1rFCqbw5GpExTwvibjHgPdFMMZyO8OWXXZlQj76Xih96791xedVfLYD+zrRYS8sL4gA==
+"@bloom-housing/ui-components@^4.0.1-alpha.17":
+  version "4.0.1-alpha.17"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.17.tgz#409f9cc47a996f79bcb143e025409b7897ebfeab"
+  integrity sha512-/0vUQq2/VC1gU/1Tie9eNdu5P8wq0bWpLhdfP6aHQ6jHESJZYpG/GK8e0rYj9GZZ8cIprBB00DJ97stBbq1zMw==
   dependencies:
-    "@bloom-housing/backend-core" "^3.0.2-alpha.10"
+    "@bloom-housing/backend-core" "^3.0.2-alpha.12"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1361,9 +1360,9 @@
     "@types/react-transition-group" "^4.4.0"
     axios "0.21.1"
     body-scroll-lock "^3.1.5"
+    dayjs "^1.10.7"
     jwt-decode "^2.2.0"
     markdown-to-jsx "^6.11.4"
-    moment "^2.29.1"
     nanoid "^3.1.12"
     react "^17.0.2"
     react-accessible-accordion "^3.3.5"
@@ -11046,7 +11045,7 @@ moment-timezone@^0.5.x:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@>=2.14.0, moment@^2.29.1:
+"moment@>= 2.9.0", moment@>=2.14.0:
   version "2.29.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
