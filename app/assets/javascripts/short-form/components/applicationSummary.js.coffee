@@ -103,6 +103,9 @@ angular.module('dahlia.components')
           ctrl.applicant.primaryLanguage or
           ctrl.applicant.gender or
           ctrl.applicant.sexualOrientation or
+          ctrl.applicant.isVeteran or
+          ctrl.application.isNonPrimaryMemberVeteran or
+          ctrl.applicant.hasDisability or
           ctrl.applicant.referral
         )
 
