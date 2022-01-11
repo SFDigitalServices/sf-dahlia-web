@@ -819,6 +819,41 @@
             "zipcode": "Zipcode"
         },
         "listings": {
+            "habitat": {
+                "payments": {
+                    "title": "Payments",
+                    "p1": "Your monthly housing payment will be 30% of your gross monthly income. The housing payment includes your mortgage, property tax, insurance, HOA fee, and utilities."
+                },
+                "sweat_equity": {
+                    "title": "Sweat Equity",
+                    "p1": "You do not need to pay a down payment. You do need to complete 500 hours of sweat equity. Sweat equity is volunteer hours that you and your friends and family do.",
+                    "p2": "If you are concerned about your ability to complete 500 hours of sweat equity, reach out to Habitat to ask how they can help."
+                },
+                "application_process": {
+                    "title": "Application Process",
+                    "p1": "These units are offered by <a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> in partnership with MOHCD",
+                    "ol1": "You must go to a <a target='_blank' href='{{infoSessionLink}}'>Habitat for Humanity information session</a>.",
+                    "ol2": "You will submit your application on DAHLIA. ",
+                    "ol3": "MOHCD will run the lottery and post results here on DAHLIA.",
+                    "ol4": "In the lottery rank order, MOHCD will check to see if you qualify for the listing. If you qualify, MOHCD will issue you a conditional approval.",
+                    "ol5": "Habitat Greater San Francisco will work with you to approve your first mortgage loan.",
+                    "ol6": "You must complete 500 hours of sweat equity.",
+                    "ol7": "MOHCD will work with you to issue a final approval.",
+                    "ol8": "MOHCD and Habitat Greater San Francisco will deliver closing documents to escrow.",
+                    "ol9": "You can move into your new home!"
+                },
+                "income_range": {
+                    "title": "Income Range",
+                    "p1": "To be eligible for a Habitat for Humanity Greater San Franscisco home in this listing, your household income needs to be between 69% and 109% AMI as listed below.",
+                    "p2": "For income calculations, household size includes everyone (all ages) living in the unit.",
+                    "p3": "People in your household may need special income calculations if they:",
+                    "ul1": "Are full-time students (but not the primary applicant)",
+                    "ul2": "Receive non-taxable income",
+                    "p4": "Your income must be in this range:",
+                    "income_range_singular": "{{number}} person household: {{minIncome}} to {{maxIncome}} per year",
+                    "income_range_plural": "{{number}} people household: {{minIncome}} to {{maxIncome}} per year"
+                }
+            },
             "additional_eligibility_rules": {
                 "credit_history": "Credit History",
                 "criminal_background": "Criminal Background",
