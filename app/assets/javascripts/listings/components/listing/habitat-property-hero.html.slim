@@ -29,11 +29,11 @@ p
   | {{'listings.habitat.income_range.p1' | translate}}
 p
   | {{'listings.habitat.income_range.p2' | translate}}
-p
-  | {{'listings.habitat.income_range.p3' | translate}}
+p translate="listings.income_exceptions.intro" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
 ul.bullet-list
-  li translate="listings.habitat.income_range.ul1"
-  li translate="listings.habitat.income_range.ul2"
+  li
+    | {{'listings.income_exceptions.students' | translate }}
+  li translate="listings.income_exceptions.nontaxable" translate-value-tooltip="{{'listings.income_exceptions.nontaxable_tooltip' | translate }}" translate-compile="true"
 p
   | {{'listings.habitat.income_range.p4' | translate}}
 ul.inline-list
