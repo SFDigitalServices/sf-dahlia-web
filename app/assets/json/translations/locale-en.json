@@ -11,6 +11,11 @@
                 "you_or_anyone": "Do you or anyone in your household need an accessible unit?",
                 "you_or_anyone_desc": "All units are reserved for people who need an accessible unit. Accessible units have features that help people with mobility, vision and hearing impairments.<br><br>Should your application be chosen, you must provide supporting information."
             },
+            "habitat": {
+                "you_or_anyone": "Did you attend a Habitat for Humanity information session?",
+                "you_or_anyone_desc": "You must attend a <a href='{{url}}' target='_blank'>Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Should your application be chosen, be prepared to provide proof of attending an information session.",
+                "yes_i_attended": "Yes, I attended an information session"
+            },
             "artist": {
                 "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
                 "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
@@ -444,6 +449,7 @@
         },
         "error": {
             "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
+            "habitat": "At least one member of your household must attend a Habitat for Humanity information session.",
             "address": "Please enter an address",
             "address_validation_not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
             "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",

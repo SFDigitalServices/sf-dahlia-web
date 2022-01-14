@@ -304,6 +304,12 @@ ListingDataService = (
         reservedFor: 'people who need accessibility features'
         # This is only for listings with reserved units, not fully reserved communities
         reservedForWhoAre: ''
+      "#{ListingConstantsService.RESERVED_TYPES.HABITAT}":
+        building: 'Habitat for Humanity'
+        eligibility: ''
+        reservedFor: ''
+        # This is only for listings with reserved units, not fully reserved communities
+        reservedForWhoAre: ''
     return type unless labelMap[type]
     return labelMap[type][modifier]
 
