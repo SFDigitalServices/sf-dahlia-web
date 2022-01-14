@@ -37,5 +37,5 @@ ul.bullet-list
 p
   | {{'listings.habitat.income_range.p4' | translate}}
 ul.inline-list
-  li translate="listings.habitat.income_range.income_range_singular" translate-value-number="1" translate-value-min-income="$100,000" translate-value-max-income="$120,000"
-  li translate="listings.habitat.income_range.income_range_plural" translate-value-number="2" translate-value-min-income="$100,000" translate-value-max-income="$120,000"
+  li ng-repeat="range in $ctrl.translatedIncomeRanges()"
+    | {{range}}

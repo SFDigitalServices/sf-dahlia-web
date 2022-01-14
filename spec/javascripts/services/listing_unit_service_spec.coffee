@@ -147,6 +147,72 @@ do ->
         priceGroups = grouped[0].incomeLevels[0].priceGroups
         expect(priceGroups[0]['Price_Without_Parking']).toBeLessThan(priceGroups[1]['Price_Without_Parking'])
 
+    describe 'getHabitatIncomeRanges', ->
+      beforeEach ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
+
+      afterEach ->
+        ListingUnitService.resetData()
+
+      it 'gets expected range for one unit', ->
+        fakeUnits = [
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 1,
+            'Max_Occupancy': 2
+          }
+        ]
+        result = ListingUnitService.getHabitatIncomeRanges(fakeUnits)
+        expectedResult = [
+          {
+              'occupancy': 1,
+              'maxIncome': 56050,
+              'minIncome': 45600
+          },
+          {
+              'occupancy': 2,
+              'maxIncome': 64050,
+              'minIncome': 52100
+          }
+        ]
+        expect(result).toEqual(expectedResult)
+
+      it 'merges multiple unit types as expected', ->
+        fakeUnits = [
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 1,
+            'Max_Occupancy': 2
+          },
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 2,
+            'Max_Occupancy': 3
+          }
+        ]
+        result = ListingUnitService.getHabitatIncomeRanges(fakeUnits)
+        expectedResult = [
+          {
+              "occupancy": 1,
+              "maxIncome": 56050,
+              "minIncome": 45600
+          },
+          {
+              "occupancy": 2,
+              "maxIncome": 64050,
+              "minIncome": 52100
+          },
+          {
+              "occupancy": 3,
+              "maxIncome": 72050,
+              "minIncome": 58600
+          }
+        ]
+        expect(result).toEqual(expectedResult)
+
     describe 'Service._sumSimilarUnits', ->
       describe 'for rental units', ->
         it 'should return availability that\'s the sum of sumilar units', ->
@@ -284,6 +350,28 @@ do ->
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         occupancies = incomeLimits.map((l) -> l.occupancy)
         expect(occupancies).toEqual([1, 2, 3])
+      it 'returns annual incomes if parameter is passed', ->
+        summary = {
+          'Max_AMI_for_Qualifying_Unit': 65,
+          'Min_AMI_for_Qualifying_Unit': 55
+          'Min_Occupancy': 1,
+          'Max_Occupancy': 2
+        }
+        result = ListingUnitService._getIncomeRangesByOccupancy(summary, true)
+
+        expected = [
+          {
+              'occupancy': 1,
+              'maxIncome': 56050,
+              'minIncome': 45600
+          },
+          {
+              'occupancy': 2,
+              'maxIncome': 64050,
+              'minIncome': 52100
+          }
+        ]
+        expect(result).toEqual(expected)
 
     describe 'Service.getListingUnits', ->
       describe 'for rental listings', ->

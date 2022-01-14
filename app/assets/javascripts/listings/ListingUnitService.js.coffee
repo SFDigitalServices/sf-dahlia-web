@@ -71,7 +71,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
     # We round min incomes up to avoid users being surprised by being rejected.
     Math.ceil(minAnnualIncome/12).toFixed(0)
 
-  Service._getIncomeRangesByOccupancy = (unitGroup) ->
+  Service._getIncomeRangesByOccupancy = (unitGroup, annual = false ) ->
     # Given a row of units grouped by size, AMI, price, etc, determine the
     # min and max incomes for that range for every available occupancy size.
     # If a max occupancy isn't defined, as in the ownership case, default to showing up to 3
@@ -85,9 +85,11 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       minAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Min_AMI_for_Qualifying_Unit.toString()})
 
     occupancyRange.map( (occupancy) ->
-      maxIncome = Service._convertMaxAnnualToMonthly(Service._getAnnualAMIAmount(maxAMIs, occupancy))
+      maxIncome = Service._getAnnualAMIAmount(maxAMIs, occupancy)
+      maxIncome = if annual then maxIncome else Service._convertMaxAnnualToMonthly(maxIncome)
       if minAMIs
-        minIncome = Service._convertMinAnnualToMonthly(Service._getAnnualAMIAmount(minAMIs, occupancy))
+        minIncome = Service._getAnnualAMIAmount(minAMIs, occupancy)
+        minIncome = if annual then minIncome else Service._convertMinAnnualToMonthly(minIncome)
       else
         minIncome = unitGroup.BMR_Rental_Minimum_Monthly_Income_Needed?.toString()
       return {
@@ -225,6 +227,20 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
       })
     return typeGroups
 
+
+  # Given a list of units, return an ordered # list of income ranges by occupancy in the format:
+  # [
+  #   {"occupancy": 1, "minIncome": 60000, "maxIncome": 80000},
+  #   {"occupancy": 2, "minIncome": 62000, "maxIncome": 86000},
+  #   ...
+  # ]
+  Service.getHabitatIncomeRanges = (units) ->
+    ranges = _.flatten(units.map((unit) ->
+      Service._getIncomeRangesByOccupancy(unit, true)
+    ))
+    return _.sortBy(_.uniqBy(ranges, 'occupancy'), 'occupancy')
+
+
   Service.groupUnitTypes = (units) ->
     # Get a grouping of unit types across both "general" and "reserved"
     # for displaying unit details in the "features" section.
@@ -260,6 +276,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
         listing.unitTypes = Service.groupUnitTypes(units)
         listing.priorityUnits = Service.groupSpecialUnits(listing.Units, 'Priority_Type')
         listing.reservedUnits = Service.groupSpecialUnits(listing.Units, 'Reserved_Type')
+        listing.habitatIncomeRanges = if ListingIdentityService.isHabitatListing then Service.getHabitatIncomeRanges(units) else []
     ).error( (data, status, headers, config) ->
       Service.loading.units = false
       Service.error.units = true
