@@ -1094,6 +1094,9 @@ ShortFormApplicationService = (
   Service.listingIsSale = ->
     ListingIdentityService.isSale(Service.listing)
 
+  Service.listingIsHabitat = ->
+    ListingIdentityService.isHabitatListing(Service.listing)
+
   Service.listingHasReservedUnitType = (type) ->
     ListingUnitService.listingHasReservedUnitType(Service.listing, type)
 

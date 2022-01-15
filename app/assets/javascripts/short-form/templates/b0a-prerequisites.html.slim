@@ -5,6 +5,7 @@
       | {{'b0_prerequisites.title' | translate}}
   .app-inner
     .form-group
+      / I have not owned residential property within the past 3 years.
       .checkbox-group
         .checkbox-block.margin-bottom--2x
           input#application_is_first_time_homebuyer name="application_is_first_time_homebuyer" type="checkbox" ng-model="application.isFirstTimeHomebuyer" ng-required="true" ng-class="{ error: inputInvalid('application_is_first_time_homebuyer')}"
@@ -13,7 +14,19 @@
               | {{'label.application_is_first_time_homebuyer' | translate}}
             small.error id="application_is_first_time_homebuyerError" ng-show="inputInvalid('application_is_first_time_homebuyer')"
               | {{'label.field_required' | translate}}
-      .checkbox-group
+      / My credit score is at least 650
+      / Special checkbox for Habitat Listing
+      / it does not get saved to Salesforce.
+      .checkbox-group ng-if="listingIsHabitat()"
+        .checkbox-block.margin-bottom--2x
+          input#application_habitat_credit_score name="application_habitat_credit_score" type="checkbox" ng-model="application.creditScoreIsAtLeast" ng-required="true" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
+          label.checkbox-block_label for="application_habitat_credit_score" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
+            strong.caps.form-label
+              | {{'label.application_habitat_credit_score' | translate}}
+            small.error id="application_habitat_credit_scoreError" ng-show="inputInvalid('application_habitat_credit_score')"
+              | {{'label.field_required' | translate}}
+      / I have attended 10 hours of Homebuyer Education in the past year.
+      .checkbox-group ng-if="!listingIsHabitat()"
         .checkbox-block.margin-bottom--2x
           input#application_has_completed_homebuyer_education name="application_has_completed_homebuyer_education" type="checkbox" ng-model="application.hasCompletedHomebuyerEducation" ng-required="true" ng-class="{ error: inputInvalid('application_has_completed_homebuyer_education')}"
           label.checkbox-block_label for="application_has_completed_homebuyer_education" ng-class="{ error: inputInvalid('application_has_completed_homebuyer_education')}"
@@ -22,10 +35,11 @@
             p.checkbox-block_note id="application_has_completed_homebuyer_education-description" translate="label.application_all_applicants_are_required"
             small.error id="application_has_completed_homebuyer_educationError" ng-show="inputInvalid('application_has_completed_homebuyer_education')"
               | {{'label.field_required' | translate}}
-      education-agency application="application" form="form"
-      .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x
+      education-agency application="application" form="form" ng-if="!listingIsHabitat()"
+      .form-group.margin-left--2x.margin-right--2x.margin-bottom--2x ng-if="!listingIsHabitat()"
         file-uploader button-label="{{'label.upload_verification_letter' | translate}}" file-label="{{'label.verification_letter' | translate}}" document="application.documents['Homebuyer education certificate']" file-type="Homebuyer education certificate" required="true"
-      .checkbox-group
+      / I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.
+      .checkbox-group ng-if="!listingIsHabitat()"
         .checkbox-block.margin-bottom--2x
           input#application_has_loan_pre_approval name="application_has_loan_pre_approval" type="checkbox" ng-model="application.hasLoanPreapproval" ng-required="true" ng-class="{ error: inputInvalid('application_has_loan_pre_approval')}"
           label.checkbox-block_label for="application_has_loan_pre_approval" ng-class="{ error: inputInvalid('application_has_loan_pre_approval')}"
@@ -33,9 +47,9 @@
             p.checkbox-block_note id="loan_pre_approval-description" translate="label.application_pre_approval_must_be_120_days"
             small.error id="application_has_loan_pre_approvalError" ng-show="inputInvalid('application_has_loan_pre_approval')"
               | {{'label.field_required' | translate}}
-      lending-institution application="application" form="form"
+      lending-institution application="application" form="form" ng-if="!listingIsHabitat()"
       .form-group.margin-left--2x.margin-right--2x
-        file-uploader button-label="{{'label.upload_preapproval_letter' | translate}}" file-label="{{'label.preapproval_letter' | translate}}" document="application.documents['Loan pre-approval']" file-type="Loan pre-approval" required="true"
+        file-uploader button-label="{{'label.upload_preapproval_letter' | translate}}" file-label="{{'label.preapproval_letter' | translate}}" document="application.documents['Loan pre-approval']" file-type="Loan pre-approval" required="true" ng-if="!listingIsHabitat()"
   .button-pager
     .button-pager_row.primary
       input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="isLoading()"
