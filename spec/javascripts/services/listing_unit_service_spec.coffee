@@ -155,7 +155,7 @@ do ->
         ListingUnitService.resetData()
 
       it 'gets expected range for one unit', ->
-        fakeUnits = [
+        fakeHabitatUnits = [
           {
             'Max_AMI_for_Qualifying_Unit': 65,
             'Min_AMI_for_Qualifying_Unit': 55
@@ -163,7 +163,7 @@ do ->
             'Max_Occupancy': 2
           }
         ]
-        result = ListingUnitService.getHabitatIncomeRanges(fakeUnits)
+        result = ListingUnitService.getHabitatIncomeRanges(fakeHabitatUnits)
         expectedResult = [
           {
               'occupancy': 1,
@@ -179,7 +179,7 @@ do ->
         expect(result).toEqual(expectedResult)
 
       it 'merges multiple unit types as expected', ->
-        fakeUnits = [
+        fakeHabitatMultipleUnits = [
           {
             'Max_AMI_for_Qualifying_Unit': 65,
             'Min_AMI_for_Qualifying_Unit': 55
@@ -193,7 +193,7 @@ do ->
             'Max_Occupancy': 3
           }
         ]
-        result = ListingUnitService.getHabitatIncomeRanges(fakeUnits)
+        result = ListingUnitService.getHabitatIncomeRanges(fakeHabitatMultipleUnits)
         expectedResult = [
           {
               "occupancy": 1,

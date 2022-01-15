@@ -37,19 +37,19 @@ do ->
       listing:
         Id: ''
       loadListing: ->
-      preferenceMap = {
-        'certOfPreference': 'Certificate of Preference (COP)',
-        'displaced': 'Displaced Tenant Housing Preference (DTHP)',
-        'liveWorkInSf': 'Live or Work in San Francisco Preference',
-        'liveInSf': 'Live or Work in San Francisco Preference',
-        'workInSf': 'Live or Work in San Francisco Preference',
-        'neighborhoodResidence': 'Neighborhood Resident Housing Preference (NRHP)',
-        'assistedHousing': 'Rent Burdened / Assisted Housing Preference',
-        'rentBurden': 'Rent Burdened / Assisted Housing Preference',
-        'antiDisplacement': 'Anti-Displacement Housing Preference (ADHP)',
-        'aliceGriffith': 'Alice Griffith Housing Development Resident',
-        'rightToReturnSunnydale': 'Right to Return - Sunnydale'
-      }
+      preferenceMap =
+        certOfPreference: 'Certificate of Preference (COP)',
+        displaced: 'Displaced Tenant Housing Preference (DTHP)',
+        liveWorkInSf: 'Live or Work in San Francisco Preference',
+        liveInSf: 'Live or Work in San Francisco Preference',
+        workInSf: 'Live or Work in San Francisco Preference',
+        neighborhoodResidence: 'Neighborhood Resident Housing Preference (NRHP)',
+        assistedHousing: 'Rent Burdened / Assisted Housing Preference',
+        rentBurden: 'Rent Burdened / Assisted Housing Preference',
+        antiDisplacement: 'Anti-Displacement Housing Preference (ADHP)',
+        aliceGriffith: 'Alice Griffith Housing Development Resident',
+        rightToReturnSunnydale: 'Right to Return - Sunnydale'
+
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -128,7 +128,7 @@ do ->
     describe 'Service setup', ->
       it 'initializes applicant defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.applicant
-        expect(ShortFormApplicationService.applicant).toEqual expectedDefault
+        expect(ShortFormApplicationService.applicant).toEqual 'blah'
 
       it 'initializes application defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults
