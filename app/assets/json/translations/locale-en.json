@@ -840,14 +840,15 @@
                     "title": "Application Process",
                     "p1": "These units are offered by <a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> in partnership with MOHCD",
                     "ol1": "You must go to a <a target='_blank' href='{{infoSessionLink}}'>Habitat for Humanity information session</a>.",
-                    "ol2": "You will submit your application on DAHLIA. ",
+                    "ol2": "You will submit your application on DAHLIA.",
                     "ol3": "MOHCD will run the lottery and post results here on DAHLIA.",
-                    "ol4": "In the lottery rank order, MOHCD will check to see if you qualify for the listing. If you qualify, MOHCD will issue you a conditional approval.",
-                    "ol5": "Habitat Greater San Francisco will work with you to approve your first mortgage loan.",
+                    "ol4": "In lottery rank order, Habitat for Humanity Greater San Francisco will do a credit and background check.",
+                    "ol5": "MOHCD will check to see if you qualify for the listing. If you qualify, MOHCD will issue you a conditional approval.",
                     "ol6": "You must complete 500 hours of sweat equity.",
-                    "ol7": "MOHCD will work with you to issue a final approval.",
-                    "ol8": "MOHCD and Habitat Greater San Francisco will deliver closing documents to escrow.",
-                    "ol9": "You can move into your new home!"
+                    "ol7": "Habitat Greater San Francisco will work with you to approve your first mortgage loan.",
+                    "ol8": "MOHCD will work with you to issue a final approval.",
+                    "ol9": "MOHCD and Habitat Greater San Francisco will deliver closing documents to escrow.",
+                    "ol10": "You can move into your new home!"
                 },
                 "income_range": {
                     "title": "Income Range",
