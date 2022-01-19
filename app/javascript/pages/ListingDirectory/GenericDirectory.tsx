@@ -66,10 +66,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
-        <div>
-          {!loading && (
-            <>
-              {props.getPageHeader(filters, setFilters, match)}
+        {!loading && (
+          <>
+            {props.getPageHeader(filters, setFilters, match)}
+            <div id="listing-results">
               {openListingsView(
                 listings.open,
                 props.directoryType,
@@ -89,9 +89,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 )}
               {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
               {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
         {signUpActionBlock(listingsAlertUrl)}
       </div>
     </LoadingOverlay>
