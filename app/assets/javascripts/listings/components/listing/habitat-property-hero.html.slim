@@ -1,18 +1,18 @@
 h4.h-caps-lined
   | {{'listings.habitat.payments.title' | translate}}
-p
+p.margin-bottom--2x
   | {{'listings.habitat.payments.p1' | translate}}
 h4.h-caps-lined
   | {{'listings.habitat.sweat_equity.title' | translate}}
 p
   | {{'listings.habitat.sweat_equity.p1' | translate}}
-p
+p.margin-bottom--2x
   | {{'listings.habitat.sweat_equity.p2' | translate}}
 
-h4.h-caps-lined.padding-top
+h4.h-caps-lined
   | {{'listings.habitat.application_process.title' | translate}}
 p translate="listings.habitat.application_process.p1" translate-value-habitat-link="https://google.com"
-ol
+ol.margin-bottom--2x
   li translate="listings.habitat.application_process.ol1" translate-value-info-session-link="https://google.com"
   li translate="listings.habitat.application_process.ol2"
   li translate="listings.habitat.application_process.ol3"
@@ -23,7 +23,7 @@ ol
   li translate="listings.habitat.application_process.ol8"
   li translate="listings.habitat.application_process.ol9"
 
-h4.h-caps-lined.padding-top
+h4.h-caps-lined
   | {{'listings.habitat.income_range.title' | translate}}
 p
   | {{'listings.habitat.income_range.p1' | translate}}
@@ -36,6 +36,6 @@ ul.bullet-list.margin-bottom
   li.margin-bottom-none translate="listings.income_exceptions.nontaxable" translate-value-tooltip="{{'listings.income_exceptions.nontaxable_tooltip' | translate }}" translate-compile="true"
 p.margin-bottom-none
   | {{'listings.habitat.income_range.p4' | translate}}
-ul.inline-list
+ul.inline-list.margin-bottom--2x
   li ng-repeat="range in $ctrl.translatedIncomeRanges()"
     | {{range}}
