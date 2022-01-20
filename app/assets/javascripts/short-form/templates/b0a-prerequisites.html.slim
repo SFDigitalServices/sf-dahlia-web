@@ -19,7 +19,7 @@
       / it does not get saved to Salesforce.
       .checkbox-group ng-if="listingIsHabitat()"
         .checkbox-block.margin-bottom--2x
-          input#application_habitat_credit_score name="application_habitat_credit_score" type="checkbox" ng-model="application.creditScoreIsAtLeast" ng-required="true" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
+          input#application_habitat_credit_score name="application_habitat_credit_score" type="checkbox" ng-model="application.hasMinimumCreditScore" ng-required="true" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
           label.checkbox-block_label for="application_habitat_credit_score" ng-class="{ error: inputInvalid('application_habitat_credit_score')}"
             strong.caps.form-label
               | {{'label.application_habitat_credit_score' | translate}}
