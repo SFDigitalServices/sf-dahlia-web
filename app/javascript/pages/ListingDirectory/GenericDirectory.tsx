@@ -14,7 +14,6 @@ import {
   additionalView,
   signUpActionBlock,
   sortListings,
-  housingCounselorActionBlock,
 } from "./DirectoryHelpers"
 import "./ListingDirectory.scss"
 
@@ -78,8 +77,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
               )}
 
               {props.findMoreActionBlock()}
-
-              {filters && housingCounselorActionBlock()}
               {filters &&
                 additionalView(
                   listings.additional,

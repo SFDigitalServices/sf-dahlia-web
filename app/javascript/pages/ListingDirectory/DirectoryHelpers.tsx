@@ -19,7 +19,7 @@ import dayjs from "dayjs"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import Link from "../../navigation/Link"
-import { getEligibilityEstimatorLink } from "../../util/routeUtil"
+import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
@@ -318,23 +318,6 @@ export const signUpActionBlock = (href: string) => {
   )
 }
 
-export const housingCounselorActionBlock = () => {
-  return (
-    <div className={"flex items-center justify-center"}>
-      <ActionBlock
-        header={`${t("listings.findHousingCounselor.weSuggestTalking")}`}
-        background="primary-lighter"
-        actions={[
-          <Link className="button" key="action-1" href={"#"}>
-            {`${t("listings.findHousingCounselor.action")}`}
-          </Link>,
-        ]}
-        className={"m-5 p-6 max-w-5xl text-center"}
-      />
-    </div>
-  )
-}
-
 // Sort listings in four buckets based on their status and filters
 export const sortListings = (
   listings: RailsListing[],
@@ -392,6 +375,11 @@ export const noMatchesTextBanner = (content: string) => {
         <div className={"mt-10 max-w-5xl flex flex-col items-start"}>
           <h2 className={"page-header-subheader"}>{t("listings.noMatches")}</h2>
           <p className={"page-header-text-block"}>{content}</p>
+          <p className={"page-header-text-block"}>
+            {renderInlineWithInnerHTML(
+              t("listings.weSuggestHousingCounselor", { url: getHousingCounselorsPath() })
+            )}
+          </p>
         </div>
       </div>
     </div>
