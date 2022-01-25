@@ -50,6 +50,8 @@ type Listing = RailsRentalListing & {
 
 const headerClassNames = "text-base text-gray-700 border-b"
 
+const habitatForHumanity = "Habitat for Humanity"
+
 // Returns every status bar under the image card for one listing
 export const getListingImageCardStatuses = (
   listing: RailsListing,
@@ -204,7 +206,7 @@ const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
 // Get a set of Listing Cards for an array of listings, which includes both the image and summary table
 export const getListingCards = (listings, directoryType, stackedDataFxn, hasFiltersSet?: boolean) =>
   listings.map((listing: Listing, index) => {
-    const hasCustomContent = listing.Reserved_community_type === "Habitat for Humanity"
+    const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
     return (
       <ListingCard
         key={index}
