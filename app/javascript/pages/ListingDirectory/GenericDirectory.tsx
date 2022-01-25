@@ -28,7 +28,7 @@ interface RentalDirectoryProps {
     setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
     match: boolean
   ) => JSX.Element
-  findMoreActionBlock: (filters: EligibilityFilters, match: boolean) => JSX.Element
+  findMoreActionBlock: () => JSX.Element
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -77,7 +77,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet
               )}
 
-              {props.findMoreActionBlock(filters, match)}
+              {props.findMoreActionBlock()}
 
               {filters && housingCounselorActionBlock()}
               {filters &&

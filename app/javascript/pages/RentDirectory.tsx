@@ -77,32 +77,30 @@ const getRentalHeader = (
           {t("rentalDirectory.findMatchingListings")}
         </LinkButton>
       </p>
-      <Markdown className="text-sm">
+      <Markdown className="text-base">
         {t("rentalDirectory.orGetHelpCalculating", { incomeLink: getHelpCalculatingIncomeLink() })}
       </Markdown>
     </PageHeader>
   )
 }
 
-const getFindMoreActionBlock = (filters: EligibilityFilters, match: boolean) => {
+const getFindMoreActionBlock = () => {
   return (
     <>
-      {(!filters || match) && (
-        <div className="bg-primary-darker">
-          <div className="max-w-5xl mx-auto p-2 md:p-4">
-            <ActionBlock
-              header={t("rentalDirectory.callouttitle")}
-              background="primary-darker"
-              layout={ActionBlockLayout.inline}
-              actions={[
-                <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
-                  {t("rentalDirectory.calloutbutton")}
-                </Link>,
-              ]}
-            />
-          </div>
+      <div className="bg-primary-darker">
+        <div className="max-w-5xl mx-auto p-2 md:p-4">
+          <ActionBlock
+            header={t("rentalDirectory.callouttitle")}
+            background="primary-darker"
+            layout={ActionBlockLayout.inline}
+            actions={[
+              <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+                {t("rentalDirectory.calloutbutton")}
+              </Link>,
+            ]}
+          />
         </div>
-      )}
+      </div>
     </>
   )
 }
