@@ -27,6 +27,7 @@ import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "./TextBanner"
+import { getHabitatContent } from "./HabitatForHumanity"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -48,6 +49,8 @@ type Listing = RailsRentalListing & {
 }
 
 const headerClassNames = "text-base text-gray-700 border-b"
+
+const habitatForHumanity = "Habitat for Humanity"
 
 // Returns every status bar under the image card for one listing
 export const getListingImageCardStatuses = (
@@ -190,45 +193,61 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
   return null
 }
 
+// Get imageCardProps for a given listing
+const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
+  imageUrl: listing.imageURL,
+  subtitle: `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
+  title: listing.Name,
+  href: `/listings/${listing.listingID}`,
+  tagLabel: listing.Reserved_community_type ?? undefined,
+  statuses: getListingImageCardStatuses(listing, hasFiltersSet),
+})
+
 // Get a set of Listing Cards for an array of listings, which includes both the image and summary table
 export const getListingCards = (listings, directoryType, stackedDataFxn, hasFiltersSet?: boolean) =>
-  listings.map((listing: Listing, index) => (
-    <ListingCard
-      key={index}
-      imageCardProps={{
-        imageUrl: listing.imageURL,
-        subtitle: `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
-        title: listing.Name,
-        href: `/listings/${listing.listingID}`,
-        tagLabel: listing.Reserved_community_type ?? undefined,
-        statuses: getListingImageCardStatuses(listing, hasFiltersSet),
-      }}
-      tableHeaderProps={{
-        tableHeader: getTableHeader(listing),
-        tableSubHeader: getTableSubHeader(listing),
-        stackedTable: true,
-      }}
-      tableProps={{
-        headers: {
-          unitType: { name: "t.units", className: headerClassNames },
-          availability: { name: "t.available", className: headerClassNames },
-          colThree: {
-            name: directoryType === "forRent" ? "t.incomeRange" : "saleDirectory.hoaDues",
-            className: headerClassNames,
-          },
-          colFour: {
-            name: directoryType === "forRent" ? "t.rent" : "saleDirectory.price",
-            className: headerClassNames,
-          },
-        },
-        responsiveCollapse: true,
-        cellClassName: "px-5 py-3",
-        headersHiddenDesktop: ["availability"],
-        stackedData: stackedDataFxn(listing),
-      }}
-      seeDetailsLink={`/listings/${listing.listingID}`}
-    />
-  ))
+  listings.map((listing: Listing, index) => {
+    const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
+    return (
+      <ListingCard
+        key={index}
+        imageCardProps={getImageCardProps(listing, hasFiltersSet)}
+        tableHeaderProps={
+          hasCustomContent
+            ? null
+            : {
+                tableHeader: getTableHeader(listing),
+                tableSubHeader: getTableSubHeader(listing),
+                stackedTable: true,
+              }
+        }
+        tableProps={
+          hasCustomContent
+            ? null
+            : {
+                headers: {
+                  unitType: { name: "t.units", className: headerClassNames },
+                  availability: { name: "t.available", className: headerClassNames },
+                  colThree: {
+                    name: directoryType === "forRent" ? "t.incomeRange" : "saleDirectory.hoaDues",
+                    className: headerClassNames,
+                  },
+                  colFour: {
+                    name: directoryType === "forRent" ? "t.rent" : "saleDirectory.price",
+                    className: headerClassNames,
+                  },
+                },
+                responsiveCollapse: true,
+                cellClassName: "px-5 py-3",
+                headersHiddenDesktop: ["availability"],
+                stackedData: stackedDataFxn(listing),
+              }
+        }
+        seeDetailsLink={`/listings/${listing.listingID}`}
+      >
+        {hasCustomContent ? getHabitatContent(listing, stackedDataFxn) : null}
+      </ListingCard>
+    )
+  })
 
 export const openListingsView = (listings, directoryType, stackedDataFxn, filtersSet?) =>
   listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
