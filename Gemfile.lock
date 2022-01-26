@@ -100,8 +100,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.8)
-    connection_pool (2.2.2)
+    concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
@@ -251,7 +251,7 @@ GEM
     rack (2.2.3)
     rack-cors (1.0.5)
       rack (>= 1.6.0)
-    rack-protection (2.0.5)
+    rack-protection (2.1.0)
       rack
     rack-proxy (0.6.5)
       rack
@@ -302,7 +302,7 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    redis (4.1.2)
+    redis (4.5.1)
     require_all (2.0.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -362,11 +362,10 @@ GEM
     sexp_processor (4.12.1)
     shoulda-matchers (4.1.0)
       activesupport (>= 4.2.0)
-    sidekiq (5.0.5)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
+    sidekiq (5.2.0)
+      connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
-      redis (>= 3.3.4, < 5)
+      redis (>= 3.3.5, < 5)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -481,7 +480,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   sentry-raven (~> 2.6.3)
   shoulda-matchers
-  sidekiq (~> 5.0.2)
+  sidekiq (~> 5.2.0)
   sitemap_generator!
   slim-rails
   spring
