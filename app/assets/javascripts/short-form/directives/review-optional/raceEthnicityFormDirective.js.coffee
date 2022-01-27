@@ -2,7 +2,7 @@ angular.module('dahlia.directives')
 .directive 'raceEthnicityForm', ['ShortFormRaceEthnicityService', (ShortFormRaceEthnicityService) ->
   replace: true
   scope: true
-  templateUrl: 'short-form/directives/race-ethnicity-form.html'
+  templateUrl: 'short-form/directives/review-optional/race-ethnicity-form.html'
 
   link: (scope, elem, attrs) ->
     scope.user = scope[attrs.user] if attrs.user

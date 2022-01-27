@@ -26,6 +26,9 @@ class DemographicSurvey extends AngularPage
     @whiteOther = element(By.id('panel-White-Other-text'))
     @userPrimaryLanguage = element(By.id('user_primary_language'))
     @otherPrimaryLanguage = element(By.id('otherLanguage'))
+    @isVeteran_PreferNotTo = element(By.id('isVeteran_decline-to-state'))
+    @isNonPrimaryMemberVeteran_PreferNotTo = element(By.id('isNonPrimaryMemberVeteran_decline-to-state'))
+    @hasDisability_PreferNotTo = element(By.id('hasDisability_decline-to-state'))
     @referral = element(By.id('referral'))
 
     @defaults =
@@ -38,6 +41,9 @@ class DemographicSurvey extends AngularPage
       indigenousCentralSouthAmericaGroup: 'Indigenous South/Central American Group'
       userPrimaryLanguage: 'Not Listed'
       otherPrimaryLanguage: 'other primary language'
+      isVeteran: 'Prefer not to answer'
+      isNonPrimaryMemberVeteran: 'Prefer not to answer'
+      hasDisability: 'Prefer not to answer'
       referral: 'Bus Ad'
 
   fill: (opts = {}) ->
@@ -72,6 +78,11 @@ class DemographicSurvey extends AngularPage
 
     @userPrimaryLanguage.sendKeys(@defaults.userPrimaryLanguage)
     @otherPrimaryLanguage.clear().sendKeys(@defaults.otherPrimaryLanguage)
+
+    # Set veteran and disability answers
+    @isVeteran_PreferNotTo.click()
+    @isNonPrimaryMemberVeteran_PreferNotTo.click()
+    @hasDisability_PreferNotTo.click()
 
     @referral.sendKeys(@defaults.referral)
 

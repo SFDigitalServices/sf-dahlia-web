@@ -16,9 +16,13 @@ import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
-import { getDisclaimerPath, getPrivacyPolicyPath } from "../util/routeUtil"
+import {
+  getDisclaimerPath,
+  getPrivacyPolicyPath,
+  getSignInPath,
+  getLocalizedPath,
+} from "../util/routeUtil"
 import MetaTags from "./MetaTags"
-import { getSignInPath, getLocalizedPath } from "../util/routeUtil"
 
 export interface LayoutProps {
   children: React.ReactNode

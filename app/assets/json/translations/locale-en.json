@@ -7,6 +7,10 @@
             "title": "Let's get started on your application"
         },
         "a2_community_screening": {
+            "accessible_only": {
+                "you_or_anyone": "Do you or anyone in your household need an accessible unit?",
+                "you_or_anyone_desc": "All units are reserved for people who need an accessible unit. Accessible units have features that help people with mobility, vision and hearing impairments.<br><br>Should your application be chosen, you must provide supporting information."
+            },
             "artist": {
                 "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
                 "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
@@ -439,6 +443,7 @@
             }
         },
         "error": {
+            "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
             "address": "Please enter an address",
             "address_validation_not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
             "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
@@ -566,6 +571,7 @@
             "alternate_contact_agency": "Where does your case manager or housing counselor work?",
             "alternate_contact_name": "Name of alternate contact",
             "applicant_additional_phone": "I have an additional phone number",
+            "applicant_disability": "Are you a person with a disability?",
             "applicant_email": "Your email address",
             "applicant_gender": "What is your gender?",
             "applicant_gender_subtitle": "Select one that best describes your current gender identity.",
@@ -584,6 +590,7 @@
             "applicant_select_a_loan_officer": "Please select a loan officer",
             "applicant_separate_address": "Send my mail to a different address",
             "applicant_sexual_orientation": "How do you describe your sexual orientation or sexual identity?",
+            "applicant_veteran": "Are you a veteran?",
             "application_all_applicants_are_required": "Only the primary applicant needs to upload the verification letter to be included in the lottery. The verification letter needs to be dated within the past year.",
             "application_cant_find_lender": "Can’t find your loan officer? Your pre-approval letter must be from <a target='_blank' href='{{url}}'>someone on our list</a>.",
             "application_has_completed_homebuyer_education": "I have attended 10 hours of Homebuyer Education in the past year.",
@@ -650,6 +657,7 @@
             "household_member_save": "Save Household Member",
             "household_member_update": "Update Household Member",
             "household_members": "Household Members",
+            "household_veteran": "Is anyone else on this application a veteran?",
             "how_did_you_hear_about_this": "How did you hear about this listing?",
             "how_did_you_hear_about_this_subtitle": "Let us know how you found out about this housing opportunity.",
             "how_you_heard_about_this_listing": "How You Heard About This Listing",
@@ -1281,6 +1289,7 @@
             "or": "or",
             "per_month": "per month",
             "per_year": "per year",
+            "prefer_not_to_answer": "Prefer not to answer",
             "save_and_come_back_later": "Save and come back later",
             "save_and_finish_later": "Save and finish later",
             "session_expired": "Your session has expired.",

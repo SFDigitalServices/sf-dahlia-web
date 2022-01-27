@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.1-alpha.38":
-  version "3.0.1-alpha.38"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.1-alpha.38.tgz#65ee83a85f60b12c4115482c174d925392f1fadd"
-  integrity sha512-u6FSFCNivjs1s1Uq7kOsD5MBstosIVRRTeCrt5qB2WY5Ojp3CnqLz8nP3stfwG1YZdaPTGAKNS/5LNb5SEA3Yw==
+"@bloom-housing/backend-core@^3.0.2-alpha.12":
+  version "3.0.2-alpha.12"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.12.tgz#2f7a86f2119716b513f4e338be2db64bd3951b1c"
+  integrity sha512-QEK4Nf1DL6PEiOT+K5c2cMciyox+dCpIuUvyEez5nTiXE3Vi4OQFWJyHlKlLS/4FRm/Y6u2aq9R9/6Jjkn3bQg==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1323,10 +1323,9 @@
     ioredis "^4.24.4"
     joi "^17.3.0"
     jwt-simple "^0.5.6"
-    moment "^2.29.1"
     nanoid "^3.1.12"
     nestjs-throttler-storage-redis "^0.1.11"
-    nestjs-typeorm-paginate "^2.2.1"
+    nestjs-typeorm-paginate "^3.1.3"
     newrelic "7.5.1"
     node-polyglot "^2.4.0"
     passport "^0.4.1"
@@ -1343,12 +1342,12 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^3.0.1-alpha.44":
-  version "3.0.1-alpha.44"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-3.0.1-alpha.44.tgz#f427197683c605e348dd1f4513c3c70b7e3ee0c3"
-  integrity sha512-1Z7F39BzgmNLpHyf2RfRdC2J58KgdRy1JZxizK/zv94xhb0+sKvElzeYyW8DQ//XSjADgUSrR6Wjcp2wH25c+w==
+"@bloom-housing/ui-components@^4.0.1-alpha.17":
+  version "4.0.1-alpha.17"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.17.tgz#409f9cc47a996f79bcb143e025409b7897ebfeab"
+  integrity sha512-/0vUQq2/VC1gU/1Tie9eNdu5P8wq0bWpLhdfP6aHQ6jHESJZYpG/GK8e0rYj9GZZ8cIprBB00DJ97stBbq1zMw==
   dependencies:
-    "@bloom-housing/backend-core" "^3.0.1-alpha.38"
+    "@bloom-housing/backend-core" "^3.0.2-alpha.12"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1361,9 +1360,9 @@
     "@types/react-transition-group" "^4.4.0"
     axios "0.21.1"
     body-scroll-lock "^3.1.5"
+    dayjs "^1.10.7"
     jwt-decode "^2.2.0"
     markdown-to-jsx "^6.11.4"
-    moment "^2.29.1"
     nanoid "^3.1.12"
     react "^17.0.2"
     react-accessible-accordion "^3.3.5"
@@ -11046,7 +11045,7 @@ moment-timezone@^0.5.x:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@>=2.14.0, moment@^2.29.1:
+"moment@>= 2.9.0", moment@>=2.14.0:
   version "2.29.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -11201,10 +11200,10 @@ nestjs-throttler-storage-redis@^0.1.11:
   resolved "https://registry.yarnpkg.com/nestjs-throttler-storage-redis/-/nestjs-throttler-storage-redis-0.1.18.tgz#708b1823d0f72f8d2340833047a04e2afd86b1f7"
   integrity sha512-BHYYN+fuJcBi96J2sOoID8VcI5jbMKfQ63Zsi5dzJ6dEnK4hqc6w4MbSKsBd8P8+eCDsSNFmnnmdhLcz/WwAaQ==
 
-nestjs-typeorm-paginate@^2.2.1:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/nestjs-typeorm-paginate/-/nestjs-typeorm-paginate-2.6.3.tgz#f399ce52eea9fa1a62467ebc14c86ee0856c65ec"
-  integrity sha512-YxrqG3n7OXTjbSKqqceGhQc5MSaUKz8mCiT1gn3+wwYrrLCDS6B5QKGBm3NTx3GqZg16p48amlFGNH8MCHKvqw==
+nestjs-typeorm-paginate@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/nestjs-typeorm-paginate/-/nestjs-typeorm-paginate-3.1.3.tgz#ba68bb403a53b2cf02b1c55af254f5f6cce8edb7"
+  integrity sha512-7iXNnO9hUe1IbJfUeVU6lH0fTEvmPPRvySIKphhEFE39VF1rz0ptd/0pec7pDs6oI9vFQlsdtiH39TNaL4Gf9Q==
   dependencies:
     chalk "^4.1.2"
 

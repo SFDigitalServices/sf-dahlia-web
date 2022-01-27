@@ -28,7 +28,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasLoanPreapproval'
       'lendingAgent'
       'homebuyerEducationAgency'
-      'referral'
+      'referral',
+      'isNonPrimaryMemberVeteran'
     ]
     primaryApplicant: [
       'alternatePhone',
@@ -46,6 +47,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'indigenousCentralSouthAmericaGroup',
       'indigenousNativeAmericanGroup',
       'indigenousOther',
+      'hasDisability',
+      'isVeteran',
       'lastName',
       'latinoOther',
       'menaOther',
@@ -77,6 +80,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
 
+  # Format application for Salesforce Processing.
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
     sfApp = _.pick application, Service.WHITELIST_FIELDS.application
@@ -157,10 +161,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       addressData.mailingAddress += ' ' + address2 if address2
 
     if opts.householdMember
-      if member.hasSameAddressAsApplicant == 'Yes'
-        addressData.hasSameAddressAsApplicant = true
-      else
-        addressData.hasSameAddressAsApplicant = false
+      addressData.hasSameAddressAsApplicant = Service._formatBoolean(member.hasSameAddressAsApplicant)
 
     return addressData
 
@@ -180,6 +181,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
+    PREFS = ListingDataService.preferenceMap
+    appPrefs = application.preferences
 
     angular.copy(ListingDataService.listing.preferences).forEach( (listingPref) ->
       # prefKey is the short name like liveInSf
@@ -189,14 +192,11 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       optOut = false
       shortformPreferenceID = null
       certificateNumber = null
-      appPrefs = application.preferences
       proofOption = null
       address = null
       city = null
       state = null
       zip = null
-      PREFS = ListingDataService.preferenceMap
-
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
         # default prefKey and optOut for Live/Work, in case individual live or work
@@ -397,6 +397,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
     return contact
 
+  # Convert from Salesforce back to DAHLIA format
   Service._reformatPrimaryApplicant = (contact, altContact) ->
     applicant = _.pick contact, Service.WHITELIST_FIELDS.primaryApplicant
     applicant.mailing_address = Service._reformatMailingAddress(contact)
@@ -406,6 +407,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     # we use this tempId to identify people in the preference dropdown
     applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
+
     return applicant
 
   Service._reformatHousehold = (contacts) ->

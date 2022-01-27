@@ -643,6 +643,11 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
+  # Go to income-vouchers or income based on what type of listing it is
+  $scope.goToPostHouseholdPrioritiesPage = ->
+    page = ShortFormNavigationService.getPostHouseholdPrioritiesPage($scope.listing)
+    ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
+
   $scope.publicHousingYes = ->
     ShortFormApplicationService.resetMonthlyRentForm()
     # make sure they're forced through now that they have the assistedHousing option
