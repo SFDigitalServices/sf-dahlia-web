@@ -71,12 +71,13 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
     # We round min incomes up to avoid users being surprised by being rejected.
     Math.ceil(minAnnualIncome/12).toFixed(0)
 
-  Service._getIncomeRangesByOccupancy = (unitGroup, annual = false ) ->
+  Service._getIncomeRangesByOccupancy = (unitGroup, annual = false, maxOccupancyOverride = null ) ->
     # Given a row of units grouped by size, AMI, price, etc, determine the
     # min and max incomes for that range for every available occupancy size.
     # If a max occupancy isn't defined, as in the ownership case, default to showing up to 3
     # occupancy options.
-    maxOccupancy = unitGroup.Max_Occupancy || unitGroup.Min_Occupancy + 2
+    # maxOccupancyOverride is for the Habitat for Humanity case where we want to show 9 values.
+    maxOccupancy = if maxOccupancyOverride != null then maxOccupancyOverride else (unitGroup.Max_Occupancy || unitGroup.Min_Occupancy + 2)
     occupancyRange = [unitGroup.Min_Occupancy..maxOccupancy]
     # FIXME: This does not handle cases where listings have multiple AMI charts with the same percent.
     maxAMIs = _.find(Service.AMICharts, {'percent': unitGroup.Max_AMI_for_Qualifying_Unit.toString()})
@@ -236,7 +237,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
   # ]
   Service.getHabitatIncomeRanges = (units) ->
     ranges = _.flatten(units.map((unit) ->
-      Service._getIncomeRangesByOccupancy(unit, true)
+      Service._getIncomeRangesByOccupancy(unit, true, 9)
     ))
     return _.sortBy(_.uniqBy(ranges, 'occupancy'), 'occupancy')
 
@@ -276,7 +277,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
         listing.unitTypes = Service.groupUnitTypes(units)
         listing.priorityUnits = Service.groupSpecialUnits(listing.Units, 'Priority_Type')
         listing.reservedUnits = Service.groupSpecialUnits(listing.Units, 'Reserved_Type')
-        listing.habitatIncomeRanges = if ListingIdentityService.isHabitatListing then Service.getHabitatIncomeRanges(units) else []
+        listing.habitatIncomeRanges = if ListingIdentityService.isHabitatListing() then Service.getHabitatIncomeRanges(units) else []
     ).error( (data, status, headers, config) ->
       Service.loading.units = false
       Service.error.units = true
