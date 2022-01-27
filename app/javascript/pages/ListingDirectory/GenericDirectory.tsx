@@ -14,7 +14,6 @@ import {
   additionalView,
   signUpActionBlock,
   sortListings,
-  housingCounselorActionBlock,
 } from "./DirectoryHelpers"
 import "./ListingDirectory.scss"
 
@@ -28,7 +27,7 @@ interface RentalDirectoryProps {
     setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
     match: boolean
   ) => JSX.Element
-  findMoreActionBlock: (filters: EligibilityFilters, match: boolean) => JSX.Element
+  findMoreActionBlock: () => JSX.Element
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -66,10 +65,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
-        <div>
-          {!loading && (
-            <>
-              {props.getPageHeader(filters, setFilters, match)}
+        {!loading && (
+          <>
+            {props.getPageHeader(filters, setFilters, match)}
+            <div id="listing-results">
               {openListingsView(
                 listings.open,
                 props.directoryType,
@@ -77,9 +76,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet
               )}
 
-              {props.findMoreActionBlock(filters, match)}
-
-              {filters && housingCounselorActionBlock()}
+              {props.findMoreActionBlock()}
               {filters &&
                 additionalView(
                   listings.additional,
@@ -89,9 +86,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 )}
               {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
               {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
         {signUpActionBlock(listingsAlertUrl)}
       </div>
     </LoadingOverlay>
