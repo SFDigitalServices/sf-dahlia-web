@@ -75,38 +75,36 @@ const getBuyHeader = (
   )
 }
 
-const getFindMoreActionBlock = (filters: EligibilityFilters, match: boolean) => {
+const getFindMoreActionBlock = () => {
   return (
     <>
-      {(!filters || match) && (
-        <div className="bg-primary-darker">
-          <div className="max-w-5xl mx-auto p-2 md:p-4">
-            <ActionBlock
-              header={t("saleDirectory.callout.title")}
-              background="primary-darker"
-              layout={ActionBlockLayout.inline}
-              actions={[
-                <Link
-                  className="button"
-                  key="action-1"
-                  external
-                  href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
-                >
-                  {t("saleDirectory.callout.firstComeFirstServed")}
-                </Link>,
-                <Link
-                  className="button"
-                  key="action-2"
-                  external
-                  href={"https://sfmohcd.org/current-listings-city-second-program"}
-                >
-                  {t("saleDirectory.callout.citySecondLoan")}
-                </Link>,
-              ]}
-            />
-          </div>
+      <div className="bg-primary-darker">
+        <div className="max-w-5xl mx-auto p-2 md:p-4">
+          <ActionBlock
+            header={t("saleDirectory.callout.title")}
+            background="primary-darker"
+            layout={ActionBlockLayout.inline}
+            actions={[
+              <Link
+                className="button"
+                key="action-1"
+                external
+                href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
+              >
+                {t("saleDirectory.callout.firstComeFirstServed")}
+              </Link>,
+              <Link
+                className="button"
+                key="action-2"
+                external
+                href={"https://sfmohcd.org/current-listings-city-second-program"}
+              >
+                {t("saleDirectory.callout.citySecondLoan")}
+              </Link>,
+            ]}
+          />
         </div>
-      )}
+      </div>
     </>
   )
 }
