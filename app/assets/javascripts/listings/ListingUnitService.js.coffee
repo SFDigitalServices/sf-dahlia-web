@@ -277,7 +277,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
         listing.unitTypes = Service.groupUnitTypes(units)
         listing.priorityUnits = Service.groupSpecialUnits(listing.Units, 'Priority_Type')
         listing.reservedUnits = Service.groupSpecialUnits(listing.Units, 'Reserved_Type')
-        listing.habitatIncomeRanges = if ListingIdentityService.isHabitatListing() then Service.getHabitatIncomeRanges(units) else []
+        listing.habitatIncomeRanges = if ListingIdentityService.isHabitatListing(listing) then Service.getHabitatIncomeRanges(units) else []
     ).error( (data, status, headers, config) ->
       Service.loading.units = false
       Service.error.units = true
