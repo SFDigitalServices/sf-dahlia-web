@@ -24,7 +24,7 @@ import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "./TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
@@ -186,8 +186,29 @@ export const getTableHeader = (listing: RailsRentalListing) => {
 // Get the summary table subheader
 export const getTableSubHeader = (listing: RailsRentalListing) => {
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
-    const priorityNames = listing.prioritiesDescriptor.map((priority) => priority.name)
-    // TODO: Translate the priority descriptor names.
+    const priorityNames = []
+    listing.prioritiesDescriptor.forEach((priority) => {
+      switch (priority.name) {
+        case "Vision impairments":
+          priorityNames.push(t("listings.mobilityImpairments.vision"))
+          break
+        case "Hearing impairments":
+          priorityNames.push(t("listings.mobilityImpairments.hearing"))
+          break
+        case "Hearing/Vision impairments":
+          priorityNames.push(t("listings.mobilityImpairments.hearingVision"))
+          break
+        case "Mobility/hearing/vision impairments":
+          priorityNames.push(t("listings.mobilityImpairments.mobilityHearingVision"))
+          break
+        case "Mobility impairments":
+          priorityNames.push(t("listings.mobilityImpairments.mobility"))
+          break
+        default:
+          priorityNames.push(priority.name)
+      }
+    })
+
     return t("listings.includesPriorityUnits", { priorities: priorityNames.join(", ") })
   }
   return null
@@ -199,7 +220,7 @@ const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
   subtitle: `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
   title: listing.Name,
   href: `/listings/${listing.listingID}`,
-  tagLabel: listing.Reserved_community_type ?? undefined,
+  tagLabel: getReservedCommunityType(listing.Reserved_community_type) ?? undefined,
   statuses: getListingImageCardStatuses(listing, hasFiltersSet),
 })
 
