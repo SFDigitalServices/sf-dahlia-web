@@ -1,15 +1,15 @@
 / Qualify
-span ng-show="::($ctrl.isSale && !$ctrl.atAutofillPreview)"
+span ng-show="::$ctrl.isSale"
   review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable"
   .app-inner
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-first-time-homebuyer" ng-if="::$ctrl.application.isFirstTimeHomebuyer"
       | {{'label.application_is_first_time_homebuyer' | translate}}
-    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'label.applicant_homebuyer_education_agency' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}" ng-if="::$ctrl.application.hasCompletedHomebuyerEducation"
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-completed-homebuyer-education" sub-label="{{'label.applicant_homebuyer_education_agency' | translate}}: {{::$ctrl.application.homebuyerEducationAgency}}" bold-sub-label="{{::$ctrl.verificationLetterAttached()}}" ng-if="::($ctrl.application.hasCompletedHomebuyerEducation && !$ctrl.isHabitatListing)"
       | {{'label.application_has_completed_homebuyer_education' | translate}}
-    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'label.applicant_name_loan_officer' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}" ng-if="::$ctrl.application.hasLoanPreapproval"
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-loan-pre-approval" sub-label="{{'label.applicant_name_loan_officer' | translate}}: {{::$ctrl.getLendingAgentName($ctrl.application.lendingAgent)}}, {{::$ctrl.getLendingInstitution($ctrl.application.lendingAgent)}}" bold-sub-label="{{::$ctrl.preapprovalLetterAttached()}}" ng-if="::($ctrl.application.hasLoanPreapproval && !$ctrl.isHabitatListing)"
       | {{'label.application_has_loan_pre_approval' | translate}}
     / Only used for Habitat for Humanity listing
-    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-minimum-credit-score" ng-if="::$ctrl.application.hasMinimumCreditScore"
+    review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-minimum-credit-score" ng-if="::($ctrl.application.hasMinimumCreditScore && $ctrl.isHabitatListing)"
       | {{'label.application_habitat_credit_score' | translate}}
 / You
 review-summary-section header="{{'t.you' | translate}}" section-name="name" editable="::$ctrl.sectionsAreEditable"
