@@ -116,6 +116,12 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 }
 
 const Layout = (props: LayoutProps) => {
+  // eslint-disable-next-line dot-notation
+  if (window.document["documentMode"]) {
+    window.location.href = "/ie-deprecated.html"
+    return
+  }
+
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, signOut } = useContext(UserContext)
 
