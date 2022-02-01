@@ -93,7 +93,8 @@
   },
   "engines": {
     "npm": "5.3.0",
-    "yarn": "1.x.x"
+    "yarn": "1.x.x",
+    "node" : "14.x.x"
   },
   "scripts": {
     "postinstall": "bower install",

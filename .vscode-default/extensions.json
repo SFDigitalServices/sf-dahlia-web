@@ -19,7 +19,20 @@
 		/*
 		 * React auto-import suggestions as you type.
 		 */
-		"nucllear.vscode-extension-auto-import"
+		"nucllear.vscode-extension-auto-import",
+		/*
+		 * Ruby syntax highlighting
+		 */
+		"ebornix.Ruby",
+		/*
+		 * HTML slim template highlighting.
+		 */
+		"sianglim.slim",
+		/*
+		 * Syntax highlighting for Cucumber/Gherkin test syntax that we use for e2e-legacy tests.
+		 */
+		"alexkrechik.cucumberautocomplete"
+
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
