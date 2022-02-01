@@ -116,14 +116,14 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 }
 
 const Layout = (props: LayoutProps) => {
+  const { getAssetPath } = useContext(ConfigContext)
+  const { profile, signOut } = useContext(UserContext)
+
   // eslint-disable-next-line dot-notation
   if (window.document["documentMode"]) {
     window.location.href = "/ie-deprecated.html"
     return
   }
-
-  const { getAssetPath } = useContext(ConfigContext)
-  const { profile, signOut } = useContext(UserContext)
 
   const researchBanner = (
     <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
