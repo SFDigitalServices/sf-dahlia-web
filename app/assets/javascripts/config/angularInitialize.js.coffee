@@ -50,6 +50,10 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      if (window.document.documentMode)
+        $window.location.href = '/ie-deprecated.html'
+        return
+
       if (SharedService.shouldRouteViaRails(toState.name, isFirstLoad))
         isFirstLoad = false
 
