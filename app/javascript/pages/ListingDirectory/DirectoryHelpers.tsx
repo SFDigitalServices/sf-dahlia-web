@@ -190,19 +190,19 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
     listing.prioritiesDescriptor.forEach((priority) => {
       switch (priority.name) {
         case "Vision impairments":
-          priorityNames.push(t("listings.mobilityImpairments.vision"))
+          priorityNames.push(t("listings.prioritiesDescriptor.vision"))
           break
         case "Hearing impairments":
-          priorityNames.push(t("listings.mobilityImpairments.hearing"))
+          priorityNames.push(t("listings.prioritiesDescriptor.hearing"))
           break
         case "Hearing/Vision impairments":
-          priorityNames.push(t("listings.mobilityImpairments.hearingVision"))
+          priorityNames.push(t("listings.prioritiesDescriptor.hearingVision"))
           break
         case "Mobility/hearing/vision impairments":
-          priorityNames.push(t("listings.mobilityImpairments.mobilityHearingVision"))
+          priorityNames.push(t("listings.prioritiesDescriptor.mobilityHearingVision"))
           break
         case "Mobility impairments":
-          priorityNames.push(t("listings.mobilityImpairments.mobility"))
+          priorityNames.push(t("listings.prioritiesDescriptor.mobility"))
           break
         default:
           priorityNames.push(priority.name)
