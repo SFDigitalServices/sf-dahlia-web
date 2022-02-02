@@ -157,3 +157,11 @@ export function getReservedCommunityType(type: string | undefined): string {
       return type
   }
 }
+
+/**
+ * If no translation exists for current key, return default salesforce value
+ */
+export function defaultIfNotTranslated(key: string, value: string): string {
+  const translatedKey = t(key)
+  return translatedKey === key ? value : translatedKey
+}
