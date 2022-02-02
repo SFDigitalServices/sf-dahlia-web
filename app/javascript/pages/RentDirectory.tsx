@@ -20,7 +20,7 @@ import {
   getEligibilityEstimatorLink,
   getHelpCalculatingIncomeLink,
 } from "../util/routeUtil"
-import { emptyIfNotTranslated } from "../util/languageUtil"
+import { defaultIfNotTranslated } from "../util/languageUtil"
 
 import {
   getRangeString,
@@ -38,7 +38,10 @@ const getForRentSummaryTable = (listing: RailsRentalListing) =>
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
       unitType: {
-        cellText: emptyIfNotTranslated(`listings.unitTypes.${summary.unitType}`, summary.unitType),
+        cellText: defaultIfNotTranslated(
+          `listings.unitTypes.${summary.unitType}`,
+          summary.unitType
+        ),
         cellSubText: getAvailabilityString(listing, summary, false),
         hideMobile: true,
       },
