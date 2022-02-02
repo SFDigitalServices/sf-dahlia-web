@@ -15,6 +15,11 @@
                 "you_or_anyone": "Do you or anyone on this application have a business license related to your art?",
                 "you_or_anyone_desc": "This is an artist live/work building. You or someone else in the household must be an artist and have a San Francisco business license related to your art. You must use part of this home for creating, teaching, or showing art. <br><br>Should your application be chosen, be prepared to provide information about your business and your plan for the space."
             },
+            "habitat": {
+                "yes_i_attended": "Yes, I attended an information session",
+                "you_or_anyone": "Did you attend a Habitat for Humanity information session?",
+                "you_or_anyone_desc": "You must attend a <a href='{{url}}' target='_blank'>Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Should your application be chosen, be prepared to provide proof of attending an information session."
+            },
             "senior": {
                 "you_and_everyone": "Are you and everyone on this application a senior?",
                 "you_and_everyone_desc": "This is a senior building and all applicants must be {{minAge}}+.",
@@ -471,6 +476,7 @@
             "first_name": "Please enter a First Name",
             "form_submission": "You'll need to resolve any errors before moving on.",
             "get_assistance": "Get Assistance",
+            "habitat": "At least one member of your household must attend a Habitat for Humanity information session.",
             "household_income_too_high": "Your household income is too high.",
             "household_income_too_low": "Your household income is too low.",
             "household_member_relationship": "Please select your relationship to the household member",
@@ -578,7 +584,7 @@
             "applicant_homebuyer_education_agency": "Homebuyer education agency",
             "applicant_income_total": "What is your household total pre-tax income?",
             "applicant_lending_institution": "lending institution",
-            "applicant_name_loan_officer": "loan officer",
+            "applicant_name_loan_officer": "Loan officer",
             "applicant_no_email": "I don't have an email address",
             "applicant_no_phone": "I don't have a telephone number",
             "applicant_phone": "Your phone number",
@@ -593,6 +599,7 @@
             "applicant_veteran": "Are you a veteran?",
             "application_all_applicants_are_required": "Only the primary applicant needs to upload the verification letter to be included in the lottery. The verification letter needs to be dated within the past year.",
             "application_cant_find_lender": "Can’t find your loan officer? Your pre-approval letter must be from <a target='_blank' href='{{url}}'>someone on our list</a>.",
+            "application_habitat_credit_score": "My credit score is at least 650",
             "application_has_completed_homebuyer_education": "I have attended 10 hours of Homebuyer Education in the past year.",
             "application_has_loan_pre_approval": "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan Officer.",
             "application_is_first_time_homebuyer": "I have not owned residential property within the past 3 years.",
@@ -918,6 +925,39 @@
             "final_waitlist_size": "Final Waitlist Size",
             "for_household_size": "for <strong>{{size}}</strong> {{people}}",
             "for_income_calculations": "For income calculations, household size includes everyone (all ages) living in the unit.",
+            "habitat": {
+                "application_process": {
+                    "ol1": "You must go to a <a target='_blank' href='{{infoSessionLink}}'>Habitat for Humanity information session</a>.",
+                    "ol10": "You can move into your new home!",
+                    "ol2": "You will submit your application on DAHLIA.",
+                    "ol3": "MOHCD will run the lottery and post results here on DAHLIA.",
+                    "ol4": "In lottery rank order, Habitat for Humanity Greater San Francisco will do a credit and background check.",
+                    "ol5": "MOHCD will check to see if you qualify for the listing. If you qualify, MOHCD will issue you a conditional approval.",
+                    "ol6": "You must complete 500 hours of sweat equity.",
+                    "ol7": "Habitat Greater San Francisco will work with you to approve your first mortgage loan.",
+                    "ol8": "MOHCD will work with you to issue a final approval.",
+                    "ol9": "MOHCD and Habitat Greater San Francisco will deliver closing documents to escrow.",
+                    "p1": "These units are offered by <a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> in partnership with MOHCD",
+                    "title": "Application Process"
+                },
+                "income_range": {
+                    "income_range_plural": "{{number}} people household: {{minIncome}} to {{maxIncome}} per year",
+                    "income_range_singular": "{{number}} person household: {{minIncome}} to {{maxIncome}} per year",
+                    "p1": "To be eligible for a Habitat for Humanity Greater San Franscisco home in this listing, your household income needs to be between 69% and 109% AMI as listed below.",
+                    "p2": "For income calculations, household size includes everyone (all ages) living in the unit.",
+                    "p4": "Your income must be in this range:",
+                    "title": "Income Range"
+                },
+                "payments": {
+                    "p1": "Your monthly housing payment will be 30% of your gross monthly income. The housing payment includes your mortgage, property tax, insurance, HOA fee, and utilities.",
+                    "title": "Payments"
+                },
+                "sweat_equity": {
+                    "p1": "You do not need to pay a down payment. You do need to complete 500 hours of sweat equity. Sweat equity is volunteer hours that you and your friends and family do.",
+                    "p2": "If you are concerned about your ability to complete 500 hours of sweat equity, reach out to Habitat for Humanity Greater San Francisco to ask how they can help.",
+                    "title": "Sweat Equity"
+                }
+            },
             "household_maximum_income": "Household Maximum Income",
             "housing_program": "Housing Program",
             "important_program_rules": "Important Program Rules",
@@ -980,7 +1020,7 @@
             "rental_units": "Rental Units",
             "required_documents": "Required Documents",
             "required_documents_after_applying": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide <a href='{{url}}' target='_blank'>required supporting documents</a> within 5 business days of being contacted.",
-            "reserved_community_building": "{{type}} Building",
+            "reserved_community_building": "{{type}}",
             "reserved_for": "Reserved for {{type}}",
             "reserved_units": "Reserved Units",
             "reserved_units_description": "In order to qualify for these units one of the following must apply to you or someone in your household:",
@@ -1057,6 +1097,14 @@
                 "step_4": "Get pre-approved for a mortgage loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
                 "step_5": "Have enough in savings for closing costs and downpayment",
                 "title": "Before applying"
+            },
+            "before_applying_habitat": {
+                "read_full_list": "Read <a href='{{url}}' target='_blank'>the full list of requirements</a> for more details.",
+                "rules_are_different": "These units have rules that are different from other ownership listings on DAHLIA. Make sure you:",
+                "step_1": "Go to a <a href='{{url}}' target='_blank'>Habitat for Humanity information session</a>",
+                "step_2": "Haven't owned residential property in the past 3 years",
+                "step_3": "Meet the <a href='{{url}}' target='_blank'>income requirements</a>",
+                "step_4": "Have a 650 credit score or higher"
             },
             "callout": {
                 "city_second_loan_button": "City Second Loan Program",

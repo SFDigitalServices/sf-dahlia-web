@@ -23,6 +23,11 @@ ListingIdentityService = (ListingConstantsService) ->
     return false unless listing
     listing.Tenure == 'New rental' || listing.Tenure == 'Re-rental'
 
+  # Determine if listing is special habitat for humanity listing that has hard-coded content
+  Service.isHabitatListing = (listing) ->
+    return false unless listing
+    listing.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.HABITAT
+
   # Business logic for determining if a listing is open
   # `due date` should be a datetime, to include precise hour of deadline
   Service.isOpen = (listing) ->

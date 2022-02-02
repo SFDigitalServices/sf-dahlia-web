@@ -26,6 +26,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasCompletedHomebuyerEducation'
       'isFirstTimeHomebuyer'
       'hasLoanPreapproval'
+      'hasMinimumCreditScore'
       'lendingAgent'
       'homebuyerEducationAgency'
       'referral',
