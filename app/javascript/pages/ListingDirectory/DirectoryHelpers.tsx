@@ -217,7 +217,12 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
 // Get imageCardProps for a given listing
 const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
   imageUrl: listing.imageURL,
-  subtitle: `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
+  subtitle:
+    listing.Building_Street_Address &&
+    listing.Building_City &&
+    listing.Building_State &&
+    listing.Building_Zip_Code &&
+    `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
   title: listing.Name,
   href: `/listings/${listing.listingID}`,
   tagLabel: getReservedCommunityType(listing.Reserved_community_type) ?? undefined,
