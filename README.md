@@ -26,9 +26,9 @@ This repository contains the source code for [housing.sfgov.org](https://housing
 
 Before you install DAHLIA, your system should have the following:
 
+- [Homebrew](http://brew.sh)
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.9 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
-- [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
 - [Node.js](https://nodejs.org/en/) 14.7.0
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
@@ -109,17 +109,7 @@ To run stress testing against the Salesforce instance, refer to the documentatio
 
 ## Releases
 
-Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/1851752601/Webapp+Release+Template) page on Confluence for the full release guide.
-
-### Release script: create_release_branch
-
-Command: `bash create_release_branch.sh` from the webapp repo root.
-
-This script will:
-
-- Create a new branch named `release-<todays-date>`
-- Merge it with the latest main
-- Open a PR in a browser window
+Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2775351453/Frontend+release+process) page on Confluence for the full release guide.
 
 ## Environment variable configurations
 
@@ -133,6 +123,7 @@ This script will:
 We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. This can be overridden with
 
 - HOME_PAGE_REACT='true'
+- DIRECTORY_PAGE_REACT='true'
 
 ### React env variables
 

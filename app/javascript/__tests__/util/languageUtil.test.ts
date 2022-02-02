@@ -4,6 +4,7 @@ import {
   getRoutePrefix,
   LanguagePrefix,
   toLanguagePrefix,
+  getReservedCommunityType,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -147,6 +148,16 @@ describe("languageUtil", () => {
       expect(getCurrentLanguage("sign-in/es")).toBe("en")
       expect(getCurrentLanguage("sign-in/zh")).toBe("en")
       expect(getCurrentLanguage("sign-in/tl")).toBe("en")
+    })
+  })
+
+  describe("getReservedCommunityType", () => {
+    it("returns translation when known reserved community type", () => {
+      expect(getReservedCommunityType("Senior")).toBe("Senior Building")
+    })
+
+    it("returns translation when unknown reserved community type", () => {
+      expect(getReservedCommunityType("New Type")).toBe("New Type")
     })
   })
 })
