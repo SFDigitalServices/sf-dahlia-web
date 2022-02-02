@@ -17,8 +17,8 @@
             },
             "habitat": {
                 "yes_i_attended": "Yes, I attended an information session",
-                "you_or_anyone": "Did you attend a Habitat for Humanity information session?",
-                "you_or_anyone_desc": "You must attend a <a href='{{url}}' target='_blank'>Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Should your application be chosen, be prepared to provide proof of attending an information session."
+                "you_or_anyone": "Did you attend an information session?",
+                "you_or_anyone_desc": "You or a member of your household must <a href='{{url}}' target='_blank'>attend a Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Save your attendance confirmation email. We may ask for it later."
             },
             "senior": {
                 "you_and_everyone": "Are you and everyone on this application a senior?",
