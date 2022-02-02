@@ -5,7 +5,7 @@ import {
   LanguagePrefix,
   toLanguagePrefix,
   getReservedCommunityType,
-  emptyIfNotTranslated,
+  defaultIfNotTranslated,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -161,13 +161,19 @@ describe("languageUtil", () => {
       expect(getReservedCommunityType("New Type")).toBe("New Type")
     })
   })
+
   describe("emptyIfNotTranslated", () => {
+    const salesforceVals = ["2 BR", "500 BR"]
     it("returns a translated string", () => {
-      expect(emptyIfNotTranslated("listings.unitTypes.2 BR")).toBe("2 Bedroom")
+      expect(
+        defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[0]}`, salesforceVals[0])
+      ).toBe("2 Bedroom")
     })
 
     it("returns an empty string when no translation", () => {
-      expect(emptyIfNotTranslated("listings.unitTypes.500 BR")).toBe("")
+      expect(
+        defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[1]}`, salesforceVals[1])
+      ).toBe("500 BR")
     })
   })
 })

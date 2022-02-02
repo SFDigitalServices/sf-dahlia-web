@@ -19,15 +19,17 @@ import {
   getMinMax,
 } from "./ListingDirectory/DirectoryHelpers"
 import BuyHeader from "./ListingDirectory/BuyHeader"
-import { emptyIfNotTranslated } from "../util/languageUtil"
+import { defaultIfNotTranslated } from "../util/languageUtil"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) =>
   listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
       unitType: {
-        cellText:
-          emptyIfNotTranslated(`listings.unitTypes.${summary.unitType}`) || summary.unitType,
+        cellText: defaultIfNotTranslated(
+          `listings.unitTypes.${summary.unitType}`,
+          summary.unitType
+        ),
         cellSubText: getAvailabilityString(listing, summary, false),
         hideMobile: true,
       },
