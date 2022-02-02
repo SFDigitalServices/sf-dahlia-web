@@ -5,6 +5,7 @@ import {
   LanguagePrefix,
   toLanguagePrefix,
   getReservedCommunityType,
+  emptyIfNotTranslated,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -158,6 +159,15 @@ describe("languageUtil", () => {
 
     it("returns translation when unknown reserved community type", () => {
       expect(getReservedCommunityType("New Type")).toBe("New Type")
+    })
+  })
+  describe("emptyIfNotTranslated", () => {
+    it("returns a translated string", () => {
+      expect(emptyIfNotTranslated("listings.unitTypes.2 BR")).toBe("2 Bedroom")
+    })
+
+    it("returns an empty string when no translation", () => {
+      expect(emptyIfNotTranslated("listings.unitTypes.500 BR")).toBe("")
     })
   })
 })

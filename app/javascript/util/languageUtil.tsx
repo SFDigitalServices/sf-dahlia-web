@@ -157,3 +157,10 @@ export function getReservedCommunityType(type: string | undefined): string {
       return type
   }
 }
+
+// If no translation exists for current key, return an empty
+// string
+export function emptyIfNotTranslated(key: string): string {
+  const translatedKey = t(key)
+  return translatedKey === key ? "" : translatedKey
+}
