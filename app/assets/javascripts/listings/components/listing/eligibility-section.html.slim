@@ -8,7 +8,7 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
-    li.custom-counter_item ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+    li.custom-counter_item ng-if="::($ctrl.parent.isSale($ctrl.parent.listing) && !$ctrl.parent.isHabitatListing($ctrl.parent.listing))"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title translate="listings_for_sale.before_applying.title"
@@ -17,7 +17,16 @@ accordion-heading.lead
           ng-include src="'listings/templates/_before-applying-list.html'"
         p.custom-counter_text translate="listings_for_sale.before_applying.read_full_list" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
 
-    li.custom-counter_item ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
+    li.custom-counter_item ng-if="::$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title translate="listings_for_sale.before_applying.title"
+          p.custom-counter_text translate="listings_for_sale.before_applying_habitat.rules_are_different"
+        .content-card
+          ng-include src="'listings/templates/_before-applying-list-habitat.html'"
+        p.custom-counter_text translate="listings_for_sale.before_applying_habitat.read_full_list" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+
+    li.custom-counter_item ng-if="::($ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing) && !$ctrl.parent.isHabitatListing($ctrl.parent.listing))"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title translate="listings.reserved_community_building" translate-value-type="{{$ctrl.parent.listing.Reserved_community_type}}"
@@ -28,7 +37,7 @@ accordion-heading.lead
             | {{'listings.all_units' | translate}}
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
 
-    li.custom-counter_item
+    li.custom-counter_item ng-if="::!$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title

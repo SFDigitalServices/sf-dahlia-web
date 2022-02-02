@@ -104,6 +104,7 @@ ListingConstantsService = () ->
     SENIOR: 'Senior'
     ARTIST: 'Artist Live/Work'
     ACCESSIBLE_ONLY: 'Accessible Units Only'
+    HABITAT: 'Habitat for Humanity'
   }
 
   # TODO: -- REMOVE HARDCODED FEATURES --

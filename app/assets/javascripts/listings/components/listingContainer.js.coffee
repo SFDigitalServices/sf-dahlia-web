@@ -31,6 +31,9 @@ angular.module('dahlia.components')
     @isSale = (listing) ->
       ListingIdentityService.isSale(listing)
 
+    @isHabitatListing = (listing) ->
+      ListingIdentityService.isHabitatListing(listing)
+
     @hasSaleAndRentalFavorited = (listings) ->
       favoritedListings = @filterByFavorites listings
       areSaleListings = (@isSale listing for listing in favoritedListings)

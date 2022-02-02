@@ -276,32 +276,38 @@ ListingDataService = (
   Service.reservedLabel = (listing, type,  modifier) ->
     labelMap =
       "#{ListingConstantsService.RESERVED_TYPES.SENIOR}":
-        building: 'Senior'
+        building: 'Senior Building'
         eligibility: 'Seniors'
         reservedFor: "seniors #{Service.formatSeniorMinimumAge(listing)}"
         reservedForWhoAre: "seniors #{Service.formatSeniorMinimumAge(listing)}"
         unitDescription: "seniors #{Service.formatSeniorMinimumAge(listing)}"
       "#{ListingConstantsService.RESERVED_TYPES.VETERAN}":
-        building: 'Veterans'
+        building: 'Veterans Building'
         eligibility: 'Veterans'
         reservedFor: 'veterans'
         reservedForWhoAre: 'veterans'
         unitDescription: 'veterans of the U.S. Armed Forces'
       "#{ListingConstantsService.RESERVED_TYPES.DISABLED}":
-        building: 'Developmental Disability'
+        building: 'Developmental Disability Building'
         eligibility: 'People with developmental disabilities'
         reservedFor: 'people with developmental disabilities'
         reservedForWhoAre: 'developmentally disabled'
         unitDescription: 'people with developmental disabilities'
       "#{ListingConstantsService.RESERVED_TYPES.ARTIST}":
-        building: 'Artist Loft'
+        building: 'Artist Loft Building'
         eligibility: 'Artist lofts'
         reservedFor: 'artists to live and work in'
         reservedForWhoAre: 'professional artists'
       "#{ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY}":
-        building: 'Accessible Units'
+        building: 'Accessible Units Only'
         eligibility: 'Accessible units'
         reservedFor: 'people who need accessibility features'
+        # This is only for listings with reserved units, not fully reserved communities
+        reservedForWhoAre: ''
+      "#{ListingConstantsService.RESERVED_TYPES.HABITAT}":
+        building: 'Habitat Greater San Francisco'
+        eligibility: ''
+        reservedFor: ''
         # This is only for listings with reserved units, not fully reserved communities
         reservedForWhoAre: ''
     return type unless labelMap[type]
