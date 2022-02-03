@@ -17,8 +17,8 @@
             },
             "habitat": {
                 "yes_i_attended": "Yes, I attended an information session",
-                "you_or_anyone": "Did you attend a Habitat for Humanity information session?",
-                "you_or_anyone_desc": "You must attend a <a href='{{url}}' target='_blank'>Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Should your application be chosen, be prepared to provide proof of attending an information session."
+                "you_or_anyone": "Did you attend an information session?",
+                "you_or_anyone_desc": "You or a member of your household must <a href='{{url}}' target='_blank'>attend a Habitat for Humanity information session</a> to be eligible for this lottery. <br><br>Save your attendance confirmation email. We may ask for it later."
             },
             "senior": {
                 "you_and_everyone": "Are you and everyone on this application a senior?",
@@ -943,7 +943,7 @@
                 "income_range": {
                     "income_range_plural": "{{number}} people household: {{minIncome}} to {{maxIncome}} per year",
                     "income_range_singular": "{{number}} person household: {{minIncome}} to {{maxIncome}} per year",
-                    "p1": "To be eligible for a Habitat for Humanity Greater San Franscisco home in this listing, your household income needs to be between 69% and 109% AMI as listed below.",
+                    "p1": "To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 82% and 109.8% AMI as listed below.",
                     "p2": "For income calculations, household size includes everyone (all ages) living in the unit.",
                     "p4": "Your income must be in this range:",
                     "title": "Income Range"
