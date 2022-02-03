@@ -36,6 +36,7 @@ RemoveUnusedMethodsInControllersCheck:
         "Overrides::PasswordsController#resource_update_method",
         "Overrides::PasswordsController#render_update_success",
         "AuthController#sign_in",
+        "SitemapsController#generate"
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
