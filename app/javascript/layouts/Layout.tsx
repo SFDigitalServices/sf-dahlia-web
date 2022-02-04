@@ -120,7 +120,7 @@ const Layout = (props: LayoutProps) => {
   const { profile, signOut } = useContext(UserContext)
 
   // eslint-disable-next-line dot-notation
-  if (window.document["documentMode"]) {
+  if (window.document["documentMode"] && process.env.DIRECTORY_PAGE_REACT === "true") {
     window.location.href = "/ie-deprecated.html"
     return
   }
