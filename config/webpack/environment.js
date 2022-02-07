@@ -16,6 +16,7 @@ environment.plugins.prepend(
       TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
       SHOW_RESEARCH_BANNER: process.env.SHOW_RESEARCH_BANNER,
       RESEARCH_FORM_URL: JSON.stringify(process.env.RESEARCH_FORM_URL),
+      DIRECTORY_PAGE_REACT: JSON.stringify(process.env.DIRECTORY_PAGE_REACT),
     },
   })
 )

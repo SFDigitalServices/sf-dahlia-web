@@ -16,9 +16,6 @@ class SitemapsController < ApplicationController
     listings = Force::ListingService.listings
     @sitemap = SitemapGenerator::Builder::SitemapFile.new(host: 'https://' + host_name)
     @sitemap.add '/', changefreq: 'weekly', priority: 1.0
-    @sitemap.add '/welcome-chinese', changefreq: 'weekly'
-    @sitemap.add '/welcome-spanish', changefreq: 'weekly'
-    @sitemap.add '/welcome-filipino', changefreq: 'weekly'
     @sitemap.add '/listings/for-rent', changefreq: 'daily', priority: 0.75
     @sitemap.add '/listings/for-sale', changefreq: 'daily', priority: 0.75
     @sitemap.add '/eligibility-estimator/rental', changefreq: 'monthly'
