@@ -380,6 +380,7 @@ class Api::V1::ShortFormController < ApiController
                 candidateScore
                 hasCompletedHomebuyerEducation
                 isFirstTimeHomebuyer
+                hasMinimumCreditScore
                 hasLoanPreapproval
               ],
             },
@@ -459,6 +460,7 @@ class Api::V1::ShortFormController < ApiController
             :formMetadata,
             :hasCompletedHomebuyerEducation,
             :isFirstTimeHomebuyer,
+            :hasMinimumCreditScore,
             :hasLoanPreapproval,
             :lendingAgent,
             :homebuyerEducationAgency,

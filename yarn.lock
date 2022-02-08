@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.2-alpha.12":
-  version "3.0.2-alpha.12"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.12.tgz#2f7a86f2119716b513f4e338be2db64bd3951b1c"
-  integrity sha512-QEK4Nf1DL6PEiOT+K5c2cMciyox+dCpIuUvyEez5nTiXE3Vi4OQFWJyHlKlLS/4FRm/Y6u2aq9R9/6Jjkn3bQg==
+"@bloom-housing/backend-core@^3.0.2-alpha.15":
+  version "3.0.2-alpha.15"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.15.tgz#01059fcbf3052b6a5e4d32b0de20d1b68c2339e4"
+  integrity sha512-iGHOATdE5z8ZfrKPJs6TMtwq6C7mX0ksiV9p4h8sVwZ4YRi302Gb3sWts85fdQys5E65x6vY6C0mekEN+18sXQ==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1342,12 +1342,12 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^4.0.1-alpha.17":
-  version "4.0.1-alpha.17"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.17.tgz#409f9cc47a996f79bcb143e025409b7897ebfeab"
-  integrity sha512-/0vUQq2/VC1gU/1Tie9eNdu5P8wq0bWpLhdfP6aHQ6jHESJZYpG/GK8e0rYj9GZZ8cIprBB00DJ97stBbq1zMw==
+"@bloom-housing/ui-components@^4.0.1-alpha.24":
+  version "4.0.1-alpha.24"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.24.tgz#57dceaa57134c6ea027689cafd21422ab9971a5a"
+  integrity sha512-T7zSQYJLnc5Qs7h3LnIEY27/bj70C0URR03KzjmPXwc79UE+QLNboFSYuJLYN2EZ6qojnR7gpnkIXfhDRZ7rBw==
   dependencies:
-    "@bloom-housing/backend-core" "^3.0.2-alpha.12"
+    "@bloom-housing/backend-core" "^3.0.2-alpha.15"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"

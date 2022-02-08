@@ -22,16 +22,13 @@ React pages will be released behind feature flags, see the **Rewrite feature fla
 
 This repository contains the source code for [housing.sfgov.org](https://housing.sfgov.org), which is the user-facing web application of the DAHLIA platform. It is a [Ruby on Rails](http://rubyonrails.org/) application that serves up a single page [AngularJS](https://angularjs.org/) app. The web application connects to a Salesforce backend (you can find the source code for that [here](https://github.com/Exygy/sf-dahlia-salesforce)), which is where the listings are actually created and administered. The primary purpose of the PostgreSQL database on the web application is to serve as user authentication (using [Devise](https://github.com/plataformatec/devise) + [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth)), with every user in the database getting a `salesforce_contact_id` which corresponds to their record in the Salesforce database.
 
-![Architecture Diagram](https://www.lucidchart.com/publicSegments/view/61f66aec-5d56-442b-8e46-9b2ff8316f97/image.jpeg)
-See [here](https://www.lucidchart.com/documents/view/53cd191b-3ca5-4b23-832d-28a6591500f2) for the original Lucidchart of the above diagram
-
 ## Dependencies
 
 Before you install DAHLIA, your system should have the following:
 
+- [Homebrew](http://brew.sh)
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.9 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
-- [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
 - [Node.js](https://nodejs.org/en/) 14.7.0
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
@@ -109,48 +106,10 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
-## Translations process with [Phrase](https://app.phrase.com/accounts/city-county-of-san-francisco/projects/dahlia-sf-dahlia-web/dashboard)
-
-To get started working with our Phrase translations, you will need to:
-
-1. Install the Phrase CLI with `brew tap phrase/brewed && brew install phrase`
-1. [Create an access token for Phrase](https://app.phrase.com/settings/oauth_access_tokens). Save it for future use in Lastpass and as a local env var.
-1. Save the access token as an env var so you don't have to pass it to the phrase commands: `export PHRASE_ACCESS_TOKEN="YOUR_ACCESS_TOKEN"`
-
-### Push your changes to Phrase every time you update locale-en.json or en.json
-
-After running `grunt translations`, run `grunt phrasePush` to push to Phrase each time you update locale-en.json to keep Phrase up-to-date
-
-Special cases:
-
-- If you changed the meaning or intent of an existing English string, you should delete the existing non-English translations in Phrase and run `grunt phrasePull` so users don't get incorrect info.
-- If you updated an English string but it doesn't change the meaning or intent of the string then you don't need to delete the existing translations. Phrase will automatically mark the translations in other languages as "unverified".
-- If you deleted a key in locale-en.json, run phrase cleanup after you push to delete the now-unused key `phrase uploads cleanup --id=[upload id from phrase push log]`
-- If you re-named a key, we treat that the same as deleting the old key and adding a new one. After you run `grunt phrasePush` and `phrase cleanup`, follow the instructions below to update the translations and pull them down.
-
-### Make your updates in Phrase if you need to update non-English locale files
-
-If you want to update translations in a non-English locale file, you need to make your changes in Phrase, then pull down the updated translations.
-
-You have to do this if you rename a key too. If you renamed a key in locale-en.json, you need to push your change to Phrase, then update the translations for the new key in Phrase and pull those translations down following the instructions below
-
-### How to download new translations from Phrase
-
-If we have new verified translations in Phrase, run `grunt phrasePull` to get the latest translations
 
 ## Releases
 
-Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/1851752601/Webapp+Release+Template) page on Confluence for the full release guide.
-
-### Release script: create_release_branch
-
-Command: `bash create_release_branch.sh` from the webapp repo root.
-
-This script will:
-
-- Create a new branch named `release-<todays-date>`
-- Merge it with the latest main
-- Open a PR in a browser window
+Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2775351453/Frontend+release+process) page on Confluence for the full release guide.
 
 ## Environment variable configurations
 
@@ -164,6 +123,7 @@ This script will:
 We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. This can be overridden with
 
 - HOME_PAGE_REACT='true'
+- DIRECTORY_PAGE_REACT='true'
 
 ### React env variables
 
