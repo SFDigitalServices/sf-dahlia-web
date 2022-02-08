@@ -50,7 +50,7 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if (window.document.documentMode && window.env.directoryPageReact)
+      if (window.document.documentMode && window.env.directoryPageReact is 'true')
         $window.location.href = '/ie-deprecated.html'
         return
 
