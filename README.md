@@ -106,7 +106,6 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
-
 ## Releases
 
 Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2775351453/Frontend+release+process) page on Confluence for the full release guide.
@@ -124,6 +123,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
+- LISTING_DETAIL_PAGE_REACT='true'
 
 ### React env variables
 
