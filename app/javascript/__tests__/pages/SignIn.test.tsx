@@ -1,6 +1,6 @@
 import React from "react"
 
-import SignIn from "../../pages/SignIn"
+import SignIn from "../../pages/sign-in"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<SignIn />", () => {
