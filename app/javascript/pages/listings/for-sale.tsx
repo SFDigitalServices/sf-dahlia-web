@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
 
-import { getSaleListings, EligibilityFilters } from "../api/listingsApiService"
-import Layout from "../layouts/Layout"
-import withAppSetup from "../layouts/withAppSetup"
-import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import Link from "../navigation/Link"
+import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
+import Layout from "../../layouts/Layout"
+import withAppSetup from "../../layouts/withAppSetup"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import Link from "../../navigation/Link"
 
-import { GenericDirectory } from "./ListingDirectory/GenericDirectory"
+import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {
   getRangeString,
   showWaitlist,
@@ -17,9 +17,9 @@ import {
   noMatchesTextBanner,
   eligibilityHeader,
   getMinMax,
-} from "./ListingDirectory/DirectoryHelpers"
-import BuyHeader from "./ListingDirectory/BuyHeader"
-import { defaultIfNotTranslated } from "../util/languageUtil"
+} from "../../modules/listings/DirectoryHelpers"
+import BuyHeader from "../../modules/listings/BuyHeader"
+import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) =>
   listing.unitSummaries.general

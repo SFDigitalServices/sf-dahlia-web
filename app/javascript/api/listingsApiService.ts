@@ -56,9 +56,6 @@ export const getListings = async (
         ({ data }) => data.listings
       )
 
-export const getListing = async (listingId?: string): Promise<ListingsResponse> =>
-  get<ListingsResponse>(`/api/v1/listings/#${listingId}.json`).then(({ data }) => data)
-
 export const getRentalListings = async (
   filters?: EligibilityFilters
 ): Promise<RailsRentalListing[]> => getListings("rental", filters)

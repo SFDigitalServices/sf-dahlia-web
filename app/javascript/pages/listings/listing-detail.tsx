@@ -1,11 +1,7 @@
-import React, { useContext, useEffect } from "react"
+import React from "react"
 
 import {
-  t,
   SiteAlert,
-  Hero,
-  ActionBlock,
-  NavigationContext,
   ListingDetails,
   ListingDetailItem,
   ImageCard,
@@ -13,22 +9,13 @@ import {
   GroupedTable,
   ApplicationStatus,
   DownloadLotteryResults,
-  OpenHouseEvent,
   Waitlist,
   GetApplication,
   SubmitApplication,
-  PublicLotteryEvent,
-  LotteryResultsEvent,
-  WhatToExpect,
-  LeasingAgent,
 } from "@bloom-housing/ui-components"
 
-import Layout from "../layouts/Layout"
-import withAppSetup from "../layouts/withAppSetup"
-import { ConfigContext } from "../lib/ConfigContext"
-import Link from "../navigation/Link"
-import { getRentalDirectoryPath, getSaleDirectoryPath } from "../util/routeUtil"
-import { getListing } from "../api/listingsApiService"
+import Layout from "../../layouts/Layout"
+import withAppSetup from "../../layouts/withAppSetup"
 
 interface ListingDetailProps {
   assetPaths: unknown
@@ -36,8 +23,8 @@ interface ListingDetailProps {
 
 const ListingDetail = (_props: ListingDetailProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
-  const { router } = useContext(NavigationContext)
+  // const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
+  // const { router } = useContext(NavigationContext)
 
   const getImage = () => {
     return (
@@ -47,54 +34,12 @@ const ListingDetail = (_props: ListingDetailProps) => {
           <p className="font-alt-sans uppercase tracking-widest text-sm font-semibold">Address</p>
           <p className="text-gray-700 text-base">Developer</p>
           <p className="text-xs">
-            <a href={""} target="_blank" aria-label="Opens in new window">
+            <a href={"/"} target="_blank" aria-label="Opens in new window">
               View on Map
             </a>
           </p>
         </div>
       </header>
-    )
-  }
-
-  const getBodyAndSidebar = () => {
-    return (
-      <ListingDetails>
-        <ListingDetailItem
-          imageAlt={""}
-          imageSrc={""}
-          title={"Eligibility"}
-          subtitle={"Income, occupancy, preferences, subsides"}
-          desktopClass="bg-primary-lighter"
-        >
-          Eligibility content
-        </ListingDetailItem>
-        <ListingDetailItem
-          imageAlt={""}
-          imageSrc={""}
-          title={"Features"}
-          subtitle={"Amenities, unit details and additional fees"}
-        >
-          Features content
-        </ListingDetailItem>
-        <ListingDetailItem
-          imageAlt={""}
-          imageSrc={""}
-          title={"Neighborhood"}
-          subtitle={"Location and transportation"}
-          desktopClass="bg-primary-lighter"
-        >
-          Neighborhood content
-        </ListingDetailItem>
-        <ListingDetailItem
-          imageAlt={""}
-          imageSrc={""}
-          title={"Additional information"}
-          subtitle={"Required documents and selection criteria"}
-        >
-          Additional information content
-        </ListingDetailItem>
-        {getSidebar()}
-      </ListingDetails>
     )
   }
 
@@ -175,6 +120,48 @@ const ListingDetail = (_props: ListingDetailProps) => {
           {/* <LeasingAgent listing={null} /> */}
         </aside>
       </ListingDetailItem>
+    )
+  }
+
+  const getBodyAndSidebar = () => {
+    return (
+      <ListingDetails>
+        <ListingDetailItem
+          imageAlt={""}
+          imageSrc={""}
+          title={"Eligibility"}
+          subtitle={"Income, occupancy, preferences, subsides"}
+          desktopClass="bg-primary-lighter"
+        >
+          Eligibility content
+        </ListingDetailItem>
+        <ListingDetailItem
+          imageAlt={""}
+          imageSrc={""}
+          title={"Features"}
+          subtitle={"Amenities, unit details and additional fees"}
+        >
+          Features content
+        </ListingDetailItem>
+        <ListingDetailItem
+          imageAlt={""}
+          imageSrc={""}
+          title={"Neighborhood"}
+          subtitle={"Location and transportation"}
+          desktopClass="bg-primary-lighter"
+        >
+          Neighborhood content
+        </ListingDetailItem>
+        <ListingDetailItem
+          imageAlt={""}
+          imageSrc={""}
+          title={"Additional information"}
+          subtitle={"Required documents and selection criteria"}
+        >
+          Additional information content
+        </ListingDetailItem>
+        {getSidebar()}
+      </ListingDetails>
     )
   }
 

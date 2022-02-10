@@ -9,18 +9,18 @@ import {
   PageHeader,
 } from "@bloom-housing/ui-components"
 
-import { getRentalListings, EligibilityFilters } from "../api/listingsApiService"
-import { GenericDirectory } from "./ListingDirectory/GenericDirectory"
-import Layout from "../layouts/Layout"
-import withAppSetup from "../layouts/withAppSetup"
-import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
-import Link from "../navigation/Link"
+import { getRentalListings, EligibilityFilters } from "../../api/listingsApiService"
+import { GenericDirectory } from "../../modules/listings/GenericDirectory"
+import Layout from "../../layouts/Layout"
+import withAppSetup from "../../layouts/withAppSetup"
+import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import Link from "../../navigation/Link"
 import {
   getAdditionalResourcesPath,
   getEligibilityEstimatorLink,
   getHelpCalculatingIncomeLink,
-} from "../util/routeUtil"
-import { defaultIfNotTranslated } from "../util/languageUtil"
+} from "../../util/routeUtil"
+import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 import {
   getRangeString,
@@ -31,7 +31,7 @@ import {
   matchedTextBanner,
   noMatchesTextBanner,
   eligibilityHeader,
-} from "./ListingDirectory/DirectoryHelpers"
+} from "../../modules/listings/DirectoryHelpers"
 
 const getForRentSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general

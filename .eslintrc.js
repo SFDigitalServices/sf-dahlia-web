@@ -152,16 +152,7 @@ module.exports = {
     "unicorn/no-null": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/no-array-for-each": "off",
-    "unicorn/filename-case": [
-      "error",
-      {
-        cases: {
-          camelCase: true,
-          pascalCase: true,
-        },
-        ignore: ["^react_application.tsx"],
-      },
-    ],
+    "unicorn/filename-case": "off",
     "unicorn/prevent-abbreviations": "off",
     "import/order": "off",
     "@typescript-eslint/no-empty-function": "off",

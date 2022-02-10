@@ -26,7 +26,7 @@ import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSu
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
 
-import TextBanner from "./TextBanner"
+import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
