@@ -5,8 +5,8 @@
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
 		/*
-			Syntax highlighting that will work with jsx, other polyfills we use
-		*/
+		 * Syntax highlighting that will work with jsx, other polyfills we use
+		 */
 		"mgmcdermott.vscode-language-babel",
 		/*
 		 * Linting support.

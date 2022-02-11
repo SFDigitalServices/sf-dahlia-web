@@ -1,0 +1,42 @@
+h4.h-caps-lined
+  | {{'listings.habitat.payments.title' | translate}}
+p.padding-bottom
+  | {{'listings.habitat.payments.p1' | translate}}
+h4.h-caps-lined
+  | {{'listings.habitat.sweat_equity.title' | translate}}
+p
+  | {{'listings.habitat.sweat_equity.p1' | translate}}
+p.padding-bottom
+  | {{'listings.habitat.sweat_equity.p2' | translate}}
+
+h4.h-caps-lined
+  | {{'listings.habitat.application_process.title' | translate}}
+p translate="listings.habitat.application_process.p1" translate-value-habitat-link="https://habitatgsf.org/amber-drive-info/"
+ol.padding-bottom
+  li translate="listings.habitat.application_process.ol1" translate-value-info-session-link="https://habitatgsf.org/amber-drive-info/"
+  li translate="listings.habitat.application_process.ol2"
+  li translate="listings.habitat.application_process.ol3"
+  li translate="listings.habitat.application_process.ol4"
+  li translate="listings.habitat.application_process.ol5"
+  li translate="listings.habitat.application_process.ol6"
+  li translate="listings.habitat.application_process.ol7"
+  li translate="listings.habitat.application_process.ol8"
+  li translate="listings.habitat.application_process.ol9"
+  li translate="listings.habitat.application_process.ol10"
+
+h4.h-caps-lined
+  | {{'listings.habitat.income_range.title' | translate}}
+p
+  | {{'listings.habitat.income_range.p1' | translate}}
+p
+  | {{'listings.habitat.income_range.p2' | translate}}
+p.margin-bottom-none translate="listings.income_exceptions.intro" translate-value-url="https://sfmohcd.org/special-calculations-household-income"
+ul.bullet-list.margin-bottom
+  li.margin-bottom-none
+    | {{'listings.income_exceptions.students' | translate }}
+  li.margin-bottom-none translate="listings.income_exceptions.nontaxable" translate-value-tooltip="{{'listings.income_exceptions.nontaxable_tooltip' | translate }}" translate-compile="true"
+p.margin-bottom-none
+  | {{'listings.habitat.income_range.p4' | translate}}
+ul.inline-list.padding-bottom
+  li ng-repeat="range in $ctrl.translatedIncomeRanges()"
+    | {{range}}

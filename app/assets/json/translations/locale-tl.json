@@ -962,7 +962,7 @@
             "rental_units": "Mga Paupahang Unit",
             "required_documents": "Mga Kinakailangang Dokumento",
             "required_documents_after_applying": "Sakaling mapili ang inyong aplikasyon sa lottery o palabunutan, maging handa sa pagsagot ng mas detalyadong aplikasyon at sa pagbibigay ng <a href='{{url}}' target='_blank'>itinatakdang pansuportang mga dokumento </a> sa loob ng 5 araw ng trabaho matapos makontak kayo. ",
-            "reserved_community_building": "{{type}} na Building o Gusali",
+            "reserved_community_building": "{{type}}",
             "reserved_for": "Nakareserba para sa {{type}}",
             "reserved_units": "Mga Nakareserbang Unit ",
             "reserved_units_description": "Upang maging kuwalipikado para sa mga unit na ito, kailangang too ang isa sa mga sumusunod sa sitwasyon ninyo o ng sinuman sa inyong kabahayan. ",

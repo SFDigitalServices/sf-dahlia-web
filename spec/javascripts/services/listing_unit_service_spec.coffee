@@ -30,6 +30,7 @@ do ->
       )
 
     requestURL = undefined
+    expectedHabitatRanges = undefined
 
 
     beforeEach module('dahlia.services', ($provide) ->
@@ -146,6 +147,54 @@ do ->
           )
         priceGroups = grouped[0].incomeLevels[0].priceGroups
         expect(priceGroups[0]['Price_Without_Parking']).toBeLessThan(priceGroups[1]['Price_Without_Parking'])
+
+    describe 'getHabitatIncomeRanges', ->
+      beforeEach ->
+        ListingUnitService.AMICharts = ListingUnitService._consolidatedAMICharts(fakeAmiAmiTiers.ami)
+        expectedHabitatRanges = [
+          { 'occupancy': 1, 'maxIncome': 56050, 'minIncome': 45600 },
+          { 'occupancy': 2, 'maxIncome': 64050, 'minIncome': 52100 },
+          { 'occupancy': 3, 'maxIncome': 72050, 'minIncome': 58600 },
+          { 'occupancy': 4, 'maxIncome': 80050, 'minIncome': 65100 },
+          { 'occupancy': 5, 'maxIncome': 86450, 'minIncome': 70300 },
+          { 'occupancy': 6, 'maxIncome': 92850, 'minIncome': 75550 },
+          { 'occupancy': 7, 'maxIncome': 99250, 'minIncome': 80750 },
+          { 'occupancy': 8, 'maxIncome': 105650, 'minIncome': 85950 },
+          { 'occupancy': 9, 'maxIncome': 112050, 'minIncome': 91150 }
+        ]
+
+      afterEach ->
+        ListingUnitService.resetData()
+
+      it 'gets expected range for one unit', ->
+        fakeHabitatUnits = [
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 1,
+            'Max_Occupancy': 2
+          }
+        ]
+        result = ListingUnitService.getHabitatIncomeRanges(fakeHabitatUnits)
+        expect(result).toEqual(expectedHabitatRanges)
+
+      it 'merges multiple unit types as expected', ->
+        fakeHabitatMultipleUnits = [
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 1,
+            'Max_Occupancy': 2
+          },
+          {
+            'Max_AMI_for_Qualifying_Unit': 65,
+            'Min_AMI_for_Qualifying_Unit': 55
+            'Min_Occupancy': 2,
+            'Max_Occupancy': 3
+          }
+        ]
+        result = ListingUnitService.getHabitatIncomeRanges(fakeHabitatMultipleUnits)
+        expect(result).toEqual(expectedHabitatRanges)
 
     describe 'Service._sumSimilarUnits', ->
       describe 'for rental units', ->
@@ -284,6 +333,39 @@ do ->
         incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary)
         occupancies = incomeLimits.map((l) -> l.occupancy)
         expect(occupancies).toEqual([1, 2, 3])
+
+      it 'allows for an override of maxOccupancy', ->
+        summary = {
+          'BMR_Rental_Minimum_Monthly_Income_Needed': 0,
+          'Max_AMI_for_Qualifying_Unit': 55,
+          'Min_Occupancy': 1,
+        }
+        incomeLimits = ListingUnitService._getIncomeRangesByOccupancy(summary, false, 9)
+        occupancies = incomeLimits.map((l) -> l.occupancy)
+        expect(occupancies).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+      it 'returns annual incomes if parameter is passed', ->
+        summary = {
+          'Max_AMI_for_Qualifying_Unit': 65,
+          'Min_AMI_for_Qualifying_Unit': 55
+          'Min_Occupancy': 1,
+          'Max_Occupancy': 2
+        }
+        result = ListingUnitService._getIncomeRangesByOccupancy(summary, true)
+
+        expected = [
+          {
+              'occupancy': 1,
+              'maxIncome': 56050,
+              'minIncome': 45600
+          },
+          {
+              'occupancy': 2,
+              'maxIncome': 64050,
+              'minIncome': 52100
+          }
+        ]
+        expect(result).toEqual(expected)
 
     describe 'Service.getListingUnits', ->
       describe 'for rental listings', ->

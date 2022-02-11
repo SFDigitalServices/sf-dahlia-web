@@ -965,7 +965,7 @@
             "rental_units": "Unidades en alquiler",
             "required_documents": "Documentación Requerida",
             "required_documents_after_applying": "Si su solicitud sale elegida en el sorteo, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la <a href='{{url}}' target='_blank'>documentación de respaldo requerida</a> en un plazo de 5 días hábiles posteriores a la fecha de notificación.",
-            "reserved_community_building": "Edificio {{type}}",
+            "reserved_community_building": "{{type}}",
             "reserved_for": "Reservada para {{type}}",
             "reserved_units": "Unidades reservadas",
             "reserved_units_description": "Para ser elegible para estas unidades, usted o algún miembro de su familia debe cumplir con alguno de los siguientes requisitos:",
