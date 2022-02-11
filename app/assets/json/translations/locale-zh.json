@@ -7,9 +7,18 @@
             "title": "立即開始您的申請作業"
         },
         "a2_community_screening": {
+            "accessible_only": {
+                "you_or_anyone": "您本人或家中的任何一名成員是否需要無障礙單位的住房？",
+                "you_or_anyone_desc": "所有單位皆保留給需要無障礙單位的人士。無障礙單位備有多項功能，可嘉惠行動不便、視力和聽覺功能障礙人士。<br><br>如果您的申請被選中，您必須提供相關證明資料。"
+            },
             "artist": {
                 "you_or_anyone": "您本人或本申請中包含的任何人是否持有與您的藝術有關的商業牌照？",
                 "you_or_anyone_desc": "本大樓專供藝術家居住、創作使用。您或您的家庭成員必須是藝術家，且持有與您的藝術相關的三藩市商業牌照。您必須把本居所的部分空間用於藝術創作、教學或展示。<br><br>如果您的申請獲選，請準備好提供您的商業信息以及空間使用計劃。"
+            },
+            "habitat": {
+                "yes_i_attended": "是，我出席過說明會",
+                "you_or_anyone": "您是否出席過說明會？",
+                "you_or_anyone_desc": "您或家中一名住戶成員必須<a href='{{url}}' target='_blank'>出席 Habitat for Humanity 的說明會</a>，以取得抽籤資格。<br><br>請保存您的出席確認電子郵件。我們可能在未來會請您出示該郵件。"
             },
             "senior": {
                 "you_and_everyone": "您本人及本申請中的所有人皆是年長者嗎？",
@@ -69,7 +78,7 @@
             "you_already_have_an_account": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
         },
         "b2_contact": {
-            "applicant_address_desc": "我們需要您目前居住地點的地址。若您無家可歸，請輸入收容所地址或靠近您所在地點的地址。",
+            "applicant_address_desc": "您需要提供目前的居住地址。如果您目前無家可歸，請提供庇護所的地址，或是鄰近現居地的地址。請勿提供郵政信箱。",
             "claim_work_in_sf": "為行使此為抽籤優先權利，您將需要上傳佐證文件，在稍後的畫面中會有說明。",
             "email_editable_via": "您的電子郵件地址可以編輯，請透過您的",
             "only_use_your_email": "您的電子郵件地址僅用於申請作業聯絡用途。",
@@ -182,6 +191,7 @@
             "continue_with_application": "繼續申請作業",
             "create_an_account": "建立帳戶",
             "email_confirm_instructions": "請重新輸入電子郵件地址以便確認。",
+            "must_be_over_18": "您必須年滿 18 歲，才有資格申請 DAHLIA 上的可負擔房屋。",
             "p1": "您將會使用此資訊登入帳戶，因此請務必記住此資訊。",
             "password_instructions": "必須至少有 8 個字元，而且其中包括至少 1 個英文字母和 1 個數字。",
             "password_short_instructions": "必須有 8 個字元"
@@ -395,6 +405,10 @@
                 "work_in_education": "三藩市公立高等教育機構",
                 "work_in_healthcare": "三藩市公共衛生機構"
             },
+            "tida": {
+                "certificate_caption": "您需要提供 TIR 憑證編號，以取得此項優先權。如果您不知道自己的 TIR 憑證編號，請透過 <a href='mailto:TIAdvisor@arws.com'>TIAdvisor@arws.com</a> 或 <a href='tel:415-650-6078'>415-650-6078</a> 聯絡您的 TI 諮詢人員。",
+                "certificate_label": "您的 TIR 憑證編號為何？"
+            },
             "title": "此房源有其他特殊的抽籤優先順序"
         },
         "e8_general_lottery_notice": {
@@ -434,8 +448,10 @@
             }
         },
         "error": {
+            "accessible_only_anyone": "您的家中至少要有一名成員有無障礙單位方面的需求。",
             "address": "請輸入地址",
             "address_validation_not_found": "找不到此地址。請檢查輸入的城市、街道和住家號碼是否正確。不接受郵政信箱。",
+            "address_validation_po_box": "您需要提供目前的居住地址。請勿提供郵政信箱。",
             "alert": {
                 "bad_request": "糟糕！似乎發生了問題。請重試。 \n\n如果您仍然遇到問題，請聯絡 sfhousing.info@sfgov.org。",
                 "timeout_please_try_again": "糟糕！似乎發生了問題。請重試。"
@@ -460,6 +476,7 @@
             "first_name": "請輸入名字",
             "form_submission": "您需要先行排除所有錯誤才能繼續作業。",
             "get_assistance": "尋求協助",
+            "habitat": "您家中至少要有一名成員出席 Habitat for Humanity 說明會。",
             "household_income_too_high": "您的家庭收入過高。",
             "household_income_too_low": "您的家庭收入過低。",
             "household_member_relationship": "請選取您與該家庭成員的關係",
@@ -560,6 +577,7 @@
             "alternate_contact_agency": "您的個案經理或住房顧問在哪裡工作？",
             "alternate_contact_name": "備用聯絡人姓名",
             "applicant_additional_phone": "我有其他電話號碼",
+            "applicant_disability": "您是否為身心障礙人士？",
             "applicant_email": "您的電子郵件地址",
             "applicant_gender": "您的性別是？",
             "applicant_gender_subtitle": "選擇一個最能描述您目前性別認同的選項。",
@@ -578,8 +596,10 @@
             "applicant_select_a_loan_officer": "請選擇一位貸款經紀人",
             "applicant_separate_address": "將我的郵件寄送到另一個地址",
             "applicant_sexual_orientation": "您如何描述自己的性傾向或性別認同？",
+            "applicant_veteran": "您是否為退伍軍人？",
             "application_all_applicants_are_required": "只有主要申請人需要上傳核查書，以參與抽籤。該核查書註明的日期需要在過去一年內。",
             "application_cant_find_lender": "找不到您的貸款經紀人？您的預先批准信寄件人必須是<a target='_blank' href='{{url}}'>我們核准名單中的某經紀人</a>。",
+            "application_habitat_credit_score": "我的信用分數至少有 650 分",
             "application_has_completed_homebuyer_education": "本人在過去一年內已經參加了 10 小時的購屋教育。",
             "application_has_loan_pre_approval": "本人已經獲得市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development, MOHCD) 核准的貸款經紀人的房貸預先批准。",
             "application_is_first_time_homebuyer": "本人在過去 3 年內並未擁有住宅物業。",
@@ -644,6 +664,7 @@
             "household_member_save": "儲存家庭成員",
             "household_member_update": "更新家庭成員",
             "household_members": "家庭成員",
+            "household_veteran": "這份申請表中還有其他人是退伍軍人嗎？",
             "how_did_you_hear_about_this": "您如何得知此出租項目？",
             "how_did_you_hear_about_this_subtitle": "請告知我們您是如何得知這一住房機會的。",
             "how_you_heard_about_this_listing": "您得知此房源的途徑",
@@ -904,6 +925,39 @@
             "final_waitlist_size": "最終等候名單中的人數",
             "for_household_size": "人數：<strong>{{size}}</strong>{{people}}",
             "for_income_calculations": "為計算收入，家庭人數須包含居住在該單位的所有成員 (無論年齡)。",
+            "habitat": {
+                "application_process": {
+                    "ol1": "您必須參加 <a target='_blank' href='{{infoSessionLink}}'>Habitat for Humanity 說明會</a>。",
+                    "ol10": "您可以搬入新家！",
+                    "ol2": "您將於 DAHLIA 上提交申請表。",
+                    "ol3": "市長住房及社區發展辦公室 (MOHCD) 將進行抽籤，並於 DAHLIA 上發表抽籤結果。",
+                    "ol4": "Habitat for Humanity Greater San Francisco 將依照抽籤排名順序進行信用和背景調查。",
+                    "ol5": "MOHCD 將確認您是否符合房源資格。如果符合資格，MOHCD 將核發附條件批準給您。",
+                    "ol6": "您必須完成 500 小時的義工時間。",
+                    "ol7": "Habitat Greater San Francisco 將與您合作，以核准您的首次抵押貸款。",
+                    "ol8": "MOHCD 將與您合作，以核發最終批准。",
+                    "ol9": "MOHCD 和 Habitat Greater San Francisco 會將過戶文件交給第三方托管。",
+                    "p1": "這些單位是由 <a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> 與 MOHCD 共同提供",
+                    "title": "申請流程"
+                },
+                "income_range": {
+                    "income_range_plural": "{{number}} 人一戶：每年 {{minIncome}} 至 {{maxIncome}}",
+                    "income_range_singular": "{{number}} 人一戶：每年 {{minIncome}} 至 {{maxIncome}}",
+                    "p1": "若要符合本房源的 Habitat for Humanity Greater San Francisco 住戶申請資格，您的家庭收入必須介於下方所列的 82% 至 109.8% AMI 之間。",
+                    "p2": "計算收入時，家庭人數包含居住於該單位中的每個人 (不分年齡)。",
+                    "p4": "您的收入必須在此範圍內：",
+                    "title": "收入範圍"
+                },
+                "payments": {
+                    "p1": "您每月應支付 30% 的月總收入做為住房費用。住房費用包含您的抵押貸款、房地產稅、保險、HOA 費用和水電瓦斯費。",
+                    "title": "費用"
+                },
+                "sweat_equity": {
+                    "p1": "您不需要繳交首期付款，但需要完成 500 小時的義工時間。義工時間是指您和您的朋友及家人所付出的志願服務時數。",
+                    "p2": "如果對您能否完成 500 小時的義工時間有任何顧慮，請聯繫 Habitat for Humanity Greater San Francisco，以詢問相關協助方式。",
+                    "title": "義工時間"
+                }
+            },
             "household_maximum_income": "家庭最高收入",
             "housing_program": "住房計劃",
             "important_program_rules": "重要計畫規定",
@@ -950,7 +1004,7 @@
             "priority_units_description": "如果下列情況適用於您或是家中的某成員，本棟樓提供保留單位：",
             "process": {
                 "header": "流程",
-                "information_sessions": "情況介紹會",
+                "information_sessions": "說明會",
                 "lottery_date_time_and_venue_to_be_scheduled": "抽籤日期、時間和地點待定。",
                 "public_lottery": "公眾抽籤",
                 "see_this_unit_on_mls": "在MLS上查看本單位",
@@ -1044,6 +1098,14 @@
                 "step_5": "有足夠的積蓄可支付成交費以及首期付款",
                 "title": "申請之前"
             },
+            "before_applying_habitat": {
+                "read_full_list": "請參閱<a href='{{url}}' target='_blank'>完整的要求清單</a>以了解詳情。",
+                "rules_are_different": "這些單位適用的規則不同於 DAHLIA 上的其他所有權房源。請確認您符合以下條件：",
+                "step_1": "參加 <a href='{{url}}' target='_blank'>Habitat for Humanity 說明會</a>",
+                "step_2": "過去 3 年內未擁有任何住宅房產",
+                "step_3": "符合<a href='{{url}}' target='_blank'>收入要求</a>",
+                "step_4": "信用分數達 650 分以上"
+            },
             "callout": {
                 "city_second_loan_button": "市府第二貸款計劃（City Second Loan Program, CSLP）",
                 "first_come_first_served_button": "依先到先得原則",
@@ -1112,6 +1174,7 @@
             "account_settings": "帳戶設定",
             "buy": "購買",
             "get_assistance": "尋求協助",
+            "get_feedback": "我們歡迎<a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>您的回饋意見</a>。",
             "my_account": "我的帳戶",
             "my_applications": "我的申請",
             "my_dashboard": "我的儀表板",
@@ -1150,11 +1213,11 @@
                 "title": "Alice Griffith 住宅區居民優先權利"
             },
             "rtr_sunnydale": {
-                "address": "Sunnydale 住址",
-                "address_desc": "您目前或從前在Sunnydale公共住宅建築的住址。",
-                "desc": "適用於家庭中至少有一位是曾經或現在居住在Sunnydale公共住宅的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
-                "proof_desc": "您需要準備以下其中一項的文件來證明您在Sunnydale住宅建築的地址。",
-                "title": "回歸權 - Sunnydale 優先權"
+                "address": "Sunnydale 地址",
+                "address_desc": "您目前或先前的 Sunnydale 公共住房發展計畫地址",
+                "desc": "針對至少有一名成員先前或目前是 Sunnydale 公共住房發展計畫居民的住戶，請注意，這些單位並不提供補助，如果收入發生變化，租金將保持不變。",
+                "proof_desc": "您需要提供下列任一文件，當中應顯示您在 Sunnydale 住房發展計畫的地址。",
+                "title": "重回原先居住地之權利 - Sunnydale 優先權"
             }
         },
         "privacy_policy": {
@@ -1274,6 +1337,7 @@
             "or": "或",
             "per_month": "每月",
             "per_year": "每年",
+            "prefer_not_to_answer": "不想要回答此問題",
             "save_and_come_back_later": "儲存，並稍後返回",
             "save_and_finish_later": "儲存並稍後完成",
             "session_expired": "您使用本頁面的時限已過。",
