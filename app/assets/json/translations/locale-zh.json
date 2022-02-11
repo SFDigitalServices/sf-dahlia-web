@@ -1213,11 +1213,11 @@
                 "title": "Alice Griffith 住宅區居民優先權利"
             },
             "rtr_sunnydale": {
-                "address": "Sunnydale 地址",
-                "address_desc": "您目前或先前的 Sunnydale 公共住房發展計畫地址",
-                "desc": "針對至少有一名成員先前或目前是 Sunnydale 公共住房發展計畫居民的住戶，請注意，這些單位並不提供補助，如果收入發生變化，租金將保持不變。",
-                "proof_desc": "您需要提供下列任一文件，當中應顯示您在 Sunnydale 住房發展計畫的地址。",
-                "title": "重回原先居住地之權利 - Sunnydale 優先權"
+                "address": "Sunnydale 住址",
+                "address_desc": "您目前或從前在Sunnydale公共住宅建築的住址。",
+                "desc": "適用於家庭中至少有一位是曾經或現在居住在Sunnydale公共住宅的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
+                "proof_desc": "您需要準備以下其中一項的文件來證明您在Sunnydale住宅建築的地址。",
+                "title": "回歸權 - Sunnydale 優先權"
             }
         },
         "privacy_policy": {
