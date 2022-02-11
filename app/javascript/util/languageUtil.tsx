@@ -137,3 +137,31 @@ export function renderInlineWithInnerHTML(translatedString: string) {
     />
   )
 }
+
+// Get the translated community type
+export function getReservedCommunityType(type: string | undefined): string {
+  switch (type) {
+    case "Senior":
+      return t("listings.reservedCommunityType.senior")
+    case "Artist Live/Work":
+      return t("listings.reservedCommunityType.artist")
+    case "Habitat for Humanity":
+      return t("listings.reservedCommunityType.habitat")
+    case "Accessible Units Only":
+      return t("listings.reservedCommunityType.accessible")
+    case "Veteran":
+      return t("listings.reservedCommunityType.veteran")
+    case "Developmental disabilities":
+      return t("listings.reservedCommunityType.disability")
+    default:
+      return type
+  }
+}
+
+/**
+ * If no translation exists for current key, return default salesforce value
+ */
+export function defaultIfNotTranslated(key: string, value: string): string {
+  const translatedKey = t(key)
+  return translatedKey === key ? value : translatedKey
+}

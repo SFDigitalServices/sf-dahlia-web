@@ -4,6 +4,8 @@ import {
   getRoutePrefix,
   LanguagePrefix,
   toLanguagePrefix,
+  getReservedCommunityType,
+  defaultIfNotTranslated,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -147,6 +149,31 @@ describe("languageUtil", () => {
       expect(getCurrentLanguage("sign-in/es")).toBe("en")
       expect(getCurrentLanguage("sign-in/zh")).toBe("en")
       expect(getCurrentLanguage("sign-in/tl")).toBe("en")
+    })
+  })
+
+  describe("getReservedCommunityType", () => {
+    it("returns translation when known reserved community type", () => {
+      expect(getReservedCommunityType("Senior")).toBe("Senior Building")
+    })
+
+    it("returns translation when unknown reserved community type", () => {
+      expect(getReservedCommunityType("New Type")).toBe("New Type")
+    })
+  })
+
+  describe("emptyIfNotTranslated", () => {
+    const salesforceVals = ["2 BR", "500 BR"]
+    it("returns a translated string", () => {
+      expect(
+        defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[0]}`, salesforceVals[0])
+      ).toBe("2 Bedroom")
+    })
+
+    it("returns an empty string when no translation", () => {
+      expect(
+        defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[1]}`, salesforceVals[1])
+      ).toBe("500 BR")
     })
   })
 })

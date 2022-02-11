@@ -966,7 +966,7 @@
             "rental_units": "租賃單位",
             "required_documents": "所需文件",
             "required_documents_after_applying": "如果您的申請從抽籤中獲選，請準備在收到通知的 5 個工作天內填寫更詳細的申請資料並提供<a href='{{url}}' target='_blank'>必要的證明文件</a>。",
-            "reserved_community_building": "{{type}} 建築",
+            "reserved_community_building": "{{type}}",
             "reserved_for": "已為 {{type}} 保留",
             "reserved_units": "保留的單位",
             "reserved_units_description": "為了符合入住這些單位的資格，您或家中的某成員必須符合以下其中一項條件：",

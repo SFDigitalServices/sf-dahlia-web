@@ -8,6 +8,7 @@ angular.module('dahlia.components')
     householdMembers: '<'
     isRental: '<'
     isSale: '<'
+    isHabitatListing: '<'
     listing: '<'
     preferences: '<'
   controller: [
@@ -35,10 +36,10 @@ angular.module('dahlia.components')
           currentDOB != oldDOB
 
       ctrl.preapprovalLetterAttached = ->
-        $translate.instant('label.file_attached', {file: $translate.instant('label.preapproval_letter')})
+        if ctrl.atAutofillPreview then '' else $translate.instant('label.file_attached', {file: $translate.instant('label.preapproval_letter')})
 
       ctrl.verificationLetterAttached = ->
-        $translate.instant('label.file_attached', {file: $translate.instant('label.verification_letter')})
+        if ctrl.atAutofillPreview then '' else $translate.instant('label.file_attached', {file: $translate.instant('label.verification_letter')})
 
       ctrl.prioritiesSelectedExists = ->
         !_.isEmpty(ctrl.application.adaPrioritiesSelected)
