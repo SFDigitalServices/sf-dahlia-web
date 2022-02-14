@@ -19,7 +19,7 @@
 
     h1.property-hero_title.offset.skiptranslate
       | {{::$ctrl.parent.listing.Name}}
-    span.property-hero_label.label.radius.bg-splash ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" translate="listings.reserved_community_building" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'building')}}"
+    span.property-hero_label.label.radius.bg-splash.notranslate ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" translate="listings.reserved_community_building" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'building')}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
@@ -84,7 +84,7 @@
         ng-pluralize count="unitGroup.length" when="{'1': ' Unit', 'other': ' Units'}"
       sale-unit-stats unit-group="::unitGroup" ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
     .property-hero_stat.margin-top--2x.margin-left.margin-right ng-if="::$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
-      habitat-property-hero unit-groups="::$ctrl.parent.listing.habitatIncomeRanges"
+      habitat-property-hero.notranslate unit-groups="::$ctrl.parent.listing.habitatIncomeRanges"
 
 
   / TODO: remove case for hardcoded listings

@@ -237,7 +237,7 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
   # ]
   Service.getHabitatIncomeRanges = (units) ->
     ranges = _.flatten(units.map((unit) ->
-      Service._getIncomeRangesByOccupancy(unit, true, 9)
+      Service._getIncomeRangesByOccupancy(unit, true, 10)
     ))
     return _.sortBy(_.uniqBy(ranges, 'occupancy'), 'occupancy')
 
