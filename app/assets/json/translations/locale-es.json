@@ -7,9 +7,18 @@
             "title": "Comencemos con su solicitud"
         },
         "a2_community_screening": {
+            "accessible_only": {
+                "you_or_anyone": "¿Necesita usted o alguien en su hogar una unidad accesible?",
+                "you_or_anyone_desc": "Todas las unidades se reservan para personas que necesitan una unidad accesible. Las unidades accesibles poseen características que ayudan a las personas con movilidad reducida y con discapacidad visual y auditiva.<br><br>Si su solicitud resulta elegida, debe brindar información de respaldo."
+            },
             "artist": {
                 "you_or_anyone": "¿Tiene usted o alguien en esta solicitud una licencia comercial relacionada con su arte?",
                 "you_or_anyone_desc": "Este es un edificio de uso mixto para artistas. Usted u otra persona que viva en la casa debe ser un artista y tener una licencia comercial de San Francisco relacionada con su arte. Debe usar parte de esta casa para crear, enseñar o exhibir arte. <br><br>En caso de que su solicitud sea elegida, prepárese para brindar información sobre su negocio y su plan para el espacio."
+            },
+            "habitat": {
+                "yes_i_attended": "Sí, asistí a una sesión informativa.",
+                "you_or_anyone": "¿Asistió a una sesión informativa?",
+                "you_or_anyone_desc": "Para poder participar de este sorteo, usted o un miembro de su hogar debe <a href='{{url}}' target='_blank'>asistir a una sesión informativa de Habitat for Humanity</a>. <br><br>Guarde el correo electrónico de confirmación de asistencia. Podremos pedírselo más adelante."
             },
             "senior": {
                 "you_and_everyone": "¿Usted y todas las personas que figuran en esta solicitud son adultos mayores?",
@@ -68,7 +77,7 @@
             "you_already_have_an_account": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
         },
         "b2_contact": {
-            "applicant_address_desc": "Necesitamos la dirección del lugar donde usted vive actualmente. Si no tiene vivienda, ingrese la dirección del refugio donde se aloja o una dirección cercana a su ubicación.",
+            "applicant_address_desc": "Necesitamos la dirección donde vive actualmente. Si no tiene hogar, ingrese la dirección del refugio o una dirección cerca de donde se hospeda. No se permiten los apartados postales.",
             "claim_work_in_sf": "Para solicitar esto como preferencia para el sorteo, deberá cargar la documentación probatoria que se indica en una pantalla posterior.",
             "email_editable_via": "Puede editar su dirección de correo electrónico mediante su",
             "only_use_your_email": "Solo utilizaremos su dirección de correo electrónico para comunicarnos con usted en lo que respecta a su solicitud.",
@@ -181,6 +190,7 @@
             "continue_with_application": "Continuar con la solicitud",
             "create_an_account": "Crear una cuenta",
             "email_confirm_instructions": "Ingrese su dirección de correo electrónico nuevamente para confirmar.",
+            "must_be_over_18": "Debe tener 18 años o más para solicitar una vivienda asequible en DAHLIA.",
             "p1": "Asegúrese de que pueda recordar esta información ya que la usará para acceder a su cuenta.",
             "password_instructions": "Debe tener al menos 8 caracteres e incluir al menos una letra y un número.",
             "password_short_instructions": "Debe tener 8 caracteres"
@@ -394,6 +404,10 @@
                 "work_in_education": "Institución pública de educación superior de SF",
                 "work_in_healthcare": "Institución de salud pública de SF"
             },
+            "tida": {
+                "certificate_caption": "Necesita un Certificado de Residente de Treasure Island (TIR, siglas en inglés) para obtener esta preferencia. Si no conoce el número de su Certificado TIR, contacte a su Asesor de Treasure Island (TI, siglas en inglés) al <a href='mailto:TIAdvisor@arws.com'>TIAdvisor@arws.com</a> o al <a href='tel:415-650-6078'>415-650-6078</a>.",
+                "certificate_label": "¿Cuál es el número de su certificado TIR?"
+            },
             "title": "Este listado tiene otras preferencias especiales de sorteo"
         },
         "e8_general_lottery_notice": {
@@ -433,8 +447,10 @@
             }
         },
         "error": {
+            "accessible_only_anyone": "Al menos un miembro de su hogar debe necesitar una unidad accesible.",
             "address": "Ingrese una dirección",
             "address_validation_not_found": "Esta direccion no fue encontrada.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
+            "address_validation_po_box": "Necesitamos la dirección donde vive actualmente. No se permiten los apartados postales.",
             "alert": {
                 "bad_request": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente. \n\nContacte a sfhousing.info@sfgov.org si continúa teniendo problemas.",
                 "timeout_please_try_again": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente."
@@ -459,6 +475,7 @@
             "first_name": "Ingrese el primer nombre",
             "form_submission": "Deberá resolver algunos errores antes de avanzar.",
             "get_assistance": "Obtener asistencia",
+            "habitat": "Al menos un miembro de su hogar debe asistir a una sesión informativa de Habitat for Humanity.",
             "household_income_too_high": "Sus ingresos familiares son muy altos.",
             "household_income_too_low": "Sus ingresos familiares son muy bajos.",
             "household_member_relationship": "Indique su parentesco con el integrante del grupo familiar",
@@ -559,13 +576,14 @@
             "alternate_contact_agency": "¿Dónde trabaja su trabajador social o su consejero de vivienda?",
             "alternate_contact_name": "Nombre del contacto alternativo",
             "applicant_additional_phone": "Tengo un número de teléfono adicional",
+            "applicant_disability": "¿Tiene usted alguna discapacidad?",
             "applicant_email": "Su dirección de correo electrónico:",
             "applicant_gender": "¿Cuál es su género?",
             "applicant_gender_subtitle": "Seleccione la opción que describa mejor su identidad de género actual.",
             "applicant_homebuyer_education_agency": "Agencia de capacitación para compradores de viviendas",
             "applicant_income_total": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
             "applicant_lending_institution": "entidad de préstamos",
-            "applicant_name_loan_officer": "agente de préstamos",
+            "applicant_name_loan_officer": "Agente de préstamos",
             "applicant_no_email": "No tengo dirección de correo electrónico",
             "applicant_no_phone": "No tengo teléfono",
             "applicant_phone": "Su número de teléfono",
@@ -577,8 +595,10 @@
             "applicant_select_a_loan_officer": "Indique su agente de préstamos",
             "applicant_separate_address": "Envíen mi correspondencia a una dirección diferente",
             "applicant_sexual_orientation": "¿Cómo describiría su orientación sexual o identidad sexual?",
+            "applicant_veteran": "¿Es usted un veterano?",
             "application_all_applicants_are_required": "Únicamente el solicitante principal debe subir o cargar la carta de verificación que se incluirá en el sorteo. La carta de verificación debe tener una fecha del año pasado.",
             "application_cant_find_lender": "¿No encuentra a su agente de préstamos? Su carta de pre-aprobación debe ser de <a target='_blank' href='{{url}}'>un agente de nuestra lista</a>.",
+            "application_habitat_credit_score": "Mi puntuación de crédito es como mínimo 650",
             "application_has_completed_homebuyer_education": "Yo completé 10 horas de capacitación para compradores de vivienda.",
             "application_has_loan_pre_approval": "Yo obtuve la pre-aprobación para obtener un préstamo hipotecario de un agente de préstamos aprobado por la Oficina de Desarrollo Comunitario y de Viviendas del Alcalde (Mayor's Office of Housing and Community Development, MOHCD).",
             "application_is_first_time_homebuyer": "Yo no he sido propietario de vivienda en los últimos 3 años.",
@@ -643,6 +663,7 @@
             "household_member_save": "Guardar al integrante del grupo familiar",
             "household_member_update": "Actualizar al integrante del grupo familiar",
             "household_members": "Integrantes del grupo familiar",
+            "household_veteran": "¿Es alguien más en esta solicitud un veterano?",
             "how_did_you_hear_about_this": "¿Cómo se enteró sobre este aviso de vivienda?",
             "how_did_you_hear_about_this_subtitle": "Díganos cómo se enteró de esta oportunidad de vivienda.",
             "how_you_heard_about_this_listing": "Cómo se enteró de este anuncio.",
@@ -903,6 +924,39 @@
             "final_waitlist_size": "Tamaño de la lista de espera final",
             "for_household_size": "para <strong>{{size}}</strong> {{people}}",
             "for_income_calculations": "Para el cálculo de los ingresos, tenga en cuenta que el tamaño del grupo familiar incluye a todas las personas (de cualquier edad) que viven en la unidad.",
+            "habitat": {
+                "application_process": {
+                    "ol1": "Debe asistir a una <a target='_blank' href='{{infoSessionLink}}'>sesión informativa de Habitat for Humanity</a>.",
+                    "ol10": "¡Puede mudarse a su nueva casa!",
+                    "ol2": "Presentará su solicitud en DAHLIA.",
+                    "ol3": "La MOHCD realizará el sorteo y publicará los resultados aquí en DAHLIA.",
+                    "ol4": "En el orden del sorteo, Habitat for Humanity Greater San Francisco realizará una verificación de crédito y antecedentes.",
+                    "ol5": "La MOHCD verificará si califica para el anuncio. Si califica, la MOHCD le emitirá una aprobación condicional.",
+                    "ol6": "Debe realizar 500 horas de voluntariado.",
+                    "ol7": "Habitat Greater San Francisco trabajará con usted para aprobar su primer préstamo de hipoteca.",
+                    "ol8": "La MOHCD trabajará con usted para emitir una aprobación definitiva.",
+                    "ol9": "La MOHCD y Habitat Greater San Francisco entregará los documentos de cierre en fideicomiso.",
+                    "p1": "<a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> ofrece estas unidades en sociedad con la MOHCD",
+                    "title": "Proceso de solicitud"
+                },
+                "income_range": {
+                    "income_range_plural": "Hogar de {{number}} personas: de {{minIncome}} a {{maxIncome}} por año",
+                    "income_range_singular": "Hogar de {{number}} persona: de {{minIncome}} a {{maxIncome}} por año",
+                    "p1": "Para poder ser elegible para una casa de Habitat for Humanity Greater San Francisco en este anuncio, los ingresos de su hogar deben ser de entre el 82 % y el 109.8 % del Ingreso promedio del área (AMI, siglas en inglés), como se indica a continuación.",
+                    "p2": "Para el cálculo de los ingresos, las personas que viven en el hogar incluyen a todas las personas (de todas las edades) que viven en la unidad.",
+                    "p4": "Sus ingresos deben estar en este rango:",
+                    "title": "Rango de ingresos"
+                },
+                "payments": {
+                    "p1": "Su pago mensual de la vivienda será el 30 % de sus ingresos brutos mensuales. El pago de la vivienda incluye la hipoteca, el impuesto sobre la propiedad, el seguro, la cuota de HOA y los servicios públicos.",
+                    "title": "Pagos"
+                },
+                "sweat_equity": {
+                    "p1": "No debe hacer ningún depósito inicial. Sí debe realizar 500 horas de voluntariado. Las horas de voluntariado son horas que usted, sus amigos y su familia trabajan como voluntarios.",
+                    "p2": "Si le preocupa su capacidad de realizar 500 horas de voluntariado, póngase en contacto con Habitat for Humanity Greater San Francisco para solicitar asistencia.",
+                    "title": "Horas de voluntariado"
+                }
+            },
             "household_maximum_income": "Ingresos anuales del grupo familiar",
             "housing_program": "Programa de vivienda",
             "important_program_rules": "Reglas Importantes del Programa",
@@ -1043,6 +1097,14 @@
                 "step_5": "Tenga ahorros suficientes para los costos de cierre y el pago inicial",
                 "title": "Antes de presentar la solicitud"
             },
+            "before_applying_habitat": {
+                "read_full_list": "Para obtener más detalles, lea <a href='{{url}}' target='_blank'>la lista completa de requisitos</a>.",
+                "rules_are_different": "Estas unidades poseen normas diferentes de otros anuncios de propiedad en DAHLIA. Asegúrese de:",
+                "step_1": "Asistir a una <a href='{{url}}' target='_blank'>sesión informativa de Habitat for Humanity</a>",
+                "step_2": "No haber sido propietario de una propiedad residencial en los últimos 3 años",
+                "step_3": "Cumplir con los <a href='{{url}}' target='_blank'>requisitos de ingresos</a>",
+                "step_4": "Tener una puntuación de crédito de 650 o mayor"
+            },
             "callout": {
                 "city_second_loan_button": "Segundo Programa de Préstamos de la Ciudad de San Francisco",
                 "first_come_first_served_button": "Por orden de llegada",
@@ -1111,6 +1173,7 @@
             "account_settings": "Configuraciones de la cuenta",
             "buy": "Comprar",
             "get_assistance": "Obtener asistencia",
+            "get_feedback": "Nos encantaría conocer <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>sus comentarios.</a>",
             "my_account": "Mi Cuenta",
             "my_applications": "Mis solicitudes",
             "my_dashboard": "Mi Panel",
@@ -1273,6 +1336,7 @@
             "or": "o",
             "per_month": "por mes",
             "per_year": "por año",
+            "prefer_not_to_answer": "Prefiero no responder",
             "save_and_come_back_later": "Guardar y regresar luego",
             "save_and_finish_later": "Guardar y finalizar en otro momento",
             "session_expired": "Su sesión ha caducado.",

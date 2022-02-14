@@ -7,9 +7,18 @@
             "title": "Magsimula na tayo sa inyong aplikasyon\n"
         },
         "a2_community_screening": {
+            "accessible_only": {
+                "you_or_anyone": "Nangangailangan ka ba o ang sinuman sa iyong kabahayan ng yunit na madaling mai-access?",
+                "you_or_anyone_desc": "Nakareserba ang lahat ng unit para sa mga taong nangangailangan ng yunit na madaling mai-access. Ang mga yunit na madaling mai-access ay may mga feature na nakakatulong sa mga taong may mga kapansanan sa pagkilos, paningin, at pandinig.<br><br>Kung mapipili ang iyong aplikasyon, kailangan mong magbigay ng sumusuportang impormasyon."
+            },
             "artist": {
                 "you_or_anyone": "Mayroon ba kayo, o sinumang nasa aplikasyong ito, ng lisensiya sa negosyo na may kinalaman sa inyong sining?",
                 "you_or_anyone_desc": "Isa itong gusali kung saan nakatira/nagtatrabaho ang mga artist (artist live/work building). Kailangang artist kayo, o sinuman sa inyong kabahayan, at may lisensiya sa negosyo na may kinalaman sa inyong sining sa San Francisco.Kailangang gamitin ninyo ang bahagi ng bahay na ito sa paglikha, pagtuturo, o pagpapakita ng sining<br><br>Kapag napili ang aplikasyon ninyo, maging handa sa pagbibigay ng impormasyon tungkol sa inyong negosyo at sa inyong plano para sa espasyo."
+            },
+            "habitat": {
+                "yes_i_attended": "Oo, dumalo ako sa isang sesyon para sa pagbibigay ng impormasyon",
+                "you_or_anyone": "Dumalo ka ba sa isang sesyon para sa pagbibigay ng impormasyon?",
+                "you_or_anyone_desc": "Ikaw o ang isang miyembro ng iyong kabahayan ay dapat <a href='{{url}}' target='_blank'>dumalo sa isang sesyon para sa pagbibigay ng impormasyon ng Habitat for Humanity</a> para maging kwalipikado para sa lottery na ito. <br><br>I-save ang iyong email ng kumpirmasyon ng pagdalo. Maaari namin itong hilingin sa ibang pagkakataon."
             },
             "senior": {
                 "you_and_everyone": "Senior o matanda na ba kayo o ang lahat ng tao na nasa aplikasyong ito?",
@@ -68,7 +77,7 @@
             "you_already_have_an_account": "Mukhang may account na kayo. Kapag nag-sign in kayo, mase-save ang aplikasyon na ito sa inyong account at puwede ninyong ma-check ang estado ng inyong aplikasyon sa anumang panahon. \n"
         },
         "b2_contact": {
-            "applicant_address_desc": "Kailangan namin ang address kung saan kayo kasalukuyang nakatira. Kung homeless kayo o walang tirahan, pakipasok ang address ng shelter o ang address na malapit kung saan kayo nakatira.",
+            "applicant_address_desc": "Kailangan namin ang address ng kung saan ka kasalukuyang nakatira. Kung wala kang tirahan, ilagay ang address ng silungan o address na malapit sa kung saan ka nananatili. Hindi puwedeng maglagay ng mga PO Box.",
             "claim_work_in_sf": "Para magamit ito bilang preperensiya sa lottery, kailangan ninyong mag-upload ng dokumentasyong nagbibigay ng suporta, ayon sa mga instruksiyon sa iba pang screen.",
             "email_editable_via": "Puwedeng ma-edit o mabago ang inyong email addres sa pamamagitan ng inyong",
             "only_use_your_email": "Gagamitin lamang namin ang inyong email address para makontak kayo tungkol sa inyong aplikasyon.",
@@ -181,6 +190,7 @@
             "continue_with_application": "Ipagpatuloy ang Aplikasyon",
             "create_an_account": "Gumawa ng Account",
             "email_confirm_instructions": "Pakipasok muli ang inyong email address para makumpirma ito. ",
+            "must_be_over_18": "Dapat ay 18 taong gulang pataas ka para makapag-apply para sa abot-kayang pabahay sa DAHLIA.",
             "p1": "Gagamitin ninyo ang impormasyong ito para mag-log in sa inyong account, kaya't tiyaking matatandaan ninyo ito. ",
             "password_instructions": "Kailangang mayroon itong hindi bababa sa 8 character, at kasama na rito ang 1 o higit pang letra at 1  o higit pang numero.",
             "password_short_instructions": "Kailangang mayroon itong 8 character"
@@ -394,6 +404,10 @@
                 "work_in_education": "Pampublikong institusyon para sa mas mataas na edukasyon sa SF",
                 "work_in_healthcare": "Pampublikong institusyon para sa pangangalagang pangkalusugan sa SF"
             },
+            "tida": {
+                "certificate_caption": "Kailangan mo ng numero ng TIR Certificate para makuha ang kagustuhang ito. Kung hindi mo alam ang numero ng iyong TIR Certificate, makipag-ugnayan sa iyong TI Advisor sa <a href='mailto:TIAdvisor@arws.com'>TIAdvisor@arws.com</a> o <a href='tel:415-650-6078'>415-650-6078</a>.",
+                "certificate_label": "Ano ang numero ng iyong TIR certificate?"
+            },
             "title": "May iba pang espesyal na pagtatangi sa loterya ang listing na ito"
         },
         "e8_general_lottery_notice": {
@@ -433,8 +447,10 @@
             }
         },
         "error": {
+            "accessible_only_anyone": "Dapat ay nangangailangan ng yunit na madaling mai-access ang kahit isang miyembro ng iyong kabahayan.",
             "address": "Pakipasok ang inyong address",
             "address_validation_not_found": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Hindi puwede ang mga P.O. Box.",
+            "address_validation_po_box": "Kailangan namin ang address ng kung saan ka kasalukuyang nakatira. Hindi puwedeng maglagay ng mga PO Box.",
             "alert": {
                 "bad_request": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
                 "timeout_please_try_again": "Naku! Nagkaroon na naman ng problema. Pakisubukang muli. "
@@ -459,6 +475,7 @@
             "first_name": "Pakilagay ang Unang Pangalan ninyo",
             "form_submission": "Kailangan muna ninyo maayos ang mga pagkakamali bago kayo makapagpapatuloy.",
             "get_assistance": "Kumuha ng Tulong",
+            "habitat": "Dapat dumalo ang kahit isang miyembro ng iyong kabahayan sa isang sesyon para sa pagbibigay ng impormasyon ng Habitat for Humanity.",
             "household_income_too_high": "Masyadong mataas ang kita ng inyong kabahayan.",
             "household_income_too_low": "Masyadong mababa ang kita ng inyong kabahayan.",
             "household_member_relationship": "Mangyaring piliin ang inyong relasyon sa miyembro ng kabahayan",
@@ -559,13 +576,14 @@
             "alternate_contact_agency": "Saan nagtatrabaho ang inyong tagapamahala ng kaso (case manager) o tagapayo para sa pabahay (housing counselor)?",
             "alternate_contact_name": "Pangalan ng kahaliling kontak",
             "applicant_additional_phone": "Mayroon akong iba pang numero ng telepono",
+            "applicant_disability": "Ikaw ba ay may kapansanan?",
             "applicant_email": "Ang email address ninyo",
             "applicant_gender": "Ano ang inyong kasarian?",
             "applicant_gender_subtitle": "Piiin ang pinakanakapaglalarawan sa inyong kasalukuyang kinikilalang kasarian (gender identity). ",
             "applicant_homebuyer_education_agency": "Ahensya para sa pagbibigay ng edukasyon para sa bumibili ng bahay",
             "applicant_income_total": "Ano ang kabuuang kita ng inyong kabahayan bago ito mabawasan ng buwis?",
             "applicant_lending_institution": "nagpapautang na institusyon",
-            "applicant_name_loan_officer": "loan officer (opisyal na namamahala sa pagpapautang)",
+            "applicant_name_loan_officer": "Loan officer (opisyal na namamahala sa pagpapautang)",
             "applicant_no_email": "Wala akong email address",
             "applicant_no_phone": "Wala akong numero ng telepono",
             "applicant_phone": "Ang numero ng inyong telepono",
@@ -577,8 +595,10 @@
             "applicant_select_a_loan_officer": "Mangyaring pumili ng loan officer (opisyal na namamahala sa pagpapautang)",
             "applicant_separate_address": "Ipadala ang aking sulat sa ibang address",
             "applicant_sexual_orientation": "Paano ninyo mailalarawanan ang inyong seksuwal na oryentasyon o kinikilalang kasarian?",
+            "applicant_veteran": "Ikaw ba ay isang beterano?",
             "application_all_applicants_are_required": "Ang pangunahing aplikante lang ang kailangang mag-upload ng liham ng pagpapatunay (verification letter) na isasama sa lottery. Ang liham ng pagpapatunay ay dapat nakapetsa sa nakalipas na taon.",
             "application_cant_find_lender": "Hindi ba ninyo mahanap ang inyong loan officer (opisyal na namamahala sa pagpapautang)? Dapat galing ang inyong sulat ng paunang pag-apruba (pre-approval letter) sa <a target='_blank' href='{{url}}'>taong nasa aming listahan</a>.",
+            "application_habitat_credit_score": "Hindi bababa sa 650 ang aking credit score",
             "application_has_completed_homebuyer_education": "Nakadalo na ako sa 10 oras na Edukasyon para sa Bumibili ng Bahay (Homebuyer Education).",
             "application_has_loan_pre_approval": "Mayroon na akong paunang pag-apruba sa pag-utang para sa pabahay mula sa Loan Officer (opisyal na namamahala sa pagpapautang) na Aprubado ng MOHCD.",
             "application_is_first_time_homebuyer": "Hindi ako nagmay-ari ng residensiyal na ari-arian nitong nakaraang 3 taon.",
@@ -643,6 +663,7 @@
             "household_member_save": "I-save ang Miyembro ng Kabahayan",
             "household_member_update": "Baguhin o I-update ang Miyembro ng Kabahayan",
             "household_members": "Mga Miyembro ng Kabahayan",
+            "household_veteran": "Mayroon pa bang ibang beterano sa aplikasyong ito?",
             "how_did_you_hear_about_this": "Paano ninyo nalaman ang tungkol sa nakalistang pabahay na ito?",
             "how_did_you_hear_about_this_subtitle": "Sabihin sa amin kung paano mo nalaman ang tungkol sa oportunidad na ito sa pabahay.",
             "how_you_heard_about_this_listing": "Paano Mo Nalaman ang Tungkol sa Listing na Ito",
@@ -728,7 +749,10 @@
                 "paystub_home": "Paystub (rekord ng suweldo) (nakalista ang address ng tahanan)",
                 "public_benefits": "Rekord ng mga pampublikong benepisyo",
                 "school_record": "Rekord para sa paaralan",
+                "sf_city_id": "SF City ID",
+                "sfha_lease": "Pagpapaupa ng SFHA",
                 "sfha_letter": "Sulat mula sa SFHA na nagpapatunay ng address",
+                "sfha_residency_letter": "Sulat mula sa SFHA na nagpapatunay sa paninirahan",
                 "telephone_bill": "Singil para sa telepono (land line lamang)",
                 "water_bill": "Singil para sa tubig"
             },
@@ -833,7 +857,7 @@
                 "drop_off_application_or_mail": "I-drop off ang Aplikasyon o Ipadala sa pamamagitan ng US Mail ",
                 "eligibility_requirement_description": "Ang iyong liham ng paunang pahintulot sa loan ay may petsa dapat na mula sa nakalipas na 120 araw, at ang iyong pag-verify ng Homebuyer Education ay may petsa dapat na mula sa nakalipas na taon.",
                 "find_a_housing_counselor": "Maghanap ng Housing Counselor (tagapayo para sa pabahay)",
-                "fulfill_eligibility_requirements": "Tiyakin na matutugunan ninyo ang<a href='{{url}}' target='_blank'>mga itinatakda para maging kuwalipikado</a> sa nakalistang pahabay na ito bago kayo magsimula.",
+                "fulfill_eligibility_requirements": "Tiyakin na matutugunan ninyo ang <a href='{{url}}' target='_blank'>mga itinatakda para maging kuwalipikado</a> sa nakalistang pahabay na ito bago kayo magsimula.",
                 "get_a_paper_application": "Kumuha ng Papel na Aplikasyon",
                 "how_to_apply": "Kung Paano Mag-aplay ",
                 "include_an_envelope": "Para matanggap ang inyong numero sa lottery, magsama ng sobre na may selyo na at naka-address sa inyo, dahil kung hindi, hindi ito ipadadala sa inyo.",
@@ -900,6 +924,39 @@
             "final_waitlist_size": "Pinal na Laki ng Waitlist (listahan ng mga naghihintay magkaroon ng pabahay).",
             "for_household_size": "para sa <strong>{{size}}</strong> {{people}}",
             "for_income_calculations": "Para sa mga kalkulasyon ng kita, kasama sa laki ng kabahayan (household size) ang lahat ng tao (lahat ng edad) na nakatira sa unit.",
+            "habitat": {
+                "application_process": {
+                    "ol1": "Dapat kang dumalo sa isang <a target='_blank' href='{{infoSessionLink}}'>sesyon para sa pagbibigay ng impormasyon ng Habitat for Humanity</a>",
+                    "ol10": "Puwede kang lumipat sa iyong bagong bahay!",
+                    "ol2": "Isusumite mo ang iyong aplikasyon sa DAHLIA.",
+                    "ol3": "Ang MOHCD ang magsasagawa ng lottery at magpo-post ng mga resulta dito sa DAHLIA.",
+                    "ol4": "Batay sa pagkakasunod-sunod ng rank sa lottery, magsasagawa ang Habitat for Humanity Greater San Francisco ng pagsusuri sa kredito at pinagmulan.",
+                    "ol5": "Titingnan ng MOHCD kung kwalipikado ka para sa listahan. Kung kwalipikado ka, bibigyan ka ng MOHCD ng kundisyonal na pag-apruba.",
+                    "ol6": "Dapat kang magkumpleto ng 500 oras ng boluntaryong serbisyo.",
+                    "ol7": "Makikipagtulungan sa iyo ang Habitat Greater San Francisco para aprubahan ang iyong unang mortgage loan.",
+                    "ol8": "Makikipagtulungan sa iyo ang MOHCD para magbigay ng pinal na pag-apruba.",
+                    "ol9": "Ang MOHCD at Habitat Greater San Francisco ang magdadala ng mga dokumento para sa pagbili ng bahay sa escrow.",
+                    "p1": "Iniaalok ang mga yunit na ito ng <a target='_blank' href='{{habitatLink}}'>Habitat for Humanity Greater San Francisco</a> sa pakikipagtulungan sa MOHCD",
+                    "title": "Proseso ng Aplikasyon"
+                },
+                "income_range": {
+                    "income_range_plural": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
+                    "income_range_singular": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
+                    "p1": "Para maging kwalipikado para sa bahay mula sa Habitat for Humanity Greater San Francisco sa listahan na ito, kailangang nasa pagitan ng 82% at 109.8% AMI ang kita ng iyong kabahayan, gaya ng nakalista sa ibaba.",
+                    "p2": "Para sa mga kalkulasyon ng kita, kasama sa laki ng sambahayan ang lahat (anuman ang edad) ng nakatira sa yunit.",
+                    "p4": "Dapat ay nasa saklaw na ito ang iyong kita:",
+                    "title": "Saklaw ng Kita"
+                },
+                "payments": {
+                    "p1": "30% ng iyong kabuuang buwanang kita ang iyong magiging buwanang bayad sa pabahay. Kasama sa bayad sa pabahay ang iyong mortgage, buwis sa pag-aari, insurance, bayarin sa HOA, at mga utility.",
+                    "title": "Mga Pagbabayad"
+                },
+                "sweat_equity": {
+                    "p1": "Hindi mo kailangang magbayad ng paunang bayad. Kailangan mong magkumpleto ng 500 oras ng boluntaryong serbisyo. Ang oras ng boluntaryong serbisyo ay oras ng pagboboluntaryo na ginugugol mo at ng iyong mga kaibigan at pamilya.",
+                    "p2": "Kung inaalala mo ang iyong kakayahang makakumpleto ng 500 oras ng boluntaryong serbisyo, makipag-ugnayan sa Habitat for Humanity Greater San Francisco para itanong kung paano sila makakatulong.",
+                    "title": "Oras ng Boluntaryong Serbisyo"
+                }
+            },
             "household_maximum_income": "Maximum o Pinakamalaki nang Kita Dapat ng Kabahayan",
             "housing_program": "Programa sa Pabahay (Housing Program)",
             "important_program_rules": "Mahahalagang Patakaran ng Programa ",
@@ -1040,6 +1097,14 @@
                 "step_5": "Mayroon kayong sapat sa ipon para sa pagsasara ng transaksyon (closing costs) at paunang bayad (downpayment)",
                 "title": "Bago kayo mag-aplay"
             },
+            "before_applying_habitat": {
+                "read_full_list": "Basahin <a href='{{url}}' target='_blank'>ang kumpletong listahan ng mga kinakailangan</a> para sa higit pang detalye.",
+                "rules_are_different": "May mga patakaran ang mga yunit na ito na iba sa iba pang listahan ng pag-aari sa DAHLIA. Tiyaking ikaw ay:",
+                "step_1": "Dumalo sa isang <a href='{{url}}' target='_blank'>sesyon para sa pagbibigay ng impormasyon ng Habitat for Humanity</a>",
+                "step_2": "Hindi nagmay-ari ng residensyal na ari-arian sa nakalipas na 3 taon",
+                "step_3": "Nakakatugon sa <a href='{{url}}' target='_blank'>mga kinakailangan sa kita</a>",
+                "step_4": "May credit score na 650 o mas mataas"
+            },
             "callout": {
                 "city_second_loan_button": "Pangalawang Programa sa Loan ng Lungsod",
                 "first_come_first_served_button": "Ang Unang Dumating ang Unang Pagsisilbihan",
@@ -1108,6 +1173,7 @@
             "account_settings": "Mga Setting ng Account ",
             "buy": "Bumili",
             "get_assistance": "Kumuha ng Tulong ",
+            "get_feedback": "Gusto naming makakuha ng <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>feedback mula sa iyo.</a>",
             "my_account": "Ang Aking Account ",
             "my_applications": "Ang Aking mga Aplikasyon ",
             "my_dashboard": "Ang Aking Dashboard ",
@@ -1144,6 +1210,13 @@
                 "proof_desc": "Kailangan ninyo ng isa sa mga sumusunod na dokumento na nagpapakita ng inyong address sa Alice Griffith Housing Development, na may petsang Oktubre 26, 2010, o matapos ang petsang ito:",
                 "sfha_letter_instructions": "Sulat mula sa San Francisco Housing Authority na nagpapatunay na nakatira ang aplikante sa address ng Alice Griffith noong Oktubre 26, 2010 o matapos ang petsang ito",
                 "title": "Preperensiya para sa Residente ng Alice Griffith Housing Development. "
+            },
+            "rtr_sunnydale": {
+                "address": "Address sa Sunnydale",
+                "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Sunnydale",
+                "desc": "Para sa mga kabahayan kung saan may kahit isang tao na dati o kasalukuyang residente ng pampublikong pabahay ng Sunnydale. Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
+                "proof_desc": "Kakailanganin mo ng isa sa mga sumusunod na dokumentong nagpapakita ng iyong address sa Sunnydale Housing Development.",
+                "title": "Karapatang Bumalik - Kagustuhan sa Sunnydale"
             }
         },
         "privacy_policy": {
@@ -1263,6 +1336,7 @@
             "or": "o",
             "per_month": "kada buwan",
             "per_year": "kada taon",
+            "prefer_not_to_answer": "Mas gustong hindi sumagot",
             "save_and_come_back_later": "I-save at bumalik sa ibang panahon",
             "save_and_finish_later": "I-save at tapusin sa ibang panahon",
             "session_expired": "Nag-expire o nagsara na ang inyong sesyon. ",
