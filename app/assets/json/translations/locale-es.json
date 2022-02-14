@@ -1100,10 +1100,10 @@
             "before_applying_habitat": {
                 "read_full_list": "Para obtener más detalles, lea <a href='{{url}}' target='_blank'>la lista completa de requisitos</a>.",
                 "rules_are_different": "Estas unidades poseen normas diferentes de otros anuncios de propiedad en DAHLIA. Asegúrese de:",
-                "step_1": "asistir a una <a href='{{url}}' target='_blank'>sesión informativa de Habitat for Humanity</a>",
-                "step_2": "no haber sido propietario de una propiedad residencial en los últimos 3 años",
-                "step_3": "cumplir con los <a href='{{url}}' target='_blank'>requisitos de ingresos</a>",
-                "step_4": "tener una puntuación de crédito de 650 o mayor"
+                "step_1": "Asistir a una <a href='{{url}}' target='_blank'>sesión informativa de Habitat for Humanity</a>",
+                "step_2": "No haber sido propietario de una propiedad residencial en los últimos 3 años",
+                "step_3": "Cumplir con los <a href='{{url}}' target='_blank'>requisitos de ingresos</a>",
+                "step_4": "Tener una puntuación de crédito de 650 o mayor"
             },
             "callout": {
                 "city_second_loan_button": "Segundo Programa de Préstamos de la Ciudad de San Francisco",
