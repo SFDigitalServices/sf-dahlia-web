@@ -23,6 +23,7 @@ const Router: GenericRouter = {
 
     window.location.href = urlString
   },
+  back: null,
   get pathname(): string {
     return window.location.pathname
   },
