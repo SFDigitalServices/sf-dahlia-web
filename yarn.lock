@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^3.0.2-alpha.15":
-  version "3.0.2-alpha.15"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.15.tgz#01059fcbf3052b6a5e4d32b0de20d1b68c2339e4"
-  integrity sha512-iGHOATdE5z8ZfrKPJs6TMtwq6C7mX0ksiV9p4h8sVwZ4YRi302Gb3sWts85fdQys5E65x6vY6C0mekEN+18sXQ==
+"@bloom-housing/backend-core@^3.0.2-alpha.35":
+  version "3.0.2-alpha.35"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-3.0.2-alpha.35.tgz#02935f4cdfffb99d6c826606ada39775217dbff2"
+  integrity sha512-/bfp9l1umB70VfhDRZEEb1+cvEgOPtqpD7YpDSVyEVWAz8MEwGQtGrCfepOPo2qrHTAkOsCLl9mctTcrWVGGvQ==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1312,7 +1312,7 @@
     axios "0.21.1"
     cache-manager "^3.4.0"
     cache-manager-redis-store "^2.0.0"
-    casbin "^5.1.6"
+    casbin "5.13.0"
     class-transformer "0.3.1"
     class-validator "^0.12.2"
     cloudinary "^1.25.2"
@@ -1323,6 +1323,7 @@
     ioredis "^4.24.4"
     joi "^17.3.0"
     jwt-simple "^0.5.6"
+    lodash "^4.17.21"
     nanoid "^3.1.12"
     nestjs-throttler-storage-redis "^0.1.11"
     nestjs-typeorm-paginate "^3.1.3"
@@ -1342,12 +1343,12 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^4.0.1-alpha.24":
-  version "4.0.1-alpha.24"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.24.tgz#57dceaa57134c6ea027689cafd21422ab9971a5a"
-  integrity sha512-T7zSQYJLnc5Qs7h3LnIEY27/bj70C0URR03KzjmPXwc79UE+QLNboFSYuJLYN2EZ6qojnR7gpnkIXfhDRZ7rBw==
+"@bloom-housing/ui-components@^4.0.1-alpha.58":
+  version "4.0.1-alpha.58"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.0.1-alpha.58.tgz#e1de4c6e29b83560549aa14a68fdca2b28de83d1"
+  integrity sha512-KpvndXNJzFlz/wUu7Dvwf9A8G4EKpx4zlycsKVxM6cxTRzy5BBzVOo/yQd//GMCiIMqUd56fdUzMJuNFR0FwRA==
   dependencies:
-    "@bloom-housing/backend-core" "^3.0.2-alpha.15"
+    "@bloom-housing/backend-core" "^3.0.2-alpha.35"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -4339,10 +4340,10 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-casbin@^5.1.6:
-  version "5.11.5"
-  resolved "https://registry.yarnpkg.com/casbin/-/casbin-5.11.5.tgz#3da761b3caf3ca4763bf7ac8c6c5d65f84be34a1"
-  integrity sha512-VOPc0W3sWg2XB315MtyjcnOBDI8gO9J1pkXv/vYeEqrrIfzPZ5tSYa6hkdBKlq35H0qLFTu3wKv0LiU431rwkA==
+casbin@5.13.0:
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/casbin/-/casbin-5.13.0.tgz#286835c79246eb43319d3507371457efe6d2e434"
+  integrity sha512-pN8R37/ALma3OMBx7DP9QPUWs0qI+0t+VHeUHxwM4eIY+GR0bJT74blH/ob0f/hG7WpVuA8YO3he3WSV/MyV9w==
   dependencies:
     await-lock "^2.0.1"
     csv-parse "^4.15.3"
