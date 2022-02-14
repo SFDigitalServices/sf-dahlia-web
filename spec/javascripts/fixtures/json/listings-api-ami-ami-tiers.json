@@ -65,6 +65,13 @@
           "numOfHousehold": 9,
           "chartType": "HUD Unadjusted",
           "amount": 112050
+        },
+        {
+          "year": 2019,
+          "percent": 65,
+          "numOfHousehold": 10,
+          "chartType": "HUD Unadjusted",
+          "amount": 116050
         }
       ]
     },
@@ -269,6 +276,13 @@
           "numOfHousehold": 7,
           "chartType": "HUD Unadjusted",
           "amount": 80750.00
+        },
+        {
+          "year": 2018,
+          "percent": 55,
+          "numOfHousehold": 10,
+          "chartType": "HUD Unadjusted",
+          "amount": 95000.00
         }
       ]
     },

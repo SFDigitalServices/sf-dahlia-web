@@ -160,7 +160,8 @@ do ->
           { 'occupancy': 6, 'maxIncome': 92850, 'minIncome': 75550 },
           { 'occupancy': 7, 'maxIncome': 99250, 'minIncome': 80750 },
           { 'occupancy': 8, 'maxIncome': 105650, 'minIncome': 85950 },
-          { 'occupancy': 9, 'maxIncome': 112050, 'minIncome': 91150 }
+          { 'occupancy': 9, 'maxIncome': 112050, 'minIncome': 91150 },
+          { 'occupancy': 10, 'maxIncome': 116050, 'minIncome': 95000 }
         ]
 
       afterEach ->
