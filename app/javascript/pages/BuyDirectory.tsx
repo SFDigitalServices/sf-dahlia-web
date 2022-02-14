@@ -41,8 +41,7 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) =>
         cellText: getRangeString(
           getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min"),
           getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max"),
-          null,
-          "$"
+          true
         ),
         cellSubText: t("t.perMonth"),
       },
@@ -50,8 +49,7 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) =>
         cellText: getRangeString(
           getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min"),
           getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max"),
-          null,
-          "$"
+          true
         ),
       },
     }))
