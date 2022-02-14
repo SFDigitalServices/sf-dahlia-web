@@ -50,7 +50,7 @@ const getForRentSummaryTable = (listing: RailsRentalListing) =>
         cellSubText: showWaitlist(listing, summary) ? null : t("t.available"),
       },
       colThree: {
-        cellText: getRangeString(summary.absoluteMinIncome, summary.absoluteMaxIncome, null, "$"),
+        cellText: getRangeString(summary.absoluteMinIncome || 0, summary.absoluteMaxIncome, true),
         cellSubText: t("t.perMonth"),
       },
       colFour: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
