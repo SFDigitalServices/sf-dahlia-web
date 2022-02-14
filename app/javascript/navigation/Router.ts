@@ -23,6 +23,7 @@ const Router: GenericRouter = {
 
     window.location.href = urlString
   },
+  // FIXME: remove when bloom makes this optional
   back: null,
   get pathname(): string {
     return window.location.pathname
