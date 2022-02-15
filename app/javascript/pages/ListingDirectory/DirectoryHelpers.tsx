@@ -104,35 +104,55 @@ export const getListingImageCardStatuses = (
   return statuses
 }
 
-// Transforms an integer into a currency string
-export const getNumberString = (currencyNumber: number) =>
-  currencyNumber ? currencyNumber.toLocaleString() : null
+// Transforms an integer or float into a currency string
+export const getCurrencyString = (currencyNumber: number) => {
+  const fractionDigits = Number.isInteger(currencyNumber) ? 0 : 2
+  return currencyNumber || currencyNumber === 0
+    ? currencyNumber.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: fractionDigits,
+        minimumFractionDigits: fractionDigits,
+      })
+    : null
+}
 
-// Transforms two numbers into a range string with optional prefix and suffix
-// 100, 200, null, "$" --> $100 - $200
-// 100, 100, "%" --> 100%
-export const getRangeString = (min: number, max: number, suffix?: string, prefix?: string) => {
-  if (min && max && min !== max) {
-    const minString = `${prefix ?? ""}${getNumberString(min)}`
-    const maxString = `${prefix ?? ""}${getNumberString(max)}`
+// Transforms a number into a number string, with optional currency formatting
+export const getNumberString = (num: number, currency?: boolean) =>
+  num || num === 0 ? (currency ? getCurrencyString(num) : num.toLocaleString()) : null
+
+// Return true for 0, but false for null or undefined.
+const isNumber = (val: number) => val || val === 0
+
+// Transforms two numbers into a range string with optional currency formatting and optional suffix
+// 100, 200, true, null --> $100 - $200
+// 100, 100, false, "%" --> 100%
+export const getRangeString = (min: number, max: number, currency?: boolean, suffix?: string) => {
+  // If the numbers differ, return as a range.
+  if (isNumber(min) && isNumber(max) && min !== max) {
+    const minString = getNumberString(min, currency)
+    const maxString = getNumberString(max, currency)
     const range = t("t.numberRange", {
       minValue: minString,
       maxValue: maxString,
     })
     return `${range}${suffix ?? ""}`
   }
-  if (min || max) {
-    return `${prefix ?? ""}${getNumberString(min ?? max)}${suffix ?? ""}`
+  // If a min or max is missing, or they are equal, only return one
+  if (isNumber(min) || isNumber(max)) {
+    return `${getNumberString(min ?? max, currency)}${suffix ?? ""}`
   }
+  // If both numbers are missing, return null
   return null
 }
 
 // Gets the rental income range string depending on rent method
 export const getRentRangeString = (summary: RailsRentalUnitSummary) => {
-  const rentRangeString = getRangeString(summary.minMonthlyRent, summary.maxMonthlyRent, null, "$")
+  const rentRangeString = getRangeString(summary.minMonthlyRent, summary.maxMonthlyRent, true)
   const percentIncomeRangeString = getRangeString(
     summary.minPercentIncome,
     summary.maxPercentIncome,
+    false,
     "%"
   )
   return rentRangeString ?? percentIncomeRangeString ?? ""

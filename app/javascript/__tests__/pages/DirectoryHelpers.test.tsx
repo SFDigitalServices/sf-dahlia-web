@@ -1,7 +1,8 @@
 import {
   getListingImageCardStatuses,
-  getNumberString,
+  getCurrencyString,
   getRangeString,
+  getNumberString,
   getRentRangeString,
   getRentSubText,
   getTableHeader,
@@ -97,26 +98,84 @@ describe("DirectoryHelpers", () => {
       })
     })
   })
-
-  it("getNumberString adds commas where appropriate", () => {
-    expect(getNumberString(100000)).toBe("100,000")
-    expect(getNumberString(10000)).toBe("10,000")
-    expect(getNumberString(1000)).toBe("1,000")
-    expect(getNumberString(100)).toBe("100")
+  describe("getCurrencyString", () => {
+    it("adds commas where appropriate", () => {
+      expect(getCurrencyString(100000)).toBe("$100,000")
+      expect(getCurrencyString(10000)).toBe("$10,000")
+      expect(getCurrencyString(1000)).toBe("$1,000")
+      expect(getCurrencyString(100)).toBe("$100")
+    })
+    it("does not display decimal values if they're empty", () => {
+      // eslint-disable-next-line unicorn/no-zero-fractions
+      expect(getCurrencyString(1.0)).toBe("$1")
+      // eslint-disable-next-line unicorn/no-zero-fractions, prettier/prettier
+      expect(getCurrencyString(1000.000)).toBe("$1,000")
+    })
+    it("displays two digits after the decimal if not empty", () => {
+      expect(getCurrencyString(1.01)).toBe("$1.01")
+      expect(getCurrencyString(1.9)).toBe("$1.90")
+    })
+    it("handles null, undefined, 0s as expected", () => {
+      expect(getCurrencyString(0)).toBe("$0")
+      expect(getCurrencyString(null)).toBeNull()
+      expect(getCurrencyString(undefined)).toBeNull()
+    })
+  })
+  describe("getNumberString", () => {
+    it("defaults to not adding $", () => {
+      expect(getNumberString(1)).toBe("1")
+    })
+    it("formats as currency when expected", () => {
+      expect(getNumberString(1, true)).toBe("$1")
+    })
+    it("adds commas where appropriate", () => {
+      expect(getNumberString(100000)).toBe("100,000")
+      expect(getNumberString(10000)).toBe("10,000")
+      expect(getNumberString(1000)).toBe("1,000")
+      expect(getNumberString(100)).toBe("100")
+    })
+    it("handles null, undefined, 0s as expected", () => {
+      expect(getNumberString(0)).toBe("0")
+      expect(getNumberString(null)).toBeNull()
+      expect(getNumberString(undefined)).toBeNull()
+    })
   })
 
   describe("getRangeString", () => {
     it("returns range when different mix and max", () => {
       expect(getRangeString(10, 20)).toBe("10 to 20")
     })
-
     it("returns constant when same min and max", () => {
-      expect(getRangeString(10, 10, "suffix", "prefix")).toBe("prefix10suffix")
+      expect(getRangeString(10, 10)).toBe("10")
     })
-
-    it("adds prefix and suffix where appropriate", () => {
-      expect(getRangeString(10, 20, "suffix", "prefix")).toBe("prefix10 to prefix20suffix")
-      expect(getRangeString(10, 20, " per month", "$")).toBe("$10 to $20 per month")
+    it("includes 0 as min value if provided", () => {
+      expect(getRangeString(0, 20, false)).toBe("0 to 20")
+      expect(getRangeString(0, 20, true)).toBe("$0 to $20")
+      expect(getRangeString(0, 0, false)).toBe("0")
+    })
+    it("formats ranges as currency when expected", () => {
+      expect(getRangeString(10, 20, false)).toBe("10 to 20")
+      expect(getRangeString(10.1, 20, false)).toBe("10.1 to 20")
+      expect(getRangeString(10, 20, true)).toBe("$10 to $20")
+      expect(getRangeString(10.1, 20, true)).toBe("$10.10 to $20")
+      expect(getRangeString(10, 10, true)).toBe("$10")
+    })
+    it("adds suffix where appropriate", () => {
+      expect(getRangeString(10, 20, false, "suffix")).toBe("10 to 20suffix")
+      expect(getRangeString(10, 20, true, "suffix")).toBe("$10 to $20suffix")
+      expect(getRangeString(10, 20, true, " per month")).toBe("$10 to $20 per month")
+    })
+    it("handles undefined and null values as expected", () => {
+      expect(getRangeString(undefined, undefined)).toBeNull()
+      expect(getRangeString(null, null)).toBeNull()
+      expect(getRangeString(undefined, 20)).toBe("20")
+      expect(getRangeString(null, 20)).toBe("20")
+      expect(getRangeString(null, 0)).toBe("0")
+      expect(getRangeString(0, null)).toBe("0")
+      expect(getRangeString(undefined, 0)).toBe("0")
+      expect(getRangeString(0, undefined)).toBe("0")
+      expect(getRangeString(20, undefined)).toBe("20")
+      expect(getRangeString(20, null)).toBe("20")
     })
   })
   describe("getRentRangeString", () => {

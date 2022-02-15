@@ -33,3 +33,7 @@ body .goog-te-banner-frame {
   color: inherit;
   font-weight: 700;
 }
+
+.habitat-income-list li {
+  float: none;
+}
