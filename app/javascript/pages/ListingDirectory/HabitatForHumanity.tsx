@@ -29,7 +29,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
       <div className={"font-alt-sans font-semibold text-base mb-2 text-gray-900"}>
         {t("listings.availableUnits")}
       </div>
-      {getHeader("Units")}
+      {getHeader(t("t.units"))}
       {stackedData.map((row) =>
         getHabitatContentRow(
           `${row.unitType.cellText}:`,
