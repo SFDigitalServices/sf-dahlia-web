@@ -1,4 +1,4 @@
-import { setHeaders } from "../authentication/token"
+import { setAuthHeaders } from "../authentication/token"
 import { User, UserData } from "../authentication/user"
 import { authenticatedGet, post, put } from "./apiService"
 
@@ -7,7 +7,7 @@ export const signIn = async (email: string, password: string): Promise<User> =>
     email,
     password,
   }).then(({ data, headers }) => {
-    setHeaders(headers)
+    setAuthHeaders(headers)
     return data.data
   })
 
