@@ -24,8 +24,16 @@ export interface AuthHeaders {
   "token-type": string
 }
 
-export const setHeaders = (headers: AuthHeaders) => {
-  getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headers))
+export const setAuthHeaders = (headers: AuthHeaders) => {
+  // Set only relevant auth headers
+  const headersToSet = {
+    expiry: headers.expiry,
+    "access-token": headers["access-token"],
+    client: headers.client,
+    uid: headers.uid,
+    "token-type": headers["token-type"],
+  }
+  getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headersToSet))
 }
 
 export const getHeaders = (): AuthHeaders | undefined => getAuthHeaders()

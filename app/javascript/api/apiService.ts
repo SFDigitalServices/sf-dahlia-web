@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
 
-import { setHeaders, getHeaders } from "../authentication/token"
+import { setAuthHeaders, getHeaders } from "../authentication/token"
 
 // Use this function for authenticated calls
 const createAxiosInstance = (): AxiosInstance => {
@@ -12,7 +12,7 @@ const createAxiosInstance = (): AxiosInstance => {
     headers: getHeaders(),
     transformResponse: (res, headers) => {
       if (headers["access-token"]) {
-        setHeaders(headers)
+        setAuthHeaders(headers)
       }
       return JSON.parse(res)
     },
