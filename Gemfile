@@ -87,7 +87,7 @@ gem 'prerender_rails', '~> 1.6.0'
 # http requests made easy
 gem 'http', '~> 2.0.2', require: false
 
-gem 'sidekiq', '~> 5.0.2'
+gem 'sidekiq', '~> 6.4.0'
 
 gem 'hashdiff', '~> 0.3.0'
 
