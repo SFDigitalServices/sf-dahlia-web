@@ -2,7 +2,7 @@ import React from "react"
 
 import { within } from "@testing-library/react"
 
-import HomePage from "../../pages/HomePage"
+import HomePage from "../../pages/index"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 describe("<HomePage />", () => {
