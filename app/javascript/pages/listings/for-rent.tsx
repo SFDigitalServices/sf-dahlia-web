@@ -35,7 +35,7 @@ import {
 
 const getForRentSummaryTable = (listing: RailsRentalListing) =>
   listing.unitSummaries.general
-    .filter((summary) => !!summary.unitType)
+    ?.filter((summary) => !!summary.unitType)
     .map((summary) => ({
       unitType: {
         cellText: defaultIfNotTranslated(
