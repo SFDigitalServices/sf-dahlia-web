@@ -514,8 +514,8 @@ ShortFormApplicationService = (
   Service.liveInTheNeighborhoodMembers = ->
     # used by both NRHP / ADHP
     Service.fullHousehold().filter (member) ->
-      # find all household members that match NRHP
-      member.preferenceAddressMatch == 'Matched'
+      # find all household members that match NRHP and only for sf to avoid south san francisco
+      member.preferenceAddressMatch == 'Matched' && member.home_address && _.lowerCase(member.home_address.city) == 'san francisco'
 
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant

@@ -30,6 +30,7 @@ do ->
       city: 'Mount Shasta'
     fakeApplicant = undefined
     fakeHouseholdMember = undefined
+    fakeHouseholdMemberWithAddress = undefined
     fakeListingIdentityService =
       isRental: ->
       isSale: ->
@@ -89,9 +90,20 @@ do ->
         dob_year: '1966'
         relationship: 'Cousin'
       }, attributes
+    setupFakeHouseholdMemberWithAddress = (attributes) ->
+      fakeHouseholdMemberWithAddress = _.assign {
+        firstName: 'Din'
+        lastName: 'Djarin'
+        dob_month: '05'
+        dob_day: '04'
+        dob_year: '2000'
+        relationship: 'Sibling'
+        home_address: fakeSFAddress
+      }, attributes
     resetFakePeople = ->
       fakeApplicant = undefined
       fakeHouseholdMember = undefined
+      fakeHouseholdMemberWithAddress = undefined
     deleteValidatedForms = ->
       delete ShortFormApplicationService.application.validatedForms
     resetValidatedForms = ->
@@ -500,13 +512,13 @@ do ->
 
       describe 'household member matches neighborhood preference', ->
         beforeEach ->
-          fakeHouseholdMember.preferenceAddressMatch = 'Matched'
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          setupFakeHouseholdMemberWithAddress({preferenceAddressMatch: 'Matched'})
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAddress)
 
         it 'returns array with household member', ->
           members = ShortFormApplicationService.liveInTheNeighborhoodMembers()
           expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeHouseholdMember)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeHouseholdMemberWithAddress)
 
       describe 'applicant and household member match neighborhood preference', ->
         beforeEach ->
@@ -514,11 +526,10 @@ do ->
           fakeHouseholdMember.preferenceAddressMatch = 'Matched'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
-        it 'returns array with applicant and household member', ->
+        it 'returns array with only members that live in the neighborhood', ->
           liveInTheNeighborhoodMembers = ShortFormApplicationService.liveInTheNeighborhoodMembers()
-          expect(liveInTheNeighborhoodMembers.length).toEqual(2)
+          expect(liveInTheNeighborhoodMembers.length).toEqual(1)
           expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
-          expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
 
     describe 'eligibleForLiveWork', ->
       beforeEach ->
@@ -542,7 +553,8 @@ do ->
         fakeListingPreferenceService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
       it 'returns true if someone is eligible for NRHP', ->
-        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+        setupFakeApplicant({preferenceAddressMatch = 'Matched'})
+        ShortFormApplicationService.applicant = fakeApplicant
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
 
       it 'returns false if nobody is eligible for NRHP', ->
@@ -559,7 +571,8 @@ do ->
         fakeListingPreferenceService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
       it 'returns true if someone is eligible for ADHP', ->
-        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+        setupFakeApplicant({preferenceAddressMatch = 'Matched'})
+        ShortFormApplicationService.applicant = fakeApplicant
         expect(ShortFormApplicationService.eligibleForADHP()).toEqual true
 
       it 'returns false if nobody is eligible for ADHP', ->
@@ -1029,6 +1042,19 @@ do ->
 
           # Applicant not eligible for NRHP
           setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+        it 'should not clear Live in SF if applicant lives in South San Francisco', ->
+          # Listing has NRHP
+          fakeListingPreferenceService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant lives in South San Francisco
+          setupFakeApplicant({preferenceAddressMatch: 'Matched', home_address: {address1: '567 1st St', city: 'South San Francisco', zip: '94080'}})
           ShortFormApplicationService.applicant = fakeApplicant
 
           ShortFormApplicationService.cancelPreference('neighborhoodResidence')
