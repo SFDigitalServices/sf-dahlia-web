@@ -33,8 +33,11 @@ import {
   eligibilityHeader,
 } from "../../modules/listings/DirectoryHelpers"
 
-const getForRentSummaryTable = (listing: RailsRentalListing) =>
-  listing.unitSummaries.general
+const getForRentSummaryTable = (listing: RailsRentalListing) => {
+  const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
+  if (!summary) return null
+
+  return summary
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
       unitType: {
@@ -55,6 +58,7 @@ const getForRentSummaryTable = (listing: RailsRentalListing) =>
       },
       colFour: { cellText: getRentRangeString(summary), cellSubText: getRentSubText(summary) },
     }))
+}
 
 const getRentalHeader = (
   filters: EligibilityFilters,
