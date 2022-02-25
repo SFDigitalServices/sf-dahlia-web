@@ -34,7 +34,9 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 
 const getForRentSummaryTable = (listing: RailsRentalListing) => {
-  const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved ?? []
+  const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
+  if (!summary) return null
+
   return summary
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
