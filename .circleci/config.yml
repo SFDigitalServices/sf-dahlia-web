@@ -209,6 +209,8 @@ jobs:
       - setup
       - start-server
       - run: yarn test:e2e
+      - store_test_results:
+          path: cypress/results
   e2e-legacy:
     <<: *defaults
     parallelism: 4

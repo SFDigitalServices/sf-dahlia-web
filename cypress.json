@@ -3,5 +3,9 @@
   "defaultCommandTimeout": 100000,
   "projectId": "dahlia-housing-portal",
   "pageLoadTimeout": 100000,
+  "reporterOptions": {
+    "mochaFile": "cypress/results/tests-[hash].xml",
+    "toConsole": true
+  },
   "video": false
 }
