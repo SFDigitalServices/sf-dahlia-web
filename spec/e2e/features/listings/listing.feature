@@ -4,8 +4,6 @@ Feature: Listings
 
   Scenario: Attempting to go to a listing page using an invalid ID
     Given I try to go to a listing page with an invalid ID
-    #give time for the lookup failure and redirect
-    And I wait "5" seconds
     Then I should be redirected to the welcome page
 
   Scenario: Viewing and interacting with a listing page

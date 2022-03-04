@@ -1,4 +1,5 @@
 World = require('../world.coffee')
+EC = protractor.ExpectedConditions
 Utils = require('../utils')
 { Given, When, Then, setWorldConstructor } = require('cucumber')
 
@@ -40,7 +41,7 @@ When 'I click the Rent link', ->
 
 Then 'I should be redirected to the welcome page', ->
   welcomeComponent = element(By.tagName('welcome-component'))
-  @expect(welcomeComponent.isPresent()).to.eventually.equal(true)
+  browser.wait(EC.presenceOf(welcomeComponent), 5000)
 
 Then 'I should see available units', ->
   propertyCard = element(By.tagName('property-card'))
