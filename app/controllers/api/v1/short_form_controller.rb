@@ -360,7 +360,6 @@ class Api::V1::ShortFormController < ApiController
                 sexualOrientation
                 sexualOrientationOther
                 isVeteran
-                hasDisability
                 indigenousCentralSouthAmericaGroup
                 indigenousNativeAmericanGroup
                 hiv
