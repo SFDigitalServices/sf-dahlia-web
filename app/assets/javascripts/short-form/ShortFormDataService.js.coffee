@@ -48,7 +48,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'indigenousCentralSouthAmericaGroup',
       'indigenousNativeAmericanGroup',
       'indigenousOther',
-      'hasDisability',
       'isVeteran',
       'lastName',
       'latinoOther',

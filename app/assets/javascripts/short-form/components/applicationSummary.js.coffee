@@ -106,7 +106,6 @@ angular.module('dahlia.components')
           ctrl.applicant.sexualOrientation or
           ctrl.applicant.isVeteran or
           ctrl.application.isNonPrimaryMemberVeteran or
-          ctrl.applicant.hasDisability or
           ctrl.applicant.referral
         )
 
@@ -123,9 +122,6 @@ angular.module('dahlia.components')
 
       ctrl.getIsNonPrimaryMemberVeteran = ->
         ctrl.translatedYesNoNoAnswer(ctrl.application.isNonPrimaryMemberVeteran)
-
-      ctrl.getHasDisability = ->
-        ctrl.translatedYesNoNoAnswer(ctrl.applicant.hasDisability)
 
       return ctrl
   ]
