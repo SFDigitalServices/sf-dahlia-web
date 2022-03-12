@@ -23,6 +23,7 @@ import {
   getLocalizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
+import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -172,7 +173,7 @@ const Layout = (props: LayoutProps) => {
         />
 
         <main data-testid="main-content-test-id" id="main-content">
-          {props.children}
+          <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
         </main>
       </div>
 

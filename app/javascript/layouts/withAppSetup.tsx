@@ -7,6 +7,7 @@ import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
 import NavigationProvider from "../navigation/NavigationProvider"
+import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -22,14 +23,16 @@ const withAppSetup = <P extends ObjectWithAssets>(
     void axe(React, ReactDOM, 1000)
   }
   return (
-    <NavigationProvider>
-      <ConfigProvider assetPaths={props.assetPaths}>
-        <UserProvider>
-          <IdleTimeout onTimeout={() => console.log("Logout")} useFormTimeout={useFormTimeout} />
-          <Component {...props} />
-        </UserProvider>
-      </ConfigProvider>
-    </NavigationProvider>
+    <ErrorBoundary boundaryScope={BoundaryScope.page}>
+      <NavigationProvider>
+        <ConfigProvider assetPaths={props.assetPaths}>
+          <UserProvider>
+            <IdleTimeout onTimeout={() => console.log("Logout")} useFormTimeout={useFormTimeout} />
+            <Component {...props} />
+          </UserProvider>
+        </ConfigProvider>
+      </NavigationProvider>
+    </ErrorBoundary>
   )
 }
 
