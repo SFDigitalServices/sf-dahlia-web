@@ -1,5 +1,12 @@
 import RailsListingDescriptor from "./RailsListingDescriptor"
 
+type OpenHouseEvent = {
+  Id: string
+  Listing: string
+  Venue: string
+  attributes: { type: string; url: string }
+}
+
 type BaseRailsListing = {
   reservedDescriptor?: Array<RailsListingDescriptor>
   prioritiesDescriptor?: Array<RailsListingDescriptor>
@@ -24,6 +31,10 @@ type BaseRailsListing = {
   RecordTypeId: string
   imageURL?: string
   Does_Match?: boolean
+  Total_waitlist_openings?: number
+  Maximum_waitlist_size?: number
+  current_waitlist_size?: number
+  Open_Houses: OpenHouseEvent[]
 }
 
 export default BaseRailsListing

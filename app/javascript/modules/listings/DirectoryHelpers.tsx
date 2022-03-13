@@ -6,8 +6,6 @@ import {
   ListingsGroup,
   ListingCard,
   t,
-  StatusBarType,
-  ApplicationStatusType,
   Button,
   PageHeader,
   LinkButton,
@@ -21,15 +19,13 @@ import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUn
 import Link from "../../navigation/Link"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
-import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
-
-export type RailsListing = RailsSaleListing | RailsRentalListing
+import { RailsListing, getImageCardProps } from "./SharedHelpers"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -51,58 +47,6 @@ type Listing = RailsRentalListing & {
 const headerClassNames = "text-base text-gray-700 border-b"
 
 const habitatForHumanity = "Habitat for Humanity"
-
-// Returns every status bar under the image card for one listing
-export const getListingImageCardStatuses = (
-  listing: RailsListing,
-  hasFiltersSet: boolean
-): StatusBarType[] => {
-  const statuses: StatusBarType[] = []
-  const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
-  const lotteryResultsDateString = dayjs(listing.Lottery_Results_Date).format("MMMM DD, YYYY")
-
-  if (new Date(listing.Application_Due_Date) < new Date()) {
-    if (!areLotteryResultsShareable(listing)) {
-      statuses.push({
-        status: ApplicationStatusType.Closed,
-        content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
-        hideIcon: true,
-      })
-    }
-    statuses.push({
-      status: ApplicationStatusType.PostLottery,
-      content: `${t("listings.lotteryResults.cardTitle")}: ${lotteryResultsDateString}`,
-      hideIcon: true,
-    })
-  } else {
-    if (hasFiltersSet && listing.Does_Match) {
-      return [
-        {
-          status: ApplicationStatusType.Matched,
-          content: `${t("listings.eligibilityCalculator.matched")}`,
-          hideIcon: false,
-          iconType: "check",
-        },
-      ]
-    } else if (hasFiltersSet && !listing.Does_Match) {
-      return [
-        {
-          status: ApplicationStatusType.PostLottery,
-          content: `${t("listings.eligibilityCalculator.notAMatch")}`,
-          hideIcon: true,
-        },
-      ]
-    } else {
-      return [
-        {
-          status: ApplicationStatusType.Open,
-          content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
-        },
-      ]
-    }
-  }
-  return statuses
-}
 
 // Transforms an integer or float into a currency string
 export const getCurrencyString = (currencyNumber: number) => {
@@ -233,21 +177,6 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
   }
   return null
 }
-
-// Get imageCardProps for a given listing
-const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
-  imageUrl: listing.imageURL,
-  subtitle:
-    listing.Building_Street_Address &&
-    listing.Building_City &&
-    listing.Building_State &&
-    listing.Building_Zip_Code &&
-    `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
-  title: listing.Name,
-  href: `/listings/${listing.listingID}`,
-  tagLabel: getReservedCommunityType(listing.Reserved_community_type) ?? undefined,
-  statuses: getListingImageCardStatuses(listing, hasFiltersSet),
-})
 
 // Get a set of Listing Cards for an array of listings, which includes both the image and summary table
 export const getListingCards = (listings, directoryType, stackedDataFxn, hasFiltersSet?: boolean) =>

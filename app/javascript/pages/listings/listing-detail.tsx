@@ -1,5 +1,5 @@
-import React from "react"
-
+import React, { useContext, useState, useEffect } from "react"
+import dayjs from "dayjs"
 import {
   SiteAlert,
   ListingDetails,
@@ -21,19 +21,28 @@ import {
   Description,
   AdditionalFees,
   MarkdownSection,
+  NavigationContext,
+  LoadingOverlay,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
+import { getListing } from "../../api/listingApiService"
+import {
+  RailsListing,
+  getImageCardProps,
+  getListingImageCardStatuses,
+} from "../../modules/listings/SharedHelpers"
 
-interface ListingDetailProps {
-  assetPaths: unknown
-}
+// interface ListingDetailProps {
+//   assetPaths: unknown
+// }
 
-const ListingDetail = (_props: ListingDetailProps) => {
+const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
-  // const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
-  // const { router } = useContext(NavigationContext)
+  const { router } = useContext(NavigationContext)
+
+  const [listing, setListing] = useState<RailsListing>(null)
 
   const mockHeaders = {
     name: "Name",
@@ -54,7 +63,7 @@ const ListingDetail = (_props: ListingDetailProps) => {
   const getImage = () => {
     return (
       <header className="image-card--leader">
-        <ImageCard title={"Listing Name"} imageUrl={""} tagLabel={""} />
+        <ImageCard {...getImageCardProps(listing)} />
         <div className="p-3">
           <p className="font-alt-sans uppercase tracking-widest text-sm font-semibold">Address</p>
           <p className="text-gray-700 text-base">Developer</p>
@@ -67,6 +76,14 @@ const ListingDetail = (_props: ListingDetailProps) => {
       </header>
     )
   }
+
+  useEffect(() => {
+    void getListing(router.pathname.split("/")[2]).then((listing: RailsListing) => {
+      console.log("response", listing)
+      setListing(listing)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const getSidebarApplySection = () => {
     return (
@@ -125,7 +142,25 @@ const ListingDetail = (_props: ListingDetailProps) => {
       >
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
-            <ApplicationStatus content={"Application Deadline Dec 31, 2022 at 6:00 PM"} />
+            <ApplicationStatus {...getListingImageCardStatuses(listing, false)[0]} />
+            {!(dayjs(listing.Application_Due_Date) > dayjs()) && (
+              <>
+                {listing.Open_Houses.map((openHouse) => {
+                  return (
+                    <EventSection
+                      events={[
+                        {
+                          dateString: "January 1st, 2022",
+                          timeString: "2:00pm",
+                          note: openHouse.Venue,
+                        },
+                      ]}
+                      headerText={"Open Houses"}
+                    />
+                  )
+                })}
+              </>
+            )}
             <EventSection
               events={[
                 {
@@ -136,21 +171,11 @@ const ListingDetail = (_props: ListingDetailProps) => {
               ]}
               headerText={"Information Sessions"}
             />
-            <EventSection
-              events={[
-                {
-                  dateString: "January 1st, 2022",
-                  timeString: "2:00pm",
-                  note: "1234 Dahlia Avenue, San Francisco",
-                },
-              ]}
-              headerText={"Open Houses"}
-            />
+            {/* TODO: Waitlist component needs to accept custom strings, custom number rows, custom bolded styling */}
             <Waitlist
-              isWaitlistOpen={true}
-              waitlistMaxSize={100}
-              waitlistCurrentSize={25}
-              waitlistOpenSpots={75}
+              isWaitlistOpen={listing.hasWaitlist}
+              waitlistCurrentSize={listing.Units_Available}
+              waitlistOpenSpots={listing.Total_waitlist_openings}
             />
 
             <DownloadLotteryResults resultsDate={"January 1st, 2022"} pdfURL={""} />
@@ -326,17 +351,21 @@ const ListingDetail = (_props: ListingDetailProps) => {
   }
 
   return (
-    <Layout>
-      <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
-        <SiteAlert type="alert" className={alertClasses} />
-        <SiteAlert type="success" className={alertClasses} timeout={30_000} />
-      </div>
-      <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
-        {getImage()}
-        {getAMISection()}
-        {getBodyAndSidebar()}
-      </article>
-    </Layout>
+    <LoadingOverlay isLoading={!listing}>
+      <Layout>
+        <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
+          <SiteAlert type="alert" className={alertClasses} />
+          <SiteAlert type="success" className={alertClasses} timeout={30_000} />
+        </div>
+        {listing && (
+          <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
+            {getImage()}
+            {getAMISection()}
+            {getBodyAndSidebar()}
+          </article>
+        )}
+      </Layout>
+    </LoadingOverlay>
   )
 }
 
