@@ -6,12 +6,8 @@ import {
   ListingDetailItem,
   ImageCard,
   Message,
-  GroupedTable,
   ApplicationStatus,
-  DownloadLotteryResults,
   Waitlist,
-  GetApplication,
-  SubmitApplication,
   EventSection,
   ListSection,
   StandardTable,
@@ -23,6 +19,7 @@ import {
   MarkdownSection,
   NavigationContext,
   LoadingOverlay,
+  ContentAccordion,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
@@ -33,10 +30,7 @@ import {
   getImageCardProps,
   getListingImageCardStatuses,
 } from "../../modules/listings/SharedHelpers"
-
-// interface ListingDetailProps {
-//   assetPaths: unknown
-// }
+import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -59,6 +53,26 @@ const ListingDetail = () => {
       dob: "05/01/1975",
     },
   ]
+
+  const getEventTimeString = (listingEvent: ListingEvent) => {
+    if (listingEvent.Start_Time) {
+      return listingEvent.End_Time
+        ? `${listingEvent.Start_Time} - ${listingEvent.End_Time}`
+        : listingEvent.Start_Time
+    }
+    return ""
+  }
+
+  const getEventNote = (listingEvent: ListingEvent) => {
+    return (
+      <div className="flex flex-col">
+        {listingEvent.Venue && <span>{listingEvent.Venue}</span>}
+        {listingEvent.Street_Address && listingEvent.City && (
+          <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
+        )}
+      </div>
+    )
+  }
 
   const getImage = () => {
     return (
@@ -85,51 +99,6 @@ const ListingDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const getSidebarApplySection = () => {
-    return (
-      <>
-        <GetApplication
-          onlineApplicationURL={"https://www.example.com"}
-          applicationsOpen={true}
-          applicationsOpenDate={"January 1st"}
-          paperApplications={[{ fileURL: "https://www.example.com", languageString: "English" }]}
-          paperMethod={false}
-          postmarkedApplicationsReceivedByDate={"January 2nd"}
-          applicationPickUpAddressOfficeHours={"Pick up office hours"}
-          applicationPickUpAddress={{
-            street: "Pick up street",
-            city: "City",
-            state: "State",
-            zipCode: "Zip",
-          }}
-          listingStatus={"active" as any}
-        />
-        <SubmitApplication
-          applicationMailingAddress={{
-            street: "Mail in street",
-            city: "City",
-            state: "State",
-            zipCode: "Zip",
-          }}
-          applicationDropOffAddress={{
-            street: "Drop off street",
-            city: "City",
-            state: "State",
-            zipCode: "Zip",
-          }}
-          applicationDropOffAddressOfficeHours={"Drop off office hours"}
-          applicationOrganization={"Application organization"}
-          postmarkedApplicationData={{
-            postmarkedApplicationsReceivedByDate: "January 2nd",
-            developer: "Developer",
-            applicationsDueDate: "January 1st",
-          }}
-          listingStatus={"active" as any}
-        />
-      </>
-    )
-  }
-
   const getSidebar = () => {
     return (
       <ListingDetailItem
@@ -143,49 +112,67 @@ const ListingDetail = () => {
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ApplicationStatus {...getListingImageCardStatuses(listing, false)[0]} />
-            {!(dayjs(listing.Application_Due_Date) > dayjs()) && (
+            <Waitlist
+              isWaitlistOpen={!!listing.Maximum_waitlist_size || !!listing.Total_waitlist_openings}
+              waitlistCurrentSize={listing.Units_Available}
+              waitlistOpenSpots={listing.Total_waitlist_openings}
+              waitlistMaxSize={listing.Maximum_waitlist_size}
+            />
+            {dayjs(listing.Application_Due_Date) > dayjs() && (
               <>
-                {listing.Open_Houses.map((openHouse) => {
+                {listing.Information_Sessions?.map((informationSession) => {
                   return (
                     <EventSection
                       events={[
                         {
-                          dateString: "January 1st, 2022",
-                          timeString: "2:00pm",
-                          note: openHouse.Venue,
+                          dateString: dayjs(informationSession.Date).format("MMMM DD"),
+                          timeString: getEventTimeString(informationSession),
+                          note: getEventNote(informationSession),
                         },
                       ]}
-                      headerText={"Open Houses"}
+                      headerText={"Information Sessions"}
                     />
                   )
                 })}
+                {listing.Open_Houses?.length && (
+                  <EventSection
+                    events={listing.Open_Houses?.map((openHouse) => {
+                      return {
+                        dateString: dayjs(openHouse.Date).format("MMMM DD"),
+                        timeString: getEventTimeString(openHouse),
+                        note: getEventNote(openHouse),
+                      }
+                    })}
+                    headerText={"Open Houses"}
+                  />
+                )}
+
+                {/* TODO: Bloom prop changes for get and submit application sections */}
               </>
             )}
-            <EventSection
-              events={[
-                {
-                  dateString: "January 1st, 2022",
-                  timeString: "2:00pm",
-                  note: "1234 Dahlia Avenue, San Francisco",
-                },
-              ]}
-              headerText={"Information Sessions"}
-            />
-            {/* TODO: Waitlist component needs to accept custom strings, custom number rows, custom bolded styling */}
-            <Waitlist
-              isWaitlistOpen={listing.hasWaitlist}
-              waitlistCurrentSize={listing.Units_Available}
-              waitlistOpenSpots={listing.Total_waitlist_openings}
-            />
-
-            <DownloadLotteryResults resultsDate={"January 1st, 2022"} pdfURL={""} />
-
-            {getSidebarApplySection()}
+            {!!listing.Lottery_Date &&
+              dayjs(listing.Lottery_Date) > dayjs() &&
+              !listing.LotteryResultsURL && (
+                <EventSection
+                  events={[
+                    {
+                      dateString: dayjs(listing.Lottery_Date).format("MMMM DD, YYYY"),
+                      timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
+                      note: getEventNote({
+                        City: listing.Lottery_City,
+                        Street_Address: listing.Lottery_Street_Address,
+                        Venue: listing.Lottery_Venue,
+                      }),
+                    },
+                  ]}
+                  headerText={"Public Lottery"}
+                  sectionHeader={true}
+                />
+              )}
+            {/* TODO: Bloom prop changes <DownloadLotteryResults resultsDate={"January 1st, 2022"} pdfURL={""} /> */}
+            {/* TODO: Bloom prop changes <WhatToExpect listing={null} /> */}
+            {/* TODO: Bloom prop changes <LeasingAgent listing={null} />  */}
           </div>
-
-          {/* Needs Bloom backend dependencies removed, generalized
-          <WhatToExpect listing={null} />
-          <LeasingAgent listing={null} /> */}
         </aside>
       </ListingDetailItem>
     )
@@ -207,6 +194,8 @@ const ListingDetail = () => {
               "For income calculations, household size includes everyone (all ages) living in the unit."
             }
           >
+            {/* TODO: Build unit summaries */}
+
             <StandardTable headers={mockHeaders} data={mockData} responsiveCollapse={true} />
           </ListSection>
           <ListSection
@@ -215,14 +204,9 @@ const ListingDetail = () => {
               "Occupancy limits for this building differ from household size, and do not include children under 6."
             }
           >
+            {/* TODO: Build unit summaries */}
             <StandardTable headers={mockHeaders} data={mockData} responsiveCollapse={true} />
           </ListSection>
-          <ListSection
-            title={"Rental Assistance"}
-            subtitle={
-              "Section 8 housing vouchers and other valid rental assistance programs can be used for this property."
-            }
-          />
           <ListSection
             title={"Lottery Preferences"}
             subtitle={
@@ -231,10 +215,13 @@ const ListingDetail = () => {
           >
             <>
               <PreferencesList
-                listingPreferences={[
-                  { title: "Title", subtitle: "Subtitle", description: "Description", ordinal: 1 },
-                  { title: "Title", subtitle: "Subtitle", description: "Description", ordinal: 2 },
-                ]}
+                listingPreferences={listing.Listing_Lottery_Preferences.map((preference) => {
+                  return {
+                    title: preference.Lottery_Preference.Name,
+                    subtitle: `Up to ${preference.Available_Units} unit(s) available`,
+                    ordinal: 1,
+                  }
+                })}
               />
               <p className="text-gray-700 text-tiny">
                 {
@@ -246,26 +233,33 @@ const ListingDetail = () => {
           <ListSection
             title={"Rental Assistance"}
             subtitle={
-              "Section 8 housing vouchers and other valid rental assistance programs can be used for this property."
+              "Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy."
             }
           />
           <ListSection
             title={"Additional Eligibility Rules"}
             subtitle={"Applicants must also qualify under the rules of the building."}
           >
-            <InfoCard title={"Credit History"}>
-              <ExpandableText className="text-sm text-gray-700">
-                {"Credit history information"}
-              </ExpandableText>
-            </InfoCard>
-            <InfoCard title={"Rental History"}>
-              <ExpandableText className="text-sm text-gray-700">
-                {"Rental history information"}
-              </ExpandableText>
-            </InfoCard>
+            {listing.Credit_Rating && (
+              <InfoCard title={"Credit History"}>
+                <ExpandableText className="text-sm text-gray-700">
+                  {listing.Credit_Rating}
+                </ExpandableText>
+              </InfoCard>
+            )}
+
+            {listing.Eviction_History && (
+              <InfoCard title={"Rental History"}>
+                <ExpandableText className="text-sm text-gray-700">
+                  {listing.Eviction_History}
+                </ExpandableText>
+              </InfoCard>
+            )}
+
             <InfoCard title={"Criminal Background"}>
               <ExpandableText className="text-sm text-gray-700">
-                {"Criminal background information"}
+                Qualified applicants with criminal history will be considered for housing in
+                compliance with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
               </ExpandableText>
             </InfoCard>
             <p>
@@ -283,18 +277,14 @@ const ListingDetail = () => {
         >
           <div className="listing-detail-panel">
             <dl className="column-definition-list">
-              <Description term={"Neighborhood"} description={"My Neighborhood"} />
-              <Description term={"Built"} description={"2022"} />
-              <Description term={"Smoking Policy"} description={"Non-smoking building"} />
-              <Description term={"Pets Policy"} description={"Service animals allowed"} />
-              <Description
-                term={"Property Amenities"}
-                description={"Underground parking, courtyard, bike room, business center"}
-              />
-              <Description term={"Unit Amenities"} description={"In-unit wahser/dryer"} />
-              <Description term={"Accessibility"} description={"Elevator to all floors"} />
+              <Description term={"Neighborhood"} description={listing.Neighborhood} />
+              <Description term={"Built"} description={listing.Year_Built} />
+              <Description term={"Smoking Policy"} description={listing.Smoking_Policy} />
+              <Description term={"Pets Policy"} description={listing.Pet_Policy} />
+              <Description term={"Property Amenities"} description={listing.Amenities} />
+              <Description term={"Accessibility"} description={listing.Accessibility} />
               {/*
-              Needs Bloom backend dependencies removed, generalized
+              TODO: Build unit summaries
               <Description
                 term={"Unit Features"}
                 description={
@@ -302,17 +292,13 @@ const ListingDetail = () => {
                     units={listing.units}
                     unitSummaries={listing?.unitsSummarized?.byUnitType}
                     disableAccordion={listing.disableUnitsAccordion}
-                  />
-                }
               /> */}
             </dl>
             <AdditionalFees
-              depositMin={"2,102"}
-              depositMax={"2,355"}
-              applicationFee={"50"}
-              costsNotIncluded={
-                "Tenants pay for gas, electricity. For pet fees: Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum. Dogs are not allowed in the building. One parking space per unit available for $175 a month."
-              }
+              depositMin={listing.Deposit_Min?.toLocaleString()}
+              depositMax={listing.Deposit_Max?.toLocaleString()}
+              applicationFee={listing.Fee?.toLocaleString()}
+              costsNotIncluded={listing.Costs_Not_Included}
               depositHelperText={"or one month's rent"}
             />
           </div>
@@ -323,29 +309,59 @@ const ListingDetail = () => {
           title={"Additional information"}
           subtitle={"Required documents and selection criteria"}
         >
-          <div className="listing-detail-panel">
-            <div className="info-card">
-              <h3 className="text-serif-lg">Required Documents</h3>
-              <p className="text-sm text-gray-700 m-0 p-0">
-                <MarkdownSection>
-                  Lottery winners will be required to fill out a building application and provide a
-                  copy of your current credit report, 3 most recent paystubs, current tax returns
-                  and W-2, and 3 most recent bank statements.
-                </MarkdownSection>
-              </p>
+          {listing.Required_Documents && (
+            <div className="listing-detail-panel">
+              <div className="info-card">
+                <h3 className="text-serif-lg">Required Documents</h3>
+                <p className="text-sm text-gray-700 m-0 p-0">{listing.Required_Documents}</p>
+              </div>
             </div>
-          </div>
+          )}
+          {listing.Legal_Disclaimers && (
+            <div className="listing-detail-panel">
+              <div className="info-card">
+                <h3 className="text-serif-lg">Important Program Rules</h3>
+                <p className="text-sm text-gray-700 m-0 p-0">
+                  <MarkdownSection>{listing.Legal_Disclaimers}</MarkdownSection>
+                </p>
+              </div>
+            </div>
+          )}
         </ListingDetailItem>
         {getSidebar()}
       </ListingDetails>
     )
   }
 
+  const getAccordionTitle = () => {
+    return (
+      <span className={"flex w-full justify-between items-center"}>
+        <span className={"flex items-center"}>
+          <span className={"font-serif text-3xl font-medium leading-4 pr-2"}>1</span> person in
+          household
+        </span>
+        <span className={"flex pr-4 items-center"}>
+          <span className={"pr-1 text-gray-700"}>Income</span>
+          <span>$4,090 to $9,325</span>
+          <span className={"pl-1 text-gray-700"}>per month</span>
+        </span>
+      </span>
+    )
+  }
+
   const getAMISection = () => {
+    /* TODO: Build unit summaries */
     return (
       <div className="w-full md:w-2/3 md:mt-6 md:mb-6 md:px-3 md:pr-8">
-        <Message warning={true}>Reserved Type</Message>
-        <GroupedTable headers={mockHeaders} data={[{ data: mockData }]} responsiveCollapse={true} />
+        {listing.Reserved_community_type && (
+          <Message warning={true}>Reserved for: {listing.Reserved_community_type}</Message>
+        )}
+        <ContentAccordion
+          customBarContent={getAccordionTitle()}
+          customExpandedContent={<></>}
+          accordionTheme={"gray"}
+          barClass={"mt-4"}
+        />
       </div>
     )
   }
