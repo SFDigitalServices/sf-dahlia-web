@@ -28,6 +28,7 @@ type BaseRailsListing = {
   Amenities?: string
   Building_City?: string
   Building_Name: string
+  Building_Selection_Criteria?: string
   Building_State?: string
   Building_Street_Address?: string
   Building_URL?: string
@@ -36,6 +37,7 @@ type BaseRailsListing = {
   Credit_Rating?: string
   Deposit_Min?: number
   Deposit_Max?: number
+  Developer?: string
   Does_Match?: boolean
   Eviction_History?: string
   Fee?: number
@@ -54,6 +56,7 @@ type BaseRailsListing = {
   Name: string
   Neighborhood?: string
   Open_Houses: ListingEvent[]
+  Parking_Information?: string
   Pet_Policy?: string
   Publish_Lottery_Results: boolean
   RecordTypeId: string

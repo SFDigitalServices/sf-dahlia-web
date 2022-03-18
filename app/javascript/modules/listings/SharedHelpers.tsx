@@ -59,15 +59,21 @@ export const getListingImageCardStatuses = (
   return statuses
 }
 
+export const getListingAddressString = (listing: RailsListing) => {
+  return (
+    (listing.Building_Street_Address &&
+      listing.Building_City &&
+      listing.Building_State &&
+      listing.Building_Zip_Code &&
+      `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`) ??
+    ""
+  )
+}
+
 // Get imageCardProps for a given listing
 export const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
   imageUrl: listing?.imageURL,
-  subtitle:
-    listing.Building_Street_Address &&
-    listing.Building_City &&
-    listing.Building_State &&
-    listing.Building_Zip_Code &&
-    `${listing.Building_Street_Address}, ${listing.Building_City} ${listing.Building_State}, ${listing.Building_Zip_Code}`,
+  subtitle: getListingAddressString(listing),
   title: listing.Name,
   href: `/listings/${listing.listingID}`,
   tagLabel: getReservedCommunityType(listing.Reserved_community_type) ?? undefined,

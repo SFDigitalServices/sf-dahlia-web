@@ -10,7 +10,6 @@ import {
   Waitlist,
   EventSection,
   ListSection,
-  StandardTable,
   PreferencesList,
   InfoCard,
   ExpandableText,
@@ -25,10 +24,11 @@ import {
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
+import { getReservedCommunityType } from "../../util/languageUtil"
 import {
   RailsListing,
-  getImageCardProps,
   getListingImageCardStatuses,
+  getListingAddressString,
 } from "../../modules/listings/SharedHelpers"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 
@@ -37,22 +37,6 @@ const ListingDetail = () => {
   const { router } = useContext(NavigationContext)
 
   const [listing, setListing] = useState<RailsListing>(null)
-
-  const mockHeaders = {
-    name: "Name",
-    dob: "Date of Birth",
-  }
-
-  const mockData = [
-    {
-      name: "Jim Halpert",
-      dob: "05/01/1985",
-    },
-    {
-      name: "Michael Scott",
-      dob: "05/01/1975",
-    },
-  ]
 
   const getEventTimeString = (listingEvent: ListingEvent) => {
     if (listingEvent.Start_Time) {
@@ -77,10 +61,17 @@ const ListingDetail = () => {
   const getImage = () => {
     return (
       <header className="image-card--leader">
-        <ImageCard {...getImageCardProps(listing)} />
+        <ImageCard
+          imageUrl={listing?.imageURL}
+          title={listing.Name}
+          href={`/listings/${listing.listingID}`}
+          tagLabel={getReservedCommunityType(listing.Reserved_community_type) ?? undefined}
+        />
         <div className="p-3">
-          <p className="font-alt-sans uppercase tracking-widest text-sm font-semibold">Address</p>
-          <p className="text-gray-700 text-base">Developer</p>
+          <p className="font-alt-sans uppercase tracking-widest text-sm font-semibold">
+            {getListingAddressString(listing)}
+          </p>
+          <p className="text-gray-700 text-base">{listing.Developer}</p>
           <p className="text-xs">
             <a href={"/"} target="_blank" aria-label="Opens in new window">
               View on Map
@@ -112,12 +103,7 @@ const ListingDetail = () => {
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ApplicationStatus {...getListingImageCardStatuses(listing, false)[0]} />
-            <Waitlist
-              isWaitlistOpen={!!listing.Maximum_waitlist_size || !!listing.Total_waitlist_openings}
-              waitlistCurrentSize={listing.Units_Available}
-              waitlistOpenSpots={listing.Total_waitlist_openings}
-              waitlistMaxSize={listing.Maximum_waitlist_size}
-            />
+
             {dayjs(listing.Application_Due_Date) > dayjs() && (
               <>
                 {listing.Information_Sessions?.map((informationSession) => {
@@ -146,10 +132,15 @@ const ListingDetail = () => {
                     headerText={"Open Houses"}
                   />
                 )}
-
                 {/* TODO: Bloom prop changes for get and submit application sections */}
               </>
             )}
+            <Waitlist
+              isWaitlistOpen={!!listing.Maximum_waitlist_size || !!listing.Total_waitlist_openings}
+              waitlistCurrentSize={listing.Units_Available}
+              waitlistOpenSpots={listing.Total_waitlist_openings}
+              waitlistMaxSize={listing.Maximum_waitlist_size}
+            />
             {!!listing.Lottery_Date &&
               dayjs(listing.Lottery_Date) > dayjs() &&
               !listing.LotteryResultsURL && (
@@ -195,8 +186,6 @@ const ListingDetail = () => {
             }
           >
             {/* TODO: Build unit summaries */}
-
-            <StandardTable headers={mockHeaders} data={mockData} responsiveCollapse={true} />
           </ListSection>
           <ListSection
             title={"Occupancy"}
@@ -205,7 +194,6 @@ const ListingDetail = () => {
             }
           >
             {/* TODO: Build unit summaries */}
-            <StandardTable headers={mockHeaders} data={mockData} responsiveCollapse={true} />
           </ListSection>
           <ListSection
             title={"Lottery Preferences"}
@@ -215,11 +203,11 @@ const ListingDetail = () => {
           >
             <>
               <PreferencesList
-                listingPreferences={listing.Listing_Lottery_Preferences.map((preference) => {
+                listingPreferences={listing.Listing_Lottery_Preferences.map((preference, index) => {
                   return {
                     title: preference.Lottery_Preference.Name,
                     subtitle: `Up to ${preference.Available_Units} unit(s) available`,
-                    ordinal: 1,
+                    ordinal: index + 1,
                   }
                 })}
               />
@@ -263,7 +251,7 @@ const ListingDetail = () => {
               </ExpandableText>
             </InfoCard>
             <p>
-              <a href={"https://www.example.com"}>
+              <a href={listing.Building_Selection_Criteria} target={"_blank"}>
                 {"Find out more about Building Selection Criteria"}
               </a>
             </p>
@@ -279,20 +267,13 @@ const ListingDetail = () => {
             <dl className="column-definition-list">
               <Description term={"Neighborhood"} description={listing.Neighborhood} />
               <Description term={"Built"} description={listing.Year_Built} />
+              <Description term={"Parking"} description={listing.Parking_Information} />
               <Description term={"Smoking Policy"} description={listing.Smoking_Policy} />
               <Description term={"Pets Policy"} description={listing.Pet_Policy} />
               <Description term={"Property Amenities"} description={listing.Amenities} />
               <Description term={"Accessibility"} description={listing.Accessibility} />
-              {/*
-              TODO: Build unit summaries
-              <Description
-                term={"Unit Features"}
-                description={
-                  <UnitTables
-                    units={listing.units}
-                    unitSummaries={listing?.unitsSummarized?.byUnitType}
-                    disableAccordion={listing.disableUnitsAccordion}
-              /> */}
+
+              <Description term={"Unit Features"} description={""} />
             </dl>
             <AdditionalFees
               depositMin={listing.Deposit_Min?.toLocaleString()}
@@ -302,6 +283,14 @@ const ListingDetail = () => {
               depositHelperText={"or one month's rent"}
             />
           </div>
+        </ListingDetailItem>
+        <ListingDetailItem
+          imageAlt={""}
+          imageSrc={""}
+          title={"Neighborhood"}
+          subtitle={"Location and transportation"}
+        >
+          Map
         </ListingDetailItem>
         <ListingDetailItem
           imageAlt={""}
@@ -327,7 +316,15 @@ const ListingDetail = () => {
               </div>
             </div>
           )}
+          <div className="listing-detail-panel">
+            <div className="info-card">
+              <h3 className="text-serif-lg">
+                Monitored by the Mayor's Office of Housing and Community Development
+              </h3>
+            </div>
+          </div>
         </ListingDetailItem>
+
         {getSidebar()}
       </ListingDetails>
     )
@@ -337,13 +334,8 @@ const ListingDetail = () => {
     return (
       <span className={"flex w-full justify-between items-center"}>
         <span className={"flex items-center"}>
-          <span className={"font-serif text-3xl font-medium leading-4 pr-2"}>1</span> person in
+          <span className={"font-serif text-3xl font-medium leading-4 pr-2"}>#</span> person in
           household
-        </span>
-        <span className={"flex pr-4 items-center"}>
-          <span className={"pr-1 text-gray-700"}>Income</span>
-          <span>$4,090 to $9,325</span>
-          <span className={"pl-1 text-gray-700"}>per month</span>
         </span>
       </span>
     )
@@ -358,7 +350,7 @@ const ListingDetail = () => {
         )}
         <ContentAccordion
           customBarContent={getAccordionTitle()}
-          customExpandedContent={<></>}
+          customExpandedContent={<>Pricing table</>}
           accordionTheme={"gray"}
           barClass={"mt-4"}
         />
