@@ -5,7 +5,6 @@ import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListin
 import { ConfigContext } from "../../lib/ConfigContext"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import {
-  RailsListing,
   DirectoryType,
   ListingsGroups,
   openListingsView,
@@ -15,6 +14,7 @@ import {
   signUpActionBlock,
   sortListings,
 } from "./DirectoryHelpers"
+import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 
 interface RentalDirectoryProps {
