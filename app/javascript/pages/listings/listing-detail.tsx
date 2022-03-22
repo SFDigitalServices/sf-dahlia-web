@@ -58,62 +58,6 @@ const ListingDetail = () => {
     )
   }
 
-  const mockAdditionalInfo = {
-    Listing_Other_Notes: "",
-    Required_Documents: (
-      <p className="text-sm">
-        Lottery winners will be required to fill out a building application and provide a copy of
-        your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most
-        recent bank statements.
-      </p>
-    ),
-    Legal_Disclaimers: (
-      <p className="text-sm">
-        Here are the legel disclaimers. Find out information{" "}
-        <a href="sf.gov" target="blank">
-          here
-        </a>
-        . So cool!
-      </p>
-    ),
-    CC_and_R_URL: (
-      <span>
-        <p className="text-sm mb-10">
-          The CC&R's explain the rules of the homeowners' association, and restrict how you can
-          modify the property.
-        </p>
-        <a
-          className="button"
-          href="https://polarispacific.app.box.com/v/MiraSFDisclosures"
-          target="_blank"
-          aria-label="Opens in new window"
-        >
-          Download PDF
-        </a>
-      </span>
-    ),
-    Allows_Realtor_Commission: false,
-    Realtor_Commission_Info: "",
-    Repricing_Mechanism: (
-      <p className="text-sm">
-        When you sell a BMR unit, it will be resold at a restricted price that is affordable to the
-        next qualified household. The household you sell to must meet the first‐time homebuyer,
-        income and other qualifications for the program. Please review the{" "}
-        <a
-          href="https://sfmohcd.org/sites/default/files/Documents/MOH/Limited%20Equity%20Progam/SAMPLE%20LEP%20Loan%20Disclosure%20Book.pdf"
-          target="_blank"
-        >
-          Limited Equity Loan Disclosure Book
-        </a>{" "}
-        and{" "}
-        <a href="http://sf-moh.org/index.aspx?page=295" target="_blank">
-          2018 Inclusionary Affordable Housing Program Monitoring and Procedures Manual
-        </a>{" "}
-        for specific information.{" "}
-      </p>
-    ),
-  }
-
   const getImage = () => {
     return (
       <header className="image-card--leader">
@@ -372,46 +316,7 @@ const ListingDetail = () => {
               </div>
             </div>
           )}
-          <div className="listing-detail-panel">
-            {mockAdditionalInfo.Listing_Other_Notes && (
-              <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Special Notes</h3>
-                {mockAdditionalInfo.Required_Documents}
-              </div>
-            )}
-            <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">Required Documents</h3>
-              {mockAdditionalInfo.Required_Documents}
-            </div>
-            <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">Important Program Rules</h3>
-              {mockAdditionalInfo.Legal_Disclaimers}
-            </div>
-            {mockAdditionalInfo.CC_and_R_URL && (
-              <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Covenants, Conditions and Restrictions (CC&R's)</h3>
-                {mockAdditionalInfo.CC_and_R_URL}
-              </div>
-            )}
-            {/*
-            {listing.isSale && (
-            <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
-              {mockAdditionalInfo.Allows_Realtor_Commission ? (
-                display realtor_commission_header
-                realtorComissionMessage
-                {mockAdditionalInfo.Realtor_Commission_Info && realtor_commission_how_to}
-              ) : display realtor_commission_not_eligible message}
-            </div>
-            )}
-            */}
-            {mockAdditionalInfo.Repricing_Mechanism && (
-              <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Resale Price Restrictions</h3>
-                {mockAdditionalInfo.Repricing_Mechanism}
-              </div>
-            )}
-          </div>
+          <div className="listing-detail-panel" />
         </ListingDetailItem>
 
         {getSidebar()}
