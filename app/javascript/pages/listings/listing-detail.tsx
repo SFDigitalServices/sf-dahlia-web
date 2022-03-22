@@ -15,7 +15,6 @@ import {
   ExpandableText,
   Description,
   AdditionalFees,
-  MarkdownSection,
   NavigationContext,
   LoadingOverlay,
   ContentAccordion,
@@ -25,6 +24,7 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { getReservedCommunityType } from "../../util/languageUtil"
+import { stripMostTags } from "../../util/filterUtil"
 import {
   RailsListing,
   getListingImageCardStatuses,
@@ -37,6 +37,7 @@ const ListingDetail = () => {
   const { router } = useContext(NavigationContext)
 
   const [listing, setListing] = useState<RailsListing>(null)
+  // console.log(stripMostTags(listing.Legal_Disclaimers))
 
   const getEventTimeString = (listingEvent: ListingEvent) => {
     if (listingEvent.Start_Time) {
@@ -298,25 +299,52 @@ const ListingDetail = () => {
           title={"Additional information"}
           subtitle={"Required documents and selection criteria"}
         >
-          {listing.Required_Documents && (
-            <div className="listing-detail-panel">
-              <div className="info-card">
-                <h3 className="text-serif-lg">Required Documents</h3>
-                <p className="text-sm text-gray-700 m-0 p-0">{listing.Required_Documents}</p>
+          <div className="listing-detail-panel">
+            {listing.Listing_Other_Notes && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">Special Notes</h3>
+                <div
+                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Listing_Other_Notes) }}
+                />
               </div>
+            )}
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-lg">Required Documents</h3>
+              <div
+                dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Required_Documents) }}
+              />
             </div>
-          )}
-          {listing.Legal_Disclaimers && (
-            <div className="listing-detail-panel">
-              <div className="info-card">
-                <h3 className="text-serif-lg">Important Program Rules</h3>
-                <p className="text-sm text-gray-700 m-0 p-0">
-                  <MarkdownSection>{listing.Legal_Disclaimers}</MarkdownSection>
-                </p>
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-lg">Important Program Rules</h3>
+              <div dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Legal_Disclaimers) }} />
+            </div>
+            {listing.CC_and_R_URL && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">Covenants, Conditions and Restrictions (CC&R's)</h3>
+                <div dangerouslySetInnerHTML={{ __html: stripMostTags(listing.CC_and_R_URL) }} />
               </div>
+            )}
+            {/*
+            {listing.isSale && (
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
+              {listing.Allows_Realtor_Commission ? (
+                display realtor_commission_header
+                realtorComissionMessage
+                {listing.Realtor_Commission_Info && realtor_commission_how_to}
+              ) : display realtor_commission_not_eligible message}
             </div>
-          )}
-          <div className="listing-detail-panel" />
+            )}
+            */}
+            {listing.Repricing_Mechanism && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">Resale Price Restrictions</h3>
+                <div
+                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Repricing_Mechanism) }}
+                />
+              </div>
+            )}
+          </div>
         </ListingDetailItem>
 
         {getSidebar()}

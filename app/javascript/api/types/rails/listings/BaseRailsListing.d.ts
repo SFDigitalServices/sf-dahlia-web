@@ -24,6 +24,7 @@ export type ListingLotteryPreference = {
 
 type BaseRailsListing = {
   Accessibility?: string
+  Allows_Realtor_Commission?: boolean
   Application_Due_Date: string
   Amenities?: string
   Building_City?: string
@@ -33,6 +34,7 @@ type BaseRailsListing = {
   Building_Street_Address?: string
   Building_URL?: string
   Building_Zip_Code?: string
+  CC_and_R_URL?: string
   Costs_Not_Included?: string
   Credit_Rating?: string
   Deposit_Min?: number
@@ -45,6 +47,7 @@ type BaseRailsListing = {
   Information_Sessions: ListingEvent[]
   Legal_Disclaimers?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
+  Listing_Other_Notes?: string
   LotteryResultsURL?: string
   Lottery_City?: string
   Lottery_Date?: string
@@ -59,7 +62,9 @@ type BaseRailsListing = {
   Parking_Information?: string
   Pet_Policy?: string
   Publish_Lottery_Results: boolean
+  Realtor_Commission_Info?: string
   RecordTypeId: string
+  Repricing_Mechanism?: string
   Reserved_community_minimum_age: number
   Reserved_community_type?: string
   Required_Documents?: string
