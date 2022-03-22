@@ -1,5 +1,4 @@
 import {
-  getListingImageCardStatuses,
   getCurrencyString,
   getRangeString,
   getNumberString,
@@ -8,6 +7,7 @@ import {
   getTableHeader,
   showWaitlist,
 } from "../../modules/listings/DirectoryHelpers"
+import { getListingImageCardStatuses } from "../../modules/listings/SharedHelpers"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 
@@ -109,7 +109,7 @@ describe("DirectoryHelpers", () => {
       // eslint-disable-next-line unicorn/no-zero-fractions
       expect(getCurrencyString(1.0)).toBe("$1")
       // eslint-disable-next-line unicorn/no-zero-fractions, prettier/prettier
-      expect(getCurrencyString(1000.000)).toBe("$1,000")
+      expect(getCurrencyString(1000.0)).toBe("$1,000")
     })
     it("displays two digits after the decimal if not empty", () => {
       expect(getCurrencyString(1.01)).toBe("$1.01")

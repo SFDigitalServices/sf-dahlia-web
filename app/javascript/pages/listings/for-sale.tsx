@@ -110,7 +110,7 @@ const getFindMoreActionBlock = () => {
     </>
   )
 }
-const RentDirectory = () => {
+const SaleDirectory = () => {
   const eligibilityFilters: EligibilityFilters = JSON.parse(
     localStorage.getItem("ngStorage-eligibility_filters")
   )
@@ -138,4 +138,4 @@ const RentDirectory = () => {
   )
 }
 
-export default withAppSetup(RentDirectory)
+export default withAppSetup(SaleDirectory)
