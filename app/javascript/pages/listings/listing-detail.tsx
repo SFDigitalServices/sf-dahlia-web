@@ -304,6 +304,7 @@ const ListingDetail = () => {
               <div className="info-card bg-gray-100 border-0">
                 <h3 className="text-serif-lg">Special Notes</h3>
                 <div
+                  className="text-sm"
                   dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Listing_Other_Notes) }}
                 />
               </div>
@@ -311,17 +312,24 @@ const ListingDetail = () => {
             <div className="info-card bg-gray-100 border-0">
               <h3 className="text-serif-lg">Required Documents</h3>
               <div
+                className="text-sm"
                 dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Required_Documents) }}
               />
             </div>
             <div className="info-card bg-gray-100 border-0">
               <h3 className="text-serif-lg">Important Program Rules</h3>
-              <div dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Legal_Disclaimers) }} />
+              <div
+                className="text-sm"
+                dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Legal_Disclaimers) }}
+              />
             </div>
             {listing.CC_and_R_URL && (
               <div className="info-card bg-gray-100 border-0">
                 <h3 className="text-serif-lg">Covenants, Conditions and Restrictions (CC&R's)</h3>
-                <div dangerouslySetInnerHTML={{ __html: stripMostTags(listing.CC_and_R_URL) }} />
+                <div
+                  className="text-sm"
+                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.CC_and_R_URL) }}
+                />
               </div>
             )}
             {/*
@@ -340,6 +348,7 @@ const ListingDetail = () => {
               <div className="info-card bg-gray-100 border-0">
                 <h3 className="text-serif-lg">Resale Price Restrictions</h3>
                 <div
+                  className="text-sm"
                   dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Repricing_Mechanism) }}
                 />
               </div>
