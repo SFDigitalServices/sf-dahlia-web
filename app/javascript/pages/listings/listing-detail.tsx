@@ -18,12 +18,13 @@ import {
   NavigationContext,
   LoadingOverlay,
   ContentAccordion,
+  t,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
-import { getReservedCommunityType } from "../../util/languageUtil"
+import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import {
   RailsListing,
@@ -302,34 +303,30 @@ const ListingDetail = () => {
           <div className="listing-detail-panel">
             {listing.Listing_Other_Notes && (
               <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Special Notes</h3>
-                <div
-                  className="text-sm"
-                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Listing_Other_Notes) }}
-                />
+                <h3 className="text-serif-lg">{t("listings.special_notes")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.Listing_Other_Notes))}
+                </div>
               </div>
             )}
             <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">Required Documents</h3>
-              <div
-                className="text-sm"
-                dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Required_Documents) }}
-              />
+              <h3 className="text-serif-lg">{t("listings.required_documents")}</h3>
+              <div className="text-sm">
+                {renderInlineWithInnerHTML(stripMostTags(listing.Required_Documents))}
+              </div>
             </div>
             <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">Important Program Rules</h3>
-              <div
-                className="text-sm"
-                dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Legal_Disclaimers) }}
-              />
+              <h3 className="text-serif-lg">{t("listings.important_program_rules")}</h3>
+              <div className="text-sm">
+                {renderInlineWithInnerHTML(stripMostTags(listing.Legal_Disclaimers))}
+              </div>
             </div>
             {listing.CC_and_R_URL && (
               <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Covenants, Conditions and Restrictions (CC&R's)</h3>
-                <div
-                  className="text-sm"
-                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.CC_and_R_URL) }}
-                />
+                <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.CC_and_R_URL))}
+                </div>
               </div>
             )}
             {/*
@@ -346,11 +343,10 @@ const ListingDetail = () => {
             */}
             {listing.Repricing_Mechanism && (
               <div className="info-card bg-gray-100 border-0">
-                <h3 className="text-serif-lg">Resale Price Restrictions</h3>
-                <div
-                  className="text-sm"
-                  dangerouslySetInnerHTML={{ __html: stripMostTags(listing.Repricing_Mechanism) }}
-                />
+                <h3 className="text-serif-lg">{t("listings.re_pricing")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.Repricing_Mechanism))}
+                </div>
               </div>
             )}
           </div>
