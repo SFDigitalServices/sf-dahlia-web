@@ -21,6 +21,8 @@
   "languages.es": "Español",
   "languages.tl": "Filipino",
   "languages.zh": "中文",
+  "listingDetails.applicationDeadline.open": "Application Deadline %{date} at %{time}",
+  "listingDetails.applicationDeadline.closed": "Applications Closed %{date} at %{time}",
   "listings.additional.hide": "Hide additional listings",
   "listings.additional.show": "Show additional listings",
   "listings.additional.subtitle": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
