@@ -14,7 +14,6 @@ import {
   ListingDetails,
   ListSection,
   LoadingOverlay,
-  MarkdownSection,
   Message,
   NavigationContext,
   PreferencesList,
@@ -29,11 +28,7 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import { stripMostTags } from "../../util/filterUtil"
-import {
-  getListingAddressString,
-  getListingImageCardStatuses,
-  RailsListing,
-} from "../../modules/listings/SharedHelpers"
+import { getListingAddressString, RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import bloomTheme from "../../../../tailwind.config"
 
