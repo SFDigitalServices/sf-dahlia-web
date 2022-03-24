@@ -357,10 +357,11 @@ const ListingDetail = () => {
         <div className="listing-detail-panel">
           <div className="info-card flex">
             {/* TODO: do we have a class for serifs but smaller we can enable? */}
-            <p className="text-serif-lg">
-              Monitored by the Mayor's Office of Housing & Community Development
-            </p>
-            <img alt="Equal Housing Opportunity Logo" src={getAssetPath("logo-equal.png")} />
+            <p className="text-serif-lg">{t("listings.monitored_by_mohcd")}</p>
+            <img
+              alt={t("listings.equal_housing_opportunity_logo")}
+              src={getAssetPath("logo-equal.png")}
+            />
           </div>
         </div>
       </ListingDetails>
