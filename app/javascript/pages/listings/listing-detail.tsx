@@ -29,8 +29,8 @@ import { getListing } from "../../api/listingApiService"
 import { getReservedCommunityType } from "../../util/languageUtil"
 import { getListingAddressString, RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import bloomTheme from "../../../../tailwind.config"
 
-const alertIconColor = "#E31C3D"
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
@@ -112,7 +112,7 @@ const ListingDetail = () => {
                   time: dayjs(listing.Application_Due_Date).format("h:mm A"),
                 }
               )}
-              iconColor={!isApplicationOpen && alertIconColor}
+              iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
               status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
             />
 
