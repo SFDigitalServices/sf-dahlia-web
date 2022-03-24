@@ -14,7 +14,6 @@ import {
   ListingDetails,
   ListSection,
   LoadingOverlay,
-  MarkdownSection,
   Message,
   NavigationContext,
   PreferencesList,
@@ -23,16 +22,19 @@ import {
   Waitlist,
 } from "@bloom-housing/ui-components"
 
+import { ConfigContext } from "../../lib/ConfigContext"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
-import { getReservedCommunityType } from "../../util/languageUtil"
+import { getReservedCommunityType, renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { stripMostTags } from "../../util/filterUtil"
 import { getListingAddressString, RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import bloomTheme from "../../../../tailwind.config"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
+  const { getAssetPath } = useContext(ConfigContext)
   const { router } = useContext(NavigationContext)
 
   const [listing, setListing] = useState<RailsListing>(null)
@@ -310,34 +312,69 @@ const ListingDetail = () => {
           title={"Additional information"}
           subtitle={"Required documents and selection criteria"}
         >
-          {listing.Required_Documents && (
-            <div className="listing-detail-panel">
-              <div className="info-card">
-                <h3 className="text-serif-lg">Required Documents</h3>
-                <p className="text-sm text-gray-700 m-0 p-0">{listing.Required_Documents}</p>
-              </div>
-            </div>
-          )}
-          {listing.Legal_Disclaimers && (
-            <div className="listing-detail-panel">
-              <div className="info-card">
-                <h3 className="text-serif-lg">Important Program Rules</h3>
-                <p className="text-sm text-gray-700 m-0 p-0">
-                  <MarkdownSection>{listing.Legal_Disclaimers}</MarkdownSection>
-                </p>
-              </div>
-            </div>
-          )}
           <div className="listing-detail-panel">
-            <div className="info-card">
-              <h3 className="text-serif-lg">
-                Monitored by the Mayor's Office of Housing and Community Development
-              </h3>
+            {listing.Listing_Other_Notes && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">{t("listings.special_notes")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.Listing_Other_Notes))}
+                </div>
+              </div>
+            )}
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-lg">{t("listings.required_documents")}</h3>
+              <div className="text-sm">
+                {renderInlineWithInnerHTML(stripMostTags(listing.Required_Documents))}
+              </div>
             </div>
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-lg">{t("listings.important_program_rules")}</h3>
+              <div className="text-sm">
+                {renderInlineWithInnerHTML(stripMostTags(listing.Legal_Disclaimers))}
+              </div>
+            </div>
+            {listing.CC_and_R_URL && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.CC_and_R_URL))}
+                </div>
+              </div>
+            )}
+            {/* TODO: implement once we've established needs for sales listings
+              {listing.isSale && (
+                <div className="info-card bg-gray-100 border-0">
+                  <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
+                  {listing.Allows_Realtor_Commission ? (
+                    display realtor_commission_header
+                    realtorComissionMessage
+                    {listing.Realtor_Commission_Info && realtor_commission_how_to}
+                  ) : display realtor_commission_not_eligible message}
+                </div>
+              )}
+            */}
+            {listing.Repricing_Mechanism && (
+              <div className="info-card bg-gray-100 border-0">
+                <h3 className="text-serif-lg">{t("listings.re_pricing")}</h3>
+                <div className="text-sm">
+                  {renderInlineWithInnerHTML(stripMostTags(listing.Repricing_Mechanism))}
+                </div>
+              </div>
+            )}
           </div>
         </ListingDetailItem>
 
         {getSidebar()}
+        <div className="listing-detail-panel">
+          <div className="info-card flex">
+            {/* TODO: do we have a class for serifs but smaller we can enable? */}
+            <p className="text-serif-lg">{t("listings.monitored_by_mohcd")}</p>
+            <img
+              alt={t("listings.equal_housing_opportunity_logo")}
+              src={getAssetPath("logo-equal.png")}
+            />
+          </div>
+        </div>
       </ListingDetails>
     )
   }

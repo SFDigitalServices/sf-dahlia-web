@@ -9,8 +9,6 @@
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
     "@bloom-housing/ui-components": "^4.1.1-alpha.3",
-    "core-js": "^3.19",
-    "regenerator-runtime": "^0.13",
     "@rails/webpacker": "5.2.1",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
@@ -19,6 +17,7 @@
     "axios": "^0.21.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bower": "1.8.8",
+    "core-js": "^3.19",
     "dayjs": "^1.10.7",
     "dotenv": "2.0.0",
     "markdown-to-jsx": "^6.11.4",
@@ -31,6 +30,7 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^6.15.1",
     "react-inlinesvg": "^2.2.2",
+    "regenerator-runtime": "^0.13",
     "sass": "^1.32.1",
     "sass-loader": "^10.1.1",
     "tailwindcss": "^2.2.10",
@@ -42,10 +42,10 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
+    "@types/markdown-to-jsx": "^6.11.2",
     "@types/react-helmet": "^6.1.1",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
-    "@types/markdown-to-jsx": "^6.11.2",
     "chai": "4.0.2",
     "chai-as-promised": "7.1.1",
     "chance": "1.0.10",
@@ -94,7 +94,7 @@
   "engines": {
     "npm": "5.3.0",
     "yarn": "1.x.x",
-    "node" : "14.x.x"
+    "node": "14.x.x"
   },
   "scripts": {
     "postinstall": "bower install",
