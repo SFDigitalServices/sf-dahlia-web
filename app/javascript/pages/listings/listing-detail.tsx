@@ -1,36 +1,35 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import dayjs from "dayjs"
 import {
-  SiteAlert,
-  ListingDetails,
-  ListingDetailItem,
-  ImageCard,
-  Message,
-  ApplicationStatus,
-  Waitlist,
-  EventSection,
-  ListSection,
-  PreferencesList,
-  InfoCard,
-  ExpandableText,
-  Description,
   AdditionalFees,
-  MarkdownSection,
-  NavigationContext,
-  LoadingOverlay,
+  ApplicationStatus,
+  ApplicationStatusType,
   ContentAccordion,
+  Description,
+  EventSection,
+  ExpandableText,
+  ImageCard,
+  InfoCard,
+  ListingDetailItem,
+  ListingDetails,
+  ListSection,
+  LoadingOverlay,
+  MarkdownSection,
+  Message,
+  NavigationContext,
+  PreferencesList,
+  SiteAlert,
+  t,
+  Waitlist,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { getReservedCommunityType } from "../../util/languageUtil"
-import {
-  RailsListing,
-  getListingImageCardStatuses,
-  getListingAddressString,
-} from "../../modules/listings/SharedHelpers"
+import { getListingAddressString, RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import bloomTheme from "../../../../tailwind.config"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -84,13 +83,14 @@ const ListingDetail = () => {
 
   useEffect(() => {
     void getListing(router.pathname.split("/")[2]).then((listing: RailsListing) => {
-      console.log("response", listing)
       setListing(listing)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getSidebar = () => {
+    const isApplicationOpen = new Date(listing.Application_Due_Date) > new Date()
+
     return (
       <ListingDetailItem
         imageAlt={""}
@@ -102,7 +102,19 @@ const ListingDetail = () => {
       >
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
-            <ApplicationStatus {...getListingImageCardStatuses(listing, false)[0]} />
+            <ApplicationStatus
+              content={t(
+                isApplicationOpen
+                  ? "listingDetails.applicationDeadline.open"
+                  : "listingDetails.applicationDeadline.closed",
+                {
+                  date: dayjs(listing.Application_Due_Date).format("MMM DD, YYYY"),
+                  time: dayjs(listing.Application_Due_Date).format("h:mm A"),
+                }
+              )}
+              iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
+              status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
+            />
 
             {dayjs(listing.Application_Due_Date) > dayjs() && (
               <>
