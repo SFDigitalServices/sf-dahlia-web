@@ -21,6 +21,7 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 
+import { ConfigContext } from "../../lib/ConfigContext"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
@@ -35,10 +36,10 @@ import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
+  const { getAssetPath } = useContext(ConfigContext)
   const { router } = useContext(NavigationContext)
 
   const [listing, setListing] = useState<RailsListing>(null)
-  // console.log(stripMostTags(listing.Legal_Disclaimers))
 
   const getEventTimeString = (listingEvent: ListingEvent) => {
     if (listingEvent.Start_Time) {
@@ -329,17 +330,17 @@ const ListingDetail = () => {
                 </div>
               </div>
             )}
-            {/*
-            {listing.isSale && (
-            <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
-              {listing.Allows_Realtor_Commission ? (
-                display realtor_commission_header
-                realtorComissionMessage
-                {listing.Realtor_Commission_Info && realtor_commission_how_to}
-              ) : display realtor_commission_not_eligible message}
-            </div>
-            )}
+            {/* TODO: implement once we've established needs for sales listings
+              {listing.isSale && (
+                <div className="info-card bg-gray-100 border-0">
+                  <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
+                  {listing.Allows_Realtor_Commission ? (
+                    display realtor_commission_header
+                    realtorComissionMessage
+                    {listing.Realtor_Commission_Info && realtor_commission_how_to}
+                  ) : display realtor_commission_not_eligible message}
+                </div>
+              )}
             */}
             {listing.Repricing_Mechanism && (
               <div className="info-card bg-gray-100 border-0">
@@ -359,10 +360,7 @@ const ListingDetail = () => {
             <p className="text-serif-lg">
               Monitored by the Mayor's Office of Housing & Community Development
             </p>
-            <img
-              alt="Equal Housing Opportunity Logo"
-              src="/assets/logo-equal-784f0277ac265fa4f14d489618f11b326fcdf72d4ce37b4d83607b3b0c37c6b1.png"
-            />
+            <img alt="Equal Housing Opportunity Logo" src={getAssetPath("logo-equal.png")} />
           </div>
         </div>
       </ListingDetails>
