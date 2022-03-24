@@ -1,6 +1,8 @@
 // This is adapted from the filter implemented in customFilters.js.coffee
 // for doing a barebones sanitization of incoming raw html. We should probably
-// find a better solution with community support at some point
+// find a better solution with community support at some point.
+// We may also want to look into wrapping any areas with user
+// generated content with a component-level error boundary.
 
 export const stripMostTags = (input, allowed?: string) => {
   if (!input) return ""
