@@ -1,9 +1,11 @@
-import { t, StatusBarType, ApplicationStatusType } from "@bloom-housing/ui-components"
+import React from "react"
+import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
 import { getReservedCommunityType } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -79,3 +81,14 @@ export const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
   tagLabel: getReservedCommunityType(listing.Reserved_community_type) ?? undefined,
   statuses: getListingImageCardStatuses(listing, hasFiltersSet),
 })
+
+export const getEventNote = (listingEvent: ListingEvent) => {
+  return (
+    <div className="flex flex-col">
+      {listingEvent.Venue && <span>{listingEvent.Venue}</span>}
+      {listingEvent.Street_Address && listingEvent.City && (
+        <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
+      )}
+    </div>
+  )
+}

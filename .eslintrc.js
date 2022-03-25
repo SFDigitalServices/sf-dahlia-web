@@ -156,7 +156,6 @@ module.exports = {
     "unicorn/prevent-abbreviations": "off",
     "import/order": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "unicorn/consistent-function-scoping": "off",
   },
   overrides: [
     {
