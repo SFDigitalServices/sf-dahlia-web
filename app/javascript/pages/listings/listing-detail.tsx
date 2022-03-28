@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import {
-  ListingDetailItem,
   ListingDetails,
   LoadingOverlay,
   NavigationContext,
@@ -49,16 +48,7 @@ const ListingDetail = () => {
               <ListingDetailsFeatures listing={listing} />
               <ListingDetailsNeighborhood />
               <ListingDetailsAdditionalInformation listing={listing} />
-              <ListingDetailItem
-                imageAlt={""}
-                imageSrc={""}
-                title={"Process"}
-                subtitle={"Process subtitle"}
-                hideHeader={true}
-                desktopClass="header-hidden"
-              >
-                <ListingDetailsAside listing={listing} />
-              </ListingDetailItem>
+              <ListingDetailsAside listing={listing} />
               <div className="listing-detail-panel">
                 <div className="info-card flex">
                   {/* TODO: do we have a class for serifs but smaller we can enable? */}
