@@ -1,7 +1,7 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
-import { areLotteryResultsShareable } from "../../util/listingStatusUtil"
+import { areLotteryResultsShareable } from "../../util/listingUtil"
 import { getReservedCommunityType } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"

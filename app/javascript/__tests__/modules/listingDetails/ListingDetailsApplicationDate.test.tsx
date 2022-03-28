@@ -1,13 +1,13 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsAside } from "../../../modules/listingDetails/ListingDetailsAside"
+import { ListingDetailsApplicationDate } from "../../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 
-describe("Listing Details Aside", () => {
+describe("Listing Details Application Date", () => {
   it("displays Application Deadline when due date has not passed", () => {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const tree = renderer
       .create(
-        <ListingDetailsAside
+        <ListingDetailsApplicationDate
           listing={{ Application_Due_Date: "2050-01-01T01:00:00.000+0000" } as any}
         />
       )
@@ -19,7 +19,7 @@ describe("Listing Details Aside", () => {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const tree = renderer
       .create(
-        <ListingDetailsAside
+        <ListingDetailsApplicationDate
           listing={{ Application_Due_Date: "2000-01-01T01:00:00.000+0000" } as any}
         />
       )
