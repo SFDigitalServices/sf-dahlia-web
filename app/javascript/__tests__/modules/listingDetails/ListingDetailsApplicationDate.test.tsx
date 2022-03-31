@@ -8,6 +8,7 @@ describe("Listing Details Application Date", () => {
     const tree = renderer
       .create(
         <ListingDetailsApplicationDate
+          isApplicationOpen={true}
           listing={{ Application_Due_Date: "2050-01-01T01:00:00.000+0000" } as any}
         />
       )
@@ -20,6 +21,7 @@ describe("Listing Details Application Date", () => {
     const tree = renderer
       .create(
         <ListingDetailsApplicationDate
+          isApplicationOpen={false}
           listing={{ Application_Due_Date: "2000-01-01T01:00:00.000+0000" } as any}
         />
       )

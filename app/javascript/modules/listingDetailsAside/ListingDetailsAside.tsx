@@ -1,10 +1,10 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { ListingDetailsInfoSession } from "../listingDetailsAside/ListingDetailsInfoSession"
-import { ListingDetailsApply } from "../listingDetailsAside/ListingDetailsApply"
-import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProcess"
+import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
+import { ListingDetailsApply } from "./ListingDetailsApply"
+import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
-import { ListingDetailsApplicationDate } from "../listingDetailsAside/ListingDetailsApplicationDate"
+import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailItem } from "@bloom-housing/ui-components"
 
 export interface ListingDetailsSidebarProps {
@@ -25,7 +25,7 @@ export const ListingDetailsAside = ({ listing }: ListingDetailsSidebarProps) => 
     >
       <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
         <div className="hidden md:block">
-          <ListingDetailsApplicationDate listing={listing} />
+          <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsApply listing={listing} />
           <ListingDetailsProcess listing={listing} />

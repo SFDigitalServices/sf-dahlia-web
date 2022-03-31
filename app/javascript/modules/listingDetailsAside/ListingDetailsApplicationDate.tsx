@@ -3,15 +3,16 @@ import { RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
 import { ApplicationStatus, ApplicationStatusType, t } from "@bloom-housing/ui-components"
 import bloomTheme from "../../../../tailwind.config"
-import { isOpen } from "../../util/listingUtil"
 
 export interface ListingDetailsApplicationDateProps {
+  isApplicationOpen: boolean
   listing: RailsListing
 }
 
-export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
-  const isApplicationOpen = isOpen(listing)
-
+export const ListingDetailsApplicationDate = ({
+  isApplicationOpen,
+  listing,
+}: ListingDetailsApplicationDateProps) => {
   return (
     <ApplicationStatus
       content={t(
