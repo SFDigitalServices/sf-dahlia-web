@@ -1,0 +1,73 @@
+import React from "react"
+import { ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { RailsListing } from "../listings/SharedHelpers"
+import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { stripMostTags } from "../../util/filterUtil"
+
+export interface ListingDetailsAdditionalInformationProps {
+  listing: RailsListing
+}
+
+export const ListingDetailsAdditionalInformation = ({
+  listing,
+}: ListingDetailsAdditionalInformationProps) => {
+  return (
+    <ListingDetailItem
+      imageAlt={""}
+      imageSrc={""}
+      title={"Additional information"}
+      subtitle={"Required documents and selection criteria"}
+    >
+      <div className="listing-detail-panel">
+        {listing.Listing_Other_Notes && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.special_notes")}</h3>
+            <div className="text-sm">
+              {renderInlineWithInnerHTML(stripMostTags(listing.Listing_Other_Notes))}
+            </div>
+          </div>
+        )}
+        <div className="info-card bg-gray-100 border-0">
+          <h3 className="text-serif-lg">{t("listings.required_documents")}</h3>
+          <div className="text-sm">
+            {renderInlineWithInnerHTML(stripMostTags(listing.Required_Documents))}
+          </div>
+        </div>
+        <div className="info-card bg-gray-100 border-0">
+          <h3 className="text-serif-lg">{t("listings.important_program_rules")}</h3>
+          <div className="text-sm">
+            {renderInlineWithInnerHTML(stripMostTags(listing.Legal_Disclaimers))}
+          </div>
+        </div>
+        {listing.CC_and_R_URL && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
+            <div className="text-sm">
+              {renderInlineWithInnerHTML(stripMostTags(listing.CC_and_R_URL))}
+            </div>
+          </div>
+        )}
+        {/* TODO: implement once we've established needs for sales listings
+              {listing.isSale && (
+                <div className="info-card bg-gray-100 border-0">
+                  <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
+                  {listing.Allows_Realtor_Commission ? (
+                    display realtor_commission_header
+                    realtorComissionMessage
+                    {listing.Realtor_Commission_Info && realtor_commission_how_to}
+                  ) : display realtor_commission_not_eligible message}
+                </div>
+              )}
+            */}
+        {listing.Repricing_Mechanism && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.re_pricing")}</h3>
+            <div className="text-sm">
+              {renderInlineWithInnerHTML(stripMostTags(listing.Repricing_Mechanism))}
+            </div>
+          </div>
+        )}
+      </div>
+    </ListingDetailItem>
+  )
+}
