@@ -18,7 +18,7 @@ export const ListingDetailsAdditionalInformation = ({
       imageAlt={""}
       imageSrc={imageSrc}
       title={t("listings.additionalInformation.header")}
-      subtitle={t("listings.additionalInformation.header")}
+      subtitle={t("listings.additionalInformation.subheader")}
     >
       <div className="listing-detail-panel">
         {listing.Listing_Other_Notes && (
