@@ -25,7 +25,7 @@ import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
-import { getImageCardProps, RailsListing } from "./SharedHelpers"
+import { getImageCardProps, getListingAddressString, RailsListing } from "./SharedHelpers"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -185,14 +185,16 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
     return (
       <ListingCard
         key={index}
+        stackedTable={true}
         imageCardProps={getImageCardProps(listing, hasFiltersSet)}
-        tableHeaderProps={
+        contentProps={
           hasCustomContent
             ? null
             : {
-                tableHeader: getTableHeader(listing),
-                tableSubHeader: getTableSubHeader(listing),
-                stackedTable: true,
+                tableHeader: { text: getTableHeader(listing) },
+                tableSubheader: { text: getTableSubHeader(listing) },
+                contentHeader: { text: listing.Name },
+                contentSubheader: { text: getListingAddressString(listing) },
               }
         }
         tableProps={
@@ -217,7 +219,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
                 stackedData: stackedDataFxn(listing),
               }
         }
-        seeDetailsLink={`/listings/${listing.listingID}`}
+        footerButtons={[{ text: t("t.seeDetails"), href: `/listings/${listing.listingID}` }]}
       >
         {hasCustomContent ? getHabitatContent(listing, stackedDataFxn) : null}
       </ListingCard>
