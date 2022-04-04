@@ -57,7 +57,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <ListingDetailsAside listing={listing} />
+              <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
               <div className="listing-detail-panel">
                 <div className="info-card flex">
                   {/* TODO: do we have a class for serifs but smaller we can enable? */}

@@ -7,7 +7,7 @@ import {
   PreferencesList,
   t,
 } from "@bloom-housing/ui-components"
-import { RailsListing } from "../listings/SharedHelpers"
+import { isSale, RailsListing } from "../listings/SharedHelpers"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -23,7 +23,7 @@ export const ListingDetailsEligibility = ({
       imageAlt={""}
       imageSrc={imageSrc}
       title={t("listings.eligibility.header")}
-      subtitle={t("listings.eligibility.subheader")}
+      subtitle={isSale(listing) ? "" : t("listings.eligibility.subheader")}
       desktopClass="bg-primary-lighter"
     >
       <ListSection
