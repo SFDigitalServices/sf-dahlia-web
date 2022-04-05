@@ -5,21 +5,22 @@ import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
-import { ListingDetailItem } from "@bloom-housing/ui-components"
+import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
+  imageSrc: string
 }
 
-export const ListingDetailsAside = ({ listing }: ListingDetailsSidebarProps) => {
+export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
 
   return (
     <ListingDetailItem
       imageAlt={""}
-      imageSrc={""}
-      title={"Process"}
-      subtitle={"Process subtitle"}
+      imageSrc={imageSrc}
+      title={t("listings.process.header")}
+      subtitle={t("listings.process.subheader")}
       hideHeader={true}
       desktopClass="header-hidden"
     >

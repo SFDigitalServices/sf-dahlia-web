@@ -44,11 +44,20 @@ const ListingDetail = () => {
             <ListingDetailsImageCard listing={listing} />
             <ListingDetailsPricingTable listing={listing} />
             <ListingDetails>
-              <ListingDetailsEligibility listing={listing} />
-              <ListingDetailsFeatures listing={listing} />
-              <ListingDetailsNeighborhood />
-              <ListingDetailsAdditionalInformation listing={listing} />
-              <ListingDetailsAside listing={listing} />
+              <ListingDetailsEligibility
+                listing={listing}
+                imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <ListingDetailsFeatures
+                listing={listing}
+                imageSrc={getAssetPath("listing-features.svg")}
+              />
+              <ListingDetailsNeighborhood imageSrc={getAssetPath("listing-neighborhood.svg")} />
+              <ListingDetailsAdditionalInformation
+                listing={listing}
+                imageSrc={getAssetPath("listing-legal.svg")}
+              />
+              <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
               <div className="listing-detail-panel">
                 <div className="info-card flex">
                   {/* TODO: do we have a class for serifs but smaller we can enable? */}

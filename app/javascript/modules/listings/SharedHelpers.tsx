@@ -92,3 +92,6 @@ export const getEventNote = (listingEvent: ListingEvent) => {
     </div>
   )
 }
+
+export const isSale = (listing: RailsListing) =>
+  listing.Tenure === "New sale" || listing.Tenure === "Resale"
