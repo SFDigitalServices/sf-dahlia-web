@@ -36,21 +36,21 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     listItems = [
       {
         content: renderWithInnerHTML(
-          `${t("listings_for_sale.before_applying_habitat.step_1", {
+          `${t("listingsForSale.beforeApplyingHabitat.step1", {
             url: "https://habitatgsf.org/amber-drive-info/",
           })}`
         ),
       },
-      { content: t("listings_for_sale.before_applying_habitat.step_2") },
+      { content: t("listingsForSale.beforeApplyingHabitat.step2") },
       {
         content: renderWithInnerHTML(
-          `${t("listings_for_sale.before_applying_habitat.step_3", {
+          `${t("listingsForSale.beforeApplyingHabitat.step3", {
             url:
               "https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf",
           })}`
         ),
       },
-      { content: t("listings_for_sale.before_applying_habitat.step_4") },
+      { content: t("listingsForSale.beforeApplyingHabitat.step4") },
     ]
   } else if (
     beforeApplyingType === BeforeApplyingType.DIRECTORY ||

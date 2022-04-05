@@ -24,12 +24,12 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
             listingPreferences={preferences.map((preference, index) => {
               const links = []
               if (preference.readMoreUrl) {
-                links.push({ title: t("label.read_more"), url: preference.readMoreUrl })
+                links.push({ title: t("label.readMore"), url: preference.readMoreUrl })
               }
               // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
               if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
                 links.push({
-                  title: t("label.view_document_checklist"),
+                  title: t("label.viewDocumentChecklist"),
                   url: "/document-checklist",
                 })
               }
@@ -39,24 +39,24 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
                   preference.preferenceName === PREFERENCES.neighborhoodResidence &&
                   preference.NRHPDistrict
                     ? t(
-                        "listings.lottery_preference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
+                        "listings.lotteryPreference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
                         { number: preference.NRHPDistrict }
                       )
-                    : t(`listings.lottery_preference.${preference.preferenceName}.desc`),
+                    : t(`listings.lotteryPreference.${preference.preferenceName}.desc`),
                 links,
                 ordinal: index + 1,
                 subtitle:
                   preference.unitsAvailable &&
-                  t("listings.lottery_preference.up_to_units", {
+                  t("listings.lotteryPreference.upToUnits", {
                     units: preference.unitsAvailable,
                   }),
-                title: t(`listings.lottery_preference.${preference.preferenceName}.title`),
+                title: t(`listings.lotteryPreference.${preference.preferenceName}.title`),
               }
             })}
           />
           {preferences.length > 0 && (
             <p className="text-gray-700 text-tiny">
-              {t("listings.lottery_preference.remaining_units_after_preference_consideration")}
+              {t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration")}
             </p>
           )}
         </>
