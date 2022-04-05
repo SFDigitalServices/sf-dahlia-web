@@ -4,10 +4,12 @@ import {
   InfoCard,
   ListingDetailItem,
   ListSection,
-  PreferencesList,
   t,
 } from "@bloom-housing/ui-components"
-import { isSale, RailsListing } from "../listings/SharedHelpers"
+import { RailsListing } from "../listings/SharedHelpers"
+import { isHabitatListing, isSale } from "../../util/listingUtil"
+import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
+import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -26,6 +28,15 @@ export const ListingDetailsEligibility = ({
       subtitle={isSale(listing) ? "" : t("listings.eligibility.subheader")}
       desktopClass="bg-primary-lighter"
     >
+      {isSale(listing) && (
+        <BeforeApplyingForSale
+          beforeApplyingType={
+            isHabitatListing(listing)
+              ? BeforeApplyingType.LISTING_DETAILS_HABITAT
+              : BeforeApplyingType.LISTING_DETAILS
+          }
+        />
+      )}
       <ListSection
         title={"Household Maximum Income"}
         subtitle={
@@ -42,29 +53,7 @@ export const ListingDetailsEligibility = ({
       >
         {/* TODO: Build unit summaries */}
       </ListSection>
-      <ListSection
-        title={"Lottery Preferences"}
-        subtitle={
-          "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order."
-        }
-      >
-        <>
-          <PreferencesList
-            listingPreferences={listing.Listing_Lottery_Preferences.map((preference, index) => {
-              return {
-                title: preference.Lottery_Preference.Name,
-                subtitle: `Up to ${preference.Available_Units} unit(s) available`,
-                ordinal: index + 1,
-              }
-            })}
-          />
-          <p className="text-gray-700 text-tiny">
-            {
-              "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order."
-            }
-          </p>
-        </>
-      </ListSection>
+      <ListingDetailsPreferences listingID={listing.listingID} />
       <ListSection
         title={"Rental Assistance"}
         subtitle={

@@ -1,4 +1,22 @@
 import RailsListingDescriptor from "./RailsListingDescriptor"
+import RailsUnit from "./RailsUnit"
+
+type ListingBuilding = {
+  attributes: ListingAttributes
+  Id: string
+  Number_of_Parking_Spaces: number
+}
+
+type RecordType = {
+  attributes: ListingAttributes
+  Id: string
+  Name: string
+}
+
+export type ListingAttributes = {
+  type: string
+  url: string
+}
 
 export type ListingEvent = {
   City?: string
@@ -20,13 +38,25 @@ export type ListingLotteryPreference = {
   Lottery_Preference: { Name: string; Id: string; attributes: { type: string; url: string } }
   Order: number
   Total_Submitted_Apps: number
+  attributes: ListingAttributes
 }
 
 type BaseRailsListing = {
+  Accepting_Online_Applications: boolean
+  Accepting_applications_at_leasing_agent: boolean
+  Accepting_applications_by_PO_Box: boolean
   Accessibility?: string
   Allows_Realtor_Commission?: boolean
-  Application_Due_Date: string
   Amenities?: string
+  Application_City: string
+  Application_Due_Date: string
+  Application_Organization: string
+  Application_Phone: string
+  Application_Postal_Code: string
+  Application_State: string
+  Application_Street_Address: string
+  Blank_paper_application_can_be_picked_up: boolean
+  Building: ListingBuilding
   Building_City?: string
   Building_Name: string
   Building_Selection_Criteria?: string
@@ -37,14 +67,17 @@ type BaseRailsListing = {
   CC_and_R_URL?: string
   Costs_Not_Included?: string
   Credit_Rating?: string
-  Deposit_Min?: number
   Deposit_Max?: number
+  Deposit_Min?: number
   Developer?: string
   Does_Match?: boolean
   Eviction_History?: string
   Fee?: number
+  First_Come_First_Served: boolean
   Id: string
+  In_Lottery: number
   Information_Sessions: ListingEvent[]
+  LastModifiedDate: string
   Legal_Disclaimers?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
@@ -55,31 +88,43 @@ type BaseRailsListing = {
   Lottery_Status?: string
   Lottery_Street_Address?: string
   Lottery_Venue?: string
+  Lottery_Winners: number
+  Marketing_URL: string
   Maximum_waitlist_size?: number
   Name: string
   Neighborhood?: string
+  Number_of_people_currently_on_waitlist: number
   Open_Houses: ListingEvent[]
   Parking_Information?: string
   Pet_Policy?: string
+  Program_Type: string
+  Project_ID: string
   Publish_Lottery_Results: boolean
   Realtor_Commission_Info?: string
+  RecordType: RecordType
   RecordTypeId: string
   Repricing_Mechanism?: string
+  Required_Documents?: string
+  Reserved_community_maximum_age: number
   Reserved_community_minimum_age: number
   Reserved_community_type?: string
-  Required_Documents?: string
+  SASE_Required_for_Lottery_Ticket: boolean
   Smoking_Policy?: string
   Tenure: string
+  Total_number_of_building_units: number
   Total_waitlist_openings?: number
+  Units: Array<RailsUnit>
   Units_Available: number
+  Year_Built?: number
+  attributes: ListingAttributes
   chartTypes?: unknown
   current_waitlist_size?: number
   hasWaitlist: boolean
   imageURL?: string
   listingID: string
+  nGeneral_Application_Total: number
   prioritiesDescriptor?: Array<RailsListingDescriptor>
   reservedDescriptor?: Array<RailsListingDescriptor>
-  Year_Built?: number
 }
 
 export default BaseRailsListing
