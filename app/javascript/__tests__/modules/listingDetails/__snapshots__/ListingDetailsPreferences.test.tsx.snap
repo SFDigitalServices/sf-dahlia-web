@@ -60,7 +60,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
             <a
               href="http://sfmohcd.org/certificate-preference"
             >
-              read more
+              Read More
             </a>
           </span>
         </div>
@@ -98,7 +98,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
             <a
               href="http://sfmohcd.org/displaced-tenant-housing-preference"
             >
-              read more
+              Read More
             </a>
           </span>
         </div>
@@ -136,7 +136,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
             <a
               href="http://sfmohcd.org/housing-preference-programs"
             >
-              read more
+              Read More
             </a>
           </span>
           <span>
@@ -218,7 +218,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
             <a
               href="http://sfmohcd.org/certificate-preference"
             >
-              read more
+              Read More
             </a>
           </span>
         </div>
@@ -256,7 +256,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
             <a
               href="http://sfmohcd.org/housing-preference-programs"
             >
-              read more
+              Read More
             </a>
           </span>
           <span>
@@ -301,7 +301,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
             <a
               href="http://sfmohcd.org/displaced-tenant-housing-preference"
             >
-              read more
+              Read More
             </a>
           </span>
         </div>
@@ -339,7 +339,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
             <a
               href="http://sfmohcd.org/neighborhood-resident-housing-preference"
             >
-              read more
+              Read More
             </a>
           </span>
           <span>
@@ -384,7 +384,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
             <a
               href="http://sfmohcd.org/housing-preference-programs"
             >
-              read more
+              Read More
             </a>
           </span>
           <span>
