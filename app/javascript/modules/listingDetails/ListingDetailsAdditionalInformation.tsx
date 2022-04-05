@@ -6,17 +6,19 @@ import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
+  imageSrc: string
 }
 
 export const ListingDetailsAdditionalInformation = ({
   listing,
+  imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
   return (
     <ListingDetailItem
       imageAlt={""}
-      imageSrc={""}
-      title={"Additional information"}
-      subtitle={"Required documents and selection criteria"}
+      imageSrc={imageSrc}
+      title={t("listings.additionalInformation.header")}
+      subtitle={t("listings.additionalInformation.subheader")}
     >
       <div className="listing-detail-panel">
         {listing.Listing_Other_Notes && (
