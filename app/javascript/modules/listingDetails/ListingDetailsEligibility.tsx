@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import {
   ExpandableText,
   InfoCard,
@@ -7,8 +7,7 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isHabitatListing, isRental, isSale } from "../../util/listingUtil"
-import ConfigContext from "../../lib/ConfigContext"
+import { isHabitatListing, isSale } from "../../util/listingUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 
