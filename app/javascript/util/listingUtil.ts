@@ -1,17 +1,18 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import dayjs from "dayjs"
+import { RESERVED_TYPES, TENURE_TYPES } from "../modules/constants"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
 
 /**
- * Check if a listing is a rental
+ * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the listing is a rental, false otherwise
+ * @returns {boolean} returns true if the listing is for Habitat for Humanity, false otherwise
  */
-export const isRental = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Tenure === "New rental" || listing.Tenure === "Re-rental"
+export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Reserved_community_type === RESERVED_TYPES.HABITAT
 
 /**
  * Check if a listing is open for applying
@@ -20,3 +21,19 @@ export const isRental = (listing: RailsRentalListing | RailsSaleListing) =>
  */
 export const isOpen = (listing: RailsRentalListing | RailsSaleListing) =>
   dayjs(listing.Application_Due_Date) > dayjs()
+
+/**
+ * Check if a listing is a rental
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is a rental, false otherwise
+ */
+export const isRental = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Tenure === TENURE_TYPES.NEW_RENTAL || listing.Tenure === TENURE_TYPES.RE_RENTAL
+
+/**
+ * Check if a listing is a sale
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is a sale, false otherwise
+ */
+export const isSale = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Tenure === TENURE_TYPES.NEW_SALE || listing.Tenure === TENURE_TYPES.RESALE

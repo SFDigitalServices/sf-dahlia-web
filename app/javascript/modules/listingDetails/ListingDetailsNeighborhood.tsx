@@ -1,13 +1,17 @@
 import React from "react"
-import { ListingDetailItem } from "@bloom-housing/ui-components"
+import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 
-export const ListingDetailsNeighborhood = () => {
+export interface ListingDetailsEligibilityProps {
+  imageSrc: string
+}
+
+export const ListingDetailsNeighborhood = ({ imageSrc }: ListingDetailsEligibilityProps) => {
   return (
     <ListingDetailItem
       imageAlt={""}
-      imageSrc={""}
-      title={"Neighborhood"}
-      subtitle={"Location and transportation"}
+      imageSrc={imageSrc}
+      title={t("listings.neighborhood.header")}
+      subtitle={t("listings.neighborhood.subheader")}
     >
       Map
     </ListingDetailItem>

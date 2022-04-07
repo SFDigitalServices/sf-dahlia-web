@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Listing Details Application Date displays Application Deadline when due date has not passed 1`] = `
+exports[`ListingDetailsApplicationDate displays Application Deadline when listing is a sale and due date has not passed 1`] = `
 <div
   className="application-status text-sm text-gray-800 bg-primary-light"
 >
@@ -26,7 +26,7 @@ exports[`Listing Details Application Date displays Application Deadline when due
 </div>
 `;
 
-exports[`Listing Details Application Date displays Applications Closed when due date has passed 1`] = `
+exports[`ListingDetailsApplicationDate displays Applications Closed when listing is a rental and due date has passed 1`] = `
 <div
   className="application-status text-sm text-gray-800 bg-alert-light"
 >

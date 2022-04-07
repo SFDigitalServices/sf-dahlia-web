@@ -1,18 +1,24 @@
 import { RailsListing } from "../listings/SharedHelpers"
-import { AdditionalFees, Description, ListingDetailItem } from "@bloom-housing/ui-components"
+import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import React from "react"
+import { isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
+  imageSrc: string
 }
 
-export const ListingDetailsFeatures = ({ listing }: ListingDetailsFeaturesProps) => {
+export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   return (
     <ListingDetailItem
       imageAlt={"Image Alt"}
-      imageSrc={""}
-      title={"Features"}
-      subtitle={"Amenities, unit details and additional fees"}
+      imageSrc={imageSrc}
+      title={t("listings.features.header")}
+      subtitle={
+        isSale(listing)
+          ? t("listings.features.saleSubheader")
+          : t("listings.features.rentSubheader")
+      }
     >
       <div className="listing-detail-panel">
         <dl className="column-definition-list">

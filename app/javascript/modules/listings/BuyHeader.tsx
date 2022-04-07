@@ -2,44 +2,7 @@ import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
 import Link from "../../navigation/Link"
 import "./BuyHeader.scss"
-import { renderWithInnerHTML } from "../../util/languageUtil"
-
-const BeforeApplying = () => (
-  <div className="mb-8">
-    <Heading className="mb-5" priority={2} underline>
-      {t("saleDirectory.beforeApplying.title")}
-    </Heading>
-    <p>{t("saleDirectory.beforeApplying.makeSureYou")}</p>
-    <ol className="numbered-list my-6">
-      <li>{t("saleDirectory.beforeApplying.step1")}</li>
-      <li>
-        {renderWithInnerHTML(
-          `${t("saleDirectory.beforeApplying.step2", {
-            url: "https://sfmohcd.org/homebuyer-program-eligibility",
-          })}`
-        )}
-      </li>
-      <li>
-        {renderWithInnerHTML(
-          `${t("saleDirectory.beforeApplying.step3", {
-            url: "https://sfmohcd.org/homebuyer-application-requirements#education",
-          })}`
-        )}
-      </li>
-      <li>
-        {renderWithInnerHTML(
-          `${t("saleDirectory.beforeApplying.step4", { url: "https://sfmohcd.org/lender-list" })}`
-        )}
-      </li>
-      <li>{t("saleDirectory.beforeApplying.step5")}</li>
-    </ol>
-    {renderWithInnerHTML(
-      `${t("saleDirectory.beforeApplying.readFullList", {
-        url: "https://sfmohcd.org/homebuyer-program-eligibility",
-      })}`
-    )}
-  </div>
-)
+import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
@@ -66,7 +29,7 @@ const BuyHeader = () => (
         </a>
       </div>
       <div className="buy-header_left_col">
-        <BeforeApplying />
+        <BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.DIRECTORY} />
       </div>
       <div className="buy-header_right_col">
         <GetHelp />
