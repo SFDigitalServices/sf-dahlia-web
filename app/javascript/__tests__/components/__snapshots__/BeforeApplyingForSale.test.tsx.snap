@@ -63,7 +63,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
   className="mb-8"
 >
   <h2
-    className="mb-5 text-caps-underline"
+    className="text-caps-underline mb-5"
   >
     Before applying
   </h2>
