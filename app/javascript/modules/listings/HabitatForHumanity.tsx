@@ -48,7 +48,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
 
         {getHeader(t("listings.habitat.payments"))}
         <div>{t("listings.habitat.payments.desc")}</div>
-        <div className={"mt-4  border-0 border-b pb-2 mb-2"}>
+        <div className={"mt-4 border-0 border-b pb-2 mb-2"}>
           {t("listings.habitat.infoSession")}
         </div>
       </div>
