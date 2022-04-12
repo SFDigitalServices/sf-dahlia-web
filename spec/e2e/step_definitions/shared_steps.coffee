@@ -131,3 +131,6 @@ Then 'I should see a PO Boxes not allowed error', ->
   Utils.Expect.alertBox(@)
   Utils.Expect.error(@, 'PO Boxes are not allowed.')
 
+Then 'I should see an address not found error', ->
+  Utils.Expect.alertBox(@)
+  Utils.Expect.error(@, 'This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.')
