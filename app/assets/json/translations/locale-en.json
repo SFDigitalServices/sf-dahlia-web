@@ -1209,10 +1209,10 @@
     "preferences": {
       "alice_griffith": {
         "address": "Alice Griffith Address",
-        "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
-        "desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
-        "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
-        "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
+        "address_desc": "Your address at Alice Griffith Housing Development",
+        "desc": "For households in which at least one member was a resident of the Alice Griffith housing development.",
+        "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development:",
+        "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address",
         "title": "Alice Griffith Housing Development Resident Preference"
       },
       "rtr_sunnydale": {

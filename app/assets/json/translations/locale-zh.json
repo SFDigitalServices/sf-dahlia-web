@@ -1206,10 +1206,10 @@
         "preferences": {
             "alice_griffith": {
                 "address": "Alice Griffith 地址",
-                "address_desc": "您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區",
-                "desc": "針對至少有一名成員居住在 Alice Griffith 住宅區中的家庭。這包括於「鄰里選擇」(Choice Neighborhoods) 計畫申請時間，即 2010 年 10 月 26 日（或之後）居住在目標重建地點的基線和目前居民。",
-                "proof_desc": "您需要提供以下任一文件，證明您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區：",
-                "sfha_letter_instructions": "三藩市房屋署(SFHA) 的信函，證明申請人於 2010 年 10 月 26 日（或之後）居住在 Alice Griffith 住宅區",
+                "address_desc": "您的地址位在 Alice Griffith 住宅區",
+                "desc": "針對至少有一名成員居住在 Alice Griffith 住宅區中的家庭。",
+                "proof_desc": "您需要提供以下任一文件，證明您的地址位在 Alice Griffith 住宅區:",
+                "sfha_letter_instructions": "由舊金山房屋管理局發出的確認申請人居住在 Alice Griffith 地址的信函",
                 "title": "Alice Griffith 住宅區居民優先權利"
             },
             "rtr_sunnydale": {
