@@ -59,6 +59,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
           <span>
             <a
               href="http://sfmohcd.org/certificate-preference"
+              target="_blank"
             >
               Read More
             </a>
@@ -97,6 +98,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
           <span>
             <a
               href="http://sfmohcd.org/displaced-tenant-housing-preference"
+              target="_blank"
             >
               Read More
             </a>
@@ -135,6 +137,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
           <span>
             <a
               href="http://sfmohcd.org/housing-preference-programs"
+              target="_blank"
             >
               Read More
             </a>
@@ -142,6 +145,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/
           <span>
             <a
               href="/document-checklist"
+              target="_blank"
             >
               View Document Checklist
             </a>
@@ -217,6 +221,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="http://sfmohcd.org/certificate-preference"
+              target="_blank"
             >
               Read More
             </a>
@@ -255,6 +260,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="http://sfmohcd.org/housing-preference-programs"
+              target="_blank"
             >
               Read More
             </a>
@@ -262,6 +268,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="/document-checklist"
+              target="_blank"
             >
               View Document Checklist
             </a>
@@ -300,6 +307,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="http://sfmohcd.org/displaced-tenant-housing-preference"
+              target="_blank"
             >
               Read More
             </a>
@@ -338,6 +346,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="http://sfmohcd.org/neighborhood-resident-housing-preference"
+              target="_blank"
             >
               Read More
             </a>
@@ -345,6 +354,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="/document-checklist"
+              target="_blank"
             >
               View Document Checklist
             </a>
@@ -383,6 +393,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="http://sfmohcd.org/housing-preference-programs"
+              target="_blank"
             >
               Read More
             </a>
@@ -390,6 +401,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="/document-checklist"
+              target="_blank"
             >
               View Document Checklist
             </a>
@@ -423,6 +435,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
           <span>
             <a
               href="/document-checklist"
+              target="_blank"
             >
               View Document Checklist
             </a>
