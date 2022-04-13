@@ -11,6 +11,7 @@ angular.module('dahlia.components')
       @setError = =>
         unless @error
           @errorMessage = ''
+          @errorMessageWithEmail = ''
           return
 
         switch @error
