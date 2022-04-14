@@ -2,6 +2,7 @@ angular.module('dahlia.components')
 .component 'addressError',
   bindings:
     error: '<'
+    userType: '@'
   templateUrl: 'short-form/components/address-error.html'
 
   controller:
@@ -21,19 +22,28 @@ angular.module('dahlia.components')
             # Catch all other easy post validation errors and provide generic error response on how to get help. Most
             # often this is E.ADDRESS.NOT_FOUND, but could also be E.HOUSE_NUMBER.INVALID, E.STREET.MAGNET, etc, etc.
             # See https://www.easypost.com/errors-guide
-            homeAddress = ShortFormApplicationService.applicant.home_address
-            phone = ShortFormApplicationService.applicant.phone
+
+            #address on the current form. it could be primary applicant or household member
+            form = ShortFormApplicationService.form.applicationForm
+            address1 = form.home_address_address1['$viewValue']
+            address2 = form.home_address_address2['$viewValue']
+            city = form.home_address_city['$viewValue']
+            state = form.home_address_state['$viewValue']
+            zip = form.home_address_zip['$viewValue']
+
+            #applicant's phone number
+            applicantPhone = ShortFormApplicationService.applicant.phone
+
             bodyParams =
               listing_name: ShortFormApplicationService.listing.Name
-              applicant_address: homeAddress.address1 + (if homeAddress.address2 then ' ' + homeAddress.address2 else '') +
-                ', ' + homeAddress.city + ', ' + homeAddress.state + ' ' + homeAddress.zip
-              applicant_first_name: ShortFormApplicationService.applicant.firstName
-              applicant_last_name: ShortFormApplicationService.applicant.lastName
-              applicant_email: ShortFormApplicationService.applicant.email
-              applicant_phone_number: if phone then '(' + phone[0..2] + ') ' + phone[3..-5] + '-' + phone[-4..] else ''
+              home_address: address1 + (if address2 then ' ' + address2 else '') + ', ' + city + ', ' + state + ' ' + zip
+              first_name: ShortFormApplicationService.applicant.firstName
+              last_name: ShortFormApplicationService.applicant.lastName
+              email: ShortFormApplicationService.applicant.email
+              phone_number: if applicantPhone then '(' + applicantPhone[0..2] + ') ' + applicantPhone[3..-5] + '-' + applicantPhone[-4..] else ''
 
             mailParams =
-              subject: $translate.instant('error.address_validation.not_found_subject')
+              subject: '[Invalid Address Error] ' + $translate.instant('error.address_validation.not_found_subject')
               body: $translate.instant('error.address_validation.not_found_body', bodyParams)
 
             @errorMessageWithEmail = $translate.instant('error.address_validation.not_found'

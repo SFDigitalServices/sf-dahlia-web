@@ -453,7 +453,7 @@
       "address_validation": {
         "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, email us at <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
         "not_found_subject": "Unable to enter my address in DAHLIA application",
-        "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{applicant_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{applicant_first_name}} {{applicant_last_name}}\n{{applicant_email}}\n{{applicant_phone_number}}"
+        "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}"
       },
       "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
       "alert": {
