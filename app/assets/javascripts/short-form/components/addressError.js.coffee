@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'addressError',
   bindings:
     error: '<'
-    userType: '@'
   templateUrl: 'short-form/components/address-error.html'
 
   controller:
@@ -42,6 +41,7 @@ angular.module('dahlia.components')
               email: ShortFormApplicationService.applicant.email
               phone_number: if applicantPhone then '(' + applicantPhone[0..2] + ') ' + applicantPhone[3..-5] + '-' + applicantPhone[-4..] else ''
 
+            #hard code something in english to the beginning of the email subject for email filtering
             mailParams =
               subject: '[Invalid Address Error] ' + $translate.instant('error.address_validation.not_found_subject')
               body: $translate.instant('error.address_validation.not_found_body', bodyParams)
