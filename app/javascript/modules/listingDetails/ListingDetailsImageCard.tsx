@@ -12,9 +12,12 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
     <header className="image-card--leader">
       <ImageCard
         imageUrl={listing?.imageURL}
-        title={listing.Name}
         href={`/listings/${listing.listingID}`}
-        tagLabel={getReservedCommunityType(listing.Reserved_community_type) ?? undefined}
+        tags={
+          listing.Reserved_community_type
+            ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
+            : undefined
+        }
       />
       <div className="p-3">
         <p className="font-alt-sans uppercase tracking-widest text-sm font-semibold">

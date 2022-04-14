@@ -111,7 +111,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     </ListSection>
   ) : (
     <div className="mb-8">
-      <Heading className="mb-5" priority={2} underline>
+      <Heading className="mb-5" priority={2} style={"sidebarHeader"}>
         {t("saleDirectory.beforeApplying.title")}
       </Heading>
       <p>{t("saleDirectory.beforeApplying.makeSureYou")}</p>

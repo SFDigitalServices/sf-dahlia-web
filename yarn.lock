@@ -1288,10 +1288,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/backend-core@^4.1.1-alpha.0":
-  version "4.1.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-4.1.1-alpha.0.tgz#4ebc635e73f697f02e6036edd6843aadf4ebaf27"
-  integrity sha512-IzpYvde8AgoT0qswrI11pW0PfBVigKE8L23gD6kFKcjU48toqv5JQsOZ9S+9XdfcmpHsaEAyR5ocMBV2R4GOjQ==
+"@bloom-housing/backend-core@^4.1.3-alpha.1":
+  version "4.1.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/backend-core/-/backend-core-4.1.3-alpha.1.tgz#d7c9db501113f967b636d32b473f66f6ef2bbe88"
+  integrity sha512-pEHlTr4WgblpkgGNyEY6dB6An1xr+ZDSNGV/cSr/2uZp7em3x6S2DlMmfZI4X5pqe8Wpovn+h48ThvYXaNjmMA==
   dependencies:
     "@anchan828/nest-sendgrid" "^0.3.25"
     "@google-cloud/translate" "^6.2.6"
@@ -1309,7 +1309,7 @@
     "@types/cache-manager" "^3.4.0"
     "@types/cron" "^1.7.3"
     async-retry "^1.3.1"
-    axios "0.21.1"
+    axios "0.21.2"
     cache-manager "^3.4.0"
     cache-manager-redis-store "^2.0.0"
     casbin "5.13.0"
@@ -1346,12 +1346,12 @@
     typescript "^3.9.7"
     uuid "^8.3.2"
 
-"@bloom-housing/ui-components@^4.1.1-alpha.3":
-  version "4.1.1-alpha.3"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.1.1-alpha.3.tgz#d7e41c2ed46fe5535afe41db356643aa0d74616a"
-  integrity sha512-tLJ9Ey2+lVzgTfaJu5sX+4p5y/JdLODOnDzHeMOojwFrROJii/VWeckawW97yvDVeKM3FLIZwQahbFV0c994og==
+"@bloom-housing/ui-components@^4.1.3-alpha.5":
+  version "4.1.3-alpha.5"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-4.1.3-alpha.5.tgz#666634ca1b89e85d253c8e970a5e6d579a0dedda"
+  integrity sha512-oEIuYEPIgFHucjAjX2SaSXq3aKaExESSehRYNXDP2JlducfRBrnhiMZNeBXyK9EN6SXVmesRDgimFzc3JOZAgQ==
   dependencies:
-    "@bloom-housing/backend-core" "^4.1.1-alpha.0"
+    "@bloom-housing/backend-core" "^4.1.3-alpha.1"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/body-scroll-lock" "^2.6.1"
     "@types/jwt-decode" "^2.2.1"
@@ -1362,7 +1362,7 @@
     "@types/react-dom" "^16.9.5"
     "@types/react-text-mask" "^5.4.6"
     "@types/react-transition-group" "^4.4.0"
-    axios "0.21.1"
+    axios "0.21.2"
     body-scroll-lock "^3.1.5"
     dayjs "^1.10.7"
     jwt-decode "^2.2.0"
@@ -3674,7 +3674,7 @@ axios@0.21.1:
   dependencies:
     follow-redirects "^1.10.0"
 
-axios@^0.21.2:
+axios@0.21.2, axios@^0.21.2:
   version "0.21.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.2.tgz#21297d5084b2aeeb422f5d38e7be4fbb82239017"
   integrity sha512-87otirqUw3e8CzHTMO+/9kh/FSgXt/eVDvipijwDtEuwbkySWZ9SBm6VEubmJ/kLKEoLQV/POhxXFb66bfekfg==
