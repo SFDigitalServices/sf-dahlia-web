@@ -169,10 +169,13 @@ When /^I change WorkInSF to "([^"]*)"$/, (workInSf) ->
     element(By.id('workInSf_no')).click()
 
 When "I fill out the Contact page with an address that's a PO Box", ->
-  Pages.Contact.fill({ address1: 'P.O. Box 37176' })
+  Pages.Contact.fill({ address1: 'P.O. Box 8097', city: 'San Francisco', zip: '94128'})
+
+When 'I fill out the Contact page with a fake address', ->
+  Pages.Contact.fill({ address1: '1234 Test St', zip: '94920' })
 
 Then 'I should see my address, NRHP match, on the Contact page', ->
-  Pages.Contact.expectToMatch(@, { address1: '1222 HARRISON ST' })
+  Pages.Contact.expectToMatch(@, { address1: '1222 HARRISON ST', zip: '94103' })
 
 Then 'the Contact page fields should be empty', ->
   [
