@@ -76,7 +76,7 @@ describe 'Address Validation API' do
     expect(json['address']['verifications']['delivery']['success']).to eq(true)
   end
 
-  it 'allows invalid addresses to continue through' do
+  it 'validates invalid address with success == false' do
     VCR.use_cassette('address_validation/invalid') do
       params = {
         address: {
@@ -90,10 +90,11 @@ describe 'Address Validation API' do
     end
 
     json = JSON.parse(response.body)
-    # test for the 422 error status
-    expect(response.status).to eq(200)
 
-    # Check that we got a status of 200 even though the address was invalid
+    # test for the 422 error status
+    expect(response.status).to eq(422)
+
+    # check to make sure the delivery verification is not 'success'
     expect(json['address']['verifications']['delivery']['success']).to eq(false)
   end
 
