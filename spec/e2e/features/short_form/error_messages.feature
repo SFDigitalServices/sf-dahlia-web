@@ -30,6 +30,10 @@ Feature: Short Form Application
         And I fill out the Contact page with an address that's a PO Box
         Then I should see a PO Boxes not allowed error
 
+        #error: invalid address (address not found by easy post)
+        When I fill out the Contact page with a fake address
+        Then I should see an address not found error
+
         When I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         # error: invalid email in alternate contact
