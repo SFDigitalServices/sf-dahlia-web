@@ -1205,10 +1205,10 @@
         "preferences": {
             "alice_griffith": {
                 "address": "Address sa Alice Griffith",
-                "address_desc": "Ang inyong address sa Alice Griffith Housing Development sa petsang Oktubre 26, 2010 o matapos ang petsang ito",
-                "desc": "Para sa mga kabahayan na may kahit na isang miyembro na naging residente ng Alice Griffith housing development. Kasama rito ang baseline (pinagsisimulan) at kasalukuyang residente na tumira sa tinatarget na lugar para sa redevelopment sa panahon ng aplikasyon para sa Choice Neighborhoods noong Oktubre 26, 2010, o matapos ang petsang ito. ",
-                "proof_desc": "Kailangan ninyo ng isa sa mga sumusunod na dokumento na nagpapakita ng inyong address sa Alice Griffith Housing Development, na may petsang Oktubre 26, 2010, o matapos ang petsang ito:",
-                "sfha_letter_instructions": "Sulat mula sa San Francisco Housing Authority na nagpapatunay na nakatira ang aplikante sa address ng Alice Griffith noong Oktubre 26, 2010 o matapos ang petsang ito",
+                "address_desc": "Ang inyong address sa Alice Griffith Housing Development",
+                "desc": "Para sa mga kabahayan na may kahit na isang miyembro na naging residente ng Alice Griffith housing development.",
+                "proof_desc": "Kailangan ninyo ng isa sa mga sumusunod na dokumento na nagpapakita ng inyong address sa Alice Griffith Housing Development:",
+                "sfha_letter_instructions": "Ang liham mula sa San Francisco Housing Authority na nagpapatunay sa aplikante ay nakatira sa address ng Alice Griffith",
                 "title": "Preperensiya para sa Residente ng Alice Griffith Housing Development. "
             },
             "rtr_sunnydale": {
