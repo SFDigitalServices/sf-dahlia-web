@@ -160,6 +160,7 @@ const Layout = (props: LayoutProps) => {
           homeURL={"/"}
           dropdownItemClassName={"text-xs"}
           menuItemClassName={"pb-4 pt-1 flex items-end"}
+          languageNavLabel={t("languages.choose")}
           languages={getLanguageItems()}
           logoSrc={getAssetPath("DAHLIA-logo.svg")}
           notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
