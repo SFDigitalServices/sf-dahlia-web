@@ -61,6 +61,8 @@
   "listings.includesPriorityUnits": "Includes Priority Units for %{priorities}",
   "listings.includingChildren": "(including <span class='eligibility-subtext'>%{number} %{children}</span> under 6)",
   "listings.lottery.preferences": "Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.",
+  "listings.lottery.lotteryResults": "Lottery Results",
+  "listings.lottery.viewLotteryResults": "View Lottery Results",
   "listings.lottery.title": "Lottery Preferences",
   "listings.lotteryPreference.Alice Griffith Housing Development Resident.desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
   "listings.lotteryPreference.Alice Griffith Housing Development Resident.title": "Alice Griffith Housing Development Resident",

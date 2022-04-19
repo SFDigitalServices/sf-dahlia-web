@@ -6,6 +6,7 @@ import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { ListingDetailsLotteryResults } from "./ListingDetailsLotteryResults"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -29,6 +30,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsApply listing={listing} />
+          <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsProcess listing={listing} />
         </div>
       </aside>
