@@ -16,14 +16,14 @@ export interface TextTruncateProps {
 export const TextTruncate = ({ text }: TextTruncateProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  truncate.setup({ byWords: true, ellipsis: " ... ", length: 60 })
+  truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true })
   const truncatedText = renderInlineWithInnerHTML(stripMostTags(truncate(text)))
   const untruncatedText = renderInlineWithInnerHTML(stripMostTags(text))
 
   return (
     <div className="text-sm">
       {isExpanded ? untruncatedText : truncatedText}
-      {truncate(text) !== text && (
+      {truncate(text)?.length !== text?.length && (
         <span
           className="button-toggle"
           onClick={() => setIsExpanded(!isExpanded)}
