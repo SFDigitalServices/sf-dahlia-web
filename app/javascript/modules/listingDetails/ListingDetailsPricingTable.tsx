@@ -1,5 +1,5 @@
 import React from "react"
-import { ContentAccordion, Message } from "@bloom-housing/ui-components"
+import { CategoryTable, ContentAccordion, Message } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 
 export interface ListingDetailsPricingTableProps {
@@ -7,7 +7,25 @@ export interface ListingDetailsPricingTableProps {
 }
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
-  /* TODO: Build unit summaries */
+  /* TODO: Build unit summaries, remove mock data */
+  const responsiveTableRows = [
+    {
+      units: { cellText: "Studio", cellSubText: "23 available" },
+      income: { cellText: "Up to $6,854", cellSubText: "per month" },
+      rent: { cellText: "30%", cellSubText: "income" },
+    },
+    {
+      units: { cellText: "1 BR", cellSubText: "3 available" },
+      income: { cellText: "$2,194 to $6,854", cellSubText: "per month" },
+      rent: { cellText: "$1,295", cellSubText: "income" },
+    },
+  ]
+
+  const responsiveTableHeaders = {
+    units: { name: "t.unitType" },
+    income: { name: "t.incomeRange" },
+    rent: { name: "t.rent" },
+  }
 
   const accordionTitle = (
     <span className={"flex w-full justify-between items-center"}>
@@ -24,7 +42,22 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
       )}
       <ContentAccordion
         customBarContent={accordionTitle}
-        customExpandedContent={<>Pricing table</>}
+        customExpandedContent={
+          <div className={"p-4 border-2 border-gray-400"}>
+            <CategoryTable
+              categoryData={[
+                {
+                  header: "Header 1",
+                  tableData: { stackedData: responsiveTableRows, headers: responsiveTableHeaders },
+                },
+                {
+                  header: "Header 2",
+                  tableData: { stackedData: responsiveTableRows, headers: responsiveTableHeaders },
+                },
+              ]}
+            />
+          </div>
+        }
         accordionTheme={"gray"}
         barClass={"mt-4"}
       />
