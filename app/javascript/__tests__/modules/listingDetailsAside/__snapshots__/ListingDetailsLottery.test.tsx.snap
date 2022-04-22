@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsLotteryResults display if lottery is complete 1`] = `
+exports[`ListingDetailsLottery display if lottery is complete 1`] = `
 <div
   className="border-b pt-4 text-center"
 >
@@ -27,4 +27,4 @@ exports[`ListingDetailsLotteryResults display if lottery is complete 1`] = `
 </div>
 `;
 
-exports[`ListingDetailsLotteryResults does not display if lottery is not complete 1`] = `null`;
+exports[`ListingDetailsLottery does not display if lottery is not complete 1`] = `null`;

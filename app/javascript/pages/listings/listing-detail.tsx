@@ -43,6 +43,7 @@ const ListingDetail = () => {
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
             <ListingDetailsPricingTable listing={listing} />
+            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <ListingDetailsEligibility
                 listing={listing}
@@ -57,7 +58,6 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
               <div className="listing-detail-panel">
                 <div className="info-card flex">
                   {/* TODO: do we have a class for serifs but smaller we can enable? */}
