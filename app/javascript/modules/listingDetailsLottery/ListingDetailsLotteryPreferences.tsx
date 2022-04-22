@@ -15,10 +15,10 @@ export const ListingDetailsLotteryPreferences = ({
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
     <div className="text-tiny">
-      <p className="py-4 text-sm">{t("lottery.buckets_intro")}</p>
-      <h2 className="text-caps-underline">{t("lottery.housing_preferences")}</h2>
+      <p className="py-4 text-sm">{t("lottery.bucketsIntro")}</p>
+      <h2 className="text-caps-underline">{t("lottery.housingPreferences")}</h2>
       <p className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm">
-        {t("lottery.ranking_order_note")}
+        {t("lottery.rankingOrderNote")}
       </p>
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
@@ -31,10 +31,10 @@ export const ListingDetailsLotteryPreferences = ({
               {bucket.preferenceName}
             </h3>
             <p className="text-tiny">
-              {t("lottery.up_to_x_units_available", { units: bucket.unitsAvailable })}
+              {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
             </p>
             <p className="text-gray-700 text-tiny">
-              {t("lottery.number_applicants_qualified_for_preference", {
+              {t("lottery.numberApplicantsQualifiedForPreference", {
                 number: bucket.totalSubmittedApps,
               })}
             </p>
@@ -49,11 +49,11 @@ export const ListingDetailsLotteryPreferences = ({
         .map((bucket) => (
           <div key={bucket.preferenceOrder}>
             <h3 className="font-sans font-semibold text-tiny tracking-wide uppercase">
-              {t("lottery.general_pool")}
+              {t("lottery.generalPool")}
             </h3>
-            <p className="text-tiny">{t("lottery.any_remaining_units")}</p>
+            <p className="text-tiny">{t("lottery.anyRemainingUnits")}</p>
             <p className=" border-b pb-2 text-gray-700 text-tiny">
-              {t("lottery.number_applicants_qualified_for_general_pool", {
+              {t("lottery.numberApplicantsQualifiedForGeneralPool", {
                 number: bucket.totalSubmittedApps,
               })}
             </p>
@@ -61,22 +61,22 @@ export const ListingDetailsLotteryPreferences = ({
         ))}
       <div className="bg-gray-100 mb-2 py-4 text-center">
         <a href="http://sfmohcd.org/housing-preference-programs" target="_blank">
-          {t("lottery.read_about_preferences")}
+          {t("lottery.readAboutPreferences")}
         </a>
       </div>
       <div className="text-center">
         <p className="py-2">
-          {t("lottery.results_from", {
+          {t("lottery.resultsFrom", {
             date: dayjs(listing.Lottery_Results_Date).format("MMM D, YYYY"),
           })}
         </p>
         <p className="py-2">
           <a href={listing.LotteryResultsURL} target="_blank">
-            {t("lottery.lottery_results_pdf_link")}
+            {t("lottery.lotteryResultsPdfLink")}
           </a>
         </p>
         <p className="text-gray-700 py-2">
-          {t("lottery.unsorted_results_note", {
+          {t("lottery.unsortedResultsNote", {
             date: dayjs(listing.Lottery_Date).format("MMM D, YYYY"),
           })}
         </p>
