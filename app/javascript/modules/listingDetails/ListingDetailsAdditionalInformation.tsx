@@ -1,8 +1,7 @@
 import React from "react"
 import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
-import { stripMostTags } from "../../util/filterUtil"
+import { TextTruncate } from "../../components/TextTruncate"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -24,28 +23,24 @@ export const ListingDetailsAdditionalInformation = ({
         {listing.Listing_Other_Notes && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.special_notes")}</h3>
-            <div className="text-sm">
-              {renderInlineWithInnerHTML(stripMostTags(listing.Listing_Other_Notes))}
-            </div>
+            <TextTruncate text={listing.Listing_Other_Notes} />
           </div>
         )}
         <div className="info-card bg-gray-100 border-0">
           <h3 className="text-serif-lg">{t("listings.required_documents")}</h3>
           <div className="text-sm">
-            {renderInlineWithInnerHTML(stripMostTags(listing.Required_Documents))}
+            <TextTruncate text={listing.Required_Documents} />
           </div>
         </div>
         <div className="info-card bg-gray-100 border-0">
           <h3 className="text-serif-lg">{t("listings.important_program_rules")}</h3>
-          <div className="text-sm">
-            {renderInlineWithInnerHTML(stripMostTags(listing.Legal_Disclaimers))}
-          </div>
+          <TextTruncate text={listing.Legal_Disclaimers} />
         </div>
         {listing.CC_and_R_URL && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
             <div className="text-sm">
-              {renderInlineWithInnerHTML(stripMostTags(listing.CC_and_R_URL))}
+              <TextTruncate text={listing.CC_and_R_URL} />
             </div>
           </div>
         )}
@@ -65,7 +60,7 @@ export const ListingDetailsAdditionalInformation = ({
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.re_pricing")}</h3>
             <div className="text-sm">
-              {renderInlineWithInnerHTML(stripMostTags(listing.Repricing_Mechanism))}
+              <TextTruncate text={listing.Repricing_Mechanism} />
             </div>
           </div>
         )}
