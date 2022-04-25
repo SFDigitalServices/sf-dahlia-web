@@ -1,5 +1,5 @@
 import React from "react"
-import { t } from "@bloom-housing/ui-components"
+import { Heading, t } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import { RailsLotteryBucketsDetails } from "../../api/types/rails/listings/RailsLotteryBucketsDetails"
 import { RailsListing } from "../listings/SharedHelpers"
@@ -16,7 +16,9 @@ export const ListingDetailsLotteryPreferences = ({
   return (
     <div className="text-tiny">
       <p className="py-4 text-sm">{t("lottery.bucketsIntro")}</p>
-      <h2 className="text-caps-underline">{t("lottery.housingPreferences")}</h2>
+      <Heading className="text-caps-underline" priority={2}>
+        {t("lottery.housingPreferences")}
+      </Heading>
       <p className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm">
         {t("lottery.rankingOrderNote")}
       </p>

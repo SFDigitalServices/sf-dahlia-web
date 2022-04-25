@@ -5,7 +5,7 @@ exports[`ListingDetailsLottery display if lottery is complete 1`] = `
   className="border-b pt-4 text-center"
 >
   <h4
-    className="mb-2 text-2xl"
+    className="undefined undefined"
   >
     Lottery Results
   </h4>

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import { AppearanceSizeType, AppearanceStyleType, Button, t } from "@bloom-housing/ui-components"
+import {
+  AppearanceSizeType,
+  AppearanceStyleType,
+  Button,
+  Heading,
+  t,
+} from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
@@ -24,7 +30,7 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
   return (
     isLotteryComplete(listing) && (
       <div className="border-b pt-4 text-center">
-        <h4 className="mb-2 text-2xl">{t("listings.lottery.lotteryResults")}</h4>
+        <Heading priority={4}>{t("listings.lottery.lotteryResults")}</Heading>
         <p className="mb-4 text-sm uppercase">
           {dayjs(listing.Lottery_Results_Date).format("MMMM D, YYYY")}
         </p>

@@ -1,5 +1,5 @@
-import { Field, Modal, t } from "@bloom-housing/ui-components"
 import React from "react"
+import { Field, Heading, Modal, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 import { RailsLotteryBucketsDetails } from "../../api/types/rails/listings/RailsLotteryBucketsDetails"
 import { RailsListing } from "../listings/SharedHelpers"
@@ -25,7 +25,7 @@ export const ListingDetailsLotteryModal = ({
     <Modal onClose={onClose} open={isOpen} title="">
       <div className="w-96">
         <header className="pb-4 text-center">
-          <h1 className="">{t("listings.lottery.lotteryResults")}</h1>
+          <Heading>{t("listings.lottery.lotteryResults")}</Heading>
           <h2 className="font-sans font-semibold text-sm uppercase">{listing.Name}</h2>
         </header>
         <form className="bg-gray-100 px-6 py-4">
