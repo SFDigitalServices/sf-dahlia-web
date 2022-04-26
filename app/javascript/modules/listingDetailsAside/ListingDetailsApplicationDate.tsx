@@ -3,6 +3,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
 import { ApplicationStatus, ApplicationStatusType, t } from "@bloom-housing/ui-components"
 import bloomTheme from "../../../../tailwind.config"
+import { localizedFormat } from "../../util/languageUtil"
 
 export interface ListingDetailsApplicationDateProps {
   isApplicationOpen: boolean
@@ -20,7 +21,7 @@ export const ListingDetailsApplicationDate = ({
           ? "listingDetails.applicationDeadline.open"
           : "listingDetails.applicationDeadline.closed",
         {
-          date: dayjs(listing.Application_Due_Date).format("MMM DD, YYYY"),
+          date: localizedFormat(listing.Application_Due_Date, "ll"),
           time: dayjs(listing.Application_Due_Date).format("h:mm A"),
         }
       )}

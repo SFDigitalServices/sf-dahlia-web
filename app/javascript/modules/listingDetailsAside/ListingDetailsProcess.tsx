@@ -2,6 +2,7 @@ import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
 import { EventSection } from "@bloom-housing/ui-components"
+import { localizedFormat } from "../../util/languageUtil"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
@@ -15,7 +16,7 @@ export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) =
       <EventSection
         events={[
           {
-            dateString: dayjs(listing.Lottery_Date).format("MMMM DD, YYYY"),
+            dateString: localizedFormat(listing.Lottery_Date, "LL"),
             timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
             note: getEventNote({
               City: listing.Lottery_City,
