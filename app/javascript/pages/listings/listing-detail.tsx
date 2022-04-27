@@ -19,6 +19,7 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
+import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -27,7 +28,8 @@ const ListingDetail = () => {
   const [listing, setListing] = useState<RailsListing>(null)
 
   useEffect(() => {
-    void getListing(router.pathname.split("/")[2]).then((listing: RailsListing) => {
+    const path = getPathWithoutLanguagePrefix(router.pathname)
+    void getListing(path.split("/")[2]).then((listing: RailsListing) => {
       setListing(listing)
     })
   }, [router.pathname])
