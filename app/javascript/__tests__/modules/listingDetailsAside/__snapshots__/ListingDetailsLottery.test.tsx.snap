@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsLottery display if lottery is complete 1`] = `
+exports[`ListingDetailsLottery displays if lottery is complete 1`] = `
 <div
   className="border-b pt-4 text-center"
 >

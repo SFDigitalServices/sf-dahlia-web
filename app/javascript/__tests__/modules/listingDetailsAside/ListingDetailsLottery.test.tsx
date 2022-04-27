@@ -11,7 +11,7 @@ describe("ListingDetailsLottery", () => {
     expect(tree).toMatchSnapshot()
   })
 
-  it("display if lottery is complete", () => {
+  it("displays if lottery is complete", () => {
     const tree = renderer
       .create(<ListingDetailsLottery listing={lotteryCompleteRentalListing} />)
       .toJSON()

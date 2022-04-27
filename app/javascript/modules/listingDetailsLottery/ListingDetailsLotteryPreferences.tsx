@@ -26,12 +26,13 @@ export const ListingDetailsLotteryPreferences = ({
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
         .map((bucket, index, arr) => (
           <>
-            <h3
+            <Heading
               className="font-sans font-semibold text-tiny tracking-wide uppercase"
               key={bucket.preferenceOrder}
+              priority={3}
             >
               {bucket.preferenceName}
-            </h3>
+            </Heading>
             <p className="text-tiny">
               {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
             </p>
