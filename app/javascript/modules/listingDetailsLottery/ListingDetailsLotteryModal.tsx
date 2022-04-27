@@ -26,9 +26,7 @@ export const ListingDetailsLotteryModal = ({
       <div className="w-96">
         <header className="pb-4 text-center">
           <Heading>{t("listings.lottery.lotteryResults")}</Heading>
-          <Heading className="font-sans font-semibold text-sm uppercase" priority={2}>
-            {listing.Name}
-          </Heading>
+          <h2 className="font-sans font-semibold text-sm uppercase">{listing.Name}</h2>
         </header>
         <form className="bg-gray-100 px-6 py-4">
           <Field

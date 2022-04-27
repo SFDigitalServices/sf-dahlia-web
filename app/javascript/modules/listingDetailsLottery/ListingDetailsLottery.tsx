@@ -30,7 +30,9 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
   return (
     isLotteryComplete(listing) && (
       <div className="border-b pt-4 text-center">
-        <Heading priority={4}>{t("listings.lottery.lotteryResults")}</Heading>
+        <Heading className="mb-4" priority={4}>
+          {t("listings.lottery.lotteryResults")}
+        </Heading>
         <p className="mb-4 text-sm uppercase">
           {dayjs(listing.Lottery_Results_Date).format("MMMM D, YYYY")}
         </p>
