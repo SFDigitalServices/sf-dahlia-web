@@ -65,7 +65,7 @@ const ListingDetail = () => {
                   {/* TODO: do we have a class for serifs but smaller we can enable? */}
                   <p className="text-serif-lg">{t("listings.monitoredByMohcd")}</p>
                   <img
-                    alt={t("listings.equal_housing_opportunity_logo")}
+                    alt={t("listings.equalHousingOpportunityLogo")}
                     src={getAssetPath("logo-equal.png")}
                   />
                 </div>
