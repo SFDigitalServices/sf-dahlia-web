@@ -6,6 +6,7 @@ import {
   toLanguagePrefix,
   getReservedCommunityType,
   defaultIfNotTranslated,
+  localizedFormat,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -174,6 +175,18 @@ describe("languageUtil", () => {
       expect(
         defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[1]}`, salesforceVals[1])
       ).toBe("500 BR")
+    })
+  })
+
+  describe("localizedFormat", () => {
+    const date = "2050-01-01T01:00:00.000+0000"
+
+    it("formats date", () => {
+      expect(localizedFormat(date, "LL")).toBe("January 1, 2050")
+    })
+
+    it("formats date and time", () => {
+      expect(localizedFormat(date, "LLL")).toBe("January 1, 2050 1:00 AM")
     })
   })
 })

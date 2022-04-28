@@ -15,6 +15,14 @@ export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing)
   listing.Reserved_community_type === RESERVED_TYPES.HABITAT
 
 /**
+ * Check if lottery is complete for a listing
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and has a lottery date, false otherwise
+ */
+export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
+
+/**
  * Check if a listing is open for applying
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing is accepting applications, false otherwise
