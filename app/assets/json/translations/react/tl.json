@@ -129,7 +129,7 @@
   "listings.weSuggestHousingCounselor": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon. <a href='%{url}' target='_blank'>Humanap ng Tagapayo sa Pabahay (Housing Counselor)</a>.",
   "listingsForRent.rentalAssistance.title": "Tulong sa Pag-upa",
   "listingsForRent.rentalAssitance.subtitle": "Pwedeng gamitin para sa ari-ariang ito ang mga Seksyon 8 na voucher para sa pabahay at iba pang may bisang programa para sa pagtulong sa upa",
-  "listingsForSale.beforeApplyingHabitat.readFullList": "Basahin <a href='{{url}}' target='_blank'>ang kumpletong listahan ng mga kinakailangan</a> para sa higit pang detalye.",
+  "listingsForSale.beforeApplyingHabitat.readFullList": "Basahin <a href='%{url}' target='_blank'>ang kumpletong listahan ng mga kinakailangan</a> para sa higit pang detalye.",
   "listingsForSale.beforeApplyingHabitat.rulesAreDifferent": "May mga patakaran ang mga yunit na ito na iba sa iba pang listahan ng pag-aari sa DAHLIA. Tiyaking ikaw ay:",
   "lottery.lotteryResultsPdfLink": "I-download ang mga Resulta ng Lottery na naka-PDF. ",
   "nav.accountSettings": "Mga Setting ng Account ",

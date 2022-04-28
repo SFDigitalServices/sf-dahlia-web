@@ -129,7 +129,7 @@
   "listings.weSuggestHousingCounselor": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones. <a href='%{url}' target='_blank'>Encuentre un consejero de vivienda</a>.",
   "listingsForRent.rentalAssistance.title": "Asistencia para el alquiler",
   "listingsForRent.rentalAssitance.subtitle": "Los vales de vivienda de la Sección 8 y otros programas válidos de asistencia para el alquiler pueden utilizarse para esta propiedad.",
-  "listingsForSale.beforeApplyingHabitat.readFullList": "Para obtener más detalles, lea <a href='{{url}}' target='_blank'>la lista completa de requisitos</a>.",
+  "listingsForSale.beforeApplyingHabitat.readFullList": "Para obtener más detalles, lea <a href='%{url}' target='_blank'>la lista completa de requisitos</a>.",
   "listingsForSale.beforeApplyingHabitat.rulesAreDifferent": "Estas unidades poseen normas diferentes de otros anuncios de propiedad en DAHLIA. Asegúrese de:",
   "lottery.lotteryResultsPdfLink": "Descargue los Resultados del Sorteo en Formato PDF",
   "nav.accountSettings": "Configuraciones de la cuenta",

@@ -129,7 +129,7 @@
   "listings.weSuggestHousingCounselor": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。<a href='%{url}' target='_blank'>尋找住房顧問</a>。",
   "listingsForRent.rentalAssistance.title": "租房補助",
   "listingsForRent.rentalAssitance.subtitle": "此物業適用第8段房屋補助及其他有效租房援助計劃補貼。",
-  "listingsForSale.beforeApplyingHabitat.readFullList": "請參閱<a href='{{url}}' target='_blank'>完整的要求清單</a>以了解詳情。",
+  "listingsForSale.beforeApplyingHabitat.readFullList": "請參閱<a href='%{url}' target='_blank'>完整的要求清單</a>以了解詳情。",
   "listingsForSale.beforeApplyingHabitat.rulesAreDifferent": "這些單位適用的規則不同於 DAHLIA 上的其他所有權房源。請確認您符合以下條件：",
   "lottery.lotteryResultsPdfLink": "下載抽籤結果 PDF",
   "nav.accountSettings": "帳戶設定",
