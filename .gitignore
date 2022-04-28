@@ -53,3 +53,6 @@ yarn-debug.log*
 .yarn-integrity
 
 .DS_Store
+
+# Test output
+app/javascript/test-coverage
