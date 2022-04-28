@@ -1,11 +1,11 @@
 name: Heroku
 on:
   pull_request:
-    types: [opened, synchronize, closed, reopened]
+    types: [opened, synchronize, closed, reopened, labeled]
 
 jobs:
   create-review-app:
-    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    if: github.event.action == 'opened' || github.event.action == 'reopened' || || github.event.label.name == 'heroku-review-app'
     runs-on: ubuntu-latest
     steps:
       - uses: fastruby/manage-heroku-review-app@v1.2
