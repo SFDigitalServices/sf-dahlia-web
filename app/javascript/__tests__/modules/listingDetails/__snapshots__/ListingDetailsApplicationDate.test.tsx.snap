@@ -21,7 +21,7 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
     </svg>
   </span>
   <span>
-    Application Deadline Jan 01, 2050 at 1:00 AM
+    Application Deadline Jan 1, 2050 at 1:00 AM
   </span>
 </div>
 `;
@@ -47,7 +47,7 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
     </svg>
   </span>
   <span>
-    Applications Closed Jan 01, 2000 at 1:00 AM
+    Applications Closed Jan 1, 2000 at 1:00 AM
   </span>
 </div>
 `;
