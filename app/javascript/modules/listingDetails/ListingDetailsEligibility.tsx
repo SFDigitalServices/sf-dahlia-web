@@ -38,34 +38,25 @@ export const ListingDetailsEligibility = ({
         />
       )}
       <ListSection
-        title={"Household Maximum Income"}
-        subtitle={
-          "For income calculations, household size includes everyone (all ages) living in the unit."
-        }
+        title={t("listings.householdMaximumIncome")}
+        subtitle={t("listings.forIncomeCalculations")}
       >
         {/* TODO: Build unit summaries */}
       </ListSection>
-      <ListSection
-        title={"Occupancy"}
-        subtitle={
-          "Occupancy limits for this building differ from household size, and do not include children under 6."
-        }
-      >
+      <ListSection title={t("t.occupancy")} subtitle={t("listings.occupancyDescriptionNoSro")}>
         {/* TODO: Build unit summaries */}
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />
       <ListSection
-        title={"Rental Assistance"}
-        subtitle={
-          "Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy."
-        }
+        title={t("listingsForRent.rentalAssistance.title")}
+        subtitle={t("listingsForRent.rentalAssitance.subtitle")}
       />
       <ListSection
-        title={"Additional Eligibility Rules"}
-        subtitle={"Applicants must also qualify under the rules of the building."}
+        title={t("listings.additionalEligibilityRules.title")}
+        subtitle={t("listings.additionalEligibilityRules.subtitle")}
       >
         {listing.Credit_Rating && (
-          <InfoCard title={"Credit History"}>
+          <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
             <ExpandableText className="text-sm text-gray-700">
               {listing.Credit_Rating}
             </ExpandableText>
@@ -73,14 +64,14 @@ export const ListingDetailsEligibility = ({
         )}
 
         {listing.Eviction_History && (
-          <InfoCard title={"Rental History"}>
+          <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
             <ExpandableText className="text-sm text-gray-700">
               {listing.Eviction_History}
             </ExpandableText>
           </InfoCard>
         )}
 
-        <InfoCard title={"Criminal Background"}>
+        <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
           <ExpandableText className="text-sm text-gray-700">
             Qualified applicants with criminal history will be considered for housing in compliance
             with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
@@ -88,7 +79,7 @@ export const ListingDetailsEligibility = ({
         </InfoCard>
         <p>
           <a href={listing.Building_Selection_Criteria} target={"_blank"}>
-            {"Find out more about Building Selection Criteria"}
+            {t("listings.additionalEligibilityRules.findOutMore")}
           </a>
         </p>
       </ListSection>

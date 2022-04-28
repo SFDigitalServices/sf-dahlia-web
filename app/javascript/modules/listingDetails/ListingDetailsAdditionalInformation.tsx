@@ -22,18 +22,18 @@ export const ListingDetailsAdditionalInformation = ({
       <div className="listing-detail-panel">
         {listing.Listing_Other_Notes && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.special_notes")}</h3>
+            <h3 className="text-serif-lg">{t("listings.specialNotes")}</h3>
             <TextTruncate text={listing.Listing_Other_Notes} />
           </div>
         )}
         <div className="info-card bg-gray-100 border-0">
-          <h3 className="text-serif-lg">{t("listings.required_documents")}</h3>
+          <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
           <div className="text-sm">
             <TextTruncate text={listing.Required_Documents} />
           </div>
         </div>
         <div className="info-card bg-gray-100 border-0">
-          <h3 className="text-serif-lg">{t("listings.important_program_rules")}</h3>
+          <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
           <TextTruncate text={listing.Legal_Disclaimers} />
         </div>
         {listing.CC_and_R_URL && (
@@ -58,7 +58,7 @@ export const ListingDetailsAdditionalInformation = ({
             */}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.re_pricing")}</h3>
+            <h3 className="text-serif-lg">{t("listings.rePricing")}</h3>
             <div className="text-sm">
               <TextTruncate text={listing.Repricing_Mechanism} />
             </div>
