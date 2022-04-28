@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLottery displays if lottery is complete 1`] = `
+<div
+  className="border-b pt-4 text-center"
+>
+  <h4
+    className="undefined mb-4"
+  >
+    Lottery Results
+  </h4>
+  <p
+    className="mb-4 text-sm uppercase"
+  >
+    January 26, 2022
+  </p>
+  <div
+    className="bg-gray-100 py-4"
+  >
+    <button
+      className="button is-primary is-small"
+      onClick={[Function]}
+    >
+      View Lottery Results
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsLottery does not display if lottery is not complete 1`] = `null`;
