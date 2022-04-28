@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsPreferences display 3 default preferences - COP, DHTP, L/W 1`] = `
+exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/W 1`] = `
 <li
   className="list-section custom-counter__item"
 >

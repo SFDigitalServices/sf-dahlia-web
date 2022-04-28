@@ -3,6 +3,7 @@ import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import { EventSection } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import { localizedFormat } from "../../util/languageUtil"
 
 export interface ListingDetailsInfoSessionProps {
   listing: RailsListing
@@ -25,7 +26,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
           <EventSection
             events={[
               {
-                dateString: dayjs(informationSession.Date).format("MMMM DD"),
+                dateString: localizedFormat(informationSession.Date, "LL"),
                 timeString: getEventTimeString(informationSession),
                 note: getEventNote(informationSession),
               },
