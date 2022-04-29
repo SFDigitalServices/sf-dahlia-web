@@ -8,6 +8,12 @@ export interface ListingDetailsFeaturesProps {
   imageSrc: string
 }
 
+const getDepositString = (min?: string, max?: string) => {
+  if (!min && !max) return null
+  if (min && max) return `$${min} - $${max}`
+  return min ? `$${min}` : `$${max}`
+}
+
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   return (
     <ListingDetailItem
@@ -47,14 +53,24 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
-        {/* Waiting on new prop uptake from DAH-1133
-          <AdditionalFees
-          depositMin={listing.Deposit_Min?.toLocaleString()}
-          depositMax={listing.Deposit_Max?.toLocaleString()}
-          applicationFee={listing.Fee?.toLocaleString()}
+        <AdditionalFees
+          deposit={getDepositString(
+            listing.Deposit_Min.toLocaleString(),
+            listing.Deposit_Max.toLocaleString()
+          )}
+          applicationFee={`$${listing.Fee?.toLocaleString()}`}
           costsNotIncluded={listing.Costs_Not_Included}
-          depositHelperText={"or one month's rent"}
-        /> */}
+          strings={{
+            sectionHeader: t("listings.features.additionalFees"),
+            deposit: t("listings.features.deposit"),
+            depositSubtext: [t("listings.features.orOneMonthsRent")],
+            applicationFee: t("listings.features.applicationFee"),
+            applicationFeeSubtext: [
+              t("listings.features.perApplicant"),
+              t("listings.features.duePostLottery"),
+            ],
+          }}
+        />
       </div>
     </ListingDetailItem>
   )
