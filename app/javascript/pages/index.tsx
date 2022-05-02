@@ -34,7 +34,6 @@ const HomePage = (_props: HomePageProps) => {
         secondaryButtonLink={getSaleDirectoryPath()}
         secondaryButtonTitle={t("welcome.seeSaleListings")}
       />
-      <div>hi!</div>
       <div className="homepage-extra mt-2">
         <ActionBlock
           header={t("welcome.newListingEmailAlert")}
