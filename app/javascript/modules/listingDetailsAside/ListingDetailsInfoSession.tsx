@@ -1,7 +1,6 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
-import { EventSection } from "@bloom-housing/ui-components"
-import dayjs from "dayjs"
+import { EventSection, t } from "@bloom-housing/ui-components"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
 
@@ -31,7 +30,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
                 note: getEventNote(informationSession),
               },
             ]}
-            headerText={"Information Sessions"}
+            headerText={t("listings.process.informationSessions")}
           />
         )
       })}
@@ -39,12 +38,12 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
         <EventSection
           events={listing.Open_Houses?.map((openHouse) => {
             return {
-              dateString: dayjs(openHouse.Date).format("MMMM DD"),
+              dateString: localizedFormat(openHouse.Date, "LL"),
               timeString: getEventTimeString(openHouse),
               note: getEventNote(openHouse),
             }
           })}
-          headerText={"Open Houses"}
+          headerText={t("label.openHouses")}
         />
       )}
       {/* TODO: Bloom prop changes for get and submit application sections */}
