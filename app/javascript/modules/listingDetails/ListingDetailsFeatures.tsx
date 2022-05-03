@@ -22,15 +22,30 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
     >
       <div className="listing-detail-panel">
         <dl className="column-definition-list">
-          <Description term={"Neighborhood"} description={listing.Neighborhood} />
-          <Description term={"Built"} description={listing.Year_Built} />
-          <Description term={"Parking"} description={listing.Parking_Information} />
-          <Description term={"Smoking Policy"} description={listing.Smoking_Policy} />
-          <Description term={"Pets Policy"} description={listing.Pet_Policy} />
-          <Description term={"Property Amenities"} description={listing.Amenities} />
-          <Description term={"Accessibility"} description={listing.Accessibility} />
+          <Description
+            term={t("listings.neighborhood.header")}
+            description={listing.Neighborhood}
+          />
+          <Description term={t("listings.features.built")} description={listing.Year_Built} />
+          <Description
+            term={t("listings.features.parking")}
+            description={listing.Parking_Information}
+          />
+          <Description
+            term={t("listings.features.smokingPolicy")}
+            description={listing.Smoking_Policy}
+          />
+          <Description term={t("listings.features.petsPolicy")} description={listing.Pet_Policy} />
+          <Description
+            term={t("listings.features.propertyAmenities")}
+            description={listing.Amenities}
+          />
+          <Description
+            term={t("listings.features.accessibility")}
+            description={listing.Accessibility}
+          />
 
-          <Description term={"Unit Features"} description={""} />
+          <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
         <AdditionalFees
           depositMin={listing.Deposit_Min?.toLocaleString()}

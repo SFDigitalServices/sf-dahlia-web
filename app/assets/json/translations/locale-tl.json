@@ -970,7 +970,7 @@
             },
             "lottery_preference": {
                 "all_remaining_units": "Lahat ng natitirang unit",
-                "up_to_units": "Hanggang sa  {{units}} unit na puwedeng makuha"
+                "up_to_units": "Hanggang sa {{units}} unit na puwedeng makuha"
             },
             "lottery_results": {
                 "hide": "Itago ang mga Resulta ng Lottery",
