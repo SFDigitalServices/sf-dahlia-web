@@ -1,5 +1,5 @@
 import { RailsListing } from "../listings/SharedHelpers"
-import { Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { Description, ListingDetailItem, t, AdditionalFees } from "@bloom-housing/ui-components"
 import React from "react"
 import { isRental, isSale } from "../../util/listingUtil"
 
