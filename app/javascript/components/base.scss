@@ -57,7 +57,6 @@ $text: $black;
 $border: 2px solid #ccc; // not sure how this gets used -JW
 $radius-large: 8px;
 $radius: 4px;
-$desktop: $tailwind-screens-md;
 $speed: 86ms;
 $easing: ease-out;
 
@@ -87,6 +86,12 @@ $colors: (
 @import "@bloom-housing/ui-components/src/global/tables.scss";
 @import "@bloom-housing/ui-components/src/global/homepage.scss";
 @import "@bloom-housing/ui-components/src/global/print.scss";
+
+@import "@bloom-housing/ui-components/src/global/tokens/borders.scss";
+@import "@bloom-housing/ui-components/src/global/tokens/colors.scss";
+@import "@bloom-housing/ui-components/src/global/tokens/fonts.scss";
+@import "@bloom-housing/ui-components/src/global/tokens/screens.scss";
+@import "@bloom-housing/ui-components/src/global/tokens/sizes.scss";
 
 // /* ***********/
 // /* Additional stylesheets are contained within individual component folders */

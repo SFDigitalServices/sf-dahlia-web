@@ -1,5 +1,5 @@
 import { RailsListing } from "../listings/SharedHelpers"
-import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { isSale } from "../../util/listingUtil"
 
@@ -47,13 +47,14 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
-        <AdditionalFees
+        {/* Waiting on new prop uptake from DAH-1133
+          <AdditionalFees
           depositMin={listing.Deposit_Min?.toLocaleString()}
           depositMax={listing.Deposit_Max?.toLocaleString()}
           applicationFee={listing.Fee?.toLocaleString()}
           costsNotIncluded={listing.Costs_Not_Included}
           depositHelperText={"or one month's rent"}
-        />
+        /> */}
       </div>
     </ListingDetailItem>
   )
