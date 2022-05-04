@@ -1,7 +1,7 @@
 import { RailsListing } from "../listings/SharedHelpers"
 import { Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { isSale } from "../../util/listingUtil"
+import { isRental, isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -13,6 +13,8 @@ const getDepositString = (min?: string, max?: string) => {
   if (min && max) return `$${min} - $${max}`
   return min ? `$${min}` : `$${max}`
 }
+
+// TBD: if listing is BMR add "may be higher for lower credit scores" string
 
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   return (
@@ -53,24 +55,26 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
-        <AdditionalFees
-          deposit={getDepositString(
-            listing.Deposit_Min.toLocaleString(),
-            listing.Deposit_Max.toLocaleString()
-          )}
-          applicationFee={`$${listing.Fee?.toLocaleString()}`}
-          costsNotIncluded={listing.Costs_Not_Included}
-          strings={{
-            sectionHeader: t("listings.features.additionalFees"),
-            deposit: t("listings.features.deposit"),
-            depositSubtext: [t("listings.features.orOneMonthsRent")],
-            applicationFee: t("listings.features.applicationFee"),
-            applicationFeeSubtext: [
-              t("listings.features.perApplicant"),
-              t("listings.features.duePostLottery"),
-            ],
-          }}
-        />
+        {isRental(listing) && (
+          <AdditionalFees
+            deposit={getDepositString(
+              listing.Deposit_Min?.toLocaleString(),
+              listing.Deposit_Max?.toLocaleString()
+            )}
+            applicationFee={listing.Fee ? `$${listing.Fee?.toLocaleString()}` : null}
+            costsNotIncluded={listing.Costs_Not_Included}
+            strings={{
+              sectionHeader: t("listings.features.additionalFees"),
+              deposit: t("listings.features.deposit"),
+              depositSubtext: [t("listings.features.orOneMonthsRent")],
+              applicationFee: t("listings.features.applicationFee"),
+              applicationFeeSubtext: [
+                t("listings.features.perApplicant"),
+                t("listings.features.duePostLottery"),
+              ],
+            }}
+          />
+        )}
       </div>
     </ListingDetailItem>
   )
