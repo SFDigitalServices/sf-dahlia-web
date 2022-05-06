@@ -1,8 +1,7 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import dayjs from "dayjs"
 import { areLotteryResultsShareable } from "../../util/listingUtil"
-import { getReservedCommunityType } from "../../util/languageUtil"
+import { getReservedCommunityType, localizedFormat } from "../../util/languageUtil"
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
@@ -15,8 +14,8 @@ export const getListingImageCardStatuses = (
   hasFiltersSet: boolean
 ): StatusBarType[] => {
   const statuses: StatusBarType[] = []
-  const formattedDueDateString = dayjs(listing.Application_Due_Date).format("MMMM DD, YYYY")
-  const lotteryResultsDateString = dayjs(listing.Lottery_Results_Date).format("MMMM DD, YYYY")
+  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+  const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
 
   if (new Date(listing.Application_Due_Date) < new Date()) {
     if (!areLotteryResultsShareable(listing)) {

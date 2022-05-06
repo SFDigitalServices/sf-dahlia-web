@@ -8,7 +8,7 @@
     "@babel/plugin-transform-react-jsx": "^7.12.16",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
-    "@bloom-housing/ui-components": "^4.1.3-alpha.5",
+    "@bloom-housing/ui-components": "^4.2.2-alpha.10",
     "@rails/webpacker": "5.2.1",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
@@ -34,6 +34,7 @@
     "sass": "^1.32.1",
     "sass-loader": "^10.1.1",
     "tailwindcss": "^2.2.10",
+    "truncate-html": "^1.0.4",
     "ts-loader": "^8.0.16",
     "typescript": "^4.3.2",
     "webpacker-react": "^0.3.2"

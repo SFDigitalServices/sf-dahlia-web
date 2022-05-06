@@ -1205,10 +1205,10 @@
         "preferences": {
             "alice_griffith": {
                 "address": "Dirección en Alice Griffith",
-                "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
-                "desc": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
-                "proof_desc": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
-                "sfha_letter_instructions": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority, SFHA) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
+                "address_desc": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development)",
+                "desc": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith.",
+                "proof_desc": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith:",
+                "sfha_letter_instructions": "Carta de la Autoridad de Vivienda de San Francisco que verifique que el solicitante vivía en la dirección de Alice Griffith",
                 "title": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
             },
             "rtr_sunnydale": {

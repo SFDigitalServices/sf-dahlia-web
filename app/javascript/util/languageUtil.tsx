@@ -1,4 +1,5 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
+import dayjs from "dayjs"
 import React from "react"
 
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
@@ -16,6 +17,14 @@ export enum LanguagePrefix {
   Spanish = "es",
   Chinese = "zh",
   Tagalog = "tl",
+}
+
+// Mapping of language prefixes to dayjs language codes
+enum dayJsLocales {
+  en = "en",
+  es = "es",
+  tl = "tl-ph",
+  zh = "zh",
 }
 
 export const LANGUAGE_CONFIGS: Record<LanguagePrefix, LangConfig> = {
@@ -64,6 +73,15 @@ export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> =>
 
   if (!config.isDefault) {
     addTranslation(await config.load())
+  }
+
+  // load the plugin for localized formats https://day.js.org/docs/en/plugin/localized-format
+  const localizedFormat = require("dayjs/plugin/localizedFormat")
+  dayjs.extend(localizedFormat)
+
+  // load the locale
+  if (prefix !== LanguagePrefix.English) {
+    require(`dayjs/locale/${dayJsLocales[prefix]}`)
   }
 }
 
@@ -164,4 +182,17 @@ export function getReservedCommunityType(type: string | undefined): string {
 export function defaultIfNotTranslated(key: string, value: string): string {
   const translatedKey = t(key)
   return translatedKey === key ? value : translatedKey
+}
+
+/**
+ * Localize a given date for the current language.
+ *
+ * @param date {string} - date to format
+ * @param format {string} - format string. see https://day.js.org/docs/en/display/format#list-of-localized-formats
+ * @returns {string} localized date
+ */
+export function localizedFormat(date: string, format: string): string {
+  const lang = getCurrentLanguage(window.location.pathname)
+
+  return dayjs(date).locale(dayJsLocales[lang]).format(format)
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import { ImageCard } from "@bloom-housing/ui-components"
+import { ImageCard, t } from "@bloom-housing/ui-components"
 import { getReservedCommunityType } from "../../util/languageUtil"
 import { getListingAddressString, RailsListing } from "../listings/SharedHelpers"
 
@@ -26,7 +26,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
         <p className="text-gray-700 text-base">{listing.Developer}</p>
         <p className="text-xs">
           <a href={"/"} target="_blank" aria-label="Opens in new window">
-            View on Map
+            {t("label.viewOnMap")}
           </a>
         </p>
       </div>

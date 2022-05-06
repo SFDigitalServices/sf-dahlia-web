@@ -10,7 +10,7 @@ import { getPreferences } from "../../../api/listingApiService"
 jest.mock("../../../api/listingApiService")
 
 describe("ListingDetailsPreferences", () => {
-  it("display 3 default preferences - COP, DHTP, L/W", async () => {
+  it("display 3 default preferences - COP, DTHP, L/W", async () => {
     const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
     getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
 

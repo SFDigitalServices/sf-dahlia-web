@@ -451,7 +451,7 @@
       "accessible_only_anyone": "At least one member of your household must need an accessible unit.",
       "address": "Please enter an address",
       "address_validation": {
-        "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, email us at <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
+        "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
         "not_found_subject": "Unable to enter my address in DAHLIA application",
         "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}"
       },
@@ -1209,10 +1209,10 @@
     "preferences": {
       "alice_griffith": {
         "address": "Alice Griffith Address",
-        "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
-        "desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
-        "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
-        "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
+                "address_desc": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
+                "desc": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
+                "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+                "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
         "title": "Alice Griffith Housing Development Resident Preference"
       },
       "rtr_sunnydale": {
