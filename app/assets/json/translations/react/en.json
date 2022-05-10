@@ -49,7 +49,7 @@
   "listings.availableUnits": "Available Units",
   "listings.availableUnitsAndOpenWaitlist": "Available Units & Open Waitlist",
   "listings.availableUnitsAndWaitlist": "Available units and waitlist",
-  "listings.availableUnitsAndWaitlistDescription": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='italic'>%{number} %{unit}</span>",
+  "listings.availableUnitsAndWaitlistDescription": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for %{number} %{unit}",
   "listings.availableUnitsAndWaitlistDescription.pluralUnits": "units",
   "listings.availableUnitsAndWaitlistDescription.singularUnit": "unit",
   "listings.buildingImageAltText": "A picture of the building",
