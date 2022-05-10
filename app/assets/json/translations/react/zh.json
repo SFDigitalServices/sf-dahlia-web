@@ -41,7 +41,7 @@
   "listings.availableUnits": "可用單位",
   "listings.availableUnitsAndOpenWaitlist": "現有單位與開放等候名單",
   "listings.availableUnitsAndWaitlist": "現有單位與等候名單",
-  "listings.availableUnitsAndWaitlistDescription": "一旦中籤者住滿所有現有單位，其他中籤者將會被列入 <span class='-italic'>%{number} %{unit}</span>的等候名單中",
+  "listings.availableUnitsAndWaitlistDescription": "一旦中籤者住滿所有現有單位，其他中籤者將會被列入 <span class='italic'>%{number} %{unit}</span>的等候名單中",
   "listings.buildingImageAltText": "建築物照片",
   "listings.cc&r": "契約、條件與限制 (Covenants, Conditions and Restrictions, CC&R)",
   "listings.cc&rDescription": "CC&R 說明有關屋主協會的規定，並且限制您如何裝修該物業。",
