@@ -1,6 +1,8 @@
 import React from "react"
-import { RailsListing } from "../listings/SharedHelpers"
+import dayjs from "dayjs"
 import { QuantityRowSection, t } from "@bloom-housing/ui-components"
+import { RailsListing } from "../listings/SharedHelpers"
+import { isLotteryComplete } from "../../util/listingUtil"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -42,7 +44,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const unavailableDescription = (
     <>
-      <p>{t("listings.noAvailableUnits")}</p>
+      <p className={"mb-2"}>{t("listings.noAvailableUnits")}</p>
       <p>
         {t("listings.enterLotteryForWaitlist", {
           ...descriptionValues,
@@ -69,9 +71,11 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
     },
   ]
 
+  const listingsOpen = dayjs(listing.Application_Due_Date) > dayjs()
+
   return (
     <>
-      {listing.hasWaitlist && (
+      {listing.hasWaitlist && (listingsOpen || isLotteryComplete(listing)) && (
         <>
           {listing.Units_Available === 0 && (
             <QuantityRowSection
