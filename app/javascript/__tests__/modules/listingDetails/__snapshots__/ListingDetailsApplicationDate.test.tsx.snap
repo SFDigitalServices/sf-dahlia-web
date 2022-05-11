@@ -35,7 +35,7 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
     data-test-id={null}
   >
     <svg
-      fill="#E41D3D"
+      fill="var(--bloom-color-red-700)"
       viewBox="0 0 32 32"
     >
       <path
