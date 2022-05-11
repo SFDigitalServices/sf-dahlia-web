@@ -57,7 +57,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
     {
       amount: listing.Number_of_people_currently_on_waitlist,
       text: t("listings.currentWaitlistSize"),
-      emphasized: true,
+      emphasized: false,
     },
     {
       amount: listing.Total_waitlist_openings,
@@ -67,7 +67,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
     {
       amount: listing.Maximum_waitlist_size,
       text: t("listings.finalWaitlistSize"),
-      emphasized: true,
+      emphasized: false,
     },
   ]
 
