@@ -57,7 +57,7 @@
   "listings.eligibilityCalculator.sale.noMatchingUnits": "De acuerdo con la información que ha ingresado, no coincide con ninguno de los anuncios actuales para la venta.",
   "listings.eligibilityCalculator.sale.showingMatchingUnits": "Se muestran las unidades compatibles para alquilar",
   "listings.eligibilityCalculator.youMayBeEligible": "Según la información ingresada, usted podría ser elegible para las unidades de la siguiente propiedad.",
-  "listings.enterLotteryForWaitlist": "Ingrese al sorteo para obtener un lugar en la lista de espera de %{number} %{unit}.",
+  "listings.enterLotteryForWaitlist": "Ingrese al sorteo para obtener un lugar en la lista de espera.",
   "listings.equalHousingOpportunityLogo": "Logotipo de Igualdad de oportunidades de vivienda",
   "listings.features.accessibility": "Accesibilidad",
   "listings.features.built": "Año de construcción",

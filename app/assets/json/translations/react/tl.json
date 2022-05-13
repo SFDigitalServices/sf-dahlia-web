@@ -57,7 +57,7 @@
   "listings.eligibilityCalculator.sale.noMatchingUnits": "Batay sa impormasyong inilagay ninyo, walang nag-match sa inyo na kasalukuyang nakalistang pabahay (listing) na ibinebenta.",
   "listings.eligibilityCalculator.sale.showingMatchingUnits": "Ipinapakita ang mga ka-match na unit na ibinebenta ",
   "listings.eligibilityCalculator.youMayBeEligible": "Batay sa impormasyong impormasyong inilagay ninyo, posibleng kuwalipikado kayo para sa mga unit sa mga sumusunod na gusali. ",
-  "listings.enterLotteryForWaitlist": "Sumali sa lottery para sa bukas na puwesto sa waitlist para sa %{number} %{unit}.",
+  "listings.enterLotteryForWaitlist": "Sumali sa lottery para sa bukas na puwesto sa waitlist.",
   "listings.equalHousingOpportunityLogo": "Logo ng Equal Housing Opportunity (Pantay na Oportunidad sa Pabahay)",
   "listings.features.accessibility": "Pagkakaroon ng daan papasok sa gusali ",
   "listings.features.built": "Itinayo",

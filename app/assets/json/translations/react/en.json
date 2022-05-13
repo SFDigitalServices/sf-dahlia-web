@@ -64,7 +64,7 @@
   "listings.eligibilityCalculator.sale.noMatchingUnits": "Based on information you entered, you don't match any current listings for sale.",
   "listings.eligibilityCalculator.sale.showingMatchingUnits": "Showing matching units for sale",
   "listings.eligibilityCalculator.youMayBeEligible": "Based on information you entered, you may be eligible for units at the following property.",
-  "listings.enterLotteryForWaitlist": "Enter the lottery for an open slot on the waitlist for %{number} %{unit}.",
+  "listings.enterLotteryForWaitlist": "Enter the lottery for an open slot on the waitlist.",
   "listings.equalHousingOpportunityLogo": "Equal Housing Opportunity Logo",
   "listings.features.accessibility": "Accessibility",
   "listings.features.built": "Built",
