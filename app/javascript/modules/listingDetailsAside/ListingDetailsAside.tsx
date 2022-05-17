@@ -1,11 +1,10 @@
 import React from "react"
+import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
-import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
-import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { ListingDetailsLottery } from "../listingDetailsLottery/ListingDetailsLottery"
 
 export interface ListingDetailsSidebarProps {
@@ -30,7 +29,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           <ListingDetailsLottery listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-          <ListingDetailsApply listing={listing} />
+          {/* DAH-1136 <ListingDetailsApply listing={listing} /> */}
           <ListingDetailsProcess listing={listing} />
         </div>
       </aside>
