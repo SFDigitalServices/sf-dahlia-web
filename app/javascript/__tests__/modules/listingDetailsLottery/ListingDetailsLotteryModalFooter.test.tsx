@@ -5,7 +5,7 @@ import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/list
 import { LOTTERY_MODAL_STATE } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryModal"
 
 describe("ListingDetailsLotteryModalFooter", () => {
-  it("displays preference link only when status is not initial status", () => {
+  it("displays preference link only when status is not initial state", () => {
     const tree = renderer
       .create(
         <ListingDetailsLotteryModalFooter
@@ -17,7 +17,7 @@ describe("ListingDetailsLotteryModalFooter", () => {
 
     expect(tree).toMatchSnapshot()
   })
-  it("displays full footer when modal status is initial_state", () => {
+  it("displays full footer when modal status is initial state", () => {
     const tree = renderer
       .create(
         <ListingDetailsLotteryModalFooter

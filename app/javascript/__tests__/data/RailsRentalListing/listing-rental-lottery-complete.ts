@@ -1,5 +1,8 @@
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
+/**
+ * ListingDetails response for rental listing with status of Lottery Complete
+ */
 export const lotteryCompleteRentalListing: RailsRentalListing = {
   unitSummaries: {
     reserved: null,

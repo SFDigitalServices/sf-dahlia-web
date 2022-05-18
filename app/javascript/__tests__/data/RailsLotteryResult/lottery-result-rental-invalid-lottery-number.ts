@@ -1,5 +1,9 @@
 import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
 
+/**
+ * LotteryResult response for rental listing that is invalid. Salesforce returns
+ * lotteryBuckets array with each of the preferenceResults having an empty array
+ */
 export const lotteryResultRentalInvalidLotteryNumber: RailsLotteryResult = {
   URL: null,
   publishLotteryResults: true,

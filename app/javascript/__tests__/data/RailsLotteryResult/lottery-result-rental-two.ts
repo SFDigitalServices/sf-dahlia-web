@@ -1,5 +1,8 @@
 import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
 
+/**
+ * LotteryResult for rental listing with COP and L/W preference rank
+ */
 export const lotteryResultRentalTwo: RailsLotteryResult = {
   URL: null,
   publishLotteryResults: true,

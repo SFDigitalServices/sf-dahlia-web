@@ -1,6 +1,9 @@
 import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
 
-export const lotteryResultSaleBucketsTwo: RailsLotteryResult = {
+/**
+ * LotteryResult for sale listing with NRHP and L/W preference ranks
+ */
+export const lotteryResultSaleTwo: RailsLotteryResult = {
   URL: null,
   publishLotteryResults: true,
   officeHours:

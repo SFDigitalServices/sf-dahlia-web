@@ -2,7 +2,7 @@ import React from "react"
 import renderer from "react-test-renderer"
 import { ListingDetailsLotteryModal } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryModal"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
-import { lotteryResultRentalBucketsThree } from "../../data/RailsLotteryResult/lottery-result-rental-buckets-three"
+import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
 import userEvent from "@testing-library/user-event"
 import { render, screen } from "@testing-library/react"
 import { getLotteryResults } from "../../../api/listingApiService"
@@ -16,7 +16,7 @@ describe("ListingDetailsLotteryModal", () => {
       .create(
         <ListingDetailsLotteryModal
           listing={lotteryCompleteRentalListing}
-          lotteryBucketDetails={lotteryResultRentalBucketsThree}
+          lotteryBucketDetails={lotteryResultRentalThree}
         />
       )
       .toJSON()
@@ -29,7 +29,7 @@ describe("ListingDetailsLotteryModal", () => {
     const { getByText } = render(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
-        lotteryBucketDetails={lotteryResultRentalBucketsThree}
+        lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
@@ -39,13 +39,13 @@ describe("ListingDetailsLotteryModal", () => {
 
   it("displays three results when lottery number found", async () => {
     const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalBucketsThree))
+    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
 
     const user = userEvent.setup()
     const { getByText } = render(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
-        lotteryBucketDetails={lotteryResultRentalBucketsThree}
+        lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
@@ -67,7 +67,7 @@ describe("ListingDetailsLotteryModal", () => {
     const { getByText } = render(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
-        lotteryBucketDetails={lotteryResultRentalBucketsThree}
+        lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
@@ -77,5 +77,23 @@ describe("ListingDetailsLotteryModal", () => {
 
     getByText("The number you entered was not found.")
   })
-  it("displays error when api error", () => {})
+
+  it("displays error when api error", async () => {
+    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
+    getLotteryResultsMock.mockReturnValue(Promise.resolve(null))
+
+    const user = userEvent.setup()
+    const { getByText } = render(
+      <ListingDetailsLotteryModal
+        listing={lotteryCompleteRentalListing}
+        lotteryBucketDetails={lotteryResultRentalThree}
+      />
+    )
+
+    const input = screen.getByRole("textbox")
+    await userEvent.type(input, "123")
+    await user.click(screen.getByRole("button"))
+
+    getByText("We seem to be having a connection issue. Please try your search again.")
+  })
 })

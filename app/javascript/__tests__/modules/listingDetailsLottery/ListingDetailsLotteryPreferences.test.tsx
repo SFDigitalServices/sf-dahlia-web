@@ -1,15 +1,13 @@
 import React from "react"
 import renderer from "react-test-renderer"
 import { ListingDetailsLotteryPreferences } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryPreferences"
-import { lotteryResultRentalBucketsThree } from "../../data/RailsLotteryResult/lottery-result-rental-buckets-three"
-import { lotteryResultSaleBucketsTwo } from "../../data/RailsLotteryResult/lottery-result-sale-buckets-two"
+import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
+import { lotteryResultSaleTwo } from "../../data/RailsLotteryResult/lottery-result-sale-two"
 
 describe("ListingDetailsLotteryPreferences", () => {
   it("displays 3 default preferences - COP, DTHP, L/W", () => {
     const tree = renderer
-      .create(
-        <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultRentalBucketsThree} />
-      )
+      .create(<ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultRentalThree} />)
       .toJSON()
 
     expect(tree).toMatchSnapshot()
@@ -17,9 +15,7 @@ describe("ListingDetailsLotteryPreferences", () => {
 
   it("displays 2 preferences - NRHP, L/W", () => {
     const tree = renderer
-      .create(
-        <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultSaleBucketsTwo} />
-      )
+      .create(<ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultSaleTwo} />)
       .toJSON()
 
     expect(tree).toMatchSnapshot()
