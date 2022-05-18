@@ -4,12 +4,13 @@ import {
   AppearanceStyleType,
   Button,
   Heading,
+  Modal,
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
-import { RailsLotteryBucketsDetails } from "../../api/types/rails/listings/RailsLotteryBucketsDetails"
+import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotteryModal } from "./ListingDetailsLotteryModal"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 
@@ -18,7 +19,7 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) => {
-  const [lotteryBucketDetails, setLotteryBucketDetails] = useState<RailsLotteryBucketsDetails>()
+  const [lotteryBucketDetails, setLotteryBucketDetails] = useState<RailsLotteryResult>()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
@@ -54,12 +55,12 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
         </div>
 
         {lotteryBucketDetails && (
-          <ListingDetailsLotteryModal
-            isOpen={isModalOpen}
-            listing={listing}
-            lotteryBucketDetails={lotteryBucketDetails}
-            onClose={() => setIsModalOpen(false)}
-          />
+          <Modal onClose={() => setIsModalOpen(false)} open={isModalOpen} title="">
+            <ListingDetailsLotteryModal
+              listing={listing}
+              lotteryBucketDetails={lotteryBucketDetails}
+            />
+          </Modal>
         )}
       </div>
     )

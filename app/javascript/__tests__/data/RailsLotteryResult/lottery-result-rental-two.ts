@@ -1,4 +1,6 @@
-export const lotteryBuckets = {
+import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
+
+export const lotteryResultRentalTwo: RailsLotteryResult = {
   URL: null,
   publishLotteryResults: true,
   officeHours: "Monday - Friday 10:00 AM - 6:00 PM",
@@ -27,14 +29,7 @@ export const lotteryBuckets = {
     {
       unitsAvailable: 1,
       totalSubmittedApps: 4,
-      preferenceResults: [
-        {
-          preferenceRank: 1,
-          lotteryRank: 9,
-          lotteryNumber: "00972674",
-          applicationID: "a0o4U00000KTlTYQA1",
-        },
-      ],
+      preferenceResults: [],
       preferenceOrder: 2,
       preferenceName: "Displaced Tenant Housing Preference (DTHP)",
     },
@@ -43,10 +38,10 @@ export const lotteryBuckets = {
       totalSubmittedApps: 905,
       preferenceResults: [
         {
-          preferenceRank: 1,
-          lotteryRank: 1,
-          lotteryNumber: "00972722",
-          applicationID: "a0o4U00000KTlcHQAT",
+          preferenceRank: 374,
+          lotteryRank: 462,
+          lotteryNumber: "00972877",
+          applicationID: "a0o4U00000KTlwTQAT",
         },
       ],
       preferenceOrder: 3,
@@ -55,14 +50,7 @@ export const lotteryBuckets = {
     {
       unitsAvailable: 1,
       totalSubmittedApps: 193,
-      preferenceResults: [
-        {
-          preferenceRank: 1,
-          lotteryRank: 13,
-          lotteryNumber: "00972751",
-          applicationID: "a0o4U00000KTlekQAD",
-        },
-      ],
+      preferenceResults: [],
       preferenceOrder: null,
       preferenceName: "generalLottery",
     },

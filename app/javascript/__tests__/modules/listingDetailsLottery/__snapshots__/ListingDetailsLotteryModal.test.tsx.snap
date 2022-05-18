@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryModal displays initial view with form and listing preferences 1`] = `
+<div
+  className="lottery-modal w-96"
+>
+  <header
+    className="pb-4 text-center"
+  >
+    <h1
+      className="undefined undefined"
+    >
+      Lottery Results
+    </h1>
+    <h2
+      className="font-sans font-semibold text-sm uppercase"
+    >
+      855 Brannan Units 318
+    </h2>
+  </header>
+  <form
+    className="bg-gray-100 flex lottery-results-form mb-4 px-6 py-4"
+    onSubmit={[Function]}
+  >
+    <div
+      className="field w-full"
+    >
+      <label
+        className="label"
+        htmlFor="lotterySearchNumber"
+      />
+      <div
+        className="control"
+      >
+        <input
+          aria-describedby="lotterySearchNumber"
+          aria-invalid={false}
+          className="input"
+          id="lotterySearchNumber"
+          name="lotterySearchNumber"
+          placeholder="Enter Your Lottery Number"
+          type="text"
+        />
+      </div>
+    </div>
+    <button
+      className="bg-blue-600 h-12 mt-2 p-3"
+    >
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="#ffffff"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M7.467 30.133c-0.4 0.4-0.4 1.2 0 1.6 0 0 0 0 0 0v0c0.4 0.4 1.2 0.4 1.6 0 0 0 0 0 0 0l14-14-1.467-1.733-14.133 14.133z"
+          />
+          <path
+            d="M7.467 1.867l15.733 15.6 1.6-1.6-1.6-1.6-14.133-14c-0.4-0.4-1.067-0.4-1.6 0-0.4 0.533-0.4 1.2 0 1.6z"
+          />
+          <path
+            d="M24.8 16v0 0z"
+          />
+        </svg>
+      </span>
+    </button>
+  </form>
+  <div
+    aria-busy={false}
+    aria-live="polite"
+  >
+    <div
+      className="text-tiny"
+    >
+      <p
+        className="pb-4 text-sm"
+      >
+        Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
+      </p>
+      <header>
+        <h2
+          className="undefined text-caps-underline"
+        >
+          Housing Preferences
+        </h2>
+        <p
+          className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm"
+        >
+          Ranking in these lists is considered in the order shown here.
+        </p>
+      </header>
+      <div>
+        <h3
+          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        >
+          Certificate of Preference (COP)
+        </h3>
+        <p
+          className="text-tiny"
+        >
+          Up to 1 units
+        </p>
+        <p
+          className="text-gray-700 text-tiny"
+        >
+          1 applicants are on this list.
+        </p>
+        <hr
+          className="my-4"
+        />
+      </div>
+      <div>
+        <h3
+          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference (DTHP)
+        </h3>
+        <p
+          className="text-tiny"
+        >
+          Up to 1 units
+        </p>
+        <p
+          className="text-gray-700 text-tiny"
+        >
+          4 applicants are on this list.
+        </p>
+        <hr
+          className="my-4"
+        />
+      </div>
+      <div>
+        <h3
+          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          className="text-tiny"
+        >
+          Up to 1 units
+        </p>
+        <p
+          className="text-gray-700 text-tiny"
+        >
+          905 applicants are on this list.
+        </p>
+        <hr
+          className="mt-4"
+        />
+      </div>
+      <div
+        className="bg-gray-100 border-b mb-4 p-4"
+      >
+        <hr
+          className="border-b-4 border-primary"
+        />
+      </div>
+      <div>
+        <h3
+          className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        >
+          General Pool
+        </h3>
+        <p
+          className="mb-1 text-tiny"
+        >
+          Any remaining units
+        </p>
+        <p
+          className=" border-b pb-2 text-gray-700 text-tiny"
+        >
+          193 applicants are on this list. Please note, preference holders will be considered for all units first.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bg-gray-100 mb-2 py-4 text-center"
+  >
+    <a
+      href="http://sfmohcd.org/housing-preference-programs"
+      target="_blank"
+    >
+      Read About Housing Preferences
+    </a>
+  </div>
+  <div
+    className="p-4 text-center text-tiny"
+  >
+    <p
+      className="py-2"
+    >
+      Results from January 26, 2022
+    </p>
+    <p
+      className="py-2"
+    >
+      <a
+        href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
+        target="_blank"
+      >
+        Download Lottery Results PDF
+      </a>
+    </p>
+    <p
+      className="text-gray-700 py-2"
+    >
+      This PDF contains the unsorted lottery results from the housing lottery held on January 25, 2022.
+    </p>
+  </div>
+</div>
+`;

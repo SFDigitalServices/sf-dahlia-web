@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with one result - L/W 1`] = `
+<div
+  className="lottery-ranking text-tiny"
+>
+  <header>
+    <h2
+      className="undefined text-caps-underline"
+    >
+      Your preference ranking
+    </h2>
+    <p
+      className="border-b border-gray-450 pb-4 text-gray-700"
+    >
+      Ranking in these lists is considered in the order shown here.
+    </p>
+  </header>
+  <div
+    className="bg-blue-200 border-b border-gray-450 flex mb-4 py-4"
+  >
+    <span
+      className="ui-icon ui-medium mr-4"
+      data-test-id={null}
+    >
+      <svg
+        fill="currentColor"
+        viewBox="0 0 32 32"
+      >
+        <path
+          d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
+        />
+      </svg>
+    </span>
+    <p>
+      Please note, there are other preferences that will be considered for units first.
+    </p>
+  </div>
+  <div
+    className="lottery-results-row border-b border-gray-450 flex mb-4 py-4"
+  >
+    <div
+      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+    >
+      <div
+        className="rank-title uppercase"
+      >
+        Rank
+      </div>
+      <div>
+        15
+      </div>
+    </div>
+    <div
+      className="mx-4"
+    >
+      <h3
+        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+      >
+        Live or Work in San Francisco Preference
+      </h3>
+      <p
+        className="mb-1 text-gray-900 text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        905 applicants are on this list.
+      </p>
+    </div>
+  </div>
+  <div>
+    <button
+      aria-expanded={false}
+      className="button is-unstyled m-0 no-underline has-toggle"
+      onClick={[Function]}
+      type="button"
+    >
+      t.readMore
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with two results - COP and L/W 1`] = `
+<div
+  className="lottery-ranking text-tiny"
+>
+  <header>
+    <h2
+      className="undefined text-caps-underline"
+    >
+      Your preference ranking
+    </h2>
+    <p
+      className="border-b border-gray-450 pb-4 text-gray-700"
+    >
+      Ranking in these lists is considered in the order shown here.
+    </p>
+  </header>
+  <div
+    className="lottery-results-row border-b border-gray-450 flex mb-4 py-4"
+  >
+    <div
+      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+    >
+      <div
+        className="rank-title uppercase"
+      >
+        Rank
+      </div>
+      <div>
+        1
+      </div>
+    </div>
+    <div
+      className="mx-4"
+    >
+      <h3
+        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+      >
+        Certificate of Preference (COP)
+      </h3>
+      <p
+        className="mb-1 text-gray-900 text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        1 applicants are on this list.
+      </p>
+    </div>
+  </div>
+  <div
+    className="lottery-results-row border-b border-gray-450 flex mb-4 py-4"
+  >
+    <div
+      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+    >
+      <div
+        className="rank-title uppercase"
+      >
+        Rank
+      </div>
+      <div>
+        374
+      </div>
+    </div>
+    <div
+      className="mx-4"
+    >
+      <h3
+        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+      >
+        Live or Work in San Francisco Preference
+      </h3>
+      <p
+        className="mb-1 text-gray-900 text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        905 applicants are on this list.
+      </p>
+    </div>
+  </div>
+  <div>
+    <button
+      aria-expanded={false}
+      className="button is-unstyled m-0 no-underline has-toggle"
+      onClick={[Function]}
+      type="button"
+    >
+      t.readMore
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with general pool only 1`] = `
+<div
+  className="lottery-ranking text-tiny"
+>
+  <div
+    className="bg-blue-200 border-b border-gray-450 flex mb-4 py-4"
+  >
+    <span
+      className="ui-icon ui-medium mr-4"
+      data-test-id={null}
+    >
+      <svg
+        fill="currentColor"
+        viewBox="0 0 32 32"
+      >
+        <path
+          d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
+        />
+      </svg>
+    </span>
+    <p>
+      Please note, preference holders will be considered for all units first.
+    </p>
+  </div>
+  <div
+    className="lottery-results-row border-b border-gray-450 flex mb-4 py-4"
+  >
+    <div
+      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+    >
+      <div
+        className="rank-title uppercase"
+      >
+        Rank
+      </div>
+      <div>
+        1
+      </div>
+    </div>
+    <div
+      className="mx-4"
+    >
+      <h3
+        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+      >
+        General Pool
+      </h3>
+      <p
+        className="mb-1 text-gray-900 text-tiny"
+      >
+        Any remaining units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        2 applicants are on this list.
+      </p>
+    </div>
+  </div>
+  <div>
+    <button
+      aria-expanded={false}
+      className="button is-unstyled m-0 no-underline has-toggle"
+      onClick={[Function]}
+      type="button"
+    >
+      t.readMore
+    </button>
+  </div>
+</div>
+`;

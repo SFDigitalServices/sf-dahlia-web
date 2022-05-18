@@ -1,11 +1,11 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
-import { STATES } from "./ListingDetailsLotteryModal"
+import { LOTTERY_MODAL_STATE } from "./ListingDetailsLotteryModal"
 import { RailsListing } from "../listings/SharedHelpers"
 
 interface ListingDetailsLotteryModalFooterProps {
-  lotteryModalStatus: STATES
+  lotteryModalStatus: LOTTERY_MODAL_STATE
   listing: RailsListing
 }
 
@@ -20,7 +20,7 @@ export const ListingDetailsLotteryModalFooter = ({
           {t("lottery.readAboutPreferences")}
         </a>
       </div>
-      {lotteryModalStatus === STATES.INITIAL_STATE && (
+      {lotteryModalStatus === LOTTERY_MODAL_STATE.INITIAL_STATE && (
         <div className="p-4 text-center text-tiny">
           <p className="py-2">
             {t("lottery.resultsFrom", {

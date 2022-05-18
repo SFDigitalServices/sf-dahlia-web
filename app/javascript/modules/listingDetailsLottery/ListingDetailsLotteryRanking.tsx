@@ -1,11 +1,11 @@
 import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
-import { RailsLotteryRanking } from "../../api/types/rails/listings/RailsLotteryRanking"
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
+import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 
 interface ListingDetailsLotteryRankingProps {
-  lotteryRanking: RailsLotteryRanking
+  lotteryResult: RailsLotteryResult
 }
 
 interface TooltipProps {
@@ -21,9 +21,9 @@ const Tooltip = ({ text }: TooltipProps) => {
   )
 }
 export const ListingDetailsLotteryRanking = ({
-  lotteryRanking,
+  lotteryResult,
 }: ListingDetailsLotteryRankingProps) => {
-  const preferenceBuckets = lotteryRanking?.lotteryBuckets.filter((bucket) => {
+  const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
     }
@@ -33,12 +33,12 @@ export const ListingDetailsLotteryRanking = ({
   const applicantHasCertOfPreference = preferenceBuckets.some(
     (bucket) => bucket.preferenceName === PREFERENCES.certificateOfPreference
   )
-  const generalLotteryBucket = lotteryRanking?.lotteryBuckets.find(
+  const generalLotteryBucket = lotteryResult?.lotteryBuckets.find(
     (bucket) => bucket.preferenceName === "generalLottery"
   )
 
   return (
-    lotteryRanking && (
+    lotteryResult && (
       <div className="lottery-ranking text-tiny">
         {applicantSelectedForPreference && (
           <header>
@@ -57,7 +57,7 @@ export const ListingDetailsLotteryRanking = ({
           <Tooltip text={t("lottery.rankingPreferencesConsideredOverGeneralNote")} />
         )}
         {preferenceBuckets?.map((bucket) => (
-          <ListingDetailsLotteryResultsRow bucket={bucket} />
+          <ListingDetailsLotteryResultsRow bucket={bucket} key={bucket.preferenceName} />
         ))}
         {!applicantSelectedForPreference && (
           <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />

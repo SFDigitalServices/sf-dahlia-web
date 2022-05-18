@@ -1,7 +1,7 @@
 import { isLotteryComplete, isOpen, isRental, isSale } from "../../util/listingUtil"
-import { openSaleListing } from "../data/listing-sale-open"
-import { closedRentalListing } from "../data/listing-rental-closed"
-import { lotteryCompleteRentalListing } from "../data/listing-rental-lottery-complete"
+import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
+import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
+import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 
 describe("listingUtil", () => {
   describe("isLotteryComplete", () => {

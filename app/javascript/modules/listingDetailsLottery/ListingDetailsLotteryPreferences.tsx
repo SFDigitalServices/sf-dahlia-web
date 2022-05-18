@@ -1,9 +1,9 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { RailsLotteryBucketsDetails } from "../../api/types/rails/listings/RailsLotteryBucketsDetails"
+import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 
 export interface ListingDetailsLotteryPreferencesProps {
-  lotteryBucketsDetails: RailsLotteryBucketsDetails
+  lotteryBucketsDetails: RailsLotteryResult
 }
 
 export const ListingDetailsLotteryPreferences = ({
