@@ -7,6 +7,7 @@ import userEvent from "@testing-library/user-event"
 import { render, screen } from "@testing-library/react"
 import { getLotteryResults } from "../../../api/listingApiService"
 import { lotteryResultRentalInvalidLotteryNumber } from "../../data/RailsLotteryResult/lottery-result-rental-invalid-lottery-number"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 jest.mock("../../../api/listingApiService")
 
@@ -42,7 +43,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
 
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { getByText } = await renderAndLoadAsync(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -64,7 +65,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalInvalidLotteryNumber))
 
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { getByText } = await renderAndLoadAsync(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -83,7 +84,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(null))
 
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { getByText } = await renderAndLoadAsync(
       <ListingDetailsLotteryModal
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
