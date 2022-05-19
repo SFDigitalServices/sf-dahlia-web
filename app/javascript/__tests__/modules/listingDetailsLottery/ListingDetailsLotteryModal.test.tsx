@@ -12,6 +12,11 @@ import { renderAndLoadAsync } from "../../__util__/renderUtils"
 jest.mock("../../../api/listingApiService")
 
 describe("ListingDetailsLotteryModal", () => {
+  beforeAll(() => {
+    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
+    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
+  })
+
   it("displays initial view with form and listing preferences", () => {
     const tree = renderer
       .create(

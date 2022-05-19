@@ -24,10 +24,12 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    void getLotteryBucketDetails(listing.Id).then((lotteryBucketDetails) => {
-      setLotteryBucketDetails(lotteryBucketDetails)
-    })
-  }, [listing.Id])
+    if (isLotteryComplete(listing)) {
+      void getLotteryBucketDetails(listing.Id).then((lotteryBucketDetails) => {
+        setLotteryBucketDetails(lotteryBucketDetails)
+      })
+    }
+  }, [listing, listing.Id])
 
   return (
     isLotteryComplete(listing) && (

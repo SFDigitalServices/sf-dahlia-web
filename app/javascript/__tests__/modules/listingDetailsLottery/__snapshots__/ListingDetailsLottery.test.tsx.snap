@@ -64,5 +64,3 @@ exports[`ListingDetailsLottery displays if lottery is complete with summary 1`] 
   </div>
 </div>
 `;
-
-exports[`ListingDetailsLottery does not display if lottery is not complete 1`] = `null`;

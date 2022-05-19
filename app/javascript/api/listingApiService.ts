@@ -30,13 +30,7 @@ export const getLotteryResults = async (
   listingId: string,
   lotteryId: string
 ): Promise<RailsLotteryResult> =>
-  get<RailsLotteryResult>(lotteryRanking(listingId, lotteryId))
-    .then((response) => response.data)
-    .catch(() => {
-      // intentionally returning null for now. will consider adding a component level
-      // error boundary in a future story
-      return null
-    })
+  get<RailsLotteryResult>(lotteryRanking(listingId, lotteryId)).then((response) => response.data)
 
 /**
  * Get the lottery preferences for the given listing
