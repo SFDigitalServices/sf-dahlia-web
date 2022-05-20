@@ -2,8 +2,8 @@ import React from "react"
 import renderer, { act } from "react-test-renderer"
 
 import { ListingDetailsPreferences } from "../../../modules/listingDetails/ListingDetailsPreferences"
-import { preferences as defaultPreferences } from "../../data/lottery-preferences-default"
-import { preferences as sixPreferences } from "../../data/lottery-preferences-six"
+import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
+import { preferences as sixPreferences } from "../../data/RailsListingPreferences/lottery-preferences-six"
 
 import { getPreferences } from "../../../api/listingApiService"
 

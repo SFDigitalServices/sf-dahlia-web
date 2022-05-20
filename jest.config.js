@@ -11,10 +11,10 @@ module.exports = {
   coverageDirectory: "test-coverage",
   coverageThreshold: {
     global: {
-      branches: 40,
-      functions: 40,
-      lines: 55,
-      statements: 55,
+      branches: 45,
+      functions: 45,
+      lines: 60,
+      statements: 60,
     },
   },
   preset: "ts-jest",

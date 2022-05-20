@@ -1,4 +1,9 @@
-export const lotteryBuckets = {
+import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
+
+/**
+ * LotteryResult for rental listing with COP, DTHP and L/W preference ranks
+ */
+export const lotteryResultRentalThree: RailsLotteryResult = {
   URL: null,
   publishLotteryResults: true,
   officeHours: "Monday - Friday 10:00 AM - 6:00 PM",

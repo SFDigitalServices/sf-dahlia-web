@@ -96,6 +96,7 @@ type BaseRailsListing = {
   Lottery_City?: string
   Lottery_Date?: string
   Lottery_Results_Date?: string
+  Lottery_Summary?: string
   Lottery_Status?: string
   Lottery_Street_Address?: string
   Lottery_Venue?: string

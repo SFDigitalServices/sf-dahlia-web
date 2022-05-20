@@ -4,8 +4,14 @@ import "./ErrorBoundary.scss"
 
 export enum BoundaryScope {
   /**
-   * The main content of the page will be wrapped in the error boundary, e.g. outside wrapping components like header
-   * and footer should still show on the page
+   * A small component on the page has an error. An error message will display where
+   * the component would normally display.
+   */
+  component = "component",
+
+  /**
+   * The main content of the page will be wrapped in the error boundary, e.g. outside
+   * wrapping components like header and footer should still show on the page
    */
   content = "content",
 
@@ -40,23 +46,27 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      if (this.props.boundaryScope === BoundaryScope.page) {
-        window.location.replace("/500.html")
-      } else if (this.props.boundaryScope === BoundaryScope.content) {
-        return (
-          <ActionBlock
-            className="error-boundary"
-            header={t("errorBoundary.description")}
-            actions={[
-              <Button
-                onClick={() => (window.location.href = "/")}
-                styleType={AppearanceStyleType.info}
-              >
-                {t("errorBoundary.goHome")}
-              </Button>,
-            ]}
-          />
-        )
+      switch (this.props.boundaryScope) {
+        case BoundaryScope.content:
+          return (
+            <ActionBlock
+              className="error-boundary"
+              header={t("errorBoundary.description")}
+              actions={[
+                <Button
+                  onClick={() => (window.location.href = "/")}
+                  styleType={AppearanceStyleType.info}
+                >
+                  {t("errorBoundary.goHome")}
+                </Button>,
+              ]}
+            />
+          )
+        case BoundaryScope.component:
+          return <div className="p-4 text-center">{t("errorBoundary.description")}</div>
+        default:
+          // Assume the worst if not specified. Will handle as a page level boundary
+          window.location.replace("/500.html")
       }
     }
 

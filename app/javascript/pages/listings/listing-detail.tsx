@@ -36,7 +36,7 @@ const ListingDetail = () => {
 
   return (
     <LoadingOverlay isLoading={!listing}>
-      <Layout>
+      <Layout title={listing?.Name}>
         <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
           <SiteAlert type="alert" className={alertClasses} />
           <SiteAlert type="success" className={alertClasses} timeout={30_000} />

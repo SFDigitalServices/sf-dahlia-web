@@ -28,7 +28,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-hook-form": "^6.15.1",
+    "react-hook-form": "^6.15.5",
     "react-inlinesvg": "^2.2.2",
     "regenerator-runtime": "^0.13",
     "sass": "^1.32.1",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^14.2.0",
     "@types/jest": "^26.0.20",
     "@types/markdown-to-jsx": "^6.11.2",
     "@types/react-helmet": "^6.1.1",
@@ -100,7 +101,7 @@
   "scripts": {
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "test:e2e": "cypress run",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",

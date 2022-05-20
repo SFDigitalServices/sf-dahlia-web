@@ -1,34 +1,31 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
-import dayjs from "dayjs"
-import { RailsLotteryBucketsDetails } from "../../api/types/rails/listings/RailsLotteryBucketsDetails"
-import { RailsListing } from "../listings/SharedHelpers"
+import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 
 export interface ListingDetailsLotteryPreferencesProps {
-  listing: RailsListing
-  lotteryBucketsDetails: RailsLotteryBucketsDetails
+  lotteryBucketsDetails: RailsLotteryResult
 }
 
 export const ListingDetailsLotteryPreferences = ({
-  listing,
   lotteryBucketsDetails,
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
     <div className="text-tiny">
-      <p className="py-4 text-sm">{t("lottery.bucketsIntro")}</p>
-      <Heading className="text-caps-underline" priority={2}>
-        {t("lottery.housingPreferences")}
-      </Heading>
-      <p className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm">
-        {t("lottery.rankingOrderNote")}
-      </p>
+      <p className="pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
+      <header>
+        <Heading className="text-caps-underline" priority={2}>
+          {t("lottery.housingPreferences")}
+        </Heading>
+        <p className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm">
+          {t("lottery.rankingOrderNote")}
+        </p>
+      </header>
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
         .map((bucket, index, arr) => (
-          <>
+          <div key={bucket.preferenceOrder}>
             <Heading
               className="font-sans font-semibold text-tiny tracking-wide uppercase"
-              key={bucket.preferenceOrder}
               priority={3}
             >
               {bucket.preferenceName}
@@ -42,7 +39,7 @@ export const ListingDetailsLotteryPreferences = ({
               })}
             </p>
             <hr className={arr.length - 1 === index ? "mt-4" : "my-4"} />
-          </>
+          </div>
         ))}
       <div className="bg-gray-100 border-b mb-4 p-4">
         <hr className="border-b-4 border-primary" />
@@ -54,7 +51,7 @@ export const ListingDetailsLotteryPreferences = ({
             <h3 className="font-sans font-semibold text-tiny tracking-wide uppercase">
               {t("lottery.generalPool")}
             </h3>
-            <p className="text-tiny">{t("lottery.anyRemainingUnits")}</p>
+            <p className="mb-1 text-tiny">{t("lottery.anyRemainingUnits")}</p>
             <p className=" border-b pb-2 text-gray-700 text-tiny">
               {t("lottery.numberApplicantsQualifiedForGeneralPool", {
                 number: bucket.totalSubmittedApps,
@@ -62,28 +59,6 @@ export const ListingDetailsLotteryPreferences = ({
             </p>
           </div>
         ))}
-      <div className="bg-gray-100 mb-2 py-4 text-center">
-        <a href="http://sfmohcd.org/housing-preference-programs" target="_blank">
-          {t("lottery.readAboutPreferences")}
-        </a>
-      </div>
-      <div className="text-center">
-        <p className="py-2">
-          {t("lottery.resultsFrom", {
-            date: dayjs(listing.Lottery_Results_Date).format("MMM D, YYYY"),
-          })}
-        </p>
-        <p className="py-2">
-          <a href={listing.LotteryResultsURL} target="_blank">
-            {t("lottery.lotteryResultsPdfLink")}
-          </a>
-        </p>
-        <p className="text-gray-700 py-2">
-          {t("lottery.unsortedResultsNote", {
-            date: dayjs(listing.Lottery_Date).format("MMM D, YYYY"),
-          })}
-        </p>
-      </div>
     </div>
   )
 }
