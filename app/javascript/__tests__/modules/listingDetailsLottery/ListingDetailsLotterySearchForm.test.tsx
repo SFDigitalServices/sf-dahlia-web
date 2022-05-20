@@ -1,6 +1,6 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsLotteryModal } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryModal"
+import { ListingDetailsLotterySearchForm } from "../../../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
 import userEvent from "@testing-library/user-event"
@@ -20,7 +20,7 @@ describe("ListingDetailsLotteryModal", () => {
   it("displays initial view with form and listing preferences", () => {
     const tree = renderer
       .create(
-        <ListingDetailsLotteryModal
+        <ListingDetailsLotterySearchForm
           listing={lotteryCompleteRentalListing}
           lotteryBucketDetails={lotteryResultRentalThree}
         />
@@ -33,7 +33,7 @@ describe("ListingDetailsLotteryModal", () => {
   it("displays error when user submits form with empty lottery number", async () => {
     const user = userEvent.setup()
     const { getByText } = render(
-      <ListingDetailsLotteryModal
+      <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
@@ -49,7 +49,7 @@ describe("ListingDetailsLotteryModal", () => {
 
     const user = userEvent.setup()
     const { getByText } = await renderAndLoadAsync(
-      <ListingDetailsLotteryModal
+      <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
@@ -71,7 +71,7 @@ describe("ListingDetailsLotteryModal", () => {
 
     const user = userEvent.setup()
     const { getByText } = await renderAndLoadAsync(
-      <ListingDetailsLotteryModal
+      <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
@@ -90,7 +90,7 @@ describe("ListingDetailsLotteryModal", () => {
 
     const user = userEvent.setup()
     const { getByText } = await renderAndLoadAsync(
-      <ListingDetailsLotteryModal
+      <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />

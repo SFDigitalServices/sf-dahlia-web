@@ -2,7 +2,7 @@
 
 exports[`ListingDetailsLotteryModal displays initial view with form and listing preferences 1`] = `
 <div
-  className="lottery-modal w-96"
+  className="lottery-search-form w-96"
 >
   <header
     className="pb-4 text-center"
@@ -19,7 +19,8 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     </h2>
   </header>
   <form
-    className="bg-gray-100 flex lottery-results-form mb-4 px-6 py-4"
+    className="bg-gray-100 flex mb-4 px-6 py-4"
+    id="search-form"
     onSubmit={[Function]}
   >
     <div

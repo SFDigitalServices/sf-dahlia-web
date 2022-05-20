@@ -1,16 +1,16 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsLotteryModalFooter } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryModalFooter"
+import { ListingDetailsLotterySearchFooter } from "../../../modules/listingDetailsLottery/ListingDetailsLotterySearchFooter"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
-import { LOTTERY_MODAL_STATE } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryModal"
+import { LOTTERY_SEARCH_FORM_STATUS } from "../../../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
 
 describe("ListingDetailsLotteryModalFooter", () => {
   it("displays preference link only when status is not initial state", () => {
     const tree = renderer
       .create(
-        <ListingDetailsLotteryModalFooter
+        <ListingDetailsLotterySearchFooter
           listing={lotteryCompleteRentalListing}
-          lotteryModalStatus={LOTTERY_MODAL_STATE.LOADING}
+          lotterySearchFormStatus={LOTTERY_SEARCH_FORM_STATUS.LOADING}
         />
       )
       .toJSON()
@@ -20,9 +20,9 @@ describe("ListingDetailsLotteryModalFooter", () => {
   it("displays full footer when modal status is initial state", () => {
     const tree = renderer
       .create(
-        <ListingDetailsLotteryModalFooter
+        <ListingDetailsLotterySearchFooter
           listing={lotteryCompleteRentalListing}
-          lotteryModalStatus={LOTTERY_MODAL_STATE.INITIAL_STATE}
+          lotterySearchFormStatus={LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE}
         />
       )
       .toJSON()

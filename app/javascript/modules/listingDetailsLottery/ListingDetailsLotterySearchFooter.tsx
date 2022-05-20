@@ -1,18 +1,18 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
-import { LOTTERY_MODAL_STATE } from "./ListingDetailsLotteryModal"
+import { LOTTERY_SEARCH_FORM_STATUS } from "./ListingDetailsLotterySearchForm"
 import { RailsListing } from "../listings/SharedHelpers"
 
-interface ListingDetailsLotteryModalFooterProps {
-  lotteryModalStatus: LOTTERY_MODAL_STATE
+interface ListingDetailsLotterySearchFooterProps {
+  lotterySearchFormStatus: LOTTERY_SEARCH_FORM_STATUS
   listing: RailsListing
 }
 
-export const ListingDetailsLotteryModalFooter = ({
-  lotteryModalStatus,
+export const ListingDetailsLotterySearchFooter = ({
+  lotterySearchFormStatus,
   listing,
-}: ListingDetailsLotteryModalFooterProps) => {
+}: ListingDetailsLotterySearchFooterProps) => {
   return (
     <>
       <div className="bg-gray-100 mb-2 py-4 text-center">
@@ -20,7 +20,7 @@ export const ListingDetailsLotteryModalFooter = ({
           {t("lottery.readAboutPreferences")}
         </a>
       </div>
-      {lotteryModalStatus === LOTTERY_MODAL_STATE.INITIAL_STATE && (
+      {lotterySearchFormStatus === LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE && (
         <div className="p-4 text-center text-tiny">
           <p className="py-2">
             {t("lottery.resultsFrom", {

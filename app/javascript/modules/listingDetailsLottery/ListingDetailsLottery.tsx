@@ -11,7 +11,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
 import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
-import { ListingDetailsLotteryModal } from "./ListingDetailsLotteryModal"
+import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
@@ -60,7 +60,7 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
 
           {lotteryBucketDetails && (
             <Modal onClose={() => setIsModalOpen(false)} open={isModalOpen} title="">
-              <ListingDetailsLotteryModal
+              <ListingDetailsLotterySearchForm
                 listing={listing}
                 lotteryBucketDetails={lotteryBucketDetails}
               />
