@@ -14,9 +14,14 @@ const getDepositString = (min?: string, max?: string) => {
   return min ? `$${min}` : `$${max}`
 }
 
-// TBD: if listing is BMR add "may be higher for lower credit scores" string
-
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
+  const depositSubtext = [t("listings.features.orOneMonthsRent")]
+
+  // If listing is BMR
+  if (listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN") {
+    depositSubtext.push(t("listings.features.mayBeHigherForLowerCreditScores"))
+  }
+
   return (
     <ListingDetailItem
       imageAlt={"Image Alt"}
@@ -66,7 +71,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
               deposit: t("listings.features.deposit"),
-              depositSubtext: [t("listings.features.orOneMonthsRent")],
+              depositSubtext: depositSubtext,
               applicationFee: t("listings.features.applicationFee"),
               applicationFeeSubtext: [
                 t("listings.features.perApplicant"),
