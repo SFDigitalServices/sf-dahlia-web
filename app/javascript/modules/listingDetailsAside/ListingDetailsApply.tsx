@@ -14,20 +14,7 @@ export interface ListingDetailsApplyProps {
   Need Help
 */
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
-  const descriptionValues = {
-    number: listing.Total_number_of_building_units,
-    unit:
-      listing.Total_number_of_building_units > 1
-        ? t("listings.availableUnitsAndWaitlistDescription.pluralUnits")
-        : t("listings.availableUnitsAndWaitlistDescription.singularUnit"),
-  }
-  const availableDescription = (
-    <p>
-      {t("listings.availableUnitsAndWaitlistDescription", {
-        ...descriptionValues,
-      })}
-    </p>
-  )
+  const availableDescription = <p>{t("listings.availableUnitsAndWaitlistDescription")}</p>
 
   const availableRows = [
     {
@@ -45,11 +32,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const unavailableDescription = (
     <>
       <p className={"mb-2"}>{t("listings.noAvailableUnits")}</p>
-      <p>
-        {t("listings.enterLotteryForWaitlist", {
-          ...descriptionValues,
-        })}
-      </p>
+      <p>{t("listings.enterLotteryForWaitlist")}</p>
     </>
   )
 
