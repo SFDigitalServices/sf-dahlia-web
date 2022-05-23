@@ -26,7 +26,7 @@ export const ListingDetailsEligibility = ({
       imageSrc={imageSrc}
       title={t("listings.eligibility.header")}
       subtitle={isSale(listing) ? "" : t("listings.eligibility.subheader")}
-      desktopClass="bg-primary-lighter"
+      desktopClass="bg-grey-1"
     >
       {isSale(listing) && (
         <BeforeApplyingForSale
