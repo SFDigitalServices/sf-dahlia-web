@@ -1,7 +1,7 @@
 import { RailsListing } from "../listings/SharedHelpers"
 import { Description, ListingDetailItem, t, AdditionalFees } from "@bloom-housing/ui-components"
 import React from "react"
-import { isRental, isSale } from "../../util/listingUtil"
+import { isRental, isSale, isBMR } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -17,8 +17,7 @@ const getDepositString = (min?: string, max?: string) => {
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   const depositSubtext = [t("listings.features.orOneMonthsRent")]
 
-  // If listing is BMR
-  if (listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN") {
+  if (isBMR(listing)) {
     depositSubtext.push(t("listings.features.mayBeHigherForLowerCreditScores"))
   }
 
