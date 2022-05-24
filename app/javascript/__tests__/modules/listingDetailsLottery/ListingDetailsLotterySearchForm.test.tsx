@@ -43,6 +43,21 @@ describe("ListingDetailsLotteryModal", () => {
     getByText("Please enter a valid lottery number.")
   })
 
+  it("displays error when user submits form with non numeric lottery number", async () => {
+    const user = userEvent.setup()
+    const { getByText } = render(
+      <ListingDetailsLotterySearchForm
+        listing={lotteryCompleteRentalListing}
+        lotteryBucketDetails={lotteryResultRentalThree}
+      />
+    )
+
+    const input = screen.getByRole("textbox")
+    await userEvent.type(input, "123abc")
+    await user.click(screen.getByRole("button"))
+    getByText("Please enter a valid lottery number.")
+  })
+
   it("displays three results when lottery number found", async () => {
     const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
     getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
