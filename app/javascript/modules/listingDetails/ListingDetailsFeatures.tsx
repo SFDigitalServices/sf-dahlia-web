@@ -1,6 +1,6 @@
+import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { Description, ListingDetailItem, t, AdditionalFees } from "@bloom-housing/ui-components"
-import React from "react"
 import { isRental, isSale, isBMR } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
