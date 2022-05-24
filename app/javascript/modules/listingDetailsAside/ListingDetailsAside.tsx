@@ -4,6 +4,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
+import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLottery } from "../listingDetailsLottery/ListingDetailsLottery"
 
@@ -29,7 +30,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           <ListingDetailsLottery listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-          {/* DAH-1136 <ListingDetailsApply listing={listing} /> */}
+          <ListingDetailsApply listing={listing} />
           <ListingDetailsProcess listing={listing} />
         </div>
       </aside>
