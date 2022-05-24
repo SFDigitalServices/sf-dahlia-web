@@ -45,3 +45,11 @@ export const isRental = (listing: RailsRentalListing | RailsSaleListing) =>
  */
 export const isSale = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Tenure === TENURE_TYPES.NEW_SALE || listing.Tenure === TENURE_TYPES.RESALE
+
+/**
+ * Check if a listing is BMR
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is BMR, false otherwise
+ */
+export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN"
