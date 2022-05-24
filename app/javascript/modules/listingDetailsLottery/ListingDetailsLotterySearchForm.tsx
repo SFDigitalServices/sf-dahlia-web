@@ -93,7 +93,8 @@ export const ListingDetailsLotterySearchForm = ({
   }
 
   const errorMessage =
-    (errors[lotteryNumberField]?.type === "required" && t("lottery.lotteryNumberNotValid")) ||
+    (["required", "pattern"].includes(errors[lotteryNumberField]?.type) &&
+      t("lottery.lotteryNumberNotValid")) ||
     (lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.INVALID_LOTTERY_NUMBER &&
       t("lottery.lotteryNumberNotFoundP1")) ||
     (lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.API_ERROR && t("error.lotteryRankingSearch"))
@@ -117,7 +118,7 @@ export const ListingDetailsLotterySearchForm = ({
           name={lotteryNumberField}
           placeholder={t("lottery.enterLotteryNumber")}
           type="text"
-          validation={{ required: true }}
+          validation={{ pattern: /^\d+$/, required: true }}
         />
         <button className="bg-blue-600 h-12 mt-2 p-3">
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
