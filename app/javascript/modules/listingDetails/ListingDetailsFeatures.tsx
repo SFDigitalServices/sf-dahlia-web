@@ -1,14 +1,26 @@
-import { RailsListing } from "../listings/SharedHelpers"
-import { Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { isSale } from "../../util/listingUtil"
+import { RailsListing } from "../listings/SharedHelpers"
+import { Description, ListingDetailItem, t, AdditionalFees } from "@bloom-housing/ui-components"
+import { isRental, isSale, isBMR } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
   imageSrc: string
 }
 
+const getDepositString = (min?: string, max?: string) => {
+  if (!min && !max) return null
+  if (min && max) return `$${min} - $${max}`
+  return min ? `$${min}` : `$${max}`
+}
+
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
+  const depositSubtext = [t("listings.features.orOneMonthsRent")]
+
+  if (isBMR(listing)) {
+    depositSubtext.push(t("listings.features.mayBeHigherForLowerCreditScores"))
+  }
+
   return (
     <ListingDetailItem
       imageAlt={"Image Alt"}
@@ -47,14 +59,26 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
-        {/* Waiting on new prop uptake from DAH-1133
+        {isRental(listing) && (
           <AdditionalFees
-          depositMin={listing.Deposit_Min?.toLocaleString()}
-          depositMax={listing.Deposit_Max?.toLocaleString()}
-          applicationFee={listing.Fee?.toLocaleString()}
-          costsNotIncluded={listing.Costs_Not_Included}
-          depositHelperText={"or one month's rent"}
-        /> */}
+            deposit={getDepositString(
+              listing.Deposit_Min?.toLocaleString(),
+              listing.Deposit_Max?.toLocaleString()
+            )}
+            applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
+            costsNotIncluded={listing.Costs_Not_Included}
+            strings={{
+              sectionHeader: t("listings.features.additionalFees"),
+              deposit: t("listings.features.deposit"),
+              depositSubtext: depositSubtext,
+              applicationFee: t("listings.features.applicationFee"),
+              applicationFeeSubtext: [
+                t("listings.features.perApplicant"),
+                t("listings.features.duePostLottery"),
+              ],
+            }}
+          />
+        )}
       </div>
     </ListingDetailItem>
   )

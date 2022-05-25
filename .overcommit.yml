@@ -55,6 +55,7 @@ PreCommit:
       - "app/assets/**/*.svg"
       - "public/images/**/*.svg"
       - "lib/assets/bower_components/**/*"
+      - "**/__snapshots__/*"
 
   CustomScript:
     enabled: true
