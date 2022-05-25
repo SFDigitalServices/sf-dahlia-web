@@ -449,7 +449,6 @@
         "error": {
             "accessible_only_anyone": "Al menos un miembro de su hogar debe necesitar una unidad accesible.",
             "address": "Ingrese una dirección",
-            "address_validation_not_found": "Esta direccion no fue encontrada.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
             "address_validation_po_box": "Necesitamos la dirección donde vive actualmente. No se permiten los apartados postales.",
             "alert": {
                 "bad_request": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente. \n\nContacte a sfhousing.info@sfgov.org si continúa teniendo problemas.",
@@ -576,7 +575,6 @@
             "alternate_contact_agency": "¿Dónde trabaja su trabajador social o su consejero de vivienda?",
             "alternate_contact_name": "Nombre del contacto alternativo",
             "applicant_additional_phone": "Tengo un número de teléfono adicional",
-            "applicant_disability": "¿Tiene usted alguna discapacidad?",
             "applicant_email": "Su dirección de correo electrónico:",
             "applicant_gender": "¿Cuál es su género?",
             "applicant_gender_subtitle": "Seleccione la opción que describa mejor su identidad de género actual.",
@@ -734,7 +732,6 @@
             },
             "primary_user": "Solicitante principal",
             "proof": {
-                "ca_license": "Id. o licencia de conducir emitida por el estado de CA",
                 "cable_bill": "Factura de internet y de cable",
                 "cancelled_check": "Cheque cancelado",
                 "debit_from_bank": "Débito de su cuenta bancaria",
@@ -940,8 +937,6 @@
                     "title": "Proceso de solicitud"
                 },
                 "income_range": {
-                    "income_range_plural": "Hogar de {{number}} personas: de {{minIncome}} a {{maxIncome}} por año",
-                    "income_range_singular": "Hogar de {{number}} persona: de {{minIncome}} a {{maxIncome}} por año",
                     "p1": "Para poder ser elegible para una casa de Habitat for Humanity Greater San Francisco en este anuncio, los ingresos de su hogar deben ser de entre el 82 % y el 109.8 % del Ingreso promedio del área (AMI, siglas en inglés), como se indica a continuación.",
                     "p2": "Para el cálculo de los ingresos, las personas que viven en el hogar incluyen a todas las personas (de todas las edades) que viven en la unidad.",
                     "p4": "Sus ingresos deben estar en este rango:",

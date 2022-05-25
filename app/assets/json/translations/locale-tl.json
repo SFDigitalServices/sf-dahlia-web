@@ -449,7 +449,6 @@
         "error": {
             "accessible_only_anyone": "Dapat ay nangangailangan ng yunit na madaling mai-access ang kahit isang miyembro ng iyong kabahayan.",
             "address": "Pakipasok ang inyong address",
-            "address_validation_not_found": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Hindi puwede ang mga P.O. Box.",
             "address_validation_po_box": "Kailangan namin ang address ng kung saan ka kasalukuyang nakatira. Hindi puwedeng maglagay ng mga PO Box.",
             "alert": {
                 "bad_request": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
@@ -576,7 +575,6 @@
             "alternate_contact_agency": "Saan nagtatrabaho ang inyong tagapamahala ng kaso (case manager) o tagapayo para sa pabahay (housing counselor)?",
             "alternate_contact_name": "Pangalan ng kahaliling kontak",
             "applicant_additional_phone": "Mayroon akong iba pang numero ng telepono",
-            "applicant_disability": "Ikaw ba ay may kapansanan?",
             "applicant_email": "Ang email address ninyo",
             "applicant_gender": "Ano ang inyong kasarian?",
             "applicant_gender_subtitle": "Piiin ang pinakanakapaglalarawan sa inyong kasalukuyang kinikilalang kasarian (gender identity). ",
@@ -734,7 +732,6 @@
             },
             "primary_user": "Pangunahing Aplikante",
             "proof": {
-                "ca_license": "CA ID o Driver's License (Lisensiya ng Nagmamaneho) ",
                 "cable_bill": "Singil para sa cable at internet",
                 "cancelled_check": "Kanseladong tseke",
                 "debit_from_bank": "Debit mula sa inyong account sa bangko",
@@ -940,8 +937,6 @@
                     "title": "Proseso ng Aplikasyon"
                 },
                 "income_range": {
-                    "income_range_plural": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
-                    "income_range_singular": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
                     "p1": "Para maging kwalipikado para sa bahay mula sa Habitat for Humanity Greater San Francisco sa listahan na ito, kailangang nasa pagitan ng 82% at 109.8% AMI ang kita ng iyong kabahayan, gaya ng nakalista sa ibaba.",
                     "p2": "Para sa mga kalkulasyon ng kita, kasama sa laki ng sambahayan ang lahat (anuman ang edad) ng nakatira sa yunit.",
                     "p4": "Dapat ay nasa saklaw na ito ang iyong kita:",

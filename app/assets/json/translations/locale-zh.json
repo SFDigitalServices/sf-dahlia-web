@@ -450,7 +450,6 @@
         "error": {
             "accessible_only_anyone": "您的家中至少要有一名成員有無障礙單位方面的需求。",
             "address": "請輸入地址",
-            "address_validation_not_found": "找不到此地址。請檢查輸入的城市、街道和住家號碼是否正確。不接受郵政信箱。",
             "address_validation_po_box": "您需要提供目前的居住地址。請勿提供郵政信箱。",
             "alert": {
                 "bad_request": "糟糕！似乎發生了問題。請重試。 \n\n如果您仍然遇到問題，請聯絡 sfhousing.info@sfgov.org。",
@@ -577,7 +576,6 @@
             "alternate_contact_agency": "您的個案經理或住房顧問在哪裡工作？",
             "alternate_contact_name": "備用聯絡人姓名",
             "applicant_additional_phone": "我有其他電話號碼",
-            "applicant_disability": "您是否為身心障礙人士？",
             "applicant_email": "您的電子郵件地址",
             "applicant_gender": "您的性別是？",
             "applicant_gender_subtitle": "選擇一個最能描述您目前性別認同的選項。",
@@ -735,7 +733,6 @@
             },
             "primary_user": "主要申請人",
             "proof": {
-                "ca_license": "加州 ID 或駕駛執照",
                 "cable_bill": "有線電視及網際網路帳單",
                 "cancelled_check": "已取消的支票",
                 "debit_from_bank": "您銀行帳戶的金融卡",
@@ -941,8 +938,6 @@
                     "title": "申請流程"
                 },
                 "income_range": {
-                    "income_range_plural": "{{number}} 人一戶：每年 {{minIncome}} 至 {{maxIncome}}",
-                    "income_range_singular": "{{number}} 人一戶：每年 {{minIncome}} 至 {{maxIncome}}",
                     "p1": "若要符合本房源的 Habitat for Humanity Greater San Francisco 住戶申請資格，您的家庭收入必須介於下方所列的 82% 至 109.8% AMI 之間。",
                     "p2": "計算收入時，家庭人數包含居住於該單位中的每個人 (不分年齡)。",
                     "p4": "您的收入必須在此範圍內：",
