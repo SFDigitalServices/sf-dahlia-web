@@ -1,0 +1,11 @@
+.modal {
+  @apply max-w-0;
+}
+
+.modal__inner {
+  @apply p-0;
+}
+
+.modal__close {
+  z-index: 100;
+}
