@@ -26,7 +26,7 @@ export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) =
                 }),
               },
             ]}
-            headerText={"Public Lottery"}
+            headerText={t("listings.process.publicLottery")}
             sectionHeader={true}
           />
         )}
@@ -52,7 +52,7 @@ export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) =
         }
         contactEmail={listing.Leasing_Agent_Email}
         contactName={listing.Leasing_Agent_Name}
-        contactPhoneNumber={`Call ${listing.Leasing_Agent_Phone}`}
+        contactPhoneNumber={t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })}
         contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
         contactTitle={listing.Leasing_Agent_Title}
         strings={{
