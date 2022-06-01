@@ -455,6 +455,7 @@
         "not_found_subject": "Unable to enter my address in DAHLIA application",
         "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}"
       },
+      "address_validation_duplicate_unit": "If you have an apartment or unit number, only enter it in the Apt or Unit # box",
       "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
       "alert": {
         "bad_request": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
