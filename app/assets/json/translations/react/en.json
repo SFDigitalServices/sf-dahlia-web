@@ -127,7 +127,7 @@
   "listings.lotteryPreference.Right to Return - Sunnydale.desc": "For households in which at least one person is a former or current resident of Sunnydale public housing. Please note, these units are not subsidized, the rent will not change if your income changes.",
   "listings.lotteryPreference.Right to Return - Sunnydale.title": "Right to Return - Sunnydale",
   "listings.lotteryPreference.Treasure Island Resident (TIR) Preference.desc": "For households in which at least one person holds a TIR Certificate number from the Treasure Island Development Authority (TIDA) issued in 2021.",
-  "listings.lotteryPreference.Treasure Island Resident (TIR) Preference.title": "Right to Return - Sunnydale",
+  "listings.lotteryPreference.Treasure Island Resident (TIR) Preference.title": "Treasure Island Resident (TIR) Preference",
   "listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
   "listings.lotteryPreference.upToUnits": "Up to %{units} units available",
   "listings.lotteryResults.cardTitle": "Lottery Results Posted",
