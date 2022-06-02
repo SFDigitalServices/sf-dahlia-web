@@ -9,7 +9,7 @@ interface LotteryResultsRowProps {
 
 export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowProps) => {
   return (
-    <div className="lottery-results-row border-b border-gray-450 flex mb-4 py-4">
+    <div className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4">
       <div className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white">
         <div className="rank-title uppercase">{t("lottery.rank")}</div>
         <div>{bucket.preferenceResults[0].preferenceRank}</div>

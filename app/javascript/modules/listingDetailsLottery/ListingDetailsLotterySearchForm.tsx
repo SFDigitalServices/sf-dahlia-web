@@ -77,7 +77,7 @@ export const ListingDetailsLotterySearchForm = ({
     }
     case LOTTERY_SEARCH_FORM_STATUS.INVALID_LOTTERY_NUMBER: {
       content = (
-        <div className="my-6 text-gray-700">
+        <div className="my-6 px-8 text-gray-700">
           <p className="mb-2">{t("lottery.lotteryNumberNotFoundP2")}</p>
           <p className="mb-2">{t("lottery.lotteryNumberNotFoundP3")}</p>
         </div>

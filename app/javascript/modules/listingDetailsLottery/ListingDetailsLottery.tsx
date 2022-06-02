@@ -7,7 +7,6 @@ import {
   Modal,
   t,
 } from "@bloom-housing/ui-components"
-import "./ListingDetailsLottery.scss"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
@@ -60,7 +59,15 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
           </div>
 
           {lotteryBucketDetails && (
-            <Modal onClose={() => setIsModalOpen(false)} open={isModalOpen} title="" scrollable>
+            <Modal
+              onClose={() => setIsModalOpen(false)}
+              open={isModalOpen}
+              title=""
+              modalClassNames="max-w-0"
+              innerClassNames="p-0"
+              closeClassNames="z-50"
+              scrollable
+            >
               <ListingDetailsLotterySearchForm
                 listing={listing}
                 lotteryBucketDetails={lotteryBucketDetails}
