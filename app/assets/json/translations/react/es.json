@@ -93,7 +93,6 @@
   "listings.importantProgramRules": "Reglas Importantes del Programa",
   "listings.includesPriorityUnits": "Incluye unidades con prioridad para %{priorities}",
   "listings.includingChildren": "(incluidos <span class='eligibility-subtext'>%{number} %{children}</span> menores de 6 años)",
-  "listings.lottery.lotteryResults": "Resultados del Sorteo",
   "listings.lottery.preferences": "Cualquier persona puede participar en el sorteo de viviendas para este listado. Si las personas que viven con usted tienen una de las siguientes preferencias, se le considerará en el orden que se muestra aquí. Cada poseedor de preferencias será revisado de acuerdo al orden en que haya salido en el sorteo.",
   "listings.lottery.title": "Preferencias del sorteo",
   "listings.lottery.viewLotteryResults": "Ver los Resultados del Sorteo",

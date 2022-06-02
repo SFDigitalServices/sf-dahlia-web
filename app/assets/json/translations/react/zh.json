@@ -93,7 +93,6 @@
   "listings.importantProgramRules": "重要計畫規定",
   "listings.includesPriorityUnits": "包括 %{priorities} 的優先單位",
   "listings.includingChildren": "(包括<span class='eligibility-subtext'>%{number} %{children}</span>6歲以下兒童)",
-  "listings.lottery.lotteryResults": "抽籤結果",
   "listings.lottery.preferences": "任何人均可參加該物業的住房抽籤。如果您的家庭享有以下優先權之一，您將按照如下所示次序獲得考慮。每個優先權擁有者均按抽籤排名次序審議。",
   "listings.lottery.title": "抽籤優先權",
   "listings.lottery.viewLotteryResults": "查看抽籤結果",

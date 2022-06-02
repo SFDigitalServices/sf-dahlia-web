@@ -93,7 +93,6 @@
   "listings.importantProgramRules": "Mahahalagang Patakaran ng Programa ",
   "listings.includesPriorityUnits": "Kasama ang mga Unit na Nagbibigay Prayoridad para sa %{priorities}",
   "listings.includingChildren": "(kasama ang <span class='eligibility-subtext'>%{number} %{children}</span> mas bata sa edad na 6)",
-  "listings.lottery.lotteryResults": "Mga Resulta ng Lottery",
   "listings.lottery.preferences": "Puwedeng sumali ang sinuman sa lottery o palabunutan sa pabahay para sa nakalistang pabahay na ito. Kung mayroong isa sa mga sumusunod na preperensiya ang inyong kabahayan, isasaalang-alang kayo ayon sa pagkakasuod-sunod na ipinapakita rito. Pag-aaralan ang bawat mayroong preperensiya ayon sa pagkakasunod-sunod ng ranggo sa lottery. ",
   "listings.lottery.title": "Mga Preperensya sa Loterya o Palabunutan",
   "listings.lottery.viewLotteryResults": "Ipakita ang mga Resulta ng Lottery",
