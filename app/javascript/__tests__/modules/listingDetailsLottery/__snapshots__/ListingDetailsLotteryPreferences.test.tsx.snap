@@ -5,11 +5,13 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
   className="text-tiny"
 >
   <p
-    className="pb-4 text-sm"
+    className="px-8 pb-4 text-sm"
   >
     Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
   </p>
-  <header>
+  <header
+    className="px-8"
+  >
     <h2
       className="undefined text-caps-underline"
     >
@@ -21,7 +23,9 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       Ranking in these lists is considered in the order shown here.
     </p>
   </header>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -41,7 +45,9 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="my-4"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -61,7 +67,9 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="my-4"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -81,7 +89,9 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="my-4"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -108,7 +118,9 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="border-b-4 border-primary"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -133,11 +145,13 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
   className="text-tiny"
 >
   <p
-    className="pb-4 text-sm"
+    className="px-8 pb-4 text-sm"
   >
     Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
   </p>
-  <header>
+  <header
+    className="px-8"
+  >
     <h2
       className="undefined text-caps-underline"
     >
@@ -149,7 +163,9 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       Ranking in these lists is considered in the order shown here.
     </p>
   </header>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -169,7 +185,9 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="my-4"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -189,7 +207,9 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="my-4"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
@@ -216,7 +236,9 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="border-b-4 border-primary"
     />
   </div>
-  <div>
+  <div
+    className="px-8"
+  >
     <h3
       className="font-sans font-semibold text-tiny tracking-wide uppercase"
     >

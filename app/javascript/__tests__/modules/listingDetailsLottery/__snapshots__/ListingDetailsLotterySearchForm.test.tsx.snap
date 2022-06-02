@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryModal displays initial view with form and listing preferences 1`] = `
-<div
-  className="lottery-search-form w-96"
->
+<div>
   <header
-    className="pb-4 text-center"
+    className="pt-8 pb-4 text-center bg-white sticky top-0 z-50"
   >
     <h1
       className="undefined undefined"
@@ -76,11 +74,13 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       className="text-tiny"
     >
       <p
-        className="pb-4 text-sm"
+        className="px-8 pb-4 text-sm"
       >
         Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
       </p>
-      <header>
+      <header
+        className="px-8"
+      >
         <h2
           className="undefined text-caps-underline"
         >
@@ -92,7 +92,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           Ranking in these lists is considered in the order shown here.
         </p>
       </header>
-      <div>
+      <div
+        className="px-8"
+      >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
         >
@@ -112,7 +114,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="my-4"
         />
       </div>
-      <div>
+      <div
+        className="px-8"
+      >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
         >
@@ -132,7 +136,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="my-4"
         />
       </div>
-      <div>
+      <div
+        className="px-8"
+      >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
         >
@@ -159,7 +165,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="border-b-4 border-primary"
         />
       </div>
-      <div>
+      <div
+        className="px-8"
+      >
         <h3
           className="font-sans font-semibold text-tiny tracking-wide uppercase"
         >
