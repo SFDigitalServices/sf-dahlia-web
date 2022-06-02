@@ -14,6 +14,12 @@ do ->
       city: 'San Francisco'
       state: 'CA'
       zip: '94137'
+    fakeDupUnitAddress =
+      address1: '123 Main St #707'
+      address2: '707'
+      city: 'San Francisco'
+      state: 'CA'
+      zip: '94137'
     fakeValidResult = getJSONFixture('address-validation-api-valid-address.json')
     fakePOBoxResult = getJSONFixture('address-validation-api-valid-po-box.json')
     fakeDupUnitResult = getJSONFixture('address-validation-api-invalid-duplicate-unit.json')
@@ -74,7 +80,7 @@ do ->
       it 'determines if duplicate unit failed validation', ->
         stubAngularAjaxErrorRequest httpBackend, requestURL, fakeDupUnitResult
         AddressValidationService.validate({
-          address: fakePOBoxAddress
+          address: fakeDupUnitAddress
           type: 'home'
         })
         httpBackend.flush()
