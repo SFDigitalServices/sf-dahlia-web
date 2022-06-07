@@ -40,7 +40,7 @@ class AddressValidationService
 
   def duplicate_unit?(validation)
     # Check for duplicate apt/unit no on street lines 1 and 2
-    validation.present? && validation.street2.present? &&
+    validation.present? && validation.street2.present? && validation.street1.present? &&
       validation.street1.end_with?(validation.street2)
   end
 
