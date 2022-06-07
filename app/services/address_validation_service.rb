@@ -30,10 +30,18 @@ class AddressValidationService
     #   does not normalize street1 so check case insensitive with optional periods and
     #   space, e.g. look for 'po box', 'P. O. Box'
     # https://www.easypost.com/errors-guide
+    false unless validation.present?
+
     validation.street1.match(/P\.?\s*O\.?\s*BOX/i) || (
       !validation.verifications.delivery.success &&
       validation.verifications.delivery.errors[0].code == 'E.BOX_NUMBER.INVALID'
     )
+  end
+
+  def duplicate_unit?(validation)
+    # Check for duplicate apt/unit no on street lines 1 and 2
+    validation.present? && validation.street2.present? && validation.street1.present? &&
+      validation.street1.end_with?(validation.street2)
   end
 
   def invalid?
@@ -41,11 +49,16 @@ class AddressValidationService
     Rails.logger.warn('Address validation: Easypost request timed out') if timeout?
 
     # we do not accept PO Boxes
-    if @validation.present? && po_box?(@validation)
+    if po_box?(@validation)
       Rails.logger.info(
         'Address validation: '\
         "Raised an address validation error for a PO Box #{@validation.to_json}",
       )
+      return true
+    end
+
+    if duplicate_unit?(@validation)
+      Rails.logger.info("Address validation: Duplicate unit #{@validation.to_json}")
       return true
     end
 
@@ -61,6 +74,7 @@ class AddressValidationService
 
   def error
     return 'PO BOX' if po_box?(@validation)
+    return 'DUPLICATE UNIT' if duplicate_unit?(@validation)
     return nil unless
       @validation.present? && @validation.verifications.delivery.errors.present?
     @validation.verifications.delivery.errors.first.message
