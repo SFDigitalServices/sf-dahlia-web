@@ -17,6 +17,8 @@ angular.module('dahlia.components')
         switch @error
           when 'PO BOX'
             @errorMessage = $translate.instant('error.address_validation_po_box')
+          when 'DUPLICATE UNIT'
+            @errorMessage = $translate.instant('error.address_validation_duplicate_unit')
           else
             # Catch all other easy post validation errors and provide generic error response on how to get help. Most
             # often this is E.ADDRESS.NOT_FOUND, but could also be E.HOUSE_NUMBER.INVALID, E.STREET.MAGNET, etc, etc.
