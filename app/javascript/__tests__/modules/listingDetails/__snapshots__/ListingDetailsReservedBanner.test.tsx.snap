@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsReservedBanner displays banner when reserved community type is Accessible Units Only 1`] = `
+<div
+  className="md:pr-8 md:w-2/3 mt-4 w-full"
+>
+  <div
+    className="message is-warning"
+  >
+    All units reserved for people who need accessibility features
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsReservedBanner displays banner when reserved community type is Artist Live/Work 1`] = `
+<div
+  className="md:pr-8 md:w-2/3 mt-4 w-full"
+>
+  <div
+    className="message is-warning"
+  >
+    All units reserved for artists to live and work in
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsReservedBanner displays banner when reserved community type is Senior 1`] = `
+<div
+  className="md:pr-8 md:w-2/3 mt-4 w-full"
+>
+  <div
+    className="message is-warning"
+  >
+    All units reserved for ages 65+
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsReservedBanner displays banner when reserved community type is Veteran 1`] = `
+<div
+  className="md:pr-8 md:w-2/3 mt-4 w-full"
+>
+  <div
+    className="message is-warning"
+  >
+    All units reserved for veterans
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `null`;
+
+exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `null`;

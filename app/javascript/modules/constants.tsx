@@ -24,7 +24,7 @@ export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.rightToReturnSunnydale,
 ]
 
-export const RESERVED_TYPES = {
+export const RESERVED_COMMUNITY_TYPES = {
   ACCESSIBLE_ONLY: "Accessible Units Only",
   ARTIST: "Artist Live/Work",
   DISABLED: "Developmental disabilities",
