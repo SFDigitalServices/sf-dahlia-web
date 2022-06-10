@@ -15,7 +15,7 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
       rent: { cellText: "30%", cellSubText: "income" },
     },
     {
-      units: { cellText: "1 BR", cellSubText: "3 available" },
+      units: { cellText: "1 Bedroom", cellSubText: "3 available" },
       income: { cellText: "$2,194 to $6,854", cellSubText: "per month" },
       rent: { cellText: "$1,295", cellSubText: "income" },
     },
