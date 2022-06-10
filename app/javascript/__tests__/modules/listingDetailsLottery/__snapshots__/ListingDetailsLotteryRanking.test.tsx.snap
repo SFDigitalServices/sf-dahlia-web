@@ -83,7 +83,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
         onClick={[Function]}
         type="button"
       >
-        t.readMore
+        Read More
       </button>
     </div>
   </div>
@@ -188,7 +188,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         onClick={[Function]}
         type="button"
       >
-        t.readMore
+        Read More
       </button>
     </div>
   </div>
@@ -264,7 +264,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
         onClick={[Function]}
         type="button"
       >
-        t.readMore
+        Read More
       </button>
     </div>
   </div>
