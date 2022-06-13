@@ -62,7 +62,9 @@ export const ListingDetailsLotteryRanking = ({
         {!applicantSelectedForPreference && (
           <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />
         )}
-        <ExpandableContent>
+        <ExpandableContent
+          strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+        >
           <div className="text-gray-700">
             <p className="mb-2">{t("lottery.nextStepsP1")}</p>
             <p className="mb-2">{t("lottery.nextStepsP2")}</p>
