@@ -24,10 +24,13 @@ export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.rightToReturnSunnydale,
 ]
 
-export const RESERVED_TYPES = {
+/**
+ * 'Reserved Community Type' used at the development or listing level. Not to be
+ * confused with the 'Reserved Type' at the unit level
+ */
+export const RESERVED_COMMUNITY_TYPES = {
   ACCESSIBLE_ONLY: "Accessible Units Only",
   ARTIST: "Artist Live/Work",
-  DISABLED: "Developmental disabilities",
   HABITAT: "Habitat for Humanity",
   SENIOR: "Senior",
   VETERAN: "Veteran",

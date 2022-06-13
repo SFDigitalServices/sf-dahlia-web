@@ -20,6 +20,7 @@ import { ListingDetailsNeighborhood } from "../../modules/listingDetails/Listing
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -44,6 +45,10 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            <ListingDetailsReservedBanner
+              reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
+              reservedCommunityType={listing.Reserved_community_type}
+            />
             <ListingDetailsPricingTable listing={listing} />
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
