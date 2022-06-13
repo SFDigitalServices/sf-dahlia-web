@@ -14,16 +14,16 @@ export const ListingDetailsReservedBanner = ({
   if (!reservedCommunityType || reservedCommunityType === RESERVED_COMMUNITY_TYPES.HABITAT)
     return null
 
-  let message
-  switch (reservedCommunityType) {
-    case RESERVED_COMMUNITY_TYPES.SENIOR:
-      message = t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
-        age: reservedCommunityMinimumAge,
-      })
-      break
-    default:
-      message = t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
+  if (!Object.values(RESERVED_COMMUNITY_TYPES).includes(reservedCommunityType)) {
+    return null
   }
+
+  const message =
+    reservedCommunityType === RESERVED_COMMUNITY_TYPES.SENIOR
+      ? t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
+          age: reservedCommunityMinimumAge,
+        })
+      : t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
 
   return (
     <div className="md:pr-8 md:w-2/3 mt-4 w-full">

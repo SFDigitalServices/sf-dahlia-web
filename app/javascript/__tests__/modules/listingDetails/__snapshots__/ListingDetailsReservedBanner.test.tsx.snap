@@ -51,3 +51,5 @@ exports[`ListingDetailsReservedBanner displays banner when reserved community ty
 exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `null`;
 
 exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `null`;
+
+exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `null`;

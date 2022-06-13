@@ -9,6 +9,15 @@ describe("ListingDetailsReservedBanner", () => {
 
     expect(tree).toMatchSnapshot()
   })
+
+  it("does not display banner when unknown reserved community type", () => {
+    const tree = renderer
+      .create(<ListingDetailsReservedBanner reservedCommunityType={"anUnknownType"} />)
+      .toJSON()
+
+    expect(tree).toMatchSnapshot()
+  })
+
   it("displays banner when reserved community type is Accessible Units Only", () => {
     const tree = renderer
       .create(
@@ -20,6 +29,7 @@ describe("ListingDetailsReservedBanner", () => {
 
     expect(tree).toMatchSnapshot()
   })
+
   it("displays banner when reserved community type is Artist Live/Work", () => {
     const tree = renderer
       .create(
@@ -29,6 +39,7 @@ describe("ListingDetailsReservedBanner", () => {
 
     expect(tree).toMatchSnapshot()
   })
+
   it("does not display banner when reserved community type is Habitat for Humanity", () => {
     const tree = renderer
       .create(
@@ -38,6 +49,7 @@ describe("ListingDetailsReservedBanner", () => {
 
     expect(tree).toMatchSnapshot()
   })
+
   it("displays banner when reserved community type is Senior", () => {
     const tree = renderer
       .create(
@@ -50,6 +62,7 @@ describe("ListingDetailsReservedBanner", () => {
 
     expect(tree).toMatchSnapshot()
   })
+
   it("displays banner when reserved community type is Veteran", () => {
     const tree = renderer
       .create(
