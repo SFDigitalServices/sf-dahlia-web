@@ -59,7 +59,15 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
           </div>
 
           {lotteryBucketDetails && (
-            <Modal onClose={() => setIsModalOpen(false)} open={isModalOpen} title="">
+            <Modal
+              onClose={() => setIsModalOpen(false)}
+              open={isModalOpen}
+              title=""
+              modalClassNames="max-w-0"
+              innerClassNames="p-0"
+              closeClassNames="z-50"
+              scrollable
+            >
               <ListingDetailsLotterySearchForm
                 listing={listing}
                 lotteryBucketDetails={lotteryBucketDetails}

@@ -77,7 +77,7 @@ export const ListingDetailsLotterySearchForm = ({
     }
     case LOTTERY_SEARCH_FORM_STATUS.INVALID_LOTTERY_NUMBER: {
       content = (
-        <div className="my-6 text-gray-700">
+        <div className="my-6 px-8 text-gray-700">
           <p className="mb-2">{t("lottery.lotteryNumberNotFoundP2")}</p>
           <p className="mb-2">{t("lottery.lotteryNumberNotFoundP3")}</p>
         </div>
@@ -100,8 +100,8 @@ export const ListingDetailsLotterySearchForm = ({
     (lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.API_ERROR && t("error.lotteryRankingSearch"))
 
   return (
-    <div className="lottery-search-form w-96">
-      <header className="pb-4 text-center">
+    <div>
+      <header className="pt-8 pb-4 text-center bg-white sticky top-0 z-50">
         <Heading>{t("lottery.lotteryResults")}</Heading>
         <h2 className="font-sans font-semibold text-sm uppercase">{listing.Name}</h2>
       </header>

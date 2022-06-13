@@ -41,7 +41,7 @@ export const ListingDetailsLotteryRanking = ({
     lotteryResult && (
       <div className="lottery-ranking text-tiny">
         {applicantSelectedForPreference && (
-          <header>
+          <header className="px-8">
             <Heading className="text-caps-underline" priority={2}>
               {t("lottery.rankingTitle")}
             </Heading>
@@ -62,15 +62,17 @@ export const ListingDetailsLotteryRanking = ({
         {!applicantSelectedForPreference && (
           <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />
         )}
-        <ExpandableContent
-          strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
-        >
-          <div className="text-gray-700">
-            <p className="mb-2">{t("lottery.nextStepsP1")}</p>
-            <p className="mb-2">{t("lottery.nextStepsP2")}</p>
-            <p className="mb-2">{t("lottery.nextStepsP3")}</p>
-          </div>
-        </ExpandableContent>
+        <div className="px-8">
+          <ExpandableContent
+            strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+          >
+            <div className="text-gray-700">
+              <p className="mb-2">{t("lottery.nextStepsP1")}</p>
+              <p className="mb-2">{t("lottery.nextStepsP2")}</p>
+              <p className="mb-2">{t("lottery.nextStepsP3")}</p>
+            </div>
+          </ExpandableContent>
+        </div>
       </div>
     )
   )
