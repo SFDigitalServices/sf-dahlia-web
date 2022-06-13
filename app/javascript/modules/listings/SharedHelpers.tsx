@@ -68,7 +68,7 @@ export const getListingAddressString = (listing: RailsListing) => {
       listing.Building_Zip_Code && (
         <span>
           {listing.Building_Street_Address}, {listing.Building_City}{" "}
-          <abbr title="California">{listing.Building_State}</abbr>, {listing.Building_Zip_Code}
+          <abbr title="California">CA</abbr>, {listing.Building_Zip_Code}
         </span>
       )) ??
     ""
