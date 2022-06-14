@@ -2,6 +2,7 @@ import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
+import { RailsListing } from "../modules/listings/SharedHelpers"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -53,3 +54,21 @@ export const isSale = (listing: RailsRentalListing | RailsSaleListing) =>
  */
 export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN"
+
+/**
+ * Builds and return an address string. Not to be used for display. Use
+ * {@link ListingAddress} instead.
+ * @param  {RailsRentalListing | RailsRentalListing} listing
+ * @returns {string} the full address string if all required fields are present, empty
+ * string otherwise
+ */
+export const getListingAddressString = (listing: RailsListing): string => {
+  return (
+    (listing.Building_Street_Address &&
+      listing.Building_City &&
+      listing.Building_State &&
+      listing.Building_Zip_Code &&
+      `${listing.Building_Street_Address}, ${listing.Building_City}, ${listing.Building_State} ${listing.Building_Zip_Code}`) ||
+    ""
+  )
+}

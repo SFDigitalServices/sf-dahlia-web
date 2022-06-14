@@ -1,10 +1,10 @@
 import {
+  getCurrentLanguage,
   getPathWithoutLanguagePrefix,
-  LANGUAGE_CONFIGS,
   LangConfig,
+  LANGUAGE_CONFIGS,
   LanguagePrefix,
   toLanguagePrefix,
-  getCurrentLanguage,
 } from "./languageUtil"
 import { cleanPath } from "./urlUtil"
 
@@ -57,6 +57,7 @@ export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
 export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
 export const getHousingCounselorsPath = localizedPathGetter("/housing-counselors")
+export const getShareListingPath = localizedPathGetter("/share")
 
 // Rental Listing Directory
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
