@@ -1,7 +1,7 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 
-import { getListingAddressString } from "./SharedHelpers"
+import { getListingAddressString } from "../../util/listingUtil"
 
 export const getHabitatContent = (listing, stackedDataFxn) => {
   const getHeader = (header: string) => {

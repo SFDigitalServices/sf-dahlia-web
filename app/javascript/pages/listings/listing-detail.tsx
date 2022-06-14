@@ -49,7 +49,7 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable listing={listing} />
+            <ListingDetailsPricingTable />
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <ListingDetailsEligibility
