@@ -24,7 +24,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     </p>
   </header>
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -41,12 +41,12 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     >
       0 applicants are on this list.
     </p>
-    <hr
-      className="my-4"
-    />
   </div>
+  <hr
+    className="my-4 mx-8"
+  />
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -63,12 +63,12 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     >
       0 applicants are on this list.
     </p>
-    <hr
-      className="my-4"
-    />
   </div>
+  <hr
+    className="my-4 mx-8"
+  />
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -85,12 +85,12 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     >
       6 applicants are on this list.
     </p>
-    <hr
-      className="my-4"
-    />
   </div>
+  <hr
+    className="my-4 mx-8"
+  />
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -107,10 +107,10 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     >
       56 applicants are on this list.
     </p>
-    <hr
-      className="mt-4"
-    />
   </div>
+  <hr
+    className="mt-4"
+  />
   <div
     className="bg-gray-100 border-b mb-4 p-4"
   >
@@ -122,7 +122,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     className="px-8"
   >
     <h3
-      className="font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
       General Pool
     </h3>
@@ -132,11 +132,14 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       Any remaining units
     </p>
     <p
-      className=" border-b pb-2 text-gray-700 text-tiny"
+      className="text-gray-700 text-tiny"
     >
       5 applicants are on this list. Please note, preference holders will be considered for all units first.
     </p>
   </div>
+  <hr
+    className="mt-4"
+  />
 </div>
 `;
 
@@ -164,7 +167,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     </p>
   </header>
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -181,12 +184,12 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     >
       1 applicants are on this list.
     </p>
-    <hr
-      className="my-4"
-    />
   </div>
+  <hr
+    className="my-4 mx-8"
+  />
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -203,12 +206,12 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     >
       4 applicants are on this list.
     </p>
-    <hr
-      className="my-4"
-    />
   </div>
+  <hr
+    className="my-4 mx-8"
+  />
   <div
-    className="px-8"
+    className="px-8 "
   >
     <h3
       className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -225,10 +228,10 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     >
       905 applicants are on this list.
     </p>
-    <hr
-      className="mt-4"
-    />
   </div>
+  <hr
+    className="mt-4"
+  />
   <div
     className="bg-gray-100 border-b mb-4 p-4"
   >
@@ -240,7 +243,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     className="px-8"
   >
     <h3
-      className="font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
     >
       General Pool
     </h3>
@@ -250,10 +253,13 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       Any remaining units
     </p>
     <p
-      className=" border-b pb-2 text-gray-700 text-tiny"
+      className="text-gray-700 text-tiny"
     >
       193 applicants are on this list. Please note, preference holders will be considered for all units first.
     </p>
   </div>
+  <hr
+    className="mt-4"
+  />
 </div>
 `;

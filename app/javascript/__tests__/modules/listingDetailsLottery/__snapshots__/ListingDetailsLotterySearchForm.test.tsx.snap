@@ -93,7 +93,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         </p>
       </header>
       <div
-        className="px-8"
+        className="px-8 "
       >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -110,12 +110,12 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         >
           1 applicants are on this list.
         </p>
-        <hr
-          className="my-4"
-        />
       </div>
+      <hr
+        className="my-4 mx-8"
+      />
       <div
-        className="px-8"
+        className="px-8 "
       >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -132,12 +132,12 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         >
           4 applicants are on this list.
         </p>
-        <hr
-          className="my-4"
-        />
       </div>
+      <hr
+        className="my-4 mx-8"
+      />
       <div
-        className="px-8"
+        className="px-8 "
       >
         <h3
           className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -154,10 +154,10 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         >
           905 applicants are on this list.
         </p>
-        <hr
-          className="mt-4"
-        />
       </div>
+      <hr
+        className="mt-4"
+      />
       <div
         className="bg-gray-100 border-b mb-4 p-4"
       >
@@ -169,7 +169,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         className="px-8"
       >
         <h3
-          className="font-sans font-semibold text-tiny tracking-wide uppercase"
+          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
         >
           General Pool
         </h3>
@@ -179,11 +179,14 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           Any remaining units
         </p>
         <p
-          className=" border-b pb-2 text-gray-700 text-tiny"
+          className="text-gray-700 text-tiny"
         >
           193 applicants are on this list. Please note, preference holders will be considered for all units first.
         </p>
       </div>
+      <hr
+        className="mt-4"
+      />
     </div>
   </div>
   <div
