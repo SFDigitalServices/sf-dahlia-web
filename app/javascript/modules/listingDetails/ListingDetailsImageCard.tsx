@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
 import { getReservedCommunityType } from "../../util/languageUtil"
 import { RailsListing } from "../listings/SharedHelpers"
@@ -16,6 +16,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const listingAddress = getListingAddressString(listing)
   const shareButton = getAssetPath("share-button.svg")
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
+  const [shareImage, setShareImage] = useState(shareButton)
 
   return (
     <header className="image-card--leader">
@@ -47,13 +48,15 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
             </p>
           </div>
           <div>
-            <a href={`${getShareListingPath()}/${listing.listingID}`} target="_blank">
-              <img
-                alt={t("label.share")}
-                onMouseEnter={(e) => (e.currentTarget.src = shareButtonSelected)}
-                onMouseLeave={(e) => (e.currentTarget.src = shareButton)}
-                src={shareButton}
-              />
+            <a
+              href={`${getShareListingPath()}/${listing.listingID}`}
+              onBlur={() => setShareImage(shareButton)}
+              onFocus={() => setShareImage(shareButtonSelected)}
+              onMouseEnter={() => setShareImage(shareButtonSelected)}
+              onMouseLeave={() => setShareImage(shareButton)}
+              target="_blank"
+            >
+              <img alt={t("label.share")} src={shareImage} />
             </a>
           </div>
         </div>

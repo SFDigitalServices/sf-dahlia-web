@@ -56,7 +56,8 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Program_Type === "IH-RENTAL" || listing.Program_Type === "IH-OWN"
 
 /**
- * If an address has all required fields, build and return the address string
+ * Builds and return an address string. Not to be used for display. Use
+ * {@link ListingAddress} instead.
  * @param  {RailsRentalListing | RailsRentalListing} listing
  * @returns {string} the full address string if all required fields are present, empty
  * string otherwise

@@ -42,6 +42,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
         ,
          
         <abbr
+          className="no-underline"
           title="California"
         >
           CA
@@ -74,12 +75,14 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
       <div>
         <a
           href="/share/a0W0P00000GlKfBUAV"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
           target="_blank"
         >
           <img
             alt="Share"
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
           />
         </a>
       </div>
@@ -135,6 +138,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         ,
          
         <abbr
+          className="no-underline"
           title="California"
         >
           CA
@@ -165,12 +169,14 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
       <div>
         <a
           href="/share/a0W8H000000HI2uUAG"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
           target="_blank"
         >
           <img
             alt="Share"
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
           />
         </a>
       </div>

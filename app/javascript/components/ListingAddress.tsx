@@ -13,7 +13,10 @@ export const ListingAddress = ({ listing }: ListingAddressProps) => {
     listing.Building_Zip_Code && (
       <span>
         {listing.Building_Street_Address}, {listing.Building_City},{" "}
-        <abbr title="California">CA</abbr> {listing.Building_Zip_Code}
+        <abbr className="no-underline" title="California">
+          CA
+        </abbr>{" "}
+        {listing.Building_Zip_Code}
       </span>
     )
   )

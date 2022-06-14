@@ -8,6 +8,7 @@ exports[`ListingAddress displays address when all fields present 1`] = `
   ,
    
   <abbr
+    className="no-underline"
     title="California"
   >
     CA
