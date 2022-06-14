@@ -181,7 +181,7 @@ module.exports = {
   settings: {
     react: {
       // Must be updated when package.json react version is bumped
-      version: "16.9.0",
+      version: "17.0.2",
     },
     "import/resolver": {
       node: {

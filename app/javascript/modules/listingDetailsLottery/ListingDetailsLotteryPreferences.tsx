@@ -11,8 +11,8 @@ export const ListingDetailsLotteryPreferences = ({
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
     <div className="text-tiny">
-      <p className="pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
-      <header>
+      <p className="px-8 pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
+      <header className="px-8">
         <Heading className="text-caps-underline" priority={2}>
           {t("lottery.housingPreferences")}
         </Heading>
@@ -23,7 +23,7 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
         .map((bucket, index, arr) => (
-          <div key={bucket.preferenceOrder}>
+          <div className="px-8" key={bucket.preferenceOrder}>
             <Heading
               className="font-sans font-semibold text-tiny tracking-wide uppercase"
               priority={3}
@@ -47,7 +47,7 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName === "generalLottery")
         .map((bucket) => (
-          <div key={bucket.preferenceOrder}>
+          <div className="px-8" key={bucket.preferenceOrder}>
             <h3 className="font-sans font-semibold text-tiny tracking-wide uppercase">
               {t("lottery.generalPool")}
             </h3>

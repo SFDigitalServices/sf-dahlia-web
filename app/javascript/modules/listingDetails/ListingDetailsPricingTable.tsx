@@ -1,12 +1,12 @@
 import React from "react"
-import { CategoryTable, ContentAccordion, Message } from "@bloom-housing/ui-components"
+import { CategoryTable, ContentAccordion } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
 }
 
-export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
+export const ListingDetailsPricingTable = () => {
   /* TODO: Build unit summaries, remove mock data */
   const responsiveTableRows = [
     {
@@ -36,10 +36,7 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
     </span>
   )
   return (
-    <div className="w-full md:w-2/3 md:mt-6 md:mb-6 md:px-3 md:pr-8">
-      {listing.Reserved_community_type && (
-        <Message warning={true}>Reserved for: {listing.Reserved_community_type}</Message>
-      )}
+    <div className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
       <ContentAccordion
         customBarContent={accordionTitle}
         customExpandedContent={

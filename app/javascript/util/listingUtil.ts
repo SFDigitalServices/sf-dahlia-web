@@ -1,7 +1,7 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import dayjs from "dayjs"
-import { RESERVED_TYPES, TENURE_TYPES } from "../modules/constants"
+import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -12,7 +12,7 @@ export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSa
  * @returns {boolean} returns true if the listing is for Habitat for Humanity, false otherwise
  */
 export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Reserved_community_type === RESERVED_TYPES.HABITAT
+  listing.Reserved_community_type === RESERVED_COMMUNITY_TYPES.HABITAT
 
 /**
  * Check if lottery is complete for a listing
