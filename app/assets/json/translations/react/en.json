@@ -728,7 +728,6 @@
   "listings.atTotalIncome": "at <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableAndWaitlist": "Available Units & Open Waitlist",
   "listings.availableUnitsAndOpenWaitlist": "Available Units & Open Waitlist",
-  "listings.availableUnitsAndWaitlistDesc": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>%{number} units</span>",
   "listings.availableUnitsAndWaitlistDescription": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist.",
   "listings.availableUnitsAndWaitlist": "Available units and waitlist",
   "listings.availableUnits": "Available Units",

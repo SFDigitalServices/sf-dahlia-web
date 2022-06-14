@@ -709,7 +709,6 @@
   "listings.atTotalIncome": "sa <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableAndWaitlist": "Mga Makukuhang Unit at Bukas na Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
   "listings.availableUnitsAndOpenWaitlist": "Mga Makukuhang Unit at Bukas na Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
-  "listings.availableUnitsAndWaitlistDesc": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist para sa <span class+'t-italic'>%{number}units</span>",
   "listings.availableUnitsAndWaitlistDescription": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist.",
   "listings.availableUnitsAndWaitlist": "Mga makukuhang unit at waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
   "listings.availableUnits": "Mga Makukuhang Unit ",

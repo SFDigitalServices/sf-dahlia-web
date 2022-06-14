@@ -709,7 +709,6 @@
   "listings.atTotalIncome": "a <span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableAndWaitlist": "Unidades disponibles y lista de espera abierta",
   "listings.availableUnitsAndOpenWaitlist": "Unidades disponibles y lista de espera abierta",
-  "listings.availableUnitsAndWaitlistDesc": "Una vez que las personas sorteadas ocupen todas las unidades disponibles, las demás personas sorteadas entrarán en la lista de espera para la ocupación de <span class='t-italic'>%{number} unidades</span>",
   "listings.availableUnitsAndWaitlistDescription": "Una vez que las personas sorteadas ocupen todas las unidades disponibles, las demás personas sorteadas entrarán en la lista de espera.",
   "listings.availableUnitsAndWaitlist": "Unidades disponibles y lista de espera",
   "listings.availableUnits": "Unidades disponibles",

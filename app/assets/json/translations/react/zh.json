@@ -710,7 +710,6 @@
   "listings.atTotalIncome": "總收入：<span class='eligibility-subtext'>$%{income}</span> %{per}",
   "listings.availableAndWaitlist": "現有單位與開放等候名單",
   "listings.availableUnitsAndOpenWaitlist": "現有單位與開放等候名單",
-  "listings.availableUnitsAndWaitlistDesc": "一旦中籤者住滿所有現有單位，其他中籤者將會被列入 <span class='t-italic'>%{number} 個單位</span>的等候名單中",
   "listings.availableUnitsAndWaitlistDescription": "一旦中籤者住滿所有現有單位，其他中籤者將會被列入 的等候名單中",
   "listings.availableUnitsAndWaitlist": "現有單位與等候名單",
   "listings.availableUnits": "可用單位",
