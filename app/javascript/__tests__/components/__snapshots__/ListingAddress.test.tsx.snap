@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingAddress displays address when all fields present 1`] = `
+<span>
+  1 South Van Ness Ave
+  , 
+  San Francisco
+  ,
+   
+  <abbr
+    title="California"
+  >
+    CA
+  </abbr>
+   
+  94103
+</span>
+`;
+
+exports[`ListingAddress does not display address when address field missing 1`] = `""`;
