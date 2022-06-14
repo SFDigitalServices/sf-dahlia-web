@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
+<header
+  className="image-card--leader"
+>
+  <a
+    className="block"
+    href="/listings/a0W0P00000GlKfBUAV"
+  >
+    <div
+      className="image-card__wrapper"
+    >
+      <div
+        className="image-card-tag__wrapper"
+      />
+      <figure
+        className="image-card"
+      >
+        <img
+          alt="A picture of the building"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+      </figure>
+    </div>
+  </a>
+  <div
+    className="flex flex-col md:items-start md:text-left p-3 text-center"
+  >
+    <h1
+      className="font-sans font-semibold text-3xl"
+    >
+      TEST Sale Listing (do not modify) - Homeownership Acres
+    </h1>
+    <p
+      className="my-1"
+    >
+      <span>
+        1 South Van Ness Ave
+        , 
+        San Francisco
+        ,
+         
+        <abbr
+          className="no-underline"
+          title="California"
+        >
+          CA
+        </abbr>
+         
+        94103
+      </span>
+    </p>
+    <div
+      className="flex flex-col items-center md:flex-row md:justify-between md:w-full"
+    >
+      <div>
+        <p
+          className="text-gray-700"
+        >
+          Munoz, Carney and Clements
+        </p>
+        <p
+          className="my-2"
+        >
+          <a
+            aria-label="View on Map - Opens in a new window"
+            href="https://www.google.com/maps/place/1%20South%20Van%20Ness%20Ave%2C%20San%20Francisco%2C%20CA%2094103"
+            target="_blank"
+          >
+            View on Map
+          </a>
+        </p>
+      </div>
+      <div>
+        <a
+          href="/share/a0W0P00000GlKfBUAV"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          target="_blank"
+        >
+          <img
+            alt="Share"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`ListingDetailsImageCard displays tag when listing is habitat for humanity 1`] = `
+<header
+  className="image-card--leader"
+>
+  <a
+    className="block"
+    href="/listings/a0W8H000000HI2uUAG"
+  >
+    <div
+      className="image-card__wrapper"
+    >
+      <div
+        className="image-card-tag__wrapper"
+      >
+        <span
+          className="tag is-warning mt-3 mr-2 ml-2"
+        >
+          Habitat Greater San Francisco
+        </span>
+      </div>
+      <figure
+        className="image-card"
+      >
+        <div
+          className="image-card__placeholder"
+        />
+      </figure>
+    </div>
+  </a>
+  <div
+    className="flex flex-col md:items-start md:text-left p-3 text-center"
+  >
+    <h1
+      className="font-sans font-semibold text-3xl"
+    >
+      TEST: 36 Amber Drive
+    </h1>
+    <p
+      className="my-1"
+    >
+      <span>
+        36 Amber Drive
+        , 
+        San Francisco
+        ,
+         
+        <abbr
+          className="no-underline"
+          title="California"
+        >
+          CA
+        </abbr>
+         
+        94131
+      </span>
+    </p>
+    <div
+      className="flex flex-col items-center md:flex-row md:justify-between md:w-full"
+    >
+      <div>
+        <p
+          className="text-gray-700"
+        />
+        <p
+          className="my-2"
+        >
+          <a
+            aria-label="View on Map - Opens in a new window"
+            href="https://www.google.com/maps/place/36%20Amber%20Drive%2C%20San%20Francisco%2C%20CA%2094131"
+            target="_blank"
+          >
+            View on Map
+          </a>
+        </p>
+      </div>
+      <div>
+        <a
+          href="/share/a0W8H000000HI2uUAG"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          target="_blank"
+        >
+          <img
+            alt="Share"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+`;

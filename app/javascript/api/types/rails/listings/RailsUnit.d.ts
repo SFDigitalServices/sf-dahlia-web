@@ -8,6 +8,7 @@ type RailsUnit = {
   Id: string
   Listing: string
   Max_AMI_for_Qualifying_Unit: number
+  Min_AMI_for_Qualifying_Unit?: number
   Property_Type?: string
   Status: string
   Unit_Type: string

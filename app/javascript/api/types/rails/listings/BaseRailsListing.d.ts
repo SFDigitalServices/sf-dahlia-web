@@ -53,7 +53,7 @@ type BaseRailsListing = {
   Application_City?: string
   Application_Due_Date: string
   Application_Organization?: string
-  Application_Phone: string
+  Application_Phone?: string
   Application_Postal_Code?: string
   Application_State?: string
   Application_Street_Address?: string
@@ -108,7 +108,7 @@ type BaseRailsListing = {
   Neighborhood?: string
   Number_of_people_currently_on_waitlist?: number
   Office_Hours?: string
-  Open_Houses: ListingEvent[]
+  Open_Houses?: ListingEvent[]
   Parking_Information?: string
   Pet_Policy?: string
   Program_Type: string

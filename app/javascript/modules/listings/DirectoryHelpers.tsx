@@ -18,14 +18,14 @@ import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListin
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import Link from "../../navigation/Link"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { areLotteryResultsShareable } from "../../util/listingUtil"
+import { areLotteryResultsShareable, getListingAddressString } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
-import { getImageCardProps, getListingAddressString, RailsListing } from "./SharedHelpers"
+import { getImageCardProps, RailsListing } from "./SharedHelpers"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 

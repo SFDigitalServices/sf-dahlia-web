@@ -1,7 +1,7 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 
-import { getListingAddressString } from "./SharedHelpers"
+import { ListingAddress } from "../../components/ListingAddress"
 
 export const getHabitatContent = (listing, stackedDataFxn) => {
   const getHeader = (header: string) => {
@@ -31,7 +31,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
         {listing.Name}
       </Heading>
       <Heading priority={3} style={"cardSubheader"} className={"order-2"}>
-        {getListingAddressString(listing)}
+        <ListingAddress listing={listing} />
       </Heading>
       <hr className={"mb-2"} />
       <div className={"text-gray-750"}>
