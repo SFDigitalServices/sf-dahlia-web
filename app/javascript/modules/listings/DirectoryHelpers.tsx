@@ -23,6 +23,7 @@ import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSu
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
+import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
@@ -194,7 +195,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
                 tableHeader: { text: getTableHeader(listing) },
                 tableSubheader: { text: getTableSubHeader(listing) },
                 contentHeader: { text: listing.Name },
-                contentSubheader: { text: getListingAddressString(listing) },
+                contentSubheader: { element: <ListingAddress listing={listing} />, text: "" },
               }
         }
         tableProps={
