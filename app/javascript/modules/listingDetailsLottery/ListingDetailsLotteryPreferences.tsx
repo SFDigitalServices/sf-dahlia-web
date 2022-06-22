@@ -23,23 +23,25 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
         .map((bucket, index, arr) => (
-          <div className="px-8" key={bucket.preferenceOrder}>
-            <Heading
-              className="font-sans font-semibold text-tiny tracking-wide uppercase"
-              priority={3}
-            >
-              {bucket.preferenceName}
-            </Heading>
-            <p className="text-tiny">
-              {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
-            </p>
-            <p className="text-gray-700 text-tiny">
-              {t("lottery.numberApplicantsQualifiedForPreference", {
-                number: bucket.totalSubmittedApps,
-              })}
-            </p>
-            <hr className={arr.length - 1 === index ? "mt-4" : "my-4"} />
-          </div>
+          <>
+            <div className="px-8 " key={bucket.preferenceOrder}>
+              <Heading
+                className="font-sans font-semibold text-tiny tracking-wide uppercase"
+                priority={3}
+              >
+                {bucket.preferenceName}
+              </Heading>
+              <p className="text-tiny">
+                {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
+              </p>
+              <p className="text-gray-700 text-tiny">
+                {t("lottery.numberApplicantsQualifiedForPreference", {
+                  number: bucket.totalSubmittedApps,
+                })}
+              </p>
+            </div>
+            <hr className={arr.length - 1 === index ? "mt-4" : "my-4 mx-8"} />
+          </>
         ))}
       <div className="bg-gray-100 border-b mb-4 p-4">
         <hr className="border-b-4 border-primary" />
@@ -47,17 +49,23 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName === "generalLottery")
         .map((bucket) => (
-          <div className="px-8" key={bucket.preferenceOrder}>
-            <h3 className="font-sans font-semibold text-tiny tracking-wide uppercase">
-              {t("lottery.generalPool")}
-            </h3>
-            <p className="mb-1 text-tiny">{t("lottery.anyRemainingUnits")}</p>
-            <p className=" border-b pb-2 text-gray-700 text-tiny">
-              {t("lottery.numberApplicantsQualifiedForGeneralPool", {
-                number: bucket.totalSubmittedApps,
-              })}
-            </p>
-          </div>
+          <>
+            <div className="px-8" key={bucket.preferenceOrder}>
+              <Heading
+                className="font-sans font-semibold text-tiny tracking-wide uppercase"
+                priority={3}
+              >
+                {t("lottery.generalPool")}
+              </Heading>
+              <p className="mb-1 text-tiny">{t("lottery.anyRemainingUnits")}</p>
+              <p className="text-gray-700 text-tiny">
+                {t("lottery.numberApplicantsQualifiedForGeneralPool", {
+                  number: bucket.totalSubmittedApps,
+                })}
+              </p>
+            </div>
+            <hr className="mt-4" />
+          </>
         ))}
     </div>
   )

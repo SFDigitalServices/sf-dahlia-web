@@ -76,14 +76,16 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
   <div
     className="px-8"
   >
-    <div>
+    <div
+      className="pb-4"
+    >
       <button
         aria-expanded={false}
         className="button is-unstyled m-0 no-underline has-toggle"
         onClick={[Function]}
         type="button"
       >
-        Read More
+        What happens next?
       </button>
     </div>
   </div>
@@ -181,14 +183,16 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
   <div
     className="px-8"
   >
-    <div>
+    <div
+      className="pb-4"
+    >
       <button
         aria-expanded={false}
         className="button is-unstyled m-0 no-underline has-toggle"
         onClick={[Function]}
         type="button"
       >
-        Read More
+        What happens next?
       </button>
     </div>
   </div>
@@ -257,14 +261,16 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
   <div
     className="px-8"
   >
-    <div>
+    <div
+      className="pb-4"
+    >
       <button
         aria-expanded={false}
         className="button is-unstyled m-0 no-underline has-toggle"
         onClick={[Function]}
         type="button"
       >
-        Read More
+        What happens next?
       </button>
     </div>
   </div>
