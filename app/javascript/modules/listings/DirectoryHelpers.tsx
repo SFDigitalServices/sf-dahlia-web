@@ -192,10 +192,10 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
           hasCustomContent
             ? null
             : {
-                tableHeader: { text: getTableHeader(listing) },
-                tableSubheader: { text: getTableSubHeader(listing) },
-                contentHeader: { text: listing.Name },
-                contentSubheader: { element: <ListingAddress listing={listing} />, text: "" },
+                tableHeader: { content: getTableHeader(listing) },
+                tableSubheader: { content: getTableSubHeader(listing) },
+                contentHeader: { content: listing.Name },
+                contentSubheader: { content: <ListingAddress listing={listing} /> },
               }
         }
         tableProps={
