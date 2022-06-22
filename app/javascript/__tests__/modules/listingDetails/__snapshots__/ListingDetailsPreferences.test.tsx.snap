@@ -427,7 +427,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         <div
           className="preferences-list__description"
         >
-          For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.
+          Right to Return - Alice Griffith. For households in which at least one member is a former or current resident of Alice Griffith public housing. Please note, these units are not subsidized — the rent will not change if your income changes.
         </div>
         <div
           className="preferences-list__links"
