@@ -64,7 +64,11 @@ export const ListingDetailsLotteryRanking = ({
         )}
         <div className="px-8">
           <ExpandableContent
-            strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+            className="pb-4"
+            strings={{
+              readMore: t("lottery.nextStepsTitle"),
+              readLess: t("lottery.nextStepsTitle"),
+            }}
           >
             <div className="text-gray-700">
               <p className="mb-2">{t("lottery.nextStepsP1")}</p>
