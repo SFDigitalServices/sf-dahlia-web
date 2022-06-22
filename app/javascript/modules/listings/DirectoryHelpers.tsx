@@ -18,11 +18,12 @@ import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListin
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import Link from "../../navigation/Link"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { areLotteryResultsShareable, getListingAddressString } from "../../util/listingUtil"
+import { areLotteryResultsShareable } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 
+import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
@@ -191,10 +192,10 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
           hasCustomContent
             ? null
             : {
-                tableHeader: { text: getTableHeader(listing) },
-                tableSubheader: { text: getTableSubHeader(listing) },
-                contentHeader: { text: listing.Name },
-                contentSubheader: { text: getListingAddressString(listing) },
+                tableHeader: { content: getTableHeader(listing) },
+                tableSubheader: { content: getTableSubHeader(listing) },
+                contentHeader: { content: listing.Name },
+                contentSubheader: { content: <ListingAddress listing={listing} /> },
               }
         }
         tableProps={

@@ -18,4 +18,4 @@ exports[`ListingAddress displays address when all fields present 1`] = `
 </span>
 `;
 
-exports[`ListingAddress does not display address when address field missing 1`] = `""`;
+exports[`ListingAddress does not display address when address field missing 1`] = `null`;
