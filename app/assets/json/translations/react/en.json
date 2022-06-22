@@ -1013,7 +1013,7 @@
   "lottery.lotteryNumberNotFoundP1": "The number you entered was not found.",
   "lottery.lotteryNumberNotFoundP2": "Review the number you entered to make sure it is correct.",
   "lottery.lotteryNumberNotFoundP3": "If you were not selected, we encourage you to apply for other listings.",
-  "lottery.lotteryNumber": "Please enter a valid lottery number.",
+  "lottery.lotteryNumberNotValid": "Please enter a valid lottery number.",
   "lottery.lotteryResults": "Lottery Results",
   "lottery.lotteryResultsPdfLink": "Download Lottery Results PDF",
   "lottery.nextStepsP1": "Applicants will be contacted by the agent in preference rank order until vacancies are filled.",
