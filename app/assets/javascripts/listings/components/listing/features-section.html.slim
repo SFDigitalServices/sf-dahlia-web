@@ -67,7 +67,7 @@ accordion-heading
                 | {{ $ctrl.formatBaths(unit.Number_of_Bathrooms) }}
               td
                 | {{::unit.Unit_Floor}}
-              td
+              td ng-if="::unit.Priority_Type != 'Adaptable'"
                 | {{::unit.Priority_Type}}
 
   .content-tile.feature-tile ng-if="$ctrl.parent.isRental($ctrl.parent.listing)"
