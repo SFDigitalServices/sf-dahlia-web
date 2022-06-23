@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryModal displays initial view with form and listing preferences 1`] = `
-<div>
+<div
+  className="lottery-search-form"
+>
   <header
     className="pt-8 pb-4 text-center bg-white sticky top-0 z-50"
   >
@@ -92,72 +94,78 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           Ranking in these lists is considered in the order shown here.
         </p>
       </header>
-      <div
-        className="px-8 "
-      >
-        <h3
-          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      <div>
+        <div
+          className="px-8 "
         >
-          Certificate of Preference (COP)
-        </h3>
-        <p
-          className="text-tiny"
-        >
-          Up to 1 units
-        </p>
-        <p
-          className="text-gray-700 text-tiny"
-        >
-          1 applicants are on this list.
-        </p>
+          <h3
+            className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+          >
+            Certificate of Preference (COP)
+          </h3>
+          <p
+            className="text-tiny"
+          >
+            Up to 1 units
+          </p>
+          <p
+            className="text-gray-700 text-tiny"
+          >
+            1 applicants are on this list.
+          </p>
+        </div>
+        <hr
+          className="my-4 mx-8"
+        />
       </div>
-      <hr
-        className="my-4 mx-8"
-      />
-      <div
-        className="px-8 "
-      >
-        <h3
-          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      <div>
+        <div
+          className="px-8 "
         >
-          Displaced Tenant Housing Preference (DTHP)
-        </h3>
-        <p
-          className="text-tiny"
-        >
-          Up to 1 units
-        </p>
-        <p
-          className="text-gray-700 text-tiny"
-        >
-          4 applicants are on this list.
-        </p>
+          <h3
+            className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+          >
+            Displaced Tenant Housing Preference (DTHP)
+          </h3>
+          <p
+            className="text-tiny"
+          >
+            Up to 1 units
+          </p>
+          <p
+            className="text-gray-700 text-tiny"
+          >
+            4 applicants are on this list.
+          </p>
+        </div>
+        <hr
+          className="my-4 mx-8"
+        />
       </div>
-      <hr
-        className="my-4 mx-8"
-      />
-      <div
-        className="px-8 "
-      >
-        <h3
-          className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      <div>
+        <div
+          className="px-8 "
         >
-          Live or Work in San Francisco Preference
-        </h3>
-        <p
-          className="text-tiny"
-        >
-          Up to 1 units
-        </p>
-        <p
-          className="text-gray-700 text-tiny"
-        >
-          905 applicants are on this list.
-        </p>
+          <h3
+            className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+          >
+            Live or Work in San Francisco Preference
+          </h3>
+          <p
+            className="text-tiny"
+          >
+            Up to 1 units
+          </p>
+          <p
+            className="text-gray-700 text-tiny"
+          >
+            905 applicants are on this list.
+          </p>
+        </div>
+        <hr
+          className="mt-4"
+        />
       </div>
-      <hr
-        className="mt-4"
-      />
       <div
         className="bg-gray-100 border-b mb-4 p-4"
       >
