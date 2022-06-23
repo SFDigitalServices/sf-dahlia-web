@@ -24,7 +24,7 @@ import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import { isOpen } from "../../util/listingUtil"
-import { ListingDetailsLottery } from "../../modules/listingDetailsLottery/ListingDetailsLottery"
+import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -73,12 +73,10 @@ const ListingDetail = () => {
             )}
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
-              <Mobile>
-                <ListingDetailsLottery
-                  imageSrc={getAssetPath("listing-units.svg")}
-                  listing={listing}
-                />
-              </Mobile>
+              <MobileListingDetailsLottery
+                imageSrc={getAssetPath("listing-units.svg")}
+                listing={listing}
+              />
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
