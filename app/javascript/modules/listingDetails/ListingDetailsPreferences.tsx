@@ -19,7 +19,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
   return (
     <ListSection title={t("listings.lottery.title")} subtitle={t("listings.lottery.preferences")}>
       {preferences.length === 0 ? (
-        <div className="maxw-full flex justify-center">
+        <div className="flex justify-center">
           <Icon symbol="spinner" />
         </div>
       ) : (
