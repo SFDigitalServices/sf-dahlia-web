@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ListSection, LoadingOverlay, PreferencesList, t } from "@bloom-housing/ui-components"
+import { Icon, ListSection, PreferencesList, t } from "@bloom-housing/ui-components"
 import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 import { PREFERENCES, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
@@ -18,7 +18,11 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
 
   return (
     <ListSection title={t("listings.lottery.title")} subtitle={t("listings.lottery.preferences")}>
-      <LoadingOverlay isLoading={preferences.length === 0}>
+      {preferences.length === 0 ? (
+        <div className="maxw-full flex justify-center">
+          <Icon symbol="spinner" />
+        </div>
+      ) : (
         <>
           <PreferencesList
             listingPreferences={preferences.map((preference, index) => {
@@ -60,7 +64,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
             </p>
           )}
         </>
-      </LoadingOverlay>
+      )}
     </ListSection>
   )
 }
