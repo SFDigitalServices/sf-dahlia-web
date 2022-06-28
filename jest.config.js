@@ -31,7 +31,7 @@ module.exports = {
   setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
-    "\\.(scss|css|less)$": "identity-obj-proxy",
+    "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
   "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"]
 }
