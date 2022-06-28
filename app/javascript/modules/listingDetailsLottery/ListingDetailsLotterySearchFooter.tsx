@@ -27,11 +27,19 @@ export const ListingDetailsLotterySearchFooter = ({
               date: localizedFormat(listing.Lottery_Results_Date, "LL"),
             })}
           </p>
-          <p className="py-2">
-            <a href={listing.LotteryResultsURL} target="_blank">
-              {t("lottery.lotteryResultsPdfLink")}
-            </a>
-          </p>
+          {listing.lotteryResultsPdfLink ? (
+            <p className="py-2">
+              <a href={listing.LotteryResultsURL} target="_blank">
+                {t("lottery.lotteryResultsPdfLink")}
+              </a>
+            </p>
+          ) : (
+            <p className="py-2">
+              {t("lottery.resultsWillBePostedOn", {
+                date: localizedFormat(listing.Lottery_Results_Date, "LL"),
+              })}
+            </p>
+          )}
           <p className="text-gray-700 py-2">
             {t("lottery.unsortedResultsNote", {
               date: localizedFormat(listing.Lottery_Date, "LL"),
