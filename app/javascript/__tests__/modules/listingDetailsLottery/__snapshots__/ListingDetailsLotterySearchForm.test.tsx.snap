@@ -210,7 +210,12 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     <p
       className="py-2"
     >
-      Complete lottery results will be posted in pdf format on January 26, 2022
+      <a
+        href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
+        target="_blank"
+      >
+        Download Lottery Results PDF
+      </a>
     </p>
     <p
       className="text-gray-700 py-2"
