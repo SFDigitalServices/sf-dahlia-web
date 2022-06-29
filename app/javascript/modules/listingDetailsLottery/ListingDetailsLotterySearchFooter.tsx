@@ -21,33 +21,41 @@ export const ListingDetailsLotterySearchFooter = ({
         </a>
       </div>
       {lotterySearchFormStatus === LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE && (
-        <div className="p-4 text-center text-tiny">
+        <>
           {listing.LotteryResultsURL ? (
             <>
-              <p className="py-2">
-                {t("lottery.resultsFrom", {
-                  date: localizedFormat(listing.Lottery_Results_Date, "LL"),
-                })}
-              </p>
-              <p className="py-2">
-                <a href={listing.LotteryResultsURL} target="_blank">
-                  {t("lottery.lotteryResultsPdfLink")}
-                </a>
-              </p>
-              <p className="text-gray-700 py-2">
-                {t("lottery.unsortedResultsNote", {
-                  date: localizedFormat(listing.Lottery_Date, "LL"),
-                })}
-              </p>
+              <div className="p-4 text-center text-tiny">
+                <p className="py-2">
+                  {t("lottery.resultsFrom", {
+                    date: localizedFormat(listing.Lottery_Results_Date, "LL"),
+                  })}
+                </p>
+                <p className="py-2">
+                  <a href={listing.LotteryResultsURL} target="_blank">
+                    {t("lottery.lotteryResultsPdfLink")}
+                  </a>
+                </p>
+                <p className="text-gray-700 py-2">
+                  {t("lottery.unsortedResultsNote", {
+                    date: localizedFormat(listing.Lottery_Date, "LL"),
+                  })}
+                </p>
+              </div>
             </>
           ) : (
-            <p className="py-2">
-              {t("lottery.resultsWillBePostedOn", {
-                date: localizedFormat(listing.Lottery_Results_Date, "LL"),
-              })}
-            </p>
+            <>
+              {listing.Lottery_Results_Date && (
+                <div className="p-4 text-center text-tiny">
+                  <p className="py-2">
+                    {t("lottery.resultsWillBePostedOn", {
+                      date: localizedFormat(listing.Lottery_Results_Date, "LL"),
+                    })}
+                  </p>
+                </div>
+              )}
+            </>
           )}
-        </div>
+        </>
       )}
     </>
   )
