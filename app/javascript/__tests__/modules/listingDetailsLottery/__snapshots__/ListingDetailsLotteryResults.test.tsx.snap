@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsLottery displays if lottery is complete 1`] = `
+exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
 <div
   className="border-b pt-4 text-center"
 >
@@ -27,7 +27,7 @@ exports[`ListingDetailsLottery displays if lottery is complete 1`] = `
 </div>
 `;
 
-exports[`ListingDetailsLottery displays if lottery is complete with summary 1`] = `
+exports[`ListingDetailsLotteryResults displays with summary if lottery is complete 1`] = `
 <div
   className="border-b pt-4 text-center"
 >
