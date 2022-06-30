@@ -15,11 +15,11 @@ import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchFo
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
-export interface ListingDetailsLotteryProps {
+export interface ListingDetailsLotteryResultsProps {
   listing: RailsListing
 }
 
-export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) => {
+export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryResultsProps) => {
   const [lotteryBucketDetails, setLotteryBucketDetails] = useState<RailsLotteryResult>()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -63,7 +63,7 @@ export const ListingDetailsLottery = ({ listing }: ListingDetailsLotteryProps) =
               onClose={() => setIsModalOpen(false)}
               open={isModalOpen}
               title=""
-              modalClassNames="max-w-0"
+              modalClassNames="md:max-w-0 w-screen"
               innerClassNames="p-0"
               closeClassNames="z-50"
               scrollable

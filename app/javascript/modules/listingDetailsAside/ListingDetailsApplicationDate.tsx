@@ -15,18 +15,20 @@ export const ListingDetailsApplicationDate = ({
   listing,
 }: ListingDetailsApplicationDateProps) => {
   return (
-    <ApplicationStatus
-      content={t(
-        isApplicationOpen
-          ? "listingDetails.applicationDeadline.open"
-          : "listingDetails.applicationDeadline.closed",
-        {
-          date: localizedFormat(listing.Application_Due_Date, "ll"),
-          time: dayjs(listing.Application_Due_Date).format("h:mm A"),
-        }
-      )}
-      iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
-      status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
-    />
+    <div className="w-full">
+      <ApplicationStatus
+        content={t(
+          isApplicationOpen
+            ? "listingDetails.applicationDeadline.open"
+            : "listingDetails.applicationDeadline.closed",
+          {
+            date: localizedFormat(listing.Application_Due_Date, "ll"),
+            time: dayjs(listing.Application_Due_Date).format("h:mm A"),
+          }
+        )}
+        iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
+        status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
+      />
+    </div>
   )
 }

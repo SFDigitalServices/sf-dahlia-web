@@ -23,7 +23,7 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName !== "generalLottery")
         .map((bucket, index, arr) => (
-          <>
+          <div key={bucket.preferenceOrder}>
             <div className="px-8 " key={bucket.preferenceOrder}>
               <Heading
                 className="font-sans font-semibold text-tiny tracking-wide uppercase"
@@ -41,7 +41,7 @@ export const ListingDetailsLotteryPreferences = ({
               </p>
             </div>
             <hr className={arr.length - 1 === index ? "mt-4" : "my-4 mx-8"} />
-          </>
+          </div>
         ))}
       <div className="bg-gray-100 border-b mb-4 p-4">
         <hr className="border-b-4 border-primary" />
