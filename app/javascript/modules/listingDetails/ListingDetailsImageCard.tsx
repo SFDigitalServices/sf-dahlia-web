@@ -6,6 +6,7 @@ import { getShareListingPath } from "../../util/routeUtil"
 import { getListingAddressString } from "../../util/listingUtil"
 import ConfigContext from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
+import fallbackImg from "../../../assets/images/bg@1200.jpg"
 
 export interface ListingDetailsImageCardProps {
   listing: RailsListing
@@ -21,7 +22,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   return (
     <header className="image-card--leader">
       <ImageCard
-        imageUrl={listing?.imageURL}
+        imageUrl={listing?.imageURL ?? fallbackImg}
         href={`/listings/${listing.listingID}`}
         tags={
           listing.Reserved_community_type
