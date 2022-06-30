@@ -23,94 +23,102 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       Ranking in these lists is considered in the order shown here.
     </p>
   </header>
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Certificate of Preference (COP)
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 13 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      0 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Certificate of Preference (COP)
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 13 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        0 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="my-4 mx-8"
+    />
   </div>
-  <hr
-    className="my-4 mx-8"
-  />
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Displaced Tenant Housing Preference (DTHP)
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 2 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      0 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Displaced Tenant Housing Preference (DTHP)
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 2 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        0 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="my-4 mx-8"
+    />
   </div>
-  <hr
-    className="my-4 mx-8"
-  />
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Neighborhood Resident Housing Preference (NRHP)
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 5 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      6 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Neighborhood Resident Housing Preference (NRHP)
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 5 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        6 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="my-4 mx-8"
+    />
   </div>
-  <hr
-    className="my-4 mx-8"
-  />
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Live or Work in San Francisco Preference
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 13 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      56 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Live or Work in San Francisco Preference
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 13 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        56 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="mt-4"
+    />
   </div>
-  <hr
-    className="mt-4"
-  />
   <div
     className="bg-gray-100 border-b mb-4 p-4"
   >
@@ -166,72 +174,78 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       Ranking in these lists is considered in the order shown here.
     </p>
   </header>
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Certificate of Preference (COP)
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 1 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      1 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Certificate of Preference (COP)
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        1 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="my-4 mx-8"
+    />
   </div>
-  <hr
-    className="my-4 mx-8"
-  />
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Displaced Tenant Housing Preference (DTHP)
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 1 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      4 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Displaced Tenant Housing Preference (DTHP)
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        4 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="my-4 mx-8"
+    />
   </div>
-  <hr
-    className="my-4 mx-8"
-  />
-  <div
-    className="px-8 "
-  >
-    <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+  <div>
+    <div
+      className="px-8 "
     >
-      Live or Work in San Francisco Preference
-    </h3>
-    <p
-      className="text-tiny"
-    >
-      Up to 1 units
-    </p>
-    <p
-      className="text-gray-700 text-tiny"
-    >
-      905 applicants are on this list.
-    </p>
+      <h3
+        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      >
+        Live or Work in San Francisco Preference
+      </h3>
+      <p
+        className="text-tiny"
+      >
+        Up to 1 units
+      </p>
+      <p
+        className="text-gray-700 text-tiny"
+      >
+        905 applicants are on this list.
+      </p>
+    </div>
+    <hr
+      className="mt-4"
+    />
   </div>
-  <hr
-    className="mt-4"
-  />
   <div
     className="bg-gray-100 border-b mb-4 p-4"
   >

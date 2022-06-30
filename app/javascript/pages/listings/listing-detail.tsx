@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import {
   ListingDetails,
   LoadingOverlay,
+  Mobile,
   NavigationContext,
   SiteAlert,
   t,
@@ -21,12 +22,16 @@ import { ListingDetailsAdditionalInformation } from "../../modules/listingDetail
 import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
+import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
+import { isOpen } from "../../util/listingUtil"
+import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
+  const isApplicationOpen = listing && isOpen(listing)
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -45,13 +50,33 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            {!isApplicationOpen && (
+              <Mobile>
+                <ListingDetailsApplicationDate
+                  isApplicationOpen={isApplicationOpen}
+                  listing={listing}
+                />
+              </Mobile>
+            )}
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
             <ListingDetailsPricingTable />
+            {isApplicationOpen && (
+              <Mobile>
+                <ListingDetailsApplicationDate
+                  isApplicationOpen={isApplicationOpen}
+                  listing={listing}
+                />
+              </Mobile>
+            )}
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
+              <MobileListingDetailsLottery
+                imageSrc={getAssetPath("listing-units.svg")}
+                listing={listing}
+              />
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}

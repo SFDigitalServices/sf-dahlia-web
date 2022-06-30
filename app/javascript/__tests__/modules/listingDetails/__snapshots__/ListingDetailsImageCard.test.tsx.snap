@@ -9,13 +9,13 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
     href="/listings/a0W0P00000GlKfBUAV"
   >
     <div
-      className="image-card__wrapper"
+      className="image-card"
     >
       <div
         className="image-card-tag__wrapper"
       />
       <figure
-        className="image-card"
+        className="image-card__inner"
       >
         <img
           alt="A picture of the building"
@@ -100,19 +100,19 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
     href="/listings/a0W8H000000HI2uUAG"
   >
     <div
-      className="image-card__wrapper"
+      className="image-card"
     >
       <div
         className="image-card-tag__wrapper"
       >
         <span
-          className="tag is-warning mt-3 mr-2 ml-2"
+          className="tag is-warning"
         >
           Habitat Greater San Francisco
         </span>
       </div>
       <figure
-        className="image-card"
+        className="image-card__inner"
       >
         <img
           alt="A picture of the building"
