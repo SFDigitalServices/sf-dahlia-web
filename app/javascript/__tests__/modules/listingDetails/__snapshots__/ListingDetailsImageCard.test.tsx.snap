@@ -114,8 +114,9 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
       <figure
         className="image-card__inner"
       >
-        <div
-          className="image-card__placeholder"
+        <img
+          alt="A picture of the building"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
       </figure>
     </div>
