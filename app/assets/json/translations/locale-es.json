@@ -454,7 +454,7 @@
         "not_found_body": "Estimado(a) MOHCD,\n\nno puedo completar mi solicitud para {{listing_name}}. Mi dirección es {{home_address}} y el formulario me señala que hay un error. Indíqueme qué puedo hacer a continuación.\n\nGracias,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
         "not_found_subject": "No puedo ingresar mi dirección en la solicitud en DAHLIA"
       },
-      "address_validation_duplicate_unit": "Si tiene un número de unidad o departamento, simplemente ingréselo en el casillero “Apt or Unit #” (N.° de departamento o unidad)",
+      "address_validation_duplicate_unit": "Si tiene un número de unidad o departamento, simplemente ingréselo en el casillero Número de departamento o unidad",
       "address_validation_po_box": "Necesitamos la dirección donde vive actualmente. No se permiten los apartados postales.",
       "alert": {
         "bad_request": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente. \n\nContacte a sfhousing.info@sfgov.org si continúa teniendo problemas.",
@@ -575,7 +575,7 @@
       "additional_phone": "Teléfono adicional",
       "address": "Domicilio",
       "address_1": "Dirección",
-      "address_2": "Apartamento o unidad n.º",
+      "address_2": "Número de departamento o unidad",
       "agency": "Agencia",
       "alternate_contact": "Contacto alternativo",
       "alternate_contact_agency": "¿Dónde trabaja su trabajador social o su consejero de vivienda?",
