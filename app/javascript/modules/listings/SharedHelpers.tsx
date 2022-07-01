@@ -5,6 +5,7 @@ import { getReservedCommunityType, localizedFormat } from "../../util/languageUt
 import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import fallbackImg from "../../../assets/images/bg@1200.jpg"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -61,14 +62,16 @@ export const getListingImageCardStatuses = (
 }
 
 // Get imageCardProps for a given listing
-export const getImageCardProps = (listing, hasFiltersSet?: boolean) => ({
-  imageUrl: listing?.imageURL,
-  href: `/listings/${listing.listingID}`,
-  tags: listing.Reserved_community_type
-    ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-    : undefined,
-  statuses: getListingImageCardStatuses(listing, hasFiltersSet),
-})
+export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
+  return {
+    imageUrl: listing?.imageURL ?? fallbackImg,
+    href: `/listings/${listing.listingID}`,
+    tags: listing.Reserved_community_type
+      ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
+      : undefined,
+    statuses: getListingImageCardStatuses(listing, hasFiltersSet),
+  }
+}
 
 export const getEventNote = (listingEvent: ListingEvent) => {
   return (
