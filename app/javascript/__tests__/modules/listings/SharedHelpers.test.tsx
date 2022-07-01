@@ -6,6 +6,7 @@ describe("SharedHelpers", () => {
     describe("with no imageURL", () => {
       it("returns an object with fallback image", () => {
         const listing = {
+          Application_Due_Date: "2050-01-01T01:00:00.000+0000",
           imageURL: null,
         }
         expect(getImageCardProps(listing as RailsRentalListing)).toMatchObject({
@@ -13,7 +14,7 @@ describe("SharedHelpers", () => {
           imageUrl: {},
           statuses: [
             {
-              content: "Application Deadline: June 30, 2022",
+              content: "Application Deadline: January 1, 2050",
               status: 0,
             },
           ],
