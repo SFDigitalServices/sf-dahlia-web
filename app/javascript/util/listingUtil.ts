@@ -82,3 +82,12 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
   }
   return ""
 }
+
+/**
+ * Check if a listing is accepting paper applications
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is accepting paper applications, false otherwise
+ */
+export const acceptingPaperApplications = (listing: RailsListing): boolean => {
+  return listing.Accepting_applications_at_leasing_agent || listing.Accepting_applications_by_PO_Box
+}
