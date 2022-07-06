@@ -452,7 +452,7 @@
       "address": "請輸入地址",
       "address_validation": {
         "not_found": "沒有符合此地址的資料。請檢查輸入的門牌號碼、街道名和城市名。請勿提供郵政信箱。<br><br>如果您輸入的地址正確，<a href={{mailInfo}} target=\"_blank\">請傳送電子郵件至 lotteryappeals@sfgov.org</a> 尋求協助。",
-        "not_found_body": "您好 MOHCD\n\n我無法完成有關 {{listing_name}} 的申請表。我的地址是 {{home_address}}，而表格顯示資料有誤。請告訴我接下來該如何處理\n\n謝謝\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
+        "not_found_body": "您好 MOHCD\n\n我無法完成有關 {{listing_name}} 的申請表。我的地址是 {{home_address}}，而表格顯示資料有誤。請告訴我接下來該如何處理.\n\n謝謝\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
         "not_found_subject": "無法在 DAHLIA 申請表輸入我的地址。"
       },
       "address_validation_duplicate_unit": "如果您有公寓或單位號碼，只能在公寓或單位號碼欄位填寫。",
