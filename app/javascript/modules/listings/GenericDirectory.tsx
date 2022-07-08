@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState, Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
 
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import { ConfigContext } from "../../lib/ConfigContext"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import {
+  additionalView,
   DirectoryType,
   ListingsGroups,
-  openListingsView,
-  upcomingLotteriesView,
   lotteryResultsView,
-  additionalView,
-  signUpActionBlock,
+  openListingsView,
   sortListings,
+  upcomingLotteriesView,
 } from "./DirectoryHelpers"
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
+import { MailingListSignup } from "../../components/MailingListSignup"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -31,7 +30,6 @@ interface RentalDirectoryProps {
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
-  const { listingsAlertUrl } = useContext(ConfigContext)
   const [rawListings, setRawListings] = useState([])
   const [listings, setListings] = useState<ListingsGroups>({
     open: [],
@@ -89,7 +87,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
             </div>
           </>
         )}
-        {signUpActionBlock(listingsAlertUrl)}
+        <MailingListSignup />
       </div>
     </LoadingOverlay>
   )
