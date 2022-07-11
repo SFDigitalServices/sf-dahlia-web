@@ -1,11 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 import dayjs from "dayjs"
 import {
+  AppearanceStyleType,
+  Button,
   ExpandableSection,
-  GetApplication,
   LinkButton,
+  OrDivider,
   PaperApplication,
   QuantityRowSection,
+  SidebarBlock,
+  Heading,
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
@@ -23,6 +27,7 @@ export interface ListingDetailsApplyProps {
 }
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+  const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
   const isListingRental = isRental(listing)
 
   const availableDescription = <p>{t("listings.availableUnitsAndWaitlistDescription")}</p>
@@ -44,19 +49,17 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
     { language: "Tagalog", label: "Filipino" },
   ]
 
-  const getPaperApplications = () => {
-    const urlBase = isListingRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
-    return acceptingPaperApplications
-      ? paperAppLanguages.map(
-          (lang): PaperApplication => {
-            return {
-              languageString: lang.label,
-              fileURL: urlBase.replace("{lang}", lang.slug || lang.language),
-            }
+  const urlBase = isListingRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
+  const paperApplications = acceptingPaperApplications
+    ? paperAppLanguages.map(
+        (lang): PaperApplication => {
+          return {
+            languageString: lang.label,
+            fileURL: urlBase.replace("{lang}", lang.slug || lang.language),
           }
-        )
-      : []
-  }
+        }
+      )
+    : []
 
   const availableRows = [
     {
@@ -122,16 +125,37 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
           )}
         </>
       )}
-      <GetApplication
-        applicationsOpen={isOpen(listing)}
-        onlineApplicationURL={
-          listing.Accepting_Online_Applications
-            ? `/listings/${listing.listingID}/apply-welcome/intro`
-            : undefined
-        }
-        paperApplications={getPaperApplications()}
-        paperMethod={acceptingPaperApplications(listing)}
-      />
+      <SidebarBlock title={"How to Apply"}>
+        <Button styleType={AppearanceStyleType.primary} className={"w-full"} transition={true}>
+          Apply Online
+        </Button>
+        <OrDivider bgColor={"white"} />
+        <Heading priority={4} className={"text-gray-900 text-lg -mt-2 mb-3"}>
+          <span className={"text-blue-600 mr-1"}>1</span>Get a Paper Application
+        </Heading>
+        Paper applications must be sent by US Mail and cannot be submitted in person.
+        <Button
+          className={"w-full mt-4"}
+          transition={true}
+          icon={"arrowDown"}
+          iconPlacement={"right"}
+          onClick={() => setPaperApplicationsOpen(!paperApplicationsOpen)}
+        >
+          Download Application
+        </Button>
+        {paperApplicationsOpen && (
+          <div className={"flex w-full items-center justify-center flex-col"}>
+            {paperApplications.map((app) => {
+              return (
+                <LinkButton href={app.fileURL} unstyled className={"m-0 pt-4 no-underline"}>
+                  {app.languageString}
+                </LinkButton>
+              )
+            })}
+          </div>
+        )}
+      </SidebarBlock>
+
       <section className="aside-block">
         <h4 className="text-caps-underline">{t("listings.apply.needHelp")}</h4>
         <div className="text-tiny text-gray-750 flex flex-col justify-center">
@@ -139,6 +163,8 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             <div className={"mb-4"}>{t("listings.apply.visitAHousingCounselor")}</div>
           )}
           <LinkButton
+            transition={true}
+            newTab={true}
             href={"https://www.homeownershipsf.org/application-assistance-for-homebuyers/"}
           >
             {t("housingCounselor.findAHousingCounselor")}
