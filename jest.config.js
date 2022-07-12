@@ -28,7 +28,6 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
-  setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",

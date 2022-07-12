@@ -94,7 +94,6 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
   >
     <a
       className="button"
-      external={true}
       href=""
       target="_blank"
     >
