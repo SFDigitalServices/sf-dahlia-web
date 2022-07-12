@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
 import {
-  ActionBlock,
   AppearanceSizeType,
   Button,
   Icon,
@@ -16,7 +15,6 @@ import dayjs from "dayjs"
 
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
-import Link from "../../navigation/Link"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
@@ -296,22 +294,6 @@ export const additionalView = (listings, directoryType, stackedDataFxn, filtersS
     filtersSet,
     t("listings.additional.subtitle"),
     "doubleHouse"
-  )
-}
-
-export const signUpActionBlock = (href: string) => {
-  return (
-    <ActionBlock
-      className={"mt-4"}
-      header={t("welcome.newListingEmailAlert")}
-      background="primary-lighter"
-      icon={<Icon size="3xl" symbol="mailThin" fill="transparent" />}
-      actions={[
-        <Link className="button" key="action-1" external={true} href={href}>
-          {t("welcome.signUpToday")}
-        </Link>,
-      ]}
-    />
   )
 }
 
