@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsWaitlist does not render waitlist section if listing has no waitlist 1`] = `null`;
+
+exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist 1`] = `
+<section
+  className="aside-block is-tinted"
+>
+  <h4
+    className="text-caps-tiny"
+  >
+    Available units and waitlist
+  </h4>
+  <div>
+    <p
+      className="text-tiny text-gray-800 pb-3"
+    >
+      <p>
+        Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist.
+      </p>
+    </p>
+    <ul>
+      <li
+        className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+      >
+        <span
+          className="text-right w-12 inline-block pr-2.5 text-base"
+        >
+          5
+        </span>
+        <span
+          className="text-sm"
+        >
+          Available Units
+        </span>
+      </li>
+      <li
+        className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+      >
+        <span
+          className="text-right w-12 inline-block pr-2.5 text-base"
+        >
+          2
+        </span>
+        <span
+          className="text-sm"
+        >
+          Open Waitlist Slots
+        </span>
+      </li>
+    </ul>
+  </div>
+</section>
+`;

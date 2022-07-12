@@ -4,6 +4,7 @@ import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
+import { LANGUAGE_CONFIGS } from "./languageUtil"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -105,8 +106,30 @@ export const mohcdSalePaperAppURLTemplate =
   "{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf"
 
 export const paperAppLanguages = [
-  { language: "English", label: "English" },
-  { language: "Spanish", label: "Español" },
-  { language: "Traditional Chinese", label: "中文", slug: "Chinese" },
-  { language: "Tagalog", label: "Filipino" },
+  { language: "English", prefix: "en" },
+  { language: "Spanish", prefix: "es" },
+  { language: "Chinese", prefix: "zh" },
+  { language: "Tagalog", prefix: "tl" },
 ]
+
+type PaperApplication = {
+  languageString: string
+  fileURL: string
+}
+
+/**
+ * Returns an object of the paper application languages and URLs
+ * @param {boolean} isRental
+ * @returns {PaperApplication[]}
+ */
+export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
+  const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
+  return paperAppLanguages.map(
+    (lang): PaperApplication => {
+      return {
+        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+        fileURL: urlBase.replace("{lang}", lang.language),
+      }
+    }
+  )
+}

@@ -1,54 +1,76 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsApplicationDate does not render waitlist section if listing has no waitlist 1`] = `null`;
+exports[`ListingDetailsApply does not render if listing is closed 1`] = `null`;
 
-exports[`ListingDetailsApplicationDate renders waitlist section if listing has waitlist 1`] = `
-<section
-  className="aside-block is-tinted"
->
-  <h4
-    className="text-caps-tiny"
+exports[`ListingDetailsApply renders if listing is open 1`] = `
+Array [
+  <section
+    className="aside-block "
   >
-    Available units and waitlist
-  </h4>
-  <div>
-    <p
-      className="text-tiny text-gray-800 pb-3"
+    <h4
+      className="text-caps-underline undefined"
     >
-      <p>
-        Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist.
+      How to Apply
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <p
+        className="mb-4"
+      >
+        <span
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Make sure you fulfill the <a href='https://sfmohcd.org/homebuyer-program-eligibility' target='_blank'>eligibility requirements</a> for this listing before you begin.",
+            }
+          }
+        />
       </p>
-    </p>
-    <ul>
-      <li
-        className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+      <p
+        className="mb-4"
       >
-        <span
-          className="text-right w-12 inline-block pr-2.5 text-base"
-        >
-          5
-        </span>
-        <span
-          className="text-sm"
-        >
-          Available Units
-        </span>
-      </li>
-      <li
-        className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+        Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+      </p>
+      <button
+        className="button is-primary w-full transition"
       >
-        <span
-          className="text-right w-12 inline-block pr-2.5 text-base"
-        >
-          2
-        </span>
-        <span
-          className="text-sm"
-        >
-          Open Waitlist Slots
-        </span>
-      </li>
-    </ul>
-  </div>
-</section>
+        Apply Online
+      </button>
+    </div>
+  </section>,
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Need Help?
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <a
+        className="button w-full transition"
+        href="https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+        target="_blank"
+      >
+        Find a Housing Counselor
+      </a>
+    </div>
+  </section>,
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Expected move-in date
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      June 2020
+    </div>
+  </section>,
+]
 `;

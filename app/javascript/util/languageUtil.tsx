@@ -130,8 +130,9 @@ export const getPathWithoutLanguagePrefix = (path: string): string => {
  * Get the current language prefix, or default to the english prefix if there is no explicit prefix in
  * the path.
  */
-export const getCurrentLanguage = (path: string | undefined): LanguagePrefix =>
-  getRoutePrefix(path || "") || LanguagePrefix.English
+export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix => {
+  return getRoutePrefix(path || window.location.pathname) || LanguagePrefix.English
+}
 
 /**
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />

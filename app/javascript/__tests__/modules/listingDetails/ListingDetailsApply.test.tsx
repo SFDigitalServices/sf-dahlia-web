@@ -2,18 +2,16 @@ import React from "react"
 import renderer from "react-test-renderer"
 import { ListingDetailsApply } from "../../../modules/listingDetailsAside/ListingDetailsApply"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
-import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
+import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
-describe("ListingDetailsApplicationDate", () => {
-  it("does not render waitlist section if listing has no waitlist", () => {
-    const tree = renderer.create(<ListingDetailsApply listing={openSaleListing} />).toJSON()
+describe("ListingDetailsApply", () => {
+  it("does not render if listing is closed", () => {
+    const tree = renderer.create(<ListingDetailsApply listing={closedRentalListing} />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
-  it("renders waitlist section if listing has waitlist", () => {
-    const tree = renderer
-      .create(<ListingDetailsApply listing={lotteryCompleteRentalListing} />)
-      .toJSON()
+  it("renders if listing is open", () => {
+    const tree = renderer.create(<ListingDetailsApply listing={openSaleListing} />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
