@@ -78,7 +78,12 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             <div className={"flex w-full items-center justify-center flex-col"}>
               {paperApplicationURLs(isListingRental).map((app) => {
                 return (
-                  <LinkButton href={app.fileURL} unstyled className={"m-0 pt-4 no-underline"}>
+                  <LinkButton
+                    href={app.fileURL}
+                    unstyled
+                    className={"m-0 pt-4 no-underline"}
+                    newTab={true}
+                  >
                     {app.languageString}
                   </LinkButton>
                 )
@@ -130,7 +135,11 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       <LinkButton
         transition={true}
         newTab={true}
-        href={"https://www.homeownershipsf.org/application-assistance-for-homebuyers/"}
+        href={
+          !isListingRental
+            ? "https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+            : "/housing-counselors"
+        }
         className={"w-full"}
       >
         {t("housingCounselor.findAHousingCounselor")}
