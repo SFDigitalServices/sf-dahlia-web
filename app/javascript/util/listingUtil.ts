@@ -118,7 +118,7 @@ type PaperApplication = {
 }
 
 /**
- * Returns an object of the paper application languages and URLs
+ * Returns an array of all the paper application URLs
  * @param {boolean} isRental
  * @returns {PaperApplication[]}
  */
