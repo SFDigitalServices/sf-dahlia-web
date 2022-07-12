@@ -23,6 +23,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
       {listing.Information_Sessions?.map((informationSession) => {
         return (
           <EventSection
+            sectionHeader={true}
             events={[
               {
                 dateString: localizedFormat(informationSession.Date, "LL"),
@@ -43,6 +44,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
               note: getEventNote(openHouse),
             }
           })}
+          sectionHeader={true}
           headerText={t("label.openHouses")}
         />
       )}
