@@ -91,3 +91,22 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
 export const acceptingPaperApplications = (listing: RailsListing): boolean => {
   return listing.Accepting_applications_at_leasing_agent || listing.Accepting_applications_by_PO_Box
 }
+
+export const mohcdPaperAppURLBase = "https://sfmohcd.org/sites/default/files/Documents/MOH/"
+
+export const mohcdRentalPaperAppURLTemplate =
+  mohcdPaperAppURLBase +
+  "BMR%20Rental%20Paper%20Applications/" +
+  "{lang}%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf"
+
+export const mohcdSalePaperAppURLTemplate =
+  mohcdPaperAppURLBase +
+  "BMR%20Ownership%20Paper%20Applications/" +
+  "{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf"
+
+export const paperAppLanguages = [
+  { language: "English", label: "English" },
+  { language: "Spanish", label: "Español" },
+  { language: "Traditional Chinese", label: "中文", slug: "Chinese" },
+  { language: "Tagalog", label: "Filipino" },
+]
