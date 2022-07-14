@@ -55,9 +55,14 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
           <p className={"mb-4"}>{t("listings.apply.eligibilityRequirementDescription")}</p>
         </>
       )}
-      <Button styleType={AppearanceStyleType.primary} className={"w-full"} transition={true}>
+      <LinkButton
+        styleType={AppearanceStyleType.primary}
+        className={"w-full"}
+        transition={true}
+        href={`listings/${listing.listingID}/apply-welcome/intro`}
+      >
         {t("label.applyOnline")}
-      </Button>
+      </LinkButton>
       {acceptingPaperApps && (
         <>
           <OrDivider bgColor={"white"} />
