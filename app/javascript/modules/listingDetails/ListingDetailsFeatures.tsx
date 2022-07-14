@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { Description, ListingDetailItem, t, AdditionalFees } from "@bloom-housing/ui-components"
-import { isRental, isSale, isBMR } from "../../util/listingUtil"
+import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { isBMR, isRental, isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -66,7 +66,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
               listing.Deposit_Max?.toLocaleString()
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
-            costsNotIncluded={listing.Costs_Not_Included}
+            footerContent={[<>{listing.Costs_Not_Included}</>]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
               deposit: t("listings.features.deposit"),
