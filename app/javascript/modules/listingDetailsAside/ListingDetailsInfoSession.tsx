@@ -17,27 +17,37 @@ const getEventTimeString = (listingEvent: ListingEvent) => {
   return ""
 }
 
+const filterListingEventsWithoutDates = (listingEvent: ListingEvent) => {
+  return listingEvent?.Date
+}
+
 export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSessionProps) => {
   return (
     <>
-      {listing.Information_Sessions?.map((informationSession) => {
-        return (
-          <EventSection
-            sectionHeader={true}
-            events={[
-              {
-                dateString: localizedFormat(informationSession.Date, "LL"),
-                timeString: getEventTimeString(informationSession),
-                note: getEventNote(informationSession),
-              },
-            ]}
-            headerText={t("listings.process.informationSessions")}
-          />
-        )
-      })}
-      {listing.Open_Houses?.length && (
+      {listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
+        return filterListingEventsWithoutDates(informationSession)
+      })?.length > 0 && (
         <EventSection
-          events={listing.Open_Houses?.map((openHouse) => {
+          sectionHeader={true}
+          events={listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
+            return filterListingEventsWithoutDates(informationSession)
+          }).map((informationSession) => {
+            return {
+              dateString: localizedFormat(informationSession.Date, "LL"),
+              timeString: getEventTimeString(informationSession),
+              note: getEventNote(informationSession),
+            }
+          })}
+          headerText={t("listings.process.informationSessions")}
+        />
+      )}
+      {listing.Open_Houses?.filter((informationSession: ListingEvent) => {
+        return filterListingEventsWithoutDates(informationSession)
+      }).length && (
+        <EventSection
+          events={listing.Open_Houses?.filter((informationSession: ListingEvent) => {
+            return filterListingEventsWithoutDates(informationSession)
+          }).map((openHouse) => {
             return {
               dateString: localizedFormat(openHouse.Date, "LL"),
               timeString: getEventTimeString(openHouse),
