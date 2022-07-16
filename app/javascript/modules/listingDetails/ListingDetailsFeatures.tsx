@@ -66,7 +66,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
               listing.Deposit_Max?.toLocaleString()
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
-            costsNotIncluded={listing.Costs_Not_Included}
+            footerContent={[listing.Costs_Not_Included]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
               deposit: t("listings.features.deposit"),

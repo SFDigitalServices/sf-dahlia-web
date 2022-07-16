@@ -137,7 +137,7 @@ exports[`ListingDetailsFeatures displays listing details features section 1`] = 
         className="info-card__columns text-sm"
       >
         <div
-          className="info-card__column null"
+          className="info-card__column-2 null"
         >
           <div
             className="text-base"
@@ -157,17 +157,21 @@ exports[`ListingDetailsFeatures displays listing details features section 1`] = 
           </div>
         </div>
       </div>
-      <p
-        className="text-sm mt-2 mt-6"
+      <div
+        className="info-card__columns text-sm"
       >
-        Tenants pay for gas, electricity.
+        <div
+          className="info-card__column-2"
+        >
+          Tenants pay for gas, electricity.
 
 For pet fees:  Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum.  
 
 Dogs are not allowed in the building.  
 
 One parking space per unit available for $175 a month.
-      </p>
+        </div>
+      </div>
     </div>
   </div>
 </li>
