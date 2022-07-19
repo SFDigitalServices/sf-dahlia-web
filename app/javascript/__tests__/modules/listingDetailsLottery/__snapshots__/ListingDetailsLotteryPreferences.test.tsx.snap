@@ -30,54 +30,6 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       <h3
         className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
       >
-        Certificate of Preference (COP)
-      </h3>
-      <p
-        className="text-tiny"
-      >
-        Up to 13 units
-      </p>
-      <p
-        className="text-gray-700 text-tiny"
-      >
-        0 applicants are on this list.
-      </p>
-    </div>
-    <hr
-      className="my-4 mx-8"
-    />
-  </div>
-  <div>
-    <div
-      className="px-8 "
-    >
-      <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
-      >
-        Displaced Tenant Housing Preference (DTHP)
-      </h3>
-      <p
-        className="text-tiny"
-      >
-        Up to 2 units
-      </p>
-      <p
-        className="text-gray-700 text-tiny"
-      >
-        0 applicants are on this list.
-      </p>
-    </div>
-    <hr
-      className="my-4 mx-8"
-    />
-  </div>
-  <div>
-    <div
-      className="px-8 "
-    >
-      <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
-      >
         Neighborhood Resident Housing Preference (NRHP)
       </h3>
       <p
