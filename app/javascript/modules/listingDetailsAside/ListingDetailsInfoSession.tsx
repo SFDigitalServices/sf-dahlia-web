@@ -1,8 +1,8 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
-import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
-import { localizedFormat, listingEventHasDate, getEventTimeString } from "../../util/languageUtil"
+import { localizedFormat } from "../../util/languageUtil"
+import { getEventTimeString } from "../../util/listingUtil"
 import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsInfoSessionProps {
@@ -12,14 +12,10 @@ export interface ListingDetailsInfoSessionProps {
 export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSessionProps) => {
   return (
     <>
-      {listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
-        return listingEventHasDate(informationSession)
-      })?.length > 0 ? (
+      {listing.Information_Sessions?.length > 0 ? (
         <EventSection
           sectionHeader={true}
-          events={listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
-            return listingEventHasDate(informationSession)
-          }).map((informationSession) => {
+          events={listing.Information_Sessions?.map((informationSession) => {
             return {
               dateString: localizedFormat(informationSession.Date, "LL"),
               timeString: getEventTimeString(informationSession),

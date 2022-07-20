@@ -96,5 +96,82 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       </button>
     </div>
   </div>
+  <section
+    class="aside-block"
+  >
+    <h4
+      class="text-caps-underline undefined"
+    >
+      Open Houses
+    </h4>
+    <div
+      class="pb-3"
+    >
+      <p
+        class="text-tiny text-gray-700 pb-3"
+      />
+      <div
+        class="flex flex-col"
+      >
+        <span>
+          <p>
+            <strong>
+              FIRST COME, FIRST SERVED LISTING
+            </strong>
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            To view the listing & instructions on how to submit an application, please click on this 
+            <a
+              href="https://sfmohcd.org/bmr-resale-55-page-street-unit-211"
+              target="_blank"
+            >
+              link
+            </a>
+            .
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            Individual viewings may be available by appointment only. Please contact the listing agent, Trista Bernasconi, for assistance.
+          </p>
+        </span>
+      </div>
+      <p />
+    </div>
+    <div
+      class="false"
+    >
+      <p
+        class="text-tiny text-gray-700 false"
+      />
+      <div
+        class="flex flex-col"
+      >
+        <span>
+          <p>
+            <br />
+          </p>
+          <p>
+            To view the virtual tour, please click on this 
+            <a
+              href="https://my.matterport.com/show/?m=bfGPnSQLVhk&amp;mls=1"
+              target="_blank"
+            >
+              link
+            </a>
+            .
+          </p>
+        </span>
+      </div>
+      <p />
+    </div>
+  </section>
 </DocumentFragment>
 `;

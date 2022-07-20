@@ -74,10 +74,6 @@ export const getListingAddressString = (listing: RailsListing): string => {
   )
 }
 
-export const listingEventHasDate = (listingEvent: ListingEvent) => {
-  return listingEvent?.Date
-}
-
 export const getEventTimeString = (listingEvent: ListingEvent) => {
   if (listingEvent.Start_Time) {
     return listingEvent.End_Time

@@ -3,7 +3,7 @@ import { getEventNote, RailsListing } from "../modules/listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
 import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../util/languageUtil"
-import { listingEventHasDate, getEventTimeString } from "../util/listingUtil"
+import { getEventTimeString } from "../util/listingUtil"
 
 export interface OpenHousesProps {
   listing: RailsListing
@@ -12,15 +12,11 @@ export interface OpenHousesProps {
 const OpenHouses = ({ listing }: OpenHousesProps) => {
   return (
     <>
-      {listing.Open_Houses?.filter((openHouse: ListingEvent) => {
-        return listingEventHasDate(openHouse)
-      }).length ? (
+      {listing.Open_Houses?.length ? (
         <EventSection
-          events={listing.Open_Houses?.filter((openHouse: ListingEvent) => {
-            return listingEventHasDate(openHouse)
-          }).map((openHouse: ListingEvent) => {
+          events={listing.Open_Houses?.map((openHouse: ListingEvent) => {
             return {
-              dateString: localizedFormat(openHouse.Date, "LL"),
+              dateString: openHouse.Date && localizedFormat(openHouse.Date, "LL"),
               timeString: getEventTimeString(openHouse),
               note: getEventNote(openHouse),
             }
