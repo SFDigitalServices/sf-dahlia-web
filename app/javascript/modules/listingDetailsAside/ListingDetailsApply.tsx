@@ -63,6 +63,16 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       >
         {t("label.applyOnline")}
       </LinkButton>
+      {process.env.COVID_UPDATE && (
+        <div className={"mt-4"}>
+          <Heading priority={4} className={"text-base text-gray-800 font-sans"}>
+            {t("listings.apply.covidUpdate")}
+          </Heading>
+          <div className={"text-gray-700 text-base mt-2"}>
+            {t("listings.apply.covidUpdateInfo")}
+          </div>
+        </div>
+      )}
       {acceptingPaperApps && (
         <>
           <OrDivider bgColor={"white"} />
@@ -147,7 +157,9 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         }
         className={"w-full"}
       >
-        {t("housingCounselor.findAHousingCounselor")}
+        {isListingRental
+          ? t("housingCounselor.findAHousingCounselor")
+          : t("listings.apply.visitHomeownershipSf")}
       </LinkButton>
     </SidebarBlock>
   )
