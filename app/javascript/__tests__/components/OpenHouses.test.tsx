@@ -9,7 +9,7 @@ describe("OpenHouses", () => {
     expect(tree).toMatchSnapshot()
   })
 
-  it("doesn't display OpenHouses with Listing not containing Open_Houses", () => {
+  it("doesn't display anything with Listing not containing Open_Houses", () => {
     const listing = { ...lotteryCompleteRentalListing, Open_Houses: [] }
     const tree = renderer.create(<OpenHouses listing={listing} />).toJSON()
     expect(tree).toMatchSnapshot()

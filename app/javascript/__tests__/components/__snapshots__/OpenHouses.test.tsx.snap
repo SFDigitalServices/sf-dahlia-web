@@ -37,4 +37,4 @@ exports[`OpenHouses displays OpenHouses with Listing containing Open_Houses 1`] 
 </section>
 `;
 
-exports[`OpenHouses doesn't display OpenHouses with Listing not containing Open_Houses 1`] = `null`;
+exports[`OpenHouses doesn't display anything with Listing not containing Open_Houses 1`] = `null`;

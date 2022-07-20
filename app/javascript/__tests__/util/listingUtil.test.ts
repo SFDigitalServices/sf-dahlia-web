@@ -79,7 +79,7 @@ describe("listingUtil", () => {
   })
 
   describe("getEventTimeString", () => {
-    it("should return 5:00PM - 7:00PM", () => {
+    it("should return 5:00PM - 7:00PM when event has start and end time", () => {
       expect(getEventTimeString(lotteryCompleteRentalListing.Open_Houses[0])).toBe(
         "5:00PM - 7:00PM"
       )
