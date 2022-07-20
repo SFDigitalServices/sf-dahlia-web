@@ -1205,10 +1205,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@5.0.1-alpha.14":
-  version "5.0.1-alpha.14"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.0.1-alpha.14.tgz#a1ef85f81fe4a1f707f2803be05931d1d97f51b8"
-  integrity sha512-3vkfyaxeUaoK+3Mo/CZFNvZgGHDWrQWV213tBaH/1TJ4NEgvtoWybYuwDjs2P6kDvsEkXvKZvESMQlobrONC4Q==
+"@bloom-housing/ui-components@5.0.1-alpha.16":
+  version "5.0.1-alpha.16"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.0.1-alpha.16.tgz#01e09bcfed0b6483d1e00f8e84a763f6de3e43d2"
+  integrity sha512-KYmcw/CrNkj68OA3fcZYX8U+3PUGM0xG5qlX9WcOd1t6RY/Hrsl2J2HG29uZwOlPFuxoMKjUndLmggtOYpwzyQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"

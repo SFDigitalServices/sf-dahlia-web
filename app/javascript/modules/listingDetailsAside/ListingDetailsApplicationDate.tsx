@@ -17,6 +17,7 @@ export const ListingDetailsApplicationDate = ({
   return (
     <div className="w-full">
       <ApplicationStatus
+        className="place-content-center"
         content={t(
           isApplicationOpen
             ? "listingDetails.applicationDeadline.open"
