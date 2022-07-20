@@ -1,6 +1,7 @@
 import React, { ErrorInfo, ReactNode } from "react"
 import { ActionBlock, AppearanceStyleType, Button, t } from "@bloom-housing/ui-components"
 import "./ErrorBoundary.scss"
+import { localizedPath } from "../util/routeUtil"
 
 export enum BoundaryScope {
   /**
@@ -54,7 +55,7 @@ class ErrorBoundary extends React.Component<Props, State> {
               header={t("errorBoundary.description")}
               actions={[
                 <Button
-                  onClick={() => (window.location.href = "/")}
+                  onClick={() => (window.location.href = localizedPath("/"))}
                   styleType={AppearanceStyleType.info}
                 >
                   {t("errorBoundary.goHome")}

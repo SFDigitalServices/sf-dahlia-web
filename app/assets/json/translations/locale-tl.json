@@ -451,7 +451,7 @@
       "address": "Pakipasok ang inyong address",
       "address_validation": {
         "not_found": "Hindi nahanap ang address na ito. Pakitingnan ang house number, street, at lungsod na nailagay. Hindi pinapayagan ang mga PO Box.<br><br>Kung wasto ang nailagay ninyong address, <a href={{mailInfo}} target=\"_blank\">mag-email sa amin sa lotteryappeals@sfgov.org</a> para sa tulong.",
-        "not_found_body": "Minamahal na MOHCD,\n\nhindi ko makumpleto ang aking aplikasyon para sa {{listing_name}}. Ang address ko ay {{home_address}} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin.\n\nSalamat,\n{{first_name}} {{last_name}}\n{{email}}n{{phone_number}}",
+        "not_found_body": "Minamahal na MOHCD,\n\nHindi ko makumpleto ang aking aplikasyon para sa {{listing_name}}. Ang address ko ay {{home_address}} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin.\n\nSalamat,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
         "not_found_subject": "Hindi mailagay ang aking address sa aplikasyon sa DAHLIA"
       },
       "address_validation_duplicate_unit": "Kung mayroon kayong numero ng apartment o yunit, ilagay lang ito sa kahong Numero ng Apt o Unit.",

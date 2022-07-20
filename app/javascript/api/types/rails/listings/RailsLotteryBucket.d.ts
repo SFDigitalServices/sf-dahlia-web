@@ -8,7 +8,7 @@ type PreferenceResult = {
 export type RailsLotteryBucket = {
   preferenceName: string
   preferenceOrder: number
-  preferenceResults: Array<PreferenceResult>
+  preferenceResults?: Array<PreferenceResult>
   totalSubmittedApps: number
   unitsAvailable: number
 }

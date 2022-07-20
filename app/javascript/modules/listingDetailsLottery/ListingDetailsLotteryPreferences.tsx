@@ -21,7 +21,10 @@ export const ListingDetailsLotteryPreferences = ({
         </p>
       </header>
       {lotteryBucketsDetails.lotteryBuckets
-        .filter((bucket) => bucket.preferenceName !== "generalLottery")
+        .filter(
+          (bucket) =>
+            bucket.preferenceName !== "generalLottery" && bucket.preferenceResults?.length > 0
+        )
         .map((bucket, index, arr) => (
           <div key={bucket.preferenceOrder}>
             <div className="px-8 " key={bucket.preferenceOrder}>
