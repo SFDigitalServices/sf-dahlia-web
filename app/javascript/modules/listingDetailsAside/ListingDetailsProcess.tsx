@@ -32,7 +32,12 @@ export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) =
         )}
       <ExpandableSection
         content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
-        expandableContent={t("f2ReviewTerms.p3")}
+        expandableContent={
+          <>
+            <p>{t("f2ReviewTerms.p3")}</p>
+            <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
+          </>
+        }
         strings={{
           title: t("label.whatToExpect"),
           readMore: t("label.readMore"),

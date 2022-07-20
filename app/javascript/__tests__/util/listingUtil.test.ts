@@ -6,6 +6,7 @@ import {
   isRental,
   isSale,
   getEventTimeString,
+  paperApplicationURLs,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
@@ -93,6 +94,57 @@ describe("listingUtil", () => {
     it("should return empty string with no date", () => {
       const event = { ...lotteryCompleteRentalListing.Open_Houses[0], Start_Time: "" }
       expect(getEventTimeString(event)).toBe("")
+    })
+  })
+  describe("paperApplicationURLs", () => {
+    it("should build rental URLs correctly", () => {
+      expect(paperApplicationURLs(true)).toStrictEqual([
+        {
+          languageString: "English",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "Español",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/Spanish%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "中文",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/Chinese%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "Filipino",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/Tagalog%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf",
+        },
+      ])
+    })
+
+    it("should build sale URLs correctly", () => {
+      expect(paperApplicationURLs(false)).toStrictEqual([
+        {
+          languageString: "English",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/English%20BMR%20Own%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "Español",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/Spanish%20BMR%20Own%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "中文",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/Chinese%20BMR%20Own%20Short%20Form%20Paper%20App.pdf",
+        },
+        {
+          languageString: "Filipino",
+          fileURL:
+            "https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/Tagalog%20BMR%20Own%20Short%20Form%20Paper%20App.pdf",
+        },
+      ])
     })
   })
 })
