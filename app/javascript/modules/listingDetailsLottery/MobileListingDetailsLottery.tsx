@@ -4,6 +4,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsLotteryResults } from "./ListingDetailsLotteryResults"
 import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
+import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 
 export interface ListingDetailsLotteryProps {
   imageSrc: string
@@ -21,6 +22,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           title={t("lottery")}
           subtitle={t("lottery.lotteryInfoSubheader")}
         >
+          <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsProcess listing={listing} />
         </ListingDetailItem>

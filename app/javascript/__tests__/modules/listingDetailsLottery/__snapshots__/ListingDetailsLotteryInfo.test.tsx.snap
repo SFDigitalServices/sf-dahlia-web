@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`] = `
+Array [
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Lottery
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <p
+        className="flex justify-between mb-4"
+      >
+        <span>
+          March 22, 2023
+        </span>
+        <span
+          className="font-bold"
+        >
+          6:00 PM
+        </span>
+      </p>
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style=\\"font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;\\"> </span></p><p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>",
+          }
+        }
+      />
+      <p
+        className="mt-4"
+      >
+        An open lottery will be held to draw numbers to determine selection. Attendance is optional.
+      </p>
+    </div>
+  </section>,
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Lottery Results
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <p
+        className="mb-4"
+      >
+        March 23, 2023
+      </p>
+      <p>
+        Complete lottery results will be posted on this date by 5pm.
+      </p>
+    </div>
+  </section>,
+]
+`;
+
+exports[`ListingDetailsLotteryInfo does not display when listing has a completed lottery 1`] = `null`;
+
+exports[`ListingDetailsLotteryInfo does not display when listing has no lottery date 1`] = `null`;
+
+exports[`ListingDetailsLotteryInfo does not display when listing is open 1`] = `null`;
