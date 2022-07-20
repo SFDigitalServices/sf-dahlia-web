@@ -1,5 +1,6 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
+import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
@@ -71,4 +72,17 @@ export const getListingAddressString = (listing: RailsListing): string => {
       `${listing.Building_Street_Address}, ${listing.Building_City}, ${listing.Building_State} ${listing.Building_Zip_Code}`) ||
     ""
   )
+}
+
+export const listingEventHasDate = (listingEvent: ListingEvent) => {
+  return listingEvent?.Date
+}
+
+export const getEventTimeString = (listingEvent: ListingEvent) => {
+  if (listingEvent.Start_Time) {
+    return listingEvent.End_Time
+      ? `${listingEvent.Start_Time} - ${listingEvent.End_Time}`
+      : listingEvent.Start_Time
+  }
+  return ""
 }

@@ -3,6 +3,7 @@ import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
+import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsInfoSessionProps {
   listing: RailsListing
@@ -26,7 +27,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
     <>
       {listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
         return filterListingEventsWithoutDates(informationSession)
-      })?.length > 0 && (
+      })?.length > 0 ? (
         <EventSection
           sectionHeader={true}
           events={listing.Information_Sessions?.filter((informationSession: ListingEvent) => {
@@ -40,24 +41,8 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
           })}
           headerText={t("listings.process.informationSessions")}
         />
-      )}
-      {listing.Open_Houses?.filter((informationSession: ListingEvent) => {
-        return filterListingEventsWithoutDates(informationSession)
-      }).length && (
-        <EventSection
-          events={listing.Open_Houses?.filter((informationSession: ListingEvent) => {
-            return filterListingEventsWithoutDates(informationSession)
-          }).map((openHouse) => {
-            return {
-              dateString: localizedFormat(openHouse.Date, "LL"),
-              timeString: getEventTimeString(openHouse),
-              note: getEventNote(openHouse),
-            }
-          })}
-          sectionHeader={true}
-          headerText={t("label.openHouses")}
-        />
-      )}
+      ) : null}
+      <OpenHouses listing={listing} />
       {/* TODO: Bloom prop changes for get and submit application sections */}
     </>
   )
