@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
+<div
+  className="border-b pt-4 text-center"
+>
+  <h4
+    className="undefined mb-4"
+  >
+    Lottery Results
+  </h4>
+  <p
+    className="mb-4 text-sm uppercase"
+  >
+    January 26, 2022
+  </p>
+  <div
+    className="bg-gray-100 py-4"
+  >
+    <button
+      className="button is-primary is-small"
+      onClick={[Function]}
+    >
+      View Lottery Results
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsLotteryResults displays with summary if lottery is complete 1`] = `
+<div
+  className="border-b pt-4 text-center"
+>
+  <h4
+    className="undefined mb-4"
+  >
+    Lottery Results
+  </h4>
+  <p
+    className="mb-4 text-sm uppercase"
+  >
+    December 22, 2021
+  </p>
+  <div
+    className="bg-gray-100 py-4"
+  >
+    <div
+      className="mb-3 mx-2 text-gray-700 text-sm"
+    >
+      <span
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<p>**Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST**</p>",
+          }
+        }
+      />
+    </div>
+    <button
+      className="button is-primary is-small"
+      onClick={[Function]}
+    >
+      View Lottery Results
+    </button>
+  </div>
+</div>
+`;

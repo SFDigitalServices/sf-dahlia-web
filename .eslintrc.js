@@ -152,16 +152,7 @@ module.exports = {
     "unicorn/no-null": "off",
     "unicorn/no-useless-undefined": "off",
     "unicorn/no-array-for-each": "off",
-    "unicorn/filename-case": [
-      "error",
-      {
-        cases: {
-          camelCase: true,
-          pascalCase: true,
-        },
-        ignore: ["^react_application.tsx"],
-      },
-    ],
+    "unicorn/filename-case": "off",
     "unicorn/prevent-abbreviations": "off",
     "import/order": "off",
     "@typescript-eslint/no-empty-function": "off",
@@ -190,7 +181,7 @@ module.exports = {
   settings: {
     react: {
       // Must be updated when package.json react version is bumped
-      version: "16.9.0",
+      version: "17.0.2",
     },
     "import/resolver": {
       node: {

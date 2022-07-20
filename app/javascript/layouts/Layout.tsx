@@ -23,6 +23,7 @@ import {
   getLocalizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
+import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -159,6 +160,7 @@ const Layout = (props: LayoutProps) => {
           homeURL={"/"}
           dropdownItemClassName={"text-xs"}
           menuItemClassName={"pb-4 pt-1 flex items-end"}
+          languageNavLabel={t("languages.choose")}
           languages={getLanguageItems()}
           logoSrc={getAssetPath("DAHLIA-logo.svg")}
           notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
@@ -172,7 +174,7 @@ const Layout = (props: LayoutProps) => {
         />
 
         <main data-testid="main-content-test-id" id="main-content">
-          {props.children}
+          <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
         </main>
       </div>
 

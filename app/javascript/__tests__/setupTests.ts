@@ -1,5 +1,6 @@
+/* eslint-disable jest/no-standalone-expect */
 import "@testing-library/jest-dom/extend-expect"
-
+import axios from "axios"
 import { cleanup } from "@testing-library/react"
 import { configure } from "enzyme"
 import Adapter from "enzyme-adapter-react-16"
@@ -8,7 +9,25 @@ import { LanguagePrefix, loadTranslations } from "../util/languageUtil"
 
 configure({ adapter: new Adapter() })
 
-afterEach(cleanup)
+const spies = {
+  delete: jest.spyOn(axios, "delete"),
+  get: jest.spyOn(axios, "get"),
+  post: jest.spyOn(axios, "post"),
+  put: jest.spyOn(axios, "put"),
+}
+
+beforeEach(() => {
+  jest.resetAllMocks()
+})
+
+// fail test if api call has not been mocked up
+afterEach(() => {
+  cleanup()
+  expect(spies.delete).not.toHaveBeenCalled()
+  expect(spies.get).not.toHaveBeenCalled()
+  expect(spies.post).not.toHaveBeenCalled()
+  expect(spies.put).not.toHaveBeenCalled()
+})
 
 // see: https://jestjs.io/docs/en/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 window.matchMedia = jest.fn().mockImplementation((query) => ({

@@ -258,6 +258,9 @@ ListingUnitService = ($translate, $http, $q, ListingConstantsService, ListingIde
   Service.groupSpecialUnits = (units, type) ->
     grouped = _.groupBy units, type
     delete grouped['undefined']
+
+    # 'Adaptable' is a new picklist value introduced by the data migration at the Unit level, but should be ignored by webapp
+    delete grouped['Adaptable']
     grouped
 
   Service.getListingUnits = (listing, forceRecache = false) ->

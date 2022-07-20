@@ -25,7 +25,7 @@ p
       br
       = val
 
-- if @listing.Office_Hours || true
+- if @listing.Office_Hours
   p
     = t 'emailer.submission_confirmation.office_hours'
     | :
@@ -33,5 +33,5 @@ p
 
 p
   => t 'emailer.submission_confirmation.how_are_we_doing'
-  = link_to t('emailer.submission_confirmation.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
+  = link_to t('emailer.submission_confirmation.we_would_like_your_feedback'), 'https://airtable.com/shrw64DubWTQfRkdo'
   | .

@@ -452,9 +452,10 @@
       "address": "Please enter an address",
       "address_validation": {
         "not_found": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.<br><br>If the address you entered is correct, <a href={{mailInfo}} target=\"_blank\">email us at lotteryappeals@sfgov.org</a> for help.",
-        "not_found_subject": "Unable to enter my address in DAHLIA application",
-        "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}"
+        "not_found_body": "Dear MOHCD,\n\nI am unable to complete my application for {{listing_name}}. My address is {{home_address}} and the form is telling me there is an error. Please advise me on what to do next.\n\nThank you,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
+        "not_found_subject": "Unable to enter my address in DAHLIA application"
       },
+      "address_validation_duplicate_unit": "If you have an apartment or unit number, only enter it in the Apt or Unit # box.",
       "address_validation_po_box": "We need the address where you currently live. PO Boxes are not allowed.",
       "alert": {
         "bad_request": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
@@ -490,7 +491,7 @@
       "last_name": "Please enter a Last Name",
       "lottery_ranking_search": "We seem to be having a connection issue. Please try your search again.",
       "not_eligible": "Unfortunately it appears you do not qualify for this listing.",
-      "not_eligible_description": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
+      "not_eligible_description": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future as more properties become available.",
       "password": "Please enter a valid password",
       "password_confirmation": "Password confirmation does not match",
       "password_update": "Error updating your password. Please try again or contact us.",
@@ -581,7 +582,6 @@
       "alternate_contact_agency": "Where does your case manager or housing counselor work?",
       "alternate_contact_name": "Name of alternate contact",
       "applicant_additional_phone": "I have an additional phone number",
-      "applicant_disability": "Are you a person with a disability?",
       "applicant_email": "Your email address",
       "applicant_gender": "What is your gender?",
       "applicant_gender_subtitle": "Select one that best describes your current gender identity.",
@@ -739,7 +739,6 @@
       },
       "primary_user": "Primary Applicant",
       "proof": {
-        "ca_license": "CA ID or Driver's License",
         "cable_bill": "Cable and internet bill",
         "cancelled_check": "Cancelled check",
         "debit_from_bank": "Debit from your bank account",
@@ -1210,10 +1209,10 @@
     "preferences": {
       "alice_griffith": {
         "address": "Alice Griffith Address",
-          "address_desc": "Your address at Alice Griffith Housing Development",
-          "desc": "For households in which at least one member was a resident of the Alice Griffith housing development.",
-          "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development:",
-          "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address",
+        "address_desc": "Your address at Alice Griffith Housing Development",
+        "desc": "For households in which at least one member was a resident of the Alice Griffith housing development.",
+        "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development:",
+        "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address",
         "title": "Alice Griffith Housing Development Resident Preference"
       },
       "rtr_sunnydale": {

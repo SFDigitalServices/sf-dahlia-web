@@ -30,7 +30,7 @@ Before you install DAHLIA, your system should have the following:
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.9 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 14.7.0
+- [Node.js](https://nodejs.org/en/) 14.19.3
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
@@ -72,6 +72,7 @@ To run E2E tests:
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
 - On another tab, run `yarn protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
+- If you get errors starting selenium, make sure you have [java](https://java.com/en/download/) installed
 
 Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
@@ -106,7 +107,6 @@ In order to test caching locally,
 
 To run stress testing against the Salesforce instance, refer to the documentation in the [stress testing folder](load_testing/load_testing.md)
 
-
 ## Releases
 
 Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2775351453/Frontend+release+process) page on Confluence for the full release guide.
@@ -124,6 +124,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
+- LISTING_DETAIL_PAGE_REACT='true'
 
 ### React env variables
 

@@ -21,7 +21,7 @@ gem 'coffee-rails'
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-gem 'puma', '~> 4.3.9'
+gem 'puma', '~> 4.3.12'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
@@ -87,7 +87,7 @@ gem 'prerender_rails', '~> 1.6.0'
 # http requests made easy
 gem 'http', '~> 2.0.2', require: false
 
-gem 'sidekiq', '~> 5.0.2'
+gem 'sidekiq', '~> 5.2.10'
 
 gem 'hashdiff', '~> 0.3.0'
 

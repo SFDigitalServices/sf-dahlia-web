@@ -38,10 +38,11 @@ public/assets/
 public/packs
 public/packs-test
 
-# VS Code
+# IDE
 TAGS
 .vscode/*
 !.vscode-default/*
+.idea/*
 
 # Byebug command history
 .byebug_history
@@ -52,3 +53,6 @@ yarn-debug.log*
 .yarn-integrity
 
 .DS_Store
+
+# Test output
+app/javascript/test-coverage

@@ -1,14 +1,12 @@
 import BaseRailsUnitSummary from "./BaseRailsUnitSummary"
 
 type RailsRentalUnitSummary = BaseRailsUnitSummary & {
-  minRentalMinIncome: number
-  minPercentIncome?: number
-  maxRentalMinIncome: number
-  maxPercentIncome?: number
-  maxMonthlyRent: number
-  minMonthlyRent: number
-  absoluteMinIncome: number
-  absoluteMaxIncome: number
+  maxHoaDuesWithParking?: number
+  maxHoaDuesWithoutParking?: number
+  maxPriceWithParking?: number
+  maxPriceWithoutParking?: number
+  minHoaDuesWithParking?: number
+  minHoaDuesWithoutParking?: number
 }
 
 export default RailsRentalUnitSummary

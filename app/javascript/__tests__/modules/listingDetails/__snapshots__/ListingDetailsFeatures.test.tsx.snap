@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsFeatures displays listing details features section 1`] = `
+<li
+  className="responsive-content-item "
+>
+  <header
+    className="detail-header"
+  >
+    <img
+      alt="Image Alt"
+      className="detail-header__image "
+      src="listing-features.svg"
+    />
+    <hgroup
+      className="detail-header__hgroup"
+    >
+      <h2
+        className="detail-header__title"
+      >
+        Features
+      </h2>
+      <span
+        className="detail-header__subtitle"
+      >
+        Amenities, unit details and additional fees
+      </span>
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+          />
+        </svg>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    className="listing-detail-panel"
+  >
+    <dl
+      className="column-definition-list"
+    >
+      <dd
+        className="description__title"
+      >
+        Neighborhood
+      </dd>
+      <dt
+        className="description__body"
+      >
+        Hayes Valley
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Built
+      </dd>
+      <dt
+        className="description__body"
+      >
+        2009
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Parking
+      </dd>
+      <dt
+        className="description__body"
+      />
+      <dd
+        className="description__title"
+      >
+        Smoking Policy
+      </dd>
+      <dt
+        className="description__body"
+      >
+        Non-smoking building
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Pets Policy
+      </dd>
+      <dt
+        className="description__body"
+      >
+        Dogs are not allowed in the building.
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Property Amenities
+      </dd>
+      <dt
+        className="description__body"
+      >
+        Laundry room, underground parking, courtyard, bike room
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Accessibility
+      </dd>
+      <dt
+        className="description__body"
+      >
+        Elevator to all floors
+      </dt>
+      <dd
+        className="description__title"
+      >
+        Unit Features
+      </dd>
+      <dt
+        className="description__body"
+      >
+        
+      </dt>
+    </dl>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <p
+        className="info-card__title mb-2"
+      >
+        Additional Fees
+      </p>
+      <div
+        className="info-card__columns text-sm"
+      >
+        <div
+          className="info-card__column-2 null"
+        >
+          <div
+            className="text-base"
+          >
+            Deposit
+          </div>
+          <div
+            className="text-xl font-bold"
+          >
+            $2,102 - $2,355
+          </div>
+          <div>
+            or one month's rent
+          </div>
+          <div>
+            May be higher for lower credit scores
+          </div>
+        </div>
+      </div>
+      <div
+        className="info-card__columns text-sm"
+      >
+        <div
+          className="info-card__column-2"
+        >
+          Tenants pay for gas, electricity.
+
+For pet fees:  Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum.  
+
+Dogs are not allowed in the building.  
+
+One parking space per unit available for $175 a month.
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+`;
