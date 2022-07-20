@@ -17,7 +17,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
           sectionHeader={true}
           events={listing.Information_Sessions?.map((informationSession) => {
             return {
-              dateString: localizedFormat(informationSession.Date, "LL"),
+              dateString: informationSession.Date && localizedFormat(informationSession.Date, "LL"),
               timeString: getEventTimeString(informationSession),
               note: getEventNote(informationSession),
             }
