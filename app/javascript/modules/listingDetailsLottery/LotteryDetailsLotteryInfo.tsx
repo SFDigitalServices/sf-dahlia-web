@@ -15,19 +15,25 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
 
   return (
     <>
-      <SidebarBlock title={t("label.lottery")}>
-        <p className="flex justify-between mb-4">
-          <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
-          <span className="font-bold">{localizedFormat(listing.Lottery_Date, "LT")}</span>
-        </p>
-        {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
-        {process.env.COVID_UPDATE !== "true" && <p className="mt-4">{t("label.preLotteryInfo")}</p>}
-      </SidebarBlock>
+      <div className="border-b border-gray-400 md:border-b-0">
+        <SidebarBlock title={t("label.lottery")}>
+          <p className="flex justify-between mb-4">
+            <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
+            <span className="font-bold">{localizedFormat(listing.Lottery_Date, "LT")}</span>
+          </p>
+          {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
+          {process.env.COVID_UPDATE !== "true" && (
+            <p className="mt-4">{t("label.preLotteryInfo")}</p>
+          )}
+        </SidebarBlock>
+      </div>
 
-      <SidebarBlock title={t("lottery.lotteryResults")}>
-        <p className="mb-4">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
-        <p>{t("lottery.completeResultsWillBePosted")}</p>
-      </SidebarBlock>
+      <div className="border-b border-gray-400 md:border-b-0">
+        <SidebarBlock title={t("lottery.lotteryResults")}>
+          <p className="mb-4">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
+          <p>{t("lottery.completeResultsWillBePosted")}</p>
+        </SidebarBlock>
+      </div>
     </>
   )
 }
