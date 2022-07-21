@@ -19,17 +19,13 @@ export const TextTruncate = ({ text }: TextTruncateProps) => {
   truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true })
   const truncatedText = renderInlineWithInnerHTML(stripMostTags(truncate(text)))
   const untruncatedText = renderInlineWithInnerHTML(stripMostTags(text))
-  const linkStyles = ["button-toggle"]
-  if (!isExpanded) {
-    linkStyles.push("mx-1")
-  }
 
   return (
     <div className="text-sm">
       {isExpanded ? untruncatedText : truncatedText}
       {truncate(text)?.length !== text?.length && (
         <span
-          className={linkStyles.join(" ")}
+          className="button-toggle ml-1"
           onClick={() => setIsExpanded(!isExpanded)}
           onKeyPress={() => setIsExpanded(!isExpanded)}
           role="button"
