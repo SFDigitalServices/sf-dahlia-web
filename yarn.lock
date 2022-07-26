@@ -1205,10 +1205,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@5.0.1-alpha.4":
-  version "5.0.1-alpha.4"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.0.1-alpha.4.tgz#c80421011853a6e898d49922e474d9a28ac198be"
-  integrity sha512-ePXlsbWaCxGMXjI23NwzNRw4jSXRu/BXU8dLZB3x+IazGHrIxVCsFD53DTe7sR2J+ABNtDwiamrkJQSoqsyw0Q==
+"@bloom-housing/ui-components@5.0.1-alpha.25":
+  version "5.0.1-alpha.25"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.0.1-alpha.25.tgz#b4f53f9d2aaf5fbdb0641d15792f412f17e389af"
+  integrity sha512-FrNVKHAsoBsfFsYVJZJ/vnMVNF3OBFrxTsfoiYhrQGVonIa8B3a+G24/zOrF3Oe0Z0R+TpxWLIpZvDQI13muuQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1227,9 +1227,11 @@
     "@types/react-transition-group" "^4.4.0"
     ag-grid-community "^26.0.0"
     ag-grid-react "^26.0.0"
+    aria-autocomplete "^1.4.0"
     axios "0.21.2"
     body-scroll-lock "^3.1.5"
     dayjs "^1.10.7"
+    dompurify "^2.3.10"
     jwt-decode "^2.2.0"
     markdown-to-jsx "^6.11.4"
     nanoid "^3.1.12"
@@ -2712,6 +2714,16 @@ argparse@^1.0.7:
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   dependencies:
     sprintf-js "~1.0.2"
+
+aria-autocomplete@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/aria-autocomplete/-/aria-autocomplete-1.4.0.tgz#01436813bb8b47d6c004d32cfb4ce538ab024ebe"
+  integrity sha512-YEkq5YolRYjzzVrOz43HuV2N9jDpUHGClDkmazTlKNCRdioxwAusZuXRFN/xnzFQMSQ++Cc08UEn43LWvcQ0pA==
+  dependencies:
+    element-addclass "^1.0.2"
+    element-removeclass "^1.0.1"
+    input-autowidth "^1.0.3"
+    is-printable-keycode "^1.0.3"
 
 aria-query@^4.2.2:
   version "4.2.2"
@@ -5182,6 +5194,11 @@ domhandler@^4.0.0:
   dependencies:
     domelementtype "^2.1.0"
 
+dompurify@^2.3.10:
+  version "2.3.10"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.10.tgz#901f7390ffe16a91a5a556b94043314cd4850385"
+  integrity sha512-o7Fg/AgC7p/XpKjf/+RC3Ok6k4St5F7Q6q6+Nnm3p2zGWioAY6dh0CbbuwOhH2UcSzKsdniE/YnE2/92JcsA+g==
+
 domutils@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"
@@ -5269,6 +5286,16 @@ electron-to-chromium@^1.3.649:
   version "1.3.670"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.670.tgz"
   integrity sha512-iiHQa72+3wbkPR0O8InsNbRwKcV6gBEKiUqPaJ4+TOwQkJQY4ku1sBNC+0ZSfANQ0nqr0SyRO3/Qr6S7Lct/IA==
+
+element-addclass@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/element-addclass/-/element-addclass-1.0.2.tgz#e91585ada601aa1f7409ef6eacee809fab91d0d3"
+  integrity sha512-Rx2ZofOL/oLGzHXXpmPTgRLCI/VYb2QK41RVUrqQPXo4jHj/soLEtClut44CCjgPdkMxDAU1pYkOOnoOhawugg==
+
+element-removeclass@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/element-removeclass/-/element-removeclass-1.0.1.tgz#b204851927b0c80df9857cda27e256fa0eea0a4c"
+  integrity sha512-fpH8Nxs+ygSwgrSQwC8a1LEO2kPuPKischcri5WRR+7w6StPSVMwfd0og7d/t5LZYK2E8u2btaD4Dq6Ozf/iDQ==
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -7669,6 +7696,13 @@ ini@^1.3.4, ini@^1.3.5:
   resolved "https://registry.npmjs.org/ini/-/ini-1.3.8.tgz"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
+input-autowidth@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/input-autowidth/-/input-autowidth-1.0.3.tgz#8703c6cbb7b5b52a5197e4b5dcd4d6f53fdde23b"
+  integrity sha512-FWVUJsfTnlR6lSXWjV5SS7fSdAKGTbOfwmdNUgW06U8So+09nMtsDyicpn23B/XvYIy/7RvdNrd8xmAGw1xusQ==
+  dependencies:
+    is-printable-keycode "^1.0.3"
+
 internal-ip@^4.3.0:
   version "4.3.0"
   resolved "https://registry.npmjs.org/internal-ip/-/internal-ip-4.3.0.tgz"
@@ -8079,6 +8113,11 @@ is-potential-custom-element-name@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/is-potential-custom-element-name/-/is-potential-custom-element-name-1.0.0.tgz"
   integrity sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
+
+is-printable-keycode@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/is-printable-keycode/-/is-printable-keycode-1.0.3.tgz#d5cc54bb04758bf2d7a34612d5241bc5fbc4cc37"
+  integrity sha512-AlV2FGBdbfOUqLyCEjsW1PZVcptIpttgnMW7pPYYXt9UuoDIi3IiuAiVPso/mBVThOtiMj1/BlUvMV8WS1hvLg==
 
 is-regex@^1.0.4, is-regex@^1.0.5, is-regex@^1.1.0, is-regex@^1.1.1, is-regex@^1.1.2:
   version "1.1.2"
