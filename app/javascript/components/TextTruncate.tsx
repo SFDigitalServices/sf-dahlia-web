@@ -25,7 +25,7 @@ export const TextTruncate = ({ text }: TextTruncateProps) => {
       {isExpanded ? untruncatedText : truncatedText}
       {truncate(text)?.length !== text?.length && (
         <span
-          className="button-toggle"
+          className="button-toggle ml-1"
           onClick={() => setIsExpanded(!isExpanded)}
           onKeyPress={() => setIsExpanded(!isExpanded)}
           role="button"
