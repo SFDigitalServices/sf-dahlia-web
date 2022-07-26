@@ -5,6 +5,7 @@ import {
   isOpen,
   isRental,
   isSale,
+  getEventTimeString,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
@@ -74,6 +75,24 @@ describe("listingUtil", () => {
 
     it("should return true when listing is a habitat listing", () => {
       expect(isHabitatListing(habitatListing)).toBe(true)
+    })
+  })
+
+  describe("getEventTimeString", () => {
+    it("should return 5:00PM - 7:00PM when event has start and end time", () => {
+      expect(getEventTimeString(lotteryCompleteRentalListing.Open_Houses[0])).toBe(
+        "5:00PM - 7:00PM"
+      )
+    })
+
+    it("should return only start time with no end time", () => {
+      const event = { ...lotteryCompleteRentalListing.Open_Houses[0], End_Time: "" }
+      expect(getEventTimeString(event)).toBe("5:00PM")
+    })
+
+    it("should return empty string with no date", () => {
+      const event = { ...lotteryCompleteRentalListing.Open_Houses[0], Start_Time: "" }
+      expect(getEventTimeString(event)).toBe("")
     })
   })
 })

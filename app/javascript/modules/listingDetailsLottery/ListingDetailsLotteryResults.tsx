@@ -14,6 +14,7 @@ import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryR
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsLotteryResultsProps {
   listing: RailsListing
@@ -33,8 +34,8 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
 
   return (
     isLotteryComplete(listing) && (
-      <div className="border-b pt-4 text-center">
-        <ErrorBoundary boundaryScope={BoundaryScope.component}>
+      <ErrorBoundary boundaryScope={BoundaryScope.component}>
+        <div className="border-b pt-4 text-center">
           <Heading className="mb-4" priority={4}>
             {t("lottery.lotteryResults")}
           </Heading>
@@ -74,8 +75,9 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
               />
             </Modal>
           )}
-        </ErrorBoundary>
-      </div>
+        </div>
+        <OpenHouses listing={listing} />
+      </ErrorBoundary>
     )
   )
 }
