@@ -21,9 +21,11 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
             <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
             <span className="font-bold">{localizedFormat(listing.Lottery_Date, "LT")}</span>
           </p>
-          {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
+          <div className="text-gray-700">
+            {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
+          </div>
           {process.env.COVID_UPDATE !== "true" && (
-            <p className="mt-4">{t("label.preLotteryInfo")}</p>
+            <p className="mt-4 text-gray-700">{t("label.preLotteryInfo")}</p>
           )}
         </SidebarBlock>
       </div>
@@ -31,7 +33,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
       <div className="border-b border-gray-400 md:border-b-0">
         <SidebarBlock title={t("lottery.lotteryResults")}>
           <p className="mb-4">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
-          <p>{t("lottery.completeResultsWillBePosted")}</p>
+          <p className="text-gray-700">{t("lottery.completeResultsWillBePosted")}</p>
         </SidebarBlock>
       </div>
     </>

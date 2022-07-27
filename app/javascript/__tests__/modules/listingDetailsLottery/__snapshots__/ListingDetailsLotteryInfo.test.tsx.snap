@@ -29,14 +29,18 @@ Array [
           </span>
         </p>
         <div
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "<p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style=\\"font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;\\"> </span></p><p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>",
+          className="text-gray-700"
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style=\\"font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;\\"> </span></p><p><span style=\\"font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;\\">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>",
+              }
             }
-          }
-        />
+          />
+        </div>
         <p
-          className="mt-4"
+          className="mt-4 text-gray-700"
         >
           An open lottery will be held to draw numbers to determine selection. Attendance is optional.
         </p>
@@ -62,7 +66,9 @@ Array [
         >
           March 23, 2023
         </p>
-        <p>
+        <p
+          className="text-gray-700"
+        >
           Complete lottery results will be posted on this date by 5pm.
         </p>
       </div>
