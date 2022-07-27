@@ -89,8 +89,8 @@ export const ListingDetailsEligibility = ({
               <li>
                 <span>
                   {renderInlineWithInnerHTML(t("listings.incomeExceptions.nontaxable"))}.{" "}
+                  {t("listings.incomeExceptions.nontaxableTooltip")}
                 </span>
-                <span>{t("listings.incomeExceptions.nontaxableTooltip")}</span>
               </li>
             </ul>
           </div>
