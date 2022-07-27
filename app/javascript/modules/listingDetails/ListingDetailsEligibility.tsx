@@ -31,23 +31,23 @@ export const ListingDetailsEligibility = ({
   const HMITableData = [
     {
       householdSize: { content: `1 ${t("listings.person")}` },
-      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
-      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `2 ${t("t..people")}` },
-      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
-      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+      householdSize: { content: `2 ${t("listings.people")}` },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
       householdSize: { content: `3 ${t("listings.people")}` },
-      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
-      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
       householdSize: { content: `4 ${t("listings.people")}` },
-      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
-      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
   ]
 
@@ -57,7 +57,7 @@ export const ListingDetailsEligibility = ({
   }
   const occupancyTableData = listing.unitSummaries.general.map((unit) => ({
     unitType: { content: t(`listings.unitTypes.${unit.unitType}`) },
-    occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ` + t("listings.people") },
+    occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
   }))
   return (
     <ListingDetailItem
