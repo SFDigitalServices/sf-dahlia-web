@@ -1,0 +1,370 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryInfo displays listing details eligibility section 1`] = `
+<li
+  className="responsive-content-item bg-primary-lighter"
+>
+  <header
+    className="detail-header"
+  >
+    <img
+      alt=""
+      className="detail-header__image "
+      src="listing-eligibility.svg"
+    />
+    <hgroup
+      className="detail-header__hgroup"
+    >
+      <h2
+        className="detail-header__title"
+      >
+        Eligibility
+      </h2>
+      <span
+        className="detail-header__subtitle"
+      >
+        Income, occupancy, preferences, and subsidies
+      </span>
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+          />
+        </svg>
+      </span>
+    </hgroup>
+  </header>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h4
+          className="custom-counter__title"
+        >
+          Household Maximum Income
+        </h4>
+        <span
+          className="custom-counter__subtitle"
+        >
+          <div>
+            <p>
+              <span
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "For income calculations, household size includes everyone (all ages) living in the unit.",
+                  }
+                }
+              />
+            </p>
+            <br />
+            <p>
+              <span
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "People in your household may need <a href='%{url}' target='_blank'>special income calculations</a> if they:",
+                  }
+                }
+              />
+            </p>
+            <br />
+            <ul>
+              <li>
+                <span
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "Are full-time students (but not the primary applicant)",
+                    }
+                  }
+                />
+              </li>
+              <li>
+                <span>
+                  <span
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Receive <span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
+                      }
+                    }
+                  />
+                  .
+                   
+                </span>
+                <span>
+                  Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.
+                </span>
+              </li>
+            </ul>
+          </div>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      style={
+        Object {
+          "overflowX": "auto",
+        }
+      }
+    >
+      <table
+        className="w-full text-sm"
+      >
+        <thead>
+          <tr>
+            <th
+              className=""
+            >
+              household size
+            </th>
+            <th
+              className=""
+            >
+              maximum income per month
+            </th>
+            <th
+              className=""
+            >
+              maximum income per year
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </li>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h4
+          className="custom-counter__title"
+        >
+          Occupancy
+        </h4>
+        <span
+          className="custom-counter__subtitle"
+        >
+          Occupancy limits for this building differ from household size, and do not include children under 6.
+        </span>
+      </hgroup>
+    </header>
+    <div
+      style={
+        Object {
+          "overflowX": "auto",
+        }
+      }
+    >
+      <table
+        className="w-full text-sm"
+      >
+        <thead>
+          <tr>
+            <th
+              className=""
+            >
+              Unit Type
+            </th>
+            <th
+              className=""
+            >
+              Occupancy
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </li>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h4
+          className="custom-counter__title"
+        >
+          Lottery Preferences
+        </h4>
+        <span
+          className="custom-counter__subtitle"
+        >
+          Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+        </span>
+      </hgroup>
+    </header>
+    <div
+      className="flex justify-center"
+    >
+      <span
+        className="ui-icon ui-large spinner-animation"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 100 100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="none"
+            r="32"
+            stroke="currentColor"
+            strokeDasharray="150.79644737231007 52.26548245743669"
+            strokeWidth="9"
+          />
+        </svg>
+      </span>
+    </div>
+  </li>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h4
+          className="custom-counter__title"
+        >
+          Rental Assistance
+        </h4>
+        <span
+          className="custom-counter__subtitle"
+        >
+          Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+        </span>
+      </hgroup>
+    </header>
+  </li>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h4
+          className="custom-counter__title"
+        >
+          Additional Eligibility Rules
+        </h4>
+        <span
+          className="custom-counter__subtitle"
+        >
+          Applicants must also qualify under the rules of the building.
+        </span>
+      </hgroup>
+    </header>
+    <div
+      className="info-card"
+    >
+      <div
+        className="info-card__header"
+      >
+        <h3
+          className="info-card__title"
+        >
+          Credit History
+        </h3>
+      </div>
+      <div
+        className="expandable-text text-sm text-gray-700"
+      >
+        <div>
+          <p>
+            Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+          </p>
+          <p>
+            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+          </p>
+          <p>
+            Collection accounts...
+          </p>
+        </div>
+        <span
+          className="button-toggle"
+          onClick={[Function]}
+        >
+          t.more
+        </span>
+      </div>
+    </div>
+    <div
+      className="info-card"
+    >
+      <div
+        className="info-card__header"
+      >
+        <h3
+          className="info-card__title"
+        >
+          Rental History
+        </h3>
+      </div>
+      <div
+        className="expandable-text text-sm text-gray-700"
+      >
+        <div>
+          <p>
+            Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+          </p>
+          <p>
+            Previous rental history will be reviewed and must exhibit no derogatory references. 
+          </p>
+          <p>
+            Landlord references will only check for...
+          </p>
+        </div>
+        <span
+          className="button-toggle"
+          onClick={[Function]}
+        >
+          t.more
+        </span>
+      </div>
+    </div>
+    <div
+      className="info-card"
+    >
+      <div
+        className="info-card__header"
+      >
+        <h3
+          className="info-card__title"
+        >
+          Criminal Background
+        </h3>
+      </div>
+      <div
+        className="expandable-text text-sm text-gray-700"
+      >
+        <span>
+          Qualified applicants with criminal history will be considered for housing in compliance with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
+        </span>
+      </div>
+    </div>
+    <p>
+      <a
+        href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
+        target="_blank"
+      >
+        Find out more about Building Selection Criteria
+      </a>
+    </p>
+  </li>
+</li>
+`;

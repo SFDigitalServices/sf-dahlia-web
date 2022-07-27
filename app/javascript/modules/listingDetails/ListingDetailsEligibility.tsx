@@ -30,9 +30,24 @@ export const ListingDetailsEligibility = ({
   }
   const HMITableData = [
     {
-      householdSize: { content: "1 person" },
-      maxIncomeMonth: { content: "$1,111 per month" },
-      maxIncomeYear: { content: "$51,111 per year" },
+      householdSize: { content: `1 ${t("listings.person")}` },
+      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
+      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+    },
+    {
+      householdSize: { content: `2 ${t("t..people")}` },
+      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
+      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+    },
+    {
+      householdSize: { content: `3 ${t("listings.people")}` },
+      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
+      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
+    },
+    {
+      householdSize: { content: `4 ${t("listings.people")}` },
+      maxIncomeMonth: { content: `$1,111 ${t("t.perMonth")}` },
+      maxIncomeYear: { content: `$51,111 ${t("t.perYear")}` },
     },
   ]
 
@@ -64,11 +79,11 @@ export const ListingDetailsEligibility = ({
       <ListSection
         title={t("listings.householdMaximumIncome")}
         subtitle={
-          <span>
-            <p>{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
-            <br />
-            <p>{renderInlineWithInnerHTML(t("listings.incomeExceptions.intro"))}</p>
-            <br />
+          <div>
+            <p className="mb-4">{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
+            <p className="mb-4">
+              {renderInlineWithInnerHTML(t("listings.incomeExceptions.intro"))}
+            </p>
             <ul>
               <li>{renderInlineWithInnerHTML(t("listings.incomeExceptions.students"))}</li>
               <li>
@@ -78,7 +93,7 @@ export const ListingDetailsEligibility = ({
                 <span>{t("listings.incomeExceptions.nontaxableTooltip")}</span>
               </li>
             </ul>
-          </span>
+          </div>
         }
       >
         <StandardTable headers={HMITableHeaders} data={HMITableData} />
