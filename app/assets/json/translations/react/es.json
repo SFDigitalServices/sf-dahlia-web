@@ -481,7 +481,7 @@
   "label.doneAddingPeople": "Ya he agregado a todas las personas",
   "label.doneWithThisAddress": "Ya he finalizado con esta dirección",
   "label.dontWantPreference": "No deseo esta preferencia para el sorteo",
-  "label.downloadApplication": "Descargar solicitud en %{lang}",
+  "label.downloadApplicationLang": "Descargar solicitud en %{lang}",
   "label.editEligbility": "Modifique la elegibilidad",
   "label.editEligibility": "Modifique la elegibilidad",
   "label.edited": "Editado",

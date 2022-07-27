@@ -85,9 +85,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             iconPlacement={"right"}
             onClick={() => setPaperApplicationsOpen(!paperApplicationsOpen)}
           >
-            {t("label.downloadApplication", {
-              lang: "",
-            })}
+            {t("label.downloadApplication")}
           </Button>
           {paperApplicationsOpen && acceptingPaperApplications && (
             <div className={"flex w-full items-center justify-center flex-col"}>
@@ -137,9 +135,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         {t("listings.apply.applicationsMustBeReceivedByDeadline")}
       </SidebarBlock>
       <SidebarBlock className={"bg-blue-200"}>
-        {`${t("listings.apply.doNotApplyOnlineAndPaper")} ${t(
-          "listings.apply.doNotDoMultipleApplications"
-        )}`}
+        {t("listings.doNotApplyOneAndPaperOrMultiple")}
       </SidebarBlock>
     </>
   )

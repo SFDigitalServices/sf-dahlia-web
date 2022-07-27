@@ -481,7 +481,7 @@
   "label.doneAddingPeople": "Tapos na ang pagdaragdag ng mga tao",
   "label.doneWithThisAddress": "Tapos na sa address na ito",
   "label.dontWantPreference": "Hindi ko gusto ang preperensiyang ito para sa lottery",
-  "label.downloadApplication": "I-download ang %{lang} na Aplikasyon ",
+  "label.downloadApplicationLang": "I-download ang %{lang} na Aplikasyon ",
   "label.editEligbility": "I-edit ang Pagiging Kuwalipikado",
   "label.editEligibility": "I-edit ang Pagiging Kuwalipikado",
   "label.edited": "Na-edit na",
