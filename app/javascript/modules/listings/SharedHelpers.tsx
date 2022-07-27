@@ -1,4 +1,5 @@
 import React from "react"
+import Markdown from "markdown-to-jsx"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import { areLotteryResultsShareable } from "../../util/listingUtil"
 import { getReservedCommunityType, localizedFormat } from "../../util/languageUtil"
@@ -76,7 +77,7 @@ export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
 export const getEventNote = (listingEvent: ListingEvent) => {
   return (
     <div className="flex flex-col">
-      {listingEvent.Venue && <span>{listingEvent.Venue}</span>}
+      {listingEvent.Venue && <Markdown>{listingEvent.Venue}</Markdown>}
       {listingEvent.Street_Address && listingEvent.City && (
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
       )}
