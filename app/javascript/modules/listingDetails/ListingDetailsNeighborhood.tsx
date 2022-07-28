@@ -16,8 +16,13 @@ export const ListingDetailsNeighborhood = ({
   listing,
 }: ListingDetailsEligibilityProps) => {
   const { getAssetPath } = useContext(ConfigContext)
-  const lang = getCurrentLanguage(window.location.pathname)
   const listingAddress = getListingAddressString(listing)
+
+  if (!listingAddress) {
+    return null
+  }
+
+  const lang = getCurrentLanguage(window.location.pathname)
   const iframeUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_PLACES_KEY}&q=${listingAddress}&language=${lang}`
 
   return (

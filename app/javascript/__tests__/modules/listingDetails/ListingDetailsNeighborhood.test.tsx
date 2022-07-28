@@ -1,7 +1,7 @@
 import React from "react"
 import renderer from "react-test-renderer"
 import { ListingDetailsNeighborhood } from "../../../modules/listingDetails/ListingDetailsNeighborhood"
-import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
+import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 
 describe("ListingDetailsNeighborhood", () => {
   it("displays map", () => {
@@ -20,7 +20,9 @@ describe("ListingDetailsNeighborhood", () => {
     })
 
     const tree = renderer
-      .create(<ListingDetailsNeighborhood imageSrc={"test"} listing={closedRentalListing} />)
+      .create(
+        <ListingDetailsNeighborhood imageSrc={"test"} listing={lotteryCompleteRentalListing} />
+      )
       .toJSON()
 
     expect(tree).toMatchSnapshot()
