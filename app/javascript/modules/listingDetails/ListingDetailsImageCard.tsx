@@ -4,7 +4,7 @@ import { getReservedCommunityType } from "../../util/languageUtil"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
 import { getListingAddressString } from "../../util/listingUtil"
-import ConfigContext from "../../lib/ConfigContext"
+import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 

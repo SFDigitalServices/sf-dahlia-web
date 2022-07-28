@@ -4,6 +4,7 @@ import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
+import { LANGUAGE_CONFIGS } from "./languageUtil"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -81,4 +82,54 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
       : listingEvent.Start_Time
   }
   return ""
+}
+
+/**
+ * Check if a listing is accepting paper applications
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is accepting paper applications, false otherwise
+ */
+export const acceptingPaperApplications = (listing: RailsListing): boolean => {
+  return listing.Accepting_applications_at_leasing_agent || listing.Accepting_applications_by_PO_Box
+}
+
+type PaperApplication = {
+  languageString: string
+  fileURL: string
+}
+
+/**
+ * Returns an array of all the paper application URLs
+ * @param {boolean} isRental
+ * @returns {PaperApplication[]}
+ */
+export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
+  const mohcdPaperAppURLBase = "https://sfmohcd.org/sites/default/files/Documents/MOH/"
+
+  const mohcdRentalPaperAppURLTemplate =
+    mohcdPaperAppURLBase +
+    "BMR%20Rental%20Paper%20Applications/" +
+    "{lang}%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf"
+
+  const mohcdSalePaperAppURLTemplate =
+    mohcdPaperAppURLBase +
+    "BMR%20Ownership%20Paper%20Applications/" +
+    "{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf"
+
+  const paperAppLanguages = [
+    { language: "English", prefix: "en" },
+    { language: "Spanish", prefix: "es" },
+    { language: "Chinese", prefix: "zh" },
+    { language: "Tagalog", prefix: "tl" },
+  ]
+
+  const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
+  return paperAppLanguages.map(
+    (lang): PaperApplication => {
+      return {
+        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+        fileURL: urlBase.replace("{lang}", lang.language),
+      }
+    }
+  )
 }

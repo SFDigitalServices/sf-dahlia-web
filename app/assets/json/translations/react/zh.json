@@ -482,7 +482,7 @@
   "label.doneAddingPeople": "人員新增完成",
   "label.doneWithThisAddress": "此地址已填寫完成",
   "label.dontWantPreference": "我不想要此抽籤優先權利",
-  "label.downloadApplication": "下載%{lang}申請",
+  "label.downloadApplicationLang": "下載%{lang}申請",
   "label.editEligbility": "編輯資格",
   "label.editEligibility": "編輯資格",
   "label.edited": "已編輯",
