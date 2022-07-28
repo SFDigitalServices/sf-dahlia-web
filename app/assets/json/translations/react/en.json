@@ -864,6 +864,7 @@
   "listings.neighborhood.header": "Neighborhood",
   "listings.neighborhood.locationAndTransportation": "Location and transportation",
   "listings.neighborhood.subheader": "Location and transportation",
+  "listings.neighborhood.mapTitle": "Map of %{listingAddress}",
   "listings.noAvailableUnits": "There are no available units at this time.",
   "listings.noFavorites": "It looks like you haven't favorited any listings yet.",
   "listings.noMatches": "No Matches",

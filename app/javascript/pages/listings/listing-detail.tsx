@@ -86,7 +86,10 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-features.svg")}
               />
-              <ListingDetailsNeighborhood imageSrc={getAssetPath("listing-neighborhood.svg")} />
+              <ListingDetailsNeighborhood
+                imageSrc={getAssetPath("listing-neighborhood.svg")}
+                listing={listing}
+              />
               <ListingDetailsAdditionalInformation
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
