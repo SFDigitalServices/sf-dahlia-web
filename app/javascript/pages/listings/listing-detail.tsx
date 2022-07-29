@@ -26,6 +26,7 @@ import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside
 import { isOpen } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -59,6 +60,9 @@ const ListingDetail = () => {
                 />
               </Mobile>
             )}
+            <Mobile>
+              <ListingDetailsWaitlist listing={listing} />
+            </Mobile>
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
