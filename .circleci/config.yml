@@ -184,9 +184,7 @@ jobs:
       - run: yarn install
       - run: yarn test
       - store_test_results:
-          path: reports-junit
-      - store_artifacts:
-          path: reports-junit
+          path: app/javascript/__tests__
   unit-rspec:
     <<: *defaults
     steps:
@@ -214,9 +212,7 @@ jobs:
       - start-server
       - run: yarn test:e2e
       - store_test_results:
-          path: reports-cypress
-      - store_artifacts:
-          path: reports-cypress
+          path: cypress
   e2e-legacy:
     <<: *defaults
     parallelism: 4
