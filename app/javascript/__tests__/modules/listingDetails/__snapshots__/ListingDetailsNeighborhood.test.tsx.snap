@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsNeighborhood displays map 1`] = `
+<li
+  className="responsive-content-item bg-primary-lighter"
+>
+  <header
+    className="detail-header"
+  >
+    <img
+      alt=""
+      className="detail-header__image "
+      src="test"
+    />
+    <hgroup
+      className="detail-header__hgroup"
+    >
+      <h2
+        className="detail-header__title"
+      >
+        Neighborhood
+      </h2>
+      <span
+        className="detail-header__subtitle"
+      >
+        Location and transportation
+      </span>
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+          />
+        </svg>
+      </span>
+    </hgroup>
+  </header>
+  <iframe
+    height="450"
+    src="https://www.google.com/maps/embed/v1/place?key=undefined&q=855 Brannan St, San Francisco, CA 94103&language=en"
+    title="Map of 855 Brannan St, San Francisco, CA 94103"
+    width="100%"
+  />
+  <div
+    className="flex items-center mt-2 justify-center"
+  >
+    <img
+      alt=""
+      className=" inline mx-1"
+    />
+    <a
+      href="https://www.google.com/maps/place/855%20Brannan%20St%2C%20San%20Francisco%2C%20CA%2094103&language=en"
+      target="_blank"
+    >
+      Get Directions
+    </a>
+  </div>
+</li>
+`;
