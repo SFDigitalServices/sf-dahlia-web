@@ -3,6 +3,7 @@ import { t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
 import { LOTTERY_SEARCH_FORM_STATUS } from "./ListingDetailsLotterySearchForm"
 import { RailsListing } from "../listings/SharedHelpers"
+import "./ListingDetailsLotterySearchFooter.scss"
 
 interface ListingDetailsLotterySearchFooterProps {
   lotterySearchFormStatus: LOTTERY_SEARCH_FORM_STATUS
@@ -16,7 +17,11 @@ export const ListingDetailsLotterySearchFooter = ({
   return (
     <>
       <div className="bg-gray-100 py-4 text-center">
-        <a href="http://sfmohcd.org/housing-preference-programs" target="_blank">
+        <a
+          className="lottery-results-modal-anchor"
+          href="http://sfmohcd.org/housing-preference-programs"
+          target="_blank"
+        >
           {t("lottery.readAboutPreferences")}
         </a>
       </div>
@@ -31,7 +36,11 @@ export const ListingDetailsLotterySearchFooter = ({
                   })}
                 </p>
                 <p className="py-2">
-                  <a href={listing.LotteryResultsURL} target="_blank">
+                  <a
+                    href={listing.LotteryResultsURL}
+                    target="_blank"
+                    className="lottery-results-modal-anchor"
+                  >
                     {t("lottery.lotteryResultsPdfLink")}
                   </a>
                 </p>
