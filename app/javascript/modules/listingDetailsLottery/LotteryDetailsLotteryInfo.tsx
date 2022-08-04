@@ -19,7 +19,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
         <SidebarBlock title={t("label.lottery")}>
           <p className="flex justify-between mb-4">
             <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
-            <span className="font-bold">{localizedFormat(listing.Lottery_Date, "LT")}</span>
+            <span className="font-bold">{localizedFormat(listing.Lottery_Date, "h:mm a")}</span>
           </p>
           <div className="text-gray-700">
             {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
