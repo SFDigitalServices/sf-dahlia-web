@@ -11,7 +11,7 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
       Lottery Results
     </h4>
     <p
-      class="mb-4 text-sm uppercase"
+      class="mb-4 text-sm"
     >
       January 26, 2022
     </p>
@@ -73,7 +73,7 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       Lottery Results
     </h4>
     <p
-      class="mb-4 text-sm uppercase"
+      class="mb-4 text-sm"
     >
       December 22, 2021
     </p>
