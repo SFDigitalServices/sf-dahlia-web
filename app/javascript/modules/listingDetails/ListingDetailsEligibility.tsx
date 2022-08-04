@@ -30,22 +30,30 @@ export const ListingDetailsEligibility = ({
   }
   const HMITableData = [
     {
-      householdSize: { content: `1 ${t("listings.person")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`1 ${t("listings.person")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `2 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`2 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `3 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`3 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `4 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`4 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
@@ -56,7 +64,9 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
   const occupancyTableData = listing.unitSummaries.general.map((unit) => ({
-    unitType: { content: t(`listings.unitTypes.${unit.unitType}`) },
+    unitType: {
+      content: <span className="font-semibold">{t(`listings.unitTypes.${unit.unitType}`)}</span>,
+    },
     occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
   }))
   return (
@@ -84,14 +94,9 @@ export const ListingDetailsEligibility = ({
             <p className="mb-4">
               {renderInlineWithInnerHTML(t("listings.incomeExceptions.intro"))}
             </p>
-            <ul>
-              <li>{renderInlineWithInnerHTML(t("listings.incomeExceptions.students"))}</li>
-              <li>
-                <span>
-                  {renderInlineWithInnerHTML(t("listings.incomeExceptions.nontaxable"))}.{" "}
-                  {t("listings.incomeExceptions.nontaxableTooltip")}
-                </span>
-              </li>
+            <ul className="list-disc ml-5">
+              <li>{t("listings.incomeExceptions.students")}</li>
+              <li>{t("listings.incomeExceptions.nontaxable")}</li>
             </ul>
           </div>
         }
