@@ -17,3 +17,12 @@ import "./commands"
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// eslint-disable-next-line no-undef
+Cypress.on("uncaught:exception", (err) => {
+  // TODO: remove this once we rewrite the application forms with DAH-732
+  // ignore translate function in angular causing errors
+  if (err.message.includes(" Maximum call stack size exceeded")) {
+    return false
+  }
+})

@@ -40,6 +40,7 @@
     "webpacker-react": "^0.3.2"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^14.2.0",
@@ -55,13 +56,14 @@
     "coffeelint": "^2.1.0",
     "coffeelint-forbidden-regex": "0.1.1",
     "cucumber": "^2.3.1",
-    "cypress": "^8.6.0",
+    "cypress": "10.4.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.1",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
