@@ -78,29 +78,14 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
                 }
               />
             </p>
-            <ul>
+            <ul
+              className="list-disc ml-5"
+            >
               <li>
-                <span
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Are full-time students (but not the primary applicant)",
-                    }
-                  }
-                />
+                Are full-time students (but not the primary applicant).
               </li>
               <li>
-                <span>
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "Receive <span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
-                      }
-                    }
-                  />
-                  .
-                   
-                  Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.
-                </span>
+                Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
               </li>
             </ul>
           </div>
