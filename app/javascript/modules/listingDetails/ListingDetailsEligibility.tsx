@@ -92,7 +92,11 @@ export const ListingDetailsEligibility = ({
           <div>
             <p className="mb-4">{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
             <p className="mb-4">
-              {renderInlineWithInnerHTML(t("listings.incomeExceptions.intro"))}
+              {renderInlineWithInnerHTML(
+                t("listings.incomeExceptions.intro", {
+                  url: "https://sfmohcd.org/special-calculations-household-income",
+                })
+              )}
             </p>
             <ul className="list-disc ml-5">
               <li>{t("listings.incomeExceptions.students")}</li>
