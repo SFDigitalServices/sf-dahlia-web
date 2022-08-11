@@ -1,9 +1,9 @@
-/**
- * As a San Franciscan looking for affordable housing
- * I should be able to view a sale listing and fill out a short form application
- * In order to enter the lottery for the listing
- */
 describe("Short Form Application - Sale Listing", () => {
+  beforeEach(() => {
+    /* Using iphone-x size https://docs.cypress.io/api/commands/viewport#Usage */
+    cy.viewport(375, 812)
+  })
+
   it("goes to the listing page", () => {
     cy.visit("/listings/a0W0P00000GlKfBUAV")
     cy.contains("TEST Sale Listing (do not modify) - Homeownership Acres")
@@ -25,16 +25,23 @@ describe("Short Form Application - Sale Listing", () => {
     cy.contains("First, let’s make sure you’re eligible to apply.")
   })
 
-  it("displays error for an incomplete prerequisites form", () => {
-    cy.findByText("I have attended 10 hours of Homebuyer Education in the past year.").click()
-    cy.findByRole("button", { name: "Next" }).click()
-    cy.contains("This field is required")
-  })
-
   it("goes to the Name page of the application", () => {
     cy.findByText("I have not owned residential property within the past 3 years.").click()
 
+    cy.findByText("I have attended 10 hours of Homebuyer Education in the past year.").click()
+
     // We expect lending institutions and agents to be updated frequently, so we just select the first available option.
     cy.findByLabelText("Homebuyer education agency").closest("select").select(1)
+
+    cy.findByText(
+      "I am pre-approved for a mortgage loan by a MOHCD-Approved Loan" + " Officer."
+    ).click()
+    cy.findByLabelText("lending institution").closest("select").select(1)
+    cy.findByLabelText("Loan officer").closest("select").select(1)
+
+    cy.findByRole("button", { name: "Upload verification letter" }).click()
+    cy.get(
+      'input[id="ngf-Homebuyer education certificateFile"]'
+    ).selectFile("cypress/fixtures/logo-city.png", { force: true })
   })
 })
