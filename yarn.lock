@@ -1205,10 +1205,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@5.0.1-alpha.27":
-  version "5.0.1-alpha.27"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.0.1-alpha.27.tgz#2decf8e60a53ec028eb2633eff88314e71e94bce"
-  integrity sha512-Txgsr2Nl4ecvJemW8k7zRjycT0VH7xRlIyFWJjNatM9I5h2JfnUf+lwRfbpPXZJWguY5w69g+R5yhf4OecLIwA==
+"@bloom-housing/ui-components@5.1.1-alpha.4":
+  version "5.1.1-alpha.4"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-5.1.1-alpha.4.tgz#aa5455561a5305fce816586991920c19608e1e30"
+  integrity sha512-yFWpHFS9bK7m+7a3QwbzWcl5gbcHNfxvR05vVbVfaDNfa8oomHsQVL6fdoT69jnyoD5XvTdlD6tifhCyiAwM5A==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1231,7 +1231,6 @@
     axios "0.21.2"
     body-scroll-lock "^3.1.5"
     dayjs "^1.10.7"
-    dompurify "^2.3.10"
     jwt-decode "^2.2.0"
     markdown-to-jsx "^6.11.4"
     nanoid "^3.1.12"
@@ -5193,11 +5192,6 @@ domhandler@^4.0.0:
   integrity sha512-KPTbnGQ1JeEMQyO1iYXoagsI6so/C96HZiFyByU3T6iAzpXn8EGEvct6unm1ZGoed8ByO2oirxgwxBmqKF9haA==
   dependencies:
     domelementtype "^2.1.0"
-
-dompurify@^2.3.10:
-  version "2.3.10"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.10.tgz#901f7390ffe16a91a5a556b94043314cd4850385"
-  integrity sha512-o7Fg/AgC7p/XpKjf/+RC3Ok6k4St5F7Q6q6+Nnm3p2zGWioAY6dh0CbbuwOhH2UcSzKsdniE/YnE2/92JcsA+g==
 
 domutils@1.5.1:
   version "1.5.1"
