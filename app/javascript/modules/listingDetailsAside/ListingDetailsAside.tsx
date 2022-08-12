@@ -33,6 +33,8 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
+          {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
+          importance in different state */}
           {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsOpenHouses listing={listing} />
