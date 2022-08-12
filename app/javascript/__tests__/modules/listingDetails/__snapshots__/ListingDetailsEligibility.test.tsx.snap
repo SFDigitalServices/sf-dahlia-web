@@ -269,6 +269,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
       <div
         className="expandable-text text-sm text-gray-700"
       >
+         
         <div>
           <p>
             Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
@@ -283,9 +284,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
         <span
           className="button-toggle"
           onClick={[Function]}
-        >
-          t.more
-        </span>
+        />
       </div>
     </div>
     <div
@@ -303,6 +302,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
       <div
         className="expandable-text text-sm text-gray-700"
       >
+         
         <div>
           <p>
             Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
@@ -317,9 +317,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
         <span
           className="button-toggle"
           onClick={[Function]}
-        >
-          t.more
-        </span>
+        />
       </div>
     </div>
     <div
@@ -337,6 +335,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
       <div
         className="expandable-text text-sm text-gray-700"
       >
+         
         <span>
           Qualified applicants with criminal history will be considered for housing in compliance with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
         </span>
