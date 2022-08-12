@@ -4,7 +4,7 @@ exports[`ListingDetailsWaitlist does not render waitlist section if listing has 
 
 exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist 1`] = `
 <div
-  className="w-full mx-4 md:mx-0"
+  className="w-full px-4 md:px-0"
 >
   <section
     className="aside-block is-tinted"
