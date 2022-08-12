@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OpenHouses displays OpenHouses with Listing containing Open_Houses 1`] = `
+exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing Open_Houses 1`] = `
 <section
   className="aside-block"
 >
@@ -37,4 +37,4 @@ exports[`OpenHouses displays OpenHouses with Listing containing Open_Houses 1`] 
 </section>
 `;
 
-exports[`OpenHouses doesn't display anything with Listing not containing Open_Houses 1`] = `null`;
+exports[`ListingDetailsOpenHouses doesn't display anything with Listing not containing Open_Houses 1`] = `null`;
