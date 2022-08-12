@@ -60,9 +60,6 @@ const ListingDetail = () => {
                 />
               </Mobile>
             )}
-            <Mobile>
-              <ListingDetailsWaitlist listing={listing} />
-            </Mobile>
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
@@ -74,6 +71,7 @@ const ListingDetail = () => {
                   isApplicationOpen={isApplicationOpen}
                   listing={listing}
                 />
+                <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
