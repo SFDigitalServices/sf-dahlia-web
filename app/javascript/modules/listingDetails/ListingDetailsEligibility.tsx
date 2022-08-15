@@ -123,7 +123,7 @@ export const ListingDetailsEligibility = ({
           <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
             <ExpandableText
               className="text-sm text-gray-700"
-              strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
             >
               {listing.Credit_Rating}
             </ExpandableText>
@@ -134,7 +134,7 @@ export const ListingDetailsEligibility = ({
           <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
             <ExpandableText
               className="text-sm text-gray-700"
-              strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
             >
               {listing.Eviction_History}
             </ExpandableText>
@@ -144,7 +144,7 @@ export const ListingDetailsEligibility = ({
         <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
           <ExpandableText
             className="text-sm text-gray-700"
-            strings={{ readMore: t("label.readMore"), readLess: t("label.readLess") }}
+            strings={{ readMore: t("label.more"), readLess: t("label.less") }}
             maxLength={600}
           >
             {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
