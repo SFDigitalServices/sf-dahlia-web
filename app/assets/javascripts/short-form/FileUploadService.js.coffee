@@ -98,6 +98,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurd
         method: 'POST'
         data:
           uploaded_file: uploadedFileParams
+        disableProgress: true
       ).then( ((resp) ->
         proofDocument.loading = false
         proofDocument.error = false
