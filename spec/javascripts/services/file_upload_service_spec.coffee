@@ -265,6 +265,7 @@ do ->
             method: 'POST'
             data:
               uploaded_file: uploadedFileParams
+            disableProgress: true
 
           FileUploadService._uploadProofFile(file, proofDocument, uploadedFileParams)
           expect(Upload.upload).toHaveBeenCalledWith(params)

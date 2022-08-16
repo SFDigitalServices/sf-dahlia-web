@@ -101,8 +101,36 @@ describe("Short Form Application - Sale Listing", () => {
     cy.findByRole("button", { name: "Next" }).click()
   })
 
-  it("goes to income form when selecting 'I will live alone'", () => {
+  it("goes to income form when selecting no alternate contact", () => {
     cy.findByRole("button", { name: "I will live alone" }).click()
     cy.contains("Let's move to income.")
+  })
+
+  it("goes to the preferences form when filling out income", () => {
+    cy.get('input[placeholder="Total all of your income sources"]').type("25000")
+    cy.findByText("per year").click()
+    cy.findByRole("button", { name: "Next" }).click()
+  })
+
+  it("displays lottery ticket number when going through the rest of the views", () => {
+    cy.findByRole("button", { name: "Get started" }).click()
+
+    cy.findByText("I don't want this lottery preference").click()
+    cy.findByRole("button", { name: "Next" }).click()
+
+    // skip preferences
+    cy.findByRole("button", { name: "Next" }).click()
+
+    // ack being in the general lottery
+    cy.findByRole("button", { name: "Next" }).click()
+
+    // skip demographics form
+    cy.findByRole("button", { name: "Next" }).click()
+
+    cy.findByRole("button", { name: "Confirm" }).click()
+
+    cy.findByText("I agree and understand that I cannot change anything after I submit.").click()
+    cy.findByRole("button", { name: "Submit" }).click()
+    cy.contains("Here's your lottery ticket number")
   })
 })
