@@ -1,5 +1,5 @@
 EC = protractor.ExpectedConditions
-timeout = 20000
+timeout = 60000
 
 ExpectUtil = {
   alert: (context, message, className) ->
@@ -38,9 +38,9 @@ ExpectUtil = {
     el = element(By.css("input[name='#{name}']:checked"))
     context.expect(el.getAttribute('value')).to.eventually.equal(value)
   urlContains: (urlFrag) ->
-    browser.wait(EC.urlContains(urlFrag), timeout)
+    browser.wait(EC.urlContains(urlFrag), timeout, "Url should contain #{urlFrag} within #{timeout}ms")
   urlIs: (url) ->
-    browser.wait(EC.urlIs(url), timeout)
+    browser.wait(EC.urlIs(url), timeout, "Page url should contain #{url} within #{timeout}ms")
 }
 
 module.exports = ExpectUtil
