@@ -1,5 +1,5 @@
 EC = protractor.ExpectedConditions
-timeout = 10000
+timeout = 20000
 
 ExpectUtil = {
   alert: (context, message, className) ->

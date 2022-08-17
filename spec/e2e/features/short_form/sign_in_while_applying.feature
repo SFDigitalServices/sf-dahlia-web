@@ -169,7 +169,6 @@ Feature: Sign-in while filling out application
         And I wait "5" seconds
         And I continue my saved draft for the Test Listing
         And I sign in as "Harper Lee"
-        And I wait "30" seconds
         Then I should be on the "Name" page of the application
         And I should only by able to edit my info from account settings
         And I should not be able to navigate to the "Income" section
