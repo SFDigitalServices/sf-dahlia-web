@@ -12,6 +12,7 @@ import { isHabitatListing, isSale } from "../../util/listingUtil"
 import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
+import RailsListingDescriptor from "../../api/types/rails/listings/RailsListingDescriptor"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -22,6 +23,29 @@ export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
 }: ListingDetailsEligibilityProps) => {
+  const priorityLabelMap = {
+    "Mobility impairments": {
+      titleTranslation: "listings.prioritiesDescriptor.mobility",
+      description: "impaired mobility",
+    },
+    "Hearing/Vision impairments": {
+      titleTranslation: "listings.prioritiesDescriptor.hearingVision",
+      description: "impaired vision and/or hearing",
+    },
+    "Hearing impairments": {
+      titleTranslation: "listings.prioritiesDescriptor.hearing",
+      description: "impaired hearing",
+    },
+    "Mobility/hearing/vision impairments": {
+      titleTranslation: "listings.prioritiesDescriptor.mobilityHearingVision",
+      description: "impaired mobility, hearing and/or vision",
+    },
+    "Vision impairments": {
+      titleTranslation: ' "listings.prioritiesDescriptor.vision"',
+      description: "impaired vision",
+    },
+  }
+
   /* TODO: Implement updated API to get actual data */
   const HMITableHeaders = {
     householdSize: "t.householdSize",
@@ -69,6 +93,7 @@ export const ListingDetailsEligibility = ({
     },
     occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
   }))
+
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -112,6 +137,33 @@ export const ListingDetailsEligibility = ({
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />
       <ListSection
+        title={t("listings.priorityUnits")}
+        subtitle={t("listings.priorityUnitsDescription")}
+      >
+        {listing.prioritiesDescriptor?.length > 0 ? (
+          listing.prioritiesDescriptor?.map((descriptor: RailsListingDescriptor) => {
+            return (
+              <InfoCard
+                title={
+                  priorityLabelMap[descriptor?.name]
+                    ? t(priorityLabelMap[descriptor?.name]?.titleTranslation)
+                    : descriptor?.name
+                }
+                subtitle={`${descriptor.numberOfUnits} ${t("t.units")}`}
+              >
+                {t("listings.unitsHaveAccessibilityFeaturesFor", {
+                  type: priorityLabelMap[descriptor?.name]
+                    ? t(priorityLabelMap[descriptor?.name].description)
+                    : descriptor?.name,
+                })}
+              </InfoCard>
+            )
+          })
+        ) : (
+          <></>
+        )}
+      </ListSection>
+      <ListSection
         title={t("listingsForRent.rentalAssistance.title")}
         subtitle={t("listingsForRent.rentalAssitance.subtitle")}
       />
@@ -121,7 +173,10 @@ export const ListingDetailsEligibility = ({
       >
         {listing.Credit_Rating && (
           <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Credit_Rating}
             </ExpandableText>
           </InfoCard>
@@ -129,16 +184,26 @@ export const ListingDetailsEligibility = ({
 
         {listing.Eviction_History && (
           <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Eviction_History}
             </ExpandableText>
           </InfoCard>
         )}
 
         <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
-          <ExpandableText className="text-sm text-gray-700">
-            Qualified applicants with criminal history will be considered for housing in compliance
-            with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
+          <ExpandableText
+            className="text-sm text-gray-700"
+            strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            maxLength={600}
+          >
+            {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
+              fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
+              article49Url:
+                "https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf",
+            })}
           </ExpandableText>
         </InfoCard>
         <p>
