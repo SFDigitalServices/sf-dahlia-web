@@ -217,16 +217,19 @@ jobs:
       - run: yarn test:e2e
   e2e-legacy:
     <<: *defaults
+    parallelism: 4
     steps:
       - setup
       - start-server
       - run:
-          name: Run legacy e2e tests
+          name: Run e2e tests using test splitting
           command: |
-            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature")
+            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
             LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
             echo $LIST
             npm run protractor -- --specs $LIST
+      - store_artifacts:
+          path: tmp/screenshots
 workflows:
   version: 2.1
   build-and-deploy:
