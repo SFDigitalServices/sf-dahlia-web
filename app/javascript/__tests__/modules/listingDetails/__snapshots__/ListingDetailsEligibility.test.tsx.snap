@@ -282,7 +282,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
           </p>
         </div>
         <span
-          className="button-toggle"
+          className="button-toggle ml-4"
           onClick={[Function]}
         >
           More
@@ -317,7 +317,7 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
           </p>
         </div>
         <span
-          className="button-toggle"
+          className="button-toggle ml-4"
           onClick={[Function]}
         >
           More
