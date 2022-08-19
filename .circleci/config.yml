@@ -182,7 +182,13 @@ jobs:
       - setup
       - run: yarn cache clean
       - run: yarn install
-      - run: yarn test
+      - run:
+          name: Run react unit tests
+          command: yarn test --maxWorkers=2 --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+      - store_test_results:
+          path: ./reports/junit/
   unit-rspec:
     <<: *defaults
     steps:
@@ -209,8 +215,6 @@ jobs:
       - setup
       - start-server
       - run: yarn test:e2e
-      - store_test_results:
-          path: cypress/results
   e2e-legacy:
     <<: *defaults
     parallelism: 4

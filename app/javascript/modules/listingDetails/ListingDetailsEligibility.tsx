@@ -30,22 +30,30 @@ export const ListingDetailsEligibility = ({
   }
   const HMITableData = [
     {
-      householdSize: { content: `1 ${t("listings.person")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`1 ${t("listings.person")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `2 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`2 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `3 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`3 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
     {
-      householdSize: { content: `4 ${t("listings.people")}` },
+      householdSize: {
+        content: <span className="font-semibold">{`4 ${t("listings.people")}`}</span>,
+      },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
     },
@@ -56,7 +64,9 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
   const occupancyTableData = listing.unitSummaries.general.map((unit) => ({
-    unitType: { content: t(`listings.unitTypes.${unit.unitType}`) },
+    unitType: {
+      content: <span className="font-semibold">{t(`listings.unitTypes.${unit.unitType}`)}</span>,
+    },
     occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
   }))
   return (
@@ -82,16 +92,15 @@ export const ListingDetailsEligibility = ({
           <div>
             <p className="mb-4">{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
             <p className="mb-4">
-              {renderInlineWithInnerHTML(t("listings.incomeExceptions.intro"))}
+              {renderInlineWithInnerHTML(
+                t("listings.incomeExceptions.intro", {
+                  url: "https://sfmohcd.org/special-calculations-household-income",
+                })
+              )}
             </p>
-            <ul>
-              <li>{renderInlineWithInnerHTML(t("listings.incomeExceptions.students"))}</li>
-              <li>
-                <span>
-                  {renderInlineWithInnerHTML(t("listings.incomeExceptions.nontaxable"))}.{" "}
-                  {t("listings.incomeExceptions.nontaxableTooltip")}
-                </span>
-              </li>
+            <ul className="list-disc ml-5">
+              <li>{t("listings.incomeExceptions.students")}</li>
+              <li>{t("listings.incomeExceptions.nontaxable")}</li>
             </ul>
           </div>
         }
@@ -112,7 +121,10 @@ export const ListingDetailsEligibility = ({
       >
         {listing.Credit_Rating && (
           <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Credit_Rating}
             </ExpandableText>
           </InfoCard>
@@ -120,16 +132,26 @@ export const ListingDetailsEligibility = ({
 
         {listing.Eviction_History && (
           <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Eviction_History}
             </ExpandableText>
           </InfoCard>
         )}
 
         <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
-          <ExpandableText className="text-sm text-gray-700">
-            Qualified applicants with criminal history will be considered for housing in compliance
-            with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
+          <ExpandableText
+            className="text-sm text-gray-700"
+            strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            maxLength={600}
+          >
+            {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
+              fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
+              article49Url:
+                "https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf",
+            })}
           </ExpandableText>
         </InfoCard>
         <p>

@@ -14,7 +14,6 @@ import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryR
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsLotteryResultsProps {
   listing: RailsListing
@@ -39,9 +38,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
           <Heading className="mb-4" priority={4}>
             {t("lottery.lotteryResults")}
           </Heading>
-          <p className="mb-4 text-sm uppercase">
-            {localizedFormat(listing.Lottery_Results_Date, "LL")}
-          </p>
+          <p className="mb-4 text-sm">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
           <div className="bg-gray-100 py-4">
             {listing.Lottery_Summary && (
               <div className="mb-3 mx-2 text-gray-700 text-sm">
@@ -76,7 +73,6 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
             </Modal>
           )}
         </div>
-        <OpenHouses listing={listing} />
       </ErrorBoundary>
     )
   )

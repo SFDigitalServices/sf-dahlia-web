@@ -32,5 +32,6 @@ module.exports = {
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
-  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"]
+  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"],
+  "reporters" : [ "default", "jest-junit" ]
 }

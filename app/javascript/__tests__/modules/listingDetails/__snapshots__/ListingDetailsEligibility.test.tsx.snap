@@ -73,34 +73,19 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
               <span
                 dangerouslySetInnerHTML={
                   Object {
-                    "__html": "People in your household may need <a href='%{url}' target='_blank'>special income calculations</a> if they:",
+                    "__html": "People in your household may need <a href='https://sfmohcd.org/special-calculations-household-income' target='_blank'>special income calculations</a> if they:",
                   }
                 }
               />
             </p>
-            <ul>
+            <ul
+              className="list-disc ml-5"
+            >
               <li>
-                <span
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Are full-time students (but not the primary applicant)",
-                    }
-                  }
-                />
+                Are full-time students (but not the primary applicant).
               </li>
               <li>
-                <span>
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "Receive <span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>non-taxable income</span>",
-                      }
-                    }
-                  />
-                  .
-                   
-                  Non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits.
-                </span>
+                Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
               </li>
             </ul>
           </div>
@@ -299,7 +284,9 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
         <span
           className="button-toggle"
           onClick={[Function]}
-        />
+        >
+          More
+        </span>
       </div>
     </div>
     <div
@@ -332,7 +319,9 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
         <span
           className="button-toggle"
           onClick={[Function]}
-        />
+        >
+          More
+        </span>
       </div>
     </div>
     <div
@@ -352,7 +341,21 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
       >
          
         <span>
-          Qualified applicants with criminal history will be considered for housing in compliance with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
+          Qualified applicants with criminal history will be considered for housing in compliance with 
+          <a
+            href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+            target="_blank"
+          >
+            Article 49
+          </a>
+           of the San Francisco Police Code: 
+          <a
+            href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+            target="_blank"
+          >
+            Fair Chance Ordinance
+          </a>
+          .
         </span>
       </div>
     </div>
