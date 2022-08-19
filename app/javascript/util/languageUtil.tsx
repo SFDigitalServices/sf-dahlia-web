@@ -1,4 +1,5 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
+import Markdown from "markdown-to-jsx"
 import dayjs from "dayjs"
 import React from "react"
 
@@ -139,21 +140,17 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  */
 export function renderWithInnerHTML(translatedString: string) {
   return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: translatedString,
-      }}
-    />
+    <div>
+      <Markdown>{translatedString}</Markdown>
+    </div>
   )
 }
 
 export function renderInlineWithInnerHTML(translatedString: string) {
   return (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: translatedString,
-      }}
-    />
+    <span>
+      <Markdown>{translatedString}</Markdown>
+    </span>
   )
 }
 

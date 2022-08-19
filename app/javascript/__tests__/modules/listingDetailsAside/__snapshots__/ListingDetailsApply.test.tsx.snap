@@ -18,13 +18,18 @@ Array [
       <p
         className="mb-4"
       >
-        <span
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "Make sure you fulfill the <a href='https://sfmohcd.org/homebuyer-program-eligibility' target='_blank'>eligibility requirements</a> for this listing before you begin.",
-            }
-          }
-        />
+        <span>
+          <span>
+            Make sure you fulfill the 
+            <a
+              href="https://sfmohcd.org/homebuyer-program-eligibility"
+              target="_blank"
+            >
+              eligibility requirements
+            </a>
+             for this listing before you begin.
+          </span>
+        </span>
       </p>
       <p
         className="mb-4"

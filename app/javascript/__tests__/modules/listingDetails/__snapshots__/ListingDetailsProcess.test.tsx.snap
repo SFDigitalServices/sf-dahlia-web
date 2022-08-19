@@ -107,13 +107,11 @@ Array [
     <div
       className="text-gray-800 text-tiny markdown"
     >
-      <span
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "Monday - Friday 10:00 AM - 6:00 PM",
-          }
-        }
-      />
+      <span>
+        <span>
+          Monday - Friday 10:00 AM - 6:00 PM
+        </span>
+      </span>
     </div>
   </section>,
 ]
