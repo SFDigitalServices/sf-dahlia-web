@@ -138,7 +138,7 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
 /**
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
-export function renderWithInnerHTML(translatedString: string) {
+export function renderMarkup(translatedString: string) {
   return (
     <div>
       <Markdown>{translatedString}</Markdown>
@@ -146,7 +146,7 @@ export function renderWithInnerHTML(translatedString: string) {
   )
 }
 
-export function renderInlineWithInnerHTML(translatedString: string) {
+export function renderInlineMarkup(translatedString: string) {
   return (
     <span>
       <Markdown>{translatedString}</Markdown>

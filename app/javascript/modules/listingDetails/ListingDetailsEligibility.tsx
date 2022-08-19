@@ -9,7 +9,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { renderInlineMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 
@@ -90,9 +90,9 @@ export const ListingDetailsEligibility = ({
         title={t("listings.householdMaximumIncome")}
         subtitle={
           <div>
-            <p className="mb-4">{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
+            <p className="mb-4">{renderInlineMarkup(t("listings.forIncomeCalculations"))}</p>
             <p className="mb-4">
-              {renderInlineWithInnerHTML(
+              {renderInlineMarkup(
                 t("listings.incomeExceptions.intro", {
                   url: "https://sfmohcd.org/special-calculations-household-income",
                 })

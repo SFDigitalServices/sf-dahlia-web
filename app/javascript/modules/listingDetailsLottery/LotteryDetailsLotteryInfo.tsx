@@ -1,7 +1,7 @@
 import React from "react"
 import { SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { localizedFormat, renderWithInnerHTML } from "../../util/languageUtil"
+import { localizedFormat, renderMarkup } from "../../util/languageUtil"
 import { isLotteryComplete, isOpen } from "../../util/listingUtil"
 
 export interface ListingDetailsLotteryInfoProps {
@@ -22,7 +22,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
             <span className="font-bold">{localizedFormat(listing.Lottery_Date, "h:mm a")}</span>
           </p>
           <div className="text-gray-700">
-            {listing.Lottery_Venue && renderWithInnerHTML(listing.Lottery_Venue)}
+            {listing.Lottery_Venue && renderMarkup(listing.Lottery_Venue)}
           </div>
           {process.env.COVID_UPDATE !== "true" && (
             <p className="mt-4 text-gray-700">{t("label.preLotteryInfo")}</p>
