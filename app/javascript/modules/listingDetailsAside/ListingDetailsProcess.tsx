@@ -3,7 +3,6 @@ import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
 import { EventSection, Contact, t, ExpandableSection } from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
-import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
@@ -63,7 +62,7 @@ export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) =
               ? [
                   {
                     title: t("contactAgent.officeHours"),
-                    content: renderInlineWithInnerHTML(stripMostTags(listing.Office_Hours)),
+                    content: renderInlineWithInnerHTML(listing.Office_Hours),
                   },
                 ]
               : undefined
