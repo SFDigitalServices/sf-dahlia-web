@@ -121,7 +121,10 @@ export const ListingDetailsEligibility = ({
       >
         {listing.Credit_Rating && (
           <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Credit_Rating}
             </ExpandableText>
           </InfoCard>
@@ -129,16 +132,26 @@ export const ListingDetailsEligibility = ({
 
         {listing.Eviction_History && (
           <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
-            <ExpandableText className="text-sm text-gray-700">
+            <ExpandableText
+              className="text-sm text-gray-700"
+              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            >
               {listing.Eviction_History}
             </ExpandableText>
           </InfoCard>
         )}
 
         <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
-          <ExpandableText className="text-sm text-gray-700">
-            Qualified applicants with criminal history will be considered for housing in compliance
-            with Article 49 of the San Francisco Police Code: Fair Chance Ordinance.
+          <ExpandableText
+            className="text-sm text-gray-700"
+            strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+            maxLength={600}
+          >
+            {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
+              fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
+              article49Url:
+                "https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf",
+            })}
           </ExpandableText>
         </InfoCard>
         <p>
