@@ -26,23 +26,27 @@ export const ListingDetailsEligibility = ({
   const priorityLabelMap = {
     "Mobility impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobility",
-      description: "impaired mobility",
+      descriptionTranslation: "listings.prioritiesDescriptor.mobilityDescription",
     },
     "Hearing/Vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.hearingVision",
-      description: "impaired vision and/or hearing",
+      descriptionTranslation: "listings.prioritiesDescriptor.hearingVisionDescription",
     },
     "Hearing impairments": {
       titleTranslation: "listings.prioritiesDescriptor.hearing",
-      description: "impaired hearing",
+      descriptionTranslation: "listings.prioritiesDescriptor.hearingDescription",
     },
     "Mobility/hearing/vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobilityHearingVision",
-      description: "impaired mobility, hearing and/or vision",
+      descriptionTranslation: "listings.prioritiesDescriptor.mobilityHearingVisionDescription",
     },
     "Vision impairments": {
-      titleTranslation: ' "listings.prioritiesDescriptor.vision"',
-      description: "impaired vision",
+      titleTranslation: "listings.prioritiesDescriptor.vision",
+      descriptionTranslation: "listings.prioritiesDescriptor.visionDescription",
+    },
+    "Hearing/Vision (Communication)": {
+      titleTranslation: "listings.prioritiesDescriptor.hearingVisionCommunication",
+      descriptionTranslation: "listings.prioritiesDescriptor.hearingVisionCommunicationDescription",
     },
   }
 
@@ -141,24 +145,28 @@ export const ListingDetailsEligibility = ({
         subtitle={t("listings.priorityUnitsDescription")}
       >
         {listing.prioritiesDescriptor?.length > 0 ? (
-          listing.prioritiesDescriptor?.map((descriptor: RailsListingDescriptor) => {
-            return (
-              <InfoCard
-                title={
-                  priorityLabelMap[descriptor?.name]
-                    ? t(priorityLabelMap[descriptor?.name]?.titleTranslation)
-                    : descriptor?.name
-                }
-                subtitle={`${descriptor.numberOfUnits} ${t("t.units")}`}
-              >
-                {t("listings.unitsHaveAccessibilityFeaturesFor", {
-                  type: priorityLabelMap[descriptor?.name]
-                    ? t(priorityLabelMap[descriptor?.name].description)
-                    : descriptor?.name,
-                })}
-              </InfoCard>
-            )
-          })
+          listing.prioritiesDescriptor
+            ?.filter((descriptor: RailsListingDescriptor) => {
+              return descriptor?.name !== "Adaptable"
+            })
+            ?.map((descriptor: RailsListingDescriptor) => {
+              return (
+                <InfoCard
+                  title={
+                    priorityLabelMap[descriptor?.name]
+                      ? t(priorityLabelMap[descriptor?.name]?.titleTranslation)
+                      : descriptor?.name
+                  }
+                  subtitle={`${descriptor.numberOfUnits} ${t("t.units")}`}
+                >
+                  {priorityLabelMap[descriptor?.name]
+                    ? t(priorityLabelMap[descriptor?.name]?.descriptionTranslation)
+                    : t("listings.unitsHaveAccessibilityFeaturesFor", {
+                        type: descriptor?.name,
+                      })}
+                </InfoCard>
+              )
+            })
         ) : (
           <></>
         )}
