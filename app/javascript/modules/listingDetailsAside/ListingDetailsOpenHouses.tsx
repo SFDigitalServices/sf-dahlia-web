@@ -1,15 +1,15 @@
 import React from "react"
-import { getEventNote, RailsListing } from "../modules/listings/SharedHelpers"
+import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
-import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import { localizedFormat } from "../util/languageUtil"
-import { getEventTimeString } from "../util/listingUtil"
+import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import { localizedFormat } from "../../util/languageUtil"
+import { getEventTimeString } from "../../util/listingUtil"
 
 export interface OpenHousesProps {
   listing: RailsListing
 }
 
-const OpenHouses = ({ listing }: OpenHousesProps) => {
+export const ListingDetailsOpenHouses = ({ listing }: OpenHousesProps) => {
   return (
     <>
       {listing.Open_Houses?.length ? (
@@ -28,5 +28,3 @@ const OpenHouses = ({ listing }: OpenHousesProps) => {
     </>
   )
 }
-
-export default OpenHouses
