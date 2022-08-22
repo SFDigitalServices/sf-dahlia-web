@@ -1,6 +1,7 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 export interface ListingDetailsLotteryPreferencesProps {
   lotteryBucketsDetails: RailsLotteryResult
@@ -30,7 +31,10 @@ export const ListingDetailsLotteryPreferences = ({
                 className="font-sans font-semibold text-tiny tracking-wide uppercase"
                 priority={3}
               >
-                {t(`listings.lotteryPreference.${bucket.preferenceName}.title`)}
+                {defaultIfNotTranslated(
+                  `listings.lotteryPreference.${bucket.preferenceName}.title`,
+                  bucket.preferenceName
+                )}
               </Heading>
               <p className="text-tiny">
                 {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
