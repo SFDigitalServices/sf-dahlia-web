@@ -6,7 +6,7 @@ Array [
     className="bg-gray-100 py-4 text-center"
   >
     <a
-      className="lottery-results-modal-anchor"
+      className="text-blue-800"
       href="http://sfmohcd.org/housing-preference-programs"
       target="_blank"
     >
@@ -25,7 +25,7 @@ Array [
       className="py-2"
     >
       <a
-        className="lottery-results-modal-anchor"
+        className="text-blue-800"
         href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
         target="_blank"
       >
@@ -46,7 +46,7 @@ exports[`ListingDetailsLotteryModalFooter displays preference link only when sta
   className="bg-gray-100 py-4 text-center"
 >
   <a
-    className="lottery-results-modal-anchor"
+    className="text-blue-800"
     href="http://sfmohcd.org/housing-preference-programs"
     target="_blank"
   >
