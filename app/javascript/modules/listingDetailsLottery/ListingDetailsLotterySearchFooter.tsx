@@ -16,7 +16,11 @@ export const ListingDetailsLotterySearchFooter = ({
   return (
     <>
       <div className="bg-gray-100 py-4 text-center">
-        <a href="http://sfmohcd.org/housing-preference-programs" target="_blank">
+        <a
+          className="text-blue-800"
+          href="http://sfmohcd.org/housing-preference-programs"
+          target="_blank"
+        >
           {t("lottery.readAboutPreferences")}
         </a>
       </div>
@@ -31,7 +35,7 @@ export const ListingDetailsLotterySearchFooter = ({
                   })}
                 </p>
                 <p className="py-2">
-                  <a href={listing.LotteryResultsURL} target="_blank">
+                  <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-800">
                     {t("lottery.lotteryResultsPdfLink")}
                   </a>
                 </p>
