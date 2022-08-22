@@ -32,58 +32,56 @@ Array [
           className="text-gray-700"
         >
           <div>
-            <span>
-              <p>
-                <span
-                  style={
-                    Object {
-                      "": "",
-                      "backgroundColor": "transparent",
-                      "color": "rgb(0, 0, 0)",
-                      "fontFamily": "Arial",
-                      "fontSize": "10pt",
-                    }
+            <p>
+              <span
+                style={
+                  Object {
+                    "": "",
+                    "backgroundColor": "transparent",
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "Arial",
+                    "fontSize": "10pt",
                   }
-                >
-                  The lottery will not be in person, but instead will be a virtual lottery.
-                </span>
-              </p>
-              <p>
-                <span
-                  style={
-                    Object {
-                      "": "",
-                      "backgroundColor": "transparent",
-                      "color": "rgb(0, 0, 0)",
-                      "fontSize": "12pt",
-                    }
+                }
+              >
+                The lottery will not be in person, but instead will be a virtual lottery.
+              </span>
+            </p>
+            <p>
+              <span
+                style={
+                  Object {
+                    "": "",
+                    "backgroundColor": "transparent",
+                    "color": "rgb(0, 0, 0)",
+                    "fontSize": "12pt",
                   }
-                >
-                   
-                </span>
-              </p>
-              <p>
-                <span
-                  style={
-                    Object {
-                      "": "",
-                      "backgroundColor": "transparent",
-                      "color": "rgb(0, 0, 0)",
-                      "fontFamily": "Arial",
-                      "fontSize": "10pt",
-                    }
+                }
+              >
+                 
+              </span>
+            </p>
+            <p>
+              <span
+                style={
+                  Object {
+                    "": "",
+                    "backgroundColor": "transparent",
+                    "color": "rgb(0, 0, 0)",
+                    "fontFamily": "Arial",
+                    "fontSize": "10pt",
                   }
-                >
-                  Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
-                </span>
-              </p>
-              <p>
-                <br />
-              </p>
-              <p>
-                <br />
-              </p>
-            </span>
+                }
+              >
+                Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
+              </span>
+            </p>
+            <p>
+              <br />
+            </p>
+            <p>
+              <br />
+            </p>
           </div>
         </div>
         <p

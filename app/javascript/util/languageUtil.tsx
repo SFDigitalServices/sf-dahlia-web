@@ -139,19 +139,11 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
 export function renderMarkup(translatedString: string) {
-  return (
-    <div>
-      <Markdown>{translatedString}</Markdown>
-    </div>
-  )
+  return <Markdown options={{ forceBlock: true }}>{translatedString}</Markdown>
 }
 
 export function renderInlineMarkup(translatedString: string) {
-  return (
-    <span>
-      <Markdown>{translatedString}</Markdown>
-    </span>
-  )
+  return <Markdown>{translatedString}</Markdown>
 }
 
 // Get the translated community type
