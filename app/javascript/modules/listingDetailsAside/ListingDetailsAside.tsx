@@ -7,6 +7,8 @@ import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
+import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
+import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -28,8 +30,10 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
       <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
         <div className="hidden md:block">
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
+          <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
+          <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsApply listing={listing} />
           <ListingDetailsProcess listing={listing} />
         </div>

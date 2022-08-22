@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsApplicationDate does not render waitlist section if listing has no waitlist 1`] = `null`;
+exports[`ListingDetailsWaitlist does not render waitlist section if listing has no waitlist 1`] = `null`;
 
-exports[`ListingDetailsApplicationDate renders waitlist section if listing has waitlist 1`] = `
+exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist 1`] = `
 <section
   className="aside-block is-tinted"
 >

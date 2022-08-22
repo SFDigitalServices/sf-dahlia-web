@@ -52,8 +52,8 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter((bucket) => bucket.preferenceName === "generalLottery")
         .map((bucket) => (
-          <>
-            <div className="px-8" key={bucket.preferenceOrder}>
+          <React.Fragment key={bucket.preferenceOrder}>
+            <div className="px-8">
               <Heading
                 className="font-sans font-semibold text-tiny tracking-wide uppercase"
                 priority={3}
@@ -68,7 +68,7 @@ export const ListingDetailsLotteryPreferences = ({
               </p>
             </div>
             <hr className="mt-4" />
-          </>
+          </React.Fragment>
         ))}
     </div>
   )

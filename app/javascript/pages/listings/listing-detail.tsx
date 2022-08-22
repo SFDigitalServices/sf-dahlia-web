@@ -25,6 +25,7 @@ import { ListingDetailsReservedBanner } from "../../modules/listingDetails/Listi
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import { isOpen } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
+import { MailingListSignup } from "../../components/MailingListSignup"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -85,15 +86,19 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-features.svg")}
               />
-              <ListingDetailsNeighborhood imageSrc={getAssetPath("listing-neighborhood.svg")} />
+              <ListingDetailsNeighborhood
+                imageSrc={getAssetPath("listing-neighborhood.svg")}
+                listing={listing}
+              />
               <ListingDetailsAdditionalInformation
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <div className="listing-detail-panel">
-                <div className="info-card flex">
-                  {/* TODO: do we have a class for serifs but smaller we can enable? */}
-                  <p className="text-serif-lg">{t("listings.monitoredByMohcd")}</p>
+              <div className="listing-detail-panel p-0">
+                <div className="m-0 info-card flex items-center justify-between">
+                  <p className="m-0 text-base text-serif-lg w-3/4">
+                    {t("listings.monitoredByMohcd")}
+                  </p>
                   <img
                     alt={t("listings.equalHousingOpportunityLogo")}
                     src={getAssetPath("logo-equal.png")}
@@ -103,6 +108,7 @@ const ListingDetail = () => {
             </ListingDetails>
           </article>
         )}
+        <MailingListSignup />
       </Layout>
     </LoadingOverlay>
   )

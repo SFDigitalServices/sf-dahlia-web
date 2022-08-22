@@ -11,10 +11,10 @@ module.exports = {
   coverageDirectory: "test-coverage",
   coverageThreshold: {
     global: {
-      branches: 50,
+      branches: 53,
       functions: 45,
-      lines: 62,
-      statements: 63,
+      lines: 65,
+      statements: 66,
     },
   },
   preset: "ts-jest",
@@ -28,10 +28,10 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
-  setupFiles: ["dotenv/config"],
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
-  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"]
+  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"],
+  "reporters" : [ "default", "jest-junit" ]
 }

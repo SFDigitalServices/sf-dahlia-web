@@ -1,6 +1,5 @@
 import React from "react"
-import { screen } from "@testing-library/react"
-import renderer from "react-test-renderer"
+import { render, screen } from "@testing-library/react"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 import { lotteryCompleteRentalListingWithSummary } from "../../data/RailsRentalListing/listing-rental-lottery-complete-with-summary"
@@ -29,23 +28,27 @@ describe("ListingDetailsLotteryResults", () => {
     expect(viewButton).not.toBeInTheDocument()
   })
 
-  it("displays if lottery is complete", () => {
+  it("displays if lottery is complete", async () => {
     getLotteryBucketDetailsMock.mockReturnValue(Promise.resolve(lotteryResultRentalOne))
 
-    const tree = renderer
-      .create(<ListingDetailsLotteryResults listing={lotteryCompleteRentalListing} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsLotteryResults listing={lotteryCompleteRentalListing} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    await screen.findByText("View Lottery Results")
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
-  it("displays with summary if lottery is complete", () => {
+  it("displays with summary if lottery is complete", async () => {
     getLotteryBucketDetailsMock.mockReturnValue(Promise.resolve(lotteryResultRentalOne))
 
-    const tree = renderer
-      .create(<ListingDetailsLotteryResults listing={lotteryCompleteRentalListingWithSummary} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsLotteryResults listing={lotteryCompleteRentalListingWithSummary} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    await screen.findByText("View Lottery Results")
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

@@ -1,66 +1,177 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
-<div
-  className="border-b pt-4 text-center"
->
-  <h4
-    className="undefined mb-4"
-  >
-    Lottery Results
-  </h4>
-  <p
-    className="mb-4 text-sm uppercase"
-  >
-    January 26, 2022
-  </p>
+<DocumentFragment>
   <div
-    className="bg-gray-100 py-4"
+    class="border-b pt-4 text-center"
   >
-    <button
-      className="button is-primary is-small"
-      onClick={[Function]}
+    <h4
+      class="undefined mb-4"
     >
-      View Lottery Results
-    </button>
+      Lottery Results
+    </h4>
+    <p
+      class="mb-4 text-sm"
+    >
+      January 26, 2022
+    </p>
+    <div
+      class="bg-gray-100 py-4"
+    >
+      <button
+        class="button is-primary is-small"
+      >
+        View Lottery Results
+      </button>
+    </div>
   </div>
-</div>
+  <section
+    class="aside-block"
+  >
+    <h4
+      class="text-caps-underline undefined"
+    >
+      Open Houses
+    </h4>
+    <div
+      class="false"
+    >
+      <p
+        class="text text-gray-800 pb-2 flex justify-between items-center"
+      >
+        <span
+          class="inline-block text-tiny uppercase"
+        >
+          January 7, 2022
+        </span>
+        <span
+          class="inline-block text-sm font-bold ml-5 font-alt-sans"
+        >
+          5:00PM - 7:00PM
+        </span>
+      </p>
+      <p
+        class="text-tiny text-gray-700 false"
+      />
+      <div
+        class="flex flex-col"
+      />
+      <p />
+    </div>
+  </section>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsLotteryResults displays with summary if lottery is complete 1`] = `
-<div
-  className="border-b pt-4 text-center"
->
-  <h4
-    className="undefined mb-4"
-  >
-    Lottery Results
-  </h4>
-  <p
-    className="mb-4 text-sm uppercase"
-  >
-    December 22, 2021
-  </p>
+<DocumentFragment>
   <div
-    className="bg-gray-100 py-4"
+    class="border-b pt-4 text-center"
   >
+    <h4
+      class="undefined mb-4"
+    >
+      Lottery Results
+    </h4>
+    <p
+      class="mb-4 text-sm"
+    >
+      December 22, 2021
+    </p>
     <div
-      className="mb-3 mx-2 text-gray-700 text-sm"
+      class="bg-gray-100 py-4"
     >
-      <span
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "<p>**Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST**</p>",
-          }
-        }
-      />
+      <div
+        class="mb-3 mx-2 text-gray-700 text-sm"
+      >
+        <span>
+          <p>
+            **Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST**
+          </p>
+        </span>
+      </div>
+      <button
+        class="button is-primary is-small"
+      >
+        View Lottery Results
+      </button>
     </div>
-    <button
-      className="button is-primary is-small"
-      onClick={[Function]}
-    >
-      View Lottery Results
-    </button>
   </div>
-</div>
+  <section
+    class="aside-block"
+  >
+    <h4
+      class="text-caps-underline undefined"
+    >
+      Open Houses
+    </h4>
+    <div
+      class="pb-3"
+    >
+      <p
+        class="text-tiny text-gray-700 pb-3"
+      />
+      <div
+        class="flex flex-col"
+      >
+        <span>
+          <p>
+            <strong>
+              FIRST COME, FIRST SERVED LISTING
+            </strong>
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            To view the listing & instructions on how to submit an application, please click on this 
+            <a
+              href="https://sfmohcd.org/bmr-resale-55-page-street-unit-211"
+              target="_blank"
+            >
+              link
+            </a>
+            .
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            <br />
+          </p>
+          <p>
+            Individual viewings may be available by appointment only. Please contact the listing agent, Trista Bernasconi, for assistance.
+          </p>
+        </span>
+      </div>
+      <p />
+    </div>
+    <div
+      class="false"
+    >
+      <p
+        class="text-tiny text-gray-700 false"
+      />
+      <div
+        class="flex flex-col"
+      >
+        <span>
+          <p>
+            <br />
+          </p>
+          <p>
+            To view the virtual tour, please click on this 
+            <a
+              href="https://my.matterport.com/show/?m=bfGPnSQLVhk&amp;mls=1"
+              target="_blank"
+            >
+              link
+            </a>
+            .
+          </p>
+        </span>
+      </div>
+      <p />
+    </div>
+  </section>
+</DocumentFragment>
 `;

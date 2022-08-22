@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsApply does not render if listing is closed 1`] = `null`;
+
+exports[`ListingDetailsApply renders if listing is open 1`] = `
+Array [
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      How to Apply
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <p
+        className="mb-4"
+      >
+        <span
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Make sure you fulfill the <a href='https://sfmohcd.org/homebuyer-program-eligibility' target='_blank'>eligibility requirements</a> for this listing before you begin.",
+            }
+          }
+        />
+      </p>
+      <p
+        className="mb-4"
+      >
+        Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+      </p>
+      <a
+        className="button is-primary w-full transition"
+        href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+      >
+        Apply Online
+      </a>
+    </div>
+  </section>,
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Need Help?
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      <a
+        className="button w-full transition"
+        href="https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+        target="_blank"
+      >
+        Visit HomeownershipSF
+      </a>
+    </div>
+  </section>,
+  <section
+    className="aside-block "
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Expected move-in date
+    </h4>
+    <div
+      className="text-tiny text-gray-750"
+    >
+      June 2020
+    </div>
+  </section>,
+]
+`;

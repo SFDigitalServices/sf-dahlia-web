@@ -9,8 +9,8 @@ type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTML
  * Right now this is a very simple link component, but we keep it in
  * its own file so that if we add functionality to it we can do it in one place only.
  */
-const Link = ({ ...props }: LinkProps) => {
-  const link = props.external ? props.href : localizedPath(props.href)
+const Link = ({ external = false, ...props }: LinkProps) => {
+  const link = external ? props.href : localizedPath(props.href)
   return (
     <a {...props} href={link}>
       {props.children}

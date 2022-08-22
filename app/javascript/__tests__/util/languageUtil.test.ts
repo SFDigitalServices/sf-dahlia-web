@@ -164,6 +164,19 @@ describe("languageUtil", () => {
   })
 
   describe("emptyIfNotTranslated", () => {
+    // errors are expected for these tests, suppress console
+    beforeEach(() => {
+      jest.spyOn(console, "error")
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      console.error.mockImplementation(() => null)
+    })
+    afterEach(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      console.error.mockRestore()
+    })
+
     const salesforceVals = ["2 BR", "500 BR"]
     it("returns a translated string", () => {
       expect(

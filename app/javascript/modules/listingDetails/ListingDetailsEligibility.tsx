@@ -4,10 +4,12 @@ import {
   InfoCard,
   ListingDetailItem,
   ListSection,
+  StandardTable,
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
+import { renderInlineWithInnerHTML } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 
@@ -20,6 +22,53 @@ export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
 }: ListingDetailsEligibilityProps) => {
+  /* TODO: Implement updated API to get actual data */
+  const HMITableHeaders = {
+    householdSize: "t.householdSize",
+    maxIncomeMonth: "t.maximumIncomeMonth",
+    maxIncomeYear: "t.maximumIncomeYear",
+  }
+  const HMITableData = [
+    {
+      householdSize: {
+        content: <span className="font-semibold">{`1 ${t("listings.person")}`}</span>,
+      },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
+    },
+    {
+      householdSize: {
+        content: <span className="font-semibold">{`2 ${t("listings.people")}`}</span>,
+      },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
+    },
+    {
+      householdSize: {
+        content: <span className="font-semibold">{`3 ${t("listings.people")}`}</span>,
+      },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
+    },
+    {
+      householdSize: {
+        content: <span className="font-semibold">{`4 ${t("listings.people")}`}</span>,
+      },
+      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
+      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
+    },
+  ]
+
+  const occupancyTableHeaders = {
+    unitType: "t.unitType",
+    occupancy: "t.occupancy",
+  }
+  const occupancyTableData = listing.unitSummaries.general.map((unit) => ({
+    unitType: {
+      content: <span className="font-semibold">{t(`listings.unitTypes.${unit.unitType}`)}</span>,
+    },
+    occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
+  }))
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -39,12 +88,27 @@ export const ListingDetailsEligibility = ({
       )}
       <ListSection
         title={t("listings.householdMaximumIncome")}
-        subtitle={t("listings.forIncomeCalculations")}
+        subtitle={
+          <div>
+            <p className="mb-4">{renderInlineWithInnerHTML(t("listings.forIncomeCalculations"))}</p>
+            <p className="mb-4">
+              {renderInlineWithInnerHTML(
+                t("listings.incomeExceptions.intro", {
+                  url: "https://sfmohcd.org/special-calculations-household-income",
+                })
+              )}
+            </p>
+            <ul className="list-disc ml-5">
+              <li>{t("listings.incomeExceptions.students")}</li>
+              <li>{t("listings.incomeExceptions.nontaxable")}</li>
+            </ul>
+          </div>
+        }
       >
-        {/* TODO: Build unit summaries */}
+        <StandardTable headers={HMITableHeaders} data={HMITableData} />
       </ListSection>
       <ListSection title={t("t.occupancy")} subtitle={t("listings.occupancyDescriptionNoSro")}>
-        {/* TODO: Build unit summaries */}
+        <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />
       <ListSection
