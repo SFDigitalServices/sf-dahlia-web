@@ -30,7 +30,7 @@ export const ListingDetailsLotteryPreferences = ({
                 className="font-sans font-semibold text-tiny tracking-wide uppercase"
                 priority={3}
               >
-                {bucket.preferenceName}
+                {t(`listings.lotteryPreference.${bucket.preferenceName}.title`)}
               </Heading>
               <p className="text-tiny">
                 {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
