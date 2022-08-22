@@ -14,7 +14,6 @@ import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryR
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsLotteryResultsProps {
   listing: RailsListing
@@ -74,7 +73,6 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
             </Modal>
           )}
         </div>
-        <OpenHouses listing={listing} />
       </ErrorBoundary>
     )
   )
