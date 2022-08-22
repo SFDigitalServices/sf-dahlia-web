@@ -81,15 +81,15 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
       </p>
       <header
-        className="px-8"
+        className="border-b border-gray-450 mb-4"
       >
         <h2
-          className="undefined text-caps-underline"
+          className="undefined text-caps-underline mx-8"
         >
           Housing Preferences
         </h2>
         <p
-          className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm"
+          className="pb-4 text-gray-700 text-sm mx-8"
         >
           Ranking in these lists is considered in the order shown here.
         </p>
@@ -115,7 +115,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           </p>
         </div>
         <hr
-          className="my-4 mx-8"
+          className="my-4"
         />
       </div>
       <div>
@@ -139,7 +139,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           </p>
         </div>
         <hr
-          className="my-4 mx-8"
+          className="my-4"
         />
       </div>
       <div>
@@ -201,6 +201,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     className="bg-gray-100 py-4 text-center"
   >
     <a
+      className="text-blue-800"
       href="http://sfmohcd.org/housing-preference-programs"
       target="_blank"
     >
@@ -219,6 +220,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       className="py-2"
     >
       <a
+        className="text-blue-800"
         href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
         target="_blank"
       >
