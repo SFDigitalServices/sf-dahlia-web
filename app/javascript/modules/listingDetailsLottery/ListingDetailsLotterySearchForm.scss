@@ -4,6 +4,6 @@
     }
 
     #search-form input::placeholder {
-        color:#555555;
+        @apply text-gray-750;
     }
 }
