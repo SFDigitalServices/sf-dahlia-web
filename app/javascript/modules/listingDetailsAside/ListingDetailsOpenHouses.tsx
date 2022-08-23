@@ -14,6 +14,7 @@ export const ListingDetailsOpenHouses = ({ listing }: OpenHousesProps) => {
     <>
       {listing.Open_Houses?.length ? (
         <EventSection
+          dateClassName="normal-case"
           events={listing.Open_Houses?.map((openHouse: ListingEvent) => {
             return {
               dateString: openHouse.Date && localizedFormat(openHouse.Date, "LL"),

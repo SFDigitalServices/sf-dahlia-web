@@ -13,6 +13,7 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
     <>
       {listing.Information_Sessions?.length > 0 ? (
         <EventSection
+          dateClassName="normal-case"
           sectionHeader={true}
           events={listing.Information_Sessions?.map((informationSession) => {
             return {
