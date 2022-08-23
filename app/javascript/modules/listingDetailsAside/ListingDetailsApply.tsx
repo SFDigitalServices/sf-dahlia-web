@@ -17,7 +17,7 @@ import {
   isSale,
   paperApplicationURLs,
 } from "../../util/listingUtil"
-import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -46,7 +46,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       {!isListingRental && (
         <>
           <p className={"mb-4"}>
-            {renderInlineWithInnerHTML(
+            {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
                 url: "https://sfmohcd.org/homebuyer-program-eligibility",
               })

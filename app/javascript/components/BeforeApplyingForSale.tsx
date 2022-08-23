@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, ListSection, t } from "@bloom-housing/ui-components"
-import { renderWithInnerHTML } from "../util/languageUtil"
+import { renderMarkup } from "../util/languageUtil"
 
 export enum BeforeApplyingType {
   DIRECTORY,
@@ -27,7 +27,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
 
   // different requirements + list items for habitat vs other sales
   if (beforeApplyingType === BeforeApplyingType.LISTING_DETAILS_HABITAT) {
-    requirements = renderWithInnerHTML(
+    requirements = renderMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
         url: "https://habitatgsf.org/amber-drive-info/",
       })}`
@@ -35,7 +35,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
 
     listItems = [
       {
-        content: renderWithInnerHTML(
+        content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step1", {
             url: "https://habitatgsf.org/amber-drive-info/",
           })}`
@@ -43,7 +43,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       },
       { content: t("listingsForSale.beforeApplyingHabitat.step2") },
       {
-        content: renderWithInnerHTML(
+        content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step3", {
             url:
               "https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf",
@@ -56,7 +56,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     beforeApplyingType === BeforeApplyingType.DIRECTORY ||
     beforeApplyingType === BeforeApplyingType.LISTING_DETAILS
   ) {
-    requirements = renderWithInnerHTML(
+    requirements = renderMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
         url: "https://sfmohcd.org/homebuyer-program-eligibility",
       })}`
@@ -65,21 +65,21 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     listItems = [
       { content: t("saleDirectory.beforeApplying.step1") },
       {
-        content: renderWithInnerHTML(
+        content: renderMarkup(
           `${t("saleDirectory.beforeApplying.step2", {
             url: "https://sfmohcd.org/homebuyer-program-eligibility",
           })}`
         ),
       },
       {
-        content: renderWithInnerHTML(
+        content: renderMarkup(
           `${t("saleDirectory.beforeApplying.step3", {
             url: "https://sfmohcd.org/homebuyer-application-requirements#education",
           })}`
         ),
       },
       {
-        content: renderWithInnerHTML(
+        content: renderMarkup(
           `${t("saleDirectory.beforeApplying.step4", {
             url: "https://sfmohcd.org/lender-list",
           })}`
