@@ -1,4 +1,5 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
+import Markdown from "markdown-to-jsx"
 import dayjs from "dayjs"
 import React from "react"
 
@@ -137,24 +138,12 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
 /**
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
-export function renderWithInnerHTML(translatedString: string) {
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: translatedString,
-      }}
-    />
-  )
+export function renderMarkup(translatedString: string) {
+  return <Markdown options={{ forceBlock: true }}>{translatedString}</Markdown>
 }
 
-export function renderInlineWithInnerHTML(translatedString: string) {
-  return (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: translatedString,
-      }}
-    />
-  )
+export function renderInlineMarkup(translatedString: string) {
+  return <Markdown>{translatedString}</Markdown>
 }
 
 // Get the translated community type
