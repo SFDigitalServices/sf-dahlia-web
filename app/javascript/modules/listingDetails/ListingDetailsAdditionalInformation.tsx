@@ -1,5 +1,5 @@
 import React from "react"
-import { ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isSale } from "../../util/listingUtil"
@@ -53,7 +53,10 @@ export const ListingDetailsAdditionalInformation = ({
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
             <div className="text-sm">
-              <TextTruncate text={listing.CC_and_R_URL} />
+              <TextTruncate text={t("listings.cc&rDescription")} />
+              <LinkButton href={listing.CC_and_R_URL} className={"mt-4"} newTab={true}>
+                {t("listings.downloadPdf")}
+              </LinkButton>
             </div>
           </div>
         )}
