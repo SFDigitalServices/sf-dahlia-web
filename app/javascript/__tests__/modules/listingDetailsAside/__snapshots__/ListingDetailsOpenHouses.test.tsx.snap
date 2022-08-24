@@ -16,7 +16,7 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
       className="text text-gray-800 pb-2 flex justify-between items-center"
     >
       <span
-        className="inline-block text-tiny uppercase"
+        className="inline-block text-tiny uppercase normal-case"
       >
         January 7, 2022
       </span>
