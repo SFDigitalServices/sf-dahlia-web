@@ -9,20 +9,44 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { renderInlineWithInnerHTML, defaultIfNotTranslated } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
-import RailsListingDescriptor from "../../api/types/rails/listings/RailsListingDescriptor"
+import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
   imageSrc: string
 }
 
+export interface ReducedUnit {
+  name: string
+  numberOfUnits: number
+}
+
 export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
 }: ListingDetailsEligibilityProps) => {
+  const priorityUnits = []
+
+  listing.Units.forEach((unit: RailsUnit) => {
+    const priorityUnit = priorityUnits.find((priorityUnit: ReducedUnit) => {
+      return priorityUnit.name === unit.Priority_Type
+    })
+
+    if (unit.Priority_Type && !priorityUnit) {
+      priorityUnits.push({
+        name: unit.Priority_Type,
+        numberOfUnits: 1,
+      })
+    }
+
+    if (unit.Priority_Type && priorityUnit) {
+      priorityUnit.numberOfUnits++
+    }
+  })
+
   const priorityLabelMap = {
     "Mobility impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobility",
@@ -144,26 +168,43 @@ export const ListingDetailsEligibility = ({
         title={t("listings.priorityUnits")}
         subtitle={t("listings.priorityUnitsDescription")}
       >
-        {listing.prioritiesDescriptor?.length > 0 ? (
-          listing.prioritiesDescriptor
-            ?.filter((descriptor: RailsListingDescriptor) => {
-              return descriptor?.name !== "Adaptable"
+        {priorityUnits?.length > 0 ? (
+          priorityUnits
+            .filter((unit: ReducedUnit) => {
+              return unit?.name !== "Adaptable"
             })
-            ?.map((descriptor: RailsListingDescriptor) => {
+            .map((unit: ReducedUnit) => {
               return (
                 <InfoCard
                   title={
-                    priorityLabelMap[descriptor?.name]
-                      ? t(priorityLabelMap[descriptor?.name]?.titleTranslation)
-                      : descriptor?.name
+                    priorityLabelMap[unit?.name]
+                      ? defaultIfNotTranslated(
+                          priorityLabelMap[unit?.name]?.titleTranslation,
+                          unit.name
+                        )
+                      : unit?.name
                   }
-                  subtitle={`${descriptor.numberOfUnits} ${t("t.units")}`}
+                  subtitle={
+                    unit.numberOfUnits === 1
+                      ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
+                          "listings.features.unit",
+                          "unit"
+                        )}`
+                      : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
+                  }
                 >
-                  {priorityLabelMap[descriptor?.name]
-                    ? t(priorityLabelMap[descriptor?.name]?.descriptionTranslation)
-                    : t("listings.unitsHaveAccessibilityFeaturesFor", {
-                        type: descriptor?.name,
-                      })}
+                  {priorityLabelMap[unit.name]
+                    ? defaultIfNotTranslated(
+                        priorityLabelMap[unit.name]?.descriptionTranslation,
+                        `These units have accessibility features for people with ${unit.name}.`
+                      )
+                    : defaultIfNotTranslated(
+                        "listings.unitsHaveAccessibilityFeaturesFor",
+                        `These units have accessibility features for people with ${unit.name}.`,
+                        {
+                          type: unit.name,
+                        }
+                      )}
                 </InfoCard>
               )
             })

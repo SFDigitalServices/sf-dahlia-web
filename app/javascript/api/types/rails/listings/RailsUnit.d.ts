@@ -18,6 +18,7 @@ type RailsUnit = {
   Price_With_Parking?: number
   HOA_Dues_Without_Parking?: number
   HOA_Dues_With_Parking?: number
+  Priority_Type?: string
 }
 
 export default RailsUnit
