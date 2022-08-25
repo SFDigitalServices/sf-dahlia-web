@@ -60,7 +60,7 @@ export const ListingDetailsEligibility = ({
       titleTranslation: "listings.prioritiesDescriptor.hearing",
       descriptionTranslation: "listings.prioritiesDescriptor.hearingDescription",
     },
-    "Mobility/hearing/vision impairments": {
+    "Mobility/Hearing/Vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobilityHearingVision",
       descriptionTranslation: "listings.prioritiesDescriptor.mobilityHearingVisionDescription",
     },
