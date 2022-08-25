@@ -1,6 +1,7 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 export interface ListingDetailsLotteryPreferencesProps {
   lotteryBucketsDetails: RailsLotteryResult
@@ -12,13 +13,11 @@ export const ListingDetailsLotteryPreferences = ({
   return (
     <div className="text-tiny">
       <p className="px-8 pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
-      <header className="px-8">
-        <Heading className="text-caps-underline" priority={2}>
+      <header className="border-b border-gray-450 mb-4">
+        <Heading className="text-caps-underline mx-8" priority={2}>
           {t("lottery.housingPreferences")}
         </Heading>
-        <p className="border-b border-gray-450 mb-4 pb-4 text-gray-700 text-sm">
-          {t("lottery.rankingOrderNote")}
-        </p>
+        <p className="pb-4 text-gray-700 text-sm mx-8">{t("lottery.rankingOrderNote")}</p>
       </header>
       {lotteryBucketsDetails.lotteryBuckets
         .filter(
@@ -32,7 +31,10 @@ export const ListingDetailsLotteryPreferences = ({
                 className="font-sans font-semibold text-tiny tracking-wide uppercase"
                 priority={3}
               >
-                {bucket.preferenceName}
+                {defaultIfNotTranslated(
+                  `listings.lotteryPreference.${bucket.preferenceName}.title`,
+                  bucket.preferenceName
+                )}
               </Heading>
               <p className="text-tiny">
                 {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
@@ -43,7 +45,7 @@ export const ListingDetailsLotteryPreferences = ({
                 })}
               </p>
             </div>
-            <hr className={arr.length - 1 === index ? "mt-4" : "my-4 mx-8"} />
+            <hr className={arr.length - 1 === index ? "mt-4" : "my-4"} />
           </div>
         ))}
       <div className="bg-gray-100 border-b mb-4 p-4">

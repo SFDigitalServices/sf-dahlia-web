@@ -19,7 +19,7 @@ import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../uti
 import { areLotteryResultsShareable } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
@@ -355,7 +355,7 @@ export const noMatchesTextBanner = (content: string) => {
           <h2 className={"page-header-subheader"}>{t("listings.noMatches")}</h2>
           <p className={"page-header-text-block"}>{content}</p>
           <p className={"page-header-text-block"}>
-            {renderInlineWithInnerHTML(
+            {renderInlineMarkup(
               t("listings.weSuggestHousingCounselor", { url: getHousingCounselorsPath() })
             )}
           </p>
@@ -389,9 +389,9 @@ export const eligibilityHeader = (
     })}`
     return (
       <>
-        {renderInlineWithInnerHTML(householdSizeContent)}
-        {filters.include_children_under_6 && renderInlineWithInnerHTML(childrenContent)}
-        {renderInlineWithInnerHTML(incomeContent)}
+        {renderInlineMarkup(householdSizeContent)}
+        {filters.include_children_under_6 && renderInlineMarkup(childrenContent)}
+        {renderInlineMarkup(incomeContent)}
       </>
     )
   }

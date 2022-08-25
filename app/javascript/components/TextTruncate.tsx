@@ -6,8 +6,7 @@
 import React, { useState } from "react"
 import { t } from "@bloom-housing/ui-components"
 import truncate from "truncate-html"
-import { renderInlineWithInnerHTML } from "../util/languageUtil"
-import { stripMostTags } from "../util/filterUtil"
+import { renderInlineMarkup } from "../util/languageUtil"
 
 export interface TextTruncateProps {
   text: string
@@ -17,8 +16,8 @@ export const TextTruncate = ({ text }: TextTruncateProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true })
-  const truncatedText = renderInlineWithInnerHTML(stripMostTags(truncate(text)))
-  const untruncatedText = renderInlineWithInnerHTML(stripMostTags(text))
+  const truncatedText = text ? renderInlineMarkup(truncate(text)) : ""
+  const untruncatedText = renderInlineMarkup(text)
 
   return (
     <div className="text-sm">
