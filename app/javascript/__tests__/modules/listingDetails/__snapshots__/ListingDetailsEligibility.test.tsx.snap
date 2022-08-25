@@ -224,26 +224,6 @@ exports[`ListingDetailsLotteryInfo displays listing details eligibility section 
         <h4
           className="custom-counter__title"
         >
-          Priority Units
-        </h4>
-        <span
-          className="custom-counter__subtitle"
-        >
-          This building has units set aside if any of the following apply to you or someone in your household:
-        </span>
-      </hgroup>
-    </header>
-  </li>
-  <li
-    className="list-section custom-counter__item"
-  >
-    <header
-      className="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h4
-          className="custom-counter__title"
-        >
           Rental Assistance
         </h4>
         <span
