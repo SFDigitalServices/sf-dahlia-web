@@ -50,27 +50,27 @@ export const ListingDetailsEligibility = ({
   const priorityLabelMap = {
     "Mobility impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobility",
-      descriptionTranslation: "listings.prioritiesDescriptor.mobilityDescription",
+      description: "impaired mobility",
     },
     "Hearing/Vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.hearingVision",
-      descriptionTranslation: "listings.prioritiesDescriptor.hearingVisionDescription",
+      description: "impaired vision and/or hearing",
     },
     "Hearing impairments": {
       titleTranslation: "listings.prioritiesDescriptor.hearing",
-      descriptionTranslation: "listings.prioritiesDescriptor.hearingDescription",
+      description: "impaired hearing",
     },
     "Mobility/Hearing/Vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.mobilityHearingVision",
-      descriptionTranslation: "listings.prioritiesDescriptor.mobilityHearingVisionDescription",
+      description: "impaired mobility, hearing and/or vision",
     },
     "Vision impairments": {
       titleTranslation: "listings.prioritiesDescriptor.vision",
-      descriptionTranslation: "listings.prioritiesDescriptor.visionDescription",
+      description: "impaired vision",
     },
     "Hearing/Vision (Communication)": {
       titleTranslation: "listings.prioritiesDescriptor.hearingVisionCommunication",
-      descriptionTranslation: "listings.prioritiesDescriptor.hearingVisionCommunicationDescription",
+      description: "impaired hearing and/or vision (communication)",
     },
   }
 
@@ -193,10 +193,7 @@ export const ListingDetailsEligibility = ({
                     "listings.unitsHaveAccessibilityFeaturesFor",
                     `These units have accessibility features for people with ${unit.name}.`,
                     {
-                      type: defaultIfNotTranslated(
-                        priorityLabelMap[unit?.name]?.titleTranslation,
-                        unit.name
-                      ),
+                      type: priorityLabelMap[unit?.name]?.description || unit.name,
                     }
                   )}
                 </InfoCard>
