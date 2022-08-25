@@ -164,12 +164,12 @@ export const ListingDetailsEligibility = ({
         <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />
-      <ListSection
-        title={t("listings.priorityUnits")}
-        subtitle={t("listings.priorityUnitsDescription")}
-      >
-        {priorityUnits?.length > 0 ? (
-          priorityUnits
+      {priorityUnits?.length > 0 ? (
+        <ListSection
+          title={t("listings.priorityUnits")}
+          subtitle={t("listings.priorityUnitsDescription")}
+        >
+          {priorityUnits
             .filter((unit: ReducedUnit) => {
               return unit?.name !== "Adaptable"
             })
@@ -207,11 +207,11 @@ export const ListingDetailsEligibility = ({
                       )}
                 </InfoCard>
               )
-            })
-        ) : (
-          <></>
-        )}
-      </ListSection>
+            })}
+        </ListSection>
+      ) : (
+        <></>
+      )}
       <ListSection
         title={t("listingsForRent.rentalAssistance.title")}
         subtitle={t("listingsForRent.rentalAssitance.subtitle")}
