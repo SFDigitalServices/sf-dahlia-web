@@ -176,14 +176,10 @@ export const ListingDetailsEligibility = ({
             .map((unit: ReducedUnit) => {
               return (
                 <InfoCard
-                  title={
-                    priorityLabelMap[unit?.name]
-                      ? defaultIfNotTranslated(
-                          priorityLabelMap[unit?.name]?.titleTranslation,
-                          unit.name
-                        )
-                      : unit?.name
-                  }
+                  title={defaultIfNotTranslated(
+                    priorityLabelMap[unit?.name]?.titleTranslation,
+                    unit.name
+                  )}
                   subtitle={
                     unit.numberOfUnits === 1
                       ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
@@ -193,18 +189,16 @@ export const ListingDetailsEligibility = ({
                       : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
                   }
                 >
-                  {priorityLabelMap[unit.name]
-                    ? defaultIfNotTranslated(
-                        priorityLabelMap[unit.name]?.descriptionTranslation,
-                        `These units have accessibility features for people with ${unit.name}.`
-                      )
-                    : defaultIfNotTranslated(
-                        "listings.unitsHaveAccessibilityFeaturesFor",
-                        `These units have accessibility features for people with ${unit.name}.`,
-                        {
-                          type: unit.name,
-                        }
-                      )}
+                  {defaultIfNotTranslated(
+                    "listings.unitsHaveAccessibilityFeaturesFor",
+                    `These units have accessibility features for people with ${unit.name}.`,
+                    {
+                      type: defaultIfNotTranslated(
+                        priorityLabelMap[unit?.name]?.titleTranslation,
+                        unit.name
+                      ),
+                    }
+                  )}
                 </InfoCard>
               )
             })}
