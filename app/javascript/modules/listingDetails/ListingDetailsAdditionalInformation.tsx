@@ -2,7 +2,7 @@ import React from "react"
 import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isSale } from "../../util/listingUtil"
+import { isHabitatListing, isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -35,18 +35,29 @@ export const ListingDetailsAdditionalInformation = ({
             <TextTruncate text={listing.Listing_Other_Notes} />
           </div>
         )}
-        {listing.Required_Documents && (
+        {(!!listing.Required_Documents || isSale(listing)) && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
             <div className="text-sm">
               <TextTruncate text={listing.Required_Documents} />
             </div>
+            {isSale(listing) && !isHabitatListing(listing) && (
+              <div className="text-sm mt-4">
+                <TextTruncate
+                  text={t("listings.requiredDocumentsAfterApplying", {
+                    url: "https://sfmohcd.org/after-homebuyer-lottery",
+                  })}
+                />
+              </div>
+            )}
           </div>
         )}
         {listing.Legal_Disclaimers && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
-            <TextTruncate text={listing.Legal_Disclaimers} />
+            <div className="text-sm">
+              <TextTruncate text={listing.Legal_Disclaimers} />
+            </div>
           </div>
         )}
         {listing.CC_and_R_URL && (
