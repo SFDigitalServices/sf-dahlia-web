@@ -677,7 +677,7 @@
   "listings.additional.title": "Mga Karagdagang Nakalistang Pabahay",
   "listings.additionalEligibilityRules.creditHistory": "Kasaysayan ng Credit o Pag-utang",
   "listings.additionalEligibilityRules.criminalBackground": "Kriminal na Nakaraan ",
-  "listings.additionalEligibilityRules.criminalBackgroundInfo": "Isasaalang-alang para sa pabahay ang mga kuwalipikadong aplikante na may kriminal na kasaysayan bilang pagsunod sa <a target='_blank' href='%{article49Url}'>Article 49</a> ng Kodigo ng Pulisya (Police Code) ng San Francisco: <a href='%{fairChanceUrl}' target='_blank'>Ordinansa ukol sa Pagbibigay ng Makatarungang Pagkakataon (Fair Chance Ordinance)",
+  "listings.additionalEligibilityRules.criminalBackgroundInfo": "Isasaalang-alang para sa pabahay ang mga kuwalipikadong aplikante na may kriminal na kasaysayan bilang pagsunod sa <a target='_blank' href='%{article49Url}'>Article 49</a> ng Kodigo ng Pulisya (Police Code) ng San Francisco: <a href='%{fairChanceUrl}' target='_blank'>Ordinansa ukol sa Pagbibigay ng Makatarungang Pagkakataon (Fair Chance Ordinance)</a>",
   "listings.additionalEligibilityRules.findOutMore": "Alamin pa ang tungkol sa Pamantayan para sa Pagpili ng Gusali (Building Selection Criteria)",
   "listings.additionalEligibilityRules.rentalHistory": "Kasaysayan sa Pag-upa",
   "listings.additionalEligibilityRules.subtitle": "Kailangang kuwalipikado rin ang aplikante batay sa mga patakaran ng gusali.",

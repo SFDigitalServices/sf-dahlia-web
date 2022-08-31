@@ -49,11 +49,9 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       <div
         class="mb-3 mx-2 text-gray-700 text-sm"
       >
-        <p>
-          <strong>
-            Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
-          </strong>
-        </p>
+        <strong>
+          Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
+        </strong>
       </div>
       <button
         class="button is-primary is-small"

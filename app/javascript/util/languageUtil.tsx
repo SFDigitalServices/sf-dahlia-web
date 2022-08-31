@@ -3,6 +3,7 @@ import Markdown from "markdown-to-jsx"
 import dayjs from "dayjs"
 import React from "react"
 
+import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 
 type PhraseBundle = Record<string, unknown>
@@ -139,11 +140,11 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
 export function renderMarkup(translatedString: string) {
-  return <Markdown options={{ forceBlock: true }}>{translatedString}</Markdown>
+  return <Markdown options={{ forceBlock: true }}>{stripMostTags(translatedString)}</Markdown>
 }
 
 export function renderInlineMarkup(translatedString: string) {
-  return <Markdown>{translatedString}</Markdown>
+  return <Markdown>{stripMostTags(translatedString)}</Markdown>
 }
 
 // Get the translated community type
