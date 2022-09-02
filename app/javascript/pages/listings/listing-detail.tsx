@@ -24,10 +24,11 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen, isPluralSRO } from "../../util/listingUtil"
+import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
+import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -66,11 +67,14 @@ const ListingDetail = () => {
               reservedCommunityType={listing.Reserved_community_type}
             />
             <ListingDetailsPricingTable />
-            {isPluralSRO && (
-              <InfoCard title={t("listings.singleRoomOccupancy")}>
-                {t("listings.singleRoomOccupancyDescription")}
-              </InfoCard>
-            )}
+            {listingHasSROUnits(listing) &&
+              !(
+                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
+              ) && (
+                <div className="md:w-2/3 md:pr-8">
+                  <ListingDetailsSROInfo listing={listing} />
+                </div>
+              )}
             {isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate

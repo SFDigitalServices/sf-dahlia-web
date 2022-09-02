@@ -947,6 +947,7 @@
   "listings.unitTypes.3 BR": "3 Bedroom",
   "listings.unitTypes.4 BR": "4 Bedroom",
   "listings.unitTypes.5 BR": "5 Bedroom",
+  "listings.unitTypes.Room": "Room",
   "listings.unitTypes.SRO": "SRO",
   "listings.unitTypes.Studio": "Studio",
   "listings.unitsAreFor": "These units are for %{type}.",
