@@ -8,7 +8,13 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isHabitatListing, isSale } from "../../util/listingUtil"
+import {
+  isHabitatListing,
+  isPluralSRO,
+  isSale,
+  listingHasOnlySROUnits,
+  listingHasSROUnits,
+} from "../../util/listingUtil"
 import { renderMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
@@ -22,6 +28,9 @@ export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
 }: ListingDetailsEligibilityProps) => {
+  const isAllSRO = listingHasOnlySROUnits(listing)
+  const isSomeSRO = listingHasSROUnits(listing)
+
   /* TODO: Implement updated API to get actual data */
   const HMITableHeaders = {
     householdSize: "t.householdSize",
@@ -59,16 +68,47 @@ export const ListingDetailsEligibility = ({
     },
   ]
 
+  let occupancySubtitle = ""
+  if (isSale(listing)) {
+    occupancySubtitle = t("listings.occupancyDescriptionMinOne")
+  } else if (
+    isAllSRO &&
+    !(isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing))
+  ) {
+    occupancySubtitle = t("listings.occupancyDescriptionAllSro")
+  } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
+    occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
+  } else if (!isAllSRO && isSomeSRO) {
+    occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
+  } else {
+    occupancySubtitle = t("listings.occupancyDescriptionNoSro")
+  }
+
   const occupancyTableHeaders = {
     unitType: "t.unitType",
     occupancy: "t.occupancy",
   }
-  const occupancyTableData = listing.unitSummaries.general.map((unit) => ({
-    unitType: {
-      content: <span className="font-semibold">{t(`listings.unitTypes.${unit.unitType}`)}</span>,
-    },
-    occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
-  }))
+  const occupancyTableData = listing.unitSummaries.general.map((unit) => {
+    let occupancyLabel = ""
+    if (unit.maxOccupancy === 1) {
+      occupancyLabel = `1 ${t("listings.person")}`
+    } else if (unit.minOccupancy && unit.maxOccupancy) {
+      occupancyLabel = t("listings.minMaxPeople", {
+        min: unit.minOccupancy,
+        max: unit.maxOccupancy,
+      })
+    } else if (unit.minOccupancy && !unit.maxOccupancy) {
+      occupancyLabel = t("listings.minPeople", { num: unit.minOccupancy })
+    }
+    return {
+      unitType: {
+        content: <span className="font-semibold">{t(`listings.unitTypes.${unit.unitType}`)}</span>,
+      },
+      occupancy: {
+        content: occupancyLabel,
+      },
+    }
+  })
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -107,7 +147,7 @@ export const ListingDetailsEligibility = ({
       >
         <StandardTable headers={HMITableHeaders} data={HMITableData} />
       </ListSection>
-      <ListSection title={t("t.occupancy")} subtitle={t("listings.occupancyDescriptionNoSro")}>
+      <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
         <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import {
+  InfoCard,
   ListingDetails,
   LoadingOverlay,
   Mobile,
@@ -23,7 +24,7 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen } from "../../util/listingUtil"
+import { isOpen, isPluralSRO } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
@@ -65,6 +66,11 @@ const ListingDetail = () => {
               reservedCommunityType={listing.Reserved_community_type}
             />
             <ListingDetailsPricingTable />
+            {isPluralSRO && (
+              <InfoCard title={t("listings.singleRoomOccupancy")}>
+                {t("listings.singleRoomOccupancyDescription")}
+              </InfoCard>
+            )}
             {isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate

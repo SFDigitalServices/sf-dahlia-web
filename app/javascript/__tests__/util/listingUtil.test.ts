@@ -7,13 +7,28 @@ import {
   isSale,
   getEventTimeString,
   paperApplicationURLs,
+  listingHasOnlySROUnits,
+  listingHasSROUnits,
+  isPluralSRO,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
+import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
 
 describe("listingUtil", () => {
+  const OLD_ENV = process.env
+
+  beforeEach(() => {
+    jest.resetModules()
+    process.env = { ...OLD_ENV }
+  })
+
+  afterAll(() => {
+    process.env = OLD_ENV
+  })
+
   describe("isLotteryComplete", () => {
     it("should return false when listing is open", () => {
       expect(isLotteryComplete(openSaleListing)).toBe(false)
@@ -51,6 +66,38 @@ describe("listingUtil", () => {
 
     it("should return true when listing is a sale", () => {
       expect(isSale(openSaleListing)).toBe(true)
+    })
+  })
+
+  describe("listingHasOnlySROUnits", () => {
+    it("should return false when not all units are SRO", () => {
+      expect(listingHasOnlySROUnits(closedRentalListing)).toBe(false)
+    })
+
+    it("should return true when all units are SRO", () => {
+      expect(listingHasOnlySROUnits(sroRentalListing)).toBe(true)
+    })
+  })
+
+  describe("listingHasSROUnits", () => {
+    it("should return false when listing has no SRO units", () => {
+      expect(listingHasSROUnits(closedRentalListing)).toBe(false)
+    })
+
+    it("should return true when listing has SRO units", () => {
+      expect(listingHasSROUnits(sroRentalListing)).toBe(true)
+    })
+  })
+
+  describe("isPluralSRO", () => {
+    it("should return false when listing is not in the list of plural SROs", () => {
+      expect(isPluralSRO("Merry Go Round Shared Housing", sroRentalListing)).toBe(false)
+    })
+
+    it("should return true when listing is in the list of plural SROs", () => {
+      process.env.SRO_PLURAL_LISTINGS = JSON.parse(process.env.SRO_PLURAL_LISTINGS)
+      const listing = { ...sroRentalListing, Id: "a0W0P00000F7t4uUAB" }
+      expect(isPluralSRO("Merry Go Round Shared Housing", listing)).toBe(true)
     })
   })
 
