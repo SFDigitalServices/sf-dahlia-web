@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import {
-  InfoCard,
   ListingDetails,
   LoadingOverlay,
   Mobile,
