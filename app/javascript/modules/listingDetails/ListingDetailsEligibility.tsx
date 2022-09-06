@@ -47,36 +47,6 @@ export const ListingDetailsEligibility = ({
     }
   })
 
-  const priorityLabelMap = {
-    "Mobility impairments": {
-      titleTranslation: "listings.prioritiesDescriptor.mobility",
-      descriptionTranslation: "listings.unitsHaveAccessibilityFeaturesFor.impaired mobility",
-    },
-    "Hearing/Vision impairments": {
-      titleTranslation: "listings.prioritiesDescriptor.hearingVision",
-      descriptionTranslation:
-        "listings.unitsHaveAccessibilityFeaturesFor.impaired vision and/or hearing",
-    },
-    "Hearing impairments": {
-      titleTranslation: "listings.prioritiesDescriptor.hearing",
-      descriptionTranslation: "listings.unitsHaveAccessibilityFeaturesFor.impaired hearing",
-    },
-    "Mobility/Hearing/Vision impairments": {
-      titleTranslation: "listings.prioritiesDescriptor.mobilityHearingVision",
-      descriptionTranslation:
-        "listings.unitsHaveAccessibilityFeaturesFor.impaired mobility, hearing and/or vision",
-    },
-    "Vision impairments": {
-      titleTranslation: "listings.prioritiesDescriptor.vision",
-      descriptionTranslation: "listings.unitsHaveAccessibilityFeaturesFor.impaired vision",
-    },
-    "Hearing/Vision (Communication)": {
-      titleTranslation: "listings.prioritiesDescriptor.hearingVisionCommunication",
-      descriptionTranslation:
-        "listings.unitsHaveAccessibilityFeaturesFor.impaired hearing and/or vision (communication)",
-    },
-  }
-
   /* TODO: Implement updated API to get actual data */
   const HMITableHeaders = {
     householdSize: "t.householdSize",
@@ -179,10 +149,7 @@ export const ListingDetailsEligibility = ({
             .map((unit: ReducedUnit) => {
               return (
                 <InfoCard
-                  title={defaultIfNotTranslated(
-                    priorityLabelMap[unit?.name]?.titleTranslation,
-                    unit.name
-                  )}
+                  title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
                   subtitle={
                     unit.numberOfUnits === 1
                       ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
@@ -193,7 +160,7 @@ export const ListingDetailsEligibility = ({
                   }
                 >
                   {defaultIfNotTranslated(
-                    priorityLabelMap[unit?.name]?.descriptionTranslation,
+                    `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
                     `These units have accessibility features for people with ${unit.name}.`
                   )}
                 </InfoCard>
