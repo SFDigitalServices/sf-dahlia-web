@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsAdditionalInformation displays additional information section for a rental string 1`] = `
+exports[`ListingDetailsAdditionalInformation displays additional information section for a rental listing 1`] = `
 <li
   className="responsive-content-item "
 >
@@ -78,100 +78,18 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           className="text-sm"
         >
           <span>
-            <span
-              style={
-                Object {
-                  "": "",
-                  "fontSize": "10pt",
-                }
-              }
-            >
-              <span
-                style={
-                  Object {
-                    "": "",
-                    "fontFamily": "arial,sans-serif",
-                  }
-                }
-              >
-                All BMR renters must review and acknowledge the 
-              </span>
-            </span>
+            All BMR renters must review and acknowledge the 
             <a
               href="http://sf-moh.org/index.aspx?page=295"
               target="_blank"
             >
-              <span
-                style={
-                  Object {
-                    "": "",
-                    "fontSize": "10pt",
-                  }
-                }
-              >
-                <span
-                  style={
-                    Object {
-                      "": "",
-                      "fontFamily": "arial,sans-serif",
-                    }
-                  }
-                />
-                <span
-                  style={
-                    Object {
-                      "": "",
-                      "color": "rgb(0, 0, 255)",
-                    }
-                  }
-                >
-                  Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013
-                </span>
-              </span>
-              <p>
-                &lt;/span&gt;
-              </p>
+              Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013
             </a>
-            <span
-              style={
-                Object {
-                  "": "",
-                  "fontSize": "10pt",
-                }
-              }
-            >
-              <span
-                style={
-                  Object {
-                    "": "",
-                    "fontFamily": "arial,sans-serif",
-                  }
-                }
-              >
-                that governs this property upon the signing of a lease for a BMR unit. 
-              </span>
-            </span>
+             that governs this property upon the signing of a lease for a BMR unit. 
             <br />
+             
             <br />
-            <span
-              style={
-                Object {
-                  "": "",
-                  "fontSize": "10pt",
-                }
-              }
-            >
-              <span
-                style={
-                  Object {
-                    "": "",
-                    "fontFamily": "arial,sans-serif",
-                  }
-                }
-              >
-                Applicants should be informed that BMR rental units in some buildings may convert to ownership units in the future. In the case of conversion, BMR renters will be afforded certain rights as explained in ... 
-              </span>
-            </span>
+            Applicants should be informed that BMR rental units in some buildings may convert to ownership units in the future.  In the case of conversion, BMR renters will be afforded certain rights as explained in ...
           </span>
           <span
             className="button-toggle ml-1"
@@ -244,26 +162,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <span>
-          <b>
-            Some
-          </b>
-          <i>
-            other
-          </i>
-          <u>
-            excessively
-          </u>
-          <strike>
-            formatted
-          </strike>
-          <b>
-            <i>
-              <u>
-                listing notes
-              </u>
-            </i>
-          </b>
-          .
+          Some other excessively formatted listing notes.
         </span>
       </div>
     </div>
@@ -282,16 +181,13 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           className="text-sm"
         >
           <span>
-            Proof of residence Bank statements Concert tickets
-          </span>
-          <span
-            className="button-toggle ml-1"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            tabIndex={0}
-          >
-            More
+            Proof of residence
+
+            <br />
+            Bank statements
+
+            <br />
+            Concert tickets
           </span>
         </div>
       </div>
@@ -329,15 +225,9 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           className="text-sm"
         >
           <span>
-            Some important program rules with bullets: 
-            <ul>
-              <li>
-                Rule one
-              </li>
-              <li>
-                Rule two
-              </li>
-            </ul>
+            Some important program rules with bullets:
+            <br />
+            Rule oneRule two
           </span>
         </div>
       </div>
@@ -399,16 +289,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
               className="text-sm"
             >
               <span>
-                <b>
-                  Register
-                </b>
-                <i>
-                  with
-                </i>
-                <u>
-                  the
-                </u>
-                 Leasing Agent
+                Register with the Leasing Agent
               </span>
             </div>
           </span>
