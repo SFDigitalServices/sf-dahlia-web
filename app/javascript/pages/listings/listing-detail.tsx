@@ -27,6 +27,7 @@ import { isOpen } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
+import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -83,6 +84,10 @@ const ListingDetail = () => {
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <MobileListingDetailsProcess
+                listing={listing}
+                imageSrc={getAssetPath("listing-units.svg")}
               />
               <ListingDetailsFeatures
                 listing={listing}

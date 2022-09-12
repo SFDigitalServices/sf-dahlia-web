@@ -7,6 +7,7 @@ import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
+import { ListingDetailsLotteryPreferences } from "../listingDetailsAside/ListingDetailsLotteryPreferences"
 
 export interface ListingDetailsLotteryProps {
   imageSrc: string
@@ -28,6 +29,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsOpenHouses listing={listing} />
+          <ListingDetailsLotteryPreferences listing={listing} />
           <ListingDetailsProcess listing={listing} />
         </ListingDetailItem>
       </Mobile>
