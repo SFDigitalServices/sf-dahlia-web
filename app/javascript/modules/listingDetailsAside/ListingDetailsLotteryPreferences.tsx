@@ -21,7 +21,11 @@ export const ListingDetailsLotteryPreferences = ({ listing }: ListingDetailsProc
         return (
           <SidebarBlock
             className=""
-            title={t("listings.confirmedNeighorhoodResidentHousingPreferenceListTitle")}
+            title={t("listings.confirmedPreferenceList", {
+              preference: t(
+                `listings.lotteryPreference.${preference.Lottery_Preference.Name}.title`
+              ),
+            })}
           >
             <LinkButton
               styleType={AppearanceStyleType.primary}
@@ -29,7 +33,7 @@ export const ListingDetailsLotteryPreferences = ({ listing }: ListingDetailsProc
               transition={true}
               href={preference.PDF_URL}
             >
-              View Preference List
+              {t("lottery.viewPreferenceList")}
             </LinkButton>
             <p className="mt-4">{t("lottery.applicationsThatQualifyForPreference")}</p>
           </SidebarBlock>
