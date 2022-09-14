@@ -8,7 +8,7 @@ export interface ListingDetailsProcessProps {
   listing: RailsListing
 }
 
-export const ListingDetailsLotteryPreferences = ({ listing }: ListingDetailsProcessProps) => {
+export const ListingDetailsLotteryPreferenceLists = ({ listing }: ListingDetailsProcessProps) => {
   if (isLotteryComplete(listing)) {
     return null
   }
