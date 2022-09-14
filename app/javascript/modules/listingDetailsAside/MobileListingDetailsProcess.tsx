@@ -3,7 +3,6 @@ import { ListingDetailItem, t, Mobile } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
 import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
@@ -11,10 +10,14 @@ import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
   imageSrc: string
+  isApplicationOpen: boolean
 }
 
-export const MobileListingDetailsProcess = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
-  const isApplicationOpen = isOpen(listing)
+export const MobileListingDetailsProcess = ({
+  listing,
+  imageSrc,
+  isApplicationOpen,
+}: ListingDetailsSidebarProps) => {
   return (
     listing &&
     isApplicationOpen && (

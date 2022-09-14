@@ -1,16 +1,18 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isOpen } from "../../util/listingUtil"
 import { EventSection, Contact, t, ExpandableSection } from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
+  isApplicationOpen: boolean
 }
 
-export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) => {
-  const isApplicationOpen = isOpen(listing)
+export const ListingDetailsProcess = ({
+  listing,
+  isApplicationOpen,
+}: ListingDetailsProcessProps) => {
   return (
     <>
       {!!listing.Lottery_Date &&

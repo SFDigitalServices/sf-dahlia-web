@@ -17,10 +17,9 @@ export const ListingDetailsLotteryPreferences = ({ listing }: ListingDetailsProc
     <>
       {listing.Listing_Lottery_Preferences.filter((preference: ListingLotteryPreference) => {
         return !!preference.PDF_URL
-      }).map((preference) => {
+      }).map((preference: ListingLotteryPreference) => {
         return (
           <SidebarBlock
-            className=""
             title={t("listings.confirmedPreferenceList", {
               preference: t(
                 `listings.lotteryPreference.${preference.Lottery_Preference.Name}.title`

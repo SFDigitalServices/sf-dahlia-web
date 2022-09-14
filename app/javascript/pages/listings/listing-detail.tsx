@@ -88,6 +88,7 @@ const ListingDetail = () => {
               <MobileListingDetailsProcess
                 listing={listing}
                 imageSrc={getAssetPath("listing-units.svg")}
+                isApplicationOpen={isApplicationOpen}
               />
               <ListingDetailsFeatures
                 listing={listing}
