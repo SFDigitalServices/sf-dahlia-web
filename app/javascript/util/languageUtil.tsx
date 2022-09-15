@@ -14,6 +14,10 @@ export interface LangConfig {
   load: () => Promise<PhraseBundle>
 }
 
+interface TranslationInterpolations {
+  [key: string]: string
+}
+
 export enum LanguagePrefix {
   English = "en",
   Spanish = "es",
@@ -170,8 +174,20 @@ export function getReservedCommunityType(type: string | undefined): string {
 /**
  * If no translation exists for current key, return default salesforce value
  */
-export function defaultIfNotTranslated(key: string, value: string): string {
-  const translatedKey = t(key)
+export function defaultIfNotTranslated(
+  key: string,
+  value: string,
+  translationInterpolations?: TranslationInterpolations
+): string {
+  let translatedKey
+
+  if (translationInterpolations) {
+    translatedKey = t(key, translationInterpolations)
+  }
+
+  if (!translationInterpolations) {
+    translatedKey = t(key)
+  }
   return translatedKey === key ? value : translatedKey
 }
 
