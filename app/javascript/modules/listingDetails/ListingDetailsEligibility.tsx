@@ -30,8 +30,8 @@ export const ListingDetailsEligibility = ({
 }: ListingDetailsEligibilityProps) => {
   const priorityUnits = []
 
-  listing.Units.forEach((unit: RailsUnit) => {
-    const priorityUnit = priorityUnits.find((priorityUnit: ReducedUnit) => {
+  listing.Units?.forEach((unit: RailsUnit) => {
+    const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
       return priorityUnit.name === unit.Priority_Type
     })
 
