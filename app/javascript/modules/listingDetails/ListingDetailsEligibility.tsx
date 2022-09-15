@@ -40,7 +40,7 @@ export const ListingDetailsEligibility = ({
   const HMITableData = [
     {
       householdSize: {
-        content: <span className="font-semibold">{`1 ${t("listings.person")}`}</span>,
+        content: <span className="font-semibold">{t("listings.onePerson")}</span>,
       },
       maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
       maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
@@ -91,7 +91,7 @@ export const ListingDetailsEligibility = ({
   const occupancyTableData = listing.unitSummaries.general.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
-      occupancyLabel = `1 ${t("listings.person")}`
+      occupancyLabel = t("listings.onePerson")
     } else if (unit.minOccupancy && unit.maxOccupancy) {
       occupancyLabel = t("listings.minMaxPeople", {
         min: unit.minOccupancy,
