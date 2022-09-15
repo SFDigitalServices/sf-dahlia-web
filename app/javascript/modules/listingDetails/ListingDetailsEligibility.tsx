@@ -9,19 +9,44 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
-import { renderMarkup } from "../../util/languageUtil"
+import { renderMarkup, defaultIfNotTranslated } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
+import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
   imageSrc: string
 }
 
+export interface ReducedUnit {
+  name: string
+  numberOfUnits: number
+}
+
 export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
 }: ListingDetailsEligibilityProps) => {
+  const priorityUnits = []
+
+  listing.Units?.forEach((unit: RailsUnit) => {
+    const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
+      return priorityUnit.name === unit.Priority_Type
+    })
+
+    if (unit.Priority_Type && !priorityUnit) {
+      priorityUnits.push({
+        name: unit.Priority_Type,
+        numberOfUnits: 1,
+      })
+    }
+
+    if (unit.Priority_Type && priorityUnit) {
+      priorityUnit.numberOfUnits++
+    }
+  })
+
   /* TODO: Implement updated API to get actual data */
   const HMITableHeaders = {
     householdSize: "t.householdSize",
@@ -69,6 +94,7 @@ export const ListingDetailsEligibility = ({
     },
     occupancy: { content: `${unit.minOccupancy}-${unit.maxOccupancy} ${t("listings.people")}` },
   }))
+
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -111,6 +137,39 @@ export const ListingDetailsEligibility = ({
         <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
       </ListSection>
       <ListingDetailsPreferences listingID={listing.listingID} />
+      {priorityUnits?.length > 0 ? (
+        <ListSection
+          title={t("listings.priorityUnits")}
+          subtitle={t("listings.priorityUnitsDescription")}
+        >
+          {priorityUnits
+            .filter((unit: ReducedUnit) => {
+              return unit?.name !== "Adaptable"
+            })
+            .map((unit: ReducedUnit) => {
+              return (
+                <InfoCard
+                  title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
+                  subtitle={
+                    unit.numberOfUnits === 1
+                      ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
+                          "listings.features.unit",
+                          "unit"
+                        )}`
+                      : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
+                  }
+                >
+                  {defaultIfNotTranslated(
+                    `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
+                    `These units have accessibility features for people with ${unit.name}.`
+                  )}
+                </InfoCard>
+              )
+            })}
+        </ListSection>
+      ) : (
+        <></>
+      )}
       <ListSection
         title={t("listingsForRent.rentalAssistance.title")}
         subtitle={t("listingsForRent.rentalAssitance.subtitle")}
