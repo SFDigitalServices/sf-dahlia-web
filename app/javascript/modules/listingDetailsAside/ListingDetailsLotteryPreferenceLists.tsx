@@ -12,10 +12,11 @@ export interface ListingDetailsLotteryPreferenceLists {
 export const ListingDetailsLotteryPreferenceLists = ({
   listing,
   isApplicationOpen,
-}: ListingDetailsProcessProps) => {
+}: ListingDetailsLotteryPreferenceLists) => {
   if (isLotteryComplete(listing) || isApplicationOpen) {
     return null
   }
+
   return (
     <>
       {listing.Listing_Lottery_Preferences.filter((preference: ListingLotteryPreference) => {
