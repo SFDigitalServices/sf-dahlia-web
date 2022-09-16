@@ -42,7 +42,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           <ListingDetailsApply listing={listing} />
           <ListingDetailsLotteryPreferenceLists listing={listing} />
-          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationopen} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </div>
       </aside>
     </ListingDetailItem>
