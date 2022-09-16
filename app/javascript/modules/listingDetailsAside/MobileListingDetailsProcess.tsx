@@ -34,7 +34,7 @@ export const MobileListingDetailsProcess = ({
           <ListingDetailsLotteryResults listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </ListingDetailItem>
       </Mobile>
     )
