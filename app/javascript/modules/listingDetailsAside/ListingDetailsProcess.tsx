@@ -20,40 +20,45 @@ export const ListingDetailsProcess = ({
         dayjs(listing.Lottery_Date) > dayjs() &&
         !listing.LotteryResultsURL &&
         isApplicationOpen && (
-          <EventSection
-            events={[
-              {
-                dateString: localizedFormat(listing.Lottery_Date, "LL"),
-                timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
-                note: getEventNote({
-                  City: listing.Lottery_City,
-                  Street_Address: listing.Lottery_Street_Address,
-                  Venue: listing.Lottery_Venue,
-                }),
-              },
-            ]}
-            headerText={t("listings.process.publicLottery")}
-            sectionHeader={true}
-          />
+          <div className="border-b border-gray-400 md:border-b-0">
+            <EventSection
+              events={[
+                {
+                  dateString: localizedFormat(listing.Lottery_Date, "LL"),
+                  timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
+                  note: getEventNote({
+                    City: listing.Lottery_City,
+                    Street_Address: listing.Lottery_Street_Address,
+                    Venue: listing.Lottery_Venue,
+                  }),
+                },
+              ]}
+              headerText={t("listings.process.publicLottery")}
+              sectionHeader={true}
+            />
+          </div>
         )}
-      <ExpandableSection
-        content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
-        expandableContent={
-          <>
-            <p>{t("f2ReviewTerms.p3")}</p>
-            <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
-          </>
-        }
-        strings={{
-          title: t("label.whatToExpect"),
-          readMore: t("label.readMore"),
-          readLess: t("label.readLess"),
-        }}
-      />
+      <div className="border-b border-gray-400 md:border-b-0">
+        <ExpandableSection
+          content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
+          expandableContent={
+            <>
+              <p>{t("f2ReviewTerms.p3")}</p>
+              <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
+            </>
+          }
+          strings={{
+            title: t("label.whatToExpect"),
+            readMore: t("label.readMore"),
+            readLess: t("label.readLess"),
+          }}
+        />
+      </div>
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
       />
+
       {(listing.Leasing_Agent_Email ||
         listing.Leasing_Agent_Name ||
         listing.Leasing_Agent_Phone ||

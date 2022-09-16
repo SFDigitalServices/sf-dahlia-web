@@ -12,18 +12,21 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
   return (
     <>
       {listing.Information_Sessions?.length > 0 ? (
-        <EventSection
-          dateClassName="normal-case"
-          sectionHeader={true}
-          events={listing.Information_Sessions?.map((informationSession) => {
-            return {
-              dateString: informationSession.Date && localizedFormat(informationSession.Date, "LL"),
-              timeString: getEventTimeString(informationSession),
-              note: getEventNote(informationSession),
-            }
-          })}
-          headerText={t("listings.process.informationSessions")}
-        />
+        <div className="border-b border-gray-400 md:border-b-0">
+          <EventSection
+            dateClassName="normal-case"
+            sectionHeader={true}
+            events={listing.Information_Sessions?.map((informationSession) => {
+              return {
+                dateString:
+                  informationSession.Date && localizedFormat(informationSession.Date, "LL"),
+                timeString: getEventTimeString(informationSession),
+                note: getEventNote(informationSession),
+              }
+            })}
+            headerText={t("listings.process.informationSessions")}
+          />
+        </div>
       ) : null}
       {/* TODO: Bloom prop changes for get and submit application sections */}
     </>

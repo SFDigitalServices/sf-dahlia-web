@@ -4,7 +4,7 @@ import { AppearanceStyleType, t, SidebarBlock, LinkButton } from "@bloom-housing
 import { isLotteryComplete } from "../../util/listingUtil"
 import { ListingLotteryPreference } from "../../api/types/rails/listings/BaseRailsListing"
 
-export interface ListingDetailsProcessProps {
+export interface ListingDetailsLotteryPreferenceLists {
   listing: RailsListing
   isApplicationOpen: boolean
 }
@@ -22,23 +22,25 @@ export const ListingDetailsLotteryPreferenceLists = ({
         return !!preference.PDF_URL
       }).map((preference: ListingLotteryPreference) => {
         return (
-          <SidebarBlock
-            title={t("listings.confirmedPreferenceList", {
-              preference: t(
-                `listings.lotteryPreference.${preference.Lottery_Preference.Name}.title`
-              ),
-            })}
-          >
-            <LinkButton
-              styleType={AppearanceStyleType.primary}
-              className={"w-full mt-1"}
-              transition={true}
-              href={preference.PDF_URL}
+          <div className="border-b border-gray-400 md:border-b-0">
+            <SidebarBlock
+              title={t("listings.confirmedPreferenceList", {
+                preference: t(
+                  `listings.lotteryPreference.${preference.Lottery_Preference.Name}.title`
+                ),
+              })}
             >
-              {t("lottery.viewPreferenceList")}
-            </LinkButton>
-            <p className="mt-4">{t("lottery.applicationsThatQualifyForPreference")}</p>
-          </SidebarBlock>
+              <LinkButton
+                styleType={AppearanceStyleType.primary}
+                className={"w-full mt-1"}
+                transition={true}
+                href={preference.PDF_URL}
+              >
+                {t("lottery.viewPreferenceList")}
+              </LinkButton>
+              <p className="mt-4">{t("lottery.applicationsThatQualifyForPreference")}</p>
+            </SidebarBlock>
+          </div>
         )
       })}
     </>
