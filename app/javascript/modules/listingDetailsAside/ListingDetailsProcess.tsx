@@ -3,6 +3,7 @@ import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
 import { EventSection, Contact, t, ExpandableSection } from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
@@ -48,6 +49,10 @@ export const ListingDetailsProcess = ({
           readMore: t("label.readMore"),
           readLess: t("label.readLess"),
         }}
+      />
+      <ListingDetailsLotteryPreferenceLists
+        listing={listing}
+        isApplicationOpen={isApplicationOpen}
       />
       {(listing.Leasing_Agent_Email ||
         listing.Leasing_Agent_Name ||

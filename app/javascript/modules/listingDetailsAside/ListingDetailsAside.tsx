@@ -10,7 +10,6 @@ import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDe
 import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
-import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -41,7 +40,6 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsOpenHouses listing={listing} />
           {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           <ListingDetailsApply listing={listing} />
-          <ListingDetailsLotteryPreferenceLists listing={listing} />
           <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </div>
       </aside>

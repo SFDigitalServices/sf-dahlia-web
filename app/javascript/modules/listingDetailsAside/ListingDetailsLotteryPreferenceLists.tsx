@@ -6,13 +6,16 @@ import { ListingLotteryPreference } from "../../api/types/rails/listings/BaseRai
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
+  isApplicationOpen: boolean
 }
 
-export const ListingDetailsLotteryPreferenceLists = ({ listing }: ListingDetailsProcessProps) => {
-  if (isLotteryComplete(listing)) {
+export const ListingDetailsLotteryPreferenceLists = ({
+  listing,
+  isApplicationOpen,
+}: ListingDetailsProcessProps) => {
+  if (isLotteryComplete(listing) || isApplicationOpen) {
     return null
   }
-
   return (
     <>
       {listing.Listing_Lottery_Preferences.filter((preference: ListingLotteryPreference) => {
