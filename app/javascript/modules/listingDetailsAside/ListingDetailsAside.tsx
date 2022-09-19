@@ -34,13 +34,13 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
           {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
-          importance in different state */}
+          importance in different states */}
           {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsOpenHouses listing={listing} />
           {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           <ListingDetailsApply listing={listing} />
-          <ListingDetailsProcess listing={listing} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </div>
       </aside>
     </ListingDetailItem>

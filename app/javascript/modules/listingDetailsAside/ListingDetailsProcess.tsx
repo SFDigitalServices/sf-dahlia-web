@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isOpen, isSale } from "../../util/listingUtil"
+import { isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -10,50 +10,64 @@ import {
   SidebarBlock,
 } from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
+  isApplicationOpen: boolean
 }
 
-export const ListingDetailsProcess = ({ listing }: ListingDetailsProcessProps) => {
-  const isApplicationOpen = isOpen(listing)
+export const ListingDetailsProcess = ({
+  listing,
+  isApplicationOpen,
+}: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
 
   return (
     <>
       {!!listing.Lottery_Date &&
         dayjs(listing.Lottery_Date) > dayjs() &&
-        !listing.LotteryResultsURL && (
-          <EventSection
-            events={[
-              {
-                dateString: localizedFormat(listing.Lottery_Date, "LL"),
-                timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
-                note: getEventNote({
-                  City: listing.Lottery_City,
-                  Street_Address: listing.Lottery_Street_Address,
-                  Venue: listing.Lottery_Venue,
-                }),
-              },
-            ]}
-            headerText={t("listings.process.publicLottery")}
-            sectionHeader={true}
-          />
+        !listing.LotteryResultsURL &&
+        isApplicationOpen && (
+          <div className="border-b border-gray-400 md:border-b-0">
+            <EventSection
+              events={[
+                {
+                  dateString: localizedFormat(listing.Lottery_Date, "LL"),
+                  timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
+                  note: getEventNote({
+                    City: listing.Lottery_City,
+                    Street_Address: listing.Lottery_Street_Address,
+                    Venue: listing.Lottery_Venue,
+                  }),
+                },
+              ]}
+              headerText={t("listings.process.publicLottery")}
+              sectionHeader={true}
+            />
+          </div>
         )}
-      <ExpandableSection
-        content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
-        expandableContent={
-          <>
-            <p>{t("f2ReviewTerms.p3")}</p>
-            <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
-          </>
-        }
-        strings={{
-          title: t("label.whatToExpect"),
-          readMore: t("label.readMore"),
-          readLess: t("label.readLess"),
-        }}
+      <div className="border-b border-gray-400 md:border-b-0">
+        <ExpandableSection
+          content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
+          expandableContent={
+            <>
+              <p>{t("f2ReviewTerms.p3")}</p>
+              <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
+            </>
+          }
+          strings={{
+            title: t("label.whatToExpect"),
+            readMore: t("label.readMore"),
+            readLess: t("label.readLess"),
+          }}
+        />
+      </div>
+      <ListingDetailsLotteryPreferenceLists
+        listing={listing}
+        isApplicationOpen={isApplicationOpen}
       />
+
       {(listing.Leasing_Agent_Email ||
         listing.Leasing_Agent_Name ||
         listing.Leasing_Agent_Phone ||
