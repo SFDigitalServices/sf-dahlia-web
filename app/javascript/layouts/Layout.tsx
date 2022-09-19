@@ -173,7 +173,7 @@ const Layout = (props: LayoutProps) => {
           menuLinks={getMenuLinks(!!profile, signOut)}
         />
 
-        <main data-testid="main-content-test-id" id="main-content">
+        <main data-testid="main-content-test-id" id="main-content" className="overflow-hidden">
           <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
         </main>
       </div>
