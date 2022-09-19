@@ -112,6 +112,7 @@ export const ListingDetailsEligibility = ({
     unitType: "t.unitType",
     occupancy: "t.occupancy",
   }
+
   const occupancyTableData = listing.unitSummaries.general.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {

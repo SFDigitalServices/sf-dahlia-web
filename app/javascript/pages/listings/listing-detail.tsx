@@ -27,6 +27,7 @@ import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
+import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
 
 const ListingDetail = () => {
@@ -92,6 +93,11 @@ const ListingDetail = () => {
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <MobileListingDetailsProcess
+                listing={listing}
+                imageSrc={getAssetPath("listing-units.svg")}
+                isApplicationOpen={isApplicationOpen}
               />
               <ListingDetailsFeatures
                 listing={listing}

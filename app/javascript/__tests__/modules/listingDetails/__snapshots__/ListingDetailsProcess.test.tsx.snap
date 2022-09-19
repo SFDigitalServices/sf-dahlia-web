@@ -2,36 +2,40 @@
 
 exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
 Array [
-  <section
-    className="aside-block"
+  <div
+    className="border-b border-gray-400 md:border-b-0"
   >
-    <h4
-      className="text-caps-underline"
+    <section
+      className="aside-block"
     >
-      What to Expect
-    </h4>
-    <div
-      className="text-tiny text-gray-750"
-    >
-      <span>
-        Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
-      </span>
-      <div
-        className="mt-2"
+      <h4
+        className="text-caps-underline"
       >
-        <div>
-          <button
-            aria-expanded={false}
-            className="button is-unstyled m-0 no-underline has-toggle"
-            onClick={[Function]}
-            type="button"
-          >
-            Read More
-          </button>
+        What to Expect
+      </h4>
+      <div
+        className="text-tiny text-gray-750"
+      >
+        <span>
+          Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+        </span>
+        <div
+          className="mt-2"
+        >
+          <div>
+            <button
+              aria-expanded={false}
+              className="button is-unstyled m-0 no-underline has-toggle"
+              onClick={[Function]}
+              type="button"
+            >
+              Read More
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>,
+    </section>
+  </div>,
   <section
     className="aside-block"
   >
