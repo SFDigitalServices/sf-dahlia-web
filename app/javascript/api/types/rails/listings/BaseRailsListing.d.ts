@@ -40,6 +40,7 @@ export type ListingLotteryPreference = {
   Order: number
   Total_Submitted_Apps: number
   attributes: ListingAttributes
+  PDF_URL?: string
 }
 
 type BaseRailsListing = {
