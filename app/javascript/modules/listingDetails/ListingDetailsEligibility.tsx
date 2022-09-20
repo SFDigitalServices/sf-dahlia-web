@@ -199,10 +199,12 @@ export const ListingDetailsEligibility = ({
                       : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
                   }
                 >
-                  {defaultIfNotTranslated(
-                    `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
-                    `These units have accessibility features for people with ${unit.name}.`
-                  )}
+                  <p className="text-tiny">
+                    {defaultIfNotTranslated(
+                      `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
+                      `These units have accessibility features for people with ${unit.name}.`
+                    )}
+                  </p>
                 </InfoCard>
               )
             })}
