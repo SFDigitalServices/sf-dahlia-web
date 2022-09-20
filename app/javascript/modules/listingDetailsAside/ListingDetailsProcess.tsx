@@ -1,7 +1,14 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { EventSection, Contact, t, ExpandableSection } from "@bloom-housing/ui-components"
+import { isSale } from "../../util/listingUtil"
+import {
+  EventSection,
+  Contact,
+  t,
+  ExpandableSection,
+  SidebarBlock,
+} from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 
@@ -14,6 +21,8 @@ export const ListingDetailsProcess = ({
   listing,
   isApplicationOpen,
 }: ListingDetailsProcessProps) => {
+  const isListingSale = isSale(listing)
+
   return (
     <>
       {!!listing.Lottery_Date &&
@@ -97,8 +106,29 @@ export const ListingDetailsProcess = ({
           }}
         />
       )}
+      {isListingSale && (
+        <SidebarBlock title={t("listings.housingProgram")}>
+          <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+            {t("listings.belowMarketRate")}
+          </a>
+        </SidebarBlock>
+      )}
+      {isApplicationOpen && (
+        <SidebarBlock>
+          <p className="">{`${t("t.listingUpdated")}: ${localizedFormat(
+            listing.LastModifiedDate,
+            "LL"
+          )}`}</p>
+          {listing.Multiple_Listing_Service_URL && (
+            <p className="mt-1">
+              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="">
+                {t("listings.process.seeThisUnitOnMls")}
+              </a>
+            </p>
+          )}
+        </SidebarBlock>
+      )}
     </>
   )
   /* TODO: Bloom prop changes <DownloadLotteryResults resultsDate={"January 1st, 2022"} pdfURL={""} /> */
-  /* TODO: Last updated */
 }
