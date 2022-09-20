@@ -881,7 +881,7 @@
   "listings.realtorCommissionHeader": "Ang Inyong Komisyon:",
   "listings.realtorCommissionHowTo": "Kung paano ninyo matatanggap ito:",
   "listings.realtorCommissionNotEligible": "Hindi kuwalipikado ang inyong realtor para sa komisyon sa unit na ito",
-  "listings.realtorCommissionPercentage": "%{percentage}% ng presyo ng pagkakabenta",
+  "listings.realtorCommissionPercentage": " %{percentage}% ng presyo ng pagkakabenta",
   "listings.remainingUnitsAfterPreferenceConsideration": "Matapos maisalang-alang ang lahat ng mayroong preperensiya, puwede nang makuha ang anumang natitirang unit sa mga kuwalipikadong aplikante ayon sa pagkakasunod-sunod nila sa lottery.",
   "listings.rentalUnits": "Mga Paupahang Unit",
   "listings.requiredDocuments": "Mga Kinakailangang Dokumento",
