@@ -28,7 +28,7 @@ export const ListingDetailsAdditionalInformation = ({
         )}
         <div className="info-card bg-gray-100 border-0">
           <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
-          <div className="text-sm">
+          <div className="text-sm translate">
             <TextTruncate text={listing.Required_Documents} />
           </div>
         </div>

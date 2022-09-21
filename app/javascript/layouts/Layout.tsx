@@ -2,14 +2,14 @@ import React, { useContext } from "react"
 
 import {
   AlertBox,
+  AlertTypes,
   FooterNav,
   FooterSection,
   LangItem,
+  MenuLink,
   SiteFooter,
   SiteHeader,
   t,
-  AlertTypes,
-  MenuLink,
 } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
@@ -18,9 +18,9 @@ import Link from "../navigation/Link"
 import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getDisclaimerPath,
+  getLocalizedPath,
   getPrivacyPolicyPath,
   getSignInPath,
-  getLocalizedPath,
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
@@ -152,7 +152,7 @@ const Layout = (props: LayoutProps) => {
   )
 
   return (
-    <div className="site-wrapper">
+    <div className="notranslate site-wrapper">
       <div className="site-content">
         <MetaTags title={props.title} description={props.description} image={props.image} />
         {topAlert}

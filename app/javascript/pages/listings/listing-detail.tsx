@@ -29,6 +29,7 @@ import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
+import { useTranslate } from "../../util/customHooks"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -43,6 +44,8 @@ const ListingDetail = () => {
       setListing(listing)
     })
   }, [router.pathname])
+
+  useTranslate()
 
   return (
     <LoadingOverlay isLoading={!listing}>
