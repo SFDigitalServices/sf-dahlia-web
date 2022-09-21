@@ -16,6 +16,7 @@ environment.plugins.prepend(
             GOOGLE_PLACES_KEY: JSON.stringify(process.env.GOOGLE_PLACES_KEY),
             RESEARCH_FORM_URL: JSON.stringify(process.env.RESEARCH_FORM_URL),
             SHOW_RESEARCH_BANNER: process.env.SHOW_RESEARCH_BANNER,
+            SRO_PLURAL_LISTINGS: process.env.SRO_PLURAL_LISTINGS,
             TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
             TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
             TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED)
