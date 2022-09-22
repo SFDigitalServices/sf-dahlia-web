@@ -67,66 +67,68 @@ export const ListingDetailsProcess = ({
         listing={listing}
         isApplicationOpen={isApplicationOpen}
       />
-
       {(listing.Leasing_Agent_Email ||
         listing.Leasing_Agent_Name ||
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
         listing.Leasing_Agent_Title) && (
-        <Contact
-          sectionTitle={t("contactAgent.contact")}
-          contactAddress={{
-            street: listing.Leasing_Agent_Street,
-            city: listing.Leasing_Agent_City,
-            state: listing.Leasing_Agent_State,
-            zipCode: listing.Leasing_Agent_Zip,
-          }}
-          additionalInformation={
-            listing.Office_Hours
-              ? [
-                  {
-                    title: t("contactAgent.officeHours"),
-                    content: renderInlineMarkup(listing.Office_Hours),
-                  },
-                ]
-              : undefined
-          }
-          contactEmail={listing.Leasing_Agent_Email}
-          contactName={listing.Leasing_Agent_Name}
-          contactPhoneNumber={
-            listing.Leasing_Agent_Phone
-              ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
-              : undefined
-          }
-          contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
-          contactTitle={listing.Leasing_Agent_Title}
-          strings={{
-            email: t("label.emailAddress"),
-            getDirections: t("label.getDirections"),
-          }}
-        />
+        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+          <Contact
+            sectionTitle={t("contactAgent.contact")}
+            contactAddress={{
+              street: listing.Leasing_Agent_Street,
+              city: listing.Leasing_Agent_City,
+              state: listing.Leasing_Agent_State,
+              zipCode: listing.Leasing_Agent_Zip,
+            }}
+            additionalInformation={
+              listing.Office_Hours
+                ? [
+                    {
+                      title: t("contactAgent.officeHours"),
+                      content: renderInlineMarkup(listing.Office_Hours),
+                    },
+                  ]
+                : undefined
+            }
+            contactEmail={listing.Leasing_Agent_Email}
+            contactName={listing.Leasing_Agent_Name}
+            contactPhoneNumber={
+              listing.Leasing_Agent_Phone
+                ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
+                : undefined
+            }
+            contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
+            contactTitle={listing.Leasing_Agent_Title}
+            strings={{
+              email: t("label.emailAddress"),
+              getDirections: t("label.getDirections"),
+            }}
+          />
+        </div>
       )}
       {isListingSale && (
-        <SidebarBlock title={t("listings.housingProgram")}>
-          <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
-            {t("listings.belowMarketRate")}
-          </a>
-        </SidebarBlock>
+        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+          <SidebarBlock title={t("listings.housingProgram")}>
+            <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+              {t("listings.belowMarketRate")}
+            </a>
+          </SidebarBlock>
+        </div>
       )}
       {isApplicationOpen && (
-        <SidebarBlock>
-          <p className="">{`${t("t.listingUpdated")}: ${localizedFormat(
-            listing.LastModifiedDate,
-            "LL"
-          )}`}</p>
-          {listing.Multiple_Listing_Service_URL && (
-            <p className="mt-1">
-              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="">
-                {t("listings.process.seeThisUnitOnMls")}
-              </a>
-            </p>
-          )}
-        </SidebarBlock>
+        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+          <SidebarBlock>
+            <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
+            {listing.Multiple_Listing_Service_URL && (
+              <p className="mt-1">
+                <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
+                  {t("listings.process.seeThisUnitOnMls")}
+                </a>
+              </p>
+            )}
+          </SidebarBlock>
+        </div>
       )}
     </>
   )
