@@ -29,6 +29,7 @@ import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
+import GoogleTranslate from "../../components/GoogleTranslate"
 import { useTranslate } from "../../util/customHooks"
 
 const ListingDetail = () => {
@@ -49,6 +50,7 @@ const ListingDetail = () => {
 
   return (
     <LoadingOverlay isLoading={!listing}>
+      <GoogleTranslate />
       <Layout title={listing?.Name}>
         <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
           <SiteAlert type="alert" className={alertClasses} />
