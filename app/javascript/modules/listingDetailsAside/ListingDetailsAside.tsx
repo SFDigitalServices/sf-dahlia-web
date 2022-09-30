@@ -9,6 +9,7 @@ import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
 import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
+import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -32,10 +33,14 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           <ListingDetailsApplicationDate isApplicationOpen={isApplicationOpen} listing={listing} />
           <ListingDetailsLotteryInfo listing={listing} />
           <ListingDetailsLotteryResults listing={listing} />
+          {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
+          importance in different states */}
+          {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-          <ListingDetailsWaitlist listing={listing} />
+          <ListingDetailsOpenHouses listing={listing} />
+          {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
           <ListingDetailsApply listing={listing} />
-          <ListingDetailsProcess listing={listing} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </div>
       </aside>
     </ListingDetailItem>

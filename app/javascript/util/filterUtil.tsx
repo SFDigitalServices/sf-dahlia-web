@@ -1,8 +1,10 @@
 // This is adapted from the filter implemented in customFilters.js.coffee
-// for doing a barebones sanitization of incoming raw html. We should probably
-// find a better solution with community support at some point.
-// We may also want to look into wrapping any areas with user
-// generated content with a component-level error boundary.
+// for doing a barebones sanitization of incoming raw html. Our html/markdown
+// parsing library (markdown-to-jsx) currently has reported issues
+// with nested <span> tags so it's necessary to strip them to
+// avoid buggy parsing behavior.
+
+// https://github.com/probablyup/markdown-to-jsx/issues?q=is%3Aissue+is%3Aopen+span
 
 export const stripMostTags = (input, allowed?: string) => {
   if (!input) return ""

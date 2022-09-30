@@ -6,7 +6,9 @@ import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/list
 describe("ListingDetailsProcess", () => {
   it("renders leasing agent section if exists", () => {
     const tree = renderer
-      .create(<ListingDetailsProcess listing={lotteryCompleteRentalListing} />)
+      .create(
+        <ListingDetailsProcess listing={lotteryCompleteRentalListing} isApplicationOpen={true} />
+      )
       .toJSON()
 
     expect(tree).toMatchSnapshot()

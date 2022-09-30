@@ -12,9 +12,8 @@ import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
 import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
-import { localizedFormat, renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import OpenHouses from "../../components/OpenHouses"
 
 export interface ListingDetailsLotteryResultsProps {
   listing: RailsListing
@@ -43,7 +42,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
           <div className="bg-gray-100 py-4">
             {listing.Lottery_Summary && (
               <div className="mb-3 mx-2 text-gray-700 text-sm">
-                {renderInlineWithInnerHTML(listing.Lottery_Summary)}
+                {renderInlineMarkup(listing.Lottery_Summary)}
               </div>
             )}
             <Button
@@ -74,7 +73,6 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
             </Modal>
           )}
         </div>
-        <OpenHouses listing={listing} />
       </ErrorBoundary>
     )
   )

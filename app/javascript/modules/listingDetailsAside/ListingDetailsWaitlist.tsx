@@ -51,7 +51,7 @@ export const ListingDetailsWaitlist = ({ listing }: ListingDetailsWaitlistProps)
   ]
 
   return (
-    <>
+    <div className="w-full px-4 md:px-0">
       {listing.Units_Available === 0 && (
         <QuantityRowSection
           quantityRows={waitlistUnavailableRows}
@@ -70,6 +70,6 @@ export const ListingDetailsWaitlist = ({ listing }: ListingDetailsWaitlistProps)
           }}
         />
       )}
-    </>
+    </div>
   )
 }

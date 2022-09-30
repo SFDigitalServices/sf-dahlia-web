@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing Open_Houses 1`] = `
+<div
+  className="border-b border-gray-400 md:border-b-0"
+>
+  <section
+    className="aside-block"
+  >
+    <h4
+      className="text-caps-underline undefined"
+    >
+      Open Houses
+    </h4>
+    <div
+      className="false"
+    >
+      <p
+        className="text text-gray-800 pb-2 flex justify-between items-center"
+      >
+        <span
+          className="inline-block text-tiny uppercase normal-case"
+        >
+          January 7, 2022
+        </span>
+        <span
+          className="inline-block text-sm font-bold ml-5 font-alt-sans"
+        >
+          5:00PM - 7:00PM
+        </span>
+      </p>
+      <p
+        className="text-tiny text-gray-700 false"
+      >
+        <div
+          className="flex flex-col"
+        />
+      </p>
+    </div>
+  </section>
+</div>
+`;
+
+exports[`ListingDetailsOpenHouses doesn't display anything with Listing not containing Open_Houses 1`] = `null`;

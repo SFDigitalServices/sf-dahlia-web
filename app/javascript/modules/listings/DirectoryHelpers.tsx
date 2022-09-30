@@ -19,7 +19,7 @@ import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../uti
 import { areLotteryResultsShareable } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
-import { renderInlineWithInnerHTML } from "../../util/languageUtil"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
@@ -355,7 +355,7 @@ export const noMatchesTextBanner = (content: string) => {
           <h2 className={"page-header-subheader"}>{t("listings.noMatches")}</h2>
           <p className={"page-header-text-block"}>{content}</p>
           <p className={"page-header-text-block"}>
-            {renderInlineWithInnerHTML(
+            {renderInlineMarkup(
               t("listings.weSuggestHousingCounselor", { url: getHousingCounselorsPath() })
             )}
           </p>
@@ -379,19 +379,19 @@ export const eligibilityHeader = (
       size: filters.household_size,
       people: filters.household_size === "1" ? t("listings.person") : t("listings.people"),
     })
-    const childrenContent = ` ${t("listings.includingChildren", {
+    const childrenContent = t("listings.includingChildren", {
       number: filters.children_under_6,
       children: filters.children_under_6 === "1" ? t("t.child") : t("t.children"),
-    })}`
-    const incomeContent = ` ${t("listings.atTotalIncome", {
+    })
+    const incomeContent = t("listings.atTotalIncome", {
       income: filters.income_total.toLocaleString(),
       per: getYearString(),
-    })}`
+    })
     return (
       <>
-        {renderInlineWithInnerHTML(householdSizeContent)}
-        {filters.include_children_under_6 && renderInlineWithInnerHTML(childrenContent)}
-        {renderInlineWithInnerHTML(incomeContent)}
+        {renderInlineMarkup(householdSizeContent, "<span>")}{" "}
+        {filters.include_children_under_6 && renderInlineMarkup(childrenContent, "<span>")}{" "}
+        {renderInlineMarkup(incomeContent, "<span>")}
       </>
     )
   }
