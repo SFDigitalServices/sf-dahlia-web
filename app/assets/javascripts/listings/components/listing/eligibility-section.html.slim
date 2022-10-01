@@ -35,7 +35,7 @@ accordion-heading.lead
             | {{$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'eligibility')}}
           p.c-steel
             | {{'listings.all_units' | translate}}
-          p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
+          p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Reserved_community_type_Description | nl2br" ng-tt-words-threshold="60")
 
     li.custom-counter_item ng-if="::!$ctrl.parent.isHabitatListing($ctrl.parent.listing)"
       .content-tile
