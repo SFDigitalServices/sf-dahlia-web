@@ -29,7 +29,7 @@ import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
-import GoogleTranslate from "../../components/GoogleTranslate"
+import useTranslate from "../../hooks/useTranslate"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -37,6 +37,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  useTranslate()
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -47,7 +48,6 @@ const ListingDetail = () => {
 
   return (
     <>
-      <GoogleTranslate />
       <LoadingOverlay isLoading={!listing}>
         <Layout title={listing?.Name}>
           <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
