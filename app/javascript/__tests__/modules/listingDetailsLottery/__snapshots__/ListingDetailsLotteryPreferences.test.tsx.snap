@@ -13,7 +13,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     className="border-b border-gray-450 mb-4"
   >
     <h2
-      className="text-caps-underline mx-8"
+      className="text__underline-weighted mx-8"
     >
       Housing Preferences
     </h2>
@@ -116,7 +116,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     className="border-b border-gray-450 mb-4"
   >
     <h2
-      className="text-caps-underline mx-8"
+      className="text__underline-weighted mx-8"
     >
       Housing Preferences
     </h2>

@@ -71,7 +71,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline"
+      className="text__underline-weighted"
     >
       How to Apply
     </h4>
@@ -110,7 +110,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline"
+      className="text__underline-weighted"
     >
       Need Help?
     </h4>
@@ -130,7 +130,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline"
+      className="text__underline-weighted"
     >
       Expected move-in date
     </h4>

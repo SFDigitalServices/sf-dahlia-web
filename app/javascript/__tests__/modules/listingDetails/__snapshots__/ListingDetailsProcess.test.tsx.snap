@@ -9,7 +9,7 @@ Array [
       className="aside-block"
     >
       <h4
-        className="text-caps-underline"
+        className="text__underline-weighted"
       >
         What to Expect
       </h4>
@@ -43,7 +43,7 @@ Array [
       className="aside-block"
     >
       <h4
-        className="text-caps-underline"
+        className="text__underline-weighted"
       >
         Contact
       </h4>
@@ -110,7 +110,7 @@ Array [
         className="my-3"
       >
         <h3
-          className="text-caps-tiny"
+          className="text__caps-weighted"
         >
           Office Hours
         </h3>

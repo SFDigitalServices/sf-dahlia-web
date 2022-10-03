@@ -84,7 +84,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         className="border-b border-gray-450 mb-4"
       >
         <h2
-          className="text-caps-underline mx-8"
+          className="text__underline-weighted mx-8"
         >
           Housing Preferences
         </h2>

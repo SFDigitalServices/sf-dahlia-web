@@ -9,7 +9,7 @@ Array [
       className="aside-block "
     >
       <h4
-        className="text-caps-underline"
+        className="text__underline-weighted"
       >
         Lottery
       </h4>
@@ -52,7 +52,7 @@ Array [
       className="aside-block "
     >
       <h4
-        className="text-caps-underline"
+        className="text__underline-weighted"
       >
         Lottery Results
       </h4>

@@ -8,7 +8,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     className="px-8"
   >
     <h2
-      className="text-caps-underline"
+      className="text__underline-weighted"
     >
       Your preference ranking
     </h2>
@@ -100,7 +100,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
     className="px-8"
   >
     <h2
-      className="text-caps-underline"
+      className="text__underline-weighted"
     >
       Your preference ranking
     </h2>
