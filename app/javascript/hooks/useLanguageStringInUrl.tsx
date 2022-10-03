@@ -1,7 +1,15 @@
-import { getRoutePrefix } from "../util/languageUtil"
+import { useEffect, useState } from "react"
+import { getCurrentLanguage } from "../util/languageUtil"
 
 const useLanguageStringInUrl = () => {
-  return window.location?.pathname && getRoutePrefix(window.location.pathname)
+  const [languageFromStringInUrl, setLanguageFromStringInUrl] = useState("en")
+  const lang = getCurrentLanguage()
+
+  useEffect(() => {
+    setLanguageFromStringInUrl(lang)
+  }, [lang])
+
+  return languageFromStringInUrl
 }
 
 export default useLanguageStringInUrl

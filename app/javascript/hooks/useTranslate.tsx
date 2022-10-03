@@ -14,7 +14,6 @@ import { useEffect } from "react"
 import useLanguageStringInUrl from "./useLanguageStringInUrl"
 import usePollElementRender from "./usePollElementRender"
 import useScript from "./useScript"
-
 const tWindow = window as any
 const languageMap = {
   zh: "zh-TW",
@@ -52,13 +51,6 @@ const useTranslate = () => {
     if (languageInRoute && googleTranslateDropdownElHasBeenRendered) {
       const selectInDom = document.querySelector("select.goog-te-combo")
       selectInDom.value = languageMap[languageInRoute] || languageInRoute
-      const ev = new Event("change", { bubbles: true })
-      selectInDom.dispatchEvent(ev)
-    }
-
-    if (!languageInRoute && googleTranslateDropdownElHasBeenRendered) {
-      const selectInDom = document.querySelector("select.goog-te-combo")
-      selectInDom.value = "en"
       const ev = new Event("change", { bubbles: true })
       selectInDom.dispatchEvent(ev)
     }
