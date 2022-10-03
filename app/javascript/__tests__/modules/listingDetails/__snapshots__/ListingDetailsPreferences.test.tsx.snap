@@ -8,11 +8,11 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
     className="list-section__header custom-counter__header"
   >
     <hgroup>
-      <h4
+      <h3
         className="custom-counter__title"
       >
         Lottery Preferences
-      </h4>
+      </h3>
       <span
         className="custom-counter__subtitle"
       >
@@ -165,11 +165,11 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
     className="list-section__header custom-counter__header"
   >
     <hgroup>
-      <h4
+      <h3
         className="custom-counter__title"
       >
         Lottery Preferences
-      </h4>
+      </h3>
       <span
         className="custom-counter__subtitle"
       >

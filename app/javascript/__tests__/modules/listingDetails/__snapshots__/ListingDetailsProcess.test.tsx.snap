@@ -43,7 +43,7 @@ Array [
       className="aside-block"
     >
       <h4
-        className="text-caps-underline undefined"
+        className="text-caps-underline"
       >
         Contact
       </h4>
@@ -106,17 +106,21 @@ Array [
           Email
         </a>
       </p>
-      <h3
-        className="text-caps-tiny undefined"
-      >
-        Office Hours
-      </h3>
       <div
-        className="text-gray-800 text-tiny markdown"
+        className="my-3"
       >
-        <span>
-          Monday - Friday 10:00 AM - 6:00 PM
-        </span>
+        <h3
+          className="text-caps-tiny"
+        >
+          Office Hours
+        </h3>
+        <div
+          className="text-gray-800 text-tiny markdown"
+        >
+          <span>
+            Monday - Friday 10:00 AM - 6:00 PM
+          </span>
+        </div>
       </div>
     </section>
   </div>,

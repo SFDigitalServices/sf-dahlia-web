@@ -35,7 +35,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
     isLotteryComplete(listing) && (
       <ErrorBoundary boundaryScope={BoundaryScope.component}>
         <div className="border-b pt-4 text-center">
-          <Heading className="mb-4" priority={4}>
+          <Heading className="mb-4" priority={3}>
             {t("lottery.lotteryResults")}
           </Heading>
           <p className="mb-4 text-sm">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>

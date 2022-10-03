@@ -71,7 +71,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text-caps-underline"
     >
       How to Apply
     </h4>
@@ -100,6 +100,7 @@ Array [
       <a
         className="button is-primary w-full transition"
         href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+        tabIndex={0}
       >
         Apply Online
       </a>
@@ -109,7 +110,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text-caps-underline"
     >
       Need Help?
     </h4>
@@ -129,7 +130,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text-caps-underline"
     >
       Expected move-in date
     </h4>
