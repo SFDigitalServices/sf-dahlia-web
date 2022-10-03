@@ -732,7 +732,7 @@
   "listings.availableUnits": "Available Units",
   "listings.availableUnitsAndOpenWaitlist": "Available Units & Open Waitlist",
   "listings.availableUnitsAndWaitlist": "Available units and waitlist",
-  "listings.availableUnitsAndWaitlistDescription": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist.",
+  "listings.availableUnitsAndWaitlistDescription": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for %{number} units",
   "listings.bath": "bath",
   "listings.belowMarketRate": "Below Market Rate",
   "listings.browseRentals": "Browse Rentals",

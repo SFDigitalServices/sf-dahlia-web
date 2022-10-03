@@ -718,7 +718,7 @@
   "listings.availableUnits": "Unidades disponibles",
   "listings.availableUnitsAndOpenWaitlist": "Unidades disponibles y lista de espera abierta",
   "listings.availableUnitsAndWaitlist": "Unidades disponibles y lista de espera",
-  "listings.availableUnitsAndWaitlistDescription": "Una vez que las personas sorteadas ocupen todas las unidades disponibles, las demás personas sorteadas entrarán en la lista de espera.",
+  "listings.availableUnitsAndWaitlistDescription": "Una vez que las personas sorteadas ocupen todas las unidades disponibles, las demás personas sorteadas entrarán en la lista de espera para la ocupación de %{number} unidades",
   "listings.bath": "baño",
   "listings.belowMarketRate": "Tarifa inferior a la del mercado",
   "listings.browseRentals": "Buscar alquileres",
