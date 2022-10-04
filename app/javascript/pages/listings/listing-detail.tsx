@@ -47,91 +47,89 @@ const ListingDetail = () => {
   }, [router.pathname])
 
   return (
-    <>
-      <LoadingOverlay isLoading={!listing}>
-        <Layout title={listing?.Name}>
-          <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
-            <SiteAlert type="alert" className={alertClasses} />
-            <SiteAlert type="success" className={alertClasses} timeout={30_000} />
-          </div>
-          {listing && (
-            <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
-              <ListingDetailsImageCard listing={listing} />
-              {!isApplicationOpen && (
-                <Mobile>
-                  <ListingDetailsApplicationDate
-                    isApplicationOpen={isApplicationOpen}
-                    listing={listing}
-                  />
-                </Mobile>
-              )}
-              <ListingDetailsReservedBanner
-                reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
-                reservedCommunityType={listing.Reserved_community_type}
-              />
-              <ListingDetailsPricingTable />
-              {listingHasSROUnits(listing) &&
-                !(
-                  isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
-                ) && (
-                  <div className="md:w-2/3 md:pr-8">
-                    <ListingDetailsSROInfo listing={listing} />
-                  </div>
-                )}
-              {isApplicationOpen && (
-                <Mobile>
-                  <ListingDetailsApplicationDate
-                    isApplicationOpen={isApplicationOpen}
-                    listing={listing}
-                  />
-                  <ListingDetailsWaitlist listing={listing} />
-                </Mobile>
-              )}
-              <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
-              <ListingDetails>
-                <MobileListingDetailsLottery
-                  imageSrc={getAssetPath("listing-units.svg")}
-                  listing={listing}
-                />
-                <ListingDetailsEligibility
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-eligibility.svg")}
-                />
-                <MobileListingDetailsProcess
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-units.svg")}
+    <LoadingOverlay isLoading={!listing}>
+      <Layout title={listing?.Name}>
+        <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
+          <SiteAlert type="alert" className={alertClasses} />
+          <SiteAlert type="success" className={alertClasses} timeout={30_000} />
+        </div>
+        {listing && (
+          <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
+            <ListingDetailsImageCard listing={listing} />
+            {!isApplicationOpen && (
+              <Mobile>
+                <ListingDetailsApplicationDate
                   isApplicationOpen={isApplicationOpen}
-                />
-                <ListingDetailsFeatures
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-features.svg")}
-                />
-                <ListingDetailsNeighborhood
-                  imageSrc={getAssetPath("listing-neighborhood.svg")}
                   listing={listing}
                 />
-                <ListingDetailsAdditionalInformation
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-legal.svg")}
-                />
-                <div className="listing-detail-panel p-0">
-                  <div className="m-0 info-card flex items-center justify-between">
-                    <p className="m-0 text-base text-serif-lg w-3/4">
-                      {t("listings.monitoredByMohcd")}
-                    </p>
-                    <img
-                      alt={t("listings.equalHousingOpportunityLogo")}
-                      src={getAssetPath("logo-equal.png")}
-                    />
-                  </div>
+              </Mobile>
+            )}
+            <ListingDetailsReservedBanner
+              reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
+              reservedCommunityType={listing.Reserved_community_type}
+            />
+            <ListingDetailsPricingTable />
+            {listingHasSROUnits(listing) &&
+              !(
+                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
+              ) && (
+                <div className="md:w-2/3 md:pr-8">
+                  <ListingDetailsSROInfo listing={listing} />
                 </div>
-              </ListingDetails>
-            </article>
-          )}
-          <MailingListSignup />
-        </Layout>
-      </LoadingOverlay>
-    </>
+              )}
+            {isApplicationOpen && (
+              <Mobile>
+                <ListingDetailsApplicationDate
+                  isApplicationOpen={isApplicationOpen}
+                  listing={listing}
+                />
+                <ListingDetailsWaitlist listing={listing} />
+              </Mobile>
+            )}
+            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
+            <ListingDetails>
+              <MobileListingDetailsLottery
+                imageSrc={getAssetPath("listing-units.svg")}
+                listing={listing}
+              />
+              <ListingDetailsEligibility
+                listing={listing}
+                imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <MobileListingDetailsProcess
+                listing={listing}
+                imageSrc={getAssetPath("listing-units.svg")}
+                isApplicationOpen={isApplicationOpen}
+              />
+              <ListingDetailsFeatures
+                listing={listing}
+                imageSrc={getAssetPath("listing-features.svg")}
+              />
+              <ListingDetailsNeighborhood
+                imageSrc={getAssetPath("listing-neighborhood.svg")}
+                listing={listing}
+              />
+              <ListingDetailsAdditionalInformation
+                listing={listing}
+                imageSrc={getAssetPath("listing-legal.svg")}
+              />
+              <div className="listing-detail-panel p-0">
+                <div className="m-0 info-card flex items-center justify-between">
+                  <p className="m-0 text-base text-serif-lg w-3/4">
+                    {t("listings.monitoredByMohcd")}
+                  </p>
+                  <img
+                    alt={t("listings.equalHousingOpportunityLogo")}
+                    src={getAssetPath("logo-equal.png")}
+                  />
+                </div>
+              </div>
+            </ListingDetails>
+          </article>
+        )}
+        <MailingListSignup />
+      </Layout>
+    </LoadingOverlay>
   )
 }
 
