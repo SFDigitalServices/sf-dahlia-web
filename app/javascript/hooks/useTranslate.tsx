@@ -11,8 +11,8 @@
  */
 
 import { useEffect } from "react"
-import useLanguageStringInUrl from "./useLanguageStringInUrl"
 import usePollElementRender from "./usePollElementRender"
+import { getCurrentLanguage } from "../util/languageUtil"
 import useScript from "./useScript"
 const tWindow = window as any
 const languageMap = {
@@ -36,7 +36,7 @@ const initGoogleTranslate = () => {
 tWindow.initGoogleTranslate = initGoogleTranslate
 
 const useTranslate = () => {
-  const languageInRoute = useLanguageStringInUrl()
+  const languageInRoute = getCurrentLanguage()
   useScript("//translate.google.com/translate_a/element.js?cb=initGoogleTranslate")
   /*
    * It seems the <select> and the <options> get added at different times.
