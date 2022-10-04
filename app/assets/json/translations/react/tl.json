@@ -718,7 +718,7 @@
   "listings.availableUnits": "Mga Makukuhang Unit ",
   "listings.availableUnitsAndOpenWaitlist": "Mga Makukuhang Unit at Bukas na Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
   "listings.availableUnitsAndWaitlist": "Mga makukuhang unit at waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
-  "listings.availableUnitsAndWaitlistDescription": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist.",
+  "listings.availableUnitsAndWaitlistDescription": "Kapag napunan na ng mga nanalo sa lottery ang lahat ng makukuhang unit, ilalagay ang iba pang nanalo sa lottery sa waitlist para sa %{number} units",
   "listings.bath": "banyo",
   "listings.belowMarketRate": "Presyo na mas Mababa Kaysa sa Presyo ng Merkado (Below Market Rate)",
   "listings.browseRentals": "Tingnan ang mga Pinauupahan ",
