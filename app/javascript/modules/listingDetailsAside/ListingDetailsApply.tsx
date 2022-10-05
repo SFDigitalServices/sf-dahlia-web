@@ -12,6 +12,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
+  isHabitatListing,
   isOpen,
   isRental,
   isSale,
@@ -48,7 +49,9 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
           <p className={"mb-4"}>
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
-                url: "https://sfmohcd.org/homebuyer-program-eligibility",
+                url: isHabitatListing(listing)
+                  ? "https://habitatgsf.org/amber-drive-info/"
+                  : "https://sfmohcd.org/homebuyer-program-eligibility",
               })
             )}
           </p>
