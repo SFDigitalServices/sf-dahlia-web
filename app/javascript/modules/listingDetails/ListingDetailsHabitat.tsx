@@ -67,7 +67,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>{t("listings.incomeExceptions.nontaxable")}</li>
       </ul>
       <p className="mt-4">{t("listings.habitat.incomeRange.p4")}</p>
-      // TODO: Dependent on DAH-1139
+      {/* TODO: Dependent on DAH-1139 */}
     </div>
   )
 }
