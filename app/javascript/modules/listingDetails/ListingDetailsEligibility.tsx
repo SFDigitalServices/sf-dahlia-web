@@ -154,7 +154,6 @@ export const ListingDetailsEligibility = ({
       )}
       <ul>
         <ListSection
-          className="list-none"
           title={t("listings.householdMaximumIncome")}
           subtitle={
             <div>
