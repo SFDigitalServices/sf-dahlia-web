@@ -127,7 +127,6 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
   >
     Your income must be in this range:
   </p>
-  // TODO: Dependent on DAH-1139
 </div>
 `;
 
