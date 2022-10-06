@@ -1314,89 +1314,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </span>
     </div>
   </li>
-  <li
-    className="list-section custom-counter__item"
-  >
-    <header
-      className="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h3
-          className="custom-counter__title"
-        >
-          Rental Assistance
-        </h3>
-        <span
-          className="custom-counter__subtitle"
-        >
-          Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-        </span>
-      </hgroup>
-    </header>
-  </li>
-  <li
-    className="list-section custom-counter__item"
-  >
-    <header
-      className="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h3
-          className="custom-counter__title"
-        >
-          Additional Eligibility Rules
-        </h3>
-        <span
-          className="custom-counter__subtitle"
-        >
-          Applicants must also qualify under the rules of the building.
-        </span>
-      </hgroup>
-    </header>
-    <div
-      className="info-card"
-    >
-      <div
-        className="info-card__header"
-      >
-        <h3
-          className="info-card__title"
-        >
-          Criminal Background
-        </h3>
-      </div>
-      <div
-        className="expandable-text text-sm text-gray-700"
-      >
-         
-        <span>
-          Qualified applicants with criminal history will be considered for housing in compliance with 
-          <a
-            href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-            target="_blank"
-          >
-            Article 49
-          </a>
-           of the San Francisco Police Code: 
-          <a
-            href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-            target="_blank"
-          >
-            Fair Chance Ordinance
-          </a>
-          .
-        </span>
-      </div>
-    </div>
-    <p>
-      <a
-        href="https://sfmohcd.org/homebuyer-program-eligibility"
-        target="_blank"
-      >
-        Find out more about Building Selection Criteria
-      </a>
-    </p>
-  </li>
 </li>
 `;
 
@@ -2406,8 +2323,56 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
     <li
       className="list-section custom-counter__item"
     >
-      <header
-        className="list-section__header custom-counter__header"
+      <hgroup>
+        <h3
+          className="custom-counter__title"
+        >
+          Before applying
+        </h3>
+        <span
+          className="custom-counter__subtitle"
+        >
+          Make sure you:
+        </span>
+      </hgroup>
+    </header>
+    <ol
+      className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+    >
+      <li>
+        <p>
+          Go to a 
+          <a
+            href="https://habitatgsf.org/amber-drive-info/"
+            target="_blank"
+          >
+            Habitat for Humanity information session
+          </a>
+        </p>
+      </li>
+      <li>
+        Haven't owned residential property in the past 3 years
+      </li>
+      <li>
+        <p>
+          Meet the 
+          <a
+            href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
+            target="_blank"
+          >
+            income requirements
+          </a>
+        </p>
+      </li>
+      <li>
+        Have a 650 credit score or higher
+      </li>
+    </ol>
+    <p>
+      Read 
+      <a
+        href="https://habitatgsf.org/amber-drive-info/"
+        target="_blank"
       >
         <hgroup>
           <h4
@@ -2468,72 +2433,55 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
     <li
       className="list-section custom-counter__item"
     >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h4
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h4>
-          <span
-            className="custom-counter__subtitle"
-          >
-            A minimum of one person per bedroom is required.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
+      <hgroup>
+        <h3
+          className="custom-counter__title"
+        >
+          Occupancy
+        </h3>
+        <span
+          className="custom-counter__subtitle"
+        >
+          A minimum of one person per bedroom is required.
+        </span>
+      </hgroup>
+    </header>
+    <div
+      style={
+        Object {
+          "overflowX": "auto",
         }
       >
-        <table
-          className="w-full text-sm"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                Unit Type
-              </th>
-              <th
-                className=""
-              >
-                Occupancy
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
+        <thead>
+          <tr>
+            <th
+              className=""
+            >
+              Unit Type
+            </th>
+            <th
+              className=""
+            >
+              Occupancy
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </li>
+  <li
+    className="list-section custom-counter__item"
+  >
+    <header
+      className="list-section__header custom-counter__header"
     >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h4
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h4>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
+      <hgroup>
+        <h3
+          className="custom-counter__title"
+        >
+          Lottery Preferences
+        </h3>
         <span
           className="ui-icon ui-large spinner-animation"
           data-test-id={null}

@@ -6,7 +6,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text__underline-weighted"
     >
       How to Apply
     </h4>
@@ -35,6 +35,7 @@ Array [
       <a
         className="button is-primary w-full transition"
         href="listings/a0W8H000000HI2uUAG/apply-welcome/intro"
+        tabIndex={0}
       >
         Apply Online
       </a>
@@ -44,7 +45,7 @@ Array [
     className="aside-block "
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text__underline-weighted"
     >
       Need Help?
     </h4>
