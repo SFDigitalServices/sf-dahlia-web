@@ -18,12 +18,12 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
         className="image-card__inner"
       >
         <img
-          alt="TEST Sale Listing (do not modify) - Homeownership Acres"
+          alt="A picture of the building"
           src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
       </figure>
       <aside
-        aria-label="TEST Sale Listing (do not modify) - Homeownership Acres Statuses"
+        aria-label="A picture of the building Statuses"
         className="image-card__status"
       />
     </div>
@@ -119,12 +119,12 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         className="image-card__inner"
       >
         <img
-          alt="TEST: 36 Amber Drive"
+          alt="A picture of the building"
           src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
       </figure>
       <aside
-        aria-label="TEST: 36 Amber Drive Statuses"
+        aria-label="A picture of the building Statuses"
         className="image-card__status"
       />
     </div>

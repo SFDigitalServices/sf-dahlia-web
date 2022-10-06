@@ -29,7 +29,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
             ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
             : undefined
         }
-        description={listing?.Name}
+        description={"A picture of the building"}
       />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-3xl">{listing.Name}</h1>
