@@ -14,9 +14,11 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
+  const isApplicationOpen = isOpen(listing)
+
   return (
     listing &&
-    !isOpen(listing) && (
+    !isApplicationOpen && (
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
@@ -28,7 +30,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
         </ListingDetailItem>
       </Mobile>
     )

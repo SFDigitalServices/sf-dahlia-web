@@ -23,10 +23,14 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen } from "../../util/listingUtil"
+import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
+import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
+import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
+import useTranslate from "../../hooks/useTranslate"
+import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -34,6 +38,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  useTranslate()
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -52,6 +57,7 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            <ListingDetailsHabitat listing={listing} />
             {!isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate
@@ -64,7 +70,15 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable />
+            <ListingDetailsPricingTable listing={listing} />
+            {listingHasSROUnits(listing) &&
+              !(
+                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
+              ) && (
+                <div className="md:w-2/3 md:pr-8">
+                  <ListingDetailsSROInfo listing={listing} />
+                </div>
+              )}
             {isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate
@@ -83,6 +97,11 @@ const ListingDetail = () => {
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <MobileListingDetailsProcess
+                listing={listing}
+                imageSrc={getAssetPath("listing-units.svg")}
+                isApplicationOpen={isApplicationOpen}
               />
               <ListingDetailsFeatures
                 listing={listing}

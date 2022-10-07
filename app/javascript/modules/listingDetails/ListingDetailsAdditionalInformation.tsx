@@ -1,7 +1,8 @@
 import React from "react"
-import { ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
+import { isHabitatListing, isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -12,6 +13,14 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
+  const getCommissionString = () => {
+    return listing.Realtor_Commission_Unit === "percent"
+      ? t("listings.realtorCommissionPercentage", {
+          percentage: listing.Realtor_Commission_Amount,
+        })
+      : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
+  }
+
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -26,21 +35,62 @@ export const ListingDetailsAdditionalInformation = ({
             <TextTruncate text={listing.Listing_Other_Notes} />
           </div>
         )}
-        <div className="info-card bg-gray-100 border-0">
-          <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
-          <div className="text-sm">
-            <TextTruncate text={listing.Required_Documents} />
+        {(!!listing.Required_Documents || isSale(listing)) && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
+            <div className="text-sm translate">
+              <TextTruncate text={listing.Required_Documents} />
+            </div>
+            {isSale(listing) && !isHabitatListing(listing) && (
+              <div className="text-sm mt-4">
+                <TextTruncate
+                  text={t("listings.requiredDocumentsAfterApplying", {
+                    url: "https://sfmohcd.org/after-homebuyer-lottery",
+                  })}
+                />
+              </div>
+            )}
           </div>
-        </div>
-        <div className="info-card bg-gray-100 border-0">
-          <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
-          <TextTruncate text={listing.Legal_Disclaimers} />
-        </div>
+        )}
+        {listing.Legal_Disclaimers && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
+            <div className="text-sm">
+              <TextTruncate text={listing.Legal_Disclaimers} />
+            </div>
+          </div>
+        )}
         {listing.CC_and_R_URL && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
             <div className="text-sm">
-              <TextTruncate text={listing.CC_and_R_URL} />
+              <TextTruncate text={t("listings.cc&rDescription")} />
+              <LinkButton href={listing.CC_and_R_URL} className={"mt-4"} newTab={true}>
+                {t("listings.downloadPdf")}
+              </LinkButton>
+            </div>
+          </div>
+        )}
+        {isSale(listing) && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-lg">{t("listings.realtorCommission")}</h3>
+            <div className="text-sm">
+              {listing.Allows_Realtor_Commission ? (
+                <>
+                  <span className={"font-bold"}>{t("listings.realtorCommissionHeader")}</span>
+                  {getCommissionString()}
+                </>
+              ) : (
+                t("listings.realtorCommissionNotEligible")
+              )}
+              {listing.Realtor_Commission_Info && (
+                <div className={"flex mt-4"}>
+                  <span className={"font-bold mr-1"}>{t("listings.realtorCommissionHowTo")}</span>
+                  <span>
+                    <TextTruncate text={listing.Realtor_Commission_Info} />
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}

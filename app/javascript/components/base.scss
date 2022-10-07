@@ -14,6 +14,7 @@ body {
   @apply font-sans;
   @apply bg-white;
   @apply text-gray-900;
+  top:0px !important;
 }
 
 .-top {
@@ -249,3 +250,11 @@ nav {
 }
 
 @import "tailwindcss/utilities";
+
+ #google_translate_element{
+   display:none !important;
+}
+
+.goog-te-banner-frame{
+  display:none !important;
+ }

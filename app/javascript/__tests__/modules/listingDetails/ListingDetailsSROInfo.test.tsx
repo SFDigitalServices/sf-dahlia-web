@@ -1,11 +1,21 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsFeatures } from "../../../modules/listingDetails/ListingDetailsFeatures"
-import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
-import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import { ListingDetailsSROInfo } from "../../../modules/listingDetails/ListingDetailsSROInfo"
+import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 
-describe("ListingDetailsFeatures", () => {
-  it("displays listing details features section when rental listing", () => {
+describe("ListingDetailsLotteryInfo", () => {
+  const OLD_ENV = process.env
+
+  beforeEach(() => {
+    jest.resetModules()
+    process.env = { ...OLD_ENV }
+  })
+
+  afterAll(() => {
+    process.env = OLD_ENV
+  })
+
+  it("displays the SRO info box for a regular SRO", () => {
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -19,16 +29,14 @@ describe("ListingDetailsFeatures", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
-      )
-      .toJSON()
+    const tree = renderer.create(<ListingDetailsSROInfo listing={sroRentalListing} />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
 
-  it("displays listing details features section when sales listing", () => {
+  it("displays the Merry Go Round Housing description for its listing", () => {
+    process.env.SRO_PLURAL_LISTINGS = JSON.parse(process.env.SRO_PLURAL_LISTINGS)
+    const listing = { ...sroRentalListing, Id: "a0W0P00000F7t4uUAB" }
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -42,11 +50,7 @@ describe("ListingDetailsFeatures", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
-      )
-      .toJSON()
+    const tree = renderer.create(<ListingDetailsSROInfo listing={listing} />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })
