@@ -115,7 +115,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <div className="listing-detail-panel p-0">
+              <li className="listing-detail-panel p-0 list-none">
                 <div className="m-0 info-card flex items-center justify-between">
                   <p className="m-0 text-base text-serif-lg w-3/4">
                     {t("listings.monitoredByMohcd")}
@@ -125,7 +125,7 @@ const ListingDetail = () => {
                     src={getAssetPath("logo-equal.png")}
                   />
                 </div>
-              </div>
+              </li>
             </ListingDetails>
           </article>
         )}
