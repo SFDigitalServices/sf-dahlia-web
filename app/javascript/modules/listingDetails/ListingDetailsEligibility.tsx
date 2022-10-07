@@ -157,7 +157,7 @@ export const ListingDetailsEligibility = ({
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection
             title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
-            subtitle={t("")}
+            subtitle=""
           >
             <InfoCard
               title={t(
