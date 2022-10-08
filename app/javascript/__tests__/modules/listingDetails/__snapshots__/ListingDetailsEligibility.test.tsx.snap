@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsEligibility displays listing details eligibility section 1`] = `
+exports[`ListingDetailsEligibility displays listing details eligibility section and no Building Selection Criteria Link 1`] = `
 <li
   className="responsive-content-item bg-primary-lighter"
 >
@@ -359,14 +359,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </span>
         </div>
       </div>
-      <p>
-        <a
-          href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
-          target="_blank"
-        >
-          Find out more about Building Selection Criteria
-        </a>
-      </p>
+      
     </li>
   </ul>
 </li>
