@@ -18,9 +18,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
       <p
         className="text-tiny text-gray-800 pb-3"
       >
-        <p>
-          Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
-        </p>
+        Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
       </p>
       <ul>
         <li
