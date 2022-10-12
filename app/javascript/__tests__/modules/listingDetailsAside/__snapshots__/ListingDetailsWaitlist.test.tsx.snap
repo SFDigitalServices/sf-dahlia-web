@@ -10,7 +10,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
     className="aside-block is-tinted"
   >
     <h4
-      className="text-caps-tiny"
+      className="text__caps-weighted"
     >
       Available units and waitlist
     </h4>

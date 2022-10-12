@@ -27,15 +27,15 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
 
   return (
     <>
-      <Heading priority={2} style={"cardHeader"} className={"order-1"}>
+      <Heading priority={2} styleType={"largePrimary"} className={"order-1"}>
         {listing.Name}
       </Heading>
-      <Heading priority={3} style={"cardSubheader"} className={"order-2"}>
+      <Heading priority={3} styleType={"mediumNormal"} className={"order-2"}>
         <ListingAddress listing={listing} />
       </Heading>
       <hr className={"mb-2"} />
       <div className={"text-gray-750"}>
-        <Heading priority={3} style={"tableHeader"}>
+        <Heading priority={3} styleType={"smallWeighted"}>
           {t("listings.availableUnits")}
         </Heading>
         {getHeader(t("t.units"))}

@@ -48,11 +48,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Household Maximum Income
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -132,11 +132,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -179,11 +179,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -222,11 +222,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Rental Assistance
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -242,11 +242,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Additional Eligibility Rules
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -281,12 +281,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Collection accounts...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -316,12 +316,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Landlord references will only check for...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -413,11 +413,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Household Maximum Income
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -497,11 +497,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -544,11 +544,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -587,11 +587,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Rental Assistance
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -607,11 +607,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Additional Eligibility Rules
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -646,12 +646,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Collection accounts...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -681,12 +681,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Landlord references will only check for...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -785,11 +785,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Before applying
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -858,11 +858,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Household Maximum Income
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -942,11 +942,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -989,11 +989,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1077,11 +1077,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Household Maximum Income
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1161,11 +1161,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1208,11 +1208,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1251,11 +1251,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Rental Assistance
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1271,11 +1271,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Additional Eligibility Rules
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1310,12 +1310,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Collection accounts...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -1345,12 +1345,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Landlord references will only check for...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -1449,11 +1449,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Household Maximum Income
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1533,11 +1533,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1580,11 +1580,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1623,11 +1623,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Rental Assistance
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1643,11 +1643,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Additional Eligibility Rules
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1682,12 +1682,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Collection accounts...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -1717,12 +1717,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               Landlord references will only check for...
             </p>
           </div>
-          <span
+          <button
             className="button-toggle ml-4"
             onClick={[Function]}
           >
             More
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -1821,11 +1821,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Before applying
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1883,11 +1883,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Occupancy
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
@@ -1930,11 +1930,11 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="list-section__header custom-counter__header"
       >
         <hgroup>
-          <h4
+          <h3
             className="custom-counter__title"
           >
             Lottery Preferences
-          </h4>
+          </h3>
           <span
             className="custom-counter__subtitle"
           >
