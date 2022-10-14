@@ -282,11 +282,13 @@ export const ListingDetailsEligibility = ({
               </ExpandableText>
             </InfoCard>
 
-            <p>
-              <a href={listing.Building_Selection_Criteria} target={"_blank"}>
-                {t("listings.additionalEligibilityRules.findOutMore")}
-              </a>
-            </p>
+            {listing.Building_Selection_Criteria && (
+              <p>
+                <a href={listing.Building_Selection_Criteria} target={"_blank"}>
+                  {t("listings.additionalEligibilityRules.findOutMore")}
+                </a>
+              </p>
+            )}
           </ListSection>
         )}
       </ul>

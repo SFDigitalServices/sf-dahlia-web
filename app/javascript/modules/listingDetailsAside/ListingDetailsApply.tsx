@@ -121,7 +121,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       </SidebarBlock>
       <SidebarBlock
         className={"bg-blue-200"}
-        style={"sidebarSubHeader"}
+        styleType={"capsWeighted"}
         title={t("listings.apply.sendByUsMail")}
       >
         <div className={"mb-2 text-gray-900 text-base"}>
