@@ -26,22 +26,27 @@ function verifyListing(language, id, altPhotoText, title, address, applyButtonTe
   cy.contains(applyButtonText)
 }
 
-const testListings = {
-  OPEN_RENTAL: {
-    id: "a0W0P00000F8YG4UAN",
-    title: "TEST Automated Listing (do not modify)",
-  },
-  OPEN_SALE: {
-    id: "a0W0P00000GlKfBUAV",
-    address: "1 South Van Ness Ave, San Francisco, CA 94103",
-    title: "TEST Sale Listing (do not modify) - Homeownership Acres",
-  },
-}
-
 describe("Listing Details for Open Listings", () => {
+  const testListings = {
+    OPEN_RENTAL: {
+      id: "a0W0P00000F8YG4UAN",
+      title: "TEST Automated Listing (do not modify)",
+    },
+    OPEN_SALE: {
+      id: "a0W0P00000GlKfBUAV",
+      address: "1 South Van Ness Ave, San Francisco, CA 94103",
+      title: "TEST Sale Listing (do not modify) - Homeownership Acres",
+    },
+  }
+
   beforeEach(() => {
     /* Using iphone-x size https://docs.cypress.io/api/commands/viewport#Usage */
     cy.viewport(375, 812)
+  })
+  afterEach(() => {
+    // TODO: remove me. we shouldn't have to wait in between tests, but there is a rogue
+    // loading issue beyond the scope of this story
+    cy.wait(3000)
   })
 
   describe("Rental Listing", () => {
