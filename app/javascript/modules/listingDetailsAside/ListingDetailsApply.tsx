@@ -172,11 +172,11 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   )
 
   return (
-    <>
+    <div className="md:px-0 px-2">
       {howToApplyBlock}
       {acceptingPaperApps && submitPaperApplicationBlocks}
       {needHelpBlock}
       {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
-    </>
+    </div>
   )
 }

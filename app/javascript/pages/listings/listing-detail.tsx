@@ -31,6 +31,7 @@ import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/M
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
 import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
+import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -88,6 +89,9 @@ const ListingDetail = () => {
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
+            <Mobile>
+              <ListingDetailsApply listing={listing} />
+            </Mobile>
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <MobileListingDetailsLottery
