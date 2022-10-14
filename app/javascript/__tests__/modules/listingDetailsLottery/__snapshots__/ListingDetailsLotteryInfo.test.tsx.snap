@@ -8,11 +8,11 @@ Array [
     <section
       className="aside-block "
     >
-      <h2
+      <h4
         className="text-caps-underline undefined"
       >
         Lottery
-      </h2>
+      </h4>
       <div
         className="text-tiny text-gray-750"
       >
@@ -51,11 +51,11 @@ Array [
     <section
       className="aside-block "
     >
-      <h2
+      <h4
         className="text-caps-underline undefined"
       >
         Lottery Results
-      </h2>
+      </h4>
       <div
         className="text-tiny text-gray-750"
       >
