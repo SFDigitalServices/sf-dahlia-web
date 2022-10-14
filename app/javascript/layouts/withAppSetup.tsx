@@ -20,14 +20,7 @@ const withAppSetup = <P extends ObjectWithAssets>(
   useFormTimeout?: boolean
 ) => (props: P) => {
   if (process.env.NODE_ENV !== "production") {
-    void axe(React, ReactDOM, 1000, {
-      rules: [
-        {
-          id: "page-has-heading-one",
-          enabled: false,
-        },
-      ],
-    })
+    void axe(React, ReactDOM, 1000)
   }
   return (
     <ErrorBoundary boundaryScope={BoundaryScope.page}>
