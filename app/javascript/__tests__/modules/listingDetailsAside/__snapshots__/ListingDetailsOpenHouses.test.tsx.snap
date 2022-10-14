@@ -32,7 +32,7 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
       <p
         className="text-tiny text-gray-700 false"
       >
-        <span
+        <div
           className="flex flex-col"
         />
       </p>
