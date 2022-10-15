@@ -26,38 +26,47 @@ function verifyListing(language, id, altPhotoText, title, address, applyButtonTe
   cy.contains(applyButtonText)
 }
 
-describe("Listing Details for Open Listings", () => {
-  const testListings = {
-    OPEN_RENTAL: {
-      id: "a0W0P00000F8YG4UAN",
-      title: "TEST Automated Listing (do not modify)",
-    },
-    OPEN_SALE: {
-      id: "a0W0P00000GlKfBUAV",
-      address: "1 South Van Ness Ave, San Francisco, CA 94103",
-      title: "TEST Sale Listing (do not modify) - Homeownership Acres",
-    },
-  }
+const testListings = {
+  OPEN_RENTAL: {
+    id: "a0W0P00000F8YG4UAN",
+    title: "TEST Automated Listing (do not modify)",
+  },
+  OPEN_SALE: {
+    id: "a0W0P00000GlKfBUAV",
+    address: "1 South Van Ness Ave, San Francisco, CA 94103",
+    title: "TEST Sale Listing (do not modify) - Homeownership Acres",
+  },
+}
+const ALT_PHOTO_TEXT = {
+  en: "A picture of the building",
+  es: "Una foto del edificio",
+  tl: "Isang larawan ng gusali",
+  zh: "建築物照片",
+}
 
-  beforeEach(() => {
-    /* Using iphone-x size https://docs.cypress.io/api/commands/viewport#Usage */
-    cy.viewport(375, 812)
-  })
+const APPLY_BUTTON_TEXT = {
+  en: "Apply Online",
+  es: "Presente su solicitud en línea",
+  tl: "Mag-aplay Online",
+  zh: "網上申請",
+}
+
+describe("Listing Details for Open Listings", () => {
   afterEach(() => {
-    // TODO: remove me. we shouldn't have to wait in between tests, but there is a rogue
-    // loading issue beyond the scope of this story
+    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
+    // there is a rogue loading issue beyond the scope of this story
     cy.wait(3000)
   })
 
-  describe("Rental Listing", () => {
+  describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
       verifyListing(
         null,
         testListings.OPEN_RENTAL.id,
-        "A picture of the building",
+        ALT_PHOTO_TEXT.en,
         testListings.OPEN_RENTAL.title,
         null,
-        "Apply Online"
+        APPLY_BUTTON_TEXT.en
       )
     })
 
@@ -65,10 +74,10 @@ describe("Listing Details for Open Listings", () => {
       verifyListing(
         "es",
         testListings.OPEN_RENTAL.id,
-        "Una foto del edificio",
+        ALT_PHOTO_TEXT.es,
         testListings.OPEN_RENTAL.title,
         null,
-        "Presente su solicitud en línea"
+        APPLY_BUTTON_TEXT.es
       )
     })
 
@@ -76,10 +85,10 @@ describe("Listing Details for Open Listings", () => {
       verifyListing(
         "zh",
         testListings.OPEN_RENTAL.id,
-        "建築物照片",
+        ALT_PHOTO_TEXT.zh,
         testListings.OPEN_RENTAL.title,
         "",
-        "網上申請"
+        APPLY_BUTTON_TEXT.zh
       )
     })
 
@@ -87,10 +96,56 @@ describe("Listing Details for Open Listings", () => {
       verifyListing(
         "tl",
         testListings.OPEN_RENTAL.id,
-        "Isang larawan ng gusali",
+        ALT_PHOTO_TEXT.tl,
         testListings.OPEN_RENTAL.title,
         null,
-        "Mag-aplay Online"
+        APPLY_BUTTON_TEXT.tl
+      )
+    })
+  })
+
+  describe("Sale Listing " + testListings.OPEN_SALE.id, () => {
+    it("displays in English", () => {
+      verifyListing(
+        null,
+        testListings.OPEN_SALE.id,
+        ALT_PHOTO_TEXT.en,
+        testListings.OPEN_SALE.title,
+        testListings.OPEN_SALE.address,
+        APPLY_BUTTON_TEXT.en
+      )
+    })
+
+    it("displays in Spanish", () => {
+      verifyListing(
+        "es",
+        testListings.OPEN_SALE.id,
+        ALT_PHOTO_TEXT.es,
+        testListings.OPEN_SALE.title,
+        testListings.OPEN_SALE.address,
+        APPLY_BUTTON_TEXT.es
+      )
+    })
+
+    it("displays in Chinese", () => {
+      verifyListing(
+        "zh",
+        testListings.OPEN_SALE.id,
+        ALT_PHOTO_TEXT.zh,
+        testListings.OPEN_SALE.title,
+        testListings.OPEN_SALE.address,
+        APPLY_BUTTON_TEXT.zh
+      )
+    })
+
+    it("displays in Filipino", () => {
+      verifyListing(
+        "tl",
+        testListings.OPEN_SALE.id,
+        ALT_PHOTO_TEXT.tl,
+        testListings.OPEN_SALE.title,
+        testListings.OPEN_SALE.address,
+        APPLY_BUTTON_TEXT.tl
       )
     })
   })
