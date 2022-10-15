@@ -18,4 +18,6 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },
+  // workaround see https://github.com/dequelabs/axe-core/issues/3057
+  modifyObstructiveCode: false
 })
