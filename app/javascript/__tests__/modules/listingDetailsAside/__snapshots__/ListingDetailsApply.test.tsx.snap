@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsApply displays habitat link for eligibility requirements when listing is habitat and is open 1`] = `
-Array [
+<div
+  className="md:px-0 px-2"
+>
   <section
     className="aside-block "
   >
@@ -40,7 +42,7 @@ Array [
         Apply Online
       </a>
     </div>
-  </section>,
+  </section>
   <section
     className="aside-block "
   >
@@ -60,14 +62,16 @@ Array [
         Visit HomeownershipSF
       </a>
     </div>
-  </section>,
-]
+  </section>
+</div>
 `;
 
 exports[`ListingDetailsApply does not render if listing is closed 1`] = `null`;
 
 exports[`ListingDetailsApply renders if listing is open 1`] = `
-Array [
+<div
+  className="md:px-0 px-2"
+>
   <section
     className="aside-block "
   >
@@ -106,7 +110,7 @@ Array [
         Apply Online
       </a>
     </div>
-  </section>,
+  </section>
   <section
     className="aside-block "
   >
@@ -126,7 +130,7 @@ Array [
         Visit HomeownershipSF
       </a>
     </div>
-  </section>,
+  </section>
   <section
     className="aside-block "
   >
@@ -140,6 +144,6 @@ Array [
     >
       June 2020
     </div>
-  </section>,
-]
+  </section>
+</div>
 `;

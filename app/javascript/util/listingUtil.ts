@@ -80,7 +80,7 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * permit multiple occupancy, false otherwise
  */
 export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) =>
-  process.env.SRO_PLURAL_LISTINGS[listing.Id] === name
+  process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
 
 /**
  * Builds and return an address string. Not to be used for display. Use
