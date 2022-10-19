@@ -29,13 +29,14 @@ describe("ListingDetailsEligibility", () => {
       }
     })
   })
-  it("displays listing details eligibility section", () => {
+  it("displays listing details eligibility section and no Building Selection Criteria Link", () => {
+    const testListing = {
+      ...closedRentalListing,
+      Building_Selection_Criteria: "",
+    }
     const tree = renderer
       .create(
-        <ListingDetailsEligibility
-          listing={closedRentalListing}
-          imageSrc={"listing-eligibility.svg"}
-        />
+        <ListingDetailsEligibility listing={testListing} imageSrc={"listing-eligibility.svg"} />
       )
       .toJSON()
 

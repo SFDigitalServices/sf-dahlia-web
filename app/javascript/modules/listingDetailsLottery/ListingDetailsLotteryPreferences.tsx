@@ -14,7 +14,7 @@ export const ListingDetailsLotteryPreferences = ({
     <div className="text-tiny">
       <p className="px-8 pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
       <header className="border-b border-gray-450 mb-4">
-        <Heading className="text-caps-underline mx-8" priority={2}>
+        <Heading styleType="underlineWeighted" className="mx-8" priority={2}>
           {t("lottery.housingPreferences")}
         </Heading>
         <p className="pb-4 text-gray-700 text-sm mx-8">{t("lottery.rankingOrderNote")}</p>

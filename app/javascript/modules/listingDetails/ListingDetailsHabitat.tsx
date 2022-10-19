@@ -13,16 +13,16 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
 
   return (
     <div className="md:pr-8 md:w-2/3 mt-4 mx-2 w-full">
-      <Heading priority={4} style="sidebarHeader">
+      <Heading priority={4} styleType="underlineWeighted">
         {t("listings.habitat.payments.title")}
       </Heading>
       <p>{t("listings.habitat.payments.p1")}</p>
-      <Heading className="mt-8" priority={4} style="sidebarHeader">
+      <Heading className="mt-8" priority={4} styleType="underlineWeighted">
         {t("listings.habitat.sweatEquity.title")}
       </Heading>
       <p>{t("listings.habitat.sweatEquity.p1")}</p>
       <p className="mt-4">{t("listings.habitat.sweatEquity.p2")}</p>
-      <Heading className="mt-8" priority={4} style="sidebarHeader">
+      <Heading className="mt-8" priority={4} styleType="underlineWeighted">
         {t("listings.habitat.applicationProcess.title")}
       </Heading>
       <p>
@@ -50,7 +50,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
         <li>{t("listings.habitat.applicationProcess.ol9")}</li>
         <li>{t("listings.habitat.applicationProcess.ol10")}</li>
       </ol>
-      <Heading className="mt-8" priority={4} style="sidebarHeader">
+      <Heading className="mt-8" priority={4} styleType="underlineWeighted">
         {t("listings.habitat.incomeRange.title")}
       </Heading>
       <p>{t("listings.habitat.incomeRange.p1")}</p>

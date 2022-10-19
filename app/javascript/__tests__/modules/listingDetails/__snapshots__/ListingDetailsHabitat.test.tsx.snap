@@ -5,7 +5,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
   className="md:pr-8 md:w-2/3 mt-4 mx-2 w-full"
 >
   <h4
-    className="text-caps-underline undefined"
+    className="text__underline-weighted"
   >
     Payments
   </h4>
@@ -13,7 +13,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     Your monthly housing payment will be 30% of your gross monthly income. The housing payment includes your mortgage, property tax, insurance, HOA fee, and utilities.
   </p>
   <h4
-    className="text-caps-underline mt-8"
+    className="text__underline-weighted mt-8"
   >
     Sweat Equity
   </h4>
@@ -26,7 +26,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     If you are concerned about your ability to complete 500 hours of sweat equity, reach out to Habitat for Humanity Greater San Francisco to ask how they can help.
   </p>
   <h4
-    className="text-caps-underline mt-8"
+    className="text__underline-weighted mt-8"
   >
     Application Process
   </h4>
@@ -86,7 +86,7 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     </li>
   </ol>
   <h4
-    className="text-caps-underline mt-8"
+    className="text__underline-weighted mt-8"
   >
     Income Range
   </h4>
