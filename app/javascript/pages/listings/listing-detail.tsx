@@ -29,6 +29,8 @@ import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
+import useTranslate from "../../hooks/useTranslate"
+import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -36,6 +38,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  useTranslate()
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -54,6 +57,7 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            <ListingDetailsHabitat listing={listing} />
             {!isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate
@@ -66,7 +70,7 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable />
+            <ListingDetailsPricingTable listing={listing} />
             {listingHasSROUnits(listing) &&
               !(
                 isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)

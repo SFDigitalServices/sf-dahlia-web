@@ -42,7 +42,7 @@ export const ListingDetailsLotteryRanking = ({
       <div className="lottery-ranking text-tiny">
         {applicantSelectedForPreference && (
           <header className="px-8">
-            <Heading className="text-caps-underline" priority={2}>
+            <Heading styleType="underlineWeighted" priority={2}>
               {t("lottery.rankingTitle")}
             </Heading>
             <p className="border-b border-gray-450 pb-4 text-gray-700">

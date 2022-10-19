@@ -2,6 +2,7 @@ import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
+import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -14,6 +15,17 @@ const getDepositString = (min?: string, max?: string) => {
   return min ? `$${min}` : `$${max}`
 }
 
+// TODO: add prop for items that should have machine translated content
+interface FeatureItemProps {
+  content: any
+  title: string
+}
+const FeatureItem = ({ content, title }: FeatureItemProps) => {
+  if (!content) return <></>
+
+  return <Description term={title} description={stripMostTags(content)} markdown={true} />
+}
+
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   const depositSubtext = [t("listings.features.orOneMonthsRent")]
 
@@ -23,7 +35,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
   return (
     <ListingDetailItem
-      imageAlt={"Image Alt"}
+      imageAlt={""}
       imageSrc={imageSrc}
       title={t("listings.features.header")}
       subtitle={
@@ -34,27 +46,33 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
     >
       <div className="listing-detail-panel">
         <dl className="column-definition-list">
-          <Description
-            term={t("listings.neighborhood.header")}
-            description={listing.Neighborhood}
+          <FeatureItem content={listing.Neighborhood} title={t("listings.neighborhood.header")} />
+          <FeatureItem content={String(listing.Year_Built)} title={t("listings.features.built")} />
+          <FeatureItem content={listing.Appliances} title={t("listings.features.appliances")} />
+          <FeatureItem
+            content={listing.Services_Onsite}
+            title={t(
+              isSale(listing)
+                ? "listings.features.servicesCoveredByHoaDues"
+                : "listings.features.servicesOnsite"
+            )}
           />
-          <Description term={t("listings.features.built")} description={listing.Year_Built} />
-          <Description
-            term={t("listings.features.parking")}
-            description={listing.Parking_Information}
+          <FeatureItem
+            content={listing.Parking_Information}
+            title={t("listings.features.parking")}
           />
-          <Description
-            term={t("listings.features.smokingPolicy")}
-            description={listing.Smoking_Policy}
+          <FeatureItem
+            content={listing.Smoking_Policy}
+            title={t("listings.features.smokingPolicy")}
           />
-          <Description term={t("listings.features.petsPolicy")} description={listing.Pet_Policy} />
-          <Description
-            term={t("listings.features.propertyAmenities")}
-            description={listing.Amenities}
+          <FeatureItem content={listing.Pet_Policy} title={t("listings.features.petsPolicy")} />
+          <FeatureItem
+            content={listing.Amenities}
+            title={t("listings.features.propertyAmenities")}
           />
-          <Description
-            term={t("listings.features.accessibility")}
-            description={listing.Accessibility}
+          <FeatureItem
+            content={listing.Accessibility}
+            title={t("listings.features.accessibility")}
           />
 
           <Description term={t("listings.features.unitFeatures")} description={""} />

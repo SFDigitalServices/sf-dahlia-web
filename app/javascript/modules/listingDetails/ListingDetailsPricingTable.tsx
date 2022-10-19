@@ -1,12 +1,15 @@
 import React from "react"
 import { CategoryTable, ContentAccordion } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
+import { isHabitatListing } from "../../util/listingUtil"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
 }
 
-export const ListingDetailsPricingTable = () => {
+export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
+  if (isHabitatListing(listing)) return null
+
   /* TODO: Build unit summaries, remove mock data */
   const responsiveTableRows = [
     {

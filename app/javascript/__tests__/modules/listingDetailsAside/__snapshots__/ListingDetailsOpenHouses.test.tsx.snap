@@ -8,7 +8,7 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
     className="aside-block"
   >
     <h4
-      className="text-caps-underline undefined"
+      className="text__underline-weighted"
     >
       Open Houses
     </h4>

@@ -13,7 +13,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     className="border-b border-gray-450 mb-4"
   >
     <h2
-      className="undefined text-caps-underline mx-8"
+      className="text__underline-weighted mx-8"
     >
       Housing Preferences
     </h2>
@@ -28,7 +28,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="px-8 "
     >
       <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-tiny tracking-wide uppercase"
       >
         Neighborhood Resident Housing Preference (NRHP)
       </h3>
@@ -52,7 +52,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="px-8 "
     >
       <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-tiny tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
@@ -82,7 +82,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     className="px-8"
   >
     <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="font-sans font-semibold text-tiny tracking-wide uppercase"
     >
       General Pool
     </h3>
@@ -116,7 +116,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     className="border-b border-gray-450 mb-4"
   >
     <h2
-      className="undefined text-caps-underline mx-8"
+      className="text__underline-weighted mx-8"
     >
       Housing Preferences
     </h2>
@@ -131,7 +131,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-tiny tracking-wide uppercase"
       >
         Certificate of Preference (COP)
       </h3>
@@ -155,7 +155,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-tiny tracking-wide uppercase"
       >
         Displaced Tenant Housing Preference (DTHP)
       </h3>
@@ -179,7 +179,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-tiny tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
@@ -209,7 +209,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     className="px-8"
   >
     <h3
-      className="undefined font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="font-sans font-semibold text-tiny tracking-wide uppercase"
     >
       General Pool
     </h3>

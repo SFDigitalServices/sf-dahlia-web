@@ -11,11 +11,12 @@ import { RailsListing } from "../listings/SharedHelpers"
 import {
   isHabitatListing,
   isPluralSRO,
+  isRental,
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
 } from "../../util/listingUtil"
-import { renderMarkup, defaultIfNotTranslated } from "../../util/languageUtil"
+import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -143,124 +144,153 @@ export const ListingDetailsEligibility = ({
       subtitle={isSale(listing) ? "" : t("listings.eligibility.subheader")}
       desktopClass="bg-primary-lighter"
     >
-      {isSale(listing) && (
-        <BeforeApplyingForSale
-          beforeApplyingType={
-            isHabitatListing(listing)
-              ? BeforeApplyingType.LISTING_DETAILS_HABITAT
-              : BeforeApplyingType.LISTING_DETAILS
-          }
-        />
-      )}
-      <ListSection
-        title={t("listings.householdMaximumIncome")}
-        subtitle={
-          <div>
-            <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
-            <div className="mb-4">
-              {renderMarkup(
-                t("listings.incomeExceptions.intro", {
-                  url: "https://sfmohcd.org/special-calculations-household-income",
-                })
-              )}
-            </div>
-            <ul className="list-disc ml-5">
-              <li>{t("listings.incomeExceptions.students")}</li>
-              <li>{t("listings.incomeExceptions.nontaxable")}</li>
-            </ul>
-          </div>
-        }
-      >
-        <StandardTable headers={HMITableHeaders} data={HMITableData} />
-      </ListSection>
-      <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
-        <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
-      </ListSection>
-      <ListingDetailsPreferences listingID={listing.listingID} />
-      {priorityUnits?.length > 0 ? (
-        <ListSection
-          title={t("listings.priorityUnits")}
-          subtitle={t("listings.priorityUnitsDescription")}
-        >
-          {priorityUnits
-            .filter((unit: ReducedUnit) => {
-              return unit?.name !== "Adaptable"
-            })
-            .map((unit: ReducedUnit) => {
-              return (
-                <InfoCard
-                  title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
-                  subtitle={
-                    unit.numberOfUnits === 1
-                      ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
-                          "listings.features.unit",
-                          "unit"
-                        )}`
-                      : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
-                  }
-                >
-                  <p className="text-tiny">
-                    {defaultIfNotTranslated(
-                      `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
-                      `These units have accessibility features for people with ${unit.name}.`
-                    )}
-                  </p>
-                </InfoCard>
-              )
-            })}
-        </ListSection>
-      ) : (
-        <></>
-      )}
-      <ListSection
-        title={t("listingsForRent.rentalAssistance.title")}
-        subtitle={t("listingsForRent.rentalAssitance.subtitle")}
-      />
-      <ListSection
-        title={t("listings.additionalEligibilityRules.title")}
-        subtitle={t("listings.additionalEligibilityRules.subtitle")}
-      >
-        {listing.Credit_Rating && (
-          <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
-            <ExpandableText
-              className="text-sm text-gray-700"
-              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-            >
-              {listing.Credit_Rating}
-            </ExpandableText>
-          </InfoCard>
+      <ul>
+        {isSale(listing) && (
+          <BeforeApplyingForSale
+            beforeApplyingType={
+              isHabitatListing(listing)
+                ? BeforeApplyingType.LISTING_DETAILS_HABITAT
+                : BeforeApplyingType.LISTING_DETAILS
+            }
+          />
         )}
-
-        {listing.Eviction_History && (
-          <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
-            <ExpandableText
-              className="text-sm text-gray-700"
-              strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-            >
-              {listing.Eviction_History}
-            </ExpandableText>
-          </InfoCard>
-        )}
-
-        <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
-          <ExpandableText
-            className="text-sm text-gray-700"
-            strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-            maxLength={600}
+        {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
+          <ListSection
+            title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
+            subtitle={t("")}
           >
-            {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
-              fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
-              article49Url:
-                "https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf",
-            })}
-          </ExpandableText>
-        </InfoCard>
-        <p>
-          <a href={listing.Building_Selection_Criteria} target={"_blank"}>
-            {t("listings.additionalEligibilityRules.findOutMore")}
-          </a>
-        </p>
-      </ListSection>
+            <InfoCard
+              title={t(
+                `listings.reservedCommunityType.${listing.Reserved_community_type}.eligibility`
+              )}
+              subtitle={t("listings.allUnits")}
+            >
+              {listing.Reserved_community_type_Description && (
+                <div className="text-gray-700 text-sm translate">
+                  {renderMarkup(listing.Reserved_community_type_Description)}
+                </div>
+              )}
+            </InfoCard>
+          </ListSection>
+        )}
+        {!isHabitatListing(listing) && (
+          <ListSection
+            title={t("listings.householdMaximumIncome")}
+            subtitle={
+              <div>
+                <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
+                <div className="mb-4">
+                  {renderMarkup(
+                    t("listings.incomeExceptions.intro", {
+                      url: "https://sfmohcd.org/special-calculations-household-income",
+                    })
+                  )}
+                </div>
+                <ul className="list-disc ml-5">
+                  <li>{t("listings.incomeExceptions.students")}</li>
+                  <li>{t("listings.incomeExceptions.nontaxable")}</li>
+                </ul>
+              </div>
+            }
+          >
+            <StandardTable headers={HMITableHeaders} data={HMITableData} />
+          </ListSection>
+        )}
+        <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
+          <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
+        </ListSection>
+        <ListingDetailsPreferences listingID={listing.listingID} />
+        {priorityUnits?.length > 0 ? (
+          <ListSection
+            title={t("listings.priorityUnits")}
+            subtitle={t("listings.priorityUnitsDescription")}
+          >
+            {priorityUnits
+              .filter((unit: ReducedUnit) => {
+                return unit?.name !== "Adaptable"
+              })
+              .map((unit: ReducedUnit) => {
+                return (
+                  <InfoCard
+                    title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
+                    subtitle={
+                      unit.numberOfUnits === 1
+                        ? `${unit.numberOfUnits} ${defaultIfNotTranslated(
+                            "listings.features.unit",
+                            "unit"
+                          )}`
+                        : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
+                    }
+                  >
+                    <p className="text-tiny">
+                      {defaultIfNotTranslated(
+                        `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
+                        `These units have accessibility features for people with ${unit.name}.`
+                      )}
+                    </p>
+                  </InfoCard>
+                )
+              })}
+          </ListSection>
+        ) : (
+          <></>
+        )}
+        {isRental(listing) && (
+          <ListSection
+            title={t("listingsForRent.rentalAssistance.title")}
+            subtitle={t("listingsForRent.rentalAssitance.subtitle")}
+          />
+        )}
+        {(listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History) && (
+          <ListSection
+            title={t("listings.additionalEligibilityRules.title")}
+            subtitle={t("listings.additionalEligibilityRules.subtitle")}
+          >
+            {listing.Credit_Rating && (
+              <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
+                <ExpandableText
+                  className="text-sm text-gray-700"
+                  strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                >
+                  {listing.Credit_Rating}
+                </ExpandableText>
+              </InfoCard>
+            )}
+
+            {listing.Eviction_History && (
+              <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
+                <ExpandableText
+                  className="text-sm text-gray-700"
+                  strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                >
+                  {listing.Eviction_History}
+                </ExpandableText>
+              </InfoCard>
+            )}
+            <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
+              <ExpandableText
+                className="text-sm text-gray-700"
+                strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                maxLength={600}
+              >
+                {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
+                  fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
+                  article49Url:
+                    "https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf",
+                })}
+              </ExpandableText>
+            </InfoCard>
+
+            {listing.Building_Selection_Criteria && (
+              <p>
+                <a href={listing.Building_Selection_Criteria} target={"_blank"}>
+                  {t("listings.additionalEligibilityRules.findOutMore")}
+                </a>
+              </p>
+            )}
+          </ListSection>
+        )}
+      </ul>
     </ListingDetailItem>
   )
 }

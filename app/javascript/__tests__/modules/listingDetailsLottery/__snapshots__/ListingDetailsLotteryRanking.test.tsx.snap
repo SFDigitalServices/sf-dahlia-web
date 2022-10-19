@@ -8,7 +8,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     className="px-8"
   >
     <h2
-      className="undefined text-caps-underline"
+      className="text__underline-weighted"
     >
       Your preference ranking
     </h2>
@@ -57,7 +57,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
       className="mx-4"
     >
       <h3
-        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
@@ -100,7 +100,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
     className="px-8"
   >
     <h2
-      className="undefined text-caps-underline"
+      className="text__underline-weighted"
     >
       Your preference ranking
     </h2>
@@ -129,7 +129,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       className="mx-4"
     >
       <h3
-        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
       >
         Certificate of Preference (COP)
       </h3>
@@ -164,7 +164,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       className="mx-4"
     >
       <h3
-        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
@@ -242,7 +242,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
       className="mx-4"
     >
       <h3
-        className="undefined font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
       >
         General Pool
       </h3>

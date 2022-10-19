@@ -6,7 +6,7 @@ import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/Befo
 
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
-    <Heading className="mb-5" priority={2} underline>
+    <Heading styleType="underlineWeighted" className="mb-5" priority={2}>
       {t("saleDirectory.getHelp.title")}
     </Heading>
     <p className="mb-4">{t("saleDirectory.getHelp.somePeopleMayQualify")}</p>

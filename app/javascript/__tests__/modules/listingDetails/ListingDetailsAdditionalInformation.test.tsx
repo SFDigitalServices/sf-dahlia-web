@@ -1,12 +1,11 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsFeatures } from "../../../modules/listingDetails/ListingDetailsFeatures"
+import { ListingDetailsAdditionalInformation } from "../../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 
-describe("ListingDetailsFeatures", () => {
-  it("displays listing details features section when rental listing", () => {
-    // This component pulls in react-media, which needs this custom mock
+describe("ListingDetailsAdditionalInformation", () => {
+  it("displays additional information section for a sale listing", () => {
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
         matches: true,
@@ -21,15 +20,14 @@ describe("ListingDetailsFeatures", () => {
     })
     const tree = renderer
       .create(
-        <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
+        <ListingDetailsAdditionalInformation listing={openSaleListing} imageSrc={"/image-url"} />
       )
       .toJSON()
 
     expect(tree).toMatchSnapshot()
   })
 
-  it("displays listing details features section when sales listing", () => {
-    // This component pulls in react-media, which needs this custom mock
+  it("displays additional information section for a rental listing", () => {
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
         matches: true,
@@ -44,7 +42,10 @@ describe("ListingDetailsFeatures", () => {
     })
     const tree = renderer
       .create(
-        <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
+        <ListingDetailsAdditionalInformation
+          listing={closedRentalListing}
+          imageSrc={"/image-url"}
+        />
       )
       .toJSON()
 
