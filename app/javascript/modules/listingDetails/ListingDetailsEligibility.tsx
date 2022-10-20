@@ -212,6 +212,7 @@ export const ListingDetailsEligibility = ({
               .map((unit: ReducedUnit) => {
                 return (
                   <InfoCard
+                    key={unit.name}
                     title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
                     subtitle={
                       unit.numberOfUnits === 1

@@ -66,8 +66,8 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
-<div
-  className="mb-8"
+<li
+  className="mb-8 style-none"
 >
   <h2
     className="text__underline-weighted mb-5"
@@ -130,7 +130,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     </a>
      for more details.
   </p>
-</div>
+</li>
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is listing detail 1`] = `

@@ -5,7 +5,6 @@ import {
   Mobile,
   NavigationContext,
   SiteAlert,
-  t,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
@@ -31,6 +30,7 @@ import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/M
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
 import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
+import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 
 const ListingDetail = () => {
@@ -119,17 +119,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <div className="listing-detail-panel p-0">
-                <div className="m-0 info-card flex items-center justify-between">
-                  <p className="m-0 text-base text-serif-lg w-3/4">
-                    {t("listings.monitoredByMohcd")}
-                  </p>
-                  <img
-                    alt={t("listings.equalHousingOpportunityLogo")}
-                    src={getAssetPath("logo-equal.png")}
-                  />
-                </div>
-              </div>
+              <ListingDetailsMOHCD />
             </ListingDetails>
           </article>
         )}

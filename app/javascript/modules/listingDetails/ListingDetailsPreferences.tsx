@@ -14,6 +14,9 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
     void getPreferences(listingID).then((preferences) => {
       setPreferences(preferences)
     })
+    return () => {
+      setPreferences([])
+    }
   }, [listingID])
 
   return (

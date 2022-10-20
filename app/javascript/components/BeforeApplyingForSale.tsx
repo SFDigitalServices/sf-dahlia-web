@@ -110,12 +110,12 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {content}
     </ListSection>
   ) : (
-    <div className="mb-8">
+    <li className="mb-8 style-none">
       <Heading className="mb-5" priority={2} styleType={"underlineWeighted"}>
         {t("saleDirectory.beforeApplying.title")}
       </Heading>
       <p>{t("saleDirectory.beforeApplying.makeSureYou")}</p>
       {content}
-    </div>
+    </li>
   )
 }

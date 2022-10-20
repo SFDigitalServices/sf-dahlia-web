@@ -94,7 +94,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             <div className={"flex w-full items-center justify-center flex-col"}>
               {paperApplicationURLs(isListingRental).map((app) => {
                 return (
-                  <span className={"pt-4"}>
+                  <span className={"pt-4"} key={app.languageString}>
                     <LinkButton
                       href={app.fileURL}
                       unstyled
