@@ -252,7 +252,7 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{ wrapper: null, forceInline: true }}
+                  markdownProps={{ forceInline: true }}
                   buttonClassName="ml-1"
                 >
                   {listing.Credit_Rating}
@@ -265,7 +265,7 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{ wrapper: null, forceInline: true }}
+                  markdownProps={{ forceInline: true }}
                   buttonClassName="ml-1"
                 >
                   {listing.Eviction_History}
@@ -277,7 +277,7 @@ export const ListingDetailsEligibility = ({
                 className="text-sm text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
-                markdownProps={{ wrapper: null, forceInline: true }}
+                markdownProps={{ forceInline: true }}
                 buttonClassName="ml-1"
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
