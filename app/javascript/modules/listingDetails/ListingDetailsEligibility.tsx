@@ -252,6 +252,8 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  markdownProps={{ wrapper: null, forceInline: true }}
+                  buttonClassName="ml-1"
                 >
                   {listing.Credit_Rating}
                 </ExpandableText>
@@ -263,6 +265,8 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  markdownProps={{ wrapper: null, forceInline: true }}
+                  buttonClassName="ml-1"
                 >
                   {listing.Eviction_History}
                 </ExpandableText>
@@ -273,6 +277,8 @@ export const ListingDetailsEligibility = ({
                 className="text-sm text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
+                markdownProps={{ wrapper: null, forceInline: true }}
+                buttonClassName="ml-1"
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
                   fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
