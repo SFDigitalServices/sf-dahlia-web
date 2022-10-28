@@ -270,16 +270,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-            <br />
-            <br />
-            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-            <br />
-            <br />
-            Collection...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Collection...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -305,16 +325,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-            <br />
-            <br />
-            Previous rental history will be reviewed and must exhibit no derogatory references. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-            <br />
-            <br />
-            Landlord references will only check...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Landlord references will only check...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -340,22 +380,34 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
+          <span
+            className="mr-1"
+          >
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                  target="_blank"
+                >
+                  Article 49
+                </a>
+              </span>
+               of the San Francisco Police Code: 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                  target="_blank"
+                >
+                  Fair Chance Ordinance
+                </a>
+              </span>
+              .
+            </span>
           </span>
         </div>
       </div>
@@ -635,16 +687,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-            <br />
-            <br />
-            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-            <br />
-            <br />
-            Collection...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Collection...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -670,16 +742,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-            <br />
-            <br />
-            Previous rental history will be reviewed and must exhibit no derogatory references. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-            <br />
-            <br />
-            Landlord references will only check...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Landlord references will only check...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -705,22 +797,34 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
+          <span
+            className="mr-1"
+          >
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                  target="_blank"
+                >
+                  Article 49
+                </a>
+              </span>
+               of the San Francisco Police Code: 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                  target="_blank"
+                >
+                  Fair Chance Ordinance
+                </a>
+              </span>
+              .
+            </span>
           </span>
         </div>
       </div>
@@ -1299,16 +1403,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-            <br />
-            <br />
-            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-            <br />
-            <br />
-            Collection...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Collection...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -1334,16 +1458,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-            <br />
-            <br />
-            Previous rental history will be reviewed and must exhibit no derogatory references. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-            <br />
-            <br />
-            Landlord references will only check...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Landlord references will only check...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -1369,22 +1513,34 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
+          <span
+            className="mr-1"
+          >
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                  target="_blank"
+                >
+                  Article 49
+                </a>
+              </span>
+               of the San Francisco Police Code: 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                  target="_blank"
+                >
+                  Fair Chance Ordinance
+                </a>
+              </span>
+              .
+            </span>
           </span>
         </div>
       </div>
@@ -1671,16 +1827,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-            <br />
-            <br />
-            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-            <br />
-            <br />
-            Collection...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Collection...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -1706,16 +1882,36 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+          <span
+            className="mr-1"
+          >
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-            <br />
-            <br />
-            Previous rental history will be reviewed and must exhibit no derogatory references. 
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-            <br />
-            <br />
-            Landlord references will only check...
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              <span
+                className="mr-1"
+              >
+                <br />
+              </span>
+              Landlord references will only check...
+            </span>
           </span>
           <button
             className="button-toggle"
@@ -1741,22 +1937,34 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           className="expandable-text text-sm text-gray-700"
         >
            
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
+          <span
+            className="mr-1"
+          >
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                  target="_blank"
+                >
+                  Article 49
+                </a>
+              </span>
+               of the San Francisco Police Code: 
+              <span
+                className="mr-1"
+              >
+                <a
+                  href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                  target="_blank"
+                >
+                  Fair Chance Ordinance
+                </a>
+              </span>
+              .
+            </span>
           </span>
         </div>
       </div>
