@@ -17,6 +17,7 @@ import {
   listingHasSROUnits,
 } from "../../util/listingUtil"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
+import { stripMostTags } from "../../util/filterUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -252,10 +253,8 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{ forceInline: true }}
-                  buttonClassName="ml-1"
                 >
-                  {listing.Credit_Rating}
+                  {stripMostTags(listing.Credit_Rating)}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -265,10 +264,8 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{ forceInline: true }}
-                  buttonClassName="ml-1"
                 >
-                  {listing.Eviction_History}
+                  {stripMostTags(listing.Eviction_History)}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -277,8 +274,6 @@ export const ListingDetailsEligibility = ({
                 className="text-sm text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
-                markdownProps={{ forceInline: true }}
-                buttonClassName="ml-1"
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
                   fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",

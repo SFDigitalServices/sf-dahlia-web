@@ -273,12 +273,16 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <span>
             Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+            <br />
+            <br />
+            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-Collection accounts...
+            <br />
+            <br />
+            Collection...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -304,12 +308,16 @@ Collection accounts...
           <span>
             Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-Previous rental history will be reviewed and must exhibit no derogatory references. 
+            <br />
+            <br />
+            Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-Landlord references will only check for...
+            <br />
+            <br />
+            Landlord references will only check...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -630,12 +638,16 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <span>
             Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+            <br />
+            <br />
+            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-Collection accounts...
+            <br />
+            <br />
+            Collection...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -661,12 +673,16 @@ Collection accounts...
           <span>
             Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-Previous rental history will be reviewed and must exhibit no derogatory references. 
+            <br />
+            <br />
+            Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-Landlord references will only check for...
+            <br />
+            <br />
+            Landlord references will only check...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -1286,12 +1302,16 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <span>
             Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+            <br />
+            <br />
+            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-Collection accounts...
+            <br />
+            <br />
+            Collection...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -1317,12 +1337,16 @@ Collection accounts...
           <span>
             Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-Previous rental history will be reviewed and must exhibit no derogatory references. 
+            <br />
+            <br />
+            Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-Landlord references will only check for...
+            <br />
+            <br />
+            Landlord references will only check...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -1650,12 +1674,16 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <span>
             Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
 
-Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+            <br />
+            <br />
+            Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
 
-Collection accounts...
+            <br />
+            <br />
+            Collection...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
@@ -1681,12 +1709,16 @@ Collection accounts...
           <span>
             Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
 
-Previous rental history will be reviewed and must exhibit no derogatory references. 
+            <br />
+            <br />
+            Previous rental history will be reviewed and must exhibit no derogatory references. 
 
-Landlord references will only check for...
+            <br />
+            <br />
+            Landlord references will only check...
           </span>
           <button
-            className="button-toggle ml-1"
+            className="button-toggle"
             onClick={[Function]}
           >
             More
