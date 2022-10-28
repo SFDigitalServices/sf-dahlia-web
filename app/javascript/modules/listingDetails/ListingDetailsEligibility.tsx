@@ -253,6 +253,13 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  markdownProps={{
+                    createElement(type, props, children) {
+                      return (
+                        <span className="mr-1">{React.createElement(type, props, children)}</span>
+                      )
+                    },
+                  }}
                 >
                   {stripMostTags(listing.Credit_Rating)}
                 </ExpandableText>
@@ -264,6 +271,13 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  markdownProps={{
+                    createElement(type, props, children) {
+                      return (
+                        <span className="mr-1">{React.createElement(type, props, children)}</span>
+                      )
+                    },
+                  }}
                 >
                   {stripMostTags(listing.Eviction_History)}
                 </ExpandableText>
@@ -274,6 +288,13 @@ export const ListingDetailsEligibility = ({
                 className="text-sm text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
+                markdownProps={{
+                  createElement(type, props, children) {
+                    return (
+                      <span className="mr-1">{React.createElement(type, props, children)}</span>
+                    )
+                  },
+                }}
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
                   fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
