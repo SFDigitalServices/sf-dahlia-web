@@ -125,9 +125,14 @@ export const ListingDetailsLotterySearchForm = ({
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
         </button>
       </form>
-      <div aria-live="polite" aria-busy={lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.LOADING}>
-        <ErrorBoundary boundaryScope={BoundaryScope.component}>{content}</ErrorBoundary>
-      </div>
+      <ErrorBoundary boundaryScope={BoundaryScope.component}>
+        <div
+          aria-live="polite"
+          aria-busy={lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.LOADING}
+        >
+          {content}
+        </div>
+      </ErrorBoundary>
       <ListingDetailsLotterySearchFooter
         lotterySearchFormStatus={lotteryFormStatus}
         listing={listing}
