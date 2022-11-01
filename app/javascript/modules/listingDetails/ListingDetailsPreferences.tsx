@@ -19,7 +19,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
     }
   }, [listingID])
 
-  if (preferences.length === 0) {
+  if (preferences?.length === 0) {
     return (
       <div className="flex justify-center">
         <Icon symbol="spinner" size="large" />
