@@ -6,6 +6,7 @@ import {
   getRentSubText,
   getTableHeader,
   showWaitlist,
+  getTableSubHeader,
 } from "../../modules/listings/DirectoryHelpers"
 import { getListingImageCardStatuses } from "../../modules/listings/SharedHelpers"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -24,6 +25,7 @@ describe("DirectoryHelpers", () => {
           getListingImageCardStatuses(testListing as RailsRentalListing, false)
         ).toStrictEqual([{ status: 0, content: "Application Deadline: October 30, 2100" }])
       })
+
       it("renders as upcoming lottery", () => {
         const testListing = {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
@@ -308,6 +310,101 @@ describe("DirectoryHelpers", () => {
       }
       expect(getTableHeader(testListing as RailsRentalListing)).toBe(
         "Available Units & Open Waitlist"
+      )
+    })
+  })
+  describe("getTableSubHeader", () => {
+    it("returns null with listing lacking prioritiesDescriptor", () => {
+      const testListing = {}
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(null)
+    })
+
+    it("returns null with listing lacking priorities length", () => {
+      const testListing = { prioritiesDescriptor: [] }
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(null)
+    })
+
+    it("correctly parses Vision impairments", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "Vision impairments",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for Vision Impairments"
+      )
+    })
+
+    it("correctly parses Hearing impairments", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "Hearing impairments",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for Hearing Impairments"
+      )
+    })
+
+    it("correctly parses Hearing/Vision impairments", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "Hearing/Vision impairments",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for Vision and/or Hearing Impairments"
+      )
+    })
+
+    it("correctly parses Mobility/hearing/vision impairments", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "Mobility/hearing/vision impairments",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for Mobility, Hearing and/or Vision Impairments"
+      )
+    })
+
+    it("correctly parses Mobility impairments", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "Mobility impairments",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for Mobility Impairments"
+      )
+    })
+
+    it("correctly parses no matches", () => {
+      const testListing = {
+        prioritiesDescriptor: [
+          {
+            name: "test",
+          },
+        ],
+      }
+
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
+        "Includes Priority Units for test"
       )
     })
   })
