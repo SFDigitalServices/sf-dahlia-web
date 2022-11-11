@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsHabitat does not display when not habitat listing 1`] = `
+Array [
+  <h2
+    className="text__large-primary order-1"
+  >
+    TEST: 36 Amber Drive
+  </h2>,
+  <h3
+    className="text__medium-normal order-2"
+  >
+    <span>
+      36 Amber Drive
+      , 
+      San Francisco
+      ,
+       
+      <abbr
+        className="no-underline"
+        title="California"
+      >
+        CA
+      </abbr>
+       
+      94131
+    </span>
+  </h3>,
+  <hr
+    className="mb-2"
+  />,
+  <div
+    className="text-gray-750"
+  >
+    <h3
+      className="text__small-weighted"
+    >
+      Available Units
+    </h3>
+    <div
+      className="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
+    >
+      Units
+    </div>
+    <div>
+      <span
+        className="font-semibold"
+      >
+        :
+      </span>
+       
+       available
+    </div>
+    <div
+      className="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
+    >
+      Payments
+    </div>
+    <div>
+      No down payment, but you do need to complete 500 hours of sweat equity. Your monthly payment will be 30% of your income.
+    </div>
+    <div
+      className="mt-4 border-0 border-b pb-2 mb-2"
+    >
+      You will need to attend an information session.
+    </div>
+  </div>,
+]
+`;

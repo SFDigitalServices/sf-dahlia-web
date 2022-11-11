@@ -316,12 +316,12 @@ describe("DirectoryHelpers", () => {
   describe("getTableSubHeader", () => {
     it("returns null with listing lacking prioritiesDescriptor", () => {
       const testListing = {}
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(null)
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBeNull()
     })
 
     it("returns null with listing lacking priorities length", () => {
       const testListing = { prioritiesDescriptor: [] }
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(null)
+      expect(getTableSubHeader(testListing as RailsRentalListing)).toBeNull()
     })
 
     it("correctly parses Vision impairments", () => {
