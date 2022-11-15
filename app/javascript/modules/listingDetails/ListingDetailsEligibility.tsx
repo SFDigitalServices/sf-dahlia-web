@@ -7,6 +7,7 @@ import {
   StandardTable,
   t,
 } from "@bloom-housing/ui-components"
+import { stripMostTags } from "../../util/filterUtil"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   isHabitatListing,
@@ -17,7 +18,6 @@ import {
   listingHasSROUnits,
 } from "../../util/listingUtil"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
-import { stripMostTags } from "../../util/filterUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -253,15 +253,9 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{
-                    createElement(type, props, children) {
-                      return (
-                        <span className="mr-1">{React.createElement(type, props, children)}</span>
-                      )
-                    },
-                  }}
+                  buttonClassName="mt-2"
                 >
-                  {stripMostTags(listing.Credit_Rating)}
+                  {listing.Credit_Rating}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -271,15 +265,9 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
-                  markdownProps={{
-                    createElement(type, props, children) {
-                      return (
-                        <span className="mr-1">{React.createElement(type, props, children)}</span>
-                      )
-                    },
-                  }}
+                  buttonClassName="mt-2"
                 >
-                  {stripMostTags(listing.Eviction_History)}
+                  {listing.Eviction_History}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -288,13 +276,6 @@ export const ListingDetailsEligibility = ({
                 className="text-sm text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
-                markdownProps={{
-                  createElement(type, props, children) {
-                    return (
-                      <span className="mr-1">{React.createElement(type, props, children)}</span>
-                    )
-                  },
-                }}
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
                   fairChanceUrl: "https://sfgov.org/olse/fair-chance-ordinance-fco",
