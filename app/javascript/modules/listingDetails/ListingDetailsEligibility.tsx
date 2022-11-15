@@ -7,7 +7,6 @@ import {
   StandardTable,
   t,
 } from "@bloom-housing/ui-components"
-import { stripMostTags } from "../../util/filterUtil"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   isHabitatListing,
