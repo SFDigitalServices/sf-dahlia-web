@@ -261,6 +261,7 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  buttonClassName="mt-2"
                 >
                   {listing.Credit_Rating}
                 </ExpandableText>
@@ -272,6 +273,7 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-sm text-gray-700"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  buttonClassName="mt-2"
                 >
                   {listing.Eviction_History}
                 </ExpandableText>

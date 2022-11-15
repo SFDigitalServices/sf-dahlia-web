@@ -282,7 +282,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -317,7 +317,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -647,7 +647,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -682,7 +682,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1311,7 +1311,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1346,7 +1346,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1683,7 +1683,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1718,7 +1718,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
