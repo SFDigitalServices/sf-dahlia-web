@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsPricingTable does not render ListingDetailsInfoSession component whith no information sessions attached to listing 1`] = `null`;
+exports[`ListingDetailsInfoSession does not render ListingDetailsInfoSession component whith no information sessions attached to listing 1`] = `null`;
 
-exports[`ListingDetailsPricingTable renders ListingDetailsInfoSession component 1`] = `
+exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1`] = `
 <div
   className="border-b border-gray-400 md:border-b-0"
 >

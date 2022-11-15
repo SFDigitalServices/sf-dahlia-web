@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsPricingTable renders ListingDetailsAside component 1`] = `
+exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
 <ul>
   <li
     className="responsive-content-item header-hidden"

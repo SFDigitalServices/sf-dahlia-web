@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsHabitat does not display when not habitat listing 1`] = `
+exports[`HabitatForHumanity renders HabitatForHumanity component 1`] = `
 Array [
   <h2
     className="text__large-primary order-1"

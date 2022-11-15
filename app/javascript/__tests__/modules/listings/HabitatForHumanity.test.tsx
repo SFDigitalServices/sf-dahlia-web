@@ -2,8 +2,8 @@ import renderer from "react-test-renderer"
 import { getHabitatContent } from "../../../modules/listings/HabitatForHumanity"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 
-describe("ListingDetailsHabitat", () => {
-  it("does not display when not habitat listing", () => {
+describe("HabitatForHumanity", () => {
+  it("renders HabitatForHumanity component", () => {
     const tree = renderer
       .create(
         getHabitatContent(habitatListing, () => {

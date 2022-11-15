@@ -3,7 +3,7 @@ import renderer from "react-test-renderer"
 import { ListingDetailsAside } from "../../../modules/listingDetailsAside/ListingDetailsAside"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
-describe("ListingDetailsPricingTable", () => {
+describe("ListingDetailsAside", () => {
   it("renders ListingDetailsAside component", () => {
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {

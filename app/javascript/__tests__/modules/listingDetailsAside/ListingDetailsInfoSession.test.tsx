@@ -4,7 +4,7 @@ import { ListingDetailsInfoSession } from "../../../modules/listingDetailsAside/
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
-describe("ListingDetailsPricingTable", () => {
+describe("ListingDetailsInfoSession", () => {
   it("renders ListingDetailsInfoSession component", () => {
     const tree = renderer.create(<ListingDetailsInfoSession listing={openSaleListing} />).toJSON()
     expect(tree).toMatchSnapshot()
