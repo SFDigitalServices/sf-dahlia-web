@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsInfoSession does not render ListingDetailsInfoSession component whith no information sessions attached to listing 1`] = `null`;
+
+exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1`] = `
+<div
+  className="border-b border-gray-400 md:border-b-0"
+>
+  <section
+    className="aside-block"
+  >
+    <h4
+      className="text__underline-weighted"
+    >
+      Information Sessions
+    </h4>
+    <div
+      className="false"
+    >
+      <p
+        className="text text-gray-800 pb-2 flex justify-between items-center"
+      >
+        <span
+          className="inline-block text-tiny uppercase normal-case"
+        >
+          November 19, 2019
+        </span>
+        <span
+          className="inline-block text-sm font-bold ml-5 font-alt-sans"
+        >
+          6:00 PM
+        </span>
+      </p>
+      <p
+        className="text-tiny text-gray-700 false"
+      >
+        <div
+          className="flex flex-col"
+        >
+          <span>
+            MOHCD
+          </span>
+          <span>
+            1 South Van Ness Ave, Fl 5, San Francisco
+          </span>
+        </div>
+      </p>
+    </div>
+  </section>
+</div>
+`;
