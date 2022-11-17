@@ -8,6 +8,7 @@ import { getLotteryResults } from "../../api/listingApiService"
 import { ListingDetailsLotteryRanking } from "./ListingDetailsLotteryRanking"
 import { ListingDetailsLotterySearchFooter } from "./ListingDetailsLotterySearchFooter"
 import "./ListingDetailsLotterySearchForm.scss"
+import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export enum LOTTERY_SEARCH_FORM_STATUS {
   INITIAL_STATE,
@@ -124,9 +125,14 @@ export const ListingDetailsLotterySearchForm = ({
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
         </button>
       </form>
-      <div aria-live="polite" aria-busy={lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.LOADING}>
-        {content}
-      </div>
+      <ErrorBoundary boundaryScope={BoundaryScope.component}>
+        <div
+          aria-live="polite"
+          aria-busy={lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.LOADING}
+        >
+          {content}
+        </div>
+      </ErrorBoundary>
       <ListingDetailsLotterySearchFooter
         lotterySearchFormStatus={lotteryFormStatus}
         listing={listing}

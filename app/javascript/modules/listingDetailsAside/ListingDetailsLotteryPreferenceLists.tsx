@@ -23,7 +23,10 @@ export const ListingDetailsLotteryPreferenceLists = ({
         return !!preference.PDF_URL
       }).map((preference: ListingLotteryPreference) => {
         return (
-          <div className="border-b border-gray-400 md:border-b-0">
+          <div
+            key={preference.Lottery_Preference.Name}
+            className="border-b border-gray-400 md:border-b-0"
+          >
             <SidebarBlock
               title={t("listings.confirmedPreferenceList", {
                 preference: t(

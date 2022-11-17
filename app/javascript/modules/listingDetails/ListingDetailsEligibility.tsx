@@ -20,6 +20,7 @@ import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -157,7 +158,7 @@ export const ListingDetailsEligibility = ({
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection
             title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
-            subtitle={t("")}
+            subtitle={""}
           >
             <InfoCard
               title={t(
@@ -199,7 +200,15 @@ export const ListingDetailsEligibility = ({
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
-        <ListingDetailsPreferences listingID={listing.listingID} />
+
+        <ListSection
+          title={t("listings.lottery.title")}
+          subtitle={t("listings.lottery.preferences")}
+        >
+          <ErrorBoundary boundaryScope={BoundaryScope.component}>
+            <ListingDetailsPreferences listingID={listing.listingID} />
+          </ErrorBoundary>
+        </ListSection>
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}
@@ -212,6 +221,7 @@ export const ListingDetailsEligibility = ({
               .map((unit: ReducedUnit) => {
                 return (
                   <InfoCard
+                    key={unit.name}
                     title={defaultIfNotTranslated(`listings.${unit.name}.title`, unit.name)}
                     subtitle={
                       unit.numberOfUnits === 1

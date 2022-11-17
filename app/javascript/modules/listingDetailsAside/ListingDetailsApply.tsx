@@ -94,7 +94,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             <div className={"flex w-full items-center justify-center flex-col"}>
               {paperApplicationURLs(isListingRental).map((app) => {
                 return (
-                  <span className={"pt-4"}>
+                  <span className={"pt-4"} key={app.languageString}>
                     <LinkButton
                       href={app.fileURL}
                       unstyled
@@ -172,11 +172,11 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   )
 
   return (
-    <>
+    <div className="md:px-0 px-2">
       {howToApplyBlock}
       {acceptingPaperApps && submitPaperApplicationBlocks}
       {needHelpBlock}
       {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
-    </>
+    </div>
   )
 }
