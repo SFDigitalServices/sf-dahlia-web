@@ -259,7 +259,7 @@ class Api::V1::ShortFormController < ApiController
   def applicant_attrs
     {
       contactId: user_contact_id,
-      webAppID: current_user_id.web_app_id,
+      webAppID: current_user_id,
     }
   end
 
@@ -281,7 +281,7 @@ class Api::V1::ShortFormController < ApiController
 
   def current_user_id
     if current_user
-      current_user.id
+      current_user.web_app_id
     elsif @unconfirmed_user
       @unconfirmed_user.id
     end
