@@ -33,7 +33,7 @@ class User < ApplicationRecord
     contact = Force::AccountService.get(salesforce_contact_id)
     return unless contact.present?
     Force::AccountService.create_or_update(
-      webAppID: id,
+      webAppID: web_app_id,
       contactId: salesforce_contact_id,
       # send unconfirmed_email because it's about to be confirmed
       email: unconfirmed_email,
@@ -47,5 +47,16 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  # Takes a user id and namespaces it if needed. This should only be used for environments
+  # that point to salesforce full to avoid collisions (since there are multiple webapps
+  # that point to salesforce full)
+  def web_app_id
+    if ENV['ENABLE_WEBAPPID_PREFIX'] == 'true' && ENV['HEROKU_APP_NAME']
+      "#{ENV['HEROKU_APP_NAME']}-#{id}"
+    else
+      id
+    end
   end
 end

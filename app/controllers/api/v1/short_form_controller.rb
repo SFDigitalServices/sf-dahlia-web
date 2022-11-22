@@ -259,7 +259,7 @@ class Api::V1::ShortFormController < ApiController
   def applicant_attrs
     {
       contactId: user_contact_id,
-      webAppID: current_user_id,
+      webAppID: current_user_id.web_app_id,
     }
   end
 
