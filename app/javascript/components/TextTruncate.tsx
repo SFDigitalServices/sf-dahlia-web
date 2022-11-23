@@ -15,7 +15,7 @@ export interface TextTruncateProps {
 export const TextTruncate = ({ text }: TextTruncateProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true })
+  truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true, keepWhitespaces: true })
   const truncatedText = text ? renderInlineMarkup(truncate(text)) : ""
   const untruncatedText = renderInlineMarkup(text)
 

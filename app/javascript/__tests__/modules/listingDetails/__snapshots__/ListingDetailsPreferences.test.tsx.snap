@@ -1,25 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/W 1`] = `
-<li
-  className="list-section custom-counter__item"
->
-  <header
-    className="list-section__header custom-counter__header"
-  >
-    <hgroup>
-      <h4
-        className="custom-counter__title"
-      >
-        Lottery Preferences
-      </h4>
-      <span
-        className="custom-counter__subtitle"
-      >
-        Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-      </span>
-    </hgroup>
-  </header>
+Array [
   <ol
     className="preferences-list"
   >
@@ -148,35 +130,17 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
         </span>
       </div>
     </li>
-  </ol>
+  </ol>,
   <p
     className="text-gray-700 text-tiny"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>
-</li>
+  </p>,
+]
 `;
 
 exports[`ListingDetailsPreferences display 6 preferences 1`] = `
-<li
-  className="list-section custom-counter__item"
->
-  <header
-    className="list-section__header custom-counter__header"
-  >
-    <hgroup>
-      <h4
-        className="custom-counter__title"
-      >
-        Lottery Preferences
-      </h4>
-      <span
-        className="custom-counter__subtitle"
-      >
-        Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-      </span>
-    </hgroup>
-  </header>
+Array [
   <ol
     className="preferences-list"
   >
@@ -433,11 +397,11 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
         </span>
       </div>
     </li>
-  </ol>
+  </ol>,
   <p
     className="text-gray-700 text-tiny"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>
-</li>
+  </p>,
+]
 `;

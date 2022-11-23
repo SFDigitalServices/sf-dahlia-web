@@ -22,6 +22,10 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
           src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
       </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+        className="image-card__status"
+      />
     </div>
   </a>
   <div
@@ -119,6 +123,10 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
           src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
       </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+        className="image-card__status"
+      />
     </div>
   </a>
   <div

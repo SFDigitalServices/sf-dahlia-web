@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryInfo displays the Merry Go Round Housing description for its listing 1`] = `
+<div
+  className="info-card"
+>
+  <div
+    className="info-card__header"
+  >
+    <h3
+      className="info-card__title"
+    >
+      Single Room Occupancy
+    </h3>
+  </div>
+  <div
+    className="markdown"
+  >
+    <span>
+      This property offers single rooms for up to 2 people only. Tenants may share bathrooms, and sometimes kitchen facilities.
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ListingDetailsLotteryInfo displays the SRO info box for a regular SRO 1`] = `
+<div
+  className="info-card"
+>
+  <div
+    className="info-card__header"
+  >
+    <h3
+      className="info-card__title"
+    >
+      Single Room Occupancy
+    </h3>
+  </div>
+  <div
+    className="markdown"
+  >
+    <span>
+      This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.
+    </span>
+  </div>
+</div>
+`;

@@ -2,6 +2,7 @@ import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 import { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryBucket"
 import "./ListingDetailsLotteryResultsRow.scss"
+import { defaultIfNotTranslated } from "../../util/languageUtil"
 
 interface LotteryResultsRowProps {
   bucket: RailsLotteryBucket
@@ -21,7 +22,10 @@ export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowPro
         >
           {bucket.preferenceName === "generalLottery"
             ? t("lottery.generalPool")
-            : bucket.preferenceName}
+            : defaultIfNotTranslated(
+                `listings.lotteryPreference.${bucket.preferenceName}.title`,
+                bucket.preferenceName
+              )}
         </Heading>
         {bucket.preferenceName !== "generalLottery" && (
           <p className="mb-1 text-gray-900 text-tiny">

@@ -184,10 +184,16 @@ describe("languageUtil", () => {
       ).toBe("2 Bedroom")
     })
 
-    it("returns an empty string when no translation", () => {
+    it("returns untranslated value when no translation found", () => {
       expect(
         defaultIfNotTranslated(`listings.unitTypes.${salesforceVals[1]}`, salesforceVals[1])
       ).toBe("500 BR")
+    })
+
+    it("returns interpolated value when interpolations param passed", () => {
+      expect(defaultIfNotTranslated(`listings.unitsAreFor`, "", { type: "testing" })).toBe(
+        "These units are for testing."
+      )
     })
   })
 

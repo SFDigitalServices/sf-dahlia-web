@@ -3,6 +3,13 @@
 
 process.env.TZ = "UTC"
 process.env.NODE_ENV = "test"
+process.env.SRO_PLURAL_LISTINGS = JSON.stringify({
+  a0W0P00000F7t4uUAB: "Merry Go Round Shared Housing",
+  a0W0P00000FIuv3UAD: "1335 Folsom Street",
+  a0W4U00000HlubxUAB: "1335 Folsom Street",
+  a0W4U00000KGFDWUA5: "1335 Folsom Street",
+  a0W4U00000KKtXyUAL: "750 Harrison",
+})
 
 module.exports = {
   testRegex: "/*.test.(tsx|ts)$",
@@ -11,10 +18,10 @@ module.exports = {
   coverageDirectory: "test-coverage",
   coverageThreshold: {
     global: {
-      branches: 53,
-      functions: 45,
-      lines: 65,
-      statements: 66,
+      branches: 67,
+      functions: 57,
+      lines: 80,
+      statements: 80,
     },
   },
   preset: "ts-jest",
@@ -32,6 +39,6 @@ module.exports = {
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
-  "transformIgnorePatterns": ["node_modules/?!(@bloom-housing/ui-components)"],
-  "reporters" : [ "default", "jest-junit" ]
+  transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
+  reporters: ["default", "jest-junit"],
 }

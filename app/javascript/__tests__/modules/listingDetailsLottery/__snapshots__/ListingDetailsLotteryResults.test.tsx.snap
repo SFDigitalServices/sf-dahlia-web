@@ -5,11 +5,11 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
   <div
     class="border-b pt-4 text-center"
   >
-    <h4
-      class="undefined mb-4"
+    <h3
+      class="mb-4"
     >
       Lottery Results
-    </h4>
+    </h3>
     <p
       class="mb-4 text-sm"
     >
@@ -20,6 +20,7 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
     >
       <button
         class="button is-primary is-small"
+        tabindex="0"
       >
         View Lottery Results
       </button>
@@ -33,11 +34,11 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
   <div
     class="border-b pt-4 text-center"
   >
-    <h4
-      class="undefined mb-4"
+    <h3
+      class="mb-4"
     >
       Lottery Results
-    </h4>
+    </h3>
     <p
       class="mb-4 text-sm"
     >
@@ -49,14 +50,13 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       <div
         class="mb-3 mx-2 text-gray-700 text-sm"
       >
-        <p>
-          <strong>
-            Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
-          </strong>
-        </p>
+        <strong>
+          Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
+        </strong>
       </div>
       <button
         class="button is-primary is-small"
+        tabindex="0"
       >
         View Lottery Results
       </button>

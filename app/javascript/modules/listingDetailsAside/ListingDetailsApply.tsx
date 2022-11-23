@@ -12,6 +12,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
+  isHabitatListing,
   isOpen,
   isRental,
   isSale,
@@ -48,7 +49,9 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
           <p className={"mb-4"}>
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
-                url: "https://sfmohcd.org/homebuyer-program-eligibility",
+                url: isHabitatListing(listing)
+                  ? "https://habitatgsf.org/amber-drive-info/"
+                  : "https://sfmohcd.org/homebuyer-program-eligibility",
               })
             )}
           </p>
@@ -91,7 +94,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             <div className={"flex w-full items-center justify-center flex-col"}>
               {paperApplicationURLs(isListingRental).map((app) => {
                 return (
-                  <span className={"pt-4"}>
+                  <span className={"pt-4"} key={app.languageString}>
                     <LinkButton
                       href={app.fileURL}
                       unstyled
@@ -118,7 +121,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
       </SidebarBlock>
       <SidebarBlock
         className={"bg-blue-200"}
-        style={"sidebarSubHeader"}
+        styleType={"capsWeighted"}
         title={t("listings.apply.sendByUsMail")}
       >
         <div className={"mb-2 text-gray-900 text-base"}>
@@ -169,11 +172,11 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   )
 
   return (
-    <>
+    <div className="md:px-0 px-2">
       {howToApplyBlock}
       {acceptingPaperApps && submitPaperApplicationBlocks}
       {needHelpBlock}
       {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
-    </>
+    </div>
   )
 }

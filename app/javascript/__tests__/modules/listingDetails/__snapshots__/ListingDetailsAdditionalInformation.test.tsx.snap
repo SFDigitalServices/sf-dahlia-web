@@ -1,0 +1,328 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsAdditionalInformation displays additional information section for a rental listing 1`] = `
+<li
+  className="responsive-content-item "
+>
+  <header
+    className="detail-header"
+  >
+    <img
+      alt=""
+      className="detail-header__image "
+      src="/image-url"
+    />
+    <hgroup
+      className="detail-header__hgroup"
+    >
+      <h2
+        className="detail-header__title"
+      >
+        Additional Information
+      </h2>
+      <span
+        className="detail-header__subtitle"
+      >
+        Required documents and selection criteria
+      </span>
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+          />
+        </svg>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    className="listing-detail-panel"
+  >
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Required Documents
+      </h3>
+      <div
+        className="text-sm translate"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Important Program Rules
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            All BMR renters must review and acknowledge the 
+            <a
+              href="http://sf-moh.org/index.aspx?page=295"
+              target="_blank"
+            >
+              Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013
+            </a>
+             that governs this property upon the signing of a lease for a BMR unit. 
+            <br />
+             
+            <br />
+            Applicants should be informed that BMR rental units in some buildings may convert to ownership units in the future.  In the case of conversion, BMR renters will be afforded certain rights as explained in ...
+          </span>
+          <span
+            className="button-toggle ml-1"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            role="button"
+            tabIndex={0}
+          >
+            More
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+`;
+
+exports[`ListingDetailsAdditionalInformation displays additional information section for a sale listing 1`] = `
+<li
+  className="responsive-content-item "
+>
+  <header
+    className="detail-header"
+  >
+    <img
+      alt=""
+      className="detail-header__image "
+      src="/image-url"
+    />
+    <hgroup
+      className="detail-header__hgroup"
+    >
+      <h2
+        className="detail-header__title"
+      >
+        Additional Information
+      </h2>
+      <span
+        className="detail-header__subtitle"
+      >
+        Required documents and selection criteria
+      </span>
+      <span
+        className="ui-icon ui-medium"
+        data-test-id={null}
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+          />
+        </svg>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    className="listing-detail-panel"
+  >
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Special Notes
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <span>
+          Some other excessively formatted listing notes.
+        </span>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Required Documents
+      </h3>
+      <div
+        className="text-sm translate"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            Proof of residence
+
+            <br />
+            Bank statements
+
+            <br />
+            Concert tickets
+          </span>
+        </div>
+      </div>
+      <div
+        className="text-sm mt-4"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide 
+            <a
+              href="https://sfmohcd.org/after-homebuyer-lottery"
+              target="_blank"
+            >
+              required supporting documents
+            </a>
+             within 5 business days of being contacted.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Important Program Rules
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            Some important program rules with bullets:
+            <br />
+            Rule oneRule two
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Covenants, Conditions and Restrictions (CC&R's)
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
+          </span>
+        </div>
+        <a
+          className="button mt-4"
+          href="http://www.duckduckgo.com"
+          target="_blank"
+        >
+          Download PDF
+        </a>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        For the Buyer's Realtor
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <span
+          className="font-bold"
+        >
+          Your Commission: 
+        </span>
+         3% of the sales price
+        <div
+          className="flex mt-4"
+        >
+          <span
+            className="font-bold mr-1"
+          >
+            How to receive it: 
+          </span>
+          <span>
+            <div
+              className="text-sm"
+            >
+              <span>
+                Register with the Leasing Agent
+              </span>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="info-card bg-gray-100 border-0"
+    >
+      <h3
+        className="text-serif-lg"
+      >
+        Resale Price Restrictions
+      </h3>
+      <div
+        className="text-sm"
+      >
+        <div
+          className="text-sm"
+        >
+          <span>
+            A BMR unit will be resold at a restricted price to a household that meets the first‐time homebuyer and income qualifications for the program. Please review the 
+            <a
+              href="http://sf-moh.org/index.aspx?page=295"
+              target="_blank"
+            >
+              Inclusionary Housing Procedures Manual
+            </a>
+             for specific information.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+`;

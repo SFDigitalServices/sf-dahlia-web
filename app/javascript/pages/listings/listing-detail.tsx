@@ -5,7 +5,6 @@ import {
   Mobile,
   NavigationContext,
   SiteAlert,
-  t,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
@@ -23,10 +22,16 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen } from "../../util/listingUtil"
+import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
+import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
+import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
+import useTranslate from "../../hooks/useTranslate"
+import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
+import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
+import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -34,6 +39,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  useTranslate()
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -52,6 +58,7 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            <ListingDetailsHabitat listing={listing} />
             {!isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate
@@ -64,7 +71,15 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable />
+            <ListingDetailsPricingTable listing={listing} />
+            {listingHasSROUnits(listing) &&
+              !(
+                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
+              ) && (
+                <div className="md:w-2/3 md:pr-8">
+                  <ListingDetailsSROInfo listing={listing} />
+                </div>
+              )}
             {isApplicationOpen && (
               <Mobile>
                 <ListingDetailsApplicationDate
@@ -74,6 +89,9 @@ const ListingDetail = () => {
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
+            <Mobile>
+              <ListingDetailsApply listing={listing} />
+            </Mobile>
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <MobileListingDetailsLottery
@@ -83,6 +101,11 @@ const ListingDetail = () => {
               <ListingDetailsEligibility
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
+              <MobileListingDetailsProcess
+                listing={listing}
+                imageSrc={getAssetPath("listing-units.svg")}
+                isApplicationOpen={isApplicationOpen}
               />
               <ListingDetailsFeatures
                 listing={listing}
@@ -96,17 +119,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <div className="listing-detail-panel p-0">
-                <div className="m-0 info-card flex items-center justify-between">
-                  <p className="m-0 text-base text-serif-lg w-3/4">
-                    {t("listings.monitoredByMohcd")}
-                  </p>
-                  <img
-                    alt={t("listings.equalHousingOpportunityLogo")}
-                    src={getAssetPath("logo-equal.png")}
-                  />
-                </div>
-              </div>
+              <ListingDetailsMOHCD />
             </ListingDetails>
           </article>
         )}

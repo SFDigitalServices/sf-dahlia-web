@@ -8,11 +8,11 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     className="list-section__header custom-counter__header"
   >
     <hgroup>
-      <h4
+      <h3
         className="custom-counter__title"
       >
         Before applying
-      </h4>
+      </h3>
       <span
         className="custom-counter__subtitle"
       >
@@ -66,11 +66,11 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
-<div
-  className="mb-8"
+<li
+  className="mb-8 style-none"
 >
   <h2
-    className="text-caps-underline mb-5"
+    className="text__underline-weighted mb-5"
   >
     Before applying
   </h2>
@@ -130,7 +130,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     </a>
      for more details.
   </p>
-</div>
+</li>
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is listing detail 1`] = `
@@ -141,11 +141,11 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     className="list-section__header custom-counter__header"
   >
     <hgroup>
-      <h4
+      <h3
         className="custom-counter__title"
       >
         Before applying
-      </h4>
+      </h3>
       <span
         className="custom-counter__subtitle"
       >

@@ -177,6 +177,7 @@ module.exports = {
     "spec/e2e",
     "spec/javascripts",
     "**/.eslintrc.js",
+    "cypress.config.ts"
   ],
   settings: {
     react: {
