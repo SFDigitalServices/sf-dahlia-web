@@ -267,7 +267,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -302,7 +302,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -632,7 +632,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -667,7 +667,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1296,7 +1296,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1331,7 +1331,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1668,7 +1668,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1703,7 +1703,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>

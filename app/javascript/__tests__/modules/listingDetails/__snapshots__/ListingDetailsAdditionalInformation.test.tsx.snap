@@ -52,7 +52,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         Required Documents
       </h3>
       <div
-        className="text-sm translate"
+        className="text-sm"
       >
         <div
           className="text-sm"
@@ -161,9 +161,13 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <span>
-          Some other excessively formatted listing notes.
-        </span>
+        <div
+          className="text-sm"
+        >
+          <span>
+            Some other excessively formatted listing notes.
+          </span>
+        </div>
       </div>
     </div>
     <div
@@ -175,7 +179,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         Required Documents
       </h3>
       <div
-        className="text-sm translate"
+        className="text-sm"
       >
         <div
           className="text-sm"

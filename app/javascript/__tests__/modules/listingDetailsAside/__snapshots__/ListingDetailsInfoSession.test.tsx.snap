@@ -37,8 +37,12 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
         <div
           className="flex flex-col"
         >
-          <span>
-            MOHCD
+          <span
+            className="translate"
+          >
+            <span>
+              MOHCD
+            </span>
           </span>
           <span>
             1 South Van Ness Ave, Fl 5, San Francisco

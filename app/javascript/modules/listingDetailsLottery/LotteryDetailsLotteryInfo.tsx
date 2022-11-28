@@ -21,7 +21,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
             <span>{localizedFormat(listing.Lottery_Date, "LL")}</span>
             <span className="font-bold">{localizedFormat(listing.Lottery_Date, "h:mm a")}</span>
           </p>
-          <div className="text-gray-700">
+          <div className="text-gray-700 translate">
             {listing.Lottery_Venue && renderMarkup(listing.Lottery_Venue)}
           </div>
           {process.env.COVID_UPDATE !== "true" && (
