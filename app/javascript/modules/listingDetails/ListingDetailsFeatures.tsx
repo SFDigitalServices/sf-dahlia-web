@@ -7,6 +7,7 @@ import { stripMostTags } from "../../util/filterUtil"
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
   imageSrc: string
+  toTranslate: boolean
 }
 
 const getDepositString = (min?: string, max?: string) => {
@@ -19,11 +20,19 @@ const getDepositString = (min?: string, max?: string) => {
 interface FeatureItemProps {
   content: any
   title: string
+  toTranslate?: boolean
 }
-const FeatureItem = ({ content, title }: FeatureItemProps) => {
+const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
   if (!content) return <></>
 
-  return <Description term={title} description={stripMostTags(content)} markdown={true} />
+  return (
+    <Description
+      term={title}
+      description={stripMostTags(content)}
+      markdown={true}
+      dtClassName={toTranslate && "translate"}
+    />
+  )
 }
 
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
@@ -46,9 +55,21 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
     >
       <div className="listing-detail-panel">
         <dl className="column-definition-list">
-          <FeatureItem content={listing.Neighborhood} title={t("listings.neighborhood.header")} />
-          <FeatureItem content={String(listing.Year_Built)} title={t("listings.features.built")} />
-          <FeatureItem content={listing.Appliances} title={t("listings.features.appliances")} />
+          <FeatureItem
+            content={listing.Neighborhood}
+            title={t("listings.neighborhood.header")}
+            toTranslate={false}
+          />
+          <FeatureItem
+            content={String(listing.Year_Built)}
+            title={t("listings.features.built")}
+            toTranslate={true}
+          />
+          <FeatureItem
+            content={listing.Appliances}
+            title={t("listings.features.appliances")}
+            toTranslate={true}
+          />
           <FeatureItem
             content={listing.Services_Onsite}
             title={t(
@@ -56,30 +77,43 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
                 ? "listings.features.servicesCoveredByHoaDues"
                 : "listings.features.servicesOnsite"
             )}
+            toTranslate={true}
           />
           <FeatureItem
             content={listing.Parking_Information}
             title={t("listings.features.parking")}
+            toTranslate={true}
           />
           <FeatureItem
             content={listing.Smoking_Policy}
             title={t("listings.features.smokingPolicy")}
+            toTranslate={true}
           />
-          <FeatureItem content={listing.Pet_Policy} title={t("listings.features.petsPolicy")} />
+          <FeatureItem
+            content={listing.Pet_Policy}
+            title={t("listings.features.petsPolicy")}
+            toTranslate={true}
+          />
           <FeatureItem
             content={listing.Amenities}
             title={t("listings.features.propertyAmenities")}
+            toTranslate={true}
           />
           <FeatureItem
             content={listing.Accessibility}
             title={t("listings.features.accessibility")}
+            toTranslate={true}
           />
 
-          <Description term={t("listings.features.unitFeatures")} description={""} />
+          <Description
+            term={t("listings.features.unitFeatures")}
+            description={""}
+            dtClassName="translate"
+          />
         </dl>
         {isRental(listing) && (
           <AdditionalFees
-            deposit={getDepositString(
+            depsit={getDepositString(
               listing.Deposit_Min?.toLocaleString(),
               listing.Deposit_Max?.toLocaleString()
             )}
