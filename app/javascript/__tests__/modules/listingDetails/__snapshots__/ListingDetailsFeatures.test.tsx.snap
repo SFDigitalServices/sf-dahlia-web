@@ -64,7 +64,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Built
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           2009
@@ -76,7 +76,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Smoking Policy
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Non-smoking building
@@ -88,7 +88,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Pets Policy
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Dogs are not allowed in the building.
@@ -100,7 +100,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Property Amenities
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Laundry room, underground parking, courtyard, bike room
@@ -112,7 +112,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Accessibility
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Elevator to all floors
@@ -124,7 +124,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Unit Features
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         
       </dt>
@@ -245,7 +245,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Built
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           2018
@@ -257,7 +257,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Appliances
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
@@ -269,7 +269,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Services Covered by HOA Dues
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Test Service
@@ -281,7 +281,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Parking
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Landing at The San Francisco Shipyard:
@@ -301,7 +301,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Smoking Policy
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           Smoking may cause problems
@@ -313,7 +313,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Pets Policy
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         <span>
           All pets are awesome!
@@ -325,7 +325,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Unit Features
       </dd>
       <dt
-        className="description__body"
+        className="description__body translate"
       >
         
       </dt>

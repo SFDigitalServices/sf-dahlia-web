@@ -112,7 +112,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
         </dl>
         {isRental(listing) && (
           <AdditionalFees
-            depsit={getDepositString(
+            deposit={getDepositString(
               listing.Deposit_Min?.toLocaleString(),
               listing.Deposit_Max?.toLocaleString()
             )}
