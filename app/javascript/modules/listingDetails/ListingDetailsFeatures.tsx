@@ -7,7 +7,6 @@ import { stripMostTags } from "../../util/filterUtil"
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
   imageSrc: string
-  toTranslate: boolean
 }
 
 const getDepositString = (min?: string, max?: string) => {
