@@ -162,7 +162,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         </div>
       </div>
       <div
-        className="info-card__columns text-sm translate"
+        className="info-card__columns text-sm"
       >
         <div
           className="info-card__column-2"
