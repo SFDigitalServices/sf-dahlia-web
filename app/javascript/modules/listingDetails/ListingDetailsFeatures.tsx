@@ -28,6 +28,9 @@ const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
     <Description
       term={title}
       description={stripMostTags(content)}
+      markdownProps={{
+        disableParsingRawHTML: false,
+      }}
       markdown={true}
       dtClassName={toTranslate && "translate"}
     />
@@ -62,7 +65,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
           <FeatureItem
             content={String(listing.Year_Built)}
             title={t("listings.features.built")}
-            toTranslate={true}
+            toTranslate={false}
           />
           <FeatureItem
             content={listing.Appliances}
@@ -117,7 +120,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
               listing.Deposit_Max?.toLocaleString()
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
-            footerContent={[listing.Costs_Not_Included]}
+            footerContent={[<div className="translate">{listing.Costs_Not_Included}</div>]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
               deposit: t("listings.features.deposit"),
