@@ -124,7 +124,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         Unit Features
       </dd>
       <dt
-        className="description__body translate"
+        className="description__body"
       >
         
       </dt>
@@ -335,7 +335,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
         Unit Features
       </dd>
       <dt
-        className="description__body translate"
+        className="description__body"
       >
         
       </dt>
