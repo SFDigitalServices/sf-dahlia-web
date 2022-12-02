@@ -107,11 +107,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             toTranslate={true}
           />
 
-          <Description
-            term={t("listings.features.unitFeatures")}
-            description={""}
-            dtClassName="translate"
-          />
+          <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
         {isRental(listing) && (
           <AdditionalFees
