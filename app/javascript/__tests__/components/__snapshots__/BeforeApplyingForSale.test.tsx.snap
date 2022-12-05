@@ -21,9 +21,11 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
   >
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Go to a 
         <a
@@ -34,10 +36,14 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Haven't owned residential property in the past 3 years
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Meet the 
         <a
@@ -48,7 +54,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Have a 650 credit score or higher
     </li>
   </ol>
@@ -70,20 +78,26 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
   className="mb-8 style-none"
 >
   <h2
-    className="text__underline-weighted mb-5"
+    className="text__underline-weighted mb-5 text-gray-750"
   >
     Before applying
   </h2>
-  <p>
+  <p
+    className="text-gray-750"
+  >
     Make sure you:
   </p>
   <ol
-    className="numbered-list my-5"
+    className="numbered-list my-5 text-gray-700"
   >
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Haven't owned residential property in the past 3 years
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Meet our 
         <a
@@ -94,7 +108,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Complete 
         <a
@@ -105,7 +121,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Get pre-approved for a mortgage loan by a 
         <a
@@ -116,7 +134,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Have enough in savings for closing costs and downpayment
     </li>
   </ol>
@@ -154,12 +174,16 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
   >
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Haven't owned residential property in the past 3 years
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Meet our 
         <a
@@ -170,7 +194,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Complete 
         <a
@@ -181,7 +207,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       <p>
         Get pre-approved for a mortgage loan by a 
         <a
@@ -192,7 +220,9 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </a>
       </p>
     </li>
-    <li>
+    <li
+      className="text-gray-700"
+    >
       Have enough in savings for closing costs and downpayment
     </li>
   </ol>

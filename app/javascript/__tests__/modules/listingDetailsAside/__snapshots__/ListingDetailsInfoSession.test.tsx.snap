@@ -31,7 +31,7 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
           6:00 PM
         </span>
       </p>
-      <p
+      <div
         className="text-tiny text-gray-700 false"
       >
         <div
@@ -44,7 +44,7 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
             1 South Van Ness Ave, Fl 5, San Francisco
           </span>
         </div>
-      </p>
+      </div>
     </div>
   </section>
 </div>

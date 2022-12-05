@@ -70,7 +70,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             6:00 PM
           </span>
         </p>
-        <p
+        <div
           className="text-tiny text-gray-700 false"
         >
           <div
@@ -83,7 +83,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               1 South Van Ness Ave, Fl 5, San Francisco
             </span>
           </div>
-        </p>
+        </div>
       </div>
     </section>
   </div>
@@ -115,13 +115,13 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             2:00 PM - 6:00 PM
           </span>
         </p>
-        <p
+        <div
           className="text-tiny text-gray-700 pb-3"
         >
           <div
             className="flex flex-col"
           />
-        </p>
+        </div>
       </div>
       <div
         className="pb-3"
@@ -140,7 +140,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             10:00 AM - 12:00 PM
           </span>
         </p>
-        <p
+        <div
           className="text-tiny text-gray-700 pb-3"
         >
           <div
@@ -153,7 +153,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               1 Library Way, San Francisco
             </span>
           </div>
-        </p>
+        </div>
       </div>
       <div
         className="false"
@@ -168,13 +168,13 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           </span>
           
         </p>
-        <p
+        <div
           className="text-tiny text-gray-700 false"
         >
           <div
             className="flex flex-col"
           />
-        </p>
+        </div>
       </div>
     </section>
   </div>

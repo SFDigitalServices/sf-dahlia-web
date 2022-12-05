@@ -32,20 +32,26 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
           className="mb-8 style-none"
         >
           <h2
-            className="text__underline-weighted mb-5"
+            className="text__underline-weighted mb-5 text-gray-750"
           >
             Before applying
           </h2>
-          <p>
+          <p
+            className="text-gray-750"
+          >
             Make sure you:
           </p>
           <ol
-            className="numbered-list my-5"
+            className="numbered-list my-5 text-gray-700"
           >
-            <li>
+            <li
+              className="text-gray-700"
+            >
               Haven't owned residential property in the past 3 years
             </li>
-            <li>
+            <li
+              className="text-gray-700"
+            >
               <p>
                 Meet our 
                 <a
@@ -56,7 +62,9 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </a>
               </p>
             </li>
-            <li>
+            <li
+              className="text-gray-700"
+            >
               <p>
                 Complete 
                 <a
@@ -67,7 +75,9 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </a>
               </p>
             </li>
-            <li>
+            <li
+              className="text-gray-700"
+            >
               <p>
                 Get pre-approved for a mortgage loan by a 
                 <a
@@ -78,7 +88,9 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </a>
               </p>
             </li>
-            <li>
+            <li
+              className="text-gray-700"
+            >
               Have enough in savings for closing costs and downpayment
             </li>
           </ol>
