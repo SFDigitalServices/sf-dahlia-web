@@ -14,7 +14,7 @@ export interface BeforeApplyingForSaleProps {
   beforeApplyingType: BeforeApplyingType
 }
 export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForSaleProps) => {
-  const listClassNames = ["numbered-list", "my-5", "text-gray-700"]
+  const listClassNames = ["numbered-list", "my-5"]
   let listItems, requirements
 
   // extra styles on the details page
