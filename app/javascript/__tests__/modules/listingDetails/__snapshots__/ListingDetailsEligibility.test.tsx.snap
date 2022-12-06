@@ -798,7 +798,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </hgroup>
       </header>
       <ol
-        className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
+        className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
       >
         <li
           className="text-gray-700"
@@ -850,16 +850,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           Have enough in savings for closing costs and downpayment
         </li>
       </ol>
-      <p>
-        Read 
-        <a
-          href="https://sfmohcd.org/homebuyer-program-eligibility"
-          target="_blank"
-        >
-          our full list of requirements
-        </a>
-         for more details.
-      </p>
+      <div
+        className="text-gray-750"
+      >
+        <p>
+          Read 
+          <a
+            href="https://sfmohcd.org/homebuyer-program-eligibility"
+            target="_blank"
+          >
+            our full list of requirements
+          </a>
+           for more details.
+        </p>
+      </div>
     </li>
     <li
       className="list-section custom-counter__item"
@@ -1844,7 +1848,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </hgroup>
       </header>
       <ol
-        className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
+        className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
       >
         <li
           className="text-gray-700"
@@ -1883,16 +1887,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           Have a 650 credit score or higher
         </li>
       </ol>
-      <p>
-        Read 
-        <a
-          href="https://habitatgsf.org/amber-drive-info/"
-          target="_blank"
-        >
-          our full list of requirements
-        </a>
-         for more details.
-      </p>
+      <div
+        className="text-gray-750"
+      >
+        <p>
+          Read 
+          <a
+            href="https://habitatgsf.org/amber-drive-info/"
+            target="_blank"
+          >
+            our full list of requirements
+          </a>
+           for more details.
+        </p>
+      </div>
     </li>
     <li
       className="list-section custom-counter__item"

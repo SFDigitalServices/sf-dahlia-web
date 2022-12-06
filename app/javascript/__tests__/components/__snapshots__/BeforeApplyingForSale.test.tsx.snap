@@ -21,7 +21,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
   >
     <li
       className="text-gray-700"
@@ -60,16 +60,20 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       Have a 650 credit score or higher
     </li>
   </ol>
-  <p>
-    Read 
-    <a
-      href="https://habitatgsf.org/amber-drive-info/"
-      target="_blank"
-    >
-      our full list of requirements
-    </a>
-     for more details.
-  </p>
+  <div
+    className="text-gray-750"
+  >
+    <p>
+      Read 
+      <a
+        href="https://habitatgsf.org/amber-drive-info/"
+        target="_blank"
+      >
+        our full list of requirements
+      </a>
+       for more details.
+    </p>
+  </div>
 </li>
 `;
 
@@ -88,7 +92,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     Make sure you:
   </p>
   <ol
-    className="numbered-list my-5 text-gray-700"
+    className="numbered-list my-5"
   >
     <li
       className="text-gray-700"
@@ -140,16 +144,20 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       Have enough in savings for closing costs and downpayment
     </li>
   </ol>
-  <p>
-    Read 
-    <a
-      href="https://sfmohcd.org/homebuyer-program-eligibility"
-      target="_blank"
-    >
-      our full list of requirements
-    </a>
-     for more details.
-  </p>
+  <div
+    className="text-gray-750"
+  >
+    <p>
+      Read 
+      <a
+        href="https://sfmohcd.org/homebuyer-program-eligibility"
+        target="_blank"
+      >
+        our full list of requirements
+      </a>
+       for more details.
+    </p>
+  </div>
 </li>
 `;
 
@@ -174,7 +182,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 text-gray-700 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
   >
     <li
       className="text-gray-700"
@@ -226,15 +234,19 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       Have enough in savings for closing costs and downpayment
     </li>
   </ol>
-  <p>
-    Read 
-    <a
-      href="https://sfmohcd.org/homebuyer-program-eligibility"
-      target="_blank"
-    >
-      our full list of requirements
-    </a>
-     for more details.
-  </p>
+  <div
+    className="text-gray-750"
+  >
+    <p>
+      Read 
+      <a
+        href="https://sfmohcd.org/homebuyer-program-eligibility"
+        target="_blank"
+      >
+        our full list of requirements
+      </a>
+       for more details.
+    </p>
+  </div>
 </li>
 `;

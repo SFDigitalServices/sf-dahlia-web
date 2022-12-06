@@ -42,7 +42,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
             Make sure you:
           </p>
           <ol
-            className="numbered-list my-5 text-gray-700"
+            className="numbered-list my-5"
           >
             <li
               className="text-gray-700"
@@ -94,16 +94,20 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
               Have enough in savings for closing costs and downpayment
             </li>
           </ol>
-          <p>
-            Read 
-            <a
-              href="https://sfmohcd.org/homebuyer-program-eligibility"
-              target="_blank"
-            >
-              our full list of requirements
-            </a>
-             for more details.
-          </p>
+          <div
+            className="text-gray-750"
+          >
+            <p>
+              Read 
+              <a
+                href="https://sfmohcd.org/homebuyer-program-eligibility"
+                target="_blank"
+              >
+                our full list of requirements
+              </a>
+               for more details.
+            </p>
+          </div>
         </li>
       </div>
       <div
