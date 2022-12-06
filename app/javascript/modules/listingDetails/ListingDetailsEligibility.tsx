@@ -195,19 +195,11 @@ export const ListingDetailsEligibility = ({
               </div>
             }
           >
-            <StandardTable
-              headers={HMITableHeaders}
-              data={HMITableData}
-              cellClassName="p-5 text-gray-700"
-            />
+            <StandardTable headers={HMITableHeaders} data={HMITableData} />
           </ListSection>
         )}
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
-          <StandardTable
-            headers={occupancyTableHeaders}
-            data={occupancyTableData}
-            cellClassName="p-5 text-gray-700"
-          />
+          <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
         <ListSection
