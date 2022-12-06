@@ -101,7 +101,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                 </span>
               </p>
               <div
-                className="text-gray-700 translate"
+                className="text-gray-700"
               >
                 <p>
                   The lottery will not be in person, but instead will be a virtual lottery. Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.

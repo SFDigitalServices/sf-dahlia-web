@@ -23,14 +23,7 @@ interface FeatureItemProps {
 const FeatureItem = ({ content, title }: FeatureItemProps) => {
   if (!content) return <></>
 
-  return (
-    <Description
-      term={title}
-      description={stripMostTags(content)}
-      markdown={true}
-      dtClassName="translate"
-    />
-  )
+  return <Description term={title} description={stripMostTags(content)} markdown={true} />
 }
 
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
