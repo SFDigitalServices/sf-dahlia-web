@@ -94,10 +94,12 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     <>
       <ol className={[...listClassNames].join(" ")}>
         {listItems.map((item, index) => (
-          <li key={index}>{item.content}</li>
+          <li className="text-gray-700" key={index}>
+            {item.content}
+          </li>
         ))}
       </ol>
-      {requirements}
+      <div className="text-gray-750">{requirements}</div>
     </>
   )
 
@@ -111,10 +113,10 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     </ListSection>
   ) : (
     <li className="mb-8 style-none">
-      <Heading className="mb-5" priority={2} styleType={"underlineWeighted"}>
+      <Heading className="mb-5 text-gray-750" priority={2} styleType={"underlineWeighted"}>
         {t("saleDirectory.beforeApplying.title")}
       </Heading>
-      <p>{t("saleDirectory.beforeApplying.makeSureYou")}</p>
+      <p className="text-gray-750">{t("saleDirectory.beforeApplying.makeSureYou")}</p>
       {content}
     </li>
   )

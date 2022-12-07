@@ -172,7 +172,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                   9:00AM - 12:00PM
                 </span>
               </p>
-              <p
+              <div
                 className="text-tiny text-gray-700 false"
               >
                 <div
@@ -189,7 +189,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                     123 Van ness, San Francisco
                   </span>
                 </div>
-              </p>
+              </div>
             </div>
           </section>
         </div>
