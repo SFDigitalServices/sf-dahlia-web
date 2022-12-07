@@ -76,8 +76,12 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           <div
             className="flex flex-col"
           >
-            <span>
-              MOHCD
+            <span
+              className="translate"
+            >
+              <span>
+                MOHCD
+              </span>
             </span>
             <span>
               1 South Van Ness Ave, Fl 5, San Francisco
@@ -146,8 +150,12 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           <div
             className="flex flex-col"
           >
-            <span>
-              SFPL
+            <span
+              className="translate"
+            >
+              <span>
+                SFPL
+              </span>
             </span>
             <span>
               1 Library Way, San Francisco

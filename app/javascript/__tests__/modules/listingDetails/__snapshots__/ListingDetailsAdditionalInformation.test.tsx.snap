@@ -52,7 +52,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         Required Documents
       </h3>
       <div
-        className="text-sm translate"
+        className="text-sm"
       >
         <div
           className="text-sm"
@@ -175,7 +175,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         Required Documents
       </h3>
       <div
-        className="text-sm translate"
+        className="text-sm"
       >
         <div
           className="text-sm"

@@ -178,8 +178,12 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                 <div
                   className="flex flex-col"
                 >
-                  <span>
-                    Library
+                  <span
+                    className="translate"
+                  >
+                    <span>
+                      Library
+                    </span>
                   </span>
                   <span>
                     123 Van ness, San Francisco

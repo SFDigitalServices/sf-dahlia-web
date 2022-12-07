@@ -77,7 +77,11 @@ export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
 export const getEventNote = (listingEvent: ListingEvent) => {
   return (
     <div className="flex flex-col">
-      {listingEvent.Venue && <Markdown>{listingEvent.Venue}</Markdown>}
+      {listingEvent.Venue && (
+        <span className="translate">
+          <Markdown>{listingEvent.Venue}</Markdown>
+        </span>
+      )}
       {listingEvent.Street_Address && listingEvent.City && (
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
       )}

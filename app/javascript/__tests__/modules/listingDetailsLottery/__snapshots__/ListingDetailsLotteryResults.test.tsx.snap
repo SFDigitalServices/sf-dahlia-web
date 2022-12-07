@@ -48,7 +48,7 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       class="bg-gray-100 py-4"
     >
       <div
-        class="mb-3 mx-2 text-gray-700 text-sm"
+        class="mb-3 mx-2 text-gray-700 text-sm translate"
       >
         <strong>
           Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST
