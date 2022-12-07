@@ -29,13 +29,13 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
           5:00PM - 7:00PM
         </span>
       </p>
-      <p
+      <div
         className="text-tiny text-gray-700 false"
       >
         <div
           className="flex flex-col"
         />
-      </p>
+      </div>
     </div>
   </section>
 </div>

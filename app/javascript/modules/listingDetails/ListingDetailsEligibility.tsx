@@ -21,6 +21,7 @@ import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/Befo
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -232,7 +233,7 @@ export const ListingDetailsEligibility = ({
                         : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
                     }
                   >
-                    <p className="text-tiny">
+                    <p className="text-tiny text-gray-700">
                       {defaultIfNotTranslated(
                         `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
                         `These units have accessibility features for people with ${unit.name}.`
