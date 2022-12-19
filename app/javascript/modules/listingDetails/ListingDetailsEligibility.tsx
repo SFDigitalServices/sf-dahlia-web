@@ -181,7 +181,7 @@ export const ListingDetailsEligibility = ({
             subtitle={
               <div>
                 <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
-                <div className="mb-4">
+                <div className="mb-4 primary-lighter-markup-link-desktop">
                   {renderMarkup(
                     t("listings.incomeExceptions.intro", {
                       url: "https://sfmohcd.org/special-calculations-household-income",
@@ -296,7 +296,11 @@ export const ListingDetailsEligibility = ({
 
             {listing.Building_Selection_Criteria && (
               <p>
-                <a href={listing.Building_Selection_Criteria} target={"_blank"}>
+                <a
+                  href={listing.Building_Selection_Criteria}
+                  target={"_blank"}
+                  className="md:text-blue-700"
+                >
                   {t("listings.additionalEligibilityRules.findOutMore")}
                 </a>
               </p>
