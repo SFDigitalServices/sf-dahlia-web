@@ -65,7 +65,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 </p>
               </div>
               <div
-                className="mb-4"
+                className="mb-4 primary-lighter-markup-link-desktop"
               >
                 <p>
                   People in your household may need 
@@ -430,7 +430,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 </p>
               </div>
               <div
-                className="mb-4"
+                className="mb-4 primary-lighter-markup-link-desktop"
               >
                 <p>
                   People in your household may need 
@@ -726,6 +726,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </div>
       <p>
         <a
+          className="md:text-blue-700"
           href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
           target="_blank"
         >
@@ -851,7 +852,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </li>
       </ol>
       <div
-        className="text-gray-750"
+        className="text-gray-750 primary-lighter-markup-link-desktop"
       >
         <p>
           Read 
@@ -889,7 +890,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 </p>
               </div>
               <div
-                className="mb-4"
+                className="mb-4 primary-lighter-markup-link-desktop"
               >
                 <p>
                   People in your household may need 
@@ -1108,7 +1109,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 </p>
               </div>
               <div
-                className="mb-4"
+                className="mb-4 primary-lighter-markup-link-desktop"
               >
                 <p>
                   People in your household may need 
@@ -1404,6 +1405,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </div>
       <p>
         <a
+          className="md:text-blue-700"
           href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
           target="_blank"
         >
@@ -1480,7 +1482,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                 </p>
               </div>
               <div
-                className="mb-4"
+                className="mb-4 primary-lighter-markup-link-desktop"
               >
                 <p>
                   People in your household may need 
@@ -1776,6 +1778,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </div>
       <p>
         <a
+          className="md:text-blue-700"
           href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
           target="_blank"
         >
@@ -1888,7 +1891,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </li>
       </ol>
       <div
-        className="text-gray-750"
+        className="text-gray-750 primary-lighter-markup-link-desktop"
       >
         <p>
           Read 
