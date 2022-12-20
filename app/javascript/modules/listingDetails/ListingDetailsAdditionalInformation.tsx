@@ -2,7 +2,6 @@ import React from "react"
 import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { stripMostTags } from "../../util/filterUtil"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
