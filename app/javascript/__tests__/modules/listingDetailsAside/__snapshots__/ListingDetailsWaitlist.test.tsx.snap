@@ -15,13 +15,13 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
       Available units and waitlist
     </h4>
     <div>
-      <p
+      <div
         className="text-tiny text-gray-800 pb-3"
       >
         <p>
           Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
         </p>
-      </p>
+      </div>
       <ul>
         <li
           className="uppercase text-gray-800 font-bold font-alt-sans leading-7"

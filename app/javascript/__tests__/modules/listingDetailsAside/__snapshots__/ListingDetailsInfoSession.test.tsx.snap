@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing Open_Houses 1`] = `
+exports[`ListingDetailsInfoSession does not render ListingDetailsInfoSession component whith no information sessions attached to listing 1`] = `null`;
+
+exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1`] = `
 <div
   className="border-b border-gray-400 md:border-b-0"
 >
@@ -10,7 +12,7 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
     <h4
       className="text__underline-weighted"
     >
-      Open Houses
+      Information Sessions
     </h4>
     <div
       className="false"
@@ -21,12 +23,12 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
         <span
           className="inline-block text-tiny uppercase normal-case"
         >
-          January 7, 2022
+          November 19, 2019
         </span>
         <span
           className="inline-block text-sm font-bold ml-5 font-alt-sans"
         >
-          5:00PM - 7:00PM
+          6:00 PM
         </span>
       </p>
       <div
@@ -34,11 +36,20 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
       >
         <div
           className="flex flex-col"
-        />
+        >
+          <span
+            className="translate"
+          >
+            <span>
+              MOHCD
+            </span>
+          </span>
+          <span>
+            1 South Van Ness Ave, Fl 5, San Francisco
+          </span>
+        </div>
       </div>
     </div>
   </section>
 </div>
 `;
-
-exports[`ListingDetailsOpenHouses doesn't display anything with Listing not containing Open_Houses 1`] = `null`;

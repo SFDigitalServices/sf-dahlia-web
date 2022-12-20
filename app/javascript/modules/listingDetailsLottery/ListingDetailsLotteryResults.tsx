@@ -41,7 +41,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
           <p className="mb-4 text-sm">{localizedFormat(listing.Lottery_Results_Date, "LL")}</p>
           <div className="bg-gray-100 py-4">
             {listing.Lottery_Summary && (
-              <div className="mb-3 mx-2 text-gray-700 text-sm">
+              <div className="mb-3 mx-2 text-gray-700 text-sm translate">
                 {renderInlineMarkup(listing.Lottery_Summary)}
               </div>
             )}

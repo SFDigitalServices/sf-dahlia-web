@@ -267,7 +267,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -282,7 +282,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -302,7 +302,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -317,7 +317,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -632,7 +632,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -647,7 +647,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -667,7 +667,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -682,7 +682,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -800,10 +800,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       <ol
         className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
       >
-        <li>
+        <li
+          className="text-gray-700"
+        >
           Haven't owned residential property in the past 3 years
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           <p>
             Meet our 
             <a
@@ -814,7 +818,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </a>
           </p>
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           <p>
             Complete 
             <a
@@ -825,7 +831,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </a>
           </p>
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           <p>
             Get pre-approved for a mortgage loan by a 
             <a
@@ -836,20 +844,26 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </a>
           </p>
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           Have enough in savings for closing costs and downpayment
         </li>
       </ol>
-      <p>
-        Read 
-        <a
-          href="https://sfmohcd.org/homebuyer-program-eligibility"
-          target="_blank"
-        >
-          our full list of requirements
-        </a>
-         for more details.
-      </p>
+      <div
+        className="text-gray-750"
+      >
+        <p>
+          Read 
+          <a
+            href="https://sfmohcd.org/homebuyer-program-eligibility"
+            target="_blank"
+          >
+            our full list of requirements
+          </a>
+           for more details.
+        </p>
+      </div>
     </li>
     <li
       className="list-section custom-counter__item"
@@ -1296,7 +1310,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1311,7 +1325,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1331,7 +1345,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1346,7 +1360,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1668,7 +1682,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1683,7 +1697,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1703,7 +1717,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-sm text-gray-700 translate"
         >
            
           <div>
@@ -1718,7 +1732,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
-            className="button-toggle ml-4"
+            className="button-toggle mt-2"
             onClick={[Function]}
           >
             More
@@ -1836,7 +1850,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       <ol
         className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
       >
-        <li>
+        <li
+          className="text-gray-700"
+        >
           <p>
             Go to a 
             <a
@@ -1847,10 +1863,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </a>
           </p>
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           Haven't owned residential property in the past 3 years
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           <p>
             Meet the 
             <a
@@ -1861,20 +1881,26 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </a>
           </p>
         </li>
-        <li>
+        <li
+          className="text-gray-700"
+        >
           Have a 650 credit score or higher
         </li>
       </ol>
-      <p>
-        Read 
-        <a
-          href="https://habitatgsf.org/amber-drive-info/"
-          target="_blank"
-        >
-          our full list of requirements
-        </a>
-         for more details.
-      </p>
+      <div
+        className="text-gray-750"
+      >
+        <p>
+          Read 
+          <a
+            href="https://habitatgsf.org/amber-drive-info/"
+            target="_blank"
+          >
+            our full list of requirements
+          </a>
+           for more details.
+        </p>
+      </div>
     </li>
     <li
       className="list-section custom-counter__item"
