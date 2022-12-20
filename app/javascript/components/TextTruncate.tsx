@@ -22,13 +22,13 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
   const untruncatedText = renderInlineMarkup(text)
   let wrapperClassNames = ["text-sm"]
   if (className) {
-    wrapperClassNames = wrapperClassNames.concat([className])
+    wrapperClassNames = [...wrapperClassNames, className]
   }
 
   let buttonClassNames = ["button-toggle ml-1"]
 
   if (buttonClassName) {
-    buttonClassNames = buttonClassNames.concat([buttonClassName])
+    buttonClassNames = [...buttonClassNames, buttonClassName]
   }
 
   return (
