@@ -47,7 +47,7 @@ export const ListingDetailsAdditionalInformation = ({
               <TextTruncate
                 className="primary-lighter-markup-link"
                 buttonClassName="text-blue-700"
-                text={stripMostTags(listing.Required_Documents)}
+                text={listing.Required_Documents}
               />
             </div>
             {isSale(listing) && !isHabitatListing(listing) && (
