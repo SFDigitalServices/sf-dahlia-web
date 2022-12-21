@@ -43,11 +43,11 @@ const testListings = {
     address: "1 South Van Ness Ave, San Francisco, CA 94103",
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
   },
-  HABITAT_SALE:{
+  HABITAT_SALE: {
     id: "a0W4U00000KnMyXUAV",
-    address:"36 Amber Drive, San Francisco, CA 94131",
-    title:"Habitat Amber Drive"
-  }
+    address: "36 Amber Drive, San Francisco, CA 94131",
+    title: "Habitat Amber Drive",
+  },
 }
 const ALT_PHOTO_TEXT = {
   en: "A picture of the building",
@@ -149,7 +149,7 @@ describe("Listing Details for Open Listings", () => {
      * If one of those happen, it should be fine to either update the translation string in this file or find another machine translated field
      * and test that in the same way it's happening here. These machine translation tests are just to ensure the integration is working, not testing
      * the specific translation itself.
-    */
+     */
 
     it("machine translations works in Filipino", () => {
       verifyMachineTranslations("tl", testListings.OPEN_RENTAL.id, [
