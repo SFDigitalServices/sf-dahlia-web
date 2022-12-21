@@ -102,8 +102,8 @@ export const ListingDetailsAdditionalInformation = ({
                 t("listings.realtorCommissionNotEligible")
               )}
               {listing.Realtor_Commission_Info && (
-                <div className={"flex mt-4"}>
-                  <span className={"font-bold mr-1"}>{t("listings.realtorCommissionHowTo")}</span>
+                <div className={"mt-4"}>
+                  <span className={"font-bold"}>{t("listings.realtorCommissionHowTo")}</span>
                   <span>
                     <TextTruncate
                       className="primary-lighter-markup-link"

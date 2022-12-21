@@ -32,7 +32,7 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
   }
 
   return (
-    <div className={wrapperClassNames.join(" ")}>
+    <span className={wrapperClassNames.join(" ")}>
       {isExpanded ? untruncatedText : truncatedText}
       {truncate(text)?.length !== text?.length && (
         <span
@@ -45,6 +45,6 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
           {isExpanded ? t("label.less") : t("label.more")}
         </span>
       )}
-    </div>
+    </span>
   )
 }
