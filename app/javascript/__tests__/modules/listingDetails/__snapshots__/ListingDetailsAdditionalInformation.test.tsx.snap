@@ -54,13 +54,13 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
           </span>
-        </div>
+        </span>
       </div>
     </div>
     <div
@@ -74,7 +74,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
@@ -100,7 +100,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           >
             More
           </span>
-        </div>
+        </span>
       </div>
     </div>
   </div>
@@ -158,13 +158,13 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       >
         Special Notes
       </h3>
-      <div
+      <span
         className="text-sm primary-lighter-markup-link"
       >
         <span>
           Some other excessively formatted listing notes.
         </span>
-      </div>
+      </span>
     </div>
     <div
       className="info-card bg-gray-100 border-0"
@@ -177,7 +177,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
@@ -189,12 +189,12 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             <br />
             Concert tickets
           </span>
-        </div>
+        </span>
       </div>
       <div
         className="text-sm mt-4"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
@@ -207,7 +207,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             </a>
              within 5 business days of being contacted.
           </span>
-        </div>
+        </span>
       </div>
     </div>
     <div
@@ -221,7 +221,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
@@ -229,7 +229,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             <br />
             Rule oneRule two
           </span>
-        </div>
+        </span>
       </div>
     </div>
     <div
@@ -243,13 +243,13 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
             The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
           </span>
-        </div>
+        </span>
         <a
           className="button mt-4"
           href="http://www.duckduckgo.com"
@@ -277,21 +277,21 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         </span>
          3% of the sales price
         <div
-          className="flex mt-4"
+          className="mt-4"
         >
           <span
-            className="font-bold mr-1"
+            className="font-bold"
           >
             How to receive it: 
           </span>
           <span>
-            <div
+            <span
               className="text-sm primary-lighter-markup-link"
             >
               <span>
                 Register with the Leasing Agent
               </span>
-            </div>
+            </span>
           </span>
         </div>
       </div>
@@ -307,7 +307,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       <div
         className="text-sm"
       >
-        <div
+        <span
           className="text-sm primary-lighter-markup-link"
         >
           <span>
@@ -320,7 +320,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             </a>
              for specific information.
           </span>
-        </div>
+        </span>
       </div>
     </div>
   </div>
