@@ -20,7 +20,7 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
   truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true, keepWhitespaces: true })
   const truncatedText = text ? renderInlineMarkup(truncate(text)) : ""
   const untruncatedText = renderInlineMarkup(text)
-  let wrapperClassNames = ["text-sm"]
+  let wrapperClassNames = ["text-sm inline"]
   if (className) {
     wrapperClassNames = [...wrapperClassNames, className]
   }
@@ -32,7 +32,7 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
   }
 
   return (
-    <span className={wrapperClassNames.join(" ")}>
+    <div className={wrapperClassNames.join(" ")}>
       {isExpanded ? untruncatedText : truncatedText}
       {truncate(text)?.length !== text?.length && (
         <span
@@ -45,6 +45,6 @@ export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateP
           {isExpanded ? t("label.less") : t("label.more")}
         </span>
       )}
-    </span>
+    </div>
   )
 }
