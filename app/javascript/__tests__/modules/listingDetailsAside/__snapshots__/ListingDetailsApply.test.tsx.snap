@@ -56,7 +56,7 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
     >
       <a
         className="button w-full transition"
-        href="https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+        href="https://www.homeownershipsf.org/buyerapplications/"
         target="_blank"
       >
         Visit HomeownershipSF
@@ -124,7 +124,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
     >
       <a
         className="button w-full transition"
-        href="https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+        href="https://www.homeownershipsf.org/buyerapplications/"
         target="_blank"
       >
         Visit HomeownershipSF
