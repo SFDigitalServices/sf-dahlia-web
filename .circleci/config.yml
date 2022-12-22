@@ -217,6 +217,9 @@ jobs:
       - run: yarn test:e2e
   e2e-legacy:
     <<: *defaults
+    environment:
+      ENABLE_WEBAPPID_PREFIX: "true"
+      HEROKU_APP_NAME: $CIRCLE_BRANCH
     parallelism: 4
     steps:
       - setup

@@ -108,6 +108,9 @@
     },
     "COVID_UPDATE": {
       "required": false
+    },
+    "ENABLE_WEBAPPID_PREFIX": {
+      "required": false
     }
   }
 }
