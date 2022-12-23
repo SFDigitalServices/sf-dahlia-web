@@ -90,11 +90,11 @@ const PARKING_TEXT = {
 }
 
 describe("Listing Details for Open Listings", () => {
-  // afterEach(() => {
-  //   // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-  //   // there is a rogue loading issue beyond the scope of this story
-  //   cy.wait(3000)
-  // })
+  afterEach(() => {
+    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
+    // there is a rogue loading issue beyond the scope of this story
+    cy.wait(3000)
+  })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
