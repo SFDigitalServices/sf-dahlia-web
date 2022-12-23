@@ -219,7 +219,6 @@ jobs:
     <<: *defaults
     environment:
       ENABLE_WEBAPPID_PREFIX: "true"
-      HEROKU_APP_NAME: ${CIRCLE_BUILD_NUM}
     parallelism: 4
     steps:
       - setup

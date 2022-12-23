@@ -53,8 +53,12 @@ class User < ApplicationRecord
   # that point to salesforce full to avoid collisions (since there are multiple webapps
   # that point to salesforce full)
   def web_app_id
-    if ENV['ENABLE_WEBAPPID_PREFIX'] == 'true' && ENV['HEROKU_APP_NAME']
-      "#{ENV['HEROKU_APP_NAME']}-#{id}"
+    if ENV['ENABLE_WEBAPPID_PREFIX'] == 'true'
+      if ENV['HEROKU_APP_NAME']
+        "#{ENV['HEROKU_APP_NAME']}-#{id}"
+      elsif ENV['CIRCLE_JOB']
+        "#{ENV['CIRCLE_JOB']}-#{id}"
+      end
     else
       id
     end
