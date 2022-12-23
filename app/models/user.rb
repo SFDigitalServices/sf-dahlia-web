@@ -56,8 +56,8 @@ class User < ApplicationRecord
     if ENV['ENABLE_WEBAPPID_PREFIX'] == 'true'
       if ENV['HEROKU_APP_NAME']
         "#{ENV['HEROKU_APP_NAME']}-#{id}"
-      elsif ENV['CIRCLE_JOB']
-        "#{ENV['CIRCLE_JOB']}-#{id}"
+      elsif ENV['CIRCLE_BUILD_NUM']
+        "#{ENV['CIRCLE_BUILD_NUM']}-#{id}"
       end
     else
       id
