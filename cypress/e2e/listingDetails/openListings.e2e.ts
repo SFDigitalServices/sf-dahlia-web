@@ -37,7 +37,6 @@ const testListings = {
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
   },
 }
-
 const ALT_PHOTO_TEXT = {
   en: "A picture of the building",
   es: "Una foto del edificio",
