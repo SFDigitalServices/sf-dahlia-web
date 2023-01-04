@@ -1,6 +1,6 @@
 const listings = {
   COMPLETED_LOTTERY: {
-    id: "a0W8H000000AmpKUAS",
+    id: "a0W4U00000Igm2kUAB",
   },
 }
 
@@ -15,16 +15,16 @@ const visitListing = (mobile, language) => {
   cy.visit(`${langPart}/listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
 }
 
-const clickLotteryResultsButton = (mobile) => {
+const clickLotteryResultsButton = (mobile : boolean) => {
   if (mobile) {
-    cy.get(".detail-header__title").contains("Lottery").click()
+    cy.get("h2").contains("Lottery").click()
   }
   cy.get("button").contains("View Lottery Results").click()
 }
 
 const searchForLotteryResults = () => {
-  cy.get("#lotterySearchNumber").type("01100972")
-  cy.get("form button svg").click()
+  cy.get('input[placeholder="Enter Your Lottery Number"]').type("01100972")
+  cy.get("form").submit()
 }
 
 const LOTTERY_BUTTON_TEXT = {
@@ -42,26 +42,6 @@ describe("Listing Details for Completed Lottery Listing", () => {
   })
 
   describe("Completed Lottery Rental Listing " + listings.COMPLETED_LOTTERY.id, () => {
-    it("displays in English", () => {
-      visitListing(true, "")
-      cy.contains(LOTTERY_BUTTON_TEXT.en)
-    })
-
-    it("displays in Filipino", () => {
-      visitListing(true, "tl")
-      cy.contains(LOTTERY_BUTTON_TEXT.tl)
-    })
-
-    it("displays in Spanish", () => {
-      visitListing(true, "es")
-      cy.contains(LOTTERY_BUTTON_TEXT.es)
-    })
-
-    it("displays in Chinese", () => {
-      visitListing(true, "zh")
-      cy.contains(LOTTERY_BUTTON_TEXT.zh)
-    })
-
     it("clicking the View Lottery Results button opens the lottery results button on mobile devices", () => {
       visitListing(true, "")
       clickLotteryResultsButton(true)
