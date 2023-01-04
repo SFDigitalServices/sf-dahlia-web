@@ -1,6 +1,14 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { ListingDetailsUnitAccordion } from "./ListingDetailsUnitAccordion"
+import {
+  AdditionalFees,
+  Description,
+  Icon,
+  ListingDetailItem,
+  t,
+} from "@bloom-housing/ui-components"
+import { getUnits } from "../../api/listingApiService"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 
@@ -38,6 +46,42 @@ const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
 }
 
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
+  const [units, setUnits] = useState({})
+
+  useEffect(() => {
+    void getUnits(listing.Id).then((units) => {
+      // eslint-disable-next-line unicorn/no-array-reduce
+      const sortedUnits = units.reduce((acc, unit) => {
+        if (!acc[unit.Unit_Type]) {
+          acc = {
+            ...acc,
+            [unit.Unit_Type]: {},
+          }
+        }
+        acc[unit.Unit_Type].units = [...(acc[unit.Unit_Type]?.units || []), unit]
+
+        if (!acc[unit.Unit_Type].availability) acc[unit.Unit_Type].availability = 0
+        acc[unit.Unit_Type].availability += unit.Availability
+
+        if (!acc[unit.Unit_Type].minSqFt && !acc[unit.Unit_Type].maxSqFt) {
+          acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
+          acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
+        }
+        if (unit.Unit_Square_Footage < acc[unit.Unit_Type].minSqFt) {
+          acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
+        }
+        if (unit.Unit_Square_Footage > acc[unit.Unit_Type].maxSqFt) {
+          acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
+        }
+        return acc
+      }, {})
+      setUnits(sortedUnits)
+    })
+    return () => {
+      setUnits([])
+    }
+  }, [listing.Id])
+
   const depositSubtext = [t("listings.features.orOneMonthsRent")]
 
   if (isBMR(listing)) {
@@ -109,6 +153,19 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
+        {Object.keys(units).length > 0 ? (
+          Object.keys(units).map((unitType) => (
+            <ListingDetailsUnitAccordion
+              key={unitType}
+              unitType={unitType}
+              unitGroup={units[unitType]}
+            />
+          ))
+        ) : (
+          <div className="flex justify-center">
+            <Icon symbol="spinner" size="large" />
+          </div>
+        )}
         {isRental(listing) && (
           <AdditionalFees
             deposit={getDepositString(
