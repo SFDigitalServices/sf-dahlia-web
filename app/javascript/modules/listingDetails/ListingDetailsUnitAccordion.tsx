@@ -35,7 +35,13 @@ const getTableData = (units: RailsListingUnits[]) =>
     },
     baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
     floor: { content: <span className="font-semibold">{unit.Unit_Floor}</span> },
-    accessibility: { content: <span className="font-semibold">TODO</span> },
+    accessibility: {
+      content: (
+        <span className="font-semibold">
+          {unit.Priority_Type && unit.Priority_Type !== "Adaptable" ? unit.Priority_Type : ""}
+        </span>
+      ),
+    },
   }))
 
 export const ListingDetailsUnitAccordion = ({

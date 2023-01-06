@@ -10,6 +10,7 @@ export type RailsListingUnits = {
   Min_Occupancy: number
   Number_of_Bathrooms: number
   Price_Without_Parking?: number
+  Priority_Type?: string
   Property_Type: string
   Status: string
   Unit_Floor: string
