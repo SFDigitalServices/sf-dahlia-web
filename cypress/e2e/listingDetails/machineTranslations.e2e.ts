@@ -11,7 +11,7 @@ const listings = {
     title: "TEST Automated Listing (do not modify)",
   },
   HABITAT_SALE: {
-    id: "a0W4U00000KnMyXUAV",
+    id: "a0W0P00000GlKfB",
     address: "36 Amber Drive, San Francisco, CA 94131",
     title: "Habitat Amber Drive",
   },
@@ -24,9 +24,9 @@ const INFORMATION_SESSION_RENTAL_TEXT = {
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
-  es: "La asistencia a una sesión informativa por parte de un solicitante es obligatoria.",
+  es: "La asistencia a una sesión informativa de un solicitante es obligatoria.",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon ng isang aplikante ay sapilitan.",
-  zh: "必須由一名申請人參加信息發布會。請",
+  zh: "必須由一名申請人參加信息發布會。",
 }
 
 const CREDIT_HISTORY_TEXT = {
@@ -38,9 +38,9 @@ const CREDIT_HISTORY_TEXT = {
 }
 
 const PARKING_TEXT = {
-  es: "Garaje para un auto por unidad y está incluido en el precio de venta.",
-  tl: "Isang garahe ng kotse bawat yunit at kasama sa presyo ng pagbebenta.",
-  zh: "每個單元一個車庫，包含在銷售價格中。",
+  es: "En el precio de venta de cada unidad se incluye una plaza de aparcamiento.",
+  tl: "Isang parking space ang kasama sa presyo ng pagbebenta ng bawat unit.",
+  zh: "每個單元的銷售價格中包含一個停車位",
 }
 
 describe("Listing Details Machine Translations", () => {
