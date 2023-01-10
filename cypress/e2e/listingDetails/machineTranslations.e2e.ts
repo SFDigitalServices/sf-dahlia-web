@@ -34,7 +34,7 @@ const CREDIT_HISTORY_TEXT = {
     "Proporcione un informe de crédito con puntaje de Equifax, Experian o TransUnion fechado dentro de los treinta (30) días posteriores a la solicitud.",
   tl:
     "Magbigay ng credit report na may marka mula sa Equifax, Experian, o TransUnion na may petsa sa loob ng tatlumpung (30) araw ng aplikasyon.",
-  zh: "提供 Equifax、Experian 或 TransUnion 在申請後三十",
+  zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
 }
 
 const PARKING_TEXT = {
