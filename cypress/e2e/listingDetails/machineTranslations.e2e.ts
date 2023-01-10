@@ -10,10 +10,10 @@ const listings = {
     id: "a0W0P00000F8YG4UAN",
     title: "TEST Automated Listing (do not modify)",
   },
-  HABITAT_SALE: {
+  OPEN_SALE: {
     id: "a0W0P00000GlKfB",
-    address: "36 Amber Drive, San Francisco, CA 94131",
-    title: "Habitat Amber Drive",
+    address: "1 South Van Ness Ave, San Francisco, CA 94103",
+    title: "TEST Sale Listing (do not modify) - Homeownership Acres",
   },
 }
 
@@ -83,7 +83,7 @@ describe("Listing Details Machine Translations", () => {
     })
   })
 
-  describe("Sale Listing " + listings.HABITAT_SALE.id, () => {
+  describe("Sale Listing " + listings.OPEN_SALE.id, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -95,21 +95,21 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("tl", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.tl,
         PARKING_TEXT.tl,
       ])
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("zh", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.zh,
         PARKING_TEXT.zh,
       ])
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("es", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.es,
         PARKING_TEXT.es,
       ])
