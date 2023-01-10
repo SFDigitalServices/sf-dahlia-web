@@ -15,7 +15,7 @@ const visitListing = (mobile, language) => {
   cy.visit(`${langPart}/listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
 }
 
-const clickLotteryResultsButton = (mobile : boolean) => {
+const clickLotteryResultsButton = (mobile: boolean) => {
   if (mobile) {
     cy.get("h2").contains("Lottery").click()
   }
