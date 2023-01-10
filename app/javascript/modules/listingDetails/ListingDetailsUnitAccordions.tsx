@@ -15,11 +15,30 @@ export interface ListingDetailsUnitAccordionsProps {
 }
 
 const TableHeaders = {
-  unit: "t.listings.features.unit",
-  area: "t.listings.features.area",
-  baths: "t.listings.features.baths",
-  floor: "t.listings.features.floor",
-  accessibility: "t.listings.features.accessibility",
+  unit: "listings.features.unit",
+  area: "listings.features.area",
+  baths: "listings.features.baths",
+  floor: "listings.features.floor",
+  accessibility: "listings.features.accessibility",
+}
+
+const getPriorityTypeText = (priorityType) => {
+  switch (priorityType) {
+    case "Adaptable":
+      return ""
+    case "Hearing Impairments":
+      return t("listings.prioritiesDescriptor.hearing")
+    case "Vision and/or Hearing Impairments":
+      return t("listings.prioritiesDescriptor.hearingVision")
+    case "Mobility Impairments":
+      return t("listings.prioritiesDescriptor.mobility")
+    case "Mobility, Hearing and/or Vision Impairments":
+      return t("listings.prioritiesDescriptor.mobilityHearingVision")
+    case "Vision Impairments":
+      return t("listings.prioritiesDescriptor.vision")
+    default:
+      return ""
+  }
 }
 
 const getTableData = (units: RailsListingUnits[]) =>
@@ -38,7 +57,7 @@ const getTableData = (units: RailsListingUnits[]) =>
     accessibility: {
       content: (
         <span className="font-semibold">
-          {unit.Priority_Type && unit.Priority_Type !== "Adaptable" ? unit.Priority_Type : ""}
+          {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
         </span>
       ),
     },
