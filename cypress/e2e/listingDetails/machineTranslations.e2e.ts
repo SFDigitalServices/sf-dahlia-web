@@ -25,7 +25,7 @@ const INFORMATION_SESSION_RENTAL_TEXT = {
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
-  es: "La asistencia a una sesión informativa.",
+  es: "La asistencia a una sesión informativa",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon",
   zh: "必須由一名申請人參加信息發布會。",
 }
