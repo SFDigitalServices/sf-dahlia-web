@@ -21,11 +21,12 @@ const INFORMATION_SESSION_RENTAL_TEXT = {
   es: "sesión de información de prueba",
   tl: "sesyon ng impormasyon ng pagsubok",
   zh: "測試信息會話",
+
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
-  es: "La asistencia a una sesión informativa de un solicitante es obligatoria.",
-  tl: "Ang pagdalo sa isang sesyon ng impormasyon ng isang aplikante ay sapilitan.",
+  es: "La asistencia a una sesión informativa.",
+  tl: "Ang pagdalo sa isang sesyon ng impormasyon",
   zh: "必須由一名申請人參加信息發布會。",
 }
 
@@ -34,7 +35,7 @@ const CREDIT_HISTORY_TEXT = {
     "Proporcione un informe de crédito con puntaje de Equifax, Experian o TransUnion fechado dentro de los treinta (30) días posteriores a la solicitud.",
   tl:
     "Magbigay ng credit report na may marka mula sa Equifax, Experian, o TransUnion na may petsa sa loob ng tatlumpung (30) araw ng aplikasyon.",
-  zh: "提供 Equifax、Experian 或 TransUnion 在申請後三十 (30) 天內提供的帶有評分的信用報告",
+  zh: "提供 Equifax、Experian 或 TransUnion 在申請後三十",
 }
 
 const PARKING_TEXT = {
