@@ -21,7 +21,6 @@ const INFORMATION_SESSION_RENTAL_TEXT = {
   es: "sesión de información de prueba",
   tl: "sesyon ng impormasyon ng pagsubok",
   zh: "測試信息會話",
-
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
