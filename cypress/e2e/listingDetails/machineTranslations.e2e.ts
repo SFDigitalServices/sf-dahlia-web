@@ -30,10 +30,8 @@ const INFORMATION_SESSION_SALE_TEXT = {
 }
 
 const CREDIT_HISTORY_TEXT = {
-  es:
-    "Proporcione un informe de crédito",
-  tl:
-    "Magbigay ng credit report",
+  es: "Proporcione un informe de crédito",
+  tl: "Magbigay ng credit report",
   zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
 }
 
