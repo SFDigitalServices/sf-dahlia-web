@@ -166,7 +166,6 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
             ./tmp/cc-test-reporter before-build
-      - setup-webdriver
       - persist_to_workspace:
           root: .
           paths:
