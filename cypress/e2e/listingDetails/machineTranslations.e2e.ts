@@ -48,7 +48,7 @@ describe("Listing Details Machine Translations", () => {
     cy.wait(3000)
   })
 
-  describe("Rental Listing " + listings.OPEN_RENTAL.id, () => {
+  describe(`Rental Listing ${listings.OPEN_RENTAL.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -81,7 +81,7 @@ describe("Listing Details Machine Translations", () => {
     })
   })
 
-  describe("Sale Listing " + listings.OPEN_SALE.id, () => {
+  describe(`Sale Listing ${listings.OPEN_SALE.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
