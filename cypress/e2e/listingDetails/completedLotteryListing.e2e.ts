@@ -27,13 +27,6 @@ const searchForLotteryResults = () => {
   cy.get("form").submit()
 }
 
-const LOTTERY_BUTTON_TEXT = {
-  en: "View Lottery Results",
-  tl: "Ipakita ang mga Resulta ng Lottery",
-  zh: "查看抽籤結果",
-  es: "Ver los Resultados del Sorteo",
-}
-
 describe("Listing Details for Completed Lottery Listing", () => {
   afterEach(() => {
     // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
@@ -42,7 +35,7 @@ describe("Listing Details for Completed Lottery Listing", () => {
   })
 
   describe("Completed Lottery Rental Listing " + listings.COMPLETED_LOTTERY.id, () => {
-    it("clicking the View Lottery Results button opens the lottery results button on mobile devices", () => {
+    it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
       visitListing(true, "")
       clickLotteryResultsButton(true)
       cy.contains("Lottery results are divided into multiple lists.")
@@ -57,10 +50,10 @@ describe("Listing Details for Completed Lottery Listing", () => {
 
     it("renders on desktop devices", () => {
       cy.visit(`listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
-      cy.contains(LOTTERY_BUTTON_TEXT.en)
+      cy.contains("View Lottery Results")
     })
 
-    it("clicking the View Lottery Results button opens the lottery results button on desktop devices", () => {
+    it("clicking the View Lottery Results button opens the lottery results modal on desktop devices", () => {
       visitListing(false, "")
       clickLotteryResultsButton(false)
       cy.contains("Lottery results are divided into multiple lists.")
