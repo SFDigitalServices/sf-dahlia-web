@@ -10,10 +10,10 @@ const listings = {
     id: "a0W0P00000F8YG4UAN",
     title: "TEST Automated Listing (do not modify)",
   },
-  HABITAT_SALE: {
-    id: "a0W4U00000KnMyXUAV",
-    address: "36 Amber Drive, San Francisco, CA 94131",
-    title: "Habitat Amber Drive",
+  OPEN_SALE: {
+    id: "a0W0P00000GlKfB",
+    address: "1 South Van Ness Ave, San Francisco, CA 94103",
+    title: "TEST Sale Listing (do not modify) - Homeownership Acres",
   },
 }
 
@@ -24,23 +24,21 @@ const INFORMATION_SESSION_RENTAL_TEXT = {
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
-  es: "La asistencia a una sesión informativa por parte de un solicitante es obligatoria.",
-  tl: "Ang pagdalo sa isang sesyon ng impormasyon ng isang aplikante ay sapilitan.",
-  zh: "必須由一名申請人參加信息發布會。請",
+  es: "La asistencia a una sesión informativa",
+  tl: "Ang pagdalo sa isang sesyon ng impormasyon",
+  zh: "必須由一名申請人參加信息發布會。",
 }
 
 const CREDIT_HISTORY_TEXT = {
-  es:
-    "Proporcione un informe de crédito con puntaje de Equifax, Experian o TransUnion fechado dentro de los treinta (30) días posteriores a la solicitud.",
-  tl:
-    "Magbigay ng credit report na may marka mula sa Equifax, Experian, o TransUnion na may petsa sa loob ng tatlumpung (30) araw ng aplikasyon.",
-  zh: "提供 Equifax、Experian 或 TransUnion 在申請後三十 (30) 天內提供的帶有評分的信用報告",
+  es: "Proporcione un informe de crédito",
+  tl: "Magbigay ng credit report",
+  zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
 }
 
 const PARKING_TEXT = {
-  es: "Garaje para un auto por unidad y está incluido en el precio de venta.",
-  tl: "Isang garahe ng kotse bawat yunit at kasama sa presyo ng pagbebenta.",
-  zh: "每個單元一個車庫，包含在銷售價格中。",
+  es: "En el precio de venta de cada unidad se incluye una plaza de aparcamiento.",
+  tl: "Isang parking space ang kasama sa presyo ng pagbebenta ng bawat unit.",
+  zh: "每個單元的銷售價格中包含一個停車位",
 }
 
 describe("Listing Details Machine Translations", () => {
@@ -83,7 +81,7 @@ describe("Listing Details Machine Translations", () => {
     })
   })
 
-  describe("Sale Listing " + listings.HABITAT_SALE.id, () => {
+  describe("Sale Listing " + listings.OPEN_SALE.id, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -95,21 +93,21 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("tl", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.tl,
         PARKING_TEXT.tl,
       ])
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("zh", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.zh,
         PARKING_TEXT.zh,
       ])
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", listings.HABITAT_SALE.id, [
+      verifyMachineTranslations("es", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.es,
         PARKING_TEXT.es,
       ])
