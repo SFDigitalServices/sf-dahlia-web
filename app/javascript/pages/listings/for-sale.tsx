@@ -21,8 +21,11 @@ import {
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
 
-const getForSaleSummaryTable = (listing: RailsSaleListing) =>
-  listing.unitSummaries.general
+const getForSaleSummaryTable = (listing: RailsSaleListing) => {
+  const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
+  if (!summary) return null
+
+  return listing.unitSummaries.general
     .filter((summary) => !!summary.unitType)
     .map((summary) => ({
       unitType: {
@@ -53,6 +56,7 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) =>
         ),
       },
     }))
+}
 
 const getBuyHeader = (
   filters: EligibilityFilters,

@@ -32,18 +32,28 @@ export const ListingDetailsAdditionalInformation = ({
         {listing.Listing_Other_Notes && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.specialNotes")}</h3>
-            <TextTruncate text={listing.Listing_Other_Notes} />
+            <TextTruncate
+              className="primary-lighter-markup-link"
+              buttonClassName="text-blue-700"
+              text={listing.Listing_Other_Notes}
+            />
           </div>
         )}
         {(!!listing.Required_Documents || isSale(listing)) && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
             <div className="text-sm">
-              <TextTruncate text={listing.Required_Documents} />
+              <TextTruncate
+                className="primary-lighter-markup-link"
+                buttonClassName="text-blue-700"
+                text={listing.Required_Documents}
+              />
             </div>
             {isSale(listing) && !isHabitatListing(listing) && (
               <div className="text-sm mt-4">
                 <TextTruncate
+                  className="primary-lighter-markup-link"
+                  buttonClassName="text-blue-700"
                   text={t("listings.requiredDocumentsAfterApplying", {
                     url: "https://sfmohcd.org/after-homebuyer-lottery",
                   })}
@@ -56,7 +66,11 @@ export const ListingDetailsAdditionalInformation = ({
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
             <div className="text-sm">
-              <TextTruncate text={listing.Legal_Disclaimers} />
+              <TextTruncate
+                text={listing.Legal_Disclaimers}
+                className="primary-lighter-markup-link"
+                buttonClassName="text-blue-700"
+              />
             </div>
           </div>
         )}
@@ -64,7 +78,11 @@ export const ListingDetailsAdditionalInformation = ({
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
             <div className="text-sm">
-              <TextTruncate text={t("listings.cc&rDescription")} />
+              <TextTruncate
+                className="primary-lighter-markup-link"
+                buttonClassName="text-blue-700"
+                text={t("listings.cc&rDescription")}
+              />
               <LinkButton href={listing.CC_and_R_URL} className={"mt-4"} newTab={true}>
                 {t("listings.downloadPdf")}
               </LinkButton>
@@ -84,10 +102,14 @@ export const ListingDetailsAdditionalInformation = ({
                 t("listings.realtorCommissionNotEligible")
               )}
               {listing.Realtor_Commission_Info && (
-                <div className={"flex mt-4"}>
-                  <span className={"font-bold mr-1"}>{t("listings.realtorCommissionHowTo")}</span>
+                <div className={"mt-4"}>
+                  <span className={"font-bold"}>{t("listings.realtorCommissionHowTo")}</span>
                   <span>
-                    <TextTruncate text={listing.Realtor_Commission_Info} />
+                    <TextTruncate
+                      className="primary-lighter-markup-link"
+                      buttonClassName="text-blue-700"
+                      text={listing.Realtor_Commission_Info}
+                    />
                   </span>
                 </div>
               )}
@@ -110,7 +132,11 @@ export const ListingDetailsAdditionalInformation = ({
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-lg">{t("listings.rePricing")}</h3>
             <div className="text-sm">
-              <TextTruncate text={listing.Repricing_Mechanism} />
+              <TextTruncate
+                className="primary-lighter-markup-link"
+                buttonClassName="text-blue-700"
+                text={listing.Repricing_Mechanism}
+              />
             </div>
           </div>
         )}

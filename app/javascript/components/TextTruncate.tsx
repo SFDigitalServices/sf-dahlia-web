@@ -10,21 +10,33 @@ import { renderInlineMarkup } from "../util/languageUtil"
 
 export interface TextTruncateProps {
   text: string
+  className?: string
+  buttonClassName?: string
 }
 
-export const TextTruncate = ({ text }: TextTruncateProps) => {
+export const TextTruncate = ({ text, className, buttonClassName }: TextTruncateProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true, keepWhitespaces: true })
   const truncatedText = text ? renderInlineMarkup(truncate(text)) : ""
   const untruncatedText = renderInlineMarkup(text)
+  let wrapperClassNames = ["text-sm inline"]
+  if (className) {
+    wrapperClassNames = [...wrapperClassNames, className]
+  }
+
+  let buttonClassNames = ["button-toggle ml-1"]
+
+  if (buttonClassName) {
+    buttonClassNames = [...buttonClassNames, buttonClassName]
+  }
 
   return (
-    <div className="text-sm">
+    <div className={wrapperClassNames.join(" ")}>
       {isExpanded ? untruncatedText : truncatedText}
       {truncate(text)?.length !== text?.length && (
         <span
-          className="button-toggle ml-1"
+          className={buttonClassNames.join(" ")}
           onClick={() => setIsExpanded(!isExpanded)}
           onKeyPress={() => setIsExpanded(!isExpanded)}
           role="button"

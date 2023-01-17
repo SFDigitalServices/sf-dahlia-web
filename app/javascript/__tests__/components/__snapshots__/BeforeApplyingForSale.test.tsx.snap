@@ -61,7 +61,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     </li>
   </ol>
   <div
-    className="text-gray-750"
+    className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
       Read 
@@ -145,7 +145,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     </li>
   </ol>
   <div
-    className="text-gray-750"
+    className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
       Read 
@@ -235,7 +235,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     </li>
   </ol>
   <div
-    className="text-gray-750"
+    className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
       Read 

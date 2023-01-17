@@ -95,7 +95,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
             </li>
           </ol>
           <div
-            className="text-gray-750"
+            className="text-gray-750 primary-lighter-markup-link-desktop"
           >
             <p>
               Read 

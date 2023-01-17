@@ -6,7 +6,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/web
   docker:
-    - image: cimg/ruby:2.5.9-browsers
+    - image: cimg/ruby:2.6.8-browsers
       environment:
         RAILS_ENV: development
         PGHOST: 127.0.0.1
@@ -166,7 +166,6 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
             ./tmp/cc-test-reporter before-build
-      - setup-webdriver
       - persist_to_workspace:
           root: .
           paths:

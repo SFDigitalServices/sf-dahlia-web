@@ -153,7 +153,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         newTab={true}
         href={
           !isListingRental
-            ? "https://www.homeownershipsf.org/application-assistance-for-homebuyers/"
+            ? "https://www.homeownershipsf.org/buyerapplications/"
             : "/housing-counselors"
         }
         className={"w-full"}

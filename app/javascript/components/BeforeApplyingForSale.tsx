@@ -99,7 +99,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
           </li>
         ))}
       </ol>
-      <div className="text-gray-750">{requirements}</div>
+      <div className="text-gray-750 primary-lighter-markup-link-desktop">{requirements}</div>
     </>
   )
 

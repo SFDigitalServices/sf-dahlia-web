@@ -27,7 +27,8 @@ This repository contains the source code for [housing.sfgov.org](https://housing
 Before you install DAHLIA, your system should have the following:
 
 - [Homebrew](http://brew.sh)
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.5.9 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.6.8 (Use [RVM]
+  (https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
 - [Node.js](https://nodejs.org/en/) 14.19.3
