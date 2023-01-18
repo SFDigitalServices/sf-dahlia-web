@@ -17,9 +17,9 @@ const visitListing = (mobile, language) => {
 
 const clickLotteryResultsButton = (mobile: boolean) => {
   if (mobile) {
-    cy.get("h2").contains("Lottery").click()
+    cy.contains("Lottery selection, important dates and contact").click()
   }
-  cy.get("button").contains("View Lottery Results").click()
+  cy.contains("View Lottery Results").click()
 }
 
 const searchForLotteryResults = () => {
