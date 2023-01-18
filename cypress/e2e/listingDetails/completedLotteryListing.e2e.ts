@@ -35,24 +35,24 @@ describe("Listing Details for Completed Lottery Listing", () => {
   })
 
   describe("Completed Lottery Rental Listing " + listings.COMPLETED_LOTTERY.id, () => {
-    // it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
-    //   visitListing(true, "")
-    //   clickLotteryResultsButton(true)
-    //   cy.contains("Lottery results are divided into multiple lists.")
-    // })
+    it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
+      visitListing(true, "")
+      clickLotteryResultsButton(true)
+      cy.contains("Lottery results are divided into multiple lists.")
+    })
 
-    // it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
-    //   visitListing(true, "")
-    //   clickLotteryResultsButton(true)
-    //   cy.contains("Lottery results are divided into multiple lists.")
-    // })
+    it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
+      visitListing(true, "")
+      clickLotteryResultsButton(true)
+      cy.contains("Lottery results are divided into multiple lists.")
+    })
 
-    // it("searching for a lottery number returns results on mobile devices", () => {
-    //   visitListing(true, "")
-    //   clickLotteryResultsButton(true)
-    //   searchForLotteryResults()
-    //   cy.contains("Your preference ranking")
-    // })
+    it("searching for a lottery number returns results on mobile devices", () => {
+      visitListing(true, "")
+      clickLotteryResultsButton(true)
+      searchForLotteryResults()
+      cy.contains("Your preference ranking")
+    })
 
     it("renders on desktop devices", () => {
       cy.visit(`listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
