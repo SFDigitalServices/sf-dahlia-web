@@ -1212,10 +1212,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-7.0.5.tgz#922f67c75589c4492919b2b41cd800162dd91543"
-  integrity sha512-Yd5TUB4W8GV++CI0PFWDohDPIN81hf/kUya9o9Q25mkn40dcmYs4rAP5GONiiFNYOqcEfU15u2J0tfKn38SJYw==
+"@bloom-housing/ui-components@7.3.2":
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-7.3.2.tgz#b8a74ca564ebb847fc930ca15f09523eaa8fd7bf"
+  integrity sha512-5Dgfm5KrvX516LhXAbFglHSssL51xKGnH7BwzPZshp1EMwaON142qVrV/TBS/PEbnzSUSyLWXAX8vQKxvEP7bw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1223,7 +1223,6 @@
     "@fortawesome/react-fontawesome" "^0.1.18"
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/jwt-decode" "^2.2.1"
-    "@types/markdown-to-jsx" "^6.11.2"
     "@types/mdx" "^2.0.1"
     "@types/node" "^12.12.67"
     "@types/node-polyglot" "^2.4.1"
@@ -1237,7 +1236,7 @@
     axios "0.21.2"
     dayjs "^1.10.7"
     jwt-decode "^2.2.0"
-    markdown-to-jsx "^6.11.4"
+    markdown-to-jsx "7.1.8"
     nanoid "^3.1.12"
     node-polyglot "^2.4.0"
     react "^17.0.2"
@@ -1246,6 +1245,7 @@
     react-dom "^17.0.2"
     react-dropzone "^11.3.2"
     react-focus-lock "^2.5.2"
+    react-hook-form "^6.15.5"
     react-map-gl "^6.1.16"
     react-media "^1.10.0"
     react-remove-scroll "2.5.4"
@@ -9465,13 +9465,10 @@ mapbox-gl@^2.3.0:
     tinyqueue "^2.0.3"
     vt-pbf "^3.1.1"
 
-markdown-to-jsx@^6.11.4:
-  version "6.11.4"
-  resolved "https://registry.npmjs.org/markdown-to-jsx/-/markdown-to-jsx-6.11.4.tgz"
-  integrity sha512-3lRCD5Sh+tfA52iGgfs/XZiw33f7fFX9Bn55aNnVNUd2GzLDkOWyKYYD8Yju2B1Vn+feiEdgJs8T6Tg0xNokPw==
-  dependencies:
-    prop-types "^15.6.2"
-    unquote "^1.1.0"
+markdown-to-jsx@7.1.8:
+  version "7.1.8"
+  resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.8.tgz#49c3bb3c122aa714324034142c8829b93c889338"
+  integrity sha512-rRSa1aFmFnpDRFAhv5vIkWM4nPaoB9vnzIjuIKa1wGupfn2hdCNeaQHKpu4/muoc8n8J7yowjTP2oncA4/Rbgg==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -14536,7 +14533,7 @@ unpipe@1.0.0, unpipe@~1.0.0:
   resolved "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
-unquote@^1.1.0, unquote@~1.1.1:
+unquote@~1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/unquote/-/unquote-1.1.1.tgz"
   integrity sha1-j97XMk7G6IoP+LkF58CYzcCG1UQ=
