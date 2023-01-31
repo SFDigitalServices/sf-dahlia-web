@@ -86,7 +86,11 @@ export const ListingDetailsProcess = ({
                 ? [
                     {
                       title: t("contactAgent.officeHours"),
-                      content: renderInlineMarkup(listing.Office_Hours),
+                      content: (
+                        <span className="translate">
+                          {renderInlineMarkup(listing.Office_Hours)}
+                        </span>
+                      ),
                     },
                   ]
                 : undefined
@@ -100,6 +104,7 @@ export const ListingDetailsProcess = ({
             }
             contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
             contactTitle={listing.Leasing_Agent_Title}
+            contactTitleClassname={"translate"}
             strings={{
               email: t("label.emailAddress"),
               getDirections: t("label.getDirections"),
