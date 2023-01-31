@@ -55,7 +55,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
@@ -75,7 +75,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             All BMR renters must review and acknowledge the 
@@ -89,16 +89,25 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
             <br />
              
             <br />
-            Applicants should be informed that BMR rental units in some buildings may convert to ownership units in the future.  In the case of conversion, BMR renters will be afforded certain rights as explained in ...
-          </span>
-          <span
-            className="button-toggle ml-1 text-blue-700"
-            onClick={[Function]}
-            onKeyPress={[Function]}
-            role="button"
-            tabIndex={0}
-          >
-            More
+            Applicants should be informed that BMR rental units in some buildings may convert to ownership units in the future.  In the case of conversion, BMR renters will be afforded certain rights as explained in the 
+            <a
+              href="http://sf-moh.org/index.aspx?page=295"
+              target="_blank"
+            >
+              Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013
+            </a>
+            . Applicants should inquire with the building contact person listed above to determine if the building has a minimum number of years that it must remain a rental building.  (Some buildings may have such restrictions based on government sources of financing for their building.) Most buildings may have no restrictions on conversion at all. 
+            <br />
+             
+            <br />
+            It is also important to note that units governed by the Inclusionary Housing Program are NOT governed by the San Francisco Rent Ordinance (also known as “rent control”). Among other rules, rents may increase beyond increases allowed under “rent control.”  Please see the 
+            <a
+              href="http://sf-moh.org/index.aspx?page=295"
+              target="_blank"
+            >
+              Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013
+            </a>
+             for more information.
           </span>
         </div>
       </div>
@@ -159,7 +168,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         Special Notes
       </h3>
       <div
-        className="text-sm inline primary-lighter-markup-link"
+        className="text-sm inline primary-lighter-markup-link translate"
       >
         <span>
           Some other excessively formatted listing notes.
@@ -178,7 +187,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             Proof of residence
@@ -195,7 +204,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm mt-4"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide 
@@ -222,7 +231,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             Some important program rules with bullets:
@@ -244,7 +253,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
@@ -286,7 +295,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           </span>
           <span>
             <div
-              className="text-sm inline primary-lighter-markup-link"
+              className="text-sm inline primary-lighter-markup-link translate"
             >
               <span>
                 Register with the Leasing Agent
@@ -308,7 +317,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         className="text-sm"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link"
+          className="text-sm inline primary-lighter-markup-link translate"
         >
           <span>
             A BMR unit will be resold at a restricted price to a household that meets the first‐time homebuyer and income qualifications for the program. Please review the 
