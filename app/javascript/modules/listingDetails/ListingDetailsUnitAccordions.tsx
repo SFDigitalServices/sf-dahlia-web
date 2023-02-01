@@ -47,8 +47,9 @@ const getTableData = (units: RailsListingUnits[]) =>
     area: {
       content: (
         <>
-          <span className="font-semibold">{unit.Unit_Square_Footage}</span>
-          {t("listings.features.sqft")}
+          <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
+          <span aria-hidden="true">{t("listings.features.sqft")}</span>
+          <span className="sr-only">{t("listings.features.squareFeet")}</span>
         </>
       ),
     },
