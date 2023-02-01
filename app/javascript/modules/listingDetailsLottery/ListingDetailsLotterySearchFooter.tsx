@@ -17,7 +17,7 @@ export const ListingDetailsLotterySearchFooter = ({
     <>
       <div className="bg-gray-100 py-4 text-center">
         <a
-          className="text-blue-800"
+          className="text-blue-900"
           href="http://sfmohcd.org/housing-preference-programs"
           target="_blank"
         >
@@ -28,14 +28,14 @@ export const ListingDetailsLotterySearchFooter = ({
         <>
           {listing.LotteryResultsURL ? (
             <>
-              <div className="p-4 text-center text-tiny">
+              <div className="p-4 text-center text-sm">
                 <p className="py-2">
                   {t("lottery.resultsFrom", {
                     date: localizedFormat(listing.Lottery_Results_Date, "LL"),
                   })}
                 </p>
                 <p className="py-2">
-                  <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-800">
+                  <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-900">
                     {t("lottery.lotteryResultsPdfLink")}
                   </a>
                 </p>
@@ -49,7 +49,7 @@ export const ListingDetailsLotterySearchFooter = ({
           ) : (
             <>
               {listing.Lottery_Results_Date && (
-                <div className="p-4 text-center text-tiny">
+                <div className="p-4 text-center text-sm">
                   <p className="py-2">
                     {t("lottery.resultsWillBePostedOn", {
                       date: localizedFormat(listing.Lottery_Results_Date, "LL"),

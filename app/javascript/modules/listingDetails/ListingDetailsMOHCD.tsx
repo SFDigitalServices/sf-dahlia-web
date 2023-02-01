@@ -7,7 +7,7 @@ export const ListingDetailsMOHCD = () => {
 
   const MohcdEl = (
     <div className="m-0 info-card flex items-center justify-between">
-      <p className="m-0 text-base text-serif-lg w-3/4">{t("listings.monitoredByMohcd")}</p>
+      <p className="m-0 text-base text-serif-xl w-3/4">{t("listings.monitoredByMohcd")}</p>
       <img alt={t("listings.equalHousingOpportunityLogo")} src={getAssetPath("logo-equal.png")} />
     </div>
   )

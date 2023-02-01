@@ -65,7 +65,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
         })}
       />
       {preferences.length > 0 && (
-        <p className="text-gray-750 text-tiny">
+        <p className="text-gray-750 text-sm">
           {t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration")}
         </p>
       )}

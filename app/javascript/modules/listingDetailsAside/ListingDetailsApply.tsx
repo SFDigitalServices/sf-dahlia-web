@@ -35,8 +35,8 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const ordinalHeader = (ordinal: number, title: string) => {
     return (
-      <Heading priority={4} className={"text-gray-900 text-lg -mt-2 mb-3"}>
-        <span className={"text-blue-600 mr-2"}>{ordinal}</span>
+      <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
+        <span className={"text-blue-500 mr-2"}>{ordinal}</span>
         {title}
       </Heading>
     )
@@ -115,16 +115,16 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const submitPaperApplicationBlocks = (
     <>
-      <SidebarBlock className={"bg-blue-200"}>
+      <SidebarBlock className={"bg-blue-100"}>
         {ordinalHeader(2, t("listings.apply.submitAPaperApplication"))}
         {t("listings.apply.includeAnEnvelope")}
       </SidebarBlock>
       <SidebarBlock
-        className={"bg-blue-200"}
+        className={"bg-blue-100"}
         styleType={"capsWeighted"}
         title={t("listings.apply.sendByUsMail")}
       >
-        <div className={"mb-2 text-gray-900 text-base"}>
+        <div className={"mb-2 text-gray-950 text-base"}>
           <MultiLineAddress
             address={{
               placeName: listing.Application_Organization,
@@ -137,7 +137,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         </div>
         {t("listings.apply.applicationsMustBeReceivedByDeadline")}
       </SidebarBlock>
-      <SidebarBlock className={"bg-blue-200"}>
+      <SidebarBlock className={"bg-blue-100"}>
         {t("listings.doNotApplyOneAndPaperOrMultiple")}
       </SidebarBlock>
     </>
