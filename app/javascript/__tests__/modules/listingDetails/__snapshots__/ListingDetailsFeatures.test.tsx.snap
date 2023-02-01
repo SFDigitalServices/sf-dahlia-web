@@ -132,35 +132,48 @@ exports[`ListingDetailsFeatures displays listing details features section when r
     <div
       className="info-card bg-gray-100 border-0"
     >
-      <p
-        className="info-card__title mb-2"
-      >
-        Additional Fees
-      </p>
       <div
-        className="info-card__columns text-sm"
+        className="info-card__header"
+      >
+        <h3
+          className="info-card__title"
+        >
+          Additional Fees
+        </h3>
+      </div>
+      <section
+        className="grid-section"
       >
         <div
-          className="info-card__column-2 null"
+          className="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
         >
-          <div
-            className="text-base"
+          <article
+            aria-label=""
+            className="grid-item"
           >
-            Deposit
-          </div>
-          <div
-            className="text-xl font-bold"
-          >
-            $2,102 - $2,355
-          </div>
-          <div>
-            or one month's rent
-          </div>
-          <div>
-            May be higher for lower credit scores
-          </div>
+            <div
+              className="text-base"
+            >
+              Deposit
+            </div>
+            <div
+              className="text-xl font-bold"
+            >
+              $2,102 - $2,355
+            </div>
+            <div
+              className="text-sm"
+            >
+              or one month's rent
+            </div>
+            <div
+              className="text-sm"
+            >
+              May be higher for lower credit scores
+            </div>
+          </article>
         </div>
-      </div>
+      </section>
       <div
         className="info-card__columns text-sm"
       >

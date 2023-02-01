@@ -107,17 +107,29 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                household size
+                <span
+                  className=""
+                >
+                  household size
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per month
+                <span
+                  className=""
+                >
+                  maximum income per month
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per year
+                <span
+                  className=""
+                >
+                  maximum income per year
+                </span>
               </th>
             </tr>
           </thead>
@@ -159,12 +171,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
@@ -272,10 +292,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
             </p>
             <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
             </p>
             <p>
               Collection accounts...
@@ -307,10 +327,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
             </p>
             <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references. 
+              Previous rental history will be reviewed and must exhibit no derogatory references.
             </p>
             <p>
               Landlord references will only check for...
@@ -472,17 +492,29 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                household size
+                <span
+                  className=""
+                >
+                  household size
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per month
+                <span
+                  className=""
+                >
+                  maximum income per month
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per year
+                <span
+                  className=""
+                >
+                  maximum income per year
+                </span>
               </th>
             </tr>
           </thead>
@@ -524,12 +556,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
@@ -637,10 +677,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
             </p>
             <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
             </p>
             <p>
               Collection accounts...
@@ -672,10 +712,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
             </p>
             <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references. 
+              Previous rental history will be reviewed and must exhibit no derogatory references.
             </p>
             <p>
               Landlord references will only check for...
@@ -932,17 +972,29 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                household size
+                <span
+                  className=""
+                >
+                  household size
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per month
+                <span
+                  className=""
+                >
+                  maximum income per month
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per year
+                <span
+                  className=""
+                >
+                  maximum income per year
+                </span>
               </th>
             </tr>
           </thead>
@@ -984,12 +1036,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
@@ -1151,17 +1211,29 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                household size
+                <span
+                  className=""
+                >
+                  household size
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per month
+                <span
+                  className=""
+                >
+                  maximum income per month
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per year
+                <span
+                  className=""
+                >
+                  maximum income per year
+                </span>
               </th>
             </tr>
           </thead>
@@ -1203,12 +1275,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
@@ -1316,10 +1396,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
             </p>
             <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
             </p>
             <p>
               Collection accounts...
@@ -1351,10 +1431,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
             </p>
             <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references. 
+              Previous rental history will be reviewed and must exhibit no derogatory references.
             </p>
             <p>
               Landlord references will only check for...
@@ -1524,17 +1604,29 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                household size
+                <span
+                  className=""
+                >
+                  household size
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per month
+                <span
+                  className=""
+                >
+                  maximum income per month
+                </span>
               </th>
               <th
                 className=""
               >
-                maximum income per year
+                <span
+                  className=""
+                >
+                  maximum income per year
+                </span>
               </th>
             </tr>
           </thead>
@@ -1576,12 +1668,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
@@ -1689,10 +1789,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
             </p>
             <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
             </p>
             <p>
               Collection accounts...
@@ -1724,10 +1824,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
            
           <div>
             <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
             </p>
             <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references. 
+              Previous rental history will be reviewed and must exhibit no derogatory references.
             </p>
             <p>
               Landlord references will only check for...
@@ -1939,12 +2039,20 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <th
                 className=""
               >
-                Unit Type
+                <span
+                  className=""
+                >
+                  Unit Type
+                </span>
               </th>
               <th
                 className=""
               >
-                Occupancy
+                <span
+                  className=""
+                >
+                  Occupancy
+                </span>
               </th>
             </tr>
           </thead>
