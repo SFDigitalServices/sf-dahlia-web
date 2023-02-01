@@ -47,15 +47,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Required Documents
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             Lottery winners will be required to fill out a building application and provide a copy of your current credit report, 3 most recent paystubs, current tax returns and W-2, and 3 most recent bank statements.
@@ -67,15 +67,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Important Program Rules
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             All BMR renters must review and acknowledge the 
@@ -163,12 +163,12 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Special Notes
       </h3>
       <div
-        className="text-sm inline primary-lighter-markup-link translate"
+        className="text-xs inline primary-lighter-markup-link translate"
       >
         <span>
           Some other excessively formatted listing notes.
@@ -179,15 +179,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Required Documents
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             Proof of residence
@@ -201,10 +201,10 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
         </div>
       </div>
       <div
-        className="text-sm mt-4"
+        className="text-xs mt-4"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide 
@@ -223,15 +223,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Important Program Rules
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             Some important program rules with bullets:
@@ -245,15 +245,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Covenants, Conditions and Restrictions (CC&R's)
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.
@@ -272,12 +272,12 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         For the Buyer's Realtor
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <span
           className="font-bold"
@@ -295,7 +295,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
           </span>
           <span>
             <div
-              className="text-sm inline primary-lighter-markup-link translate"
+              className="text-xs inline primary-lighter-markup-link translate"
             >
               <span>
                 Register with the Leasing Agent
@@ -309,15 +309,15 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       className="info-card bg-gray-100 border-0"
     >
       <h3
-        className="text-serif-lg"
+        className="text-serif-xl"
       >
         Resale Price Restrictions
       </h3>
       <div
-        className="text-sm"
+        className="text-xs"
       >
         <div
-          className="text-sm inline primary-lighter-markup-link translate"
+          className="text-xs inline primary-lighter-markup-link translate"
         >
           <span>
             A BMR unit will be resold at a restricted price to a household that meets the first‐time homebuyer and income qualifications for the program. Please review the 

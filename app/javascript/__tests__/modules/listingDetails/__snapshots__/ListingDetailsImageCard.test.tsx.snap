@@ -32,7 +32,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
     className="flex flex-col md:items-start md:text-left p-3 text-center"
   >
     <h1
-      className="font-sans font-semibold text-3xl"
+      className="font-sans font-semibold text-2xl"
     >
       TEST Sale Listing (do not modify) - Homeownership Acres
     </h1>
@@ -133,7 +133,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
     className="flex flex-col md:items-start md:text-left p-3 text-center"
   >
     <h1
-      className="font-sans font-semibold text-3xl"
+      className="font-sans font-semibold text-2xl"
     >
       TEST: 36 Amber Drive
     </h1>

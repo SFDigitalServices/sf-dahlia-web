@@ -13,7 +13,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       Lottery Results
     </h1>
     <h2
-      className="font-sans font-semibold text-sm uppercase"
+      className="font-sans font-semibold text-xs uppercase"
     >
       855 Brannan Units 318
     </h2>
@@ -45,7 +45,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       </div>
     </div>
     <button
-      className="bg-blue-600 h-12 mt-2 p-3"
+      className="bg-blue-500 h-12 mt-2 p-3"
     >
       <span
         className="ui-icon ui-medium"
@@ -73,10 +73,10 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     aria-live="polite"
   >
     <div
-      className="text-tiny"
+      className="text-sm"
     >
       <p
-        className="px-8 pb-4 text-sm"
+        className="px-8 pb-4 text-xs"
       >
         Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
       </p>
@@ -89,7 +89,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           Housing Preferences
         </h2>
         <p
-          className="pb-4 text-gray-700 text-sm mx-8"
+          className="pb-4 text-gray-700 text-xs mx-8"
         >
           Ranking in these lists is considered in the order shown here.
         </p>
@@ -99,17 +99,17 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="px-8 "
         >
           <h3
-            className="font-sans font-semibold text-tiny tracking-wide uppercase"
+            className="font-sans font-semibold text-xs tracking-wide uppercase"
           >
             Certificate of Preference (COP)
           </h3>
           <p
-            className="text-tiny"
+            className="text-sm"
           >
             Up to 1 units
           </p>
           <p
-            className="text-gray-700 text-tiny"
+            className="text-gray-700 text-sm"
           >
             1 applicants are on this list.
           </p>
@@ -123,17 +123,17 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="px-8 "
         >
           <h3
-            className="font-sans font-semibold text-tiny tracking-wide uppercase"
+            className="font-sans font-semibold text-xs tracking-wide uppercase"
           >
             Displaced Tenant Housing Preference (DTHP)
           </h3>
           <p
-            className="text-tiny"
+            className="text-sm"
           >
             Up to 1 units
           </p>
           <p
-            className="text-gray-700 text-tiny"
+            className="text-gray-700 text-sm"
           >
             4 applicants are on this list.
           </p>
@@ -147,17 +147,17 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           className="px-8 "
         >
           <h3
-            className="font-sans font-semibold text-tiny tracking-wide uppercase"
+            className="font-sans font-semibold text-xs tracking-wide uppercase"
           >
             Live or Work in San Francisco Preference
           </h3>
           <p
-            className="text-tiny"
+            className="text-sm"
           >
             Up to 1 units
           </p>
           <p
-            className="text-gray-700 text-tiny"
+            className="text-gray-700 text-sm"
           >
             905 applicants are on this list.
           </p>
@@ -177,17 +177,17 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         className="px-8"
       >
         <h3
-          className="font-sans font-semibold text-tiny tracking-wide uppercase"
+          className="font-sans font-semibold text-sm tracking-wide uppercase"
         >
           General Pool
         </h3>
         <p
-          className="mb-1 text-tiny"
+          className="mb-1 text-sm"
         >
           Any remaining units
         </p>
         <p
-          className="text-gray-700 text-tiny"
+          className="text-gray-700 text-sm"
         >
           193 applicants are on this list. Please note, preference holders will be considered for all units first.
         </p>
@@ -201,7 +201,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     className="bg-gray-100 py-4 text-center"
   >
     <a
-      className="text-blue-800"
+      className="text-blue-900"
       href="http://sfmohcd.org/housing-preference-programs"
       target="_blank"
     >
@@ -209,7 +209,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     </a>
   </div>
   <div
-    className="p-4 text-center text-tiny"
+    className="p-4 text-center text-sm"
   >
     <p
       className="py-2"
@@ -220,7 +220,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       className="py-2"
     >
       <a
-        className="text-blue-800"
+        className="text-blue-900"
         href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
         target="_blank"
       >

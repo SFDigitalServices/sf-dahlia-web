@@ -2,10 +2,10 @@
 
 exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`] = `
 <div
-  className="text-tiny"
+  className="text-sm"
 >
   <p
-    className="px-8 pb-4 text-sm"
+    className="px-8 pb-4 text-xs"
   >
     Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
   </p>
@@ -18,7 +18,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       Housing Preferences
     </h2>
     <p
-      className="pb-4 text-gray-700 text-sm mx-8"
+      className="pb-4 text-gray-700 text-xs mx-8"
     >
       Ranking in these lists is considered in the order shown here.
     </p>
@@ -28,17 +28,17 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="px-8 "
     >
       <h3
-        className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-xs tracking-wide uppercase"
       >
         Neighborhood Resident Housing Preference (NRHP)
       </h3>
       <p
-        className="text-tiny"
+        className="text-sm"
       >
         Up to 5 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         6 applicants are on this list.
       </p>
@@ -52,17 +52,17 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       className="px-8 "
     >
       <h3
-        className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-xs tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
       <p
-        className="text-tiny"
+        className="text-sm"
       >
         Up to 13 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         56 applicants are on this list.
       </p>
@@ -82,17 +82,17 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
     className="px-8"
   >
     <h3
-      className="font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="font-sans font-semibold text-sm tracking-wide uppercase"
     >
       General Pool
     </h3>
     <p
-      className="mb-1 text-tiny"
+      className="mb-1 text-sm"
     >
       Any remaining units
     </p>
     <p
-      className="text-gray-700 text-tiny"
+      className="text-gray-700 text-sm"
     >
       5 applicants are on this list. Please note, preference holders will be considered for all units first.
     </p>
@@ -105,10 +105,10 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
 
 exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, DTHP, L/W 1`] = `
 <div
-  className="text-tiny"
+  className="text-sm"
 >
   <p
-    className="px-8 pb-4 text-sm"
+    className="px-8 pb-4 text-xs"
   >
     Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
   </p>
@@ -121,7 +121,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       Housing Preferences
     </h2>
     <p
-      className="pb-4 text-gray-700 text-sm mx-8"
+      className="pb-4 text-gray-700 text-xs mx-8"
     >
       Ranking in these lists is considered in the order shown here.
     </p>
@@ -131,17 +131,17 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-xs tracking-wide uppercase"
       >
         Certificate of Preference (COP)
       </h3>
       <p
-        className="text-tiny"
+        className="text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         1 applicants are on this list.
       </p>
@@ -155,17 +155,17 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-xs tracking-wide uppercase"
       >
         Displaced Tenant Housing Preference (DTHP)
       </h3>
       <p
-        className="text-tiny"
+        className="text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         4 applicants are on this list.
       </p>
@@ -179,17 +179,17 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       className="px-8 "
     >
       <h3
-        className="font-sans font-semibold text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold text-xs tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
       <p
-        className="text-tiny"
+        className="text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         905 applicants are on this list.
       </p>
@@ -209,17 +209,17 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
     className="px-8"
   >
     <h3
-      className="font-sans font-semibold text-tiny tracking-wide uppercase"
+      className="font-sans font-semibold text-sm tracking-wide uppercase"
     >
       General Pool
     </h3>
     <p
-      className="mb-1 text-tiny"
+      className="mb-1 text-sm"
     >
       Any remaining units
     </p>
     <p
-      className="text-gray-700 text-tiny"
+      className="text-gray-700 text-sm"
     >
       193 applicants are on this list. Please note, preference holders will be considered for all units first.
     </p>

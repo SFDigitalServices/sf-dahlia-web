@@ -51,7 +51,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
           className="w-full"
         >
           <div
-            className="application-status text-sm text-gray-800 bg-alert-light place-content-center"
+            className="application-status text-xs text-gray-800 bg-alert-light place-content-center"
           >
             <span
               className="ui-icon ui-medium"
@@ -86,7 +86,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
               Lottery
             </h4>
             <div
-              className="text-tiny text-gray-750"
+              className="text-sm text-gray-750"
             >
               <p
                 className="flex justify-between mb-4"
@@ -129,7 +129,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
               Lottery Results
             </h4>
             <div
-              className="text-tiny text-gray-750"
+              className="text-sm text-gray-750"
             >
               <p
                 className="mb-4"
@@ -162,18 +162,18 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                 className="text text-gray-800 pb-2 flex justify-between items-center"
               >
                 <span
-                  className="inline-block text-tiny uppercase normal-case"
+                  className="inline-block text-sm uppercase normal-case"
                 >
                   February 23, 2018
                 </span>
                 <span
-                  className="inline-block text-sm font-bold ml-5 font-alt-sans"
+                  className="inline-block text-xs font-bold ml-5 font-alt-sans"
                 >
                   9:00AM - 12:00PM
                 </span>
               </p>
               <div
-                className="text-tiny text-gray-700 false"
+                className="text-sm text-gray-700 false"
               >
                 <div
                   className="flex flex-col"
@@ -205,7 +205,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
               What to Expect
             </h4>
             <div
-              className="text-tiny text-gray-750"
+              className="text-sm text-gray-750"
             >
               <span>
                 Applicants will be contacted by the agent in lottery rank order until vacancies are filled.

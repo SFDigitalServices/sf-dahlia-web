@@ -332,7 +332,7 @@ exports[`For Rent renders ForRent component 1`] = `
           </span>
         </p>
         <p
-          className="text-sm mt-4 text-gray-500"
+          className="text-xs mt-4 text-gray-500"
         >
           <span>
             in partnership with
@@ -363,7 +363,7 @@ exports[`For Rent renders ForRent component 1`] = `
         className="footer-row__section pb-8"
       >
         <p
-          className="text-tiny"
+          className="text-sm"
         >
           For listing and application questions, please contact the agent displayed on the listing.
            
