@@ -104,7 +104,7 @@ export const ListingDetailsProcess = ({
             }
             contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
             contactTitle={listing.Leasing_Agent_Title}
-            contactTitleClassname={"translate"}
+            contactTitleClassname="translate"
             strings={{
               email: t("label.emailAddress"),
               getDirections: t("label.getDirections"),
