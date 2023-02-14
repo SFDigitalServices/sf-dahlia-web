@@ -53,7 +53,7 @@ Array [
         Kathryn Kelley
       </p>
       <p
-        className="text-gray-700"
+        className="text-gray-700 translate"
       >
         Leasing Agent
       </p>
@@ -117,8 +117,12 @@ Array [
         <div
           className="text-gray-800 text-sm markdown"
         >
-          <span>
-            Monday - Friday 10:00 AM - 6:00 PM
+          <span
+            className="translate"
+          >
+            <span>
+              Monday - Friday 10:00 AM - 6:00 PM
+            </span>
           </span>
         </div>
       </div>
