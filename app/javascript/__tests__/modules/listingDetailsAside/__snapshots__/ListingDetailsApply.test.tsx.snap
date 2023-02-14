@@ -13,7 +13,7 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
       How to Apply
     </h4>
     <div
-      className="text-tiny text-gray-750"
+      className="text-sm text-gray-750"
     >
       <p
         className="mb-4"
@@ -52,7 +52,7 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
       Need Help?
     </h4>
     <div
-      className="text-tiny text-gray-750"
+      className="text-sm text-gray-750"
     >
       <a
         className="button w-full transition"
@@ -81,7 +81,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
       How to Apply
     </h4>
     <div
-      className="text-tiny text-gray-750"
+      className="text-sm text-gray-750"
     >
       <p
         className="mb-4"
@@ -120,7 +120,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
       Need Help?
     </h4>
     <div
-      className="text-tiny text-gray-750"
+      className="text-sm text-gray-750"
     >
       <a
         className="button w-full transition"
@@ -140,7 +140,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
       Expected move-in date
     </h4>
     <div
-      className="text-tiny text-gray-750"
+      className="text-sm text-gray-750"
     >
       June 2020
     </div>
