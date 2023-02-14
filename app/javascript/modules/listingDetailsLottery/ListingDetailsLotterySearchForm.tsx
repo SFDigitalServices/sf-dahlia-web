@@ -121,7 +121,11 @@ export const ListingDetailsLotterySearchForm = ({
           type="text"
           validation={{ pattern: /^\d+$/, required: true }}
         />
-        <button className="bg-blue-500 h-12 mt-2 p-3">
+        <button
+          className="bg-blue-600 h-12 mt-2 p-3 translate"
+          type="submit"
+          aria-label="Submit number"
+        >
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
         </button>
       </form>

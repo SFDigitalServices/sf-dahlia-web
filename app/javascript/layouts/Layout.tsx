@@ -170,6 +170,7 @@ const Layout = (props: LayoutProps) => {
           imageOnly={true}
           mobileText={true}
           logoWidth={"medium"}
+          logoClass="translate"
           menuLinks={getMenuLinks(!!profile, signOut)}
           strings={{
             skipToMainContent: t("t.skipToMainContent"),
