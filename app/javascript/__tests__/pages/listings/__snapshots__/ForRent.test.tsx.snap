@@ -10,6 +10,12 @@ exports[`For Rent renders ForRent component 1`] = `
     <header
       className="site-header"
     >
+      <a
+        className="skip-link"
+        href="#main-content"
+      >
+        Skip to main content
+      </a>
       <div
         className="language-bar"
       >
@@ -64,7 +70,7 @@ exports[`For Rent renders ForRent component 1`] = `
         </div>
       </div>
       <div
-        className="navbar-notice false"
+        className="navbar-notice "
       >
         <div
           className="navbar-notice__text"
@@ -93,7 +99,7 @@ exports[`For Rent renders ForRent component 1`] = `
           >
             <a
               aria-label="Home page"
-              className="logo undefined navbar-custom-width"
+              className="logo  navbar-custom-width"
               href="/"
             >
               <div
