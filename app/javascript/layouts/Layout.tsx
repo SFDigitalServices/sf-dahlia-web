@@ -174,7 +174,7 @@ const Layout = (props: LayoutProps) => {
           menuLinks={getMenuLinks(!!profile, signOut)}
           strings={{
             skipToMainContent: t("t.skipToMainContent"),
-            logoAriaLable: "DAHLIA San Francisco Housing Portal",
+            logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
           }}
           mainContentId={"main-content"}
         />

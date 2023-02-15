@@ -124,7 +124,7 @@ export const ListingDetailsLotterySearchForm = ({
         <button
           className="bg-blue-600 h-12 mt-2 p-3 translate"
           type="submit"
-          aria-label="Submit number"
+          aria-label={t("lottery.submitNumber")}
         >
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
         </button>

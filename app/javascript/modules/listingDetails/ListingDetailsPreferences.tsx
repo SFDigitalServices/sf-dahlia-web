@@ -34,12 +34,19 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
         listingPreferences={preferences?.map((preference, index) => {
           const links = []
           if (preference.readMoreUrl) {
-            links.push({ title: t("label.readMore"), url: preference.readMoreUrl })
+            links.push({
+              title: t("label.readMore"),
+              url: preference.readMoreUrl,
+              ariaLabel: t(`listings.lotteryPreference.${preference.preferenceName}.readMore`),
+            })
           }
           // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
           if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
             links.push({
               title: t("label.viewDocumentChecklist"),
+              ariaLabel: t(
+                `listings.lotteryPreference.${preference.preferenceName}.additionalDocumentation`
+              ),
               url: "/document-checklist",
             })
           }

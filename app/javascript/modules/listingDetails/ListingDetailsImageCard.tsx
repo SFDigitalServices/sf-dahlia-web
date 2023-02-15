@@ -57,7 +57,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
               onFocus={() => setShareImage(shareButtonSelected)}
               onMouseEnter={() => setShareImage(shareButtonSelected)}
               onMouseLeave={() => setShareImage(shareButton)}
-              aria-label={""}
+              aria-label={t("pageTitle.shareThisListing")}
               target="_blank"
               className="share-button"
             >
