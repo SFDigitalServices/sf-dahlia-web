@@ -261,7 +261,11 @@ export const ListingDetailsEligibility = ({
               <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
                 <ExpandableText
                   className="text-xs text-gray-700 translate"
-                  strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  strings={{
+                    readMore: t("label.more"),
+                    readLess: t("label.less"),
+                    buttonAriaLabel: t("listings.eligibility.guidelines.creditHistory"),
+                  }}
                   buttonClassName="mt-2"
                 >
                   {listing.Credit_Rating}
@@ -273,7 +277,11 @@ export const ListingDetailsEligibility = ({
               <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
                 <ExpandableText
                   className="text-xs text-gray-700 translate"
-                  strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                  strings={{
+                    readMore: t("label.more"),
+                    readLess: t("label.less"),
+                    buttonAriaLabel: t("listings.eligibility.guidelines.rentalHistory"),
+                  }}
                   buttonClassName="mt-2"
                 >
                   {listing.Eviction_History}
@@ -283,7 +291,11 @@ export const ListingDetailsEligibility = ({
             <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
               <ExpandableText
                 className="text-xs text-gray-700"
-                strings={{ readMore: t("label.more"), readLess: t("label.less") }}
+                strings={{
+                  readMore: t("label.more"),
+                  readLess: t("label.less"),
+                  buttonAriaLabel: t("listings.eligibility.guidelines.criminalBackground"),
+                }}
                 maxLength={600}
               >
                 {t("listings.additionalEligibilityRules.criminalBackgroundInfo", {
