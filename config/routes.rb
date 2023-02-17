@@ -7,7 +7,6 @@ end
 
 Rails.application.routes.draw do
   root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
-
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
@@ -23,14 +22,18 @@ Rails.application.routes.draw do
 
   ## --- API namespacing
   namespace :api do
+    Rails.logger.info('were under the api namespace')
     namespace :v1 do
+      Rails.logger.info('were under the api v1 namespace')
       # listings
       resources :listings, only: %i[index show] do
         member do
+          Rails.logger.info('were in the resources')
           get 'units'
           get 'lottery_buckets'
           get 'lottery_ranking'
           get 'preferences'
+          get 'listingPricingTable'
         end
         collection do
           get 'ami' => 'listings#ami'
@@ -61,6 +64,10 @@ Rails.application.routes.draw do
         put 'update' => 'account#update'
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
+      end
+      scope '/services' do
+        Rails.logger.info('ppppppppppppt ------------------------------------------------------------------>>>>>>>')
+        get 'listing_pricing_table'
       end
     end
   end

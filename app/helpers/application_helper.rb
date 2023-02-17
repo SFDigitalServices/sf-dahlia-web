@@ -10,6 +10,7 @@ module ApplicationHelper
 
   private
 
+  # this is getting like static assets, e.g. translation files
   def dev_asset_paths
     asset_paths = {}
     Rails.application.assets.each_file do |f|

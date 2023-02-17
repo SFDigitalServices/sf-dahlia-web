@@ -50,3 +50,29 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
   </div>
 </div>
 `;
+
+exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with spinner before api call 1`] = `
+<div
+  className="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+>
+  <span
+    className="ui-icon ui-large spinner-animation"
+    data-test-id={null}
+  >
+    <svg
+      fill="currentColor"
+      viewBox="0 0 100 100"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        fill="none"
+        r="32"
+        stroke="currentColor"
+        strokeDasharray="150.79644737231007 52.26548245743669"
+        strokeWidth="9"
+      />
+    </svg>
+  </span>
+</div>
+`;

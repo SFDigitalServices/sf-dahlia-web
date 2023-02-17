@@ -18,7 +18,7 @@ module Force
     # get listings with eligibility matches applied
     # filters:
     #  householdsize: n
-    #  incomelevel: n
+    #  incomelevel: nbb
     #  childrenUnder6: n
     def self.eligible_listings(filters)
       results = get_listings(params: filters)
@@ -29,6 +29,7 @@ module Force
     # get one detailed listing result by id
     def self.listing(id, opts = {})
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
+      Rails.logger.info(endpoint)
       force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       add_image_urls(results).first
@@ -79,6 +80,13 @@ module Force
       esc_listing_id = CGI.escape(listing_id)
       esc_lottery_number = CGI.escape(lottery_number)
       endpoint = "/Listing/LotteryResult/#{esc_listing_id}/#{esc_lottery_number}"
+      Request.new.get(endpoint)
+    end
+
+    def self.listing_pricing_table(listing_id)
+      esc_listing_id = CGI.escape(listing_id)
+      endpoint = "/ListingPricingTable/#{esc_listing_id}"
+      Rails.logger.info(endpoint)
       Request.new.get(endpoint)
     end
 

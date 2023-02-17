@@ -1212,10 +1212,8 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@7.3.2":
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-7.3.2.tgz#b8a74ca564ebb847fc930ca15f09523eaa8fd7bf"
-  integrity sha512-5Dgfm5KrvX516LhXAbFglHSssL51xKGnH7BwzPZshp1EMwaON142qVrV/TBS/PEbnzSUSyLWXAX8vQKxvEP7bw==
+"@bloom-housing/ui-components@file:.yalc/@bloom-housing/ui-components":
+  version "7.2.2"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -9469,6 +9467,17 @@ markdown-to-jsx@7.1.8:
   version "7.1.8"
   resolved "https://registry.yarnpkg.com/markdown-to-jsx/-/markdown-to-jsx-7.1.8.tgz#49c3bb3c122aa714324034142c8829b93c889338"
   integrity sha512-rRSa1aFmFnpDRFAhv5vIkWM4nPaoB9vnzIjuIKa1wGupfn2hdCNeaQHKpu4/muoc8n8J7yowjTP2oncA4/Rbgg==
+<<<<<<< Updated upstream
+=======
+
+markdown-to-jsx@^6.11.4:
+  version "6.11.4"
+  resolved "https://registry.npmjs.org/markdown-to-jsx/-/markdown-to-jsx-6.11.4.tgz"
+  integrity sha512-3lRCD5Sh+tfA52iGgfs/XZiw33f7fFX9Bn55aNnVNUd2GzLDkOWyKYYD8Yju2B1Vn+feiEdgJs8T6Tg0xNokPw==
+  dependencies:
+    prop-types "^15.6.2"
+    unquote "^1.1.0"
+>>>>>>> Stashed changes
 
 md5.js@^1.3.4:
   version "1.3.5"
