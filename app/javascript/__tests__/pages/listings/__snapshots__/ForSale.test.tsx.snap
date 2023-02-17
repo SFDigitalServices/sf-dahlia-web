@@ -10,6 +10,12 @@ exports[`For Sale renders ForSale component 1`] = `
     <header
       className="site-header"
     >
+      <a
+        className="skip-link"
+        href="#main-content"
+      >
+        Skip to main content
+      </a>
       <div
         className="language-bar"
       >

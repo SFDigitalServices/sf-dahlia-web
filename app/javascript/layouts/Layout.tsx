@@ -171,6 +171,8 @@ const Layout = (props: LayoutProps) => {
           mobileText={true}
           logoWidth={"medium"}
           menuLinks={getMenuLinks(!!profile, signOut)}
+          strings={{ skipToMainContent: t("t.skipToMainContent") }}
+          mainContentId={"main-content"}
         />
 
         <main data-testid="main-content-test-id" id="main-content" className="md:overflow-x-hidden">

@@ -10,6 +10,12 @@ exports[`For Rent renders ForRent component 1`] = `
     <header
       className="site-header"
     >
+      <a
+        className="skip-link"
+        href="#main-content"
+      >
+        Skip to main content
+      </a>
       <div
         className="language-bar"
       >
