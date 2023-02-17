@@ -237,7 +237,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         Matthew Burns
       </p>
       <p
-        className="text-gray-700"
+        className="text-gray-700 translate"
       >
         Leasing Agent
       </p>
@@ -335,14 +335,18 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         <div
           className="text-gray-800 text-sm markdown"
         >
-          <span>
-            8-4 Mon-Thurs
+          <span
+            className="translate"
+          >
+            <span>
+              8-4 Mon-Thurs
 
-            <br />
-            9-4 Fri
+              <br />
+              9-4 Fri
 
-            <br />
-            10-2 Weekends
+              <br />
+              10-2 Weekends
+            </span>
           </span>
         </div>
       </div>

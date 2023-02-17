@@ -64,7 +64,7 @@ exports[`For Sale renders ForSale component 1`] = `
         </div>
       </div>
       <div
-        className="navbar-notice false"
+        className="navbar-notice "
       >
         <div
           className="navbar-notice__text"
@@ -93,7 +93,7 @@ exports[`For Sale renders ForSale component 1`] = `
           >
             <a
               aria-label="Home page"
-              className="logo undefined navbar-custom-width"
+              className="logo  navbar-custom-width"
               href="/"
             >
               <div
