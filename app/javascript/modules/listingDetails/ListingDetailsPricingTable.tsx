@@ -29,8 +29,10 @@ export interface MappedUnitsByOccupancy {
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
   const listingIsSale = isSale(listing)
+  const listingIsHabitat = isHabitatListing(listing)
+  let pricingDataContent
 
-  const responsiveTableHeaders = isSale
+  const responsiveTableHeaders = listingIsSale
     ? {
         units: { name: "t.unitType" },
         income: { name: "t.incomeRange" },
@@ -65,97 +67,134 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
   if (pricingData.units?.length) {
     mappedUnitsByOccupancy = classifyPricingDataByOccupancy(pricingData.units)
   }
-  console.log(pricingData)
 
-  const pricingTableAccordions = mappedUnitsByOccupancy?.map(
-    (unitsByOccupancy: MappedUnitsByOccupancy, index) => {
-      const categoryData = unitsByOccupancy.summaryByAMI.map((unitsSummaryByAMI: SummaryByAMI) => {
-        const responsiveTableRows = unitsSummaryByAMI.summaryByType.map(
-          (unitSummary: RailsListingPricingTableUnit) => {
-            return listingIsSale
-              ? {
-                  units: {
-                    cellText: unitSummary.unitType,
-                    cellSubText: `${unitSummary.availability} ${t("t.available")}`,
-                  },
-                  income: {
-                    cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
-                    cellSubText: t("t.perMonth"),
-                  },
-                  sale: {
-                    cellText: `$${unitSummary.maxPriceWithParking}`,
-                    cellSubText: t("t.perMonth"),
-                  },
-                  monthlyHoaDues: {
-                    cellText: `$${unitSummary.maxPriceWithParking}`,
-                    cellSubText: t("t.perMonth"),
-                  },
-                }
-              : {
-                  units: {
-                    cellText: unitSummary.unitType,
-                    cellSubText: `${unitSummary.availability} ${t("t.available")}`,
-                  },
-                  income: {
-                    cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
-                    cellSubText: t("t.perMonth"),
-                  },
-                  rent: {
-                    cellText: `$${unitSummary.maxMonthlyRent}`,
-                    cellSubText: t("t.perMonth"),
-                  },
-                }
+  if (!listingIsHabitat) {
+    pricingDataContent = mappedUnitsByOccupancy?.map(
+      (unitsByOccupancy: MappedUnitsByOccupancy, index, array) => {
+        const accordionLength = array.length
+
+        const categoryData = unitsByOccupancy.summaryByAMI.map(
+          (unitsSummaryByAMI: SummaryByAMI) => {
+            const responsiveTableRows = unitsSummaryByAMI.summaryByType.map(
+              (unitSummary: RailsListingPricingTableUnit) => {
+                return listingIsSale
+                  ? {
+                      units: {
+                        cellText: unitSummary.unitType,
+                        cellSubText: `${unitSummary.availability} ${t("t.available")}`,
+                      },
+                      income: {
+                        cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
+                        cellSubText: t("t.perMonth"),
+                      },
+                      sale: [
+                        {
+                          cellText: `$${unitSummary.maxPriceWithParking}`,
+                          cellSubText: "with parking",
+                        },
+                        {
+                          cellText: `$${unitSummary.maxPriceWithoutParking}`,
+                          cellSubText: "without parking",
+                        },
+                      ],
+                      monthlyHoaDues: [
+                        {
+                          cellText: `$${unitSummary.maxHoaDuesWithParking}`,
+                          cellSubText: "with parking",
+                        },
+                        {
+                          cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+                          cellSubText: "without parking",
+                        },
+                      ],
+                    }
+                  : {
+                      units: {
+                        cellText: unitSummary.unitType,
+                        cellSubText: `${unitSummary.availability} ${t("t.available")}`,
+                      },
+                      income: {
+                        cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
+                        cellSubText: t("t.perMonth"),
+                      },
+                      rent: {
+                        cellText: `$${unitSummary.maxMonthlyRent}`,
+                        cellSubText: t("t.perMonth"),
+                      },
+                    }
+              }
+            )
+            return {
+              header: t("listings.stats.upToPercentAmi", {
+                amiPercent: unitsSummaryByAMI.unitMaxAMI,
+              }),
+              tableData: {
+                stackedData: responsiveTableRows,
+                headers: responsiveTableHeaders,
+              },
+            }
           }
         )
-        return {
-          header: t("listings.stats.upToPercentAmi", { amiPercent: unitsSummaryByAMI.unitMaxAMI }),
-          tableData: {
-            stackedData: responsiveTableRows,
-            headers: responsiveTableHeaders,
-          },
-        }
-      })
 
-      return (
-        <ContentAccordion
-          key={index}
-          customBarContent={
-            <span className={"flex w-full justify-between items-center"}>
-              <span className={"flex items-center"}>
-                {unitsByOccupancy.occupancy > 1
-                  ? `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
-                  : `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+        return (
+          <ContentAccordion
+            key={index}
+            initialOpen={accordionLength === 1}
+            customBarContent={
+              <span className={"flex w-full justify-between items-center"}>
+                <span className={"flex items-center"}>
+                  {unitsByOccupancy.occupancy > 1
+                    ? `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
+                    : `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+                </span>
+                <span className={"flex items-center mr-2"}>
+                  {`Income $${unitsByOccupancy.absoluteMinIncome} ${t("t.to")} $${
+                    unitsByOccupancy.absoluteMaxIncome
+                  } ${t("t.perMonth")}`}
+                </span>
               </span>
-              <span className={"flex items-center mr-2"}>
-                {`Income $${unitsByOccupancy.absoluteMinIncome} ${t("t.to")} $${
-                  unitsByOccupancy.absoluteMaxIncome
-                } ${t("t.perMonth")}`}
-              </span>
-            </span>
-          }
-          customExpandedContent={
-            <div className={"p-4 border-2 border-gray-400"}>
-              <CategoryTable categoryData={categoryData} />
-            </div>
-          }
-          accordionTheme={"gray"}
-          barClass={"mt-4"}
-        />
-      )
-    }
-  )
+            }
+            customExpandedContent={
+              <div className={"p-4 border-2 border-gray-400"}>
+                <CategoryTable categoryData={categoryData} />
+              </div>
+            }
+            accordionTheme={"gray"}
+            barClass={"mt-4"}
+          />
+        )
+      }
+    )
+  } else {
+    const habitatStrings = mappedUnitsByOccupancy.map((unitByOccupancy) => {
+      return `${unitByOccupancy.occupancy} people household: $${unitByOccupancy.absoluteMinIncome} to $${unitByOccupancy.absoluteMaxIncome}`
+    })
 
-  if (!pricingData.hasFetched) {
-    return (
-      <div className="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
-        <Icon symbol="spinner" size="large" />
-      </div>
+    pricingDataContent = (
+      <>
+        <p>{t("listings.habitat.incomeRange.p4")}</p>
+        <ul>
+          {habitatStrings.map((habitatString) => {
+            return (
+              <li>
+                <p>{habitatString}</p>
+              </li>
+            )
+          })}
+        </ul>
+      </>
     )
   }
 
-  if (isHabitatListing(listing)) return null
+  const loadingContent = (
+    <div className="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
+      <Icon symbol="spinner" size="large" />
+    </div>
+  )
 
   return (
-    <div className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">{pricingTableAccordions}</div>
+    <div className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
+      {pricingData.hasFetched ? pricingDataContent : loadingContent}
+    </div>
   )
 }
