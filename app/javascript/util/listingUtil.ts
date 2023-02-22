@@ -160,50 +160,6 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   )
 }
 
-// export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUnit[]) => {
-//   const mappedUnitsByOccupancy = []
-//   units.forEach((unit: RailsListingPricingTableUnit) => {
-
-//     for (let i = unit.minOccupancy; i <= unit.maxOccupancy; i++){
-//       console.log('we gotta add something', i);
-//     }
-
-//     const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
-//       return s.occupancy === unit.maxOccupancy
-//     })
-
-//     if (!mappedOccupancy) {
-//       mappedUnitsByOccupancy.push({
-//         occupancy: unit.maxOccupancy,
-//         listingId: unit.listingID,
-//         summaryByAMI: [
-//           {
-//             unitMaxAMI: unit.unitMaxAMI,
-//             summaryByType: [{ ...unit }],
-//           },
-//         ],
-//       })
-//     } else {
-//       const ami = mappedOccupancy.summaryByAMI.find((s) => {
-//         return unit.unitMaxAMI === s.unitMaxAMI
-//       })
-
-//       if (ami) {
-//         ami.summaryByType.push({
-//           ...unit,
-//         })
-//       } else {
-//         mappedOccupancy.summaryByAMI.push({
-//           unitMaxAMI: unit.unitMaxAMI,
-//           summaryByType: [{ ...unit }],
-//         })
-//       }
-//     }
-//   })
-
-//   return mappedUnitsByOccupancy
-// }
-
 export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUnit[]) => {
   const mappedUnitsByOccupancy = []
   units.forEach((unit: RailsListingPricingTableUnit) => {

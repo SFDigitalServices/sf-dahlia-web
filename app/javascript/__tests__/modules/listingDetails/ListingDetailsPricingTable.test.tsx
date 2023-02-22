@@ -8,10 +8,6 @@ import { getListingPricingTableUnits } from "../../../api/listingApiService"
 
 jest.mock("../../../api/listingApiService")
 
-/*
- * TODO - open accordion on certain listings, error state
- */
-
 describe("ListingDetailsPricingTable", () => {
   it("renders ListingDetailsPricingTable component with spinner before api call", () => {
     const getListingPricingTableUnitsMock = getListingPricingTableUnits as jest.MockedFunction<

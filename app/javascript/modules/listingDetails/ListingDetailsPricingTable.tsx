@@ -37,34 +37,34 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
       cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
       cellSubText: t("t.perMonth"),
     },
-    sale: {
-      cellText: `$${unitSummary.maxPriceWithParking}`,
-      cellSubText: "with parking",
-    },
-    monthlyHoaDues: {
-      cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-      cellSubText: "without parking",
-    },
-    // sale: [
-    //   {
-    //     cellText: `$${unitSummary.maxPriceWithParking}`,
-    //     cellSubText: "with parking",
-    //   },
-    //   {
-    //     cellText: `$${unitSummary.maxPriceWithoutParking}`,
-    //     cellSubText: "without parking",
-    //   },
-    // ],
-    // monthlyHoaDues: [
-    //   {
-    //     cellText: `$${unitSummary.maxHoaDuesWithParking}`,
-    //     cellSubText: "with parking",
-    //   },
-    //   {
-    //     cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-    //     cellSubText: "without parking",
-    //   },
-    // ],
+    // sale: {
+    //   cellText: `$${unitSummary.maxPriceWithParking}`,
+    //   cellSubText: "with parking",
+    // },
+    // monthlyHoaDues: {
+    //   cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+    //   cellSubText: "without parking",
+    // },
+    sale: [
+      {
+        cellText: `$${unitSummary.maxPriceWithParking}`,
+        cellSubText: "with parking",
+      },
+      {
+        cellText: `$${unitSummary.maxPriceWithoutParking}`,
+        cellSubText: "without parking",
+      },
+    ],
+    monthlyHoaDues: [
+      {
+        cellText: `$${unitSummary.maxHoaDuesWithParking}`,
+        cellSubText: "with parking",
+      },
+      {
+        cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+        cellSubText: "without parking",
+      },
+    ],
   }
 }
 
