@@ -34,7 +34,6 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
 
   useEffect(() => {
     void getPreferences(listingID).then((preferences) => {
-      console.log(preferences)
       setPreferences(preferences)
     })
     return () => {
