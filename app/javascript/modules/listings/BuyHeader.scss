@@ -12,6 +12,7 @@
 }
 .buy-header_left_col,
 .buy-header_right_col {
+  @apply text-sm;
   @apply md:text-base;
   @apply px-4;
 }
@@ -25,6 +26,6 @@
 
 .buy-header_title {
   @apply mb-8;
-  @apply text-4xl;
-  @apply md:text-5xl;
+  @apply text-3xl;
+  @apply md:text-4xl;
 }

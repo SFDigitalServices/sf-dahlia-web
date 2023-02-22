@@ -37,26 +37,34 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
       cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
       cellSubText: t("t.perMonth"),
     },
-    sale: [
-      {
-        cellText: `$${unitSummary.maxPriceWithParking}`,
-        cellSubText: "with parking",
-      },
-      {
-        cellText: `$${unitSummary.maxPriceWithoutParking}`,
-        cellSubText: "without parking",
-      },
-    ],
-    monthlyHoaDues: [
-      {
-        cellText: `$${unitSummary.maxHoaDuesWithParking}`,
-        cellSubText: "with parking",
-      },
-      {
-        cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-        cellSubText: "without parking",
-      },
-    ],
+    sale: {
+      cellText: `$${unitSummary.maxPriceWithParking}`,
+      cellSubText: "with parking",
+    },
+    monthlyHoaDues: {
+      cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+      cellSubText: "without parking",
+    },
+    // sale: [
+    //   {
+    //     cellText: `$${unitSummary.maxPriceWithParking}`,
+    //     cellSubText: "with parking",
+    //   },
+    //   {
+    //     cellText: `$${unitSummary.maxPriceWithoutParking}`,
+    //     cellSubText: "without parking",
+    //   },
+    // ],
+    // monthlyHoaDues: [
+    //   {
+    //     cellText: `$${unitSummary.maxHoaDuesWithParking}`,
+    //     cellSubText: "with parking",
+    //   },
+    //   {
+    //     cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+    //     cellSubText: "without parking",
+    //   },
+    // ],
   }
 }
 
@@ -85,7 +93,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
   }
 
   return mappedUnitsByOccupancy?.map((unitsByOccupancy: MappedUnitsByOccupancy, index, array) => {
-    const accordionLength = array.length
+    // const accordionLength = array.length
 
     const categoryData = unitsByOccupancy.summaryByAMI.map((unitsSummaryByAMI: SummaryByAMI) => {
       const responsiveTableRows = unitsSummaryByAMI.summaryByType.map(
@@ -121,7 +129,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
     return (
       <ContentAccordion
         key={index}
-        initialOpen={accordionLength === 1}
+        //initialOpen={accordionLength === 1}
         customBarContent={
           <span className={"flex w-full justify-between items-center"}>
             <span className={"flex items-center"}>
@@ -210,7 +218,11 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
   }, [listing.Id])
 
   return (
-    <div className={`${!pricingDataState.hasFetched ? "flex justify-center" : ""} md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full`}>
+    <div
+      className={`${
+        !pricingDataState.hasFetched ? "flex justify-center" : ""
+      } md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full`}
+    >
       {buildContent(pricingDataState, listingIsSale, listingIsHabitat)}
     </div>
   )

@@ -14,7 +14,7 @@ Array [
         What to Expect
       </h4>
       <div
-        className="text-tiny text-gray-750"
+        className="text-sm text-gray-750"
       >
         <span>
           Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
@@ -53,7 +53,7 @@ Array [
         Kathryn Kelley
       </p>
       <p
-        className="text-gray-700"
+        className="text-gray-700 translate"
       >
         Leasing Agent
       </p>
@@ -80,7 +80,7 @@ Array [
         </a>
       </p>
       <p
-        className="text-sm text-gray-700"
+        className="text-xs text-gray-700"
       >
         Due to high call volume you may hear a message.
       </p>
@@ -115,10 +115,14 @@ Array [
           Office Hours
         </h3>
         <div
-          className="text-gray-800 text-tiny markdown"
+          className="text-gray-800 text-sm markdown"
         >
-          <span>
-            Monday - Friday 10:00 AM - 6:00 PM
+          <span
+            className="translate"
+          >
+            <span>
+              Monday - Friday 10:00 AM - 6:00 PM
+            </span>
           </span>
         </div>
       </div>
@@ -131,7 +135,7 @@ Array [
       className="aside-block "
     >
       <div
-        className="text-tiny text-gray-750"
+        className="text-sm text-gray-750"
       >
         <p>
           Listing Updated: February 7, 2022

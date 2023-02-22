@@ -21,7 +21,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
   >
     <li
       className="text-gray-700"
@@ -182,7 +182,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     </hgroup>
   </header>
   <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+    className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
   >
     <li
       className="text-gray-700"

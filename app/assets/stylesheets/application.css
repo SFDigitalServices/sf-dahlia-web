@@ -37,3 +37,7 @@ body .goog-te-banner-frame {
 .habitat-income-list li {
   float: none;
 }
+
+#\:1\.container{
+  display:none !important;
+}

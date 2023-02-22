@@ -19,18 +19,18 @@ exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing O
         className="text text-gray-800 pb-2 flex justify-between items-center"
       >
         <span
-          className="inline-block text-tiny uppercase normal-case"
+          className="inline-block text-sm uppercase normal-case"
         >
           January 7, 2022
         </span>
         <span
-          className="inline-block text-sm font-bold ml-5 font-alt-sans"
+          className="inline-block text-xs font-bold ml-5 font-alt-sans"
         >
           5:00PM - 7:00PM
         </span>
       </p>
       <div
-        className="text-tiny text-gray-700 false"
+        className="text-sm text-gray-700 false"
       >
         <div
           className="flex flex-col"

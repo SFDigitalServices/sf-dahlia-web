@@ -158,7 +158,7 @@ const Layout = (props: LayoutProps) => {
         {topAlert}
         <SiteHeader
           homeURL={"/"}
-          dropdownItemClassName={"text-xs"}
+          dropdownItemClassName={"text-2xs"}
           menuItemClassName={"pb-4 pt-1 flex items-end"}
           languageNavLabel={t("languages.choose")}
           languages={getLanguageItems()}
@@ -171,6 +171,8 @@ const Layout = (props: LayoutProps) => {
           mobileText={true}
           logoWidth={"medium"}
           menuLinks={getMenuLinks(!!profile, signOut)}
+          strings={{ skipToMainContent: t("t.skipToMainContent") }}
+          mainContentId={"main-content"}
         />
 
         <main data-testid="main-content-test-id" id="main-content" className="md:overflow-x-hidden">
@@ -190,7 +192,7 @@ const Layout = (props: LayoutProps) => {
               })}
             </Markdown>
           </p>
-          <p className="text-sm mt-4 text-gray-500">
+          <p className="text-xs mt-4 text-gray-500">
             <Markdown>
               {t("footer.inPartnershipWith", {
                 sfdsUrl: "https://digitalservices.sfgov.org/",
@@ -201,7 +203,7 @@ const Layout = (props: LayoutProps) => {
         </FooterSection>
 
         <FooterSection>
-          <p className="text-tiny">
+          <p className="text-sm">
             {t("footer.forListingQuestions")} <br />
             {t("footer.forGeneralQuestions")}
           </p>

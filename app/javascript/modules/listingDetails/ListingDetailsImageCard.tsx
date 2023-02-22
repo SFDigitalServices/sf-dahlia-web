@@ -7,6 +7,7 @@ import { getListingAddressString } from "../../util/listingUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
+import "./ListingDetailsImageCard.scss"
 
 export interface ListingDetailsImageCardProps {
   listing: RailsListing
@@ -32,7 +33,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
         description={t("listings.buildingImageAltText")}
       />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
-        <h1 className="font-sans font-semibold text-3xl">{listing.Name}</h1>
+        <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>
         <p className="my-1">
           <ListingAddress listing={listing} />
         </p>
@@ -49,18 +50,17 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
               </a>
             </p>
           </div>
-          <div>
-            <a
-              href={`${getShareListingPath()}/${listing.listingID}`}
-              onBlur={() => setShareImage(shareButton)}
-              onFocus={() => setShareImage(shareButtonSelected)}
-              onMouseEnter={() => setShareImage(shareButtonSelected)}
-              onMouseLeave={() => setShareImage(shareButton)}
-              target="_blank"
-            >
-              <img alt={t("label.share")} src={shareImage} />
-            </a>
-          </div>
+          <a
+            href={`${getShareListingPath()}/${listing.listingID}`}
+            onBlur={() => setShareImage(shareButton)}
+            onFocus={() => setShareImage(shareButtonSelected)}
+            onMouseEnter={() => setShareImage(shareButtonSelected)}
+            onMouseLeave={() => setShareImage(shareButton)}
+            target="_blank"
+            className="share-button"
+          >
+            <img alt={t("label.share")} src={shareImage} />
+          </a>
         </div>
       </div>
     </header>

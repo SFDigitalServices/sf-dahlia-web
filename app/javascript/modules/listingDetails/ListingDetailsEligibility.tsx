@@ -168,7 +168,7 @@ export const ListingDetailsEligibility = ({
               subtitle={t("listings.allUnits")}
             >
               {listing.Reserved_community_type_Description && (
-                <div className="text-gray-700 text-sm translate">
+                <div className="text-gray-700 text-xs translate">
                   {renderMarkup(listing.Reserved_community_type_Description)}
                 </div>
               )}
@@ -233,7 +233,7 @@ export const ListingDetailsEligibility = ({
                         : `${unit.numberOfUnits} ${defaultIfNotTranslated("t.units", "units")}`
                     }
                   >
-                    <p className="text-tiny text-gray-700">
+                    <p className="text-sm text-gray-700">
                       {defaultIfNotTranslated(
                         `listings.unitsHaveAccessibilityFeaturesFor.${unit.name}`,
                         `These units have accessibility features for people with ${unit.name}.`
@@ -260,7 +260,7 @@ export const ListingDetailsEligibility = ({
             {listing.Credit_Rating && (
               <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
                 <ExpandableText
-                  className="text-sm text-gray-700 translate"
+                  className="text-xs text-gray-700 translate"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                   buttonClassName="mt-2"
                 >
@@ -272,7 +272,7 @@ export const ListingDetailsEligibility = ({
             {listing.Eviction_History && (
               <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
                 <ExpandableText
-                  className="text-sm text-gray-700 translate"
+                  className="text-xs text-gray-700 translate"
                   strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                   buttonClassName="mt-2"
                 >
@@ -282,7 +282,7 @@ export const ListingDetailsEligibility = ({
             )}
             <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
               <ExpandableText
-                className="text-sm text-gray-700"
+                className="text-xs text-gray-700"
                 strings={{ readMore: t("label.more"), readLess: t("label.less") }}
                 maxLength={600}
               >

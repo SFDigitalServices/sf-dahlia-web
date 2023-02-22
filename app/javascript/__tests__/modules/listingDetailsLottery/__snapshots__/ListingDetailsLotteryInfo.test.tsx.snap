@@ -14,7 +14,7 @@ Array [
         Lottery
       </h4>
       <div
-        className="text-tiny text-gray-750"
+        className="text-sm text-gray-750"
       >
         <p
           className="flex justify-between mb-4"
@@ -57,7 +57,7 @@ Array [
         Lottery Results
       </h4>
       <div
-        className="text-tiny text-gray-750"
+        className="text-sm text-gray-750"
       >
         <p
           className="mb-4"

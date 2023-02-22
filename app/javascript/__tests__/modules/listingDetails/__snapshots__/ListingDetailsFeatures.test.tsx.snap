@@ -46,88 +46,88 @@ exports[`ListingDetailsFeatures displays listing details features section when r
     <dl
       className="column-definition-list"
     >
-      <dd
+      <dt
         className="description__title"
       >
         Neighborhood
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         <span>
           Hayes Valley
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Built
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         <span>
           2009
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Smoking Policy
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Non-smoking building
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Pets Policy
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Dogs are not allowed in the building.
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Property Amenities
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Laundry room, underground parking, courtyard, bike room
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Accessibility
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Elevator to all floors
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Unit Features
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         
-      </dt>
+      </dd>
     </dl>
     <div
       className="info-card bg-gray-100 border-0"
@@ -175,7 +175,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
         </div>
       </section>
       <div
-        className="info-card__columns text-sm"
+        className="info-card__columns text-xs"
       >
         <div
           className="info-card__column-2"
@@ -244,60 +244,60 @@ exports[`ListingDetailsFeatures displays listing details features section when s
     <dl
       className="column-definition-list"
     >
-      <dd
+      <dt
         className="description__title"
       >
         Neighborhood
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         <span>
           Tenderloin
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Built
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         <span>
           2018
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Appliances
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Services Covered by HOA Dues
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Test Service
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Parking
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
@@ -317,41 +317,41 @@ exports[`ListingDetailsFeatures displays listing details features section when s
           <br />
           Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Smoking Policy
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           Smoking may cause problems
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Pets Policy
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body translate"
       >
         <span>
           All pets are awesome!
         </span>
-      </dt>
-      <dd
+      </dd>
+      <dt
         className="description__title"
       >
         Unit Features
-      </dd>
-      <dt
+      </dt>
+      <dd
         className="description__body"
       >
         
-      </dt>
+      </dd>
     </dl>
   </div>
 </li>

@@ -24,7 +24,7 @@ export const TextTruncate = ({ text, className }: TextTruncateProps) => {
   // truncate.setup({ ellipsis: " ... ", length: 400, reserveLastWord: true, keepWhitespaces: true })
   // const truncatedText = text ? renderInlineMarkup(truncate(text)) : ""
   const untruncatedText = renderInlineMarkup(text)
-  let wrapperClassNames = ["text-sm inline"]
+  let wrapperClassNames = ["text-xs inline"]
   if (className) {
     wrapperClassNames = [...wrapperClassNames, className]
   }

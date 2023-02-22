@@ -31,7 +31,7 @@ export const ListingDetailsAdditionalInformation = ({
       <div className="listing-detail-panel">
         {listing.Listing_Other_Notes && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.specialNotes")}</h3>
+            <h3 className="text-serif-xl">{t("listings.specialNotes")}</h3>
             <TextTruncate
               className="primary-lighter-markup-link translate"
               buttonClassName="text-blue-700"
@@ -41,8 +41,8 @@ export const ListingDetailsAdditionalInformation = ({
         )}
         {(!!listing.Required_Documents || isSale(listing)) && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.requiredDocuments")}</h3>
-            <div className="text-sm">
+            <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
+            <div className="text-xs">
               <TextTruncate
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-700"
@@ -50,7 +50,7 @@ export const ListingDetailsAdditionalInformation = ({
               />
             </div>
             {isSale(listing) && !isHabitatListing(listing) && (
-              <div className="text-sm mt-4">
+              <div className="text-xs mt-4">
                 <TextTruncate
                   className="primary-lighter-markup-link translate"
                   buttonClassName="text-blue-700"
@@ -64,23 +64,23 @@ export const ListingDetailsAdditionalInformation = ({
         )}
         {listing.Legal_Disclaimers && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.importantProgramRules")}</h3>
-            <div className="text-sm">
+            <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
+            <div className="text-xs">
               <TextTruncate
                 text={listing.Legal_Disclaimers}
                 className="primary-lighter-markup-link translate"
-                buttonClassName="text-blue-700"
+                buttonClassName="text-blue-500"
               />
             </div>
           </div>
         )}
         {listing.CC_and_R_URL && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.cc&r")}</h3>
-            <div className="text-sm">
+            <h3 className="text-serif-xl">{t("listings.cc&r")}</h3>
+            <div className="text-xs">
               <TextTruncate
                 className="primary-lighter-markup-link translate"
-                buttonClassName="text-blue-700"
+                buttonClassName="text-blue-500"
                 text={t("listings.cc&rDescription")}
               />
               <LinkButton href={listing.CC_and_R_URL} className={"mt-4"} newTab={true}>
@@ -91,8 +91,8 @@ export const ListingDetailsAdditionalInformation = ({
         )}
         {isSale(listing) && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.realtorCommission")}</h3>
-            <div className="text-sm">
+            <h3 className="text-serif-xl">{t("listings.realtorCommission")}</h3>
+            <div className="text-xs">
               {listing.Allows_Realtor_Commission ? (
                 <>
                   <span className={"font-bold"}>{t("listings.realtorCommissionHeader")}</span>
@@ -107,7 +107,7 @@ export const ListingDetailsAdditionalInformation = ({
                   <span>
                     <TextTruncate
                       className="primary-lighter-markup-link translate"
-                      buttonClassName="text-blue-700"
+                      buttonClassName="text-blue-500"
                       text={listing.Realtor_Commission_Info}
                     />
                   </span>
@@ -119,7 +119,7 @@ export const ListingDetailsAdditionalInformation = ({
         {/* TODO: implement once we've established needs for sales listings
               {listing.isSale && (
                 <div className="info-card bg-gray-100 border-0">
-                  <h3 className="text-serif-lg">For the Buyer's Realtor</h3>
+                  <h3 className="text-serif-xl">For the Buyer's Realtor</h3>
                   {listing.Allows_Realtor_Commission ? (
                     display realtor_commission_header
                     realtorComissionMessage
@@ -130,11 +130,11 @@ export const ListingDetailsAdditionalInformation = ({
             */}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-lg">{t("listings.rePricing")}</h3>
-            <div className="text-sm">
+            <h3 className="text-serif-xl">{t("listings.rePricing")}</h3>
+            <div className="text-xs">
               <TextTruncate
                 className="primary-lighter-markup-link translate"
-                buttonClassName="text-blue-700"
+                buttonClassName="text-blue-500"
                 text={listing.Repricing_Mechanism}
               />
             </div>

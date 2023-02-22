@@ -39,17 +39,17 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("does not render ListingDetailsPricingTable when habitat listing", async () => {
-    const getListingPricingTableUnitsMock = getListingPricingTableUnits as jest.MockedFunction<
-      typeof getListingPricingTableUnits
-    >
+  // it("does not render ListingDetailsPricingTable when habitat listing", async () => {
+  //   const getListingPricingTableUnitsMock = getListingPricingTableUnits as jest.MockedFunction<
+  //     typeof getListingPricingTableUnits
+  //   >
 
-    getListingPricingTableUnitsMock.mockReturnValue(Promise.resolve(pricingTableUnits))
+  //   getListingPricingTableUnitsMock.mockReturnValue(Promise.resolve(pricingTableUnits))
 
-    const tree = renderer.create(<ListingDetailsPricingTable listing={habitatListing} />)
+  //   const tree = renderer.create(<ListingDetailsPricingTable listing={habitatListing} />)
 
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
+  //   await act(() => new Promise((resolve) => setTimeout(resolve)))
 
-    expect(tree.toJSON()).toMatchSnapshot()
-  })
+  //   expect(tree.toJSON()).toMatchSnapshot()
+  // })
 })

@@ -100,7 +100,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -164,7 +164,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -287,7 +287,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -322,7 +322,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -357,7 +357,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-xs text-gray-700"
         >
            
           <span>
@@ -485,7 +485,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -549,7 +549,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -672,7 +672,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -707,7 +707,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -742,7 +742,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-xs text-gray-700"
         >
            
           <span>
@@ -839,7 +839,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </hgroup>
       </header>
       <ol
-        className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+        className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
       >
         <li
           className="text-gray-700"
@@ -965,7 +965,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1029,7 +1029,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1204,7 +1204,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1268,7 +1268,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1391,7 +1391,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -1426,7 +1426,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -1461,7 +1461,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-xs text-gray-700"
         >
            
           <span>
@@ -1597,7 +1597,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1661,7 +1661,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>
@@ -1784,7 +1784,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -1819,7 +1819,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700 translate"
+          className="expandable-text text-xs text-gray-700 translate"
         >
            
           <div>
@@ -1854,7 +1854,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </h3>
         </div>
         <div
-          className="expandable-text text-sm text-gray-700"
+          className="expandable-text text-xs text-gray-700"
         >
            
           <span>
@@ -1951,7 +1951,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </hgroup>
       </header>
       <ol
-        className="numbered-list my-5 bg-white p-4 pt-6 text-sm"
+        className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
       >
         <li
           className="text-gray-700"
@@ -2032,7 +2032,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         }
       >
         <table
-          className="w-full text-sm"
+          className="w-full text-xs"
         >
           <thead>
             <tr>

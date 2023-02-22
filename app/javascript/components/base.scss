@@ -13,7 +13,7 @@ html {
 body {
   @apply font-sans;
   @apply bg-white;
-  @apply text-gray-900;
+  @apply text-gray-950;
   top:0px !important;
 }
 
@@ -251,10 +251,12 @@ nav {
 
 @import "tailwindcss/utilities";
 
+// Hide container for Google Translate widget
  #google_translate_element{
    display:none !important;
 }
 
+ // Hide element for Google Translate widget
 .goog-te-banner-frame{
   display:none !important;
  }
@@ -273,4 +275,9 @@ nav {
   @media (min-width: $screen-md) {
     color:var(--bloom-color-blue-700);
   }
+}
+
+// Hide another container for Google Translate widget
+#\:1\.container{
+  display:none !important;
 }
