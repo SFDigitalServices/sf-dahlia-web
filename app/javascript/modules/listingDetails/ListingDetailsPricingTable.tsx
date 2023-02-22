@@ -92,9 +92,8 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
     mappedUnitsByOccupancy = classifyPricingDataByOccupancy(units)
   }
 
-  return mappedUnitsByOccupancy?.map((unitsByOccupancy: MappedUnitsByOccupancy, index, array) => {
+  return mappedUnitsByOccupancy?.map((unitsByOccupancy: MappedUnitsByOccupancy, index: number) => {
     // const accordionLength = array.length
-
     const categoryData = unitsByOccupancy.summaryByAMI.map((unitsSummaryByAMI: SummaryByAMI) => {
       const responsiveTableRows = unitsSummaryByAMI.summaryByType.map(
         (unitSummary: RailsListingPricingTableUnit) => {

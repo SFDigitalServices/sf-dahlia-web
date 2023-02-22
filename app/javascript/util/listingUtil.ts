@@ -213,7 +213,6 @@ export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUn
       })
 
       if (!mappedOccupancy) {
-
         mappedUnitsByOccupancy.push({
           occupancy: i,
           listingId: unit.listingID,
