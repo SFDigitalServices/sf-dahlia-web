@@ -107,7 +107,7 @@ Array [
       <div
         className="preferences-list__description "
       >
-        For households in which at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant must currently work in San Francisco at least 75% of their working hours.
+        This is a custom description - For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.
       </div>
       <div
         className="preferences-list__links"
