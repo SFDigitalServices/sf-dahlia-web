@@ -128,7 +128,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
     return (
       <ContentAccordion
         key={index}
-        //initialOpen={accordionLength === 1}
+        // initialOpen={accordionLength === 1}
         customBarContent={
           <span className={"flex w-full justify-between items-center"}>
             <span className={"flex items-center"}>
