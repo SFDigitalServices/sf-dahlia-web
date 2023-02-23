@@ -99,7 +99,7 @@ exports[`For Sale renders ForSale component 1`] = `
           >
             <a
               aria-label="DAHLIA San Francisco Housing Portal"
-              className="logo translate navbar-custom-width"
+              className="site-header__logo translate site-header__custom-width"
               href="/"
             >
               <div
