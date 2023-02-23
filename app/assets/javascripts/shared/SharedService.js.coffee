@@ -45,6 +45,19 @@ SharedService = ($http, $state, $window, $document) ->
     'dahlia.redirect-home':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
       shouldRailsRoute: (isFirstLoad) -> true
+    'dahlia.housing-counselors':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/housing-counselors")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+    'dahlia.get-assistance':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/get-assistance")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+    'dahlia.additional-resources':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/additional-resources")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+    'dahlia.document-checklist':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/document-checklist")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+
 
   Service.getLanguageCode = (langName) ->
     # will take "English" and return "en", for example

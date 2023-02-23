@@ -85,6 +85,10 @@ Rails.application.routes.draw do
   # TODO: Paths on Bloom needs to be configurable
   get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
+  get '(:lang)/housing-counselors' => 'assistance#housing_counselors', lang: /(en|es|zh|tl)/
+  get '(:lang)/get-assistance' => 'assistance#get_assistance', lang: /(en|es|zh|tl)/
+  get '(:lang)/document-checklist' => 'assistance#document_checklist', lang: /(en|es|zh|tl)/
+  get '(:lang)/additional-resources' => 'assistance#additional_resources', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
