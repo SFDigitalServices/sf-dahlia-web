@@ -11,7 +11,7 @@ exports[`For Rent renders ForRent component 1`] = `
       className="site-header"
     >
       <a
-        className="site-header__skip-link"
+        className="skip-link"
         href="#main-content"
       >
         Skip to main content
@@ -70,10 +70,10 @@ exports[`For Rent renders ForRent component 1`] = `
         </div>
       </div>
       <div
-        className="site-header__notice "
+        className="navbar-notice "
       >
         <div
-          className="site-header__notice-text"
+          className="navbar-notice__text"
         >
           <span>
             We'd love to get 
@@ -88,36 +88,36 @@ exports[`For Rent renders ForRent component 1`] = `
       </div>
       <nav
         aria-label="main navigation"
-        className="site-header__container"
+        className="navbar-container"
         role="navigation"
       >
         <div
-          className="site-header__base side-header__width-base"
+          className="navbar navbar-width-base"
         >
           <div
-            className="site-header__logo-container site-header__logo-width-med"
+            className="navbar-logo navbar-logo-width-med"
           >
             <a
               aria-label="Home page"
-              className="site-header__logo  site-header__custom-width"
+              className="logo  navbar-custom-width"
               href="/"
             >
               <div
-                className="site-header__logo-content site-header__image-only-container"
+                className="logo-content navbar-image-only-container"
               >
                 <img
                   alt="Site logo"
-                  className="site-header__logo-image site-header__image-only"
+                  className="logo__image navbar-image-only"
                 />
               </div>
             </a>
           </div>
           <div
-            className="site-header__navbar-menu"
+            className="navbar-menu"
           >
             <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-test-id="Rent-0"
+              className="navbar-link pb-4 pt-1 flex items-end"
+              data-test-id="Rent"
               href="/listings/for-rent"
             >
               <div>
@@ -125,8 +125,8 @@ exports[`For Rent renders ForRent component 1`] = `
               </div>
             </a>
             <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-test-id="Buy-1"
+              className="navbar-link pb-4 pt-1 flex items-end"
+              data-test-id="Buy"
               href="/listings/for-sale"
             >
               <div>
@@ -134,8 +134,8 @@ exports[`For Rent renders ForRent component 1`] = `
               </div>
             </a>
             <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-test-id="My Favorites-2"
+              className="navbar-link pb-4 pt-1 flex items-end"
+              data-test-id="My Favorites"
               href="/favorites"
             >
               <div>
@@ -143,8 +143,8 @@ exports[`For Rent renders ForRent component 1`] = `
               </div>
             </a>
             <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-test-id="Get Assistance-3"
+              className="navbar-link pb-4 pt-1 flex items-end"
+              data-test-id="Get Assistance"
               href="/get-assistance"
             >
               <div>
@@ -152,8 +152,8 @@ exports[`For Rent renders ForRent component 1`] = `
               </div>
             </a>
             <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-test-id="Sign In-4"
+              className="navbar-link pb-4 pt-1 flex items-end"
+              data-test-id="Sign In"
               href="/sign-in"
             >
               <div>

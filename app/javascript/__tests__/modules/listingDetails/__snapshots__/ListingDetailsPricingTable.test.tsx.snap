@@ -27,7 +27,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $1500 to  $6000 per month
+            Income $3256 to  $4000 per month
           </span>
         </span>
         <span

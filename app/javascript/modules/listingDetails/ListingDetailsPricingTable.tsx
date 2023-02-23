@@ -20,6 +20,7 @@ export interface SummaryByAMI {
 }
 
 export interface MappedUnitsByOccupancy {
+  listingID: string
   occupancy: number
   absoluteMinIncome: number
   absoluteMaxIncome: number
