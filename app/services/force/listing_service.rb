@@ -18,7 +18,7 @@ module Force
     # get listings with eligibility matches applied
     # filters:
     #  householdsize: n
-    #  incomelevel: nbb
+    #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
       results = get_listings(params: filters)
