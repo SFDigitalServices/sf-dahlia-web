@@ -1,5 +1,6 @@
 function verifyMachineTranslations(language, id, translations) {
   cy.visit(`${language}/listings/${id}?react=true`)
+  cy.wait(3000)
   translations.forEach((text) => {
     cy.contains(text)
   })
@@ -42,7 +43,7 @@ const PARKING_TEXT = {
 }
 
 describe("Listing Details Machine Translations", () => {
-  afterEach(() => {
+  beforeEach(() => {
     // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
     // there is a rogue loading issue beyond the scope of this story
     cy.wait(3000)
