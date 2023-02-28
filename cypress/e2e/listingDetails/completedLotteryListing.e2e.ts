@@ -1,6 +1,9 @@
 const listings = {
-  COMPLETED_LOTTERY: {
+  COMPLETED_LOTTERY_FULL: {
     id: "a0W8H000000AmpKUAS",
+  },
+  COMPLETED_LOTTER_PROD: {
+    id: "a0W4U00000IhGZcUAN",
   },
 }
 
@@ -12,7 +15,14 @@ const visitListing = (mobile, language) => {
   if (mobile) {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
-  cy.visit(`${langPart}/listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
+
+  // TODO: Temporary check. Remove with DAH-1420
+  const listingId =
+    window.location.host === "housing.sfgov.org"
+      ? listings.COMPLETED_LOTTER_PROD.id
+      : listings.COMPLETED_LOTTERY_FULL.id
+
+  cy.visit(`${langPart}/listings/${listingId}?react=true`)
 }
 
 const clickLotteryResultsButton = (mobile: boolean) => {
@@ -34,7 +44,7 @@ describe("Listing Details for Completed Lottery Listing", () => {
     cy.wait(6000)
   })
 
-  describe("Completed Lottery Rental Listing " + listings.COMPLETED_LOTTERY.id, () => {
+  describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
       visitListing(true, "")
       clickLotteryResultsButton(true)
@@ -49,7 +59,7 @@ describe("Listing Details for Completed Lottery Listing", () => {
     })
 
     it("renders on desktop devices", () => {
-      cy.visit(`listings/${listings.COMPLETED_LOTTERY.id}?react=true`)
+      visitListing(false, "")
       cy.contains("View Lottery Results")
     })
 
