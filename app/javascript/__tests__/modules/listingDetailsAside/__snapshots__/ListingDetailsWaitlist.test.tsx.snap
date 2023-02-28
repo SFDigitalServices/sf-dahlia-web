@@ -16,7 +16,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
     </h4>
     <div>
       <div
-        className="text-tiny text-gray-800 pb-3"
+        className="text-sm text-gray-800 pb-3"
       >
         <p>
           Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
@@ -32,7 +32,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
             5
           </span>
           <span
-            className="text-sm"
+            className="text-xs"
           >
             Available Units
           </span>
@@ -46,7 +46,7 @@ exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist
             2
           </span>
           <span
-            className="text-sm"
+            className="text-xs"
           >
             Open Waitlist Slots
           </span>

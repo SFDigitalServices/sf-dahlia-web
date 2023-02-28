@@ -132,7 +132,7 @@ Array [
     </li>
   </ol>,
   <p
-    className="text-gray-750 text-tiny"
+    className="text-gray-750 text-sm"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
   </p>,
@@ -399,7 +399,7 @@ Array [
     </li>
   </ol>,
   <p
-    className="text-gray-750 text-tiny"
+    className="text-gray-750 text-sm"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
   </p>,

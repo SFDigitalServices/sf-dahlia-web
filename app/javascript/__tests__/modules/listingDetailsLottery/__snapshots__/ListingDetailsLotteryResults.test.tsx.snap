@@ -11,7 +11,7 @@ exports[`ListingDetailsLotteryResults displays if lottery is complete 1`] = `
       Lottery Results
     </h3>
     <p
-      class="mb-4 text-sm"
+      class="mb-4 text-xs"
     >
       January 26, 2022
     </p>
@@ -40,7 +40,7 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       Lottery Results
     </h3>
     <p
-      class="mb-4 text-sm"
+      class="mb-4 text-xs"
     >
       December 22, 2021
     </p>
@@ -48,7 +48,7 @@ exports[`ListingDetailsLotteryResults displays with summary if lottery is comple
       class="bg-gray-100 py-4"
     >
       <div
-        class="mb-3 mx-2 text-gray-700 text-sm translate"
+        class="mb-3 mx-2 text-gray-700 text-xs translate"
       >
         <strong>
           Applications are being accepted on a first come, first served basis starting 01/26/2022 at 8:00 AM PST

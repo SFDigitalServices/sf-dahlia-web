@@ -11,13 +11,13 @@ export const ListingDetailsLotteryPreferences = ({
   lotteryBucketsDetails,
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
-    <div className="text-tiny">
-      <p className="px-8 pb-4 text-sm">{t("lottery.bucketsIntro")}</p>
+    <div className="text-sm">
+      <p className="px-8 pb-4 text-xs">{t("lottery.bucketsIntro")}</p>
       <header className="border-b border-gray-450 mb-4">
         <Heading styleType="underlineWeighted" className="mx-8" priority={2}>
           {t("lottery.housingPreferences")}
         </Heading>
-        <p className="pb-4 text-gray-700 text-sm mx-8">{t("lottery.rankingOrderNote")}</p>
+        <p className="pb-4 text-gray-700 text-xs mx-8">{t("lottery.rankingOrderNote")}</p>
       </header>
       {lotteryBucketsDetails.lotteryBuckets
         .filter(
@@ -28,7 +28,7 @@ export const ListingDetailsLotteryPreferences = ({
           <div key={bucket.preferenceOrder}>
             <div className="px-8 " key={bucket.preferenceOrder}>
               <Heading
-                className="font-sans font-semibold text-tiny tracking-wide uppercase"
+                className="font-sans font-semibold text-xs tracking-wide uppercase"
                 priority={3}
               >
                 {defaultIfNotTranslated(
@@ -36,10 +36,10 @@ export const ListingDetailsLotteryPreferences = ({
                   bucket.preferenceName
                 )}
               </Heading>
-              <p className="text-tiny">
+              <p className="text-sm">
                 {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
               </p>
-              <p className="text-gray-700 text-tiny">
+              <p className="text-gray-700 text-sm">
                 {t("lottery.numberApplicantsQualifiedForPreference", {
                   number: bucket.totalSubmittedApps,
                 })}
@@ -57,13 +57,13 @@ export const ListingDetailsLotteryPreferences = ({
           <React.Fragment key={bucket.preferenceOrder}>
             <div className="px-8">
               <Heading
-                className="font-sans font-semibold text-tiny tracking-wide uppercase"
+                className="font-sans font-semibold text-sm tracking-wide uppercase"
                 priority={3}
               >
                 {t("lottery.generalPool")}
               </Heading>
-              <p className="mb-1 text-tiny">{t("lottery.anyRemainingUnits")}</p>
-              <p className="text-gray-700 text-tiny">
+              <p className="mb-1 text-sm">{t("lottery.anyRemainingUnits")}</p>
+              <p className="text-gray-700 text-sm">
                 {t("lottery.numberApplicantsQualifiedForGeneralPool", {
                   number: bucket.totalSubmittedApps,
                 })}

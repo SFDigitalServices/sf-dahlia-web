@@ -1,8 +1,10 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
+import { ListingDetailsUnitAccordions } from "./ListingDetailsUnitAccordions"
 import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
+import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -109,6 +111,9 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
 
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
+        <ErrorBoundary boundaryScope={BoundaryScope.component}>
+          <ListingDetailsUnitAccordions listingId={listing.Id} />
+        </ErrorBoundary>
         {isRental(listing) && (
           <AdditionalFees
             deposit={getDepositString(

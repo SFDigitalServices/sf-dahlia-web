@@ -22,7 +22,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     beforeApplyingType === BeforeApplyingType.LISTING_DETAILS ||
     beforeApplyingType === BeforeApplyingType.LISTING_DETAILS_HABITAT
   ) {
-    listClassNames.push("bg-white", "p-4", "pt-6", "text-sm")
+    listClassNames.push("bg-white", "p-4", "pt-6", "text-xs")
   }
 
   // different requirements + list items for habitat vs other sales

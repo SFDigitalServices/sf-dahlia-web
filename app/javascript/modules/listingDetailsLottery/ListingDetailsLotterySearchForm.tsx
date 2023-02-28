@@ -104,7 +104,7 @@ export const ListingDetailsLotterySearchForm = ({
     <div className="lottery-search-form">
       <header className="pt-8 pb-4 text-center bg-white sticky top-0 z-50">
         <Heading>{t("lottery.lotteryResults")}</Heading>
-        <h2 className="font-sans font-semibold text-sm uppercase">{listing.Name}</h2>
+        <h2 className="font-sans font-semibold text-xs uppercase">{listing.Name}</h2>
       </header>
       <form
         id="search-form"
@@ -121,7 +121,7 @@ export const ListingDetailsLotterySearchForm = ({
           type="text"
           validation={{ pattern: /^\d+$/, required: true }}
         />
-        <button className="bg-blue-600 h-12 mt-2 p-3">
+        <button className="bg-blue-500 h-12 mt-2 p-3">
           <Icon fill={IconFillColors.white} size="medium" symbol="right" />
         </button>
       </form>

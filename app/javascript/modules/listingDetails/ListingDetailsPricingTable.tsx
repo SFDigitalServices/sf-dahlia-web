@@ -33,7 +33,7 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
   const accordionTitle = (
     <span className={"flex w-full justify-between items-center"}>
       <span className={"flex items-center"}>
-        <span className={"font-serif text-3xl font-medium leading-4 pr-2"}>#</span> person in
+        <span className={"font-serif text-2xl font-medium leading-4 pr-2"}>#</span> person in
         household
       </span>
     </span>

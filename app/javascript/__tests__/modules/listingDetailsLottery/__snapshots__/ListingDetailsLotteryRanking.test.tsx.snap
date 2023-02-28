@@ -2,7 +2,7 @@
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with one result - L/W 1`] = `
 <div
-  className="lottery-ranking text-tiny"
+  className="lottery-ranking text-sm"
 >
   <header
     className="px-8"
@@ -19,7 +19,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     </p>
   </header>
   <div
-    className="bg-blue-200 border-b border-gray-450 flex mb-4 py-4"
+    className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
       className="ui-icon ui-medium mx-4"
@@ -42,7 +42,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
   >
     <div
-      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
     >
       <div
         className="rank-title uppercase"
@@ -57,17 +57,17 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
       className="mx-4"
     >
       <h3
-        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
       <p
-        className="mb-1 text-gray-900 text-tiny"
+        className="mb-1 text-gray-950 text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         905 applicants are on this list.
       </p>
@@ -94,7 +94,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with two results - COP and L/W 1`] = `
 <div
-  className="lottery-ranking text-tiny"
+  className="lottery-ranking text-sm"
 >
   <header
     className="px-8"
@@ -114,7 +114,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
     className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
   >
     <div
-      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
     >
       <div
         className="rank-title uppercase"
@@ -129,17 +129,17 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       className="mx-4"
     >
       <h3
-        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
       >
         Certificate of Preference (COP)
       </h3>
       <p
-        className="mb-1 text-gray-900 text-tiny"
+        className="mb-1 text-gray-950 text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         1 applicants are on this list.
       </p>
@@ -149,7 +149,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
     className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
   >
     <div
-      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
     >
       <div
         className="rank-title uppercase"
@@ -164,17 +164,17 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       className="mx-4"
     >
       <h3
-        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
       >
         Live or Work in San Francisco Preference
       </h3>
       <p
-        className="mb-1 text-gray-900 text-tiny"
+        className="mb-1 text-gray-950 text-sm"
       >
         Up to 1 units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         905 applicants are on this list.
       </p>
@@ -201,10 +201,10 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with general pool only 1`] = `
 <div
-  className="lottery-ranking text-tiny"
+  className="lottery-ranking text-sm"
 >
   <div
-    className="bg-blue-200 border-b border-gray-450 flex mb-4 py-4"
+    className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
       className="ui-icon ui-medium mx-4"
@@ -227,7 +227,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
     className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
   >
     <div
-      className="bg-blue-600 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
     >
       <div
         className="rank-title uppercase"
@@ -242,17 +242,17 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
       className="mx-4"
     >
       <h3
-        className="font-sans font-semibold mb-1 text-tiny tracking-wide uppercase"
+        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
       >
         General Pool
       </h3>
       <p
-        className="mb-1 text-gray-900 text-tiny"
+        className="mb-1 text-gray-950 text-sm"
       >
         Any remaining units
       </p>
       <p
-        className="text-gray-700 text-tiny"
+        className="text-gray-700 text-sm"
       >
         2 applicants are on this list.
       </p>

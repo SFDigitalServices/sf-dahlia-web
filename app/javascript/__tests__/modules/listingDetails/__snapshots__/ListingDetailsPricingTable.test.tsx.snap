@@ -25,7 +25,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
             className="flex items-center"
           >
             <span
-              className="font-serif text-3xl font-medium leading-4 pr-2"
+              className="font-serif text-2xl font-medium leading-4 pr-2"
             >
               #
             </span>
