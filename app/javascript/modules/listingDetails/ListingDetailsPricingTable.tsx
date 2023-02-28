@@ -34,37 +34,37 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
       cellSubText: `${unitSummary.availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
+      cellText: `$${unitSummary.absoluteMinIncome.toLocaleString()} to $${unitSummary.absoluteMaxIncome.toLocaleString()}`,
       cellSubText: t("t.perMonth"),
     },
-    sale: {
-      cellText: `$${unitSummary.maxPriceWithParking}`,
-      cellSubText: "with parking",
-    },
-    monthlyHoaDues: {
-      cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-      cellSubText: "without parking",
-    },
-    // sale: [
-    //   {
-    //     cellText: `$${unitSummary.maxPriceWithParking}`,
-    //     cellSubText: "with parking",
-    //   },
-    //   {
-    //     cellText: `$${unitSummary.maxPriceWithoutParking}`,
-    //     cellSubText: "without parking",
-    //   },
-    // ],
-    // monthlyHoaDues: [
-    //   {
-    //     cellText: `$${unitSummary.maxHoaDuesWithParking}`,
-    //     cellSubText: "with parking",
-    //   },
-    //   {
-    //     cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-    //     cellSubText: "without parking",
-    //   },
-    // ],
+    // sale: {
+    //   cellText: `$${unitSummary.maxPriceWithParking}`,
+    //   cellSubText: "with parking",
+    // },
+    // monthlyHoaDues: {
+    //   cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
+    //   cellSubText: "without parking",
+    // },
+    sale: [
+      {
+        cellText: `$${unitSummary.maxPriceWithParking.toLocaleString()}`,
+        cellSubText: "with parking",
+      },
+      {
+        cellText: `$${unitSummary.maxPriceWithoutParking.toLocaleString()}`,
+        cellSubText: "without parking",
+      },
+    ],
+    monthlyHoaDues: [
+      {
+        cellText: `$${unitSummary.maxHoaDuesWithParking.toLocaleString()}`,
+        cellSubText: "with parking",
+      },
+      {
+        cellText: `$${unitSummary.maxHoaDuesWithoutParking.toLocaleString()}`,
+        cellSubText: "without parking",
+      },
+    ],
   }
 }
 
@@ -104,7 +104,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
       const responsiveTableHeaders = listingIsSale
         ? {
             units: { name: "t.unitType" },
-            income: { name: "t.incomeRange" },
+            income: { name: "shortFormNav.income" },
             sale: { name: "listings.stats.salesPrice" },
             monthlyHoaDues: { name: "Monthly HOA Dues" },
           }
@@ -137,7 +137,10 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
                 : `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
             </span>
             <span className={"flex items-center mr-2"}>
-              {`Income $${unitsByOccupancy.absoluteMinIncome} to  $${unitsByOccupancy.absoluteMaxIncome} per month`}
+              {t("listings.incomeRange.minMaxPerMonth", {
+                min: unitsByOccupancy.absoluteMinIncome.toLocaleString(),
+                max: unitsByOccupancy.absoluteMaxIncome.toLocaleString(),
+              })}
             </span>
           </span>
         }
@@ -174,7 +177,7 @@ const buildContent = (
 
   if (listingIsHabitat) {
     const habitatStrings = mappedUnitsByOccupancy.map((unitByOccupancy) => {
-      return `${unitByOccupancy.occupancy} people household: $${unitByOccupancy.absoluteMinIncome} to $${unitByOccupancy.absoluteMaxIncome}`
+      return `${unitByOccupancy.occupancy} people household: $${unitByOccupancy.absoluteMinIncome.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome.toLocaleString()}`
     })
 
     return (
