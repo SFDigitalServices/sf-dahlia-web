@@ -11,9 +11,6 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
     <div
       className="image-card"
     >
-      <div
-        className="image-card-tag__wrapper"
-      />
       <figure
         className="image-card__inner"
       >
@@ -25,6 +22,9 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
       <aside
         aria-label="A picture of the building Statuses"
         className="image-card__status"
+      />
+      <div
+        className="image-card-tag__wrapper"
       />
     </div>
   </a>
@@ -108,15 +108,6 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
     <div
       className="image-card"
     >
-      <div
-        className="image-card-tag__wrapper"
-      >
-        <span
-          className="tag is-warning"
-        >
-          Habitat Greater San Francisco
-        </span>
-      </div>
       <figure
         className="image-card__inner"
       >
@@ -129,6 +120,15 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         aria-label="A picture of the building Statuses"
         className="image-card__status"
       />
+      <div
+        className="image-card-tag__wrapper"
+      >
+        <span
+          className="tag is-warning"
+        >
+          Habitat Greater San Francisco
+        </span>
+      </div>
     </div>
   </a>
   <div
