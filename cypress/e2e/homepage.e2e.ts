@@ -92,11 +92,14 @@ describe("Homepage integration tests", () => {
   describe("using the nav bar", () => {
     beforeEach(() => {
       cy.visit("/")
-      cy.get("div.navbar-menu > a:nth-child(1)").as("NavBarRentButton")
-      cy.get("div.navbar-menu > a:nth-child(2)").as("NavBarBuyButton")
-      cy.get("div.navbar-menu > a:nth-child(3)").as("NavBarFavoritesButton")
-      cy.get("div.navbar-menu > a:nth-child(4)").as("NavBarAssistanceButton")
-      cy.get("div.navbar-menu > a:nth-child(5)").as("SignInButton")
+
+      cy.findByRole("navigation", { name: "main navigation" }).as("MainNav")
+
+      cy.get("@MainNav").find('a[href*="/listings/for-rent"]').as("NavBarRentButton")
+      cy.get("@MainNav").find('a[href*="/listings/for-sale"]').as("NavBarBuyButton")
+      cy.get("@MainNav").find('a[href*="/favorites"]').as("NavBarFavoritesButton")
+      cy.get("@MainNav").find('a[href*="/get-assistance"]').as("NavBarAssistanceButton")
+      cy.get("@MainNav").find('a[href*="/sign-in"]').as("SignInButton")
     })
 
     describe("navigating to the for-rent page", () => {
