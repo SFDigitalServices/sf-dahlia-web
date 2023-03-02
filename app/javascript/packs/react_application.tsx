@@ -10,6 +10,10 @@ import HomePage from "../pages"
 import SignIn from "../pages/sign-in"
 import ListingDetail from "../pages/listings/listing-detail"
 import { getCurrentLanguage, loadTranslations } from "../util/languageUtil"
+import HousingCounselors from "../pages/getAssistance/housing-counselors"
+import GetAssistance from "../pages/getAssistance/get-assistance"
+import DocumentChecklist from "../pages/getAssistance/document-checklist"
+import AdditionalResources from "../pages/getAssistance/additional-resources"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -21,5 +25,9 @@ void loadTranslations(currentLanguage).then(() =>
     ListingDetail,
     RentDirectory,
     SignIn,
+    HousingCounselors,
+    GetAssistance,
+    DocumentChecklist,
+    AdditionalResources,
   })
 )
