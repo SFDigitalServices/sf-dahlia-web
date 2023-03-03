@@ -7,7 +7,7 @@ const HousingCounselors = () => {
   return (
     <AssistanceLayout
       title={t("pageTitle.housingCounselors")}
-      subtitle={"Counselors can help you with your DAHLIA application and housing search."}
+      subtitle={t("pageSubtitle.housingCounselors")}
     >
       <h1>{t("pageTitle.housingCounselors")}</h1>
     </AssistanceLayout>

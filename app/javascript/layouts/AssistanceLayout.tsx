@@ -2,6 +2,9 @@ import React from "react"
 import Layout from "./Layout"
 import { PageHeader, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { renderInlineMarkup } from "../util/languageUtil"
+import { ConfigContext } from "../lib/ConfigContext"
+
+import "./AssistanceLayout.scss"
 
 export interface Props {
   children: React.ReactNode
@@ -10,13 +13,15 @@ export interface Props {
 }
 
 const AssistanceLayout = ({ children, title, subtitle }: Props) => {
+  const { getAssetPath } = React.useContext(ConfigContext)
+
   return (
     <Layout title={title}>
       <PageHeader
         title={title}
         subtitle={subtitle}
         inverse
-        // backgroundImage={getAssetPath("bg@1200.jpg")}
+        backgroundImage={getAssetPath("bg@1200.jpg")}
       />
       <article className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full">
         <div className="w-full md:w-2/3">{children}</div>
