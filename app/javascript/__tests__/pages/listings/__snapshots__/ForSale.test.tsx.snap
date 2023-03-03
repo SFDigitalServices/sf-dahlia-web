@@ -92,7 +92,7 @@ exports[`For Sale renders ForSale component 1`] = `
         role="navigation"
       >
         <div
-          className="site-header__base side-header__width-base"
+          className="site-header__base "
         >
           <div
             className="site-header__logo-container site-header__logo-width-med"
@@ -166,7 +166,7 @@ exports[`For Sale renders ForSale component 1`] = `
     </header>
     <main
       className="md:overflow-x-hidden"
-      data-testid="main-content-test-id"
+      data-test-id="main-content-test-id"
       id="main-content"
     >
       <div

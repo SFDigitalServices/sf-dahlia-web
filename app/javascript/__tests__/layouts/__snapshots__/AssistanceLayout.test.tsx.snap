@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`For Rent renders ForRent component 1`] = `
+exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
 <div
   className="notranslate site-wrapper"
 >
@@ -98,8 +98,8 @@ exports[`For Rent renders ForRent component 1`] = `
             className="site-header__logo-container site-header__logo-width-med"
           >
             <a
-              aria-label="DAHLIA San Francisco Housing Portal"
-              className="site-header__logo translate site-header__custom-width"
+              aria-label="Home page"
+              className="site-header__logo  site-header__custom-width"
               href="/"
             >
               <div
@@ -169,137 +169,141 @@ exports[`For Rent renders ForRent component 1`] = `
       data-test-id="main-content-test-id"
       id="main-content"
     >
-      <div
-        aria-live="assertive"
-        role="alert"
+      <header
+        className="page-header is-inverse"
+      >
+        <hgroup
+          className="page-header__group"
+        >
+          <h1
+            className="page-header__title"
+            data-test-id="page-header"
+          >
+            Title Text
+          </h1>
+          <p
+            className="page-header__lead"
+          >
+             
+            Subtitle Text
+          </p>
+        </hgroup>
+      </header>
+      <article
+        className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
       >
         <div
-          className="loading-overlay"
-          data-test-id="loading-overlay"
+          className="w-full md:w-2/3"
+          data-test-id="assistance-main-content"
         >
-          <span
-            className="ui-icon ui-3xl loading-overlay__spinner spinner-animation"
-            data-test-id={null}
-          >
-            <svg
-              fill="currentColor"
-              viewBox="0 0 100 100"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                fill="none"
-                r="32"
-                stroke="currentColor"
-                strokeDasharray="150.79644737231007 52.26548245743669"
-                strokeWidth="9"
-              />
-            </svg>
-          </span>
-          <div>
-            <div
-              className="action-block mt-4 primary-lighter action-block__block"
-            >
-              <div
-                className="action-block__head"
-              >
-                <div
-                  className="action-block__icon"
-                >
-                  <span
-                    className="ui-icon ui-3xl"
-                    data-test-id={null}
-                  >
-                    <svg
-                      fill="transparent"
-                      height="35"
-                      viewBox="0 0 80 35"
-                      width="80"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        fill="transparent"
-                        height="75"
-                        width="80"
-                      />
-                      <g
-                        clipPath="url(#clip0)"
-                      >
-                        <rect
-                          fill="transparent"
-                          height="1390"
-                          transform="translate(-284 -530)"
-                          width="1280"
-                        />
-                        <path
-                          d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
-                          stroke="black"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeMiterlimit="10"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M49.1858 41.271L61.375 50.878"
-                          stroke="black"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeMiterlimit="10"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M32.1668 41.271L19.9775 50.878"
-                          stroke="black"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeMiterlimit="10"
-                          strokeWidth="2"
-                        />
-                        <path
-                          d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
-                          stroke="black"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeMiterlimit="10"
-                          strokeWidth="2"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath
-                          id="clip0"
-                        >
-                          <rect
-                            fill="white"
-                            height="1390"
-                            transform="translate(-284 -530)"
-                            width="1280"
-                          />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </span>
-                </div>
-                <h2
-                  className="action-block__header"
-                >
-                  Get emailed whenever a new listing is posted.
-                </h2>
-              </div>
-              <div
-                className="action-block__actions"
-              >
-                <a
-                  className="button"
-                  href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                  target="_blank"
-                >
-                  Sign Up today
-                </a>
-              </div>
-            </div>
-          </div>
+          <h1>
+            Content!
+          </h1>
         </div>
-      </div>
+        <section
+          className="aside-block w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
+        >
+          <h4
+            className="text__underline-weighted"
+          >
+            Contact
+          </h4>
+          <div
+            className="text-sm text-gray-750"
+          >
+            <span
+              className="text-gray-950"
+            >
+              <p
+                className="mb-4"
+              >
+                <span
+                  className="font-semibold"
+                >
+                  For questions about DAHLIA listings:
+                </span>
+                <br />
+                 
+                <span>
+                  Contact the agent shown on the listing page.
+                </span>
+              </p>
+              <p
+                className="mb-4"
+              >
+                <span
+                  className="font-semibold"
+                >
+                  For help with San Francisco services 24 hours a day, 7 days a week:
+                </span>
+                <br />
+                 
+                <span>
+                  Call 311 or 
+                  <a
+                    href="https://sf311.org/"
+                    target="_blank"
+                  >
+                    visit the 311 website.
+                  </a>
+                </span>
+              </p>
+              <div>
+                <span
+                  className="font-semibold"
+                >
+                  For questions about housing programs:
+                </span>
+                <br />
+                <span>
+                  <span>
+                    <a
+                      href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                      target="_blank"
+                    >
+                      Visit the website for the Mayor’s Office of Housing and Community Development 
+                    </a>
+                    (MOHCD)
+                  </span>
+                </span>
+                <span
+                  className="mt-1"
+                >
+                  <span>
+                    Email 
+                    <a
+                      href="mailto:sfhousinginfo@sfgov.org"
+                    >
+                      sfhousinginfo@sfgov.org
+                    </a>
+                  </span>
+                </span>
+                <span
+                  className="mt-1"
+                >
+                  Call MOHCD at:
+                  <ul
+                    className="list-disc list-inside mt-1"
+                  >
+                    <li>
+                      English: (415) 701-5622
+                    </li>
+                    <li>
+                      Españo: (415) 701-5623
+                    </li>
+                    <li>
+                      中文: (415) 701-5624
+                    </li>
+                    <li>
+                      Filipino: (415) 701-5570
+                    </li>
+                  </ul>
+                </span>
+              </div>
+            </span>
+          </div>
+        </section>
+      </article>
     </main>
   </div>
   <footer
@@ -312,8 +316,7 @@ exports[`For Rent renders ForRent component 1`] = `
         className="footer-row__section pb-8"
       >
         <img
-          alt=""
-          data-testid="footer-logo-test-id"
+          alt="City & County of San Francisco Logo"
         />
       </div>
     </div>

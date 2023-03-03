@@ -24,7 +24,9 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
       <article className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full">
-        <div className="w-full md:w-2/3">{children}</div>
+        <div className="w-full md:w-2/3" data-test-id="assistance-main-content">
+          {children}
+        </div>
         <SidebarBlock
           className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
           title={t("footer.contact")}
@@ -40,7 +42,7 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
               <span className="font-semibold">{t("assistance.contact.helpLine.title1")}</span>
               <br /> {renderInlineMarkup(t("assistance.contact.helpLine.subtitle"))}
             </p>
-            <p>
+            <div>
               <span className="font-semibold">
                 {t("assistance.contact.questionsAboutPrograms.title1")}
               </span>
@@ -48,10 +50,10 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
               <span>
                 {renderInlineMarkup(t("assistance.contact.questionsAboutPrograms.contactWebsite"))}
               </span>
-              <div className="mt-1">
+              <span className="mt-1">
                 {renderInlineMarkup(t("assistance.contact.questionsAboutPrograms.contactEmail"))}
-              </div>
-              <div className="mt-1">
+              </span>
+              <span className="mt-1">
                 {t("assistance.contact.questionsAboutPrograms.contactCall.title")}
                 <ul className="list-disc list-inside mt-1">
                   <li>English: (415) 701-5622</li>
@@ -59,8 +61,8 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
                   <li>中文: (415) 701-5624</li>
                   <li>Filipino: (415) 701-5570</li>
                 </ul>
-              </div>
-            </p>
+              </span>
+            </div>
           </span>
         </SidebarBlock>
       </article>
