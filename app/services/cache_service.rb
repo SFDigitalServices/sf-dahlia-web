@@ -22,6 +22,8 @@ class CacheService
   end
 
   def cache_only_updated_listings
+    # TODO: consider adding logging for how many items to process in a given run of the
+    # cache service
     fresh_listings.each do |fresh_listing|
       prev_cached_listing = prev_cached_listings.find do |l|
         l['Id'] == fresh_listing['Id']
