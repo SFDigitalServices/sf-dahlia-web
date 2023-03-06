@@ -83,7 +83,7 @@ export const ListingDetailsUnitAccordions = ({ listingId }: ListingDetailsUnitAc
         acc[unit.Unit_Type].units = [...(acc[unit.Unit_Type]?.units || []), unit]
 
         if (!acc[unit.Unit_Type].availability) acc[unit.Unit_Type].availability = 0
-        acc[unit.Unit_Type].availability += unit.Availability
+        acc[unit.Unit_Type].availability++
 
         if (!acc[unit.Unit_Type].minSqFt && !acc[unit.Unit_Type].maxSqFt) {
           acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage

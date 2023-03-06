@@ -9,12 +9,12 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
   >
     <button
       aria-expanded={false}
-      className="w-full text-left undefined"
+      className="w-full text-left "
       data-test-id="content-accordion-button"
       onClick={[Function]}
     >
       <div
-        className="flex justify-between mt-4 false accordion-gray-theme__bar false"
+        className="flex justify-between mt-4  accordion-gray-theme__bar "
       >
         <span
           className="flex w-full justify-between items-center"
