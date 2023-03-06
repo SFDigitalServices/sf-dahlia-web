@@ -37,14 +37,6 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
       cellText: `$${unitSummary.absoluteMinIncome?.toLocaleString()} to $${unitSummary.absoluteMaxIncome?.toLocaleString()}`,
       cellSubText: t("t.perMonth"),
     },
-    // sale: {
-    //   cellText: `$${unitSummary.maxPriceWithParking}`,
-    //   cellSubText: "with parking",
-    // },
-    // monthlyHoaDues: {
-    //   cellText: `$${unitSummary.maxHoaDuesWithoutParking}`,
-    //   cellSubText: "without parking",
-    // },
     sale: [
       {
         cellText: `$${unitSummary.maxPriceWithParking?.toLocaleString()}`,
@@ -129,7 +121,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
       return (
         <ContentAccordion
           key={index}
-          initialOpen={accordionLength === 1}
+          initialExpanded={accordionLength === 1}
           customBarContent={
             <span className={"flex w-full justify-between items-center"}>
               <span className={"flex items-center"}>
