@@ -92,7 +92,7 @@ exports[`For Rent renders ForRent component 1`] = `
         role="navigation"
       >
         <div
-          className="site-header__base side-header__width-base"
+          className="site-header__base "
         >
           <div
             className="site-header__logo-container site-header__logo-width-med"
