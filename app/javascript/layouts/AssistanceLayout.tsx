@@ -1,10 +1,22 @@
 import React from "react"
 import Layout from "./Layout"
 import { PageHeader, SidebarBlock, t } from "@bloom-housing/ui-components"
-import { renderInlineMarkup } from "../util/languageUtil"
+import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
+const languageToSFGovMap = (lang: string) => {
+  switch (lang) {
+    case "es":
+      return "https://sf.gov/es/node/55"
+    case "tl":
+      return "https://sf.gov/fil/node/55"
+    case "zh":
+      return "https://sf.gov/zh-hant/node/55"
+    default:
+      return "https://sf.gov/departments/mayors-office-housing-and-community-development"
+  }
+}
 
 export interface Props {
   children: React.ReactNode
@@ -14,6 +26,9 @@ export interface Props {
 
 const AssistanceLayout = ({ children, title, subtitle }: Props) => {
   const { getAssetPath } = React.useContext(ConfigContext)
+
+  const lang = languageToSFGovMap(getCurrentLanguage(window.location.pathname))
+  console.log(lang)
 
   return (
     <Layout title={title}>
@@ -47,21 +62,31 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
                 {t("assistance.contact.questionsAboutPrograms.title1")}
               </span>
               <br />
-              <span>
-                {renderInlineMarkup(t("assistance.contact.questionsAboutPrograms.contactWebsite"))}
-              </span>
-              <span className="mt-1">
+              <div>
+                {renderInlineMarkup(
+                  t("assistance.contact.questionsAboutPrograms.contactWebsite", { lang })
+                )}
+              </div>
+              <div className="mt-1">
                 {renderInlineMarkup(t("assistance.contact.questionsAboutPrograms.contactEmail"))}
-              </span>
-              <span className="mt-1">
+              </div>
+              <div className="mt-1">
                 {t("assistance.contact.questionsAboutPrograms.contactCall.title")}
                 <ul className="list-disc list-inside mt-1">
-                  <li>English: (415) 701-5622</li>
-                  <li>Españo: (415) 701-5623</li>
-                  <li>中文: (415) 701-5624</li>
-                  <li>Filipino: (415) 701-5570</li>
+                  <li>
+                    English: <a href="tel:+14157015622">(415) 701-5622</a>
+                  </li>
+                  <li>
+                    Español: <a href="tel:+14157015623">(415) 701-5623</a>
+                  </li>
+                  <li>
+                    中文: <a href="tel:+14157015624">(415) 701-5624</a>
+                  </li>
+                  <li>
+                    Filipino: <a href="tel:+14157015570">(415) 701-5570</a>
+                  </li>
                 </ul>
-              </span>
+              </div>
             </div>
           </span>
         </SidebarBlock>

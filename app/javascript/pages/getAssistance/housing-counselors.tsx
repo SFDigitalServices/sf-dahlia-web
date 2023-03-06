@@ -6,10 +6,10 @@ import withAppSetup from "../../layouts/withAppSetup"
 const HousingCounselors = () => {
   return (
     <AssistanceLayout
-      title={t("pageTitle.housingCounselors")}
+      title={t("assistance.title.housingCouneslorss")}
       subtitle={t("pageSubtitle.housingCounselors")}
     >
-      <h1>{t("pageTitle.housingCounselors")}</h1>
+      <h1>{t("assistance.title.housingCouneslors")}</h1>
     </AssistanceLayout>
   )
 }

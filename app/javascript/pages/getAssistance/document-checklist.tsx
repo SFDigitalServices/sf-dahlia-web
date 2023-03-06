@@ -6,12 +6,12 @@ import withAppSetup from "../../layouts/withAppSetup"
 const DocumentChecklist = () => {
   return (
     <AssistanceLayout
-      title={t("pageTitle.documentChecklist")}
+      title={t("assistance.title.documentChecklist")}
       subtitle={t("pageSubtitle.documentChecklist")}
     >
       {
         <div className="flex flex-col justify-around h-screen">
-          <h1>{t("pageTitle.documentChecklist")}</h1>
+          <h1>{t("assistance.title.documentChecklist")}</h1>
 
           <h2 id="anchorMe">I'm an anchor</h2>
         </div>

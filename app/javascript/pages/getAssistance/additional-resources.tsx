@@ -6,10 +6,10 @@ import AssistanceLayout from "../../layouts/AssistanceLayout"
 const AdditionalResources = () => {
   return (
     <AssistanceLayout
-      title={t("pageTitle.additionalHousingOpportunities")}
+      title={t("assistance.title.additionalHousingOpportunities")}
       subtitle={t("pageSubtitle.additionalHousingOpportunities")}
     >
-      <h1>{t("pageTitle.additionalHousingOpportunities")}</h1>
+      <h1>{t("assistance.title.additionalHousingOpportunities")}</h1>
     </AssistanceLayout>
   )
 }
