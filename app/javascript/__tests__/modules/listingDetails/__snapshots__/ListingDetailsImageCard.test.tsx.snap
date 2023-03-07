@@ -76,22 +76,20 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
           </a>
         </p>
       </div>
-      <div>
-        <a
-          aria-label="Share this listing"
-          className="share-button"
-          href="/share/a0W0P00000GlKfBUAV"
-          onBlur={[Function]}
-          onFocus={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          target="_blank"
-        >
-          <img
-            alt="Share"
-          />
-        </a>
-      </div>
+      <a
+        aria-label="Share this listing"
+        className="share-button"
+        href="/share/a0W0P00000GlKfBUAV"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        target="_blank"
+      >
+        <img
+          alt="Share list view"
+        />
+      </a>
     </div>
   </div>
 </header>
@@ -177,22 +175,20 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
           </a>
         </p>
       </div>
-      <div>
-        <a
-          aria-label="Share this listing"
-          className="share-button"
-          href="/share/a0W8H000000HI2uUAG"
-          onBlur={[Function]}
-          onFocus={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          target="_blank"
-        >
-          <img
-            alt="Share"
-          />
-        </a>
-      </div>
+      <a
+        aria-label="Share this listing"
+        className="share-button"
+        href="/share/a0W8H000000HI2uUAG"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        target="_blank"
+      >
+        <img
+          alt="Share list view"
+        />
+      </a>
     </div>
   </div>
 </header>

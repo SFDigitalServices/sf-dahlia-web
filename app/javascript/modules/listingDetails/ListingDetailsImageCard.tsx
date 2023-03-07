@@ -50,20 +50,18 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
               </a>
             </p>
           </div>
-          <div>
-            <a
-              href={`${getShareListingPath()}/${listing.listingID}`}
-              onBlur={() => setShareImage(shareButton)}
-              onFocus={() => setShareImage(shareButtonSelected)}
-              onMouseEnter={() => setShareImage(shareButtonSelected)}
-              onMouseLeave={() => setShareImage(shareButton)}
-              aria-label={t("pageTitle.shareThisListing")}
-              target="_blank"
-              className="share-button"
-            >
-              <img alt={t("label.share")} src={shareImage} />
-            </a>
-          </div>
+          <a
+            href={`${getShareListingPath()}/${listing.listingID}`}
+            onBlur={() => setShareImage(shareButton)}
+            onFocus={() => setShareImage(shareButtonSelected)}
+            onMouseEnter={() => setShareImage(shareButtonSelected)}
+            onMouseLeave={() => setShareImage(shareButton)}
+            aria-label={t("pageTitle.shareThisListing")}
+            target="_blank"
+            className="share-button"
+          >
+            <img alt={t("label.shareListView")} src={shareImage} />
+          </a>
         </div>
       </div>
     </header>

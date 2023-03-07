@@ -122,7 +122,7 @@ export const ListingDetailsLotterySearchForm = ({
           validation={{ pattern: /^\d+$/, required: true }}
         />
         <button
-          className="bg-blue-600 h-12 mt-2 p-3 translate"
+          className="bg-blue-500 h-12 mt-2 p-3 translate"
           type="submit"
           aria-label={t("lottery.submitNumber")}
         >
