@@ -7,7 +7,7 @@ const GetAssistance = () => {
   return (
     <AssistanceLayout
       title={t("assistance.title.getAssistance")}
-      subtitle={t("pageSubtitle.getAssistance")}
+      subtitle={t("assistance.subtitle.getAssistance")}
     >
       <h1>{t("assistance.title.getAssistance")}</h1>
     </AssistanceLayout>

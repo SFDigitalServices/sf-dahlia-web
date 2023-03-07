@@ -9,12 +9,14 @@ describe("<AdditionalResources />", () => {
     const { getByTestId } = await renderAndLoadAsync(<AdditionalResources assetPaths={{}} />)
     const header = getByTestId("page-header")
 
-    expect(within(header).getByText(t("pageTitle.additionalHousingOpportunities"))).not.toBeNull()
+    expect(
+      within(header).getByText(t("assistance.title.additionalHousingOpportunities"))
+    ).not.toBeNull()
   })
 
   it("shows the correct subtitle text", async () => {
     const { getByText } = await renderAndLoadAsync(<AdditionalResources assetPaths={{}} />)
 
-    expect(getByText(t("pageSubtitle.additionalHousingOpportunities"))).not.toBeNull()
+    expect(getByText(t("assistance.subtitle.additionalHousingOpportunities"))).not.toBeNull()
   })
 })

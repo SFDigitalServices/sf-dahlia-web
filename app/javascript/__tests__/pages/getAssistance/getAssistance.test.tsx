@@ -9,12 +9,12 @@ describe("<GetAssistance />", () => {
     const { getByTestId } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
     const mainContent = getByTestId("page-header")
 
-    expect(within(mainContent).getByText(t("pageTitle.getAssistance"))).not.toBeNull()
+    expect(within(mainContent).getByText(t("assistance.title.getAssistance"))).not.toBeNull()
   })
 
   it("shows the correct subtitle text", async () => {
     const { getByText } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
 
-    expect(getByText(t("pageSubtitle.getAssistance"))).not.toBeNull()
+    expect(getByText(t("assistance.subtitle.getAssistance"))).not.toBeNull()
   })
 })

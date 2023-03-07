@@ -239,7 +239,13 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                 <br />
                  
                 <span>
-                  Call 311 or 
+                  Call 
+                  <a
+                    href="tel:311"
+                  >
+                    311
+                  </a>
+                   or 
                   <a
                     href="https://sf311.org/"
                     target="_blank"
@@ -255,7 +261,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                   For questions about housing programs:
                 </span>
                 <br />
-                <span>
+                <div>
                   <span>
                     <a
                       href="https://sf.gov/departments/mayors-office-housing-and-community-development"
@@ -265,8 +271,8 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                     </a>
                     (MOHCD)
                   </span>
-                </span>
-                <span
+                </div>
+                <div
                   className="mt-1"
                 >
                   <span>
@@ -277,8 +283,8 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                       sfhousinginfo@sfgov.org
                     </a>
                   </span>
-                </span>
-                <span
+                </div>
+                <div
                   className="mt-1"
                 >
                   Call MOHCD at:
@@ -286,19 +292,39 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                     className="list-disc list-inside mt-1"
                   >
                     <li>
-                      English: (415) 701-5622
+                      English: 
+                      <a
+                        href="tel:+14157015622"
+                      >
+                        (415) 701-5622
+                      </a>
                     </li>
                     <li>
-                      Españo: (415) 701-5623
+                      Español: 
+                      <a
+                        href="tel:+14157015623"
+                      >
+                        (415) 701-5623
+                      </a>
                     </li>
                     <li>
-                      中文: (415) 701-5624
+                      中文: 
+                      <a
+                        href="tel:+14157015624"
+                      >
+                        (415) 701-5624
+                      </a>
                     </li>
                     <li>
-                      Filipino: (415) 701-5570
+                      Filipino: 
+                      <a
+                        href="tel:+14157015570"
+                      >
+                        (415) 701-5570
+                      </a>
                     </li>
                   </ul>
-                </span>
+                </div>
               </div>
             </span>
           </div>

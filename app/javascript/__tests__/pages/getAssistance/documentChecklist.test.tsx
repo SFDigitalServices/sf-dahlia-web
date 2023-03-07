@@ -9,12 +9,12 @@ describe("<DocumentChecklist />", () => {
     const { getByTestId } = await renderAndLoadAsync(<DocumentChecklist assetPaths={{}} />)
     const header = getByTestId("page-header")
 
-    expect(within(header).getByText(t("pageTitle.documentChecklist"))).not.toBeNull()
+    expect(within(header).getByText(t("assistance.title.documentChecklist"))).not.toBeNull()
   })
 
   it("shows the correct subtitle text", async () => {
     const { getByText } = await renderAndLoadAsync(<DocumentChecklist assetPaths={{}} />)
 
-    expect(getByText(t("pageSubtitle.documentChecklist"))).not.toBeNull()
+    expect(getByText(t("assistance.subtitle.documentChecklist"))).not.toBeNull()
   })
 })

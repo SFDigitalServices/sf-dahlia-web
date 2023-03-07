@@ -7,7 +7,7 @@ const DocumentChecklist = () => {
   return (
     <AssistanceLayout
       title={t("assistance.title.documentChecklist")}
-      subtitle={t("pageSubtitle.documentChecklist")}
+      subtitle={t("assistance.subtitle.documentChecklist")}
     >
       {
         <div className="flex flex-col justify-around h-screen">
