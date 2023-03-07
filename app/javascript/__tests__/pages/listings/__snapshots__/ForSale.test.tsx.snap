@@ -313,7 +313,7 @@ exports[`For Sale renders ForSale component 1`] = `
       >
         <img
           alt=""
-          data-testid="footer-logo-test-id"
+          data-test-id="footer-logo-test-id"
         />
       </div>
     </div>

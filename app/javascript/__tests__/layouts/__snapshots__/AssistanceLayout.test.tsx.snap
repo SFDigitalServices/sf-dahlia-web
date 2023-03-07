@@ -98,8 +98,8 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
             className="site-header__logo-container site-header__logo-width-med"
           >
             <a
-              aria-label="Home page"
-              className="site-header__logo  site-header__custom-width"
+              aria-label="DAHLIA San Francisco Housing Portal"
+              className="site-header__logo translate site-header__custom-width"
               href="/"
             >
               <div
@@ -342,7 +342,8 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
         className="footer-row__section pb-8"
       >
         <img
-          alt="City & County of San Francisco Logo"
+          alt=""
+          data-test-id="footer-logo-test-id"
         />
       </div>
     </div>

@@ -190,7 +190,7 @@ const Layout = (props: LayoutProps) => {
 
       <SiteFooter>
         <FooterSection>
-          <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
+          <img src={getAssetPath("logo-city.png")} alt="" data-test-id="footer-logo-test-id" />
         </FooterSection>
         <FooterSection small>
           <p className="text-gray-500">
