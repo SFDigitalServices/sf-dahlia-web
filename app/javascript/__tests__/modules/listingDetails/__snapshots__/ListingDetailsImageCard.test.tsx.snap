@@ -77,6 +77,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
         </p>
       </div>
       <a
+        aria-label="Share this listing"
         className="share-button"
         href="/share/a0W0P00000GlKfBUAV"
         onBlur={[Function]}
@@ -86,7 +87,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
         target="_blank"
       >
         <img
-          alt="Share"
+          alt="Share list view"
         />
       </a>
     </div>
@@ -175,6 +176,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         </p>
       </div>
       <a
+        aria-label="Share this listing"
         className="share-button"
         href="/share/a0W8H000000HI2uUAG"
         onBlur={[Function]}
@@ -184,7 +186,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         target="_blank"
       >
         <img
-          alt="Share"
+          alt="Share list view"
         />
       </a>
     </div>
