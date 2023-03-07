@@ -5,6 +5,27 @@ import { PREFERENCES, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 
+const determineDescription = (
+  customPreferenceDescription: boolean,
+  listingDescription: string,
+  preferenceName: string,
+  NRHPDistrict?: string
+) => {
+  if (customPreferenceDescription) {
+    return { description: listingDescription, descriptionClassName: "translate" }
+  } else {
+    return preferenceName === PREFERENCES.neighborhoodResidence && NRHPDistrict
+      ? {
+          description: t(
+            "listings.lotteryPreference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
+            { number: NRHPDistrict }
+          ),
+        }
+      : {
+          description: t(`listings.lotteryPreference.${preferenceName}.desc`),
+        }
+  }
+}
 export interface ListingDetailsPreferencesProps {
   listingID: string
 }
@@ -45,14 +66,12 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           }
 
           return {
-            description:
-              preference.preferenceName === PREFERENCES.neighborhoodResidence &&
+            ...determineDescription(
+              preference.customPreferenceDescription,
+              preference.description,
+              preference.preferenceName,
               preference.NRHPDistrict
-                ? t(
-                    "listings.lotteryPreference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
-                    { number: preference.NRHPDistrict }
-                  )
-                : t(`listings.lotteryPreference.${preference.preferenceName}.desc`),
+            ),
             links,
             ordinal: index + 1,
             subtitle:

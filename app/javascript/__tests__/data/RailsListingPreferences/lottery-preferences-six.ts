@@ -16,6 +16,7 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
   {
     unitsAvailable: 2,
@@ -32,6 +33,7 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households who are currently paying more than 50% of income for housing costs or are living in public housing or project based Section 8 housing within San Francisco.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
   {
     unitsAvailable: 3,
@@ -48,6 +50,7 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
   {
     unitsAvailable: 4,
@@ -64,12 +67,14 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households in which at least one member either lives within Supervisor district of the project [District #], or within a half-mile of the project.  Requires submission of proof of address.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
   {
     unitsAvailable: 5,
     requiresProof: false,
     readMoreUrl: "http://sfmohcd.org/housing-preference-programs",
     preferenceProofRequirementDescription: null,
+
     preferenceName: "Live or Work in San Francisco Preference",
     pdfUrl: null,
     order: 5,
@@ -80,6 +85,7 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
   {
     unitsAvailable: null,
@@ -96,5 +102,6 @@ export const preferences: RailsListingPreference[] = [
     description:
       "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
     appTotal: null,
+    customPreferenceDescription: false,
   },
 ]
