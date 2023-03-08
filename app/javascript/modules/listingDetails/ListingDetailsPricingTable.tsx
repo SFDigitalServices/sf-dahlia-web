@@ -138,7 +138,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
             </span>
           }
           customExpandedContent={
-            <div className={"p-4 border-2 border-gray-400"}>
+            <div className={"p-4 border-2 border-gray-400 rounded-b-lg"}>
               <CategoryTable categoryData={categoryData} />
             </div>
           }

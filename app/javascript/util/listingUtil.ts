@@ -6,6 +6,7 @@ import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS } from "./languageUtil"
+import { MappedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -206,7 +207,9 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
 //   return mappedUnitsByOccupancy
 // }
 
-export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUnit[]) => {
+export const classifyPricingDataByOccupancy = (
+  units: RailsListingPricingTableUnit[]
+): MappedUnitsByOccupancy[] => {
   const mappedUnitsByOccupancy = []
   units.forEach((unit: RailsListingPricingTableUnit) => {
     const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
