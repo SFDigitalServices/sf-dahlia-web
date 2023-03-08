@@ -5,6 +5,27 @@ import { PREFERENCES, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 
+const determineDescription = (
+  customPreferenceDescription: boolean,
+  listingDescription: string,
+  preferenceName: string,
+  NRHPDistrict?: string
+) => {
+  if (customPreferenceDescription) {
+    return { description: listingDescription, descriptionClassName: "translate" }
+  } else {
+    return preferenceName === PREFERENCES.neighborhoodResidence && NRHPDistrict
+      ? {
+          description: t(
+            "listings.lotteryPreference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
+            { number: NRHPDistrict }
+          ),
+        }
+      : {
+          description: t(`listings.lotteryPreference.${preferenceName}.desc`),
+        }
+  }
+}
 export interface ListingDetailsPreferencesProps {
   listingID: string
 }
@@ -34,25 +55,30 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
         listingPreferences={preferences?.map((preference, index) => {
           const links = []
           if (preference.readMoreUrl) {
-            links.push({ title: t("label.readMore"), url: preference.readMoreUrl })
+            links.push({
+              title: t("label.readMore"),
+              url: preference.readMoreUrl,
+              ariaLabel: t(`listings.lotteryPreference.${preference.preferenceName}.readMore`),
+            })
           }
           // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
           if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
             links.push({
               title: t("label.viewDocumentChecklist"),
+              ariaLabel: t(
+                `listings.lotteryPreference.${preference.preferenceName}.additionalDocumentation`
+              ),
               url: "/document-checklist",
             })
           }
 
           return {
-            description:
-              preference.preferenceName === PREFERENCES.neighborhoodResidence &&
+            ...determineDescription(
+              preference.customPreferenceDescription,
+              preference.description,
+              preference.preferenceName,
               preference.NRHPDistrict
-                ? t(
-                    "listings.lotteryPreference.Neighborhood Resident Housing Preference (NRHP).desc.withDistrict",
-                    { number: preference.NRHPDistrict }
-                  )
-                : t(`listings.lotteryPreference.${preference.preferenceName}.desc`),
+            ),
             links,
             ordinal: index + 1,
             subtitle:

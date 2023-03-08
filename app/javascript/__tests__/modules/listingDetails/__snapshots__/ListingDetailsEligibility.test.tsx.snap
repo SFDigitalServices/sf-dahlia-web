@@ -302,6 +302,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about credit history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -337,6 +338,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about rental history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -687,6 +689,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about credit history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -722,6 +725,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about rental history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -1406,6 +1410,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about credit history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -1441,6 +1446,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about rental history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -1799,6 +1805,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about credit history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >
@@ -1834,6 +1841,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </p>
           </div>
           <button
+            aria-label="Read more about rental history guidelines"
             className="button-toggle mt-2"
             onClick={[Function]}
           >

@@ -56,10 +56,11 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
             onFocus={() => setShareImage(shareButtonSelected)}
             onMouseEnter={() => setShareImage(shareButtonSelected)}
             onMouseLeave={() => setShareImage(shareButton)}
+            aria-label={t("pageTitle.shareThisListing")}
             target="_blank"
             className="share-button"
           >
-            <img alt={t("label.share")} src={shareImage} />
+            <img alt={t("label.shareListView")} src={shareImage} />
           </a>
         </div>
       </div>

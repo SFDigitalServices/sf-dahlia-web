@@ -36,6 +36,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Certificate of Preference"
             href="http://sfmohcd.org/certificate-preference"
             target="_blank"
           >
@@ -75,6 +76,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Displaced Tenant Housing Preference"
             href="http://sfmohcd.org/displaced-tenant-housing-preference"
             target="_blank"
           >
@@ -105,15 +107,16 @@ Array [
         Up to 6 units available
       </div>
       <div
-        className="preferences-list__description "
+        className="preferences-list__description translate"
       >
-        For households in which at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant must currently work in San Francisco at least 75% of their working hours.
+        This is a custom description - For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.
       </div>
       <div
         className="preferences-list__links"
       >
         <span>
           <a
+            aria-label="Read more about the Live or Work in San Francisco Preference"
             href="http://sfmohcd.org/housing-preference-programs"
             target="_blank"
           >
@@ -122,6 +125,7 @@ Array [
         </span>
         <span>
           <a
+            aria-label="View document checklist for the Live or Work in San Francisco Preference"
             href="/document-checklist"
             target="_blank"
           >
@@ -175,6 +179,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Certificate of Preference"
             href="http://sfmohcd.org/certificate-preference"
             target="_blank"
           >
@@ -214,6 +219,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Rent Burdened / Assisted Housing Preference"
             href="http://sfmohcd.org/housing-preference-programs"
             target="_blank"
           >
@@ -222,6 +228,7 @@ Array [
         </span>
         <span>
           <a
+            aria-label="View document checklist for the Rent Burdened / Assisted Housing Preference"
             href="/document-checklist"
             target="_blank"
           >
@@ -261,6 +268,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Displaced Tenant Housing Preference"
             href="http://sfmohcd.org/displaced-tenant-housing-preference"
             target="_blank"
           >
@@ -300,6 +308,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Neighborhood Resident Housing Preference"
             href="http://sfmohcd.org/neighborhood-resident-housing-preference"
             target="_blank"
           >
@@ -308,6 +317,7 @@ Array [
         </span>
         <span>
           <a
+            aria-label="View document checklist for the Neighborhood Resident Housing Preference"
             href="/document-checklist"
             target="_blank"
           >
@@ -347,6 +357,7 @@ Array [
       >
         <span>
           <a
+            aria-label="Read more about the Live or Work in San Francisco Preference"
             href="http://sfmohcd.org/housing-preference-programs"
             target="_blank"
           >
@@ -355,6 +366,7 @@ Array [
         </span>
         <span>
           <a
+            aria-label="View document checklist for the Live or Work in San Francisco Preference"
             href="/document-checklist"
             target="_blank"
           >
@@ -389,6 +401,7 @@ Array [
       >
         <span>
           <a
+            aria-label="View document checklist for the Alice Griffith Housing Development Resident"
             href="/document-checklist"
             target="_blank"
           >

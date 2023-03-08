@@ -45,7 +45,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       </div>
     </div>
     <button
-      className="bg-blue-500 h-12 mt-2 p-3"
+      aria-label="Submit number"
+      className="bg-blue-500 h-12 mt-2 p-3 translate"
+      type="submit"
     >
       <span
         className="ui-icon ui-medium"

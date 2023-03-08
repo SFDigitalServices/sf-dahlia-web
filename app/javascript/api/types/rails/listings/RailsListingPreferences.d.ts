@@ -1,6 +1,7 @@
 export type RailsListingPreference = {
   NRHPDistrict: string
   appTotal: number
+  customPreferenceDescription: boolean
   description: string
   listingId: string
   listingPreferenceID: string
