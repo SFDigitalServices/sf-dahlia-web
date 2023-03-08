@@ -82,6 +82,12 @@ module Force
       Request.new.get(endpoint)
     end
 
+    def self.listing_pricing_table(listing_id)
+      esc_listing_id = CGI.escape(listing_id)
+      endpoint = "/ListingPricingTable/#{esc_listing_id}"
+      Request.new.get(endpoint)
+    end
+
     def self.check_household_eligibility(listing_id, params)
       listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
