@@ -170,8 +170,12 @@ const Layout = (props: LayoutProps) => {
           imageOnly={true}
           mobileText={true}
           logoWidth={"medium"}
+          logoClass="translate"
           menuLinks={getMenuLinks(!!profile, signOut)}
-          strings={{ skipToMainContent: t("t.skipToMainContent") }}
+          strings={{
+            skipToMainContent: t("t.skipToMainContent"),
+            logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
+          }}
           mainContentId={"main-content"}
         />
 
@@ -182,7 +186,7 @@ const Layout = (props: LayoutProps) => {
 
       <SiteFooter>
         <FooterSection>
-          <img src={getAssetPath("logo-city.png")} alt="City &#38; County of San Francisco Logo" />
+          <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
         </FooterSection>
         <FooterSection small>
           <p className="text-gray-500">

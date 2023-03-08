@@ -13,10 +13,10 @@ describe("<HomePage />", () => {
   })
 
   it("shows the correct footer logo path", async () => {
-    const { getByAltText } = await renderAndLoadAsync(
+    const { getByTestId } = await renderAndLoadAsync(
       <HomePage assetPaths={{ "logo-city.png": "/public/logo.png" }} />
     )
-    const sfLogo = getByAltText("City & County of San Francisco Logo")
+    const sfLogo = getByTestId("footer-logo-test-id")
     expect(sfLogo).not.toBeNull()
     expect(sfLogo).toHaveAttribute("src", "/public/logo.png")
   })
