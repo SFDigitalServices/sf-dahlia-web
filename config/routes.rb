@@ -7,7 +7,6 @@ end
 
 Rails.application.routes.draw do
   root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
-
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
           get 'lottery_buckets'
           get 'lottery_ranking'
           get 'preferences'
+          get 'listingPricingTable'
         end
         collection do
           get 'ami' => 'listings#ami'
