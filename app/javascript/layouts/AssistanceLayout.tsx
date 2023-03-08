@@ -5,7 +5,7 @@ import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
-const languageToSFGovMap = (lang: string) => {
+export const languageToSFGovMap = (lang: string) => {
   switch (lang) {
     case "es":
       return "https://sf.gov/es/node/55"
@@ -28,7 +28,6 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
   const { getAssetPath } = React.useContext(ConfigContext)
 
   const lang = languageToSFGovMap(getCurrentLanguage(window.location.pathname))
-  console.log(lang)
 
   return (
     <Layout title={title}>

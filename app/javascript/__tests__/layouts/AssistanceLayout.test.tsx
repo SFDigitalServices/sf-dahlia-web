@@ -1,6 +1,6 @@
 import React from "react"
 import { within } from "@testing-library/react"
-import AssistanceLayout from "../../layouts/AssistanceLayout"
+import AssistanceLayout, { languageToSFGovMap } from "../../layouts/AssistanceLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import renderer from "react-test-renderer"
 
@@ -29,6 +29,15 @@ describe("<AssistanceLayout />", () => {
 
     expect(getByText(TitleText)).not.toBeNull()
     expect(getByText(SubtitleText)).not.toBeNull()
+  })
+
+  it("lanauageToSFGovMap returns the proper url", () => {
+    expect(languageToSFGovMap("en")).toBe(
+      "https://sf.gov/departments/mayors-office-housing-and-community-development"
+    )
+    expect(languageToSFGovMap("es")).toBe("https://sf.gov/es/node/55")
+    expect(languageToSFGovMap("zh")).toBe("https://sf.gov/zh-hant/node/55")
+    expect(languageToSFGovMap("tl")).toBe("https://sf.gov/fil/node/55")
   })
 
   describe("Contact Bar", () => {
