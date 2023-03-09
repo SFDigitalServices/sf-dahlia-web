@@ -1,13 +1,16 @@
 import { t } from "@bloom-housing/ui-components"
 import React from "react"
-import Layout from "../../layouts/Layout"
+import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-
+// Counselors can help you with your DAHLIA application and housing search.
 const HousingCounselors = () => {
   return (
-    <Layout title={t("pageTitle.housingCounselors")}>
-      {<h1>{t("pageTitle.housingCounselors")}</h1>}
-    </Layout>
+    <AssistanceLayout
+      title={t("assistance.title.housingCouneslors")}
+      subtitle={t("assistance.subtitle.housingCouneslors")}
+    >
+      <h1>{t("assistance.title.housingCouneslors")}</h1>
+    </AssistanceLayout>
   )
 }
 

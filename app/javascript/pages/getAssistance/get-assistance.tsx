@@ -1,11 +1,16 @@
 import { t } from "@bloom-housing/ui-components"
 import React from "react"
-import Layout from "../../layouts/Layout"
+import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 
 const GetAssistance = () => {
   return (
-    <Layout title={t("pageTitle.getAssistance")}>{<h1>{t("pageTitle.getAssistance")}</h1>}</Layout>
+    <AssistanceLayout
+      title={t("assistance.title.getAssistance")}
+      subtitle={t("assistance.subtitle.getAssistance")}
+    >
+      <h1>{t("assistance.title.getAssistance")}</h1>
+    </AssistanceLayout>
   )
 }
 

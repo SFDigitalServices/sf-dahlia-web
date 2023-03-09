@@ -166,7 +166,7 @@ exports[`For Rent renders ForRent component 1`] = `
     </header>
     <main
       className="md:overflow-x-hidden"
-      data-testid="main-content-test-id"
+      data-test-id="main-content-test-id"
       id="main-content"
     >
       <div
@@ -313,7 +313,7 @@ exports[`For Rent renders ForRent component 1`] = `
       >
         <img
           alt=""
-          data-testid="footer-logo-test-id"
+          data-test-id="footer-logo-test-id"
         />
       </div>
     </div>

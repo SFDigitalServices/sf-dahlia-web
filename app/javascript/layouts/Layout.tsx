@@ -179,14 +179,18 @@ const Layout = (props: LayoutProps) => {
           mainContentId={"main-content"}
         />
 
-        <main data-testid="main-content-test-id" id="main-content" className="md:overflow-x-hidden">
+        <main
+          data-test-id="main-content-test-id"
+          id="main-content"
+          className="md:overflow-x-hidden"
+        >
           <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
         </main>
       </div>
 
       <SiteFooter>
         <FooterSection>
-          <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
+          <img src={getAssetPath("logo-city.png")} alt="" data-test-id="footer-logo-test-id" />
         </FooterSection>
         <FooterSection small>
           <p className="text-gray-500">
