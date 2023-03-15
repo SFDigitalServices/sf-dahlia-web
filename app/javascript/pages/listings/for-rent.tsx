@@ -4,6 +4,7 @@ import Markdown from "markdown-to-jsx"
 import {
   ActionBlock,
   ActionBlockLayout,
+  Heading,
   t,
   LinkButton,
   PageHeader,
@@ -98,7 +99,7 @@ const getFindMoreActionBlock = () => {
       <div className="bg-primary-darker">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
-            header={t("rentalDirectory.callouttitle")}
+            header={<Heading priority={2}>{t("rentalDirectory.callouttitle")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[

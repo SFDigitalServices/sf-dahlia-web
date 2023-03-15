@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 
-import { t, SiteAlert, Hero, ActionBlock } from "@bloom-housing/ui-components"
+import { t, SiteAlert, Heading, Hero, ActionBlock } from "@bloom-housing/ui-components"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -36,7 +36,7 @@ const HomePage = (_props: HomePageProps) => {
       />
       <div className="homepage-extra mt-2">
         <ActionBlock
-          header={t("welcome.newListingEmailAlert")}
+          header={<Heading priority={2}>{t("welcome.newListingEmailAlert")}</Heading>}
           actions={[
             <Link className="button" key="action-1" external={true} href={listingsAlertUrl}>
               {t("welcome.signUpToday")}

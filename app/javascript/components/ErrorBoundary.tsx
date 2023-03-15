@@ -1,5 +1,5 @@
 import React, { ErrorInfo, ReactNode } from "react"
-import { ActionBlock, AppearanceStyleType, Button, t } from "@bloom-housing/ui-components"
+import { ActionBlock, AppearanceStyleType, Button, Heading, t } from "@bloom-housing/ui-components"
 import "./ErrorBoundary.scss"
 import { localizedPath } from "../util/routeUtil"
 
@@ -52,7 +52,7 @@ class ErrorBoundary extends React.Component<Props, State> {
           return (
             <ActionBlock
               className="error-boundary"
-              header={t("errorBoundary.description")}
+              header={<Heading priority={2}>{t("errorBoundary.description")}</Heading>}
               actions={[
                 <Button
                   onClick={() => (window.location.href = localizedPath("/"))}

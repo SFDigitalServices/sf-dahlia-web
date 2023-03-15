@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
+import { ActionBlock, ActionBlockLayout, Heading, t } from "@bloom-housing/ui-components"
 
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"
@@ -87,7 +87,7 @@ const getFindMoreActionBlock = () => {
       <div className="bg-primary-darker">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
-            header={t("saleDirectory.callout.title")}
+            header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
