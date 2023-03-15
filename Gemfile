@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.6.8'
+ruby '2.7.7'
 
 # same method is used in https://github.com/rails/rails/blob/master/Gemfile
 git_source(:github) do |repo_name|
