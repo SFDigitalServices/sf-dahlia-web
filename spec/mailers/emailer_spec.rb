@@ -10,7 +10,7 @@ describe Emailer, type: :mailer do
         last_name: 'Tester',
         listing_id: 'a0W0P00000F8YG4UAN',
       }
-      @listing_name = 'Automated Test Listing (please do not modify)'
+      @listing_name = 'TEST Automated Listing (do not modify)'
     end
 
     let(:mail) { Emailer.submission_confirmation(@params) }
@@ -41,7 +41,7 @@ describe Emailer, type: :mailer do
         last_name: 'Tester',
         listing_id: 'a0W0P00000F8YG4UAN',
       }
-      @listing_name = 'Automated Test Listing (please do not modify)'
+      @listing_name = 'TEST Automated Listing (do not modify)'
     end
 
     let(:mail) { Emailer.draft_application_saved(@params) }

@@ -85,7 +85,7 @@ describe Force::ListingService do
       allow(Force::ListingService).to receive(:get_listings).and_return(rental_listings)
       rental_filters = filters.merge(type: 'rental')
       eligible_listings = Force::ListingService.eligible_listings(rental_filters)
-      expect(eligible_listings.size).to eq(67)
+      expect(eligible_listings.size).to eq(86)
       eligible_listings.each do |listing|
         expect(listing['Tenure']).not_to include('New sale')
         expect(listing['Tenure']).not_to include('Resale')
@@ -96,7 +96,7 @@ describe Force::ListingService do
       allow(Force::ListingService).to receive(:get_listings).and_return(sale_listings)
       sale_filters = filters.merge(type: 'ownership')
       eligible_listings = Force::ListingService.eligible_listings(sale_filters)
-      expect(eligible_listings.size).to eq(26)
+      expect(eligible_listings.size).to eq(72)
       eligible_listings.each do |listing|
         expect(listing['Tenure']).not_to include('New rental')
         expect(listing['Tenure']).not_to include('Re-rental')

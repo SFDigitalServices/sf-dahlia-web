@@ -14,7 +14,7 @@ module ArcGISService
     end
 
     def data
-      response = HTTP.timeout(:global, write: 2, connect: 5, read: 5)
+      response = HTTP.timeout( write: 2, connect: 5, read: 5)
                      .get(api_url + "?#{query_params.to_query}")
 
       if response.code >= 400
@@ -41,6 +41,7 @@ module ArcGISService
         end
       end
     rescue JSON::ParserError => error
+      # require 'pry-byebug';binding.pry
       add_error(:invalid_response, error)
       send_errors
     end

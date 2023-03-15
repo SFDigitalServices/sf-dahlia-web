@@ -80,6 +80,7 @@ do ->
         ]}
         minMax = ListingEligibilityService.occupancyMinMax(listing)
         expect(minMax).toEqual [2, 7]
+
       it 'returns null for max if the listing is a sale unit and has no maxOccupancy', ->
         listing = {'unitSummary': [
           {'minOccupancy':2},

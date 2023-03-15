@@ -91,7 +91,7 @@ describe 'Gis API' do
     let(:json) { JSON.parse(response.body) }
 
     it 'sends a success response' do
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'sends valid gis information' do
@@ -167,7 +167,7 @@ describe 'Gis API' do
     let(:json) { JSON.parse(response.body) }
 
     it 'sends a success response' do
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'sends a nil boundary match' do

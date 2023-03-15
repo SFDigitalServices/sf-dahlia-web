@@ -32,11 +32,12 @@ RemoveUnusedMethodsInControllersCheck:
         "Overrides::RegistrationsController#error_checks_for_create",
         "Overrides::SessionsController#render_create_error_not_confirmed",
         "Overrides::SessionsController#render_create_error_bad_credentials",
+        "Overrides::PasswordsController#render_edit_error",
         "Overrides::PasswordsController#edit",
         "Overrides::PasswordsController#resource_update_method",
         "Overrides::PasswordsController#render_update_success",
         "AuthController#sign_in",
-        "SitemapsController#generate"
+        "SitemapsController#generate",
       ],
   }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

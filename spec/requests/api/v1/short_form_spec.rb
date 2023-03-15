@@ -79,7 +79,7 @@ describe 'ShortForm API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the response data is present
     expect(json).not_to be_nil
@@ -108,7 +108,7 @@ describe 'ShortForm API' do
           post url, params: params.merge(format: :json)
         end
       end
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -128,7 +128,7 @@ describe 'ShortForm API' do
         )
       end
       json = JSON.parse(response.body)
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(json).not_to be_nil
     end
   end
@@ -149,7 +149,7 @@ describe 'ShortForm API' do
           params: @auth_headers,
         )
       end
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -173,7 +173,7 @@ describe 'ShortForm API' do
       VCR.use_cassette('shortform/update_application') do
         put url, params: params.merge(@auth_headers)
       end
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'does not return success response for an unauthorized application' do
@@ -186,7 +186,7 @@ describe 'ShortForm API' do
       VCR.use_cassette('shortform/update_unauthorized_application') do
         put url, params: params.merge(@auth_headers)
       end
-      expect(response).not_to be_success
+      expect(response).not_to be_successful
     end
   end
 
@@ -211,7 +211,7 @@ describe 'ShortForm API' do
         params = clean_json_for_vcr(params)
         put url, params: params.merge(@auth_headers)
       end
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -228,7 +228,7 @@ describe 'ShortForm API' do
       VCR.use_cassette('shortform/show_application') do
         get url, params: @auth_headers
       end
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end
