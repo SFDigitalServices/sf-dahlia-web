@@ -64,7 +64,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
               modalClassNames="md:max-w-0 w-screen"
               innerClassNames="p-0"
               closeClassNames="z-50"
-              scrollable
+              scrollableModal
             >
               <ListingDetailsLotterySearchForm
                 listing={listing}
