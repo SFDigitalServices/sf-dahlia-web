@@ -21,7 +21,6 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
       </figure>
       <aside
         aria-label="A picture of the building Statuses"
-        className="image-card__status"
       />
       <div
         className="image-card-tag__wrapper"
@@ -116,7 +115,6 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
       </figure>
       <aside
         aria-label="A picture of the building Statuses"
-        className="image-card__status"
       />
       <div
         className="image-card-tag__wrapper"

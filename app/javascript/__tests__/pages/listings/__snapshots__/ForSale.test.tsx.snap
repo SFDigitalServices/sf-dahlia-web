@@ -279,11 +279,15 @@ exports[`For Sale renders ForSale component 1`] = `
                     </svg>
                   </span>
                 </div>
-                <h2
+                <div
                   className="action-block__header"
                 >
-                  Get emailed whenever a new listing is posted.
-                </h2>
+                  <h2
+                    className=""
+                  >
+                    Get emailed whenever a new listing is posted.
+                  </h2>
+                </div>
               </div>
               <div
                 className="action-block__actions"
