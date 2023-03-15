@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.7'
+ruby '3.1.3'
 
 # same method is used in https://github.com/rails/rails/blob/master/Gemfile
 git_source(:github) do |repo_name|
@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2.5'
+gem 'rails', '~> 6.1.7.3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -26,7 +26,7 @@ gem 'puma', '~> 4.3.12'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', group: :doc
 
 # takes care of importing javascript dependencies
 # see /bower.json for more info
@@ -40,8 +40,10 @@ gem 'angular-rails-templates'
 gem "webpacker", "~> 5.2.1"
 gem "webpacker-react", "~> 0.3.2"
 
+gem 'psych', '< 4'
+
 # salesforce
-gem 'restforce', '~>3.1.0', require: false
+gem 'restforce', '~> 6.2.2', require: false
 
 # handy ruby extensions
 gem 'facets', require: false
@@ -62,8 +64,8 @@ gem 'oj_mimic_json'
 
 # user authentication
 # Note: devise 4.7.2 is unverified and causes undefined method `rails51?' errors.
-gem 'devise', '4.7.1'
-gem 'devise_token_auth', '~> 1.1.4'
+gem 'devise', '4.9.0'
+gem 'devise_token_auth', '~> 1.2.1'
 
 # postgresql database
 gem 'pg'
@@ -79,22 +81,22 @@ gem 'actionpack-page_caching', '~> 1.2.2'
 
 
 # image manipulation
-gem 'mini_magick', '~> 4.9.4'
+gem 'mini_magick', '~> 4.12.0'
 gem 'image_optimizer', '~> 1.7.0'
 
 gem 'prerender_rails', '~> 1.6.0'
 
 # http requests made easy
-gem 'http', '~> 2.0.2', require: false
+gem 'http', '~> 5.1.1', require: false
 
 gem 'sidekiq', '~> 5.2.10'
 
-gem 'hashdiff', '~> 0.3.0'
+gem 'hashdiff'
 
 gem 'fog-aws'
 
 # https://elements.heroku.com/addons/sentry
-gem 'sentry-raven', '~> 2.6.3'
+gem 'sentry-raven'
 
 group :test do
   gem 'codeclimate-test-reporter', '= 0.6.0'
@@ -107,7 +109,7 @@ group :test do
 end
 
 group :development do
-  gem 'rubocop', '~> 0.52.0', require: false
+  gem 'rubocop', '~> 1.49', require: false
   gem 'rails_best_practices'
   gem 'overcommit'
   # Spring speeds up development by keeping your application running in the
@@ -138,6 +140,5 @@ group :production do
   gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
-  gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
   gem 'rails_autoscale_agent'
 end
