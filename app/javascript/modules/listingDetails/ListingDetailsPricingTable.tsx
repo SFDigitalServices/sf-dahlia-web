@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
+import Markdown from "markdown-to-jsx"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
 import RailsUnit, {
@@ -168,6 +169,10 @@ const buildAccordions = (
         }
       })
 
+      const incomeString = (income: string) => {
+        return `Income <span class='font-semibold'> up to $${income}</span> per month` //TODO needs translations
+      }
+
       return (
         <ContentAccordion
           key={index}
@@ -193,7 +198,6 @@ const buildAccordions = (
             </div>
           }
           accordionTheme={"gray"}
-          barClass={"mt-4"}
         />
       )
     }
