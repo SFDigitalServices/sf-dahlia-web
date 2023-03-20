@@ -147,14 +147,14 @@ const buildAccordions = (
 
         const responsiveTableHeaders = listingIsSale
           ? {
-              units: { name: "t.unitType" },
+              units: { name: "t.units" },
               income: { name: "shortFormNav.income" },
               sale: { name: "listings.stats.salesPrice" },
               monthlyHoaDues: { name: "listings.stats.monthlyHoaDues" },
             }
           : {
-              units: { name: "t.unitType" },
-              income: { name: "t.incomeRange" },
+              units: { name: "t.units" },
+              income: { name: "label.income" },
               rent: { name: "t.rent" },
             }
 
@@ -168,10 +168,6 @@ const buildAccordions = (
           },
         }
       })
-
-      const incomeString = (income: string) => {
-        return `Income <span class='font-semibold'> up to $${income}</span> per month` //TODO needs translations
-      }
 
       return (
         <ContentAccordion
