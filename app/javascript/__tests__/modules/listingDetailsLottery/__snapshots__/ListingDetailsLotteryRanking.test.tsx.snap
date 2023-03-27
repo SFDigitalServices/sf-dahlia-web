@@ -15,14 +15,22 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     <p
       className="border-b border-gray-450 pb-4 text-gray-700"
     >
-      Ranking in these lists is considered in the order shown here.
+      <p>
+        Ranking in these lists is considered in the order shown here. 
+        <a
+          href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+          target="_blank"
+        >
+          Learn how lottery ranking works.
+        </a>
+      </p>
     </p>
   </header>
   <div
     className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
-      className="ui-icon ui-medium mx-4"
+      className="ui-icon ui-medium mx-xf4"
       data-test-id={null}
     >
       <svg
@@ -107,7 +115,15 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
     <p
       className="border-b border-gray-450 pb-4 text-gray-700"
     >
-      Ranking in these lists is considered in the order shown here.
+      <p>
+        Ranking in these lists is considered in the order shown here. 
+        <a
+          href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+          target="_blank"
+        >
+          Learn how lottery ranking works.
+        </a>
+      </p>
     </p>
   </header>
   <div
@@ -207,7 +223,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
     className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
-      className="ui-icon ui-medium mx-4"
+      className="ui-icon ui-medium mx-xf4"
       data-test-id={null}
     >
       <svg

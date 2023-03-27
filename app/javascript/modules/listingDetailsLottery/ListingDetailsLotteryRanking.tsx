@@ -44,7 +44,7 @@ export const ListingDetailsLotteryRanking = ({
         {applicantSelectedForPreference && (
           <header className="px-8">
             <Heading styleType="underlineWeighted" priority={2}>
-              {t("lottery.rankingTitle")}""
+              {t("lottery.rankingTitle")}
             </Heading>
             <p className="border-b border-gray-450 pb-4 text-gray-700">
               {renderMarkup(

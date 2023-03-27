@@ -93,7 +93,15 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         <p
           className="pb-4 text-gray-700 text-xs mx-8"
         >
-          Ranking in these lists is considered in the order shown here.
+          <p>
+            Ranking in these lists is considered in the order shown here. 
+            <a
+              href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+              target="_blank"
+            >
+              Learn how lottery ranking works.
+            </a>
+          </p>
         </p>
       </header>
       <div>
