@@ -3,6 +3,7 @@ import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-component
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import { renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
@@ -15,7 +16,7 @@ interface TooltipProps {
 const Tooltip = ({ text }: TooltipProps) => {
   return (
     <div className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4">
-      <Icon className="mx-4" size="medium" symbol="info" />
+      <Icon className="mx-xf4" size="medium" symbol="info" />
       <p>{text}</p>
     </div>
   )
@@ -43,10 +44,14 @@ export const ListingDetailsLotteryRanking = ({
         {applicantSelectedForPreference && (
           <header className="px-8">
             <Heading styleType="underlineWeighted" priority={2}>
-              {t("lottery.rankingTitle")}
+              {t("lottery.rankingTitle")}""
             </Heading>
             <p className="border-b border-gray-450 pb-4 text-gray-700">
-              {t("lottery.rankingOrderNote")}
+              {renderMarkup(
+                `${t("lottery.rankingOrderNote", {
+                  lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
+                })}`
+              )}
             </p>
           </header>
         )}
