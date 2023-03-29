@@ -16,7 +16,7 @@ interface TooltipProps {
 const Tooltip = ({ text }: TooltipProps) => {
   return (
     <div className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4">
-      <Icon className="mx-xf4" size="medium" symbol="info" />
+      <Icon className="mx-4" size="medium" symbol="info" />
       <p>{text}</p>
     </div>
   )
