@@ -30,7 +30,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
     className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
-      className="ui-icon ui-medium mx-xf4"
+      className="ui-icon ui-medium mx-4"
       data-test-id={null}
     >
       <svg
@@ -223,7 +223,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
     className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
   >
     <span
-      className="ui-icon ui-medium mx-xf4"
+      className="ui-icon ui-medium mx-4"
       data-test-id={null}
     >
       <svg
