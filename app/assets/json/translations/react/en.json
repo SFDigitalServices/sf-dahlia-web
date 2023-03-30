@@ -1091,7 +1091,7 @@
   "lottery.numberApplicantsQualifiedForGeneralPool": "%{number} applicants are on this list. Please note, preference holders will be considered for all units first.",
   "lottery.numberApplicantsQualifiedForPreference": "%{number} applicants are on this list.",
   "lottery.rank": "Rank",
-  "lottery.rankingOrderNote": "Ranking in these lists is considered in the order shown here. <a target='_blank' href='%{lotteryRankingVideoUrl}'>Learn how lottery ranking works.</a>",
+  "lottery.rankingOrderNote": "Ranking in these lists is considered in the order shown here. <a target='_blank' href='%{lotteryRankingVideoUrl}'>Watch a video on how lottery ranking works.</a>",
   "lottery.rankingPreferenceConsiderationNote": "Please note, there are other preferences that will be considered for units first.",
   "lottery.rankingPreferencesConsideredOverGeneralNote": "Please note, preference holders will be considered for all units first.",
   "lottery.rankingTitle": "Your preference ranking",
