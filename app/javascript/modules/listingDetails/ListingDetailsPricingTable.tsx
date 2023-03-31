@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, classifyPricingDataByOccupancy } from "../../util/listingUtil"
-import { getListingPricingTableUnits } from "../../api/listingApiService"
+import { getListingPricingTableUnits, getUnits } from "../../api/listingApiService"
 import { RailsListingPricingTableUnit } from "../../api/types/rails/listings/RailsListingPricingTableUnit"
 
 export interface ListingDetailsPricingTableProps {
@@ -31,7 +31,7 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
   return {
     units: {
       cellText: unitSummary.unitType,
-      cellSubText: `${unitSummary?.availability} ${t("t.available")}`,
+      cellSubText: `${unitSummary?.Availability} ${t("t.available")}`,
     },
     income: {
       cellText: `$${unitSummary.absoluteMinIncome?.toLocaleString()} to $${unitSummary.absoluteMaxIncome?.toLocaleString()}`,
@@ -61,17 +61,18 @@ const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
 }
 
 const buildRentalCells = (unitSummary: RailsListingPricingTableUnit) => {
+  // console.log(unitSummary)
   return {
     units: {
-      cellText: unitSummary.unitType,
-      cellSubText: `${unitSummary.availability} ${t("t.available")}`,
+      cellText: unitSummary.Unit_Type,
+      cellSubText: `${unitSummary.Availability} ${t("t.available")}`,
     },
     income: {
       cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
       cellSubText: t("t.perMonth"),
     },
     rent: {
-      cellText: `$${unitSummary.maxMonthlyRent}`,
+      cellText: `$${unitSummary.BMR_Rent_Monthly}`,
       cellSubText: t("t.perMonth"),
     },
   }
@@ -109,7 +110,7 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
 
         return {
           header: t("listings.stats.upToPercentAmi", {
-            amiPercent: unitsSummaryByAMI.unitMaxAMI,
+            amiPercent: unitsSummaryByAMI.Max_AMI_for_Qualifying_Unit,
           }),
           tableData: {
             stackedData: responsiveTableRows,
@@ -205,9 +206,34 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
 
   useEffect(() => {
     if (listing.Id) {
-      void getListingPricingTableUnits(listing.Id).then((units: RailsListingPricingTableUnit[]) => {
-        setPricingDataState({ units, hasFetched: true })
-      })
+      void getListingPricingTableUnits(listing.Id).then(
+        (unitsTwo: RailsListingPricingTableUnit[]) => {
+          const units = [
+            {
+              attributes: {
+                type: "Unit",
+                url: "/services/data/v35.0/sobjects/Unit/a0b0P00001Fb3yNQAR",
+              },
+              Unit_Type: "1 BR",
+              Availability: 1,
+              BMR_Rent_Monthly: 2102,
+              BMR_Rental_Minimum_Monthly_Income_Needed: 5255,
+              Unit_Number: "311",
+              Unit_Floor: "3",
+              Number_of_Bathrooms: 1,
+              Status: "Available",
+              isReservedCommunity: false,
+              AMI_chart_type: "HUD Unadjusted",
+              AMI_chart_year: 2016,
+              Max_AMI_for_Qualifying_Unit: 100,
+              Min_Occupancy: 1,
+              Max_Occupancy: 3,
+              Id: "a0b0P00001Fb3yNQAR",
+            },
+          ]
+          setPricingDataState({ units, hasFetched: true })
+        }
+      )
     }
 
     return () => {
