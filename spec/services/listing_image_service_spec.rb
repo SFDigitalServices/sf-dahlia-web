@@ -40,6 +40,18 @@ describe ListingImageService do
       expect(image_processor.errors).to include(error_message)
     end
 
+    it 'should return standard error when reading image' do
+      stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
+        .to_return(body: File.new("#{Rails.root}/README.md"), status: 500)
+
+      image_processor = ListingImageService.new(listing).process_image
+
+      error_message =
+        'ListingImageService error: Unable to process image for listing '\
+        'a0W0P00000F8YG4UAN with image'
+      expect(image_processor.errors.first).to start_with(error_message)
+    end
+
     it 'should upload a listing image' do
       ListingImageService.new(listing).process_image
 

@@ -96,6 +96,10 @@ class ListingImageService
   rescue MiniMagick::Invalid
     add_error("Image for listing #{listing_id} is unreadable")
     false
+  rescue StandardError => e
+    add_error("Unable to process image for listing #{listing_id} with image"\
+      " #{image} - #{e.class.name}, #{e.message}")
+    false
   end
 
   def create_or_update_listing_image
