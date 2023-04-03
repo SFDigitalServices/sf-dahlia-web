@@ -1212,10 +1212,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-10.0.1.tgz#6a57867a6a85615a40099bc169d0846d5a800c81"
-  integrity sha512-N/M1QhYty993ZgXe3n9ppaYoupjGySlFwrbHGm5tOL4wbG/YDSQUtAVQCGNhOGlzZZfB9s6s2sUUfOpmBx9ZYA==
+"@bloom-housing/ui-components@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.0.0.tgz#c3210ba2c2649ec6656d16e409919d638746f02a"
+  integrity sha512-asPLVpLEBRKg5xoCBc3WQ4xdKuwJF317VlcV4CeKcPVVpW00wZLYQSzK4elMAaqBPI8FHfVw2J72F0KiXGg8UA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1224,7 +1224,6 @@
     "@mapbox/mapbox-sdk" "^0.13.0"
     "@types/jwt-decode" "^2.2.1"
     "@types/mdx" "^2.0.1"
-    "@types/node" "^12.12.67"
     "@types/node-polyglot" "^2.4.1"
     "@types/react-beautiful-dnd" "^13.1.1"
     "@types/react-dom" "^16.9.5"
@@ -1239,10 +1238,10 @@
     markdown-to-jsx "7.1.8"
     nanoid "^3.1.12"
     node-polyglot "^2.4.0"
-    react "^17.0.2"
-    react-accessible-accordion "^3.3.5"
+    react "18.2.0"
+    react-accessible-accordion "5.0.0"
     react-beautiful-dnd "^13.1.0"
-    react-dom "^17.0.2"
+    react-dom "18.2.0"
     react-dropzone "^11.3.2"
     react-focus-lock "^2.5.2"
     react-hook-form "^6.15.5"
@@ -1983,11 +1982,6 @@
   version "14.14.31"
   resolved "https://registry.npmjs.org/@types/node/-/node-14.14.31.tgz"
   integrity sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==
-
-"@types/node@^12.12.67":
-  version "12.20.4"
-  resolved "https://registry.npmjs.org/@types/node/-/node-12.20.4.tgz"
-  integrity sha512-xRCgeE0Q4pT5UZ189TJ3SpYuX/QGl6QIAOAIeDSbAVAd2gX1NxSZup4jNVK7cxIeP8KDSbJgcckun495isP1jQ==
 
 "@types/node@^14.14.31":
   version "14.17.27"
@@ -11998,10 +11992,10 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-accessible-accordion@^3.3.5:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/react-accessible-accordion/-/react-accessible-accordion-3.3.5.tgz#5d035994a261c832a57e7822f1bbacf914c5a5cc"
-  integrity sha512-yCh3tx+jNuOPs+m58LOBFTGDEaGvM8UfuCNznr855FDAWzwV8V/ZH/TVBvgqH0npP58KrrVrHpj4jcy0EE5hEw==
+react-accessible-accordion@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-accessible-accordion/-/react-accessible-accordion-5.0.0.tgz#5b61d06aec38906a99f977c10324d9bddec0f64c"
+  integrity sha512-MT2obYpTgLIIfPr9d7hEyvPB5rg8uJcHpgA83JSRlEUHvzH48+8HJPvzSs+nM+XprTugDgLfhozO5qyJpBvYRQ==
 
 react-beautiful-dnd@^13.1.0:
   version "13.1.0"
@@ -12022,6 +12016,14 @@ react-clientside-effect@^1.2.5:
   integrity sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==
   dependencies:
     "@babel/runtime" "^7.12.13"
+
+react-dom@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.0"
 
 react-dom@^17.0.2:
   version "17.0.2"
@@ -12199,6 +12201,13 @@ react-transition-group@^4.4.1:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+  dependencies:
+    loose-envify "^1.1.0"
 
 react@^17.0.2:
   version "17.0.2"
@@ -12862,6 +12871,13 @@ scheduler@^0.20.2:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+scheduler@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
+  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
+  dependencies:
+    loose-envify "^1.1.0"
 
 schema-utils@^1.0.0:
   version "1.0.0"
