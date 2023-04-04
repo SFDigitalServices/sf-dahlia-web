@@ -29,7 +29,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
         className="buy-header_left_col"
       >
         <li
-          className="mb-8 style-none"
+          className="mb-8 list-none"
         >
           <h2
             className="text__underline-weighted mb-5 text-gray-750"

@@ -112,7 +112,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {content}
     </ListSection>
   ) : (
-    <li className="mb-8 style-none">
+    <li className="mb-8 list-none">
       <Heading className="mb-5 text-gray-750" priority={2} styleType={"underlineWeighted"}>
         {t("saleDirectory.beforeApplying.title")}
       </Heading>

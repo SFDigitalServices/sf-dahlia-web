@@ -79,7 +79,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
 <li
-  className="mb-8 style-none"
+  className="mb-8 list-none"
 >
   <h2
     className="text__underline-weighted mb-5 text-gray-750"
