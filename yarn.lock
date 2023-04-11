@@ -1212,10 +1212,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.0.0.tgz#c3210ba2c2649ec6656d16e409919d638746f02a"
-  integrity sha512-asPLVpLEBRKg5xoCBc3WQ4xdKuwJF317VlcV4CeKcPVVpW00wZLYQSzK4elMAaqBPI8FHfVw2J72F0KiXGg8UA==
+"@bloom-housing/ui-components@^12.0.3":
+  version "12.0.3"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.0.3.tgz#2106d5923cc63d90dac283f9c161c37324dc4b25"
+  integrity sha512-4s9pWqRcuSlbk/4GOdSqiXE2VXBgriglt95V4TOFn/xKwCcQCzOpBktaYinI4Sxe79Bo9PlEKEBsXqeUKg9lQA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -1225,6 +1225,7 @@
     "@types/jwt-decode" "^2.2.1"
     "@types/mdx" "^2.0.1"
     "@types/node-polyglot" "^2.4.1"
+    "@types/react" "^18.0.32"
     "@types/react-beautiful-dnd" "^13.1.1"
     "@types/react-dom" "^16.9.5"
     "@types/react-text-mask" "^5.4.6"
@@ -2079,12 +2080,26 @@
     "@types/prop-types" "*"
     csstype "^3.0.2"
 
+"@types/react@^18.0.32":
+  version "18.0.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.34.tgz#e553444a578f023e6e1ac499514688fb80b0a984"
+  integrity sha512-NO1UO8941541CJl1BeOXi8a9dNKFK09Gnru5ZJqkm4Q3/WoQJtHvmwt0VX0SB9YCEwe7TfSSxDuaNmx6H2BAIQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
 "@types/responselike@*":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/responselike/-/responselike-1.0.0.tgz#251f4fe7d154d2bad125abe1b429b23afd262e29"
   integrity sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==
   dependencies:
     "@types/node" "*"
+
+"@types/scheduler@*":
+  version "0.16.3"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.3.tgz#cef09e3ec9af1d63d2a6cc5b383a737e24e6dcf5"
+  integrity sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
 
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"
