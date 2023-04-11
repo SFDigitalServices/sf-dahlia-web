@@ -174,7 +174,6 @@ describe 'Listings API' do
   end
 
   it 'gets lottery buckets for a Listing' do
-    # require 'pry-byebug';binding.pry
     VCR.use_cassette('listings/lottery-buckets') do
       get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
     end

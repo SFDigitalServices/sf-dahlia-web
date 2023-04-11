@@ -41,7 +41,6 @@ module ArcGISService
         end
       end
     rescue JSON::ParserError => error
-      # require 'pry-byebug';binding.pry
       add_error(:invalid_response, error)
       send_errors
     end

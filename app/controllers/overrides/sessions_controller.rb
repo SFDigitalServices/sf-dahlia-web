@@ -3,11 +3,6 @@ module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
     wrap_parameters format: []
 
-    # def create
-    #   # require 'pry-byebug';binding.pry
-    #   super
-    # end
-
     private
 
     def render_create_success

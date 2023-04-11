@@ -36,6 +36,8 @@ RemoveUnusedMethodsInControllersCheck:
         "Overrides::PasswordsController#edit",
         "Overrides::PasswordsController#resource_update_method",
         "Overrides::PasswordsController#render_update_success",
+        "Overrides::RegistrationsController#account_update_params",
+        "ListingController#use_react_app",
         "AuthController#sign_in",
         "SitemapsController#generate",
       ],
