@@ -64,7 +64,7 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # These numbers are from the recommended dalli config: https://devcenter.heroku.com/articles/memcachier#ruby
-  config.cache_store = :dalli_store, nil, {
+  config.cache_store = :mem_cache_store, nil, {
     socket_timeout: 1.5,       # default is 0.5
     socket_failure_delay: 0.2, # default is 0.01
   }

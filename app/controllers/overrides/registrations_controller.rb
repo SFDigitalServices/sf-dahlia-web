@@ -127,7 +127,7 @@ module Overrides
         @resource.errors.set(:salesforce_contact_id, ["can't be blank"])
         return false
       end
-      @resource.update_attributes(
+      @resource.update(
         salesforce_contact_id: salesforce_contact['contactId'],
       )
     end

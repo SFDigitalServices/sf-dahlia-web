@@ -1,7 +1,7 @@
 {
   "name":"sf-dahlia-web",
   "description":"",
-  "stack": "heroku-18",
+  "stack": "heroku-22",
   "scripts":{
     "postdeploy": "rake db:setup && rake db:migrate && rake listing_images:process_images"
   },
@@ -108,6 +108,10 @@
     },
     "COVID_UPDATE": {
       "required": false
+    },
+    "NODE_OPTIONS": {
+      "required": false,
+      "value": "--openssl-legacy-provider --max_old_space_size=4096"
     }
   }
 }

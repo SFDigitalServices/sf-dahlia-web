@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'support/vcr_setup'
 require 'support/jasmine'
+require 'rails_helper'
 
 describe 'Account API' do
   login_user
@@ -13,7 +14,7 @@ describe 'Account API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the response data is present
     expect(json['applications']).not_to be_nil
@@ -37,14 +38,14 @@ describe 'Account API' do
     it 'checks for existing user account by email address' do
       get '/api/v1/account/check-account', params: { email: @user.email }
       json = JSON.parse(response.body)
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(json['account_exists']).to eq(true)
     end
 
     it 'checks for non-existing user account by email address' do
       get '/api/v1/account/check-account', params: { email: 'nobody@not.email' }
       json = JSON.parse(response.body)
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(json['account_exists']).to eq(false)
     end
   end
