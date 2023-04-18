@@ -5,6 +5,7 @@ import ReactDOM from "react-dom"
 
 import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
+import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
 import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
@@ -22,15 +23,22 @@ const withAppSetup = <P extends ObjectWithAssets>(
   if (process.env.NODE_ENV !== "production") {
     void axe(React, ReactDOM, 1000)
   }
+  console.time("test1")
+
   return (
     <ErrorBoundary boundaryScope={BoundaryScope.page}>
       <NavigationProvider>
-        <ConfigProvider assetPaths={props.assetPaths}>
-          <UserProvider>
-            <IdleTimeout onTimeout={() => console.log("Logout")} useFormTimeout={useFormTimeout} />
-            <Component {...props} />
-          </UserProvider>
-        </ConfigProvider>
+        <ListingDetailsProvider>
+          <ConfigProvider assetPaths={props.assetPaths}>
+            <UserProvider>
+              <IdleTimeout
+                onTimeout={() => console.log("Logout")}
+                useFormTimeout={useFormTimeout}
+              />
+              <Component {...props} />
+            </UserProvider>
+          </ConfigProvider>
+        </ListingDetailsProvider>
       </NavigationProvider>
     </ErrorBoundary>
   )

@@ -22,7 +22,12 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
+import {
+  getAmiChartDataFromUnits,
+  isOpen,
+  isPluralSRO,
+  listingHasSROUnits,
+} from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
@@ -32,6 +37,7 @@ import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
+import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -40,6 +46,34 @@ const ListingDetail = () => {
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
   useTranslate()
+
+  const {
+    fetchUnits,
+    fetchedUnits,
+    fetchingUnits,
+    fetchAmiCharts,
+    fetchedAmiCharts,
+    fetchingAmiCharts,
+  } = useContext(ListingDetailsContext)
+
+  useEffect(() => {
+    if (listing?.listingID && !fetchedUnits && !fetchingUnits) {
+      fetchUnits(listing.listingID)
+    }
+  }, [listing?.listingID, fetchUnits, fetchingUnits, fetchedUnits])
+
+  useEffect(() => {
+    if (listing?.listingID && getAmiChartDataFromUnits && !fetchingAmiCharts && !fetchedAmiCharts) {
+      const chartsToFetch = getAmiChartDataFromUnits(listing.Units)
+      fetchAmiCharts(chartsToFetch)
+    }
+  }, [
+    listing?.listingID,
+    getAmiChartDataFromUnits,
+    fetchAmiCharts,
+    fetchedAmiCharts,
+    fetchingAmiCharts,
+  ])
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)

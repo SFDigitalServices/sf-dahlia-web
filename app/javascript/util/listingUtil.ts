@@ -1,7 +1,8 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import { RailsListingPricingTableUnit } from "../api/types/rails/listings/RailsListingPricingTableUnit"
+import { RailsUnit } from "../api/types/rails/listings/RailsUnit"
+import { RailsAmiChart, RailsAmiChartValue } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
@@ -161,102 +162,293 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   )
 }
 
-/*
- * Version of this function where it iterates over the range of occupancies. Currently exploring
- * if this can be done on the backend.
- */
-export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUnit[]) => {
-  const mappedUnitsByOccupancy = []
-  units.forEach((unit: RailsListingPricingTableUnit) => {
-    for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
-      const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
-        return s.occupancy === i
-      })
+export const deriveIncomeFromAmiCharts = (
+  unit: RailsUnit,
+  occupancy: number,
+  amiCharts: RailsAmiChart[]
+) => {
+  if (!unit || !occupancy || !amiCharts) {
+    return null
+  }
 
-      if (!mappedOccupancy) {
-        mappedUnitsByOccupancy.push({
-          occupancy: i,
-          listingId: unit.listingID,
-          absoluteMinIncome: unit.absoluteMinIncome,
-          absoluteMaxIncome: unit.absoluteMaxIncome,
-          summaryByAMI: [
-            {
-              Max_AMI_for_Qualifying_Unit: unit.Max_AMI_for_Qualifying_Unit,
-              summaryByType: [{ ...unit }],
-            },
-          ],
-        })
-      } else {
-        const ami = mappedOccupancy.summaryByAMI.find((s) => {
-          return unit.Max_AMI_for_Qualifying_Unit === s.Max_AMI_for_Qualifying_Unit
-        })
-        if (ami) {
+  const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
+    return (
+      Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
+      amiData.chartType === unit.AMI_chart_type
+    )
+  })?.values
 
-          const unitWithIncomeRangeAndRent = ami.summaryByType.find((s) => {
-            // TODO - add the income range to this function. Awaiting salesforce fields to be added
-          return unit.BMR_Rent_Monthly === s.BMR_Rent_Monthly
-        })
-
-        if (!unitWithIncomeRangeAndRent){
-          ami.summaryByType.push({
-            ...unit,
-          })
-        } else {
-          unitWithIncomeRangeAndRent.Availability += unit.Availability
-        }
-
-
-        } else {
-          mappedOccupancy.summaryByAMI.push({
-            Max_AMI_for_Qualifying_Unit: unit.Max_AMI_for_Qualifying_Unit,
-            summaryByType: [{ ...unit }],
-          })
-        }
-      }
-    }
+  const occupancyAmi = amiFromAmiChart?.find((ami: RailsAmiChartValue) => {
+    return ami.numOfHousehold === occupancy
   })
-  return mappedUnitsByOccupancy
+
+  if (occupancyAmi) {
+    return Math.floor(occupancyAmi?.amount / 12)
+  }
+
+  return null
 }
 
-// export const classifyPricingDataByOccupancy = (
-//   units: RailsListingPricingTableUnit[]
-// ): MappedUnitsByOccupancy[] => {
+export const applyMaxIncomeToUnit = (amiCharts: RailsAmiChart[]) => (unit: RailsUnit) => {
+  unit.maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+  return unit
+}
+
+export const addUnitsWithEachOccupancy = (units: RailsUnit[]) => {
+  const totalUnits = []
+  units.forEach((unit: RailsUnit) => {
+    if (!unit.Max_Occupancy) {
+      unit.Max_Occupancy = 3
+    }
+    for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
+      totalUnits.push({ ...unit, occupancy: i })
+    }
+  })
+  return totalUnits
+}
+
+export const buildAmiArray = (units: RailsUnit[]) => {
+  const arrayOfAmis = []
+  units.forEach((unit: RailsUnit) => {
+    if (arrayOfAmis.includes(unit.Max_AMI_for_Qualifying_Unit)) {
+      return
+    }
+    arrayOfAmis.push(unit.Max_AMI_for_Qualifying_Unit)
+  })
+  arrayOfAmis.sort(function (a, b) {
+    return a - b
+  })
+  return arrayOfAmis
+}
+
+export const buildOccupanciesArray = (units: RailsUnit[]) => {
+  const arrayOfOccupancies = []
+  units.forEach((unit: RailsUnit) => {
+    if (arrayOfOccupancies.includes(unit.occupancy)) {
+      return
+    }
+    arrayOfOccupancies.push(unit.occupancy)
+  })
+
+  arrayOfOccupancies.sort(function (a, b) {
+    return a - b
+  })
+  return arrayOfOccupancies
+}
+
+export const matchSharedUnitFields = (units: RailsUnit[]) => {
+  const collapsedUnits = []
+  units.forEach((unit: RailsUnit) => {
+    const summaryThatsAlreadyAdded = collapsedUnits.find((collapsedUnit: RailsUnit) => {
+      return (
+        unit.BMR_Rent_Monthly === collapsedUnit.BMR_Rent_Monthly &&
+        unit.Unit_Type === collapsedUnit.Unit_Type &&
+        unit.occupancy === collapsedUnit.occupancy &&
+        unit.maxMonthlyIncomeNeeded === collapsedUnit.maxMonthlyIncomeNeeded &&
+        unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
+          collapsedUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
+        unit.Max_AMI_for_Qualifying_Unit === collapsedUnit.Max_AMI_for_Qualifying_Unit
+      )
+    })
+
+    if (!summaryThatsAlreadyAdded) {
+      collapsedUnits.push(unit)
+    } else {
+      summaryThatsAlreadyAdded.Availability += unit.Availability
+    }
+  })
+  return collapsedUnits
+}
+
+export const getAbsoluteMinAndMaxIncome = (units: RailsUnit[]) => {
+  let absoluteMaxIncome = 0
+  let absoluteMinIncome = units[0]?.BMR_Rental_Minimum_Monthly_Income_Needed
+
+  units.forEach((unit: RailsUnit) => {
+    /*
+     * todo - throw an error if a field is missing?
+     */
+    if (unit?.maxMonthlyIncomeNeeded > absoluteMaxIncome) {
+      absoluteMaxIncome = unit.maxMonthlyIncomeNeeded
+    }
+    if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed < absoluteMinIncome) {
+      absoluteMinIncome = unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+    }
+  })
+
+  return { absoluteMaxIncome, absoluteMinIncome }
+}
+
+export const classifyUnitsByOccupancy = (
+  units: RailsUnit[],
+  amiCharts: RailsAmiChart[]
+): MappedUnitsByOccupancy[] => {
+  /*
+   * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
+   * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
+   * and a unit with occupancy 3
+   */
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(units)
+
+  /*
+   * We have to derive the max income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max income to the unit object
+   */
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+
+  /*
+   * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
+   * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
+   */
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+
+  /*
+   * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
+   * This gives us the foundation to build the pricing table accordions.
+   */
+  const occupanciesArray = buildOccupanciesArray(unitSummaries)
+
+  /*
+   * With the necessary fields added to the units and the array of occupancies built, we can
+   * then map the Unit data from the api into the pricing table.
+   */
+  const sortedUnitsByOccupancy = occupanciesArray.map((occupancy) => {
+    const unitsWithOccupancy = unitSummaries.filter((unit) => unit.occupancy === occupancy)
+
+    const { absoluteMaxIncome, absoluteMinIncome } = getAbsoluteMinAndMaxIncome(unitsWithOccupancy)
+
+    return {
+      occupancy,
+      absoluteMaxIncome: absoluteMaxIncome,
+      absoluteMinIncome: absoluteMinIncome,
+      amiRows: buildAmiArray(unitsWithOccupancy).map((ami) => {
+        const unitsWithAmi = unitsWithOccupancy.filter(
+          (unit) => unit.Max_AMI_for_Qualifying_Unit === ami
+        )
+        return {
+          ami,
+          units: unitsWithAmi,
+        }
+      }),
+    }
+  })
+
+  return sortedUnitsByOccupancy
+}
+
+export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChart[] => {
+  const uniqueCharts = []
+
+  units.forEach((unit: RailsUnit) => {
+    const uniqueChartMatch = uniqueCharts.find((uniqueChart) => {
+      return (
+        uniqueChart.year === unit.AMI_chart_year &&
+        uniqueChart.type === unit.AMI_chart_type &&
+        uniqueChart.percent === unit.Max_AMI_for_Qualifying_Unit
+      )
+    })
+
+    if (!uniqueChartMatch) {
+      uniqueCharts.push({
+        year: unit.AMI_chart_year,
+        type: unit.AMI_chart_type,
+        percent: unit.Max_AMI_for_Qualifying_Unit,
+      })
+    }
+  })
+
+  return uniqueCharts
+}
+
+// export const classifyPricingDataByOccupancyOld = (
+//   units: RailsListingPricingTableUnit[],
+//   amiCharts
+// ) => {
 //   const mappedUnitsByOccupancy = []
-//   units.forEach((unit: RailsListingPricingTableUnit) => {
-//     const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
-//       return s.occupancy === unit.maxOccupancy
-//     })
-
-//     if (!mappedOccupancy) {
-//       mappedUnitsByOccupancy.push({
-//         occupancy: unit.maxOccupancy,
-//         listingId: unit.listingID,
-//         absoluteMinIncome: unit.absoluteMinIncome,
-//         absoluteMaxIncome: unit.absoluteMaxIncome,
-//         summaryByAMI: [
-//           {
-//             unitMaxAMI: unit.unitMaxAMI,
-//             summaryByType: [{ ...unit }],
-//           },
-//         ],
-//       })
-//     } else {
-//       const ami = mappedOccupancy.summaryByAMI.find((s) => {
-//         return unit.unitMaxAMI === s.unitMaxAMI
+//   const totalUnits = expandOccupancies(units)
+//
+//   units.map(applyMaxIncome).forEach((unit: RailsListingPricingTableUnit, index: number) => {
+//     if (!unit.Max_Occupancy) {
+//       unit.Max_Occupancy = 3
+//     }
+//     // we need to plop a row for every possible occupancy. A 5 bdrm house can house between 1 - 5 people
+//     for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
+//       //mappedUnitsByOccupancy - this is where we build an object mirrorring the UI. So each of these is an accordion
+//       const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
+//         return s.occupancy === i
 //       })
 
-//       if (ami) {
-//         ami.summaryByType.push({
-//           ...unit,
+//       const maxAmount = deriveIncomeFromAmiCharts(unit, i, amiCharts)
+
+//       if (!mappedOccupancy) {
+//         mappedUnitsByOccupancy.push({
+//           occupancy: i,
+//           absoluteMinIncome: unit.BMR_Rental_Minimum_Monthly_Income_Needed,
+//           absoluteMaxIncome: maxAmount,
+//           summaryByAMI: [
+//             {
+//               Max_AMI_for_Qualifying_Unit: unit.Max_AMI_for_Qualifying_Unit,
+//               summaryByType: [{ ...unit, BMR_Rental_Maximum_Monthly_Income: maxAmount }],
+//             },
+//           ],
 //         })
 //       } else {
-//         mappedOccupancy.summaryByAMI.push({
-//           unitMaxAMI: unit.unitMaxAMI,
-//           summaryByType: [{ ...unit }],
+//         if (maxAmount > mappedOccupancy.absoluteMaxIncome) {
+//           mappedOccupancy.absoluteMaxIncome = maxAmount
+//         }
+
+//         if (unit.BMR_Rental_Minimum_Monthly_Income_Needed < mappedOccupancy.absoluteMinIncome) {
+//           mappedOccupancy.absoluteMinIncome = unit.BMR_Rental_Minimum_Monthly_Income_Needed
+//         }
+
+//         // ami within an aoccupancy
+//         const ami = mappedOccupancy.summaryByAMI.find((s) => {
+//           return unit.Max_AMI_for_Qualifying_Unit === s.Max_AMI_for_Qualifying_Unit
 //         })
+
+//         if (ami) {
+//           const unitWithIncomeRangeAndRent = ami.summaryByType.find((s) => {
+//             return (
+//               unit.BMR_Rent_Monthly === s.BMR_Rent_Monthly &&
+//               unit.Unit_Type === s.Unit_Type &&
+//               s.BMR_Rental_Maximum_Monthly_Income === maxAmount &&
+//               s.BMR_Rental_Minimum_Monthly_Income_Needed ===
+//                 unit.BMR_Rental_Minimum_Monthly_Income_Needed
+//             )
+//           })
+
+//           if (!unitWithIncomeRangeAndRent) {
+//             ami.summaryByType.push({
+//               ...unit,
+//               BMR_Rental_Maximum_Monthly_Income: maxAmount,
+//             })
+//           } else {
+//             unitWithIncomeRangeAndRent.Availability += unit.Availability
+//           }
+
+//           // gotta push a new ami
+//         } else {
+//           const index = mappedOccupancy.summaryByAMI.findIndex((s) => {
+//             if (unit.Max_AMI_for_Qualifying_Unit > s.Max_AMI_for_Qualifying_Unit) {
+//               return true
+//             }
+//           })
+
+//           if (index >= 0) {
+//             mappedOccupancy.summaryByAMI.splice(index - 1, 0, {
+//               Max_AMI_for_Qualifying_Unit: unit.Max_AMI_for_Qualifying_Unit,
+//               summaryByType: [{ ...unit, BMR_Rental_Maximum_Monthly_Income: maxAmount }],
+//             })
+//           } else {
+//             // it's the 0th
+//             mappedOccupancy.summaryByAMI.splice(0, 0, {
+//               Max_AMI_for_Qualifying_Unit: unit.Max_AMI_for_Qualifying_Unit,
+//               summaryByType: [{ ...unit, BMR_Rental_Maximum_Monthly_Income: maxAmount }],
+//             })
+//           }
+//         }
 //       }
 //     }
 //   })
-
 //   return mappedUnitsByOccupancy
 // }
