@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
-import { RailsUnits } from "../../api/types/rails/listings/RailsUnit"
+import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
 export interface UnitGroupType {
-  units: RailsUnits[]
+  units: RailsUnit[]
   availability: number
   minSqFt: number
   maxSqFt: number
@@ -37,7 +37,7 @@ const getPriorityTypeText = (priorityType) => {
   }
 }
 
-const getTableData = (units: RailsUnits[]) =>
+const getTableData = (units: RailsUnit[]) =>
   units.map((unit) => ({
     unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
     area: {
