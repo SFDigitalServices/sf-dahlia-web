@@ -5,8 +5,6 @@ import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 export enum ListingDetailsActions {
   StartFetchingUnits = "SetFetchingUnits",
   FinishFetchingUnits = "FinishFetchingUnits",
-  SetUnits = "SetUnits",
-  SetAmiCharts = "SetAmiCharts",
   StartFetchingAmiCharts = "SetFetchingAmiCharts",
   SetFetchedAmiCharts = "SetFetchedAmiCharts",
   SetFetchingAmiChartsError = "SetFetchingAmiChartsError",
@@ -15,8 +13,6 @@ export enum ListingDetailsActions {
 }
 
 export const startFetchingUnits = createAction(ListingDetailsActions.StartFetchingUnits)()
-export const setUnits = createAction(ListingDetailsActions.SetUnits)()
-export const setAmiCharts = createAction(ListingDetailsActions.SetAmiCharts)()
 export const finishFetchingAmiCharts = createAction(ListingDetailsActions.FinishFetchingAmiCharts)<
   RailsAmiChart[]
 >()

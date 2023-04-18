@@ -27,11 +27,6 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
     fetchedAmiCharts: false,
     fetchingAmiChartsError: null,
     fetchingUnitsError: null,
-    amiChartData: {
-      years: [],
-      percentages: [],
-      types: [],
-    },
   })
 
   const contextValues: ContextProps = {
@@ -41,7 +36,6 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
     fetchingAmiCharts: state.fetchingAmiCharts,
     fetchedUnits: state.fetchedUnits,
     fetchingUnits: state.fetchingUnits,
-    amiChartData: state.amiChartData,
     fetchingAmiChartsError: state.fetchingAmiChartsError,
     fetchingUnitsError: state.fetchingUnitsError,
     fetchUnits: (listingId: string) => {
