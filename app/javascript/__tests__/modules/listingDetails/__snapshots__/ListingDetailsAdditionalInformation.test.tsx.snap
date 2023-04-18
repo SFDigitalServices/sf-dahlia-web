@@ -5,13 +5,17 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
   className="responsive-content-item "
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="/image-url"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="/image-url"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -27,7 +31,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -121,13 +125,17 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
   className="responsive-content-item "
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="/image-url"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="/image-url"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -143,7 +151,7 @@ exports[`ListingDetailsAdditionalInformation displays additional information sec
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"

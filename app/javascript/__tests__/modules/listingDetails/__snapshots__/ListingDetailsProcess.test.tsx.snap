@@ -65,7 +65,7 @@ Array [
         >
           <span
             className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            data-testid={null}
           >
             <svg
               fill="#0077DA"
@@ -92,7 +92,7 @@ Array [
         >
           <span
             className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            data-testid={null}
           >
             <svg
               fill="#0077DA"

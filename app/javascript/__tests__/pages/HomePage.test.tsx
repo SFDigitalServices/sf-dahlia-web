@@ -1,6 +1,6 @@
 import React from "react"
 
-import { within } from "@testing-library/react"
+import { waitFor, within } from "@testing-library/react"
 
 import HomePage from "../../pages/index"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
@@ -25,28 +25,27 @@ describe("<HomePage />", () => {
     const getLinkByText = (container: HTMLElement, text: string) =>
       within(container).getByRole("link", { name: text })
 
-    let mainContentContainer: HTMLElement = null
-    beforeEach(async () => {
-      mainContentContainer = (await renderAndLoadAsync(<HomePage assetPaths={{}} />)).getByTestId(
-        "main-content-test-id"
-      )
-    })
-
-    it("renders a rent button", () => {
+    it("renders a rent button", async () => {
+      const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
+      const mainContentContainer = getByTestId("main-content-test-id")
       expect(getLinkByText(mainContentContainer, "Rent")).toHaveAttribute(
         "href",
         "/listings/for-rent"
       )
     })
 
-    it("renders a buy button", () => {
+    it("renders a buy button", async () => {
+      const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
+      const mainContentContainer = getByTestId("main-content-test-id")
       expect(getLinkByText(mainContentContainer, "Buy")).toHaveAttribute(
         "href",
         "/listings/for-sale"
       )
     })
 
-    it("renders the email sign up link", () => {
+    it("renders the email sign up link", async () => {
+      const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
+      const mainContentContainer = getByTestId("main-content-test-id")
       const signUpLink = getLinkByText(mainContentContainer, "Sign Up today")
       expect(signUpLink).toHaveAttribute(
         "href",

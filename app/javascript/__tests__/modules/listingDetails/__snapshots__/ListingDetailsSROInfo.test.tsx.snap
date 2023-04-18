@@ -14,7 +14,7 @@ exports[`ListingDetailsLotteryInfo displays the Merry Go Round Housing descripti
     </h3>
   </div>
   <div
-    className="markdown"
+    className="markdown info-card__content"
   >
     <span>
       This property offers single rooms for up to 2 people only. Tenants may share bathrooms, and sometimes kitchen facilities.
@@ -37,7 +37,7 @@ exports[`ListingDetailsLotteryInfo displays the SRO info box for a regular SRO 1
     </h3>
   </div>
   <div
-    className="markdown"
+    className="markdown info-card__content"
   >
     <span>
       This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.

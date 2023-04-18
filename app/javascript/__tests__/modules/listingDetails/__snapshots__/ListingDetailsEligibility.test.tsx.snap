@@ -5,13 +5,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -27,7 +31,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -216,7 +220,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -381,7 +385,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </span>
         </div>
       </div>
-      
     </li>
   </ul>
 </li>
@@ -392,13 +395,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -414,7 +421,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -603,7 +610,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -787,13 +794,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -804,12 +815,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </h2>
       <span
         className="detail-header__subtitle"
-      >
-        
-      </span>
+      />
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -1085,7 +1094,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -1113,13 +1122,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -1135,7 +1148,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -1324,7 +1337,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -1508,13 +1521,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -1530,7 +1547,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -1719,7 +1736,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -1903,13 +1920,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -1920,12 +1941,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       </h2>
       <span
         className="detail-header__subtitle"
-      >
-        
-      </span>
+      />
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -2092,7 +2111,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
       >
         <span
           className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"

@@ -9,11 +9,15 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
   <header
     className="detail-header md:hidden"
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src=""
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src=""
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -29,7 +33,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -174,7 +178,6 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           >
             December 8, 2019
           </span>
-          
         </p>
         <div
           className="text-sm text-gray-700 false"
@@ -249,7 +252,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         >
           <span
             className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            data-testid={null}
           >
             <svg
               fill="#0077DA"
@@ -276,7 +279,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         >
           <span
             className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            data-testid={null}
           >
             <svg
               fill="#0077DA"
@@ -310,7 +313,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         >
           <span
             className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            data-testid={null}
           >
             <svg
               fill="#0077DA"

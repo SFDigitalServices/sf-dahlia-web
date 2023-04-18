@@ -21,14 +21,14 @@ describe("<AssistanceLayout />", () => {
   it("renders PageHeader", async () => {
     const TitleText = "Title Text"
     const SubtitleText = "SubTitle Text"
-    const { getByText } = await renderAndLoadAsync(
+    const { getAllByText } = await renderAndLoadAsync(
       <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
         <h1>{CHILD_CONTENT}</h1>
       </AssistanceLayout>
     )
 
-    expect(getByText(TitleText)).not.toBeNull()
-    expect(getByText(SubtitleText)).not.toBeNull()
+    expect(getAllByText(TitleText).length).not.toBeNull()
+    expect(getAllByText(SubtitleText).length).not.toBeNull()
   })
 
   it("lanauageToSFGovMap returns the proper url", () => {

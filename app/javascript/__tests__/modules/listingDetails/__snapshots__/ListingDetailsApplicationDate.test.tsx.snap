@@ -9,7 +9,7 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
   >
     <span
       className="ui-icon ui-medium"
-      data-test-id={null}
+      data-testid={null}
     >
       <svg
         fill="currentColor"
@@ -39,7 +39,7 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
   >
     <span
       className="ui-icon ui-medium"
-      data-test-id={null}
+      data-testid={null}
     >
       <svg
         fill="var(--bloom-color-red-700)"

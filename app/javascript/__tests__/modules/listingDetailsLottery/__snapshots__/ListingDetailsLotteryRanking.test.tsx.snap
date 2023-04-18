@@ -31,7 +31,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
   >
     <span
       className="ui-icon ui-medium mx-4"
-      data-test-id={null}
+      data-testid={null}
     >
       <svg
         fill="currentColor"
@@ -246,7 +246,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
   >
     <span
       className="ui-icon ui-medium mx-4"
-      data-test-id={null}
+      data-testid={null}
     >
       <svg
         fill="currentColor"

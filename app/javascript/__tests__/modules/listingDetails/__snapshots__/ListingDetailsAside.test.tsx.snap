@@ -8,11 +8,15 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
     <header
       className="detail-header md:hidden"
     >
-      <img
-        alt=""
-        className="detail-header__image "
-        src=""
-      />
+      <span
+        className="detail-header__image-container"
+      >
+        <img
+          alt=""
+          className="detail-header__image "
+          src=""
+        />
+      </span>
       <hgroup
         className="detail-header__hgroup"
       >
@@ -28,7 +32,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
         </span>
         <span
           className="ui-icon ui-medium"
-          data-test-id={null}
+          data-testid={null}
         >
           <svg
             fill="currentColor"
@@ -55,7 +59,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
           >
             <span
               className="ui-icon ui-medium"
-              data-test-id={null}
+              data-testid={null}
             >
               <svg
                 fill="var(--bloom-color-red-700)"

@@ -12,7 +12,7 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
     >
       <span
         className="ui-icon ui-3xl"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="transparent"
@@ -83,11 +83,11 @@ exports[`MailingListSignup displays mailing list sign up 1`] = `
         </svg>
       </span>
     </div>
-    <h2
+    <div
       className="action-block__header"
     >
       Get emailed whenever a new listing is posted.
-    </h2>
+    </div>
   </div>
   <div
     className="action-block__actions"

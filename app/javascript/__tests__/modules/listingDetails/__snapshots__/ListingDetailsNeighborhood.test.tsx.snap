@@ -5,13 +5,17 @@ exports[`ListingDetailsNeighborhood displays map 1`] = `
   className="responsive-content-item bg-primary-lighter"
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="test"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="test"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -27,7 +31,7 @@ exports[`ListingDetailsNeighborhood displays map 1`] = `
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"

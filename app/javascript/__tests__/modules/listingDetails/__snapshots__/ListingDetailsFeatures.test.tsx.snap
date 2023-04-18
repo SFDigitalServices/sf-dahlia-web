@@ -5,13 +5,17 @@ exports[`ListingDetailsFeatures displays listing details features section when r
   className="responsive-content-item "
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-features.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-features.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -27,7 +31,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -125,9 +129,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
       </dt>
       <dd
         className="description__body"
-      >
-        
-      </dd>
+      />
     </dl>
     <div
       className="flex justify-center"
@@ -167,6 +169,9 @@ exports[`ListingDetailsFeatures displays listing details features section when r
       <section
         className="grid-section"
       >
+        <div
+          className="grid-section__header-container"
+        />
         <div
           className="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
         >
@@ -226,13 +231,17 @@ exports[`ListingDetailsFeatures displays listing details features section when s
   className="responsive-content-item "
 >
   <header
-    className="detail-header"
+    className="detail-header "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-features.svg"
-    />
+    <span
+      className="detail-header__image-container"
+    >
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-features.svg"
+      />
+    </span>
     <hgroup
       className="detail-header__hgroup"
     >
@@ -248,7 +257,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
       </span>
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="currentColor"
@@ -372,9 +381,7 @@ exports[`ListingDetailsFeatures displays listing details features section when s
       </dt>
       <dd
         className="description__body"
-      >
-        
-      </dd>
+      />
     </dl>
     <div
       className="flex justify-center"

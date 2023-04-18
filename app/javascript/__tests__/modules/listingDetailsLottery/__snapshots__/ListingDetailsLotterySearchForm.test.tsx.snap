@@ -51,7 +51,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
     >
       <span
         className="ui-icon ui-medium"
-        data-test-id={null}
+        data-testid={null}
       >
         <svg
           fill="#ffffff"

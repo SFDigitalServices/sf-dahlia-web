@@ -32,20 +32,20 @@ describe("ListingDetailsLotteryModal", () => {
 
   it("displays error when user submits form with empty lottery number", async () => {
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { findByText } = render(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    await user.click(screen.getByRole("button"))
-    getByText("Please enter a valid lottery number.")
+    user.click(screen.getByRole("button"))
+    findByText("Please enter a valid lottery number.")
   })
 
   it("displays error when user submits form with non numeric lottery number", async () => {
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { findByText } = render(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -53,9 +53,9 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123abc")
-    await user.click(screen.getByRole("button"))
-    getByText("Please enter a valid lottery number.")
+    userEvent.type(input, "123abc")
+    user.click(screen.getByRole("button"))
+    findByText("Please enter a valid lottery number.")
   })
 
   it("displays three results when lottery number found", async () => {
@@ -63,7 +63,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
 
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText } = await renderAndLoadAsync(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -71,13 +71,13 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
+    userEvent.type(input, "123")
+    user.click(screen.getByRole("button"))
 
-    getByText("Your preference ranking")
-    getByText("Displaced Tenant Housing Preference (DTHP)")
-    getByText("Certificate of Preference (COP)")
-    getByText("Live or Work in San Francisco Preference")
+    findByText("Your preference ranking")
+    findByText("Displaced Tenant Housing Preference (DTHP)")
+    findByText("Certificate of Preference (COP)")
+    findByText("Live or Work in San Francisco Preference")
   })
 
   it("displays error when invalid lottery number", async () => {
@@ -85,7 +85,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalInvalidLotteryNumber))
 
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText } = await renderAndLoadAsync(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -93,10 +93,10 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
 
-    getByText("The number you entered was not found.")
+    userEvent.type(input, "123")
+    user.click(screen.getByRole("button"))
+    findByText("The number you entered was not found.")
   })
 
   it("displays error when api error", async () => {
@@ -104,7 +104,7 @@ describe("ListingDetailsLotteryModal", () => {
     getLotteryResultsMock.mockReturnValue(Promise.resolve(null))
 
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText } = await renderAndLoadAsync(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
@@ -112,9 +112,9 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
 
-    getByText("We seem to be having a connection issue. Please try your search again.")
+    userEvent.type(input, "123")
+    user.click(screen.getByRole("button"))
+    findByText("We seem to be having a connection issue. Please try your search again.")
   })
 })
