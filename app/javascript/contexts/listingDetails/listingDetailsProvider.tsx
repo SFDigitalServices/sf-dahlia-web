@@ -3,7 +3,7 @@ import ListingDetailsReducer from "./listingDetailsReducer"
 import ListingDetailsContext, { ContextProps } from "./listingDetailsContext"
 import { getUnits, getAmiCharts } from "../../api/listingApiService"
 import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
 import {
   finishFetchingUnits,
   finishFetchingAmiCharts,
@@ -49,7 +49,7 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
           dispatch(setFetchingUnitsError(error))
         })
     },
-    fetchAmiCharts: (chartsToFetch) => {
+    fetchAmiCharts: (chartsToFetch: RailsAmiChartMetaData[]) => {
       dispatch(startFetchingAmiCharts())
       getAmiCharts(chartsToFetch)
         .then((amiCharts: RailsAmiChart[]) => {

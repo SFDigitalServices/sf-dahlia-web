@@ -1,6 +1,6 @@
 import { createContext } from "react"
 import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
 
 export type ContextProps = {
   units: RailsUnit[]
@@ -10,7 +10,7 @@ export type ContextProps = {
   fetchedUnits: boolean
   fetchingUnits: boolean
   fetchUnits: (listingId: string) => void
-  fetchAmiCharts: (year: Array<number>, percentages: Array<number>, types: Array<string>) => void
+  fetchAmiCharts: (chartsToFetch: RailsAmiChartMetaData[]) => void
   fetchingAmiChartsError: Error
   fetchingUnitsError: Error
 }
