@@ -23,7 +23,6 @@ const withAppSetup = <P extends ObjectWithAssets>(
   if (process.env.NODE_ENV !== "production") {
     void axe(React, ReactDOM, 1000)
   }
-  console.time("test1")
 
   return (
     <ErrorBoundary boundaryScope={BoundaryScope.page}>

@@ -11,3 +11,9 @@ export type RailsAmiChart = {
   values: Array<RailsAmiChartValue>
   chartType?: string
 }
+
+export type RailsAmiChartMetaData = {
+  percent: number
+  type: string
+  year: number
+}

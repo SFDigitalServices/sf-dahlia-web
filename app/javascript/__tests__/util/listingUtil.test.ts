@@ -16,7 +16,7 @@ import {
   addUnitsWithEachOccupancy,
   deriveIncomeFromAmiCharts,
   buildAmiArray,
-  classifyUnitsByOccupancy,
+  groupAndSortUnitsByOccupancy,
   getAmiChartDataFromUnits,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
@@ -398,15 +398,11 @@ describe("buildOccupanciesArray", () => {
   })
 })
 
-describe("classifyUnitsByOccupancy", () => {
+describe("groupAndSortUnitsByOccupancy", () => {
   it("should return the expected value", () => {
-    const actualOutput = classifyUnitsByOccupancy(units, amiCharts)
+    const actualOutput = groupAndSortUnitsByOccupancy(units, amiCharts)
     expect(actualOutput).toEqual(mappedUnitsByOccupancy)
   })
-
-  /*
-   * should we test some broken data states?
-   */
 })
 
 describe("getAmiChartDataFromUnits", () => {

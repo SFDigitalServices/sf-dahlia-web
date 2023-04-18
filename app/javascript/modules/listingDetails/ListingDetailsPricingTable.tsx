@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isHabitatListing, isSale, classifyUnitsByOccupancy } from "../../util/listingUtil"
+import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
 import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
 import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
@@ -15,7 +15,7 @@ export interface AmiRow {
   units: RailsUnit[]
 }
 
-export interface MappedUnitsByOccupancy {
+export interface GroupedUnitsByOccupancy {
   occupancy: number
   absoluteMinIncome: number
   absoluteMaxIncome: number
@@ -127,73 +127,75 @@ const buildAccordions = (
   listingIsSale: boolean,
   amiCharts: RailsAmiChart[]
 ) => {
-  let mappedUnitsByOccupancy: MappedUnitsByOccupancy[] = []
+  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
   if (units?.length) {
-    mappedUnitsByOccupancy = classifyUnitsByOccupancy(units, amiCharts)
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
   }
 
-  return mappedUnitsByOccupancy?.map((occupancy: MappedUnitsByOccupancy, index: number, array) => {
-    const accordionLength = array.length
+  return groupedUnitsByOccupancy?.map(
+    (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
+      const accordionLength = array.length
 
-    const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
-      const responsiveTableRows = amiRow.units.map((unit: RailsUnit) => {
-        return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
+        const responsiveTableRows = amiRow.units.map((unit: RailsUnit) => {
+          return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
+        })
+
+        const responsiveTableHeaders = listingIsSale
+          ? {
+              units: { name: "t.unitType" },
+              income: { name: "shortFormNav.income" },
+              sale: { name: "listings.stats.salesPrice" },
+              monthlyHoaDues: { name: "Monthly HOA Dues" },
+            }
+          : {
+              units: { name: "t.unitType" },
+              income: { name: "t.incomeRange" },
+              rent: { name: "t.rent" },
+            }
+
+        return {
+          header: t("listings.stats.upToPercentAmi", {
+            amiPercent: amiRow.ami,
+          }),
+          tableData: {
+            stackedData: responsiveTableRows,
+            headers: responsiveTableHeaders,
+          },
+        }
       })
 
-      const responsiveTableHeaders = listingIsSale
-        ? {
-            units: { name: "t.unitType" },
-            income: { name: "shortFormNav.income" },
-            sale: { name: "listings.stats.salesPrice" },
-            monthlyHoaDues: { name: "Monthly HOA Dues" },
-          }
-        : {
-            units: { name: "t.unitType" },
-            income: { name: "t.incomeRange" },
-            rent: { name: "t.rent" },
-          }
-
-      return {
-        header: t("listings.stats.upToPercentAmi", {
-          amiPercent: amiRow.ami,
-        }),
-        tableData: {
-          stackedData: responsiveTableRows,
-          headers: responsiveTableHeaders,
-        },
-      }
-    })
-
-    return (
-      <ContentAccordion
-        key={index}
-        initialExpanded={accordionLength === 1}
-        customBarContent={
-          <span className={"flex w-full justify-between items-center"}>
-            <span className={"flex items-center"}>
-              {occupancy?.occupancy > 1
-                ? `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
-                : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+      return (
+        <ContentAccordion
+          key={index}
+          initialExpanded={accordionLength === 1}
+          customBarContent={
+            <span className={"flex w-full justify-between items-center"}>
+              <span className={"flex items-center"}>
+                {occupancy?.occupancy > 1
+                  ? `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
+                  : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+              </span>
+              <span className={"flex items-center mr-2"}>
+                {t("listings.incomeRange.minMaxPerMonth", {
+                  min: occupancy?.absoluteMinIncome?.toLocaleString(),
+                  max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                })}
+              </span>
             </span>
-            <span className={"flex items-center mr-2"}>
-              {t("listings.incomeRange.minMaxPerMonth", {
-                min: occupancy?.absoluteMinIncome?.toLocaleString(),
-                max: occupancy?.absoluteMaxIncome?.toLocaleString(),
-              })}
-            </span>
-          </span>
-        }
-        customExpandedContent={
-          <div className={"p-4 border-2 border-gray-400 rounded-b-lg"}>
-            <CategoryTable categoryData={categoryData} />
-          </div>
-        }
-        accordionTheme={"gray"}
-        barClass={"mt-4"}
-      />
-    )
-  })
+          }
+          customExpandedContent={
+            <div className={"p-4 border-2 border-gray-400 rounded-b-lg"}>
+              <CategoryTable categoryData={categoryData} />
+            </div>
+          }
+          accordionTheme={"gray"}
+          barClass={"mt-4"}
+        />
+      )
+    }
+  )
 }
 
 const buildContent = (
@@ -203,8 +205,6 @@ const buildContent = (
   listingIsSale: boolean,
   listingIsHabitat: boolean
 ) => {
-  let mappedUnitsByOccupancy: MappedUnitsByOccupancy[] = []
-
   if (!dataHasBeenFetched) {
     return <Icon symbol="spinner" size="large" />
   }
@@ -214,30 +214,30 @@ const buildContent = (
   }
 
   if (listingIsHabitat) {
-    if (units?.length) {
-      // TODO - is this happening twice?
-      mappedUnitsByOccupancy = classifyUnitsByOccupancy(units, amiCharts)
-    }
-    const habitatStrings = mappedUnitsByOccupancy.map((unitByOccupancy) => {
-      return `${
-        unitByOccupancy.occupancy
-      } people household: $${unitByOccupancy.absoluteMinIncome?.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome?.toLocaleString()}`
-    })
+    return ""
+    // if (units?.length) {
+    //   groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
+    // }
+    // const habitatStrings = groupedUnitsByOccupancy.map((unitByOccupancy) => {
+    //   return `${
+    //     unitByOccupancy.occupancy
+    //   } people household: $${unitByOccupancy.absoluteMinIncome?.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome?.toLocaleString()}`
+    // })
 
-    return (
-      <>
-        <p>{t("listings.habitat.incomeRange.p4")}</p>
-        <ul>
-          {habitatStrings.map((habitatString) => {
-            return (
-              <li>
-                <p>{habitatString}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </>
-    )
+    // return (
+    //   <>
+    //     <p>{t("listings.habitat.incomeRange.p4")}</p>
+    //     <ul>
+    //       {habitatStrings.map((habitatString) => {
+    //         return (
+    //           <li>
+    //             <p>{habitatString}</p>
+    //           </li>
+    //         )
+    //       })}
+    //     </ul>
+    //   </>
+    // )
   }
   return buildAccordions(units, false, amiCharts)
 }

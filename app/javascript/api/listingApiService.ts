@@ -4,7 +4,7 @@ import { RailsListing } from "../modules/listings/SharedHelpers"
 import { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
 import { RailsUnit } from "./types/rails/listings/RailsUnit"
 import { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
-import { RailsAmiChart } from "./types/rails/listings/RailsAmiChart"
+import { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
 import {
   listing,
   listingPreferences,
@@ -68,9 +68,11 @@ export const getUnits = async (listingId: string): Promise<RailsUnit[]> =>
 /**
  * Get the ami charts for the given listing in a given year in a given set of ami percentages
  * @param {string} listingId, percentages, year
- * @returns {RailsListingAmiChart[]} list of Units for the listing
+ * @returns {RailsAmiChart[]} list of Units for the listing
  */
-export const getAmiCharts = async (chartsToFetch): Promise<RailsAmiChart[]> => {
+export const getAmiCharts = async (
+  chartsToFetch: RailsAmiChartMetaData[]
+): Promise<RailsAmiChart[]> => {
   // eslint-disable-next-line unicorn/no-array-reduce
   const queryParams = chartsToFetch.reduce((queryParam, amiChart) => {
     // eslint-disable-next-line unicorn/prefer-spread
