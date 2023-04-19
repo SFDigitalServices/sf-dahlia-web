@@ -67,7 +67,7 @@ const ListingDetail = () => {
       const chartsToFetch = getAmiChartDataFromUnits(listing.Units)
       fetchAmiCharts(chartsToFetch)
     }
-  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, listing.Units])
+  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, listing?.Units])
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
