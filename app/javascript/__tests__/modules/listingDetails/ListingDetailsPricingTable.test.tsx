@@ -19,11 +19,6 @@ describe("ListingDetailsPricingTable", () => {
           fetchedAmiCharts: false,
           fetchingAmiChartsError: null,
           fetchingUnitsError: null,
-          amiChartData: {
-            years: [],
-            percentages: [],
-            types: [],
-          },
         }}
       >
         <ListingDetailsPricingTable listing={closedRentalListing} />
@@ -44,11 +39,6 @@ describe("ListingDetailsPricingTable", () => {
           fetchedAmiCharts: true,
           fetchingAmiChartsError: null,
           fetchingUnitsError: null,
-          amiChartData: {
-            years: [],
-            percentages: [],
-            types: [],
-          },
         }}
       >
         <ListingDetailsPricingTable listing={closedRentalListing} />

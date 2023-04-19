@@ -19,7 +19,7 @@ import {
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
-import RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import "./ListingDetailsEligibility.scss"
 
