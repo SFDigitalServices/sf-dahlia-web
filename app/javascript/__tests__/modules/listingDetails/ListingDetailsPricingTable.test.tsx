@@ -29,7 +29,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("renders ListingDetailsPricingTable component", () => {
+  it("renders ListingDetailsPricingTable component with rental listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
@@ -49,7 +49,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("renders ListingDetailsPricingTable component with Open Sale Listing", () => {
+  it("renders ListingDetailsPricingTable component with open sale listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
