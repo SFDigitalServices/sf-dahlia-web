@@ -531,4 +531,3 @@ export const unitsGrouped = {
     maxSqFt: 1615,
   },
 }
-

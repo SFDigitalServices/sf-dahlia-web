@@ -31,11 +31,6 @@ describe("ListingDetailsUnitAccordion", () => {
             fetchedAmiCharts: false,
             fetchingAmiChartsError: null,
             fetchingUnitsError: null,
-            amiChartData: {
-              years: [],
-              percentages: [],
-              types: [],
-            },
           }}
         >
           <ListingDetailsUnitAccordions />
