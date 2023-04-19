@@ -30,3 +30,4 @@ export type RailsUnit = {
   maxMonthlyIncomeNeeded?: number
   Rent_percent_of_income?: number
 }
+

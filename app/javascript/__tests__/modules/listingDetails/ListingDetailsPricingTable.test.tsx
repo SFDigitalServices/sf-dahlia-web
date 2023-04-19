@@ -27,7 +27,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("renders ListingDetailsPricingTable component", async () => {
+  it("renders ListingDetailsPricingTable component", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{

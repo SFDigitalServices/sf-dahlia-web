@@ -112,7 +112,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
           <Description term={t("listings.features.unitFeatures")} description={""} />
         </dl>
         <ErrorBoundary boundaryScope={BoundaryScope.component}>
-          <ListingDetailsUnitAccordions listingId={listing.Id} />
+          <ListingDetailsUnitAccordions />
         </ErrorBoundary>
         {isRental(listing) && (
           <AdditionalFees

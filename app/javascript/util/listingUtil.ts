@@ -2,7 +2,11 @@ import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import { RailsUnit } from "../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart, RailsAmiChartMetaData, RailsAmiChartValue } from "../api/types/rails/listings/RailsAmiChart"
+import {
+  RailsAmiChart,
+  RailsAmiChartMetaData,
+  RailsAmiChartValue,
+} from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
@@ -359,4 +363,3 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
 
   return uniqueCharts
 }
-

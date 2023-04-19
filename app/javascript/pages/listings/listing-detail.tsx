@@ -63,17 +63,11 @@ const ListingDetail = () => {
   }, [listing?.listingID, fetchUnits, fetchingUnits, fetchedUnits])
 
   useEffect(() => {
-    if (listing?.listingID && getAmiChartDataFromUnits && !fetchingAmiCharts && !fetchedAmiCharts) {
+    if (listing?.listingID && !fetchingAmiCharts && !fetchedAmiCharts) {
       const chartsToFetch = getAmiChartDataFromUnits(listing.Units)
       fetchAmiCharts(chartsToFetch)
     }
-  }, [
-    listing?.listingID,
-    getAmiChartDataFromUnits,
-    fetchAmiCharts,
-    fetchedAmiCharts,
-    fetchingAmiCharts,
-  ])
+  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, listing.Units])
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
