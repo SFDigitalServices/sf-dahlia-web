@@ -24,7 +24,7 @@ export interface GroupedUnitsByOccupancy {
   amiRows: AmiRow[]
 }
 
-const buildSalePriceCellRow = (unit: RailsUnit) => {
+const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
@@ -57,7 +57,7 @@ const buildSalePriceCellRow = (unit: RailsUnit) => {
   }
 }
 
-const buildSaleHoaDuesCellRow = (unit: RailsUnit) => {
+const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
@@ -90,7 +90,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnit) => {
   }
 }
 
-const buildSaleCells = (unit: RailsUnit) => {
+const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   return {
     units: {
       cellText: unit.Unit_Type,
@@ -105,7 +105,7 @@ const buildSaleCells = (unit: RailsUnit) => {
   }
 }
 
-const buildRentalCells = (unit: RailsUnit) => {
+const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   return {
     units: {
       cellText: unit.Unit_Type,
@@ -140,7 +140,7 @@ const buildAccordions = (
       const accordionLength = array.length
 
       const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
-        const responsiveTableRows = amiRow.units.map((unit: RailsUnit) => {
+        const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
           return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
         })
 

@@ -3,7 +3,7 @@ import { ListingAttributes } from "./BaseRailsListing"
 type RailsUnit = {
   AMI_chart_type: string
   AMI_chart_year: number
-  Availability: number
+  Availability?: number
   BMR_Rent_Monthly?: number
   BMR_Rental_Minimum_Monthly_Income_Needed: number
   Id: string
@@ -12,13 +12,13 @@ type RailsUnit = {
   Max_Occupancy?: number
   Min_AMI_for_Qualifying_Unit?: number
   Min_Occupancy?: number
-  Number_of_Bathrooms: number
+  Number_of_Bathrooms?: number
   Property_Type?: string
   Status: string
   Unit_Type: string
-  Unit_Floor: string
-  Unit_Number: string
-  Unit_Square_Footage: number
+  Unit_Floor?: string
+  Unit_Number?: string
+  Unit_Square_Footage?: number
   attributes: ListingAttributes
   isReservedCommunity: boolean
   Price_Without_Parking?: number

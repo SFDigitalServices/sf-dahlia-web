@@ -156,6 +156,7 @@ module.exports = {
     "unicorn/prevent-abbreviations": "off",
     "import/order": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "unicorn/no-array-reduce": "off",
   },
   overrides: [
     {
@@ -177,7 +178,7 @@ module.exports = {
     "spec/e2e",
     "spec/javascripts",
     "**/.eslintrc.js",
-    "cypress.config.ts"
+    "cypress.config.ts",
   ],
   settings: {
     react: {
