@@ -2,7 +2,9 @@ import React, { useContext } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
-import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
+import RailsUnit, {
+  RailsUnitWithOccupancyAndMaxIncome,
+} from "../../api/types/rails/listings/RailsUnit"
 import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
@@ -12,7 +14,7 @@ export interface ListingDetailsPricingTableProps {
 
 export interface AmiRow {
   ami: number
-  units: RailsUnit[]
+  units: RailsUnitWithOccupancyAndMaxIncome[]
 }
 
 export interface GroupedUnitsByOccupancy {
@@ -246,7 +248,6 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
   const listingIsSale = isSale(listing)
   const listingIsHabitat = isHabitatListing(listing)
   const { fetchedAmiCharts, fetchedUnits, amiCharts, units } = useContext(ListingDetailsContext)
-
   const dataHasBeenFetched = fetchedAmiCharts && fetchedUnits
 
   return (

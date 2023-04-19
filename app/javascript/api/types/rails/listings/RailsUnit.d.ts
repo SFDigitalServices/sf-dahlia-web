@@ -1,6 +1,6 @@
 import { ListingAttributes } from "./BaseRailsListing"
 
-export type RailsUnit = {
+type RailsUnit = {
   AMI_chart_type: string
   AMI_chart_year: number
   Availability: number
@@ -26,8 +26,15 @@ export type RailsUnit = {
   HOA_Dues_Without_Parking?: number
   HOA_Dues_With_Parking?: number
   Priority_Type?: string
-  occupancy?: number
-  maxMonthlyIncomeNeeded?: number
   Rent_percent_of_income?: number
 }
 
+export interface RailsUnitWithOccupancy extends RailsUnit {
+  occupancy: number
+}
+
+export interface RailsUnitWithOccupancyAndMaxIncome extends RailsUnitWithOccupancy {
+  maxMonthlyIncomeNeeded: number
+}
+
+export default RailsUnit

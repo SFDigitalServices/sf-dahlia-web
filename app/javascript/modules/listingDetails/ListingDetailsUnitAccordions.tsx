@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
-import { RailsUnit } from "../../api/types/rails/listings/RailsUnit"
+import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
 export interface UnitGroupType {
@@ -66,7 +66,6 @@ export const ListingDetailsUnitAccordions = () => {
 
   useEffect(() => {
     if (fetchedUnits) {
-      // eslint-disable-next-line unicorn/no-array-reduce
       const sortedUnits = units.reduce((acc, unit) => {
         if (!acc[unit.Unit_Type]) {
           acc = {

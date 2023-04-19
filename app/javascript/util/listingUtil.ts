@@ -1,7 +1,10 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import { RailsUnit } from "../api/types/rails/listings/RailsUnit"
+import RailsUnit, {
+  RailsUnitWithOccupancy,
+  RailsUnitWithOccupancyAndMaxIncome,
+} from "../api/types/rails/listings/RailsUnit"
 import {
   RailsAmiChart,
   RailsAmiChartMetaData,
@@ -170,7 +173,7 @@ export const deriveIncomeFromAmiCharts = (
   unit: RailsUnit,
   occupancy: number,
   amiCharts: RailsAmiChart[]
-) => {
+): number => {
   if (!unit || !occupancy || !amiCharts) {
     return null
   }
@@ -193,12 +196,14 @@ export const deriveIncomeFromAmiCharts = (
   return null
 }
 
-export const applyMaxIncomeToUnit = (amiCharts: RailsAmiChart[]) => (unit: RailsUnit) => {
-  unit.maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-  return unit
+export const applyMaxIncomeToUnit = (amiCharts: RailsAmiChart[]) => (
+  unit: RailsUnitWithOccupancy
+): RailsUnitWithOccupancyAndMaxIncome => {
+  const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+  return { ...unit, maxMonthlyIncomeNeeded }
 }
 
-export const addUnitsWithEachOccupancy = (units: RailsUnit[]) => {
+export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
   const totalUnits = []
   units.forEach((unit: RailsUnit) => {
     if (!unit.Max_Occupancy) {
@@ -211,9 +216,9 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]) => {
   return totalUnits
 }
 
-export const buildAmiArray = (units: RailsUnit[]) => {
+export const buildAmiArray = (units: RailsUnitWithOccupancyAndMaxIncome[]): Array<number> => {
   const arrayOfAmis = []
-  units.forEach((unit: RailsUnit) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
     if (arrayOfAmis.includes(unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
@@ -225,9 +230,9 @@ export const buildAmiArray = (units: RailsUnit[]) => {
   return arrayOfAmis
 }
 
-export const buildOccupanciesArray = (units: RailsUnit[]) => {
+export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<number> => {
   const arrayOfOccupancies = []
-  units.forEach((unit: RailsUnit) => {
+  units.forEach((unit: RailsUnitWithOccupancy) => {
     if (arrayOfOccupancies.includes(unit.occupancy)) {
       return
     }
@@ -240,20 +245,24 @@ export const buildOccupanciesArray = (units: RailsUnit[]) => {
   return arrayOfOccupancies
 }
 
-export const matchSharedUnitFields = (units: RailsUnit[]) => {
+export const matchSharedUnitFields = (
+  units: RailsUnitWithOccupancyAndMaxIncome[]
+): RailsUnitWithOccupancyAndMaxIncome[] => {
   const collapsedUnits = []
-  units.forEach((unit: RailsUnit) => {
-    const summaryThatsAlreadyAdded = collapsedUnits.find((collapsedUnit: RailsUnit) => {
-      return (
-        unit.BMR_Rent_Monthly === collapsedUnit.BMR_Rent_Monthly &&
-        unit.Unit_Type === collapsedUnit.Unit_Type &&
-        unit.occupancy === collapsedUnit.occupancy &&
-        unit.maxMonthlyIncomeNeeded === collapsedUnit.maxMonthlyIncomeNeeded &&
-        unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
-          collapsedUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
-        unit.Max_AMI_for_Qualifying_Unit === collapsedUnit.Max_AMI_for_Qualifying_Unit
-      )
-    })
+  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+    const summaryThatsAlreadyAdded = collapsedUnits.find(
+      (collapsedUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+        return (
+          unit.BMR_Rent_Monthly === collapsedUnit.BMR_Rent_Monthly &&
+          unit.Unit_Type === collapsedUnit.Unit_Type &&
+          unit.occupancy === collapsedUnit.occupancy &&
+          unit.maxMonthlyIncomeNeeded === collapsedUnit.maxMonthlyIncomeNeeded &&
+          unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
+            collapsedUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
+          unit.Max_AMI_for_Qualifying_Unit === collapsedUnit.Max_AMI_for_Qualifying_Unit
+        )
+      }
+    )
 
     if (!summaryThatsAlreadyAdded) {
       collapsedUnits.push(unit)
@@ -264,14 +273,13 @@ export const matchSharedUnitFields = (units: RailsUnit[]) => {
   return collapsedUnits
 }
 
-export const getAbsoluteMinAndMaxIncome = (units: RailsUnit[]) => {
+export const getAbsoluteMinAndMaxIncome = (
+  units: RailsUnitWithOccupancyAndMaxIncome[]
+): { absoluteMaxIncome: number; absoluteMinIncome: number } => {
   let absoluteMaxIncome = 0
   let absoluteMinIncome = units[0]?.BMR_Rental_Minimum_Monthly_Income_Needed
 
-  units.forEach((unit: RailsUnit) => {
-    /*
-     * todo - throw an error if a field is missing?
-     */
+  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
     if (unit?.maxMonthlyIncomeNeeded > absoluteMaxIncome) {
       absoluteMaxIncome = unit.maxMonthlyIncomeNeeded
     }

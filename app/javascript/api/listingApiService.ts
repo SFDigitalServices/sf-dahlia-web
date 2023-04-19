@@ -2,7 +2,7 @@ import { get } from "./apiService"
 import RailsRentalListing from "./types/rails/listings/RailsRentalListing"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
-import { RailsUnit } from "./types/rails/listings/RailsUnit"
+import RailsUnit from "./types/rails/listings/RailsUnit"
 import { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
 import { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
 import {
@@ -73,7 +73,6 @@ export const getUnits = async (listingId: string): Promise<RailsUnit[]> =>
 export const getAmiCharts = async (
   chartsToFetch: RailsAmiChartMetaData[]
 ): Promise<RailsAmiChart[]> => {
-  // eslint-disable-next-line unicorn/no-array-reduce
   const queryParams = chartsToFetch.reduce((queryParam, amiChart) => {
     // eslint-disable-next-line unicorn/prefer-spread
     return queryParam.concat(

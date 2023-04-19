@@ -24,7 +24,7 @@ import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-c
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
-import { units } from "../data/RailsListingUnits/listing-units"
+import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
 import { mappedUnitsByOccupancy } from "../data/RailsListingUnits/mapped-units-by-occupancy"
 
@@ -212,22 +212,30 @@ describe("deriveIncomeFromAmiCharts", () => {
 
   it("returns null if any argument is missing", () => {
     expect(deriveIncomeFromAmiCharts(undefined, occupancy, amiCharts)).toBeNull()
-    expect(deriveIncomeFromAmiCharts(units[0], undefined, amiCharts)).toBeNull()
-    expect(deriveIncomeFromAmiCharts(units[0], occupancy, undefined)).toBeNull()
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], undefined, amiCharts)
+    ).toBeNull()
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], occupancy, undefined)
+    ).toBeNull()
   })
 
   it("returns null if no AMI chart matches the units AMI", () => {
-    const wrongUnit = { ...units[0], Max_AMI_for_Qualifying_Unit: 90 }
+    const wrongUnit = { ...unitsWithOccupancyAndMaxIncome[0], Max_AMI_for_Qualifying_Unit: 90 }
     expect(deriveIncomeFromAmiCharts(wrongUnit, occupancy, amiCharts)).toBeNull()
   })
 
   it("returns the monthly income for the given occupancy if found in the AMI chart", () => {
-    expect(deriveIncomeFromAmiCharts(units[0], occupancy, amiCharts)).toBe(5495)
+    expect(deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], occupancy, amiCharts)).toBe(
+      5495
+    )
   })
 
   it("returns null if the given occupancy is not found in the AMI chart", () => {
     const wrongOccupancy = 12
-    expect(deriveIncomeFromAmiCharts(units[0], wrongOccupancy, amiCharts)).toBeNull()
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], wrongOccupancy, amiCharts)
+    ).toBeNull()
   })
 })
 
@@ -239,7 +247,7 @@ describe("addUnitsWithEachOccupancy", () => {
   })
 
   it("should add occupancy property to each unit", () => {
-    const unitsForOccupancyTest = [units[0]]
+    const unitsForOccupancyTest = [unitsWithOccupancyAndMaxIncome[0]]
     const result = addUnitsWithEachOccupancy(unitsForOccupancyTest)
     expect(result).toHaveLength(4)
     expect(result[0]).toHaveProperty("occupancy", 2)
@@ -257,21 +265,21 @@ describe("buildAmiArray", () => {
   })
 
   it("should return an array of unique Max_AMI_for_Qualifying_Unit values sorted in ascending order", () => {
-    const result = buildAmiArray(units)
+    const result = buildAmiArray(unitsWithOccupancyAndMaxIncome)
     expect(result).toEqual([35, 55, 109.8])
   })
 })
 
 describe("getAbsoluteMinAndMaxIncome", () => {
   it("should return the correct min and max income when units is not empty", () => {
-    const result = getAbsoluteMinAndMaxIncome(units)
+    const result = getAbsoluteMinAndMaxIncome(unitsWithOccupancyAndMaxIncome)
     expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 7 })
   })
 })
 
 describe("matchSharedUnitFields", () => {
   const unit1 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1000,
     Unit_Type: "1 bedroom",
     occupancy: 1,
@@ -281,7 +289,7 @@ describe("matchSharedUnitFields", () => {
     Availability: 2,
   }
   const unit2 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1000,
     Unit_Type: "1 bedroom",
     occupancy: 1,
@@ -291,7 +299,7 @@ describe("matchSharedUnitFields", () => {
     Availability: 3,
   }
   const unit3 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1200,
     Unit_Type: "2 bedroom",
     occupancy: 2,
@@ -312,7 +320,7 @@ describe("matchSharedUnitFields", () => {
     const inputUnits = [unit1, unit2, unit3]
     const expectedOutput = [
       {
-        ...units[0],
+        ...unitsWithOccupancyAndMaxIncome[0],
         BMR_Rent_Monthly: 1000,
         Unit_Type: "1 bedroom",
         occupancy: 1,
@@ -322,7 +330,7 @@ describe("matchSharedUnitFields", () => {
         Availability: 5,
       },
       {
-        ...units[0],
+        ...unitsWithOccupancyAndMaxIncome[0],
         BMR_Rent_Monthly: 1200,
         Unit_Type: "2 bedroom",
         occupancy: 2,
@@ -346,7 +354,7 @@ describe("matchSharedUnitFields", () => {
 
 describe("buildOccupanciesArray", () => {
   const unit1 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1000,
     Unit_Type: "1 bedroom",
     occupancy: 1,
@@ -356,7 +364,7 @@ describe("buildOccupanciesArray", () => {
     Availability: 2,
   }
   const unit2 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1200,
     Unit_Type: "2 bedroom",
     occupancy: 2,
@@ -366,7 +374,7 @@ describe("buildOccupanciesArray", () => {
     Availability: 1,
   }
   const unit3 = {
-    ...units[0],
+    ...unitsWithOccupancyAndMaxIncome[0],
     BMR_Rent_Monthly: 1500,
     Unit_Type: "3 bedroom",
     occupancy: 3,
