@@ -69,7 +69,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("renders ListingDetailsPricingTable component", () => {
+  it("renders ListingDetailsPricingTable component when rental listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
