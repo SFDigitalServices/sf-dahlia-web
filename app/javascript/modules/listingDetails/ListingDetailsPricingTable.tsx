@@ -211,7 +211,7 @@ const buildContent = (
     return <Icon symbol="spinner" size="large" />
   }
 
-  if (listingIsSale) {
+  if (listingIsSale && !listingIsHabitat) {
     return buildAccordions(units, true, amiCharts)
   }
 
