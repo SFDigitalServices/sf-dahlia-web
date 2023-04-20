@@ -26,7 +26,7 @@ import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
-import { mappedUnitsByOccupancy } from "../data/RailsListingUnits/mapped-units-by-occupancy"
+import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -409,7 +409,7 @@ describe("buildOccupanciesArray", () => {
 describe("groupAndSortUnitsByOccupancy", () => {
   it("should return the expected value", () => {
     const actualOutput = groupAndSortUnitsByOccupancy(units, amiCharts)
-    expect(actualOutput).toEqual(mappedUnitsByOccupancy)
+    expect(actualOutput).toEqual(groupedUnitsByOccupancy)
   })
 })
 
