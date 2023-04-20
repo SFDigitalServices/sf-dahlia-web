@@ -1,4 +1,4 @@
-export const mappedUnitsByOccupancy = [
+export const groupedUnitsByOccupancy = [
   {
     occupancy: 1,
     absoluteMaxIncome: 4275,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
@@ -60,42 +60,36 @@ const getTableData = (units: RailsUnit[]) =>
     },
   }))
 
+const sortUnits = (units) => {
+  return units?.reduce((acc, unit) => {
+    if (!acc[unit.Unit_Type]) {
+      acc = {
+        ...acc,
+        [unit.Unit_Type]: {},
+      }
+    }
+    acc[unit.Unit_Type].units = [...(acc[unit.Unit_Type]?.units || []), unit]
+
+    if (!acc[unit.Unit_Type].availability) acc[unit.Unit_Type].availability = 0
+    acc[unit.Unit_Type].availability++
+
+    if (!acc[unit.Unit_Type].minSqFt && !acc[unit.Unit_Type].maxSqFt) {
+      acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
+      acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
+    }
+    if (unit.Unit_Square_Footage < acc[unit.Unit_Type].minSqFt) {
+      acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
+    }
+    if (unit.Unit_Square_Footage > acc[unit.Unit_Type].maxSqFt) {
+      acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
+    }
+    return acc
+  }, {})
+}
+
 export const ListingDetailsUnitAccordions = () => {
-  const [processedUnits, setUnits] = useState({})
   const { fetchingUnits, fetchedUnits, units } = useContext(ListingDetailsContext)
-
-  useEffect(() => {
-    if (fetchedUnits) {
-      const sortedUnits = units.reduce((acc, unit) => {
-        if (!acc[unit.Unit_Type]) {
-          acc = {
-            ...acc,
-            [unit.Unit_Type]: {},
-          }
-        }
-        acc[unit.Unit_Type].units = [...(acc[unit.Unit_Type]?.units || []), unit]
-
-        if (!acc[unit.Unit_Type].availability) acc[unit.Unit_Type].availability = 0
-        acc[unit.Unit_Type].availability++
-
-        if (!acc[unit.Unit_Type].minSqFt && !acc[unit.Unit_Type].maxSqFt) {
-          acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
-          acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
-        }
-        if (unit.Unit_Square_Footage < acc[unit.Unit_Type].minSqFt) {
-          acc[unit.Unit_Type].minSqFt = unit.Unit_Square_Footage
-        }
-        if (unit.Unit_Square_Footage > acc[unit.Unit_Type].maxSqFt) {
-          acc[unit.Unit_Type].maxSqFt = unit.Unit_Square_Footage
-        }
-        return acc
-      }, {})
-      setUnits(sortedUnits)
-    }
-    return () => {
-      setUnits({})
-    }
-  }, [fetchedUnits, units])
+  const processedUnits = sortUnits(units)
 
   if (fetchingUnits || !fetchedUnits) {
     return (
@@ -103,10 +97,6 @@ export const ListingDetailsUnitAccordions = () => {
         <Icon symbol="spinner" size="large" />
       </div>
     )
-  }
-
-  if (!Object.keys(units)) {
-    return null
   }
 
   const accordions = Object.keys(processedUnits)?.map((unitType) => {
