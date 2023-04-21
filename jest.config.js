@@ -28,18 +28,16 @@ module.exports = {
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
   transform: {
-    "^.+\\.(ts|tsx)?$": [
-      "ts-jest",
-      {
-        tsconfig: "tsconfig.test.json",
-      },
-    ],
+    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
-  transformIgnorePatterns: ["/node_modules/(?!@bloom-housing)"],
+  transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
+  moduleFileExtensions: ["tsx", "js", "ts"],
   reporters: ["default", "jest-junit"],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
 }
