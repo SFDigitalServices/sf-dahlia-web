@@ -2,22 +2,22 @@ import { get } from "./apiService"
 import RailsRentalListing from "./types/rails/listings/RailsRentalListing"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
-import { RailsListingUnits } from "./types/rails/listings/RailsListingUnits"
+import RailsUnit from "./types/rails/listings/RailsUnit"
 import { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
-import { RailsListingPricingTableUnit } from "./types/rails/listings/RailsListingPricingTableUnit"
+import { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
 import {
   listing,
   listingPreferences,
   listingUnits,
   lotteryBuckets,
   lotteryRanking,
-  listingPricingTableUnits,
+  amiCharts,
 } from "./apiEndpoints"
 
 type ListingsResponse = { listing: RailsRentalListing }
 type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
-type ListingUnitsResponse = { units: RailsListingUnits[] }
-type ListingPricingTableUnitResponse = { unitSummaries: RailsListingPricingTableUnit[] }
+type ListingUnitsResponse = { units: RailsUnit[] }
+type ListingAmiChartsResponse = { ami: RailsAmiChart[] }
 
 export const getListing = async (listingId?: string): Promise<RailsListing> =>
   get<ListingsResponse>(listing(listingId)).then(({ data }) => data.listing)
@@ -62,21 +62,29 @@ export const getPreferences = async (listingId: string): Promise<RailsListingPre
  * @param {string} listingId
  * @returns {RailsListingUnits[]} list of Unitss for the listing
  */
-export const getUnits = async (listingId: string): Promise<RailsListingUnits[]> =>
+export const getUnits = async (listingId: string): Promise<RailsUnit[]> =>
   get<ListingUnitsResponse>(listingUnits(listingId)).then(({ data }) => data.units)
 
 /**
- * Get the pricing table details for the given listing
- * @param {string} listingId
- * @returns {RailsListingPricingTableUnits[]} list of Units for the listing
+ * Get the ami charts for the given listing in a given year in a given set of ami percentages
+ * @param {string} listingId, percentages, year
+ * @returns {RailsAmiChart[]} list of Units for the listing
  */
-export const getListingPricingTableUnits = async (
-  listingId: string
-): Promise<RailsListingPricingTableUnit[]> =>
-  get<ListingPricingTableUnitResponse>(listingPricingTableUnits(listingId))
+export const getAmiCharts = async (
+  chartsToFetch: RailsAmiChartMetaData[]
+): Promise<RailsAmiChart[]> => {
+  const queryParams = chartsToFetch.reduce((queryParam, amiChart) => {
+    // eslint-disable-next-line unicorn/prefer-spread
+    return queryParam.concat(
+      `year[]=${amiChart.year}&percent[]=${amiChart.percent}&chartType[]=${amiChart.type}&`
+    )
+  }, "")
+
+  return get<ListingAmiChartsResponse>(amiCharts(queryParams))
     .then(({ data }) => {
-      return data[0].unitSummaries
+      return data.ami
     })
     .catch(() => {
       return null
     })
+}

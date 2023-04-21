@@ -10,12 +10,23 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
   isPluralSRO,
+  getAbsoluteMinAndMaxIncome,
+  buildOccupanciesArray,
+  matchSharedUnitFields,
+  addUnitsWithEachOccupancy,
+  deriveIncomeFromAmiCharts,
+  buildAmiArray,
+  groupAndSortUnitsByOccupancy,
+  getAmiChartDataFromUnits,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
+import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
+import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
+import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -193,5 +204,228 @@ describe("listingUtil", () => {
         },
       ])
     })
+  })
+})
+
+describe("deriveIncomeFromAmiCharts", () => {
+  const occupancy = 3
+
+  it("returns null if any argument is missing", () => {
+    expect(deriveIncomeFromAmiCharts(undefined, occupancy, amiCharts)).toBeNull()
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], undefined, amiCharts)
+    ).toBeNull()
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], occupancy, undefined)
+    ).toBeNull()
+  })
+
+  it("returns null if no AMI chart matches the units AMI", () => {
+    const wrongUnit = { ...unitsWithOccupancyAndMaxIncome[0], Max_AMI_for_Qualifying_Unit: 90 }
+    expect(deriveIncomeFromAmiCharts(wrongUnit, occupancy, amiCharts)).toBeNull()
+  })
+
+  it("returns the monthly income for the given occupancy if found in the AMI chart", () => {
+    expect(deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], occupancy, amiCharts)).toBe(
+      5495
+    )
+  })
+
+  it("returns null if the given occupancy is not found in the AMI chart", () => {
+    const wrongOccupancy = 12
+    expect(
+      deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], wrongOccupancy, amiCharts)
+    ).toBeNull()
+  })
+})
+
+describe("addUnitsWithEachOccupancy", () => {
+  it("should return an empty array when units is empty", () => {
+    const units = []
+    const result = addUnitsWithEachOccupancy(units)
+    expect(result).toEqual([])
+  })
+
+  it("should add occupancy property to each unit", () => {
+    const unitsForOccupancyTest = [unitsWithOccupancyAndMaxIncome[0]]
+    const result = addUnitsWithEachOccupancy(unitsForOccupancyTest)
+    expect(result).toHaveLength(4)
+    expect(result[0]).toHaveProperty("occupancy", 2)
+    expect(result[1]).toHaveProperty("occupancy", 3)
+    expect(result[2]).toHaveProperty("occupancy", 4)
+    expect(result[3]).toHaveProperty("occupancy", 5)
+  })
+})
+
+describe("buildAmiArray", () => {
+  it("should return an empty array when units is empty", () => {
+    const units = []
+    const result = buildAmiArray(units)
+    expect(result).toEqual([])
+  })
+
+  it("should return an array of unique Max_AMI_for_Qualifying_Unit values sorted in ascending order", () => {
+    const result = buildAmiArray(unitsWithOccupancyAndMaxIncome)
+    expect(result).toEqual([35, 55, 109.8])
+  })
+})
+
+describe("getAbsoluteMinAndMaxIncome", () => {
+  it("should return the correct min and max income when units is not empty", () => {
+    const result = getAbsoluteMinAndMaxIncome(unitsWithOccupancyAndMaxIncome)
+    expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 7 })
+  })
+})
+
+describe("matchSharedUnitFields", () => {
+  const unit1 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1000,
+    Unit_Type: "1 bedroom",
+    occupancy: 1,
+    maxMonthlyIncomeNeeded: 5000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 3000,
+    Max_AMI_for_Qualifying_Unit: 80,
+    Availability: 2,
+  }
+  const unit2 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1000,
+    Unit_Type: "1 bedroom",
+    occupancy: 1,
+    maxMonthlyIncomeNeeded: 5000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 3000,
+    Max_AMI_for_Qualifying_Unit: 80,
+    Availability: 3,
+  }
+  const unit3 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1200,
+    Unit_Type: "2 bedroom",
+    occupancy: 2,
+    maxMonthlyIncomeNeeded: 6000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 3500,
+    Max_AMI_for_Qualifying_Unit: 100,
+    Availability: 1,
+  }
+
+  it("should return the input array if there are no duplicate summaries", () => {
+    const inputUnits = [unit1, unit3]
+    const expectedOutput = inputUnits
+    const actualOutput = matchSharedUnitFields(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+
+  it("should combine Availability of units with identical summary fields", () => {
+    const inputUnits = [unit1, unit2, unit3]
+    const expectedOutput = [
+      {
+        ...unitsWithOccupancyAndMaxIncome[0],
+        BMR_Rent_Monthly: 1000,
+        Unit_Type: "1 bedroom",
+        occupancy: 1,
+        maxMonthlyIncomeNeeded: 5000,
+        BMR_Rental_Minimum_Monthly_Income_Needed: 3000,
+        Max_AMI_for_Qualifying_Unit: 80,
+        Availability: 5,
+      },
+      {
+        ...unitsWithOccupancyAndMaxIncome[0],
+        BMR_Rent_Monthly: 1200,
+        Unit_Type: "2 bedroom",
+        occupancy: 2,
+        maxMonthlyIncomeNeeded: 6000,
+        BMR_Rental_Minimum_Monthly_Income_Needed: 3500,
+        Max_AMI_for_Qualifying_Unit: 100,
+        Availability: 1,
+      },
+    ]
+    const actualOutput = matchSharedUnitFields(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+
+  it("should handle an empty input array", () => {
+    const inputUnits = []
+    const expectedOutput = inputUnits
+    const actualOutput = matchSharedUnitFields(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+})
+
+describe("buildOccupanciesArray", () => {
+  const unit1 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1000,
+    Unit_Type: "1 bedroom",
+    occupancy: 1,
+    maxMonthlyIncomeNeeded: 5000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 3000,
+    Max_AMI_for_Qualifying_Unit: 80,
+    Availability: 2,
+  }
+  const unit2 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1200,
+    Unit_Type: "2 bedroom",
+    occupancy: 2,
+    maxMonthlyIncomeNeeded: 6000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 3500,
+    Max_AMI_for_Qualifying_Unit: 100,
+    Availability: 1,
+  }
+  const unit3 = {
+    ...unitsWithOccupancyAndMaxIncome[0],
+    BMR_Rent_Monthly: 1500,
+    Unit_Type: "3 bedroom",
+    occupancy: 3,
+    maxMonthlyIncomeNeeded: 8000,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 4000,
+    Max_AMI_for_Qualifying_Unit: 120,
+    Availability: 3,
+  }
+
+  it("should return an array of unique occupancies sorted in ascending order", () => {
+    const inputUnits = [unit2, unit1, unit3, unit2]
+    const expectedOutput = [1, 2, 3]
+    const actualOutput = buildOccupanciesArray(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+
+  it("should handle an empty input array", () => {
+    const inputUnits = []
+    const expectedOutput = []
+    const actualOutput = buildOccupanciesArray(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+
+  it("should handle an input array with only one occupancy", () => {
+    const inputUnits = [unit1, unit1, unit1]
+    const expectedOutput = [1]
+    const actualOutput = buildOccupanciesArray(inputUnits)
+    expect(actualOutput).toEqual(expectedOutput)
+  })
+})
+
+describe("groupAndSortUnitsByOccupancy", () => {
+  it("should return the expected value", () => {
+    const actualOutput = groupAndSortUnitsByOccupancy(units, amiCharts)
+    expect(actualOutput).toEqual(groupedUnitsByOccupancy)
+  })
+})
+
+describe("getAmiChartDataFromUnits", () => {
+  test("returns empty array when given empty array of units", () => {
+    const units = []
+    const result = getAmiChartDataFromUnits(units)
+    expect(result).toEqual([])
+  })
+
+  test("returns unique chart data from array of units", () => {
+    const result = getAmiChartDataFromUnits(units)
+    expect(result).toEqual([
+      { year: 2021, type: "MOHCD", percent: 55 },
+      { year: 2021, type: "MOHCD", percent: 109.8 },
+      { year: 2021, type: "MOHCD", percent: 35 },
+    ])
   })
 })
