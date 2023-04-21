@@ -13,7 +13,15 @@ class Api::V1::AccountController < ApiController
     contact = account_params
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
-    salesforce_contact = Force::AccountService.create_or_update(contact)
+    salesforce_contact = Force::AccountService.create_or_update(
+      webAppID: contact[:id],
+      contactId: contact[:contactID],
+      email: contact[:email],
+      firstName: contact[:firstName],
+      middleName: contact[:middleName],
+      lastName: contact[:lastName],
+      DOB: contact[:DOB],
+    )
     Emailer.account_update(current_user).deliver_later
     render json: { contact: salesforce_contact }
   end
