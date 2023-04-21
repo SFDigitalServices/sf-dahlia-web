@@ -25,11 +25,15 @@ module.exports = {
     },
   },
   preset: "ts-jest",
+  globals: {
+    "ts-jest": {
+      tsconfig: "tsconfig.json",
+    },
+  },
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
-    "^.+\\.(js|jsx)$": "babel-jest",
   },
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {

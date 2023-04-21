@@ -15,9 +15,9 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
       </div>
     )
   }
-  const getHabitatContentRow = (prefix: string, content: string) => {
+  const getHabitatContentRow = (prefix: string, content: string, key: string) => {
     return (
-      <div>
+      <div key={key}>
         <span className={"font-semibold"}>{prefix}</span> {content}
       </div>
     )
@@ -39,10 +39,11 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
           {t("listings.availableUnits")}
         </Heading>
         {getHeader(t("t.units"))}
-        {stackedData.map((row) =>
+        {stackedData.map((row, index) =>
           getHabitatContentRow(
             `${row.unitType.cellText}:`,
-            `${row.availability.cellText} ${t("t.available")}`
+            `${row.availability.cellText} ${t("t.available")}`,
+            index
           )
         )}
 
