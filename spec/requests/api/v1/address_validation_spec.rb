@@ -70,7 +70,7 @@ describe 'Address Validation API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the delivery verification == 'success'
     expect(json['address']['verifications']['delivery']['success']).to eq(true)

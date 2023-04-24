@@ -1,56 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
-    body:
-      encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 10 Jul 2018 22:59:08 GMT
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
-      X-Content-Type-Options:
-      - nosniff
-      X-Xss-Protection:
-      - 1; mode=block
-      Content-Security-Policy:
-      - upgrade-insecure-requests
-      Cache-Control:
-      - no-cache,must-revalidate,max-age=0,no-store,private
-      Set-Cookie:
-      - BrowserId=unkNF7qdSpWjLVRr6LC0mg;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:59:08 GMT;Max-Age=5184000
-      Expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      X-Readonlymode:
-      - 'false'
-      Content-Type:
-      - application/json;charset=UTF-8
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263548830","signature":"4Mzc69E5a6ZVCdRzmw3tu+QwIEvNfA80UkRw6+lVFjQ="}'
-    http_version:
-  recorded_at: Tue, 10 Jul 2018 22:59:10 GMT
-- request:
     method: get
     uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/shortForm/
     body:
@@ -94,6 +44,95 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version:
   recorded_at: Tue, 10 Jul 2018 22:59:10 GMT
-recorded_with: VCR 3.0.3
+- request:
+    method: post
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 30 Mar 2023 15:35:07 GMT
+      Set-Cookie:
+      - BrowserId=ctQ2sc8QEe2PQ0lgvyY-3g; domain=.salesforce.com; path=/; expires=Fri,
+        29-Mar-2024 15:35:07 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:07 GMT; Max-Age=31536000
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:07
+        GMT; Max-Age=31536000
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190507242","signature":"4zTPQ6zUaoXMps74zNOQPfhEZ8VmV2HY5Y6M/3AzkMY="}'
+  recorded_at: Thu, 30 Mar 2023 15:35:07 GMT
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/a0o1F000001nzgeQAA"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.6
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Thu, 30 Mar 2023 15:35:07 GMT
+      Set-Cookie:
+      - BrowserId=cwg_X88QEe2ETjWzqJMcFw; domain=.salesforce.com; path=/; expires=Fri,
+        29-Mar-2024 15:35:07 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:07 GMT; Max-Age=31536000
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:07
+        GMT; Max-Age=31536000
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      Content-Security-Policy:
+      - upgrade-insecure-requests
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Thu, 30 Mar 2023 15:35:07 GMT
+recorded_with: VCR 6.1.0

@@ -86,6 +86,8 @@ describe Overrides::RegistrationsController do
 
       put :update, params: user_update_params
 
+      user.confirm
+
       expect(assigns(:resource).uid).to eq 'jack2@doe.com'
 
       expect(response.status).to eq 200

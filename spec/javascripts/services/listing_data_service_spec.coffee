@@ -120,7 +120,7 @@ do ->
         # Place them all in closedListings
         spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(false)
         ListingDataService.groupListings(fakeListings.listings)
-        expect(ListingDataService.closedListings.length).toEqual 67
+        expect(ListingDataService.closedListings.length).toEqual 86
         expect(ListingDataService.lotteryResultsListings.length).toEqual 0
 
       it 'puts lottery complete listings in lotteryResultsListings', ->
@@ -128,7 +128,7 @@ do ->
         spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(true)
         ListingDataService.groupListings(fakeListings.listings)
         expect(ListingDataService.closedListings.length).toEqual 0
-        expect(ListingDataService.lotteryResultsListings.length).toEqual 67
+        expect(ListingDataService.lotteryResultsListings.length).toEqual 86
 
       it 'sorts lotteryResultsListings based on their dates', ->
         spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(true)

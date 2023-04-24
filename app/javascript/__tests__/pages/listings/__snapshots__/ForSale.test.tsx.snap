@@ -64,10 +64,10 @@ exports[`For Sale renders ForSale component 1`] = `
         </div>
       </div>
       <div
-        className="navbar-notice false"
+        className="site-header__notice "
       >
         <div
-          className="navbar-notice__text"
+          className="site-header__notice-text"
         >
           <span>
             We'd love to get 
@@ -82,36 +82,36 @@ exports[`For Sale renders ForSale component 1`] = `
       </div>
       <nav
         aria-label="main navigation"
-        className="navbar-container"
+        className="site-header__container"
         role="navigation"
       >
         <div
-          className="navbar navbar-width-base"
+          className="site-header__base "
         >
           <div
-            className="navbar-logo navbar-logo-width-med"
+            className="site-header__logo-container site-header__logo-width-med"
           >
             <a
               aria-label="Home page"
-              className="logo undefined navbar-custom-width"
+              className="site-header__logo  site-header__custom-width"
               href="/"
             >
               <div
-                className="logo-content navbar-image-only-container"
+                className="site-header__logo-content site-header__image-only-container"
               >
                 <img
                   alt="Site logo"
-                  className="logo__image navbar-image-only"
+                  className="site-header__logo-image site-header__image-only"
                 />
               </div>
             </a>
           </div>
           <div
-            className="navbar-menu"
+            className="site-header__navbar-menu"
           >
             <a
-              className="navbar-link pb-4 pt-1 flex items-end"
-              data-test-id="Rent"
+              className="site-header__link pb-4 pt-1 flex items-end "
+              data-test-id="Rent-0"
               href="/listings/for-rent"
             >
               <div>
@@ -119,8 +119,8 @@ exports[`For Sale renders ForSale component 1`] = `
               </div>
             </a>
             <a
-              className="navbar-link pb-4 pt-1 flex items-end"
-              data-test-id="Buy"
+              className="site-header__link pb-4 pt-1 flex items-end "
+              data-test-id="Buy-1"
               href="/listings/for-sale"
             >
               <div>
@@ -128,8 +128,8 @@ exports[`For Sale renders ForSale component 1`] = `
               </div>
             </a>
             <a
-              className="navbar-link pb-4 pt-1 flex items-end"
-              data-test-id="My Favorites"
+              className="site-header__link pb-4 pt-1 flex items-end "
+              data-test-id="My Favorites-2"
               href="/favorites"
             >
               <div>
@@ -137,8 +137,8 @@ exports[`For Sale renders ForSale component 1`] = `
               </div>
             </a>
             <a
-              className="navbar-link pb-4 pt-1 flex items-end"
-              data-test-id="Get Assistance"
+              className="site-header__link pb-4 pt-1 flex items-end "
+              data-test-id="Get Assistance-3"
               href="/get-assistance"
             >
               <div>
@@ -146,8 +146,8 @@ exports[`For Sale renders ForSale component 1`] = `
               </div>
             </a>
             <a
-              className="navbar-link pb-4 pt-1 flex items-end"
-              data-test-id="Sign In"
+              className="site-header__link pb-4 pt-1 flex items-end "
+              data-test-id="Sign In-4"
               href="/sign-in"
             >
               <div>

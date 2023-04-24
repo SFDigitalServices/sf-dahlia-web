@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <<SALESFORCE_INSTANCE_URL>>/services/oauth2/token
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
     body:
       encoding: US-ASCII
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.15.4
+      - Faraday v0.17.6
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,18 +21,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 Mar 2019 23:05:22 GMT
+      - Thu, 30 Mar 2023 15:35:44 GMT
+      Set-Cookie:
+      - BrowserId=iSQwgc8QEe2TeH0FQL4pXA; domain=.salesforce.com; path=/; expires=Fri,
+        29-Mar-2024 15:35:44 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:44 GMT; Max-Age=31536000
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:44
+        GMT; Max-Age=31536000
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
-      X-Content-Type-Options:
-      - nosniff
-      X-Xss-Protection:
-      - 1; mode=block
+      - max-age=63072000; includeSubDomains
+      X-Robots-Tag:
+      - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
-      Set-Cookie:
-      - BrowserId=FEVWT4j9T_6JJhM3BWOWgQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        06-May-2019 23:05:22 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -45,7 +46,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1551999923746","signature":"fJO2FuEskwa5QnhLAHtzaoafbGlHfzyvx55JALlmeu8="}'
-    http_version:
-  recorded_at: Thu, 07 Mar 2019 23:05:23 GMT
-recorded_with: VCR 4.0.0
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190544673","signature":"M6BGuOUJU+g1JfcrLd9kGYsSQi/+0WH+AfxmGUxjOK0="}'
+  recorded_at: Thu, 30 Mar 2023 15:35:44 GMT
+recorded_with: VCR 6.1.0

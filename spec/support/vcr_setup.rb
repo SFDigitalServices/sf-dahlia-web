@@ -47,6 +47,9 @@ VCR.configure do |config|
     h['Authorization'].first.split('OAuth ').last if h['Authorization']&.first
   end
 
+  # Uncomment this line to force VCR to record all new cassettes
+  # config.default_cassette_options = { :record => :all }
+
   # needed for codeclimate to work
   config.ignore_hosts 'codeclimate.com'
 end

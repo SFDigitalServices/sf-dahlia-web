@@ -16,7 +16,7 @@ module Overrides
       if params[:current_password].nil? ||
          DeviseTokenAuth.check_current_password_before_update == false ||
          @resource.allow_password_change == true
-        'update_attributes'
+        'update'
       else
         'update_with_password'
       end

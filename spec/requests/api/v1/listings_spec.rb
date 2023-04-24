@@ -85,7 +85,7 @@ describe 'Listings API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure listings are returned
     expect(json['listings']).not_to be_empty
@@ -99,7 +99,7 @@ describe 'Listings API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the right Id is present
     expect(json['listing']['Id']).to eq(listing_id)
@@ -119,7 +119,7 @@ describe 'Listings API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the Eligibility_Match param is present
     expect(json['listings'].first['Does_Match']).not_to be_nil
@@ -138,7 +138,7 @@ describe 'Listings API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the right amount of AMI results are returned
     # (based on VCR cassette with 3 different AMI levels)
@@ -153,7 +153,7 @@ describe 'Listings API' do
     json = JSON.parse(response.body)
 
     # test for the 200 status-code
-    expect(response).to be_success
+    expect(response).to be_successful
 
     # check to make sure the right amount of Unit results are returned
     # (based on VCR listing with 1 unit)
@@ -168,19 +168,20 @@ describe 'Listings API' do
 
     json = JSON.parse(response.body)
 
-    expect(response).to be_success
+    expect(response).to be_successful
 
     expect(json['lotteryBuckets'].length).to eq(7)
   end
 
   it 'gets lottery buckets for a Listing' do
+    # require 'pry-byebug';binding.pry
     VCR.use_cassette('listings/lottery-buckets') do
       get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
     end
 
     json = JSON.parse(response.body)
 
-    expect(response).to be_success
+    expect(response).to be_successful
 
     expect(json['lotteryBuckets'].length).to eq(7)
   end
@@ -192,7 +193,7 @@ describe 'Listings API' do
 
     json = JSON.parse(response.body)
 
-    expect(response).to be_success
+    expect(response).to be_successful
 
     expect(json['preferences'].length).to eq(6)
   end
