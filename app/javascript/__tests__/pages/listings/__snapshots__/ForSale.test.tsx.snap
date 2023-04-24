@@ -10,12 +10,6 @@ exports[`For Sale renders ForSale component 1`] = `
     <header
       className="site-header"
     >
-      <a
-        className="site-header__skip-link"
-        href="#main-content"
-      >
-        Skip to main content
-      </a>
       <div
         className="language-bar"
       >
@@ -92,7 +86,7 @@ exports[`For Sale renders ForSale component 1`] = `
         role="navigation"
       >
         <div
-          className="site-header__base side-header__width-base"
+          className="site-header__base "
         >
           <div
             className="site-header__logo-container site-header__logo-width-med"

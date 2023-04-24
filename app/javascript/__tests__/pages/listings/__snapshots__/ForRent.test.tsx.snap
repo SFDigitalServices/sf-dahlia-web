@@ -10,12 +10,6 @@ exports[`For Rent renders ForRent component 1`] = `
     <header
       className="site-header"
     >
-      <a
-        className="site-header__skip-link"
-        href="#main-content"
-      >
-        Skip to main content
-      </a>
       <div
         className="language-bar"
       >
@@ -92,18 +86,14 @@ exports[`For Rent renders ForRent component 1`] = `
         role="navigation"
       >
         <div
-          className="site-header__base side-header__width-base"
+          className="site-header__base "
         >
           <div
             className="site-header__logo-container site-header__logo-width-med"
           >
             <a
               aria-label="Home page"
-<<<<<<< HEAD
-              className="logo undefined navbar-custom-width"
-=======
               className="site-header__logo  site-header__custom-width"
->>>>>>> eca1d577 (Uptake)
               href="/"
             >
               <div
