@@ -984,6 +984,7 @@
   "listings.stats.availableSales": "available",
   "listings.stats.currencyRange": "%{currencyMinValue} to %{currencyMaxValue}",
   "listings.stats.hoaDues": "HOA dues",
+  "listings.stats.monthlyHoaDues": "Monthly HOA dues",
   "listings.stats.householdSize": "Household size",
   "listings.stats.incomeRange": "Income Range",
   "listings.stats.maximum": "Maximum",
