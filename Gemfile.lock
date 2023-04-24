@@ -284,8 +284,6 @@ GEM
     rack (2.2.6.4)
     rack-cors (1.0.6)
       rack (>= 1.6.0)
-    rack-protection (3.0.5)
-      rack
     rack-proxy (0.7.6)
       rack
     rack-rewrite (1.5.1)
@@ -336,7 +334,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (4.3.0)
-    redis (4.5.1)
+    redis-client (0.14.1)
+      connection_pool
     regexp_parser (2.7.0)
     require_all (3.0.0)
     responders (3.1.0)
@@ -401,11 +400,11 @@ GEM
     sexp_processor (4.16.1)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
-    sidekiq (5.2.10)
-      connection_pool (~> 2.2, >= 2.2.2)
-      rack (~> 2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 4.5, < 4.6.0)
+    sidekiq (7.0.8)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -524,7 +523,7 @@ DEPENDENCIES
   sdoc
   sentry-raven
   shoulda-matchers
-  sidekiq (~> 5.2.10)
+  sidekiq (~> 7.0.8)
   sitemap_generator!
   slim-rails
   spring
