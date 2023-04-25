@@ -216,30 +216,44 @@ const buildContent = (
   }
 
   if (listingIsHabitat) {
-    return ""
-    // if (units?.length) {
-    //   groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
-    // }
-    // const habitatStrings = groupedUnitsByOccupancy.map((unitByOccupancy) => {
-    //   return `${
-    //     unitByOccupancy.occupancy
-    //   } people household: $${unitByOccupancy.absoluteMinIncome?.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome?.toLocaleString()}`
-    // })
+    const habitatStringArray = []
+    const minAmiChartsValues = amiCharts.find((chart) => {
+      return chart.derivedFrom === "MinAmi"
+    })?.values
 
-    // return (
-    //   <>
-    //     <p>{t("listings.habitat.incomeRange.p4")}</p>
-    //     <ul>
-    //       {habitatStrings.map((habitatString) => {
-    //         return (
-    //           <li>
-    //             <p>{habitatString}</p>
-    //           </li>
-    //         )
-    //       })}
-    //     </ul>
-    //   </>
-    // )
+    const maxAmiChartsValues = amiCharts.find((chart) => {
+      return chart.derivedFrom === "MaxAmi"
+    })?.values
+
+    // unsure  how these values are being derived in angular
+    for (let i = 2; i < 11; i++) {
+      const minOccupancy = minAmiChartsValues.find((chart) => {
+        return chart.numOfHousehold === i
+      })
+
+      const maxOccupancy = maxAmiChartsValues.find((chart) => {
+        return chart.numOfHousehold === i
+      })
+
+      habitatStringArray.push(
+        `${i} people household: $${minOccupancy?.amount?.toLocaleString()} to $${maxOccupancy?.amount?.toLocaleString()}`
+      )
+    }
+
+    return (
+      <>
+        <p>{t("listings.habitat.incomeRange.p4")}</p>
+        <ul>
+          {habitatStringArray.map((habitatString) => {
+            return (
+              <li>
+                <p>{habitatString}</p>
+              </li>
+            )
+          })}
+        </ul>
+      </>
+    )
   }
   return buildAccordions(units, false, amiCharts)
 }

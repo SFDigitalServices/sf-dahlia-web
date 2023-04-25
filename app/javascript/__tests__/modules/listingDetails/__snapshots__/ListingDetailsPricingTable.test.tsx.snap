@@ -4,7 +4,56 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
 <div
   className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
 >
-  
+  <p>
+    Your income must be in this range:
+  </p>
+  <ul>
+    <li>
+      <p>
+        2 people household: $58,600 to $58,600
+      </p>
+    </li>
+    <li>
+      <p>
+        3 people household: $65,950 to $65,950
+      </p>
+    </li>
+    <li>
+      <p>
+        4 people household: $73,250 to $73,250
+      </p>
+    </li>
+    <li>
+      <p>
+        5 people household: $79,100 to $140,000
+      </p>
+    </li>
+    <li>
+      <p>
+        6 people household: $85,000 to $150,000
+      </p>
+    </li>
+    <li>
+      <p>
+        7 people household: $90,850 to $160,000
+      </p>
+    </li>
+    <li>
+      <p>
+        8 people household: $96,700 to $170,000
+      </p>
+    </li>
+    <li>
+      <p>
+        9 people household: $102,600 to $180,000
+      </p>
+    </li>
+    <li>
+      <p>
+        10 people household: $108,450 to $190,000
+      </p>
+    </li>
+  </ul>
 </div>
 `;
 
