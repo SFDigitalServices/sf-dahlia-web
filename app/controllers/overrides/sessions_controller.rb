@@ -1,6 +1,13 @@
 module Overrides
   # Overrides to DeviseTokenAuth
   class SessionsController < DeviseTokenAuth::SessionsController
+    wrap_parameters format: []
+
+    # def create
+    #   # require 'pry-byebug';binding.pry
+    #   super
+    # end
+
     private
 
     def render_create_success
@@ -30,9 +37,7 @@ module Overrides
     end
 
     def error_message(type)
-      opts = {}
-      opts[:email] = @resource.email if @resource
-      I18n.t("devise_token_auth.sessions.#{type}", opts)
+      I18n.t("devise_token_auth.sessions.#{type}", email: @resource.email) if @resource
     end
 
     def salesforce_contact_data

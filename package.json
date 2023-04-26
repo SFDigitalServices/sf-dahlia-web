@@ -9,7 +9,7 @@
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.16",
     "@bloom-housing/ui-components": "8.2.0",
-    "@rails/webpacker": "5.2.1",
+    "@rails/webpacker": "5.4.4",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^16.9.5",
     "ag-grid-community": "^24.1.0",
@@ -17,6 +17,7 @@
     "axios": "^0.21.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bower": "1.8.8",
+    "clone-deep": "^4.0.1",
     "core-js": "^3.19",
     "dayjs": "^1.10.7",
     "dotenv": "2.0.0",
@@ -97,7 +98,7 @@
   "engines": {
     "npm": "5.3.0",
     "yarn": "1.x.x",
-    "node": "14.x.x"
+    "node": "18.x.x"
   },
   "scripts": {
     "postinstall": "bower install",

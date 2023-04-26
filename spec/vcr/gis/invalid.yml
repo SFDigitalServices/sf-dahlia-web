@@ -16,21 +16,16 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 10 Aug 2020 23:03:46 GMT
       Server:
-      - nginx/1.14.1
-      Access-Control-Max-Age:
-      - '1440'
-      Access-Control-Allow-Headers:
-      - X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token,
-        Accept-Encoding
-      Access-Control-Allow-Methods:
-      - POST, GET, OPTIONS, DELETE, PUT
+      - nginx/1.22.0
+      Date:
+      - Thu, 30 Mar 2023 15:34:31 GMT
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
       - '92'
+      Connection:
+      - close
       Cache-Control:
       - max-age=315360000
       Etag:
@@ -43,12 +38,9 @@ http_interactions:
       - Thu, 31 Dec 2037 23:55:55 GMT
       X-Xss-Protection:
       - 1; mode=block
-      Connection:
-      - close
     body:
       encoding: UTF-8
       string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
         3857\n },\n \"candidates\": [\n  \n ]\n}"
-    http_version: 
-  recorded_at: Mon, 10 Aug 2020 23:16:52 GMT
-recorded_with: VCR 5.0.0
+  recorded_at: Thu, 30 Mar 2023 15:34:31 GMT
+recorded_with: VCR 6.1.0
