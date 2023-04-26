@@ -193,6 +193,60 @@ const buildAccordions = (
   )
 }
 
+const buildHabitatText = (
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  amiCharts: RailsAmiChart[]
+) => {
+  const habitatStringArray = []
+  const minAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MinAmi"
+  })?.values
+
+  const maxAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MaxAmi"
+  })?.values
+
+  /*
+   * GroupedUnitsByOccupancy() is already sorted
+   */
+  const minOccupancy = groupedUnitsByOccupancy[0]?.occupancy
+  const maxOccupancy = minOccupancy + 9
+
+  /*
+   * We want to display 9 rows for Habitat listings
+   */
+  for (let i = minOccupancy; i < maxOccupancy; i++) {
+    const minOccupancyChart = minAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    const maxOccupancyChart = maxAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    if (minOccupancyChart && maxOccupancyChart) {
+      habitatStringArray.push(
+        `${i} people household: $${minOccupancyChart?.amount?.toLocaleString()} to $${maxOccupancyChart?.amount?.toLocaleString()}`
+      )
+    }
+  }
+
+  return (
+    <>
+      <p>{t("listings.habitat.incomeRange.p4")}</p>
+      <ul>
+        {habitatStringArray.map((habitatString: string, index: number) => {
+          return (
+            <li key={index}>
+              <p>{habitatString}</p>
+            </li>
+          )
+        })}
+      </ul>
+    </>
+  )
+}
+
 const buildContent = (
   dataHasBeenFetched: boolean,
   units: RailsUnit[],
@@ -215,54 +269,7 @@ const buildContent = (
   }
 
   if (listingIsHabitat) {
-    const habitatStringArray = []
-    const minAmiChartsValues = amiCharts.find((chart) => {
-      return chart.derivedFrom === "MinAmi"
-    })?.values
-
-    const maxAmiChartsValues = amiCharts.find((chart) => {
-      return chart.derivedFrom === "MaxAmi"
-    })?.values
-
-    /*
-     * GroupedUnitsByOccupancy() is already sorted
-     */
-    const minOccupancy = groupedUnitsByOccupancy[0]?.occupancy
-    const maxOccupancy = minOccupancy + 9
-
-    /*
-     * We want to display 9 rows for Habitat listings
-     */
-    for (let i = minOccupancy; i < maxOccupancy; i++) {
-      const minOccupancyChart = minAmiChartsValues.find((chart) => {
-        return chart.numOfHousehold === i
-      })
-
-      const maxOccupancyChart = maxAmiChartsValues.find((chart) => {
-        return chart.numOfHousehold === i
-      })
-
-      if (minOccupancyChart && maxOccupancyChart) {
-        habitatStringArray.push(
-          `${i} people household: $${minOccupancyChart?.amount?.toLocaleString()} to $${maxOccupancyChart?.amount?.toLocaleString()}`
-        )
-      }
-    }
-
-    return (
-      <>
-        <p>{t("listings.habitat.incomeRange.p4")}</p>
-        <ul>
-          {habitatStringArray.map((habitatString) => {
-            return (
-              <li>
-                <p>{habitatString}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </>
-    )
+    return buildHabitatText(groupedUnitsByOccupancy, amiCharts)
   }
   return buildAccordions(groupedUnitsByOccupancy, false)
 }
