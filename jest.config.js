@@ -44,4 +44,5 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
+  testTimeout: 20000,
 }

@@ -1,76 +1,82 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render, waitFor } from "@testing-library/react"
+
 import { ListingDetailsUnitAccordions } from "../../../modules/listingDetails/ListingDetailsUnitAccordions"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 import { units } from "../../data/RailsListingUnits/listing-units"
 
-describe("ListingDetailsUnitAccordion", () => {
-  it("displays the unit accordions for a given listing", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsContext.Provider
-          value={{
-            units,
-            amiCharts: [],
-            fetchingUnits: false,
-            fetchedUnits: true,
-            fetchingAmiCharts: false,
-            fetchedAmiCharts: false,
-            fetchingAmiChartsError: null,
-            fetchingUnitsError: null,
-          }}
-        >
-          <ListingDetailsUnitAccordions />
-        </ListingDetailsContext.Provider>
-      )
-      .toJSON()
+import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+const axios = require("axios")
 
-    expect(tree).toMatchSnapshot()
+jest.mock("axios")
+
+describe("ListingDetailsUnitAccordion", () => {
+  it("displays the unit accordions for a given listing", async () => {
+    axios.get.mockResolvedValue({ data: { listings: [], units: openSaleListing.Units } })
+
+    const { asFragment, findByTestId } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units,
+          amiCharts: [],
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: false,
+          fetchingAmiChartsError: null,
+          fetchingUnitsError: null,
+        }}
+      >
+        <ListingDetailsUnitAccordions />
+      </ListingDetailsContext.Provider>
+    )
+
+    await waitFor(() => {
+      findByTestId("unit-accordion")
+    })
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays spinner if no units and not fetching units", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsContext.Provider
-          value={{
-            units: [],
-            amiCharts: [],
-            fetchingUnits: false,
-            fetchedUnits: false,
-            fetchingAmiCharts: false,
-            fetchedAmiCharts: false,
-            fetchingAmiChartsError: null,
-            fetchingUnitsError: null,
-          }}
-        >
-          <ListingDetailsUnitAccordions />
-        </ListingDetailsContext.Provider>
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: [],
+          amiCharts: [],
+          fetchingUnits: false,
+          fetchedUnits: false,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: false,
+          fetchingAmiChartsError: null,
+          fetchingUnitsError: null,
+        }}
+      >
+        <ListingDetailsUnitAccordions />
+      </ListingDetailsContext.Provider>
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays the spinner for loading state", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsContext.Provider
-          value={{
-            units: [],
-            amiCharts: [],
-            fetchingUnits: true,
-            fetchedUnits: false,
-            fetchingAmiCharts: false,
-            fetchedAmiCharts: false,
-            fetchingAmiChartsError: null,
-            fetchingUnitsError: null,
-          }}
-        >
-          <ListingDetailsUnitAccordions />
-        </ListingDetailsContext.Provider>
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: [],
+          amiCharts: [],
+          fetchingUnits: true,
+          fetchedUnits: false,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: false,
+          fetchingAmiChartsError: null,
+          fetchingUnitsError: null,
+        }}
+      >
+        <ListingDetailsUnitAccordions />
+      </ListingDetailsContext.Provider>
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

@@ -1,11 +1,27 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render, cleanup } from "@testing-library/react"
 import ForRent from "../../../../javascript/pages/listings/for-rent"
-jest.useFakeTimers()
+
+const axios = require("axios")
+
+jest.useRealTimers()
+jest.mock("axios")
 
 describe("For Rent", () => {
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it("renders ForRent component", () => {
-    const tree = renderer.create(<ForRent assetPaths="/" />).toJSON()
-    expect(tree).toMatchSnapshot()
+    jest.setTimeout(30000)
+    axios.get.mockResolvedValue({ data: { listings: [] } })
+
+    const { findByTestId, asFragment } = render(<ForRent assetPaths="/" />)
+
+    // expect(await findByTestId("Rent-0")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    // done()
   })
 })

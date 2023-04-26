@@ -1,26 +1,24 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render, cleanup } from "@testing-library/react"
+
 import ForSale from "../../../pages/listings/for-sale"
-import mockAxios from "jest-mock-axios"
+const axios = require("axios")
 
 jest.useFakeTimers()
 
 jest.mock("axios")
 
-// jest.mock("axios")
-// const mockedAxios = axios as jest.Mocked<typeof axios>;
-
 describe("For Sale", () => {
   afterEach(() => {
-    mockAxios.reset()
+    cleanup()
   })
 
   it("renders ForSale component", async (done) => {
-    mockAxios.get.mockResolvedValueOnce([])
-    const tree = renderer.create(<ForSale assetPaths="/" />).toJSON()
-    setImmediate(() => {
-      expect(tree).toMatchSnapshot()
-      done()
-    })
+    axios.get.mockResolvedValue({ data: { listings: [] } })
+
+    const { findByTestId, asFragment } = render(<ForSale assetPaths="/" />)
+    expect(await findByTestId("Rent-0")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })

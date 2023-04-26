@@ -125,6 +125,7 @@ export const ListingDetailsUnitAccordions = () => {
           </div>
         }
         accordionTheme="blue"
+        data-testid={"unit-accordion"}
       />
     )
   })
