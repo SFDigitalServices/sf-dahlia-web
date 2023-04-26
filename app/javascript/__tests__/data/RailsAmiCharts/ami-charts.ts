@@ -116,49 +116,49 @@ export const amiCharts = [
         chartType: "MOHCD",
         amount: 73250,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 5,
         chartType: "MOHCD",
         amount: 140000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 6,
         chartType: "MOHCD",
         amount: 150000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 7,
         chartType: "MOHCD",
         amount: 160000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 8,
         chartType: "MOHCD",
         amount: 170000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 9,
         chartType: "MOHCD",
         amount: 180000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 10,
         chartType: "MOHCD",
         amount: 190000,
       },
-         {
+      {
         year: "2021",
         percent: 109.8,
         numOfHousehold: 11,
