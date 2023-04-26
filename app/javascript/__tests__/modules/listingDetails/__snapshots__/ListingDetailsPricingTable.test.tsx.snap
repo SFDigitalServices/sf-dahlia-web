@@ -10,6 +10,11 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
   <ul>
     <li>
       <p>
+        1 people household: $51,300 to $51,300
+      </p>
+    </li>
+    <li>
+      <p>
         2 people household: $58,600 to $58,600
       </p>
     </li>
@@ -46,11 +51,6 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
     <li>
       <p>
         9 people household: $102,600 to $180,000
-      </p>
-    </li>
-    <li>
-      <p>
-        10 people household: $108,450 to $190,000
       </p>
     </li>
   </ul>

@@ -125,16 +125,9 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
 }
 
 const buildAccordions = (
-  units: RailsUnit[],
-  listingIsSale: boolean,
-  amiCharts: RailsAmiChart[]
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  listingIsSale: boolean
 ) => {
-  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
-
-  if (units?.length) {
-    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
-  }
-
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
@@ -211,8 +204,14 @@ const buildContent = (
     return <Icon symbol="spinner" size="large" />
   }
 
+  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
+
+  if (units?.length) {
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
+  }
+
   if (listingIsSale && !listingIsHabitat) {
-    return buildAccordions(units, true, amiCharts)
+    return buildAccordions(groupedUnitsByOccupancy, true)
   }
 
   if (listingIsHabitat) {
@@ -225,19 +224,29 @@ const buildContent = (
       return chart.derivedFrom === "MaxAmi"
     })?.values
 
-    // unsure  how these values are being derived in angular
-    for (let i = 2; i < 11; i++) {
-      const minOccupancy = minAmiChartsValues.find((chart) => {
+    /*
+     * GroupedUnitsByOccupancy() is already sorted
+     */
+    const minOccupancy = groupedUnitsByOccupancy[0]?.occupancy
+    const maxOccupancy = minOccupancy + 9
+
+    /*
+     * We want to display 9 rows for Habitat listings
+     */
+    for (let i = minOccupancy; i < maxOccupancy; i++) {
+      const minOccupancyChart = minAmiChartsValues.find((chart) => {
         return chart.numOfHousehold === i
       })
 
-      const maxOccupancy = maxAmiChartsValues.find((chart) => {
+      const maxOccupancyChart = maxAmiChartsValues.find((chart) => {
         return chart.numOfHousehold === i
       })
 
-      habitatStringArray.push(
-        `${i} people household: $${minOccupancy?.amount?.toLocaleString()} to $${maxOccupancy?.amount?.toLocaleString()}`
-      )
+      if (minOccupancyChart && maxOccupancyChart) {
+        habitatStringArray.push(
+          `${i} people household: $${minOccupancyChart?.amount?.toLocaleString()} to $${maxOccupancyChart?.amount?.toLocaleString()}`
+        )
+      }
     }
 
     return (
@@ -255,7 +264,7 @@ const buildContent = (
       </>
     )
   }
-  return buildAccordions(units, false, amiCharts)
+  return buildAccordions(groupedUnitsByOccupancy, false)
 }
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
