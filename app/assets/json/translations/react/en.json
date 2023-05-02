@@ -1096,6 +1096,7 @@
   "lottery.rankingPreferenceConsiderationNote": "Please note, there are other preferences that will be considered for units first.",
   "lottery.rankingPreferencesConsideredOverGeneralNote": "Please note, preference holders will be considered for all units first.",
   "lottery.rankingTitle": "Your preference ranking",
+  "lottery.rankingTitle.noPreference": "Your lottery ranking",
   "lottery.readAboutPreferences": "Read About Housing Preferences",
   "lottery.resultsFrom": "Results from %{date}",
   "lottery.resultsWillBePostedOn": "Complete lottery results will be posted in pdf format on %{date}",
