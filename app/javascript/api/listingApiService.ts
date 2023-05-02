@@ -80,11 +80,7 @@ export const getAmiCharts = async (
     )
   }, "")
 
-  return get<ListingAmiChartsResponse>(amiCharts(queryParams))
-    .then(({ data }) => {
-      return data.ami
-    })
-    .catch(() => {
-      return null
-    })
+  return get<ListingAmiChartsResponse>(amiCharts(queryParams)).then(({ data }) => {
+    return data.ami
+  })
 }
