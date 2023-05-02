@@ -10,47 +10,52 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
   <ul>
     <li>
       <p>
-        1 people household: $51,300 to $51,300
+        1 person household: 51,300 to 51,300 per year
       </p>
     </li>
     <li>
       <p>
-        2 people household: $58,600 to $58,600
+        1 people household: 51,300 to 51,300 per year
       </p>
     </li>
     <li>
       <p>
-        3 people household: $65,950 to $65,950
+        2 people household: 58,600 to 58,600 per year
       </p>
     </li>
     <li>
       <p>
-        4 people household: $73,250 to $73,250
+        3 people household: 65,950 to 65,950 per year
       </p>
     </li>
     <li>
       <p>
-        5 people household: $79,100 to $140,000
+        4 people household: 73,250 to 73,250 per year
       </p>
     </li>
     <li>
       <p>
-        6 people household: $85,000 to $150,000
+        5 people household: 79,100 to 140,000 per year
       </p>
     </li>
     <li>
       <p>
-        7 people household: $90,850 to $160,000
+        6 people household: 85,000 to 150,000 per year
       </p>
     </li>
     <li>
       <p>
-        8 people household: $96,700 to $170,000
+        7 people household: 90,850 to 160,000 per year
       </p>
     </li>
     <li>
       <p>
-        9 people household: $102,600 to $180,000
+        8 people household: 96,700 to 170,000 per year
+      </p>
+    </li>
+    <li>
+      <p>
+        9 people household: 102,600 to 180,000 per year
       </p>
     </li>
   </ul>
