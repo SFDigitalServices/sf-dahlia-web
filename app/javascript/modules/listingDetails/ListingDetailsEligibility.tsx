@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import {
   ExpandableText,
   InfoCard,
   ListingDetailItem,
   ListSection,
   StandardTable,
+  Icon,
+  Button,
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
+  getMinMaxOccupancy,
   isHabitatListing,
   isPluralSRO,
   isRental,
@@ -21,6 +24,7 @@ import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/Befo
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
@@ -39,7 +43,14 @@ export const ListingDetailsEligibility = ({
 }: ListingDetailsEligibilityProps) => {
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
+  const listingIsSale = isSale(listing)
+  const [hmiTableCollapsed, setHmiTableCollapsed] = useState(true)
   const priorityUnits = []
+  const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
+  let minMaxOccupancies = {}
+  if (fetchedAmiCharts && fetchedUnits) {
+    minMaxOccupancies = getMinMaxOccupancy(units, amiCharts, listingIsSale)
+  }
 
   listing.Units?.forEach((unit: RailsUnit) => {
     const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
@@ -58,42 +69,105 @@ export const ListingDetailsEligibility = ({
     }
   })
 
-  /* TODO: Implement updated API to get actual data */
-  const HMITableHeaders = {
-    householdSize: "t.householdSize",
-    maxIncomeMonth: "t.maximumIncomeMonth",
-    maxIncomeYear: "t.maximumIncomeYear",
+  let HMITableHeaders = {}
+  const HMITableData = []
+
+  const buildHmiChartsForMultipleAmis = () => {
+    const maxHmi = listingIsSale ? minMaxOccupancies.max : minMaxOccupancies.max + 2
+    const max = hmiTableCollapsed ? 2 : maxHmi
+    for (let i = minMaxOccupancies.min; i <= max; i++) {
+      const HMITableRow = {}
+
+      let householdSize
+
+      if (i === 1) {
+        householdSize = {
+          content: <span className="font-semibold">{t("listings.onePerson")}</span>,
+        }
+      } else {
+        householdSize = {
+          content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
+        }
+      }
+
+      amiCharts.forEach((chart) => {
+        const amiChart = chart.values?.find((amiChart) => {
+          return amiChart.numOfHousehold === i
+        })
+
+        HMITableRow[`ami${chart.percent}`] = {
+          content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
+        }
+      })
+
+      HMITableData.push({
+        householdSize,
+        ...HMITableRow,
+      })
+    }
   }
-  const HMITableData = [
-    {
-      householdSize: {
-        content: <span className="font-semibold">{t("listings.onePerson")}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`2 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`3 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`4 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-  ]
+
+  const buildHmiChartsForOneAmi = () => {
+    const maxHmi = listingIsSale ? minMaxOccupancies.max : minMaxOccupancies.max + 2
+    const max = hmiTableCollapsed ? 2 : maxHmi
+    for (let i = minMaxOccupancies.min; i <= max; i++) {
+      const amiChart = amiCharts[0]?.values?.find((amiChart) => {
+        return amiChart.numOfHousehold === i
+      })
+
+      let householdSize
+
+      if (i === 1) {
+        householdSize = {
+          content: <span className="font-semibold">{t("listings.onePerson")}</span>,
+        }
+      } else {
+        householdSize = {
+          content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
+        }
+      }
+
+      HMITableData.push({
+        householdSize,
+        maxIncomeMonth: {
+          content: t("t.perMonthCost", {
+            cost: `$${Math.floor(amiChart?.amount / 12).toLocaleString()}`,
+          }),
+        },
+        maxIncomeYear: {
+          content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
+        },
+      })
+    }
+  }
+
+  const buildHmiHeadersForOneAmi = () => {
+    return {
+      householdSize: "t.householdSize",
+      maxIncomeMonth: "t.maximumIncomeMonth",
+      maxIncomeYear: "t.maximumIncomeYear",
+    }
+  }
+  const buildHmiHeadersForMultipleAmis = () => {
+    const headers = {
+      householdSize: "t.householdSize",
+    }
+    amiCharts.forEach((chart) => {
+      console.log(chart.percent)
+      headers[`ami${chart.percent}`] = `${chart.percent}% AMI`
+    })
+    return headers
+  }
+
+  if (fetchedAmiCharts && amiCharts.length === 1 && minMaxOccupancies.min) {
+    buildHmiChartsForOneAmi()
+    HMITableHeaders = buildHmiHeadersForOneAmi()
+  }
+
+  if (fetchedAmiCharts && amiCharts.length > 1 && minMaxOccupancies.min) {
+    buildHmiChartsForMultipleAmis()
+    HMITableHeaders = buildHmiHeadersForMultipleAmis()
+  }
 
   let occupancySubtitle = ""
   if (isSale(listing)) {
@@ -105,6 +179,7 @@ export const ListingDetailsEligibility = ({
     occupancySubtitle = t("listings.occupancyDescriptionAllSro")
   } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
+    e
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
   } else {
@@ -137,6 +212,7 @@ export const ListingDetailsEligibility = ({
       },
     }
   })
+  console.log(HMITableData)
 
   return (
     <ListingDetailItem
@@ -196,6 +272,14 @@ export const ListingDetailsEligibility = ({
             }
           >
             <StandardTable headers={HMITableHeaders} data={HMITableData} />
+            <Button
+              unstyled
+              onClick={() => {
+                setHmiTableCollapsed(!hmiTableCollapsed)
+              }}
+            >
+              {hmiTableCollapsed ? "show more" : "show less"}
+            </Button>
           </ListSection>
         )}
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
