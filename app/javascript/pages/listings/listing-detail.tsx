@@ -85,7 +85,7 @@ const ListingDetail = () => {
           <SiteAlert type="success" className={alertClasses} timeout={30_000} />
         </div>
         {listing && (
-          <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
+          <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
             <ListingDetailsHabitat listing={listing} />
             {!isApplicationOpen && (
@@ -100,7 +100,10 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+            <ErrorBoundary
+              boundaryScope={BoundaryScope.component}
+              componentClassNames="p-4 text-left"
+            >
               <ListingDetailsPricingTable listing={listing} />
             </ErrorBoundary>
             {listingHasSROUnits(listing) &&
