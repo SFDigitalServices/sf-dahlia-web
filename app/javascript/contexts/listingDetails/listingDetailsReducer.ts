@@ -48,6 +48,18 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
       }),
     }
   },
+  [ListingDetailsActions.SetFetchingAmiChartsError]: (state, { payload: error }) => {
+    return {
+      ...state,
+      fetchingAmiChartsError: error,
+    }
+  },
+  [ListingDetailsActions.SetFetchingUnitsError]: (state, { payload: error }) => {
+    return {
+      ...state,
+      fetchingUnitsError: error,
+    }
+  },
 })
 
 export default ListingDetailsReducer

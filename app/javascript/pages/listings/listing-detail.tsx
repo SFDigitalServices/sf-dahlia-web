@@ -38,6 +38,7 @@ import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetai
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -99,7 +100,9 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable listing={listing} />
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsPricingTable listing={listing} />
+            </ErrorBoundary>
             {listingHasSROUnits(listing) &&
               !(
                 isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
