@@ -24,7 +24,7 @@ export enum BoundaryScope {
 
 interface Props {
   boundaryScope: BoundaryScope
-  componentClassNames: string
+  componentClassNames?: string
   children: ReactNode
 }
 
