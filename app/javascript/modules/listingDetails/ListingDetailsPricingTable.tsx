@@ -224,9 +224,23 @@ const buildHabitatText = (
       return chart.numOfHousehold === i
     })
 
+    if (minOccupancyChart && maxOccupancyChart && i === 1) {
+      habitatStringArray.push(
+        t("listings.habitat.incomeRange.incomeRangeSingular", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
+      )
+    }
+
     if (minOccupancyChart && maxOccupancyChart) {
       habitatStringArray.push(
-        `${i} people household: $${minOccupancyChart?.amount?.toLocaleString()} to $${maxOccupancyChart?.amount?.toLocaleString()}`
+        t("listings.habitat.incomeRange.incomeRangePlural", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
       )
     }
   }
