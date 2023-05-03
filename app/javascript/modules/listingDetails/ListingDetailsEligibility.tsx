@@ -25,6 +25,7 @@ import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
 import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
@@ -72,7 +73,19 @@ export const ListingDetailsEligibility = ({
   let HMITableHeaders = {}
   const HMITableData = []
 
+  const sortAmisByPercent = (a, b) => {
+    if (a.percent < b.percent) {
+      return -1
+    }
+    if (a.percent > b.percent) {
+      return 1
+    }
+    return 0
+  }
+
   const buildHmiChartsForMultipleAmis = () => {
+    amiCharts.sort(sortAmisByPercent)
+
     const maxHmi = listingIsSale ? minMaxOccupancies.max : minMaxOccupancies.max + 2
     const max = hmiTableCollapsed ? 2 : maxHmi
     for (let i = minMaxOccupancies.min; i <= max; i++) {
@@ -153,7 +166,6 @@ export const ListingDetailsEligibility = ({
       householdSize: "t.householdSize",
     }
     amiCharts.forEach((chart) => {
-      console.log(chart.percent)
       headers[`ami${chart.percent}`] = `${chart.percent}% AMI`
     })
     return headers
@@ -179,7 +191,6 @@ export const ListingDetailsEligibility = ({
     occupancySubtitle = t("listings.occupancyDescriptionAllSro")
   } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
-    e
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
   } else {
@@ -273,12 +284,15 @@ export const ListingDetailsEligibility = ({
           >
             <StandardTable headers={HMITableHeaders} data={HMITableData} />
             <Button
-              unstyled
+              inlineIcon="right"
+              className="underline font-medium bg-primary-lighter"
+              iconSize="small"
+              icon={hmiTableCollapsed ? faAngleDown : faAngleUp}
               onClick={() => {
                 setHmiTableCollapsed(!hmiTableCollapsed)
               }}
             >
-              {hmiTableCollapsed ? "show more" : "show less"}
+              {hmiTableCollapsed ? t("label.showMore") : t("label.showLess")}
             </Button>
           </ListSection>
         )}
