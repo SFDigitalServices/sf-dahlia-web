@@ -181,7 +181,7 @@ export const deriveIncomeFromAmiCharts = (
   const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
     return (
       Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
-      amiData.chartType === unit.AMI_chart_type
+      amiData.chartType === unit.AMI_chart_type && amiData.year === unit.AMI_chart_year?.toString()
     )
   })?.values
 
@@ -207,7 +207,7 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
   const totalUnits = []
   units.forEach((unit: RailsUnit) => {
     if (!unit.Max_Occupancy) {
-      unit.Max_Occupancy = 3
+      unit.Max_Occupancy = unit.Min_Occupancy + 2
     }
     for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
       totalUnits.push({ ...unit, occupancy: i })

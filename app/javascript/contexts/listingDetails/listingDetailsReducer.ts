@@ -38,6 +38,7 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
         return {
           ...amiChart,
           chartType: amiChart?.values[0]?.chartType,
+          year: amiChart?.values[0]?.year,
         }
       }),
     }
