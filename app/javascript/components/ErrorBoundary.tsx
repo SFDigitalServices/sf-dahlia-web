@@ -24,6 +24,7 @@ export enum BoundaryScope {
 
 interface Props {
   boundaryScope: BoundaryScope
+  componentClassNames?: string
   children: ReactNode
 }
 
@@ -46,6 +47,9 @@ class ErrorBoundary extends React.Component<Props, State> {
   }
 
   render() {
+    const classNames = this.props.componentClassNames
+      ? `${this.props.componentClassNames}`
+      : "p-4 text-center"
     if (this.state.hasError) {
       switch (this.props.boundaryScope) {
         case BoundaryScope.content:
@@ -64,7 +68,7 @@ class ErrorBoundary extends React.Component<Props, State> {
             />
           )
         case BoundaryScope.component:
-          return <div className="p-4 text-center">{t("errorBoundary.description")}</div>
+          return <div className={classNames}>{t("errorBoundary.description")}</div>
         default:
           // Assume the worst if not specified. Will handle as a page level boundary
           window.location.replace("/500.html")
