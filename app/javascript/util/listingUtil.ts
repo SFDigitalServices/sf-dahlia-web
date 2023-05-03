@@ -308,7 +308,7 @@ export const groupAndSortUnitsByOccupancy = (
    * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
    * and a unit with occupancy 3
    */
-  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy, true)
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object

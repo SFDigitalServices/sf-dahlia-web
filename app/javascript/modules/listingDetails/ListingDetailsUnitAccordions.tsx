@@ -37,28 +37,31 @@ const getPriorityTypeText = (priorityType) => {
   }
 }
 
-const getTableData = (units: RailsUnit[]) =>
-  units.map((unit) => ({
-    unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
-    area: {
-      content: (
-        <>
-          <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
-          <span aria-hidden="true">{t("listings.features.sqft")}</span>
-          <span className="sr-only">{t("listings.features.squareFeet")}</span>
-        </>
-      ),
-    },
-    baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
-    floor: { content: <span className="font-semibold">{unit.Unit_Floor}</span> },
-    accessibility: {
-      content: (
-        <span className="font-semibold">
-          {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
-        </span>
-      ),
-    },
-  }))
+const getTableData = (units: RailsUnit[]) => {
+  return units.map((unit) => {
+    return {
+      unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
+      area: {
+        content: (
+          <>
+            <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
+            <span aria-hidden="true">{t("listings.features.sqft")}</span>
+            <span className="sr-only">{t("listings.features.squareFeet")}</span>
+          </>
+        ),
+      },
+      baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
+      floor: { content: <span className="font-semibold">{unit.Unit_Floor}</span> },
+      accessibility: {
+        content: (
+          <span className="font-semibold">
+            {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
+          </span>
+        ),
+      },
+    }
+  })
+}
 
 const sortUnits = (units) => {
   return units?.reduce((acc, unit) => {
