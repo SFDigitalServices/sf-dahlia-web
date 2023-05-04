@@ -159,6 +159,47 @@ export const units: RailsUnit[] = [
   },
 ]
 
+export const unitsWithOneAmi: RailsUnit[] = [
+  {
+    attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmGQAV" },
+    Unit_Type: "2 BR",
+    Availability: 1,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 7,
+    Unit_Square_Footage: 1199,
+    BMR_Rent_Monthly: 1000,
+    Unit_Number: "103C",
+    Unit_Floor: "1",
+    Number_of_Bathrooms: 2,
+    Status: "Available",
+    Property_Type: "Condo",
+    isReservedCommunity: true,
+    AMI_chart_type: "MOHCD",
+    AMI_chart_year: 2021,
+    Max_AMI_for_Qualifying_Unit: 55,
+    Min_Occupancy: 2,
+    Max_Occupancy: 5,
+    Id: "a0b4U00001JvOmGQAV",
+  },
+  {
+    attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmHQAV" },
+    Unit_Type: "2 BR",
+    Availability: 1,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 100,
+    Unit_Square_Footage: 1273,
+    Unit_Number: "303C",
+    Unit_Floor: "3",
+    Number_of_Bathrooms: 2,
+    Status: "Available",
+    Property_Type: "Condo",
+    isReservedCommunity: true,
+    AMI_chart_type: "MOHCD",
+    AMI_chart_year: 2021,
+    Max_AMI_for_Qualifying_Unit: 55,
+    Min_Occupancy: 1,
+    Id: "a0b4U00001JvOmHQAV",
+  },
+]
+
 export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[] = [
   {
     attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmGQAV" },

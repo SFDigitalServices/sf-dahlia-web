@@ -11,7 +11,7 @@ export interface ListingDetailsEligibilityProps {
   listing: RailsListing
 }
 
-const buildHmiHeadersForOneAmi = () => {
+const buildHmiHeadersWithOneAmi = () => {
   return {
     householdSize: "t.householdSize",
     maxIncomeMonth: "t.maximumIncomeMonth",
@@ -19,20 +19,20 @@ const buildHmiHeadersForOneAmi = () => {
   }
 }
 
-const buildHmiHeadersForMultipleAmis = (amiCharts) => {
+const buildHmiHeadersWithMultipleAmis = (amiCharts) => {
   const headers = {
     householdSize: "t.householdSize",
   }
   amiCharts.forEach((chart) => {
-    headers[`ami${chart.percent}`] = `${chart.percent}% AMI`
+    headers[`ami${chart.percent}`] = t("t.percentAMI", { percent: chart.percent })
   })
   return headers
 }
 
 const buildHmiChartHeaders = (amiCharts) => {
   return amiCharts.length > 1
-    ? buildHmiHeadersForMultipleAmis(amiCharts)
-    : buildHmiHeadersForOneAmi()
+    ? buildHmiHeadersWithMultipleAmis(amiCharts)
+    : buildHmiHeadersWithOneAmi()
 }
 
 const sortAmisByPercent = (a, b) => {
@@ -187,7 +187,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
       />
       <Button
         inlineIcon="right"
-        className="underline font-medium bg-primary-lighter"
+        className="underline font-medium md:bg-primary-lighter mt-3"
         iconSize="small"
         icon={tableCollapsed ? faAngleDown : faAngleUp}
         onClick={expandTableHandler}
