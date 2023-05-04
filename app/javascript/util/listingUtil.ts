@@ -216,16 +216,21 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
   return totalUnits
 }
 
-export const buildAmiArray = (units: RailsUnitWithOccupancyAndMaxIncome[]): Array<number> => {
-  const arrayOfAmis = []
+export const buildAmiArray = (
+  units: RailsUnitWithOccupancyAndMaxIncome[]
+): Array<{ min: number | undefined; max: number }> => {
+  const arrayOfAmis: Array<{ min: number | undefined; max: number }> = []
   units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
-    if (arrayOfAmis.includes(unit.Max_AMI_for_Qualifying_Unit)) {
+    if (arrayOfAmis.some((ami) => ami.max === unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
-    arrayOfAmis.push(unit.Max_AMI_for_Qualifying_Unit)
+    arrayOfAmis.push({
+      min: unit.Min_AMI_for_Qualifying_Unit,
+      max: unit.Max_AMI_for_Qualifying_Unit,
+    })
   })
   arrayOfAmis.sort(function (a, b) {
-    return a - b
+    return a.max - b.max
   })
   return arrayOfAmis
 }
@@ -335,7 +340,7 @@ export const groupAndSortUnitsByOccupancy = (
       absoluteMinIncome: absoluteMinIncome,
       amiRows: buildAmiArray(unitsWithOccupancy).map((ami) => {
         const unitsWithAmi = unitsWithOccupancy.filter(
-          (unit) => unit.Max_AMI_for_Qualifying_Unit === ami
+          (unit) => unit.Max_AMI_for_Qualifying_Unit === ami.max
         )
         return {
           ami,

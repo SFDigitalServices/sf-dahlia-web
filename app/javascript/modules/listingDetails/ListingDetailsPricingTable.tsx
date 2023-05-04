@@ -13,7 +13,7 @@ export interface ListingDetailsPricingTableProps {
 }
 
 export interface AmiRow {
-  ami: number
+  ami: { min: number | undefined; max: number }
   units: RailsUnitWithOccupancyAndMaxIncome[]
 }
 
@@ -150,10 +150,17 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
+        const header = amiRow.ami.min
+          ? t("listings.stats.amiRange", {
+              minAmiPercent: amiRow.ami.min,
+              maxAmiPercent: amiRow.ami.max,
+            })
+          : t("listings.stats.upToPercentAmi", {
+              amiPercent: amiRow.ami.max,
+            })
+
         return {
-          header: t("listings.stats.upToPercentAmi", {
-            amiPercent: amiRow.ami,
-          }),
+          header,
           tableData: {
             stackedData: responsiveTableRows,
             headers: responsiveTableHeaders,
