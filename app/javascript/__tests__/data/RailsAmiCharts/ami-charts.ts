@@ -2,7 +2,7 @@ export const amiCharts = [
   {
     percent: "55",
     chartType: "MOHCD",
-      year:"2021",
+    year: "2021",
     values: [
       {
         year: "2021",
@@ -86,7 +86,7 @@ export const amiCharts = [
   {
     percent: "109.8",
     chartType: "MOHCD",
-      year:"2021",
+    year: "2021",
     values: [
       {
         year: "2021",

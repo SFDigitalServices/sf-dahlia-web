@@ -409,7 +409,7 @@ describe("buildOccupanciesArray", () => {
 describe("groupAndSortUnitsByOccupancy", () => {
   it("should return the expected value", () => {
     const actualOutput = groupAndSortUnitsByOccupancy(units, amiCharts)
-    console.log(JSON.stringify(actualOutput));
+    console.log(JSON.stringify(actualOutput))
     expect(actualOutput).toEqual(groupedUnitsByOccupancy)
   })
 })
