@@ -84,10 +84,10 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint.skiptranslate
               tbody
                 tr
                   td.is-subtitled-nested data-th="{{ 'listings.stats.sales_price' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
-                    | {{ ::priceGroup.Price_With_Parking | currency:"$": 0}}
+                    | {{ ::priceGroup.Price_With_Parking | currency:"$"}}
                   td.is-subtitled-nested data-th="{{ 'listings.stats.hoa_dues' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
                     span ng-if="::priceGroup.HOA_Dues_With_Parking"
-                      | {{::priceGroup.HOA_Dues_With_Parking | currency:"$":0}}
+                      | {{::priceGroup.HOA_Dues_With_Parking | currency:"$"}}
                       small
                        | {{'t.per_month' | translate}}
                   td.is-subtitled-nested data-th="{{ 'listings.features.parking' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithParking(priceGroup)"
@@ -95,10 +95,10 @@ div.table-pricing-wrapper.with-mobile-styling-at-large-breakpoint.skiptranslate
                       | {{ 'listings.stats.parking_yes' | translate }}
                 tr
                   td.is-subtitled-nested data-th="{{ 'listings.stats.sales_price' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
-                    | {{ ::priceGroup.Price_Without_Parking | currency:"$": 0}}
+                    | {{ ::priceGroup.Price_Without_Parking | currency:"$"}}
                   td.is-subtitled-nested data-th="{{ 'listings.stats.hoa_dues' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"
                     span ng-if="::priceGroup.HOA_Dues_Without_Parking"
-                      | {{::priceGroup.HOA_Dues_Without_Parking | currency:"$":0}}
+                      | {{::priceGroup.HOA_Dues_Without_Parking | currency:"$"}}
                       small
                        | {{'t.per_month' | translate}}
                   td.is-subtitled-nested data-th="{{ 'listings.features.parking' | translate }}" ng-if="$ctrl.priceGroupHasUnitsWithoutParking(priceGroup)"

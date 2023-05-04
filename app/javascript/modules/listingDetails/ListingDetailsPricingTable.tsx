@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
@@ -149,7 +149,7 @@ const buildAccordions = (
               units: { name: "t.unitType" },
               income: { name: "shortFormNav.income" },
               sale: { name: "listings.stats.salesPrice" },
-              monthlyHoaDues: { name: "Monthly HOA Dues" },
+              monthlyHoaDues: { name: "listings.stats.monthlyHoaDues" },
             }
           : {
               units: { name: "t.unitType" },
@@ -247,8 +247,26 @@ const buildContent = (
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
   const listingIsSale = isSale(listing)
   const listingIsHabitat = isHabitatListing(listing)
-  const { fetchedAmiCharts, fetchedUnits, amiCharts, units } = useContext(ListingDetailsContext)
+  const {
+    fetchedAmiCharts,
+    fetchedUnits,
+    amiCharts,
+    units,
+    fetchingAmiChartsError,
+    fetchingUnitsError,
+  } = useContext(ListingDetailsContext)
   const dataHasBeenFetched = fetchedAmiCharts && fetchedUnits
+
+  useEffect(() => {
+    if (fetchingAmiChartsError) {
+      // TODO: Log error properly
+      throw fetchingAmiChartsError
+    }
+    if (fetchingUnitsError) {
+      // TODO: Log error properly
+      throw fetchingUnitsError
+    }
+  }, [fetchingAmiChartsError, fetchingUnitsError])
 
   return (
     <div
