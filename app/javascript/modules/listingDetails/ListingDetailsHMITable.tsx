@@ -24,7 +24,7 @@ const buildHmiHeadersWithMultipleAmis = (amiCharts) => {
     householdSize: "t.householdSize",
   }
   amiCharts.forEach((chart) => {
-    headers[`ami${chart.percent}`] = t("t.percentAMI", { percent: chart.percent })
+    headers[`ami${chart.percent}`] = `t.percentAMI*percent:${chart.percent}`
   })
   return headers
 }
