@@ -2,7 +2,7 @@ import React, { useContext, useState, useMemo } from "react"
 import { Icon, ListSection, StandardTable, Button, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { renderMarkup } from "../../util/languageUtil"
-import { getMinMaxOccupancy, isHabitatListing, isSale } from "../../util/listingUtil"
+import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
 import "./ListingDetailsEligibility.scss"
@@ -20,12 +20,6 @@ const buildHmiHeadersForOneAmi = () => {
   }
 }
 
-const buildHmiChartHeaders = (amiCharts) => {
-  return amiCharts.length > 1
-    ? buildHmiHeadersForOneAmi()
-    : buildHmiHeadersForMultipleAmis(amiCharts)
-}
-
 const buildHmiHeadersForMultipleAmis = (amiCharts) => {
   const headers = {
     householdSize: "t.householdSize",
@@ -34,6 +28,12 @@ const buildHmiHeadersForMultipleAmis = (amiCharts) => {
     headers[`ami${chart.percent}`] = `${chart.percent}% AMI`
   })
   return headers
+}
+
+const buildHmiChartHeaders = (amiCharts) => {
+  return amiCharts.length > 1
+    ? buildHmiHeadersForMultipleAmis(amiCharts)
+    : buildHmiHeadersForOneAmi()
 }
 
 const sortAmisByPercent = (a, b) => {
@@ -46,31 +46,9 @@ const sortAmisByPercent = (a, b) => {
   return 0
 }
 
-const buildHmiCharts = (listingIsSale, units, amiCharts) => {
-  const { min, max } = getMinMaxOccupancy(units, amiCharts, listingIsSale)
-  if (listingIsSale) {
-    max += 2
-  }
-
-  // can this be done in a way that doesn't recalculate?
-  if (amiCharts.length > 1) {
-    return buildHmiChartsForOneAmi(min, max, amiCharts, toDisplayAllData)
-  } else {
-    return buildHmiChartsForMultipleAmis(min, max, amiCharts, toDisplayAllData)
-  }
-}
-
-const buildHmiChartsForOneAmi = (
-  listingIsSale,
-  minOccupancy,
-  maxOccupancy,
-  amiCharts,
-  //  HMITableData,
-  hmiTableCollapsed
-) => {
-  const maxHmi = listingIsSale ? minMaxOccupancies.max : minMaxOccupancies.max + 2
-  const max = hmiTableCollapsed ? 2 : maxHmi
-  for (let i = minMaxOccupancies.min; i <= max; i++) {
+const buildHmiTableWithOneAmiChart = (minOccupancy, maxOccupancy, amiCharts) => {
+  const tableData = []
+  for (let i = minOccupancy; i <= maxOccupancy; i++) {
     const amiChart = amiCharts[0]?.values?.find((amiChart) => {
       return amiChart.numOfHousehold === i
     })
@@ -87,7 +65,7 @@ const buildHmiChartsForOneAmi = (
       }
     }
 
-    HMITableData.push({
+    tableData.push({
       householdSize,
       maxIncomeMonth: {
         content: t("t.perMonthCost", {
@@ -100,21 +78,16 @@ const buildHmiChartsForOneAmi = (
     })
   }
 
-  return HMITableData
+  return tableData
 }
 
-const buildHmiChartsForMultipleAmis = (
-  listingIsSale,
-  minMaxOccupancies,
-  amiCharts,
-  HMITableData,
-  hmiTableCollapsed
-) => {
+const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) => {
+  const tableData = []
+
   amiCharts.sort(sortAmisByPercent)
-  const maxHmi = listingIsSale ? minMaxOccupancies.max : minMaxOccupancies.max + 2
-  const max = hmiTableCollapsed ? 2 : maxHmi
-  for (let i = minMaxOccupancies.min; i <= max; i++) {
-    const HMITableRow = {}
+
+  for (let i = minOccupancy; i <= maxOccupancy; i++) {
+    const tableRow = {}
 
     let householdSize
 
@@ -133,15 +106,32 @@ const buildHmiChartsForMultipleAmis = (
         return amiChart.numOfHousehold === i
       })
 
-      HMITableRow[`ami${chart.percent}`] = {
+      tableRow[`ami${chart.percent}`] = {
         content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
       }
     })
 
-    HMITableData.push({
+    tableData.push({
       householdSize,
-      ...HMITableRow,
+      ...tableRow,
     })
+  }
+
+  return tableData
+}
+
+const buildHmiCharts = (listingIsSale, units, amiCharts) => {
+  console.log("building hmi charts")
+  let { min, max } = getMinMaxOccupancy(units, amiCharts, listingIsSale)
+
+  if (!listingIsSale) {
+    max += 2
+  }
+
+  if (amiCharts.length > 1) {
+    return buildHmiTableWithMultipleAmis(min, max, amiCharts)
+  } else {
+    return buildHmiTableWithOneAmiChart(min, max, amiCharts)
   }
 }
 
@@ -151,22 +141,23 @@ export interface ReducedUnit {
 }
 
 export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityProps) => {
-  const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
-  //const [hmiTableCollapsed, setHmiTableCollapsed] = useState(true)
-
-  const [numberOfRowsToDisplay, setNumberOfRowsToDisplay] = useState(2)
-
-  const hmiChartData = useMemo(() => {
-    buildHmiChartData()
-  }, [])
-
-  const hmiChartHeaders = useMemo(() => {
-    buildHmiChartHeaders(amiCharts)
-  }, [])
-
   const listingIsSale = isSale(listing)
-  let HMITableHeaders = {}
-  let HMITableData = []
+  const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
+  const [tableCollapsed, setTableCollapsed] = useState(true)
+
+  const HMITableData = useMemo(() => {
+    if (!fetchedAmiCharts || !fetchedUnits) {
+      return []
+    }
+    return buildHmiCharts(listingIsSale, units, amiCharts)
+  }, [listingIsSale, units, amiCharts, fetchedAmiCharts, fetchedUnits])
+
+  const HMITableHeaders = useMemo(() => {
+    if (!fetchedAmiCharts) {
+      return {}
+    }
+    return buildHmiChartHeaders(amiCharts)
+  }, [fetchedAmiCharts, amiCharts])
 
   if (!fetchedAmiCharts || !fetchedUnits) {
     return (
@@ -176,9 +167,8 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
     )
   }
 
-  if (fetchedAmiCharts && fetchedUnit) {
-    HMITableData = buildHmiCharts(listingIsSale, units, amiCharts)
-    HMITableHeaders = buildHmiHeader(listingIsSale, amiCharts)
+  const expandTableHandler = () => {
+    setTableCollapsed(!tableCollapsed)
   }
 
   return (
@@ -201,17 +191,18 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
         </div>
       }
     >
-      <StandardTable headers={HMITableHeaders} data={HMITableData} />
+      <StandardTable
+        headers={HMITableHeaders}
+        data={tableCollapsed ? HMITableData.slice(0, 2) : HMITableData}
+      />
       <Button
         inlineIcon="right"
         className="underline font-medium bg-primary-lighter"
         iconSize="small"
-        icon={hmiTableCollapsed ? faAngleDown : faAngleUp}
-        onClick={() => {
-          setHmiTableCollapsed(!hmiTableCollapsed)
-        }}
+        icon={tableCollapsed ? faAngleDown : faAngleUp}
+        onClick={expandTableHandler}
       >
-        {hmiTableCollapsed ? t("label.showMore") : t("label.showLess")}
+        {tableCollapsed ? t("label.showMore") : t("label.showLess")}
       </Button>
     </ListSection>
   )
