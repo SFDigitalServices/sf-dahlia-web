@@ -9,7 +9,6 @@ import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
-  imageSrc: string
 }
 
 const buildHmiHeadersForOneAmi = () => {
@@ -53,17 +52,14 @@ const buildHmiTableWithOneAmiChart = (minOccupancy, maxOccupancy, amiCharts) => 
       return amiChart.numOfHousehold === i
     })
 
-    let householdSize
-
-    if (i === 1) {
-      householdSize = {
-        content: <span className="font-semibold">{t("listings.onePerson")}</span>,
-      }
-    } else {
-      householdSize = {
-        content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
-      }
-    }
+    const householdSize =
+      i === 1
+        ? {
+            content: <span className="font-semibold">{t("listings.onePerson")}</span>,
+          }
+        : {
+            content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
+          }
 
     tableData.push({
       householdSize,
@@ -89,17 +85,14 @@ const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) =>
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
     const tableRow = {}
 
-    let householdSize
-
-    if (i === 1) {
-      householdSize = {
-        content: <span className="font-semibold">{t("listings.onePerson")}</span>,
-      }
-    } else {
-      householdSize = {
-        content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
-      }
-    }
+    const householdSize =
+      i === 1
+        ? {
+            content: <span className="font-semibold">{t("listings.onePerson")}</span>,
+          }
+        : {
+            content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
+          }
 
     amiCharts.forEach((chart) => {
       const amiChart = chart.values?.find((amiChart) => {
@@ -121,18 +114,15 @@ const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) =>
 }
 
 const buildHmiCharts = (listingIsSale, units, amiCharts) => {
-  console.log("building hmi charts")
   let { min, max } = getMinMaxOccupancy(units, amiCharts, listingIsSale)
 
   if (!listingIsSale) {
     max += 2
   }
 
-  if (amiCharts.length > 1) {
-    return buildHmiTableWithMultipleAmis(min, max, amiCharts)
-  } else {
-    return buildHmiTableWithOneAmiChart(min, max, amiCharts)
-  }
+  return amiCharts.length > 1
+    ? buildHmiTableWithMultipleAmis(min, max, amiCharts)
+    : buildHmiTableWithOneAmiChart(min, max, amiCharts)
 }
 
 export interface ReducedUnit {
