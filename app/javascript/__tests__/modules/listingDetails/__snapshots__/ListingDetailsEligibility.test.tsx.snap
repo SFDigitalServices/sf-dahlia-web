@@ -1,2116 +1,429 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsEligibility displays listing details eligibility section and no Building Selection Criteria Link 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
+Array [
+  <li
+    className="responsive-content-item bg-primary-lighter"
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
+    <header
+      className="detail-header"
     >
-      <h2
-        className="detail-header__title"
+      <img
+        alt=""
+        className="detail-header__image "
+        src="listing-eligibility.svg"
+      />
+      <hgroup
+        className="detail-header__hgroup"
       >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        Income, occupancy, preferences, and subsidies
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
+        <h2
+          className="detail-header__title"
         >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Household Maximum Income
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            <div>
-              <div
-                className="mb-4"
-              >
-                <p>
-                  For income calculations, household size includes everyone (all ages) living in the unit.
-                </p>
-              </div>
-              <div
-                className="mb-4 primary-lighter-markup-link-desktop"
-              >
-                <p>
-                  People in your household may need 
-                  <a
-                    href="https://sfmohcd.org/special-calculations-household-income"
-                    target="_blank"
-                  >
-                    special income calculations
-                  </a>
-                   if they:
-                </p>
-              </div>
-              <ul
-                className="list-disc ml-5"
-              >
-                <li>
-                  Are full-time students (but not the primary applicant).
-                </li>
-                <li>
-                  Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-                </li>
-              </ul>
-            </div>
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  household size
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per month
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per year
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Occupancy limits for this building differ from household size, and do not include children under 6.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
+          Eligibility
+        </h2>
         <span
-          className="ui-icon ui-large spinner-animation"
+          className="detail-header__subtitle"
+        >
+          Income, occupancy, preferences, and subsidies
+        </span>
+        <span
+          className="ui-icon ui-medium"
           data-test-id={null}
         >
           <svg
             fill="currentColor"
-            viewBox="0 0 100 100"
+            viewBox="0 0 32 32"
           >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
             />
           </svg>
         </span>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
+      </hgroup>
+    </header>
+    <ul>
+      <li
+        className="list-section custom-counter__item"
       >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Rental Assistance
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-          </span>
-        </hgroup>
-      </header>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Additional Eligibility Rules
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Applicants must also qualify under the rules of the building.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
+        <header
+          className="list-section__header custom-counter__header"
         >
-          <h3
-            className="info-card__title"
-          >
-            Credit History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-            </p>
-            <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-            </p>
-            <p>
-              Collection accounts...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Rental History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-            </p>
-            <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references.
-            </p>
-            <p>
-              Landlord references will only check for...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Criminal Background
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700"
-        >
-           
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
+          <hgroup>
+            <h3
+              className="custom-counter__title"
             >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
+              Household Maximum Income
+            </h3>
+            <span
+              className="custom-counter__subtitle"
             >
-              Fair Chance Ordinance
-            </a>
-            .
-          </span>
-        </div>
-      </div>
-      
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`ListingDetailsEligibility displays listing details eligibility section for a listing with only SRO units 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        Income, occupancy, preferences, and subsidies
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Household Maximum Income
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            <div>
-              <div
-                className="mb-4"
-              >
-                <p>
-                  For income calculations, household size includes everyone (all ages) living in the unit.
-                </p>
+              <div>
+                <div
+                  className="mb-4"
+                >
+                  <p>
+                    For income calculations, household size includes everyone (all ages) living in the unit.
+                  </p>
+                </div>
+                <div
+                  className="mb-4 primary-lighter-markup-link-desktop"
+                >
+                  <p>
+                    People in your household may need 
+                    <a
+                      href="https://sfmohcd.org/special-calculations-household-income"
+                      target="_blank"
+                    >
+                      special income calculations
+                    </a>
+                     if they:
+                  </p>
+                </div>
+                <ul
+                  className="list-disc ml-5"
+                >
+                  <li>
+                    Are full-time students (but not the primary applicant).
+                  </li>
+                  <li>
+                    Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+                  </li>
+                </ul>
               </div>
-              <div
-                className="mb-4 primary-lighter-markup-link-desktop"
-              >
-                <p>
-                  People in your household may need 
-                  <a
-                    href="https://sfmohcd.org/special-calculations-household-income"
-                    target="_blank"
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style={
+            Object {
+              "overflowX": "auto",
+            }
+          }
+        >
+          <table
+            className="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  className=""
+                >
+                  <span
+                    className=""
                   >
-                    special income calculations
-                  </a>
-                   if they:
-                </p>
-              </div>
-              <ul
-                className="list-disc ml-5"
-              >
-                <li>
-                  Are full-time students (but not the primary applicant).
-                </li>
-                <li>
-                  Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-                </li>
-              </ul>
+                    household size
+                  </span>
+                </th>
+                <th
+                  className=""
+                >
+                  <span
+                    className=""
+                  >
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  className=""
+                >
+                  <span
+                    className=""
+                  >
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+        </div>
+        <button
+          className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          onClick={[Function]}
+          tabIndex={0}
+        >
+          <span
+            className="button__content"
+          >
+            show more
+          </span>
+          <span
+            className="ui-icon ui-small button__icon"
+            data-test-id={null}
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+          >
+            <svg
+              aria-hidden="true"
+              className="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              style={Object {}}
+              viewBox="0 0 384 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+                fill="currentColor"
+                style={Object {}}
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        className="list-section custom-counter__item"
+      >
+        <header
+          className="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              className="custom-counter__title"
+            >
+              Occupancy
+            </h3>
+            <span
+              className="custom-counter__subtitle"
+            >
+              Occupancy limits for this building differ from household size, and do not include children under 6.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style={
+            Object {
+              "overflowX": "auto",
+            }
+          }
+        >
+          <table
+            className="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  className=""
+                >
+                  <span
+                    className=""
+                  >
+                    Unit Type
+                  </span>
+                </th>
+                <th
+                  className=""
+                >
+                  <span
+                    className=""
+                  >
+                    Occupancy
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody />
+          </table>
+        </div>
+      </li>
+      <li
+        className="list-section custom-counter__item"
+      >
+        <header
+          className="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              className="custom-counter__title"
+            >
+              Lottery Preferences
+            </h3>
+            <span
+              className="custom-counter__subtitle"
+            >
+              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          className="flex justify-center"
+        >
+          <span
+            className="ui-icon ui-large spinner-animation"
+            data-test-id={null}
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 100 100"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                fill="none"
+                r="32"
+                stroke="currentColor"
+                strokeDasharray="150.79644737231007 52.26548245743669"
+                strokeWidth="9"
+              />
+            </svg>
+          </span>
+        </div>
+      </li>
+      <li
+        className="list-section custom-counter__item"
+      >
+        <header
+          className="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              className="custom-counter__title"
+            >
+              Rental Assistance
+            </h3>
+            <span
+              className="custom-counter__subtitle"
+            >
+              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+            </span>
+          </hgroup>
+        </header>
+      </li>
+      <li
+        className="list-section custom-counter__item"
+      >
+        <header
+          className="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              className="custom-counter__title"
+            >
+              Additional Eligibility Rules
+            </h3>
+            <span
+              className="custom-counter__subtitle"
+            >
+              Applicants must also qualify under the rules of the building.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          className="info-card"
+        >
+          <div
+            className="info-card__header"
+          >
+            <h3
+              className="info-card__title"
+            >
+              Credit History
+            </h3>
+          </div>
+          <div
+            className="expandable-text text-xs text-gray-700 translate"
+          >
+             
+            <div>
+              <p>
+                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
+              </p>
+              <p>
+                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
+              </p>
+              <p>
+                Collection accounts...
+              </p>
             </div>
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  household size
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per month
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per year
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Occupancy for this building is limited to 1 person per unit.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
-        <span
-          className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
-        >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
-            />
-          </svg>
-        </span>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Rental Assistance
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-          </span>
-        </hgroup>
-      </header>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Additional Eligibility Rules
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Applicants must also qualify under the rules of the building.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Credit History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-            </p>
-            <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-            </p>
-            <p>
-              Collection accounts...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Rental History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-            </p>
-            <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references.
-            </p>
-            <p>
-              Landlord references will only check for...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Criminal Background
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700"
-        >
-           
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
+            <button
+              aria-label="Read more about credit history guidelines"
+              className="button-toggle mt-2"
+              onClick={[Function]}
             >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
-          </span>
+              More
+            </button>
+          </div>
         </div>
-      </div>
-      <p>
-        <a
-          className="md:text-blue-700"
-          href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
-          target="_blank"
+        <div
+          className="info-card"
         >
-          Find out more about Building Selection Criteria
-        </a>
-      </p>
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`ListingDetailsEligibility displays listing details eligibility section for a sales listing 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
+          <div
+            className="info-card__header"
+          >
+            <h3
+              className="info-card__title"
+            >
+              Rental History
+            </h3>
+          </div>
+          <div
+            className="expandable-text text-xs text-gray-700 translate"
+          >
+             
+            <div>
+              <p>
+                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
+              </p>
+              <p>
+                Previous rental history will be reviewed and must exhibit no derogatory references.
+              </p>
+              <p>
+                Landlord references will only check for...
+              </p>
+            </div>
+            <button
+              aria-label="Read more about rental history guidelines"
+              className="button-toggle mt-2"
+              onClick={[Function]}
+            >
+              More
+            </button>
+          </div>
+        </div>
+        <div
+          className="info-card"
+        >
+          <div
+            className="info-card__header"
+          >
+            <h3
+              className="info-card__title"
+            >
+              Criminal Background
+            </h3>
+          </div>
+          <div
+            className="expandable-text text-xs text-gray-700"
+          >
+             
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <a
+                href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                target="_blank"
+              >
+                Article 49
+              </a>
+               of the San Francisco Police Code: 
+              <a
+                href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                target="_blank"
+              >
+                Fair Chance Ordinance
+              </a>
+              .
+            </span>
+          </div>
+        </div>
         
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Before applying
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Make sure you:
-          </span>
-        </hgroup>
-      </header>
-      <ol
-        className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
-      >
-        <li
-          className="text-gray-700"
-        >
-          Haven't owned residential property in the past 3 years
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          <p>
-            Meet our 
-            <a
-              href="https://sfmohcd.org/homebuyer-program-eligibility"
-              target="_blank"
-            >
-              income requirements
-            </a>
-          </p>
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          <p>
-            Complete 
-            <a
-              href="https://sfmohcd.org/homebuyer-application-requirements#education"
-              target="_blank"
-            >
-              homebuyer education
-            </a>
-          </p>
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          <p>
-            Get pre-approved for a mortgage loan by a 
-            <a
-              href="https://sfmohcd.org/lender-list"
-              target="_blank"
-            >
-              lender on our list
-            </a>
-          </p>
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          Have enough in savings for closing costs and downpayment
-        </li>
-      </ol>
-      <div
-        className="text-gray-750 primary-lighter-markup-link-desktop"
-      >
-        <p>
-          Read 
-          <a
-            href="https://sfmohcd.org/homebuyer-program-eligibility"
-            target="_blank"
-          >
-            our full list of requirements
-          </a>
-           for more details.
-        </p>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Household Maximum Income
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            <div>
-              <div
-                className="mb-4"
-              >
-                <p>
-                  For income calculations, household size includes everyone (all ages) living in the unit.
-                </p>
-              </div>
-              <div
-                className="mb-4 primary-lighter-markup-link-desktop"
-              >
-                <p>
-                  People in your household may need 
-                  <a
-                    href="https://sfmohcd.org/special-calculations-household-income"
-                    target="_blank"
-                  >
-                    special income calculations
-                  </a>
-                   if they:
-                </p>
-              </div>
-              <ul
-                className="list-disc ml-5"
-              >
-                <li>
-                  Are full-time students (but not the primary applicant).
-                </li>
-                <li>
-                  Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-                </li>
-              </ul>
-            </div>
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  household size
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per month
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per year
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            A minimum of one person per bedroom is required.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
-        <span
-          className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
-        >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
-            />
-          </svg>
-        </span>
-      </div>
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`ListingDetailsEligibility displays listing details eligibility section for an SRO listing with a mix of SRO units and non-SRO units 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        Income, occupancy, preferences, and subsidies
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Household Maximum Income
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            <div>
-              <div
-                className="mb-4"
-              >
-                <p>
-                  For income calculations, household size includes everyone (all ages) living in the unit.
-                </p>
-              </div>
-              <div
-                className="mb-4 primary-lighter-markup-link-desktop"
-              >
-                <p>
-                  People in your household may need 
-                  <a
-                    href="https://sfmohcd.org/special-calculations-household-income"
-                    target="_blank"
-                  >
-                    special income calculations
-                  </a>
-                   if they:
-                </p>
-              </div>
-              <ul
-                className="list-disc ml-5"
-              >
-                <li>
-                  Are full-time students (but not the primary applicant).
-                </li>
-                <li>
-                  Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-                </li>
-              </ul>
-            </div>
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  household size
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per month
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per year
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
-        <span
-          className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
-        >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
-            />
-          </svg>
-        </span>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Rental Assistance
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-          </span>
-        </hgroup>
-      </header>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Additional Eligibility Rules
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Applicants must also qualify under the rules of the building.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Credit History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-            </p>
-            <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-            </p>
-            <p>
-              Collection accounts...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Rental History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-            </p>
-            <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references.
-            </p>
-            <p>
-              Landlord references will only check for...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Criminal Background
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700"
-        >
-           
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
-          </span>
-        </div>
-      </div>
-      <p>
-        <a
-          className="md:text-blue-700"
-          href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
-          target="_blank"
-        >
-          Find out more about Building Selection Criteria
-        </a>
-      </p>
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`ListingDetailsEligibility displays listing details eligibility section for an SRO listing with expanded occupancy units 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        Income, occupancy, preferences, and subsidies
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Household Maximum Income
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            <div>
-              <div
-                className="mb-4"
-              >
-                <p>
-                  For income calculations, household size includes everyone (all ages) living in the unit.
-                </p>
-              </div>
-              <div
-                className="mb-4 primary-lighter-markup-link-desktop"
-              >
-                <p>
-                  People in your household may need 
-                  <a
-                    href="https://sfmohcd.org/special-calculations-household-income"
-                    target="_blank"
-                  >
-                    special income calculations
-                  </a>
-                   if they:
-                </p>
-              </div>
-              <ul
-                className="list-disc ml-5"
-              >
-                <li>
-                  Are full-time students (but not the primary applicant).
-                </li>
-                <li>
-                  Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-                </li>
-              </ul>
-            </div>
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  household size
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per month
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  maximum income per year
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Occupancy for this building is limited to 1 person per unit.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
-        <span
-          className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
-        >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
-            />
-          </svg>
-        </span>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Rental Assistance
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-          </span>
-        </hgroup>
-      </header>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Additional Eligibility Rules
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Applicants must also qualify under the rules of the building.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Credit History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-            </p>
-            <p>
-              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-            </p>
-            <p>
-              Collection accounts...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Rental History
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700 translate"
-        >
-           
-          <div>
-            <p>
-              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-            </p>
-            <p>
-              Previous rental history will be reviewed and must exhibit no derogatory references.
-            </p>
-            <p>
-              Landlord references will only check for...
-            </p>
-          </div>
-          <button
-            aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
-            onClick={[Function]}
-          >
-            More
-          </button>
-        </div>
-      </div>
-      <div
-        className="info-card"
-      >
-        <div
-          className="info-card__header"
-        >
-          <h3
-            className="info-card__title"
-          >
-            Criminal Background
-          </h3>
-        </div>
-        <div
-          className="expandable-text text-xs text-gray-700"
-        >
-           
-          <span>
-            Qualified applicants with criminal history will be considered for housing in compliance with 
-            <a
-              href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
-              target="_blank"
-            >
-              Article 49
-            </a>
-             of the San Francisco Police Code: 
-            <a
-              href="https://sfgov.org/olse/fair-chance-ordinance-fco"
-              target="_blank"
-            >
-              Fair Chance Ordinance
-            </a>
-            .
-          </span>
-        </div>
-      </div>
-      <p>
-        <a
-          className="md:text-blue-700"
-          href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
-          target="_blank"
-        >
-          Find out more about Building Selection Criteria
-        </a>
-      </p>
-    </li>
-  </ul>
-</li>
-`;
-
-exports[`ListingDetailsEligibility displays listing details eligibility section when habitat listing 1`] = `
-<li
-  className="responsive-content-item bg-primary-lighter"
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-eligibility.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Eligibility
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <ul>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Before applying
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Make sure you:
-          </span>
-        </hgroup>
-      </header>
-      <ol
-        className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
-      >
-        <li
-          className="text-gray-700"
-        >
-          <p>
-            Go to a 
-            <a
-              href="https://habitatgsf.org/amber-drive-info/"
-              target="_blank"
-            >
-              Habitat for Humanity information session
-            </a>
-          </p>
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          Haven't owned residential property in the past 3 years
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          <p>
-            Meet the 
-            <a
-              href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
-              target="_blank"
-            >
-              income requirements
-            </a>
-          </p>
-        </li>
-        <li
-          className="text-gray-700"
-        >
-          Have a 650 credit score or higher
-        </li>
-      </ol>
-      <div
-        className="text-gray-750 primary-lighter-markup-link-desktop"
-      >
-        <p>
-          Read 
-          <a
-            href="https://habitatgsf.org/amber-drive-info/"
-            target="_blank"
-          >
-            our full list of requirements
-          </a>
-           for more details.
-        </p>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Occupancy
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            A minimum of one person per bedroom is required.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        style={
-          Object {
-            "overflowX": "auto",
-          }
-        }
-      >
-        <table
-          className="w-full text-xs"
-        >
-          <thead>
-            <tr>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Unit Type
-                </span>
-              </th>
-              <th
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  Occupancy
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody />
-        </table>
-      </div>
-    </li>
-    <li
-      className="list-section custom-counter__item"
-    >
-      <header
-        className="list-section__header custom-counter__header"
-      >
-        <hgroup>
-          <h3
-            className="custom-counter__title"
-          >
-            Lottery Preferences
-          </h3>
-          <span
-            className="custom-counter__subtitle"
-          >
-            Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-          </span>
-        </hgroup>
-      </header>
-      <div
-        className="flex justify-center"
-      >
-        <span
-          className="ui-icon ui-large spinner-animation"
-          data-test-id={null}
-        >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 100 100"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              fill="none"
-              r="32"
-              stroke="currentColor"
-              strokeDasharray="150.79644737231007 52.26548245743669"
-              strokeWidth="9"
-            />
-          </svg>
-        </span>
-      </div>
-    </li>
-  </ul>
-</li>
+      </li>
+    </ul>
+  </li>,
+  " ",
+]
 `;

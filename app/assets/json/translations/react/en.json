@@ -1290,6 +1290,7 @@
   "t.or": "or",
   "t.perMonth": "per month",
   "t.perMonthCost": "%{cost} per month",
+  "t.percentAMI": "%{percent}% AMI",
   "t.perYear": "per year",
   "t.perYearCost": "%{cost} per year",
   "t.preferNotToAnswer": "Prefer not to answer",
