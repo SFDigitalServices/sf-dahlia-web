@@ -12,11 +12,12 @@ const axios = require("axios")
 jest.mock("axios")
 
 describe("ListingDetailsLotteryResults", () => {
-  it("does not display if lottery is not complete", async () => {
+  it("does not display if lottery is not complete", async (done) => {
     await renderAndLoadAsync(<ListingDetailsLotteryResults listing={openSaleListing} />)
     const viewButton = screen.queryByText("View Lottery Results")
 
     expect(viewButton).not.toBeInTheDocument()
+    done()
   })
 
   it("displays if lottery is complete", async (done) => {
@@ -31,7 +32,7 @@ describe("ListingDetailsLotteryResults", () => {
     done()
   })
 
-  it("displays with summary if lottery is complete", async () => {
+  it("displays with summary if lottery is complete", async (done) => {
     axios.get.mockResolvedValue({ data: lotteryResultRentalOne })
 
     const { asFragment, findByText } = render(
@@ -41,5 +42,6 @@ describe("ListingDetailsLotteryResults", () => {
     await findByText("View Lottery Results")
 
     expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })

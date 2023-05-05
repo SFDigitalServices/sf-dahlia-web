@@ -4,7 +4,6 @@ import ForSale from "../../../pages/listings/for-sale"
 
 const axios = require("axios")
 
-jest.useRealTimers()
 jest.mock("axios")
 
 describe("For Sale", () => {
@@ -15,7 +14,6 @@ describe("For Sale", () => {
   })
 
   it("renders ForSale component", async (done) => {
-    jest.setTimeout(30_000)
     axios.get.mockResolvedValue({ data: { listings: [] } })
 
     const { findByTestId, asFragment } = render(<ForSale assetPaths="/" />)

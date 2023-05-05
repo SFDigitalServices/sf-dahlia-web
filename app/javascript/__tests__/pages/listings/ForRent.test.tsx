@@ -4,7 +4,6 @@ import ForRent from "../../../../javascript/pages/listings/for-rent"
 
 const axios = require("axios")
 
-jest.useRealTimers()
 jest.mock("axios")
 
 describe("For Rent", () => {
@@ -15,7 +14,6 @@ describe("For Rent", () => {
   })
 
   it("renders ForRent component", async (done) => {
-    jest.setTimeout(30_000)
     axios.get.mockResolvedValue({ data: { listings: [] } })
 
     const { findByTestId, asFragment } = render(<ForRent assetPaths="/" />)
