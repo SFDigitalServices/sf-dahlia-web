@@ -261,127 +261,179 @@ exports[`For Rent renders ForRent component 1`] = `
           aria-live="assertive"
           role="alert"
         >
-          <div
-            class="loading-overlay"
-            data-testid="loading-overlay"
-          >
-            <span
-              class="ui-icon ui-3xl loading-overlay__spinner spinner-animation"
+          <div>
+            <header
+              class="page-header"
             >
-              <svg
-                fill="currentColor"
-                viewBox="0 0 100 100"
+              <hgroup
+                class="page-header__group"
               >
-                <circle
-                  cx="50"
-                  cy="50"
-                  fill="none"
-                  r="32"
-                  stroke="currentColor"
-                  stroke-dasharray="150.79644737231007 52.26548245743669"
-                  stroke-width="9"
-                />
-              </svg>
-            </span>
-            <div>
+                <h1
+                  class="page-header__title"
+                  data-testid="page-header"
+                >
+                  Rent affordable housing
+                </h1>
+                <p
+                  class="page-header__lead"
+                >
+                   If you tell us your household size and income, we can show you listings you may qualify for.
+                </p>
+                <p
+                  class="mt-4 md:mt-8 mb-2"
+                >
+                  <a
+                    class="button"
+                    href="/eligibility-estimator/rental"
+                    tabindex="0"
+                  >
+                    Find matching listings
+                  </a>
+                </p>
+                <span
+                  class="text-base"
+                >
+                  or 
+                  <a
+                    href="/income-calculator/rental/intro"
+                  >
+                    get help calculating your income
+                  </a>
+                </span>
+              </hgroup>
+            </header>
+            <div
+              id="listing-results"
+            >
               <div
-                class="action-block mt-4 primary-lighter action-block__block"
+                class="bg-primary-darker"
               >
                 <div
-                  class="action-block__head"
+                  class="max-w-5xl mx-auto p-2 md:p-4"
                 >
                   <div
-                    class="action-block__icon"
+                    class="action-block  primary-darker action-block__inline"
                   >
-                    <span
-                      class="ui-icon ui-3xl"
+                    <div
+                      class="action-block__head"
                     >
-                      <svg
+                      <div
+                        class="action-block__header"
+                      >
+                        See more listings from our community partners.
+                      </div>
+                    </div>
+                    <div
+                      class="action-block__actions"
+                    >
+                      <a
+                        class="button"
+                        href="/additional-resources"
+                      >
+                        View opportunities
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="action-block mt-4 primary-lighter action-block__block"
+            >
+              <div
+                class="action-block__head"
+              >
+                <div
+                  class="action-block__icon"
+                >
+                  <span
+                    class="ui-icon ui-3xl"
+                  >
+                    <svg
+                      fill="transparent"
+                      height="35"
+                      viewBox="0 0 80 35"
+                      width="80"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
                         fill="transparent"
-                        height="35"
-                        viewBox="0 0 80 35"
+                        height="75"
                         width="80"
-                        xmlns="http://www.w3.org/2000/svg"
+                      />
+                      <g
+                        clip-path="url(#clip0)"
                       >
                         <rect
                           fill="transparent"
-                          height="75"
-                          width="80"
+                          height="1390"
+                          transform="translate(-284 -530)"
+                          width="1280"
                         />
-                        <g
-                          clip-path="url(#clip0)"
+                        <path
+                          d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                          stroke="black"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          stroke-width="2"
+                        />
+                        <path
+                          d="M49.1858 41.271L61.375 50.878"
+                          stroke="black"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          stroke-width="2"
+                        />
+                        <path
+                          d="M32.1668 41.271L19.9775 50.878"
+                          stroke="black"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          stroke-width="2"
+                        />
+                        <path
+                          d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                          stroke="black"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          stroke-width="2"
+                        />
+                      </g>
+                      <defs>
+                        <clippath
+                          id="clip0"
                         >
                           <rect
-                            fill="transparent"
+                            fill="white"
                             height="1390"
                             transform="translate(-284 -530)"
                             width="1280"
                           />
-                          <path
-                            d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
-                            stroke="black"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            stroke-width="2"
-                          />
-                          <path
-                            d="M49.1858 41.271L61.375 50.878"
-                            stroke="black"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            stroke-width="2"
-                          />
-                          <path
-                            d="M32.1668 41.271L19.9775 50.878"
-                            stroke="black"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            stroke-width="2"
-                          />
-                          <path
-                            d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
-                            stroke="black"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            stroke-width="2"
-                          />
-                        </g>
-                        <defs>
-                          <clippath
-                            id="clip0"
-                          >
-                            <rect
-                              fill="white"
-                              height="1390"
-                              transform="translate(-284 -530)"
-                              width="1280"
-                            />
-                          </clippath>
-                        </defs>
-                      </svg>
-                    </span>
-                  </div>
-                  <div
-                    class="action-block__header"
-                  >
-                    Get emailed whenever a new listing is posted.
-                  </div>
+                        </clippath>
+                      </defs>
+                    </svg>
+                  </span>
                 </div>
                 <div
-                  class="action-block__actions"
+                  class="action-block__header"
                 >
-                  <a
-                    class="button"
-                    href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                    target="_blank"
-                  >
-                    Sign Up today
-                  </a>
+                  Get emailed whenever a new listing is posted.
                 </div>
+              </div>
+              <div
+                class="action-block__actions"
+              >
+                <a
+                  class="button"
+                  href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                  target="_blank"
+                >
+                  Sign Up today
+                </a>
               </div>
             </div>
           </div>

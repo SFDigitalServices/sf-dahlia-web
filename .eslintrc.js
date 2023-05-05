@@ -112,15 +112,6 @@ module.exports = {
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
 
-    // only allow the first letter to be uppercase in "describe" block descriptions,
-    // "test" and "it" block descriptions must start with lowercase
-    "jest/lowercase-name": [
-      "error",
-      {
-        ignore: ["describe"],
-      },
-    ],
-
     // Ensure you"re actually asserting something when calling expect
     "jest/valid-expect": "error",
 
@@ -135,6 +126,7 @@ module.exports = {
     // Don"t always require expects, some of our frontend integration tests
     // should pass as long as they don"t timeout
     "jest/expect-expect": "off",
+    "jest/no-done-callback": "off",
     "import/extensions": "error",
     "react/prop-types": "error",
     "react/display-name": "off",

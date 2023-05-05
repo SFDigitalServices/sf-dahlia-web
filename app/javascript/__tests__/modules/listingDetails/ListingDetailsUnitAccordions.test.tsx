@@ -1,20 +1,29 @@
 import React from "react"
-import { render, waitFor } from "@testing-library/react"
-
+import { render, cleanup } from "@testing-library/react"
 import { ListingDetailsUnitAccordions } from "../../../modules/listingDetails/ListingDetailsUnitAccordions"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 import { units } from "../../data/RailsListingUnits/listing-units"
 
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+
+// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
+jest.useRealTimers()
 jest.mock("axios")
 
 describe("ListingDetailsUnitAccordion", () => {
-  it("displays the unit accordions for a given listing", async () => {
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
+  it("displays the unit accordions for a given listing", async (done) => {
+    jest.setTimeout(30_000)
     axios.get.mockResolvedValue({ data: { listings: [], units: openSaleListing.Units } })
 
-    const { asFragment, findByTestId } = render(
+    const { asFragment, findAllByTestId } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -31,11 +40,10 @@ describe("ListingDetailsUnitAccordion", () => {
       </ListingDetailsContext.Provider>
     )
 
-    await waitFor(() => {
-      findByTestId("unit-accordion")
-    })
+    expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
 
     expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
   it("displays spinner if no units and not fetching units", () => {
