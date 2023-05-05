@@ -266,7 +266,10 @@ describe("buildAmiArray", () => {
 
   it("should return an array of unique Max_AMI_for_Qualifying_Unit values sorted in ascending order", () => {
     const result = buildAmiArray(unitsWithOccupancyAndMaxIncome)
-    expect(result).toEqual([35, 55, 109.8])
+    expect(result).toEqual([
+      { min: 55, max: 82 },
+      { min: 82, max: 109.8 },
+    ])
   })
 })
 
@@ -431,7 +434,7 @@ describe("getAmiChartDataFromUnits", () => {
         year: 2021,
       },
       { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 109.8 },
-      { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 35 },
+      { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 82 },
     ])
   })
 })
