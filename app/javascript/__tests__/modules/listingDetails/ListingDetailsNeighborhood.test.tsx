@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsNeighborhood } from "../../../modules/listingDetails/ListingDetailsNeighborhood"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 
@@ -19,12 +19,10 @@ describe("ListingDetailsNeighborhood", () => {
       }
     })
 
-    const tree = renderer
-      .create(
-        <ListingDetailsNeighborhood imageSrc={"test"} listing={lotteryCompleteRentalListing} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsNeighborhood imageSrc={"test"} listing={lotteryCompleteRentalListing} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

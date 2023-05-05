@@ -1,146 +1,148 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BuyHeader renders BuyHeader component 1`] = `
-<header
-  className="page-header buy-header"
->
-  <hgroup
-    className="page-header__group"
+<DocumentFragment>
+  <header
+    class="page-header buy-header"
   >
-    <div
-      className="buy-header_columns"
+    <hgroup
+      class="page-header__group"
     >
-      <h1
-        className="buy-header_title buy-header_left_col"
-      >
-        Buy affordable housing
-      </h1>
       <div
-        className="mb-8 buy-header_right_col"
+        class="buy-header_columns"
       >
-        <a
-          className="button is-primary is-fullwidth"
-          href="#listing-results"
+        <h1
+          class="buy-header_title buy-header_left_col"
         >
-          See the listings
-        </a>
-      </div>
-      <div
-        className="buy-header_left_col"
-      >
-        <li
-          className="mb-8 list-none"
+          Buy affordable housing
+        </h1>
+        <div
+          class="mb-8 buy-header_right_col"
         >
-          <h2
-            className="text__underline-weighted mb-5 text-gray-750"
+          <a
+            class="button is-primary is-fullwidth"
+            href="#listing-results"
           >
-            Before applying
-          </h2>
-          <p
-            className="text-gray-750"
+            See the listings
+          </a>
+        </div>
+        <div
+          class="buy-header_left_col"
+        >
+          <li
+            class="mb-8 list-none"
           >
-            Make sure you:
-          </p>
-          <ol
-            className="numbered-list my-5"
-          >
-            <li
-              className="text-gray-700"
+            <h2
+              class="text__underline-weighted mb-5 text-gray-750"
             >
-              Haven't owned residential property in the past 3 years
-            </li>
-            <li
-              className="text-gray-700"
+              Before applying
+            </h2>
+            <p
+              class="text-gray-750"
+            >
+              Make sure you:
+            </p>
+            <ol
+              class="numbered-list my-5"
+            >
+              <li
+                class="text-gray-700"
+              >
+                Haven't owned residential property in the past 3 years
+              </li>
+              <li
+                class="text-gray-700"
+              >
+                <p>
+                  Meet our 
+                  <a
+                    href="https://sfmohcd.org/homebuyer-program-eligibility"
+                    target="_blank"
+                  >
+                    income requirements
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-700"
+              >
+                <p>
+                  Complete 
+                  <a
+                    href="https://sfmohcd.org/homebuyer-application-requirements#education"
+                    target="_blank"
+                  >
+                    homebuyer education
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-700"
+              >
+                <p>
+                  Get pre-approved for a mortgage loan by a 
+                  <a
+                    href="https://sfmohcd.org/lender-list"
+                    target="_blank"
+                  >
+                    lender on our list
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-700"
+              >
+                Have enough in savings for closing costs and downpayment
+              </li>
+            </ol>
+            <div
+              class="text-gray-750 primary-lighter-markup-link-desktop"
             >
               <p>
-                Meet our 
+                Read 
                 <a
                   href="https://sfmohcd.org/homebuyer-program-eligibility"
                   target="_blank"
                 >
-                  income requirements
+                  our full list of requirements
                 </a>
+                 for more details.
               </p>
-            </li>
-            <li
-              className="text-gray-700"
-            >
-              <p>
-                Complete 
-                <a
-                  href="https://sfmohcd.org/homebuyer-application-requirements#education"
-                  target="_blank"
-                >
-                  homebuyer education
-                </a>
-              </p>
-            </li>
-            <li
-              className="text-gray-700"
-            >
-              <p>
-                Get pre-approved for a mortgage loan by a 
-                <a
-                  href="https://sfmohcd.org/lender-list"
-                  target="_blank"
-                >
-                  lender on our list
-                </a>
-              </p>
-            </li>
-            <li
-              className="text-gray-700"
-            >
-              Have enough in savings for closing costs and downpayment
-            </li>
-          </ol>
+            </div>
+          </li>
+        </div>
+        <div
+          class="buy-header_right_col"
+        >
           <div
-            className="text-gray-750 primary-lighter-markup-link-desktop"
+            class="md:bg-white md:p-4"
           >
+            <h2
+              class="text__underline-weighted mb-5"
+            >
+              Get help
+            </h2>
+            <p
+              class="mb-4"
+            >
+              Some people may qualify for downpayment assistance.
+            </p>
+            <p
+              class="mb-4"
+            >
+              Others, like San Francisco teachers and first responders, may qualify for loans.
+            </p>
             <p>
-              Read 
               <a
-                href="https://sfmohcd.org/homebuyer-program-eligibility"
-                target="_blank"
+                href="https://sfmohcd.org/loan-programs"
               >
-                our full list of requirements
+                View the full list of programs
               </a>
-               for more details.
             </p>
           </div>
-        </li>
-      </div>
-      <div
-        className="buy-header_right_col"
-      >
-        <div
-          className="md:bg-white md:p-4"
-        >
-          <h2
-            className="text__underline-weighted mb-5"
-          >
-            Get help
-          </h2>
-          <p
-            className="mb-4"
-          >
-            Some people may qualify for downpayment assistance.
-          </p>
-          <p
-            className="mb-4"
-          >
-            Others, like San Francisco teachers and first responders, may qualify for loans.
-          </p>
-          <p>
-            <a
-              href="https://sfmohcd.org/loan-programs"
-            >
-              View the full list of programs
-            </a>
-          </p>
         </div>
       </div>
-    </div>
-  </hgroup>
-</header>
+    </hgroup>
+  </header>
+</DocumentFragment>
 `;

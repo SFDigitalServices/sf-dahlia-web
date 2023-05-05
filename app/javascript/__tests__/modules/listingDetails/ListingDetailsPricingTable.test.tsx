@@ -1,5 +1,4 @@
 import React from "react"
-import renderer from "react-test-renderer"
 import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -8,9 +7,21 @@ import { units } from "../../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../../data/RailsAmiCharts/ami-charts"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
+import { render } from "@testing-library/react"
+// leaving the habitat listing test commented out - should be needed very soon.
+// import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
+import { pricingTableUnits } from "../../data/RailsListingPricingTableUnits/listing-pricing-table-units-default"
+
+// eslint-disable-next-line unicorn/prefer-module
+const axios = require("axios")
+
+jest.mock("axios")
+
 describe("ListingDetailsPricingTable", () => {
-  it("renders ListingDetailsPricingTable component with spinner before api call", () => {
-    const tree = renderer.create(
+  it("renders ListingDetailsPricingTable component with spinner before api call", async (done) => {
+    jest.spyOn(axios, "get").mockResolvedValue(null)
+
+    const { asFragment, findByTestId } = render(
       <ListingDetailsContext.Provider
         value={{
           units: [],
@@ -26,31 +37,28 @@ describe("ListingDetailsPricingTable", () => {
         <ListingDetailsPricingTable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+
+    expect(await findByTestId("pricing-table")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("renders ListingDetailsPricingTable component with rental listing", () => {
-    const tree = renderer.create(
-      <ListingDetailsContext.Provider
-        value={{
-          units,
-          amiCharts,
-          fetchingUnits: false,
-          fetchedUnits: true,
-          fetchingAmiCharts: false,
-          fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
-        }}
-      >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
-      </ListingDetailsContext.Provider>
+  it("renders ListingDetailsPricingTable component", async (done) => {
+    axios.get.mockResolvedValue({ data: [{ unitSummaries: pricingTableUnits }] })
+
+    const { asFragment, findByTestId } = render(
+      <ListingDetailsPricingTable listing={closedRentalListing} />
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+
+    expect(await findByTestId("pricing-table")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("renders ListingDetailsPricingTable component with open sale listing", () => {
-    const tree = renderer.create(
+  it("renders ListingDetailsPricingTable component with open sale listing", async (done) => {
+    axios.get.mockResolvedValue({ data: [{ unitSummaries: pricingTableUnits }] })
+
+    const { asFragment, findByTestId } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -66,11 +74,16 @@ describe("ListingDetailsPricingTable", () => {
         <ListingDetailsPricingTable listing={openSaleListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+
+    expect(await findByTestId("pricing-table")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("renders ListingDetailsPricingTable component when rental listing", () => {
-    const tree = renderer.create(
+  it("renders ListingDetailsPricingTable component when rental listing", async (done) => {
+    axios.get.mockResolvedValue({ data: [{ unitSummaries: pricingTableUnits }] })
+
+    const { asFragment, findByTestId } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -86,11 +99,16 @@ describe("ListingDetailsPricingTable", () => {
         <ListingDetailsPricingTable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+
+    expect(await findByTestId("pricing-table")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("does not render ListingDetailsPricingTable when habitat listing", () => {
-    const tree = renderer.create(
+  it("does not render ListingDetailsPricingTable when habitat listing", async (done) => {
+    axios.get.mockResolvedValue({ data: [{ unitSummaries: pricingTableUnits }] })
+
+    const { asFragment, findByTestId } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -106,6 +124,9 @@ describe("ListingDetailsPricingTable", () => {
         <ListingDetailsPricingTable listing={habitatListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+
+    expect(await findByTestId("pricing-table")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })

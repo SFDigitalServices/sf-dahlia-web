@@ -1,207 +1,182 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable when habitat listing 1`] = `
-<div
-  className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
->
-  
-</div>
-`;
-
-exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component when rental listing 1`] = `
-<div
-  className=" md:my-6 md:pr-8 md:w-2/3 px-3 w-full"
->
+exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component 1`] = `
+<DocumentFragment>
   <div
-    className="mb-4"
+    class=" md:my-6 md:pr-8 md:w-2/3 px-3 w-full"
+    data-testid="pricing-table"
   >
-    <button
-      aria-expanded={false}
-      className="w-full "
-      data-testid="content-accordion-button"
-      onClick={[Function]}
+    <div
+      class="mb-4"
     >
-      <div
-        className="flex justify-between   accordion-gray-theme__bar "
+      <button
+        aria-expanded="false"
+        class="w-full "
+        data-testid="content-accordion-button"
       >
-        <span
-          className="flex w-full justify-between items-center flex-wrap gap-y-1"
+        <div
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
-            className="flex items-center text-left mr-2"
+            class="flex w-full justify-between items-center flex-wrap gap-y-1"
           >
             <span
-              className="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
+              class="flex items-center text-left mr-2"
             >
-              1
-            </span>
-            person in household
-          </span>
-          <span
-            className="flex items-center mr-4 text-end text-right"
-          >
-            <span>
-              Income 
               <span
-                className="font-semibold"
+                class="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
               >
-                $3,256 to $4,000
+                1
               </span>
-               per month
+              person in household
+            </span>
+            <span
+              class="flex items-center mr-4 text-end text-right"
+            >
+              <span>
+                Income 
+                <span
+                  class="font-semibold"
+                >
+                  $3,256 to $4,000
+                </span>
+                 per month
+              </span>
             </span>
           </span>
-        </span>
-        <span
-          className="ui-icon ui-base flex items-center"
-          data-testid="accordion-open"
-        >
-          <svg
-            fill="#0077DA"
-            viewBox="0 0 32 32"
+          <span
+            class="ui-icon ui-base flex items-center"
+            data-testid="accordion-open"
           >
-            <path
-              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-            />
-          </svg>
-        </span>
-      </div>
-    </button>
-  </div>
-  <div
-    className="mb-4"
-  >
-    <button
-      aria-expanded={false}
-      className="w-full "
-      data-testid="content-accordion-button"
-      onClick={[Function]}
+            <svg
+              fill="#0077DA"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+              />
+            </svg>
+          </span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="mb-4"
     >
-      <div
-        className="flex justify-between   accordion-gray-theme__bar "
+      <button
+        aria-expanded="false"
+        class="w-full "
+        data-testid="content-accordion-button"
       >
-        <span
-          className="flex w-full justify-between items-center flex-wrap gap-y-1"
+        <div
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
-            className="flex items-center text-left mr-2"
+            class="flex w-full justify-between items-center flex-wrap gap-y-1"
           >
             <span
-              className="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
+              class="flex items-center text-left mr-2"
             >
-              2
-            </span>
-             people in household
-          </span>
-          <span
-            className="flex items-center mr-4 text-end text-right"
-          >
-            <span>
-              Income 
               <span
-                className="font-semibold"
+                class="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
               >
-                $1,500 to $6,000
+                2
               </span>
-               per month
+               people in household
+            </span>
+            <span
+              class="flex items-center mr-4 text-end text-right"
+            >
+              <span>
+                Income 
+                <span
+                  class="font-semibold"
+                >
+                  $1,500 to $6,000
+                </span>
+                 per month
+              </span>
             </span>
           </span>
-        </span>
-        <span
-          className="ui-icon ui-base flex items-center"
-          data-testid="accordion-open"
-        >
-          <svg
-            fill="#0077DA"
-            viewBox="0 0 32 32"
+          <span
+            class="ui-icon ui-base flex items-center"
+            data-testid="accordion-open"
           >
-            <path
-              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-            />
-          </svg>
-        </span>
-      </div>
-    </button>
-  </div>
-  <div
-    className="mb-4"
-  >
-    <button
-      aria-expanded={false}
-      className="w-full "
-      data-testid="content-accordion-button"
-      onClick={[Function]}
+            <svg
+              fill="#0077DA"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+              />
+            </svg>
+          </span>
+        </div>
+      </button>
+    </div>
+    <div
+      class="mb-4"
     >
-      <div
-        className="flex justify-between   accordion-gray-theme__bar "
+      <button
+        aria-expanded="false"
+        class="w-full "
+        data-testid="content-accordion-button"
       >
-        <span
-          className="flex w-full justify-between items-center flex-wrap gap-y-1"
+        <div
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
-            className="flex items-center text-left mr-2"
+            class="flex w-full justify-between items-center flex-wrap gap-y-1"
           >
             <span
-              className="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
+              class="flex items-center text-left mr-2"
             >
-              5
+              <span
+                class="mr-1.5 md:mr-2.5 text-md md:text-2xl font-semibold md:font-normal leading-none font-medium"
+              >
+                5
+              </span>
+               people in household
             </span>
-             people in household
+            <span
+              class="flex items-center mr-4 text-end text-right"
+            >
+              <span>
+                Income 
+                <span
+                  class="font-semibold"
+                >
+                  $3,256 to $4,000
+                </span>
+                 per month
+              </span>
+            </span>
           </span>
           <span
-            className="flex items-center mr-4 text-end text-right"
+            class="ui-icon ui-base flex items-center"
+            data-testid="accordion-open"
           >
-            <span>
-              Income 
-              <span
-                className="font-semibold"
-              >
-                $3,256 to $4,000
-              </span>
-               per month
-            </span>
+            <svg
+              fill="#0077DA"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+              />
+            </svg>
           </span>
-        </span>
-        <span
-          className="ui-icon ui-base flex items-center"
-          data-testid="accordion-open"
-        >
-          <svg
-            fill="#0077DA"
-            viewBox="0 0 32 32"
-          >
-            <path
-              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-            />
-          </svg>
-        </span>
-      </div>
-    </button>
+        </div>
+      </button>
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with spinner before api call 1`] = `
-<div
-  className="flex justify-center md:my-6 md:pr-8 md:w-2/3 px-3 w-full"
->
-  <span
-    className="ui-icon ui-large spinner-animation"
-    data-testid={null}
-  >
-    <svg
-      fill="currentColor"
-      viewBox="0 0 100 100"
-    >
-      <circle
-        cx="50"
-        cy="50"
-        fill="none"
-        r="32"
-        stroke="currentColor"
-        strokeDasharray="150.79644737231007 52.26548245743669"
-        strokeWidth="9"
-      />
-    </svg>
-  </span>
-</div>
+<DocumentFragment>
+  <div
+    class=" md:my-6 md:pr-8 md:w-2/3 px-3 w-full"
+    data-testid="pricing-table"
+  />
+</DocumentFragment>
 `;

@@ -1,238 +1,237 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
-<ul>
-  <li
-    className="responsive-content-item header-hidden"
-  >
-    <header
-      className="detail-header md:hidden"
+<DocumentFragment>
+  <ul>
+    <li
+      class="responsive-content-item header-hidden"
     >
-      <span
-        className="detail-header__image-container"
+      <header
+        class="detail-header md:hidden"
       >
-        <img
-          alt=""
-          className="detail-header__image "
-          src=""
-        />
-      </span>
-      <hgroup
-        className="detail-header__hgroup"
-      >
-        <h2
-          className="detail-header__title"
-        >
-          Process
-        </h2>
         <span
-          className="detail-header__subtitle"
+          class="detail-header__image-container"
         >
-          Important dates and contact information
+          <img
+            alt=""
+            class="detail-header__image "
+            src=""
+          />
         </span>
-        <span
-          className="ui-icon ui-medium"
-          data-testid={null}
+        <hgroup
+          class="detail-header__hgroup"
         >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 32 32"
+          <h2
+            class="detail-header__title"
           >
-            <path
-              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-            />
-          </svg>
-        </span>
-      </hgroup>
-    </header>
-    <aside
-      className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white"
-    >
-      <div
-        className="hidden md:block"
+            Process
+          </h2>
+          <span
+            class="detail-header__subtitle"
+          >
+            Important dates and contact information
+          </span>
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+              />
+            </svg>
+          </span>
+        </hgroup>
+      </header>
+      <aside
+        class="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white"
       >
         <div
-          className="w-full"
+          class="hidden md:block"
         >
           <div
-            className="application-status text-xs text-gray-800 bg-alert-light place-content-center"
+            class="w-full"
           >
-            <span
-              className="ui-icon ui-medium"
-              data-testid={null}
-            >
-              <svg
-                fill="var(--bloom-color-red-700)"
-                viewBox="0 0 32 32"
-              >
-                <path
-                  d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
-                />
-                <path
-                  d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
-                />
-              </svg>
-            </span>
-            <span>
-              Applications Closed Jan 1, 2000 at 1:00 AM
-            </span>
-          </div>
-        </div>
-        <div
-          className="border-b border-gray-400 md:border-b-0"
-        >
-          <section
-            className="aside-block "
-          >
-            <h4
-              className="text__underline-weighted"
-            >
-              Lottery
-            </h4>
             <div
-              className="text-sm text-gray-750"
+              class="application-status text-xs text-gray-800 bg-alert-light place-content-center"
             >
-              <p
-                className="flex justify-between mb-4"
+              <span
+                class="ui-icon ui-medium"
               >
-                <span>
-                  March 22, 2023
-                </span>
-                <span
-                  className="font-bold"
+                <svg
+                  fill="var(--bloom-color-red-700)"
+                  viewBox="0 0 32 32"
                 >
-                  6:00 pm
-                </span>
-              </p>
-              <div
-                className="text-gray-700"
+                  <path
+                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Applications Closed Jan 1, 2000 at 1:00 AM
+              </span>
+            </div>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
+          >
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
               >
-                <p>
-                  The lottery will not be in person, but instead will be a virtual lottery. Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
-                  <br />
-                  <br />
+                Lottery
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <p
+                  class="flex justify-between mb-4"
+                >
+                  <span>
+                    March 22, 2023
+                  </span>
+                  <span
+                    class="font-bold"
+                  >
+                    6:00 pm
+                  </span>
+                </p>
+                <div
+                  class="text-gray-700"
+                >
+                  <p>
+                    The lottery will not be in person, but instead will be a virtual lottery. Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
+                    <br />
+                    <br />
+                  </p>
+                </div>
+                <p
+                  class="mt-4 text-gray-700"
+                >
+                  An open lottery will be held to draw numbers to determine selection. Attendance is optional.
                 </p>
               </div>
-              <p
-                className="mt-4 text-gray-700"
-              >
-                An open lottery will be held to draw numbers to determine selection. Attendance is optional.
-              </p>
-            </div>
-          </section>
-        </div>
-        <div
-          className="border-b border-gray-400 md:border-b-0"
-        >
-          <section
-            className="aside-block "
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
           >
-            <h4
-              className="text__underline-weighted"
+            <section
+              class="aside-block "
             >
-              Lottery Results
-            </h4>
-            <div
-              className="text-sm text-gray-750"
-            >
-              <p
-                className="mb-4"
+              <h4
+                class="text__underline-weighted"
               >
-                March 23, 2023
-              </p>
-              <p
-                className="text-gray-700"
-              >
-                Complete lottery results will be posted on this date by 5 pm.
-              </p>
-            </div>
-          </section>
-        </div>
-        <div
-          className="border-b border-gray-400 md:border-b-0"
-        >
-          <section
-            className="aside-block"
-          >
-            <h4
-              className="text__underline-weighted"
-            >
-              Open Houses
-            </h4>
-            <div
-              className="false"
-            >
-              <p
-                className="text text-gray-800 pb-2 flex justify-between items-center"
-              >
-                <span
-                  className="inline-block text-sm uppercase normal-case"
-                >
-                  February 23, 2018
-                </span>
-                <span
-                  className="inline-block text-xs font-bold ml-5 font-alt-sans"
-                >
-                  9:00AM - 12:00PM
-                </span>
-              </p>
+                Lottery Results
+              </h4>
               <div
-                className="text-sm text-gray-700 false"
+                class="text-sm text-gray-750"
               >
-                <div
-                  className="flex flex-col"
+                <p
+                  class="mb-4"
+                >
+                  March 23, 2023
+                </p>
+                <p
+                  class="text-gray-700"
+                >
+                  Complete lottery results will be posted on this date by 5 pm.
+                </p>
+              </div>
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
+          >
+            <section
+              class="aside-block"
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                Open Houses
+              </h4>
+              <div
+                class="false"
+              >
+                <p
+                  class="text text-gray-800 pb-2 flex justify-between items-center"
                 >
                   <span
-                    className="translate"
+                    class="inline-block text-sm uppercase normal-case"
                   >
-                    <span>
-                      Library
+                    February 23, 2018
+                  </span>
+                  <span
+                    class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                  >
+                    9:00AM - 12:00PM
+                  </span>
+                </p>
+                <div
+                  class="text-sm text-gray-700 false"
+                >
+                  <div
+                    class="flex flex-col"
+                  >
+                    <span
+                      class="translate"
+                    >
+                      <span>
+                        Library
+                      </span>
                     </span>
-                  </span>
-                  <span>
-                    123 Van ness, San Francisco
-                  </span>
+                    <span>
+                      123 Van ness, San Francisco
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
-        <div
-          className="border-b border-gray-400 md:border-b-0"
-        >
-          <section
-            className="aside-block"
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
           >
-            <h4
-              className="text__underline-weighted"
+            <section
+              class="aside-block"
             >
-              What to Expect
-            </h4>
-            <div
-              className="text-sm text-gray-750"
-            >
-              <span>
-                Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
-              </span>
-              <div
-                className="mt-2"
+              <h4
+                class="text__underline-weighted"
               >
-                <div>
-                  <button
-                    aria-expanded={false}
-                    className="button is-unstyled m-0 no-underline has-toggle"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Read More
-                  </button>
+                What to Expect
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <span>
+                  Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+                </span>
+                <div
+                  class="mt-2"
+                >
+                  <div>
+                    <button
+                      aria-expanded="false"
+                      class="button is-unstyled m-0 no-underline has-toggle"
+                      type="button"
+                    >
+                      Read More
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
-      </div>
-    </aside>
-  </li>
-</ul>
+      </aside>
+    </li>
+  </ul>
+</DocumentFragment>
 `;

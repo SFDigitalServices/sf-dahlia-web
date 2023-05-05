@@ -261,287 +261,127 @@ exports[`For Sale renders ForSale component 1`] = `
           aria-live="assertive"
           role="alert"
         >
-          <div>
-            <header
-              class="page-header buy-header"
+          <div
+            class="loading-overlay"
+            data-testid="loading-overlay"
+          >
+            <span
+              class="ui-icon ui-3xl loading-overlay__spinner spinner-animation"
             >
-              <hgroup
-                class="page-header__group"
+              <svg
+                fill="currentColor"
+                viewBox="0 0 100 100"
               >
-                <div
-                  class="buy-header_columns"
-                >
-                  <h1
-                    class="buy-header_title buy-header_left_col"
-                  >
-                    Buy affordable housing
-                  </h1>
-                  <div
-                    class="mb-8 buy-header_right_col"
-                  >
-                    <a
-                      class="button is-primary is-fullwidth"
-                      href="#listing-results"
-                    >
-                      See the listings
-                    </a>
-                  </div>
-                  <div
-                    class="buy-header_left_col"
-                  >
-                    <li
-                      class="mb-8 list-none"
-                    >
-                      <h2
-                        class="text__underline-weighted mb-5 text-gray-750"
-                      >
-                        Before applying
-                      </h2>
-                      <p
-                        class="text-gray-750"
-                      >
-                        Make sure you:
-                      </p>
-                      <ol
-                        class="numbered-list my-5"
-                      >
-                        <li
-                          class="text-gray-700"
-                        >
-                          Haven't owned residential property in the past 3 years
-                        </li>
-                        <li
-                          class="text-gray-700"
-                        >
-                          <p>
-                            Meet our 
-                            <a
-                              href="https://sfmohcd.org/homebuyer-program-eligibility"
-                              target="_blank"
-                            >
-                              income requirements
-                            </a>
-                          </p>
-                        </li>
-                        <li
-                          class="text-gray-700"
-                        >
-                          <p>
-                            Complete 
-                            <a
-                              href="https://sfmohcd.org/homebuyer-application-requirements#education"
-                              target="_blank"
-                            >
-                              homebuyer education
-                            </a>
-                          </p>
-                        </li>
-                        <li
-                          class="text-gray-700"
-                        >
-                          <p>
-                            Get pre-approved for a mortgage loan by a 
-                            <a
-                              href="https://sfmohcd.org/lender-list"
-                              target="_blank"
-                            >
-                              lender on our list
-                            </a>
-                          </p>
-                        </li>
-                        <li
-                          class="text-gray-700"
-                        >
-                          Have enough in savings for closing costs and downpayment
-                        </li>
-                      </ol>
-                      <div
-                        class="text-gray-750 primary-lighter-markup-link-desktop"
-                      >
-                        <p>
-                          Read 
-                          <a
-                            href="https://sfmohcd.org/homebuyer-program-eligibility"
-                            target="_blank"
-                          >
-                            our full list of requirements
-                          </a>
-                           for more details.
-                        </p>
-                      </div>
-                    </li>
-                  </div>
-                  <div
-                    class="buy-header_right_col"
-                  >
-                    <div
-                      class="md:bg-white md:p-4"
-                    >
-                      <h2
-                        class="text__underline-weighted mb-5"
-                      >
-                        Get help
-                      </h2>
-                      <p
-                        class="mb-4"
-                      >
-                        Some people may qualify for downpayment assistance.
-                      </p>
-                      <p
-                        class="mb-4"
-                      >
-                        Others, like San Francisco teachers and first responders, may qualify for loans.
-                      </p>
-                      <p>
-                        <a
-                          href="https://sfmohcd.org/loan-programs"
-                        >
-                          View the full list of programs
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </hgroup>
-            </header>
-            <div
-              id="listing-results"
-            >
+                <circle
+                  cx="50"
+                  cy="50"
+                  fill="none"
+                  r="32"
+                  stroke="currentColor"
+                  stroke-dasharray="150.79644737231007 52.26548245743669"
+                  stroke-width="9"
+                />
+              </svg>
+            </span>
+            <div>
               <div
-                class="bg-primary-darker"
+                class="action-block mt-4 primary-lighter action-block__block"
               >
                 <div
-                  class="max-w-5xl mx-auto p-2 md:p-4"
+                  class="action-block__head"
                 >
                   <div
-                    class="action-block  primary-darker action-block__inline"
+                    class="action-block__icon"
                   >
-                    <div
-                      class="action-block__head"
+                    <span
+                      class="ui-icon ui-3xl"
                     >
-                      <div
-                        class="action-block__header"
-                      >
-                        Find more listings on our website:
-                      </div>
-                    </div>
-                    <div
-                      class="action-block__actions"
-                    >
-                      <a
-                        class="button"
-                        href="https://sfmohcd.org/current-bmr-homeownership-listings"
-                      >
-                        First come, first served
-                      </a>
-                      <a
-                        class="button"
-                        href="https://sfmohcd.org/current-listings-city-second-program"
-                      >
-                        City Second Loan Program
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="action-block mt-4 primary-lighter action-block__block"
-            >
-              <div
-                class="action-block__head"
-              >
-                <div
-                  class="action-block__icon"
-                >
-                  <span
-                    class="ui-icon ui-3xl"
-                  >
-                    <svg
-                      fill="transparent"
-                      height="35"
-                      viewBox="0 0 80 35"
-                      width="80"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
+                      <svg
                         fill="transparent"
-                        height="75"
+                        height="35"
+                        viewBox="0 0 80 35"
                         width="80"
-                      />
-                      <g
-                        clip-path="url(#clip0)"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
                         <rect
                           fill="transparent"
-                          height="1390"
-                          transform="translate(-284 -530)"
-                          width="1280"
+                          height="75"
+                          width="80"
                         />
-                        <path
-                          d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M49.1858 41.271L61.375 50.878"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M32.1668 41.271L19.9775 50.878"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                      </g>
-                      <defs>
-                        <clippath
-                          id="clip0"
+                        <g
+                          clip-path="url(#clip0)"
                         >
                           <rect
-                            fill="white"
+                            fill="transparent"
                             height="1390"
                             transform="translate(-284 -530)"
                             width="1280"
                           />
-                        </clippath>
-                      </defs>
-                    </svg>
-                  </span>
+                          <path
+                            d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M49.1858 41.271L61.375 50.878"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M32.1668 41.271L19.9775 50.878"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                        </g>
+                        <defs>
+                          <clippath
+                            id="clip0"
+                          >
+                            <rect
+                              fill="white"
+                              height="1390"
+                              transform="translate(-284 -530)"
+                              width="1280"
+                            />
+                          </clippath>
+                        </defs>
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="action-block__header"
+                  >
+                    Get emailed whenever a new listing is posted.
+                  </div>
                 </div>
                 <div
-                  class="action-block__header"
+                  class="action-block__actions"
                 >
-                  Get emailed whenever a new listing is posted.
+                  <a
+                    class="button"
+                    href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                    target="_blank"
+                  >
+                    Sign Up today
+                  </a>
                 </div>
-              </div>
-              <div
-                class="action-block__actions"
-              >
-                <a
-                  class="button"
-                  href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                  target="_blank"
-                >
-                  Sign Up today
-                </a>
               </div>
             </div>
           </div>

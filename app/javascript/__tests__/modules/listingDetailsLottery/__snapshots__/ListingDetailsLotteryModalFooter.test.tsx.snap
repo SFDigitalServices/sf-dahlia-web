@@ -1,31 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryModalFooter displays full footer when modal status is initial state 1`] = `
-Array [
+<DocumentFragment>
   <div
-    className="bg-gray-100 py-4 text-center"
+    class="bg-gray-100 py-4 text-center"
   >
     <a
-      className="text-blue-900"
+      class="text-blue-900"
       href="http://sfmohcd.org/housing-preference-programs"
       target="_blank"
     >
       Read About Housing Preferences
     </a>
-  </div>,
+  </div>
   <div
-    className="p-4 text-center text-sm"
+    class="p-4 text-center text-sm"
   >
     <p
-      className="py-2"
+      class="py-2"
     >
       Results from January 26, 2022
     </p>
     <p
-      className="py-2"
+      class="py-2"
     >
       <a
-        className="text-blue-900"
+        class="text-blue-900"
         href="https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf"
         target="_blank"
       >
@@ -33,24 +33,26 @@ Array [
       </a>
     </p>
     <p
-      className="text-gray-700 py-2"
+      class="text-gray-700 py-2"
     >
       This PDF contains the unsorted lottery results from the housing lottery held on January 25, 2022.
     </p>
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsLotteryModalFooter displays preference link only when status is not initial state 1`] = `
-<div
-  className="bg-gray-100 py-4 text-center"
->
-  <a
-    className="text-blue-900"
-    href="http://sfmohcd.org/housing-preference-programs"
-    target="_blank"
+<DocumentFragment>
+  <div
+    class="bg-gray-100 py-4 text-center"
   >
-    Read About Housing Preferences
-  </a>
-</div>
+    <a
+      class="text-blue-900"
+      href="http://sfmohcd.org/housing-preference-programs"
+      target="_blank"
+    >
+      Read About Housing Preferences
+    </a>
+  </div>
+</DocumentFragment>
 `;

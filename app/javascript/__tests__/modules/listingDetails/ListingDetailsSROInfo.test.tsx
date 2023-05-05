@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsSROInfo } from "../../../modules/listingDetails/ListingDetailsSROInfo"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 
@@ -29,9 +29,10 @@ describe("ListingDetailsLotteryInfo", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer.create(<ListingDetailsSROInfo listing={sroRentalListing} />).toJSON()
 
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(<ListingDetailsSROInfo listing={sroRentalListing} />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays the Merry Go Round Housing description for its listing", () => {
@@ -50,8 +51,9 @@ describe("ListingDetailsLotteryInfo", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer.create(<ListingDetailsSROInfo listing={listing} />).toJSON()
 
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(<ListingDetailsSROInfo listing={listing} />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

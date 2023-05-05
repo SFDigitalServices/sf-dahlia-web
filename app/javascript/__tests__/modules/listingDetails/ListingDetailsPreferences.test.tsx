@@ -1,36 +1,38 @@
 import React from "react"
-import renderer, { act } from "react-test-renderer"
+import { render } from "@testing-library/react"
+import { t } from "@bloom-housing/ui-components"
 
 import { ListingDetailsPreferences } from "../../../modules/listingDetails/ListingDetailsPreferences"
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { preferences as sixPreferences } from "../../data/RailsListingPreferences/lottery-preferences-six"
 
-import { getPreferences } from "../../../api/listingApiService"
+// eslint-disable-next-line unicorn/prefer-module
+const axios = require("axios")
 
-jest.mock("../../../api/listingApiService")
+jest.mock("axios")
 
 describe("ListingDetailsPreferences", () => {
-  it("display 3 default preferences - COP, DTHP, L/W", async () => {
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
+  it("display 3 default preferences - COP, DTHP, L/W", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
-    const tree = renderer.create(<ListingDetailsPreferences listingID={"test"} />)
+    const { asFragment, findByText } = render(<ListingDetailsPreferences listingID={"test"} />)
 
-    // wait for state changes
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(
+      await findByText(t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration"))
+    ).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("display 6 preferences", async () => {
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(sixPreferences))
+  it("display 6 preferences", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: sixPreferences } })
 
-    const tree = renderer.create(<ListingDetailsPreferences listingID={"test"} />)
+    const { asFragment, findByText } = render(<ListingDetailsPreferences listingID={"test"} />)
 
-    // wait for state changes
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(
+      await findByText(t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration"))
+    ).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })

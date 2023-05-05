@@ -1,409 +1,406 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileListingDetailsProcess does not render if listing is closed 1`] = `null`;
+exports[`MobileListingDetailsProcess does not render if listing is closed 1`] = `<DocumentFragment />`;
 
 exports[`MobileListingDetailsProcess renders with listing with open application 1`] = `
-<li
-  className="responsive-content-item header-hidden"
->
-  <header
-    className="detail-header md:hidden"
+<DocumentFragment>
+  <li
+    class="responsive-content-item header-hidden"
   >
-    <span
-      className="detail-header__image-container"
+    <header
+      class="detail-header md:hidden"
     >
-      <img
-        alt=""
-        className="detail-header__image "
-        src=""
-      />
-    </span>
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Process
-      </h2>
       <span
-        className="detail-header__subtitle"
+        class="detail-header__image-container"
       >
-        Important dates and contact information
+        <img
+          alt=""
+          class="detail-header__image "
+          src=""
+        />
       </span>
-      <span
-        className="ui-icon ui-medium"
-        data-testid={null}
+      <hgroup
+        class="detail-header__hgroup"
       >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
+        <h2
+          class="detail-header__title"
         >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <div
-    className="border-b border-gray-400 md:border-b-0"
-  >
-    <section
-      className="aside-block"
+          Process
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Important dates and contact information
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
     >
-      <h4
-        className="text__underline-weighted"
+      <section
+        class="aside-block"
       >
-        Information Sessions
-      </h4>
-      <div
-        className="false"
-      >
-        <p
-          className="text text-gray-800 pb-2 flex justify-between items-center"
+        <h4
+          class="text__underline-weighted"
         >
-          <span
-            className="inline-block text-sm uppercase normal-case"
-          >
-            November 19, 2019
-          </span>
-          <span
-            className="inline-block text-xs font-bold ml-5 font-alt-sans"
-          >
-            6:00 PM
-          </span>
-        </p>
+          Information Sessions
+        </h4>
         <div
-          className="text-sm text-gray-700 false"
+          class="false"
         >
-          <div
-            className="flex flex-col"
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
           >
             <span
-              className="translate"
+              class="inline-block text-sm uppercase normal-case"
             >
-              <span>
-                MOHCD
+              November 19, 2019
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              6:00 PM
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 false"
+          >
+            <div
+              class="flex flex-col"
+            >
+              <span
+                class="translate"
+              >
+                <span>
+                  MOHCD
+                </span>
               </span>
-            </span>
-            <span>
-              1 South Van Ness Ave, Fl 5, San Francisco
-            </span>
+              <span>
+                1 South Van Ness Ave, Fl 5, San Francisco
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <div
-    className="border-b border-gray-400 md:border-b-0"
-  >
-    <section
-      className="aside-block"
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
     >
-      <h4
-        className="text__underline-weighted"
+      <section
+        class="aside-block"
       >
-        Open Houses
-      </h4>
-      <div
-        className="pb-3"
-      >
-        <p
-          className="text text-gray-800 pb-2 flex justify-between items-center"
+        <h4
+          class="text__underline-weighted"
         >
-          <span
-            className="inline-block text-sm uppercase normal-case"
-          >
-            December 3, 2019
-          </span>
-          <span
-            className="inline-block text-xs font-bold ml-5 font-alt-sans"
-          >
-            2:00 PM - 6:00 PM
-          </span>
-        </p>
+          Open Houses
+        </h4>
         <div
-          className="text-sm text-gray-700 pb-3"
+          class="pb-3"
         >
-          <div
-            className="flex flex-col"
-          />
-        </div>
-      </div>
-      <div
-        className="pb-3"
-      >
-        <p
-          className="text text-gray-800 pb-2 flex justify-between items-center"
-        >
-          <span
-            className="inline-block text-sm uppercase normal-case"
-          >
-            December 7, 2019
-          </span>
-          <span
-            className="inline-block text-xs font-bold ml-5 font-alt-sans"
-          >
-            10:00 AM - 12:00 PM
-          </span>
-        </p>
-        <div
-          className="text-sm text-gray-700 pb-3"
-        >
-          <div
-            className="flex flex-col"
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
           >
             <span
-              className="translate"
+              class="inline-block text-sm uppercase normal-case"
             >
-              <span>
-                SFPL
-              </span>
+              December 3, 2019
             </span>
-            <span>
-              1 Library Way, San Francisco
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              2:00 PM - 6:00 PM
             </span>
-          </div>
-        </div>
-      </div>
-      <div
-        className="false"
-      >
-        <p
-          className="text text-gray-800 pb-2 flex justify-between items-center"
-        >
-          <span
-            className="inline-block text-sm uppercase normal-case"
-          >
-            December 8, 2019
-          </span>
-        </p>
-        <div
-          className="text-sm text-gray-700 false"
-        >
+          </p>
           <div
-            className="flex flex-col"
-          />
-        </div>
-      </div>
-    </section>
-  </div>
-  <div
-    className="border-b border-gray-400 md:border-b-0"
-  >
-    <section
-      className="aside-block"
-    >
-      <h4
-        className="text__underline-weighted"
-      >
-        What to Expect
-      </h4>
-      <div
-        className="text-sm text-gray-750"
-      >
-        <span>
-          Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
-        </span>
-        <div
-          className="mt-2"
-        >
-          <div>
-            <button
-              aria-expanded={false}
-              className="button is-unstyled m-0 no-underline has-toggle"
-              onClick={[Function]}
-              type="button"
-            >
-              Read More
-            </button>
+            class="text-sm text-gray-700 pb-3"
+          >
+            <div
+              class="flex flex-col"
+            />
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <div
-    className="border-b border-gray-400 md:border-b-0 last:border-b-0"
-  >
-    <section
-      className="aside-block"
-    >
-      <h4
-        className="text__underline-weighted"
-      >
-        Contact
-      </h4>
-      <p
-        className="text-xl"
-      >
-        Matthew Burns
-      </p>
-      <p
-        className="text-gray-700 translate"
-      >
-        Leasing Agent
-      </p>
-      <p
-        className="mt-3"
-      >
-        <a
-          href="tel:Call 415 5552323"
-        >
-          <span
-            className="ui-icon ui-medium pr-2"
-            data-testid={null}
-          >
-            <svg
-              fill="#0077DA"
-              viewBox="0 0 32 32"
-            >
-              <path
-                d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
-              />
-            </svg>
-          </span>
-          Call (415) 555-2323
-        </a>
-      </p>
-      <p
-        className="text-xs text-gray-700"
-      >
-        Due to high call volume you may hear a message.
-      </p>
-      <p
-        className="my-3"
-      >
-        <a
-          href="mailto:ae@email.com"
-        >
-          <span
-            className="ui-icon ui-medium pr-2"
-            data-testid={null}
-          >
-            <svg
-              fill="#0077DA"
-              viewBox="0 0 32 32"
-            >
-              <path
-                d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
-              />
-            </svg>
-          </span>
-          Email
-        </a>
-      </p>
-      <p
-        className="text-gray-700 mb-1"
-      >
-        <span>
-          1 South Van Ness Ave  
-          <br />
-          San Francisco , CA 94131
-        </span>
-      </p>
-      <p
-        className="mb-4"
-      >
-        <a
-          className="inline-block pt-1"
-          href="https://www.google.com/maps/place/1 South Van Ness Ave , San Francisco, CA 94131"
-          rel="noreferrer noopener"
-          target="_blank"
-        >
-          <span
-            className="ui-icon ui-medium pr-2"
-            data-testid={null}
-          >
-            <svg
-              fill="#0077DA"
-              viewBox="0 0 18 32"
-            >
-              <path
-                d="M13.714 11.429q0-1.893-1.339-3.232t-3.232-1.339-3.232 1.339-1.339 3.232 1.339 3.232 3.232 1.339 3.232-1.339 1.339-3.232zM18.286 11.429q0 1.947-0.589 3.197l-6.501 13.821q-0.286 0.589-0.848 0.928t-1.205 0.339-1.205-0.339-0.83-0.928l-6.518-13.821q-0.589-1.25-0.589-3.197 0-3.786 2.678-6.464t6.464-2.678 6.464 2.678 2.678 6.464z"
-              />
-            </svg>
-          </span>
-          Get Directions
-        </a>
-      </p>
-      <div
-        className="my-3"
-      >
-        <h3
-          className="text__caps-weighted"
-        >
-          Office Hours
-        </h3>
         <div
-          className="text-gray-800 text-sm markdown"
+          class="pb-3"
         >
-          <span
-            className="translate"
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
           >
-            <span>
-              8-4 Mon-Thurs
-
-              <br />
-              9-4 Fri
-
-              <br />
-              10-2 Weekends
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 7, 2019
             </span>
-          </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              10:00 AM - 12:00 PM
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 pb-3"
+          >
+            <div
+              class="flex flex-col"
+            >
+              <span
+                class="translate"
+              >
+                <span>
+                  SFPL
+                </span>
+              </span>
+              <span>
+                1 Library Way, San Francisco
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <div
-    className="border-b border-gray-400 md:border-b-0 last:border-b-0"
-  >
-    <section
-      className="aside-block "
-    >
-      <h4
-        className="text__underline-weighted"
-      >
-        Housing Program
-      </h4>
-      <div
-        className="text-sm text-gray-750"
-      >
-        <a
-          className="text-base"
-          href="https://sfmohcd.org/for-buyers"
-          target="_blank"
+        <div
+          class="false"
         >
-          Below Market Rate
-        </a>
-      </div>
-    </section>
-  </div>
-  <div
-    className="border-b border-gray-400 md:border-b-0 last:border-b-0"
-  >
-    <section
-      className="aside-block "
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 8, 2019
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 false"
+          >
+            <div
+              class="flex flex-col"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
     >
-      <div
-        className="text-sm text-gray-750"
+      <section
+        class="aside-block"
       >
-        <p>
-          Listing Updated: April 11, 2022
+        <h4
+          class="text__underline-weighted"
+        >
+          What to Expect
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <span>
+            Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+          </span>
+          <div
+            class="mt-2"
+          >
+            <div>
+              <button
+                aria-expanded="false"
+                class="button is-unstyled m-0 no-underline has-toggle"
+                type="button"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Contact
+        </h4>
+        <p
+          class="text-xl"
+        >
+          Matthew Burns
         </p>
         <p
-          className="mt-1"
+          class="text-gray-700 translate"
+        >
+          Leasing Agent
+        </p>
+        <p
+          class="mt-3"
         >
           <a
-            className=""
-            href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
-            target="_blank"
+            href="tel:Call 415 5552323"
           >
-            See this unit on MLS
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
+                />
+              </svg>
+            </span>
+            Call (415) 555-2323
           </a>
         </p>
-      </div>
-    </section>
-  </div>
-</li>
+        <p
+          class="text-xs text-gray-700"
+        >
+          Due to high call volume you may hear a message.
+        </p>
+        <p
+          class="my-3"
+        >
+          <a
+            href="mailto:ae@email.com"
+          >
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
+                />
+              </svg>
+            </span>
+            Email
+          </a>
+        </p>
+        <p
+          class="text-gray-700 mb-1"
+        >
+          <span>
+            1 South Van Ness Ave  
+            <br />
+            San Francisco , CA 94131
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          <a
+            class="inline-block pt-1"
+            href="https://www.google.com/maps/place/1 South Van Ness Ave , San Francisco, CA 94131"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 18 32"
+              >
+                <path
+                  d="M13.714 11.429q0-1.893-1.339-3.232t-3.232-1.339-3.232 1.339-1.339 3.232 1.339 3.232 3.232 1.339 3.232-1.339 1.339-3.232zM18.286 11.429q0 1.947-0.589 3.197l-6.501 13.821q-0.286 0.589-0.848 0.928t-1.205 0.339-1.205-0.339-0.83-0.928l-6.518-13.821q-0.589-1.25-0.589-3.197 0-3.786 2.678-6.464t6.464-2.678 6.464 2.678 2.678 6.464z"
+                />
+              </svg>
+            </span>
+            Get Directions
+          </a>
+        </p>
+        <div
+          class="my-3"
+        >
+          <h3
+            class="text__caps-weighted"
+          >
+            Office Hours
+          </h3>
+          <div
+            class="text-gray-800 text-sm markdown"
+          >
+            <span
+              class="translate"
+            >
+              <span>
+                8-4 Mon-Thurs
+
+                <br />
+                9-4 Fri
+
+                <br />
+                10-2 Weekends
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Housing Program
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <a
+            class="text-base"
+            href="https://sfmohcd.org/for-buyers"
+            target="_blank"
+          >
+            Below Market Rate
+          </a>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p>
+            Listing Updated: April 11, 2022
+          </p>
+          <p
+            class="mt-1"
+          >
+            <a
+              class=""
+              href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+              target="_blank"
+            >
+              See this unit on MLS
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </li>
+</DocumentFragment>
 `;

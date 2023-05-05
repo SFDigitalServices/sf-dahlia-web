@@ -1,104 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MailingListSignup displays mailing list sign up 1`] = `
-<div
-  className="action-block mt-4 primary-lighter action-block__block"
->
+<DocumentFragment>
   <div
-    className="action-block__head"
+    class="action-block mt-4 primary-lighter action-block__block"
   >
     <div
-      className="action-block__icon"
+      class="action-block__head"
     >
-      <span
-        className="ui-icon ui-3xl"
-        data-testid={null}
+      <div
+        class="action-block__icon"
       >
-        <svg
-          fill="transparent"
-          height="35"
-          viewBox="0 0 80 35"
-          width="80"
-          xmlns="http://www.w3.org/2000/svg"
+        <span
+          class="ui-icon ui-3xl"
         >
-          <rect
+          <svg
             fill="transparent"
-            height="75"
+            height="35"
+            viewBox="0 0 80 35"
             width="80"
-          />
-          <g
-            clipPath="url(#clip0)"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <rect
               fill="transparent"
-              height="1390"
-              transform="translate(-284 -530)"
-              width="1280"
+              height="75"
+              width="80"
             />
-            <path
-              d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              d="M49.1858 41.271L61.375 50.878"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              d="M32.1668 41.271L19.9775 50.878"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-            <path
-              d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeMiterlimit="10"
-              strokeWidth="2"
-            />
-          </g>
-          <defs>
-            <clipPath
-              id="clip0"
+            <g
+              clip-path="url(#clip0)"
             >
               <rect
-                fill="white"
+                fill="transparent"
                 height="1390"
                 transform="translate(-284 -530)"
                 width="1280"
               />
-            </clipPath>
-          </defs>
-        </svg>
-      </span>
+              <path
+                d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                stroke="black"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-width="2"
+              />
+              <path
+                d="M49.1858 41.271L61.375 50.878"
+                stroke="black"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-width="2"
+              />
+              <path
+                d="M32.1668 41.271L19.9775 50.878"
+                stroke="black"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-width="2"
+              />
+              <path
+                d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                stroke="black"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-miterlimit="10"
+                stroke-width="2"
+              />
+            </g>
+            <defs>
+              <clippath
+                id="clip0"
+              >
+                <rect
+                  fill="white"
+                  height="1390"
+                  transform="translate(-284 -530)"
+                  width="1280"
+                />
+              </clippath>
+            </defs>
+          </svg>
+        </span>
+      </div>
+      <div
+        class="action-block__header"
+      >
+        Get emailed whenever a new listing is posted.
+      </div>
     </div>
     <div
-      className="action-block__header"
+      class="action-block__actions"
     >
-      Get emailed whenever a new listing is posted.
+      <a
+        class="button"
+        href=""
+        target="_blank"
+      >
+        Sign Up today
+      </a>
     </div>
   </div>
-  <div
-    className="action-block__actions"
-  >
-    <a
-      className="button"
-      href=""
-      target="_blank"
-    >
-      Sign Up today
-    </a>
-  </div>
-</div>
+</DocumentFragment>
 `;

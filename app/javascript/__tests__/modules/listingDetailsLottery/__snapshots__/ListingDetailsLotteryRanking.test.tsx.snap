@@ -1,20 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with one result - L/W 1`] = `
-<div
-  className="lottery-ranking text-sm"
->
-  <header
-    className="px-8"
+<DocumentFragment>
+  <div
+    class="lottery-ranking text-sm"
   >
-    <h2
-      className="text__underline-weighted"
+    <header
+      class="px-8"
     >
-      Your preference ranking
-    </h2>
-    <p
-      className="border-b border-gray-450 pb-4 text-gray-700"
-    >
+      <h2
+        class="text__underline-weighted"
+      >
+        Your preference ranking
+      </h2>
+      <p
+        class="border-b border-gray-450 pb-4 text-gray-700"
+      />
       <p>
         Ranking in these lists is considered in the order shown here. 
         <a
@@ -24,97 +25,97 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
           Watch a video on how lottery ranking works.
         </a>
       </p>
-    </p>
-  </header>
-  <div
-    className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
-  >
-    <span
-      className="ui-icon ui-medium mx-4"
-      data-testid={null}
-    >
-      <svg
-        fill="currentColor"
-        viewBox="0 0 32 32"
-      >
-        <path
-          d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
-        />
-      </svg>
-    </span>
-    <p>
-      Please note, there are other preferences that will be considered for units first.
-    </p>
-  </div>
-  <div
-    className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
-  >
+      <p />
+    </header>
     <div
-      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      class="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
+    >
+      <span
+        class="ui-icon ui-medium mx-4"
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
+          />
+        </svg>
+      </span>
+      <p>
+        Please note, there are other preferences that will be considered for units first.
+      </p>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
     >
       <div
-        className="rank-title uppercase"
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
       >
-        Rank
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          15
+        </div>
       </div>
-      <div>
-        15
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          905 applicants are on this list.
+        </p>
       </div>
     </div>
     <div
-      className="mx-4"
+      class="px-8"
     >
-      <h3
-        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+      <div
+        class="pb-4"
       >
-        Live or Work in San Francisco Preference
-      </h3>
-      <p
-        className="mb-1 text-gray-950 text-sm"
-      >
-        Up to 1 units
-      </p>
-      <p
-        className="text-gray-700 text-sm"
-      >
-        905 applicants are on this list.
-      </p>
+        <button
+          aria-expanded="false"
+          class="button is-unstyled m-0 no-underline has-toggle"
+          type="button"
+        >
+          What happens next?
+        </button>
+      </div>
     </div>
   </div>
-  <div
-    className="px-8"
-  >
-    <div
-      className="pb-4"
-    >
-      <button
-        aria-expanded={false}
-        className="button is-unstyled m-0 no-underline has-toggle"
-        onClick={[Function]}
-        type="button"
-      >
-        What happens next?
-      </button>
-    </div>
-  </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with two results - COP and L/W 1`] = `
-<div
-  className="lottery-ranking text-sm"
->
-  <header
-    className="px-8"
+<DocumentFragment>
+  <div
+    class="lottery-ranking text-sm"
   >
-    <h2
-      className="text__underline-weighted"
+    <header
+      class="px-8"
     >
-      Your preference ranking
-    </h2>
-    <p
-      className="border-b border-gray-450 pb-4 text-gray-700"
-    >
+      <h2
+        class="text__underline-weighted"
+      >
+        Your preference ranking
+      </h2>
+      <p
+        class="border-b border-gray-450 pb-4 text-gray-700"
+      />
       <p>
         Ranking in these lists is considered in the order shown here. 
         <a
@@ -124,193 +125,171 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
           Watch a video on how lottery ranking works.
         </a>
       </p>
-    </p>
-  </header>
-  <div
-    className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
-  >
+      <p />
+    </header>
     <div
-      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
     >
       <div
-        className="rank-title uppercase"
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
       >
-        Rank
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
       </div>
-      <div>
-        1
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Certificate of Preference (COP)
+        </h3>
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
       </div>
     </div>
     <div
-      className="mx-4"
-    >
-      <h3
-        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
-      >
-        Certificate of Preference (COP)
-      </h3>
-      <p
-        className="mb-1 text-gray-950 text-sm"
-      >
-        Up to 1 units
-      </p>
-      <p
-        className="text-gray-700 text-sm"
-      >
-        1 applicants are on this list.
-      </p>
-    </div>
-  </div>
-  <div
-    className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
-  >
-    <div
-      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
     >
       <div
-        className="rank-title uppercase"
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
       >
-        Rank
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          374
+        </div>
       </div>
-      <div>
-        374
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          905 applicants are on this list.
+        </p>
       </div>
     </div>
     <div
-      className="mx-4"
+      class="px-8"
     >
-      <h3
-        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+      <div
+        class="pb-4"
       >
-        Live or Work in San Francisco Preference
-      </h3>
-      <p
-        className="mb-1 text-gray-950 text-sm"
-      >
-        Up to 1 units
-      </p>
-      <p
-        className="text-gray-700 text-sm"
-      >
-        905 applicants are on this list.
-      </p>
+        <button
+          aria-expanded="false"
+          class="button is-unstyled m-0 no-underline has-toggle"
+          type="button"
+        >
+          What happens next?
+        </button>
+      </div>
     </div>
   </div>
-  <div
-    className="px-8"
-  >
-    <div
-      className="pb-4"
-    >
-      <button
-        aria-expanded={false}
-        className="button is-unstyled m-0 no-underline has-toggle"
-        onClick={[Function]}
-        type="button"
-      >
-        What happens next?
-      </button>
-    </div>
-  </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with general pool only 1`] = `
-<div
-  className="lottery-ranking text-sm"
->
-  <header
-    className="px-8"
-  >
-    <h2
-      className="text__underline-weighted"
-    >
-      Your lottery ranking
-    </h2>
-    <p
-      className="border-b border-gray-450 pb-4 text-gray-700"
-    >
-      <p>
-        Ranking in these lists is considered in the order shown here. 
-        <a
-          href="https://www.youtube.com/watch?v=4ZB35gagUl8"
-          target="_blank"
-        >
-          Watch a video on how lottery ranking works.
-        </a>
-      </p>
-    </p>
-  </header>
+<DocumentFragment>
   <div
-    className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
-  >
-    <span
-      className="ui-icon ui-medium mx-4"
-      data-testid={null}
-    >
-      <svg
-        fill="currentColor"
-        viewBox="0 0 32 32"
-      >
-        <path
-          d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
-        />
-      </svg>
-    </span>
-    <p>
-      Please note, preference holders will be considered for all units first.
-    </p>
-  </div>
-  <div
-    className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
+    class="lottery-ranking text-sm"
   >
     <div
-      className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      class="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
+    >
+      <span
+        class="ui-icon ui-medium mx-4"
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
+          />
+        </svg>
+      </span>
+      <p>
+        Please note, preference holders will be considered for all units first.
+      </p>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
     >
       <div
-        className="rank-title uppercase"
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
       >
-        Rank
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
       </div>
-      <div>
-        1
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          General Pool
+        </h3>
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Any remaining units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicants are on this list.
+        </p>
       </div>
     </div>
     <div
-      className="mx-4"
+      class="px-8"
     >
-      <h3
-        className="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+      <div
+        class="pb-4"
       >
-        General Pool
-      </h3>
-      <p
-        className="mb-1 text-gray-950 text-sm"
-      >
-        Any remaining units
-      </p>
-      <p
-        className="text-gray-700 text-sm"
-      >
-        2 applicants are on this list.
-      </p>
+        <button
+          aria-expanded="false"
+          class="button is-unstyled m-0 no-underline has-toggle"
+          type="button"
+        >
+          What happens next?
+        </button>
+      </div>
     </div>
   </div>
-  <div
-    className="px-8"
-  >
-    <div
-      className="pb-4"
-    >
-      <button
-        aria-expanded={false}
-        className="button is-unstyled m-0 no-underline has-toggle"
-        onClick={[Function]}
-        type="button"
-      >
-        What happens next?
-      </button>
-    </div>
-  </div>
-</div>
+</DocumentFragment>
 `;

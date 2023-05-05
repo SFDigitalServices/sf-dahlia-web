@@ -1,35 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsLotteryInfo displays when listing has upcoming lottery 1`] = `
-Array [
+<DocumentFragment>
   <div
-    className="border-b border-gray-400 md:border-b-0"
+    class="border-b border-gray-400 md:border-b-0"
   >
     <section
-      className="aside-block "
+      class="aside-block "
     >
       <h4
-        className="text__underline-weighted"
+        class="text__underline-weighted"
       >
         Lottery
       </h4>
       <div
-        className="text-sm text-gray-750"
+        class="text-sm text-gray-750"
       >
         <p
-          className="flex justify-between mb-4"
+          class="flex justify-between mb-4"
         >
           <span>
             March 22, 2023
           </span>
           <span
-            className="font-bold"
+            class="font-bold"
           >
             6:00 pm
           </span>
         </p>
         <div
-          className="text-gray-700"
+          class="text-gray-700"
         >
           <p>
             The lottery will not be in person, but instead will be a virtual lottery. Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
@@ -38,45 +38,45 @@ Array [
           </p>
         </div>
         <p
-          className="mt-4 text-gray-700"
+          class="mt-4 text-gray-700"
         >
           An open lottery will be held to draw numbers to determine selection. Attendance is optional.
         </p>
       </div>
     </section>
-  </div>,
+  </div>
   <div
-    className="border-b border-gray-400 md:border-b-0"
+    class="border-b border-gray-400 md:border-b-0"
   >
     <section
-      className="aside-block "
+      class="aside-block "
     >
       <h4
-        className="text__underline-weighted"
+        class="text__underline-weighted"
       >
         Lottery Results
       </h4>
       <div
-        className="text-sm text-gray-750"
+        class="text-sm text-gray-750"
       >
         <p
-          className="mb-4"
+          class="mb-4"
         >
           March 23, 2023
         </p>
         <p
-          className="text-gray-700"
+          class="text-gray-700"
         >
           Complete lottery results will be posted on this date by 5 pm.
         </p>
       </div>
     </section>
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;
 
-exports[`ListingDetailsLotteryInfo does not display when listing has a completed lottery 1`] = `null`;
+exports[`ListingDetailsLotteryInfo does not display when listing has a completed lottery 1`] = `<DocumentFragment />`;
 
-exports[`ListingDetailsLotteryInfo does not display when listing has no lottery date 1`] = `null`;
+exports[`ListingDetailsLotteryInfo does not display when listing has no lottery date 1`] = `<DocumentFragment />`;
 
-exports[`ListingDetailsLotteryInfo does not display when listing is open 1`] = `null`;
+exports[`ListingDetailsLotteryInfo does not display when listing is open 1`] = `<DocumentFragment />`;

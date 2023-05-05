@@ -52,6 +52,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
   return (
     <>
       <PreferencesList
+        data-testid={"preferences-list"}
         listingPreferences={preferences?.map((preference, index) => {
           const links = []
           if (preference.readMoreUrl) {

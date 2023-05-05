@@ -1,58 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HabitatForHumanity renders HabitatForHumanity component 1`] = `
-Array [
+<DocumentFragment>
   <h2
-    className="text__large-primary order-1"
+    class="text__large-primary order-1"
   >
     TEST: 36 Amber Drive
-  </h2>,
+  </h2>
   <h3
-    className="text__medium-normal order-2"
+    class="text__medium-normal order-2"
   >
     <span>
-      36 Amber Drive
-      , 
-      San Francisco
-      ,
-       
+      36 Amber Drive, San Francisco, 
       <abbr
-        className="no-underline"
+        class="no-underline"
         title="California"
       >
         CA
       </abbr>
-       
-      94131
+       94131
     </span>
-  </h3>,
+  </h3>
   <hr
-    className="mb-2"
-  />,
+    class="mb-2"
+  />
   <div
-    className="text-gray-750"
+    class="text-gray-750"
   >
     <h3
-      className="text__small-weighted"
+      class="text__small-weighted"
     >
       Available Units
     </h3>
     <div
-      className="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
+      class="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
     >
       Units
     </div>
     <div>
       <span
-        className="font-semibold"
+        class="font-semibold"
       >
         :
       </span>
-       
-       available
+        available
     </div>
     <div
-      className="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
+      class="font-sans font-semibold text-base uppercase text-gray-750 tracking-wider border-0 border-b pb-2 mb-2 mt-4"
     >
       Payments
     </div>
@@ -60,10 +54,10 @@ Array [
       No down payment, but you do need to complete 500 hours of sweat equity. Your monthly payment will be 30% of your income.
     </div>
     <div
-      className="mt-4 border-0 border-b pb-2 mb-2"
+      class="mt-4 border-0 border-b pb-2 mb-2"
     >
       You will need to attend an information session.
     </div>
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;

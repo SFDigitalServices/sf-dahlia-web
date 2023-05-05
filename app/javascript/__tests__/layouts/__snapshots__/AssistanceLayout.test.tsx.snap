@@ -1,548 +1,544 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
-<div
-  className="notranslate site-wrapper"
->
+<DocumentFragment>
   <div
-    className="site-content"
+    class="notranslate site-wrapper"
   >
-    <title>
-      Title Text
-    </title>
-    <meta
-      charSet="utf-8"
-    />
-    <meta
-      content="IE=edge"
-      httpEquiv="X-UA-Compatible"
-    />
-    <meta
-      content="width=device-width, initial-scale=1"
-      name="viewport"
-    />
-    <meta
-      content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-      name="google-site-verification"
-    />
-    <meta
-      content="Title Text"
-      property="og:title"
-    />
-    <meta
-      property="og:image"
-    />
-    <meta
-      content="website"
-      property="og:type"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="57x57"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="72x72"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="114x114"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="144x144"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-    />
-    <link
-      rel="icon"
-      sizes="192x192"
-      type="image/png"
-    />
-    <link
-      rel="icon"
-      sizes="32x32"
-      type="image/png"
-    />
-    <link
-      rel="icon"
-      sizes="96x96"
-      type="image/png"
-    />
-    <link
-      rel="icon"
-      sizes="16x16"
-      type="image/png"
-    />
-    <link
-      rel="manifest"
-    />
-    <meta
-      name="msapplication-TileImage"
-    />
-    <header
-      className="site-header"
+    <div
+      class="site-content"
     >
-      <a
-        className="site-header__skip-link"
-        href="#main-content"
+      <title>
+        Title Text
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="Title Text"
+        property="og:title"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="57x57"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="60x60"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="72x72"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="76x76"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="114x114"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="120x120"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="144x144"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="152x152"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+      />
+      <link
+        rel="icon"
+        sizes="192x192"
+        type="image/png"
+      />
+      <link
+        rel="icon"
+        sizes="32x32"
+        type="image/png"
+      />
+      <link
+        rel="icon"
+        sizes="96x96"
+        type="image/png"
+      />
+      <link
+        rel="icon"
+        sizes="16x16"
+        type="image/png"
+      />
+      <link
+        rel="manifest"
+      />
+      <meta
+        name="msapplication-TileImage"
+      />
+      <header
+        class="site-header"
       >
-        Skip to main content
-      </a>
+        <a
+          class="site-header__skip-link"
+          href="#main-content"
+        >
+          Skip to main content
+        </a>
+        <div
+          class="language-bar"
+        >
+          <div
+            class="language-bar__inner"
+          >
+            <nav
+              aria-label="Choose your language"
+              class="language-nav"
+            >
+              <ul
+                class="language-nav__list"
+              >
+                <li>
+                  <button
+                    class="language-nav__list-button is-active"
+                    type="button"
+                  >
+                    English
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="language-nav__list-button"
+                    type="button"
+                  >
+                    Español
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="language-nav__list-button"
+                    type="button"
+                  >
+                    中文
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="language-nav__list-button"
+                    type="button"
+                  >
+                    Filipino
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div
+          class="site-header__notice "
+        >
+          <div
+            class="site-header__notice-text"
+          >
+            <span>
+              We'd love to get 
+              <a
+                href="https://airtable.com/shrw64DubWTQfRkdo"
+                target="_blank"
+              >
+                your feedback.
+              </a>
+            </span>
+          </div>
+        </div>
+        <nav
+          aria-label="main navigation"
+          class="site-header__container"
+          role="navigation"
+        >
+          <div
+            class="site-header__base "
+          >
+            <div
+              class="site-header__logo-container site-header__logo-width-med"
+            >
+              <a
+                aria-label="DAHLIA San Francisco Housing Portal"
+                class="site-header__logo translate site-header__custom-width"
+                href="/"
+              >
+                <div
+                  class="site-header__logo-content site-header__image-only-container"
+                >
+                  <img
+                    alt="Site logo"
+                    class="site-header__logo-image site-header__image-only"
+                  />
+                </div>
+              </a>
+            </div>
+            <div
+              class="site-header__navbar-menu"
+            >
+              <a
+                class="site-header__link pb-4 pt-1 flex items-end "
+                data-testid="Rent-0"
+                href="/listings/for-rent"
+              >
+                <div>
+                  Rent
+                </div>
+              </a>
+              <a
+                class="site-header__link pb-4 pt-1 flex items-end "
+                data-testid="Buy-1"
+                href="/listings/for-sale"
+              >
+                <div>
+                  Buy
+                </div>
+              </a>
+              <a
+                class="site-header__link pb-4 pt-1 flex items-end "
+                data-testid="My Favorites-2"
+                href="/favorites"
+              >
+                <div>
+                  My Favorites
+                </div>
+              </a>
+              <a
+                class="site-header__link pb-4 pt-1 flex items-end "
+                data-testid="Get Assistance-3"
+                href="/get-assistance"
+              >
+                <div>
+                  Get Assistance
+                </div>
+              </a>
+              <a
+                class="site-header__link pb-4 pt-1 flex items-end "
+                data-testid="Sign In-4"
+                href="/sign-in"
+              >
+                <div>
+                  Sign In
+                </div>
+              </a>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main
+        class="md:overflow-x-hidden"
+        data-testid="main-content-test-id"
+        id="main-content"
+      >
+        <header
+          class="page-header is-inverse"
+        >
+          <hgroup
+            class="page-header__group"
+          >
+            <h1
+              class="page-header__title"
+              data-testid="page-header"
+            >
+              Title Text
+            </h1>
+            <p
+              class="page-header__lead"
+            >
+               Subtitle Text
+            </p>
+          </hgroup>
+        </header>
+        <article
+          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+        >
+          <div
+            class="w-full md:w-2/3"
+            data-testid="assistance-main-content"
+          >
+            <h1>
+              Content!
+            </h1>
+          </div>
+          <section
+            class="aside-block w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
+          >
+            <h4
+              class="text__underline-weighted"
+            >
+              Contact
+            </h4>
+            <div
+              class="text-sm text-gray-750"
+            >
+              <span
+                class="text-gray-950"
+              >
+                <p
+                  class="mb-4"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    For questions about DAHLIA listings:
+                  </span>
+                  <br />
+                   
+                  <span>
+                    Contact the agent shown on the listing page.
+                  </span>
+                </p>
+                <p
+                  class="mb-4"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    For help with San Francisco services 24 hours a day, 7 days a week:
+                  </span>
+                  <br />
+                   
+                  <span>
+                    Call 
+                    <a
+                      href="tel:311"
+                    >
+                      311
+                    </a>
+                     or 
+                    <a
+                      href="https://sf311.org/"
+                      target="_blank"
+                    >
+                      visit the 311 website.
+                    </a>
+                  </span>
+                </p>
+                <div>
+                  <span
+                    class="font-semibold"
+                  >
+                    For questions about housing programs:
+                  </span>
+                  <br />
+                  <div>
+                    <span>
+                      <a
+                        href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                        target="_blank"
+                      >
+                        Visit the website for the Mayor’s Office of Housing and Community Development 
+                      </a>
+                      (MOHCD)
+                    </span>
+                  </div>
+                  <div
+                    class="mt-1"
+                  >
+                    <span>
+                      Email 
+                      <a
+                        href="mailto:sfhousinginfo@sfgov.org"
+                      >
+                        sfhousinginfo@sfgov.org
+                      </a>
+                    </span>
+                  </div>
+                  <div
+                    class="mt-1"
+                  >
+                    Call MOHCD at:
+                    <ul
+                      class="list-disc list-inside mt-1"
+                    >
+                      <li>
+                        English: 
+                        <a
+                          href="tel:+14157015622"
+                        >
+                          (415) 701-5622
+                        </a>
+                      </li>
+                      <li>
+                        Español: 
+                        <a
+                          href="tel:+14157015623"
+                        >
+                          (415) 701-5623
+                        </a>
+                      </li>
+                      <li>
+                        中文: 
+                        <a
+                          href="tel:+14157015624"
+                        >
+                          (415) 701-5624
+                        </a>
+                      </li>
+                      <li>
+                        Filipino: 
+                        <a
+                          href="tel:+14157015570"
+                        >
+                          (415) 701-5570
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
+    <footer
+      class="site-footer"
+    >
       <div
-        className="language-bar"
+        class="footer-row "
       >
         <div
-          className="language-bar__inner"
+          class="footer-row__section pb-8"
         >
-          <nav
-            aria-label="Choose your language"
-            className="language-nav"
-          >
-            <ul
-              className="language-nav__list"
-            >
-              <li>
-                <button
-                  className="language-nav__list-button is-active"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  English
-                </button>
-              </li>
-              <li>
-                <button
-                  className="language-nav__list-button"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  Español
-                </button>
-              </li>
-              <li>
-                <button
-                  className="language-nav__list-button"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  中文
-                </button>
-              </li>
-              <li>
-                <button
-                  className="language-nav__list-button"
-                  onClick={[Function]}
-                  type="button"
-                >
-                  Filipino
-                </button>
-              </li>
-            </ul>
-          </nav>
+          <img
+            alt=""
+            data-testid="footer-logo-test-id"
+          />
         </div>
       </div>
       <div
-        className="site-header__notice "
+        class="footer-row "
       >
         <div
-          className="site-header__notice-text"
+          class="footer-row__section py-2"
         >
-          <span>
-            We'd love to get 
+          <p
+            class="text-gray-500"
+          >
+            <span>
+              DAHLIA: San Francisco Housing Portal is a project of the 
+              <br />
+              <a
+                class="text-white"
+                href="https://sf.gov/mohcd"
+                target="_blank"
+              >
+                Mayor's Office of Housing and Community Development
+              </a>
+            </span>
+          </p>
+          <p
+            class="text-xs mt-4 text-gray-500"
+          >
+            <span>
+              in partnership with
+              <br />
+              <a
+                class="text-white"
+                href="https://digitalservices.sfgov.org/"
+                target="_blank"
+              >
+                San Francisco Digital Services
+              </a>
+              <br />
+              <a
+                class="text-white"
+                href="https://www.innovation.sfgov.org/"
+                target="_blank"
+              >
+                Mayor's Office of Civic Innovation
+              </a>
+            </span>
+          </p>
+        </div>
+      </div>
+      <div
+        class="footer-row "
+      >
+        <div
+          class="footer-row__section pb-8"
+        >
+          <p
+            class="text-sm"
+          >
+            For listing and application questions, please contact the agent displayed on the listing. 
+            <br />
+            For general program inquiries, you may call MOHCD at 415-701-5500.
+          </p>
+        </div>
+      </div>
+      <section
+        class="footer-sock"
+      >
+        <div
+          class="footer-sock__inner"
+        >
+          <p
+            class="footer-copyright"
+          >
+            © City & County of San Francisco
+          </p>
+          <nav
+            aria-label="Footer"
+            class="footer-nav"
+          >
             <a
+              class="text-gray-500"
               href="https://airtable.com/shrw64DubWTQfRkdo"
               target="_blank"
             >
-              your feedback.
+              Give Feedback
             </a>
-          </span>
+            <a
+              class="text-gray-500"
+              href="mailto:sfhousinginfo@sfgov.org"
+            >
+              Contact
+            </a>
+            <a
+              class="text-gray-500"
+              href="/disclaimer"
+            >
+              Disclaimer
+            </a>
+            <a
+              class="text-gray-500"
+              href="/privacy"
+            >
+              Privacy Policy
+            </a>
+          </nav>
         </div>
-      </div>
-      <nav
-        aria-label="main navigation"
-        className="site-header__container"
-        role="navigation"
-      >
-        <div
-          className="site-header__base "
-        >
-          <div
-            className="site-header__logo-container site-header__logo-width-med"
-          >
-            <a
-              aria-label="DAHLIA San Francisco Housing Portal"
-              className="site-header__logo translate site-header__custom-width"
-              href="/"
-            >
-              <div
-                className="site-header__logo-content site-header__image-only-container"
-              >
-                <img
-                  alt="Site logo"
-                  className="site-header__logo-image site-header__image-only"
-                />
-              </div>
-            </a>
-          </div>
-          <div
-            className="site-header__navbar-menu"
-          >
-            <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-testid="Rent-0"
-              href="/listings/for-rent"
-            >
-              <div>
-                Rent
-              </div>
-            </a>
-            <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-testid="Buy-1"
-              href="/listings/for-sale"
-            >
-              <div>
-                Buy
-              </div>
-            </a>
-            <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-testid="My Favorites-2"
-              href="/favorites"
-            >
-              <div>
-                My Favorites
-              </div>
-            </a>
-            <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-testid="Get Assistance-3"
-              href="/get-assistance"
-            >
-              <div>
-                Get Assistance
-              </div>
-            </a>
-            <a
-              className="site-header__link pb-4 pt-1 flex items-end "
-              data-testid="Sign In-4"
-              href="/sign-in"
-            >
-              <div>
-                Sign In
-              </div>
-            </a>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <main
-      className="md:overflow-x-hidden"
-      data-testid="main-content-test-id"
-      id="main-content"
-    >
-      <header
-        className="page-header is-inverse"
-      >
-        <hgroup
-          className="page-header__group"
-        >
-          <h1
-            className="page-header__title"
-            data-testid="page-header"
-          >
-            Title Text
-          </h1>
-          <p
-            className="page-header__lead"
-          >
-             
-            Subtitle Text
-          </p>
-        </hgroup>
-      </header>
-      <article
-        className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
-      >
-        <div
-          className="w-full md:w-2/3"
-          data-testid="assistance-main-content"
-        >
-          <h1>
-            Content!
-          </h1>
-        </div>
-        <section
-          className="aside-block w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
-        >
-          <h4
-            className="text__underline-weighted"
-          >
-            Contact
-          </h4>
-          <div
-            className="text-sm text-gray-750"
-          >
-            <span
-              className="text-gray-950"
-            >
-              <p
-                className="mb-4"
-              >
-                <span
-                  className="font-semibold"
-                >
-                  For questions about DAHLIA listings:
-                </span>
-                <br />
-                 
-                <span>
-                  Contact the agent shown on the listing page.
-                </span>
-              </p>
-              <p
-                className="mb-4"
-              >
-                <span
-                  className="font-semibold"
-                >
-                  For help with San Francisco services 24 hours a day, 7 days a week:
-                </span>
-                <br />
-                 
-                <span>
-                  Call 
-                  <a
-                    href="tel:311"
-                  >
-                    311
-                  </a>
-                   or 
-                  <a
-                    href="https://sf311.org/"
-                    target="_blank"
-                  >
-                    visit the 311 website.
-                  </a>
-                </span>
-              </p>
-              <div>
-                <span
-                  className="font-semibold"
-                >
-                  For questions about housing programs:
-                </span>
-                <br />
-                <div>
-                  <span>
-                    <a
-                      href="https://sf.gov/departments/mayors-office-housing-and-community-development"
-                      target="_blank"
-                    >
-                      Visit the website for the Mayor’s Office of Housing and Community Development 
-                    </a>
-                    (MOHCD)
-                  </span>
-                </div>
-                <div
-                  className="mt-1"
-                >
-                  <span>
-                    Email 
-                    <a
-                      href="mailto:sfhousinginfo@sfgov.org"
-                    >
-                      sfhousinginfo@sfgov.org
-                    </a>
-                  </span>
-                </div>
-                <div
-                  className="mt-1"
-                >
-                  Call MOHCD at:
-                  <ul
-                    className="list-disc list-inside mt-1"
-                  >
-                    <li>
-                      English: 
-                      <a
-                        href="tel:+14157015622"
-                      >
-                        (415) 701-5622
-                      </a>
-                    </li>
-                    <li>
-                      Español: 
-                      <a
-                        href="tel:+14157015623"
-                      >
-                        (415) 701-5623
-                      </a>
-                    </li>
-                    <li>
-                      中文: 
-                      <a
-                        href="tel:+14157015624"
-                      >
-                        (415) 701-5624
-                      </a>
-                    </li>
-                    <li>
-                      Filipino: 
-                      <a
-                        href="tel:+14157015570"
-                      >
-                        (415) 701-5570
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </span>
-          </div>
-        </section>
-      </article>
-    </main>
+      </section>
+    </footer>
   </div>
-  <footer
-    className="site-footer"
-  >
-    <div
-      className="footer-row "
-    >
-      <div
-        className="footer-row__section pb-8"
-      >
-        <img
-          alt=""
-          data-testid="footer-logo-test-id"
-        />
-      </div>
-    </div>
-    <div
-      className="footer-row "
-    >
-      <div
-        className="footer-row__section py-2"
-      >
-        <p
-          className="text-gray-500"
-        >
-          <span>
-            DAHLIA: San Francisco Housing Portal is a project of the 
-            <br />
-            <a
-              className="text-white"
-              href="https://sf.gov/mohcd"
-              target="_blank"
-            >
-              Mayor's Office of Housing and Community Development
-            </a>
-          </span>
-        </p>
-        <p
-          className="text-xs mt-4 text-gray-500"
-        >
-          <span>
-            in partnership with
-            <br />
-            <a
-              className="text-white"
-              href="https://digitalservices.sfgov.org/"
-              target="_blank"
-            >
-              San Francisco Digital Services
-            </a>
-            <br />
-            <a
-              className="text-white"
-              href="https://www.innovation.sfgov.org/"
-              target="_blank"
-            >
-              Mayor's Office of Civic Innovation
-            </a>
-          </span>
-        </p>
-      </div>
-    </div>
-    <div
-      className="footer-row "
-    >
-      <div
-        className="footer-row__section pb-8"
-      >
-        <p
-          className="text-sm"
-        >
-          For listing and application questions, please contact the agent displayed on the listing.
-           
-          <br />
-          For general program inquiries, you may call MOHCD at 415-701-5500.
-        </p>
-      </div>
-    </div>
-    <section
-      className="footer-sock"
-    >
-      <div
-        className="footer-sock__inner"
-      >
-        <p
-          className="footer-copyright"
-        >
-          © City & County of San Francisco
-        </p>
-        <nav
-          aria-label="Footer"
-          className="footer-nav"
-        >
-          <a
-            className="text-gray-500"
-            href="https://airtable.com/shrw64DubWTQfRkdo"
-            target="_blank"
-          >
-            Give Feedback
-          </a>
-          <a
-            className="text-gray-500"
-            href="mailto:sfhousinginfo@sfgov.org"
-          >
-            Contact
-          </a>
-          <a
-            className="text-gray-500"
-            href="/disclaimer"
-          >
-            Disclaimer
-          </a>
-          <a
-            className="text-gray-500"
-            href="/privacy"
-          >
-            Privacy Policy
-          </a>
-        </nav>
-      </div>
-    </section>
-  </footer>
-</div>
+</DocumentFragment>
 `;
