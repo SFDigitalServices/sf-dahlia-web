@@ -368,7 +368,11 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
       )
     })
 
-    if (!uniqueChartMatchForMax) {
+    /*
+     * It's possible that there'll only be a unit.Max_AMI_for_Qualifying_Unit or unit.Min_AMI_for_Qualifying_Unit,
+     * but the rest of fields should exist
+     */
+    if (!uniqueChartMatchForMax && unit.Max_AMI_for_Qualifying_Unit) {
       uniqueCharts.push({
         year: unit.AMI_chart_year,
         type: unit.AMI_chart_type,
@@ -377,7 +381,7 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
       })
     }
 
-    if (!uniqueChartMatchForMin) {
+    if (!uniqueChartMatchForMin && unit.Min_AMI_for_Qualifying_Unit) {
       uniqueCharts.push({
         year: unit.AMI_chart_year,
         type: unit.AMI_chart_type,
