@@ -1,17 +1,19 @@
 import React from "react"
-import renderer, { act } from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsFeatures } from "../../../modules/listingDetails/ListingDetailsFeatures"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { units } from "../../data/RailsListingUnits/listing-units"
-import { getUnits } from "../../../api/listingApiService"
 
-jest.mock("../../../api/listingApiService")
+// eslint-disable-next-line unicorn/prefer-module
+const axios = require("axios")
+
+jest.mock("axios")
 
 describe("ListingDetailsFeatures", () => {
-  it("displays listing details features section when rental listing", async () => {
-    const getUnitsMock = getUnits as jest.MockedFunction<typeof getUnits>
-    getUnitsMock.mockReturnValue(Promise.resolve(units))
+  it("displays listing details features section when rental listing", async (done) => {
+    axios.get.mockResolvedValue({ data: { units: units } })
+
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -25,21 +27,19 @@ describe("ListingDetailsFeatures", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
-      )
-      .toJSON()
 
-    // wait for state changes
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
+    const { asFragment, findByText } = render(
+      <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Features")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details features section when sales listing", async () => {
-    const getUnitsMock = getUnits as jest.MockedFunction<typeof getUnits>
-    getUnitsMock.mockReturnValue(Promise.resolve(units))
+  it("displays listing details features section when sales listing", async (done) => {
+    axios.get.mockResolvedValue({ data: { units: openSaleListing.Units } })
+
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -53,15 +53,13 @@ describe("ListingDetailsFeatures", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
-      )
-      .toJSON()
 
-    // wait for state changes
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
+    const { asFragment, findByText } = render(
+      <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Features")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })
