@@ -1,5 +1,5 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react"
 import { ListingDetailsFeatures } from "../../../modules/listingDetails/ListingDetailsFeatures"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
@@ -10,6 +10,12 @@ const axios = require("axios")
 jest.mock("axios")
 
 describe("ListingDetailsFeatures", () => {
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it("displays listing details features section when rental listing", async (done) => {
     axios.get.mockResolvedValue({ data: { units: units } })
 

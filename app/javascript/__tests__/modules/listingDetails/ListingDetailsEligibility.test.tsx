@@ -1,5 +1,5 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react"
 import { ListingDetailsEligibility } from "../../../modules/listingDetails/ListingDetailsEligibility"
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
@@ -30,6 +30,13 @@ describe("ListingDetailsEligibility", () => {
       }
     })
   })
+
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it("displays listing details eligibility section and no Building Selection Criteria Link", async (done) => {
     const testListing = {
       ...closedRentalListing,

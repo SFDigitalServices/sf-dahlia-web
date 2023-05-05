@@ -1,33 +1,37 @@
 import React from "react"
-import renderer from "react-test-renderer"
 import { ListingDetailsLotterySearchForm } from "../../../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
 import userEvent from "@testing-library/user-event"
-import { render, screen } from "@testing-library/react"
+import { render, screen, cleanup } from "@testing-library/react"
 import { getLotteryResults } from "../../../api/listingApiService"
 import { lotteryResultRentalInvalidLotteryNumber } from "../../data/RailsLotteryResult/lottery-result-rental-invalid-lottery-number"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
-jest.mock("../../../api/listingApiService")
+const axios = require("axios")
+
+jest.mock("axios")
 
 describe("ListingDetailsLotteryModal", () => {
-  beforeAll(() => {
-    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
   })
 
-  it("displays initial view with form and listing preferences", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsLotterySearchForm
-          listing={lotteryCompleteRentalListing}
-          lotteryBucketDetails={lotteryResultRentalThree}
-        />
-      )
-      .toJSON()
+  it("displays initial view with form and listing preferences", async (done) => {
+    axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
 
-    expect(tree).toMatchSnapshot()
+    const { findByTestId, asFragment } = render(
+      <ListingDetailsLotterySearchForm
+        listing={lotteryCompleteRentalListing}
+        lotteryBucketDetails={lotteryResultRentalThree}
+      />
+    )
+
+    expect(await findByTestId("Rent-0")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
   it("displays error when user submits form with empty lottery number", async () => {

@@ -1,4 +1,5 @@
 import React from "react"
+import { render, cleanup } from "@testing-library/react"
 import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -7,7 +8,6 @@ import { units } from "../../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../../data/RailsAmiCharts/ami-charts"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
-import { render } from "@testing-library/react"
 // leaving the habitat listing test commented out - should be needed very soon.
 // import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { pricingTableUnits } from "../../data/RailsListingPricingTableUnits/listing-pricing-table-units-default"
@@ -17,6 +17,12 @@ const axios = require("axios")
 jest.mock("axios")
 
 describe("ListingDetailsPricingTable", () => {
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it("renders ListingDetailsPricingTable component with spinner before api call", async (done) => {
     jest.spyOn(axios, "get").mockResolvedValue(null)
 

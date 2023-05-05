@@ -1,5 +1,5 @@
 import React from "react"
-import { render } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react"
 import { t } from "@bloom-housing/ui-components"
 
 import { ListingDetailsPreferences } from "../../../modules/listingDetails/ListingDetailsPreferences"
@@ -11,6 +11,12 @@ const axios = require("axios")
 jest.mock("axios")
 
 describe("ListingDetailsPreferences", () => {
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
+  })
+
   it("display 3 default preferences - COP, DTHP, L/W", async (done) => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
