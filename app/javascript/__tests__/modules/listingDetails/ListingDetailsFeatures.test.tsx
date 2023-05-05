@@ -5,6 +5,7 @@ import { closedRentalListing } from "../../data/RailsRentalListing/listing-renta
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { units } from "../../data/RailsListingUnits/listing-units"
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
+import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
 const axios = require("axios")
 
@@ -18,8 +19,6 @@ describe("ListingDetailsFeatures", () => {
   })
 
   it("displays listing details features section when rental listing", async (done) => {
-    axios.get.mockResolvedValue({ data: { units: units } })
-
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -35,7 +34,20 @@ describe("ListingDetailsFeatures", () => {
     })
 
     const { asFragment, findAllByTestId } = render(
-      <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: units,
+          amiCharts: [],
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: null,
+          fetchingUnitsError: null,
+        }}
+      >
+        <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
@@ -63,7 +75,20 @@ describe("ListingDetailsFeatures", () => {
     })
 
     const { asFragment, findAllByTestId } = render(
-      <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: units,
+          amiCharts: [],
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: null,
+          fetchingUnitsError: null,
+        }}
+      >
+        <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)

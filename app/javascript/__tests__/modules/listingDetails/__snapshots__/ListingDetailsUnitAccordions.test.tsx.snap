@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ListingDetailsUnitAccordion displays spinner if no units and not fetching units 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-center"
+  >
+    <span
+      class="ui-icon ui-large spinner-animation"
+    >
+      <svg
+        fill="currentColor"
+        viewBox="0 0 100 100"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="32"
+          stroke="currentColor"
+          stroke-dasharray="150.79644737231007 52.26548245743669"
+          stroke-width="9"
+        />
+      </svg>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsUnitAccordion displays the spinner for loading state 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-center"
+  >
+    <span
+      class="ui-icon ui-large spinner-animation"
+    >
+      <svg
+        fill="currentColor"
+        viewBox="0 0 100 100"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="32"
+          stroke="currentColor"
+          stroke-dasharray="150.79644737231007 52.26548245743669"
+          stroke-width="9"
+        />
+      </svg>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`ListingDetailsUnitAccordion displays the unit accordions for a given listing 1`] = `
 <DocumentFragment>
   <div
@@ -17,44 +71,9 @@ exports[`ListingDetailsUnitAccordion displays the unit accordions for a given li
           class="toggle-header-content"
         >
           <strong>
-            1 Bedroom
-          </strong>
-          : 2 units, undefined square feet
-        </h3>
-        <span
-          class="ui-icon ui-base flex items-center"
-          data-testid="accordion-open"
-        >
-          <svg
-            fill="#0077DA"
-            viewBox="0 0 32 32"
-          >
-            <path
-              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-            />
-          </svg>
-        </span>
-      </div>
-    </button>
-  </div>
-  <div
-    class="mb-4"
-  >
-    <button
-      aria-expanded="false"
-      class="w-full "
-      data-testid="content-accordion-button"
-    >
-      <div
-        class="flex justify-between  accordion-blue-theme__bar  "
-      >
-        <h3
-          class="toggle-header-content"
-        >
-          <strong>
             2 Bedroom
           </strong>
-          : 2 units, undefined square feet
+          : 2 units, 1199 - 1273 square feet
         </h3>
         <span
           class="ui-icon ui-base flex items-center"
@@ -89,7 +108,42 @@ exports[`ListingDetailsUnitAccordion displays the unit accordions for a given li
           <strong>
             3 Bedroom
           </strong>
-          : 2 units, undefined square feet
+          : 5 units, 1041 - 1355 square feet
+        </h3>
+        <span
+          class="ui-icon ui-base flex items-center"
+          data-testid="accordion-open"
+        >
+          <svg
+            fill="#0077DA"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </div>
+    </button>
+  </div>
+  <div
+    class="mb-4"
+  >
+    <button
+      aria-expanded="false"
+      class="w-full "
+      data-testid="content-accordion-button"
+    >
+      <div
+        class="flex justify-between  accordion-blue-theme__bar  "
+      >
+        <h3
+          class="toggle-header-content"
+        >
+          <strong>
+            4 Bedroom
+          </strong>
+          : 1 unit, 1615 square feet
         </h3>
         <span
           class="ui-icon ui-base flex items-center"

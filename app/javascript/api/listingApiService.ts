@@ -4,10 +4,7 @@ import type { RailsListing } from "../modules/listings/SharedHelpers"
 import type { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
 import type RailsUnit from "./types/rails/listings/RailsUnit"
 import type { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
-import type {
-  RailsAmiChart,
-  RailsListingPricingTableUnit,
-} from "./types/rails/listings/RailsListingPricingTableUnit"
+import type { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
 import {
   listing,
   listingPreferences,

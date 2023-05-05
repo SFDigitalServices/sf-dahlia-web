@@ -1,11 +1,12 @@
-import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
-import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import RailsUnit, {
+import type RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
+import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
+import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import type {
   RailsUnitWithOccupancy,
   RailsUnitWithOccupancyAndMaxIncome,
 } from "../api/types/rails/listings/RailsUnit"
-import {
+import type RailsUnit from "../api/types/rails/listings/RailsUnit"
+import type {
   RailsAmiChart,
   RailsAmiChartMetaData,
   RailsAmiChartValue,

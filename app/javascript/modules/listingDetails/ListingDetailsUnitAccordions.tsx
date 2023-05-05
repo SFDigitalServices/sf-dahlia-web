@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
-import RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
 export interface UnitGroupType {

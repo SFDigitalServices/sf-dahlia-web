@@ -481,44 +481,9 @@ exports[`ListingDetailsFeatures displays listing details features section when s
               class="toggle-header-content"
             >
               <strong>
-                1 Bedroom
-              </strong>
-              : 2 units, undefined square feet
-            </h3>
-            <span
-              class="ui-icon ui-base flex items-center"
-              data-testid="accordion-open"
-            >
-              <svg
-                fill="#0077DA"
-                viewBox="0 0 32 32"
-              >
-                <path
-                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-                />
-              </svg>
-            </span>
-          </div>
-        </button>
-      </div>
-      <div
-        class="mb-4"
-      >
-        <button
-          aria-expanded="false"
-          class="w-full "
-          data-testid="content-accordion-button"
-        >
-          <div
-            class="flex justify-between  accordion-blue-theme__bar  "
-          >
-            <h3
-              class="toggle-header-content"
-            >
-              <strong>
                 2 Bedroom
               </strong>
-              : 2 units, undefined square feet
+              : 2 units, 1199 - 1273 square feet
             </h3>
             <span
               class="ui-icon ui-base flex items-center"
@@ -553,7 +518,42 @@ exports[`ListingDetailsFeatures displays listing details features section when s
               <strong>
                 3 Bedroom
               </strong>
-              : 2 units, undefined square feet
+              : 5 units, 1041 - 1355 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                4 Bedroom
+              </strong>
+              : 1 unit, 1615 square feet
             </h3>
             <span
               class="ui-icon ui-base flex items-center"

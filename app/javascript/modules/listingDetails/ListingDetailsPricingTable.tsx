@@ -1,12 +1,10 @@
 import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
-import Markdown from "markdown-to-jsx"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
-import RailsUnit, {
-  RailsUnitWithOccupancyAndMaxIncome,
-} from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import type { RailsUnitWithOccupancyAndMaxIncome } from "../../api/types/rails/listings/RailsUnit"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 
 export interface ListingDetailsPricingTableProps {
@@ -273,6 +271,7 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
       className={`${
         !dataHasBeenFetched ? "flex justify-center" : ""
       } md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full`}
+      data-testid={"pricing-table"}
     >
       {buildContent(dataHasBeenFetched, units, amiCharts, listingIsSale, listingIsHabitat)}
     </div>

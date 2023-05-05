@@ -1,7 +1,7 @@
 import { createReducer } from "typesafe-actions"
 import { ListingDetailsActions } from "./listingDetailsActions"
-import RailsUnit from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 
 type ListingDetailsState = {
   fetchingUnits: boolean

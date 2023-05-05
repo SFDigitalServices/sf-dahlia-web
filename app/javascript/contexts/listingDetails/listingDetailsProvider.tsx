@@ -2,8 +2,11 @@ import React, { useReducer } from "react"
 import ListingDetailsReducer from "./listingDetailsReducer"
 import ListingDetailsContext, { ContextProps } from "./listingDetailsContext"
 import { getUnits, getAmiCharts } from "../../api/listingApiService"
-import RailsUnit from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type {
+  RailsAmiChart,
+  RailsAmiChartMetaData,
+} from "../../api/types/rails/listings/RailsAmiChart"
 import {
   finishFetchingUnits,
   finishFetchingAmiCharts,
