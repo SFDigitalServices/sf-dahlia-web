@@ -6,7 +6,6 @@ import { units } from "../../data/RailsListingUnits/listing-units"
 
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 
-// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
 jest.useRealTimers()

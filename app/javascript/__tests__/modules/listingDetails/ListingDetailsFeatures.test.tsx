@@ -5,7 +5,6 @@ import { closedRentalListing } from "../../data/RailsRentalListing/listing-renta
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { units } from "../../data/RailsListingUnits/listing-units"
 
-// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
 jest.mock("axios")

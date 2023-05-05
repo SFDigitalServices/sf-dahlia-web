@@ -116,6 +116,7 @@ module.exports = {
     "jest/no-disabled-tests": "error",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
+    "jest/no-done-callback": "off",
 
     // only allow the first letter to be uppercase in "describe" block descriptions,
     // "test" and "it" block descriptions must start with lowercase
@@ -188,6 +189,7 @@ module.exports = {
     "import/resolver": {
       node: {
         moduleDirectory: ["node_modules", "app/javascript"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
   },

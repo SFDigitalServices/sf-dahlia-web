@@ -2,7 +2,6 @@ import React from "react"
 import { render, cleanup } from "@testing-library/react"
 import ForRent from "../../../../javascript/pages/listings/for-rent"
 
-// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
 jest.useRealTimers()

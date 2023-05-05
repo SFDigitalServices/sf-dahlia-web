@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Icon, PreferencesList, t } from "@bloom-housing/ui-components"
-import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
+import type { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 import { PREFERENCES, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"

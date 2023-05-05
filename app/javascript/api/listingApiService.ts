@@ -1,10 +1,13 @@
 import { get } from "./apiService"
-import RailsRentalListing from "./types/rails/listings/RailsRentalListing"
-import { RailsListing } from "../modules/listings/SharedHelpers"
-import { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
-import RailsUnit from "./types/rails/listings/RailsUnit"
-import { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
-import { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
+import type RailsRentalListing from "./types/rails/listings/RailsRentalListing"
+import type { RailsListing } from "../modules/listings/SharedHelpers"
+import type { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
+import type RailsUnit from "./types/rails/listings/RailsUnit"
+import type { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
+import type {
+  RailsAmiChart,
+  RailsListingPricingTableUnit,
+} from "./types/rails/listings/RailsListingPricingTableUnit"
 import {
   listing,
   listingPreferences,

@@ -1,9 +1,12 @@
 import React from "react"
 
-import { waitFor, within } from "@testing-library/react"
+import { within } from "@testing-library/react"
 
 import HomePage from "../../pages/index"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
+
+const getLinkByText = (container: HTMLElement, text: string) =>
+  within(container).getByRole("link", { name: text })
 
 describe("<HomePage />", () => {
   it("shows the correct header text", async () => {
@@ -22,9 +25,6 @@ describe("<HomePage />", () => {
   })
 
   describe("Main page content", () => {
-    const getLinkByText = (container: HTMLElement, text: string) =>
-      within(container).getByRole("link", { name: text })
-
     it("renders a rent button", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")

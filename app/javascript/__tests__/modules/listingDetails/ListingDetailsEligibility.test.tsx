@@ -10,7 +10,6 @@ import {
 } from "../../data/RailsRentalListing/listing-rental-sro"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 
-// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
 jest.mock("axios")

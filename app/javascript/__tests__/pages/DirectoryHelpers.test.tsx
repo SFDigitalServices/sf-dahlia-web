@@ -9,8 +9,8 @@ import {
   getTableSubHeader,
 } from "../../modules/listings/DirectoryHelpers"
 import { getListingImageCardStatuses } from "../../modules/listings/SharedHelpers"
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 
 describe("DirectoryHelpers", () => {
   describe("getListingImageCardStatuses", () => {

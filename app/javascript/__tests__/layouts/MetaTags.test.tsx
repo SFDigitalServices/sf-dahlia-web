@@ -1,5 +1,5 @@
 import React from "react"
-import { render, cleanup, fireEvent } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import MetaTags from "../../layouts/MetaTags"
 
 describe("<MetaTags />", () => {

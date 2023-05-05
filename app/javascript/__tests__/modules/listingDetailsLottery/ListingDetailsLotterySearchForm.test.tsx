@@ -39,8 +39,8 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    user.click(screen.getByRole("button"))
-    findByText("Please enter a valid lottery number.")
+    await user.click(screen.getByRole("button"))
+    expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
   })
 
   it("displays error when user submits form with non numeric lottery number", async () => {
@@ -53,9 +53,9 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    userEvent.type(input, "123abc")
-    user.click(screen.getByRole("button"))
-    findByText("Please enter a valid lottery number.")
+    await userEvent.type(input, "123abc")
+    await user.click(screen.getByRole("button"))
+    expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
   })
 
   it("displays three results when lottery number found", async () => {
@@ -71,13 +71,13 @@ describe("ListingDetailsLotteryModal", () => {
     )
 
     const input = screen.getByRole("textbox")
-    userEvent.type(input, "123")
-    user.click(screen.getByRole("button"))
+    await userEvent.type(input, "123")
+    await user.click(screen.getByRole("button"))
 
-    findByText("Your preference ranking")
-    findByText("Displaced Tenant Housing Preference (DTHP)")
-    findByText("Certificate of Preference (COP)")
-    findByText("Live or Work in San Francisco Preference")
+    expect(await findByText("Your preference ranking")).toBeDefined()
+    expect(await findByText("Displaced Tenant Housing Preference (DTHP)")).toBeDefined()
+    expect(await findByText("Certificate of Preference (COP)")).toBeDefined()
+    expect(await findByText("Live or Work in San Francisco Preference")).toBeDefined()
   })
 
   it("displays error when invalid lottery number", async () => {
@@ -94,9 +94,9 @@ describe("ListingDetailsLotteryModal", () => {
 
     const input = screen.getByRole("textbox")
 
-    userEvent.type(input, "123")
-    user.click(screen.getByRole("button"))
-    findByText("The number you entered was not found.")
+    await userEvent.type(input, "123")
+    await user.click(screen.getByRole("button"))
+    expect(await findByText("The number you entered was not found.")).toBeDefined()
   })
 
   it("displays error when api error", async () => {
@@ -113,8 +113,10 @@ describe("ListingDetailsLotteryModal", () => {
 
     const input = screen.getByRole("textbox")
 
-    userEvent.type(input, "123")
-    user.click(screen.getByRole("button"))
-    findByText("We seem to be having a connection issue. Please try your search again.")
+    await userEvent.type(input, "123")
+    await user.click(screen.getByRole("button"))
+    expect(
+      await findByText("We seem to be having a connection issue. Please try your search again.")
+    ).toBeDefined()
   })
 })

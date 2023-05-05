@@ -1,8 +1,7 @@
 import React from "react"
-import { within } from "@testing-library/react"
+import { render, within } from "@testing-library/react"
 import AssistanceLayout, { languageToSFGovMap } from "../../layouts/AssistanceLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import { render } from "@testing-library/react"
 
 const CHILD_CONTENT = "Content!"
 

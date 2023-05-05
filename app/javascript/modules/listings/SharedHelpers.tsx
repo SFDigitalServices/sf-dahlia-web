@@ -3,9 +3,9 @@ import Markdown from "markdown-to-jsx"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import { areLotteryResultsShareable } from "../../util/listingUtil"
 import { getReservedCommunityType, localizedFormat } from "../../util/languageUtil"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing

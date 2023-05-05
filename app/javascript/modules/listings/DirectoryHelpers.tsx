@@ -13,11 +13,11 @@ import {
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable } from "../../util/listingUtil"
-import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
+import type RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
 

@@ -6,7 +6,6 @@ import { ListingDetailsPreferences } from "../../../modules/listingDetails/Listi
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { preferences as sixPreferences } from "../../data/RailsListingPreferences/lottery-preferences-six"
 
-// eslint-disable-next-line unicorn/prefer-module
 const axios = require("axios")
 
 jest.mock("axios")
