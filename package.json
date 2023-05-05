@@ -94,7 +94,6 @@
     "prettier": "^2.2.1",
     "protractor": "^5.4.2",
     "protractor-cucumber-framework": "3.1.2",
-    "react-test-renderer": "^18.2.0",
     "ts-jest": "^26.5.2",
     "url-join": "^4.0.1",
     "webpack-bundle-analyzer": "^4.4.2",

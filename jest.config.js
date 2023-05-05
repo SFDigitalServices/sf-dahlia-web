@@ -40,9 +40,7 @@ module.exports = {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
-  moduleFileExtensions: ["tsx", "js", "ts"],
   reporters: ["default", "jest-junit"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
-  testTimeout: 20000,
 }
