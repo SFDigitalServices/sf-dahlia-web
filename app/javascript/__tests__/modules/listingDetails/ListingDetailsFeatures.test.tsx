@@ -4,6 +4,7 @@ import { ListingDetailsFeatures } from "../../../modules/listingDetails/ListingD
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { units } from "../../data/RailsListingUnits/listing-units"
+import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 
 const axios = require("axios")
 
@@ -33,17 +34,19 @@ describe("ListingDetailsFeatures", () => {
       }
     })
 
-    const { asFragment, findByText } = render(
+    const { asFragment, findAllByTestId } = render(
       <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
     )
 
-    expect(await findByText("Features")).toBeDefined()
+    expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
     expect(asFragment()).toMatchSnapshot()
     done()
   })
 
   it("displays listing details features section when sales listing", async (done) => {
-    axios.get.mockResolvedValue({ data: { units: openSaleListing.Units } })
+    axios.get.mockResolvedValue({
+      data: { units: openSaleListing.Units, preferences: defaultPreferences },
+    })
 
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
@@ -59,11 +62,11 @@ describe("ListingDetailsFeatures", () => {
       }
     })
 
-    const { asFragment, findByText } = render(
+    const { asFragment, findAllByTestId } = render(
       <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
     )
 
-    expect(await findByText("Features")).toBeDefined()
+    expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
     expect(asFragment()).toMatchSnapshot()
     done()
   })

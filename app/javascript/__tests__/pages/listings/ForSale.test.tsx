@@ -16,9 +16,9 @@ describe("For Sale", () => {
   it("renders ForSale component", async (done) => {
     axios.get.mockResolvedValue({ data: { listings: [] } })
 
-    const { findByTestId, asFragment } = render(<ForSale assetPaths="/" />)
+    const { findByText, asFragment } = render(<ForSale assetPaths="/" />)
 
-    expect(await findByTestId("Rent-0")).toBeDefined()
+    expect(await findByText("Buy affordable housing")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
     done()
   })

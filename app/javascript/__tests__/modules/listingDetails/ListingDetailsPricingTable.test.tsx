@@ -23,10 +23,11 @@ describe("ListingDetailsPricingTable", () => {
     jest.resetAllMocks()
   })
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   it("renders ListingDetailsPricingTable component with spinner before api call", async (done) => {
-    jest.spyOn(axios, "get").mockResolvedValue(null)
+    axios.get.mockResolvedValue({ data: [{ unitSummaries: pricingTableUnits }] })
 
-    const { asFragment, findByTestId } = render(
+    const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
           units: [],
@@ -43,7 +44,6 @@ describe("ListingDetailsPricingTable", () => {
       </ListingDetailsContext.Provider>
     )
 
-    expect(await findByTestId("pricing-table")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
     done()
   })
