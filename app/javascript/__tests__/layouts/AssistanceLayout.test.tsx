@@ -2,7 +2,7 @@ import React from "react"
 import { within } from "@testing-library/react"
 import AssistanceLayout, { languageToSFGovMap } from "../../layouts/AssistanceLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 
 const CHILD_CONTENT = "Content!"
 
@@ -42,14 +42,13 @@ describe("<AssistanceLayout />", () => {
 
   describe("Contact Bar", () => {
     it("renders Contact Information", () => {
-      const tree = renderer
-        .create(
-          <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-            <h1>{CHILD_CONTENT}</h1>
-          </AssistanceLayout>
-        )
-        .toJSON()
-      expect(tree).toMatchSnapshot()
+      const { asFragment } = render(
+        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
     })
   })
 })

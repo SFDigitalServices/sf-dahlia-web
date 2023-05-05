@@ -1,5 +1,5 @@
 import React from "react"
-import renderer, { act } from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsEligibility } from "../../../modules/listingDetails/ListingDetailsEligibility"
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
@@ -8,10 +8,12 @@ import {
   sroMixedRentalListing,
   sroRentalListing,
 } from "../../data/RailsRentalListing/listing-rental-sro"
-import { getPreferences } from "../../../api/listingApiService"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 
-jest.mock("../../../api/listingApiService")
+// eslint-disable-next-line unicorn/prefer-module
+const axios = require("axios")
+
+jest.mock("axios")
 
 describe("ListingDetailsEligibility", () => {
   beforeEach(() => {
@@ -29,92 +31,82 @@ describe("ListingDetailsEligibility", () => {
       }
     })
   })
-  it("displays listing details eligibility section and no Building Selection Criteria Link", () => {
+  it("displays listing details eligibility section and no Building Selection Criteria Link", async (done) => {
     const testListing = {
       ...closedRentalListing,
       Building_Selection_Criteria: "",
     }
-    const tree = renderer
-      .create(
-        <ListingDetailsEligibility listing={testListing} imageSrc={"listing-eligibility.svg"} />
-      )
-      .toJSON()
 
-    expect(tree).toMatchSnapshot()
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility listing={testListing} imageSrc={"listing-eligibility.svg"} />
+    )
+
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details eligibility section for a sales listing", async () => {
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
+  it("displays listing details eligibility section for a sales listing", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
-    const tree = renderer
-      .create(
-        <ListingDetailsEligibility listing={openSaleListing} imageSrc={"listing-eligibility.svg"} />
-      )
-      .toJSON()
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility listing={openSaleListing} imageSrc={"listing-eligibility.svg"} />
+    )
 
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details eligibility section for a listing with only SRO units", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsEligibility
-          listing={sroRentalListing}
-          imageSrc={"listing-eligibility.svg"}
-        />
-      )
-      .toJSON()
+  it("displays listing details eligibility section for a listing with only SRO units", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility listing={sroRentalListing} imageSrc={"listing-eligibility.svg"} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details eligibility section for an SRO listing with expanded occupancy units", async () => {
+  it("displays listing details eligibility section for an SRO listing with expanded occupancy units", async (done) => {
     const listing = { ...sroRentalListing, Id: "a0W0P00000FIuv3UAD" }
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
-    const tree = renderer
-      .create(<ListingDetailsEligibility listing={listing} imageSrc={"listing-eligibility.svg"} />)
-      .toJSON()
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility listing={listing} imageSrc={"listing-eligibility.svg"} />
+    )
 
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details eligibility section for an SRO listing with a mix of SRO units and non-SRO units", async () => {
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
+  it("displays listing details eligibility section for an SRO listing with a mix of SRO units and non-SRO units", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
-    const tree = renderer
-      .create(
-        <ListingDetailsEligibility
-          listing={sroMixedRentalListing}
-          imageSrc={"listing-eligibility.svg"}
-        />
-      )
-      .toJSON()
-
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree).toMatchSnapshot()
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility
+        listing={sroMixedRentalListing}
+        imageSrc={"listing-eligibility.svg"}
+      />
+    )
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays listing details eligibility section when habitat listing", async () => {
-    const getPreferencesMock = getPreferences as jest.MockedFunction<typeof getPreferences>
-    getPreferencesMock.mockReturnValue(Promise.resolve(defaultPreferences))
+  it("displays listing details eligibility section when habitat listing", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
-    const tree = renderer
-      .create(
-        <ListingDetailsEligibility listing={habitatListing} imageSrc={"listing-eligibility.svg"} />
-      )
-      .toJSON()
+    const { asFragment, findByText } = render(
+      <ListingDetailsEligibility listing={habitatListing} imageSrc={"listing-eligibility.svg"} />
+    )
 
-    await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-    expect(tree).toMatchSnapshot()
+    expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 })

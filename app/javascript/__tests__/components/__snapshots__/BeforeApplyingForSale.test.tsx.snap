@@ -1,252 +1,258 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BeforeApplyingForSale display Before Applying when type is Habitat listing detail 1`] = `
-<li
-  className="list-section custom-counter__item"
->
-  <header
-    className="list-section__header custom-counter__header"
+<DocumentFragment>
+  <li
+    class="list-section custom-counter__item"
   >
-    <hgroup>
-      <h3
-        className="custom-counter__title"
+    <header
+      class="list-section__header custom-counter__header"
+    >
+      <hgroup>
+        <h3
+          class="custom-counter__title"
+        >
+          Before applying
+        </h3>
+        <span
+          class="custom-counter__subtitle"
+        >
+          Make sure you:
+        </span>
+      </hgroup>
+    </header>
+    <ol
+      class="numbered-list my-5 bg-white p-4 pt-6 text-xs"
+    >
+      <li
+        class="text-gray-700"
       >
-        Before applying
-      </h3>
-      <span
-        className="custom-counter__subtitle"
+        <p>
+          Go to a 
+          <a
+            href="https://habitatgsf.org/amber-drive-info/"
+            target="_blank"
+          >
+            Habitat for Humanity information session
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
       >
-        Make sure you:
-      </span>
-    </hgroup>
-  </header>
-  <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
-  >
-    <li
-      className="text-gray-700"
+        Haven't owned residential property in the past 3 years
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Meet the 
+          <a
+            href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
+            target="_blank"
+          >
+            income requirements
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        Have a 650 credit score or higher
+      </li>
+    </ol>
+    <div
+      class="text-gray-750 primary-lighter-markup-link-desktop"
     >
       <p>
-        Go to a 
+        Read 
         <a
           href="https://habitatgsf.org/amber-drive-info/"
           target="_blank"
         >
-          Habitat for Humanity information session
+          our full list of requirements
         </a>
+         for more details.
       </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      Haven't owned residential property in the past 3 years
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      <p>
-        Meet the 
-        <a
-          href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
-          target="_blank"
-        >
-          income requirements
-        </a>
-      </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      Have a 650 credit score or higher
-    </li>
-  </ol>
-  <div
-    className="text-gray-750 primary-lighter-markup-link-desktop"
-  >
-    <p>
-      Read 
-      <a
-        href="https://habitatgsf.org/amber-drive-info/"
-        target="_blank"
-      >
-        our full list of requirements
-      </a>
-       for more details.
-    </p>
-  </div>
-</li>
+    </div>
+  </li>
+</DocumentFragment>
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
-<li
-  className="mb-8 list-none"
->
-  <h2
-    className="text__underline-weighted mb-5 text-gray-750"
+<DocumentFragment>
+  <li
+    class="mb-8 list-none"
   >
-    Before applying
-  </h2>
-  <p
-    className="text-gray-750"
-  >
-    Make sure you:
-  </p>
-  <ol
-    className="numbered-list my-5"
-  >
-    <li
-      className="text-gray-700"
+    <h2
+      class="text__underline-weighted mb-5 text-gray-750"
     >
-      Haven't owned residential property in the past 3 years
-    </li>
-    <li
-      className="text-gray-700"
+      Before applying
+    </h2>
+    <p
+      class="text-gray-750"
+    >
+      Make sure you:
+    </p>
+    <ol
+      class="numbered-list my-5"
+    >
+      <li
+        class="text-gray-700"
+      >
+        Haven't owned residential property in the past 3 years
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Meet our 
+          <a
+            href="https://sfmohcd.org/homebuyer-program-eligibility"
+            target="_blank"
+          >
+            income requirements
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Complete 
+          <a
+            href="https://sfmohcd.org/homebuyer-application-requirements#education"
+            target="_blank"
+          >
+            homebuyer education
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Get pre-approved for a mortgage loan by a 
+          <a
+            href="https://sfmohcd.org/lender-list"
+            target="_blank"
+          >
+            lender on our list
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        Have enough in savings for closing costs and downpayment
+      </li>
+    </ol>
+    <div
+      class="text-gray-750 primary-lighter-markup-link-desktop"
     >
       <p>
-        Meet our 
+        Read 
         <a
           href="https://sfmohcd.org/homebuyer-program-eligibility"
           target="_blank"
         >
-          income requirements
+          our full list of requirements
         </a>
+         for more details.
       </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      <p>
-        Complete 
-        <a
-          href="https://sfmohcd.org/homebuyer-application-requirements#education"
-          target="_blank"
-        >
-          homebuyer education
-        </a>
-      </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      <p>
-        Get pre-approved for a mortgage loan by a 
-        <a
-          href="https://sfmohcd.org/lender-list"
-          target="_blank"
-        >
-          lender on our list
-        </a>
-      </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      Have enough in savings for closing costs and downpayment
-    </li>
-  </ol>
-  <div
-    className="text-gray-750 primary-lighter-markup-link-desktop"
-  >
-    <p>
-      Read 
-      <a
-        href="https://sfmohcd.org/homebuyer-program-eligibility"
-        target="_blank"
-      >
-        our full list of requirements
-      </a>
-       for more details.
-    </p>
-  </div>
-</li>
+    </div>
+  </li>
+</DocumentFragment>
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is listing detail 1`] = `
-<li
-  className="list-section custom-counter__item"
->
-  <header
-    className="list-section__header custom-counter__header"
+<DocumentFragment>
+  <li
+    class="list-section custom-counter__item"
   >
-    <hgroup>
-      <h3
-        className="custom-counter__title"
-      >
-        Before applying
-      </h3>
-      <span
-        className="custom-counter__subtitle"
-      >
-        Make sure you:
-      </span>
-    </hgroup>
-  </header>
-  <ol
-    className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
-  >
-    <li
-      className="text-gray-700"
+    <header
+      class="list-section__header custom-counter__header"
     >
-      Haven't owned residential property in the past 3 years
-    </li>
-    <li
-      className="text-gray-700"
+      <hgroup>
+        <h3
+          class="custom-counter__title"
+        >
+          Before applying
+        </h3>
+        <span
+          class="custom-counter__subtitle"
+        >
+          Make sure you:
+        </span>
+      </hgroup>
+    </header>
+    <ol
+      class="numbered-list my-5 bg-white p-4 pt-6 text-xs"
+    >
+      <li
+        class="text-gray-700"
+      >
+        Haven't owned residential property in the past 3 years
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Meet our 
+          <a
+            href="https://sfmohcd.org/homebuyer-program-eligibility"
+            target="_blank"
+          >
+            income requirements
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Complete 
+          <a
+            href="https://sfmohcd.org/homebuyer-application-requirements#education"
+            target="_blank"
+          >
+            homebuyer education
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        <p>
+          Get pre-approved for a mortgage loan by a 
+          <a
+            href="https://sfmohcd.org/lender-list"
+            target="_blank"
+          >
+            lender on our list
+          </a>
+        </p>
+      </li>
+      <li
+        class="text-gray-700"
+      >
+        Have enough in savings for closing costs and downpayment
+      </li>
+    </ol>
+    <div
+      class="text-gray-750 primary-lighter-markup-link-desktop"
     >
       <p>
-        Meet our 
+        Read 
         <a
           href="https://sfmohcd.org/homebuyer-program-eligibility"
           target="_blank"
         >
-          income requirements
+          our full list of requirements
         </a>
+         for more details.
       </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      <p>
-        Complete 
-        <a
-          href="https://sfmohcd.org/homebuyer-application-requirements#education"
-          target="_blank"
-        >
-          homebuyer education
-        </a>
-      </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      <p>
-        Get pre-approved for a mortgage loan by a 
-        <a
-          href="https://sfmohcd.org/lender-list"
-          target="_blank"
-        >
-          lender on our list
-        </a>
-      </p>
-    </li>
-    <li
-      className="text-gray-700"
-    >
-      Have enough in savings for closing costs and downpayment
-    </li>
-  </ol>
-  <div
-    className="text-gray-750 primary-lighter-markup-link-desktop"
-  >
-    <p>
-      Read 
-      <a
-        href="https://sfmohcd.org/homebuyer-program-eligibility"
-        target="_blank"
-      >
-        our full list of requirements
-      </a>
-       for more details.
-    </p>
-  </div>
-</li>
+    </div>
+  </li>
+</DocumentFragment>
 `;

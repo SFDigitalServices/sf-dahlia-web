@@ -1,24 +1,22 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsApplicationDate } from "../../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
 describe("ListingDetailsApplicationDate", () => {
   it("displays Application Deadline when listing is a sale and due date has not passed", () => {
-    const tree = renderer
-      .create(<ListingDetailsApplicationDate isApplicationOpen={true} listing={openSaleListing} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsApplicationDate isApplicationOpen={true} listing={openSaleListing} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
   it("displays Applications Closed when listing is a rental and due date has passed", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsApplicationDate isApplicationOpen={false} listing={closedRentalListing} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsApplicationDate isApplicationOpen={false} listing={closedRentalListing} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })
