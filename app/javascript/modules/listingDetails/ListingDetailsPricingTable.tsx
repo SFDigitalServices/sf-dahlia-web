@@ -125,16 +125,9 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
 }
 
 const buildAccordions = (
-  units: RailsUnit[],
-  listingIsSale: boolean,
-  amiCharts: RailsAmiChart[]
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  listingIsSale: boolean
 ) => {
-  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
-
-  if (units?.length) {
-    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
-  }
-
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
@@ -200,6 +193,74 @@ const buildAccordions = (
   )
 }
 
+const buildHabitatText = (
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  amiCharts: RailsAmiChart[]
+) => {
+  const habitatStringArray = []
+  const minAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MinAmi"
+  })?.values
+
+  const maxAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MaxAmi"
+  })?.values
+
+  /*
+   * GroupedUnitsByOccupancy() is already sorted
+   */
+  const minOccupancy = groupedUnitsByOccupancy[0]?.occupancy
+  const maxOccupancy = minOccupancy + 9
+
+  /*
+   * We want to display 9 rows for Habitat listings
+   */
+  for (let i = minOccupancy; i < maxOccupancy; i++) {
+    const minOccupancyChart = minAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    const maxOccupancyChart = maxAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    if (minOccupancyChart && maxOccupancyChart && i === 1) {
+      habitatStringArray.push(
+        t("listings.habitat.incomeRange.incomeRangeSingular", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
+      )
+    }
+
+    if (minOccupancyChart && maxOccupancyChart) {
+      habitatStringArray.push(
+        t("listings.habitat.incomeRange.incomeRangePlural", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
+      )
+    }
+  }
+
+  return (
+    <>
+      <p>{t("listings.habitat.incomeRange.p4")}</p>
+      <ul>
+        {habitatStringArray.map((habitatString: string, index: number) => {
+          return (
+            <li key={index}>
+              <p>{habitatString}</p>
+            </li>
+          )
+        })}
+      </ul>
+    </>
+  )
+}
+
 const buildContent = (
   dataHasBeenFetched: boolean,
   units: RailsUnit[],
@@ -211,37 +272,20 @@ const buildContent = (
     return <Icon symbol="spinner" size="large" />
   }
 
+  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
+
+  if (units?.length) {
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
+  }
+
   if (listingIsSale && !listingIsHabitat) {
-    return buildAccordions(units, true, amiCharts)
+    return buildAccordions(groupedUnitsByOccupancy, true)
   }
 
   if (listingIsHabitat) {
-    return ""
-    // if (units?.length) {
-    //   groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
-    // }
-    // const habitatStrings = groupedUnitsByOccupancy.map((unitByOccupancy) => {
-    //   return `${
-    //     unitByOccupancy.occupancy
-    //   } people household: $${unitByOccupancy.absoluteMinIncome?.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome?.toLocaleString()}`
-    // })
-
-    // return (
-    //   <>
-    //     <p>{t("listings.habitat.incomeRange.p4")}</p>
-    //     <ul>
-    //       {habitatStrings.map((habitatString) => {
-    //         return (
-    //           <li>
-    //             <p>{habitatString}</p>
-    //           </li>
-    //         )
-    //       })}
-    //     </ul>
-    //   </>
-    // )
+    return buildHabitatText(groupedUnitsByOccupancy, amiCharts)
   }
-  return buildAccordions(units, false, amiCharts)
+  return buildAccordions(groupedUnitsByOccupancy, false)
 }
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {

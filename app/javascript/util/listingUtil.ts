@@ -359,7 +359,7 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
   const uniqueCharts = []
 
   units.forEach((unit: RailsUnit) => {
-    const uniqueChartMatch = uniqueCharts.find((uniqueChart) => {
+    const uniqueChartMatchForMax = uniqueCharts.find((uniqueChart) => {
       return (
         uniqueChart.year === unit.AMI_chart_year &&
         uniqueChart.type === unit.AMI_chart_type &&
@@ -367,11 +367,33 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
       )
     })
 
-    if (!uniqueChartMatch) {
+    const uniqueChartMatchForMin = uniqueCharts.find((uniqueChart) => {
+      return (
+        uniqueChart.year === unit.AMI_chart_year &&
+        uniqueChart.type === unit.AMI_chart_type &&
+        uniqueChart.percent === unit.Min_AMI_for_Qualifying_Unit
+      )
+    })
+
+    /*
+     * It's possible that there'll only be a unit.Max_AMI_for_Qualifying_Unit or unit.Min_AMI_for_Qualifying_Unit,
+     * but the rest of fields should exist
+     */
+    if (!uniqueChartMatchForMax && unit.Max_AMI_for_Qualifying_Unit) {
       uniqueCharts.push({
         year: unit.AMI_chart_year,
         type: unit.AMI_chart_type,
         percent: unit.Max_AMI_for_Qualifying_Unit,
+        derivedFrom: "MaxAmi",
+      })
+    }
+
+    if (!uniqueChartMatchForMin && unit.Min_AMI_for_Qualifying_Unit) {
+      uniqueCharts.push({
+        year: unit.AMI_chart_year,
+        type: unit.AMI_chart_type,
+        percent: unit.Min_AMI_for_Qualifying_Unit,
+        derivedFrom: "MinAmi",
       })
     }
   })
