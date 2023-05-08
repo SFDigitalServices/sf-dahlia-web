@@ -79,7 +79,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
             <span
               className=""
             >
-              109.8% AMI
+              55% AMI
             </span>
           </th>
           <th
@@ -88,7 +88,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
             <span
               className=""
             >
-              55% AMI
+              109.8% AMI
             </span>
           </th>
         </tr>
@@ -216,7 +216,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
             <span
               className=""
             >
-              109.8% AMI
+              55% AMI
             </span>
           </th>
           <th
@@ -225,7 +225,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
             <span
               className=""
             >
-              55% AMI
+              109.8% AMI
             </span>
           </th>
         </tr>
@@ -379,7 +379,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
             <span
               className=""
             >
-              109.8% AMI
+              55% AMI
             </span>
           </th>
           <th
@@ -388,7 +388,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
             <span
               className=""
             >
-              55% AMI
+              109.8% AMI
             </span>
           </th>
         </tr>
@@ -410,13 +410,13 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
-            data-label="109.8% AMI"
+            data-label="55% AMI"
           >
             $51,300 per year
           </td>
           <td
             className="p-5"
-            data-label="55% AMI"
+            data-label="109.8% AMI"
           >
             $51,300 per year
           </td>
@@ -437,15 +437,69 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
-            data-label="109.8% AMI"
+            data-label="55% AMI"
           >
             $58,600 per year
           </td>
           <td
             className="p-5"
-            data-label="55% AMI"
+            data-label="109.8% AMI"
           >
             $58,600 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-2"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              3 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $65,950 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $65,950 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-3"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              4 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $73,250 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $73,250 per year
           </td>
         </tr>
       </tbody>
