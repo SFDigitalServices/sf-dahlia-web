@@ -5,10 +5,24 @@ import { renderMarkup } from "../../util/languageUtil"
 import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
+import { RailsAmiChart, RailsAmiChartValue } from "../../api/types/rails/listings/RailsAmiChart"
 import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
+}
+
+const toShowButton = (maxOccupancy: number, minOccupancy: number, hmiCutoff: number): boolean => {
+  if (!maxOccupancy) {
+    return false
+  }
+
+  const calculatedMaxOccupancy = maxOccupancy + 2 - minOccupancy
+
+  if (calculatedMaxOccupancy > hmiCutoff) {
+    return true
+  }
+  return false
 }
 
 const buildHmiHeadersWithOneAmi = () => {
@@ -19,36 +33,43 @@ const buildHmiHeadersWithOneAmi = () => {
   }
 }
 
-const buildHmiHeadersWithMultipleAmis = (amiCharts) => {
+const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
   }
-  amiCharts.forEach((chart) => {
+  amiCharts.forEach((chart: RailsAmiChart) => {
     headers[`ami${chart.percent}`] = `t.percentAMI*percent:${chart.percent}`
   })
   return headers
 }
 
-const buildHmiChartHeaders = (amiCharts) => {
+const buildHmiChartHeaders = (amiCharts: RailsAmiChart[]) => {
   return amiCharts.length > 1
     ? buildHmiHeadersWithMultipleAmis(amiCharts)
     : buildHmiHeadersWithOneAmi()
 }
 
-const sortAmisByPercent = (a, b) => {
-  if (a.percent < b.percent) {
+const sortAmisByPercent = (a: RailsAmiChart, b: RailsAmiChart) => {
+  const numA = Number(a.percent)
+  const numB = Number(b.percent)
+
+  if (numA < numB) {
     return -1
   }
-  if (a.percent > b.percent) {
+  if (numA > numB) {
     return 1
   }
   return 0
 }
 
-const buildHmiTableWithOneAmiChart = (minOccupancy, maxOccupancy, amiCharts) => {
+const buildHmiTableWithOneAmiChart = (
+  minOccupancy: number,
+  maxOccupancy: number,
+  amiCharts: RailsAmiChart[]
+) => {
   const tableData = []
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
-    const amiChart = amiCharts[0]?.values?.find((amiChart) => {
+    const amiChart = amiCharts[0]?.values?.find((amiChart: RailsAmiChartValue) => {
       return amiChart.numOfHousehold === i
     })
 
@@ -60,24 +81,29 @@ const buildHmiTableWithOneAmiChart = (minOccupancy, maxOccupancy, amiCharts) => 
         : {
             content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
           }
-
-    tableData.push({
-      householdSize,
-      maxIncomeMonth: {
-        content: t("t.perMonthCost", {
-          cost: `$${Math.floor(amiChart?.amount / 12).toLocaleString()}`,
-        }),
-      },
-      maxIncomeYear: {
-        content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
-      },
-    })
+    if (amiChart) {
+      tableData.push({
+        householdSize,
+        maxIncomeMonth: {
+          content: t("t.perMonthCost", {
+            cost: `$${Math.floor(amiChart?.amount / 12).toLocaleString()}`,
+          }),
+        },
+        maxIncomeYear: {
+          content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
+        },
+      })
+    }
   }
 
   return tableData
 }
 
-const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) => {
+const buildHmiTableWithMultipleAmis = (
+  minOccupancy: number,
+  maxOccupancy: number,
+  amiCharts: RailsAmiChart[]
+) => {
   const tableData = []
 
   amiCharts.sort(sortAmisByPercent)
@@ -98,9 +124,10 @@ const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) =>
       const amiChart = chart.values?.find((amiChart) => {
         return amiChart.numOfHousehold === i
       })
-
-      tableRow[`ami${chart.percent}`] = {
-        content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
+      if (amiChart) {
+        tableRow[`ami${chart.percent}`] = {
+          content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
+        }
       }
     })
 
@@ -113,16 +140,19 @@ const buildHmiTableWithMultipleAmis = (minOccupancy, maxOccupancy, amiCharts) =>
   return tableData
 }
 
-const buildHmiCharts = (listingIsSale, units, amiCharts) => {
-  let { min, max } = getMinMaxOccupancy(units, amiCharts, listingIsSale)
-
+const buildHmiCharts = (
+  listingIsSale: boolean,
+  amiCharts: RailsAmiChart[],
+  minOccupancy: number,
+  maxOccupancy: number
+) => {
   if (!listingIsSale) {
-    max += 2
+    maxOccupancy += 2
   }
 
   return amiCharts.length > 1
-    ? buildHmiTableWithMultipleAmis(min, max, amiCharts)
-    : buildHmiTableWithOneAmiChart(min, max, amiCharts)
+    ? buildHmiTableWithMultipleAmis(minOccupancy, maxOccupancy, amiCharts)
+    : buildHmiTableWithOneAmiChart(minOccupancy, maxOccupancy, amiCharts)
 }
 
 export interface ReducedUnit {
@@ -135,12 +165,22 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
   const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
   const [tableCollapsed, setTableCollapsed] = useState(true)
 
+  const { minOccupancy, maxOccupancy, explicitMaxOccupancy } = useMemo(() => {
+    if (!fetchedAmiCharts || !fetchedUnits) {
+      return { minOccupancy: undefined, maxOccupnacy: undefined }
+    }
+
+    return getMinMaxOccupancy(units, amiCharts)
+  }, [units, amiCharts, fetchedAmiCharts, fetchedUnits])
+
   const HMITableData = useMemo(() => {
     if (!fetchedAmiCharts || !fetchedUnits) {
       return []
     }
-    return buildHmiCharts(listingIsSale, units, amiCharts)
-  }, [listingIsSale, units, amiCharts, fetchedAmiCharts, fetchedUnits])
+    return buildHmiCharts(listingIsSale, amiCharts, minOccupancy, maxOccupancy)
+  }, [listingIsSale, amiCharts, fetchedAmiCharts, fetchedUnits, minOccupancy, maxOccupancy])
+
+  const hmiCutoff = explicitMaxOccupancy ? Math.max(Math.floor(maxOccupancy / 2) * 2, 1) : 2
 
   const HMITableHeaders = useMemo(() => {
     if (!fetchedAmiCharts) {
@@ -157,7 +197,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
     )
   }
 
-  const expandTableHandler = () => {
+  const expandTableHandler = (): void => {
     setTableCollapsed(!tableCollapsed)
   }
 
@@ -183,17 +223,19 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
     >
       <StandardTable
         headers={HMITableHeaders}
-        data={tableCollapsed ? HMITableData.slice(0, 2) : HMITableData}
+        data={tableCollapsed ? HMITableData.slice(0, hmiCutoff) : HMITableData}
       />
-      <Button
-        inlineIcon="right"
-        className="underline font-medium md:bg-primary-lighter mt-3"
-        iconSize="small"
-        icon={tableCollapsed ? faAngleDown : faAngleUp}
-        onClick={expandTableHandler}
-      >
-        {tableCollapsed ? t("label.showMore") : t("label.showLess")}
-      </Button>
+      {toShowButton(maxOccupancy, minOccupancy, hmiCutoff) && (
+        <Button
+          inlineIcon="right"
+          className="underline font-medium md:bg-primary-lighter mt-3"
+          iconSize="small"
+          icon={tableCollapsed ? faAngleDown : faAngleUp}
+          onClick={expandTableHandler}
+        >
+          {tableCollapsed ? t("label.showMore") : t("label.showLess")}
+        </Button>
+      )}
     </ListSection>
   )
 }

@@ -391,17 +391,16 @@ export const getShortestAmiChartValueLength = (amiCharts: RailsAmiChart[]): numb
   return lowestChartLength
 }
 
-export const getMinMaxOccupancy = (
-  units: RailsUnit[],
-  amiCharts: RailsAmiChart[],
-  isSale: boolean
-): any => {
+export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
   /*
    * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
    * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
    * and a unit with occupancy 3
    */
-  const unitsWithOccupancy = addUnitsWithEachOccupancy(units)
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
 
   /*
    * We have to derive the max income using ami charts, so this mapping goes through each unit
@@ -420,10 +419,15 @@ export const getMinMaxOccupancy = (
    */
   const occupanciesArray = buildOccupanciesArray(unitSummaries)
 
+  const unprocessedUnitsHaveMaxOccupancy = units.some((unit) => {
+    return unit.Max_Occupancy
+  })
+
   return {
-    min: occupanciesArray[0],
-    max: isSale
-      ? getShortestAmiChartValueLength(amiCharts)
-      : occupanciesArray[occupanciesArray.length - 1],
+    explicitMaxOccupancy: unprocessedUnitsHaveMaxOccupancy,
+    minOccupancy: occupanciesArray[0],
+    maxOccupancy: unprocessedUnitsHaveMaxOccupancy
+      ? occupanciesArray[occupanciesArray.length - 1]
+      : getShortestAmiChartValueLength(amiCharts),
   }
 }
