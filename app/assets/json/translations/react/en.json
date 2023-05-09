@@ -383,7 +383,7 @@
   "error.terms": "You must agree to the terms in order to continue",
   "error.veteranAnyone": "At least one member of your household must be a Veteran",
   "error.zip": "Please enter a zipcode",
-  "errorBoundary.description": "An application error occurred. Check back later.",
+  "errorBoundary.description": "An error occurred. Check back later.",
   "errorBoundary.goHome": "Back to homepage",
   "f0ReviewOptional.p1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
   "f0ReviewOptional.title": "Help us ensure we are meeting our goal to serve all people.",
