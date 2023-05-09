@@ -426,15 +426,15 @@ describe("getAmiChartDataFromUnits", () => {
   test("returns unique chart data from array of units", () => {
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([
-      { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 55 },
+      { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 82 },
       {
         derivedFrom: "MinAmi",
-        percent: 82,
+        percent: 55,
         type: "MOHCD",
         year: 2021,
       },
       { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 109.8 },
-      { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 82 },
+      { derivedFrom: "MinAmi", year: 2021, type: "MOHCD", percent: 35 },
     ])
   })
 })
