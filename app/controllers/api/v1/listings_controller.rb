@@ -6,6 +6,7 @@ class Api::V1::ListingsController < ApiController
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
     @listings = Force::ListingService.listings(listings_params)
+
     render json: { listings: @listings }
   end
 
@@ -31,6 +32,14 @@ class Api::V1::ListingsController < ApiController
       params[:lottery_number],
     )
     render json: @lottery_ranking
+  end
+
+  def listingPricingTable
+
+    @listing_pricing_table = Force::ListingService.listing_pricing_table(
+      params[:id],
+    )
+    render json: @listing_pricing_table
   end
 
   def preferences

@@ -10,6 +10,12 @@ exports[`For Rent renders ForRent component 1`] = `
     <header
       className="site-header"
     >
+      <a
+        className="site-header__skip-link"
+        href="#main-content"
+      >
+        Skip to main content
+      </a>
       <div
         className="language-bar"
       >
@@ -92,8 +98,8 @@ exports[`For Rent renders ForRent component 1`] = `
             className="site-header__logo-container site-header__logo-width-med"
           >
             <a
-              aria-label="Home page"
-              className="site-header__logo  site-header__custom-width"
+              aria-label="DAHLIA San Francisco Housing Portal"
+              className="site-header__logo translate site-header__custom-width"
               href="/"
             >
               <div
@@ -160,7 +166,7 @@ exports[`For Rent renders ForRent component 1`] = `
     </header>
     <main
       className="md:overflow-x-hidden"
-      data-testid="main-content-test-id"
+      data-test-id="main-content-test-id"
       id="main-content"
     >
       <div
@@ -306,7 +312,8 @@ exports[`For Rent renders ForRent component 1`] = `
         className="footer-row__section pb-8"
       >
         <img
-          alt="City & County of San Francisco Logo"
+          alt=""
+          data-test-id="footer-logo-test-id"
         />
       </div>
     </div>

@@ -1,10 +1,12 @@
 import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import { RailsListingPricingTableUnit } from "../api/types/rails/listings/RailsListingPricingTableUnit"
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS } from "./languageUtil"
+import { MappedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -157,4 +159,93 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
       }
     }
   )
+}
+
+/*
+ * Version of this function where it iterates over the range of occupancies. Currently exploring
+ * if this can be done on the backend.
+ */
+// export const classifyPricingDataByOccupancy = (units: RailsListingPricingTableUnit[]) => {
+//   const mappedUnitsByOccupancy = []
+//   units.forEach((unit: RailsListingPricingTableUnit) => {
+//     for (let i = unit.minOccupancy; i <= unit.maxOccupancy; i++) {
+//       const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
+//         return s.occupancy === i
+//       })
+
+//       if (!mappedOccupancy) {
+//         mappedUnitsByOccupancy.push({
+//           occupancy: i,
+//           listingId: unit.listingID,
+//           absoluteMinIncome: unit.absoluteMinIncome,
+//           absoluteMaxIncome: unit.absoluteMaxIncome,
+//           summaryByAMI: [
+//             {
+//               unitMaxAMI: unit.unitMaxAMI,
+//               summaryByType: [{ ...unit }],
+//             },
+//           ],
+//         })
+//       } else {
+//         const ami = mappedOccupancy.summaryByAMI.find((s) => {
+//           return unit.unitMaxAMI === s.unitMaxAMI
+//         })
+
+//         if (ami) {
+//           ami.summaryByType.push({
+//             ...unit,
+//           })
+//         } else {
+//           mappedOccupancy.summaryByAMI.push({
+//             unitMaxAMI: unit.unitMaxAMI,
+//             summaryByType: [{ ...unit }],
+//           })
+//         }
+//       }
+//     }
+//   })
+//   return mappedUnitsByOccupancy
+// }
+
+export const classifyPricingDataByOccupancy = (
+  units: RailsListingPricingTableUnit[]
+): MappedUnitsByOccupancy[] => {
+  const mappedUnitsByOccupancy = []
+  units.forEach((unit: RailsListingPricingTableUnit) => {
+    const mappedOccupancy = mappedUnitsByOccupancy.find((s) => {
+      return s.occupancy === unit.maxOccupancy
+    })
+
+    if (!mappedOccupancy) {
+      mappedUnitsByOccupancy.push({
+        occupancy: unit.maxOccupancy,
+        listingId: unit.listingID,
+        absoluteMinIncome: unit.absoluteMinIncome,
+        absoluteMaxIncome: unit.absoluteMaxIncome,
+        summaryByAMI: [
+          {
+            unitMaxAMI: unit.unitMaxAMI,
+            summaryByType: [{ ...unit }],
+          },
+        ],
+      })
+    } else {
+      const ami = mappedOccupancy.summaryByAMI.find((s) => {
+        return unit.unitMaxAMI === s.unitMaxAMI
+      })
+
+      if (ami) {
+        ami.summaryByType.push({
+          ...unit,
+        })
+      } else {
+        mappedOccupancy.summaryByAMI.push({
+          unitMaxAMI: unit.unitMaxAMI,
+          summaryByType: [{ ...unit }],
+        })
+      }
+    }
+  })
+
+  return mappedUnitsByOccupancy
 }

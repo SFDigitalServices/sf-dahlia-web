@@ -4,17 +4,20 @@ import { RailsListing } from "../modules/listings/SharedHelpers"
 import { RailsListingPreference } from "./types/rails/listings/RailsListingPreferences"
 import { RailsListingUnits } from "./types/rails/listings/RailsListingUnits"
 import { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
+import { RailsListingPricingTableUnit } from "./types/rails/listings/RailsListingPricingTableUnit"
 import {
   listing,
   listingPreferences,
   listingUnits,
   lotteryBuckets,
   lotteryRanking,
+  listingPricingTableUnits,
 } from "./apiEndpoints"
 
 type ListingsResponse = { listing: RailsRentalListing }
 type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
 type ListingUnitsResponse = { units: RailsListingUnits[] }
+type ListingPricingTableUnitResponse = { unitSummaries: RailsListingPricingTableUnit[] }
 
 export const getListing = async (listingId?: string): Promise<RailsListing> =>
   get<ListingsResponse>(listing(listingId)).then(({ data }) => data.listing)
@@ -61,3 +64,19 @@ export const getPreferences = async (listingId: string): Promise<RailsListingPre
  */
 export const getUnits = async (listingId: string): Promise<RailsListingUnits[]> =>
   get<ListingUnitsResponse>(listingUnits(listingId)).then(({ data }) => data.units)
+
+/**
+ * Get the pricing table details for the given listing
+ * @param {string} listingId
+ * @returns {RailsListingPricingTableUnits[]} list of Units for the listing
+ */
+export const getListingPricingTableUnits = async (
+  listingId: string
+): Promise<RailsListingPricingTableUnit[]> =>
+  get<ListingPricingTableUnitResponse>(listingPricingTableUnits(listingId))
+    .then(({ data }) => {
+      return data[0].unitSummaries
+    })
+    .catch(() => {
+      return null
+    })
