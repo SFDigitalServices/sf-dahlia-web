@@ -1,0 +1,60 @@
+{
+    "sanFranciscoHousingPrograms" : [
+        {
+            "title": "First Come First Served below market rate sales listings",
+            "agency": "Mayor’s Office of Housing and Community Development",
+            "description": "These listings are for units that need more applicants. We review applications in the order they come in.",
+            "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings"
+        },
+        {
+            "title": "Get help with your downpayment",
+            "agency": "Mayor’s Office of Housing and Community Development",
+            "description": "The City Second Loan Program is a loan for a downpayment on a home. This program is for first-time homebuyers to use for select units.",
+            "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
+        },
+        {
+            "title": "Other San Francisco rental programs",
+            "agency": "Mayor’s Office of Housing and Community Development",
+            "description": "Find out about other rental help in San Francisco. You can also get information on Section 8 vouchers and rent subsidies.",
+            "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
+        },
+        {
+            "title": "Support for homelessness",
+            "agency": "Department of Homelessness and Supportive Housing",
+            "description": "If you need a place to stay, contact an Access Point to get help. Access Points are local nonprofits that can match you with housing and services.",
+            "externalUrl": "https://hsh.sfgov.org/services/how-to-get-services/referrals-and-housing-assistance/"
+        }
+    ],
+    "nonMOHCDHousingPrograms" : [
+        {
+            "title": "Housing for seniors and people with disabilities in the SF Bay Area",
+            "agency": "Openhouse",
+            "description": "Affordable and low income opportunities in the SF Bay Area. Created by Openhouse and updated monthly.",
+            "externalUrl": "https://sf.gov/sites/default/files/2022-12/OpenHouseListings.pdf"
+        },
+        {
+            "title": "Home Match",
+            "agency": "Front Porch",
+            "description": "A service that pairs people who are sharing a home with people who are looking for a home.",
+            "externalUrl": "https://covia.org/programs/home-match/"
+        },
+        {
+            "title": "Alameda County Housing Portal",
+            "agency": "Alameda County - Housing and Community Development (HCD) Department",
+            "description": "Affordable housing in Alameda County.",
+            "externalUrl": "https://housing.acgov.org/"
+        },
+        {
+            "title": "San Mateo County Housing Portal",
+            "agency": "San Mateo County - Department of Housing (DOH)",
+            "description": "Affordable housing in San Mateo County.",
+            "externalUrl": "https://smc.housingbayarea.org/"
+        },
+        {
+            "title": "City of San José Housing Portal",
+            "agency": "San José - Housing Department",
+            "description": "Affordable housing San José.",
+            "externalUrl": "https://housing.sanjoseca.gov/"
+        }
+    ]
+}
