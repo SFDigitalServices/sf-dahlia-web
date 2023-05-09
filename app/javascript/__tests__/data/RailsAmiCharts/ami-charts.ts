@@ -175,6 +175,7 @@ export const amiChartsWithOneAmi = [
   {
     percent: "55",
     chartType: "MOHCD",
+    derivedFrom: "MaxAmi",
     year: "2021",
     values: [
       {
