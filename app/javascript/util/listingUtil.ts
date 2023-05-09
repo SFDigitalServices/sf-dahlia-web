@@ -401,16 +401,16 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
   return uniqueCharts
 }
 
-export const getShortestAmiChartValueLength = (amiCharts: RailsAmiChart[]): number => {
-  let lowestChartLength: number
+export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): number => {
+  let longestChartLength: number
 
   amiCharts.forEach((chart: RailsAmiChart) => {
-    if (!lowestChartLength || chart?.values.length < lowestChartLength) {
-      lowestChartLength = chart?.values.length
+    if (!longestChartLength || chart?.values.length > longestChartLength) {
+      longestChartLength = chart?.values.length
     }
   })
 
-  return lowestChartLength
+  return longestChartLength
 }
 
 export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
@@ -450,6 +450,6 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
     minOccupancy: occupanciesArray[0],
     maxOccupancy: unprocessedUnitsHaveMaxOccupancy
       ? occupanciesArray[occupanciesArray.length - 1]
-      : getShortestAmiChartValueLength(amiCharts),
+      : getLongestAmiChartValueLength(amiCharts),
   }
 }
