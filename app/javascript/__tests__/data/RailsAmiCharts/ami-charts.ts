@@ -83,7 +83,7 @@ export const amiCharts = [
       },
     ],
   },
-     {
+  {
     percent: "82",
     chartType: "MOHCD",
     year: "2021",
