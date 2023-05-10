@@ -245,7 +245,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $0 per month
+            Income $10 to $7,083 per month
           </span>
         </span>
         <span
@@ -504,7 +504,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $0 per month
+            Income $10 to $7,083 per month
           </span>
         </span>
         <span
@@ -763,7 +763,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $0 per month
+            Income $10 to $7,083 per month
           </span>
         </span>
         <span

@@ -409,7 +409,6 @@ describe("buildOccupanciesArray", () => {
 describe("groupAndSortUnitsByOccupancy", () => {
   it("should return the expected value", () => {
     const actualOutput = groupAndSortUnitsByOccupancy(units, amiCharts)
-    console.log(JSON.stringify(actualOutput))
     expect(actualOutput).toEqual(groupedUnitsByOccupancy)
   })
 })
@@ -424,9 +423,8 @@ describe("getAmiChartDataFromUnits", () => {
   test("returns unique chart data from array of units", () => {
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([
-      { year: 2021, type: "MOHCD", percent: 55 },
+      { year: 2021, type: "MOHCD", percent: 82 },
       { year: 2021, type: "MOHCD", percent: 109.8 },
-      { year: 2021, type: "MOHCD", percent: 35 },
     ])
   })
 })
