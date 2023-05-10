@@ -227,7 +227,7 @@ describe("deriveIncomeFromAmiCharts", () => {
 
   it("returns the monthly income for the given occupancy if found in the AMI chart", () => {
     expect(deriveIncomeFromAmiCharts(unitsWithOccupancyAndMaxIncome[0], occupancy, amiCharts)).toBe(
-      5495
+      6329
     )
   })
 

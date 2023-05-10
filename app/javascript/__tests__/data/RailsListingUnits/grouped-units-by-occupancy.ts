@@ -1,7 +1,7 @@
 export const groupedUnitsByOccupancy = [
   {
     occupancy: 1,
-    absoluteMaxIncome: 4275,
+    absoluteMaxIncome: 5941,
     absoluteMinIncome: 100,
     amiRows: [
       {
@@ -30,7 +30,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmHQAV",
             Max_Occupancy: 3,
             occupancy: 1,
-            maxMonthlyIncomeNeeded: 4275,
+            maxMonthlyIncomeNeeded: 5941,
           },
         ],
       },
@@ -38,7 +38,7 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 2,
-    absoluteMaxIncome: 4883,
+    absoluteMaxIncome: 6550,
     absoluteMinIncome: 7,
     amiRows: [
       {
@@ -68,7 +68,7 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 2,
-            maxMonthlyIncomeNeeded: 4883,
+            maxMonthlyIncomeNeeded: 5716,
           },
         ],
       },
@@ -98,7 +98,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmHQAV",
             Max_Occupancy: 3,
             occupancy: 2,
-            maxMonthlyIncomeNeeded: 4883,
+            maxMonthlyIncomeNeeded: 6550,
           },
         ],
       },
@@ -106,7 +106,7 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 3,
-    absoluteMaxIncome: 5495,
+    absoluteMaxIncome: 6329,
     absoluteMinIncome: 7,
     amiRows: [
       {
@@ -136,7 +136,7 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 3,
-            maxMonthlyIncomeNeeded: 5495,
+            maxMonthlyIncomeNeeded: 6329,
           },
         ],
       },
@@ -166,7 +166,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmHQAV",
             Max_Occupancy: 3,
             occupancy: 3,
-            maxMonthlyIncomeNeeded: 5495,
+            maxMonthlyIncomeNeeded: 6329,
           },
           {
             attributes: {
@@ -191,7 +191,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOj5QAF",
             Max_Occupancy: 5,
             occupancy: 3,
-            maxMonthlyIncomeNeeded: 5495,
+            maxMonthlyIncomeNeeded: 6329,
           },
           {
             attributes: {
@@ -216,7 +216,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmLQAV",
             Max_Occupancy: 5,
             occupancy: 3,
-            maxMonthlyIncomeNeeded: 5495,
+            maxMonthlyIncomeNeeded: 6329,
           },
         ],
       },
@@ -224,7 +224,7 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 4,
-    absoluteMaxIncome: 6104,
+    absoluteMaxIncome: 6937,
     absoluteMinIncome: 7,
     amiRows: [
       {
@@ -254,7 +254,7 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 4,
-            maxMonthlyIncomeNeeded: 6104,
+            maxMonthlyIncomeNeeded: 6937,
           },
           {
             attributes: {
@@ -279,7 +279,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOm7QAF",
             Max_Occupancy: 6,
             occupancy: 4,
-            maxMonthlyIncomeNeeded: 6104,
+            maxMonthlyIncomeNeeded: 6937,
           },
         ],
       },
@@ -309,7 +309,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOj5QAF",
             Max_Occupancy: 5,
             occupancy: 4,
-            maxMonthlyIncomeNeeded: 6104,
+            maxMonthlyIncomeNeeded: 6937,
           },
           {
             attributes: {
@@ -334,7 +334,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmLQAV",
             Max_Occupancy: 5,
             occupancy: 4,
-            maxMonthlyIncomeNeeded: 6104,
+            maxMonthlyIncomeNeeded: 6937,
           },
         ],
       },
@@ -372,7 +372,7 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 5,
-            maxMonthlyIncomeNeeded: 6591,
+            maxMonthlyIncomeNeeded: 8258,
           },
           {
             attributes: {
@@ -397,7 +397,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOm7QAF",
             Max_Occupancy: 6,
             occupancy: 5,
-            maxMonthlyIncomeNeeded: 6591,
+            maxMonthlyIncomeNeeded: 8258,
           },
         ],
       },
@@ -460,7 +460,7 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 6,
-    absoluteMaxIncome: 7083,
+    absoluteMaxIncome: 7916,
     absoluteMinIncome: 10,
     amiRows: [
       {
@@ -489,7 +489,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOm7QAF",
             Max_Occupancy: 6,
             occupancy: 6,
-            maxMonthlyIncomeNeeded: 7083,
+            maxMonthlyIncomeNeeded: 7916,
           },
         ],
       },
