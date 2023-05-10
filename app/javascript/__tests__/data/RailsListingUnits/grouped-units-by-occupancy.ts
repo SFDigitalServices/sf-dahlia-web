@@ -5,7 +5,10 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 100,
     amiRows: [
       {
-        ami: 109.8,
+        ami: {
+          min: 82,
+          max: 109.8,
+        },
         units: [
           {
             attributes: {
@@ -42,7 +45,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 55,
+        ami: { max: 82, min: 55 },
         units: [
           {
             attributes: {
@@ -62,8 +65,8 @@ export const groupedUnitsByOccupancy = [
             isReservedCommunity: true,
             AMI_chart_type: "MOHCD",
             AMI_chart_year: 2021,
-            Max_AMI_for_Qualifying_Unit: 55,
-            Min_AMI_for_Qualifying_Unit: 82,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 55,
             Min_Occupancy: 2,
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
@@ -73,7 +76,10 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: {
+          min: 82,
+          max: 109.8,
+        },
         units: [
           {
             attributes: {
@@ -110,7 +116,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 55,
+        ami: { max: 82, min: 55 },
         units: [
           {
             attributes: {
@@ -130,8 +136,8 @@ export const groupedUnitsByOccupancy = [
             isReservedCommunity: true,
             AMI_chart_type: "MOHCD",
             AMI_chart_year: 2021,
-            Max_AMI_for_Qualifying_Unit: 55,
-            Min_AMI_for_Qualifying_Unit: 82,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 55,
             Min_Occupancy: 2,
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
@@ -141,7 +147,10 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: {
+          min: 82,
+          max: 109.8,
+        },
         units: [
           {
             attributes: {
@@ -228,7 +237,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 55,
+        ami: { max: 82, min: 55 },
         units: [
           {
             attributes: {
@@ -248,8 +257,8 @@ export const groupedUnitsByOccupancy = [
             isReservedCommunity: true,
             AMI_chart_type: "MOHCD",
             AMI_chart_year: 2021,
-            Max_AMI_for_Qualifying_Unit: 55,
-            Min_AMI_for_Qualifying_Unit: 82,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 55,
             Min_Occupancy: 2,
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
@@ -266,7 +275,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 55,
+        ami: { max: 82, min: 55 },
         units: [
           {
             attributes: {
@@ -286,8 +295,8 @@ export const groupedUnitsByOccupancy = [
             isReservedCommunity: true,
             AMI_chart_type: "MOHCD",
             AMI_chart_year: 2021,
-            Max_AMI_for_Qualifying_Unit: 55,
-            Min_AMI_for_Qualifying_Unit: 82,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 55,
             Min_Occupancy: 2,
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",

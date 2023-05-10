@@ -1,6 +1,6 @@
 export const amiCharts = [
   {
-    percent: "55",
+    percent: "82",
     chartType: "MOHCD",
     derivedFrom: "MinAmi",
     values: [
