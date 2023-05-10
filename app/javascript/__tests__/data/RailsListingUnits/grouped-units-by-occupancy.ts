@@ -5,7 +5,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 100,
     amiRows: [
       {
-        ami: 109.8,
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -42,7 +42,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 82,
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -73,7 +73,7 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -110,7 +110,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 82,
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -141,7 +141,7 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -228,7 +228,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 82,
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -284,7 +284,7 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -342,11 +342,11 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 5,
-    absoluteMaxIncome: 6591,
+    absoluteMaxIncome: 11666,
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: 82,
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -402,7 +402,7 @@ export const groupedUnitsByOccupancy = [
         ],
       },
       {
-        ami: 109.8,
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -427,7 +427,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOj5QAF",
             Max_Occupancy: 5,
             occupancy: 5,
-            maxMonthlyIncomeNeeded: null,
+            maxMonthlyIncomeNeeded: 11666,
           },
           {
             attributes: {
@@ -452,7 +452,7 @@ export const groupedUnitsByOccupancy = [
             Id: "a0b4U00001JvOmLQAV",
             Max_Occupancy: 5,
             occupancy: 5,
-            maxMonthlyIncomeNeeded: null,
+            maxMonthlyIncomeNeeded: 11666,
           },
         ],
       },
@@ -464,7 +464,7 @@ export const groupedUnitsByOccupancy = [
     absoluteMinIncome: 10,
     amiRows: [
       {
-        ami: 82,
+        ami: { min: 35, max: 82 },
         units: [
           {
             attributes: {

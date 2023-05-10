@@ -8,12 +8,14 @@ export type RailsAmiChartValue = {
 
 export type RailsAmiChart = {
   percent: string
+  derivedFrom: string
   values: Array<RailsAmiChartValue>
   year: string
   chartType?: string
 }
 
 export type RailsAmiChartMetaData = {
+  derivedFrom: string
   percent: number
   type: string
   year: number

@@ -3,6 +3,7 @@ export const amiCharts = [
     percent: "55",
     chartType: "MOHCD",
     year: "2021",
+    derivedFrom: "MinAmi",
     values: [
       {
         year: "2021",
@@ -86,6 +87,7 @@ export const amiCharts = [
   {
     percent: "82",
     chartType: "MOHCD",
+    derivedFrom: "MaxAmi",
     year: "2021",
     values: [
       {
@@ -171,6 +173,7 @@ export const amiCharts = [
     percent: "109.8",
     chartType: "MOHCD",
     year: "2021",
+    derivedFrom: "MaxAmi",
     values: [
       {
         year: "2021",
@@ -199,6 +202,55 @@ export const amiCharts = [
         numOfHousehold: 4,
         chartType: "MOHCD",
         amount: 73250,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 5,
+        chartType: "MOHCD",
+        amount: 140000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 6,
+        chartType: "MOHCD",
+        amount: 150000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 7,
+        chartType: "MOHCD",
+        amount: 160000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 8,
+        chartType: "MOHCD",
+        amount: 170000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 9,
+        chartType: "MOHCD",
+        amount: 180000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 10,
+        chartType: "MOHCD",
+        amount: 190000,
+      },
+      {
+        year: "2021",
+        percent: 109.8,
+        numOfHousehold: 11,
+        chartType: "MOHCD",
+        amount: 200000,
       },
     ],
   },
