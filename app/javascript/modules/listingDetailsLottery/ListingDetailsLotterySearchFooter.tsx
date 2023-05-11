@@ -15,7 +15,7 @@ export const ListingDetailsLotterySearchFooter = ({
 }: ListingDetailsLotterySearchFooterProps) => {
   return (
     <>
-      <div className="bg-gray-100 py-4 text-center">
+      <div className="bg-gray-100 py-4 px-8 md:px-0 text-center">
         <a
           className="text-blue-900"
           href="http://sfmohcd.org/housing-preference-programs"
