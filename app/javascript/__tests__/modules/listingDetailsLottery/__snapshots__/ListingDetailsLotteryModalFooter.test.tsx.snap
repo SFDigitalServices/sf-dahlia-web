@@ -3,7 +3,7 @@
 exports[`ListingDetailsLotteryModalFooter displays full footer when modal status is initial state 1`] = `
 Array [
   <div
-    className="bg-gray-100 py-4 text-center"
+    className="bg-gray-100 py-4 px-8 md:px-0 text-center"
   >
     <a
       className="text-blue-900"
@@ -43,7 +43,7 @@ Array [
 
 exports[`ListingDetailsLotteryModalFooter displays preference link only when status is not initial state 1`] = `
 <div
-  className="bg-gray-100 py-4 text-center"
+  className="bg-gray-100 py-4 px-8 md:px-0 text-center"
 >
   <a
     className="text-blue-900"
