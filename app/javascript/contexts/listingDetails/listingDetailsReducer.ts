@@ -41,6 +41,7 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
         return {
           ...amiChart,
           chartType: amiChart?.values[0]?.chartType,
+          year: amiChart?.values[0]?.year,
           derivedFrom: chartsToFetch.find((chart: RailsAmiChartMetaData) => {
             return chart.percent === Number(amiChart.percent)
           })?.derivedFrom,
