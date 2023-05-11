@@ -1,9 +1,9 @@
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
-import { InfoCard, t } from "@bloom-housing/ui-components"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
-import InfoCardGridAdditionalResources from "./InfoCardGridAdditionalResources"
 import additionalResources from "./additional-resources.json"
+import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
+import "./additional-resources.scss"
 
 const AdditionalResources = () => {
   return (
@@ -12,31 +12,32 @@ const AdditionalResources = () => {
       subtitle={t("assistance.subtitle.additionalHousingOpportunities")}
     >
       <div className="flex flex-col mr-8">
-        {/* <h1>{t("assistance.title.additionalHousingOpportunities")}</h1> */}
-        <InfoCardGridAdditionalResources
-          title="San Fransciso Housing Programs"
-          subtitle="Programs run and funded by the City and County of San Francisco"
-          className="mb-4"
-        >
-          {additionalResources.sanFranciscoHousingPrograms.map((resource) => {
-            return (
-              <InfoCard
-                title={resource.title}
-                subtitle={resource.agency}
-                externalHref={resource.externalUrl}
-                className="is-normal-primary-lighter"
-                key={resource.title}
-              >
-                {<div className="text-gray-700 text-xs">{resource.description}</div>}
-              </InfoCard>
-            )
-          })}
-        </InfoCardGridAdditionalResources>
+        <div className="info-card-grid-additional-resources">
+          <InfoCardGrid
+            title="San Fransciso Housing Programs"
+            subtitle="Programs run and funded by the City and County of San Francisco"
+            headingStyle="default"
+          >
+            {additionalResources.sanFranciscoHousingPrograms.map((resource) => {
+              return (
+                <InfoCard
+                  title={resource.title}
+                  subtitle={resource.agency}
+                  externalHref={resource.externalUrl}
+                  className="info-card-additional-resources is-normal-primary-lighter"
+                  key={resource.title}
+                >
+                  {<div className="text-gray-950 text-xs">{resource.description}</div>}
+                </InfoCard>
+              )
+            })}
+          </InfoCardGrid>
+        </div>
 
-        <InfoCardGridAdditionalResources
+        <InfoCardGrid
           title="Non-MOHCD housing programs and resources"
           subtitle="These are resources from other cities and nonprofits. They are not sponsored by the city of San Francisco. We are not able to answer any questions about these resources. Please contact the organizations listed if you have any questions."
-          className="mb-4"
+          headingStyle="default"
         >
           {additionalResources.nonMOHCDHousingPrograms.map((resource) => {
             return (
@@ -44,14 +45,14 @@ const AdditionalResources = () => {
                 title={resource.title}
                 subtitle={resource.agency}
                 externalHref={resource.externalUrl}
-                className="is-normal-primary-lighter"
+                className="info-card-additional-resources is-normal-primary-lighter"
                 key={resource.title}
               >
-                {<div className="text-gray-700 text-xs translate">{resource.description}</div>}
+                {<div className="text-gray-950 text-xs">{resource.description}</div>}
               </InfoCard>
             )
           })}
-        </InfoCardGridAdditionalResources>
+        </InfoCardGrid>
       </div>
     </AssistanceLayout>
   )
