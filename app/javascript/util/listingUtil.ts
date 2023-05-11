@@ -210,6 +210,7 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
     if (!unit.Max_Occupancy) {
       unit.Max_Occupancy = unit.Min_Occupancy + 2
     }
+
     for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
       totalUnits.push({ ...unit, occupancy: i })
     }
@@ -302,12 +303,18 @@ export const groupAndSortUnitsByOccupancy = (
   amiCharts: RailsAmiChart[]
 ): GroupedUnitsByOccupancy[] => {
   /*
+   * make a deep copy
+   */
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
+
+  /*
    * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
    * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
    * and a unit with occupancy 3
    */
-  const unitsWithOccupancy = addUnitsWithEachOccupancy(units)
-
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object
@@ -398,4 +405,57 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
   })
 
   return uniqueCharts
+}
+
+export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): number => {
+  let longestChartLength: number
+
+  amiCharts.forEach((chart: RailsAmiChart) => {
+    if (!longestChartLength || chart?.values.length > longestChartLength) {
+      longestChartLength = chart?.values.length
+    }
+  })
+
+  return longestChartLength
+}
+
+export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
+  /*
+   * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
+   * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
+   * and a unit with occupancy 3
+   */
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
+
+  /*
+   * We have to derive the max income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max income to the unit object
+   */
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+
+  /*
+   * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
+   * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
+   */
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+  /*
+   * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
+   * This gives us the foundation to build the pricing table accordions.
+   */
+  const occupanciesArray = buildOccupanciesArray(unitSummaries)
+
+  const unprocessedUnitsHaveMaxOccupancy = units.some((unit) => {
+    return unit.Max_Occupancy
+  })
+
+  return {
+    explicitMaxOccupancy: unprocessedUnitsHaveMaxOccupancy,
+    minOccupancy: occupanciesArray[0],
+    maxOccupancy: unprocessedUnitsHaveMaxOccupancy
+      ? occupanciesArray[occupanciesArray.length - 1]
+      : getLongestAmiChartValueLength(amiCharts),
+  }
 }

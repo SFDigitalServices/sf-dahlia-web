@@ -1,8 +1,8 @@
 export const amiCharts = [
   {
     percent: "55",
-    chartType: "MOHCD",
     year: "2021",
+    chartType: "MOHCD",
     derivedFrom: "MinAmi",
     values: [
       {
@@ -171,8 +171,8 @@ export const amiCharts = [
   },
   {
     percent: "109.8",
-    chartType: "MOHCD",
     year: "2021",
+    chartType: "MOHCD",
     derivedFrom: "MaxAmi",
     values: [
       {
@@ -251,6 +251,94 @@ export const amiCharts = [
         numOfHousehold: 11,
         chartType: "MOHCD",
         amount: 200000,
+      },
+    ],
+  },
+]
+
+export const amiChartsWithOneAmi = [
+  {
+    percent: "55",
+    chartType: "MOHCD",
+    derivedFrom: "MaxAmi",
+    year: "2021",
+    values: [
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 1,
+        chartType: "MOHCD",
+        amount: 51300,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 2,
+        chartType: "MOHCD",
+        amount: 58600,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 3,
+        chartType: "MOHCD",
+        amount: 65950,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 4,
+        chartType: "MOHCD",
+        amount: 73250,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 5,
+        chartType: "MOHCD",
+        amount: 79100,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 6,
+        chartType: "MOHCD",
+        amount: 85000,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 7,
+        chartType: "MOHCD",
+        amount: 90850,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 8,
+        chartType: "MOHCD",
+        amount: 96700,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 9,
+        chartType: "MOHCD",
+        amount: 102600,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 10,
+        chartType: "MOHCD",
+        amount: 108450,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 11,
+        chartType: "MOHCD",
+        amount: 114300,
       },
     ],
   },
