@@ -13,7 +13,7 @@ export interface ListingDetailsPricingTableProps {
 }
 
 export interface AmiRow {
-  ami: number
+  ami: { min: number | undefined; max: number }
   units: RailsUnitWithOccupancyAndMaxIncome[]
 }
 
@@ -61,11 +61,11 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${(unit?.HOA_Dues_With_Parking).toLocaleString()}`,
+        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
         cellSubText: "with parking",
       },
       {
-        cellText: `$${(unit?.HOA_Dues_Without_Parking).toLocaleString()}`,
+        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
         cellSubText: "without parking",
       },
     ]
@@ -74,7 +74,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && !unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${(unit?.HOA_Dues_With_Parking).toLocaleString()}`,
+        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
         cellSubText: "with parking",
       },
     ]
@@ -83,7 +83,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (!unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${(unit?.HOA_Dues_Without_Parking).toLocaleString()}`,
+        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
         cellSubText: "without parking",
       },
     ]
@@ -150,10 +150,17 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
+        const header = amiRow.ami.min
+          ? t("listings.stats.amiRange", {
+              minAmiPercent: amiRow.ami.min,
+              maxAmiPercent: amiRow.ami.max,
+            })
+          : t("listings.stats.upToPercentAmi", {
+              amiPercent: amiRow.ami.max,
+            })
+
         return {
-          header: t("listings.stats.upToPercentAmi", {
-            amiPercent: amiRow.ami,
-          }),
+          header,
           tableData: {
             stackedData: responsiveTableRows,
             headers: responsiveTableHeaders,

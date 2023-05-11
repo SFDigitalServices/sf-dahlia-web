@@ -7,52 +7,52 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
   <ul>
     <li>
       <p>
-        1 person household: 51,300 to 51,300 per year
+        1 person household: 51,300 to 61,300 per year
       </p>
     </li>
     <li>
       <p>
-        1 people household: 51,300 to 51,300 per year
+        1 people household: 51,300 to 61,300 per year
       </p>
     </li>
     <li>
       <p>
-        2 people household: 58,600 to 58,600 per year
+        2 people household: 58,600 to 68,600 per year
       </p>
     </li>
     <li>
       <p>
-        3 people household: 65,950 to 65,950 per year
+        3 people household: 65,950 to 75,950 per year
       </p>
     </li>
     <li>
       <p>
-        4 people household: 73,250 to 73,250 per year
+        4 people household: 73,250 to 83,250 per year
       </p>
     </li>
     <li>
       <p>
-        5 people household: 79,100 to 140,000 per year
+        5 people household: 79,100 to 99,100 per year
       </p>
     </li>
     <li>
       <p>
-        6 people household: 85,000 to 150,000 per year
+        6 people household: 85,000 to 95,000 per year
       </p>
     </li>
     <li>
       <p>
-        7 people household: 90,850 to 160,000 per year
+        7 people household: 90,850 to 100,850 per year
       </p>
     </li>
     <li>
       <p>
-        8 people household: 96,700 to 170,000 per year
+        8 people household: 96,700 to 106,700 per year
       </p>
     </li>
     <li>
       <p>
-        9 people household: 102,600 to 180,000 per year
+        9 people household: 102,600 to 112,600 per year
       </p>
     </li>
   </ul>
@@ -86,7 +86,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $4,275 per month
+            Income $100 to $5,941 per month
           </span>
         </span>
         <span
@@ -128,7 +128,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $4,883 per month
+            Income $7 to $6,550 per month
           </span>
         </span>
         <span
@@ -170,7 +170,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $5,495 per month
+            Income $7 to $6,329 per month
           </span>
         </span>
         <span
@@ -212,7 +212,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,104 per month
+            Income $7 to $6,937 per month
           </span>
         </span>
         <span
@@ -254,7 +254,49 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,591 per month
+            Income $7 to $11,666 per month
+          </span>
+        </span>
+        <span
+          className="ui-icon ui-base flex items-center"
+          data-test-id="accordion-open"
+        >
+          <svg
+            fill="#0077DA"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </div>
+    </button>
+  </div>
+  <div
+    className="mb-4"
+  >
+    <button
+      aria-expanded={false}
+      className="w-full text-left "
+      data-test-id="content-accordion-button"
+      onClick={[Function]}
+    >
+      <div
+        className="flex justify-between mt-4  accordion-gray-theme__bar "
+      >
+        <span
+          className="flex w-full justify-between items-center"
+        >
+          <span
+            className="flex items-center"
+          >
+            6 people in household
+          </span>
+          <span
+            className="flex items-center mr-2"
+          >
+            Income $10 to $7,916 per month
           </span>
         </span>
         <span
@@ -303,7 +345,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $4,275 per month
+            Income $100 to $5,941 per month
           </span>
         </span>
         <span
@@ -345,7 +387,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $4,883 per month
+            Income $7 to $6,550 per month
           </span>
         </span>
         <span
@@ -387,7 +429,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $5,495 per month
+            Income $7 to $6,329 per month
           </span>
         </span>
         <span
@@ -429,7 +471,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,104 per month
+            Income $7 to $6,937 per month
           </span>
         </span>
         <span
@@ -471,7 +513,49 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,591 per month
+            Income $7 to $11,666 per month
+          </span>
+        </span>
+        <span
+          className="ui-icon ui-base flex items-center"
+          data-test-id="accordion-open"
+        >
+          <svg
+            fill="#0077DA"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </div>
+    </button>
+  </div>
+  <div
+    className="mb-4"
+  >
+    <button
+      aria-expanded={false}
+      className="w-full text-left "
+      data-test-id="content-accordion-button"
+      onClick={[Function]}
+    >
+      <div
+        className="flex justify-between mt-4  accordion-gray-theme__bar "
+      >
+        <span
+          className="flex w-full justify-between items-center"
+        >
+          <span
+            className="flex items-center"
+          >
+            6 people in household
+          </span>
+          <span
+            className="flex items-center mr-2"
+          >
+            Income $10 to $7,916 per month
           </span>
         </span>
         <span
@@ -520,7 +604,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $4,275 per month
+            Income $100 to $5,941 per month
           </span>
         </span>
         <span
@@ -562,7 +646,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $4,883 per month
+            Income $7 to $6,550 per month
           </span>
         </span>
         <span
@@ -604,7 +688,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $5,495 per month
+            Income $7 to $6,329 per month
           </span>
         </span>
         <span
@@ -646,7 +730,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,104 per month
+            Income $7 to $6,937 per month
           </span>
         </span>
         <span
@@ -688,7 +772,49 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,591 per month
+            Income $7 to $11,666 per month
+          </span>
+        </span>
+        <span
+          className="ui-icon ui-base flex items-center"
+          data-test-id="accordion-open"
+        >
+          <svg
+            fill="#0077DA"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </div>
+    </button>
+  </div>
+  <div
+    className="mb-4"
+  >
+    <button
+      aria-expanded={false}
+      className="w-full text-left "
+      data-test-id="content-accordion-button"
+      onClick={[Function]}
+    >
+      <div
+        className="flex justify-between mt-4  accordion-gray-theme__bar "
+      >
+        <span
+          className="flex w-full justify-between items-center"
+        >
+          <span
+            className="flex items-center"
+          >
+            6 people in household
+          </span>
+          <span
+            className="flex items-center mr-2"
+          >
+            Income $10 to $7,916 per month
           </span>
         </span>
         <span
