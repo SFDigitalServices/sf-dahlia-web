@@ -88,6 +88,15 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
             <span
               className=""
             >
+              82% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
               109.8% AMI
             </span>
           </th>
@@ -217,6 +226,15 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
               className=""
             >
               55% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              82% AMI
             </span>
           </th>
           <th
@@ -388,6 +406,15 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
             <span
               className=""
             >
+              82% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
               109.8% AMI
             </span>
           </th>
@@ -416,9 +443,15 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
+            data-label="82% AMI"
+          >
+            $61,300 per year
+          </td>
+          <td
+            className="p-5"
             data-label="109.8% AMI"
           >
-            $51,300 per year
+            $71,300 per year
           </td>
         </tr>
         <tr
@@ -443,9 +476,15 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
+            data-label="82% AMI"
+          >
+            $68,600 per year
+          </td>
+          <td
+            className="p-5"
             data-label="109.8% AMI"
           >
-            $58,600 per year
+            $78,600 per year
           </td>
         </tr>
         <tr
@@ -470,9 +509,15 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
+            data-label="82% AMI"
+          >
+            $75,950 per year
+          </td>
+          <td
+            className="p-5"
             data-label="109.8% AMI"
           >
-            $65,950 per year
+            $75,950 per year
           </td>
         </tr>
         <tr
@@ -497,9 +542,81 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
           </td>
           <td
             className="p-5"
+            data-label="82% AMI"
+          >
+            $83,250 per year
+          </td>
+          <td
+            className="p-5"
             data-label="109.8% AMI"
           >
-            $73,250 per year
+            $83,250 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-4"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              5 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $79,100 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $99,100 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $140,000 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-5"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              6 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $85,000 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $95,000 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $150,000 per year
           </td>
         </tr>
       </tbody>
