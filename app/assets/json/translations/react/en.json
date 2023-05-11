@@ -979,6 +979,7 @@
   "listings.singleRoomOccupancy": "Single Room Occupancy",
   "listings.singleRoomOccupancyDescription": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
   "listings.specialNotes": "Special Notes",
+  "listings.stats.amiRange": "%{minAmiPercent}% to %{maxAmiPercent}% AMI",
   "listings.stats.availability": "Availability",
   "listings.stats.availableRental": "available",
   "listings.stats.availableSales": "available",
