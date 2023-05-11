@@ -40,6 +40,9 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
       amiCharts: amiCharts?.map((amiChart: RailsAmiChart) => {
         return {
           ...amiChart,
+          /*
+           * The chartType are the same on all the values
+           */
           chartType: amiChart?.values[0]?.chartType,
           year: amiChart?.values[0]?.year,
           derivedFrom: chartsToFetch.find((chart: RailsAmiChartMetaData) => {
