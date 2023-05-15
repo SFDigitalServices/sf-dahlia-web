@@ -3,18 +3,27 @@ import React from "react"
 import Link from "../../navigation/Link"
 import "./BuyHeader.scss"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
     <Heading styleType="underlineWeighted" className="mb-5" priority={2}>
-      {t("saleDirectory.getHelp.title")}
+      {t("listingsForSale.getHelp.helpWithDownpayment")}
     </Heading>
-    <p className="mb-4">{t("saleDirectory.getHelp.somePeopleMayQualify")}</p>
-    <p className="mb-4">{t("saleDirectory.getHelp.otherGroupsMayQualify")}</p>
-    <p>
-      <Link external={true} href="https://sfmohcd.org/loan-programs">
-        {t("saleDirectory.getHelp.viewFullListOfPrograms")}
-      </Link>
+    <span>
+      <p className="mb-4">
+        {t("listingsForSale.getHelp.dalpProgramInfo")}{" "}
+        <Link external={true} href="http://www.google.com">
+          {t("listingsForSale.getHelp.learnMoreAndHowToApply")}
+        </Link>
+      </p>
+    </span>
+    <p className="mb-4">
+      {renderInlineMarkup(
+        t("listingsForSale.getHelp.otherAssistancePrograms", {
+          url: "https://sf.gov/resource/2022/mohcd-loan-programs",
+        })
+      )}
     </p>
   </div>
 )

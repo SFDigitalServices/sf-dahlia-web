@@ -1,6 +1,5 @@
 {
   "415-701-5500": "415-701-5500",
-  "a1Intro.chooseYourLanguage": "Elija su idioma",
   "a1Intro.signInSaveTime": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría revisar el estatus de esta solicitud en cualquier momento.",
   "a1Intro.title": "Comencemos con su solicitud",
   "a2CommunityScreening.accessibleOnly.youOrAnyone": "¿Necesita usted o alguien en su hogar una unidad accesible?",
@@ -978,7 +977,8 @@
   "listingsForSale.callout.citySecondLoanButton": "Segundo Programa de Préstamos de la Ciudad de San Francisco",
   "listingsForSale.callout.firstComeFirstServedButton": "Por orden de llegada",
   "listingsForSale.callout.title": "Hay más anuncios disponibles en nuestro sitio web.",
-  "listingsForSale.getHelp.dalpProgramInfo": "El Programa de Préstamos para Apoyo en el Pago Inicial (DALP) de 2021 comenzará a aceptar solicitudes el 26 de febrero de 2021.",
+  "listingsForSale.getHelp.dalpProgramInfo": "El Programa de Préstamos para Apoyo en el Pago Inicial (DALP) de 2023 comenzará a aceptar solicitudes el 15 de mayo de 2023.",
+  "listingsForSale.getHelp.otherAssistancePrograms": "You can also get help with a down payment, loan, or refinancing  <a target='_blank' href='%{url}'>through one of our other assistance programs</a>",
   "listingsForSale.getHelp.helpWithDownpayment": "Ayuda con los pagos iniciales",
   "listingsForSale.getHelp.learnMoreAndHowToApply": "Obtenga más información sobre el DALP y cómo presentar la solicitud en SF.gov",
   "listingsForSale.getHelp.mohcdPrograms": "La Oficina de Vivienda y Desarrollo Comunitario de la Alcaldía (MOHCD) ofrece una serie de programas para ayudar a los compradores de vivienda en San Francisco.",
