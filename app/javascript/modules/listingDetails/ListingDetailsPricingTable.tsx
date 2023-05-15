@@ -241,7 +241,7 @@ const buildHabitatText = (
       )
     }
 
-    if (minOccupancyChart && maxOccupancyChart) {
+    if (minOccupancyChart && maxOccupancyChart && i !== 1) {
       habitatStringArray.push(
         t("listings.habitat.incomeRange.incomeRangePlural", {
           number: i,
