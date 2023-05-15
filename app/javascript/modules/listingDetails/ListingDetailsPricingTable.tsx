@@ -253,8 +253,7 @@ const buildHabitatText = (
   }
 
   return (
-    <>
-      <p>{t("listings.habitat.incomeRange.p4")}</p>
+    <div className="md:pr-8 md:w-2/3 mx-2 w-full">
       <ul>
         {habitatStringArray.map((habitatString: string, index: number) => {
           return (
@@ -264,7 +263,7 @@ const buildHabitatText = (
           )
         })}
       </ul>
-    </>
+    </div>
   )
 }
 
@@ -276,7 +275,11 @@ const buildContent = (
   listingIsHabitat: boolean
 ) => {
   if (!dataHasBeenFetched) {
-    return <Icon symbol="spinner" size="large" />
+    return (
+      <div className="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
+        <Icon symbol="spinner" size="large" />
+      </div>
+    )
   }
 
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
@@ -285,14 +288,15 @@ const buildContent = (
     groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
   }
 
-  if (listingIsSale && !listingIsHabitat) {
-    return buildAccordions(groupedUnitsByOccupancy, true)
-  }
-
   if (listingIsHabitat) {
     return buildHabitatText(groupedUnitsByOccupancy, amiCharts)
   }
-  return buildAccordions(groupedUnitsByOccupancy, false)
+
+  return (
+    <div className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
+      {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
+    </div>
+  )
 }
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
@@ -319,13 +323,5 @@ export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTab
     }
   }, [fetchingAmiChartsError, fetchingUnitsError])
 
-  return (
-    <div
-      className={`${
-        !dataHasBeenFetched ? "flex justify-center" : ""
-      } md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full`}
-    >
-      {buildContent(dataHasBeenFetched, units, amiCharts, listingIsSale, listingIsHabitat)}
-    </div>
-  )
+  return buildContent(dataHasBeenFetched, units, amiCharts, listingIsSale, listingIsHabitat)
 }

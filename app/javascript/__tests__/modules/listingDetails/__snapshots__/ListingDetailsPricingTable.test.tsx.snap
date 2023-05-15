@@ -2,11 +2,8 @@
 
 exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable when habitat listing 1`] = `
 <div
-  className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+  className="md:pr-8 md:w-2/3 mx-2 w-full"
 >
-  <p>
-    Your income must be in this range:
-  </p>
   <ul>
     <li>
       <p>
@@ -64,7 +61,7 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component when rental listing 1`] = `
 <div
-  className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+  className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
 >
   <div
     className="mb-4"
@@ -323,7 +320,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with open sale listing 1`] = `
 <div
-  className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+  className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
 >
   <div
     className="mb-4"
@@ -582,7 +579,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with rental listing 1`] = `
 <div
-  className=" md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
+  className="md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full"
 >
   <div
     className="mb-4"
