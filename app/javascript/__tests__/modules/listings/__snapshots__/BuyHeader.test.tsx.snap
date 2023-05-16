@@ -119,24 +119,33 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
           <h2
             className="text__underline-weighted mb-5"
           >
-            Get help
+            Help with downpayments
           </h2>
-          <p
-            className="mb-4"
-          >
-            Some people may qualify for downpayment assistance.
-          </p>
-          <p
-            className="mb-4"
-          >
-            Others, like San Francisco teachers and first responders, may qualify for loans.
-          </p>
-          <p>
-            <a
-              href="https://sfmohcd.org/loan-programs"
+          <span>
+            <p
+              className="mb-4"
             >
-              View the full list of programs
-            </a>
+              The 2023 Downpayment Assistance Loan Program (DALP) will begin accepting applications on May 15, 2023.
+               
+              <a
+                href="http://www.google.com"
+              >
+                Learn more about DALP and how to apply on SF.gov
+              </a>
+            </p>
+          </span>
+          <p
+            className="mb-4"
+          >
+            <span>
+              You can also get help with a down payment, loan, or refinancing  
+              <a
+                href="https://sf.gov/resource/2022/mohcd-loan-programs"
+                target="_blank"
+              >
+                through one of our other assistance programs
+              </a>
+            </span>
           </p>
         </div>
       </div>
