@@ -136,23 +136,26 @@ const DocumentChecklist = () => {
       subtitle={t("assistance.subtitle.documentChecklist")}
     >
       {
-        <div className="flex flex-col w-full space-y-4 py-12 pr-12">
-          <h3>{t("documentChecklist.preferenceHeader")}</h3>
-          <p>{t("documentChecklist.p1")}</p>
-          <p>{t("documentChecklist.p2")}</p>
-          <p>{renderInlineMarkup(t("documentChecklist.p3"))}</p>
-          {preferences}
-          <div>
-            <hr className="mt-9 mb-5" />
+        <div className="flex flex-col w-full ">
+          <div className="space-y-4 p-6 md:p-11">
+            <h3>{t("documentChecklist.preferenceHeader")}</h3>
+            <p>{t("documentChecklist.p1")}</p>
+            <p>{t("documentChecklist.p2")}</p>
+            <p>{renderInlineMarkup(t("documentChecklist.p3"))}</p>
+            {preferences}
           </div>
-          <h3>{t("documentChecklist.homebuyerHeader")}</h3>
-
-          <p>{t("documentChecklist.homebuyerDesc")}</p>
-          <ol className="list-decimal ml-7">
-            <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
-            <li>{renderInlineMarkup(t("documentChecklist.homebuyerLoanDesc"))}</li>
-          </ol>
-          <p>{t("label.applicationUploadBothDocuments")}</p>
+          <div className="md:px-11">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:p-11">
+            <h3>{t("documentChecklist.homebuyerHeader")}</h3>
+            <p>{t("documentChecklist.homebuyerDesc")}</p>
+            <ol className="list-decimal ml-7">
+              <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
+              <li>{renderInlineMarkup(t("documentChecklist.homebuyerLoanDesc"))}</li>
+            </ol>
+            <p>{t("label.applicationUploadBothDocuments")}</p>
+          </div>
         </div>
       }
     </AssistanceLayout>
