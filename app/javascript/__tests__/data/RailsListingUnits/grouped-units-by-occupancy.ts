@@ -1,14 +1,11 @@
 export const groupedUnitsByOccupancy = [
   {
     occupancy: 1,
-    absoluteMaxIncome: 4275,
+    absoluteMaxIncome: 5941,
     absoluteMinIncome: 100,
     amiRows: [
       {
-        ami: {
-          min: 82,
-          max: 109.8,
-        },
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -31,9 +28,9 @@ export const groupedUnitsByOccupancy = [
             Min_AMI_for_Qualifying_Unit: 82,
             Min_Occupancy: 1,
             Id: "a0b4U00001JvOmHQAV",
-            maxMonthlyIncomeNeeded: 4275,
             Max_Occupancy: 3,
             occupancy: 1,
+            maxMonthlyIncomeNeeded: 5941,
           },
         ],
       },
@@ -41,11 +38,11 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 2,
-    absoluteMaxIncome: 4883,
+    absoluteMaxIncome: 6550,
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: { max: 82, min: 55 },
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -71,15 +68,12 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 2,
-            maxMonthlyIncomeNeeded: 4883,
+            maxMonthlyIncomeNeeded: 5716,
           },
         ],
       },
       {
-        ami: {
-          min: 82,
-          max: 109.8,
-        },
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -102,9 +96,9 @@ export const groupedUnitsByOccupancy = [
             Min_AMI_for_Qualifying_Unit: 82,
             Min_Occupancy: 1,
             Id: "a0b4U00001JvOmHQAV",
-            maxMonthlyIncomeNeeded: 4883,
             Max_Occupancy: 3,
             occupancy: 2,
+            maxMonthlyIncomeNeeded: 6550,
           },
         ],
       },
@@ -112,11 +106,11 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 3,
-    absoluteMaxIncome: 5495,
+    absoluteMaxIncome: 6329,
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: { max: 82, min: 55 },
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -142,15 +136,12 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 3,
-            maxMonthlyIncomeNeeded: 5495,
+            maxMonthlyIncomeNeeded: 6329,
           },
         ],
       },
       {
-        ami: {
-          min: 82,
-          max: 109.8,
-        },
+        ami: { min: 82, max: 109.8 },
         units: [
           {
             attributes: {
@@ -173,9 +164,9 @@ export const groupedUnitsByOccupancy = [
             Min_AMI_for_Qualifying_Unit: 82,
             Min_Occupancy: 1,
             Id: "a0b4U00001JvOmHQAV",
-            maxMonthlyIncomeNeeded: 5495,
             Max_Occupancy: 3,
             occupancy: 3,
+            maxMonthlyIncomeNeeded: 6329,
           },
           {
             attributes: {
@@ -198,9 +189,9 @@ export const groupedUnitsByOccupancy = [
             Min_AMI_for_Qualifying_Unit: 82,
             Min_Occupancy: 3,
             Id: "a0b4U00001JvOj5QAF",
-            maxMonthlyIncomeNeeded: 5495,
-            Max_Occupancy: 3,
+            Max_Occupancy: 5,
             occupancy: 3,
+            maxMonthlyIncomeNeeded: 6329,
           },
           {
             attributes: {
@@ -223,9 +214,9 @@ export const groupedUnitsByOccupancy = [
             Min_AMI_for_Qualifying_Unit: 82,
             Min_Occupancy: 3,
             Id: "a0b4U00001JvOmLQAV",
-            maxMonthlyIncomeNeeded: 5495,
-            Max_Occupancy: 3,
+            Max_Occupancy: 5,
             occupancy: 3,
+            maxMonthlyIncomeNeeded: 6329,
           },
         ],
       },
@@ -233,11 +224,11 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 4,
-    absoluteMaxIncome: 6104,
+    absoluteMaxIncome: 6937,
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: { max: 82, min: 55 },
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -263,7 +254,87 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 4,
-            maxMonthlyIncomeNeeded: 6104,
+            maxMonthlyIncomeNeeded: 6937,
+          },
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOm7QAF",
+            },
+            Unit_Type: "4 BR",
+            Availability: 1,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 10,
+            Unit_Square_Footage: 1615,
+            Unit_Number: "202B",
+            Unit_Floor: "2-3",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 35,
+            Min_Occupancy: 4,
+            Id: "a0b4U00001JvOm7QAF",
+            Max_Occupancy: 6,
+            occupancy: 4,
+            maxMonthlyIncomeNeeded: 6937,
+          },
+        ],
+      },
+      {
+        ami: { min: 82, max: 109.8 },
+        units: [
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOj5QAF",
+            },
+            Unit_Type: "3 BR",
+            Availability: 4,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 10,
+            Unit_Square_Footage: 1130,
+            Unit_Number: "101A",
+            Unit_Floor: "1",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 109.8,
+            Min_AMI_for_Qualifying_Unit: 82,
+            Min_Occupancy: 3,
+            Id: "a0b4U00001JvOj5QAF",
+            Max_Occupancy: 5,
+            occupancy: 4,
+            maxMonthlyIncomeNeeded: 6937,
+          },
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmLQAV",
+            },
+            Unit_Type: "3 BR",
+            Availability: 1,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 110,
+            Unit_Square_Footage: 1131,
+            Unit_Number: "203C",
+            Unit_Floor: "2",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 109.8,
+            Min_AMI_for_Qualifying_Unit: 82,
+            Min_Occupancy: 3,
+            Id: "a0b4U00001JvOmLQAV",
+            Max_Occupancy: 5,
+            occupancy: 4,
+            maxMonthlyIncomeNeeded: 6937,
           },
         ],
       },
@@ -271,11 +342,11 @@ export const groupedUnitsByOccupancy = [
   },
   {
     occupancy: 5,
-    absoluteMaxIncome: 6591,
+    absoluteMaxIncome: 11666,
     absoluteMinIncome: 7,
     amiRows: [
       {
-        ami: { max: 82, min: 55 },
+        ami: { min: 55, max: 82 },
         units: [
           {
             attributes: {
@@ -301,7 +372,124 @@ export const groupedUnitsByOccupancy = [
             Max_Occupancy: 5,
             Id: "a0b4U00001JvOmGQAV",
             occupancy: 5,
-            maxMonthlyIncomeNeeded: 6591,
+            maxMonthlyIncomeNeeded: 8258,
+          },
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOm7QAF",
+            },
+            Unit_Type: "4 BR",
+            Availability: 1,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 10,
+            Unit_Square_Footage: 1615,
+            Unit_Number: "202B",
+            Unit_Floor: "2-3",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 35,
+            Min_Occupancy: 4,
+            Id: "a0b4U00001JvOm7QAF",
+            Max_Occupancy: 6,
+            occupancy: 5,
+            maxMonthlyIncomeNeeded: 8258,
+          },
+        ],
+      },
+      {
+        ami: { min: 82, max: 109.8 },
+        units: [
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOj5QAF",
+            },
+            Unit_Type: "3 BR",
+            Availability: 4,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 10,
+            Unit_Square_Footage: 1130,
+            Unit_Number: "101A",
+            Unit_Floor: "1",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 109.8,
+            Min_AMI_for_Qualifying_Unit: 82,
+            Min_Occupancy: 3,
+            Id: "a0b4U00001JvOj5QAF",
+            Max_Occupancy: 5,
+            occupancy: 5,
+            maxMonthlyIncomeNeeded: 11666,
+          },
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmLQAV",
+            },
+            Unit_Type: "3 BR",
+            Availability: 1,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 110,
+            Unit_Square_Footage: 1131,
+            Unit_Number: "203C",
+            Unit_Floor: "2",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 109.8,
+            Min_AMI_for_Qualifying_Unit: 82,
+            Min_Occupancy: 3,
+            Id: "a0b4U00001JvOmLQAV",
+            Max_Occupancy: 5,
+            occupancy: 5,
+            maxMonthlyIncomeNeeded: 11666,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    occupancy: 6,
+    absoluteMaxIncome: 7916,
+    absoluteMinIncome: 10,
+    amiRows: [
+      {
+        ami: { min: 35, max: 82 },
+        units: [
+          {
+            attributes: {
+              type: "Unit",
+              url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOm7QAF",
+            },
+            Unit_Type: "4 BR",
+            Availability: 1,
+            BMR_Rental_Minimum_Monthly_Income_Needed: 10,
+            Unit_Square_Footage: 1615,
+            Unit_Number: "202B",
+            Unit_Floor: "2-3",
+            Number_of_Bathrooms: 2,
+            Status: "Available",
+            Property_Type: "Condo",
+            isReservedCommunity: true,
+            AMI_chart_type: "MOHCD",
+            AMI_chart_year: 2021,
+            Max_AMI_for_Qualifying_Unit: 82,
+            Min_AMI_for_Qualifying_Unit: 35,
+            Min_Occupancy: 4,
+            Id: "a0b4U00001JvOm7QAF",
+            Max_Occupancy: 6,
+            occupancy: 6,
+            maxMonthlyIncomeNeeded: 7916,
           },
         ],
       },

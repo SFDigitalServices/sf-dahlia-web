@@ -1,0 +1,664 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when habitat listing 1`] = `
+<li
+  className="list-section custom-counter__item"
+>
+  <header
+    className="list-section__header custom-counter__header"
+  >
+    <hgroup>
+      <h3
+        className="custom-counter__title"
+      >
+        Household Maximum Income
+      </h3>
+      <span
+        className="custom-counter__subtitle"
+      >
+        <div>
+          <div
+            className="mb-4"
+          >
+            <p>
+              For income calculations, household size includes everyone (all ages) living in the unit.
+            </p>
+          </div>
+          <div
+            className="mb-4 primary-lighter-markup-link-desktop"
+          >
+            <p>
+              People in your household may need 
+              <a
+                href="https://sfmohcd.org/special-calculations-household-income"
+                target="_blank"
+              >
+                special income calculations
+              </a>
+               if they:
+            </p>
+          </div>
+          <ul
+            className="list-disc ml-5"
+          >
+            <li>
+              Are full-time students (but not the primary applicant).
+            </li>
+            <li>
+              Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+            </li>
+          </ul>
+        </div>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    style={
+      Object {
+        "overflowX": "auto",
+      }
+    }
+  >
+    <table
+      className="w-full text-xs"
+    >
+      <thead>
+        <tr>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              household size
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              55% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              82% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              109.8% AMI
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+  <button
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    onClick={[Function]}
+    tabIndex={0}
+  >
+    <span
+      className="button__content"
+    >
+      show more
+    </span>
+    <span
+      className="ui-icon ui-small button__icon"
+      data-test-id={null}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <svg
+        aria-hidden="true"
+        className="svg-inline--fa fa-angle-down "
+        data-icon="angle-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        style={Object {}}
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+          fill="currentColor"
+          style={Object {}}
+        />
+      </svg>
+    </span>
+  </button>
+</li>
+`;
+
+exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with rental listing 1`] = `
+<li
+  className="list-section custom-counter__item"
+>
+  <header
+    className="list-section__header custom-counter__header"
+  >
+    <hgroup>
+      <h3
+        className="custom-counter__title"
+      >
+        Household Maximum Income
+      </h3>
+      <span
+        className="custom-counter__subtitle"
+      >
+        <div>
+          <div
+            className="mb-4"
+          >
+            <p>
+              For income calculations, household size includes everyone (all ages) living in the unit.
+            </p>
+          </div>
+          <div
+            className="mb-4 primary-lighter-markup-link-desktop"
+          >
+            <p>
+              People in your household may need 
+              <a
+                href="https://sfmohcd.org/special-calculations-household-income"
+                target="_blank"
+              >
+                special income calculations
+              </a>
+               if they:
+            </p>
+          </div>
+          <ul
+            className="list-disc ml-5"
+          >
+            <li>
+              Are full-time students (but not the primary applicant).
+            </li>
+            <li>
+              Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+            </li>
+          </ul>
+        </div>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    style={
+      Object {
+        "overflowX": "auto",
+      }
+    }
+  >
+    <table
+      className="w-full text-xs"
+    >
+      <thead>
+        <tr>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              household size
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              55% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              82% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              109.8% AMI
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  </div>
+  <button
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    onClick={[Function]}
+    tabIndex={0}
+  >
+    <span
+      className="button__content"
+    >
+      show more
+    </span>
+    <span
+      className="ui-icon ui-small button__icon"
+      data-test-id={null}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <svg
+        aria-hidden="true"
+        className="svg-inline--fa fa-angle-down "
+        data-icon="angle-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        style={Object {}}
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+          fill="currentColor"
+          style={Object {}}
+        />
+      </svg>
+    </span>
+  </button>
+</li>
+`;
+
+exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with spinner before api call 1`] = `
+<li
+  className="flex w-full justify-center"
+>
+  <span
+    className="ui-icon ui-large spinner-animation"
+    data-test-id={null}
+  >
+    <svg
+      fill="currentColor"
+      viewBox="0 0 100 100"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        fill="none"
+        r="32"
+        stroke="currentColor"
+        strokeDasharray="150.79644737231007 52.26548245743669"
+        strokeWidth="9"
+      />
+    </svg>
+  </span>
+</li>
+`;
+
+exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component with open sale listing 1`] = `
+<li
+  className="list-section custom-counter__item"
+>
+  <header
+    className="list-section__header custom-counter__header"
+  >
+    <hgroup>
+      <h3
+        className="custom-counter__title"
+      >
+        Household Maximum Income
+      </h3>
+      <span
+        className="custom-counter__subtitle"
+      >
+        <div>
+          <div
+            className="mb-4"
+          >
+            <p>
+              For income calculations, household size includes everyone (all ages) living in the unit.
+            </p>
+          </div>
+          <div
+            className="mb-4 primary-lighter-markup-link-desktop"
+          >
+            <p>
+              People in your household may need 
+              <a
+                href="https://sfmohcd.org/special-calculations-household-income"
+                target="_blank"
+              >
+                special income calculations
+              </a>
+               if they:
+            </p>
+          </div>
+          <ul
+            className="list-disc ml-5"
+          >
+            <li>
+              Are full-time students (but not the primary applicant).
+            </li>
+            <li>
+              Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+            </li>
+          </ul>
+        </div>
+      </span>
+    </hgroup>
+  </header>
+  <div
+    style={
+      Object {
+        "overflowX": "auto",
+      }
+    }
+  >
+    <table
+      className="w-full text-xs"
+    >
+      <thead>
+        <tr>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              household size
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              55% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              82% AMI
+            </span>
+          </th>
+          <th
+            className=""
+          >
+            <span
+              className=""
+            >
+              109.8% AMI
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className=""
+          id="standardrow-0"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              1 person
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $51,300 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $61,300 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $71,300 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-1"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              2 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $58,600 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $68,600 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $78,600 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-2"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              3 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $65,950 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $75,950 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $75,950 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-3"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              4 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $73,250 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $83,250 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $83,250 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-4"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              5 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $79,100 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $99,100 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $140,000 per year
+          </td>
+        </tr>
+        <tr
+          className=""
+          id="standardrow-5"
+        >
+          <td
+            className="p-5"
+            data-label="household size"
+          >
+            <span
+              className="font-semibold"
+            >
+              6 people
+            </span>
+          </td>
+          <td
+            className="p-5"
+            data-label="55% AMI"
+          >
+            $85,000 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="82% AMI"
+          >
+            $95,000 per year
+          </td>
+          <td
+            className="p-5"
+            data-label="109.8% AMI"
+          >
+            $150,000 per year
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    onClick={[Function]}
+    tabIndex={0}
+  >
+    <span
+      className="button__content"
+    >
+      show more
+    </span>
+    <span
+      className="ui-icon ui-small button__icon"
+      data-test-id={null}
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <svg
+        aria-hidden="true"
+        className="svg-inline--fa fa-angle-down "
+        data-icon="angle-down"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        style={Object {}}
+        viewBox="0 0 384 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+          fill="currentColor"
+          style={Object {}}
+        />
+      </svg>
+    </span>
+  </button>
+</li>
+`;
