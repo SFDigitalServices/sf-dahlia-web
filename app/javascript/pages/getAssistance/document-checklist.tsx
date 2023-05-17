@@ -3,6 +3,7 @@ import React from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { renderInlineMarkup } from "../../util/languageUtil"
+
 const DocumentChecklist = () => {
   const preferences = [
     {
