@@ -124,7 +124,9 @@ const DocumentChecklist = () => {
   ].map((pref) => (
     <ContentAccordion
       customBarContent={pref.title}
-      customExpandedContent={<div className="p-5 border-2 border-gray-400">{pref.expanded}</div>}
+      customExpandedContent={
+        <div className="p-5 rounded-b-lg border-2 border-gray-400">{pref.expanded}</div>
+      }
       accordionTheme={"gray"}
     />
   ))
