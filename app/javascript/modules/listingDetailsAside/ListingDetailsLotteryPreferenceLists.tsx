@@ -19,7 +19,7 @@ export const ListingDetailsLotteryPreferenceLists = ({
 
   return (
     <>
-      {listing.Listing_Lottery_Preferences.filter((preference: ListingLotteryPreference) => {
+      {listing.Listing_Lottery_Preferences?.filter((preference: ListingLotteryPreference) => {
         return !!preference.PDF_URL
       }).map((preference: ListingLotteryPreference) => {
         return (
