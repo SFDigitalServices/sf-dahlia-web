@@ -105,9 +105,6 @@ const buildHmiTableWithMultipleAmis = (
   amiCharts: RailsAmiChart[]
 ) => {
   const tableData = []
-
-  amiCharts.sort(sortAmisByPercent)
-
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
     const tableRow = {}
 
@@ -163,6 +160,11 @@ export interface ReducedUnit {
 export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityProps) => {
   const listingIsSale = isSale(listing)
   const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
+
+  if (amiCharts?.length > 0) {
+    amiCharts.sort(sortAmisByPercent)
+  }
+
   const [tableCollapsed, setTableCollapsed] = useState(true)
 
   const { minOccupancy, maxOccupancy, explicitMaxOccupancy } = useMemo(() => {
@@ -177,6 +179,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
     if (!fetchedAmiCharts || !fetchedUnits) {
       return []
     }
+
     return buildHmiCharts(listingIsSale, amiCharts, minOccupancy, maxOccupancy)
   }, [listingIsSale, amiCharts, fetchedAmiCharts, fetchedUnits, minOccupancy, maxOccupancy])
 
