@@ -172,7 +172,16 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
       }
     })
 
-    return t("listings.includesPriorityUnits", { priorities: priorityNames.join(", ") })
+    return (
+      <div>
+        {t("listings.includesPriorityUnits")}
+        <ul className="list-disc ml-4">
+          {priorityNames.map((name) => (
+            <li key={name}>{name}</li>
+          ))}
+        </ul>
+      </div>
+    )
   }
   return null
 }

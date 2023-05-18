@@ -807,7 +807,7 @@
   "listings.householdMaximumIncome": "Ingresos anuales del grupo familiar",
   "listings.housingProgram": "Programa de vivienda",
   "listings.importantProgramRules": "Reglas Importantes del Programa",
-  "listings.includesPriorityUnits": "Incluye unidades con prioridad para %{priorities}",
+  "listings.includesPriorityUnits": "Incluye unidades con prioridad para:",
   "listings.includingChildren": "(incluidos <span class='eligibility-subtext'>%{number} %{children}</span> menores de 6 años)",
   "listings.incomeExceptions.intro": "Las personas en su hogar pueden necesitar <a href='%{url}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
   "listings.incomeExceptions.students": "Sean estudiantes de tiempo completo (no se aplica al solicitante principal)",

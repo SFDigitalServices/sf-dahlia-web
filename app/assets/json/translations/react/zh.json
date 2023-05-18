@@ -808,7 +808,7 @@
   "listings.householdMaximumIncome": "家庭最高收入",
   "listings.housingProgram": "住房計劃",
   "listings.importantProgramRules": "重要計畫規定",
-  "listings.includesPriorityUnits": "包括 %{priorities} 的優先單位",
+  "listings.includesPriorityUnits": "包括 的優先單位",
   "listings.includingChildren": "(包括<span class='eligibility-subtext'>%{number} %{children}</span>6歲以下兒童)",
   "listings.incomeExceptions.intro": "如果您家中的成員符合以下情況，可能需要<a href='%{url}' target='_blank'>特別收入計算方式</a>：",
   "listings.incomeExceptions.students": "是全日制學生（但不是主申請人）",
