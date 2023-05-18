@@ -25,6 +25,7 @@ import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
+import TableSubHeader from "./TableSubHeader"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -147,7 +148,7 @@ export const getTableHeader = (listing: RailsRentalListing) => {
 }
 
 // Get the summary table subheader
-export const getTableSubHeader = (listing: RailsRentalListing) => {
+export const getPriorityTypes = (listing: RailsRentalListing): string[] | null => {
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
     const priorityNames = []
     listing.prioritiesDescriptor.forEach((priority) => {
@@ -171,17 +172,7 @@ export const getTableSubHeader = (listing: RailsRentalListing) => {
           priorityNames.push(priority.name)
       }
     })
-
-    return (
-      <div>
-        {t("listings.includesPriorityUnits")}
-        <ul className="list-disc ml-4">
-          {priorityNames.map((name) => (
-            <li key={name}>{name}</li>
-          ))}
-        </ul>
-      </div>
-    )
+    return priorityNames
   }
   return null
 }
@@ -200,7 +191,9 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
             ? null
             : {
                 tableHeader: { content: getTableHeader(listing) },
-                tableSubheader: { content: getTableSubHeader(listing) },
+                tableSubheader: {
+                  content: <TableSubHeader priorityTypes={getPriorityTypes(listing)} />,
+                },
                 contentHeader: { content: listing.Name },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
               }
