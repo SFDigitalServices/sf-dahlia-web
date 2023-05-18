@@ -34,7 +34,7 @@ const clickLotteryResultsButton = (mobile: boolean) => {
 
 const searchForLotteryResults = () => {
   cy.get('input[placeholder="Enter Your Lottery Number"]').type("01150047")
-  cy.get("form").submit()
+  cy.get('[aria-label="Submit number"]').click()
 }
 
 describe("Listing Details for Completed Lottery Listing", () => {
