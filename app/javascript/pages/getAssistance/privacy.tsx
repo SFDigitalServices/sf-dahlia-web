@@ -6,7 +6,7 @@ const Privacy = () => {
   return (
     <Layout title={"Privacy Policy"}>
       {/* Add PageHeader Component (Look in AssistanceLayout) */}
-      <h1>Privacy Policy Content :)</h1>
+      <h1>Privacy Policy Content</h1>
     </Layout>
   )
 }

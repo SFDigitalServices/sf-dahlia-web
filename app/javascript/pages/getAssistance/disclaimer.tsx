@@ -6,7 +6,7 @@ const Disclaimer = () => {
   return (
     <Layout title={"Disclaimer"}>
       {/* Add PageHeader Component (Look in AssistanceLayout) */}
-      <h1>Disclaimer </h1>
+      <h1>Disclaimer Content</h1>
     </Layout>
   )
 }
