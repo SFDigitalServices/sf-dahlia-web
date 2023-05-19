@@ -13,7 +13,7 @@ const GetHelp = () => (
     <span>
       <p className="mb-4">
         {t("listingsForSale.getHelp.dalpProgramInfo")}{" "}
-        <Link external={true} href="http://www.google.com">
+        <Link external={true} href="https://sf.gov/resource/2022/mohcd-loan-programs">
           {t("listingsForSale.getHelp.learnMoreAndHowToApply")}
         </Link>
       </p>
