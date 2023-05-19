@@ -807,7 +807,6 @@
   "listings.householdMaximumIncome": "Maximum o Pinakamalaki nang Kita Dapat ng Kabahayan",
   "listings.housingProgram": "Programa sa Pabahay (Housing Program)",
   "listings.importantProgramRules": "Mahahalagang Patakaran ng Programa ",
-  "listings.includesPriorityUnits": "Kasama ang mga Unit na Nagbibigay Prayoridad para sa %{priorities}",
   "listings.includingChildren": "(kasama ang <span class='eligibility-subtext'>%{number} %{children}</span> mas bata sa edad na 6)",
   "listings.incomeExceptions.intro": "Posibleng kailangan ng mga tao sa inyong kabahayan ng  <a href='%{url}' target='_blank'>espesyal na pagkakalkula ng kita </a> kung sila ay:",
   "listings.incomeExceptions.students": "Mga buong oras na estudyante (pero hindi ang pangunahing aplikante)",
