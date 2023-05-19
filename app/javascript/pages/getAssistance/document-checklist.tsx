@@ -137,8 +137,8 @@ const DocumentChecklist = () => {
     >
       {
         <div className="flex flex-col w-full ">
-          <div className="space-y-4 p-6 md:p-11">
-            <h3>{t("documentChecklist.preferenceHeader")}</h3>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 md:pl-0">
+            <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
             <p>{t("documentChecklist.p2")}</p>
             <p>{renderInlineMarkup(t("documentChecklist.p3"))}</p>
@@ -148,7 +148,7 @@ const DocumentChecklist = () => {
             <hr />
           </div>
           <div className="space-y-4 p-6 md:p-11">
-            <h3>{t("documentChecklist.homebuyerHeader")}</h3>
+            <h2>{t("documentChecklist.homebuyerHeader")}</h2>
             <p>{t("documentChecklist.homebuyerDesc")}</p>
             <ol className="list-decimal ml-7">
               <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
