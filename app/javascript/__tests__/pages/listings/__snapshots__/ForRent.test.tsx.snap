@@ -101,6 +101,7 @@ exports[`For Rent renders ForRent component 1`] = `
               aria-label="DAHLIA San Francisco Housing Portal"
               className="site-header__logo translate site-header__custom-width"
               href="/"
+              target="_self"
             >
               <div
                 className="site-header__logo-content site-header__image-only-container"
@@ -119,6 +120,7 @@ exports[`For Rent renders ForRent component 1`] = `
               className="site-header__link pb-4 pt-1 flex items-end "
               data-test-id="Rent-0"
               href="/listings/for-rent"
+              target="_self"
             >
               <div>
                 Rent
@@ -128,6 +130,7 @@ exports[`For Rent renders ForRent component 1`] = `
               className="site-header__link pb-4 pt-1 flex items-end "
               data-test-id="Buy-1"
               href="/listings/for-sale"
+              target="_self"
             >
               <div>
                 Buy
@@ -137,6 +140,7 @@ exports[`For Rent renders ForRent component 1`] = `
               className="site-header__link pb-4 pt-1 flex items-end "
               data-test-id="My Favorites-2"
               href="/favorites"
+              target="_self"
             >
               <div>
                 My Favorites
@@ -146,6 +150,7 @@ exports[`For Rent renders ForRent component 1`] = `
               className="site-header__link pb-4 pt-1 flex items-end "
               data-test-id="Get Assistance-3"
               href="/get-assistance"
+              target="_self"
             >
               <div>
                 Get Assistance
@@ -155,6 +160,7 @@ exports[`For Rent renders ForRent component 1`] = `
               className="site-header__link pb-4 pt-1 flex items-end "
               data-test-id="Sign In-4"
               href="/sign-in"
+              target="_self"
             >
               <div>
                 Sign In
@@ -404,18 +410,21 @@ exports[`For Rent renders ForRent component 1`] = `
           <a
             className="text-gray-500"
             href="mailto:sfhousinginfo@sfgov.org"
+            target="_self"
           >
             Contact
           </a>
           <a
             className="text-gray-500"
             href="/disclaimer"
+            target="_self"
           >
             Disclaimer
           </a>
           <a
             className="text-gray-500"
             href="/privacy"
+            target="_self"
           >
             Privacy Policy
           </a>
