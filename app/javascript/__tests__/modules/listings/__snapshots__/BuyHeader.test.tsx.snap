@@ -119,7 +119,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
           <h2
             className="text__underline-weighted mb-5"
           >
-            Help with downpayments
+            Help with down payments
           </h2>
           <span>
             <p
