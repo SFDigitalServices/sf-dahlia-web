@@ -126,7 +126,7 @@ Array [
         <span>
           <a
             aria-label="View document checklist for the Live or Work in San Francisco Preference"
-            href="/document-checklist"
+            href="/document-checklist#live-or-work-sf"
             target="_blank"
           >
             View Document Checklist
@@ -229,7 +229,7 @@ Array [
         <span>
           <a
             aria-label="View document checklist for the Rent Burdened / Assisted Housing Preference"
-            href="/document-checklist"
+            href="/document-checklist#rent-burdened-assisted-housing"
             target="_blank"
           >
             View Document Checklist
@@ -318,7 +318,7 @@ Array [
         <span>
           <a
             aria-label="View document checklist for the Neighborhood Resident Housing Preference"
-            href="/document-checklist"
+            href="/document-checklist#nrhp"
             target="_blank"
           >
             View Document Checklist
@@ -367,7 +367,7 @@ Array [
         <span>
           <a
             aria-label="View document checklist for the Live or Work in San Francisco Preference"
-            href="/document-checklist"
+            href="/document-checklist#live-or-work-sf"
             target="_blank"
           >
             View Document Checklist
@@ -402,7 +402,7 @@ Array [
         <span>
           <a
             aria-label="View document checklist for the Alice Griffith Housing Development Resident"
-            href="/document-checklist"
+            href="/document-checklist#hope-sf"
             target="_blank"
           >
             View Document Checklist

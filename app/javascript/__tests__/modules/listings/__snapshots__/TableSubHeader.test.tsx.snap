@@ -2,7 +2,7 @@
 
 exports[`TableSubHeader renders TableSubHeader component 1`] = `
 <div>
-  Includes Priority Units for:
+  Includes Priority Units for %{priorities}
   <ul
     className="list-disc ml-4"
   >
