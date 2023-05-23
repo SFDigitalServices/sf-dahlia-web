@@ -4,6 +4,8 @@ import { RailsListingPreference } from "../../api/types/rails/listings/RailsList
 import { PREFERENCES, PREFERENCES_IDS, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
+import { getLocalizedPath } from "../../util/routeUtil"
+import { getRoutePrefix } from "../../util/languageUtil"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -63,6 +65,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           }
           // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
           if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
+            const routePrefix = getRoutePrefix(window.location.pathname)
             const anchorMap = {
               "Neighborhood Resident Housing Preference (NRHP)":
                 PREFERENCES_IDS.neighborhoodResidence,
@@ -75,7 +78,13 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
               ariaLabel: t(
                 `listings.lotteryPreference.${preference.preferenceName}.additionalDocumentation`
               ),
-              url: `/document-checklist#${anchorMap[preference.preferenceName]}`,
+              url:
+                typeof routePrefix === "undefined"
+                  ? `/document-checklist#${anchorMap[preference.preferenceName]}`
+                  : getLocalizedPath(
+                      `/document-checklist#${anchorMap[preference.preferenceName]}`,
+                      routePrefix
+                    ),
             })
           }
 

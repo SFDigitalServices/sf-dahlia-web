@@ -24,13 +24,6 @@ export const PREFERENCES_IDS = {
   certificateOfPreference: "cop",
 }
 
-export const anchorMap = {
-  "Neighborhood Resident Housing Preference (NRHP)": PREFERENCES_IDS.neighborhoodResidence,
-  "Rent Burdened / Assisted Housing Preference": PREFERENCES_IDS.assistedHousing,
-  "Live or Work in San Francisco Preference": PREFERENCES_IDS.liveWorkInSf,
-  "Alice Griffith Housing Development Resident": PREFERENCES_IDS.aliceGriffith,
-}
-
 export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.aliceGriffith,
   PREFERENCES.antiDisplacement,
