@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { Icon, PreferencesList, t } from "@bloom-housing/ui-components"
 import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
-import { PREFERENCES, PREFERENCES_WITH_PROOF } from "../constants"
+import { PREFERENCES, PREFERENCES_IDS, PREFERENCES_WITH_PROOF } from "../constants"
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
+import { getLocalizedPath } from "../../util/routeUtil"
+import { getRoutePrefix } from "../../util/languageUtil"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -63,12 +65,26 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           }
           // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
           if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
+            const routePrefix = getRoutePrefix(window.location.pathname)
+            const anchorMap = {
+              "Neighborhood Resident Housing Preference (NRHP)":
+                PREFERENCES_IDS.neighborhoodResidence,
+              "Rent Burdened / Assisted Housing Preference": PREFERENCES_IDS.assistedHousing,
+              "Live or Work in San Francisco Preference": PREFERENCES_IDS.liveWorkInSf,
+              "Alice Griffith Housing Development Resident": PREFERENCES_IDS.aliceGriffith,
+            }
             links.push({
               title: t("label.viewDocumentChecklist"),
               ariaLabel: t(
                 `listings.lotteryPreference.${preference.preferenceName}.additionalDocumentation`
               ),
-              url: "/document-checklist",
+              url:
+                typeof routePrefix === "undefined"
+                  ? `/document-checklist#${anchorMap[preference.preferenceName]}`
+                  : getLocalizedPath(
+                      `/document-checklist#${anchorMap[preference.preferenceName]}`,
+                      routePrefix
+                    ),
             })
           }
 

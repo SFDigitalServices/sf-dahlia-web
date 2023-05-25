@@ -15,6 +15,15 @@ export const PREFERENCES = {
   treasureIsland: "Treasure Island Resident (TIR) Preference",
 }
 
+export const PREFERENCES_IDS = {
+  aliceGriffith: "hope-sf",
+  neighborhoodResidence: "nrhp",
+  assistedHousing: "rent-burdened-assisted-housing",
+  liveWorkInSf: "live-or-work-sf",
+  displacedTenant: "dthp",
+  certificateOfPreference: "cop",
+}
+
 export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.aliceGriffith,
   PREFERENCES.antiDisplacement,
