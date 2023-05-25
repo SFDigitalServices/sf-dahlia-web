@@ -63,7 +63,6 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
               ariaLabel: t(`listings.lotteryPreference.${preference.preferenceName}.readMore`),
             })
           }
-          // TODO: DAH-1138 rewrite document-checklist page and link to appropriate section
           if (PREFERENCES_WITH_PROOF.includes(preference.preferenceName)) {
             const routePrefix = getRoutePrefix(window.location.pathname)
             const anchorMap = {
