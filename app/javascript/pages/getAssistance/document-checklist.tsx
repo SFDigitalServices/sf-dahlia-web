@@ -15,7 +15,7 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{renderInlineMarkup(t("documentChecklist.nrhpDoc1"), "<ul><li>")}</p>
           <p>{t("documentChecklist.nrhpDoc2")}</p>
-          <ul className="list-disc list-inside">
+          <ul className="list-disc ml-7">
             <li>{t("label.proof.telephoneBill")}</li>
             <li>{t("label.proof.cableBill")}</li>
             <li>{t("label.proof.electricBill")}</li>
@@ -35,10 +35,10 @@ const DocumentChecklist = () => {
       expanded: (
         <div>
           <p className="pb-2.5">{t("documentChecklist.twoWaysDesc")}</p>
-          <ul className="space-y-2.5 list-decimal list-inside ml-2">
+          <ul className="space-y-2.5 list-decimal ml-7">
             <li>
               <p className="pb-2.5">{t("documentChecklist.liveSfDesc")}</p>
-              <ul className="list-disc list-inside">
+              <ul className="list-disc ml-2">
                 <li>{t("label.proof.telephoneBill")}</li>
                 <li>{t("label.proof.cableBill")}</li>
                 <li>{t("label.proof.electricBill")}</li>
@@ -52,7 +52,7 @@ const DocumentChecklist = () => {
             </li>
             <li>
               <p className="pb-2.5">{t("documentChecklist.workSfDesc")}</p>
-              <ul className="list-disc list-inside">
+              <ul className="list-disc ml-2">
                 <li>{t("label.proof.paystubEmployer")}</li>
                 <li>{t("label.proof.letterFromEmployer")}</li>
               </ul>
@@ -89,12 +89,12 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{renderInlineMarkup(t("documentChecklist.ociiSponsored"))}</p>
           <p>{t("documentChecklist.twoWaysDesc")}</p>
-          <ol className="list-decimal list-inside ml-2">
+          <ol className="list-decimal ml-7">
             <li>
               <p className="pb-2.5">
                 {renderInlineMarkup(t("documentChecklist.assistedHousingDesc"))}
               </p>
-              <ul className="list-disc list-inside ml-2">
+              <ul className="list-disc ml-7">
                 <li>
                   <p className="pb-2.5">{t("label.proof.leaseAgreement")}</p>
                 </li>
@@ -102,13 +102,13 @@ const DocumentChecklist = () => {
             </li>
             <li>
               <p className="pb-2.5">{t("documentChecklist.rentBurdenDoc1")}</p>
-              <ol style={{ listStyleType: "lower-alpha" }} className="list-inside ml-2">
+              <ol style={{ listStyleType: "lower-alpha" }} className="ml-7">
                 <li>
                   <p>{t("label.proof.leaseAgreement")}</p>
                 </li>
                 <li>
                   <p className="pb-2.5">{t("documentChecklist.rentBurdenDoc2")}</p>
-                  <ul className="list-disc list-inside ml-2">
+                  <ul className="list-disc ml-7">
                     <li>{t("label.proof.moneyOrder")}</li>
                     <li>{t("label.proof.cancelledCheck")}</li>
                     <li>{t("label.proof.debitFromBank")}</li>
@@ -128,7 +128,7 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{t("documentChecklist.hopeSfDoc1")}</p>
           <p>{t("documentChecklist.hopeSfDoc2")}</p>
-          <ul className="list-disc list-inside">
+          <ul className="list-disc ml-7">
             <li>{t("label.proof.sfhaResidencyLetter")}</li>
             <li>{t("label.proof.sfhaLease")}</li>
             <li>{t("label.proof.sfCityId")}</li>
@@ -171,7 +171,7 @@ const DocumentChecklist = () => {
           <div className="space-y-4 p-6 md:py-11 md:pr-11 md:pl-0">
             <h2>{t("documentChecklist.homebuyerHeader")}</h2>
             <p>{t("documentChecklist.homebuyerDesc")}</p>
-            <ol className="list-decimal list-inside">
+            <ol className="list-decimal ml-7">
               <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
               <li>{renderInlineMarkup(t("documentChecklist.homebuyerLoanDesc"))}</li>
             </ol>
