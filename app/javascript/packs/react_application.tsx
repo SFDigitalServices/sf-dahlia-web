@@ -14,6 +14,8 @@ import HousingCounselors from "../pages/getAssistance/housing-counselors"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
+import Disclaimer from "../pages/getAssistance/disclaimer"
+import Privacy from "../pages/getAssistance/privacy"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -29,5 +31,7 @@ void loadTranslations(currentLanguage).then(() =>
     GetAssistance,
     DocumentChecklist,
     AdditionalResources,
+    Disclaimer,
+    Privacy,
   })
 )
