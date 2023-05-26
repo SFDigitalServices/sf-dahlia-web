@@ -142,14 +142,16 @@ const DocumentChecklist = () => {
       ),
     },
   ].map((pref) => (
-    <ContentAccordion
-      customBarContent={pref.title}
-      customExpandedContent={
-        <div className="p-5 rounded-b-lg border-2 border-gray-400">{pref.expanded}</div>
-      }
-      accordionTheme={"gray"}
-      initialExpanded={pref.id === anchor}
-    />
+    <div id={pref.id}>
+      <ContentAccordion
+        customBarContent={pref.title}
+        customExpandedContent={
+          <div className="p-5 rounded-b-lg border-2 border-gray-400">{pref.expanded}</div>
+        }
+        accordionTheme={"gray"}
+        initialExpanded={pref.id === anchor}
+      />
+    </div>
   ))
   return (
     <AssistanceLayout
