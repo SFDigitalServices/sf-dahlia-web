@@ -81,7 +81,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $5,941 per month
+            <div>
+              Income $100 to $5,941 per month
+            </div>
           </span>
         </span>
         <span
@@ -123,7 +125,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,550 per month
+            <div>
+              Income $7 to $6,550 per month
+            </div>
           </span>
         </span>
         <span
@@ -165,7 +169,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,329 per month
+            <div>
+              Income $7 to $6,329 per month
+            </div>
           </span>
         </span>
         <span
@@ -207,7 +213,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,937 per month
+            <div>
+              Income $7 to $6,937 per month
+            </div>
           </span>
         </span>
         <span
@@ -249,7 +257,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $11,666 per month
+            <div>
+              Income $7 to $11,666 per month
+            </div>
           </span>
         </span>
         <span
@@ -291,7 +301,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $7,916 per month
+            <div>
+              Income $10 to $7,916 per month
+            </div>
           </span>
         </span>
         <span
@@ -340,7 +352,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $5,941 per month
+            <div>
+              Income $100 to $5,941 per month
+            </div>
           </span>
         </span>
         <span
@@ -382,7 +396,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,550 per month
+            <div>
+              Income $7 to $6,550 per month
+            </div>
           </span>
         </span>
         <span
@@ -424,7 +440,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,329 per month
+            <div>
+              Income $7 to $6,329 per month
+            </div>
           </span>
         </span>
         <span
@@ -466,7 +484,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,937 per month
+            <div>
+              Income $7 to $6,937 per month
+            </div>
           </span>
         </span>
         <span
@@ -508,7 +528,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $11,666 per month
+            <div>
+              Income $7 to $11,666 per month
+            </div>
           </span>
         </span>
         <span
@@ -550,7 +572,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $7,916 per month
+            <div>
+              Income $10 to $7,916 per month
+            </div>
           </span>
         </span>
         <span
@@ -599,7 +623,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $100 to $5,941 per month
+            <div>
+              Income $100 to $5,941 per month
+            </div>
           </span>
         </span>
         <span
@@ -641,7 +667,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,550 per month
+            <div>
+              Income $7 to $6,550 per month
+            </div>
           </span>
         </span>
         <span
@@ -683,7 +711,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,329 per month
+            <div>
+              Income $7 to $6,329 per month
+            </div>
           </span>
         </span>
         <span
@@ -725,7 +755,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $6,937 per month
+            <div>
+              Income $7 to $6,937 per month
+            </div>
           </span>
         </span>
         <span
@@ -767,7 +799,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $7 to $11,666 per month
+            <div>
+              Income $7 to $11,666 per month
+            </div>
           </span>
         </span>
         <span
@@ -809,7 +843,9 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <span
             className="flex items-center mr-2"
           >
-            Income $10 to $7,916 per month
+            <div>
+              Income $10 to $7,916 per month
+            </div>
           </span>
         </span>
         <span

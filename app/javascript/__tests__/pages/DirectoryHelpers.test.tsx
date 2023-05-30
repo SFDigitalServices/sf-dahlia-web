@@ -151,8 +151,8 @@ describe("DirectoryHelpers", () => {
       expect(getRangeString(10, 10)).toBe("10")
     })
     it("includes 0 as min value if provided", () => {
-      expect(getRangeString(0, 20, false)).toBe("0 to 20")
-      expect(getRangeString(0, 20, true)).toBe("$0 to $20")
+      expect(getRangeString(0, 20, false)).toBe("up to 20")
+      expect(getRangeString(0, 20, true)).toBe("up to $20")
       expect(getRangeString(0, 0, false)).toBe("0")
     })
     it("formats ranges as currency when expected", () => {
