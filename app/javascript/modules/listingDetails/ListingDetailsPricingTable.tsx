@@ -7,6 +7,7 @@ import RailsUnit, {
 } from "../../api/types/rails/listings/RailsUnit"
 import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { getRangeString } from "../listings/DirectoryHelpers"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
@@ -97,7 +98,11 @@ const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
       cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unit?.BMR_Rental_Minimum_Monthly_Income_Needed?.toLocaleString()} to $${unit?.maxMonthlyIncomeNeeded?.toLocaleString()}`,
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
       cellSubText: t("t.perMonth"),
     },
     sale: buildSalePriceCellRow(unit),
@@ -112,7 +117,11 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
       cellSubText: `${unit.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unit?.BMR_Rental_Minimum_Monthly_Income_Needed?.toLocaleString()} to $${unit?.maxMonthlyIncomeNeeded?.toLocaleString()}`,
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
@@ -180,10 +189,22 @@ const buildAccordions = (
                   : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
               </span>
               <span className={"flex items-center mr-2"}>
-                {t("listings.incomeRange.minMaxPerMonth", {
-                  min: occupancy?.absoluteMinIncome?.toLocaleString(),
-                  max: occupancy?.absoluteMaxIncome?.toLocaleString(),
-                })}
+                {(() => {
+                  return occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
+                    <div>
+                      {t("listings.incomeRange.upToMaxPerMonth", {
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  ) : (
+                    <div>
+                      {t("listings.incomeRange.minMaxPerMonth", {
+                        min: occupancy?.absoluteMinIncome?.toLocaleString(),
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  )
+                })()}
               </span>
             </span>
           }
