@@ -798,7 +798,7 @@
       "upload_lease_description": "請上傳第一頁，或是載明租金總額的頁面。",
       "upload_preapproval_letter": "上傳預先批准信",
       "upload_proof_instructions_1": "若您目前正使用手機，可以拍攝照片。",
-      "upload_proof_instructions_2": "檔案大小上限為 5MB。<br>支援的檔案類型包括：PDF、JPG、PNG、HEIC。",
+      "upload_proof_instructions_2": "檔案大小上限為 25MB。<br>支援的檔案類型包括：PDF、JPG、PNG、HEIC。",
       "upload_proof_instructions_3": "檔案名稱的長度上限為 80 個字",
       "upload_proof_of_preference": "上傳優先權利證明",
       "upload_proof_of_rent_payment": "上傳租金付款證明",

@@ -1,7 +1,7 @@
 FileUploadService = ($http, $q, Upload, uuid, ListingPreferenceService, RentBurdenFileService, ShortFormHelperService) ->
   Service = {}
   Service.maxFileNameLength = 80
-  Service.maxFileSizeBytes = 5e6 # 5MB
+  Service.maxFileSizeBytes = 2.5e7 # 25MB
   # these are to be overridden
   Service.preferences = {}
   Service.session_uid = -> null

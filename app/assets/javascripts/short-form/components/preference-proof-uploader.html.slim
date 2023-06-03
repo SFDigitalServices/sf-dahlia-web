@@ -32,7 +32,7 @@
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
   / type="button" tells it not to act as a submit button
-  / The ngf-max-size attr is set to 20MB, which is different from the 5MB limit in FileUploadService, because we try to resize the file in  _processProofFile to see if we can get it under 5MB
+  / The ngf-max-size attr is set to 25MB, which is different from the 5MB limit in FileUploadService, because we try to resize the file in  _processProofFile to see if we can get it under 5MB
   button.button.secondary[
         ng-class="{expand: ($ctrl.proofType != 'Copy of Lease'), disabled: $ctrl.uploaderDisabled(), error: $ctrl.inputInvalid($ctrl.fileInputName), 'ghost-white': !$ctrl.inputInvalid($ctrl.fileInputName)}"
         type="button"
@@ -43,7 +43,7 @@
         ng-model="$ctrl.proofDocument.file.name"
         ng-required="$ctrl.application.preferences[$ctrl.preference]"
         ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf, image/HEIC'"
-        ngf-max-size="20MB"
+        ngf-max-size="25MB"
         ngf-pattern="'.png,.pdf,.jpg,.jpeg,.HEIC'"
         ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)"
         ngf-validate-fn="$ctrl.validateFileNameLength($file)"

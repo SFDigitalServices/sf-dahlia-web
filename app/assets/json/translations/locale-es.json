@@ -797,7 +797,7 @@
       "upload_lease_description": "Cargue la primera página o la página que muestre el monto del alquiler.",
       "upload_preapproval_letter": "Cargue su carta de pre-aprobación",
       "upload_proof_instructions_1": "Si está utilizando un teléfono inteligente, puede tomar una fotografía.",
-      "upload_proof_instructions_2": "El tamaño máximo del archivo es 5 MB.<br>Tipos de archivos compatibles: PDF, JPG, PNG, HEIC.",
+      "upload_proof_instructions_2": "El tamaño máximo del archivo es 25 MB.<br>Tipos de archivos compatibles: PDF, JPG, PNG, HEIC.",
       "upload_proof_instructions_3": "El nombre del archivo puede tener una longitud máxima de 80 caracteres",
       "upload_proof_of_preference": "Cargar comprobante de la preferencia",
       "upload_proof_of_rent_payment": "Cargar comprobante del pago del alquiler",
