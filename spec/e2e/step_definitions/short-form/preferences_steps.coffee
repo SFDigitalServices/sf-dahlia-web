@@ -27,8 +27,8 @@ When /^I upload a "([^"]*)" as my proof of preference for "([^"]*)"$/,
 
 When /^I upload a too-large "([^"]*)" as my proof of preference for "([^"]*)"$/,
   (documentType, preference) ->
-    # currently the max allowed file size after any resizing is 5MB
-    # upload a file that will be >5MB even after any resizing
+    # currently the max allowed file size after any resizing is 25MB
+    # upload a file that will be >25MB even after any resizing
     Utils.Page.uploadPreferenceProof(
       preference, documentType, '/spec/e2e/assets/sf-homes-wide.pdf')
 

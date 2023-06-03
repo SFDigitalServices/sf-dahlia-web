@@ -676,7 +676,7 @@
   "label.uploadLeaseDescription": "Please upload the first page, or whichever page shows the rent amount.",
   "label.uploadPreapprovalLetter": "Upload pre-approval letter",
   "label.uploadProofInstructions1": "If you're on a smartphone, you can take a picture.",
-  "label.uploadProofInstructions2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG, HEIC.",
+  "label.uploadProofInstructions2": "Maximum file size is 25MB.<br>Supported file types: PDF, JPG, PNG, HEIC.",
   "label.uploadProofInstructions3": "Maximum file name length is 80 characters",
   "label.uploadProofOfPreference": "Upload proof of preference",
   "label.uploadProofOfRentPayment": "Upload proof of rent payment",

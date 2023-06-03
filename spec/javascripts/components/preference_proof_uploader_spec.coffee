@@ -33,7 +33,7 @@ do ->
       proofDocument: {}
     fakeFileUploadService =
       maxFileNameLength: 80
-      maxFileSizeBytes: 5e6 # 5MB
+      maxFileSizeBytes: 2.5e7 # 25MB
       uploadProof: jasmine.createSpy()
       deleteFile: jasmine.createSpy()
     fakeShortFormHelperService =

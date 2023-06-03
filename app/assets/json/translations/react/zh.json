@@ -626,7 +626,7 @@
   "label.uploadLeaseDescription": "請上傳第一頁，或是載明租金總額的頁面。",
   "label.uploadPreapprovalLetter": "上傳預先批准信",
   "label.uploadProofInstructions1": "若您目前正使用手機，可以拍攝照片。",
-  "label.uploadProofInstructions2": "檔案大小上限為 5MB。<br>支援的檔案類型包括：PDF、JPG、PNG、HEIC。",
+  "label.uploadProofInstructions2": "檔案大小上限為 25MB。<br>支援的檔案類型包括：PDF、JPG、PNG、HEIC。",
   "label.uploadProofInstructions3": "檔案名稱的長度上限為 80 個字",
   "label.uploadProofOfPreference": "上傳優先權利證明",
   "label.uploadProofOfRentPayment": "上傳租金付款證明",

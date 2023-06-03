@@ -231,10 +231,10 @@ do ->
                   1: 'rent file'
         proofDocument = FileUploadService.preferences.documents[prefType]
 
-      describe 'when file is larger than 5MB', ->
+      describe 'when file is larger than 25MB', ->
         beforeEach ->
           file =
-            size: (5 * 1000 * 1000) + 1
+            size: (2.5e7) + 1
           uploadedFileParams = {}
           errorMsg = 'error.file_upload'
           FileUploadService._uploadProofFile(file, proofDocument, uploadedFileParams)
@@ -248,10 +248,10 @@ do ->
         it "sets the proofDocument's error to ERROR.FILE_UPLOAD", ->
           expect(proofDocument.error).toEqual(errorMsg)
 
-      describe 'when file is equal to or less than than 5MB', ->
+      describe 'when file is equal to or less than than 25MB', ->
         beforeEach ->
           file =
-            size: 5 * 1000 * 1000
+            size: 2.5e7
 
         it 'calls Upload.upload with the correct params', ->
           Upload.upload = jasmine.createSpy().and.callFake ->

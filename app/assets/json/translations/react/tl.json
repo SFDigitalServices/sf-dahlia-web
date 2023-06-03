@@ -625,7 +625,7 @@
   "label.uploadLeaseDescription": "Paki-upload ang unang pahina, o anumang pahina na nagpapakita ng halaga ng upa.",
   "label.uploadPreapprovalLetter": "I-upload ang liham ng paunang pag-apruba (pre-approval letter)",
   "label.uploadProofInstructions1": "Kung gumagamit kayo ng smartphone, kumuha ng larawan.",
-  "label.uploadProofInstructions2": "Ang maximum na laki ng file ay 5MB.<br>Mga uri ng sinusuportahang file: PDF, JPG, PNG, HEIC.",
+  "label.uploadProofInstructions2": "Ang maximum na laki ng file ay 25MB.<br>Mga uri ng sinusuportahang file: PDF, JPG, PNG, HEIC.",
   "label.uploadProofInstructions3": "80 character ang pinakahaba nang pwedeng pangalan sa file",
   "label.uploadProofOfPreference": "I-upload ang patunay para sa preperensiya",
   "label.uploadProofOfRentPayment": "I-upload ang patunay ng pagbabayad ng upa.",
