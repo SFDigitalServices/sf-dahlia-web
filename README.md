@@ -27,31 +27,36 @@ This repository contains the source code for [housing.sfgov.org](https://housing
 Before you install DAHLIA, your system should have the following:
 
 - [Homebrew](http://brew.sh)
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.6.8 (Use [RVM]
-  (https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 3.1.3 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
+  - For issues installing on an Apple Silicon mac, go [here](https://zwbetz.com/install-ruby-version-manager-on-mac/)
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 14.19.3
+- [Node.js](https://nodejs.org/en/) 18.12.1
   - Installing node with nvm is recommended. See [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495).
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
   - After node is installed, you can install yarn with `npm install --global yarn`
 
 ## Getting started
+More information about getting started can be found on the team confluence.
 
 1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
 1. Open a terminal window
 1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
-1. `cd sf-dahlia-web` to open the directory
-1. `bundle install` to download all necessary gems
-   - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
-   - if you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
-1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
-1. `overcommit --install` to install git hooks into the repo
-1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
-1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
-1. `./bin/webpack-dev-server` to start the webpack dev server
+   - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
+3. `cd sf-dahlia-web` to open the directory
+4. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
+5. Using RVM, install 3.1.3 (or whatever version we are on) with `rvm instal 3.1.3`
+6. `bundle install` to download all necessary gems
+   - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
+   - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
+7. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
+8. `overcommit --install` to install git hooks into the repo
+9. Download PostgreSQL. You only need to turn it on, step 10 will set it up for you.
+10. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
+11. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
+12. `./bin/webpack-dev-server` to start the webpack dev server
    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
-1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
+13. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
 
 ## How to migrate a page from AngularJS to React
 
