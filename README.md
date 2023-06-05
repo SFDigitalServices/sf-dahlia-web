@@ -42,13 +42,13 @@ More information about getting started can be found on the team confluence.
 1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
 1. Open a terminal window
 1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
-   - Using gh is recommended either with [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
+   - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
 3. `cd sf-dahlia-web` to open the directory
 4. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
 5. Using RVM, install 3.1.3 (or whatever version we are on) with `rvm instal 3.1.3`
 6. `bundle install` to download all necessary gems
-   - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
-   - if you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
+   - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
+   - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
 7. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 8. `overcommit --install` to install git hooks into the repo
 9. Download PostgreSQL. You only need to turn it on, step 10 will set it up for you.
