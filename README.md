@@ -51,12 +51,16 @@ More information about getting started can be found on the team confluence.
    - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
 1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
 1. `overcommit --install` to install git hooks into the repo
-1. Download PostgreSQL. You only need to turn it on, step 10 will set it up for you.
+1. Download PostgreSQL. You only need to turn it on, the next step will set it up for you.
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
 1. `./bin/webpack-dev-server` to start the webpack dev server
    - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
 1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
+1. Alternatively to the two steps above you can start either the webpack server, rails server, or both using yarn.
+   - `yarn client` to start webpack alone
+   - `yarn server` to start rails alone
+   - `yarn start` to start both servers
 
 ## How to migrate a page from AngularJS to React
 
@@ -67,11 +71,15 @@ See [docs/migrating-to-react](docs/migrating-to-react.md) for a step-by-step gui
 To run ruby tests:
 
 - `rake spec`
+   - you may need to install [imagemagick](https://formulae.brew.sh/formula/imagemagick) due to a dependency on the [minimagick gem](https://github.com/minimagick/minimagick)
 
-To run javascript unit tests:
+To run Angular unit tests:
 
 - `rake jasmine:ci` to run in terminal
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
+
+To run React unit tests:
+- `yarn test`
 
 To run E2E tests:
 
