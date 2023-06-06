@@ -54,13 +54,14 @@ More information about getting started can be found on the team confluence.
 1. Download PostgreSQL. You only need to turn it on, the next step will set it up for you.
 1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
 1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
-1. `./bin/webpack-dev-server` to start the webpack dev server
-   - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
-1. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
-1. Alternatively to the two steps above you can start either the webpack server, rails server, or both using yarn.
-   - `yarn client` to start webpack alone
-   - `yarn server` to start rails alone
-   - `yarn start` to start both servers
+1. Start Servers
+   - `yarn client` to start the webpack dev server alone
+   - `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
+   - `yarn start` to start both servers with a single command
+1. Alternatively you can start the servers using the webpack and rails command directly
+   - `NODE_OPTIONS=--openssl-legacy-provider ./bin/webpack-dev-server` to start webpack
+      - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+   - In another terminal tab, run `rails s` to start the rails
 
 ## How to migrate a page from AngularJS to React
 
