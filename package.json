@@ -105,7 +105,6 @@
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
     "test": "jest",
-    "updateSnapshot": "jest --updateSnapshot",
     "test:e2e": "cypress run",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",
