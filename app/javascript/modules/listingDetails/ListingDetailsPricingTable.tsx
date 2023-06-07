@@ -133,6 +133,29 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
+// TODO: Add comment and simplify
+const buildHeader = (amiRow: AmiRow, index: number): string => {
+  if (index === 0) {
+    return amiRow.ami.min
+      ? t("listings.stats.amiRange.longText", {
+          minAmiPercent: amiRow.ami.min,
+          maxAmiPercent: amiRow.ami.max,
+        })
+      : t("listings.stats.upToPercentAmi.longText", {
+          amiPercent: amiRow.ami.max,
+        })
+  } else {
+    return amiRow.ami.min
+      ? t("listings.stats.amiRange", {
+          minAmiPercent: amiRow.ami.min,
+          maxAmiPercent: amiRow.ami.max,
+        })
+      : t("listings.stats.upToPercentAmi", {
+          amiPercent: amiRow.ami.max,
+        })
+  }
+}
+
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
   listingIsSale: boolean
@@ -141,7 +164,8 @@ const buildAccordions = (
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
 
-      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
+      // TODO: innerIndex vs index
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, innerIndex: number) => {
         const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
           return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
         })
@@ -159,14 +183,7 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
-        const header = amiRow.ami.min
-          ? t("listings.stats.amiRange", {
-              minAmiPercent: amiRow.ami.min,
-              maxAmiPercent: amiRow.ami.max,
-            })
-          : t("listings.stats.upToPercentAmi", {
-              amiPercent: amiRow.ami.max,
-            })
+        const header: string = buildHeader(amiRow, innerIndex)
 
         return {
           header,
