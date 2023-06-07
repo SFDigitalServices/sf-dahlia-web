@@ -133,27 +133,18 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
-// TODO: Add comment and simplify
 const buildHeader = (amiRow: AmiRow, index: number): string => {
-  if (index === 0) {
-    return amiRow.ami.min
-      ? t("listings.stats.amiRange.longText", {
-          minAmiPercent: amiRow.ami.min,
-          maxAmiPercent: amiRow.ami.max,
-        })
-      : t("listings.stats.upToPercentAmi.longText", {
-          amiPercent: amiRow.ami.max,
-        })
-  } else {
-    return amiRow.ami.min
-      ? t("listings.stats.amiRange", {
-          minAmiPercent: amiRow.ami.min,
-          maxAmiPercent: amiRow.ami.max,
-        })
-      : t("listings.stats.upToPercentAmi", {
-          amiPercent: amiRow.ami.max,
-        })
-  }
+  // only add the AMI full text on the first accordion
+  // otherwise just use the acronym
+  const fullText: string = index === 0 ? ".fullText" : ""
+  return amiRow.ami.min
+    ? t("listings.stats.amiRange".concat(fullText), {
+        minAmiPercent: amiRow.ami.min,
+        maxAmiPercent: amiRow.ami.max,
+      })
+    : t("listings.stats.upToPercentAmi".concat(fullText), {
+        amiPercent: amiRow.ami.max,
+      })
 }
 
 const buildAccordions = (
@@ -164,8 +155,7 @@ const buildAccordions = (
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
 
-      // TODO: innerIndex vs index
-      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, innerIndex: number) => {
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
         const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
           return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
         })
@@ -183,7 +173,7 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
-        const header: string = buildHeader(amiRow, innerIndex)
+        const header: string = buildHeader(amiRow, amiRowIndex)
 
         return {
           header,
