@@ -4,7 +4,7 @@ import { ListingDetailsPricingTable } from "../../../modules/listingDetails/List
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
-import { units, unitsWithOneOccupancy } from "../../data/RailsListingUnits/listing-units"
+import { units, unitsWithOneOccupant } from "../../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../../data/RailsAmiCharts/ami-charts"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
@@ -93,7 +93,7 @@ describe("ListingDetailsPricingTable", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
-          units: unitsWithOneOccupancy,
+          units: unitsWithOneOccupant,
           amiCharts,
           fetchingUnits: false,
           fetchedUnits: true,

@@ -353,7 +353,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
             className="flex items-center mr-2"
           >
             <div>
-              Income $100 to $5,941 per month
+              Income $7 to $5,941 per month
             </div>
           </span>
         </span>
@@ -409,7 +409,61 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           <h3
             className="text__light-weighted"
           >
-            82% to 109.8% AMI (Area Median Income)
+            55% to 82% AMI (Area Median Income)
+          </h3>
+          <hr
+            className="my-2"
+          />
+          <div
+            style={
+              Object {
+                "overflowX": "auto",
+              }
+            }
+          >
+            <table
+              className="w-full text-xs responsive-collapse td-plain th-plain base stacked-table category-table mb-2 md:mb-6"
+            >
+              <thead>
+                <tr>
+                  <th
+                    className="undefined stacked-table-header"
+                  >
+                    <span
+                      className=""
+                    >
+                      Unit Type
+                    </span>
+                  </th>
+                  <th
+                    className="undefined stacked-table-header"
+                  >
+                    <span
+                      className=""
+                    >
+                      Income Range
+                    </span>
+                  </th>
+                  <th
+                    className="undefined stacked-table-header"
+                  >
+                    <span
+                      className=""
+                    >
+                      Rent
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody />
+            </table>
+          </div>
+        </div>
+        <div>
+          <h3
+            className="text__light-weighted"
+          >
+            82% to 109.8% AMI
           </h3>
           <hr
             className="my-2"
