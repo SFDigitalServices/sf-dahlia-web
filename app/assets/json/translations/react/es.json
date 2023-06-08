@@ -916,7 +916,6 @@
   "listings.stats.tableLabel": "Tabla de precios para %{numInHouseholdString}, %{amiPercentString}",
   "listings.stats.upToPercentAmi": "Hasta %{amiPercent} % del AMI",
   "listings.stats.upToPercentAmi.fullText": "Hasta %{amiPercent} % del AMI (Ingreso promedio del área)",
-  "listings.stats.amiRange": "%{minAmiPercent}% to %{maxAmiPercent}% AMI",
   "listings.stats.amiRange.fullText": "%{minAmiPercent}% to %{maxAmiPercent}% AMI (Ingreso promedio del área)",
   "listings.stats.waitlist": "Lista de espera",
   "listings.unitTypes.1 BR": "1 habitación",

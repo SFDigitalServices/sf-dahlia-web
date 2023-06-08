@@ -133,10 +133,8 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
-const buildHeader = (amiRow: AmiRow, index: number): string => {
-  // only add the AMI full text on the first accordion
-  // otherwise just use the acronym
-  const fullText: string = index === 0 ? ".fullText" : ""
+const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
+  const fullText: string = showFullText ? ".fullText" : ""
   return amiRow.ami.min
     ? t("listings.stats.amiRange".concat(fullText), {
         minAmiPercent: amiRow.ami.min,
@@ -173,7 +171,8 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
-        const header: string = buildHeader(amiRow, amiRowIndex)
+        // only add the AMI full text on the first accordion
+        const header: string = buildHeader(amiRow, amiRowIndex === 0)
 
         return {
           header,
