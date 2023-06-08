@@ -572,3 +572,26 @@ export const unitsGrouped = {
     maxSqFt: 1615,
   },
 }
+
+export const unitsWithOneOccupancy: RailsUnit[] = [
+  {
+    attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmHQAV" },
+    Unit_Type: "1 BR",
+    Availability: 1,
+    BMR_Rental_Minimum_Monthly_Income_Needed: 100,
+    Unit_Square_Footage: 1273,
+    Unit_Number: "303C",
+    Unit_Floor: "3",
+    Number_of_Bathrooms: 2,
+    Status: "Available",
+    Property_Type: "Condo",
+    isReservedCommunity: true,
+    AMI_chart_type: "MOHCD",
+    AMI_chart_year: 2021,
+    Max_AMI_for_Qualifying_Unit: 109.8,
+    Min_AMI_for_Qualifying_Unit: 82,
+    Min_Occupancy: 1,
+    Max_Occupancy: 1,
+    Id: "a0b4U00001JvOmHQAV",
+  },
+]
