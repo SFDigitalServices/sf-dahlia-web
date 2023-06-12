@@ -31,7 +31,7 @@ export const ListingDetailsNeighborhood = ({
       subtitle={t("listings.neighborhood.subheader")}
     >
       <iframe
-        className="md:mb-6"
+        className="md:mb-6 lg:pl-16"
         src={iframeUrl}
         title={t("listings.neighborhood.mapTitle", {
           listingAddress: listingAddress,
