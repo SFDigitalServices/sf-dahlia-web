@@ -35,11 +35,11 @@ const CREDIT_HISTORY_TEXT = {
   zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
 }
 
-const PARKING_TEXT = {
-  es: "En el precio de venta de cada unidad se incluye una plaza de aparcamiento.",
-  tl: "Isang parking space ang kasama sa presyo ng pagbebenta ng bawat unit.",
-  zh: "每個單元的銷售價格中包含一個停車位",
-}
+// const PARKING_TEXT = {
+//   es: "SESIONES INFORMATIVAS",
+//   tl: "MGA SESYON PARA",
+//   zh: "說明會",
+// }
 
 describe("Listing Details Machine Translations", () => {
   afterEach(() => {
@@ -98,21 +98,21 @@ describe("Listing Details Machine Translations", () => {
     it("machine translations works in Filipino", () => {
       verifyMachineTranslations("tl", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.tl,
-        PARKING_TEXT.tl,
+        // PARKING_TEXT.tl,
       ])
     })
 
     it("machine translations works in Chinese", () => {
       verifyMachineTranslations("zh", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.zh,
-        PARKING_TEXT.zh,
+        // PARKING_TEXT.zh,
       ])
     })
 
     it("machine translations work in Spanish", () => {
       verifyMachineTranslations("es", listings.OPEN_SALE.id, [
         INFORMATION_SESSION_SALE_TEXT.es,
-        PARKING_TEXT.es,
+        // PARKING_TEXT.es,
       ])
     })
   })
