@@ -106,7 +106,6 @@
     "protractor": "protractor ./spec/e2e/conf.js",
     "test": "jest",
     "test:e2e": "cypress run",
-    "test:e2espec": "cypress run --spec 'cypress/e2e/listingDetails/machineTranslations.e2e.ts'",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx app/javascript cypress",
     "webpack:analyze": "yarn webpack:build_json && yarn webpack:analyze_json",
