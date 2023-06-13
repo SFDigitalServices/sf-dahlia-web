@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 7.0.4.3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -37,8 +37,8 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 
 # Javascript packages pre-processor
-gem "webpacker", "~> 5.2.1"
-gem "webpacker-react", "~> 0.3.2"
+gem 'shakapacker', '6.6.0'
+gem "react_on_rails", "13.3.4"
 
 gem 'psych', '< 4'
 

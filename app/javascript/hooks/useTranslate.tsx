@@ -49,7 +49,8 @@ const useTranslate = () => {
 
   useEffect(() => {
     if (languageInRoute && googleTranslateDropdownElHasBeenRendered) {
-      const selectInDom = document.querySelector("select.goog-te-combo")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const selectInDom: any = document.querySelector("select.goog-te-combo")
       selectInDom.value = languageMap[languageInRoute] || languageInRoute
       const ev = new Event("change", { bubbles: true })
       selectInDom.dispatchEvent(ev)

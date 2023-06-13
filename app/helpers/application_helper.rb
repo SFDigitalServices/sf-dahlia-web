@@ -19,7 +19,7 @@ module ApplicationHelper
       f = if defined?(asset_path)
             # this method is more "correct" in dev than the below one,
             # which can require server restart to pickup locale-en.json changes
-            asset_path(filename)
+            asset_path(filename, skip_pipeline: true)
           else
             # only needed for asset_redirect in ApplicationController
             ActionController::Base.helpers.asset_path(filename)

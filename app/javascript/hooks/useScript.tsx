@@ -13,7 +13,8 @@ const useScript = (src) => {
       }
       // Fetch existing script element by src
       // It may have been added by another intance of this hook
-      let script = document.querySelector(`script[src="${src}"]`)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let script: any = document.querySelector(`script[src="${src}"]`)
       if (!script) {
         // Create script
         script = document.createElement("script")

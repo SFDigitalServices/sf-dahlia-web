@@ -29,7 +29,13 @@ module.exports = {
     // Creates `style` nodes from JS strings
     "style-loader",
     // Translates CSS into CommonJS
-    "css-loader",
+    // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
+    {
+      loader: "css-loader",
+      // options: {
+      //   esModule: false,
+      // },
+    },
     // Various CSS pre and post-processors, including tailwind.
     // See postcss.config.js for specifics
     // This line must come after style/css loaders and before the sass loader

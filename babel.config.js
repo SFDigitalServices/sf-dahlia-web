@@ -1,4 +1,6 @@
 module.exports = function (api) {
+  const defaultConfigFunc = require('shakapacker/package/babel/preset.js')
+  const resultConfig = defaultConfigFunc(api)
   var validEnv = ["development", "test", "production"]
   var currentEnv = api.env()
   var isDevelopmentEnv = api.env("development")
@@ -15,7 +17,7 @@ module.exports = function (api) {
     )
   }
 
-  return {
+  const changesOnDefault = {
     presets: [
       isTestEnv && [
         "@babel/preset-env",
@@ -56,15 +58,21 @@ module.exports = function (api) {
         },
       ],
       [
-        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-private-methods",
         {
-          useBuiltIns: true,
+          loose: true,
         },
       ],
       [
-        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-private-property-in-object", 
+        { 
+          loose: true 
+        }
+      ],
+      [
+        "@babel/plugin-proposal-object-rest-spread",
         {
-          helpers: false,
+          useBuiltIns: true,
         },
       ],
       [
@@ -76,4 +84,42 @@ module.exports = function (api) {
       "@babel/plugin-transform-modules-commonjs",
     ].filter(Boolean),
   }
+
+  resultConfig.presets = [...changesOnDefault.presets]
+  resultConfig.plugins = [...resultConfig.plugins, ...changesOnDefault.plugins ]
+
+  return resultConfig
 }
+
+// module.exports = function (api) {
+//   const defaultConfigFunc = require('shakapacker/package/babel/preset.js')
+//   const resultConfig = defaultConfigFunc(api)
+//   const isDevelopmentEnv = api.env('development')
+//   const isProductionEnv = api.env('production')
+//   const isTestEnv = api.env('test')
+
+//   const changesOnDefault = {
+//     presets: [
+//       [
+//         '@babel/preset-react',
+//         {
+//           development: isDevelopmentEnv || isTestEnv,
+//           useBuiltIns: true
+//         } 
+//       ]
+//     ].filter(Boolean),
+//     plugins: [
+//       isProductionEnv && ['babel-plugin-transform-react-remove-prop-types', 
+//         { 
+//           removeImport: true 
+//         }
+//       ],
+//       process.env.WEBPACK_SERVE && 'react-refresh/babel'
+//     ].filter(Boolean),
+//   }
+
+//   resultConfig.presets = [...resultConfig.presets, ...changesOnDefault.presets]
+//   resultConfig.plugins = [...resultConfig.plugins, ...changesOnDefault.plugins ]
+
+//   return resultConfig
+// }

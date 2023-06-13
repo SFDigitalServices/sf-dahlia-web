@@ -1,5 +1,7 @@
-process.env.NODE_ENV = process.env.NODE_ENV || "test"
+const webpackConfig = require('./envSpecific')
 
-const environment = require("./environment")
+const testOnly = (_clientWebpackConfig, _serverWebpackConfig) => {
+  // place any code here that is for test only
+}
 
-module.exports = environment.toWebpackConfig()
+module.exports = webpackConfig(testOnly)
