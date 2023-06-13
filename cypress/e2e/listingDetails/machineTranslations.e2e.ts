@@ -36,8 +36,8 @@ const CREDIT_HISTORY_TEXT = {
 }
 
 // const PARKING_TEXT = {
-//   es: "SESIONES INFORMATIVAS",
-//   tl: "MGA SESYON PARA",
+//   es: "Fumar puede causar problemas",
+//   tl: "Deadline ng Aplikasyon",
 //   zh: "說明會",
 // }
 
@@ -96,24 +96,15 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", listings.OPEN_SALE.id, [
-        INFORMATION_SESSION_SALE_TEXT.tl,
-        // PARKING_TEXT.tl,
-      ])
+      verifyMachineTranslations("tl", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.tl])
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", listings.OPEN_SALE.id, [
-        INFORMATION_SESSION_SALE_TEXT.zh,
-        // PARKING_TEXT.zh,
-      ])
+      verifyMachineTranslations("zh", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.zh])
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", listings.OPEN_SALE.id, [
-        INFORMATION_SESSION_SALE_TEXT.es,
-        // PARKING_TEXT.es,
-      ])
+      verifyMachineTranslations("es", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.es])
     })
   })
 })
