@@ -75,9 +75,9 @@ ListingConstantsService = () ->
       description: 'impaired vision and/or hearing'
     'Mobility/hearing/vision impairments':
       name: 'Mobility, Hearing and/or Vision Impairments'
-      description: 'impaired mobility, hearing and/or vision'
+      description: 'impaired mobility, hearing and/or vision?'
     'Mobility impairments':
-      name: 'Mobility Impairments'
+      name: 'Mobility Impairments angular'
       description: 'impaired mobility'
 
   Service.preferenceMap =

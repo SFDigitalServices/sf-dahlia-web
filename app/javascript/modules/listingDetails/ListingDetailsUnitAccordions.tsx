@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+// TODO: relative path?
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -26,18 +27,21 @@ const getPriorityTypeText = (priorityType) => {
       return t("listings.prioritiesDescriptor.hearing")
     case "Vision and/or Hearing Impairments":
       return t("listings.prioritiesDescriptor.hearingVision")
-    case "Mobility Impairments":
+    case "Mobility impairments":
       return t("listings.prioritiesDescriptor.mobility")
     case "Mobility, Hearing and/or Vision Impairments":
       return t("listings.prioritiesDescriptor.mobilityHearingVision")
     case "Vision Impairments":
       return t("listings.prioritiesDescriptor.vision")
+    case "Hearing/Vision impairments":
+      return "testing"
     default:
       return ""
   }
 }
 
 const getTableData = (units: RailsUnit[]) => {
+  console.log(units)
   return units.map((unit) => {
     return {
       unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },

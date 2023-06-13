@@ -459,3 +459,8 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
       : getLongestAmiChartValueLength(amiCharts),
   }
 }
+
+// TODO: Better name for function
+// export const mapPriortyTypeToLanguageKey = (priortyType: string): string => {
+//   return "hello";
+// };
