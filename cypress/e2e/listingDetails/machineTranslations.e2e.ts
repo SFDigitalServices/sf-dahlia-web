@@ -35,6 +35,9 @@ const CREDIT_HISTORY_TEXT = {
   zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
 }
 
+// TODO: Removing flaky tests to unblock CircleCI pipeline
+// DAH-1539 will be used to investigate root cause
+//
 // const PARKING_TEXT = {
 //   es: "Fumar puede causar problemas",
 //   tl: "Deadline ng Aplikasyon",
