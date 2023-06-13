@@ -133,6 +133,18 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
+const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
+  const fullText: string = showFullText ? ".fullText" : ""
+  return amiRow.ami.min
+    ? t("listings.stats.amiRange".concat(fullText), {
+        minAmiPercent: amiRow.ami.min,
+        maxAmiPercent: amiRow.ami.max,
+      })
+    : t("listings.stats.upToPercentAmi".concat(fullText), {
+        amiPercent: amiRow.ami.max,
+      })
+}
+
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
   listingIsSale: boolean
@@ -141,7 +153,7 @@ const buildAccordions = (
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
 
-      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
         const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
           return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
         })
@@ -159,14 +171,8 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
-        const header = amiRow.ami.min
-          ? t("listings.stats.amiRange", {
-              minAmiPercent: amiRow.ami.min,
-              maxAmiPercent: amiRow.ami.max,
-            })
-          : t("listings.stats.upToPercentAmi", {
-              amiPercent: amiRow.ami.max,
-            })
+        // only add the AMI full text on the first accordion
+        const header: string = buildHeader(amiRow, amiRowIndex === 0)
 
         return {
           header,
