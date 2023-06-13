@@ -41,7 +41,7 @@ exports[`ListingDetailsNeighborhood displays map 1`] = `
     </hgroup>
   </header>
   <iframe
-    className="md:mb-6"
+    className="md:mb-6 md:pl-16 pl-0"
     height="450"
     src="https://www.google.com/maps/embed/v1/place?key=undefined&q=855 Brannan St, San Francisco, CA 94103&language=en"
     title="Map of 855 Brannan St, San Francisco, CA 94103"
