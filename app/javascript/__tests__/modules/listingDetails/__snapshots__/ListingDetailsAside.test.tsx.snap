@@ -220,7 +220,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                     onClick={[Function]}
                     type="button"
                   >
-                    Read More
+                    Show more
                   </button>
                 </div>
               </div>

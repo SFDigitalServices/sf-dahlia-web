@@ -137,14 +137,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
         onClick={[Function]}
         tabIndex={0}
       >
         <span
           className="button__content"
         >
-          show more
+          Show more
         </span>
         <span
           className="ui-icon ui-small button__icon"
@@ -341,10 +341,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -377,10 +377,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -562,14 +562,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
         onClick={[Function]}
         tabIndex={0}
       >
         <span
           className="button__content"
         >
-          show more
+          Show more
         </span>
         <span
           className="ui-icon ui-small button__icon"
@@ -766,10 +766,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -802,10 +802,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -1082,14 +1082,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
         onClick={[Function]}
         tabIndex={0}
       >
         <span
           className="button__content"
         >
-          show more
+          Show more
         </span>
         <span
           className="ui-icon ui-small button__icon"
@@ -1359,14 +1359,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
         onClick={[Function]}
         tabIndex={0}
       >
         <span
           className="button__content"
         >
-          show more
+          Show more
         </span>
         <span
           className="ui-icon ui-small button__icon"
@@ -1563,10 +1563,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -1599,10 +1599,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -1792,14 +1792,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
         onClick={[Function]}
         tabIndex={0}
       >
         <span
           className="button__content"
         >
-          show more
+          Show more
         </span>
         <span
           className="ui-icon ui-small button__icon"
@@ -1996,10 +1996,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about credit history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>
@@ -2032,10 +2032,10 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </div>
           <button
             aria-label="Read more about rental history guidelines"
-            className="button-toggle mt-2"
+            className="button-toggle mt-2 has-toggle"
             onClick={[Function]}
           >
-            More
+            Show more
           </button>
         </div>
       </div>

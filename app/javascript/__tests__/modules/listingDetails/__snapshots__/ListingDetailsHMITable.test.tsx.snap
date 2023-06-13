@@ -106,14 +106,14 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
     onClick={[Function]}
     tabIndex={0}
   >
     <span
       className="button__content"
     >
-      show more
+      Show more
     </span>
     <span
       className="ui-icon ui-small button__icon"
@@ -252,14 +252,14 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
     onClick={[Function]}
     tabIndex={0}
   >
     <span
       className="button__content"
     >
-      show more
+      Show more
     </span>
     <span
       className="ui-icon ui-small button__icon"
@@ -623,14 +623,14 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
     onClick={[Function]}
     tabIndex={0}
   >
     <span
       className="button__content"
     >
-      show more
+      Show more
     </span>
     <span
       className="ui-icon ui-small button__icon"

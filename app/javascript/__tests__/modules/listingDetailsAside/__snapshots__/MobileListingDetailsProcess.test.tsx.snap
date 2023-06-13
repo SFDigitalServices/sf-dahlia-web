@@ -213,7 +213,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               onClick={[Function]}
               type="button"
             >
-              Read More
+              Show more
             </button>
           </div>
         </div>
