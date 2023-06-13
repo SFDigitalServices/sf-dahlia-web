@@ -7,6 +7,7 @@ import RailsUnit, {
 } from "../../api/types/rails/listings/RailsUnit"
 import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { getRangeString } from "../listings/DirectoryHelpers"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
@@ -97,7 +98,11 @@ const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
       cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unit?.BMR_Rental_Minimum_Monthly_Income_Needed?.toLocaleString()} to $${unit?.maxMonthlyIncomeNeeded?.toLocaleString()}`,
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
       cellSubText: t("t.perMonth"),
     },
     sale: buildSalePriceCellRow(unit),
@@ -112,7 +117,11 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
       cellSubText: `${unit.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unit?.BMR_Rental_Minimum_Monthly_Income_Needed?.toLocaleString()} to $${unit?.maxMonthlyIncomeNeeded?.toLocaleString()}`,
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
@@ -124,6 +133,18 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
+const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
+  const fullText: string = showFullText ? ".fullText" : ""
+  return amiRow.ami.min
+    ? t("listings.stats.amiRange".concat(fullText), {
+        minAmiPercent: amiRow.ami.min,
+        maxAmiPercent: amiRow.ami.max,
+      })
+    : t("listings.stats.upToPercentAmi".concat(fullText), {
+        amiPercent: amiRow.ami.max,
+      })
+}
+
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
   listingIsSale: boolean
@@ -132,7 +153,7 @@ const buildAccordions = (
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
 
-      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow) => {
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
         const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
           return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
         })
@@ -150,14 +171,8 @@ const buildAccordions = (
               rent: { name: "t.rent" },
             }
 
-        const header = amiRow.ami.min
-          ? t("listings.stats.amiRange", {
-              minAmiPercent: amiRow.ami.min,
-              maxAmiPercent: amiRow.ami.max,
-            })
-          : t("listings.stats.upToPercentAmi", {
-              amiPercent: amiRow.ami.max,
-            })
+        // only add the AMI full text on the first accordion
+        const header: string = buildHeader(amiRow, amiRowIndex === 0)
 
         return {
           header,
@@ -180,10 +195,22 @@ const buildAccordions = (
                   : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
               </span>
               <span className={"flex items-center mr-2"}>
-                {t("listings.incomeRange.minMaxPerMonth", {
-                  min: occupancy?.absoluteMinIncome?.toLocaleString(),
-                  max: occupancy?.absoluteMaxIncome?.toLocaleString(),
-                })}
+                {(() => {
+                  return occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
+                    <div>
+                      {t("listings.incomeRange.upToMaxPerMonth", {
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  ) : (
+                    <div>
+                      {t("listings.incomeRange.minMaxPerMonth", {
+                        min: occupancy?.absoluteMinIncome?.toLocaleString(),
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  )
+                })()}
               </span>
             </span>
           }
