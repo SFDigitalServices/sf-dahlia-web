@@ -16,7 +16,7 @@ import dayjs from "dayjs"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { areLotteryResultsShareable } from "../../util/listingUtil"
+import { areLotteryResultsShareable, mapPriortyTypeToContentKey } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -157,25 +157,8 @@ export const getPriorityTypes = (listing: RailsRentalListing): string[] | null =
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
     const priorityNames = []
     listing.prioritiesDescriptor.forEach((priority) => {
-      switch (priority.name) {
-        case "Vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.vision"))
-          break
-        case "Hearing impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.hearing"))
-          break
-        case "Hearing/Vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.hearingVision"))
-          break
-        case "Mobility/hearing/vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.mobilityHearingVision"))
-          break
-        case "Mobility impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.mobility"))
-          break
-        default:
-          priorityNames.push(priority.name)
-      }
+      const key = mapPriortyTypeToContentKey(priority.name)
+      key ? priorityNames.push(key) : priorityNames.push(priority.name)
     })
     return priorityNames
   }

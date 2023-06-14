@@ -19,10 +19,6 @@ const TableHeaders = {
   accessibility: "listings.features.accessibility",
 }
 
-const getPriorityTypeText = (priorityType) => {
-  return mapPriortyTypeToContentKey(priorityType)
-}
-
 const getTableData = (units: RailsUnit[]) => {
   return units.map((unit) => {
     return {
@@ -41,7 +37,7 @@ const getTableData = (units: RailsUnit[]) => {
       accessibility: {
         content: (
           <span className="font-semibold">
-            {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
+            {unit.Priority_Type && mapPriortyTypeToContentKey(unit.Priority_Type)}
           </span>
         ),
       },
