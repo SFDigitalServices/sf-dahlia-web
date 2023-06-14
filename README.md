@@ -79,7 +79,6 @@ To run Angular unit tests:
 - `rake jasmine:ci` to run in terminal
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
-
 To run React unit tests:
 - to run the entire suite run `yarn test`
 - to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
