@@ -80,7 +80,8 @@ To run Angular unit tests:
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run React unit tests:
-- `yarn test`
+- to run the entire suite run `yarn test`
+- to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
 
 To run Legacy E2E (Angular) tests:
 

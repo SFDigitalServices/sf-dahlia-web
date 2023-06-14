@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
-import { mapPriortyTypeToContentKey } from "../../util/listingUtil"
+import { getPriorityTypeText } from "../../util/listingUtil"
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -37,7 +37,7 @@ const getTableData = (units: RailsUnit[]) => {
       accessibility: {
         content: (
           <span className="font-semibold">
-            {unit.Priority_Type && mapPriortyTypeToContentKey(unit.Priority_Type)}
+            {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
           </span>
         ),
       },

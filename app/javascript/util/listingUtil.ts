@@ -461,26 +461,26 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
   }
 }
 
-export const mapPriortyTypeToContentKey = (priortyType: string): string => {
-  let key: string
+export const getPriorityTypeText = (priortyType: string): string => {
+  let text: string
   switch (priortyType) {
     case "Vision impairments":
-      key = t("listings.prioritiesDescriptor.vision")
+      text = t("listings.prioritiesDescriptor.vision")
       break
     case "Hearing impairments":
-      key = t("listings.prioritiesDescriptor.hearing")
+      text = t("listings.prioritiesDescriptor.hearing")
       break
     case "Hearing/Vision impairments":
-      key = t("listings.prioritiesDescriptor.hearingVision")
+      text = t("listings.prioritiesDescriptor.hearingVision")
       break
     case "Mobility/hearing/vision impairments":
-      key = t("listings.prioritiesDescriptor.mobilityHearingVision")
+      text = t("listings.prioritiesDescriptor.mobilityHearingVision")
       break
     case "Mobility impairments":
-      key = t("listings.prioritiesDescriptor.mobility")
+      text = t("listings.prioritiesDescriptor.mobility")
       break
     default:
-      key = ""
+      text = ""
   }
-  return key
+  return text
 }

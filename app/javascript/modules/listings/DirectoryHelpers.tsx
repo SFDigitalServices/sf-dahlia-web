@@ -16,7 +16,7 @@ import dayjs from "dayjs"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { areLotteryResultsShareable, mapPriortyTypeToContentKey } from "../../util/listingUtil"
+import { areLotteryResultsShareable, getPriorityTypeText } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -157,8 +157,8 @@ export const getPriorityTypes = (listing: RailsRentalListing): string[] | null =
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
     const priorityNames = []
     listing.prioritiesDescriptor.forEach((priority) => {
-      const key = mapPriortyTypeToContentKey(priority.name)
-      key ? priorityNames.push(key) : priorityNames.push(priority.name)
+      const text = getPriorityTypeText(priority.name)
+      text ? priorityNames.push(text) : priorityNames.push(priority.name)
     })
     return priorityNames
   }
