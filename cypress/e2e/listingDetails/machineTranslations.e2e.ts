@@ -39,9 +39,9 @@ const CREDIT_HISTORY_TEXT = {
 // DAH-1539 will be used to investigate root cause
 //
 // const PARKING_TEXT = {
-//   es: "Fumar puede causar problemas",
-//   tl: "Deadline ng Aplikasyon",
-//   zh: "說明會",
+//   es: "En el precio de venta de cada unidad se incluye una plaza de aparcamiento.",
+//   tl: "Isang parking space ang kasama sa presyo ng pagbebenta ng bawat unit.",
+//   zh: "每個單元的銷售價格中包含一個停車位",
 // }
 
 describe("Listing Details Machine Translations", () => {
