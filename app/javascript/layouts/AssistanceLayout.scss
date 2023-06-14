@@ -8,11 +8,16 @@
     }
 
     .page-header__group {
-        padding: 0 !important;
+        padding: 0;
         width: full;
 
         @media (min-width: $screen-md) {
             text-align: start;
+            padding-left: var(--bloom-s6);
+        }
+
+        @media (min-width: $screen-lg) {
+            padding-left:0px
         }
 
         .page-header__title {
