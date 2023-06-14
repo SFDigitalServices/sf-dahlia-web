@@ -164,7 +164,7 @@ export const getPriorityTypes = (listing: RailsRentalListing): string[] | null =
         case "Hearing impairments":
           priorityNames.push(t("listings.prioritiesDescriptor.hearing"))
           break
-        case "Hearing/Vision impairments alula":
+        case "Hearing/Vision impairments":
           priorityNames.push(t("listings.prioritiesDescriptor.hearingVision"))
           break
         case "Mobility/hearing/vision impairments":

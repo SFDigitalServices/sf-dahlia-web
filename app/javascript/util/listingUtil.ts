@@ -15,6 +15,7 @@ import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
+import { t } from "@bloom-housing/ui-components"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -460,7 +461,26 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
   }
 }
 
-// TODO: Better name for function
-// export const mapPriortyTypeToLanguageKey = (priortyType: string): string => {
-//   return "hello";
-// };
+export const mapPriortyTypeToContentKey = (priortyType: string): string => {
+  let key: string
+  switch (priortyType) {
+    case "Vision impairments":
+      key = t("listings.prioritiesDescriptor.vision")
+      break
+    case "Hearing impairments":
+      key = t("listings.prioritiesDescriptor.hearing")
+      break
+    case "Hearing/Vision impairments":
+      key = t("listings.prioritiesDescriptor.hearingVision")
+      break
+    case "Mobility/hearing/vision impairments":
+      key = t("listings.prioritiesDescriptor.mobilityHearingVision")
+      break
+    case "Mobility impairments":
+      key = t("listings.prioritiesDescriptor.mobility")
+      break
+    default:
+      key = ""
+  }
+  return key
+}
