@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { getPriorityTypeText } from "../../util/listingUtil"
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -16,25 +17,6 @@ const TableHeaders = {
   baths: "listings.features.baths",
   floor: "listings.features.floor",
   accessibility: "listings.features.accessibility",
-}
-
-const getPriorityTypeText = (priorityType) => {
-  switch (priorityType) {
-    case "Adaptable":
-      return ""
-    case "Hearing Impairments":
-      return t("listings.prioritiesDescriptor.hearing")
-    case "Vision and/or Hearing Impairments":
-      return t("listings.prioritiesDescriptor.hearingVision")
-    case "Mobility Impairments":
-      return t("listings.prioritiesDescriptor.mobility")
-    case "Mobility, Hearing and/or Vision Impairments":
-      return t("listings.prioritiesDescriptor.mobilityHearingVision")
-    case "Vision Impairments":
-      return t("listings.prioritiesDescriptor.vision")
-    default:
-      return ""
-  }
 }
 
 const getTableData = (units: RailsUnit[]) => {

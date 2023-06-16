@@ -80,7 +80,8 @@ To run Angular unit tests:
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run React unit tests:
-- `yarn test`
+- to run the entire suite run `yarn test`
+- to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
 
 To run Legacy E2E (Angular) tests:
 
@@ -147,6 +148,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
+- GET_ASSISTANCE_PAGES_REACT='true'
 
 ### React env variables
 
