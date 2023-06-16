@@ -94,7 +94,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     <>
       <ol className={[...listClassNames].join(" ")}>
         {listItems.map((item, index) => (
-          <li className="text-gray-700" key={index}>
+          <li className="text-gray-750 primary-lighter-markup-link" key={index}>
             {item.content}
           </li>
         ))}

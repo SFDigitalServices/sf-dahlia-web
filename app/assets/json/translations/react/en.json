@@ -1211,7 +1211,7 @@
   "rentalDirectory.callouttitle": "See more listings from our community partners.",
   "rentalDirectory.findMatchingListings": "Find matching listings",
   "rentalDirectory.ifYouTellUs": "If you tell us your household size and income, we can show you listings you may qualify for.",
-  "rentalDirectory.orGetHelpCalculating": "or <a href='%{incomeLink}'>get help calculating your income</a>",
+  "rentalDirectory.orGetHelpCalculating": "or get help calculating your income",
   "rentalDirectory.title": "Rent affordable housing",
   "resetPassword.title": "Reset Password",
   "resetPassword.updatePassword": "Update password",
