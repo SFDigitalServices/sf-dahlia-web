@@ -15,6 +15,7 @@ import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
+import { getRangeString } from "../modules/listings/DirectoryHelpers"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -252,31 +253,78 @@ export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<nu
   return arrayOfOccupancies
 }
 
+/**
+ * Returns a collapsed array of units grouped by matching criteria with updated availability
+ * @param {RailsUnitWithOccupancyAndMaxIncome[]} units
+ * @returns {RailsUnitWithOccupancyAndMaxIncome[]}
+ */
 export const matchSharedUnitFields = (
   units: RailsUnitWithOccupancyAndMaxIncome[]
 ): RailsUnitWithOccupancyAndMaxIncome[] => {
   const collapsedUnits = []
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
-    const summaryThatsAlreadyAdded = collapsedUnits.find(
-      (collapsedUnit: RailsUnitWithOccupancyAndMaxIncome) => {
-        return (
-          unit.BMR_Rent_Monthly === collapsedUnit.BMR_Rent_Monthly &&
-          unit.Unit_Type === collapsedUnit.Unit_Type &&
-          unit.occupancy === collapsedUnit.occupancy &&
-          unit.maxMonthlyIncomeNeeded === collapsedUnit.maxMonthlyIncomeNeeded &&
-          unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
-            collapsedUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
-          unit.Max_AMI_for_Qualifying_Unit === collapsedUnit.Max_AMI_for_Qualifying_Unit
-        )
-      }
-    )
-
-    if (!summaryThatsAlreadyAdded) {
-      collapsedUnits.push(unit)
-    } else {
-      summaryThatsAlreadyAdded.Availability += unit.Availability
+  // Process each unit in units by finding its matchingUnits
+  while (units.length > 0) {
+    const unit = units[0]
+    const matchingUnits = units.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      return (
+        unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
+        unit.Unit_Type === curUnit.Unit_Type &&
+        unit.occupancy === curUnit.occupancy &&
+        unit.maxMonthlyIncomeNeeded === curUnit.maxMonthlyIncomeNeeded &&
+        unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
+          curUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
+        unit.Max_AMI_for_Qualifying_Unit === curUnit.Max_AMI_for_Qualifying_Unit
+      )
+    })
+    // Remove duplicate matchingUnits from units
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      units.splice(units.indexOf(curUnit), 1)
+    })
+    // If min / max range exists, update unit for sales and HOA price with/out parking
+    const pricesWithParking = matchingUnits
+      .map((u) => Math.round(Number(u.Price_With_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (pricesWithParking.length > 0) {
+      unit.Price_With_Parking = getRangeString(
+        Math.min(...pricesWithParking),
+        Math.max(...pricesWithParking),
+        true
+      )
     }
-  })
+    const pricesWithoutParking = matchingUnits
+      .map((u) => Math.round(Number(u.Price_Without_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (pricesWithoutParking.length > 0) {
+      unit.Price_Without_Parking = getRangeString(
+        Math.min(...pricesWithoutParking),
+        Math.max(...pricesWithoutParking),
+        true
+      )
+    }
+    const hoaWithParking = matchingUnits
+      .map((u) => Math.round(Number(u.HOA_Dues_With_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (hoaWithParking.length > 0) {
+      unit.HOA_Dues_With_Parking = getRangeString(
+        Math.min(...hoaWithParking),
+        Math.max(...hoaWithParking),
+        true
+      )
+    }
+    const hoaWithoutParking = matchingUnits
+      .map((u) => Math.round(Number(u.HOA_Dues_Without_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (hoaWithoutParking.length > 0) {
+      unit.HOA_Dues_Without_Parking = getRangeString(
+        Math.min(...hoaWithoutParking),
+        Math.max(...hoaWithoutParking),
+        true
+      )
+    }
+    // Update availiability to number of matchingUnits
+    unit.Availability = matchingUnits.length
+    collapsedUnits.push(unit)
+  }
   return collapsedUnits
 }
 
