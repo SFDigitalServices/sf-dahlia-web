@@ -24,6 +24,7 @@ import {
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
+import useTranslate from "../hooks/useTranslate"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -119,6 +120,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, signOut } = useContext(UserContext)
+  useTranslate()
 
   // eslint-disable-next-line dot-notation
   if (window.document["documentMode"] && process.env.DIRECTORY_PAGE_REACT === "true") {
@@ -140,6 +142,7 @@ const Layout = (props: LayoutProps) => {
     <>
       {process.env.TOP_MESSAGE && (
         <AlertBox
+          className="translate"
           type={asAlertType(process.env.TOP_MESSAGE_TYPE)}
           inverted={process.env.TOP_MESSAGE_INVERTED === "true"}
           narrow
