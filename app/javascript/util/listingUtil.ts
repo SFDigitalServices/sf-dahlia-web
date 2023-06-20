@@ -264,9 +264,12 @@ export const matchSharedUnitFields = (
 ): RailsUnitWithOccupancyAndMaxIncome[] => {
   const collapsedUnits = []
   // Process each unit in units by finding its matchingUnits
-  while (units.length > 0) {
-    const unit = units[0]
-    const matchingUnits = units.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
+  while (unitsCopy.length > 0) {
+    const unit = unitsCopy[0]
+    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
       return (
         unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
         unit.Unit_Type === curUnit.Unit_Type &&
@@ -279,7 +282,7 @@ export const matchSharedUnitFields = (
     })
     // Remove duplicate matchingUnits from units
     matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
-      units.splice(units.indexOf(curUnit), 1)
+      unitsCopy.splice(unitsCopy.indexOf(curUnit), 1)
     })
     // If min / max range exists, update unit for sales and HOA price with/out parking
     const pricesWithParking = matchingUnits
@@ -322,8 +325,12 @@ export const matchSharedUnitFields = (
         true
       )
     }
-    // Update availiability to number of matchingUnits
-    unit.Availability = matchingUnits.length
+    // Update availiability based on availability in matchingUnits
+    let numAvailable = 0
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      numAvailable += curUnit.Availability
+    })
+    unit.Availability = numAvailable
     collapsedUnits.push(unit)
   }
   return collapsedUnits
