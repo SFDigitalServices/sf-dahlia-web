@@ -80,14 +80,22 @@ To run Angular unit tests:
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run React unit tests:
-- `yarn test`
+- to run the entire suite run `yarn test`
+- to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
 
-To run E2E tests:
+To run Legacy E2E (Angular) tests:
 
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
 - On another tab, run `yarn protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 - If you get errors starting selenium, make sure you have [java](https://java.com/en/download/) installed
+
+To run E2E (React) tests:
+
+- In one terminal start the application by running `yarn start`
+- In another terminal
+   - To run the full suite of tests run `yarn test:e2e`
+   - To run a specific file run `cypress run --spec 'path/to/folder/<name-of-file>.e2e.ts'`
 
 Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
@@ -140,6 +148,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
+- GET_ASSISTANCE_PAGES_REACT='true'
 
 ### React env variables
 

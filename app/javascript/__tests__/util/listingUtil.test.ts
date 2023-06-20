@@ -18,6 +18,7 @@ import {
   buildAmiArray,
   groupAndSortUnitsByOccupancy,
   getAmiChartDataFromUnits,
+  getPriorityTypeText,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
@@ -436,5 +437,18 @@ describe("getAmiChartDataFromUnits", () => {
       { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 109.8 },
       { derivedFrom: "MinAmi", year: 2021, type: "MOHCD", percent: 35 },
     ])
+  })
+})
+
+describe("getPriorityTypeText", () => {
+  test.each`
+    priorityType                             | text
+    ${"Vision impairments"}                  | ${"Vision Impairments"}
+    ${"Hearing impairments"}                 | ${"Hearing Impairments"}
+    ${"Hearing/Vision impairments"}          | ${"Vision and/or Hearing Impairments"}
+    ${"Mobility/hearing/vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
+    ${"Mobility impairments"}                | ${"Mobility Impairments"}
+  `("returns text $text when priority type is $priorityType", ({ priorityType, text }) => {
+    expect(getPriorityTypeText(priorityType)).toBe(text)
   })
 })
