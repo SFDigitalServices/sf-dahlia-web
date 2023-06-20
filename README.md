@@ -43,20 +43,25 @@ More information about getting started can be found on the team confluence.
 1. Open a terminal window
 1. `git clone https://github.com/SFDigitalServices/sf-dahlia-web.git` to create the project directory
    - Using gh is recommended. This can be installed with either [Brew](https://brew.sh/) or downloading directly from [Github](https://cli.github.com/)
-3. `cd sf-dahlia-web` to open the directory
-4. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
-5. Using RVM, install 3.1.3 (or whatever version we are on) with `rvm instal 3.1.3`
-6. `bundle install` to download all necessary gems
+1. `cd sf-dahlia-web` to open the directory
+1. Using NVM, install 18.12.1 (or whatever version we are on) with `nvm install 18.12.1`
+1. Using RVM, install 3.1.3 (or whatever version we are on) with `rvm instal 3.1.3`
+1. `bundle install` to download all necessary gems
    - See [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v <failing-pg-version> -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
    - If you need to run this command make sure you run bundle install again following the success of the Postgres installation to install the remaining gems
-7. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
-8. `overcommit --install` to install git hooks into the repo
-9. Download PostgreSQL. You only need to turn it on, step 10 will set it up for you.
-10. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
-11. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
-12. `./bin/webpack-dev-server` to start the webpack dev server
-   - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
-13. In another terminal tab, run `rails s` to start the rails server, which will now be running at http://localhost:3000 by default
+1. `yarn install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
+1. `overcommit --install` to install git hooks into the repo
+1. Download PostgreSQL. You only need to turn it on, the next step will set it up for you.
+1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
+1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
+1. Start Servers
+   - `yarn client` to start the webpack dev server alone
+   - `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
+   - `yarn start` to start both servers with a single command
+1. Alternatively you can start the servers using the webpack and rails command directly
+   - `NODE_OPTIONS=--openssl-legacy-provider ./bin/webpack-dev-server` to start webpack
+      - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+   - In another terminal tab, run `rails s` to start the rails
 
 ## How to migrate a page from AngularJS to React
 
@@ -67,18 +72,30 @@ See [docs/migrating-to-react](docs/migrating-to-react.md) for a step-by-step gui
 To run ruby tests:
 
 - `rake spec`
+   - you may need to install [imagemagick](https://formulae.brew.sh/formula/imagemagick) due to a dependency on the [minimagick gem](https://github.com/minimagick/minimagick)
 
-To run javascript unit tests:
+To run Angular unit tests:
 
 - `rake jasmine:ci` to run in terminal
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
-To run E2E tests:
+To run React unit tests:
+- to run the entire suite run `yarn test`
+- to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
+
+To run Legacy E2E (Angular) tests:
 
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
 - On another tab, run `yarn protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 - If you get errors starting selenium, make sure you have [java](https://java.com/en/download/) installed
+
+To run E2E (React) tests:
+
+- In one terminal start the application by running `yarn start`
+- In another terminal
+   - To run the full suite of tests run `yarn test:e2e`
+   - To run a specific file run `cypress run --spec 'path/to/folder/<name-of-file>.e2e.ts'`
 
 Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
@@ -91,11 +108,11 @@ If you do not already have grunt installed, run `brew install grunt` to install 
 To update this app with the latest PL styles:
 
 1. [Clone the PL repository in the same parent directory as this one.](https://github.com/SFDigitalServices/sf-dahlia-pattern-library)
-2. Switch to the PL branch you want to import styles from, either main or a specific branch
-3. Run `npm run-script build` in the pattern lib directory to compile the css
-4. `cd` to your `sf-dahlia-web` folder
-5. Run `grunt`
-6. Commit the updates to toolkit.scss with a reference to the commit you're updating from on pattern-lib
+1. Switch to the PL branch you want to import styles from, either main or a specific branch
+1. Run `npm run-script build` in the pattern lib directory to compile the css
+1. `cd` to your `sf-dahlia-web` folder
+1. Run `grunt`
+1. Commit the updates to toolkit.scss with a reference to the commit you're updating from on pattern-lib
 
 We use `grunt-clean` and `grunt-copy` to transfer the CSS, and `grunt-replace` to replace relative background image paths with Rails asset URLs.
 
@@ -131,6 +148,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
+- GET_ASSISTANCE_PAGES_REACT='true'
 
 ### React env variables
 
@@ -175,8 +193,8 @@ Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a gro
 
 1. Copy `.vscode-default` to `.vscode` like `cp -r .vscode-default .vscode`
    a. We don't commit vscode workspace settings directly to the repo, instead we have a shared settings starting point file. That way you can add workspace specific settings that don't affect your team members (for example [Peacock workspace color settings](https://www.peacockcode.dev/guide/#install))
-2. Install recommended extensions (under [.vscode-default/extensions](.vscode-default/extensions)).
-3. Double check your user settings aren't overriding the [workspace editor settings](.vscode-default/settings)
+1. Install recommended extensions (under [.vscode-default/extensions](.vscode-default/extensions)).
+1. Double check your user settings aren't overriding the [workspace editor settings](.vscode-default/settings)
 
 ### Credits
 
