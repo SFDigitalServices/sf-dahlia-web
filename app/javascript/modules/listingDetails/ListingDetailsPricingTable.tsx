@@ -320,7 +320,7 @@ const buildContent = (
   }
 
   return (
-    <div className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full">
+    <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
       {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
     </div>
   )
