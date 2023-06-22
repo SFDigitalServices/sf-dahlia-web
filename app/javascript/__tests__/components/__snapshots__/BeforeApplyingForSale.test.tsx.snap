@@ -24,10 +24,10 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
   >
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Go to a 
+        Go to a
         <a
           href="https://habitatgsf.org/amber-drive-info/"
           target="_blank"
@@ -37,15 +37,15 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Haven't owned residential property in the past 3 years
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Meet the 
+        Meet the
         <a
           href="https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf"
           target="_blank"
@@ -55,7 +55,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Have a 650 credit score or higher
     </li>
@@ -64,7 +64,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
     className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
-      Read 
+      Read
       <a
         href="https://habitatgsf.org/amber-drive-info/"
         target="_blank"
@@ -78,8 +78,8 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
-<li
-  className="mb-8 list-none"
+<div
+  className="mb-8"
 >
   <h2
     className="text__underline-weighted mb-5 text-gray-750"
@@ -95,15 +95,15 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     className="numbered-list my-5"
   >
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Haven't owned residential property in the past 3 years
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Meet our 
+        Meet our
         <a
           href="https://sfmohcd.org/homebuyer-program-eligibility"
           target="_blank"
@@ -113,10 +113,10 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Complete 
+        Complete
         <a
           href="https://sfmohcd.org/homebuyer-application-requirements#education"
           target="_blank"
@@ -126,10 +126,10 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Get pre-approved for a mortgage loan by a 
+        Get pre-approved for a mortgage loan by a
         <a
           href="https://sfmohcd.org/lender-list"
           target="_blank"
@@ -139,7 +139,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Have enough in savings for closing costs and downpayment
     </li>
@@ -148,7 +148,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
     className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
-      Read 
+      Read
       <a
         href="https://sfmohcd.org/homebuyer-program-eligibility"
         target="_blank"
@@ -158,7 +158,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
        for more details.
     </p>
   </div>
-</li>
+</div>
 `;
 
 exports[`BeforeApplyingForSale display Before Applying when type is listing detail 1`] = `
@@ -185,15 +185,15 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
   >
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Haven't owned residential property in the past 3 years
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Meet our 
+        Meet our
         <a
           href="https://sfmohcd.org/homebuyer-program-eligibility"
           target="_blank"
@@ -203,10 +203,10 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Complete 
+        Complete
         <a
           href="https://sfmohcd.org/homebuyer-application-requirements#education"
           target="_blank"
@@ -216,10 +216,10 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       <p>
-        Get pre-approved for a mortgage loan by a 
+        Get pre-approved for a mortgage loan by a
         <a
           href="https://sfmohcd.org/lender-list"
           target="_blank"
@@ -229,7 +229,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       </p>
     </li>
     <li
-      className="text-gray-700"
+      className="text-gray-750 primary-lighter-markup-link"
     >
       Have enough in savings for closing costs and downpayment
     </li>
@@ -238,7 +238,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
     className="text-gray-750 primary-lighter-markup-link-desktop"
   >
     <p>
-      Read 
+      Read
       <a
         href="https://sfmohcd.org/homebuyer-program-eligibility"
         target="_blank"

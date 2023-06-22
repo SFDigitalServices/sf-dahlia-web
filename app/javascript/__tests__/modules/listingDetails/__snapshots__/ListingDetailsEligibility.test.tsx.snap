@@ -922,12 +922,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
       >
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           Haven't owned residential property in the past 3 years
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           <p>
             Meet our 
@@ -940,7 +940,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </p>
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           <p>
             Complete 
@@ -953,7 +953,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </p>
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           <p>
             Get pre-approved for a mortgage loan by a 
@@ -966,7 +966,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </p>
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           Have enough in savings for closing costs and downpayment
         </li>
@@ -2152,7 +2152,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         className="numbered-list my-5 bg-white p-4 pt-6 text-xs"
       >
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           <p>
             Go to a 
@@ -2165,12 +2165,12 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </p>
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           Haven't owned residential property in the past 3 years
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           <p>
             Meet the 
@@ -2183,7 +2183,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </p>
         </li>
         <li
-          className="text-gray-700"
+          className="text-gray-750 primary-lighter-markup-link"
         >
           Have a 650 credit score or higher
         </li>
