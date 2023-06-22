@@ -29,11 +29,11 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_With_Parking?.toLocaleString()}`,
+        cellText: unit.Price_With_Parking,
         cellSubText: "with parking",
       },
       {
-        cellText: `$${unit.Price_Without_Parking?.toLocaleString()}`,
+        cellText: unit.Price_Without_Parking,
         cellSubText: "without parking",
       },
     ]
@@ -42,7 +42,7 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit.Price_With_Parking && !unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_With_Parking?.toLocaleString()}`,
+        cellText: unit.Price_With_Parking,
         cellSubText: "with parking",
       },
     ]
@@ -51,7 +51,7 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (!unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_Without_Parking?.toLocaleString()}`,
+        cellText: unit.Price_Without_Parking,
         cellSubText: "without parking",
       },
     ]
@@ -62,11 +62,11 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
+        cellText: unit.HOA_Dues_With_Parking,
         cellSubText: "with parking",
       },
       {
-        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
+        cellText: unit.HOA_Dues_Without_Parking,
         cellSubText: "without parking",
       },
     ]
@@ -75,7 +75,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && !unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
+        cellText: unit.HOA_Dues_With_Parking,
         cellSubText: "with parking",
       },
     ]
@@ -84,7 +84,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (!unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
+        cellText: unit.HOA_Dues_Without_Parking,
         cellSubText: "without parking",
       },
     ]
@@ -320,7 +320,7 @@ const buildContent = (
   }
 
   return (
-    <div className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full">
+    <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
       {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
     </div>
   )
