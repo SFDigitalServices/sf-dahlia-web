@@ -173,6 +173,7 @@ module.exports = {
     "app/assets",
     "lib",
     "*.config.js",
+    "config/webpack/**/*",
     "lighthouserc.js",
     "public",
     "node_modules",
@@ -184,7 +185,7 @@ module.exports = {
   settings: {
     react: {
       // Must be updated when package.json react version is bumped
-      version: "17.0.2",
+      version: "18.2.0",
     },
     "import/resolver": {
       node: {

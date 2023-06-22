@@ -10,4 +10,8 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+# We may need to add   jsonfile/index.js
 Rails.application.config.assets.precompile += %w[jquery.js jasmine-jquery.js]
+
+# Add node_modules folder to the asset load path.
+# Rails.application.config.assets.paths << Rails.root.join("node_modules")

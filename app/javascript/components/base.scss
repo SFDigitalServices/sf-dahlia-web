@@ -78,7 +78,6 @@ $colors: (
 @import "@bloom-housing/ui-components/src/global/mixins.scss";
 @import "@bloom-housing/ui-components/src/global/markdown.scss";
 @import "@bloom-housing/ui-components/src/global/text.scss";
-@import "@bloom-housing/ui-components/src/global/headers.scss";
 @import "@bloom-housing/ui-components/src/global/blocks.scss";
 @import "@bloom-housing/ui-components/src/global/accordion.scss";
 @import "@bloom-housing/ui-components/src/global/custom_counter.scss";
@@ -99,17 +98,17 @@ $colors: (
 // /* ***********/
 
 // AG Grid
-@import "~ag-grid-community/src/styles/ag-grid.scss";
-@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
 
 .ag-theme-alpine.ag-theme-bloom {
   // would like to remove the local theme class
-  @include ag-theme-alpine(
-    (
-      header-height: 83px,
-      row-height: 58px,
-    )
-  );
+  // @include ag-theme-alpine(
+  //   (
+  //     header-height: 83px,
+  //     row-height: 58px,
+  //   )
+  // );
 
   .ag-row {
     height: ag-param(row-height);
