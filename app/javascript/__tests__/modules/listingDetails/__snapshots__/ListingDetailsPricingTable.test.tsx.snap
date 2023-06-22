@@ -56,7 +56,7 @@ exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable w
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component when rental listing 1`] = `
 <div
-  className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full"
+  className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
 >
   <div
     className="mb-4"
@@ -327,7 +327,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component when rental listing with AMI full text 1`] = `
 <div
-  className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full"
+  className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
 >
   <div
     className="mb-4"
@@ -521,7 +521,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with open sale listing 1`] = `
 <div
-  className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full"
+  className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
 >
   <div
     className="mb-4"
@@ -792,7 +792,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
 
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component with rental listing 1`] = `
 <div
-  className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full"
+  className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full"
 >
   <div
     className="mb-4"
