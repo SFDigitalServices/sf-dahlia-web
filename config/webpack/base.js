@@ -12,7 +12,6 @@ dotenvFiles.forEach((dotenvFile) => {
   dotenv.config({ path: dotenvFile, silent: true })
 })
 
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const commonOptions = {
   resolve: {
     extensions: ['.css', '.ts', '.tsx', '.scss']
@@ -53,7 +52,7 @@ const ignoreWarningsConfig = {
 }
 // Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
 // const commonWebpackConfig = () => (merge({}, baseClientWebpackConfig, commonOptions))
-const commonWebpackConfig = () =>
+const base = () =>
   merge({}, generatedWebpackConfig, commonOptions, ignoreWarningsConfig)
 
-module.exports = commonWebpackConfig
+module.exports = base
