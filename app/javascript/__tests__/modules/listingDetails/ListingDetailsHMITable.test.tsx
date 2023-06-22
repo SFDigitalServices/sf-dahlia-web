@@ -1,15 +1,15 @@
 import React from "react"
 import renderer from "react-test-renderer"
-import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
+import { ListingDetailsHMITable } from "../../../modules/listingDetails/ListingDetailsHMITable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
-import { units, unitsWithOneOccupant } from "../../data/RailsListingUnits/listing-units"
+import { units } from "../../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../../data/RailsAmiCharts/ami-charts"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
-describe("ListingDetailsPricingTable", () => {
-  it("renders ListingDetailsPricingTable component with spinner before api call", () => {
+describe("ListingDetailsHMITable", () => {
+  it("renders ListingDetailsHMITable component with spinner before api call", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
@@ -23,13 +23,13 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: null,
         }}
       >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
+        <ListingDetailsHMITable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("renders ListingDetailsPricingTable component with rental listing", () => {
+  it("renders ListingDetailsHMITable component with rental listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
@@ -43,7 +43,7 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: null,
         }}
       >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
+        <ListingDetailsHMITable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
     expect(tree.toJSON()).toMatchSnapshot()
@@ -63,47 +63,7 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: null,
         }}
       >
-        <ListingDetailsPricingTable listing={openSaleListing} />
-      </ListingDetailsContext.Provider>
-    )
-    expect(tree.toJSON()).toMatchSnapshot()
-  })
-
-  it("renders ListingDetailsPricingTable component when rental listing", () => {
-    const tree = renderer.create(
-      <ListingDetailsContext.Provider
-        value={{
-          units,
-          amiCharts,
-          fetchingUnits: false,
-          fetchedUnits: true,
-          fetchingAmiCharts: false,
-          fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
-        }}
-      >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
-      </ListingDetailsContext.Provider>
-    )
-    expect(tree.toJSON()).toMatchSnapshot()
-  })
-
-  it("renders ListingDetailsPricingTable component when rental listing with AMI full text", () => {
-    const tree = renderer.create(
-      <ListingDetailsContext.Provider
-        value={{
-          units: unitsWithOneOccupant,
-          amiCharts,
-          fetchingUnits: false,
-          fetchedUnits: true,
-          fetchingAmiCharts: false,
-          fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
-        }}
-      >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
+        <ListingDetailsHMITable listing={openSaleListing} />
       </ListingDetailsContext.Provider>
     )
     expect(tree.toJSON()).toMatchSnapshot()
@@ -123,7 +83,7 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: null,
         }}
       >
-        <ListingDetailsPricingTable listing={habitatListing} />
+        <ListingDetailsHMITable listing={habitatListing} />
       </ListingDetailsContext.Provider>
     )
     expect(tree.toJSON()).toMatchSnapshot()

@@ -15,6 +15,8 @@ import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
+import { getRangeString } from "../modules/listings/DirectoryHelpers"
+import { t } from "@bloom-housing/ui-components"
 
 export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
@@ -181,7 +183,8 @@ export const deriveIncomeFromAmiCharts = (
   const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
     return (
       Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
-      amiData.chartType === unit.AMI_chart_type
+      amiData.chartType === unit.AMI_chart_type &&
+      amiData.year === unit.AMI_chart_year?.toString()
     )
   })?.values
 
@@ -207,8 +210,9 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
   const totalUnits = []
   units.forEach((unit: RailsUnit) => {
     if (!unit.Max_Occupancy) {
-      unit.Max_Occupancy = 3
+      unit.Max_Occupancy = unit.Min_Occupancy + 2
     }
+
     for (let i = unit.Min_Occupancy; i <= unit.Max_Occupancy; i++) {
       totalUnits.push({ ...unit, occupancy: i })
     }
@@ -216,16 +220,21 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
   return totalUnits
 }
 
-export const buildAmiArray = (units: RailsUnitWithOccupancyAndMaxIncome[]): Array<number> => {
-  const arrayOfAmis = []
+export const buildAmiArray = (
+  units: RailsUnitWithOccupancyAndMaxIncome[]
+): Array<{ min: number | undefined; max: number }> => {
+  const arrayOfAmis: Array<{ min: number | undefined; max: number }> = []
   units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
-    if (arrayOfAmis.includes(unit.Max_AMI_for_Qualifying_Unit)) {
+    if (arrayOfAmis.some((ami) => ami.max === unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
-    arrayOfAmis.push(unit.Max_AMI_for_Qualifying_Unit)
+    arrayOfAmis.push({
+      min: unit.Min_AMI_for_Qualifying_Unit,
+      max: unit.Max_AMI_for_Qualifying_Unit,
+    })
   })
   arrayOfAmis.sort(function (a, b) {
-    return a - b
+    return a.max - b.max
   })
   return arrayOfAmis
 }
@@ -245,31 +254,85 @@ export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<nu
   return arrayOfOccupancies
 }
 
+/**
+ * Returns a collapsed array of units grouped by matching criteria with updated availability
+ * @param {RailsUnitWithOccupancyAndMaxIncome[]} units
+ * @returns {RailsUnitWithOccupancyAndMaxIncome[]}
+ */
 export const matchSharedUnitFields = (
   units: RailsUnitWithOccupancyAndMaxIncome[]
 ): RailsUnitWithOccupancyAndMaxIncome[] => {
   const collapsedUnits = []
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
-    const summaryThatsAlreadyAdded = collapsedUnits.find(
-      (collapsedUnit: RailsUnitWithOccupancyAndMaxIncome) => {
-        return (
-          unit.BMR_Rent_Monthly === collapsedUnit.BMR_Rent_Monthly &&
-          unit.Unit_Type === collapsedUnit.Unit_Type &&
-          unit.occupancy === collapsedUnit.occupancy &&
-          unit.maxMonthlyIncomeNeeded === collapsedUnit.maxMonthlyIncomeNeeded &&
-          unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
-            collapsedUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
-          unit.Max_AMI_for_Qualifying_Unit === collapsedUnit.Max_AMI_for_Qualifying_Unit
-        )
-      }
-    )
-
-    if (!summaryThatsAlreadyAdded) {
-      collapsedUnits.push(unit)
-    } else {
-      summaryThatsAlreadyAdded.Availability += unit.Availability
-    }
+  // Process each unit in units by finding its matchingUnits
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
   })
+  while (unitsCopy.length > 0) {
+    const unit = unitsCopy[0]
+    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      return (
+        unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
+        unit.Unit_Type === curUnit.Unit_Type &&
+        unit.occupancy === curUnit.occupancy &&
+        unit.maxMonthlyIncomeNeeded === curUnit.maxMonthlyIncomeNeeded &&
+        unit.BMR_Rental_Minimum_Monthly_Income_Needed ===
+          curUnit.BMR_Rental_Minimum_Monthly_Income_Needed &&
+        unit.Max_AMI_for_Qualifying_Unit === curUnit.Max_AMI_for_Qualifying_Unit
+      )
+    })
+    // Remove duplicate matchingUnits from units
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      unitsCopy.splice(unitsCopy.indexOf(curUnit), 1)
+    })
+    // If min / max range exists, update unit for sales and HOA price with/out parking
+    const pricesWithParking = matchingUnits
+      .map((u) => Math.round(Number(u.Price_With_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (pricesWithParking.length > 0) {
+      unit.Price_With_Parking = getRangeString(
+        Math.min(...pricesWithParking),
+        Math.max(...pricesWithParking),
+        true
+      )
+    }
+    const pricesWithoutParking = matchingUnits
+      .map((u) => Math.round(Number(u.Price_Without_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (pricesWithoutParking.length > 0) {
+      unit.Price_Without_Parking = getRangeString(
+        Math.min(...pricesWithoutParking),
+        Math.max(...pricesWithoutParking),
+        true
+      )
+    }
+    const hoaWithParking = matchingUnits
+      .map((u) => Math.round(Number(u.HOA_Dues_With_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (hoaWithParking.length > 0) {
+      unit.HOA_Dues_With_Parking = getRangeString(
+        Math.min(...hoaWithParking),
+        Math.max(...hoaWithParking),
+        true
+      )
+    }
+    const hoaWithoutParking = matchingUnits
+      .map((u) => Math.round(Number(u.HOA_Dues_Without_Parking)))
+      .filter((num) => !Number.isNaN(num))
+    if (hoaWithoutParking.length > 0) {
+      unit.HOA_Dues_Without_Parking = getRangeString(
+        Math.min(...hoaWithoutParking),
+        Math.max(...hoaWithoutParking),
+        true
+      )
+    }
+    // Update availiability based on availability in matchingUnits
+    let numAvailable = 0
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+      numAvailable += curUnit.Availability
+    })
+    unit.Availability = numAvailable
+    collapsedUnits.push(unit)
+  }
   return collapsedUnits
 }
 
@@ -296,12 +359,18 @@ export const groupAndSortUnitsByOccupancy = (
   amiCharts: RailsAmiChart[]
 ): GroupedUnitsByOccupancy[] => {
   /*
+   * make a deep copy
+   */
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
+
+  /*
    * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
    * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
    * and a unit with occupancy 3
    */
-  const unitsWithOccupancy = addUnitsWithEachOccupancy(units)
-
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object
@@ -335,7 +404,7 @@ export const groupAndSortUnitsByOccupancy = (
       absoluteMinIncome: absoluteMinIncome,
       amiRows: buildAmiArray(unitsWithOccupancy).map((ami) => {
         const unitsWithAmi = unitsWithOccupancy.filter(
-          (unit) => unit.Max_AMI_for_Qualifying_Unit === ami
+          (unit) => unit.Max_AMI_for_Qualifying_Unit === ami.max
         )
         return {
           ami,
@@ -392,4 +461,81 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
   })
 
   return uniqueCharts
+}
+
+export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): number => {
+  let longestChartLength: number
+
+  amiCharts.forEach((chart: RailsAmiChart) => {
+    if (!longestChartLength || chart?.values.length > longestChartLength) {
+      longestChartLength = chart?.values.length
+    }
+  })
+
+  return longestChartLength
+}
+
+export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+  const unitsCopy = units.map((unit) => {
+    return { ...unit }
+  })
+  /*
+   * Each unit from the api call has a min and max occupancy. Each value in that range has a row in the pricing table, so we'll add a
+   * unit for each occupancy, e.g. with a min of 1 and max of 3, we'll have a unit with occupancy 1, a unit with occupancy 2,
+   * and a unit with occupancy 3
+   */
+  const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
+
+  /*
+   * We have to derive the max income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max income to the unit object
+   */
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+
+  /*
+   * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
+   * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
+   */
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+  /*
+   * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
+   * This gives us the foundation to build the pricing table accordions.
+   */
+  const occupanciesArray = buildOccupanciesArray(unitSummaries)
+
+  const unprocessedUnitsHaveMaxOccupancy = units.some((unit) => {
+    return unit.Max_Occupancy
+  })
+
+  return {
+    explicitMaxOccupancy: unprocessedUnitsHaveMaxOccupancy,
+    minOccupancy: occupanciesArray[0],
+    maxOccupancy: unprocessedUnitsHaveMaxOccupancy
+      ? occupanciesArray[occupanciesArray.length - 1]
+      : getLongestAmiChartValueLength(amiCharts),
+  }
+}
+
+export const getPriorityTypeText = (priortyType: string): string => {
+  let text: string
+  switch (priortyType) {
+    case "Vision impairments":
+      text = t("listings.prioritiesDescriptor.vision")
+      break
+    case "Hearing impairments":
+      text = t("listings.prioritiesDescriptor.hearing")
+      break
+    case "Hearing/Vision impairments":
+      text = t("listings.prioritiesDescriptor.hearingVision")
+      break
+    case "Mobility/hearing/vision impairments":
+      text = t("listings.prioritiesDescriptor.mobilityHearingVision")
+      break
+    case "Mobility impairments":
+      text = t("listings.prioritiesDescriptor.mobility")
+      break
+    default:
+      text = ""
+  }
+  return text
 }

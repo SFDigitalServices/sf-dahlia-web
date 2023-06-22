@@ -16,6 +16,14 @@ class AssistanceController < ApplicationController
     render 'additional_resources'
   end
 
+  def privacy
+    render 'privacy'
+  end
+
+  def disclaimer
+    render 'disclaimer'
+  end
+
   protected
 
   def use_react_app
