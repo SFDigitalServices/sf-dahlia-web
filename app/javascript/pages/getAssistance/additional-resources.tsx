@@ -21,13 +21,13 @@ const AdditionalResources = () => {
             {additionalResources.sanFranciscoHousingPrograms.map((resource) => {
               return (
                 <InfoCard
-                  title={resource.title}
-                  subtitle={resource.agency}
+                  title={t(resource.title)}
+                  subtitle={t(resource.agency)}
                   externalHref={resource.externalUrl}
                   className="info-card-additional-resources is-normal-primary-lighter"
                   key={resource.title}
                 >
-                  {<div className="text-gray-950 text-xs">{resource.description}</div>}
+                  {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
                 </InfoCard>
               )
             })}
@@ -42,13 +42,13 @@ const AdditionalResources = () => {
           {additionalResources.nonMOHCDHousingPrograms.map((resource) => {
             return (
               <InfoCard
-                title={resource.title}
-                subtitle={resource.agency}
+                title={t(resource.title)}
+                subtitle={t(resource.agency)}
                 externalHref={resource.externalUrl}
                 className="info-card-additional-resources is-normal-primary-lighter"
                 key={resource.title}
               >
-                {<div className="text-gray-950 text-xs">{resource.description}</div>}
+                {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
               </InfoCard>
             )
           })}
