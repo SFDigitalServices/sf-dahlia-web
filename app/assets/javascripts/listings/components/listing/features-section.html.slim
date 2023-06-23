@@ -20,7 +20,12 @@ accordion-heading
     feature-row title="{{'listings.features.accessibility' | translate}}" description="{{::$ctrl.parent.listing.Accessibility}}"
 
   .content-tile.feature-tile
-    h4.feature-title.margin-bottom translate="listings.features.unit_features"
+    h4.feature-title.margin-bottom translate="listings.features.unit_features" ng-if="$ctrl.parent.isRental($ctrl.parent.listing)"
+    .feature-row.row.collapse ng-if="$ctrl.parent.isSale($ctrl.parent.listing)"
+      .medium-4.columns.padding-right--half.overflow-wrap-break-word
+        h4.feature-title translate="listings.features.unit_details"
+      .medium-8.columns ng-if="$ctrl.parent.listing.Pricing_Matrix"
+        a.t-small target="_blank" ng-href="{{$ctrl.parent.listing.Pricing_Matrix}}" translate="listings.features.download_price_and_income_limit_for_each_unit_pdf"
 
     .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
       .padding--2x ng-include="'shared/templates/spinner.html'"
