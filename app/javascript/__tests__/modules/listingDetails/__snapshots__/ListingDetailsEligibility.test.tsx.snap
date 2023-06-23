@@ -137,7 +137,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
         onClick={[Function]}
         tabIndex={0}
       >
@@ -562,7 +562,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
         onClick={[Function]}
         tabIndex={0}
       >
@@ -1082,7 +1082,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
         onClick={[Function]}
         tabIndex={0}
       >
@@ -1359,7 +1359,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
         onClick={[Function]}
         tabIndex={0}
       >
@@ -1792,7 +1792,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         </table>
       </div>
       <button
-        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+        className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
         onClick={[Function]}
         tabIndex={0}
       >
