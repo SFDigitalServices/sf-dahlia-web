@@ -1,5 +1,5 @@
 import React from "react"
-import renderer, { act } from "react-test-renderer"
+import renderer from "react-test-renderer"
 import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
