@@ -1,13 +1,118 @@
 import React from "react"
-import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
+import AssistanceLayout from "../../layouts/AssistanceLayout"
+import { t } from "@bloom-housing/ui-components"
+import { renderMarkup } from "../../util/languageUtil"
 
 const Privacy = () => {
   return (
-    <Layout title={"Privacy Policy"}>
-      {/* Add PageHeader Component (Look in AssistanceLayout) */}
-      <h1>Privacy Policy Content</h1>
-    </Layout>
+    <AssistanceLayout title={t("pageTitle.privacy")} subtitle={t("privacyPolicy.intro")}>
+      {
+        <div className="flex flex-col w-full">
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.infoCollectionTitle")}</h2>
+            <ul className="list-disc ml-7 space-y-2.5">
+              <li>{t("privacyPolicy.infoCollectionP1")}</li>
+              <li>{t("privacyPolicy.infoCollectionP2")}</li>
+              <li>{t("privacyPolicy.infoCollectionP3")}</li>
+              <li>{t("privacyPolicy.infoCollectionP4")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.infoYouProvideTitle")}</h2>
+            <ul className="list-disc ml-7 space-y-2.5">
+              <li>{t("privacyPolicy.infoYouProvideP1")}</li>
+              <li>{t("privacyPolicy.infoYouProvideP2")}</li>
+              <li>{t("privacyPolicy.infoYouProvideP3")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.cookiesTitle")}</h2>
+            <ul className="list-disc ml-7 space-y-2.5">
+              <li>{t("privacyPolicy.cookiesP1")}</li>
+              <li>{t("privacyPolicy.cookiesP2")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.infoSharingTitle")}</h2>
+            <ul className="list-disc ml-7">
+              <li>{t("privacyPolicy.infoSharingP1")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.analyticsTitle")}</h2>
+            <p>
+              {renderMarkup(
+                `${t("privacyPolicy.analyticsP1", {
+                  termsLink:
+                    '<a href="http://www.google.com/analytics/terms/us.html" target="_blank">',
+                  privacyLink: '<a href="http://www.google.com/policies/privacy/" target="_blank">',
+                  optOutLink:
+                    '<a href="https://tools.google.com/dlpage/gaoptout?hl=en" target="_blank">',
+                  linkEnd: "</a>",
+                })}`
+              )}
+            </p>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.linksTitle")}</h2>
+            <ul className="list-disc ml-7 space-y-2.5">
+              <li>{t("privacyPolicy.linksP1")}</li>
+              <li>{t("privacyPolicy.linksP2")}</li>
+              <li>{t("privacyPolicy.linksP3")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.siteSecurityTitle")}</h2>
+            <ul className="list-disc ml-7 space-y-2.5">
+              <li>{t("privacyPolicy.siteSecurityP1")}</li>
+              <li>{t("privacyPolicy.siteSecurityP2")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.policyChangesTitle")}</h2>
+            <ul className="list-disc ml-7">
+              <li>{t("privacyPolicy.policyChangesP1")}</li>
+            </ul>
+          </div>
+          <div className="md:pr-11 md:pl-0">
+            <hr />
+          </div>
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <h2>{t("privacyPolicy.questionsTitle")}</h2>
+            <p>
+              {renderMarkup(
+                `${t("privacyPolicy.questionsP1", {
+                  telLink: '<a href="tel:4157015500">415-701-5500</a>',
+                  emailLink: '<a href="mailto:sfhousinginfo@sfgov.org">sfhousinginfo@sfgov.org</a>',
+                })}`
+              )}
+            </p>
+          </div>
+        </div>
+      }
+    </AssistanceLayout>
   )
 }
 
