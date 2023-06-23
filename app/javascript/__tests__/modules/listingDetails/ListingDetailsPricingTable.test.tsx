@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import renderer, { act } from "react-test-renderer"
 import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -109,7 +109,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("does not render ListingDetailsPricingTable when habitat listing", () => {
+  it("renders ListingDetailsPricingTable when habitat listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
