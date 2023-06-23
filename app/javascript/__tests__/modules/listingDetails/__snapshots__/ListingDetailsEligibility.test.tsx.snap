@@ -544,6 +544,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about credit history guidelines"
               class="button-toggle mt-2"
             >
@@ -579,6 +580,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about rental history guidelines"
               class="button-toggle mt-2"
             >
@@ -1171,6 +1173,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about credit history guidelines"
               class="button-toggle mt-2"
             >
@@ -1206,6 +1209,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about rental history guidelines"
               class="button-toggle mt-2"
             >
@@ -2437,6 +2441,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about credit history guidelines"
               class="button-toggle mt-2"
             >
@@ -2472,6 +2477,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about rental history guidelines"
               class="button-toggle mt-2"
             >
@@ -3073,6 +3079,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about credit history guidelines"
               class="button-toggle mt-2"
             >
@@ -3108,6 +3115,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               </p>
             </div>
             <button
+              aria-expanded="false"
               aria-label="Read more about rental history guidelines"
               class="button-toggle mt-2"
             >
