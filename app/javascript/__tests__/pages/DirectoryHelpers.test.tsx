@@ -21,9 +21,9 @@ describe("DirectoryHelpers", () => {
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
         }
-        expect(
-          getListingImageCardStatuses(testListing as RailsRentalListing, false)
-        ).toStrictEqual([{ status: 0, content: "Application Deadline: October 30, 2100" }])
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
+          [{ status: 0, content: "Application Deadline: October 30, 2100" }]
+        )
       })
 
       it("renders as upcoming lottery", () => {
@@ -46,11 +46,9 @@ describe("DirectoryHelpers", () => {
           Publish_Lottery_Results: true,
           Lottery_Status: "Lottery Complete",
         }
-        expect(
-          getListingImageCardStatuses(testListing as RailsRentalListing, false)
-        ).toStrictEqual([
-          { status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true },
-        ])
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
+          [{ status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true }]
+        )
       })
       it("does not render listing as matched", () => {
         const testListing = {
@@ -59,9 +57,9 @@ describe("DirectoryHelpers", () => {
           Publish_Lottery_Results: false,
           Does_Match: true,
         }
-        expect(
-          getListingImageCardStatuses(testListing as RailsRentalListing, false)
-        ).toStrictEqual([{ status: 0, content: "Application Deadline: October 30, 2100" }])
+        expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
+          [{ status: 0, content: "Application Deadline: October 30, 2100" }]
+        )
       })
     })
     describe("with eligibility filters", () => {
