@@ -5,6 +5,8 @@ import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
+import { MailingListSignup } from "../components/MailingListSignup"
+
 export const languageToSFGovMap = (lang: string) => {
   switch (lang) {
     case "es":
@@ -42,7 +44,7 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
           {children}
         </div>
         <SidebarBlock
-          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
+          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           title={t("footer.contact")}
         >
           <span className="text-gray-950">
@@ -90,6 +92,9 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
           </span>
         </SidebarBlock>
       </article>
+      <span className="max-w-5xl m-auto w-full pb-8">
+        <MailingListSignup />
+      </span>
     </Layout>
   )
 }
