@@ -144,14 +144,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
           {isRental(listing) && (
             <Description term={t("listings.features.unitFeatures")} description={""} />
           )}
-          {isSale(listing) && (
-            // TODO DAH-1179: remove example.com once backend provides listing.Pricing_Matrx, also update test snapshots
-            <UnitDetailsFeatureItem
-              pricingMatrixUrl={
-                listing.Pricing_Matrix ? listing.Pricing_Matrix : "https://www.example.com"
-              }
-            />
-          )}
+          {isSale(listing) && <UnitDetailsFeatureItem pricingMatrixUrl={listing.Pricing_Matrix} />}
         </dl>
         <ErrorBoundary boundaryScope={BoundaryScope.component}>
           <ListingDetailsUnitAccordions />

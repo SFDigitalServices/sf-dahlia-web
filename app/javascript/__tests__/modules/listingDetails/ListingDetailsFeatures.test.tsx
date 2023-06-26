@@ -96,3 +96,34 @@ describe("ListingDetailsFeatures", () => {
     done()
   })
 })
+
+it("displays a pdf hyperlink when Pricing_Matrix url exists in sales listing", async () => {
+  const getUnitsMock = getUnits as jest.MockedFunction<typeof getUnits>
+  getUnitsMock.mockReturnValue(Promise.resolve(units))
+  // This component pulls in react-media, which needs this custom mock
+  window.matchMedia = jest.fn().mockImplementation((query) => {
+    return {
+      matches: true,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }
+  })
+  const tree = renderer
+    .create(
+      <ListingDetailsFeatures
+        listing={{ ...openSaleListing, Pricing_Matrix: "https://www.example.com" }}
+        imageSrc={"listing-features.svg"}
+      />
+    )
+    .toJSON()
+
+  // wait for state changes
+  await act(() => new Promise((resolve) => setTimeout(resolve)))
+
+  expect(tree).toMatchSnapshot()
+})
