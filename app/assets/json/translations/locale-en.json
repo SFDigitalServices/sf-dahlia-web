@@ -905,7 +905,6 @@
         "baths": "Baths",
         "built": "Built",
         "deposit": "Deposit",
-        "download_price_and_income_limit_for_each_unit_pdf": "Download price and income limit for each unit (PDF).",
         "due_post_lottery": "Due post lottery",
         "floor": "Floor",
         "header": "Features",
@@ -924,7 +923,6 @@
         "sqft": "sqft",
         "square_feet": "square feet",
         "unit": "Unit",
-        "unit_details": "Unit Details",
         "unit_features": "Unit Features"
       },
       "final_waitlist_size": "Final Waitlist Size",
