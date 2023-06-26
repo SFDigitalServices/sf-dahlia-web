@@ -5,7 +5,6 @@ import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
-import { MailingListSignup } from "../components/MailingListSignup"
 
 export const languageToSFGovMap = (lang: string) => {
   switch (lang) {
@@ -92,9 +91,6 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
           </span>
         </SidebarBlock>
       </article>
-      <span className="max-w-5xl m-auto w-full pb-8">
-        <MailingListSignup />
-      </span>
     </Layout>
   )
 }
