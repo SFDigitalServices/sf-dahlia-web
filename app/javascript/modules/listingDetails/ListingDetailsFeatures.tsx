@@ -39,6 +39,31 @@ const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
   )
 }
 
+interface UnitDetailsFeatureItemProps {
+  pricingMatrixUrl: string
+}
+const UnitDetailsFeatureItem = ({ pricingMatrixUrl }: UnitDetailsFeatureItemProps) => {
+  const hyperlink = pricingMatrixUrl
+    ? `<a href='${pricingMatrixUrl}' target="_blank">${t(
+        "listings.features.downloadPriceAndIncomeLimitForEachUnitPdf"
+      )}</a>`
+    : ""
+
+  return (
+    <>
+      <Description
+        term={t("listings.features.unitDetails")}
+        description={hyperlink}
+        markdownProps={{
+          disableParsingRawHTML: false,
+        }}
+        markdown={true}
+      />
+      <Description term="" description="" />
+    </>
+  )
+}
+
 export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeaturesProps) => {
   const depositSubtext = [t("listings.features.orOneMonthsRent")]
 
@@ -116,7 +141,17 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             toTranslate={true}
           />
 
-          <Description term={t("listings.features.unitFeatures")} description={""} />
+          {isRental(listing) && (
+            <Description term={t("listings.features.unitFeatures")} description={""} />
+          )}
+          {isSale(listing) && (
+            // TODO DAH-1179: remove example.com once backend provides listing.Pricing_Matrx, also update test snapshots
+            <UnitDetailsFeatureItem
+              pricingMatrixUrl={
+                listing.Pricing_Matrix ? listing.Pricing_Matrix : "https://www.example.com"
+              }
+            />
+          )}
         </dl>
         <ErrorBoundary boundaryScope={BoundaryScope.component}>
           <ListingDetailsUnitAccordions />

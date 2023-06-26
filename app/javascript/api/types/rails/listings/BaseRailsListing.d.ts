@@ -113,6 +113,7 @@ type BaseRailsListing = {
   Open_Houses?: ListingEvent[]
   Parking_Information?: string
   Pet_Policy?: string
+  Pricing_Matrix?: string
   Program_Type: string
   Project_ID: string
   Publish_Lottery_Results: boolean

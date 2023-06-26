@@ -351,8 +351,112 @@ exports[`ListingDetailsFeatures displays listing details features section when s
             />
           </svg>
         </span>
+<<<<<<< HEAD
       </hgroup>
     </header>
+=======
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Appliances
+      </dt>
+      <dd
+        className="description__body translate"
+      >
+        <span>
+          Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
+        </span>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Services Covered by HOA Dues
+      </dt>
+      <dd
+        className="description__body translate"
+      >
+        <span>
+          Test Service
+        </span>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Parking
+      </dt>
+      <dd
+        className="description__body translate"
+      >
+        <span>
+          Landing at The San Francisco Shipyard:
+
+          <br />
+          <br />
+          One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+
+          <br />
+          <br />
+          <br />
+          <br />
+          Palisades at The San Francisco Shipyard:
+
+          <br />
+          <br />
+          Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+        </span>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Smoking Policy
+      </dt>
+      <dd
+        className="description__body translate"
+      >
+        <span>
+          Smoking may cause problems
+        </span>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Pets Policy
+      </dt>
+      <dd
+        className="description__body translate"
+      >
+        <span>
+          All pets are awesome!
+        </span>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        Unit Details
+      </dt>
+      <dd
+        className="description__body"
+      >
+        <a
+          href="https://www.example.com"
+          target="_blank"
+        >
+          Download price and income limit for each unit (PDF).
+        </a>
+      </dd>
+      <dt
+        className="description__title"
+      >
+        
+      </dt>
+      <dd
+        className="description__body"
+      >
+        
+      </dd>
+    </dl>
+>>>>>>> 147d324a (feat: unit details and PDF link (react))
     <div
       class="listing-detail-panel"
     >
