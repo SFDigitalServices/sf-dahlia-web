@@ -25,11 +25,11 @@ const getTableData = (units: RailsUnit[]) => {
       unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
       area: {
         content: (
-          <>
+          <div className="whitespace-nowrap">
             <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
             <span aria-hidden="true">{t("listings.features.sqft")}</span>
             <span className="sr-only">{t("listings.features.squareFeet")}</span>
-          </>
+          </div>
         ),
       },
       baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
