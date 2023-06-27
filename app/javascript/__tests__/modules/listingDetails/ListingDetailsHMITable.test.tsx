@@ -1,22 +1,15 @@
 import React from "react"
-import { render, cleanup } from "@testing-library/react"
-import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
+import { render } from "@testing-library/react"
+import { ListingDetailsHMITable } from "../../../modules/listingDetails/ListingDetailsHMITable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
-import { units, unitsWithOneOccupant } from "../../data/RailsListingUnits/listing-units"
+import { units } from "../../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../../data/RailsAmiCharts/ami-charts"
 import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
 
-describe("ListingDetailsPricingTable", () => {
-  afterEach(() => {
-    cleanup()
-    jest.clearAllMocks()
-    jest.resetAllMocks()
-  })
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  it("renders ListingDetailsPricingTable component with spinner before api call", () => {
+describe("ListingDetailsHMITable", () => {
+  it("renders ListingDetailsHMITable component with spinner before api call", () => {
     const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
@@ -30,10 +23,29 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
+        <ListingDetailsHMITable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
+    expect(asFragment()).toMatchSnapshot()
+  })
 
+  it("renders ListingDetailsHMITable component with rental listing", () => {
+    const { asFragment } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units,
+          amiCharts,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsHMITable listing={closedRentalListing} />
+      </ListingDetailsContext.Provider>
+    )
     expect(asFragment()).toMatchSnapshot()
   })
 
@@ -51,49 +63,7 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsPricingTable listing={openSaleListing} />
-      </ListingDetailsContext.Provider>
-    )
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
-  it("renders ListingDetailsPricingTable component when rental listing", () => {
-    const { asFragment } = render(
-      <ListingDetailsContext.Provider
-        value={{
-          units,
-          amiCharts,
-          fetchingUnits: false,
-          fetchedUnits: true,
-          fetchingAmiCharts: false,
-          fetchedAmiCharts: true,
-          fetchingAmiChartsError: undefined,
-          fetchingUnitsError: undefined,
-        }}
-      >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
-      </ListingDetailsContext.Provider>
-    )
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
-  it("renders ListingDetailsPricingTable component when rental listing with AMI full text", () => {
-    const { asFragment } = render(
-      <ListingDetailsContext.Provider
-        value={{
-          units: unitsWithOneOccupant,
-          amiCharts,
-          fetchingUnits: false,
-          fetchedUnits: true,
-          fetchingAmiCharts: false,
-          fetchedAmiCharts: true,
-          fetchingAmiChartsError: undefined,
-          fetchingUnitsError: undefined,
-        }}
-      >
-        <ListingDetailsPricingTable listing={closedRentalListing} />
+        <ListingDetailsHMITable listing={openSaleListing} />
       </ListingDetailsContext.Provider>
     )
     expect(asFragment()).toMatchSnapshot()
@@ -113,10 +83,9 @@ describe("ListingDetailsPricingTable", () => {
           fetchingUnitsError: undefined,
         }}
       >
-        <ListingDetailsPricingTable listing={habitatListing} />
+        <ListingDetailsHMITable listing={habitatListing} />
       </ListingDetailsContext.Provider>
     )
-
     expect(asFragment()).toMatchSnapshot()
   })
 })

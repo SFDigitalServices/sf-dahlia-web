@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { ContentAccordion, Icon, StandardTable, t } from "@bloom-housing/ui-components"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { getPriorityTypeText } from "../../util/listingUtil"
 
 export interface UnitGroupType {
   units: RailsUnit[]
@@ -18,47 +19,31 @@ const TableHeaders = {
   accessibility: "listings.features.accessibility",
 }
 
-const getPriorityTypeText = (priorityType) => {
-  switch (priorityType) {
-    case "Adaptable":
-      return ""
-    case "Hearing Impairments":
-      return t("listings.prioritiesDescriptor.hearing")
-    case "Vision and/or Hearing Impairments":
-      return t("listings.prioritiesDescriptor.hearingVision")
-    case "Mobility Impairments":
-      return t("listings.prioritiesDescriptor.mobility")
-    case "Mobility, Hearing and/or Vision Impairments":
-      return t("listings.prioritiesDescriptor.mobilityHearingVision")
-    case "Vision Impairments":
-      return t("listings.prioritiesDescriptor.vision")
-    default:
-      return ""
-  }
+const getTableData = (units: RailsUnit[]) => {
+  return units.map((unit) => {
+    return {
+      unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
+      area: {
+        content: (
+          <div className="whitespace-nowrap">
+            <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
+            <span aria-hidden="true">{t("listings.features.sqft")}</span>
+            <span className="sr-only">{t("listings.features.squareFeet")}</span>
+          </div>
+        ),
+      },
+      baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
+      floor: { content: <span className="font-semibold">{unit.Unit_Floor}</span> },
+      accessibility: {
+        content: (
+          <span className="font-semibold">
+            {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
+          </span>
+        ),
+      },
+    }
+  })
 }
-
-const getTableData = (units: RailsUnit[]) =>
-  units.map((unit) => ({
-    unit: { content: <span className="font-semibold">{unit.Unit_Number}</span> },
-    area: {
-      content: (
-        <>
-          <span className="font-semibold">{unit.Unit_Square_Footage}</span>{" "}
-          <span aria-hidden="true">{t("listings.features.sqft")}</span>
-          <span className="sr-only">{t("listings.features.squareFeet")}</span>
-        </>
-      ),
-    },
-    baths: { content: <span className="font-semibold">{unit.Number_of_Bathrooms}</span> },
-    floor: { content: <span className="font-semibold">{unit.Unit_Floor}</span> },
-    accessibility: {
-      content: (
-        <span className="font-semibold">
-          {unit.Priority_Type && getPriorityTypeText(unit.Priority_Type)}
-        </span>
-      ),
-    },
-  }))
 
 const sortUnits = (units) => {
   return units?.reduce((acc, unit) => {

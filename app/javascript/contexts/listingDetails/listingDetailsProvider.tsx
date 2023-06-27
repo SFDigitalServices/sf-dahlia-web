@@ -56,7 +56,7 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
       dispatch(startFetchingAmiCharts())
       getAmiCharts(chartsToFetch)
         .then((amiCharts: RailsAmiChart[]) => {
-          dispatch(finishFetchingAmiCharts(amiCharts))
+          dispatch(finishFetchingAmiCharts({ amiCharts, chartsToFetch }))
         })
         .catch((error) => {
           console.error(error)

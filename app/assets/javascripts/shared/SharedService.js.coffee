@@ -57,6 +57,12 @@ SharedService = ($http, $state, $window, $document) ->
     'dahlia.document-checklist':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/document-checklist")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+    'dahlia.privacy':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/privacy")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+    'dahlia.disclaimer':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/disclaimer")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
 
 
   Service.getLanguageCode = (langName) ->

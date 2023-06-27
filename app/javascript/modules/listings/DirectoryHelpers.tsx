@@ -16,8 +16,8 @@ import dayjs from "dayjs"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { areLotteryResultsShareable } from "../../util/listingUtil"
-import type RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
+import { areLotteryResultsShareable, getPriorityTypeText } from "../../util/listingUtil"
+import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
 
@@ -25,6 +25,7 @@ import { ListingAddress } from "../../components/ListingAddress"
 import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
+import TableSubHeader from "./TableSubHeader"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -71,6 +72,11 @@ const isNumber = (val: number) => val || val === 0
 // 100, 200, true, null --> $100 - $200
 // 100, 100, false, "%" --> 100%
 export const getRangeString = (min: number, max: number, currency?: boolean, suffix?: string) => {
+  // If min is 0, return "up to {max}"
+  if (isNumber(min) && isNumber(max) && min === 0 && max !== 0) {
+    const maxString = getNumberString(max, currency)
+    return `${t("t.upTo")} ${maxString}`
+  }
   // If the numbers differ, return as a range.
   if (isNumber(min) && isNumber(max) && min !== max) {
     const minString = getNumberString(min, currency)
@@ -147,32 +153,14 @@ export const getTableHeader = (listing: RailsRentalListing) => {
 }
 
 // Get the summary table subheader
-export const getTableSubHeader = (listing: RailsRentalListing) => {
+export const getPriorityTypes = (listing: RailsRentalListing): string[] | null => {
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
     const priorityNames = []
     listing.prioritiesDescriptor.forEach((priority) => {
-      switch (priority.name) {
-        case "Vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.vision"))
-          break
-        case "Hearing impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.hearing"))
-          break
-        case "Hearing/Vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.hearingVision"))
-          break
-        case "Mobility/hearing/vision impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.mobilityHearingVision"))
-          break
-        case "Mobility impairments":
-          priorityNames.push(t("listings.prioritiesDescriptor.mobility"))
-          break
-        default:
-          priorityNames.push(priority.name)
-      }
+      const text = getPriorityTypeText(priority.name)
+      text ? priorityNames.push(text) : priorityNames.push(priority.name)
     })
-
-    return t("listings.includesPriorityUnits", { priorities: priorityNames.join(", ") })
+    return priorityNames
   }
   return null
 }
@@ -191,7 +179,9 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
             ? null
             : {
                 tableHeader: { content: getTableHeader(listing) },
-                tableSubheader: { content: getTableSubHeader(listing) },
+                tableSubheader: {
+                  content: <TableSubHeader priorityTypes={getPriorityTypes(listing)} />,
+                },
                 contentHeader: { content: listing.Name },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
               }

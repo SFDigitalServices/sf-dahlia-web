@@ -15,9 +15,9 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
       </div>
     )
   }
-  const getHabitatContentRow = (prefix: string, content: string, key: string) => {
+  const getHabitatContentRow = (prefix: string, content: string, keyIndex: number) => {
     return (
-      <div key={key}>
+      <div key={keyIndex}>
         <span className={"font-semibold"}>{prefix}</span> {content}
       </div>
     )

@@ -152,13 +152,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,275 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $51,300 per year
                 </td>
               </tr>
               <tr
@@ -179,13 +179,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,883 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $58,600 per year
                 </td>
               </tr>
               <tr
@@ -206,13 +206,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $5,495 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $65,950 per year
                 </td>
               </tr>
               <tr
@@ -233,18 +233,47 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $6,104 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $73,250 per year
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <button
+          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -462,7 +491,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist
@@ -781,13 +810,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,275 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $51,300 per year
                 </td>
               </tr>
               <tr
@@ -808,13 +837,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,883 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $58,600 per year
                 </td>
               </tr>
               <tr
@@ -835,13 +864,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $5,495 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $65,950 per year
                 </td>
               </tr>
               <tr
@@ -862,18 +891,47 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $6,104 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $73,250 per year
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <button
+          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -1091,7 +1149,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist
@@ -1504,13 +1562,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,275 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $51,300 per year
                 </td>
               </tr>
               <tr
@@ -1531,13 +1589,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,883 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $58,600 per year
                 </td>
               </tr>
               <tr
@@ -1558,13 +1616,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $5,495 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $65,950 per year
                 </td>
               </tr>
               <tr
@@ -1585,18 +1643,47 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $6,104 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $73,250 per year
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <button
+          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -1856,7 +1943,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist
@@ -2028,13 +2115,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,275 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $51,300 per year
                 </td>
               </tr>
               <tr
@@ -2055,13 +2142,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,883 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $58,600 per year
                 </td>
               </tr>
               <tr
@@ -2082,13 +2169,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $5,495 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $65,950 per year
                 </td>
               </tr>
               <tr
@@ -2109,18 +2196,47 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $6,104 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $73,250 per year
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <button
+          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -2359,7 +2475,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist
@@ -2687,13 +2803,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,275 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $51,300 per year
                 </td>
               </tr>
               <tr
@@ -2714,13 +2830,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $4,883 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $58,600 per year
                 </td>
               </tr>
               <tr
@@ -2741,13 +2857,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $5,495 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $65,950 per year
                 </td>
               </tr>
               <tr
@@ -2768,18 +2884,47 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   class="p-5"
                   data-label="maximum income per month"
                 >
-                  $1,111 per month
+                  $6,104 per month
                 </td>
                 <td
                   class="p-5"
                   data-label="maximum income per year"
                 >
-                  $51,111 per year
+                  $73,250 per year
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <button
+          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -2997,7 +3142,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist
@@ -3548,7 +3693,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <span>
                 <a
                   aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist"
+                  href="/document-checklist#live-or-work-sf"
                   target="_blank"
                 >
                   View Document Checklist

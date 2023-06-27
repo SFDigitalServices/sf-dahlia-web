@@ -190,7 +190,7 @@ module.exports = {
     "import/resolver": {
       node: {
         moduleDirectory: ["node_modules", "app/javascript"],
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
       },
     },
   },

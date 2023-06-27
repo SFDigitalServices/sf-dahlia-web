@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableSubHeader renders TableSubHeader component 1`] = `
+<DocumentFragment>
+  <div>
+    Includes Priority Units for:
+    <ul
+      class="list-disc ml-4"
+    >
+      <li>
+        test
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

@@ -3,7 +3,7 @@
 exports[`ListingDetailsLotteryModalFooter displays full footer when modal status is initial state 1`] = `
 <DocumentFragment>
   <div
-    class="bg-gray-100 py-4 text-center"
+    class="bg-gray-100 py-4 px-8 md:px-0 text-center"
   >
     <a
       class="text-blue-900"
@@ -44,7 +44,7 @@ exports[`ListingDetailsLotteryModalFooter displays full footer when modal status
 exports[`ListingDetailsLotteryModalFooter displays preference link only when status is not initial state 1`] = `
 <DocumentFragment>
   <div
-    class="bg-gray-100 py-4 text-center"
+    class="bg-gray-100 py-4 px-8 md:px-0 text-center"
   >
     <a
       class="text-blue-900"

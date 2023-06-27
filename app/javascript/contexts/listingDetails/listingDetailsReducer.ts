@@ -1,7 +1,7 @@
 import { createReducer } from "typesafe-actions"
 import { ListingDetailsActions } from "./listingDetailsActions"
-import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
-import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
 
 type ListingDetailsState = {
   fetchingUnits: boolean
@@ -29,7 +29,10 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
       units,
     }
   },
-  [ListingDetailsActions.FinishFetchingAmiCharts]: (state, { payload: amiCharts }) => {
+  [ListingDetailsActions.FinishFetchingAmiCharts]: (
+    state,
+    { payload: { amiCharts, chartsToFetch } }
+  ) => {
     return {
       ...state,
       fetchingAmiCharts: false,
@@ -37,7 +40,14 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
       amiCharts: amiCharts?.map((amiChart: RailsAmiChart) => {
         return {
           ...amiChart,
+          /*
+           * The chartType are the same on all the values
+           */
           chartType: amiChart?.values[0]?.chartType,
+          year: amiChart?.values[0]?.year,
+          derivedFrom: chartsToFetch.find((chart: RailsAmiChartMetaData) => {
+            return chart.percent === Number(amiChart.percent)
+          })?.derivedFrom,
         }
       }),
     }

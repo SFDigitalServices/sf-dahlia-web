@@ -23,6 +23,7 @@ import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import {
+  isHabitatListing,
   getAmiChartDataFromUnits,
   isOpen,
   isPluralSRO,
@@ -46,6 +47,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
 
   const {
@@ -87,8 +89,16 @@ const ListingDetail = () => {
         {listing && (
           <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            {listingIsHabitat && (
+              <Mobile>
+                <ListingDetailsApplicationDate
+                  isApplicationOpen={isApplicationOpen}
+                  listing={listing}
+                />
+              </Mobile>
+            )}
             <ListingDetailsHabitat listing={listing} />
-            {!isApplicationOpen && (
+            {!isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
                   isApplicationOpen={isApplicationOpen}
@@ -114,7 +124,7 @@ const ListingDetail = () => {
                   <ListingDetailsSROInfo listing={listing} />
                 </div>
               )}
-            {isApplicationOpen && (
+            {isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
                   isApplicationOpen={isApplicationOpen}

@@ -1,6 +1,11 @@
 import { createAction } from "typesafe-actions"
-import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
-import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
+
+export type FinishFetchingAmiChartsType = {
+  amiCharts: RailsAmiChart[]
+  chartsToFetch: RailsAmiChartMetaData[]
+}
 
 export enum ListingDetailsActions {
   StartFetchingUnits = "SetFetchingUnits",
@@ -13,9 +18,9 @@ export enum ListingDetailsActions {
 }
 
 export const startFetchingUnits = createAction(ListingDetailsActions.StartFetchingUnits)()
-export const finishFetchingAmiCharts = createAction(ListingDetailsActions.FinishFetchingAmiCharts)<
-  RailsAmiChart[]
->()
+export const finishFetchingAmiCharts = createAction(
+  ListingDetailsActions.FinishFetchingAmiCharts
+)<FinishFetchingAmiChartsType>()
 export const setFetchedAmiCharts = createAction(ListingDetailsActions.SetFetchedAmiCharts)()
 export const startFetchingAmiCharts = createAction(ListingDetailsActions.StartFetchingAmiCharts)()
 export const finishFetchingUnits = createAction(ListingDetailsActions.FinishFetchingUnits)<

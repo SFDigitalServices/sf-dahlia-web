@@ -4,6 +4,9 @@ import { ListingDetailsEligibility } from "../../../modules/listingDetails/Listi
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import ListingDetailsContext from "../../../contexts/listingDetails/listingDetailsContext"
+import { unitsWithOneAmi } from "../../data/RailsListingUnits/listing-units"
+import { amiChartsWithOneAmi } from "../../data/RailsAmiCharts/ami-charts"
 import {
   sroMixedRentalListing,
   sroRentalListing,
@@ -46,7 +49,20 @@ describe("ListingDetailsEligibility", () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility listing={testListing} imageSrc={"listing-eligibility.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility listing={testListing} imageSrc={"listing-eligibility.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
@@ -58,7 +74,20 @@ describe("ListingDetailsEligibility", () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility listing={openSaleListing} imageSrc={"listing-eligibility.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility listing={openSaleListing} imageSrc={"listing-eligibility.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
@@ -69,7 +98,23 @@ describe("ListingDetailsEligibility", () => {
   it("displays listing details eligibility section for a listing with only SRO units", async (done) => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility listing={sroRentalListing} imageSrc={"listing-eligibility.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={sroRentalListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
@@ -82,7 +127,20 @@ describe("ListingDetailsEligibility", () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility listing={listing} imageSrc={"listing-eligibility.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility listing={listing} imageSrc={"listing-eligibility.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
@@ -94,10 +152,23 @@ describe("ListingDetailsEligibility", () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility
-        listing={sroMixedRentalListing}
-        imageSrc={"listing-eligibility.svg"}
-      />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={sroMixedRentalListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
     )
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
@@ -108,7 +179,20 @@ describe("ListingDetailsEligibility", () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
-      <ListingDetailsEligibility listing={habitatListing} imageSrc={"listing-eligibility.svg"} />
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility listing={habitatListing} imageSrc={"listing-eligibility.svg"} />
+      </ListingDetailsContext.Provider>
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
