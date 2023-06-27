@@ -16,6 +16,9 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
+  cy.log('host',window.location.host)
+
+
   // TODO: Temporary check. Remove with DAH-1420
   const listingId =
     window.location.host === "housing.sfgov.org"
