@@ -40,7 +40,7 @@ const searchForLotteryResults = () => {
   cy.get("form").submit()
 }
 
-describe("Listing Details for Completed Lottery Listing", () => {
+describe(`Listing Details for Completed Lottery Listing ${window.location.host}``, () => {
   afterEach(() => {
     // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
     // there is a rogue loading issue beyond the scope of this story
