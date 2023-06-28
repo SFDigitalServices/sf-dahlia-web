@@ -115,7 +115,7 @@ const Privacy = () => {
               <p>
                 {renderMarkup(
                   `${t("privacyPolicy.questionsP1", {
-                    telLink: '<a href="tel:4157015500">415-701-5500</a>',
+                    telLink: '<a href="tel:4157015500">' + t("415-701-5500") + "</a>",
                     emailLink:
                       '<a href="mailto:sfhousinginfo@sfgov.org">sfhousinginfo@sfgov.org</a>',
                   })}`
