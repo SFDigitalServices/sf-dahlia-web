@@ -109,7 +109,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(tree.toJSON()).toMatchSnapshot()
   })
 
-  it("does not render ListingDetailsPricingTable when habitat listing", () => {
+  it("renders ListingDetailsPricingTable when habitat listing", () => {
     const tree = renderer.create(
       <ListingDetailsContext.Provider
         value={{
