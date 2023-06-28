@@ -17,7 +17,7 @@ const Disclaimer = () => {
       />
       {
         <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
-          <div className="w-full md:w-2/3" data-test-id="assistance-main-content">
+          <div className="w-full md:w-2/3">
             <div className="space-y-4 p-6 md:py-11 md:pr-6 lg:pl-0">
               <h2>{t("disclaimer.liabilityTitle")}</h2>
               <p>{t("disclaimer.liabilityP1")}</p>
