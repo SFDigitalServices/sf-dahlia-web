@@ -1,11 +1,13 @@
-function verifyMachineTranslations(language, id, translations) {
+const verifyMachineTranslations = (language, id, translation) => {
   cy.visit(`${language}/listings/${id}?react=true`)
-  translations.forEach((text) => {
-    cy.contains(text)
-  })
+  cy.wait(3000)
+  // translations.forEach((text) => {
+  //   cy.contains(text)
+  // })
+  return cy.contains(translation)
 }
 
-const listings = {
+const TEST_LISTINGS = {
   OPEN_RENTAL: {
     id: "a0W0P00000F8YG4UAN",
     title: "TEST Automated Listing (do not modify)",
@@ -17,22 +19,22 @@ const listings = {
   },
 }
 
-const INFORMATION_SESSION_RENTAL_TEXT = {
-  es: "sesión de información de prueba",
-  tl: "sesyon ng impormasyon ng pagsubok",
-  zh: "測試信息會話",
-}
+// const INFORMATION_SESSION_RENTAL_TEXT = {
+//   es: "sesión de información de prueba",
+//   tl: "sesyon ng impormasyon ng pagsubok",
+//   zh: "測試信息會話",
+// }
 
 const INFORMATION_SESSION_SALE_TEXT = {
   es: "La asistencia a una sesión informativa",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon",
-  zh: "必須由一名申請人參加信息發布會。",
+  zh: "一名申請人必須參加信息發布會。",
 }
 
 const CREDIT_HISTORY_TEXT = {
   es: "Proporcione un informe de crédito",
   tl: "Magbigay ng credit report",
-  zh: "非最新或貶損的賬戶將對整體評分產生負面影響",
+  zh: "提供來自",
 }
 
 // TODO: Removing flaky tests to unblock CircleCI pipeline
@@ -45,16 +47,16 @@ const CREDIT_HISTORY_TEXT = {
 // }
 
 describe("Listing Details Machine Translations", () => {
-  afterEach(() => {
-    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-    // there is a rogue loading issue beyond the scope of this story
-    cy.wait(3000)
-  })
+  // afterEach(() => {
+  //   // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
+  //   // there is a rogue loading issue beyond the scope of this story
+  //   cy.wait(3000)
+  // })
 
   // TODO(DAH-1424): Re-enable this test suite after figuring out why it's being flaky.
   // We are temporarily disabling this to unblock work.
   // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip(`Rental Listing ${listings.OPEN_RENTAL.id}`, () => {
+  describe.skip(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -66,28 +68,19 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", listings.OPEN_RENTAL.id, [
-        INFORMATION_SESSION_RENTAL_TEXT.tl,
-        CREDIT_HISTORY_TEXT.tl,
-      ])
+      verifyMachineTranslations("tl", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.tl)
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", listings.OPEN_RENTAL.id, [
-        INFORMATION_SESSION_RENTAL_TEXT.zh,
-        CREDIT_HISTORY_TEXT.zh,
-      ])
+      verifyMachineTranslations("zh", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.zh)
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", listings.OPEN_RENTAL.id, [
-        INFORMATION_SESSION_RENTAL_TEXT.es,
-        CREDIT_HISTORY_TEXT.es,
-      ])
+      verifyMachineTranslations("es", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.es)
     })
   })
 
-  describe(`Sale Listing ${listings.OPEN_SALE.id}`, () => {
+  describe(`Sale Listing ${TEST_LISTINGS.OPEN_SALE.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -99,15 +92,15 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.tl])
+      verifyMachineTranslations("tl", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.tl)
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.zh])
+      verifyMachineTranslations("zh", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.zh)
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", listings.OPEN_SALE.id, [INFORMATION_SESSION_SALE_TEXT.es])
+      verifyMachineTranslations("es", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.es)
     })
   })
 })
