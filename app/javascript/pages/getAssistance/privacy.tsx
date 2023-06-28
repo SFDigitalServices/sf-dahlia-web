@@ -117,7 +117,9 @@ const Privacy = () => {
                   `${t("privacyPolicy.questionsP1", {
                     telLink: '<a href="tel:4157015500">' + t("415-701-5500") + "</a>",
                     emailLink:
-                      '<a href="mailto:sfhousinginfo@sfgov.org">sfhousinginfo@sfgov.org</a>',
+                      '<a href="mailto:sfhousinginfo@sfgov.org">' +
+                      t("privacyPolicy.contactEmail") +
+                      "</a>",
                   })}`
                 )}
               </p>

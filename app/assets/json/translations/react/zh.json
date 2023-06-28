@@ -1062,6 +1062,7 @@
   "preferences.rtrSunnydale.title": "回歸權 - Sunnydale 優先權",
   "privacyPolicy.analyticsP1": "我們使用名為「Google Analytics」（Google 分析）的工具協助瞭解訪客與網站的互動方式，進而達成改善網站的目的。您可以閱讀 %{termsLink}Google Analytics 使用條款%{linkEnd}以及 Google Analytics 的 %{privacyLink}Google 隱私政策%{linkEnd}。下載%{optOutLink}退出瀏覽器附加元件%{linkEnd}即可選擇不讓 Google Analytics 收集您的資料。",
   "privacyPolicy.analyticsTitle": "網站分析",
+  "privacyPolicy.contactEmail": "sfhousinginfo@sfgov.org",
   "privacyPolicy.cookiesP1": "提供網上申請等網上服務時，我們會使用「cookie」。我們使用 cookie 來改進我們的服務品質。",
   "privacyPolicy.cookiesP2": "使用 cookie 是網絡網站和大多數網絡網頁瀏覽器的標準作法之一，可以自訂為拒絕 cookie、僅依據使用者介入操作接受或拒絕 cookie，或是刪除 cookie。但是，若沒有 cookie，某些功能可能無法正常運作。",
   "privacyPolicy.cookiesTitle": "Cookie",
