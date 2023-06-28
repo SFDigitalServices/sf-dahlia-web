@@ -434,18 +434,21 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
           <a
             className="text-gray-500"
             href="mailto:sfhousinginfo@sfgov.org"
+            target="_self"
           >
             Contact
           </a>
           <a
             className="text-gray-500"
             href="/disclaimer"
+            target="_self"
           >
             Disclaimer
           </a>
           <a
             className="text-gray-500"
             href="/privacy"
+            target="_self"
           >
             Privacy Policy
           </a>
