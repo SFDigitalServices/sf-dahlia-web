@@ -405,7 +405,7 @@ GEM
     sentry-raven (3.1.2)
       faraday (>= 1.0)
     sexp_processor (4.16.1)
-    shakapacker (7.0.0.rc.1)
+    shakapacker (7.0.1)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -528,7 +528,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc
   sentry-raven
-  shakapacker (= 7.0.0.rc.1)
+  shakapacker (= 7.0.1)
   shoulda-matchers
   sidekiq (~> 5.2.10)
   sitemap_generator!

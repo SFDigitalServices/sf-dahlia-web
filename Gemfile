@@ -37,7 +37,7 @@ gem 'bower-rails'
 gem 'angular-rails-templates'
 
 # Javascript packages pre-processor
-gem "shakapacker", "7.0.0.rc.1"
+gem "shakapacker", "7.0.1"
 gem "react_on_rails", "13.3.3"
 
 gem 'psych', '< 4'
