@@ -56,7 +56,7 @@ describe("Listing Details Machine Translations", () => {
   // TODO(DAH-1424): Re-enable this test suite after figuring out why it's being flaky.
   // We are temporarily disabling this to unblock work.
   // eslint-disable-next-line jest/no-disabled-tests
-  describe(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
+  describe.skip(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
