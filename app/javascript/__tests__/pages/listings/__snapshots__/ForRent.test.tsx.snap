@@ -189,6 +189,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
                 href="/"
+                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -207,6 +208,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
+                target="_self"
               >
                 <div>
                   Rent
@@ -216,6 +218,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
+                target="_self"
               >
                 <div>
                   Buy
@@ -225,6 +228,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="My Favorites-2"
                 href="/favorites"
+                target="_self"
               >
                 <div>
                   My Favorites
@@ -234,6 +238,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
+                target="_self"
               >
                 <div>
                   Get Assistance
@@ -243,6 +248,7 @@ exports[`For Rent renders ForRent component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Sign In-4"
                 href="/sign-in"
+                target="_self"
               >
                 <div>
                   Sign In
@@ -286,6 +292,7 @@ exports[`For Rent renders ForRent component 1`] = `
                     class="button"
                     href="/eligibility-estimator/rental"
                     tabindex="0"
+                    target="_self"
                   >
                     Find matching listings
                   </a>
@@ -329,6 +336,7 @@ exports[`For Rent renders ForRent component 1`] = `
                       <a
                         class="button"
                         href="/additional-resources"
+                        target="_self"
                       >
                         View opportunities
                       </a>
@@ -541,18 +549,21 @@ exports[`For Rent renders ForRent component 1`] = `
             <a
               class="text-gray-500"
               href="mailto:sfhousinginfo@sfgov.org"
+              target="_self"
             >
               Contact
             </a>
             <a
               class="text-gray-500"
               href="/disclaimer"
+              target="_self"
             >
               Disclaimer
             </a>
             <a
               class="text-gray-500"
               href="/privacy"
+              target="_self"
             >
               Privacy Policy
             </a>

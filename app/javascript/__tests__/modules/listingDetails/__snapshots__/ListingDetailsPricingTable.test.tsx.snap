@@ -1,61 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsPricingTable does not render ListingDetailsPricingTable when habitat listing 1`] = `
-<DocumentFragment>
-  <div
-    class="md:pr-8 md:w-2/3 mx-2 w-full"
-  >
-    <ul>
-      <li>
-        <p>
-          1 person household: 51,300 to 61,300 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          2 people household: 58,600 to 68,600 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          3 people household: 65,950 to 75,950 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          4 people household: 73,250 to 83,250 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          5 people household: 79,100 to 99,100 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          6 people household: 85,000 to 95,000 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          7 people household: 90,850 to 100,850 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          8 people household: 96,700 to 106,700 per year
-        </p>
-      </li>
-      <li>
-        <p>
-          9 people household: 102,600 to 112,600 per year
-        </p>
-      </li>
-    </ul>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component when rental listing 1`] = `
 <DocumentFragment>
   <div
@@ -940,6 +884,62 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         />
       </svg>
     </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable when habitat listing 1`] = `
+<DocumentFragment>
+  <div
+    class="md:pr-8 md:w-2/3 mx-2 w-full"
+  >
+    <ul>
+      <li>
+        <p>
+          1 person household: 51,300 to 61,300 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          2 people household: 58,600 to 68,600 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          3 people household: 65,950 to 75,950 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          4 people household: 73,250 to 83,250 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          5 people household: 79,100 to 99,100 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          6 people household: 85,000 to 95,000 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          7 people household: 90,850 to 100,850 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          8 people household: 96,700 to 106,700 per year
+        </p>
+      </li>
+      <li>
+        <p>
+          9 people household: 102,600 to 112,600 per year
+        </p>
+      </li>
+    </ul>
   </div>
 </DocumentFragment>
 `;

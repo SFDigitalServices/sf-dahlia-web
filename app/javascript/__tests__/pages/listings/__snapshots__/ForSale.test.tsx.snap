@@ -189,6 +189,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 aria-label="DAHLIA San Francisco Housing Portal"
                 class="site-header__logo translate site-header__custom-width"
                 href="/"
+                target="_self"
               >
                 <div
                   class="site-header__logo-content site-header__image-only-container"
@@ -207,6 +208,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
+                target="_self"
               >
                 <div>
                   Rent
@@ -216,6 +218,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
+                target="_self"
               >
                 <div>
                   Buy
@@ -225,6 +228,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="My Favorites-2"
                 href="/favorites"
+                target="_self"
               >
                 <div>
                   My Favorites
@@ -234,6 +238,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
+                target="_self"
               >
                 <div>
                   Get Assistance
@@ -243,6 +248,7 @@ exports[`For Sale renders ForSale component 1`] = `
                 class="site-header__link pb-4 pt-1 flex items-end "
                 data-testid="Sign In-4"
                 href="/sign-in"
+                target="_self"
               >
                 <div>
                   Sign In
@@ -380,24 +386,34 @@ exports[`For Sale renders ForSale component 1`] = `
                       <h2
                         class="text__underline-weighted mb-5"
                       >
-                        Get help
+                        Help with down payments
                       </h2>
-                      <p
-                        class="mb-4"
-                      >
-                        Some people may qualify for downpayment assistance.
-                      </p>
-                      <p
-                        class="mb-4"
-                      >
-                        Others, like San Francisco teachers and first responders, may qualify for loans.
-                      </p>
-                      <p>
-                        <a
-                          href="https://sfmohcd.org/loan-programs"
+                      <span>
+                        <p
+                          class="mb-4"
                         >
-                          View the full list of programs
-                        </a>
+                          The 2023 Downpayment Assistance Loan Program (DALP) will begin accepting applications on May 15, 2023. 
+                          <a
+                            href="https://sf.gov/reports/may-2023/downpayment-assistance-loan-program-dalp"
+                            target="_blank"
+                          >
+                            Learn more about DALP and how to apply on SF.gov
+                          </a>
+                        </p>
+                      </span>
+                      <p
+                        class="mb-4"
+                      >
+                        <span>
+                          You can also get help from our 
+                          <a
+                            href="https://sf.gov/resource/2022/mohcd-loan-programs"
+                            target="_blank"
+                          >
+                            other assistance programs.
+                          </a>
+                           The Mayor’s Office of Housing and Community Development (MOHCD) helps first-time home buyers with down payments and mortgage tax credits. MOHCD also provides assistance to current program participants who refinance their loans.
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -431,12 +447,14 @@ exports[`For Sale renders ForSale component 1`] = `
                       <a
                         class="button"
                         href="https://sfmohcd.org/current-bmr-homeownership-listings"
+                        target="_self"
                       >
                         First come, first served
                       </a>
                       <a
                         class="button"
                         href="https://sfmohcd.org/current-listings-city-second-program"
+                        target="_self"
                       >
                         City Second Loan Program
                       </a>
@@ -649,18 +667,21 @@ exports[`For Sale renders ForSale component 1`] = `
             <a
               class="text-gray-500"
               href="mailto:sfhousinginfo@sfgov.org"
+              target="_self"
             >
               Contact
             </a>
             <a
               class="text-gray-500"
               href="/disclaimer"
+              target="_self"
             >
               Disclaimer
             </a>
             <a
               class="text-gray-500"
               href="/privacy"
+              target="_self"
             >
               Privacy Policy
             </a>

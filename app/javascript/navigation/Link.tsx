@@ -3,6 +3,7 @@ import { localizedPath } from "../util/routeUtil"
 
 type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> & {
   external?: boolean
+  target?: string
 }
 
 /**
@@ -11,8 +12,9 @@ type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTML
  */
 const Link = ({ external = false, ...props }: LinkProps) => {
   const link = external ? props.href : localizedPath(props.href)
+  const linkTarget = props.target || "_self"
   return (
-    <a {...props} href={link}>
+    <a {...props} href={link} target={linkTarget}>
       {props.children}
     </a>
   )

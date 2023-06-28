@@ -99,7 +99,7 @@ describe("ListingDetailsPricingTable", () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  it("does not render ListingDetailsPricingTable when habitat listing", () => {
+  it("renders ListingDetailsPricingTable when habitat listing", () => {
     const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
