@@ -57,7 +57,7 @@
     "coffeelint-forbidden-regex": "0.1.1",
     "concurrently": "^8.0.1",
     "cucumber": "^2.3.1",
-    "cypress": "^10.10.0",
+    "cypress": "12.16.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.1",
