@@ -4,8 +4,8 @@ import Privacy from "../../../pages/getAssistance/privacy"
 
 describe("<Privacy />", () => {
   it("shows the correct title text", async () => {
-    const { getByText } = await renderAndLoadAsync(<Privacy assetPaths={{}} />)
+    const { getAllByText } = await renderAndLoadAsync(<Privacy assetPaths={{}} />)
 
-    expect(getByText("Privacy Policy Content")).not.toBeNull()
+    expect(getAllByText("Privacy Policy")[0]).not.toBeNull()
   })
 })
