@@ -1,10 +1,10 @@
 const verifyMachineTranslations = (language, id, translation) => {
   cy.visit(`${language}/listings/${id}?react=true`)
-  cy.wait(3000)
+  // cy.wait(3000)
   // translations.forEach((text) => {
   //   cy.contains(text)
   // })
-  return cy.contains(translation)
+  return cy.contains(translation).should("be.visible")
 }
 
 const TEST_LISTINGS = {
@@ -19,11 +19,11 @@ const TEST_LISTINGS = {
   },
 }
 
-// const INFORMATION_SESSION_RENTAL_TEXT = {
-//   es: "sesión de información de prueba",
-//   tl: "sesyon ng impormasyon ng pagsubok",
-//   zh: "測試信息會話",
-// }
+const INFORMATION_SESSION_RENTAL_TEXT = {
+  es: "sesión de información de prueba",
+  tl: "sesyon ng impormasyon ng pagsubok",
+  zh: "測試信息會話",
+}
 
 const INFORMATION_SESSION_SALE_TEXT = {
   es: "La asistencia a una sesión informativa",
@@ -31,11 +31,11 @@ const INFORMATION_SESSION_SALE_TEXT = {
   zh: "一名申請人必須參加信息發布會。",
 }
 
-const CREDIT_HISTORY_TEXT = {
-  es: "Proporcione un informe de crédito",
-  tl: "Magbigay ng credit report",
-  zh: "提供來自",
-}
+// const CREDIT_HISTORY_TEXT = {
+//   es: "Proporcione un informe de crédito",
+//   tl: "Magbigay ng credit report",
+//   zh: "提供來自",
+// }
 
 // TODO: Removing flaky tests to unblock CircleCI pipeline
 // DAH-1539 will be used to investigate root cause
@@ -56,7 +56,7 @@ describe("Listing Details Machine Translations", () => {
   // TODO(DAH-1424): Re-enable this test suite after figuring out why it's being flaky.
   // We are temporarily disabling this to unblock work.
   // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
+  describe(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
     /*
      * If any of these machine translation tests are failing, it could be due to:
      * 1. Google Translate updated the translation
@@ -68,15 +68,27 @@ describe("Listing Details Machine Translations", () => {
      */
 
     it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.tl)
+      verifyMachineTranslations(
+        "tl",
+        TEST_LISTINGS.OPEN_RENTAL.id,
+        INFORMATION_SESSION_RENTAL_TEXT.tl
+      )
     })
 
     it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.zh)
+      verifyMachineTranslations(
+        "zh",
+        TEST_LISTINGS.OPEN_RENTAL.id,
+        INFORMATION_SESSION_RENTAL_TEXT.zh
+      )
     })
 
     it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.es)
+      verifyMachineTranslations(
+        "es",
+        TEST_LISTINGS.OPEN_RENTAL.id,
+        INFORMATION_SESSION_RENTAL_TEXT.es
+      )
     })
   })
 
