@@ -1061,6 +1061,7 @@
   "preferences.rtrSunnydale.title": "Karapatang Bumalik - Kagustuhan sa Sunnydale",
   "privacyPolicy.analyticsP1": "Gumagamit kami ng kasangkapang tinatawag na \"Google Analytics\" para maintindihan kung paano ginagamit ng mga bisita ang aming website, at nang mapahusay pa ito. Puwede ninyong mabasa ang %{termsLink}Google Analytics Terms of Use o mga Patakaran sa Paggamit %{linkEnd} at ang %{privacyLink}Google Privacy Policy o Polisiya para sa Pagiging Pribado ng Impormasyon %{linkEnd} para sa  Google Analytics.  Puwede ninyong piliin na huwag kolektahin ng Google Analytics ang inyong datos sa pamamagitan ng pagda-download ng kanilang %{optOutLink}opt-out browser add-on%{linkEnd}. ",
   "privacyPolicy.analyticsTitle": "Pagsusuri sa Website (Site Analytics)",
+  "privacyPolicy.contactEmail": "sfhousinginfo@sfgov.org",
   "privacyPolicy.cookiesP1": "Gumagamit kami ng \"cookies\" habang nagkakaloob ng mga online na serbisyo kagaya ng mga online na aplikasyon. Ginagamit namin ang cookies na ito upang mapahusay pa ang kalidad ng aming serbisyo. ",
   "privacyPolicy.cookiesP2": "Karaniwang gawain na ang paggamit ng cookies sa mga website sa internet at posibleng naka-programa ang karamihan sa web browser sa Internet na mag-reject o huwag tumanggap ng cookies, tumanggap lamang o mag-reject ng cookies batay sa kagustuhan ng user o gumagamit, o i-delete ang cookies. Gayon pa man, posibleng hindi maayos na gumana ang ilang feature kapag walang cookies.",
   "privacyPolicy.cookiesTitle": "Cookies",
