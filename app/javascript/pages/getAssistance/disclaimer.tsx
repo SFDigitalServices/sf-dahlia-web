@@ -2,8 +2,8 @@ import React from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { t, PageHeader } from "@bloom-housing/ui-components"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import { t, PageHeader } from "@bloom-housing/ui-components"
 
 const Disclaimer = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
