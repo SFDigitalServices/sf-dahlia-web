@@ -1062,6 +1062,7 @@
   "preferences.rtrSunnydale.title": "Derecho a regresar - preferencia de vivienda en Sunnydale",
   "privacyPolicy.analyticsP1": "Usamos una herramienta llamada “Google Analytics”, que nos ayuda a comprender cómo los visitantes interactúan en nuestro sitio web para poder mejorarlo. Puede acceder a los %{termsLink}Términos de uso de Google Analytics%{linkEnd} y a la %{privacyLink}Política de privacidad de Google%{linkEnd} para Google Analytics. Puede negarse a que Google Analytics recopile su información si descarga el %{optOutLink}complemento de exclusión para su navegador%{linkEnd}.",
   "privacyPolicy.analyticsTitle": "Análisis del sitio",
+  "privacyPolicy.contactEmail": "sfhousinginfo@sfgov.org",
   "privacyPolicy.cookiesP1": "Usamos cookies cuando se proporcionan servicios en línea, como solicitudes en línea. Usamos cookies para mejorar la calidad de nuestro servicio.",
   "privacyPolicy.cookiesP2": "El uso de cookies es una práctica estándar entre los sitios web de Internet, y la mayoría de los navegadores de Internet pueden personalizarse para rechazar las cookies, para aceptar o rechazar las cookies mediante la intervención del usuario únicamente o para eliminar las cookies. Sin embargo, es posible que algunas características no funcionen adecuadamente sin cookies.",
   "privacyPolicy.cookiesTitle": "Cookies",
