@@ -5,6 +5,7 @@ import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
+
 export const languageToSFGovMap = (lang: string) => {
   switch (lang) {
     case "es":
@@ -42,7 +43,7 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
           {children}
         </div>
         <SidebarBlock
-          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 p-6 mx-0"
+          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           title={t("footer.contact")}
         >
           <span className="text-gray-950">
