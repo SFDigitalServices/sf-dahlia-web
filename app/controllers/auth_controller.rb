@@ -1,7 +1,7 @@
 # Controller for the authentication pages.
 class AuthController < ApplicationController
   def sign_in
-    @SignInProps = {assetPaths: static_asset_paths}
+    @sign_in_props = { assetPaths: static_asset_paths }
   end
 
   protected

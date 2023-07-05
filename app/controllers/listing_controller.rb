@@ -1,7 +1,7 @@
 # Controller for the listing detail page
 class ListingController < ApplicationController
   def index
-    @ListingDetailProps = {assetPaths: static_asset_paths}
+    @listing_detail_props = { assetPaths: static_asset_paths }
   end
 
   protected

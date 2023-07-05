@@ -1,30 +1,32 @@
 # Controller for the get assistance pages
 class AssistanceController < ApplicationController
   def housing_counselors
-    @AssistanceProps = {assetPaths: static_asset_paths}
+    @housing_counselor_props = { assetPaths: static_asset_paths }
     render 'housing_counselors'
   end
 
   def get_assistance
-    @AssistanceProps = {assetPaths: static_asset_paths}
+    @get_assistance_props = { assetPaths: static_asset_paths }
     render 'get_assistance'
   end
 
   def document_checklist
-    @AssistanceProps = {assetPaths: static_asset_paths}
+    @document_checklist_props = { assetPaths: static_asset_paths }
     render 'document_checklist'
   end
 
   def additional_resources
-    @AssistanceProps = {assetPaths: static_asset_paths}
+    @additional_resources_props = { assetPaths: static_asset_paths }
     render 'additional_resources'
   end
 
   def privacy
+    @privacy_props = { assetPaths: static_asset_paths }
     render 'privacy'
   end
 
   def disclaimer
+    @disclaimer_props = { assetPaths: static_asset_paths }
     render 'disclaimer'
   end
 
