@@ -47,12 +47,12 @@ generatedWebpackConfig.plugins.unshift(
 )
 
 
-const ignoreWarningsConfig = {
-  ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/]
-}
-// Copy the object using merge b/c the baseClientWebpackConfig and commonOptions are mutable globals
-// const commonWebpackConfig = () => (merge({}, baseClientWebpackConfig, commonOptions))
+// Should the below error ever come back, you may enable the ignoreWarnings object and add it as a parameter in the merge function below.
+// Justification: https://github.com/shakacode/react-webpack-rails-tutorial/pull/519
+// const ignoreWarningsConfig = {
+//   ignoreWarnings: [/Module not found: Error: Can't resolve 'react-dom\/client'/]
+// }
 const base = () =>
-  merge({}, generatedWebpackConfig, commonOptions, ignoreWarningsConfig)
+  merge({}, generatedWebpackConfig, commonOptions)
 
 module.exports = base
