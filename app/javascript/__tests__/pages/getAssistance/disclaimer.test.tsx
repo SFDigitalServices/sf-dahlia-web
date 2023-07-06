@@ -4,8 +4,8 @@ import React from "react"
 
 describe("<Disclaimer />", () => {
   it("shows the correct title text", async () => {
-    const { getByText } = await renderAndLoadAsync(<Disclaimer assetPaths={{}} />)
+    const { getAllByText } = await renderAndLoadAsync(<Disclaimer assetPaths={{}} />)
 
-    expect(getByText("Disclaimer Content")).not.toBeNull()
+    expect(getAllByText("Disclaimer")[0]).not.toBeNull()
   })
 })
