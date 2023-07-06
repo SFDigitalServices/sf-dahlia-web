@@ -1025,6 +1025,8 @@
   "listings.stats.upToPercentAmi": "Up to %{amiPercent}% AMI",
   "listings.stats.upToPercentAmi.fullText": "Up to %{amiPercent}% AMI (Area Median Income)",
   "listings.stats.waitlist": "Waitlist",
+  "listings.stats.withParking": "with parking",
+  "listings.stats.withoutParking": "without parking",
   "listings.unitTypes.1 BR": "1 Bedroom",
   "listings.unitTypes.2 BR": "2 Bedroom",
   "listings.unitTypes.3 BR": "3 Bedroom",

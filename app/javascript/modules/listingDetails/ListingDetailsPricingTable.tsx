@@ -30,11 +30,11 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.Price_With_Parking,
-        cellSubText: "with parking",
+        cellSubText: t("listings.stats.withParking"),
       },
       {
         cellText: unit.Price_Without_Parking,
-        cellSubText: "without parking",
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -43,7 +43,7 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.Price_With_Parking,
-        cellSubText: "with parking",
+        cellSubText: t("listings.stats.withParking"),
       },
     ]
   }
@@ -52,7 +52,7 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.Price_Without_Parking,
-        cellSubText: "without parking",
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -63,11 +63,11 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.HOA_Dues_With_Parking,
-        cellSubText: "with parking",
+        cellSubText: t("listings.stats.withParking"),
       },
       {
         cellText: unit.HOA_Dues_Without_Parking,
-        cellSubText: "without parking",
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -76,7 +76,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.HOA_Dues_With_Parking,
-        cellSubText: "with parking",
+        cellSubText: t("listings.stats.withParking"),
       },
     ]
   }
@@ -85,7 +85,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     return [
       {
         cellText: unit.HOA_Dues_Without_Parking,
-        cellSubText: "without parking",
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
