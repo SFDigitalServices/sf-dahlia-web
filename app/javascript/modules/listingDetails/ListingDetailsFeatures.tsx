@@ -88,6 +88,12 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             title={t("listings.features.parking")}
             toTranslate={true}
           />
+          {isRental(listing) && (<FeatureItem
+            // Update with new Salesforce utilities 
+            content={listing.Smoking_Policy}
+            title={t("listings.features.utilities")}
+            toTranslate={true}
+          /> )}
           <FeatureItem
             content={listing.Smoking_Policy}
             title={t("listings.features.smokingPolicy")}
