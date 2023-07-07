@@ -4,6 +4,4 @@ export const listingUnits = (listingId) => `/api/v1/listings/${listingId}/units`
 export const lotteryBuckets = (listingId) => `/api/v1/listings/${listingId}/lottery_buckets`
 export const lotteryRanking = (listingId, lotteryId) =>
   `/api/v1/listings/${listingId}/lottery_ranking?lottery_number=${lotteryId}`
-export const listingPricingTableUnits = (listingId) =>
-  `/api/v1/listings/${listingId}/listingPricingTable`
 export const amiCharts = (queryParams: string) => `/api/v1/listings/ami.json?${queryParams}`
