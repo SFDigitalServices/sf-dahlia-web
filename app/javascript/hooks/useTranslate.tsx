@@ -50,6 +50,7 @@ const useTranslate = () => {
 
   useEffect(() => {
     if (languageInRoute && googleTranslateDropdownElHasBeenRendered) {
+      // TODO(DAH-1581): Remove any type on line 55
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const selectInDom: any = document.querySelector("select.goog-te-combo")
       selectInDom.value = languageMap[languageInRoute] || languageInRoute
