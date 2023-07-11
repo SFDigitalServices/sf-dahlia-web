@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import Markdown from "markdown-to-jsx"
 import {
   ActionBlock,
   ActionBlockLayout,
@@ -85,9 +84,9 @@ const getRentalHeader = (
           {t("rentalDirectory.findMatchingListings")}
         </LinkButton>
       </p>
-      <Markdown className="text-base">
-        {t("rentalDirectory.orGetHelpCalculating", { incomeLink: getHelpCalculatingIncomeLink() })}
-      </Markdown>
+      <a className="text-base text-primary-dark" href={getHelpCalculatingIncomeLink()}>
+        {t("rentalDirectory.orGetHelpCalculating")}
+      </a>
     </PageHeader>
   )
 }

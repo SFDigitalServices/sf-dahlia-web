@@ -106,7 +106,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
     onClick={[Function]}
     tabIndex={0}
   >
@@ -252,7 +252,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
     onClick={[Function]}
     tabIndex={0}
   >
@@ -623,7 +623,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
     </table>
   </div>
   <button
-    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3"
+    className="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
     onClick={[Function]}
     tabIndex={0}
   >
