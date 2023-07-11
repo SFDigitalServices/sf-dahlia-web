@@ -6,6 +6,7 @@ class CacheService
     @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
+
     if opts[:refresh_all]
       cache_all_listings
     else
@@ -48,8 +49,13 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
-    image_processor = ListingImageService.new(listing).process_image
-    Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
+    if ENV['CACHE_LISTING_IMAGES'].present?
+      image_processor = ListingImageService.new(listing).process_image
+      Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
+    end
+
+  #   image_processor = ListingImageService.new(listing).process_image
+  #   Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
   rescue Faraday::ClientError => e
     Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
   end
