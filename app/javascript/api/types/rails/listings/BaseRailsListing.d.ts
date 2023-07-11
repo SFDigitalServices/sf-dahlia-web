@@ -133,6 +133,7 @@ type BaseRailsListing = {
   Tenure: string
   Total_number_of_building_units: number
   Total_waitlist_openings?: number
+  Utilities?: string
   Units: Array<RailsUnit>
   Units_Available: number
   Year_Built?: number
