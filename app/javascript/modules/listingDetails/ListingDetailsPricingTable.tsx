@@ -159,14 +159,14 @@ const buildAccordions = (
 
         const responsiveTableHeaders = listingIsSale
           ? {
-              units: { name: "t.units" },
+              units: { name: "t.unitType" },
               income: { name: "shortFormNav.income" },
               sale: { name: "listings.stats.salesPrice" },
               monthlyHoaDues: { name: "listings.stats.monthlyHoaDues" },
             }
           : {
-              units: { name: "t.units" },
-              income: { name: "label.income" },
+              units: { name: "t.unitType" },
+              income: { name: "t.incomeRange" },
               rent: { name: "t.rent" },
             }
 
@@ -219,6 +219,7 @@ const buildAccordions = (
             </div>
           }
           accordionTheme={"gray"}
+          barClass={"mt-4"}
         />
       )
     }
