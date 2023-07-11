@@ -834,6 +834,7 @@
   "listings.features.squareFeet": "square feet",
   "listings.features.unit": "Unit",
   "listings.features.unitFeatures": "Unit Features",
+  "listings.features.utilities": "Utilities",
   "listings.finalWaitlistSize": "Final Waitlist Size",
   "listings.forHouseholdSize": "for <span class='eligibility-subtext'>%{size}</span> %{people}",
   "listings.forIncomeCalculations": "For income calculations, household size includes everyone (all ages) living in the unit.",
