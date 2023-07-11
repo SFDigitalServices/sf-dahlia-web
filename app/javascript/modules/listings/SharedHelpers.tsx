@@ -71,6 +71,7 @@ export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
       ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
       : undefined,
     statuses: getListingImageCardStatuses(listing, hasFiltersSet),
+    description: `${listing.Building_Name} Building`,
   }
 }
 

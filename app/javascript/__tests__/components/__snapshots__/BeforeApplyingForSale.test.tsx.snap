@@ -25,7 +25,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
       class="numbered-list my-5 bg-white p-4 pt-6 text-xs"
     >
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Go to a 
@@ -38,12 +38,12 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Haven't owned residential property in the past 3 years
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Meet the 
@@ -56,7 +56,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Have a 650 credit score or higher
       </li>
@@ -81,8 +81,8 @@ exports[`BeforeApplyingForSale display Before Applying when type is Habitat list
 
 exports[`BeforeApplyingForSale display Before Applying when type is directory 1`] = `
 <DocumentFragment>
-  <li
-    class="mb-8 list-none"
+  <div
+    class="mb-8"
   >
     <h2
       class="text__underline-weighted mb-5 text-gray-750"
@@ -98,12 +98,12 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
       class="numbered-list my-5"
     >
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Haven't owned residential property in the past 3 years
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Meet our 
@@ -116,7 +116,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Complete 
@@ -129,7 +129,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Get pre-approved for a mortgage loan by a 
@@ -142,7 +142,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Have enough in savings for closing costs and downpayment
       </li>
@@ -161,7 +161,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is directory 1`
          for more details.
       </p>
     </div>
-  </li>
+  </div>
 </DocumentFragment>
 `;
 
@@ -190,12 +190,12 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
       class="numbered-list my-5 bg-white p-4 pt-6 text-xs"
     >
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Haven't owned residential property in the past 3 years
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Meet our 
@@ -208,7 +208,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Complete 
@@ -221,7 +221,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         <p>
           Get pre-approved for a mortgage loan by a 
@@ -234,7 +234,7 @@ exports[`BeforeApplyingForSale display Before Applying when type is listing deta
         </p>
       </li>
       <li
-        class="text-gray-700"
+        class="text-gray-750 primary-lighter-markup-link"
       >
         Have enough in savings for closing costs and downpayment
       </li>

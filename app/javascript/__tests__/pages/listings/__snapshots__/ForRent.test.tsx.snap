@@ -297,16 +297,12 @@ exports[`For Rent renders ForRent component 1`] = `
                     Find matching listings
                   </a>
                 </p>
-                <span
-                  class="text-base"
+                <a
+                  class="text-base text-primary-dark"
+                  href="/income-calculator/rental/intro"
                 >
-                  or 
-                  <a
-                    href="/income-calculator/rental/intro"
-                  >
-                    get help calculating your income
-                  </a>
-                </span>
+                  or get help calculating your income
+                </a>
               </hgroup>
             </header>
             <div

@@ -29,8 +29,8 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
         <div
           class="buy-header_left_col"
         >
-          <li
-            class="mb-8 list-none"
+          <div
+            class="mb-8"
           >
             <h2
               class="text__underline-weighted mb-5 text-gray-750"
@@ -46,12 +46,12 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
               class="numbered-list my-5"
             >
               <li
-                class="text-gray-700"
+                class="text-gray-750 primary-lighter-markup-link"
               >
                 Haven't owned residential property in the past 3 years
               </li>
               <li
-                class="text-gray-700"
+                class="text-gray-750 primary-lighter-markup-link"
               >
                 <p>
                   Meet our 
@@ -64,7 +64,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </p>
               </li>
               <li
-                class="text-gray-700"
+                class="text-gray-750 primary-lighter-markup-link"
               >
                 <p>
                   Complete 
@@ -77,7 +77,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </p>
               </li>
               <li
-                class="text-gray-700"
+                class="text-gray-750 primary-lighter-markup-link"
               >
                 <p>
                   Get pre-approved for a mortgage loan by a 
@@ -90,7 +90,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                 </p>
               </li>
               <li
-                class="text-gray-700"
+                class="text-gray-750 primary-lighter-markup-link"
               >
                 Have enough in savings for closing costs and downpayment
               </li>
@@ -109,7 +109,7 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
                  for more details.
               </p>
             </div>
-          </li>
+          </div>
         </div>
         <div
           class="buy-header_right_col"
