@@ -51,7 +51,7 @@ describe CacheService do
       VCR.use_cassette('force/initialize') do
         CacheService.new.prefetch_listings(prefetch_args)
       end
-    end
+      end
 
     it 'does not cache lottery buckets if the listing is open' do
       updated_listings.first['Application_Due_Date'] = (Time.now + 7.days).iso8601
@@ -98,6 +98,7 @@ describe CacheService do
   describe '#prefetch_listings' do
     context 'listing is updated' do
       before do
+        stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
           .with(subset: 'browse', force: true).and_return(updated_listings)
