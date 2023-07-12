@@ -42,16 +42,20 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
       },
       colThree: {
         cellText: getRangeString(
-          getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min"),
-          getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max"),
+          Math.round(
+            getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min")
+          ),
+          Math.round(
+            getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max")
+          ),
           true
         ),
         cellSubText: t("t.perMonth"),
       },
       colFour: {
         cellText: getRangeString(
-          getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min"),
-          getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max"),
+          Math.round(getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min")),
+          Math.round(getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max")),
           true
         ),
       },
