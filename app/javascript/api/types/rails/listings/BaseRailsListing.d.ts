@@ -1,5 +1,5 @@
-import RailsListingDescriptor from "./RailsListingDescriptor"
-import RailsUnit from "./RailsUnit"
+import type RailsListingDescriptor from "./RailsListingDescriptor"
+import type RailsUnit from "./RailsUnit"
 
 type ListingBuilding = {
   attributes: ListingAttributes

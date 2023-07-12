@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import BuyHeader from "../../../modules/listings/BuyHeader"
 
 describe("BuyHeader", () => {
@@ -16,7 +16,9 @@ describe("BuyHeader", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer.create(<BuyHeader />).toJSON()
-    expect(tree).toMatchSnapshot()
+
+    const { asFragment } = render(<BuyHeader />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

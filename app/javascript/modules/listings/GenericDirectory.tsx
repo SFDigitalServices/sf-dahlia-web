@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
 
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import {
   additionalView,

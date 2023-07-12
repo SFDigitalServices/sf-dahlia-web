@@ -1,195 +1,179 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
-<header
-  className="image-card--leader"
->
-  <a
-    className="block"
-    href="/listings/a0W0P00000GlKfBUAV"
+<DocumentFragment>
+  <header
+    class="image-card--leader"
   >
-    <div
-      className="image-card"
+    <a
+      class="block"
+      href="/listings/a0W0P00000GlKfBUAV"
     >
-      <figure
-        className="image-card__inner"
-      >
-        <img
-          alt="A picture of the building"
-          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-        />
-      </figure>
-      <aside
-        aria-label="A picture of the building Statuses"
-        className="image-card__status"
-      />
       <div
-        className="image-card-tag__wrapper"
-      />
-    </div>
-  </a>
-  <div
-    className="flex flex-col md:items-start md:text-left p-3 text-center"
-  >
-    <h1
-      className="font-sans font-semibold text-2xl"
-    >
-      TEST Sale Listing (do not modify) - Homeownership Acres
-    </h1>
-    <p
-      className="my-1"
-    >
-      <span>
-        1 South Van Ness Ave
-        , 
-        San Francisco
-        ,
-         
-        <abbr
-          className="no-underline"
-          title="California"
-        >
-          CA
-        </abbr>
-         
-        94103
-      </span>
-    </p>
-    <div
-      className="flex flex-col items-center md:flex-row md:justify-between md:w-full"
-    >
-      <div>
-        <p
-          className="text-gray-700"
-        >
-          Munoz, Carney and Clements
-        </p>
-        <p
-          className="my-2"
-        >
-          <a
-            aria-label="View on Map - Opens in a new window"
-            href="https://www.google.com/maps/place/1%20South%20Van%20Ness%20Ave%2C%20San%20Francisco%2C%20CA%2094103"
-            target="_blank"
-          >
-            View on Map
-          </a>
-        </p>
-      </div>
-      <a
-        aria-label="Share this listing"
-        className="share-button"
-        href="/share/a0W0P00000GlKfBUAV"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        target="_blank"
+        class="image-card"
       >
-        <img
-          alt="Share list view"
+        <figure
+          class="image-card__inner"
+        >
+          <img
+            alt="A picture of the building"
+            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+          />
+        </figure>
+        <aside
+          aria-label="A picture of the building Statuses"
         />
-      </a>
+        <div
+          class="image-card-tag__wrapper"
+        />
+      </div>
+    </a>
+    <div
+      class="flex flex-col md:items-start md:text-left p-3 text-center"
+    >
+      <h1
+        class="font-sans font-semibold text-2xl"
+      >
+        TEST Sale Listing (do not modify) - Homeownership Acres
+      </h1>
+      <p
+        class="my-1"
+      >
+        <span>
+          1 South Van Ness Ave, San Francisco, 
+          <abbr
+            class="no-underline"
+            title="California"
+          >
+            CA
+          </abbr>
+           94103
+        </span>
+      </p>
+      <div
+        class="flex flex-col items-center md:flex-row md:justify-between md:w-full"
+      >
+        <div>
+          <p
+            class="text-gray-700"
+          >
+            Munoz, Carney and Clements
+          </p>
+          <p
+            class="my-2"
+          >
+            <a
+              aria-label="View on Map - Opens in a new window"
+              href="https://www.google.com/maps/place/1%20South%20Van%20Ness%20Ave%2C%20San%20Francisco%2C%20CA%2094103"
+              target="_blank"
+            >
+              View on Map
+            </a>
+          </p>
+        </div>
+        <a
+          aria-label="Share this listing"
+          class="share-button"
+          href="/share/a0W0P00000GlKfBUAV"
+          target="_blank"
+        >
+          <img
+            alt="Share list view"
+          />
+        </a>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsImageCard displays tag when listing is habitat for humanity 1`] = `
-<header
-  className="image-card--leader"
->
-  <a
-    className="block"
-    href="/listings/a0W8H000000HI2uUAG"
+<DocumentFragment>
+  <header
+    class="image-card--leader"
   >
-    <div
-      className="image-card"
+    <a
+      class="block"
+      href="/listings/a0W8H000000HI2uUAG"
     >
-      <figure
-        className="image-card__inner"
-      >
-        <img
-          alt="A picture of the building"
-          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-        />
-      </figure>
-      <aside
-        aria-label="A picture of the building Statuses"
-        className="image-card__status"
-      />
       <div
-        className="image-card-tag__wrapper"
+        class="image-card"
       >
-        <span
-          className="tag is-warning"
+        <figure
+          class="image-card__inner"
         >
-          Habitat Greater San Francisco
-        </span>
-      </div>
-    </div>
-  </a>
-  <div
-    className="flex flex-col md:items-start md:text-left p-3 text-center"
-  >
-    <h1
-      className="font-sans font-semibold text-2xl"
-    >
-      TEST: 36 Amber Drive
-    </h1>
-    <p
-      className="my-1"
-    >
-      <span>
-        36 Amber Drive
-        , 
-        San Francisco
-        ,
-         
-        <abbr
-          className="no-underline"
-          title="California"
-        >
-          CA
-        </abbr>
-         
-        94131
-      </span>
-    </p>
-    <div
-      className="flex flex-col items-center md:flex-row md:justify-between md:w-full"
-    >
-      <div>
-        <p
-          className="text-gray-700"
+          <img
+            alt="A picture of the building"
+            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+          />
+        </figure>
+        <aside
+          aria-label="A picture of the building Statuses"
         />
-        <p
-          className="my-2"
+        <div
+          class="image-card-tag__wrapper"
         >
-          <a
-            aria-label="View on Map - Opens in a new window"
-            href="https://www.google.com/maps/place/36%20Amber%20Drive%2C%20San%20Francisco%2C%20CA%2094131"
-            target="_blank"
+          <span
+            class="tag is-warning"
           >
-            View on Map
-          </a>
-        </p>
+            Habitat Greater San Francisco
+          </span>
+        </div>
       </div>
-      <a
-        aria-label="Share this listing"
-        className="share-button"
-        href="/share/a0W8H000000HI2uUAG"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        target="_blank"
+    </a>
+    <div
+      class="flex flex-col md:items-start md:text-left p-3 text-center"
+    >
+      <h1
+        class="font-sans font-semibold text-2xl"
       >
-        <img
-          alt="Share list view"
-        />
-      </a>
+        TEST: 36 Amber Drive
+      </h1>
+      <p
+        class="my-1"
+      >
+        <span>
+          36 Amber Drive, San Francisco, 
+          <abbr
+            class="no-underline"
+            title="California"
+          >
+            CA
+          </abbr>
+           94131
+        </span>
+      </p>
+      <div
+        class="flex flex-col items-center md:flex-row md:justify-between md:w-full"
+      >
+        <div>
+          <p
+            class="text-gray-700"
+          />
+          <p
+            class="my-2"
+          >
+            <a
+              aria-label="View on Map - Opens in a new window"
+              href="https://www.google.com/maps/place/36%20Amber%20Drive%2C%20San%20Francisco%2C%20CA%2094131"
+              target="_blank"
+            >
+              View on Map
+            </a>
+          </p>
+        </div>
+        <a
+          aria-label="Share this listing"
+          class="share-button"
+          href="/share/a0W8H000000HI2uUAG"
+          target="_blank"
+        >
+          <img
+            alt="Share list view"
+          />
+        </a>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</DocumentFragment>
 `;

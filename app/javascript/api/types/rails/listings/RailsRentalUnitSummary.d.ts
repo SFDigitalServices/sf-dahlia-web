@@ -1,4 +1,4 @@
-import BaseRailsUnitSummary from "./BaseRailsUnitSummary"
+import type BaseRailsUnitSummary from "./BaseRailsUnitSummary"
 
 type RailsRentalUnitSummary = BaseRailsUnitSummary & {
   maxHoaDuesWithParking?: number

@@ -12,7 +12,7 @@ import { getRentalListings, EligibilityFilters } from "../../api/listingsApiServ
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import Link from "../../navigation/Link"
 import {
   getAdditionalResourcesPath,

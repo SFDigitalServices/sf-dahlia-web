@@ -1,157 +1,158 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`BuyHeader renders BuyHeader component 1`] = `
-<header
-  className="page-header buy-header"
->
-  <hgroup
-    className="page-header__group"
+<DocumentFragment>
+  <header
+    class="page-header buy-header"
   >
-    <div
-      className="buy-header_columns"
+    <hgroup
+      class="page-header__group"
     >
-      <h1
-        className="buy-header_title buy-header_left_col"
-      >
-        Buy affordable housing
-      </h1>
       <div
-        className="mb-8 buy-header_right_col"
+        class="buy-header_columns"
       >
-        <a
-          className="button is-primary is-fullwidth"
-          href="#listing-results"
+        <h1
+          class="buy-header_title buy-header_left_col"
         >
-          See the listings
-        </a>
-      </div>
-      <div
-        className="buy-header_left_col"
-      >
+          Buy affordable housing
+        </h1>
         <div
-          className="mb-8"
+          class="mb-8 buy-header_right_col"
         >
-          <h2
-            className="text__underline-weighted mb-5 text-gray-750"
+          <a
+            class="button is-primary is-fullwidth"
+            href="#listing-results"
           >
-            Before applying
-          </h2>
-          <p
-            className="text-gray-750"
+            See the listings
+          </a>
+        </div>
+        <div
+          class="buy-header_left_col"
+        >
+          <div
+            class="mb-8"
           >
-            Make sure you:
-          </p>
-          <ol
-            className="numbered-list my-5"
-          >
-            <li
-              className="text-gray-750 primary-lighter-markup-link"
+            <h2
+              class="text__underline-weighted mb-5 text-gray-750"
             >
-              Haven't owned residential property in the past 3 years
-            </li>
-            <li
-              className="text-gray-750 primary-lighter-markup-link"
+              Before applying
+            </h2>
+            <p
+              class="text-gray-750"
+            >
+              Make sure you:
+            </p>
+            <ol
+              class="numbered-list my-5"
+            >
+              <li
+                class="text-gray-750 primary-lighter-markup-link"
+              >
+                Haven't owned residential property in the past 3 years
+              </li>
+              <li
+                class="text-gray-750 primary-lighter-markup-link"
+              >
+                <p>
+                  Meet our 
+                  <a
+                    href="https://sfmohcd.org/homebuyer-program-eligibility"
+                    target="_blank"
+                  >
+                    income requirements
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-750 primary-lighter-markup-link"
+              >
+                <p>
+                  Complete 
+                  <a
+                    href="https://sfmohcd.org/homebuyer-application-requirements#education"
+                    target="_blank"
+                  >
+                    homebuyer education
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-750 primary-lighter-markup-link"
+              >
+                <p>
+                  Get pre-approved for a mortgage loan by a 
+                  <a
+                    href="https://sfmohcd.org/lender-list"
+                    target="_blank"
+                  >
+                    lender on our list
+                  </a>
+                </p>
+              </li>
+              <li
+                class="text-gray-750 primary-lighter-markup-link"
+              >
+                Have enough in savings for closing costs and downpayment
+              </li>
+            </ol>
+            <div
+              class="text-gray-750 primary-lighter-markup-link-desktop"
             >
               <p>
-                Meet our 
+                Read 
                 <a
                   href="https://sfmohcd.org/homebuyer-program-eligibility"
                   target="_blank"
                 >
-                  income requirements
+                  our full list of requirements
                 </a>
+                 for more details.
               </p>
-            </li>
-            <li
-              className="text-gray-750 primary-lighter-markup-link"
-            >
-              <p>
-                Complete 
-                <a
-                  href="https://sfmohcd.org/homebuyer-application-requirements#education"
-                  target="_blank"
-                >
-                  homebuyer education
-                </a>
-              </p>
-            </li>
-            <li
-              className="text-gray-750 primary-lighter-markup-link"
-            >
-              <p>
-                Get pre-approved for a mortgage loan by a 
-                <a
-                  href="https://sfmohcd.org/lender-list"
-                  target="_blank"
-                >
-                  lender on our list
-                </a>
-              </p>
-            </li>
-            <li
-              className="text-gray-750 primary-lighter-markup-link"
-            >
-              Have enough in savings for closing costs and downpayment
-            </li>
-          </ol>
+            </div>
+          </div>
+        </div>
+        <div
+          class="buy-header_right_col"
+        >
           <div
-            className="text-gray-750 primary-lighter-markup-link-desktop"
+            class="md:bg-white md:p-4"
           >
-            <p>
-              Read 
-              <a
-                href="https://sfmohcd.org/homebuyer-program-eligibility"
-                target="_blank"
+            <h2
+              class="text__underline-weighted mb-5"
+            >
+              Help with down payments
+            </h2>
+            <span>
+              <p
+                class="mb-4"
               >
-                our full list of requirements
-              </a>
-               for more details.
+                The 2023 Downpayment Assistance Loan Program (DALP) will begin accepting applications on May 15, 2023. 
+                <a
+                  href="https://sf.gov/reports/may-2023/downpayment-assistance-loan-program-dalp"
+                  target="_blank"
+                >
+                  Learn more about DALP and how to apply on SF.gov
+                </a>
+              </p>
+            </span>
+            <p
+              class="mb-4"
+            >
+              <span>
+                You can also get help from our 
+                <a
+                  href="https://sf.gov/resource/2022/mohcd-loan-programs"
+                  target="_blank"
+                >
+                  other assistance programs.
+                </a>
+                 The Mayor’s Office of Housing and Community Development (MOHCD) helps first-time home buyers with down payments and mortgage tax credits. MOHCD also provides assistance to current program participants who refinance their loans.
+              </span>
             </p>
           </div>
         </div>
       </div>
-      <div
-        className="buy-header_right_col"
-      >
-        <div
-          className="md:bg-white md:p-4"
-        >
-          <h2
-            className="text__underline-weighted mb-5"
-          >
-            Help with down payments
-          </h2>
-          <span>
-            <p
-              className="mb-4"
-            >
-              The 2023 Downpayment Assistance Loan Program (DALP) will begin accepting applications on May 15, 2023.
-               
-              <a
-                href="https://sf.gov/reports/may-2023/downpayment-assistance-loan-program-dalp"
-                target="_blank"
-              >
-                Learn more about DALP and how to apply on SF.gov
-              </a>
-            </p>
-          </span>
-          <p
-            className="mb-4"
-          >
-            <span>
-              You can also get help from our 
-              <a
-                href="https://sf.gov/resource/2022/mohcd-loan-programs"
-                target="_blank"
-              >
-                other assistance programs.
-              </a>
-               The Mayor’s Office of Housing and Community Development (MOHCD) helps first-time home buyers with down payments and mortgage tax credits. MOHCD also provides assistance to current program participants who refinance their loans.
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </hgroup>
-</header>
+    </hgroup>
+  </header>
+</DocumentFragment>
 `;

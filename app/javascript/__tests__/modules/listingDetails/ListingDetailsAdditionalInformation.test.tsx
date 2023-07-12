@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsAdditionalInformation } from "../../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
@@ -18,13 +18,12 @@ describe("ListingDetailsAdditionalInformation", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsAdditionalInformation listing={openSaleListing} imageSrc={"/image-url"} />
-      )
-      .toJSON()
 
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(
+      <ListingDetailsAdditionalInformation listing={openSaleListing} imageSrc={"/image-url"} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays additional information section for a rental listing", () => {
@@ -40,15 +39,11 @@ describe("ListingDetailsAdditionalInformation", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <ListingDetailsAdditionalInformation
-          listing={closedRentalListing}
-          imageSrc={"/image-url"}
-        />
-      )
-      .toJSON()
 
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(
+      <ListingDetailsAdditionalInformation listing={closedRentalListing} imageSrc={"/image-url"} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

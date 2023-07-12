@@ -5,7 +5,7 @@ import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Link from "../../navigation/Link"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"

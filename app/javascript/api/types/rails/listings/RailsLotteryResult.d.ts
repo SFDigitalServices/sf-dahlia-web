@@ -1,4 +1,4 @@
-import { RailsLotteryBucket } from "./RailsLotteryBucket"
+import type { RailsLotteryBucket } from "./RailsLotteryBucket"
 
 export type RailsLotteryResult = {
   URL?: string

@@ -336,6 +336,12 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (4.3.0)
+    react_on_rails (13.3.3)
+      addressable
+      connection_pool
+      execjs (~> 2.5)
+      rails (>= 5.2)
+      rainbow (~> 3.0)
     redis (4.5.1)
     regexp_parser (2.7.0)
     require_all (3.0.0)
@@ -399,6 +405,11 @@ GEM
     sentry-raven (3.1.2)
       faraday (>= 1.0)
     sexp_processor (4.16.1)
+    shakapacker (7.0.1)
+      activesupport (>= 5.2)
+      rack-proxy (>= 0.6.1)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
     sidekiq (5.2.10)
@@ -449,13 +460,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    webpacker (5.2.2)
-      activesupport (>= 5.2)
-      rack-proxy (>= 0.6.1)
-      railties (>= 5.2)
-      semantic_range (>= 2.3.0)
-    webpacker-react (0.3.2)
-      webpacker
     webrick (1.8.1)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
@@ -516,6 +520,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_autoscale_agent
   rails_best_practices
+  react_on_rails (= 13.3.3)
   restforce (~> 6.2.2)
   rspec-core
   rspec-rails
@@ -523,6 +528,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc
   sentry-raven
+  shakapacker (= 7.0.1)
   shoulda-matchers
   sidekiq (~> 5.2.10)
   sitemap_generator!
@@ -532,8 +538,6 @@ DEPENDENCIES
   uglifier (~> 3.2)
   vcr
   webmock
-  webpacker (~> 5.2.1)
-  webpacker-react (~> 0.3.2)
 
 RUBY VERSION
    ruby 3.1.3p185

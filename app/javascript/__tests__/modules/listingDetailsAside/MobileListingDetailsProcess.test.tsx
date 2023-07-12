@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { MobileListingDetailsProcess } from "../../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
@@ -18,16 +18,15 @@ describe("MobileListingDetailsProcess", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <MobileListingDetailsProcess
-          listing={closedRentalListing}
-          imageSrc=""
-          isApplicationOpen={false}
-        />
-      )
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(
+      <MobileListingDetailsProcess
+        listing={closedRentalListing}
+        imageSrc=""
+        isApplicationOpen={false}
+      />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders with listing with open application", () => {
@@ -43,15 +42,11 @@ describe("MobileListingDetailsProcess", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(
-        <MobileListingDetailsProcess
-          listing={openSaleListing}
-          imageSrc=""
-          isApplicationOpen={true}
-        />
-      )
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+
+    const { asFragment } = render(
+      <MobileListingDetailsProcess listing={openSaleListing} imageSrc="" isApplicationOpen={true} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

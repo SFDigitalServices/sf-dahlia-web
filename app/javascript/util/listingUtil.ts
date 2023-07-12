@@ -1,11 +1,12 @@
-import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
-import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import RailsUnit, {
+import type RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
+import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
+import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import type {
   RailsUnitWithOccupancy,
   RailsUnitWithOccupancyAndMaxIncome,
 } from "../api/types/rails/listings/RailsUnit"
-import {
+import type RailsUnit from "../api/types/rails/listings/RailsUnit"
+import type {
   RailsAmiChart,
   RailsAmiChartMetaData,
   RailsAmiChartValue,
@@ -91,9 +92,9 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * @returns {boolean} returns true if the listing is in the harcoded list of SROs that
  * permit multiple occupancy, false otherwise
  */
-export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) =>
-  process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
-
+export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) => {
+  return process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
+}
 /**
  * Builds and return an address string. Not to be used for display. Use
  * {@link ListingAddress} instead.
@@ -161,14 +162,12 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   ]
 
   const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
-  return paperAppLanguages.map(
-    (lang): PaperApplication => {
-      return {
-        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
-        fileURL: urlBase.replace("{lang}", lang.language),
-      }
+  return paperAppLanguages.map((lang): PaperApplication => {
+    return {
+      languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+      fileURL: urlBase.replace("{lang}", lang.language),
     }
-  )
+  })
 }
 
 export const deriveIncomeFromAmiCharts = (
@@ -199,12 +198,12 @@ export const deriveIncomeFromAmiCharts = (
   return null
 }
 
-export const applyMaxIncomeToUnit = (amiCharts: RailsAmiChart[]) => (
-  unit: RailsUnitWithOccupancy
-): RailsUnitWithOccupancyAndMaxIncome => {
-  const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-  return { ...unit, maxMonthlyIncomeNeeded }
-}
+export const applyMaxIncomeToUnit =
+  (amiCharts: RailsAmiChart[]) =>
+  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMaxIncome => {
+    const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+    return { ...unit, maxMonthlyIncomeNeeded }
+  }
 
 export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
   const totalUnits = []

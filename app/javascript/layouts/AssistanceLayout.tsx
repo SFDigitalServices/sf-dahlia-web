@@ -39,7 +39,7 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
       <article className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full">
-        <div className="w-full md:w-2/3" data-test-id="assistance-main-content">
+        <div className="w-full md:w-2/3" data-testid="assistance-main-content">
           {children}
         </div>
         <SidebarBlock

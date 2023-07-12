@@ -1,31 +1,29 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 
 describe("BeforeApplyingForSale", () => {
   it("display Before Applying when type is directory", () => {
-    const tree = renderer
-      .create(<BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.DIRECTORY} />)
-      .toJSON()
+    const { asFragment } = render(
+      <BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.DIRECTORY} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("display Before Applying when type is listing detail", () => {
-    const tree = renderer
-      .create(<BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.LISTING_DETAILS} />)
-      .toJSON()
+    const { asFragment } = render(
+      <BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.LISTING_DETAILS} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("display Before Applying when type is Habitat listing detail", () => {
-    const tree = renderer
-      .create(
-        <BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.LISTING_DETAILS_HABITAT} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <BeforeApplyingForSale beforeApplyingType={BeforeApplyingType.LISTING_DETAILS_HABITAT} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })
