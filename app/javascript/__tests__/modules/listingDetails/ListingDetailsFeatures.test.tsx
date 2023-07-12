@@ -42,8 +42,8 @@ describe("ListingDetailsFeatures", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsFeatures listing={closedRentalListing} imageSrc={"listing-features.svg"} />
@@ -83,8 +83,8 @@ describe("ListingDetailsFeatures", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsFeatures listing={openSaleListing} imageSrc={"listing-features.svg"} />
@@ -95,35 +95,48 @@ describe("ListingDetailsFeatures", () => {
     expect(asFragment()).toMatchSnapshot()
     done()
   })
-})
 
-it("displays a pdf hyperlink when Pricing_Matrix url exists in sales listing", async () => {
-  const getUnitsMock = getUnits as jest.MockedFunction<typeof getUnits>
-  getUnitsMock.mockReturnValue(Promise.resolve(units))
-  // This component pulls in react-media, which needs this custom mock
-  window.matchMedia = jest.fn().mockImplementation((query) => {
-    return {
-      matches: true,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }
-  })
-  const tree = renderer
-    .create(
-      <ListingDetailsFeatures
-        listing={{ ...openSaleListing, Pricing_Matrix: "https://www.example.com" }}
-        imageSrc={"listing-features.svg"}
-      />
+  it("displays a pdf hyperlink when Pricing_Matrix url exists in sales listing", async (done) => {
+    axios.get.mockResolvedValue({
+      data: { units: openSaleListing.Units, preferences: defaultPreferences },
+    })
+
+    // This component pulls in react-media, which needs this custom mock
+    window.matchMedia = jest.fn().mockImplementation((query) => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }
+    })
+
+    const { asFragment, findAllByTestId } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: units,
+          amiCharts: [],
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsFeatures
+          listing={{ ...openSaleListing, Pricing_Matrix: "https://www.example.com" }}
+          imageSrc={"listing-features.svg"}
+        />
+      </ListingDetailsContext.Provider>
     )
-    .toJSON()
 
-  // wait for state changes
-  await act(() => new Promise((resolve) => setTimeout(resolve)))
-
-  expect(tree).toMatchSnapshot()
+    expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
+    expect(asFragment()).toMatchSnapshot()
+    done()
+  })
 })

@@ -1,5 +1,285 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ListingDetailsFeatures displays a pdf hyperlink when Pricing_Matrix url exists in sales listing 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-features.svg"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Features
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Amenities and unit details
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="listing-detail-panel"
+    >
+      <dl
+        class="column-definition-list"
+      >
+        <dt
+          class="description__title"
+        >
+          Neighborhood
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            Tenderloin
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Built
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            2018
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Appliances
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Services Covered by HOA Dues
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Test Service
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Parking
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Landing at The San Francisco Shipyard:
+
+            <br />
+            <br />
+            One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+
+            <br />
+            <br />
+            <br />
+            <br />
+            Palisades at The San Francisco Shipyard:
+
+            <br />
+            <br />
+            Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Smoking Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Smoking may cause problems
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Pets Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            All pets are awesome!
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Unit Details
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <a
+            href="https://www.example.com"
+            target="_blank"
+          >
+            Download price and income limit for each unit (PDF).
+          </a>
+        </dd>
+        <dt
+          class="description__title"
+        />
+        <dd
+          class="description__body"
+        />
+      </dl>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                2 Bedroom
+              </strong>
+              : 2 units, 1199 - 1273 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                3 Bedroom
+              </strong>
+              : 5 units, 1041 - 1355 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                4 Bedroom
+              </strong>
+              : 1 unit, 1615 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
 exports[`ListingDetailsFeatures displays listing details features section when rental listing 1`] = `
 <DocumentFragment>
   <li
@@ -351,304 +631,8 @@ exports[`ListingDetailsFeatures displays listing details features section when s
             />
           </svg>
         </span>
-<<<<<<< HEAD
       </hgroup>
     </header>
-=======
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Appliances
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Services Covered by HOA Dues
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Test Service
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Parking
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-
-          <br />
-          <br />
-          <br />
-          <br />
-          Palisades at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Smoking Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Smoking may cause problems
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Pets Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          All pets are awesome!
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Unit Details
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span />
-      </dd>
-      <dt
-        className="description__title"
-      >
-        
-      </dt>
-      <dd
-        className="description__body"
-      >
-        
-      </dd>
-    </dl>
-    <div
-      className="flex justify-center"
-    >
-      <span
-        className="ui-icon ui-large spinner-animation"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 100 100"
-        >
-          <circle
-            cx="50"
-            cy="50"
-            fill="none"
-            r="32"
-            stroke="currentColor"
-            strokeDasharray="150.79644737231007 52.26548245743669"
-            strokeWidth="9"
-          />
-        </svg>
-      </span>
-    </div>
-  </div>
-</li>
-`;
-
-exports[`displays a pdf hyperlink when Pricing_Matrix url exists in sales listing 1`] = `
-<li
-  className="responsive-content-item "
->
-  <header
-    className="detail-header"
-  >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-features.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
-    >
-      <h2
-        className="detail-header__title"
-      >
-        Features
-      </h2>
-      <span
-        className="detail-header__subtitle"
-      >
-        Amenities and unit details
-      </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <div
-    className="listing-detail-panel"
-  >
-    <dl
-      className="column-definition-list"
-    >
-      <dt
-        className="description__title"
-      >
-        Neighborhood
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          Tenderloin
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Built
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          2018
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Appliances
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Services Covered by HOA Dues
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Test Service
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Parking
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-
-          <br />
-          <br />
-          <br />
-          <br />
-          Palisades at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Smoking Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Smoking may cause problems
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Pets Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          All pets are awesome!
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Unit Details
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <a
-          href="https://www.example.com"
-          target="_blank"
-        >
-          Download price and income limit for each unit (PDF).
-        </a>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        
-      </dt>
-      <dd
-        className="description__body"
-      >
-        
-      </dd>
-    </dl>
->>>>>>> 147d324a (feat: unit details and PDF link (react))
     <div
       class="listing-detail-panel"
     >
@@ -756,8 +740,16 @@ exports[`displays a pdf hyperlink when Pricing_Matrix url exists in sales listin
         <dt
           class="description__title"
         >
-          Unit Features
+          Unit Details
         </dt>
+        <dd
+          class="description__body"
+        >
+          <span />
+        </dd>
+        <dt
+          class="description__title"
+        />
         <dd
           class="description__body"
         />
