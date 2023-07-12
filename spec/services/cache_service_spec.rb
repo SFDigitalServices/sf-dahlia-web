@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'support/vcr_setup'
 require 'ostruct'
-
+-
 describe CacheService do
   let(:cached_listings) do
     listings = VCR.use_cassette('listings/all_listings_browse') do
@@ -125,6 +125,7 @@ describe CacheService do
   end
 
   describe '#prefetch_listings(refresh_all: true)' do
+    stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
     # simulate unchanged listings, because these should still get updated
     # when refreshing all
     let(:updated_listings) { cached_listings }
