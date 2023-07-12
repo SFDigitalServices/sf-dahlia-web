@@ -125,9 +125,12 @@ describe CacheService do
   end
 
   describe '#prefetch_listings(refresh_all: true)' do
-    #stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
     # simulate unchanged listings, because these should still get updated
     # when refreshing all
+    before do
+      stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
+    end
+
     let(:updated_listings) { cached_listings }
 
     it_behaves_like 'cacher of listings' do
