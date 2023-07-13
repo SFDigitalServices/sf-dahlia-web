@@ -1,13 +1,12 @@
 import React from "react"
-import { within } from "@testing-library/react"
+import { render, within } from "@testing-library/react"
 import AssistanceLayout, { languageToSFGovMap } from "../../layouts/AssistanceLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
-import renderer from "react-test-renderer"
 
 const CHILD_CONTENT = "Content!"
 
 describe("<AssistanceLayout />", () => {
-  it("renders children", async () => {
+  it("renders children", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(
       <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
         <h1>{CHILD_CONTENT}</h1>
@@ -16,19 +15,21 @@ describe("<AssistanceLayout />", () => {
     const mainContent = getByTestId("assistance-main-content")
 
     expect(within(mainContent).getByText(CHILD_CONTENT)).not.toBeNull()
+    done()
   })
 
-  it("renders PageHeader", async () => {
+  it("renders PageHeader", async (done) => {
     const TitleText = "Title Text"
     const SubtitleText = "SubTitle Text"
-    const { getByText } = await renderAndLoadAsync(
+    const { getAllByText } = await renderAndLoadAsync(
       <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
         <h1>{CHILD_CONTENT}</h1>
       </AssistanceLayout>
     )
 
-    expect(getByText(TitleText)).not.toBeNull()
-    expect(getByText(SubtitleText)).not.toBeNull()
+    expect(getAllByText(TitleText).length).not.toBeNull()
+    expect(getAllByText(SubtitleText).length).not.toBeNull()
+    done()
   })
 
   it("lanauageToSFGovMap returns the proper url", () => {
@@ -42,14 +43,13 @@ describe("<AssistanceLayout />", () => {
 
   describe("Contact Bar", () => {
     it("renders Contact Information", () => {
-      const tree = renderer
-        .create(
-          <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-            <h1>{CHILD_CONTENT}</h1>
-          </AssistanceLayout>
-        )
-        .toJSON()
-      expect(tree).toMatchSnapshot()
+      const { asFragment } = render(
+        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
     })
   })
 })

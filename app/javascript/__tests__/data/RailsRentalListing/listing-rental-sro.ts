@@ -1,4 +1,4 @@
-import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 export const sroRentalListing: RailsRentalListing = {
   unitSummaries: {

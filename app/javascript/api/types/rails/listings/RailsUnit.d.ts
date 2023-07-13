@@ -1,4 +1,4 @@
-import { ListingAttributes } from "./BaseRailsListing"
+import type { ListingAttributes } from "./BaseRailsListing"
 
 type RailsUnit = {
   AMI_chart_type: string

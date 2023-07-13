@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsLotteryPreferencesProps {

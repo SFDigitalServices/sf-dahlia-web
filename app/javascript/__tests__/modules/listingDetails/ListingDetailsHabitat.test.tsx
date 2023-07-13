@@ -1,19 +1,19 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsHabitat } from "../../../modules/listingDetails/ListingDetailsHabitat"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 
 describe("ListingDetailsHabitat", () => {
   it("does not display when not habitat listing", () => {
-    const tree = renderer.create(<ListingDetailsHabitat listing={closedRentalListing} />).toJSON()
+    const { asFragment } = render(<ListingDetailsHabitat listing={closedRentalListing} />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays habitat info when habitat listing", () => {
-    const tree = renderer.create(<ListingDetailsHabitat listing={habitatListing} />).toJSON()
+    const { asFragment } = render(<ListingDetailsHabitat listing={habitatListing} />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

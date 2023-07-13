@@ -1,11 +1,11 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { MailingListSignup } from "../../components/MailingListSignup"
 
 describe("MailingListSignup", () => {
   it("displays mailing list sign up", () => {
-    const tree = renderer.create(<MailingListSignup />).toJSON()
+    const { asFragment } = render(<MailingListSignup />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

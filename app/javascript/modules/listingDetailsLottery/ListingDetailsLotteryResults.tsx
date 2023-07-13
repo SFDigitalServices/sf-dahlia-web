@@ -10,7 +10,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"

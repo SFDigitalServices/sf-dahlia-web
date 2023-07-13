@@ -1,4 +1,4 @@
-import WebpackerReact from "webpacker-react"
+import ReactOnRails from "react-on-rails"
 
 import "../components/base.scss"
 import "core-js/stable"
@@ -20,7 +20,7 @@ import Privacy from "../pages/getAssistance/privacy"
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
 void loadTranslations(currentLanguage).then(() =>
-  WebpackerReact.setup({
+  ReactOnRails.register({
     // Add additional components here for each react component entrypoint
     BuyDirectory,
     HomePage,

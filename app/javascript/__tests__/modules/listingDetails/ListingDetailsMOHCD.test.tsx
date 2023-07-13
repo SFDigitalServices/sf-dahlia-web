@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsMOHCD } from "../../../modules/listingDetails/ListingDetailsMOHCD"
 
 describe("ListingDetailsMOHCD", () => {
@@ -16,7 +16,9 @@ describe("ListingDetailsMOHCD", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer.create(<ListingDetailsMOHCD />).toJSON()
-    expect(tree).toMatchSnapshot()
+
+    const { asFragment } = render(<ListingDetailsMOHCD />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

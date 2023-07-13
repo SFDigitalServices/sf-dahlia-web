@@ -1,4 +1,4 @@
-import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import type RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 
 export const habitatListing: RailsSaleListing = {
   unitSummaries: {

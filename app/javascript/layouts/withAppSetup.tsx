@@ -16,31 +16,30 @@ interface ObjectWithAssets {
 
 // Ignore linting error on 'object' type, because we can't use Record<string, unknown> here.
 // eslint-disable-next-line @typescript-eslint/ban-types
-const withAppSetup = <P extends ObjectWithAssets>(
-  Component: React.ComponentType<P>,
-  useFormTimeout?: boolean
-) => (props: P) => {
-  if (process.env.NODE_ENV !== "production") {
-    void axe(React, ReactDOM, 1000)
-  }
+const withAppSetup =
+  <P extends ObjectWithAssets>(Component: React.ComponentType<P>, useFormTimeout?: boolean) =>
+  (props: P) => {
+    if (process.env.NODE_ENV !== "production") {
+      void axe(React, ReactDOM, 1000)
+    }
 
-  return (
-    <ErrorBoundary boundaryScope={BoundaryScope.page}>
-      <NavigationProvider>
-        <ListingDetailsProvider>
-          <ConfigProvider assetPaths={props.assetPaths}>
-            <UserProvider>
-              <IdleTimeout
-                onTimeout={() => console.log("Logout")}
-                useFormTimeout={useFormTimeout}
-              />
-              <Component {...props} />
-            </UserProvider>
-          </ConfigProvider>
-        </ListingDetailsProvider>
-      </NavigationProvider>
-    </ErrorBoundary>
-  )
-}
+    return (
+      <ErrorBoundary boundaryScope={BoundaryScope.page}>
+        <NavigationProvider>
+          <ListingDetailsProvider>
+            <ConfigProvider assetPaths={props.assetPaths}>
+              <UserProvider>
+                <IdleTimeout
+                  onTimeout={() => console.log("Logout")}
+                  useFormTimeout={useFormTimeout}
+                />
+                <Component {...props} />
+              </UserProvider>
+            </ConfigProvider>
+          </ListingDetailsProvider>
+        </NavigationProvider>
+      </ErrorBoundary>
+    )
+  }
 
 export default withAppSetup

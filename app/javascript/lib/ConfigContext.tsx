@@ -14,6 +14,7 @@ export const ConfigContext = createContext<ConfigContextProps>({
 
 export const ConfigProvider: FunctionComponent<{
   assetPaths: unknown
+  children: React.ReactNode
 }> = ({ assetPaths, children }) => {
   const getAssetPath = (key: string) => {
     return assetPaths[key]
