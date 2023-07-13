@@ -17,7 +17,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -28,7 +28,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $100 to $5,941 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $100 to $5,941
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -60,7 +68,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -71,7 +79,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,550 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,550
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -103,7 +119,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -114,7 +130,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,329 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,329
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -146,7 +170,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -157,7 +181,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,937 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,937
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -189,7 +221,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -200,7 +232,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $11,666 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $11,666
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -232,7 +272,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -243,7 +283,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $10 to $7,916 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $10 to $7,916
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -284,7 +332,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar accordion-open"
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -295,7 +343,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $5,941 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $5,941
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -405,7 +461,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                     >
                       <td
                         class="undefined stacked-table-header b-0"
-                        data-cell="2 BR"
+                        data-cell="2 Bedroom"
                         data-label="Unit Type"
                       >
                         <div
@@ -414,7 +470,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                           <p
                             class="stacked-table-cell"
                           >
-                            2 BR
+                            2 Bedroom
                           </p>
                           <p
                             class="stacked-table-subtext   "
@@ -523,7 +579,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                     >
                       <td
                         class="undefined stacked-table-header b-0"
-                        data-cell="1 BR"
+                        data-cell="1 Bedroom"
                         data-label="Unit Type"
                       >
                         <div
@@ -532,7 +588,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                           <p
                             class="stacked-table-cell"
                           >
-                            1 BR
+                            1 Bedroom
                           </p>
                           <p
                             class="stacked-table-subtext   "
@@ -611,7 +667,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -622,7 +678,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $100 to $5,941 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $100 to $5,941
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -654,7 +718,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -665,7 +729,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,550 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,550
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -697,7 +769,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -708,7 +780,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,329 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,329
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -740,7 +820,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -751,7 +831,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $6,937 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $6,937
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -783,7 +871,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -794,7 +882,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $7 to $11,666 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $7 to $11,666
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
@@ -826,7 +922,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
           class="flex justify-between mt-4  accordion-gray-theme__bar "
         >
           <span
-            class="flex w-full justify-between items-center"
+            class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
               class="flex items-center"
@@ -837,7 +933,15 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center mr-2"
             >
               <div>
-                Income $10 to $7,916 per month
+                <span>
+                  Income 
+                  <span
+                    class="font-semibold"
+                  >
+                    $10 to $7,916
+                  </span>
+                   per month
+                </span>
               </div>
             </span>
           </span>
