@@ -9,7 +9,7 @@ import {
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { getListing } from "../../api/listingApiService"
+import { getListing, getCms } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingDetailsImageCard } from "../../modules/listingDetails/ListingDetailsImageCard"
 import { ListingDetailsPricingTable } from "../../modules/listingDetails/ListingDetailsPricingTable"
@@ -40,6 +40,7 @@ import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetails
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import { Cms } from "../../api/types/rails/listings/BaseRailsListing"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -77,6 +78,18 @@ const ListingDetail = () => {
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
       setListing(listing)
     })
+  }, [router.pathname])
+
+  useEffect(() => {
+    const path = getPathWithoutLanguagePrefix(router.pathname)
+    console.log(path)
+    try {
+      void getCms().then((cms: Cms) => {
+        console.log(cms)
+      })
+    } catch(e) {
+      console.log(e)
+    }
   }, [router.pathname])
 
   return (

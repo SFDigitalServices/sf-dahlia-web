@@ -1,6 +1,14 @@
 import type RailsListingDescriptor from "./RailsListingDescriptor"
 import type RailsUnit from "./RailsUnit"
 
+type CmsItem = {
+  title: string
+}
+
+export type Cms = {
+  items: CmsItem[]
+}
+
 type ListingBuilding = {
   attributes: ListingAttributes
   Id: string
