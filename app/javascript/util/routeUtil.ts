@@ -28,9 +28,10 @@ export const getLocalizedPath = (
   return `${cleanedPath}${queryString || ""}`
 }
 
-export const localizedPathGetter = (newPathNonLocalized: string) => (
-  currentPath: string | undefined = window.location.pathname
-): string => getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
+export const localizedPathGetter =
+  (newPathNonLocalized: string) =>
+  (currentPath: string | undefined = window.location.pathname): string =>
+    getLocalizedPath(newPathNonLocalized, getCurrentLanguage(currentPath))
 
 export const localizedPath = (newPathNonLocalized: string) => {
   const currentPath: string | undefined = window.location.pathname

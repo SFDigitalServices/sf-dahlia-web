@@ -1,5 +1,5 @@
 import { getImageCardProps } from "../../../modules/listings/SharedHelpers"
-import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 describe("SharedHelpers", () => {
   describe("getImageCardProps", () => {

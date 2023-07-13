@@ -1,6 +1,5 @@
-import RailsUnit, {
-  RailsUnitWithOccupancyAndMaxIncome,
-} from "../../../api/types/rails/listings/RailsUnit"
+import type { RailsUnitWithOccupancyAndMaxIncome } from "../../../api/types/rails/listings/RailsUnit"
+import type RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
 export const units: RailsUnit[] = [
   {

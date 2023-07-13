@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsHMITable } from "../../../modules/listingDetails/ListingDetailsHMITable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -10,7 +10,7 @@ import ListingDetailsContext from "../../../contexts/listingDetails/listingDetai
 
 describe("ListingDetailsHMITable", () => {
   it("renders ListingDetailsHMITable component with spinner before api call", () => {
-    const tree = renderer.create(
+    const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
           units: [],
@@ -19,18 +19,18 @@ describe("ListingDetailsHMITable", () => {
           fetchedUnits: false,
           fetchingAmiCharts: true,
           fetchedAmiCharts: false,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsHMITable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders ListingDetailsHMITable component with rental listing", () => {
-    const tree = renderer.create(
+    const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -39,18 +39,18 @@ describe("ListingDetailsHMITable", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsHMITable listing={closedRentalListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders ListingDetailsPricingTable component with open sale listing", () => {
-    const tree = renderer.create(
+    const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -59,18 +59,18 @@ describe("ListingDetailsHMITable", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsHMITable listing={openSaleListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("does not render ListingDetailsPricingTable when habitat listing", () => {
-    const tree = renderer.create(
+    const { asFragment } = render(
       <ListingDetailsContext.Provider
         value={{
           units,
@@ -79,13 +79,13 @@ describe("ListingDetailsHMITable", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: true,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsHMITable listing={habitatListing} />
       </ListingDetailsContext.Provider>
     )
-    expect(tree.toJSON()).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

@@ -1,6 +1,9 @@
 import { createContext } from "react"
-import RailsUnit from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type {
+  RailsAmiChart,
+  RailsAmiChartMetaData,
+} from "../../api/types/rails/listings/RailsAmiChart"
 
 export type ContextProps = {
   units: RailsUnit[]

@@ -2,7 +2,7 @@ import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {

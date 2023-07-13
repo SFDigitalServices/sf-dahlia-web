@@ -1,55 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Accessible Units Only 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full"
   >
-    All units reserved for people who need accessibility features
+    <div
+      class="message is-warning"
+    >
+      All units reserved for people who need accessibility features
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Artist Live/Work 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full"
   >
-    All units reserved for artists to live and work in
+    <div
+      class="message is-warning"
+    >
+      All units reserved for artists to live and work in
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Senior 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full"
   >
-    All units reserved for ages 65+
+    <div
+      class="message is-warning"
+    >
+      All units reserved for ages 65+
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Veteran 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full"
   >
-    All units reserved for veterans
+    <div
+      class="message is-warning"
+    >
+      All units reserved for veterans
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
-exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `null`;
+exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `<DocumentFragment />`;
 
-exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `null`;
+exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `<DocumentFragment />`;
 
-exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `null`;
+exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `<DocumentFragment />`;
