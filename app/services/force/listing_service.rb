@@ -117,7 +117,7 @@ module Force
           li.salesforce_listing_id == listing['Id']
         end.first
         # fallback to Building_URL for the case where ListingImages have not been set up
-        url = listing_image && ENV['CACHE_LISTING_IMAGES'].present ? listing_image.image_url : listing['Building_URL']
+        url = listing_image && ENV['CACHE_LISTING_IMAGES'] ? listing_image.image_url : listing['Building_URL']
         listing['imageURL'] = url
       end
       listings
