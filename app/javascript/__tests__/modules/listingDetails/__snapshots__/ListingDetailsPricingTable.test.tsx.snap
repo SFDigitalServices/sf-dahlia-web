@@ -14,15 +14,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              1 person in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                1 
+              </span>
+              <span>
+                person in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -65,15 +72,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              2 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                2 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -116,15 +130,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              3 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                3 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -167,15 +188,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              4 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                4 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -218,15 +246,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              5 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                5 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -269,15 +304,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              6 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                6 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -329,15 +371,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar accordion-open"
+          class="flex justify-between   accordion-gray-theme__bar accordion-open"
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              1 person in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                1 
+              </span>
+              <span>
+                person in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -664,15 +713,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              1 person in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                1 
+              </span>
+              <span>
+                person in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -715,15 +771,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              2 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                2 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -766,15 +829,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              3 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                3 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -817,15 +887,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              4 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                4 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -868,15 +945,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              5 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                5 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
@@ -919,15 +1003,22 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
         data-testid="content-accordion-button"
       >
         <div
-          class="flex justify-between mt-4  accordion-gray-theme__bar "
+          class="flex justify-between   accordion-gray-theme__bar "
         >
           <span
             class="flex md:flex-row flex-col w-full justify-between items-start md:items-center"
           >
             <span
-              class="flex items-center"
+              class="flex items-center whitespace-pre-wrap"
             >
-              6 people in household
+              <span
+                class="md:text-2xl leading-8 font-semibold md:font-normal"
+              >
+                6 
+              </span>
+              <span>
+                people in household
+              </span>
             </span>
             <span
               class="flex items-center mr-2"
