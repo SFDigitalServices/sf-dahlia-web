@@ -94,7 +94,7 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
 const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   return {
     units: {
-      cellText: unit.Unit_Type,
+      cellText: defaultIfNotTranslated(`listings.unitTypes.${unit.Unit_Type}`, unit.Unit_Type),
       cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
@@ -193,10 +193,15 @@ const buildAccordions = (
                 "flex md:flex-row flex-col w-full justify-between items-start md:items-center"
               }
             >
-              <span className={"flex items-center"}>
-                {occupancy?.occupancy > 1
-                  ? `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
-                  : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+              <span className={"flex items-center whitespace-pre-wrap"}>
+                <span className={"md:text-2xl leading-8 font-semibold md:font-normal"}>
+                  {`${occupancy?.occupancy} `}
+                </span>
+                <span>
+                  {occupancy?.occupancy > 1
+                    ? `${t("listings.stats.numInHouseholdPlural")}`
+                    : `${t("listings.stats.numInHouseholdSingular")}`}
+                </span>
               </span>
               <span className={"flex items-center mr-2"}>
                 {(() => {
@@ -230,7 +235,6 @@ const buildAccordions = (
             </div>
           }
           accordionTheme={"gray"}
-          barClass={"mt-4"}
         />
       )
     }
