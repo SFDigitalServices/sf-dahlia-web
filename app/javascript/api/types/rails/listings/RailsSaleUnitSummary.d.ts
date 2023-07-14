@@ -1,4 +1,4 @@
-import BaseRailsUnitSummary from "./BaseRailsUnitSummary"
+import type BaseRailsUnitSummary from "./BaseRailsUnitSummary"
 
 type RailsSaleUnitSummary = BaseRailsUnitSummary & {
   minPriceWithParking?: number

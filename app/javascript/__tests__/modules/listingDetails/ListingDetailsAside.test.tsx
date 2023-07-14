@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsAside } from "../../../modules/listingDetailsAside/ListingDetailsAside"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
@@ -17,9 +17,9 @@ describe("ListingDetailsAside", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    const tree = renderer
-      .create(<ListingDetailsAside listing={closedRentalListing} imageSrc="" />)
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+
+    const { asFragment } = render(<ListingDetailsAside listing={closedRentalListing} imageSrc="" />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

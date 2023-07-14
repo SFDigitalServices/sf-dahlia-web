@@ -1,75 +1,65 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsReservedBanner } from "../../../modules/listingDetails/ListingDetailsReservedBanner"
 import { RESERVED_COMMUNITY_TYPES } from "../../../modules/constants"
 
 describe("ListingDetailsReservedBanner", () => {
   it("does not display banner when reserved community type is blank", () => {
-    const tree = renderer.create(<ListingDetailsReservedBanner />).toJSON()
+    const { asFragment } = render(<ListingDetailsReservedBanner />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("does not display banner when unknown reserved community type", () => {
-    const tree = renderer
-      .create(<ListingDetailsReservedBanner reservedCommunityType={"anUnknownType"} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner reservedCommunityType={"anUnknownType"} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays banner when reserved community type is Accessible Units Only", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsReservedBanner
-          reservedCommunityType={RESERVED_COMMUNITY_TYPES.ACCESSIBLE_ONLY}
-        />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner
+        reservedCommunityType={RESERVED_COMMUNITY_TYPES.ACCESSIBLE_ONLY}
+      />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays banner when reserved community type is Artist Live/Work", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.ARTIST} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.ARTIST} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("does not display banner when reserved community type is Habitat for Humanity", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.HABITAT} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.HABITAT} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays banner when reserved community type is Senior", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsReservedBanner
-          reservedCommunityType={RESERVED_COMMUNITY_TYPES.SENIOR}
-          reservedCommunityMinimumAge={65}
-        />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner
+        reservedCommunityType={RESERVED_COMMUNITY_TYPES.SENIOR}
+        reservedCommunityMinimumAge={65}
+      />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays banner when reserved community type is Veteran", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.VETERAN} />
-      )
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.VETERAN} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

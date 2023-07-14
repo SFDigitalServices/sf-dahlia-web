@@ -1,32 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
-Array [
+<DocumentFragment>
   <div
-    className="border-b border-gray-400 md:border-b-0"
+    class="border-b border-gray-400 md:border-b-0"
   >
     <section
-      className="aside-block"
+      class="aside-block"
     >
       <h4
-        className="text__underline-weighted"
+        class="text__underline-weighted"
       >
         What to Expect
       </h4>
       <div
-        className="text-sm text-gray-750"
+        class="text-sm text-gray-750"
       >
         <span>
           Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
         </span>
         <div
-          className="mt-2"
+          class="mt-2"
         >
           <div>
             <button
-              aria-expanded={false}
-              className="button is-unstyled m-0 no-underline has-toggle"
-              onClick={[Function]}
+              aria-expanded="false"
+              class="button is-unstyled m-0 no-underline has-toggle"
               type="button"
             >
               Show more
@@ -35,37 +34,36 @@ Array [
         </div>
       </div>
     </section>
-  </div>,
+  </div>
   <div
-    className="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    class="border-b border-gray-400 md:border-b-0 last:border-b-0"
   >
     <section
-      className="aside-block"
+      class="aside-block"
     >
       <h4
-        className="text__underline-weighted"
+        class="text__underline-weighted"
       >
         Contact
       </h4>
       <p
-        className="text-xl"
+        class="text-xl"
       >
         Kathryn Kelley
       </p>
       <p
-        className="text-gray-700 translate"
+        class="text-gray-700 translate"
       >
         Leasing Agent
       </p>
       <p
-        className="mt-3"
+        class="mt-3"
       >
         <a
           href="tel:Call 4158728106"
         >
           <span
-            className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            class="ui-icon ui-medium pr-2"
           >
             <svg
               fill="#0077DA"
@@ -80,19 +78,18 @@ Array [
         </a>
       </p>
       <p
-        className="text-xs text-gray-700"
+        class="text-xs text-gray-700"
       >
         Due to high call volume you may hear a message.
       </p>
       <p
-        className="my-3"
+        class="my-3"
       >
         <a
           href="mailto:ldavis3@eqr.com"
         >
           <span
-            className="ui-icon ui-medium pr-2"
-            data-test-id={null}
+            class="ui-icon ui-medium pr-2"
           >
             <svg
               fill="#0077DA"
@@ -107,18 +104,18 @@ Array [
         </a>
       </p>
       <div
-        className="my-3"
+        class="my-3"
       >
         <h3
-          className="text__caps-weighted"
+          class="text__caps-weighted"
         >
           Office Hours
         </h3>
         <div
-          className="text-gray-800 text-sm markdown"
+          class="text-gray-800 text-sm markdown"
         >
           <span
-            className="translate"
+            class="translate"
           >
             <span>
               Monday - Friday 10:00 AM - 6:00 PM
@@ -127,21 +124,21 @@ Array [
         </div>
       </div>
     </section>
-  </div>,
+  </div>
   <div
-    className="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    class="border-b border-gray-400 md:border-b-0 last:border-b-0"
   >
     <section
-      className="aside-block "
+      class="aside-block "
     >
       <div
-        className="text-sm text-gray-750"
+        class="text-sm text-gray-750"
       >
         <p>
           Listing Updated: February 7, 2022
         </p>
       </div>
     </section>
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;

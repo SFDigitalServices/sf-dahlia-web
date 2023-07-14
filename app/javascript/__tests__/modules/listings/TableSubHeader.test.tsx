@@ -1,10 +1,10 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import TableSubHeader from "../../../modules/listings/TableSubHeader"
 
 describe("TableSubHeader", () => {
   it("renders TableSubHeader component", () => {
-    const tree = renderer.create(<TableSubHeader priorityTypes={["test"]} />).toJSON()
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(<TableSubHeader priorityTypes={["test"]} />)
+    expect(asFragment()).toMatchSnapshot()
   })
 })

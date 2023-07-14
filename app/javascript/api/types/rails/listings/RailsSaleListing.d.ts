@@ -1,5 +1,5 @@
-import BaseRailsListing from "./BaseRailsListing"
-import RailsSaleUnitSummary from "./RailsSaleUnitSummary"
+import type BaseRailsListing from "./BaseRailsListing"
+import type RailsSaleUnitSummary from "./RailsSaleUnitSummary"
 
 type RailsSaleListing = BaseRailsListing & {
   unitSummaries: {

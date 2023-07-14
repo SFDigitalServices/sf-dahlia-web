@@ -37,6 +37,7 @@ Before you install DAHLIA, your system should have the following:
   - After node is installed, you can install yarn with `npm install --global yarn`
 
 ## Getting started
+
 More information about getting started can be found on the team confluence.
 
 1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
@@ -59,9 +60,9 @@ More information about getting started can be found on the team confluence.
    - `yarn server` to start rails server alone, which will now be running at http://localhost:3000 by default
    - `yarn start` to start both servers with a single command
 1. Alternatively you can start the servers using the webpack and rails command directly
-   - `NODE_OPTIONS=--openssl-legacy-provider ./bin/webpack-dev-server` to start webpack
-      - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:webpacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
-   - In another terminal tab, run `rails s` to start the rails
+   - `NODE_OPTIONS=--openssl-legacy-provider ./bin/shakapacker-dev-server` to start webpack
+     - This command might fail with `Command "webpack-dev-server" not found.`. In that case, you'll need to reinstall webpacker with `bundle exec rails:shakapacker:install`. During the install it will ask if you want to overwrite a few config files, do not overwrite them.
+   - In another terminal tab, run `rails s` to start the rails server
 
 ## How to migrate a page from AngularJS to React
 
@@ -72,7 +73,7 @@ See [docs/migrating-to-react](docs/migrating-to-react.md) for a step-by-step gui
 To run ruby tests:
 
 - `rake spec`
-   - you may need to install [imagemagick](https://formulae.brew.sh/formula/imagemagick) due to a dependency on the [minimagick gem](https://github.com/minimagick/minimagick)
+  - you may need to install [imagemagick](https://formulae.brew.sh/formula/imagemagick) due to a dependency on the [minimagick gem](https://github.com/minimagick/minimagick)
 
 To run Angular unit tests:
 
@@ -80,14 +81,23 @@ To run Angular unit tests:
 - `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run React unit tests:
-- `yarn test`
 
-To run E2E tests:
+- to run the entire suite run `yarn test`
+- to run a single file run `jest path/to/folder/<name-of-file>.test.ts`
+
+To run Legacy E2E (Angular) tests:
 
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.41 --versions.standalone 3.141.59` to get the selenium webdriver installed
 - On one tab have your Rails server running: `rails s`
 - On another tab, run `yarn protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 - If you get errors starting selenium, make sure you have [java](https://java.com/en/download/) installed
+
+To run E2E (React) tests:
+
+- In one terminal start the application by running `yarn start`
+- In another terminal
+  - To run the full suite of tests run `yarn test:e2e`
+  - To run a specific file run `cypress run --spec 'path/to/folder/<name-of-file>.e2e.ts'`
 
 Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
@@ -140,6 +150,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - HOME_PAGE_REACT='true'
 - DIRECTORY_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
+- GET_ASSISTANCE_PAGES_REACT='true'
 
 ### React env variables
 

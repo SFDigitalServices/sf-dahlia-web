@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Field, Heading, Icon, IconFillColors, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsLotteryPreferences } from "./ListingDetailsLotteryPreferences"
 import { getLotteryResults } from "../../api/listingApiService"
@@ -36,7 +36,7 @@ export const ListingDetailsLotterySearchForm = ({
   )
 
   const onSubmit = (data: { lotterySearchNumber: string }) => {
-    const { lotterySearchNumber } = data
+    const lotterySearchNumber = data.lotterySearchNumber
     setLotteryFormStatus(LOTTERY_SEARCH_FORM_STATUS.LOADING)
 
     void getLotteryResults(listing.Id, lotterySearchNumber).then((lotterySearchResults) => {

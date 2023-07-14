@@ -1,4 +1,4 @@
-import { RailsListingPreference } from "../../../api/types/rails/listings/RailsListingPreferences"
+import type { RailsListingPreference } from "../../../api/types/rails/listings/RailsListingPreferences"
 
 // Listings always have COP, DHTP and L/W
 export const preferences: RailsListingPreference[] = [

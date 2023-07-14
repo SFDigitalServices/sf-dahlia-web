@@ -13,12 +13,12 @@ const events = ["mousemove", "keypress", "scroll"]
 
 function useIdleTimeout(timeoutMs: number, onTimeout: () => void) {
   useEffect(() => {
-    let timer: number = (setTimeout(onTimeout, timeoutMs) as unknown) as number
+    let timer: number = setTimeout(onTimeout, timeoutMs) as unknown as number
     const restartTimer = () => {
       if (timer) {
         clearTimeout(timer)
       }
-      timer = (setTimeout(onTimeout, timeoutMs) as unknown) as number
+      timer = setTimeout(onTimeout, timeoutMs) as unknown as number
     }
 
     // Listen for any activity events & reset the timer when they are found
@@ -78,9 +78,9 @@ const BaseIdleTimeout: FunctionComponent<IdleTimeoutProps> = (props: IdleTimeout
 
     // Give the user 1 minute to respond to the prompt before the onTimeout action
     setPromptTimeout(
-      (setTimeout(() => {
+      setTimeout(() => {
         void timeoutAction()
-      }, PROMPT_TIMEOUT) as unknown) as number
+      }, PROMPT_TIMEOUT) as unknown as number
     )
   })
 

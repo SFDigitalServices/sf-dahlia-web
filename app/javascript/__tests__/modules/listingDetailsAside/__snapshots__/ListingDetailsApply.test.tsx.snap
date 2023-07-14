@@ -1,149 +1,153 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsApply displays habitat link for eligibility requirements when listing is habitat and is open 1`] = `
-<div
-  className="md:px-0 px-2"
->
-  <section
-    className="aside-block "
+<DocumentFragment>
+  <div
+    class="md:px-0 px-2"
   >
-    <h4
-      className="text__underline-weighted"
+    <section
+      class="aside-block "
     >
-      How to Apply
-    </h4>
-    <div
-      className="text-sm text-gray-750"
+      <h4
+        class="text__underline-weighted"
+      >
+        How to Apply
+      </h4>
+      <div
+        class="text-sm text-gray-750"
+      >
+        <p
+          class="mb-4"
+        >
+          <span>
+            Make sure you fulfill the 
+            <a
+              href="https://habitatgsf.org/amber-drive-info/"
+              target="_blank"
+            >
+              eligibility requirements
+            </a>
+             for this listing before you begin.
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+        </p>
+        <a
+          class="button is-primary w-full transition"
+          href="listings/a0W8H000000HI2uUAG/apply-welcome/intro"
+          tabindex="0"
+        >
+          Apply Online
+        </a>
+      </div>
+    </section>
+    <section
+      class="aside-block "
     >
-      <p
-        className="mb-4"
+      <h4
+        class="text__underline-weighted"
       >
-        <span>
-          Make sure you fulfill the 
-          <a
-            href="https://habitatgsf.org/amber-drive-info/"
-            target="_blank"
-          >
-            eligibility requirements
-          </a>
-           for this listing before you begin.
-        </span>
-      </p>
-      <p
-        className="mb-4"
+        Need Help?
+      </h4>
+      <div
+        class="text-sm text-gray-750"
       >
-        Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
-      </p>
-      <a
-        className="button is-primary w-full transition"
-        href="listings/a0W8H000000HI2uUAG/apply-welcome/intro"
-        tabIndex={0}
-      >
-        Apply Online
-      </a>
-    </div>
-  </section>
-  <section
-    className="aside-block "
-  >
-    <h4
-      className="text__underline-weighted"
-    >
-      Need Help?
-    </h4>
-    <div
-      className="text-sm text-gray-750"
-    >
-      <a
-        className="button w-full transition"
-        href="https://www.homeownershipsf.org/buyerapplications/"
-        target="_blank"
-      >
-        Visit HomeownershipSF
-      </a>
-    </div>
-  </section>
-</div>
+        <a
+          class="button w-full transition"
+          href="https://www.homeownershipsf.org/buyerapplications/"
+          target="_blank"
+        >
+          Visit HomeownershipSF
+        </a>
+      </div>
+    </section>
+  </div>
+</DocumentFragment>
 `;
 
-exports[`ListingDetailsApply does not render if listing is closed 1`] = `null`;
+exports[`ListingDetailsApply does not render if listing is closed 1`] = `<DocumentFragment />`;
 
 exports[`ListingDetailsApply renders if listing is open 1`] = `
-<div
-  className="md:px-0 px-2"
->
-  <section
-    className="aside-block "
+<DocumentFragment>
+  <div
+    class="md:px-0 px-2"
   >
-    <h4
-      className="text__underline-weighted"
+    <section
+      class="aside-block "
     >
-      How to Apply
-    </h4>
-    <div
-      className="text-sm text-gray-750"
-    >
-      <p
-        className="mb-4"
+      <h4
+        class="text__underline-weighted"
       >
-        <span>
-          Make sure you fulfill the 
-          <a
-            href="https://sfmohcd.org/homebuyer-program-eligibility"
-            target="_blank"
-          >
-            eligibility requirements
-          </a>
-           for this listing before you begin.
-        </span>
-      </p>
-      <p
-        className="mb-4"
+        How to Apply
+      </h4>
+      <div
+        class="text-sm text-gray-750"
       >
-        Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
-      </p>
-      <a
-        className="button is-primary w-full transition"
-        href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
-        tabIndex={0}
+        <p
+          class="mb-4"
+        >
+          <span>
+            Make sure you fulfill the 
+            <a
+              href="https://sfmohcd.org/homebuyer-program-eligibility"
+              target="_blank"
+            >
+              eligibility requirements
+            </a>
+             for this listing before you begin.
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+        </p>
+        <a
+          class="button is-primary w-full transition"
+          href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+          tabindex="0"
+        >
+          Apply Online
+        </a>
+      </div>
+    </section>
+    <section
+      class="aside-block "
+    >
+      <h4
+        class="text__underline-weighted"
       >
-        Apply Online
-      </a>
-    </div>
-  </section>
-  <section
-    className="aside-block "
-  >
-    <h4
-      className="text__underline-weighted"
-    >
-      Need Help?
-    </h4>
-    <div
-      className="text-sm text-gray-750"
-    >
-      <a
-        className="button w-full transition"
-        href="https://www.homeownershipsf.org/buyerapplications/"
-        target="_blank"
+        Need Help?
+      </h4>
+      <div
+        class="text-sm text-gray-750"
       >
-        Visit HomeownershipSF
-      </a>
-    </div>
-  </section>
-  <section
-    className="aside-block "
-  >
-    <h4
-      className="text__underline-weighted"
+        <a
+          class="button w-full transition"
+          href="https://www.homeownershipsf.org/buyerapplications/"
+          target="_blank"
+        >
+          Visit HomeownershipSF
+        </a>
+      </div>
+    </section>
+    <section
+      class="aside-block "
     >
-      Expected move-in date
-    </h4>
-    <div
-      className="text-sm text-gray-750"
-    >
-      June 2020
-    </div>
-  </section>
-</div>
+      <h4
+        class="text__underline-weighted"
+      >
+        Expected move-in date
+      </h4>
+      <div
+        class="text-sm text-gray-750"
+      >
+        June 2020
+      </div>
+    </section>
+  </div>
+</DocumentFragment>
 `;

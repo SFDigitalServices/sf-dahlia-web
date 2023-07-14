@@ -1,5 +1,5 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsLotteryRanking } from "../../../modules/listingDetailsLottery/ListingDetailsLotteryRanking"
 import { lotteryResultRentalTwo } from "../../data/RailsLotteryResult/lottery-result-rental-two"
 import { lotteryResultRentalOne } from "../../data/RailsLotteryResult/lottery-result-rental-one"
@@ -7,26 +7,26 @@ import { lotteryResultSaleGeneral } from "../../data/RailsLotteryResult/lottery-
 
 describe("ListingDetailsLotteryRanking", () => {
   it("displays lottery ranking for rental with two results - COP and L/W", () => {
-    const tree = renderer
-      .create(<ListingDetailsLotteryRanking lotteryResult={lotteryResultRentalTwo} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsLotteryRanking lotteryResult={lotteryResultRentalTwo} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays lottery ranking for rental with one result - L/W", () => {
-    const tree = renderer
-      .create(<ListingDetailsLotteryRanking lotteryResult={lotteryResultRentalOne} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsLotteryRanking lotteryResult={lotteryResultRentalOne} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays lottery ranking for sale with general pool only", () => {
-    const tree = renderer
-      .create(<ListingDetailsLotteryRanking lotteryResult={lotteryResultSaleGeneral} />)
-      .toJSON()
+    const { asFragment } = render(
+      <ListingDetailsLotteryRanking lotteryResult={lotteryResultSaleGeneral} />
+    )
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 })

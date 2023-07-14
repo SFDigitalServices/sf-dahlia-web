@@ -2,10 +2,9 @@ import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
-import RailsUnit, {
-  RailsUnitWithOccupancyAndMaxIncome,
-} from "../../api/types/rails/listings/RailsUnit"
-import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import type { RailsUnitWithOccupancyAndMaxIncome } from "../../api/types/rails/listings/RailsUnit"
+import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
+import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { getRangeString } from "../listings/DirectoryHelpers"
 
@@ -29,12 +28,12 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_With_Parking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.Price_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
       {
-        cellText: `$${unit.Price_Without_Parking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.Price_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -42,8 +41,8 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit.Price_With_Parking && !unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_With_Parking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.Price_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
     ]
   }
@@ -51,8 +50,8 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (!unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
-        cellText: `$${unit.Price_Without_Parking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.Price_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -62,12 +61,12 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.HOA_Dues_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
       {
-        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.HOA_Dues_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -75,8 +74,8 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && !unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_With_Parking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.HOA_Dues_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
     ]
   }
@@ -84,8 +83,8 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   if (!unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
-        cellText: `$${unit?.HOA_Dues_Without_Parking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.HOA_Dues_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
     ]
   }
@@ -320,7 +319,7 @@ const buildContent = (
   }
 
   return (
-    <div className="md:my-6 md:pr-8 sm:px-4 lg:px-0 md:w-2/3 px-2 w-full">
+    <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
       {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
     </div>
   )
