@@ -1,8 +1,22 @@
 import type RailsListingDescriptor from "./RailsListingDescriptor"
 import type RailsUnit from "./RailsUnit"
 
-type CmsItem = {
+export type ListingType = {
+  listing_image_banner: string
+}
+
+export type CmsContent = {
+  listing_id: string
+  listing_type: ListingType
+}
+
+type CmsMeta = {
+  type: string
+}
+
+export type CmsItem = {
   title: string
+  meta: CmsMeta
 }
 
 export type Cms = {

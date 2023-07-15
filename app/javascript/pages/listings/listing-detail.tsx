@@ -9,7 +9,7 @@ import {
 
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { getListing, getCms } from "../../api/listingApiService"
+import { getListing, getCms, getListingContent } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingDetailsImageCard } from "../../modules/listingDetails/ListingDetailsImageCard"
 import { ListingDetailsPricingTable } from "../../modules/listingDetails/ListingDetailsPricingTable"
@@ -40,13 +40,15 @@ import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetails
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import { Cms } from "../../api/types/rails/listings/BaseRailsListing"
+import { Cms, CmsItem, CmsContent } from "../../api/types/rails/listings/BaseRailsListing"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
+  const [listingContent, setListingContent] = useState<CmsItem[]>([])
+  const [matchingListing, setMatchingListing] = useState<string>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
@@ -76,21 +78,26 @@ const ListingDetail = () => {
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+      console.log(listing)
       setListing(listing)
+    })
+    void getCms().then((cmsResponse: Cms) => {
+      const listingContentResponse = cmsResponse.items.filter(item => item.meta.type === "housing.CommonListing")
+      setListingContent(listingContentResponse)
     })
   }, [router.pathname])
 
   useEffect(() => {
-    const path = getPathWithoutLanguagePrefix(router.pathname)
-    console.log(path)
-    try {
-      void getCms().then((cms: Cms) => {
-        console.log(cms)
-      })
-    } catch(e) {
-      console.log(e)
+    if(!listing || !listingContent) {
+      return
     }
-  }, [router.pathname])
+    void getListingContent().then((cmsContent: CmsContent) => {
+      console.log(listing.Id, cmsContent.listing_id)
+      if(listing.Id === cmsContent.listing_id) {
+        setMatchingListing(cmsContent.listing_type.listing_image_banner)
+      }
+    })
+  }, [listing, listingContent])
 
   return (
     <LoadingOverlay isLoading={!listing}>
@@ -101,7 +108,7 @@ const ListingDetail = () => {
         </div>
         {listing && (
           <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
-            <ListingDetailsImageCard listing={listing} />
+            <ListingDetailsImageCard listing={listing} listingContent={listingContent} matchingListing={matchingListing} />
             {listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate

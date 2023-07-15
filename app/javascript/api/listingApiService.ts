@@ -5,7 +5,7 @@ import type { RailsListingPreference } from "./types/rails/listings/RailsListing
 import type RailsUnit from "./types/rails/listings/RailsUnit"
 import type { RailsLotteryResult } from "./types/rails/listings/RailsLotteryResult"
 import type { RailsAmiChart, RailsAmiChartMetaData } from "./types/rails/listings/RailsAmiChart"
-import type {Cms} from "./types/rails/listings/BaseRailsListing"
+import type {Cms, CmsContent} from "./types/rails/listings/BaseRailsListing"
 import {
   listing,
   listingPreferences,
@@ -26,6 +26,9 @@ export const getListing = async (listingId?: string): Promise<RailsListing> =>
 
 export const getCms = async (): Promise<Cms> =>
   axios.get("http://localhost:8000/api/v2/pages/?locale=en").then(({ data }) => data)
+
+export const getListingContent = async (): Promise<CmsContent> =>
+  axios.get("http://localhost:8000/api/v2/pages/10/").then(({ data }) => data)
 
 /**
  * Get the lottery buckets with rankings for the given listing

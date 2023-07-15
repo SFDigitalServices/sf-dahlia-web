@@ -8,28 +8,29 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./ListingDetailsImageCard.scss"
+import { CmsItem } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface ListingDetailsImageCardProps {
   listing: RailsListing
+  listingContent: CmsItem[];
+  matchingListing: string
 }
 
-export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProps) => {
+export const ListingDetailsImageCard = ({ listing, listingContent, matchingListing }: ListingDetailsImageCardProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const listingAddress = getListingAddressString(listing)
   const shareButton = getAssetPath("share-button.svg")
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
 
+  console.log(listing.listingID)
+
   return (
     <header className="image-card--leader">
       <ImageCard
         imageUrl={listing?.imageURL ?? fallbackImg}
         href={`/listings/${listing.listingID}`}
-        tags={
-          listing.Reserved_community_type
-            ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-            : undefined
-        }
+        tags={matchingListing ? [{ text: matchingListing }] : undefined}
         description={t("listings.buildingImageAltText")}
       />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
