@@ -48,7 +48,7 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const [listingContent, setListingContent] = useState<CmsItem[]>([])
-  const [matchingListing, setMatchingListing] = useState<string>(null)
+  const [imageBanner, setImageBanner] = useState<string>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
@@ -78,7 +78,6 @@ const ListingDetail = () => {
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
-      console.log(listing)
       setListing(listing)
     })
     void getCms().then((cmsResponse: Cms) => {
@@ -97,7 +96,7 @@ const ListingDetail = () => {
     }
     void getListingContent(detail_url).then((cmsContent: CmsContent) => {
       if(listing.Id === cmsContent.listing_id) {
-        setMatchingListing(cmsContent.listing_type.listing_image_banner)
+        setImageBanner(cmsContent.listing_type.listing_image_banner)
       }
     })
   }, [listing, listingContent])
@@ -111,7 +110,7 @@ const ListingDetail = () => {
         </div>
         {listing && (
           <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
-            <ListingDetailsImageCard listing={listing} listingContent={listingContent} matchingListing={matchingListing} />
+            <ListingDetailsImageCard listing={listing} imageBanner={imageBanner} />
             {listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
