@@ -91,7 +91,8 @@ const ListingDetail = () => {
     if(!listing || !listingContent) {
       return
     }
-    void getListingContent().then((cmsContent: CmsContent) => {
+    const detail_url: string = listingContent.filter(item => item.title === listing.Id).map(item => item.meta.detail_url)[0]
+    void getListingContent(detail_url).then((cmsContent: CmsContent) => {
       console.log(listing.Id, cmsContent.listing_id)
       if(listing.Id === cmsContent.listing_id) {
         setMatchingListing(cmsContent.listing_type.listing_image_banner)

@@ -12,6 +12,7 @@ export type CmsContent = {
 
 type CmsMeta = {
   type: string
+  detail_url: string
 }
 
 export type CmsItem = {

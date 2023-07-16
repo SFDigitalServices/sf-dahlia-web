@@ -27,8 +27,8 @@ export const getListing = async (listingId?: string): Promise<RailsListing> =>
 export const getCms = async (): Promise<Cms> =>
   axios.get("http://localhost:8000/api/v2/pages/?locale=en").then(({ data }) => data)
 
-export const getListingContent = async (): Promise<CmsContent> =>
-  axios.get("http://localhost:8000/api/v2/pages/10/").then(({ data }) => data)
+export const getListingContent = async (url: string): Promise<CmsContent> =>
+  axios.get(url).then(({ data }) => data)
 
 /**
  * Get the lottery buckets with rankings for the given listing
