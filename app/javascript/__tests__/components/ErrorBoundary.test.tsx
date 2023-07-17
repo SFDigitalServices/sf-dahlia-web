@@ -31,7 +31,7 @@ describe("ErrorBoundary", () => {
     console.debug.mockRestore()
   })
 
-  it("displays content when there is no error", async () => {
+  it("displays content when there is no error", async (done) => {
     const content = "test 123"
     const { getByText } = await renderAndLoadAsync(
       <ErrorBoundary boundaryScope={BoundaryScope.page}>
@@ -40,9 +40,10 @@ describe("ErrorBoundary", () => {
     )
 
     getByText(content)
+    done()
   })
 
-  it("display fallback UI when error thrown for content level error boundary", async () => {
+  it("display fallback UI when error thrown for content level error boundary", async (done) => {
     const { getByText } = await renderAndLoadAsync(
       <ErrorBoundary boundaryScope={BoundaryScope.content}>
         <div>
@@ -52,9 +53,10 @@ describe("ErrorBoundary", () => {
     )
 
     getByText("An error occurred. Check back later.")
+    done()
   })
 
-  it("throws error when error occurs for page level boundary", async () => {
+  it("throws error when error occurs for page level boundary", async (done) => {
     // In development environments, errors bubble up to window object so checking for error instead of redirect.
     // https://reactjs.org/docs/react-component.html#componentdidcatch
 
@@ -67,5 +69,6 @@ describe("ErrorBoundary", () => {
         </ErrorBoundary>
       )
     ).rejects.toThrow(errorMsg)
+    done()
   })
 })

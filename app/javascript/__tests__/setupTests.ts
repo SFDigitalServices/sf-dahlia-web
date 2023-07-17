@@ -1,14 +1,9 @@
 /* eslint-disable jest/no-standalone-expect */
 import "@testing-library/jest-dom/extend-expect"
 import axios from "axios"
-import { cleanup, configure as rtlConfigure } from "@testing-library/react"
-import { configure } from "enzyme"
-import Adapter from "enzyme-adapter-react-16"
+import { cleanup } from "@testing-library/react"
 
 import { LanguagePrefix, loadTranslations } from "../util/languageUtil"
-
-configure({ adapter: new Adapter() })
-rtlConfigure({ testIdAttribute: "data-test-id" })
 
 const spies = {
   delete: jest.spyOn(axios, "delete"),

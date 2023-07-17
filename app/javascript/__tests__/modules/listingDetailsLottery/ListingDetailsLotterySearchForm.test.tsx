@@ -1,120 +1,139 @@
 import React from "react"
-import renderer from "react-test-renderer"
 import { ListingDetailsLotterySearchForm } from "../../../modules/listingDetailsLottery/ListingDetailsLotterySearchForm"
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
 import userEvent from "@testing-library/user-event"
-import { render, screen } from "@testing-library/react"
-import { getLotteryResults } from "../../../api/listingApiService"
+import { render, cleanup, act } from "@testing-library/react"
 import { lotteryResultRentalInvalidLotteryNumber } from "../../data/RailsLotteryResult/lottery-result-rental-invalid-lottery-number"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
-jest.mock("../../../api/listingApiService")
+const axios = require("axios")
+
+jest.mock("axios")
 
 describe("ListingDetailsLotteryModal", () => {
-  beforeAll(() => {
-    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+    jest.resetAllMocks()
   })
 
-  it("displays initial view with form and listing preferences", () => {
-    const tree = renderer
-      .create(
-        <ListingDetailsLotterySearchForm
-          listing={lotteryCompleteRentalListing}
-          lotteryBucketDetails={lotteryResultRentalThree}
-        />
-      )
-      .toJSON()
+  it("displays initial view with form and listing preferences", async (done) => {
+    axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
 
-    expect(tree).toMatchSnapshot()
-  })
-
-  it("displays error when user submits form with empty lottery number", async () => {
-    const user = userEvent.setup()
-    const { getByText } = render(
+    const { findByText, asFragment } = render(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    await user.click(screen.getByRole("button"))
-    getByText("Please enter a valid lottery number.")
+    expect(await findByText("Lottery Results")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
   })
 
-  it("displays error when user submits form with non numeric lottery number", async () => {
+  it("displays error when user submits form with empty lottery number", async (done) => {
     const user = userEvent.setup()
-    const { getByText } = render(
+    const { findByText, getByRole } = render(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123abc")
-    await user.click(screen.getByRole("button"))
-    getByText("Please enter a valid lottery number.")
+    await act(async () => {
+      await user.click(getByRole("button"))
+    })
+
+    expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
+    done()
   })
 
-  it("displays three results when lottery number found", async () => {
-    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalThree))
-
+  it("displays error when user submits form with non numeric lottery number", async (done) => {
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText, getByRole } = render(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
+    await act(async () => {
+      const input = getByRole("textbox")
+      await userEvent.type(input, "123abc")
+      await user.click(getByRole("button"))
+    })
 
-    getByText("Your preference ranking")
-    getByText("Displaced Tenant Housing Preference (DTHP)")
-    getByText("Certificate of Preference (COP)")
-    getByText("Live or Work in San Francisco Preference")
+    expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
+    done()
   })
 
-  it("displays error when invalid lottery number", async () => {
-    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(lotteryResultRentalInvalidLotteryNumber))
+  it("displays three results when lottery number found", async (done) => {
+    axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
 
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText, getByRole } = await renderAndLoadAsync(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
+    await act(async () => {
+      const input = getByRole("textbox")
+      await userEvent.type(input, "123")
+      await user.click(getByRole("button"))
+    })
 
-    getByText("The number you entered was not found.")
+    expect(await findByText("Your preference ranking")).toBeDefined()
+    expect(await findByText("Displaced Tenant Housing Preference (DTHP)")).toBeDefined()
+    expect(await findByText("Certificate of Preference (COP)")).toBeDefined()
+    expect(await findByText("Live or Work in San Francisco Preference")).toBeDefined()
+    done()
   })
 
-  it("displays error when api error", async () => {
-    const getLotteryResultsMock = getLotteryResults as jest.MockedFunction<typeof getLotteryResults>
-    getLotteryResultsMock.mockReturnValue(Promise.resolve(null))
+  it("displays error when invalid lottery number", async (done) => {
+    axios.get.mockResolvedValue({ data: lotteryResultRentalInvalidLotteryNumber })
 
     const user = userEvent.setup()
-    const { getByText } = await renderAndLoadAsync(
+    const { findByText, getByRole } = await renderAndLoadAsync(
       <ListingDetailsLotterySearchForm
         listing={lotteryCompleteRentalListing}
         lotteryBucketDetails={lotteryResultRentalThree}
       />
     )
 
-    const input = screen.getByRole("textbox")
-    await userEvent.type(input, "123")
-    await user.click(screen.getByRole("button"))
+    await act(async () => {
+      const input = getByRole("textbox")
+      await userEvent.type(input, "123")
+      await user.click(getByRole("button"))
+    })
 
-    getByText("We seem to be having a connection issue. Please try your search again.")
+    expect(await findByText("The number you entered was not found.")).toBeDefined()
+    done()
+  })
+
+  it("displays error when api error", async (done) => {
+    axios.get.mockResolvedValue({ data: null })
+
+    const user = userEvent.setup()
+    const { findByText, getByRole } = await renderAndLoadAsync(
+      <ListingDetailsLotterySearchForm
+        listing={lotteryCompleteRentalListing}
+        lotteryBucketDetails={lotteryResultRentalThree}
+      />
+    )
+
+    await act(async () => {
+      const input = getByRole("textbox")
+      await userEvent.type(input, "123")
+      await user.click(getByRole("button"))
+    })
+
+    expect(
+      await findByText("We seem to be having a connection issue. Please try your search again.")
+    ).toBeDefined()
+    done()
   })
 })

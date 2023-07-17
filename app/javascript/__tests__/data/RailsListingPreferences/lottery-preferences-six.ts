@@ -1,4 +1,4 @@
-import { RailsListingPreference } from "../../../api/types/rails/listings/RailsListingPreferences"
+import type { RailsListingPreference } from "../../../api/types/rails/listings/RailsListingPreferences"
 
 export const preferences: RailsListingPreference[] = [
   {

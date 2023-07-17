@@ -1,58 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsWaitlist does not render waitlist section if listing has no waitlist 1`] = `null`;
+exports[`ListingDetailsWaitlist does not render waitlist section if listing has no waitlist 1`] = `<DocumentFragment />`;
 
 exports[`ListingDetailsWaitlist renders waitlist section if listing has waitlist 1`] = `
-<div
-  className="w-full px-4 md:px-0"
->
-  <section
-    className="aside-block is-tinted"
+<DocumentFragment>
+  <div
+    class="w-full px-4 md:px-0"
   >
-    <h4
-      className="text__caps-weighted"
+    <section
+      class="aside-block is-tinted"
     >
-      Available units and waitlist
-    </h4>
-    <div>
-      <div
-        className="text-sm text-gray-800 pb-3"
+      <h4
+        class="text__caps-weighted"
       >
-        <p>
-          Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
-        </p>
+        Available units and waitlist
+      </h4>
+      <div>
+        <div
+          class="text-sm text-gray-800 pb-3"
+        >
+          <p>
+            Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for 1 units
+          </p>
+        </div>
+        <ul>
+          <li
+            class="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+          >
+            <span
+              class="text-right w-12 inline-block pr-2.5 text-base"
+            >
+              5
+            </span>
+            <span
+              class="text-xs"
+            >
+              Available Units
+            </span>
+          </li>
+          <li
+            class="uppercase text-gray-800 font-bold font-alt-sans leading-7"
+          >
+            <span
+              class="text-right w-12 inline-block pr-2.5 text-base"
+            >
+              2
+            </span>
+            <span
+              class="text-xs"
+            >
+              Open Waitlist Slots
+            </span>
+          </li>
+        </ul>
       </div>
-      <ul>
-        <li
-          className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
-        >
-          <span
-            className="text-right w-12 inline-block pr-2.5 text-base"
-          >
-            5
-          </span>
-          <span
-            className="text-xs"
-          >
-            Available Units
-          </span>
-        </li>
-        <li
-          className="uppercase text-gray-800 font-bold font-alt-sans leading-7"
-        >
-          <span
-            className="text-right w-12 inline-block pr-2.5 text-base"
-          >
-            2
-          </span>
-          <span
-            className="text-xs"
-          >
-            Open Waitlist Slots
-          </span>
-        </li>
-      </ul>
-    </div>
-  </section>
-</div>
+    </section>
+  </div>
+</DocumentFragment>
 `;

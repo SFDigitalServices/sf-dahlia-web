@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
-import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
 import { getEventTimeString } from "../../util/listingUtil"
 

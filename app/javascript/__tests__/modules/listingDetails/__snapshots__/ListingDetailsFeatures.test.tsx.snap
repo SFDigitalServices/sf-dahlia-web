@@ -1,404 +1,577 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsFeatures displays listing details features section when rental listing 1`] = `
-<li
-  className="responsive-content-item "
->
-  <header
-    className="detail-header"
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-features.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
+    <header
+      class="detail-header "
     >
-      <h2
-        className="detail-header__title"
-      >
-        Features
-      </h2>
       <span
-        className="detail-header__subtitle"
+        class="detail-header__image-container"
       >
-        Amenities, unit details and additional fees
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-features.svg"
+        />
       </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
+      <hgroup
+        class="detail-header__hgroup"
       >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
+        <h2
+          class="detail-header__title"
         >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <div
-    className="listing-detail-panel"
-  >
-    <dl
-      className="column-definition-list"
-    >
-      <dt
-        className="description__title"
-      >
-        Neighborhood
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          Hayes Valley
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Built
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          2009
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Smoking Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Non-smoking building
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Pets Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Dogs are not allowed in the building.
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Property Amenities
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Laundry room, underground parking, courtyard, bike room
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Accessibility
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Elevator to all floors
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Unit Features
-      </dt>
-      <dd
-        className="description__body"
-      >
-        
-      </dd>
-    </dl>
-    <div
-      className="flex justify-center"
-    >
-      <span
-        className="ui-icon ui-large spinner-animation"
-        data-test-id={null}
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 100 100"
+          Features
+        </h2>
+        <span
+          class="detail-header__subtitle"
         >
-          <circle
-            cx="50"
-            cy="50"
-            fill="none"
-            r="32"
-            stroke="currentColor"
-            strokeDasharray="150.79644737231007 52.26548245743669"
-            strokeWidth="9"
-          />
-        </svg>
-      </span>
-    </div>
+          Amenities, unit details and additional fees
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
     <div
-      className="info-card bg-gray-100 border-0"
+      class="listing-detail-panel"
     >
+      <dl
+        class="column-definition-list"
+      >
+        <dt
+          class="description__title"
+        >
+          Neighborhood
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            Hayes Valley
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Built
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            2009
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Smoking Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Non-smoking building
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Pets Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Dogs are not allowed in the building.
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Property Amenities
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Laundry room, underground parking, courtyard, bike room
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Accessibility
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Elevator to all floors
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Unit Features
+        </dt>
+        <dd
+          class="description__body"
+        />
+      </dl>
       <div
-        className="info-card__header"
+        class="mb-4"
       >
-        <h3
-          className="info-card__title"
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
         >
-          Additional Fees
-        </h3>
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                2 Bedroom
+              </strong>
+              : 2 units, 1199 - 1273 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
       </div>
-      <section
-        className="grid-section"
-      >
-        <div
-          className="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
-        >
-          <article
-            aria-label=""
-            className="grid-item"
-          >
-            <div
-              className="text-base"
-            >
-              Deposit
-            </div>
-            <div
-              className="text-xl font-bold"
-            >
-              $2,102 - $2,355
-            </div>
-            <div
-              className="text-sm"
-            >
-              or one month's rent
-            </div>
-            <div
-              className="text-sm"
-            >
-              May be higher for lower credit scores
-            </div>
-          </article>
-        </div>
-      </section>
       <div
-        className="info-card__columns text-xs"
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                3 Bedroom
+              </strong>
+              : 5 units, 1041 - 1355 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                4 Bedroom
+              </strong>
+              : 1 unit, 1615 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="info-card bg-gray-100 border-0"
       >
         <div
-          className="info-card__column-2"
+          class="info-card__header"
         >
-          <p
-            className="translate"
+          <h3
+            class="info-card__title"
           >
-            Tenants pay for gas, electricity.
+            Additional Fees
+          </h3>
+        </div>
+        <section
+          class="grid-section"
+        >
+          <div
+            class="grid-section__header-container"
+          />
+          <div
+            class="grid-section__inner md:grid md:grid-cols-2 md:gap-8 mb-5"
+          >
+            <article
+              aria-label=""
+              class="grid-item"
+            >
+              <div
+                class="text-base"
+              >
+                Deposit
+              </div>
+              <div
+                class="text-xl font-bold"
+              >
+                $2,102 - $2,355
+              </div>
+              <div
+                class="text-sm"
+              >
+                or one month's rent
+              </div>
+              <div
+                class="text-sm"
+              >
+                May be higher for lower credit scores
+              </div>
+            </article>
+          </div>
+        </section>
+        <div
+          class="info-card__columns text-xs"
+        >
+          <div
+            class="info-card__column-2"
+          >
+            <p
+              class="translate"
+            >
+              Tenants pay for gas, electricity.
 
 For pet fees:  Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum.  
 
 Dogs are not allowed in the building.  
 
 One parking space per unit available for $175 a month.
-          </p>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</li>
+  </li>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsFeatures displays listing details features section when sales listing 1`] = `
-<li
-  className="responsive-content-item "
->
-  <header
-    className="detail-header"
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
   >
-    <img
-      alt=""
-      className="detail-header__image "
-      src="listing-features.svg"
-    />
-    <hgroup
-      className="detail-header__hgroup"
+    <header
+      class="detail-header "
     >
-      <h2
-        className="detail-header__title"
-      >
-        Features
-      </h2>
       <span
-        className="detail-header__subtitle"
+        class="detail-header__image-container"
       >
-        Amenities and unit details
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-features.svg"
+        />
       </span>
-      <span
-        className="ui-icon ui-medium"
-        data-test-id={null}
+      <hgroup
+        class="detail-header__hgroup"
       >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
+        <h2
+          class="detail-header__title"
         >
-          <path
-            d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-          />
-        </svg>
-      </span>
-    </hgroup>
-  </header>
-  <div
-    className="listing-detail-panel"
-  >
-    <dl
-      className="column-definition-list"
-    >
-      <dt
-        className="description__title"
-      >
-        Neighborhood
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          Tenderloin
+          Features
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Amenities and unit details
         </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Built
-      </dt>
-      <dd
-        className="description__body"
-      >
-        <span>
-          2018
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
         </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Appliances
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Services Covered by HOA Dues
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Test Service
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Parking
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Landing at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-
-          <br />
-          <br />
-          <br />
-          <br />
-          Palisades at The San Francisco Shipyard:
-
-          <br />
-          <br />
-          Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Smoking Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          Smoking may cause problems
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Pets Policy
-      </dt>
-      <dd
-        className="description__body translate"
-      >
-        <span>
-          All pets are awesome!
-        </span>
-      </dd>
-      <dt
-        className="description__title"
-      >
-        Unit Features
-      </dt>
-      <dd
-        className="description__body"
-      >
-        
-      </dd>
-    </dl>
+      </hgroup>
+    </header>
     <div
-      className="flex justify-center"
+      class="listing-detail-panel"
     >
-      <span
-        className="ui-icon ui-large spinner-animation"
-        data-test-id={null}
+      <dl
+        class="column-definition-list"
       >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 100 100"
+        <dt
+          class="description__title"
         >
-          <circle
-            cx="50"
-            cy="50"
-            fill="none"
-            r="32"
-            stroke="currentColor"
-            strokeDasharray="150.79644737231007 52.26548245743669"
-            strokeWidth="9"
-          />
-        </svg>
-      </span>
+          Neighborhood
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            Tenderloin
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Built
+        </dt>
+        <dd
+          class="description__body"
+        >
+          <span>
+            2018
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Appliances
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Landing at The San Francisco Shipyard: Refrigerator: Bosch Stainless Steel Refrigerator Bosch - 300 Series Compact Washer and Condensation Dryer Bosch Stainless Steel Slide In Gas Range with Hood Bosch Stainless Steel Dishwasher Honeywell Thermostat
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Services Covered by HOA Dues
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Test Service
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Parking
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Landing at The San Francisco Shipyard:
+
+            <br />
+            <br />
+            One parking space is included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+
+            <br />
+            <br />
+            <br />
+            <br />
+            Palisades at The San Francisco Shipyard:
+
+            <br />
+            <br />
+            Two bay parking spaces in attached garage are included in the sale price of each unit. The parking space will be resold with the unit within the maximum resale price.
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Smoking Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            Smoking may cause problems
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Pets Policy
+        </dt>
+        <dd
+          class="description__body translate"
+        >
+          <span>
+            All pets are awesome!
+          </span>
+        </dd>
+        <dt
+          class="description__title"
+        >
+          Unit Features
+        </dt>
+        <dd
+          class="description__body"
+        />
+      </dl>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                2 Bedroom
+              </strong>
+              : 2 units, 1199 - 1273 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                3 Bedroom
+              </strong>
+              : 5 units, 1041 - 1355 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
+      <div
+        class="mb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="w-full "
+          data-testid="content-accordion-button"
+        >
+          <div
+            class="flex justify-between  accordion-blue-theme__bar  "
+          >
+            <h3
+              class="toggle-header-content"
+            >
+              <strong>
+                4 Bedroom
+              </strong>
+              : 1 unit, 1615 square feet
+            </h3>
+            <span
+              class="ui-icon ui-base flex items-center"
+              data-testid="accordion-open"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                />
+              </svg>
+            </span>
+          </div>
+        </button>
+      </div>
     </div>
-  </div>
-</li>
+  </li>
+</DocumentFragment>
 `;

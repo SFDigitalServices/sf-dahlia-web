@@ -45,8 +45,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {
         content: renderMarkup(
           `${t("listingsForSale.beforeApplyingHabitat.step3", {
-            url:
-              "https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf",
+            url: "https://sfmohcd.org/sites/default/files/Documents/MOH/Inclusionary%20Manuals/Inclusionary%20Affordable%20Housing%20Program%20Manual%2010.15.2018.pdf",
           })}`
         ),
       },
@@ -94,7 +93,7 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     <>
       <ol className={[...listClassNames].join(" ")}>
         {listItems.map((item, index) => (
-          <li className="text-gray-700" key={index}>
+          <li className="text-gray-750 primary-lighter-markup-link" key={index}>
             {item.content}
           </li>
         ))}
@@ -112,12 +111,12 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
       {content}
     </ListSection>
   ) : (
-    <li className="mb-8 list-none">
+    <div className="mb-8">
       <Heading className="mb-5 text-gray-750" priority={2} styleType={"underlineWeighted"}>
         {t("saleDirectory.beforeApplying.title")}
       </Heading>
       <p className="text-gray-750">{t("saleDirectory.beforeApplying.makeSureYou")}</p>
       {content}
-    </li>
+    </div>
   )
 }

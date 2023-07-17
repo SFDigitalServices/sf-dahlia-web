@@ -1,21 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingAddress displays address when all fields present 1`] = `
-<span>
-  1 South Van Ness Ave
-  , 
-  San Francisco
-  ,
-   
-  <abbr
-    className="no-underline"
-    title="California"
-  >
-    CA
-  </abbr>
-   
-  94103
-</span>
+<DocumentFragment>
+  <span>
+    1 South Van Ness Ave, San Francisco, 
+    <abbr
+      class="no-underline"
+      title="California"
+    >
+      CA
+    </abbr>
+     94103
+  </span>
+</DocumentFragment>
 `;
 
-exports[`ListingAddress does not display address when address field missing 1`] = `null`;
+exports[`ListingAddress does not display address when address field missing 1`] = `<DocumentFragment />`;

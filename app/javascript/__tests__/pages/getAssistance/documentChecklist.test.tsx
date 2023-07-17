@@ -5,16 +5,18 @@ import { within } from "@testing-library/dom"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<DocumentChecklist />", () => {
-  it("shows the correct header text", async () => {
+  it("shows the correct header text", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(<DocumentChecklist assetPaths={{}} />)
     const header = getByTestId("page-header")
 
     expect(within(header).getByText(t("assistance.title.documentChecklist"))).not.toBeNull()
+    done()
   })
 
-  it("shows the correct subtitle text", async () => {
+  it("shows the correct subtitle text", async (done) => {
     const { getByText } = await renderAndLoadAsync(<DocumentChecklist assetPaths={{}} />)
 
     expect(getByText(t("assistance.subtitle.documentChecklist"))).not.toBeNull()
+    done()
   })
 })

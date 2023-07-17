@@ -116,6 +116,7 @@ module.exports = {
     "jest/no-disabled-tests": "error",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
+    "jest/no-done-callback": "off",
 
     // only allow the first letter to be uppercase in "describe" block descriptions,
     // "test" and "it" block descriptions must start with lowercase
@@ -172,6 +173,7 @@ module.exports = {
     "app/assets",
     "lib",
     "*.config.js",
+    "config/webpack/**/*",
     "lighthouserc.js",
     "public",
     "node_modules",
@@ -183,11 +185,12 @@ module.exports = {
   settings: {
     react: {
       // Must be updated when package.json react version is bumped
-      version: "17.0.2",
+      version: "18.2.0",
     },
     "import/resolver": {
       node: {
         moduleDirectory: ["node_modules", "app/javascript"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
       },
     },
   },

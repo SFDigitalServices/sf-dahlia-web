@@ -1,13 +1,14 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsInfoSession } from "../../../modules/listingDetailsAside/ListingDetailsInfoSession"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 
 describe("ListingDetailsInfoSession", () => {
   it("renders ListingDetailsInfoSession component", () => {
-    const tree = renderer.create(<ListingDetailsInfoSession listing={openSaleListing} />).toJSON()
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(<ListingDetailsInfoSession listing={openSaleListing} />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("does not render ListingDetailsInfoSession component whith no information sessions attached to listing", () => {
@@ -16,9 +17,10 @@ describe("ListingDetailsInfoSession", () => {
       Information_Sessions: [],
     }
 
-    const tree = renderer
-      .create(<ListingDetailsInfoSession listing={closedListingWithoutInfoSessions} />)
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+    const { asFragment } = render(
+      <ListingDetailsInfoSession listing={closedListingWithoutInfoSessions} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

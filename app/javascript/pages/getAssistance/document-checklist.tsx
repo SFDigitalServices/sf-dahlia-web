@@ -160,7 +160,7 @@ const DocumentChecklist = () => {
     >
       {
         <div className="flex flex-col w-full ">
-          <div className="space-y-4 p-6 md:py-11 md:pr-11 md:pl-0">
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
             <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
             <p>{t("documentChecklist.p2")}</p>
@@ -170,7 +170,7 @@ const DocumentChecklist = () => {
           <div className="md:pr-11 md:pl-0">
             <hr />
           </div>
-          <div className="space-y-4 p-6 md:py-11 md:pr-11 md:pl-0">
+          <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
             <h2>{t("documentChecklist.homebuyerHeader")}</h2>
             <p>{t("documentChecklist.homebuyerDesc")}</p>
             <ol className="list-decimal ml-7">

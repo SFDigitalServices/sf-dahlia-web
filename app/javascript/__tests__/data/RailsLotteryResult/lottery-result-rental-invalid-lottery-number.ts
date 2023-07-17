@@ -1,4 +1,4 @@
-import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
 
 /**
  * LotteryResult response for rental listing that is invalid. Salesforce returns
