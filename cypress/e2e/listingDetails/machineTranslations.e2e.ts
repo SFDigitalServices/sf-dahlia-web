@@ -1,9 +1,7 @@
 const verifyMachineTranslations = (language, id, translation) => {
+  cy.intercept("POST", "https://translate.googleapis.com/translate_a/t?*").as("getTranslate")
   cy.visit(`${language}/listings/${id}?react=true`)
-  cy.wait(3000)
-  // translations.forEach((text) => {
-  //   cy.contains(text)
-  // })
+  cy.wait("@getTranslate")
   return cy.contains(translation)
 }
 
@@ -19,88 +17,95 @@ const TEST_LISTINGS = {
   },
 }
 
-// const INFORMATION_SESSION_RENTAL_TEXT = {
-//   es: "sesión de información de prueba",
-//   tl: "sesyon ng impormasyon ng pagsubok",
-//   zh: "測試信息會話",
-// }
+const INFORMATION_SESSION_RENTAL_TEXT = {
+  en: "test info session",
+  es: "sesión de información de prueba",
+  tl: "sesyon ng impormasyon ng pagsubok",
+  zh: "測試信息會話",
+}
 
 const INFORMATION_SESSION_SALE_TEXT = {
+  en: "Attendance at an information session by one applicant is mandatory",
   es: "La asistencia a una sesión informativa",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon",
   zh: "一名申請人必須參加信息發布會。",
 }
 
-const CREDIT_HISTORY_TEXT = {
-  es: "Proporcione un informe de crédito",
-  tl: "Magbigay ng credit report",
-  zh: "提供來自",
-}
-
-// TODO: Removing flaky tests to unblock CircleCI pipeline
-// DAH-1539 will be used to investigate root cause
-//
-// const PARKING_TEXT = {
-//   es: "En el precio de venta de cada unidad se incluye una plaza de aparcamiento.",
-//   tl: "Isang parking space ang kasama sa presyo ng pagbebenta ng bawat unit.",
-//   zh: "每個單元的銷售價格中包含一個停車位",
-// }
-
-describe("Listing Details Machine Translations", () => {
-  // afterEach(() => {
-  //   // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-  //   // there is a rogue loading issue beyond the scope of this story
-  //   cy.wait(3000)
-  // })
-
-  // TODO(DAH-1424): Re-enable this test suite after figuring out why it's being flaky.
-  // We are temporarily disabling this to unblock work.
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip(`Rental Listing ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
-    /*
-     * If any of these machine translation tests are failing, it could be due to:
-     * 1. Google Translate updated the translation
-     * 2. A Salesforce field changed
-     *
-     * If one of those happen, it should be fine to either update the translation string in this file or find another machine translated field
-     * and test that in the same way it's happening here. These machine translation tests are just to ensure the integration is working, not testing
-     * the specific translation itself.
-     */
-
-    it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.tl)
+describe("Listing Detail Machine Translations", () => {
+  describe(`Rental Listing: ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
+    describe("When a user views rental listing detail in English", () => {
+      it(`should say '${INFORMATION_SESSION_RENTAL_TEXT.en}'`, () => {
+        verifyMachineTranslations(
+          "en",
+          TEST_LISTINGS.OPEN_RENTAL.id,
+          INFORMATION_SESSION_RENTAL_TEXT.en
+        )
+      })
     })
-
-    it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.zh)
+    describe("When a user views rental listing detail in Filipino", () => {
+      it(`should translate '${INFORMATION_SESSION_RENTAL_TEXT.en}' to '${INFORMATION_SESSION_RENTAL_TEXT.tl}'`, () => {
+        verifyMachineTranslations(
+          "tl",
+          TEST_LISTINGS.OPEN_RENTAL.id,
+          INFORMATION_SESSION_RENTAL_TEXT.tl
+        )
+      })
     })
-
-    it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", TEST_LISTINGS.OPEN_RENTAL.id, CREDIT_HISTORY_TEXT.es)
+    describe("When a user views rental listing detail in Chinese", () => {
+      it(`should translate '${INFORMATION_SESSION_RENTAL_TEXT.en}' to '${INFORMATION_SESSION_RENTAL_TEXT.zh}'`, () => {
+        verifyMachineTranslations(
+          "zh",
+          TEST_LISTINGS.OPEN_RENTAL.id,
+          INFORMATION_SESSION_RENTAL_TEXT.zh
+        )
+      })
     })
-  })
-
-  describe(`Sale Listing ${TEST_LISTINGS.OPEN_SALE.id}`, () => {
-    /*
-     * If any of these machine translation tests are failing, it could be due to:
-     * 1. Google Translate updated the translation
-     * 2. A Salesforce field changed
-     *
-     * If one of those happen, it should be fine to either update the translation string in this file or find another machine translated field
-     * and test that in the same way it's happening here. These machine translation tests are just to ensure the integration is working, not testing
-     * the specific translation itself.
-     */
-
-    it("machine translations works in Filipino", () => {
-      verifyMachineTranslations("tl", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.tl)
+    describe("When a user views rental listing detail in Spanish", () => {
+      it(`should translate '${INFORMATION_SESSION_RENTAL_TEXT.en}' to '${INFORMATION_SESSION_RENTAL_TEXT.es}'`, () => {
+        verifyMachineTranslations(
+          "es",
+          TEST_LISTINGS.OPEN_RENTAL.id,
+          INFORMATION_SESSION_RENTAL_TEXT.es
+        )
+      })
     })
-
-    it("machine translations works in Chinese", () => {
-      verifyMachineTranslations("zh", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.zh)
-    })
-
-    it("machine translations work in Spanish", () => {
-      verifyMachineTranslations("es", TEST_LISTINGS.OPEN_SALE.id, INFORMATION_SESSION_SALE_TEXT.es)
+    describe(`Sales Listing: ${TEST_LISTINGS.OPEN_SALE.id}`, () => {
+      describe("When a user views sales listing detail in English", () => {
+        it(`should say '${INFORMATION_SESSION_SALE_TEXT.en}'`, () => {
+          verifyMachineTranslations(
+            "en",
+            TEST_LISTINGS.OPEN_SALE.id,
+            INFORMATION_SESSION_SALE_TEXT.en
+          )
+        })
+      })
+      describe("When a user views sales listing detail in Filipino", () => {
+        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.tl}'`, () => {
+          verifyMachineTranslations(
+            "tl",
+            TEST_LISTINGS.OPEN_SALE.id,
+            INFORMATION_SESSION_SALE_TEXT.tl
+          )
+        })
+      })
+      describe("When a user views sales listing detail in Chinese", () => {
+        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.zh}'`, () => {
+          verifyMachineTranslations(
+            "zh",
+            TEST_LISTINGS.OPEN_SALE.id,
+            INFORMATION_SESSION_SALE_TEXT.zh
+          )
+        })
+      })
+      describe("When a user views sales listing detail in Spanish", () => {
+        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.es}'`, () => {
+          verifyMachineTranslations(
+            "es",
+            TEST_LISTINGS.OPEN_SALE.id,
+            INFORMATION_SESSION_SALE_TEXT.es
+          )
+        })
+      })
     })
   })
 })
