@@ -11,12 +11,14 @@ export interface ListingDetailsSidebarProps {
   listing: RailsListing
   imageSrc: string
   isApplicationOpen: boolean
+  whatToEpectContent: string
 }
 
 export const MobileListingDetailsProcess = ({
   listing,
   imageSrc,
   isApplicationOpen,
+  whatToEpectContent
 }: ListingDetailsSidebarProps) => {
   return (
     listing &&
@@ -34,7 +36,7 @@ export const MobileListingDetailsProcess = ({
           <ListingDetailsLotteryResults listing={listing} />
           {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} whatToExpectContent={whatToEpectContent} />
         </ListingDetailItem>
       </Mobile>
     )

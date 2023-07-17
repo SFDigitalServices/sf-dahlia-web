@@ -11,9 +11,10 @@ import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsO
 export interface ListingDetailsLotteryProps {
   imageSrc: string
   listing: RailsListing
+  whatToExpectContent: string
 }
 
-export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
+export const MobileListingDetailsLottery = ({ imageSrc, listing, whatToExpectContent }: ListingDetailsLotteryProps) => {
   const isApplicationOpen = isOpen(listing)
 
   return (
@@ -30,7 +31,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} whatToExpectContent={whatToExpectContent} />
         </ListingDetailItem>
       </Mobile>
     )

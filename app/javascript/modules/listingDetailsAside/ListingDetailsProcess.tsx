@@ -15,11 +15,13 @@ import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPre
 export interface ListingDetailsProcessProps {
   listing: RailsListing
   isApplicationOpen: boolean
+  whatToExpectContent: string
 }
 
 export const ListingDetailsProcess = ({
   listing,
   isApplicationOpen,
+  whatToExpectContent
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
 
@@ -49,7 +51,7 @@ export const ListingDetailsProcess = ({
         )}
       <div className="border-b border-gray-400 md:border-b-0">
         <ExpandableSection
-          content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
+          content={whatToExpectContent}
           expandableContent={
             <>
               <p>{t("f2ReviewTerms.p3")}</p>

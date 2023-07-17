@@ -6,9 +6,15 @@ export type ListingType = {
   listing_detail_banner: string
 }
 
+type CommonContent = {
+  need_help: string
+  what_to_expect: string
+}
+
 export type CmsContent = {
   listing_id: string
   listing_type: ListingType
+  common_content: CommonContent
 }
 
 type CmsMeta = {

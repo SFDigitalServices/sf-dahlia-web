@@ -50,6 +50,8 @@ const ListingDetail = () => {
   const [listingContent, setListingContent] = useState<CmsItem[]>([])
   const [imageBanner, setImageBanner] = useState<string>(null)
   const [detailBanner, setDetailBanner] = useState<string>(null)
+  const [whatToEpectContent, setWhatToEpectContent] = useState<string>(null)
+  const [needHelpContent, setNeedHelpContent] = useState<string>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
@@ -99,6 +101,8 @@ const ListingDetail = () => {
       if(listing.Id === cmsContent.listing_id && cmsContent.listing_type) {
         setImageBanner(cmsContent.listing_type.listing_image_banner)
         setDetailBanner(cmsContent.listing_type.listing_detail_banner)
+        setWhatToEpectContent(cmsContent.common_content.what_to_expect)
+        setNeedHelpContent(cmsContent.common_content.need_help)
       }
     })
   }, [listing, listingContent])
@@ -161,11 +165,12 @@ const ListingDetail = () => {
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
-            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
+            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} whatToExpectContent={whatToEpectContent} />
             <ListingDetails>
               <MobileListingDetailsLottery
                 imageSrc={getAssetPath("listing-units.svg")}
                 listing={listing}
+                whatToExpectContent={whatToEpectContent}
               />
               <ListingDetailsEligibility
                 listing={listing}
@@ -175,6 +180,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-units.svg")}
                 isApplicationOpen={isApplicationOpen}
+                whatToEpectContent={whatToEpectContent}
               />
               <ListingDetailsFeatures
                 listing={listing}

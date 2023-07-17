@@ -14,9 +14,10 @@ import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
   imageSrc: string
+  whatToExpectContent: string
 }
 
-export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
+export const ListingDetailsAside = ({ listing, imageSrc, whatToExpectContent }: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
 
   return (
@@ -44,7 +45,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             <ListingDetailsOpenHouses listing={listing} />
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
-            <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
+            <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} whatToExpectContent={whatToExpectContent} />
           </div>
         </aside>
       </ListingDetailItem>
