@@ -4,5 +4,7 @@
 }
 
 .info-card-grid-additional-resources {
-    --title-font-size: var(--bloom-font-size-2xl);
+    .info-cards__title {
+        --title-font-size: var(--bloom-font-size-2xl);
+    }
 }
