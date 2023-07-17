@@ -12,48 +12,31 @@ const AdditionalResources = () => {
       subtitle={t("assistance.subtitle.additionalHousingOpportunities")}
     >
       <div className="flex flex-col mr-8 ml-8">
-        <div className="info-card-grid-additional-resources">
-          <InfoCardGrid
-            title="San Fransciso Housing Programs"
-            subtitle="Programs run and funded by the City and County of San Francisco"
-            defaultHeadingStyle
-          >
-            {additionalResources.sanFranciscoHousingPrograms.map((resource) => {
-              return (
-                <InfoCard
-                  title={t(resource.title)}
-                  subtitle={t(resource.agency)}
-                  externalHref={resource.externalUrl}
-                  className="info-card-additional-resources is-normal-primary-lighter"
-                  key={resource.title}
-                >
-                  {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
-                </InfoCard>
-              )
-            })}
-          </InfoCardGrid>
-        </div>
-        <div className="info-card-grid-additional-resources">
-          <InfoCardGrid
-            title="Non-MOHCD housing programs and resources"
-            subtitle="These are resources from other cities and nonprofits. They are not sponsored by the city of San Francisco. We are not able to answer any questions about these resources. Please contact the organizations listed if you have any questions."
-            defaultHeadingStyle
-          >
-            {additionalResources.nonMOHCDHousingPrograms.map((resource) => {
-              return (
-                <InfoCard
-                  title={t(resource.title)}
-                  subtitle={t(resource.agency)}
-                  externalHref={resource.externalUrl}
-                  className="info-card-additional-resources is-normal-primary-lighter"
-                  key={resource.title}
-                >
-                  {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
-                </InfoCard>
-              )
-            })}
-          </InfoCardGrid>
-        </div>
+        {additionalResources.categories.map((category) => {
+          return (
+            <div className="info-card-grid-additional-resources">
+              <InfoCardGrid
+                title={t(category.title)}
+                subtitle={t(category.subtitle)}
+                defaultHeadingStyle
+              >
+                {category.resources.map((resource) => {
+                  return (
+                    <InfoCard
+                      title={t(resource.title)}
+                      subtitle={t(resource.agency)}
+                      externalHref={resource.externalUrl}
+                      className="info-card-additional-resources is-normal-primary-lighter"
+                      key={resource.title}
+                    >
+                      {<div className="text-gray-950 text-xs">{t(resource.description)}</div>}
+                    </InfoCard>
+                  )
+                })}
+              </InfoCardGrid>
+            </div>
+          )
+        })}
       </div>
     </AssistanceLayout>
   )

@@ -1,60 +1,70 @@
 {
-    "sanFranciscoHousingPrograms" : [
+    "categories": [
         {
-            "title": "assistance.additionalResources.sfHousingResources.fcfs.title",
-            "agency": "assistance.additionalResources.sfHousingResources.fcfs.agency",
-            "description": "assistance.additionalResources.sfHousingResources.fcfs.description",
-            "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings"
+            "title": "assistance.additionalResources.sfHousingResources.title",
+            "subtitle": "assistance.additionalResources.sfHousingResources.subtitle",
+            "resources": [
+                {
+                    "title": "assistance.additionalResources.sfHousingResources.fcfs.title",
+                    "agency": "assistance.additionalResources.sfHousingResources.fcfs.agency",
+                    "description": "assistance.additionalResources.sfHousingResources.fcfs.description",
+                    "externalUrl": "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings"
+                },
+                {
+                    "title": "assistance.additionalResources.sfHousingResources.downpayment.title",
+                    "agency": "assistance.additionalResources.sfHousingResources.downpayment.agency",
+                    "description": "assistance.additionalResources.sfHousingResources.downpayment.description",
+                    "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
+                },
+                {
+                    "title": "assistance.additionalResources.sfHousingResources.rental.title",
+                    "agency": "assistance.additionalResources.sfHousingResources.rental.agency",
+                    "description": "assistance.additionalResources.sfHousingResources.rental.description",
+                    "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
+                },
+                {
+                    "title": "assistance.additionalResources.sfHousingResources.support.title",
+                    "agency": "assistance.additionalResources.sfHousingResources.support.agency",
+                    "description": "assistance.additionalResources.sfHousingResources.support.description",
+                    "externalUrl": "https://hsh.sfgov.org/services/how-to-get-services/referrals-and-housing-assistance/"
+                }
+            ]
         },
         {
-            "title": "assistance.additionalResources.sfHousingResources.downpayment.title",
-            "agency": "assistance.additionalResources.sfHousingResources.downpayment.agency",
-            "description": "assistance.additionalResources.sfHousingResources.downpayment.description",
-            "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
-        },
-        {
-            "title": "assistance.additionalResources.sfHousingResources.rental.title",
-            "agency": "assistance.additionalResources.sfHousingResources.rental.agency",
-            "description": "assistance.additionalResources.sfHousingResources.rental.description",
-            "externalUrl": "https://sf.gov/reports/december-2022/city-second-program-current-listings"
-        },
-        {
-            "title": "assistance.additionalResources.sfHousingResources.support.title",
-            "agency": "assistance.additionalResources.sfHousingResources.support.agency",
-            "description": "assistance.additionalResources.sfHousingResources.support.description",
-            "externalUrl": "https://hsh.sfgov.org/services/how-to-get-services/referrals-and-housing-assistance/"
-        }
-    ],
-    "nonMOHCDHousingPrograms" : [
-        {
-            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.title",
-            "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.agency",
-            "description": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.description",
-            "externalUrl": "https://sf.gov/sites/default/files/2022-12/OpenHouseListings.pdf"
-        },
-        {
-            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.title",
-            "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.agency",
-            "description": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.description",
-            "externalUrl": "https://covia.org/programs/home-match/"
-        },
-        {
-            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.title",
-            "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.agency",
-            "description": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.description",
-            "externalUrl": "https://housing.acgov.org/"
-        },
-        {
-            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.title",
-            "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.agency",
-            "description": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.description",
-            "externalUrl": "https://smc.housingbayarea.org/"
-        },
-        {
-            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.title",
-            "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.agency",
-            "description": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.description",
-            "externalUrl": "https://housing.sanjoseca.gov/"
+            "title": "assistance.additionalResources.nonMOHCDHousingPrograms.title",
+            "subtitle": "assistance.additionalResources.nonMOHCDHousingPrograms.subtitle",
+            "resources": [
+                {
+                    "title": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.title",
+                    "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.agency",
+                    "description": "assistance.additionalResources.nonMOHCDHousingPrograms.openHouse.description",
+                    "externalUrl": "https://sf.gov/sites/default/files/2022-12/OpenHouseListings.pdf"
+                },
+                {
+                    "title": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.title",
+                    "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.agency",
+                    "description": "assistance.additionalResources.nonMOHCDHousingPrograms.homeMatch.description",
+                    "externalUrl": "https://covia.org/programs/home-match/"
+                },
+                {
+                    "title": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.title",
+                    "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.agency",
+                    "description": "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.description",
+                    "externalUrl": "https://housing.acgov.org/"
+                },
+                {
+                    "title": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.title",
+                    "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.agency",
+                    "description": "assistance.additionalResources.nonMOHCDHousingPrograms.sanMateo.description",
+                    "externalUrl": "https://smc.housingbayarea.org/"
+                },
+                {
+                    "title": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.title",
+                    "agency": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.agency",
+                    "description": "assistance.additionalResources.nonMOHCDHousingPrograms.sanJosé.description",
+                    "externalUrl": "https://housing.sanjoseca.gov/"
+                }
+            ]
         }
     ]
 }
