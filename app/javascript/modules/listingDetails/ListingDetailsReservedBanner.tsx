@@ -20,12 +20,13 @@ export const ListingDetailsReservedBanner = ({
     return null
   }
 
-  const message =
-    detailBanner ? detailBanner : undefined
-
-  return (
-    <div className="md:pr-8 md:w-2/3 mt-4 w-full">
-      <Message warning={true}>{message}</Message>
-    </div>
-  )
+  if(detailBanner) {
+    return (
+      <div className="md:pr-8 md:w-2/3 mt-4 w-full">
+        <Message warning={true}>{detailBanner}</Message>
+      </div>
+    )
+  } else {
+    return null
+  }
 }

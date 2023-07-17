@@ -96,7 +96,7 @@ const ListingDetail = () => {
       return
     }
     void getListingContent(detail_url).then((cmsContent: CmsContent) => {
-      if(listing.Id === cmsContent.listing_id) {
+      if(listing.Id === cmsContent.listing_id && cmsContent.listing_type) {
         setImageBanner(cmsContent.listing_type.listing_image_banner)
         setDetailBanner(cmsContent.listing_type.listing_detail_banner)
       }
