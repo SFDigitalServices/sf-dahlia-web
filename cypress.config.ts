@@ -1,9 +1,9 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  defaultCommandTimeout: 100000,
+  defaultCommandTimeout: 10000,
   projectId: 'dahlia-housing-portal',
-  pageLoadTimeout: 100000,
+  pageLoadTimeout: 10000,
   reporterOptions: {
     mochaFile: 'cypress/results/tests-[hash].xml',
     toConsole: true,
@@ -17,6 +17,7 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+    retries: 2
   },
   // workaround see https://github.com/dequelabs/axe-core/issues/3057
   modifyObstructiveCode: false
