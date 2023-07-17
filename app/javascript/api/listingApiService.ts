@@ -24,8 +24,9 @@ type ListingAmiChartsResponse = { ami: RailsAmiChart[] }
 export const getListing = async (listingId?: string): Promise<RailsListing> =>
   get<ListingsResponse>(listing(listingId)).then(({ data }) => data.listing)
 
-export const getCms = async (): Promise<Cms> =>
-  axios.get("http://localhost:8000/api/v2/pages/?locale=en").then(({ data }) => data)
+export const getCms = async (language: string): Promise<Cms> => {
+  return axios.get("http://localhost:8000/api/v2/pages/?locale=" + language).then(({ data }) => data)
+}
 
 export const getListingContent = async (url: string): Promise<CmsContent> =>
   axios.get(url).then(({ data }) => data)

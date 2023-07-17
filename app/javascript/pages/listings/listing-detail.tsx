@@ -19,7 +19,7 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { getCurrentLanguage, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import {
@@ -83,8 +83,10 @@ const ListingDetail = () => {
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
       setListing(listing)
     })
-    void getCms().then((cmsResponse: Cms) => {
-      const listingContentResponse = cmsResponse.items.filter(item => item.meta.type === "housing.CommonListing")
+
+    const language: string = getCurrentLanguage(router.pathname)
+    void getCms(language).then((cmsResponse: Cms) => {
+      const listingContentResponse: CmsItem[] = cmsResponse.items.filter(item => item.meta.type === "housing.CommonListing")
       setListingContent(listingContentResponse)
     })
   }, [router.pathname])
@@ -101,9 +103,9 @@ const ListingDetail = () => {
       if(listing.Id === cmsContent.listing_id && cmsContent.listing_type) {
         setImageBanner(cmsContent.listing_type.listing_image_banner)
         setDetailBanner(cmsContent.listing_type.listing_detail_banner)
-        setWhatToEpectContent(cmsContent.common_content.what_to_expect)
-        setNeedHelpContent(cmsContent.common_content.need_help)
       }
+      setWhatToEpectContent(cmsContent.common_content.what_to_expect)
+      setNeedHelpContent(cmsContent.common_content.need_help)
     })
   }, [listing, listingContent])
 
