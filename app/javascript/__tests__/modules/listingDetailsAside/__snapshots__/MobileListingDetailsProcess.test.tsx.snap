@@ -215,7 +215,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
                 class="button is-unstyled m-0 no-underline has-toggle"
                 type="button"
               >
-                Read More
+                Show more
               </button>
             </div>
           </div>

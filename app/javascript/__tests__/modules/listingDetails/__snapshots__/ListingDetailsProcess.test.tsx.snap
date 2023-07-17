@@ -28,7 +28,7 @@ exports[`ListingDetailsProcess renders leasing agent section if exists 1`] = `
               class="button is-unstyled m-0 no-underline has-toggle"
               type="button"
             >
-              Read More
+              Show more
             </button>
           </div>
         </div>
