@@ -3,6 +3,7 @@ import type RailsUnit from "./RailsUnit"
 
 export type ListingType = {
   listing_image_banner: string
+  listing_detail_banner: string
 }
 
 export type CmsContent = {

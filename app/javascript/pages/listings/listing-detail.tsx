@@ -49,6 +49,7 @@ const ListingDetail = () => {
   const [listing, setListing] = useState<RailsListing>(null)
   const [listingContent, setListingContent] = useState<CmsItem[]>([])
   const [imageBanner, setImageBanner] = useState<string>(null)
+  const [detailBanner, setDetailBanner] = useState<string>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
@@ -97,6 +98,7 @@ const ListingDetail = () => {
     void getListingContent(detail_url).then((cmsContent: CmsContent) => {
       if(listing.Id === cmsContent.listing_id) {
         setImageBanner(cmsContent.listing_type.listing_image_banner)
+        setDetailBanner(cmsContent.listing_type.listing_detail_banner)
       }
     })
   }, [listing, listingContent])
@@ -131,6 +133,7 @@ const ListingDetail = () => {
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
+              detailBanner={detailBanner}
             />
             <ErrorBoundary
               boundaryScope={BoundaryScope.component}
