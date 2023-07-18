@@ -246,13 +246,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
           tabindex="0"
         >
           <span
             class="button__content"
           >
-            show more
+            Show more
           </span>
           <span
             class="ui-icon ui-small button__icon "
@@ -575,9 +575,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -611,9 +611,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -904,13 +904,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
           tabindex="0"
         >
           <span
             class="button__content"
           >
-            show more
+            Show more
           </span>
           <span
             class="ui-icon ui-small button__icon "
@@ -1233,9 +1233,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -1269,9 +1269,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -1656,13 +1656,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
           tabindex="0"
         >
           <span
             class="button__content"
           >
-            show more
+            Show more
           </span>
           <span
             class="ui-icon ui-small button__icon "
@@ -2209,13 +2209,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
           tabindex="0"
         >
           <span
             class="button__content"
           >
-            show more
+            Show more
           </span>
           <span
             class="ui-icon ui-small button__icon "
@@ -2559,9 +2559,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -2595,9 +2595,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -2897,13 +2897,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
           tabindex="0"
         >
           <span
             class="button__content"
           >
-            show more
+            Show more
           </span>
           <span
             class="ui-icon ui-small button__icon "
@@ -3226,9 +3226,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
@@ -3262,9 +3262,9 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
-              class="button-toggle mt-2"
+              class="button-toggle mt-2 has-toggle"
             >
-              More
+              Show more
             </button>
           </div>
         </div>
