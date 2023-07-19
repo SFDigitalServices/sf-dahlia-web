@@ -4,6 +4,7 @@ import { ListingDetailsUnitAccordions } from "./ListingDetailsUnitAccordions"
 import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
+import { isValidUrl } from "../../util/urlUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export interface ListingDetailsFeaturesProps {
@@ -43,7 +44,7 @@ interface UnitDetailsFeatureItemProps {
   pricingMatrixUrl: string
 }
 const UnitDetailsFeatureItem = ({ pricingMatrixUrl }: UnitDetailsFeatureItemProps) => {
-  const hyperlink = pricingMatrixUrl
+  const hyperlink = isValidUrl(pricingMatrixUrl)
     ? `<a href='${pricingMatrixUrl}' target="_blank">${t(
         "listings.features.downloadPriceAndIncomeLimitForEachUnitPdf"
       )}</a>`
