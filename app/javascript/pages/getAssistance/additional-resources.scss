@@ -1,6 +1,12 @@
 .info-card-additional-resources {
     --subtitle-font-weight:600;
     --subtitle-color: var(--bloom-color-gray-950);
+    .info-card__title {
+        --title-color: var(--bloom-color-blue-700);
+        a {
+            color: var(--title-color);
+        }
+    }
 }
 
 .info-card-grid-additional-resources {
