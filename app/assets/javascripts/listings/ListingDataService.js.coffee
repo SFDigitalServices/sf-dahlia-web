@@ -64,6 +64,7 @@ ListingDataService = (
     Service.resetListingData()
 
     deferred = $q.defer()
+    cmsDeferred = $q.defer()
     httpConfig = { etagCache: true }
     httpConfig.params = { force: true } if forceRecache
     $http.get("/api/v1/listings/#{_id}.json", httpConfig)
@@ -74,6 +75,15 @@ ListingDataService = (
     ).error( (data, status, headers, config) ->
       deferred.reject(data)
     )
+    $http.get("http://127.0.0.1:8000/api/v2/pages/?locale=en", httpConfig)
+    .success(
+      Service.getCmsResponse(cmsDeferred, _id, retranslate)
+    ).cached(
+      Service.getCmsResponse(cmsDeferred, _id, retranslate)
+    ).error( (data, status, headers, config) ->
+      console.log("error")
+      cmsDeferred.reject(data)
+    )
     return deferred.promise
 
   # Remove the previous listing and all it's associated data
@@ -82,6 +92,31 @@ ListingDataService = (
     angular.copy([], Service.listingPaperAppURLs)
     ListingLotteryService.resetData()
     ListingUnitService.resetData()
+
+  Service.getCmsResponse = (deferred, _id, retranslate = false) ->
+    (data, status, headers, config, itemCache) ->
+      # itemCache.set(data) unless status == 'cached'
+      console.log("incoming id = " + _id)
+      deferred.resolve()
+      if !data
+        return
+      for item in data.items
+        console.log "matching title = " + item.title if item.title == _id
+      # angular.copy(data.listing, Service.listing)
+      # # fallback for fixing the layout when a listing is missing an image
+      # Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
+      # # create a combined unitSummary
+      # unless Service.listing.unitSummary
+      #   Service.listing.unitSummary = ListingUnitService.combineUnitSummaries(Service.listing)
+      # # On listing and listings pages, we are experiencing an issue where
+      # # where the Google translation will try to keep up with digest re-calcs
+      # # happening during page load and will get tripped up and fail, leaving
+      # # the page untranslated. This quick fix runs the Google Translation
+      # # again to cover for a possible earlier failed translate.
+      # # TODO: Remove this quick fix for translation issues on listing pages
+      # # and replace with a real fix based on actual digest timing.
+      # $timeout(ExternalTranslateService.translatePageContent, 0, false) if retranslate
+      # Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListingResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
