@@ -19,4 +19,15 @@ describe("<GetAssistance />", () => {
     expect(getByText(t("assistance.subtitle.getAssistance"))).not.toBeNull()
     done()
   })
+
+  it("shows the correct section title text", async (done) => {
+    const { getByText } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
+
+    expect(getByText(t("assistance.title.housingCouneslors"))).not.toBeNull()
+    expect(getByText(t("assistance.title.additionalHousingOpportunities"))).not.toBeNull()
+    expect(getByText(t("assistance.title.sfServices"))).not.toBeNull()
+    expect(getByText(t("assistance.title.documentChecklist"))).not.toBeNull()
+    expect(getByText(t("assistance.title.dahliaVideos"))).not.toBeNull()
+    done()
+  })
 })
