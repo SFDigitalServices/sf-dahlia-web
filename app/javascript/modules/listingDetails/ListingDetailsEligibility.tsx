@@ -204,11 +204,11 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-xs text-gray-700 translate"
                   strings={{
-                    readMore: t("label.more"),
-                    readLess: t("label.less"),
+                    readMore: t("label.showMore"),
+                    readLess: t("label.showLess"),
                     buttonAriaLabel: t("listings.eligibility.guidelines.creditHistory"),
                   }}
-                  buttonClassName="mt-2"
+                  buttonClassName="mt-2 has-toggle"
                 >
                   {listing.Credit_Rating}
                 </ExpandableText>
@@ -220,11 +220,11 @@ export const ListingDetailsEligibility = ({
                 <ExpandableText
                   className="text-xs text-gray-700 translate"
                   strings={{
-                    readMore: t("label.more"),
-                    readLess: t("label.less"),
+                    readMore: t("label.showMore"),
+                    readLess: t("label.showLess"),
                     buttonAriaLabel: t("listings.eligibility.guidelines.rentalHistory"),
                   }}
-                  buttonClassName="mt-2"
+                  buttonClassName="mt-2 has-toggle"
                 >
                   {listing.Eviction_History}
                 </ExpandableText>
@@ -234,8 +234,8 @@ export const ListingDetailsEligibility = ({
               <ExpandableText
                 className="text-xs text-gray-700"
                 strings={{
-                  readMore: t("label.more"),
-                  readLess: t("label.less"),
+                  readMore: t("label.showMore"),
+                  readLess: t("label.showLess"),
                   buttonAriaLabel: t("listings.eligibility.guidelines.criminalBackground"),
                 }}
                 maxLength={600}
