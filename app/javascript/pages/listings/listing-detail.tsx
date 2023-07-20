@@ -102,7 +102,7 @@ const ListingDetail = () => {
     void getListingContent(detail_url).then((cmsContent: CmsContent) => {
       if(listing.Id === cmsContent.listing_id && cmsContent.listing_type) {
         setImageBanner(cmsContent.listing_type.listing_image_banner)
-        setDetailBanner(cmsContent.listing_type.listing_detail_banner)
+        setDetailBanner(cmsContent.listing_type.listing_detail_banner_multi)
       }
       setWhatToEpectContent(cmsContent.common_content.what_to_expect)
       setNeedHelpContent(cmsContent.common_content.need_help)
