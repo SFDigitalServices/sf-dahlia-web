@@ -221,7 +221,7 @@
   "disclaimer.liabilityP1": "Under no circumstances shall the City and County of San Francisco be liable for any actions taken or omissions made from reliance on any information contained herein from whatever source nor shall the City and County be liable for any other consequences from any such reliance.",
   "documentChecklist.assistedHousingDesc": "If you pay more than half of your income on housing costs. As proof, you will need to show:",
   "documentChecklist.copDoc1": "The COP program is for families who were displaced by the SF Redevelopment Agency. COP gives priority in housing lotteries.",
-  "documentChecklist.copDoc2": "Learn more about the <a href=https://sf.gov/learn-about-certificate-preference-cop target='_blank'>Certificate of Preference Program</a>.",
+  "documentChecklist.copDoc2": "Learn more about the <a href='https://sf.gov/learn-about-certificate-preference-cop' target='_blank'>Certificate of Preference Program</a>.",
   "documentChecklist.dthpDoc1": "The DTHP program is for tenants who lost their homes because of:",
   "documentChecklist.dthpDoc2": "<ul className='list-disc ml-7'><li>Ellis Act or owner move-in evictions</li><li>Extensive fire damage</li><li>Unaffordable rent from expired restrictions</li></ul>",
   "documentChecklist.dthpDoc3": "Learn more about the <a href='https://sf.gov/displaced-tenant-housing-preference-program-dthp' target='_blank'>Displaced Tenant Housing Preference Program</a>.",
