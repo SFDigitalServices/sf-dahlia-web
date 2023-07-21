@@ -11,7 +11,7 @@ const AdditionalResources = () => {
       title={t("assistance.title.additionalHousingOpportunities")}
       subtitle={t("assistance.subtitle.additionalHousingOpportunities")}
     >
-      <div className="flex flex-col mr-8 ml-8">
+      <div className="flex flex-col mr-8 ml-8 mb-8">
         {additionalResources.categories.map((category) => {
           return (
             <div className="info-card-grid-additional-resources">

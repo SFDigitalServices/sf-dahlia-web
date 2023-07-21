@@ -10,7 +10,12 @@
 }
 
 .info-card-grid-additional-resources {
+    margin-bottom: 1.5rem;
     .info-cards__title {
         --title-font-size: var(--bloom-font-size-2xl);
+    }
+    .info-cards__subtitle {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
     }
 }
