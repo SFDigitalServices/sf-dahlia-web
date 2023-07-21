@@ -5,6 +5,7 @@ export type ListingType = {
   listing_image_banner: string
   listing_detail_banner: string
   listing_detail_banner_multi: string
+  reserved_listing_application_question: string
 }
 
 type CommonContent = {
