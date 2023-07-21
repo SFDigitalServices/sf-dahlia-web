@@ -80,6 +80,8 @@ Rails.application.routes.draw do
   # React routes each use their own controllers (currently there's just one for the homepage)
   get '(:lang)' => 'home#index', lang: /(en|es|zh|tl)/
 
+  get '(:lang)/listings/:id/apply-welcome/intro' => 'application_intro#index', lang: /(en|es|zh|tl)/
+
   get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
   get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
   # TODO: Paths on Bloom needs to be configurable
