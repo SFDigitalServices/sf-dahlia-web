@@ -22,6 +22,7 @@ ShortFormApplicationService = (
   Service.refreshSessionUid()
 
   Service.listing = ListingDataService.listing
+  Service.reservedQuestion = ListingDataService.reservedQuestion
   Service.form = {}
   Service.accountApplication = {}
   Service.application = {}

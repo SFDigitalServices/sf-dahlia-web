@@ -36,6 +36,7 @@ ShortFormApplicationController = (
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
+  $scope.reservedQuestion = ShortFormApplicationService.reservedQuestion
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
@@ -199,6 +200,7 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.beginApplication = (lang = 'en') ->
+    console.log("in scope = " + $scope.reservedQuestion)
     if $scope.listing.Reserved_community_type
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.community-screening', {lang: lang})
     else
