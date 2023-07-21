@@ -1,0 +1,27 @@
+.category-table {
+  tr {
+    td:before {
+      font-size: var(--bloom-font-size-sm);
+
+      @media (min-width: $screen-md) {
+        font-size: var(--bloom-font-size-base);
+      }
+    }
+  }
+  .stacked-table-header {
+    .stacked-table-cell-container {
+      .stacked-table-cell {
+        font-size: var(--bloom-font-size-sm);
+        @media (min-width: $screen-md) {
+          font-size: var(--bloom-font-size-base);
+        }
+      }
+      .stacked-table-subtext {
+        font-size: var(--bloom-font-size-sm);
+        @media (min-width: $screen-md) {
+          font-size: var(--bloom-font-size-xs);
+        }
+      }
+    }
+  }
+}
