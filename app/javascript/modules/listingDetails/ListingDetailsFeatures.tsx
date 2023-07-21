@@ -4,6 +4,7 @@ import { ListingDetailsUnitAccordions } from "./ListingDetailsUnitAccordions"
 import { AdditionalFees, Description, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
+import { isValidUrl } from "../../util/urlUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export interface ListingDetailsFeaturesProps {
@@ -36,6 +37,31 @@ const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
       markdown={true}
       dtClassName={toTranslate && "translate"}
     />
+  )
+}
+
+interface UnitDetailsFeatureItemProps {
+  pricingMatrixUrl: string
+}
+const UnitDetailsFeatureItem = ({ pricingMatrixUrl }: UnitDetailsFeatureItemProps) => {
+  const hyperlink = isValidUrl(pricingMatrixUrl)
+    ? `<a href='${pricingMatrixUrl}' target="_blank">${t(
+        "listings.features.downloadPriceAndIncomeLimitForEachUnitPdf"
+      )}</a>`
+    : ""
+
+  return (
+    <>
+      <Description
+        term={t("listings.features.unitDetails")}
+        description={hyperlink}
+        markdownProps={{
+          disableParsingRawHTML: false,
+        }}
+        markdown={true}
+      />
+      <Description term="" description="" />
+    </>
   )
 }
 
@@ -116,7 +142,10 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             toTranslate={true}
           />
 
-          <Description term={t("listings.features.unitFeatures")} description={""} />
+          {isRental(listing) && (
+            <Description term={t("listings.features.unitFeatures")} description={""} />
+          )}
+          {isSale(listing) && <UnitDetailsFeatureItem pricingMatrixUrl={listing.Pricing_Matrix} />}
         </dl>
         <ErrorBoundary boundaryScope={BoundaryScope.component}>
           <ListingDetailsUnitAccordions />
