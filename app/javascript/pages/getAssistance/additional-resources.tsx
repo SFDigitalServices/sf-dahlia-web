@@ -1,7 +1,7 @@
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
-import additionalResources from "./additional-resources.json"
+import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"
 
@@ -14,7 +14,7 @@ const AdditionalResources = () => {
       <div className="flex flex-col mr-8 ml-8 mb-8">
         {additionalResources.categories.map((category) => {
           return (
-            <div className="info-card-grid-additional-resources">
+            <div className="info-card-grid-additional-resources" key={category.title}>
               <InfoCardGrid
                 title={t(category.title)}
                 subtitle={t(category.subtitle)}
