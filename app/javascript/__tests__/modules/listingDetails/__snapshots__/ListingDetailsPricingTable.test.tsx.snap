@@ -23,16 +23,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 1 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 person in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -81,16 +83,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 2 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -139,16 +143,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 3 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -197,16 +203,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 4 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -255,16 +263,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 5 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -313,16 +323,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 6 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -380,16 +392,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 1 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 person in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -722,16 +736,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 1 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 person in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -780,16 +796,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 2 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -838,16 +856,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 3 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -896,16 +916,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 4 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -954,16 +976,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 5 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
@@ -1012,16 +1036,18 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               class="flex items-center whitespace-pre-wrap"
             >
               <span
-                class="md:text-2xl leading-8 font-semibold md:font-normal"
+                class="text-sm md:text-2xl leading-8 font-semibold md:font-normal"
               >
                 6 
               </span>
-              <span>
+              <span
+                class="text-sm md:text-base"
+              >
                 people in household
               </span>
             </span>
             <span
-              class="flex items-center mr-2"
+              class="flex items-center mr-2 text-sm md:text-base"
             >
               <div>
                 <span>
