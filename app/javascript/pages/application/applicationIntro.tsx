@@ -14,10 +14,10 @@ interface ApplicationIntroPageProps {
 
 const ApplicationIntroPage = (_props: ApplicationIntroPageProps) => {
   const { router } = useContext(NavigationContext)
-  const [detailUrl, setDetailUrl] = useState<string>("")
   const [reservedQuestion, setReservedQuestion] = useState<string>(null)
   const [step, setStep] = useState<number>(0)
   const [currentComponent, setCurrentComponent] = useState(null)
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false)
   const stepMapping = useMemo(() => {
     const map = new Map()
     map.set(
@@ -30,45 +30,40 @@ const ApplicationIntroPage = (_props: ApplicationIntroPageProps) => {
   }, [reservedQuestion, step])
 
   useEffect(() => {
-    const fetchData = async (listingId) => {
-      const response: Cms = await getCms("en")
-      const matching: CmsItem[] = response.items.filter((item) => item.title === listingId)
-      if (matching && matching.length > 0) {
-        setDetailUrl(matching[0].meta.detail_url)
+    const fetchContent = async (listingId) => {
+      const cmsResponse: Cms = await getCms("en")
+      const matching: CmsItem[] = cmsResponse.items.filter((item) => item.title === listingId)
+      const detailUrl = matching && matching.length > 0 ? matching[0].meta.detail_url : null
+
+      if (!detailUrl) {
+        setReservedQuestion("")
+        setDataLoaded(true)
+        return
       }
-    }
 
-    const listingId: string = getPathWithoutLanguagePrefix(router.pathname).split("/")[2]
-    void fetchData(listingId)
-  }, [router.pathname])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response: CmsContent = await getListingContent(detailUrl)
-      if (response && response.listing_type) {
-        setReservedQuestion(response.listing_type.reserved_listing_application_question)
+      const contentResponse: CmsContent = await getListingContent(detailUrl)
+      if (contentResponse && contentResponse.listing_type) {
+        setReservedQuestion(contentResponse.listing_type.reserved_listing_application_question)
       } else {
         setReservedQuestion("")
       }
+      setDataLoaded(true)
     }
 
-    void fetchData()
-  }, [detailUrl])
+    const listingId: string = getPathWithoutLanguagePrefix(router.pathname).split("/")[2]
+    void fetchContent(listingId)
+  }, [router.pathname])
 
   useEffect(() => {
-    if (reservedQuestion) {
-      if (step === 0 && reservedQuestion === "") {
-        console.log("no data")
-        const currentStep = step + 1
-        setStep(currentStep)
-        setCurrentComponent(stepMapping.get(currentStep))
-      } else {
-        console.log("data")
-        setStep(step)
-        setCurrentComponent(stepMapping.get(step))
-      }
+    if (step === 0 && reservedQuestion === "") {
+      const currentStep = step + 1
+      setStep(currentStep)
+      setCurrentComponent(stepMapping.get(currentStep))
+    } else {
+      setStep(step)
+      setCurrentComponent(stepMapping.get(step))
     }
-  }, [reservedQuestion, step, stepMapping])
+  }, [reservedQuestion, step, stepMapping, dataLoaded])
 
   const display: string = reservedQuestion
     ? `Questions is: ${reservedQuestion}`
