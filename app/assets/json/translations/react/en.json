@@ -747,7 +747,7 @@
   "listings.allUnitsReservedFor": "All units reserved for %{type}",
   "listings.allUnitsReservedFor.Accessible Units Only": "All units reserved for people who need accessibility features",
   "listings.allUnitsReservedFor.Artist Live/Work": "All units reserved for artists to live and work in",
-  "listings.allUnitsReservedFor.Senior": "All units reserved for ages %{age}+",
+  "listings.allUnitsReservedFor.Senior": "<div style={{textTransform: \"none\"}}><p>All Unit Reserved For:</p><br /><ul style={{listStyleType: \"disc\", paddingLeft: \"1em\"}}><li>Seniors</li><li>Ages <b>%{age}+</b></li></ul></div>",
   "listings.allUnitsReservedFor.Veteran": "All units reserved for veterans",
   "listings.applicationDeadline": "Application Deadline",
   "listings.applicationsClosed": "Applications Closed",
