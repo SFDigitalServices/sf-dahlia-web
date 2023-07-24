@@ -364,7 +364,7 @@ describe("DirectoryHelpers", () => {
       const testListing = {
         prioritiesDescriptor: [
           {
-            name: "Mobility/hearing/vision impairments",
+            name: "Mobility/Hearing/Vision impairments",
           },
         ],
       }
