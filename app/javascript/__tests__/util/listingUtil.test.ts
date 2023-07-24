@@ -446,7 +446,7 @@ describe("getPriorityTypeText", () => {
     ${"Vision impairments"}                  | ${"Vision Impairments"}
     ${"Hearing impairments"}                 | ${"Hearing Impairments"}
     ${"Hearing/Vision impairments"}          | ${"Vision and/or Hearing Impairments"}
-    ${"Mobility/hearing/vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
+    ${"Mobility/Hearing/Vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
     ${"Mobility impairments"}                | ${"Mobility Impairments"}
   `("returns text $text when priority type is $priorityType", ({ priorityType, text }) => {
     expect(getPriorityTypeText(priorityType)).toBe(text)

@@ -528,7 +528,7 @@ export const getPriorityTypeText = (priortyType: string): string => {
     case "Hearing/Vision impairments":
       text = t("listings.prioritiesDescriptor.hearingVision")
       break
-    case "Mobility/hearing/vision impairments":
+    case "Mobility/Hearing/Vision impairments":
       text = t("listings.prioritiesDescriptor.mobilityHearingVision")
       break
     case "Mobility impairments":
