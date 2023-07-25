@@ -17,6 +17,7 @@ const GetAssistance = () => {
     <AssistanceLayout
       title={t("assistance.title.getAssistance")}
       subtitle={t("assistance.subtitle.getAssistance")}
+      mainPage={true}
     >
       <ActionBlock
         header={<Heading priority={2}>{t("assistance.title.housingCouneslors")}</Heading>}
