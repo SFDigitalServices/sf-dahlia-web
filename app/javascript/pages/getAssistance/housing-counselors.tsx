@@ -138,7 +138,6 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
 }
 
 const HousingCounselors = () => {
-  console.log(housingCounselors)
   return (
     <AssistanceLayout
       title={t("assistance.title.housingCouneslors")}
