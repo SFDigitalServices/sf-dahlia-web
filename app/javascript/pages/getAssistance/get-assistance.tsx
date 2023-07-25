@@ -42,7 +42,9 @@ const GetAssistance = () => {
         }
         subheader={t("assistance.subtitle.additionalHousingOpportunities")}
         background="primary-lighter"
-        icon={<Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />}
+        icon={
+          <Icon size="2xl" symbol={faHouseChimney} fill={bloomTheme.theme.colors.gray["750"]} />
+        }
         actions={[
           <Link
             key="additional-resources"
@@ -59,9 +61,7 @@ const GetAssistance = () => {
         header={<Heading priority={2}>{t("assistance.title.sfServices")}</Heading>}
         subheader={t("assistance.subtitle.sfServices")}
         background="none"
-        icon={
-          <Icon size="2xl" symbol={faHouseChimney} fill={bloomTheme.theme.colors.gray["750"]} />
-        }
+        icon={<Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
           <Link
             key="sf-services"
