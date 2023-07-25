@@ -7,6 +7,8 @@ import { getCms, getListingContent } from "../../api/listingApiService"
 import ReservedQuestion from "./reservedQuestion"
 import PersonalInfo from "./personalInfo"
 import ContactInfo from "./contactInfo"
+import ChooseLanguage from "./chooseLanguage"
+import WhatToExpect from "./whatToExpect"
 
 interface ApplicationIntroPageProps {
   assetPaths: unknown
@@ -20,12 +22,14 @@ const ApplicationIntroPage = (_props: ApplicationIntroPageProps) => {
   const [dataLoaded, setDataLoaded] = useState<boolean>(false)
   const stepMapping = useMemo(() => {
     const map = new Map()
+    map.set(0, <ChooseLanguage step={step} setStep={setStep} />)
     map.set(
-      0,
+      1,
       <ReservedQuestion reservedQuestion={reservedQuestion} step={step} setStep={setStep} />
     )
-    map.set(1, <PersonalInfo step={step} setStep={setStep} />)
-    map.set(2, <ContactInfo />)
+    map.set(2, <WhatToExpect step={step} setStep={setStep} />)
+    map.set(3, <PersonalInfo step={step} setStep={setStep} />)
+    map.set(4, <ContactInfo step={step} setStep={setStep} />)
     return map
   }, [reservedQuestion, step])
 
@@ -55,7 +59,7 @@ const ApplicationIntroPage = (_props: ApplicationIntroPageProps) => {
   }, [router.pathname])
 
   useEffect(() => {
-    if (step === 0 && reservedQuestion === "") {
+    if (step === 1 && reservedQuestion === "") {
       const currentStep = step + 1
       setStep(currentStep)
       setCurrentComponent(stepMapping.get(currentStep))
