@@ -120,7 +120,12 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
         </a>
 
         {housingCounselor.website && (
-          <a className="icon-item" target="_blank" href={housingCounselor.website}>
+          <a
+            className="icon-item"
+            target="_blank"
+            rel="noreferrer noopener"
+            href={housingCounselor.website}
+          >
             <Icon
               className="counselor-icon"
               symbol="link"
