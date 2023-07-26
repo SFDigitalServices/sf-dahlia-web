@@ -5,6 +5,23 @@ import { within } from "@testing-library/dom"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<HousingCounselors />", () => {
+  beforeEach(() => {
+    window.matchMedia = jest.fn().mockImplementation((query) => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }
+    })
+  })
+
+  // TODO: Add a snapshot test
+
   it("shows the correct header text", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(<HousingCounselors assetPaths={{}} />)
     const header = getByTestId("page-header")

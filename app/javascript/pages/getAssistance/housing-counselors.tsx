@@ -13,7 +13,7 @@ import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
-import housingCounselors from "../../../assets/json/housing_counselors_react.json"
+import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
 
 interface CounselorData {
   fullName: string
@@ -143,7 +143,7 @@ const HousingCounselors = () => {
       title={t("assistance.title.housingCouneslors")}
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
-      {housingCounselors.counselors.filter(() => true).map((item) => HousingCounselor(item))}
+      {housingCounselorsList.counselors.map((counselor) => HousingCounselor(counselor))}
     </AssistanceLayout>
   )
 }
