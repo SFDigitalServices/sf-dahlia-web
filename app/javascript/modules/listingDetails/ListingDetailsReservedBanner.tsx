@@ -14,12 +14,8 @@ export const ListingDetailsReservedBanner = ({
   reservedCommunityType,
   detailBanner,
 }: ListingDetailsReservedBannerProps) => {
-  if (!reservedCommunityType || reservedCommunityType === RESERVED_COMMUNITY_TYPES.HABITAT)
+  if (!detailBanner)
     return null
-
-  if (!Object.values(RESERVED_COMMUNITY_TYPES).includes(reservedCommunityType)) {
-    return null
-  }
 
   const renderString = () => renderMarkup(detailBanner, "<div><p><br><ul><li><b><hr>")
 
