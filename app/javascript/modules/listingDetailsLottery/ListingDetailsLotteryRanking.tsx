@@ -47,7 +47,7 @@ export const ListingDetailsLotteryRanking = ({
               ? t("lottery.rankingTitle")
               : t("lottery.rankingTitle.noPreference")}
           </Heading>
-          <p className="border-b border-gray-450 pb-4 text-gray-700">
+          <p className="border-b border-gray-450 pb-4 text-gray-700 translate">
             {renderMarkup(
               `${t("lottery.rankingOrderNote", {
                 lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
