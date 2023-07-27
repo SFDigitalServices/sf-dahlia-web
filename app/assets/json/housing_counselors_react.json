@@ -1,24 +1,6 @@
 {
     "counselors": [
         {
-            "fullName": "Homeownership SF (Rentals and Ownership)",
-            "shortName": "Homeownership SF",
-            "services": [
-                "rental",
-                "ownership"
-            ],
-            "languages": [
-                "english",
-                "filipino",
-                "spanish"
-            ],
-            "address": "275 5th Street #314",
-            "cityState": "San Francisco, CA 94103",
-            "website": "https://www.homeownershipsf.org/",
-            "email": "info@homeownershipsf.org",
-            "phone": "(415) 202-5464"
-        },
-        {
             "fullName": "ASIAN, Inc.",
             "services": [
                 "rental",

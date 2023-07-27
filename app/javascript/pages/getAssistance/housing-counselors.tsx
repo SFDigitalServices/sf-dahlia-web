@@ -7,6 +7,7 @@ import {
   Desktop,
   Mobile,
   Button,
+  Heading,
 } from "@bloom-housing/ui-components"
 import React from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
@@ -14,6 +15,18 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
+
+const HOMEOWNERSHIP_SF = {
+  fullName: "Homeownership SF (Rentals and Ownership)",
+  shortName: "Homeownership SF",
+  services: ["rental", "ownership"],
+  languages: ["english", "filipino", "spanish"],
+  address: "275 5th Street #314",
+  cityState: "San Francisco, CA 94103",
+  website: "https://www.homeownershipsf.org/",
+  email: "info@homeownershipsf.org",
+  phone: "(415) 202-5464",
+}
 
 interface CounselorData {
   fullName: string
@@ -39,7 +52,10 @@ const Label = (type: "language" | "service", text: string) => {
 
 const HousingCounselor = (housingCounselor: CounselorData) => {
   return (
-    <div className="resource-item text-base m-4" key={housingCounselor.fullName}>
+    <div
+      className="resource-item text-base pb-4 mt-2 border-b border-gray-450 last:border-b-0 md:p-4"
+      key={housingCounselor.fullName}
+    >
       <h3 className="font-sans text-lg pb-2">{housingCounselor.fullName}</h3>
       <p className="text-xs text-gray-800 pb-2 flex flex-wrap gap-1">
         {t("assistance.housingCounselors.servicesOffered")}
@@ -47,21 +63,21 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
           Label("service", t(`assistance.housingCounselors.services.${service}`))
         )}
       </p>
-      <p className="text-xs text-gray-800 pb-4 flex flex-wrap gap-1">
+      <p className="text-xs text-gray-800 flex flex-wrap gap-1">
         {t("assistance.housingCounselors.languagesSpoken")}
         {housingCounselor.languages.map((language) =>
           Label("language", t(`assistance.housingCounselors.services.languages.${language}`))
         )}
       </p>
 
-      <p className="icon-item pb-2 flex">
+      <p className="icon-item flex mt-4">
         <Icon className="address-icon" symbol="map" size="medium" />
         <span>
           {housingCounselor.address} <br /> {housingCounselor.cityState}
         </span>
       </p>
       <Mobile>
-        <div className="flex flex-col gap-2 mt-4">
+        <div className="flex flex-col gap-2 mt-4 mb-2">
           <Button
             icon="phone"
             iconPlacement="left"
@@ -148,7 +164,18 @@ const HousingCounselors = () => {
       title={t("assistance.title.housingCouneslors")}
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
-      {housingCounselorsList.counselors.map((counselor) => HousingCounselor(counselor))}
+      <div className="md:mr-8 md:ml-8 md:mb-2 md:mt-4">
+        <div className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
+          <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
+          <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
+          {HousingCounselor(HOMEOWNERSHIP_SF)}
+        </div>
+        <div className="border-b w-full border-gray-500 md:my-9" />
+        <h1>Filter content here</h1>
+        <div className="flex flex-col gap-4 m-6 md:m-0">
+          {housingCounselorsList.counselors.map((counselor) => HousingCounselor(counselor))}
+        </div>
+      </div>
     </AssistanceLayout>
   )
 }
