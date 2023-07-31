@@ -20,8 +20,6 @@ describe("<HousingCounselors />", () => {
     })
   })
 
-  // TODO: Add a snapshot test
-
   it("shows the correct header text", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(<HousingCounselors assetPaths={{}} />)
     const header = getByTestId("page-header")
