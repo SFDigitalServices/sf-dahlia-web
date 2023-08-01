@@ -47,7 +47,7 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
           {children}
         </div>
         <SidebarBlock
-          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
+          className="w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           title={t("footer.contact")}
         >
           <span className="text-gray-950">
