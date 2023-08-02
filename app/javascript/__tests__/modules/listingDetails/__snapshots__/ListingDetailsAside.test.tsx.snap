@@ -222,7 +222,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                       class="button is-unstyled m-0 no-underline has-toggle"
                       type="button"
                     >
-                      Read More
+                      Show more
                     </button>
                   </div>
                 </div>
