@@ -103,6 +103,10 @@ module Force
       end
     end
 
+    def cache_listing_images
+      ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero?
+    end
+
     private_class_method def self.get_listings(params: {}, force_recache: false)
       params[:subset] ||= 'browse'
       results = Request.new(parse_response: true)
@@ -117,7 +121,7 @@ module Force
           li.salesforce_listing_id == listing['Id']
         end.first
         # fallback to Building_URL for the case where ListingImages have not been set up
-        url = listing_image && ENV['CACHE_LISTING_IMAGES'] ? listing_image.image_url : listing['Building_URL']
+        url = listing_image && cache_listing_images ? listing_image.image_url : listing['Building_URL']
         listing['imageURL'] = url
       end
       listings

@@ -17,6 +17,10 @@ class CacheService
 
   attr_accessor :prev_cached_listings, :fresh_listings
 
+  def cache_listing_images
+    ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero?
+  end
+
   def cache_all_listings
     fresh_listings.each { |l| cache_single_listing(l) }
   end
@@ -48,7 +52,7 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
-    if ENV['CACHE_LISTING_IMAGES']
+    if cache_listing_images
       image_processor = ListingImageService.new(listing).process_image
       Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
     end
@@ -61,6 +65,7 @@ class CacheService
       due_date_passed = Date.parse(listing['Application_Due_Date']) < Date.today
     rescue ArgumentError => e
       raise e unless e.message == 'invalid date'
+
       # if date is invalid, assume we do need to get lottery results
       due_date_passed = true
     end
