@@ -9,12 +9,13 @@ import {
   Button,
   Heading,
 } from "@bloom-housing/ui-components"
-import React from "react"
+import React, { useState } from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
+import CounselorFilter from "./counselor-filter"
 
 const HOMEOWNERSHIP_SF = {
   fullName: "Homeownership SF (Rentals and Ownership)",
@@ -159,6 +160,44 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
 }
 
 const HousingCounselors = () => {
+  const getResults = (num: number) => {
+    if (num === housingCounselorsList.counselors.length) {
+      return t("assistance.housingCounselors.findACounselor.filter.all")
+    } else if (num === 1) {
+      return t("assistance.housingCounselors.findACounselor.filter.one")
+    } else {
+      return t("assistance.housingCounselors.findACounselor.filter.results", {
+        num: num,
+      })
+    }
+  }
+  const [filterData, setFilterData] = useState({
+    language: "any",
+    services: [],
+    clearClicked: false,
+  })
+  const handleFilterData = (filterData) => {
+    setFilterData(filterData)
+  }
+  if (filterData.clearClicked) {
+    filterData.language = "any"
+    filterData.services = []
+  }
+  const buildFilteredList = () => {
+    let filteredList = housingCounselorsList.counselors
+    if (filterData.language !== "any") {
+      filteredList = filteredList.filter((counselor) => {
+        return counselor.languages.includes(filterData.language)
+      })
+    }
+    if (filterData.services.length > 0) {
+      filteredList = filteredList.filter((counselor) => {
+        return counselor.services.some((service) => filterData.services.includes(service))
+      })
+    }
+    return filteredList
+  }
+  const filteredList = buildFilteredList()
   return (
     <AssistanceLayout
       title={t("assistance.title.housingCouneslors")}
@@ -171,9 +210,14 @@ const HousingCounselors = () => {
           {HousingCounselor(HOMEOWNERSHIP_SF)}
         </div>
         <div className="border-b w-full border-gray-500 md:my-9" />
-        <h1>Filter content here</h1>
-        <div className="flex flex-col gap-4 m-6 md:m-0">
-          {housingCounselorsList.counselors.map((counselor) => HousingCounselor(counselor))}
+        <div className="px-6 pt-6 md:mt-12">
+          <CounselorFilter handleFilterData={handleFilterData} />
+        </div>
+        <div className="flex flex-col gap-4 mx-6 md:m-0">
+          <Heading priority={3} className="text-lg">
+            {getResults(filteredList.length)}
+          </Heading>
+          {filteredList.map((counselor) => HousingCounselor(counselor))}
         </div>
       </div>
     </AssistanceLayout>
