@@ -198,7 +198,7 @@ const buildAccordions = (
                 <span className={"text-sm md:text-2xl leading-8 font-semibold md:font-normal"}>
                   {`${occupancy?.occupancy} `}
                 </span>
-                <span className="text-sm md:text-base">
+                <span className="text-sm md:text-base text-left">
                   {occupancy?.occupancy > 1
                     ? `${t("listings.stats.numInHouseholdPlural")}`
                     : `${t("listings.stats.numInHouseholdSingular")}`}
@@ -231,7 +231,9 @@ const buildAccordions = (
             </span>
           }
           customExpandedContent={
-            <div className={"p-4 border-2 border-gray-400 rounded-b-lg"}>
+            <div
+              className={`p-4 border-2 border-gray-400 rounded-b-lg${listingIsSale ? " sale" : ""}`}
+            >
               <CategoryTable categoryData={categoryData} />
             </div>
           }

@@ -7,6 +7,21 @@
         font-size: var(--bloom-font-size-base);
       }
     }
+    @media (min-width: $screen-md) {
+      .stacked-table-header {
+        &:first-child {
+          width: 30%;
+        }
+
+        &:nth-child(2) {
+          width: 40%;
+        }
+
+        &:last-child {
+          width: 20%;
+        }
+      }
+    }
   }
   .stacked-table-header {
     .stacked-table-cell-container {
@@ -20,6 +35,54 @@
         font-size: var(--bloom-font-size-sm);
         @media (min-width: $screen-md) {
           font-size: var(--bloom-font-size-xs);
+        }
+      }
+    }
+  }
+}
+
+.sale {
+  .category-table {
+    tr {
+      td:before {
+        font-size: var(--bloom-font-size-sm);
+
+        @media (min-width: $screen-md) {
+          font-size: var(--bloom-font-size-base);
+        }
+      }
+      @media (min-width: $screen-md) {
+        .stacked-table-header {
+          width: 20%;
+
+
+          &:nth-child(3) {
+            width: 35%;
+          }
+
+          &:last-child {
+            width: 25%;
+          }
+        }
+      }
+    }
+
+    .stacked-table-header {
+      .stacked-table-cell-container {
+        .stacked-table-cell {
+          font-size: var(--bloom-font-size-sm);
+
+          @media (min-width: $screen-md) {
+            font-size: var(--bloom-font-size-base);
+          }
+        }
+
+        .stacked-table-subtext {
+          font-size: var(--bloom-font-size-sm);
+
+          @media (min-width: $screen-md) {
+            font-size: var(--bloom-font-size-xs);
+          }
         }
       }
     }
