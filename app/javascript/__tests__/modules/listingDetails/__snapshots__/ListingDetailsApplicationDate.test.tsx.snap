@@ -3,7 +3,7 @@
 exports[`ListingDetailsApplicationDate displays Application Deadline when listing is a sale and due date has not passed 1`] = `
 <DocumentFragment>
   <div
-    class="w-full"
+    class="w-full mb-8 md:mb-0"
   >
     <div
       class="application-status text-xs text-gray-800 bg-primary-light place-content-center"
@@ -34,7 +34,7 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
 exports[`ListingDetailsApplicationDate displays Applications Closed when listing is a rental and due date has passed 1`] = `
 <DocumentFragment>
   <div
-    class="w-full"
+    class="w-full mb-8 md:mb-0"
   >
     <div
       class="application-status text-xs text-gray-800 bg-alert-light place-content-center"

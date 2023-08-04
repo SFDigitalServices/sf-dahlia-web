@@ -28,7 +28,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 1 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 person in household
               </span>
@@ -88,7 +88,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 2 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -148,7 +148,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 3 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -208,7 +208,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 4 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -268,7 +268,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 5 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -328,7 +328,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 6 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -397,7 +397,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 1 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 person in household
               </span>
@@ -741,7 +741,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 1 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 person in household
               </span>
@@ -801,7 +801,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 2 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -861,7 +861,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 3 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -921,7 +921,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 4 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -981,7 +981,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 5 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
@@ -1041,7 +1041,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                 6 
               </span>
               <span
-                class="text-sm md:text-base"
+                class="text-sm md:text-base text-left"
               >
                 people in household
               </span>
