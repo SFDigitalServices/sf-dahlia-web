@@ -87,7 +87,6 @@ const CounselorFilter = ({ handleFilterData }: CounselorFilterProps) => {
             label={t("assistance.housingCounselors.findACounselor.filter.language")}
             options={LANGUAGES_DATA}
             register={register}
-            placeholder={LANGUAGES_DATA[0].label}
             controlClassName="mt-2"
           />
         </div>
