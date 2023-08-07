@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {
   AppearanceStyleType,
   Button,
@@ -12,14 +12,11 @@ import { useForm } from "react-hook-form"
 import "./counselor-filter.scss"
 
 interface CounselorFilterProps {
-  handleFilterData: (filterData: {
-    language: string
-    services: string[]
-    clearClicked: boolean
-  }) => void
+  handleFilterData: (filterData: { language: string; services: string[] }) => void
+  clearClick: () => void
 }
 
-const CounselorFilter = ({ handleFilterData }: CounselorFilterProps) => {
+const CounselorFilter = ({ handleFilterData, clearClick }: CounselorFilterProps) => {
   const SERVICES_DATA = [
     {
       label: t("assistance.housingCounselors.findACounselor.filter.rentalServices"),
@@ -53,23 +50,18 @@ const CounselorFilter = ({ handleFilterData }: CounselorFilterProps) => {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: { language: LANGUAGES_DATA[0].value, services: [] },
   })
-  const [clearButton, setClearButton] = useState(false)
+  const [clearButton, setClearButton] = React.useState(false)
   const onSubmit = (data) => {
     setClearButton(true)
     handleFilterData({
       language: data.language,
       services: data.services,
-      clearClicked: false,
     })
   }
-  const updateClearButton = () => {
+  const onClear = () => {
     setClearButton(false)
     reset()
-    handleFilterData({
-      language: LANGUAGES_DATA[0].value,
-      services: [],
-      clearClicked: true,
-    })
+    clearClick()
   }
   return (
     <div>
@@ -101,7 +93,7 @@ const CounselorFilter = ({ handleFilterData }: CounselorFilterProps) => {
             {t("assistance.housingCounselors.findACounselor.filter.apply")}
           </Button>
           {clearButton ? (
-            <Button type="reset" onClick={() => updateClearButton()}>
+            <Button type="reset" onClick={onClear}>
               {t("assistance.housingCounselors.findACounselor.filter.clear")}
             </Button>
           ) : null}

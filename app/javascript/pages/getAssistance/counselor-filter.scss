@@ -10,7 +10,7 @@ select {
 .field {
     label {
         @apply pb-0;
-        color: var(--bloom-color-gray-950);
+        @apply text-gray-950;
         font-weight: 400 !important;
     }
     input[type=checkbox] + label::before {
@@ -19,7 +19,7 @@ select {
     }
     select {
         border-color: var(--bloom-color-gray-500);
-        color: var(--bloom-color-gray-700);
+        @apply text-gray-700;
     }
     input::placeholder {
         @apply overflow-visible;

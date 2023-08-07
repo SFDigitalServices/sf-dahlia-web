@@ -174,16 +174,9 @@ const HousingCounselors = () => {
   const [filterData, setFilterData] = useState({
     language: "any",
     services: [],
-    clearClicked: false,
   })
-  const handleFilterData = (filterData) => {
-    setFilterData(filterData)
-  }
-  if (filterData.clearClicked) {
-    filterData.language = "any"
-    filterData.services = []
-  }
-  const buildFilteredList = () => {
+
+  const filteredList = React.useMemo(() => {
     let filteredList = housingCounselorsList.counselors
     if (filterData.language !== "any") {
       filteredList = filteredList.filter((counselor) => {
@@ -196,8 +189,8 @@ const HousingCounselors = () => {
       })
     }
     return filteredList
-  }
-  const filteredList = buildFilteredList()
+  }, [filterData])
+
   return (
     <AssistanceLayout
       title={t("assistance.title.housingCouneslors")}
@@ -211,7 +204,12 @@ const HousingCounselors = () => {
         </div>
         <div className="border-b w-full border-gray-500 md:my-9" />
         <div className="px-6 pt-6 md:mt-12">
-          <CounselorFilter handleFilterData={handleFilterData} />
+          <CounselorFilter
+            handleFilterData={setFilterData}
+            clearClick={() => {
+              setFilterData({ language: "any", services: [] })
+            }}
+          />
         </div>
         <div className="flex flex-col gap-4 mx-6 md:m-0">
           <Heading priority={3} className="text-lg">
