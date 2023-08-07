@@ -54,7 +54,7 @@ const Label = (type: "language" | "service", text: string) => {
 const HousingCounselor = (housingCounselor: CounselorData) => {
   return (
     <div
-      className="resource-item text-base pb-4 mt-2 border-b border-gray-450 last:border-b-0 md:p-4"
+      className="resource-item text-base pb-4 mt-2 border-b border-gray-450 last:border-b-0 md:p-4 md:pt-0 md:pb-8 md:mt-8"
       key={housingCounselor.fullName}
     >
       <h3 className="font-sans text-lg pb-2">{housingCounselor.fullName}</h3>
@@ -211,7 +211,7 @@ const HousingCounselors = () => {
             }}
           />
         </div>
-        <div className="flex flex-col gap-4 mx-6 md:m-0">
+        <div className="flex flex-col m-6 md:m-0">
           <Heading priority={3} className="text-lg">
             {getResults(filteredList.length)}
           </Heading>
