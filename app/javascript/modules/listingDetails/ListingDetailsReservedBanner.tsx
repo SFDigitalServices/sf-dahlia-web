@@ -26,7 +26,7 @@ export const ListingDetailsReservedBanner = ({
       : t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
 
   return (
-    <div className="md:pr-8 md:w-2/3 mt-4 w-full">
+    <div className="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0">
       <Message warning={true}>{message}</Message>
     </div>
   )

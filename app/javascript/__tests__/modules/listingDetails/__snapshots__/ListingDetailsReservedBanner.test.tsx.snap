@@ -3,7 +3,7 @@
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Accessible Units Only 1`] = `
 <DocumentFragment>
   <div
-    class="md:pr-8 md:w-2/3 mt-4 w-full"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
     <div
       class="message is-warning"
@@ -17,7 +17,7 @@ exports[`ListingDetailsReservedBanner displays banner when reserved community ty
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Artist Live/Work 1`] = `
 <DocumentFragment>
   <div
-    class="md:pr-8 md:w-2/3 mt-4 w-full"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
     <div
       class="message is-warning"
@@ -31,7 +31,7 @@ exports[`ListingDetailsReservedBanner displays banner when reserved community ty
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Senior 1`] = `
 <DocumentFragment>
   <div
-    class="md:pr-8 md:w-2/3 mt-4 w-full"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
     <div
       class="message is-warning"
@@ -45,7 +45,7 @@ exports[`ListingDetailsReservedBanner displays banner when reserved community ty
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Veteran 1`] = `
 <DocumentFragment>
   <div
-    class="md:pr-8 md:w-2/3 mt-4 w-full"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
     <div
       class="message is-warning"
