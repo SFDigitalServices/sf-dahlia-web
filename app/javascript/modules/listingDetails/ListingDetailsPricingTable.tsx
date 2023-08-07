@@ -8,6 +8,7 @@ import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { getRangeString } from "../listings/DirectoryHelpers"
 import { defaultIfNotTranslated, renderInlineMarkup } from "../../util/languageUtil"
+import "./ListingDetailsPricingTable.scss"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
@@ -194,16 +195,16 @@ const buildAccordions = (
               }
             >
               <span className={"flex items-center whitespace-pre-wrap"}>
-                <span className={"md:text-2xl leading-8 font-semibold md:font-normal"}>
+                <span className={"text-sm md:text-2xl leading-8 font-semibold md:font-normal"}>
                   {`${occupancy?.occupancy} `}
                 </span>
-                <span>
+                <span className="text-sm md:text-base text-left">
                   {occupancy?.occupancy > 1
                     ? `${t("listings.stats.numInHouseholdPlural")}`
                     : `${t("listings.stats.numInHouseholdSingular")}`}
                 </span>
               </span>
-              <span className={"flex items-center mr-2"}>
+              <span className={"flex items-center mr-2 text-sm md:text-base"}>
                 {(() => {
                   return occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
                     <div>
@@ -230,7 +231,9 @@ const buildAccordions = (
             </span>
           }
           customExpandedContent={
-            <div className={"p-4 border-2 border-gray-400 rounded-b-lg"}>
+            <div
+              className={`p-4 border-2 border-gray-400 rounded-b-lg${listingIsSale ? " sale" : ""}`}
+            >
               <CategoryTable categoryData={categoryData} />
             </div>
           }
