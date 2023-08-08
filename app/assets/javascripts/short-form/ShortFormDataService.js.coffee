@@ -120,6 +120,11 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.totalMonthlyRent = Service._calculateTotalMonthlyRent(application)
     sfApp.formMetadata = Service._formatMetadata(application)
 
+    # custom educator
+    sfApp.customEducatorScreeningAnswer = application.customEducatorScreeningAnswer
+    sfApp.customEducatorJobClassificationNumber = application.customEducatorJobClassificationNumber
+    sfApp.customEducatorUnlistedJobClassificationNumber = application.customEducatorUnlistedJobClassificationNumber
+
     # add preferences and return
     sfApp.shortFormPreferences = Service._formatPreferences(application)
     return sfApp
