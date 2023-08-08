@@ -63,9 +63,14 @@ export const getListingImageCardStatuses = (
 }
 
 // Get imageCardProps for a given listing
-export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
+export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean) => {
+  const imageUrl =
+    listing?.Listing_Images?.length > 0
+      ? listing.Listing_Images[0].Image_URL
+      : listing?.imageURL ?? fallbackImg
+
   return {
-    imageUrl: listing?.imageURL ?? fallbackImg,
+    imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
     tags: listing.Reserved_community_type
       ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]

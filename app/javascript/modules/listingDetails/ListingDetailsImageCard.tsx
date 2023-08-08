@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
 import { getReservedCommunityType } from "../../util/languageUtil"
+import type { ImageItem } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
 import { getListingAddressString } from "../../util/listingUtil"
@@ -19,12 +20,18 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButton = getAssetPath("share-button.svg")
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
+  const listingImages: ImageItem[] = listing.Listing_Images.map((listingImage) => {
+    return {
+      url: listingImage.Image_URL,
+      description: listingImage.Image_Description,
+    }
+  })
 
   return (
     <header className="image-card--leader">
       <ImageCard
-        imageUrl={listing?.imageURL ?? fallbackImg}
-        href={`/listings/${listing.listingID}`}
+        imageUrl={(listingImages.length === 0 && listing?.imageURL) ?? fallbackImg}
+        images={listingImages}
         tags={
           listing.Reserved_community_type
             ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]

@@ -31,6 +31,15 @@ export type ListingEvent = {
   attributes?: { type: string; url: string }
 }
 
+export type ImageItem = {
+  attributes?: { type: string; url: string }
+  Listing?: string
+  Id?: string
+  Name?: string
+  Image_URL?: string
+  Image_Description?: string
+}
+
 export type ListingLotteryPreference = {
   Available_Units?: number
   Current_Units_Available?: number
@@ -142,6 +151,7 @@ type BaseRailsListing = {
   chartTypes?: unknown
   current_waitlist_size?: number
   hasWaitlist: boolean
+  Listing_Images: ImageItem[]
   imageURL?: string
   listingID: string
   nGeneral_Application_Total: number
