@@ -296,6 +296,21 @@ export const closedRentalListing: RailsRentalListing = {
     Id: "0120P000000kPUSQA2",
     Name: "Rental",
   },
-  imageURL:
-    "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+  Listing_Images: [
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a listing image",
+    },
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a third listing image",
+    },
+  ],
 }

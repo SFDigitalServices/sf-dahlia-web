@@ -5,29 +5,36 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
   <header
     class="image-card--leader"
   >
-    <a
-      class="block"
-      href="/listings/a0W0P00000GlKfBUAV"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images"
       >
-        <figure
-          class="image-card__inner"
-        >
-          <img
-            alt="A picture of the building"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-      </div>
-    </a>
+        <img
+          alt="This is a third listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      />
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >
@@ -92,35 +99,42 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
   <header
     class="image-card--leader"
   >
-    <a
-      class="block"
-      href="/listings/a0W8H000000HI2uUAG"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images"
       >
-        <figure
-          class="image-card__inner"
-        >
-          <img
-            alt="A picture of the building"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <img
+          alt="This is a third listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      >
+        <span
+          class="tag is-warning"
         >
-          <span
-            class="tag is-warning"
-          >
-            Habitat Greater San Francisco
-          </span>
-        </div>
+          Habitat Greater San Francisco
+        </span>
       </div>
-    </a>
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >

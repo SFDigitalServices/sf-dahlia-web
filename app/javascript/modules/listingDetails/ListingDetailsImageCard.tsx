@@ -38,6 +38,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
             : undefined
         }
         description={t("listings.buildingImageAltText")}
+        moreImagesLabel="More Images"
       />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>

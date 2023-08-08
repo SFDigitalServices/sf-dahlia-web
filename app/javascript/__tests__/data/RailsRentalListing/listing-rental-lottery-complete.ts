@@ -227,5 +227,19 @@ export const lotteryCompleteRentalListing: RailsRentalListing = {
     Id: "0120P000000kPUSQA2",
     Name: "Rental",
   },
+  Listing_Images: [
+    {
+      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a listing image",
+    },
+    {
+      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a third listing image",
+    },
+  ],
   imageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
 }
