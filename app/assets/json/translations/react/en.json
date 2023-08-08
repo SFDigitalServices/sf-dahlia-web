@@ -60,6 +60,8 @@
   "assistance.housingCounselors.findACounselor.filter.all" : "Showing all housing counselors:",
   "assistance.housingCounselors.findACounselor.filter.one" : "Showing 1 result:",
   "assistance.housingCounselors.findACounselor.filter.results" : "Showing %{num} results:",
+  "assistance.housingCounselors.findACounselor.filter.zero.part1" : "Showing 0 matches.",
+  "assistance.housingCounselors.findACounselor.filter.zero.part2" : "Change the filter to expand your search. Or, <a href='/housing-counselors#homeownership-sf'>contact Homeownership SF</a> to find a housing counselor that fits your needs.",
   "assistance.housingCounselors.counselor.call.lower": "Call %{phoneNumber}",
   "assistance.housingCounselors.counselor.call.upper": "CALL %{phoneNumber}",
   "assistance.housingCounselors.counselor.email.lower": "Email %{counselorEmail}",

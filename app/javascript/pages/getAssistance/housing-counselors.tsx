@@ -16,6 +16,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
 import CounselorFilter from "./counselor-filter"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 const HOMEOWNERSHIP_SF = {
   fullName: "Homeownership SF (Rentals and Ownership)",
@@ -161,14 +162,27 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
 
 const HousingCounselors = () => {
   const getResults = (num: number) => {
-    if (num === housingCounselorsList.counselors.length) {
-      return t("assistance.housingCounselors.findACounselor.filter.all")
-    } else if (num === 1) {
-      return t("assistance.housingCounselors.findACounselor.filter.one")
-    } else {
-      return t("assistance.housingCounselors.findACounselor.filter.results", {
-        num: num,
-      })
+    switch (num) {
+      case housingCounselorsList.counselors.length: {
+        return t("assistance.housingCounselors.findACounselor.filter.all")
+      }
+      case 1: {
+        return t("assistance.housingCounselors.findACounselor.filter.one")
+      }
+      case 0: {
+        return (
+          <div>
+            {t("assistance.housingCounselors.findACounselor.filter.zero.part1")}
+            <br /> <br />
+            {renderInlineMarkup(t("assistance.housingCounselors.findACounselor.filter.zero.part2"))}
+          </div>
+        )
+      }
+      default: {
+        return t("assistance.housingCounselors.findACounselor.filter.results", {
+          num: num,
+        })
+      }
     }
   }
   const [filterData, setFilterData] = useState({
@@ -197,7 +211,7 @@ const HousingCounselors = () => {
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
       <div className="md:mr-8 md:ml-8 md:mb-2 md:mt-4">
-        <div className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
+        <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
           <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
           <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
           {HousingCounselor(HOMEOWNERSHIP_SF)}
