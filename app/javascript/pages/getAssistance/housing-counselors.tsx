@@ -9,12 +9,14 @@ import {
   Button,
   Heading,
 } from "@bloom-housing/ui-components"
-import React from "react"
+import React, { useState } from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
+import CounselorFilter from "./counselor-filter"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 const HOMEOWNERSHIP_SF = {
   fullName: "Homeownership SF (Rentals and Ownership)",
@@ -53,7 +55,7 @@ const Label = (type: "language" | "service", text: string) => {
 const HousingCounselor = (housingCounselor: CounselorData) => {
   return (
     <div
-      className="resource-item text-base pb-4 mt-2 border-b border-gray-450 last:border-b-0 md:p-4"
+      className="resource-item text-base pb-4 mt-2 border-b border-gray-450 last:border-b-0 md:p-4 md:pt-0 md:pb-8 md:mt-8"
       key={housingCounselor.fullName}
     >
       <h3 className="font-sans text-lg pb-2">{housingCounselor.fullName}</h3>
@@ -159,21 +161,75 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
 }
 
 const HousingCounselors = () => {
+  const getResults = (num: number) => {
+    switch (num) {
+      case housingCounselorsList.counselors.length: {
+        return t("assistance.housingCounselors.findACounselor.filter.all")
+      }
+      case 1: {
+        return t("assistance.housingCounselors.findACounselor.filter.one")
+      }
+      case 0: {
+        return (
+          <div>
+            {t("assistance.housingCounselors.findACounselor.filter.zero.part1")}
+            <br /> <br />
+            {renderInlineMarkup(t("assistance.housingCounselors.findACounselor.filter.zero.part2"))}
+          </div>
+        )
+      }
+      default: {
+        return t("assistance.housingCounselors.findACounselor.filter.results", {
+          num: num,
+        })
+      }
+    }
+  }
+  const [filterData, setFilterData] = useState({
+    language: "any",
+    services: [],
+  })
+
+  const filteredList = React.useMemo(() => {
+    let filteredList = housingCounselorsList.counselors
+    if (filterData.language !== "any") {
+      filteredList = filteredList.filter((counselor) => {
+        return counselor.languages.includes(filterData.language)
+      })
+    }
+    if (filterData.services.length > 0) {
+      filteredList = filteredList.filter((counselor) => {
+        return counselor.services.some((service) => filterData.services.includes(service))
+      })
+    }
+    return filteredList
+  }, [filterData])
+
   return (
     <AssistanceLayout
       title={t("assistance.title.housingCouneslors")}
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
       <div className="md:mr-8 md:ml-8 md:mb-2 md:mt-4">
-        <div className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
+        <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
           <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
           <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
           {HousingCounselor(HOMEOWNERSHIP_SF)}
         </div>
         <div className="border-b w-full border-gray-500 md:my-9" />
-        <h1>Filter content here</h1>
-        <div className="flex flex-col gap-4 m-6 md:m-0">
-          {housingCounselorsList.counselors.map((counselor) => HousingCounselor(counselor))}
+        <div className="px-6 pt-6 md:mt-12">
+          <CounselorFilter
+            handleFilterData={setFilterData}
+            clearClick={() => {
+              setFilterData({ language: "any", services: [] })
+            }}
+          />
+        </div>
+        <div className="flex flex-col m-6 md:m-0">
+          <Heading priority={3} className="text-lg">
+            {getResults(filteredList.length)}
+          </Heading>
+          {filteredList.map((counselor) => HousingCounselor(counselor))}
         </div>
       </div>
     </AssistanceLayout>
