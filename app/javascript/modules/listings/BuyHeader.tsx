@@ -1,6 +1,5 @@
 import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
-import Link from "../../navigation/Link"
 import "./BuyHeader.scss"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -12,23 +11,10 @@ const GetHelp = () => (
     </Heading>
     <span>
       <p className="mb-4">
-        {t("listingsForSale.getHelp.dalpProgramInfo")}{" "}
-        <Link
-          external={true}
-          target="_blank"
-          href="https://sf.gov/reports/may-2023/downpayment-assistance-loan-program-dalp"
-        >
-          {t("listingsForSale.getHelp.learnMoreAndHowToApply")}
-        </Link>
+        {renderInlineMarkup(t("listingsForSale.getHelp.genericAssistanceInfo"))}
       </p>
     </span>
-    <p className="mb-4">
-      {renderInlineMarkup(
-        t("listingsForSale.getHelp.otherAssistancePrograms", {
-          url: "https://sf.gov/resource/2022/mohcd-loan-programs",
-        })
-      )}
-    </p>
+    <p className="mb-4">{t("listingsForSale.getHelp.genericAssistanceDescription")}</p>
   </div>
 )
 const BuyHeader = () => (
