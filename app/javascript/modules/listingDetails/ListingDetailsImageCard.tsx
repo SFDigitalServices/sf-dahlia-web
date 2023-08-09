@@ -20,7 +20,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButton = getAssetPath("share-button.svg")
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
-  const listingImages: ImageItem[] = listing.Listing_Images.map((listingImage) => {
+  const listingImages: ImageItem[] = listing?.Listing_Images?.map((listingImage) => {
     return {
       url: listingImage.Image_URL,
       description: listingImage.Image_Description,
@@ -30,8 +30,8 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   return (
     <header className="image-card--leader">
       <ImageCard
-        imageUrl={(listingImages.length === 0 && listing?.imageURL) ?? fallbackImg}
-        images={listingImages}
+        imageUrl={(listingImages === undefined && listing?.imageURL) ?? fallbackImg} // Fallback if there is no listing images array.
+        images={listingImages?.length === 0 ? [{ url: fallbackImg }] : listingImages}
         tags={
           listing.Reserved_community_type
             ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
