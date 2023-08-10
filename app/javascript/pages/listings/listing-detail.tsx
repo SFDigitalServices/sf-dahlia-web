@@ -22,7 +22,13 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import { isOpen, isPluralSRO, listingHasSROUnits } from "../../util/listingUtil"
+import {
+  isHabitatListing,
+  getAmiChartDataFromUnits,
+  isOpen,
+  isPluralSRO,
+  listingHasSROUnits,
+} from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
@@ -32,6 +38,8 @@ import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
+import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -39,7 +47,30 @@ const ListingDetail = () => {
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
+  const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
+
+  const {
+    fetchUnits,
+    fetchedUnits,
+    fetchingUnits,
+    fetchAmiCharts,
+    fetchedAmiCharts,
+    fetchingAmiCharts,
+  } = useContext(ListingDetailsContext)
+
+  useEffect(() => {
+    if (listing?.listingID && !fetchedUnits && !fetchingUnits) {
+      fetchUnits(listing.listingID)
+    }
+  }, [listing?.listingID, fetchUnits, fetchingUnits, fetchedUnits])
+
+  useEffect(() => {
+    if (listing?.listingID && !fetchingAmiCharts && !fetchedAmiCharts) {
+      const chartsToFetch = getAmiChartDataFromUnits(listing.Units)
+      fetchAmiCharts(chartsToFetch)
+    }
+  }, [listing?.listingID, fetchAmiCharts, fetchedAmiCharts, fetchingAmiCharts, listing?.Units])
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
@@ -56,10 +87,18 @@ const ListingDetail = () => {
           <SiteAlert type="success" className={alertClasses} timeout={30_000} />
         </div>
         {listing && (
-          <article className="flex flex-wrap relative max-w-5xl m-auto w-full">
+          <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
             <ListingDetailsImageCard listing={listing} />
+            {listingIsHabitat && (
+              <Mobile>
+                <ListingDetailsApplicationDate
+                  isApplicationOpen={isApplicationOpen}
+                  listing={listing}
+                />
+              </Mobile>
+            )}
             <ListingDetailsHabitat listing={listing} />
-            {!isApplicationOpen && (
+            {!isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
                   isApplicationOpen={isApplicationOpen}
@@ -71,7 +110,12 @@ const ListingDetail = () => {
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
             />
-            <ListingDetailsPricingTable listing={listing} />
+            <ErrorBoundary
+              boundaryScope={BoundaryScope.component}
+              componentClassNames="p-4 text-left"
+            >
+              <ListingDetailsPricingTable listing={listing} />
+            </ErrorBoundary>
             {listingHasSROUnits(listing) &&
               !(
                 isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
@@ -80,7 +124,7 @@ const ListingDetail = () => {
                   <ListingDetailsSROInfo listing={listing} />
                 </div>
               )}
-            {isApplicationOpen && (
+            {isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
                   isApplicationOpen={isApplicationOpen}

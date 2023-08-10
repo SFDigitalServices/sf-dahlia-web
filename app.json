@@ -1,7 +1,7 @@
 {
   "name":"sf-dahlia-web",
   "description":"",
-  "stack": "heroku-18",
+  "stack": "heroku-22",
   "scripts":{
     "postdeploy": "rake db:setup && rake db:migrate && rake listing_images:process_images"
   },

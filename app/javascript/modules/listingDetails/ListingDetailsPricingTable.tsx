@@ -1,105 +1,169 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isHabitatListing, isSale, classifyPricingDataByOccupancy } from "../../util/listingUtil"
-import { getListingPricingTableUnits } from "../../api/listingApiService"
-import { RailsListingPricingTableUnit } from "../../api/types/rails/listings/RailsListingPricingTableUnit"
+import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
+import RailsUnit, {
+  RailsUnitWithOccupancyAndMaxIncome,
+} from "../../api/types/rails/listings/RailsUnit"
+import { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
+import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
+import { getRangeString } from "../listings/DirectoryHelpers"
 
 export interface ListingDetailsPricingTableProps {
   listing: RailsListing
 }
 
-export interface ListingDetailsPricingTableState {
-  units: RailsListingPricingTableUnit[]
-  hasFetched: boolean
+export interface AmiRow {
+  ami: { min: number | undefined; max: number }
+  units: RailsUnitWithOccupancyAndMaxIncome[]
 }
 
-export interface SummaryByAMI {
-  unitMaxAMI: number
-  summaryByType: RailsListingPricingTableUnit[]
-}
-
-export interface MappedUnitsByOccupancy {
-  listingID: string
+export interface GroupedUnitsByOccupancy {
   occupancy: number
   absoluteMinIncome: number
   absoluteMaxIncome: number
-  summaryByAMI: SummaryByAMI[]
+  amiRows: AmiRow[]
 }
 
-const buildSaleCells = (unitSummary: RailsListingPricingTableUnit) => {
-  return {
-    units: {
-      cellText: unitSummary.unitType,
-      cellSubText: `${unitSummary?.availability} ${t("t.available")}`,
-    },
-    income: {
-      cellText: `$${unitSummary.absoluteMinIncome?.toLocaleString()} to $${unitSummary.absoluteMaxIncome?.toLocaleString()}`,
-      cellSubText: t("t.perMonth"),
-    },
-    sale: [
+const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  if (unit.Price_With_Parking && unit.Price_Without_Parking) {
+    return [
       {
-        cellText: `$${unitSummary.maxPriceWithParking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.Price_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
       {
-        cellText: `$${unitSummary.maxPriceWithoutParking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.Price_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
-    ],
-    monthlyHoaDues: [
+    ]
+  }
+
+  if (unit.Price_With_Parking && !unit.Price_Without_Parking) {
+    return [
       {
-        cellText: `$${unitSummary.maxHoaDuesWithParking?.toLocaleString()}`,
-        cellSubText: "with parking",
+        cellText: unit.Price_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
       },
+    ]
+  }
+
+  if (!unit.Price_With_Parking && unit.Price_Without_Parking) {
+    return [
       {
-        cellText: `$${unitSummary.maxHoaDuesWithoutParking?.toLocaleString()}`,
-        cellSubText: "without parking",
+        cellText: unit.Price_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
       },
-    ],
+    ]
   }
 }
 
-const buildRentalCells = (unitSummary: RailsListingPricingTableUnit) => {
+const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
+    return [
+      {
+        cellText: unit.HOA_Dues_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
+      },
+      {
+        cellText: unit.HOA_Dues_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
+      },
+    ]
+  }
+
+  if (unit?.HOA_Dues_With_Parking && !unit?.HOA_Dues_Without_Parking) {
+    return [
+      {
+        cellText: unit.HOA_Dues_With_Parking,
+        cellSubText: t("listings.stats.withParking"),
+      },
+    ]
+  }
+
+  if (!unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
+    return [
+      {
+        cellText: unit.HOA_Dues_Without_Parking,
+        cellSubText: t("listings.stats.withoutParking"),
+      },
+    ]
+  }
+}
+
+const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   return {
     units: {
-      cellText: unitSummary.unitType,
-      cellSubText: `${unitSummary.availability} ${t("t.available")}`,
+      cellText: unit.Unit_Type,
+      cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: `$${unitSummary.absoluteMinIncome} to $${unitSummary.absoluteMaxIncome}`,
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
+      cellSubText: t("t.perMonth"),
+    },
+    sale: buildSalePriceCellRow(unit),
+    monthlyHoaDues: buildSaleHoaDuesCellRow(unit),
+  }
+}
+
+const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  return {
+    units: {
+      cellText: unit.Unit_Type,
+      cellSubText: `${unit.Availability} ${t("t.available")}`,
+    },
+    income: {
+      cellText: getRangeString(
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.maxMonthlyIncomeNeeded,
+        true
+      ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
-      cellText: `$${unitSummary.maxMonthlyRent}`,
-      cellSubText: t("t.perMonth"),
+      cellText: unit?.BMR_Rent_Monthly
+        ? `$${unit?.BMR_Rent_Monthly?.toLocaleString()}`
+        : `${unit?.Rent_percent_of_income}%`,
+      cellSubText: unit?.BMR_Rent_Monthly ? t("t.perMonth") : t("t.income"),
     },
   }
 }
 
-const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: boolean) => {
-  let mappedUnitsByOccupancy: MappedUnitsByOccupancy[] = []
+const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
+  const fullText: string = showFullText ? ".fullText" : ""
+  return amiRow.ami.min
+    ? t("listings.stats.amiRange".concat(fullText), {
+        minAmiPercent: amiRow.ami.min,
+        maxAmiPercent: amiRow.ami.max,
+      })
+    : t("listings.stats.upToPercentAmi".concat(fullText), {
+        amiPercent: amiRow.ami.max,
+      })
+}
 
-  if (units?.length) {
-    mappedUnitsByOccupancy = classifyPricingDataByOccupancy(units)
-  }
-
-  return mappedUnitsByOccupancy?.map(
-    (unitsByOccupancy: MappedUnitsByOccupancy, index: number, array) => {
+const buildAccordions = (
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  listingIsSale: boolean
+) => {
+  return groupedUnitsByOccupancy?.map(
+    (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
-      const categoryData = unitsByOccupancy.summaryByAMI.map((unitsSummaryByAMI: SummaryByAMI) => {
-        const responsiveTableRows = unitsSummaryByAMI.summaryByType.map(
-          (unitSummary: RailsListingPricingTableUnit) => {
-            return listingIsSale ? buildSaleCells(unitSummary) : buildRentalCells(unitSummary)
-          }
-        )
+
+      const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
+        const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+          return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
+        })
 
         const responsiveTableHeaders = listingIsSale
           ? {
               units: { name: "t.unitType" },
               income: { name: "shortFormNav.income" },
               sale: { name: "listings.stats.salesPrice" },
-              monthlyHoaDues: { name: "Monthly HOA Dues" },
+              monthlyHoaDues: { name: "listings.stats.monthlyHoaDues" },
             }
           : {
               units: { name: "t.unitType" },
@@ -107,10 +171,11 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
               rent: { name: "t.rent" },
             }
 
+        // only add the AMI full text on the first accordion
+        const header: string = buildHeader(amiRow, amiRowIndex === 0)
+
         return {
-          header: t("listings.stats.upToPercentAmi", {
-            amiPercent: unitsSummaryByAMI.unitMaxAMI,
-          }),
+          header,
           tableData: {
             stackedData: responsiveTableRows,
             headers: responsiveTableHeaders,
@@ -125,15 +190,27 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
           customBarContent={
             <span className={"flex w-full justify-between items-center"}>
               <span className={"flex items-center"}>
-                {unitsByOccupancy.occupancy > 1
-                  ? `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
-                  : `${unitsByOccupancy.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
+                {occupancy?.occupancy > 1
+                  ? `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdPlural")}`
+                  : `${occupancy?.occupancy} ${t("listings.stats.numInHouseholdSingular")}`}
               </span>
               <span className={"flex items-center mr-2"}>
-                {t("listings.incomeRange.minMaxPerMonth", {
-                  min: unitsByOccupancy.absoluteMinIncome?.toLocaleString(),
-                  max: unitsByOccupancy.absoluteMaxIncome?.toLocaleString(),
-                })}
+                {(() => {
+                  return occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
+                    <div>
+                      {t("listings.incomeRange.upToMaxPerMonth", {
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  ) : (
+                    <div>
+                      {t("listings.incomeRange.minMaxPerMonth", {
+                        min: occupancy?.absoluteMinIncome?.toLocaleString(),
+                        max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                      })}
+                    </div>
+                  )
+                })()}
               </span>
             </span>
           }
@@ -150,78 +227,128 @@ const buildAccordions = (units: RailsListingPricingTableUnit[], listingIsSale: b
   )
 }
 
+const buildHabitatText = (
+  groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
+  amiCharts: RailsAmiChart[]
+) => {
+  const habitatStringArray = []
+  const minAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MinAmi"
+  })?.values
+
+  const maxAmiChartsValues = amiCharts.find((chart) => {
+    return chart.derivedFrom === "MaxAmi"
+  })?.values
+
+  /*
+   * GroupedUnitsByOccupancy() is already sorted
+   */
+  const minOccupancy = groupedUnitsByOccupancy[0]?.occupancy
+  const maxOccupancy = minOccupancy + 9
+
+  /*
+   * We want to display 9 rows for Habitat listings
+   */
+  for (let i = minOccupancy; i < maxOccupancy; i++) {
+    const minOccupancyChart = minAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    const maxOccupancyChart = maxAmiChartsValues.find((chart) => {
+      return chart.numOfHousehold === i
+    })
+
+    if (minOccupancyChart && maxOccupancyChart && i === 1) {
+      habitatStringArray.push(
+        t("listings.habitat.incomeRange.incomeRangeSingular", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
+      )
+    }
+
+    if (minOccupancyChart && maxOccupancyChart && i !== 1) {
+      habitatStringArray.push(
+        t("listings.habitat.incomeRange.incomeRangePlural", {
+          number: i,
+          minIncome: minOccupancyChart?.amount?.toLocaleString(),
+          maxIncome: maxOccupancyChart?.amount?.toLocaleString(),
+        })
+      )
+    }
+  }
+
+  return (
+    <div className="md:pr-8 md:w-2/3 mx-2 w-full">
+      <ul>
+        {habitatStringArray.map((habitatString: string, index: number) => {
+          return (
+            <li key={index}>
+              <p>{habitatString}</p>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
 const buildContent = (
-  pricingDataState: ListingDetailsPricingTableState,
+  dataHasBeenFetched: boolean,
+  units: RailsUnit[],
+  amiCharts: RailsAmiChart[],
   listingIsSale: boolean,
   listingIsHabitat: boolean
 ) => {
-  let mappedUnitsByOccupancy: MappedUnitsByOccupancy[] = []
-
-  if (!pricingDataState.hasFetched) {
-    return <Icon symbol="spinner" size="large" />
+  if (!dataHasBeenFetched) {
+    return (
+      <div className="flex justify-center md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full">
+        <Icon symbol="spinner" size="large" />
+      </div>
+    )
   }
 
-  if (pricingDataState.units?.length) {
-    mappedUnitsByOccupancy = classifyPricingDataByOccupancy(pricingDataState.units)
-  }
+  let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
-  if (listingIsSale) {
-    return buildAccordions(pricingDataState.units, true)
+  if (units?.length) {
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
   }
 
   if (listingIsHabitat) {
-    const habitatStrings = mappedUnitsByOccupancy.map((unitByOccupancy) => {
-      return `${
-        unitByOccupancy.occupancy
-      } people household: $${unitByOccupancy.absoluteMinIncome?.toLocaleString()} to $${unitByOccupancy.absoluteMaxIncome?.toLocaleString()}`
-    })
-
-    return (
-      <>
-        <p>{t("listings.habitat.incomeRange.p4")}</p>
-        <ul>
-          {habitatStrings.map((habitatString) => {
-            return (
-              <li>
-                <p>{habitatString}</p>
-              </li>
-            )
-          })}
-        </ul>
-      </>
-    )
+    return buildHabitatText(groupedUnitsByOccupancy, amiCharts)
   }
-  return buildAccordions(pricingDataState.units, false)
+
+  return (
+    <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
+      {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
+    </div>
+  )
 }
 
 export const ListingDetailsPricingTable = ({ listing }: ListingDetailsPricingTableProps) => {
   const listingIsSale = isSale(listing)
   const listingIsHabitat = isHabitatListing(listing)
-
-  const [pricingDataState, setPricingDataState] = useState<ListingDetailsPricingTableState>({
-    units: [],
-    hasFetched: false,
-  })
+  const {
+    fetchedAmiCharts,
+    fetchedUnits,
+    amiCharts,
+    units,
+    fetchingAmiChartsError,
+    fetchingUnitsError,
+  } = useContext(ListingDetailsContext)
+  const dataHasBeenFetched = fetchedAmiCharts && fetchedUnits
 
   useEffect(() => {
-    if (listing.Id) {
-      void getListingPricingTableUnits(listing.Id).then((units: RailsListingPricingTableUnit[]) => {
-        setPricingDataState({ units, hasFetched: true })
-      })
+    if (fetchingAmiChartsError) {
+      // TODO: Log error properly
+      throw fetchingAmiChartsError
     }
-
-    return () => {
-      setPricingDataState({ units: [], hasFetched: false })
+    if (fetchingUnitsError) {
+      // TODO: Log error properly
+      throw fetchingUnitsError
     }
-  }, [listing.Id])
+  }, [fetchingAmiChartsError, fetchingUnitsError])
 
-  return (
-    <div
-      className={`${
-        !pricingDataState.hasFetched ? "flex justify-center" : ""
-      } md:my-6 md:pr-8 md:px-0 md:w-2/3 px-3 w-full`}
-    >
-      {buildContent(pricingDataState, listingIsSale, listingIsHabitat)}
-    </div>
-  )
+  return buildContent(dataHasBeenFetched, units, amiCharts, listingIsSale, listingIsHabitat)
 }

@@ -6,7 +6,7 @@ import {
   getRentSubText,
   getTableHeader,
   showWaitlist,
-  getTableSubHeader,
+  getPriorityTypes,
 } from "../../modules/listings/DirectoryHelpers"
 import { getListingImageCardStatuses } from "../../modules/listings/SharedHelpers"
 import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -151,8 +151,8 @@ describe("DirectoryHelpers", () => {
       expect(getRangeString(10, 10)).toBe("10")
     })
     it("includes 0 as min value if provided", () => {
-      expect(getRangeString(0, 20, false)).toBe("0 to 20")
-      expect(getRangeString(0, 20, true)).toBe("$0 to $20")
+      expect(getRangeString(0, 20, false)).toBe("up to 20")
+      expect(getRangeString(0, 20, true)).toBe("up to $20")
       expect(getRangeString(0, 0, false)).toBe("0")
     })
     it("formats ranges as currency when expected", () => {
@@ -316,12 +316,12 @@ describe("DirectoryHelpers", () => {
   describe("getTableSubHeader", () => {
     it("returns null with listing lacking prioritiesDescriptor", () => {
       const testListing = {}
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBeNull()
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toBeNull()
     })
 
     it("returns null with listing lacking priorities length", () => {
       const testListing = { prioritiesDescriptor: [] }
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBeNull()
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toBeNull()
     })
 
     it("correctly parses Vision impairments", () => {
@@ -333,9 +333,7 @@ describe("DirectoryHelpers", () => {
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for Vision Impairments"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["Vision Impairments"])
     })
 
     it("correctly parses Hearing impairments", () => {
@@ -347,9 +345,7 @@ describe("DirectoryHelpers", () => {
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for Hearing Impairments"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["Hearing Impairments"])
     })
 
     it("correctly parses Hearing/Vision impairments", () => {
@@ -361,23 +357,23 @@ describe("DirectoryHelpers", () => {
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for Vision and/or Hearing Impairments"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual([
+        "Vision and/or Hearing Impairments",
+      ])
     })
 
     it("correctly parses Mobility/hearing/vision impairments", () => {
       const testListing = {
         prioritiesDescriptor: [
           {
-            name: "Mobility/hearing/vision impairments",
+            name: "Mobility/Hearing/Vision impairments",
           },
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for Mobility, Hearing and/or Vision Impairments"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual([
+        "Mobility, Hearing and/or Vision Impairments",
+      ])
     })
 
     it("correctly parses Mobility impairments", () => {
@@ -389,9 +385,7 @@ describe("DirectoryHelpers", () => {
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for Mobility Impairments"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["Mobility Impairments"])
     })
 
     it("correctly parses no matches", () => {
@@ -403,9 +397,7 @@ describe("DirectoryHelpers", () => {
         ],
       }
 
-      expect(getTableSubHeader(testListing as RailsRentalListing)).toBe(
-        "Includes Priority Units for test"
-      )
+      expect(getPriorityTypes(testListing as RailsRentalListing)).toEqual(["test"])
     })
   })
 })

@@ -51,7 +51,7 @@ describe("ErrorBoundary", () => {
       </ErrorBoundary>
     )
 
-    getByText("An application error occurred. Check back later.")
+    getByText("An error occurred. Check back later.")
   })
 
   it("throws error when error occurs for page level boundary", async () => {

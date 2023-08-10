@@ -41,20 +41,21 @@ export const ListingDetailsLotteryRanking = ({
   return (
     lotteryResult && (
       <div className="lottery-ranking text-sm">
-        {applicantSelectedForPreference && (
-          <header className="px-8">
-            <Heading styleType="underlineWeighted" priority={2}>
-              {t("lottery.rankingTitle")}
-            </Heading>
-            <p className="border-b border-gray-450 pb-4 text-gray-700">
-              {renderMarkup(
-                `${t("lottery.rankingOrderNote", {
-                  lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
-                })}`
-              )}
-            </p>
-          </header>
-        )}
+        <header className="px-8">
+          <Heading styleType="underlineWeighted" priority={2}>
+            {applicantSelectedForPreference
+              ? t("lottery.rankingTitle")
+              : t("lottery.rankingTitle.noPreference")}
+          </Heading>
+          <p className="border-b border-gray-450 pb-4 text-gray-700 translate">
+            {renderMarkup(
+              `${t("lottery.rankingOrderNote", {
+                lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
+              })}`
+            )}
+          </p>
+        </header>
+
         {applicantSelectedForPreference && !applicantHasCertOfPreference && (
           <Tooltip text={t("lottery.rankingPreferenceConsiderationNote")} />
         )}

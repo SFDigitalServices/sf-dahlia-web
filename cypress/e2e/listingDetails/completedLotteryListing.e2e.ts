@@ -34,15 +34,15 @@ const clickLotteryResultsButton = (mobile: boolean) => {
 
 const searchForLotteryResults = () => {
   cy.get('input[placeholder="Enter Your Lottery Number"]').type("01150047")
-  cy.get("form").submit()
+  cy.get('[aria-label="Submit number"]').click()
 }
 
 describe("Listing Details for Completed Lottery Listing", () => {
-  afterEach(() => {
-    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-    // there is a rogue loading issue beyond the scope of this story
-    cy.wait(6000)
-  })
+  // afterEach(() => {
+  //   // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
+  //   // there is a rogue loading issue beyond the scope of this story
+  //   cy.wait(6000)
+  // })
 
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {

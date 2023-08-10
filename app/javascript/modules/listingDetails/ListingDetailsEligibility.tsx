@@ -21,6 +21,7 @@ import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/Befo
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 
 export interface ListingDetailsEligibilityProps {
@@ -57,43 +58,6 @@ export const ListingDetailsEligibility = ({
       priorityUnit.numberOfUnits++
     }
   })
-
-  /* TODO: Implement updated API to get actual data */
-  const HMITableHeaders = {
-    householdSize: "t.householdSize",
-    maxIncomeMonth: "t.maximumIncomeMonth",
-    maxIncomeYear: "t.maximumIncomeYear",
-  }
-  const HMITableData = [
-    {
-      householdSize: {
-        content: <span className="font-semibold">{t("listings.onePerson")}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`2 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`3 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-    {
-      householdSize: {
-        content: <span className="font-semibold">{`4 ${t("listings.people")}`}</span>,
-      },
-      maxIncomeMonth: { content: t("t.perMonthCost", { cost: "$1,111" }) },
-      maxIncomeYear: { content: t("t.perYearCost", { cost: "$51,111" }) },
-    },
-  ]
 
   let occupancySubtitle = ""
   if (isSale(listing)) {
@@ -175,29 +139,7 @@ export const ListingDetailsEligibility = ({
             </InfoCard>
           </ListSection>
         )}
-        {!isHabitatListing(listing) && (
-          <ListSection
-            title={t("listings.householdMaximumIncome")}
-            subtitle={
-              <div>
-                <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
-                <div className="mb-4 primary-lighter-markup-link-desktop">
-                  {renderMarkup(
-                    t("listings.incomeExceptions.intro", {
-                      url: "https://sfmohcd.org/special-calculations-household-income",
-                    })
-                  )}
-                </div>
-                <ul className="list-disc ml-5">
-                  <li>{t("listings.incomeExceptions.students")}</li>
-                  <li>{t("listings.incomeExceptions.nontaxable")}</li>
-                </ul>
-              </div>
-            }
-          >
-            <StandardTable headers={HMITableHeaders} data={HMITableData} />
-          </ListSection>
-        )}
+        {!isHabitatListing(listing) && <ListingDetailsHMITable listing={listing} />}
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
