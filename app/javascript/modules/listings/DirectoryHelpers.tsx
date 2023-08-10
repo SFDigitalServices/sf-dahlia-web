@@ -40,7 +40,7 @@ export interface ListingsGroups {
   additional: RailsListing[]
 }
 
-export type Listing = RailsRentalListing & {
+type Listing = RailsRentalListing & {
   Reserved_community_type: string
 }
 
