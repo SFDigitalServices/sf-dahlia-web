@@ -30,9 +30,7 @@ describe("For Sale", () => {
     const { findByAltText } = render(<ForSale assetPaths="/" />)
 
     const image = await findByAltText(`${openSaleListing.Building_Name} Building`)
-    expect(image.getAttribute("src")).toBe(
-      "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-    )
+    expect(image.getAttribute("src")).toBe(openSaleListing.Listing_Images[0].Image_URL)
     done()
   })
 })

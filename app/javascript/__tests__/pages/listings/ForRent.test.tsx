@@ -43,9 +43,7 @@ describe("For Rent", () => {
     )
 
     const image = await findByAltText(`${sroRentalListing.Building_Name} Building`)
-    expect(image.getAttribute("src")).toBe(
-      "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-    )
+    expect(image.getAttribute("src")).toBe(sroRentalListing.Listing_Images[0].Image_URL)
     done()
   })
 })
