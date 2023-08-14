@@ -1010,6 +1010,7 @@
   "listings.minMaxPeople": "%{min}-%{max} people",
   "listings.minPeople": "at least %{num} people",
   "listings.monitoredByMohcd": "Monitored by the Mayor's Office of Housing & Community Development",
+  "listings.morePhotos": "photos",
   "listings.neighborhood.header": "Neighborhood",
   "listings.neighborhood.locationAndTransportation": "Location and transportation",
   "listings.neighborhood.mapTitle": "Map of %{listingAddress}",
