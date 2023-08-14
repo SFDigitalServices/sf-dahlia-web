@@ -69,11 +69,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
 
-  const { fallbackUsed, props: imageCardProps } = createImageCardProps({
-    ...listing,
-    Listing_Images: undefined,
-    imageURL: undefined,
-  })
+  const { fallbackUsed, props: imageCardProps } = createImageCardProps(listing)
 
   return (
     <header className="image-card--leader">
