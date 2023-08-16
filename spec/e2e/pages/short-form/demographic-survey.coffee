@@ -45,6 +45,7 @@ class DemographicSurvey extends AngularPage
       referral: 'Bus Ad'
 
   fill: (opts = {}) ->
+    browser.wait(2000)
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
     @userSex.sendKeys(@defaults.userSex)
