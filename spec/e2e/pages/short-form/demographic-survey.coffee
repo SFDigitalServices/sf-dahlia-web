@@ -46,11 +46,10 @@ class DemographicSurvey extends AngularPage
       referral: 'Bus Ad'
 
   fill: (opts = {}) ->
-    browser.wait(EC.presenceOf(@userGender), 5000)
-    @userGender.sendKeys(@defaults.userGender)
-    @genderOther.clear().sendKeys(@defaults.genderOther)
-    @userSex.sendKeys(@defaults.userSex)
-    @userSexOther.clear().sendKeys(@defaults.userSexOther)
+    # @userGender.sendKeys(@defaults.userGender)
+    # @genderOther.clear().sendKeys(@defaults.genderOther)
+    # @userSex.sendKeys(@defaults.userSex)
+    # @userSexOther.clear().sendKeys(@defaults.userSexOther)
 
     # Select Black - African
     @blackAccordionHeader.click()
