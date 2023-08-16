@@ -16,7 +16,7 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
 } from "../../util/listingUtil"
-import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
+import { defaultIfNotTranslated, renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -146,7 +146,14 @@ export const ListingDetailsEligibility = ({
 
         <ListSection
           title={t("listings.lottery.title")}
-          subtitle={t("listings.lottery.preferences")}
+          subtitle={
+            <>
+              <div className="mb-4">
+                {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+              </div>
+              {t("listingsForSale.lotteryPreferences.hasPreferences")}
+            </>
+          }
         >
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <ListingDetailsPreferences listingID={listing.listingID} />
