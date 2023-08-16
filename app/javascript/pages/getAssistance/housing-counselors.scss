@@ -34,5 +34,5 @@
     @media (min-width: $screen-lg) {
         @apply ml-0;
     }
-    @apply ml-8;
+    @apply md:ml-8;
 }
