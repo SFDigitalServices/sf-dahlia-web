@@ -1,4 +1,5 @@
 AngularPage = require('../angular-page').AngularPage
+EC = protractor.ExpectedConditions
 
 setCheckboxSelected = (checkboxElement, newSelectedValue) ->
   checkboxElement.isSelected().then (selected) ->
@@ -45,10 +46,10 @@ class DemographicSurvey extends AngularPage
       referral: 'Bus Ad'
 
   fill: (opts = {}) ->
-    @userGender.sendKeys(@defaults.userGender)
-    @genderOther.clear().sendKeys(@defaults.genderOther)
-    @userSex.sendKeys(@defaults.userSex)
-    @userSexOther.clear().sendKeys(@defaults.userSexOther)
+    # @userGender.sendKeys(@defaults.userGender)
+    # @genderOther.clear().sendKeys(@defaults.genderOther)
+    # @userSex.sendKeys(@defaults.userSex)
+    # @userSexOther.clear().sendKeys(@defaults.userSexOther)
 
     # Select Black - African
     @blackAccordionHeader.click()

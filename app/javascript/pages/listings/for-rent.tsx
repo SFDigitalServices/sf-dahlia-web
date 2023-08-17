@@ -6,6 +6,7 @@ import {
   t,
   LinkButton,
   PageHeader,
+  Heading,
 } from "@bloom-housing/ui-components"
 
 import { getRentalListings, EligibilityFilters } from "../../api/listingsApiService"
@@ -97,7 +98,7 @@ const getFindMoreActionBlock = () => {
       <div className="bg-primary-darker">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
-            header={t("rentalDirectory.callouttitle")}
+            header={<Heading priority={2}>{t("rentalDirectory.callouttitle")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
