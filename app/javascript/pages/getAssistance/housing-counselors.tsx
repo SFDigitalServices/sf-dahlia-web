@@ -210,26 +210,28 @@ const HousingCounselors = () => {
       title={t("assistance.title.housingCouneslors")}
       subtitle={t("assistance.subtitle.housingCouneslors")}
     >
-      <div className="md:mr-8 md:ml-8 md:mb-2 md:mt-4">
-        <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
-          <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
-          <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
-          {HousingCounselor(HOMEOWNERSHIP_SF)}
-        </div>
-        <div className="border-b w-full border-gray-500 md:my-9" />
-        <div className="px-6 pt-6 md:mt-12">
-          <CounselorFilter
-            handleFilterData={setFilterData}
-            clearClick={() => {
-              setFilterData({ language: "any", services: [] })
-            }}
-          />
-        </div>
-        <div className="flex flex-col m-6 md:m-0">
-          <Heading priority={3} className="text-lg">
-            {getResults(filteredList.length)}
-          </Heading>
-          {filteredList.map((counselor) => HousingCounselor(counselor))}
+      <div className="page-main">
+        <div className="md:mr-8 md:mb-2 md:mt-4">
+          <div id="homeownership-sf" className="m-6 mb-2 md:m-0 md:mb-0 md:mt-12">
+            <Heading priority={2}>{t("assistance.housingCounselors.startHere.title")}</Heading>
+            <p className="text-base my-4">{t("assistance.housingCounselors.startHere.subtitle")}</p>
+            {HousingCounselor(HOMEOWNERSHIP_SF)}
+          </div>
+          <div className="border-b w-full border-gray-500 md:my-9" />
+          <div className="px-6 pt-6 md:pl-0 md:mt-12">
+            <CounselorFilter
+              handleFilterData={setFilterData}
+              clearClick={() => {
+                setFilterData({ language: "any", services: [] })
+              }}
+            />
+          </div>
+          <div className="flex flex-col m-6 md:m-0">
+            <Heading priority={3} className="text-lg">
+              {getResults(filteredList.length)}
+            </Heading>
+            {filteredList.map((counselor) => HousingCounselor(counselor))}
+          </div>
         </div>
       </div>
     </AssistanceLayout>
