@@ -246,7 +246,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -911,7 +911,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -1670,7 +1670,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -2230,7 +2230,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -2925,7 +2925,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span

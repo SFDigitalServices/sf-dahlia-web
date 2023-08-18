@@ -231,7 +231,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
       {toShowButton(maxOccupancy, minOccupancy, hmiCutoff) && (
         <Button
           inlineIcon="right"
-          className="font-medium md:bg-primary-lighter mt-3"
+          className="font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           iconSize="small"
           icon={tableCollapsed ? faAngleDown : faAngleUp}
           onClick={expandTableHandler}

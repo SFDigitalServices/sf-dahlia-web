@@ -39,6 +39,8 @@ PreCommit:
   RailsBestPractices:
     enabled: true
     description: "Checking Rails best practices"
+    exclude:
+      - "**/__snapshots__/*"
 
   CoffeeLint:
     enabled: true
