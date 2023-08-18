@@ -81,6 +81,7 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
 }
 
 export const getEventNote = (listingEvent: ListingEvent) => {
+  if (!listingEvent.Venue || !(listingEvent.Street_Address && listingEvent.City)) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
