@@ -1002,7 +1002,6 @@
   "lottery.numberApplicantsQualifiedForGeneralPool": "%{number} aplikante ang nasa listahang ito. Pakitandaan, ang mga may hawak na preference ay unang mabibigyan ng konsiderasyon para sa lahat ng yunit.",
   "lottery.numberApplicantsQualifiedForPreference": "Mayroong %{number} aplikante sa listahang ito.",
   "lottery.rank": "Ranggo",
-  "lottery.rankingOrderNote": "Isasaalang-alang ang pagkakaranggo sa mga listahang ito ayon sa pagkakasunod-sunod na ipinapakita rito.",
   "lottery.rankingPreferenceConsiderationNote": "Pakitandaan na may iba pang preperensiya na isasaalang-alang muna para mga unit.",
   "lottery.rankingPreferencesConsideredOverGeneralNote": "Pakitandaan na isasaaalang-alang muna ang mga may preperensiya para sa lahat ng unit.",
   "lottery.rankingTitle": "Ang ranggo ng inyong preperensiya",

@@ -98,6 +98,7 @@ describe CacheService do
   describe '#prefetch_listings' do
     context 'listing is updated' do
       before do
+        stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
           .with(subset: 'browse', force: true).and_return(updated_listings)
@@ -124,6 +125,9 @@ describe CacheService do
   end
 
   describe '#prefetch_listings(refresh_all: true)' do
+    before do
+      stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
+    end
     # simulate unchanged listings, because these should still get updated
     # when refreshing all
     let(:updated_listings) { cached_listings }

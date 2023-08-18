@@ -52,7 +52,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
           class="hidden md:block"
         >
           <div
-            class="w-full"
+            class="w-full mb-8 md:mb-0"
           >
             <div
               class="application-status text-xs text-gray-800 bg-alert-light place-content-center"

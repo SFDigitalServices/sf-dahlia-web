@@ -249,6 +249,21 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
     Id: "0120P000000kPURQA2",
     Name: "Ownership",
   },
-  imageURL:
-    "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+  Listing_Images: [
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a listing image",
+    },
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      Image_URL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a third listing image",
+    },
+  ],
 }

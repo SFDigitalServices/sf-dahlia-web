@@ -83,6 +83,7 @@ export const ListingDetailsAdditionalInformation = ({
                 buttonClassName="text-blue-500"
                 text={t("listings.cc&rDescription")}
               />
+              <br />
               <LinkButton href={listing.CC_and_R_URL} className={"mt-4"} newTab={true}>
                 {t("listings.downloadPdf")}
               </LinkButton>

@@ -323,7 +323,11 @@ exports[`For Rent renders ForRent component 1`] = `
                       <div
                         class="action-block__header"
                       >
-                        See more listings from our community partners.
+                        <h2
+                          class=""
+                        >
+                          See more listings from our community partners.
+                        </h2>
                       </div>
                     </div>
                     <div
@@ -425,7 +429,11 @@ exports[`For Rent renders ForRent component 1`] = `
                 <div
                   class="action-block__header"
                 >
-                  Get emailed whenever a new listing is posted.
+                  <h2
+                    class=""
+                  >
+                    Get emailed whenever a new listing is posted.
+                  </h2>
                 </div>
               </div>
               <div
