@@ -47,14 +47,22 @@
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      console.log('DAH-1627', '$stateChangeStart')
+      console.log('TO', toState, ShortFormApplicationService.isShortFormPage(toState))
+      console.log('FROM', fromState, ShortFormApplicationService.isShortFormPage(fromState))
+
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
       if (window.document.documentMode && window.env.directoryPageReact is 'true')
+        console.log('ie-deprecated')
+
         $window.location.href = '/ie-deprecated.html'
         return
 
       if (SharedService.shouldRouteViaRails(toState.name, isFirstLoad))
+        console.log('shouldRouteViaRails')
+
         isFirstLoad = false
 
         # stop the state transition event from propagating
@@ -71,6 +79,8 @@
       ModalService.closeModal()
 
       if SharedService.isWelcomePage(toState)
+        console.log('isWelcomePage')
+
         # on welcome pages, the language is determined by the language of the
         # welcome page, not by toParams.lang
         welcomePageLanguage = SharedService.getWelcomePageLanguage(toState.name).code
@@ -96,11 +106,17 @@
         AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
 
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
+        console.log('hittingBackFromConfirmation')
+
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
         $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
       else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+        console.log('isLeavingShortForm')
+        console.log('toParam', toParams)
+        console.log('loggedInConfirmation', loggedInConfirmation)
+
         content =
           title: $translate.instant('t.leave_your_application')
           cancel: $translate.instant('t.stay')
