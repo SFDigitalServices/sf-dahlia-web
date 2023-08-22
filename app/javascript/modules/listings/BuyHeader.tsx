@@ -7,14 +7,16 @@ import { renderInlineMarkup } from "../../util/languageUtil"
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
     <Heading styleType="underlineWeighted" className="mb-5" priority={2}>
-      {t("listingsForSale.getHelp.helpWithDownpayment")}
+      {t("listingsForSale.buyHeader.getHelp.title")}
     </Heading>
-    <span>
-      <p className="mb-4">
-        {renderInlineMarkup(t("listingsForSale.getHelp.genericAssistanceInfo"))}
-      </p>
-    </span>
-    <p className="mb-4">{t("listingsForSale.getHelp.genericAssistanceDescription")}</p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.body1")}</p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.body2")}</p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.options.header")}</p>
+    <ul className="list-disc ml-6">
+      <li>{renderInlineMarkup(t("listingsForSale.buyHeader.getHelp.option.BMR"))}</li>
+      <br />
+      <li>{renderInlineMarkup(t("listingsForSale.buyHeader.getHelp.option.firmPrice"))}</li>
+    </ul>
   </div>
 )
 const BuyHeader = () => (
