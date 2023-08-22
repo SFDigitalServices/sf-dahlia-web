@@ -52,6 +52,7 @@ const ListingDetail = () => {
   const [detailBanner, setDetailBanner] = useState<string>(null)
   const [whatToEpectContent, setWhatToEpectContent] = useState<string>(null)
   const [needHelpContent, setNeedHelpContent] = useState<string>(null)
+  const [howToApplyContent, setHowToApplyContent] = useState<string>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
   useTranslate()
@@ -106,6 +107,7 @@ const ListingDetail = () => {
       }
       setWhatToEpectContent(cmsContent.common_content.what_to_expect)
       setNeedHelpContent(cmsContent.common_content.need_help)
+      setHowToApplyContent(cmsContent.listing_type.how_to_apply)
     })
   }, [listing, listingContent])
 
@@ -165,9 +167,14 @@ const ListingDetail = () => {
               </Mobile>
             )}
             <Mobile>
-              <ListingDetailsApply listing={listing} />
+              <ListingDetailsApply listing={listing} howToApplyContent={howToApplyContent} />
             </Mobile>
-            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} whatToExpectContent={whatToEpectContent} />
+            <ListingDetailsAside
+              listing={listing}
+              imageSrc={getAssetPath("listing-units.svg")}
+              whatToExpectContent={whatToEpectContent}
+              howToApplyContent={howToApplyContent}
+            />
             <ListingDetails>
               <MobileListingDetailsLottery
                 imageSrc={getAssetPath("listing-units.svg")}

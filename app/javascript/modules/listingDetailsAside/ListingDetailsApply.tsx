@@ -18,13 +18,14 @@ import {
   isSale,
   paperApplicationURLs,
 } from "../../util/listingUtil"
-import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
+  howToApplyContent: string
 }
 
-export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+export const ListingDetailsApply = ({ listing, howToApplyContent }: ListingDetailsApplyProps) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
 
   if (!isOpen(listing)) return null
@@ -58,6 +59,9 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
           <p className={"mb-4"}>{t("listings.apply.eligibilityRequirementDescription")}</p>
         </>
       )}
+      <div style={{ margin: "1em", padding: "1em" }}>
+        {renderMarkup(howToApplyContent, "<div><p><br><ol><ul><li><b><hr>")}
+      </div>
       <LinkButton
         styleType={AppearanceStyleType.primary}
         className={"w-full"}

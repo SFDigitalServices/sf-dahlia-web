@@ -154,6 +154,11 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
               style: { listStyleType: "disc", paddingLeft: "1em" },
             },
           },
+          ol: {
+            props: {
+              style: { listStyleType: "decimal" },
+            },
+          },
           p: {
             props: {
               style: { textTransform: "none" },

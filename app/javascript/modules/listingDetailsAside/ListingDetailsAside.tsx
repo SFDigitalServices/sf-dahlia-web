@@ -15,9 +15,15 @@ export interface ListingDetailsSidebarProps {
   listing: RailsListing
   imageSrc: string
   whatToExpectContent: string
+  howToApplyContent: string
 }
 
-export const ListingDetailsAside = ({ listing, imageSrc, whatToExpectContent }: ListingDetailsSidebarProps) => {
+export const ListingDetailsAside = ({
+  listing,
+  imageSrc,
+  whatToExpectContent,
+  howToApplyContent,
+}: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
 
   return (
@@ -44,8 +50,12 @@ export const ListingDetailsAside = ({ listing, imageSrc, whatToExpectContent }: 
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
             <ListingDetailsOpenHouses listing={listing} />
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
-            <ListingDetailsApply listing={listing} />
-            <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} whatToExpectContent={whatToExpectContent} />
+            <ListingDetailsApply listing={listing} howToApplyContent={howToApplyContent} />
+            <ListingDetailsProcess
+              listing={listing}
+              isApplicationOpen={isApplicationOpen}
+              whatToExpectContent={whatToExpectContent}
+            />
           </div>
         </aside>
       </ListingDetailItem>
