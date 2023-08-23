@@ -462,6 +462,31 @@ export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaD
   return uniqueCharts
 }
 
+// based on ListingUnitService's _consolidatedAMICharts
+export const consolidateAmiCharts = (amiCharts: RailsAmiChart[]): RailsAmiChart[] => {
+  if (!amiCharts) return amiCharts
+
+  const consolidatedCharts = []
+  amiCharts.forEach((chart: RailsAmiChart) => {
+    const existingChartWithSamePercent = consolidatedCharts.find(
+      (consolidatedChart) => consolidatedChart.percent === chart.percent
+    )
+    if (!existingChartWithSamePercent) {
+      consolidatedCharts.push(chart)
+    } else {
+      existingChartWithSamePercent.values.forEach(
+        (existingValue: RailsAmiChartValue, idx: number) => {
+          // it is fine to use idx instead of numOfHousehold, because the values array is sorted by numOfHousehold
+          const currentAmount = chart.values[idx]?.amount
+          if (!currentAmount) return
+          existingValue.amount = Math.max(existingValue.amount, currentAmount)
+        }
+      )
+    }
+  })
+  return consolidatedCharts
+}
+
 export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): number => {
   let longestChartLength: number
 
