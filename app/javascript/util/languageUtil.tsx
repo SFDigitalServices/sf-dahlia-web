@@ -156,7 +156,7 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
           },
           ol: {
             props: {
-              style: { listStyleType: "decimal" },
+              style: { listStyleType: "decimal", paddingLeft: "1em" },
             },
           },
           p: {

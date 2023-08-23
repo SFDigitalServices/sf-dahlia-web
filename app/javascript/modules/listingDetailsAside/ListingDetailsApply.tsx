@@ -59,9 +59,7 @@ export const ListingDetailsApply = ({ listing, howToApplyContent }: ListingDetai
           <p className={"mb-4"}>{t("listings.apply.eligibilityRequirementDescription")}</p>
         </>
       )}
-      <div style={{ margin: "1em", padding: "1em" }}>
-        {renderMarkup(howToApplyContent, "<div><p><br><ol><ul><li><b><hr>")}
-      </div>
+      <div>{renderMarkup(howToApplyContent, "<div><p><br><ol><ul><li><b><hr><a>")}</div>
       <LinkButton
         styleType={AppearanceStyleType.primary}
         className={"w-full"}

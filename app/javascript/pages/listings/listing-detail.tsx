@@ -175,36 +175,38 @@ const ListingDetail = () => {
               whatToExpectContent={whatToEpectContent}
               howToApplyContent={howToApplyContent}
             />
-            <ListingDetails>
-              <MobileListingDetailsLottery
-                imageSrc={getAssetPath("listing-units.svg")}
-                listing={listing}
-                whatToExpectContent={whatToEpectContent}
-              />
-              <ListingDetailsEligibility
-                listing={listing}
-                imageSrc={getAssetPath("listing-eligibility.svg")}
-              />
-              <MobileListingDetailsProcess
-                listing={listing}
-                imageSrc={getAssetPath("listing-units.svg")}
-                isApplicationOpen={isApplicationOpen}
-                whatToEpectContent={whatToEpectContent}
-              />
-              <ListingDetailsFeatures
-                listing={listing}
-                imageSrc={getAssetPath("listing-features.svg")}
-              />
-              <ListingDetailsNeighborhood
-                imageSrc={getAssetPath("listing-neighborhood.svg")}
-                listing={listing}
-              />
-              <ListingDetailsAdditionalInformation
-                listing={listing}
-                imageSrc={getAssetPath("listing-legal.svg")}
-              />
-              <ListingDetailsMOHCD />
-            </ListingDetails>
+            <div id="details">
+              <ListingDetails>
+                <MobileListingDetailsLottery
+                  imageSrc={getAssetPath("listing-units.svg")}
+                  listing={listing}
+                  whatToExpectContent={whatToEpectContent}
+                />
+                <ListingDetailsEligibility
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-eligibility.svg")}
+                />
+                <MobileListingDetailsProcess
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-units.svg")}
+                  isApplicationOpen={isApplicationOpen}
+                  whatToEpectContent={whatToEpectContent}
+                />
+                <ListingDetailsFeatures
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-features.svg")}
+                />
+                <ListingDetailsNeighborhood
+                  imageSrc={getAssetPath("listing-neighborhood.svg")}
+                  listing={listing}
+                />
+                <ListingDetailsAdditionalInformation
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-legal.svg")}
+                />
+                <ListingDetailsMOHCD />
+              </ListingDetails>
+            </div>
           </article>
         )}
         <MailingListSignup />
