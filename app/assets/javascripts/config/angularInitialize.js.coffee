@@ -63,6 +63,12 @@
 
         $window.location.href = SharedService.buildUrl(toState, toParams)
 
+        # if user chooses 'cancel' on the 'beforeunload' dialog, they stay on the page,
+        #   so we need to remove the laoding overlay on the current page
+        # if user chooses 'leave' on the 'beforeunload' dialog, a new page will load,
+        #   so we're okay to remove the loading overlay on the current page
+        bsLoadingOverlayService.stop()
+
         return
 
       isFirstLoad = false
