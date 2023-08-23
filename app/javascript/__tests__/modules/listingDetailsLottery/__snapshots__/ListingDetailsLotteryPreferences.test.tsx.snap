@@ -19,7 +19,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
         Housing Preferences
       </h2>
       <p
-        class="pb-4 text-gray-700 text-xs mx-8"
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
       />
       <p>
         Ranking in these lists is considered in the order shown here. 
@@ -132,7 +132,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
         Housing Preferences
       </h2>
       <p
-        class="pb-4 text-gray-700 text-xs mx-8"
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
       />
       <p>
         Ranking in these lists is considered in the order shown here. 

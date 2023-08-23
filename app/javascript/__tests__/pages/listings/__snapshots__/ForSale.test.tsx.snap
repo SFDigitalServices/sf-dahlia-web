@@ -438,7 +438,11 @@ exports[`For Sale renders ForSale component 1`] = `
                       <div
                         class="action-block__header"
                       >
-                        Find more listings on our website:
+                        <h2
+                          class=""
+                        >
+                          Find more listings on our website:
+                        </h2>
                       </div>
                     </div>
                     <div
@@ -547,7 +551,11 @@ exports[`For Sale renders ForSale component 1`] = `
                 <div
                   class="action-block__header"
                 >
-                  Get emailed whenever a new listing is posted.
+                  <h2
+                    class=""
+                  >
+                    Get emailed whenever a new listing is posted.
+                  </h2>
                 </div>
               </div>
               <div

@@ -15,7 +15,7 @@ export const ListingDetailsApplicationDate = ({
   listing,
 }: ListingDetailsApplicationDateProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full mb-8 md:mb-0">
       <ApplicationStatus
         className="place-content-center"
         content={t(

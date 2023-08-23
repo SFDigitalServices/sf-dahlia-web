@@ -4,6 +4,7 @@ import { EventSection, t } from "@bloom-housing/ui-components"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
 import { getEventTimeString } from "../../util/listingUtil"
+import "./ListingDetailsOpenHouses.scss"
 
 export interface OpenHousesProps {
   listing: RailsListing

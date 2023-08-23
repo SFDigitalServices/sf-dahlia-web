@@ -302,7 +302,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
       </table>
     </div>
     <button
-      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >
       <span
@@ -636,7 +636,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
       </table>
     </div>
     <button
-      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >
       <span
@@ -997,7 +997,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
       </table>
     </div>
     <button
-      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+      class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >
       <span

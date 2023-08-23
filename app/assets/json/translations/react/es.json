@@ -1003,7 +1003,6 @@
   "lottery.numberApplicantsQualifiedForGeneralPool": "Hay %{number} solicitantes en esta lista. Tenga en cuenta que los titulares de preferencias se considerarán primero para todas las unidades.",
   "lottery.numberApplicantsQualifiedForPreference": "Hay %{number} solicitantes en esta lista.",
   "lottery.rank": "Clasificación",
-  "lottery.rankingOrderNote": "La clasificación en estas listas se considera en el orden que se muestra aquí.",
   "lottery.rankingPreferenceConsiderationNote": "Por favor tenga en cuenta que hay otras preferencias que se considerarán primero para las unidades.",
   "lottery.rankingPreferencesConsideredOverGeneralNote": "Por favor tenga en cuenta que las personas con preferencia se considerarán primero para todas las unidades.",
   "lottery.rankingTitle": "Su orden de preferencia",

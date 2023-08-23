@@ -246,7 +246,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -363,6 +363,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
@@ -904,7 +911,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -1021,6 +1028,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
@@ -1656,7 +1670,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -1815,6 +1829,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
@@ -2209,7 +2230,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -2347,6 +2368,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
@@ -2897,7 +2925,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
-          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
           <span
@@ -3014,6 +3042,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
@@ -3565,6 +3600,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
               Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>

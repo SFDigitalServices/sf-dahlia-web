@@ -29,3 +29,10 @@
     }
     padding-right: 0;
 }
+
+.page-main {
+    @media (min-width: $screen-lg) {
+        @apply ml-0;
+    }
+    @apply md:ml-8;
+}
