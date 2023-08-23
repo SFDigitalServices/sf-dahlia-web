@@ -6,7 +6,7 @@ import type { RailsUnitWithOccupancyAndMaxIncome } from "../../api/types/rails/l
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
-import { getRangeString } from "../listings/DirectoryHelpers"
+import { getCurrencyString, getRangeString } from "../listings/DirectoryHelpers"
 import { defaultIfNotTranslated, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsPricingTable.scss"
 
@@ -119,15 +119,15 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     },
     income: {
       cellText: getRangeString(
-        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
-        unit?.maxMonthlyIncomeNeeded,
+        Math.round(unit?.BMR_Rental_Minimum_Monthly_Income_Needed),
+        Math.round(unit?.maxMonthlyIncomeNeeded),
         true
       ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
       cellText: unit?.BMR_Rent_Monthly
-        ? `$${unit?.BMR_Rent_Monthly?.toLocaleString()}`
+        ? getCurrencyString(Math.round(unit?.BMR_Rent_Monthly))
         : `${unit?.Rent_percent_of_income}%`,
       cellSubText: unit?.BMR_Rent_Monthly ? t("t.perMonth") : t("t.income"),
     },
@@ -219,8 +219,8 @@ const buildAccordions = (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.minMaxPerMonth", {
-                          min: occupancy?.absoluteMinIncome?.toLocaleString(),
-                          max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                          min: Math.round(occupancy?.absoluteMinIncome).toLocaleString(),
+                          max: Math.round(occupancy?.absoluteMaxIncome).toLocaleString(),
                         }),
                         "<span>"
                       )}
