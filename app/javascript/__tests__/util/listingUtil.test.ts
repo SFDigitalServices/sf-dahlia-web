@@ -446,9 +446,6 @@ describe("consolidateAmiCharts", () => {
     const consolidatedAmiCharts = [
       {
         percent: "55",
-        year: "2021",
-        chartType: "MOHCD",
-        derivedFrom: "MinAmi",
         values: [
           {
             year: "2021",

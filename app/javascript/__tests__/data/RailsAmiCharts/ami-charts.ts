@@ -347,9 +347,6 @@ export const amiChartsWithOneAmi = [
 export const amiChartsWithDuplicatePercents = [
   {
     percent: "55",
-    year: "2021",
-    chartType: "MOHCD",
-    derivedFrom: "MinAmi",
     values: [
       {
         year: "2021",
@@ -369,9 +366,6 @@ export const amiChartsWithDuplicatePercents = [
   },
   {
     percent: "55",
-    year: "2022",
-    chartType: "MOHCD",
-    derivedFrom: "MinAmi",
     values: [
       {
         year: "2022",
