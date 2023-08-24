@@ -3,7 +3,7 @@ import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import type {
   RailsUnitWithOccupancy,
-  RailsUnitWithOccupancyAndMaxIncome,
+  RailsUnitWithOccupancyAndMinMaxIncome,
 } from "../api/types/rails/listings/RailsUnit"
 import type RailsUnit from "../api/types/rails/listings/RailsUnit"
 import type {
@@ -173,15 +173,18 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
 export const deriveIncomeFromAmiCharts = (
   unit: RailsUnit,
   occupancy: number,
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  min?: boolean
 ): number => {
+  // console.log(unit, occupancy, amiCharts, min)
   if (!unit || !occupancy || !amiCharts) {
     return null
   }
 
   const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
     return (
-      Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
+      Number(amiData.percent) ===
+        unit[min ? "Min_AMI_for_Qualifying_Unit" : "Max_AMI_for_Qualifying_Unit"] &&
       amiData.chartType === unit.AMI_chart_type &&
       amiData.year === unit.AMI_chart_year?.toString()
     )
@@ -192,17 +195,27 @@ export const deriveIncomeFromAmiCharts = (
   })
 
   if (occupancyAmi) {
-    return Math.floor(occupancyAmi?.amount / 12)
+    if (min) {
+      return Math.ceil(occupancyAmi?.amount / 12)
+    }
+    return Math[min ? "ceil" : "floor"](occupancyAmi?.amount / 12)
   }
 
   return null
 }
 
+const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: RailsAmiChart[]) => {
+  return unit?.BMR_Rental_Minimum_Monthly_Income_Needed === 0
+    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true)
+    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+}
+
 export const applyMaxIncomeToUnit =
   (amiCharts: RailsAmiChart[]) =>
-  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMaxIncome => {
+  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
     const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-    return { ...unit, maxMonthlyIncomeNeeded }
+    const minMonthlyIncomeNeeded = determineMinIncomeNeeded(unit, amiCharts)
+    return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
   }
 
 export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
@@ -220,10 +233,10 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
 }
 
 export const buildAmiArray = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): Array<{ min: number | undefined; max: number }> => {
   const arrayOfAmis: Array<{ min: number | undefined; max: number }> = []
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (arrayOfAmis.some((ami) => ami.max === unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
@@ -255,12 +268,12 @@ export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<nu
 
 /**
  * Returns a collapsed array of units grouped by matching criteria with updated availability
- * @param {RailsUnitWithOccupancyAndMaxIncome[]} units
- * @returns {RailsUnitWithOccupancyAndMaxIncome[]}
+ * @param {RailsUnitWithOccupancyAndMinMaxIncome[]} units
+ * @returns {RailsUnitWithOccupancyAndMinMaxIncome[]}
  */
 export const matchSharedUnitFields = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
-): RailsUnitWithOccupancyAndMaxIncome[] => {
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
+): RailsUnitWithOccupancyAndMinMaxIncome[] => {
   const collapsedUnits = []
   // Process each unit in units by finding its matchingUnits
   const unitsCopy = units.map((unit) => {
@@ -268,7 +281,7 @@ export const matchSharedUnitFields = (
   })
   while (unitsCopy.length > 0) {
     const unit = unitsCopy[0]
-    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       return (
         unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
         unit.Unit_Type === curUnit.Unit_Type &&
@@ -280,7 +293,7 @@ export const matchSharedUnitFields = (
       )
     })
     // Remove duplicate matchingUnits from units
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       unitsCopy.splice(unitsCopy.indexOf(curUnit), 1)
     })
     // If min / max range exists, update unit for sales and HOA price with/out parking
@@ -326,7 +339,7 @@ export const matchSharedUnitFields = (
     }
     // Update availiability based on availability in matchingUnits
     let numAvailable = 0
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       numAvailable += curUnit.Availability
     })
     unit.Availability = numAvailable
@@ -336,17 +349,17 @@ export const matchSharedUnitFields = (
 }
 
 export const getAbsoluteMinAndMaxIncome = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): { absoluteMaxIncome: number; absoluteMinIncome: number } => {
   let absoluteMaxIncome = 0
-  let absoluteMinIncome = units[0]?.BMR_Rental_Minimum_Monthly_Income_Needed
+  let absoluteMinIncome = units[0]?.minMonthlyIncomeNeeded
 
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (unit?.maxMonthlyIncomeNeeded > absoluteMaxIncome) {
       absoluteMaxIncome = unit.maxMonthlyIncomeNeeded
     }
-    if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed < absoluteMinIncome) {
-      absoluteMinIncome = unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+    if (unit?.minMonthlyIncomeNeeded < absoluteMinIncome) {
+      absoluteMinIncome = unit?.minMonthlyIncomeNeeded
     }
   })
 
