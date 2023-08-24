@@ -443,7 +443,7 @@ describe("getAmiChartDataFromUnits", () => {
 
 describe("consolidateAmiCharts", () => {
   it("combines AMI charts with the same percent into a single chart, using the values with the larger amount", () => {
-    expect(consolidateAmiCharts(amiChartsWithDuplicatePercents)).toEqual([
+    const consolidatedAmiCharts = [
       {
         percent: "55",
         year: "2021",
@@ -466,7 +466,8 @@ describe("consolidateAmiCharts", () => {
           },
         ],
       },
-    ])
+    ]
+    expect(consolidateAmiCharts(amiChartsWithDuplicatePercents)).toEqual(consolidatedAmiCharts)
   })
 })
 
