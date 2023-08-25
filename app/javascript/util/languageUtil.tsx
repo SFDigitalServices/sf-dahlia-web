@@ -175,6 +175,16 @@ export function getReservedCommunityType(type: string | undefined): string {
   }
 }
 
+// Get the translated custom listing
+export function getCustomListing(type: string | undefined): string {
+  switch (type) {
+    case "Educator 1: SFUSD employees only":
+      return t("listings.customListing.educatorOne")
+    default:
+      return type
+  }
+}
+
 /**
  * If no translation exists for current key, return default salesforce value
  */
