@@ -1,8 +1,8 @@
 import React from "react"
 import Markdown from "markdown-to-jsx"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { areLotteryResultsShareable } from "../../util/listingUtil"
-import { getReservedCommunityType, localizedFormat } from "../../util/languageUtil"
+import { areLotteryResultsShareable, getTagContent } from "../../util/listingUtil"
+import { localizedFormat } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
@@ -72,9 +72,7 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
   return {
     imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
-    tags: listing.Reserved_community_type
-      ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-      : undefined,
+    tags: getTagContent(listing),
     statuses: getListingImageCardStatuses(listing, hasFiltersSet),
     description: `${listing.Building_Name} Building`,
   }
