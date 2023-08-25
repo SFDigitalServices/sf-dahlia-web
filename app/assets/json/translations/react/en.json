@@ -1067,7 +1067,7 @@
   "listings.reservedCommunityType.habitat": "Habitat Greater San Francisco",
   "listings.reservedCommunityType.senior": "Senior Building",
   "listings.reservedCommunityType.veteran": "Veterans Building",
-  "listings.customListing.educatorOne": "SF public schools employee housing",
+  "listings.customListingType.educator": "SF public schools employee housing",
   "listings.reservedFor": "Reserved for %{type}",
   "listings.reservedUnits": "Reserved Units",
   "listings.reservedUnitsDescription": "In order to qualify for these units one of the following must apply to you or someone in your household:",

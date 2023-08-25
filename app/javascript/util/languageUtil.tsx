@@ -176,10 +176,10 @@ export function getReservedCommunityType(type: string | undefined): string {
 }
 
 // Get the translated custom listing
-export function getCustomListing(type: string | undefined): string {
+export function getCustomListingType(type: string | undefined): string {
   switch (type) {
     case "Educator 1: SFUSD employees only":
-      return t("listings.customListing.educatorOne")
+      return t("listings.customListingType.educator")
     default:
       return type
   }

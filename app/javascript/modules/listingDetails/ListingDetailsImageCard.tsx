@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
-import { getCustomListing, getReservedCommunityType } from "../../util/languageUtil"
+import { getCustomListingType, getReservedCommunityType } from "../../util/languageUtil"
 import type { ImageItem } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
@@ -64,7 +64,7 @@ const createImageCardProps = (listing: RailsListing) => {
 
 const getTagContent = (listing: RailsListing) => {
   if (listing.Custom_Listing_Type) {
-    return [{ text: getCustomListing(listing.Custom_Listing_Type) }]
+    return [{ text: getCustomListingType(listing.Custom_Listing_Type) }]
   }
   return listing.Reserved_community_type
     ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
