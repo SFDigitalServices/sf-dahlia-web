@@ -539,10 +539,13 @@ export const getPriorityTypeText = (priortyType: string): string => {
   return text
 }
 
+// return content to display in image tag
 export const getTagContent = (listing: RailsListing) => {
+  // Custom_Listing_Type takes precedence for deciding tag content
   if (listing.Custom_Listing_Type) {
     return [{ text: getCustomListingType(listing.Custom_Listing_Type) }]
   }
+  // else use Reserved_community_type for deciding tag content
   return listing.Reserved_community_type
     ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
     : undefined

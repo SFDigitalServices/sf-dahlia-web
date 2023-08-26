@@ -80,7 +80,7 @@ type BaseRailsListing = {
   Costs_Not_Included?: string
   Credit_Rating?: string
   Criminal_History?: string
-  Custom_Listing_Type: string
+  Custom_Listing_Type?: string
   Deposit_Max?: number
   Deposit_Min?: number
   Developer?: string
