@@ -99,11 +99,7 @@ const buildSaleCells = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: getRangeString(
-        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
-        unit?.maxMonthlyIncomeNeeded,
-        true
-      ),
+      cellText: getRangeString(unit?.minMonthlyIncomeNeeded, unit?.maxMonthlyIncomeNeeded, true),
       cellSubText: t("t.perMonth"),
     },
     sale: buildSalePriceCellRow(unit),
@@ -204,8 +200,7 @@ const buildAccordions = (
               </span>
               <span className={"flex items-center mr-2 text-sm md:text-base"}>
                 {(() => {
-                  return occupancy?.absoluteMinIncome === null ||
-                    occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
+                  return occupancy?.absoluteMinIncome?.valueOf() <= 0 ? (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.upToMaxPerMonth", {

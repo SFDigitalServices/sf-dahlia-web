@@ -208,7 +208,7 @@ const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: Rails
   if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed === 0) {
     return unit?.Min_AMI_for_Qualifying_Unit
       ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true)
-      : null
+      : -1
   }
   return unit?.BMR_Rental_Minimum_Monthly_Income_Needed
 }
