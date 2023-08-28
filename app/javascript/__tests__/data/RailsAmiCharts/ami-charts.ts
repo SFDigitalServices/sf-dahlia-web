@@ -343,3 +343,44 @@ export const amiChartsWithOneAmi = [
     ],
   },
 ]
+
+export const amiChartsWithDuplicatePercents = [
+  {
+    percent: "55",
+    values: [
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 1,
+        chartType: "MOHCD",
+        amount: 31000,
+      },
+      {
+        year: "2021",
+        percent: 55,
+        numOfHousehold: 2,
+        chartType: "MOHCD",
+        amount: 42001,
+      },
+    ],
+  },
+  {
+    percent: "55",
+    values: [
+      {
+        year: "2022",
+        percent: 55,
+        numOfHousehold: 1,
+        chartType: "MOHCD",
+        amount: 31001,
+      },
+      {
+        year: "2022",
+        percent: 55,
+        numOfHousehold: 2,
+        chartType: "MOHCD",
+        amount: 42000,
+      },
+    ],
+  },
+]

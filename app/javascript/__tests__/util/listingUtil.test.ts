@@ -18,6 +18,7 @@ import {
   buildAmiArray,
   groupAndSortUnitsByOccupancy,
   getAmiChartDataFromUnits,
+  consolidateAmiCharts,
   getPriorityTypeText,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
@@ -26,7 +27,7 @@ import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
-import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
+import { amiCharts, amiChartsWithDuplicatePercents } from "../data/RailsAmiCharts/ami-charts"
 import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
 
 describe("listingUtil", () => {
@@ -437,6 +438,33 @@ describe("getAmiChartDataFromUnits", () => {
       { derivedFrom: "MaxAmi", year: 2021, type: "MOHCD", percent: 109.8 },
       { derivedFrom: "MinAmi", year: 2021, type: "MOHCD", percent: 35 },
     ])
+  })
+})
+
+describe("consolidateAmiCharts", () => {
+  it("combines AMI charts with the same percent into a single chart, using the values with the larger amount", () => {
+    const consolidatedAmiCharts = [
+      {
+        percent: "55",
+        values: [
+          {
+            year: "2021",
+            percent: 55,
+            numOfHousehold: 1,
+            chartType: "MOHCD",
+            amount: 31001,
+          },
+          {
+            year: "2021",
+            percent: 55,
+            numOfHousehold: 2,
+            chartType: "MOHCD",
+            amount: 42001,
+          },
+        ],
+      },
+    ]
+    expect(consolidateAmiCharts(amiChartsWithDuplicatePercents)).toEqual(consolidatedAmiCharts)
   })
 })
 
