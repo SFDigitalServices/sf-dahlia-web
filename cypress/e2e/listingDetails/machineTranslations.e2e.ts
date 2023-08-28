@@ -5,6 +5,16 @@ const verifyMachineTranslations = (language, id, translation) => {
   return cy.contains(translation)
 }
 
+/*
+ * If any of these machine translation tests are failing, it could be due to:
+ * 1. Google Translate updated the translation
+ * 2. A Salesforce field changed
+ *
+ * If one of those happen, it should be fine to either update the translation string in this file or find another machine translated field
+ * and test that in the same way it's happening here. These machine translation tests are just to ensure the integration is working, not testing
+ * the specific translation itself.
+ */
+
 const TEST_LISTINGS = {
   OPEN_RENTAL: {
     id: "a0W0P00000F8YG4UAN",
