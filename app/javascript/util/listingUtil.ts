@@ -205,9 +205,12 @@ export const deriveIncomeFromAmiCharts = (
 }
 
 const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: RailsAmiChart[]) => {
-  return unit?.BMR_Rental_Minimum_Monthly_Income_Needed === 0
-    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true)
-    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+  if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed === 0) {
+    return unit?.Min_AMI_for_Qualifying_Unit
+      ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true)
+      : null
+  }
+  return unit?.BMR_Rental_Minimum_Monthly_Income_Needed
 }
 
 export const applyMaxIncomeToUnit =
