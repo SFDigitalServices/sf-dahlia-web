@@ -103,10 +103,6 @@ module Force
       end
     end
 
-    # def cache_listing_images
-    #   ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero?
-    # end
-
     private_class_method def self.get_listings(params: {}, force_recache: false)
       params[:subset] ||= 'browse'
       results = Request.new(parse_response: true)
