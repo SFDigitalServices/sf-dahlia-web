@@ -10,3 +10,15 @@
         justify-content: center;
     }
 }
+
+.additional-rule-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    p:not(:last-child) {
+        margin-bottom: 0;
+    }
+    ul:not(:last-child) {
+        margin-bottom: 0;
+    }
+}

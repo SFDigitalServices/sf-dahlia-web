@@ -565,7 +565,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -601,7 +601,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -637,7 +637,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700"
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
           >
              
             <span>
@@ -1230,7 +1230,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -1266,7 +1266,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -1302,7 +1302,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700"
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
           >
              
             <span>
@@ -2570,7 +2570,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -2606,7 +2606,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -2642,7 +2642,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700"
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
           >
              
             <span>
@@ -3244,7 +3244,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -3280,7 +3280,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700 translate"
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
             <div>
@@ -3316,7 +3316,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </h3>
           </div>
           <div
-            class="expandable-text text-xs text-gray-700"
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
           >
              
             <span>

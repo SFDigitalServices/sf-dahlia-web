@@ -209,7 +209,7 @@ export const ListingDetailsEligibility = ({
             {listing.Credit_Rating && (
               <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
                 <ExpandableText
-                  className="text-xs text-gray-700 translate"
+                  className="text-xs text-gray-700 translate additional-rule-card"
                   strings={{
                     readMore: t("label.showMore"),
                     readLess: t("label.showLess"),
@@ -225,7 +225,7 @@ export const ListingDetailsEligibility = ({
             {listing.Eviction_History && (
               <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
                 <ExpandableText
-                  className="text-xs text-gray-700 translate"
+                  className="text-xs text-gray-700 translate additional-rule-card"
                   strings={{
                     readMore: t("label.showMore"),
                     readLess: t("label.showLess"),
@@ -239,7 +239,7 @@ export const ListingDetailsEligibility = ({
             )}
             <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
               <ExpandableText
-                className="text-xs text-gray-700"
+                className="text-xs text-gray-700 additional-rule-card"
                 strings={{
                   readMore: t("label.showMore"),
                   readLess: t("label.showLess"),
