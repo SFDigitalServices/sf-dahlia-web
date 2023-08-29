@@ -5,6 +5,7 @@ import React from "react"
 
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
+import { CUSTOM_LISTING_TYPES } from "../modules/constants"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -178,10 +179,10 @@ export function getReservedCommunityType(type: string | undefined): string {
 // Get the translated custom listing
 export function getCustomListingType(type: string | undefined): string {
   switch (type) {
-    case "Educator 1: SFUSD employees only":
+    case CUSTOM_LISTING_TYPES.EDUCATOR_ONE:
       return t("listings.customListingType.educator")
     default:
-      return type
+      return undefined
   }
 }
 

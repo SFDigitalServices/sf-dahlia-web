@@ -171,8 +171,8 @@ describe("languageUtil", () => {
       )
     })
 
-    it("returns translation when unknown custom listing type", () => {
-      expect(getCustomListingType("Unknown Type")).toBe("Unknown Type")
+    it("returns undefined when unknown custom listing type", () => {
+      expect(getCustomListingType("Unknown Type")).toBeUndefined()
     })
   })
 

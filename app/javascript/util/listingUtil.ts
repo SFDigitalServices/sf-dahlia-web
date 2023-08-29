@@ -543,7 +543,8 @@ export const getPriorityTypeText = (priortyType: string): string => {
 export const getTagContent = (listing: RailsListing) => {
   // Custom_Listing_Type takes precedence for deciding tag content
   if (listing.Custom_Listing_Type) {
-    return [{ text: getCustomListingType(listing.Custom_Listing_Type) }]
+    const text: string = getCustomListingType(listing.Custom_Listing_Type)
+    if (text) return [{ text }]
   }
   // else use Reserved_community_type for deciding tag content
   return listing.Reserved_community_type
