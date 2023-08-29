@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
-import { getReservedCommunityType } from "../../util/languageUtil"
 import type { ImageItem } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
-import { getListingAddressString } from "../../util/listingUtil"
+import { getListingAddressString, getTagContent } from "../../util/listingUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
@@ -74,14 +73,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   return (
     <header className="image-card--leader">
       <span aria-hidden={fallbackUsed}>
-        <ImageCard
-          {...imageCardProps}
-          tags={
-            listing.Reserved_community_type
-              ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-              : undefined
-          }
-        />
+        <ImageCard {...imageCardProps} tags={getTagContent(listing)} />
       </span>
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>

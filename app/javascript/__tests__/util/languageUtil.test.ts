@@ -7,6 +7,7 @@ import {
   getReservedCommunityType,
   defaultIfNotTranslated,
   localizedFormat,
+  getCustomListingType,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -160,6 +161,18 @@ describe("languageUtil", () => {
 
     it("returns translation when unknown reserved community type", () => {
       expect(getReservedCommunityType("New Type")).toBe("New Type")
+    })
+  })
+
+  describe("getCustomListingType", () => {
+    it("returns translation when known custom listing type", () => {
+      expect(getCustomListingType("Educator 1: SFUSD employees only")).toBe(
+        "SF public schools employee housing"
+      )
+    })
+
+    it("returns undefined when unknown custom listing type", () => {
+      expect(getCustomListingType("Unknown Type")).toBeUndefined()
     })
   })
 
