@@ -33,6 +33,15 @@ const buildHmiHeadersWithOneAmi = () => {
   }
 }
 
+const hasMultipleUniqueChartsByPercent = (amiCharts: RailsAmiChart[]) => {
+  return (
+    amiCharts
+      .map((chart) => chart.percent)
+      .filter((currentPercent, idx, allPercents) => allPercents.indexOf(currentPercent) === idx)
+      .length > 1
+  )
+}
+
 const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
@@ -44,7 +53,7 @@ const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
 }
 
 const buildHmiChartHeaders = (amiCharts: RailsAmiChart[]) => {
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiHeadersWithMultipleAmis(amiCharts)
     : buildHmiHeadersWithOneAmi()
 }
@@ -147,7 +156,7 @@ const buildHmiCharts = (
     maxOccupancy += 2
   }
 
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiTableWithMultipleAmis(minOccupancy, maxOccupancy, amiCharts)
     : buildHmiTableWithOneAmiChart(minOccupancy, maxOccupancy, amiCharts)
 }
