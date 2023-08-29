@@ -8,38 +8,16 @@ export interface ListingDetailsReservedBannerProps {
   reservedCommunityMinimumAge?: number
   reservedCommunityType?: string
   customListingType?: string
-  scrollToRef
-}
-
-const handleClick = (scrollToRef) => {
-  scrollToRef.current?.scrollIntoView()
-}
-
-const buttonStyle = {
-  background: "none",
-  border: "none",
-  padding: "0",
-  font: "inherit",
-  cursor: "pointer",
-  // text-decoration: "underline",
-  color: "blue",
 }
 
 export const ListingDetailsReservedBanner = ({
   reservedCommunityMinimumAge,
   reservedCommunityType,
   customListingType,
-  scrollToRef,
 }: ListingDetailsReservedBannerProps) => {
-  // const scrollToComponent = () => {
-  //   scrollToRef.current?.scrollIntoView({ behavior: "smooth" })
-  // }
-
   console.log(`customListingType = ${customListingType}`)
 
   if (customListingType) {
-    // const getContent = () => renderInlineMarkup(t(`listings.customListingType.educator.banner`))
-
     const element = () => {
       // console.log(t(`listings.customListingType.educator.banner`))
       // console.log("vs")
@@ -50,8 +28,6 @@ export const ListingDetailsReservedBanner = ({
       //   )
       // )
       // console.log(<b>heelo</b>)
-      // console.log("hello")
-      // console.log(`host = ${window.location.host}#listing-detail-eligibility`)
       console.log(`path is a = ${window.location.href}#listing-detail-eligibility`)
       return (
         <div>
@@ -63,15 +39,6 @@ export const ListingDetailsReservedBanner = ({
                 url: `#listing-detail-eligibility`,
               })
             )}
-          </div>
-          <br />
-          <div>
-            {/* <a href="#" onClick={scrollToComponent}>
-              Scroll to Component
-            </a> */}
-            <button style={buttonStyle} onClick={() => handleClick(scrollToRef)}>
-              Scroll
-            </button>
           </div>
         </div>
       )

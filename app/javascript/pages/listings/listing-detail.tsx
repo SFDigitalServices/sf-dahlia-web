@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {
   ListingDetails,
   LoadingOverlay,
@@ -41,20 +41,6 @@ import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDe
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
-const handleClick = (scrollToRef) => {
-  scrollToRef.current?.scrollIntoView()
-}
-
-const buttonStyle = {
-  background: "none",
-  border: "none",
-  padding: "0",
-  font: "inherit",
-  cursor: "pointer",
-  // text-decoration: "underline",
-  color: "blue",
-}
-
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
@@ -93,8 +79,6 @@ const ListingDetail = () => {
     })
   }, [router.pathname])
 
-  const scrollToRef = useRef()
-
   return (
     <LoadingOverlay isLoading={!listing}>
       <Layout title={listing?.Name}>
@@ -122,17 +106,11 @@ const ListingDetail = () => {
                 />
               </Mobile>
             )}
-            <button style={buttonStyle} onClick={() => handleClick(scrollToRef)}>
-              Scroll
-            </button>
-            {/* <div onClick={handleClick}> */}
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
               customListingType={listing.Custom_Listing_Type}
-              scrollToRef={scrollToRef}
             />
-            {/* </div> */}
             <ErrorBoundary
               boundaryScope={BoundaryScope.component}
               componentClassNames="p-4 text-left"
@@ -165,7 +143,7 @@ const ListingDetail = () => {
                 imageSrc={getAssetPath("listing-units.svg")}
                 listing={listing}
               />
-              <div ref={scrollToRef} id="listing-detail-eligibility">
+              <div id="listing-detail-eligibility">
                 <ListingDetailsEligibility
                   listing={listing}
                   imageSrc={getAssetPath("listing-eligibility.svg")}

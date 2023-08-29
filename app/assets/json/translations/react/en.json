@@ -1069,7 +1069,7 @@
   "listings.reservedCommunityType.veteran": "Veterans Building",
   "listings.customListingType.educator": "SF public schools employee housing",
   "listings.customListingType.educator.banner": "Special housing for San Francisco <b>public school employees<b/>",
-  "listings.customListingType.educator.banner.link.content": "<a href='%{url}' target='_blank'>Learn more about who can apply lender on our list</a>",
+  "listings.customListingType.educator.banner.link.content": "<a target='_self' href='%{url}'>Learn more about who can apply lender on our list</a>",
   "listings.customListingType.educator.banner.link.destination": "#listing-detail-eligibility",
   "listings.reservedFor": "Reserved for %{type}",
   "listings.reservedUnits": "Reserved Units",
