@@ -213,7 +213,7 @@ const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: Rails
   return unit?.BMR_Rental_Minimum_Monthly_Income_Needed
 }
 
-export const applyMaxIncomeToUnit =
+export const applyMinMaxIncomeToUnit =
   (amiCharts: RailsAmiChart[]) =>
   (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
     const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
@@ -387,16 +387,23 @@ export const groupAndSortUnitsByOccupancy = (
    */
   const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
-   * We have to derive the max income using ami charts, so this mapping goes through each unit
-   * and does that and adds that max income to the unit object
+   * We have to derive the max and min income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max and min income to the unit object.
+   * The Min income is derived through two means: by the AMI Chart for that value or via the BMR_Rental_Minimum_Monthly_Income_Needed field.
+   * The former is only applicable when the listing is a Section 415 housing listing (meaning there are discrete AMI ranges), while the latter
+   * is calculated in Salesforce by multiplying the base rent by the rent multiple (usually 2x).
+   * To determine this, we check if there is a BMR value and use that if there is, if not, we try to use the minimum AMI field.
+   * If neither of those are available, the value becomes -1, which forces the table to display "Up To".
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMinMaxIncome = unitsWithOccupancy.map(
+    applyMinMaxIncomeToUnit(amiCharts)
+  )
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
    * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
    */
-  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMinMaxIncome)
 
   /*
    * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
@@ -505,7 +512,7 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMinMaxIncomeToUnit(amiCharts))
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
