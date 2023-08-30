@@ -176,7 +176,6 @@ export const deriveIncomeFromAmiCharts = (
   amiCharts: RailsAmiChart[],
   min?: boolean
 ): number => {
-  // console.log(unit, occupancy, amiCharts, min)
   if (!unit || !occupancy || !amiCharts) {
     return null
   }
@@ -204,13 +203,20 @@ export const deriveIncomeFromAmiCharts = (
   return null
 }
 
+/**
+ *
+ * If there is a minimum specified AMI value, then we will use that first.
+ * If the AMI is not available, then we will use the BMR value
+ * If the BMR value is also not available, then null will be returned.
+ * In Sales listings, the there will only ever be an AMI Value or a BMR Rental value.
+ * In Rental listings, there can be both, but we still preference the AMI field
+ */
 const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: RailsAmiChart[]) => {
-  if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed === 0) {
-    return unit?.Min_AMI_for_Qualifying_Unit
-      ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true)
-      : -1
-  }
-  return unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+  return unit?.Min_AMI_for_Qualifying_Unit
+    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true) ||
+        unit?.BMR_Rental_Minimum_Monthly_Income_Needed ||
+        null
+    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || null
 }
 
 export const applyMinMaxIncomeToUnit =
