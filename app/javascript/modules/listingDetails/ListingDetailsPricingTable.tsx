@@ -114,7 +114,13 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       cellSubText: `${unit.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: getRangeString(unit?.minMonthlyIncomeNeeded, unit?.maxMonthlyIncomeNeeded, true),
+      cellText: getRangeString(
+        unit?.minMonthlyIncomeNeeded,
+        unit?.maxMonthlyIncomeNeeded,
+        true,
+        undefined,
+        !!unit?.Rent_percent_of_income
+      ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
@@ -145,10 +151,14 @@ const buildAccordions = (
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
+      let forceZeroInRange = false
 
       const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
         const responsiveTableRows = amiRow.units.map(
           (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
+            if (unit.Rent_percent_of_income) {
+              forceZeroInRange = true
+            }
             return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
           }
         )
@@ -200,7 +210,7 @@ const buildAccordions = (
               </span>
               <span className={"flex items-center mr-2 text-sm md:text-base"}>
                 {(() => {
-                  return occupancy?.absoluteMinIncome <= 0 ? (
+                  return occupancy?.absoluteMinIncome <= 0 && !forceZeroInRange ? (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.upToMaxPerMonth", {
@@ -213,7 +223,9 @@ const buildAccordions = (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.minMaxPerMonth", {
-                          min: Math.round(occupancy?.absoluteMinIncome).toLocaleString(),
+                          min: Math.round(
+                            forceZeroInRange ? 0 : occupancy?.absoluteMinIncome
+                          ).toLocaleString(),
                           max: Math.round(occupancy?.absoluteMaxIncome).toLocaleString(),
                         }),
                         "<span>"

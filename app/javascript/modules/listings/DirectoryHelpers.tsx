@@ -71,15 +71,21 @@ const isNumber = (val: number) => val || val === 0
 // Transforms two numbers into a range string with optional currency formatting and optional suffix
 // 100, 200, true, null --> $100 - $200
 // 100, 100, false, "%" --> 100%
-export const getRangeString = (min: number, max: number, currency?: boolean, suffix?: string) => {
+export const getRangeString = (
+  min: number,
+  max: number,
+  currency?: boolean,
+  suffix?: string,
+  forceZeroInRange = false
+) => {
   // If min is less than or equal to 0, return "up to {max}"
-  if (isNumber(min) && isNumber(max) && min <= 0 && max !== 0) {
+  if (isNumber(min) && isNumber(max) && min <= 0 && max !== 0 && !forceZeroInRange) {
     const maxString = getNumberString(max, currency)
     return `${t("t.upTo")} ${maxString}`
   }
   // If the numbers differ, return as a range.
   if (isNumber(min) && isNumber(max) && min !== max) {
-    const minString = getNumberString(min, currency)
+    const minString = getNumberString(forceZeroInRange ? 0 : min, currency)
     const maxString = getNumberString(max, currency)
     const range = t("t.numberRange", {
       minValue: minString,
