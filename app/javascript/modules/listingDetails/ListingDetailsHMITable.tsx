@@ -77,8 +77,9 @@ const buildHmiTableWithOneAmiChart = (
   amiCharts: RailsAmiChart[]
 ) => {
   const tableData = []
+  const mostRecentAmiChart = amiCharts[amiCharts.length - 1]
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
-    const amiChart = amiCharts[0]?.values?.find((amiChart: RailsAmiChartValue) => {
+    const amiChart = mostRecentAmiChart?.values?.find((amiChart: RailsAmiChartValue) => {
       return amiChart.numOfHousehold === i
     })
 
@@ -131,6 +132,7 @@ const buildHmiTableWithMultipleAmis = (
         return amiChart.numOfHousehold === i
       })
       if (amiChart) {
+        // if there are charts with the same percent, the chart with the largest index is used
         tableRow[`ami${chart.percent}`] = {
           content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
         }
