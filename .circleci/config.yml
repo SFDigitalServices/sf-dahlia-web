@@ -24,6 +24,12 @@ non_production_jobs: &non_production_jobs
       ignore: production
   requires:
     - build
+angular_e2e_jobs: &angular_e2e_jobs
+  filters:
+    tags:
+      only: angular-e2e
+  requires:
+    - build
 prod_and_release_jobs: &prod_and_release_jobs
   context: webapp-prod
   requires:
@@ -246,7 +252,7 @@ workflows:
       - e2e:
           <<: *non_production_jobs
       - e2e-legacy:
-          <<: *non_production_jobs
+          <<: *angular_e2e_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
