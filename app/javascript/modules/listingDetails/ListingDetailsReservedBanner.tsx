@@ -13,7 +13,7 @@ const buildMessage = (
   reservedCommunityMinimumAge?: number,
   reservedCommunityType?: string,
   customListingType?: string
-) => {
+): React.JSX.Element => {
   if (customListingType && getCustomListingType(customListingType)) {
     return (
       <Message warning={true}>
@@ -35,7 +35,7 @@ const buildMessage = (
   )
     return null
 
-  const content =
+  const content: string =
     reservedCommunityType === RESERVED_COMMUNITY_TYPES.SENIOR
       ? t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
           age: reservedCommunityMinimumAge,
@@ -50,7 +50,7 @@ export const ListingDetailsReservedBanner = ({
   reservedCommunityType,
   customListingType,
 }: ListingDetailsReservedBannerProps) => {
-  const message = buildMessage(
+  const message: React.JSX.Element = buildMessage(
     reservedCommunityMinimumAge,
     reservedCommunityType,
     customListingType
