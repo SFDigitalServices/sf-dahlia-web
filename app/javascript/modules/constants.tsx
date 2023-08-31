@@ -45,6 +45,10 @@ export const RESERVED_COMMUNITY_TYPES = {
   VETERAN: "Veteran",
 }
 
+export const CUSTOM_LISTING_TYPES = {
+  EDUCATOR_ONE: "Educator 1: SFUSD employees only",
+}
+
 export const TENURE_TYPES = {
   NEW_SALE: "New sale",
   RESALE: "Resale",

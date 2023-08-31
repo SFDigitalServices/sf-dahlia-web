@@ -14,7 +14,7 @@ import type {
 import dayjs from "dayjs"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
-import { LANGUAGE_CONFIGS } from "./languageUtil"
+import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
@@ -562,4 +562,17 @@ export const getPriorityTypeText = (priortyType: string): string => {
       text = ""
   }
   return text
+}
+
+// return content to display in image tag
+export const getTagContent = (listing: RailsListing) => {
+  // Custom_Listing_Type takes precedence for deciding tag content
+  if (listing.Custom_Listing_Type) {
+    const text: string = getCustomListingType(listing.Custom_Listing_Type)
+    if (text) return [{ text }]
+  }
+  // else use Reserved_community_type for deciding tag content
+  return listing.Reserved_community_type
+    ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
+    : undefined
 }

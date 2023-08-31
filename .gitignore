@@ -58,6 +58,7 @@ yarn-debug.log*
 # Test output
 app/javascript/test-coverage
 junit.xml
+cypress/screenshots/*
 
 # Yalc
 .yalc
