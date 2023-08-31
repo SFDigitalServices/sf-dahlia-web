@@ -2,56 +2,48 @@ import React from "react"
 import { Message, t } from "@bloom-housing/ui-components"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
 // import { renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
-import { renderMarkup } from "../../util/languageUtil"
+import { getCustomListingType, renderMarkup } from "../../util/languageUtil"
+import { RailsListing } from "../listings/SharedHelpers"
 
 export interface ListingDetailsReservedBannerProps {
-  reservedCommunityMinimumAge?: number
-  reservedCommunityType?: string
-  customListingType?: string
+  listing: RailsListing
 }
 
-export const ListingDetailsReservedBanner = ({
-  reservedCommunityMinimumAge,
-  reservedCommunityType,
-  customListingType,
-}: ListingDetailsReservedBannerProps) => {
-  if (customListingType) {
+const buildMessage = (listing: RailsListing) => {
+  if (listing.Custom_Listing_Type && getCustomListingType(listing.Custom_Listing_Type)) {
     return (
-      <div className="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0">
-        <Message warning={true}>
-          <div>
-            <div>{renderMarkup(`${t("listings.customListingType.educator.banner")}`)}</div>
-            <br />
-            <div>
-              {renderMarkup(
-                t(`listings.customListingType.educator.banner.link.content`, {
-                  url: `#listing-detail-eligibility`,
-                })
-              )}
-            </div>
-          </div>
-        </Message>
-      </div>
+      <Message warning={true}>
+        {renderMarkup(`${t("listings.customListingType.educator.banner")}`)}
+        {renderMarkup(
+          t(`listings.customListingType.educator.banner.link.content`, {
+            url: `#listing-detail-eligibility`,
+          })
+        )}
+      </Message>
     )
+  } else {
+    if (
+      !listing.Reserved_community_type ||
+      listing.Reserved_community_type === RESERVED_COMMUNITY_TYPES.HABITAT ||
+      !Object.values(RESERVED_COMMUNITY_TYPES).includes(listing.Reserved_community_type)
+    )
+      return null
+
+    const message =
+      listing.Reserved_community_type === RESERVED_COMMUNITY_TYPES.SENIOR
+        ? t(`listings.allUnitsReservedFor.${listing.Reserved_community_type}`, {
+            age: listing.Reserved_community_minimum_age,
+          })
+        : t(`listings.allUnitsReservedFor.${listing.Reserved_community_type}`)
+
+    return <Message warning={true}>{message}</Message>
   }
+}
 
-  if (!reservedCommunityType || reservedCommunityType === RESERVED_COMMUNITY_TYPES.HABITAT)
-    return null
-
-  if (!Object.values(RESERVED_COMMUNITY_TYPES).includes(reservedCommunityType)) {
-    return null
-  }
-
-  const message =
-    reservedCommunityType === RESERVED_COMMUNITY_TYPES.SENIOR
-      ? t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
-          age: reservedCommunityMinimumAge,
-        })
-      : t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
-
+export const ListingDetailsReservedBanner = ({ listing }: ListingDetailsReservedBannerProps) => {
   return (
     <div className="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0">
-      <Message warning={true}>{message}</Message>
+      {buildMessage(listing)}
     </div>
   )
 }
