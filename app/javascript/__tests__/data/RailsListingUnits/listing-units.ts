@@ -1,4 +1,4 @@
-import type { RailsUnitWithOccupancyAndMaxIncome } from "../../../api/types/rails/listings/RailsUnit"
+import type { RailsUnitWithOccupancyAndMinMaxIncome } from "../../../api/types/rails/listings/RailsUnit"
 import type RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
 export const units: RailsUnit[] = [
@@ -199,7 +199,7 @@ export const unitsWithOneAmi: RailsUnit[] = [
   },
 ]
 
-export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[] = [
+export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMinMaxIncome[] = [
   {
     attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmGQAV" },
     Unit_Type: "2 BR",
@@ -222,6 +222,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Id: "a0b4U00001JvOmGQAV",
     occupancy: 3,
     maxMonthlyIncomeNeeded: 500,
+    minMonthlyIncomeNeeded: 100,
   },
   {
     attributes: { type: "Unit", url: "/services/data/v35.0/sobjects/Unit/a0b4U00001JvOmHQAV" },
@@ -242,6 +243,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 1,
     Id: "a0b4U00001JvOmHQAV",
     maxMonthlyIncomeNeeded: 1500,
+    minMonthlyIncomeNeeded: 1000,
     occupancy: 3,
   },
   {
@@ -263,6 +265,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 3,
     Id: "a0b4U00001JvOj5QAF",
     maxMonthlyIncomeNeeded: 800,
+    minMonthlyIncomeNeeded: 800,
     occupancy: 3,
   },
   {
@@ -284,6 +287,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 3,
     Id: "a0b4U00001JvOmLQAV",
     maxMonthlyIncomeNeeded: 500,
+    minMonthlyIncomeNeeded: 100,
     occupancy: 3,
   },
   {
@@ -305,6 +309,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 3,
     Id: "a0b4U00001JvOmBQAV",
     maxMonthlyIncomeNeeded: 500,
+    minMonthlyIncomeNeeded: 100,
     occupancy: 3,
   },
   {
@@ -326,6 +331,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 3,
     Id: "a0b4U00001JvOm1QAF",
     maxMonthlyIncomeNeeded: 500,
+    minMonthlyIncomeNeeded: 100,
     occupancy: 3,
   },
   {
@@ -347,6 +353,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 3,
     Id: "a0b4U00001JvOm6QAF",
     maxMonthlyIncomeNeeded: 500,
+    minMonthlyIncomeNeeded: 100,
     occupancy: 3,
   },
   {
@@ -368,6 +375,7 @@ export const unitsWithOccupancyAndMaxIncome: RailsUnitWithOccupancyAndMaxIncome[
     Min_Occupancy: 4,
     Id: "a0b4U00001JvOm7QAF",
     maxMonthlyIncomeNeeded: 700,
+    minMonthlyIncomeNeeded: 100,
     occupancy: 3,
   },
 ]

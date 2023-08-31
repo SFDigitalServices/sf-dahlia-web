@@ -323,7 +323,7 @@ const buildContent = (
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
   if (units?.length) {
-    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts, listingIsSale)
   }
 
   if (listingIsHabitat) {

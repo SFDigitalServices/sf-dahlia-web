@@ -205,25 +205,24 @@ export const deriveIncomeFromAmiCharts = (
 
 /**
  *
- * If there is a minimum specified AMI value, then we will use that first.
- * If the AMI is not available, then we will use the BMR value
- * If the BMR value is also not available, then null will be returned.
- * In Sales listings, the there will only ever be an AMI Value or a BMR Rental value.
- * In Rental listings, there can be both, but we still preference the AMI field
+ * For rental listings, we ignore the minimum AMI Value in ~all~ cases, including 415.
+ * For Sale listings, we try to derive the minimum AMI, if we can't then we return -1.
  */
-const determineMinIncomeNeeded = (unit: RailsUnitWithOccupancy, amiCharts: RailsAmiChart[]) => {
-  return unit?.Min_AMI_for_Qualifying_Unit
-    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true) ||
-        unit?.BMR_Rental_Minimum_Monthly_Income_Needed ||
-        null
-    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || null
+const determineMinIncomeNeeded = (
+  unit: RailsUnitWithOccupancy,
+  amiCharts: RailsAmiChart[],
+  isSale: boolean
+) => {
+  return isSale
+    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true) || -1
+    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || -1
 }
 
 export const applyMinMaxIncomeToUnit =
-  (amiCharts: RailsAmiChart[]) =>
+  (amiCharts: RailsAmiChart[], isSale?: boolean) =>
   (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
     const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-    const minMonthlyIncomeNeeded = determineMinIncomeNeeded(unit, amiCharts)
+    const minMonthlyIncomeNeeded = determineMinIncomeNeeded(unit, amiCharts, isSale)
     return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
   }
 
@@ -377,7 +376,8 @@ export const getAbsoluteMinAndMaxIncome = (
 
 export const groupAndSortUnitsByOccupancy = (
   units: RailsUnit[],
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  isSale: boolean
 ): GroupedUnitsByOccupancy[] => {
   /*
    * make a deep copy
@@ -402,7 +402,7 @@ export const groupAndSortUnitsByOccupancy = (
    * If neither of those are available, the value becomes -1, which forces the table to display "Up To".
    */
   const unitsWithOccupancyAndMinMaxIncome = unitsWithOccupancy.map(
-    applyMinMaxIncomeToUnit(amiCharts)
+    applyMinMaxIncomeToUnit(amiCharts, isSale)
   )
 
   /*
