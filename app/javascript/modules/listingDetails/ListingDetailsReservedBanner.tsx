@@ -15,20 +15,8 @@ export const ListingDetailsReservedBanner = ({
   reservedCommunityType,
   customListingType,
 }: ListingDetailsReservedBannerProps) => {
-  console.log(`customListingType = ${customListingType}`)
-
   if (customListingType) {
     const element = () => {
-      // console.log(t(`listings.customListingType.educator.banner`))
-      // console.log("vs")
-      // console.log(
-      //   renderMarkup(
-      //     t(`listings.customListingType.educator.banner`),
-      //     "<div><p><br><ol><ul><li><b><hr><a>"
-      //   )
-      // )
-      // console.log(<b>heelo</b>)
-      console.log(`path is a = ${window.location.href}#listing-detail-eligibility`)
       return (
         <div>
           <div>{renderMarkup(`${t("listings.customListingType.educator.banner")}`, "<b>")}</div>
