@@ -153,10 +153,6 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
 }
 
 export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
-  return <Markdown>{stripMostTags(translatedString, allowedTags)}</Markdown>
-}
-
-export function renderInlineMarkupBanner(translatedString: string, allowedTags?: string) {
   return (
     <Markdown
       options={{

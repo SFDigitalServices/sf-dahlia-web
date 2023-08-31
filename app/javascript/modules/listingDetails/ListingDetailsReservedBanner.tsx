@@ -1,8 +1,7 @@
 import React from "react"
 import { Message, t } from "@bloom-housing/ui-components"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
-// import { renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
-import { getCustomListingType, renderInlineMarkupBanner } from "../../util/languageUtil"
+import { getCustomListingType, renderInlineMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsReservedBannerProps {
   reservedCommunityMinimumAge?: number
@@ -18,8 +17,8 @@ const buildMessage = (
   if (customListingType && getCustomListingType(customListingType)) {
     return (
       <Message warning={true}>
-        {renderInlineMarkupBanner(`${t("listings.customListingType.educator.banner")}`, "<p><b>")}
-        {renderInlineMarkupBanner(
+        {renderInlineMarkup(`${t("listings.customListingType.educator.banner")}`, "<p><b>")}
+        {renderInlineMarkup(
           t(`listings.customListingType.educator.banner.link.content`, {
             url: `#listing-detail-eligibility`,
           }),

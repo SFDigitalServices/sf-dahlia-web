@@ -1,10 +1,10 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { ListingDetailsReservedBanner } from "../../../modules/listingDetails/ListingDetailsReservedBanner"
-import { RESERVED_COMMUNITY_TYPES } from "../../../modules/constants"
+import { CUSTOM_LISTING_TYPES, RESERVED_COMMUNITY_TYPES } from "../../../modules/constants"
 
 describe("ListingDetailsReservedBanner", () => {
-  it("does not display banner when reserved community type is blank", () => {
+  it("does not display banner when reserved community and custom listing types are blank", () => {
     const { asFragment } = render(<ListingDetailsReservedBanner />)
 
     expect(asFragment()).toMatchSnapshot()
@@ -58,6 +58,31 @@ describe("ListingDetailsReservedBanner", () => {
   it("displays banner when reserved community type is Veteran", () => {
     const { asFragment } = render(
       <ListingDetailsReservedBanner reservedCommunityType={RESERVED_COMMUNITY_TYPES.VETERAN} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("does not display banner when custom listing type is unknown", () => {
+    const { asFragment } = render(<ListingDetailsReservedBanner customListingType="unknown" />)
+
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays banner when custom listing type is Educator One", () => {
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner customListingType={CUSTOM_LISTING_TYPES.EDUCATOR_ONE} />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays custom listing type banner when both custom listing and reserved community types are selected", () => {
+    const { asFragment } = render(
+      <ListingDetailsReservedBanner
+        reservedCommunityType={RESERVED_COMMUNITY_TYPES.VETERAN}
+        customListingType={CUSTOM_LISTING_TYPES.EDUCATOR_ONE}
+      />
     )
 
     expect(asFragment()).toMatchSnapshot()
