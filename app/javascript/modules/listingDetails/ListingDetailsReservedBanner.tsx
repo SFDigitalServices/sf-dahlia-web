@@ -20,29 +20,29 @@ const buildMessage = (
         {renderInlineMarkup(`${t("listings.customListingType.educator.banner")}`, "<p><b>")}
         {renderInlineMarkup(
           t(`listings.customListingType.educator.banner.link.content`, {
-            url: `#listing-detail-eligibility`,
+            url: `#listing-details-eligibility`,
           }),
           "<p><a>"
         )}
       </Message>
     )
-  } else {
-    if (
-      !reservedCommunityType ||
-      reservedCommunityType === RESERVED_COMMUNITY_TYPES.HABITAT ||
-      !Object.values(RESERVED_COMMUNITY_TYPES).includes(reservedCommunityType)
-    )
-      return null
-
-    const content =
-      reservedCommunityType === RESERVED_COMMUNITY_TYPES.SENIOR
-        ? t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
-            age: reservedCommunityMinimumAge,
-          })
-        : t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
-
-    return <Message warning={true}>{content}</Message>
   }
+
+  if (
+    !reservedCommunityType ||
+    reservedCommunityType === RESERVED_COMMUNITY_TYPES.HABITAT ||
+    !Object.values(RESERVED_COMMUNITY_TYPES).includes(reservedCommunityType)
+  )
+    return null
+
+  const content =
+    reservedCommunityType === RESERVED_COMMUNITY_TYPES.SENIOR
+      ? t(`listings.allUnitsReservedFor.${reservedCommunityType}`, {
+          age: reservedCommunityMinimumAge,
+        })
+      : t(`listings.allUnitsReservedFor.${reservedCommunityType}`)
+
+  return <Message warning={true}>{content}</Message>
 }
 
 export const ListingDetailsReservedBanner = ({

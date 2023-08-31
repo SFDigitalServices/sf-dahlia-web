@@ -143,7 +143,7 @@ const ListingDetail = () => {
                 imageSrc={getAssetPath("listing-units.svg")}
                 listing={listing}
               />
-              <div id="listing-detail-eligibility">
+              <div id="listing-details-eligibility">
                 <ListingDetailsEligibility
                   listing={listing}
                   imageSrc={getAssetPath("listing-eligibility.svg")}

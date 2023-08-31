@@ -19,7 +19,7 @@ exports[`ListingDetailsReservedBanner displays banner when custom listing type i
         style="text-transform: none;"
       >
         <a
-          href="#listing-detail-eligibility"
+          href="#listing-details-eligibility"
           target="_self"
         >
           Learn more about who can apply lender on our list.
@@ -105,7 +105,7 @@ exports[`ListingDetailsReservedBanner displays custom listing type banner when b
         style="text-transform: none;"
       >
         <a
-          href="#listing-detail-eligibility"
+          href="#listing-details-eligibility"
           target="_self"
         >
           Learn more about who can apply lender on our list.
@@ -121,7 +121,5 @@ exports[`ListingDetailsReservedBanner does not display banner when custom listin
 exports[`ListingDetailsReservedBanner does not display banner when reserved community and custom listing types are blank 1`] = `<DocumentFragment />`;
 
 exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `<DocumentFragment />`;
-
-exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `<DocumentFragment />`;
 
 exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `<DocumentFragment />`;
