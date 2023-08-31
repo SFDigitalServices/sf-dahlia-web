@@ -146,7 +146,18 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
   return (
-    <Markdown options={{ forceBlock: true }}>
+    <Markdown
+      options={{
+        forceBlock: true,
+        overrides: {
+          p: {
+            props: {
+              style: { textTransform: "none" },
+            },
+          },
+        },
+      }}
+    >
       {stripMostTags(translatedString, allowedTags)}
     </Markdown>
   )
