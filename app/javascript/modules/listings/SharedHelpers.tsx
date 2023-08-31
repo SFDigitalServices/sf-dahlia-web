@@ -7,6 +7,7 @@ import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListi
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
+import "./SharedHelpers.scss"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -81,11 +82,11 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
 }
 
 export const getEventNote = (listingEvent: ListingEvent) => {
-  if (!listingEvent.Venue || !(listingEvent.Street_Address && listingEvent.City)) return null
+  if (!listingEvent.Venue) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="translate">
+        <span className="translate links-space">
           <Markdown>{listingEvent.Venue}</Markdown>
         </span>
       )}
