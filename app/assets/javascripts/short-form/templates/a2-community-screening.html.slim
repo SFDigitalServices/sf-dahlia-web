@@ -1,6 +1,6 @@
 section.app-container.focus-container
   .row.collapse
-    .medium-6.medium-centered.columns.fixed-width
+    .medium-6.medium-centered.columns
       short-form-nav
       .app-card.form-card
         community-screening-header
@@ -14,5 +14,5 @@ section.app-container.focus-container
               radio-block-item value='No' user='application' name='answeredCommunityScreening' ng-required='true'
                 | {{'t.no' | translate}}
         .button-pager
-          .button-pager_row.primary.text-center
+          .button-pager_row.primary
             input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}"
