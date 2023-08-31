@@ -28,6 +28,8 @@ angular_e2e_jobs: &angular_e2e_jobs
   filters:
     tags:
       only: angular-e2e
+    branches:
+      ignore: /.*/
   requires:
     - build
 prod_and_release_jobs: &prod_and_release_jobs
