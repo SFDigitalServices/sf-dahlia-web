@@ -22,7 +22,7 @@ exports[`ListingDetailsReservedBanner displays banner when custom listing type i
           href="#listing-details-eligibility"
           target="_self"
         >
-          Learn more about who can apply lender on our list.
+          Learn more about who can apply.
         </a>
       </p>
     </div>
@@ -108,7 +108,7 @@ exports[`ListingDetailsReservedBanner displays custom listing type banner when b
           href="#listing-details-eligibility"
           target="_self"
         >
-          Learn more about who can apply lender on our list.
+          Learn more about who can apply.
         </a>
       </p>
     </div>
