@@ -145,7 +145,6 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
-  console.log(`stripMostTags = ${stripMostTags(translatedString, allowedTags)}`)
   return (
     <Markdown options={{ forceBlock: true }}>
       {stripMostTags(translatedString, allowedTags)}

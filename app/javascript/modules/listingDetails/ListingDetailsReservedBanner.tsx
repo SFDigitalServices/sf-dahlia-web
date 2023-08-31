@@ -16,24 +16,21 @@ export const ListingDetailsReservedBanner = ({
   customListingType,
 }: ListingDetailsReservedBannerProps) => {
   if (customListingType) {
-    const element = () => {
-      return (
-        <div>
-          <div>{renderMarkup(`${t("listings.customListingType.educator.banner")}`, "<b>")}</div>
-          <br />
-          <div>
-            {renderMarkup(
-              t(`listings.customListingType.educator.banner.link.content`, {
-                url: `#listing-detail-eligibility`,
-              })
-            )}
-          </div>
-        </div>
-      )
-    }
     return (
       <div className="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0">
-        <Message warning={true}>{element()}</Message>
+        <Message warning={true}>
+          <div>
+            <div>{renderMarkup(`${t("listings.customListingType.educator.banner")}`, "<b>")}</div>
+            <br />
+            <div>
+              {renderMarkup(
+                t(`listings.customListingType.educator.banner.link.content`, {
+                  url: `#listing-detail-eligibility`,
+                })
+              )}
+            </div>
+          </div>
+        </Message>
       </div>
     )
   }
