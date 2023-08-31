@@ -146,9 +146,20 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
   return (
+    <Markdown options={{ forceBlock: true }}>
+      {stripMostTags(translatedString, allowedTags)}
+    </Markdown>
+  )
+}
+
+export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
+  return <Markdown>{stripMostTags(translatedString, allowedTags)}</Markdown>
+}
+
+export function renderInlineMarkupBanner(translatedString: string, allowedTags?: string) {
+  return (
     <Markdown
       options={{
-        forceBlock: true,
         overrides: {
           p: {
             props: {
@@ -161,10 +172,6 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
       {stripMostTags(translatedString, allowedTags)}
     </Markdown>
   )
-}
-
-export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
-  return <Markdown>{stripMostTags(translatedString, allowedTags)}</Markdown>
 }
 
 // Get the translated community type

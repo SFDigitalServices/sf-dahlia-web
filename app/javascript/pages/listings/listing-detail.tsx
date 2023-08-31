@@ -106,7 +106,11 @@ const ListingDetail = () => {
                 />
               </Mobile>
             )}
-            <ListingDetailsReservedBanner listing={listing} />
+            <ListingDetailsReservedBanner
+              reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
+              reservedCommunityType={listing.Reserved_community_type}
+              customListingType={listing.Custom_Listing_Type}
+            />
             <ErrorBoundary
               boundaryScope={BoundaryScope.component}
               componentClassNames="p-4 text-left"
