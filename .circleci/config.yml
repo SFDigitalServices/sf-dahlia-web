@@ -24,12 +24,10 @@ non_production_jobs: &non_production_jobs
       ignore: production
   requires:
     - build
-angular_e2e_jobs: &angular_e2e_jobs
+angular_jobs: &angular_jobs
   filters:
-    tags:
-      only: angular-e2e
     branches:
-      ignore: /.*/
+      only: /^angular.*$/
   requires:
     - build
 prod_and_release_jobs: &prod_and_release_jobs
@@ -250,11 +248,11 @@ workflows:
       - unit-rspec:
           <<: *non_production_jobs
       - unit-angular:
-          <<: *non_production_jobs
+          <<: *angular_jobs
       - e2e:
           <<: *non_production_jobs
       - e2e-legacy:
-          <<: *angular_e2e_jobs
+          <<: *angular_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
