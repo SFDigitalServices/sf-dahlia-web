@@ -153,21 +153,7 @@ export function renderMarkup(translatedString: string, allowedTags?: string) {
 }
 
 export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
-  return (
-    <Markdown
-      options={{
-        overrides: {
-          p: {
-            props: {
-              style: { textTransform: "none" },
-            },
-          },
-        },
-      }}
-    >
-      {stripMostTags(translatedString, allowedTags)}
-    </Markdown>
-  )
+  return <Markdown>{stripMostTags(translatedString, allowedTags)}</Markdown>
 }
 
 // Get the translated community type

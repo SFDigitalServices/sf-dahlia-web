@@ -8,23 +8,23 @@ exports[`ListingDetailsReservedBanner displays banner when custom listing type i
     <div
       class="message is-warning"
     >
-      <p
-        style="text-transform: none;"
-      >
-        <b>
+      <span>
+        <b
+          style="text-transform: none;"
+        >
           Special housing for San Francisco public school employees.
         </b>
-      </p>
-      <p
-        style="text-transform: none;"
-      >
-        <a
-          href="#listing-details-eligibility"
-          target="_self"
+        <p
+          style="text-transform: none;"
         >
-          Learn more about who can apply.
-        </a>
-      </p>
+          <a
+            href="#listing-details-eligibility"
+            target="_self"
+          >
+            Learn more about who can apply.
+          </a>
+        </p>
+      </span>
     </div>
   </div>
 </DocumentFragment>
@@ -94,23 +94,23 @@ exports[`ListingDetailsReservedBanner displays custom listing type banner when b
     <div
       class="message is-warning"
     >
-      <p
-        style="text-transform: none;"
-      >
-        <b>
+      <span>
+        <b
+          style="text-transform: none;"
+        >
           Special housing for San Francisco public school employees.
         </b>
-      </p>
-      <p
-        style="text-transform: none;"
-      >
-        <a
-          href="#listing-details-eligibility"
-          target="_self"
+        <p
+          style="text-transform: none;"
         >
-          Learn more about who can apply.
-        </a>
-      </p>
+          <a
+            href="#listing-details-eligibility"
+            target="_self"
+          >
+            Learn more about who can apply.
+          </a>
+        </p>
+      </span>
     </div>
   </div>
 </DocumentFragment>

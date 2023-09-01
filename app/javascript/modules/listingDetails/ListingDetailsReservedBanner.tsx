@@ -17,12 +17,11 @@ const buildMessage = (
   if (customListingType && getCustomListingType(customListingType)) {
     return (
       <Message warning={true}>
-        {renderInlineMarkup(`${t("listings.customListingType.educator.banner")}`, "<p><b>")}
         {renderInlineMarkup(
-          t(`listings.customListingType.educator.banner.link.content`, {
+          `${t("listings.customListingType.educator.banner", {
             url: `#listing-details-eligibility`,
-          }),
-          "<p><a>"
+          })}`,
+          "<p><b><a>"
         )}
       </Message>
     )
