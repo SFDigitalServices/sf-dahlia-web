@@ -377,7 +377,7 @@ export const getAbsoluteMinAndMaxIncome = (
 export const groupAndSortUnitsByOccupancy = (
   units: RailsUnit[],
   amiCharts: RailsAmiChart[],
-  isSale: boolean
+  isSale?: boolean
 ): GroupedUnitsByOccupancy[] => {
   /*
    * make a deep copy
