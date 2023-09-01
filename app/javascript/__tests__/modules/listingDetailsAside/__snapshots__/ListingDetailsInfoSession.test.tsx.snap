@@ -39,7 +39,7 @@ exports[`ListingDetailsInfoSession renders ListingDetailsInfoSession component 1
             class="flex flex-col"
           >
             <span
-              class="translate links-space"
+              class="links-space translate"
             >
               <span>
                 MOHCD
