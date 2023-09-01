@@ -84,7 +84,7 @@ export const getEventNote = (listingEvent: ListingEvent) => {
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="translate links-space">
+        <span className="links-space translate">
           <Markdown>{listingEvent.Venue}</Markdown>
         </span>
       )}
