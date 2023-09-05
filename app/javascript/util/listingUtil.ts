@@ -221,8 +221,10 @@ const determineMinIncomeNeeded = (
 export const applyMinMaxIncomeToUnit =
   (amiCharts: RailsAmiChart[], isSale?: boolean) =>
   (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
-    const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-    const minMonthlyIncomeNeeded = determineMinIncomeNeeded(unit, amiCharts, isSale)
+    const maxMonthlyIncomeNeeded = Math.round(
+      deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+    )
+    const minMonthlyIncomeNeeded = Math.round(determineMinIncomeNeeded(unit, amiCharts, isSale))
     return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
   }
 
