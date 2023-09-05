@@ -109,6 +109,7 @@ const ListingDetail = () => {
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
+              customListingType={listing.Custom_Listing_Type}
             />
             <ErrorBoundary
               boundaryScope={BoundaryScope.component}
@@ -142,10 +143,12 @@ const ListingDetail = () => {
                 imageSrc={getAssetPath("listing-units.svg")}
                 listing={listing}
               />
-              <ListingDetailsEligibility
-                listing={listing}
-                imageSrc={getAssetPath("listing-eligibility.svg")}
-              />
+              <div id="listing-details-eligibility">
+                <ListingDetailsEligibility
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-eligibility.svg")}
+                />
+              </div>
               <MobileListingDetailsProcess
                 listing={listing}
                 imageSrc={getAssetPath("listing-units.svg")}
