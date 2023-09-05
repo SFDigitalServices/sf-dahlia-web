@@ -9,7 +9,7 @@ exports[`ListingDetailsReservedBanner displays banner when custom listing type i
       class="message is-warning"
     >
       <div
-        class="normal-case space-y-2"
+        class="normal-case space-y-1"
       >
         <b>
           Special housing for San Francisco public school employees.
@@ -93,7 +93,7 @@ exports[`ListingDetailsReservedBanner displays custom listing type banner when b
       class="message is-warning"
     >
       <div
-        class="normal-case space-y-2"
+        class="normal-case space-y-1"
       >
         <b>
           Special housing for San Francisco public school employees.
