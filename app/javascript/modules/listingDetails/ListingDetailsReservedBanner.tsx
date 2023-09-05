@@ -9,7 +9,6 @@ export interface ListingDetailsReservedBannerProps {
   customListingType?: string
 }
 
-// todo: rename and do not hardcode
 const buildMultiLineMessage = (): React.JSX.Element => {
   return (
     <div className="normal-case space-y-1">
