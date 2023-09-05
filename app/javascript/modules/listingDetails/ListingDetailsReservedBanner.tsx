@@ -1,12 +1,26 @@
 import React from "react"
 import { Message, t } from "@bloom-housing/ui-components"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
-import { getCustomListingType, renderInlineMarkup } from "../../util/languageUtil"
+import { getCustomListingType } from "../../util/languageUtil"
 
 export interface ListingDetailsReservedBannerProps {
   reservedCommunityMinimumAge?: number
   reservedCommunityType?: string
   customListingType?: string
+}
+
+// todo: rename and do not hardcode
+const buildMultiLineMessage = (): React.JSX.Element => {
+  return (
+    <div className="normal-case space-y-1">
+      <b>{`${t("listings.customListingType.educator.banner.header")}`}</b>
+      <p>
+        <a target="_self" href="#listing-details-eligibility">
+          {`${t("listings.customListingType.educator.banner.body")}`}
+        </a>
+      </p>
+    </div>
+  )
 }
 
 const buildMessage = (
@@ -15,16 +29,7 @@ const buildMessage = (
   customListingType?: string
 ): React.JSX.Element => {
   if (customListingType && getCustomListingType(customListingType)) {
-    return (
-      <Message warning={true}>
-        {renderInlineMarkup(
-          `${t("listings.customListingType.educator.banner", {
-            url: `#listing-details-eligibility`,
-          })}`,
-          "<p><b><a>"
-        )}
-      </Message>
-    )
+    return <Message warning={true}>{buildMultiLineMessage()}</Message>
   }
 
   if (
