@@ -11,7 +11,7 @@ export interface ListingDetailsReservedBannerProps {
 
 const buildMultiLineMessage = (): React.JSX.Element => {
   return (
-    <div className="normal-case space-y-1">
+    <div className="normal-case space-y-2">
       <b>{`${t("listings.customListingType.educator.banner.header")}`}</b>
       <p>
         <a target="_self" href="#listing-details-eligibility">
