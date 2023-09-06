@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  Card,
   ExpandableText,
   InfoCard,
   ListingDetailItem,
@@ -9,6 +10,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
+  isEducatorOne,
   isHabitatListing,
   isPluralSRO,
   isRental,
@@ -119,6 +121,47 @@ export const ListingDetailsEligibility = ({
                 : BeforeApplyingType.LISTING_DETAILS
             }
           />
+        )}
+        {isEducatorOne(listing) && (
+          <ListSection
+            title={t("listings.customListingType.educator.eligibility.title")}
+            subtitle=""
+          >
+            <Card className="educator1-eligiblity">
+              <Card.Section className="markdown">
+                <div>
+                  {t("listings.customListingType.educator.eligibility.part1a")}
+                  <ul className="ml-0 mt-1">
+                    <li>
+                      {renderInlineMarkup(
+                        t("listings.customListingType.educator.eligibility.part1b", {
+                          sfusdLink: "https://www.sfusd.edu/",
+                        }),
+                        "<a><b>"
+                      )}
+                    </li>
+                    <li>{t("listings.customListingType.educator.eligibility.part1c")}</li>
+                  </ul>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part2", {
+                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                      })
+                    )}
+                  </p>
+                  <p>
+                    {t("listings.customListingType.educator.eligibility.part3")}
+                    <br />
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part4", {
+                        emailListLink: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
+                      })
+                    )}
+                  </p>
+                </div>
+              </Card.Section>
+            </Card>
+          </ListSection>
         )}
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection

@@ -12,7 +12,7 @@ import type {
   RailsAmiChartValue,
 } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
-import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
+import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES, CUSTOM_LISTING_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
@@ -45,6 +45,14 @@ export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing
  */
 export const isOpen = (listing: RailsRentalListing | RailsSaleListing) =>
   dayjs(listing.Application_Due_Date) > dayjs()
+
+/**
+ * Check if a listing is educator listing 1
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is educator listing 1, false otherwise
+ */
+export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
 
 /**
  * Check if a listing is a rental
