@@ -182,7 +182,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                     class="flex flex-col"
                   >
                     <span
-                      class="translate"
+                      class="links-space translate"
                     >
                       <span>
                         Library

@@ -81,7 +81,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               class="flex flex-col"
             >
               <span
-                class="translate"
+                class="links-space translate"
               >
                 <span>
                   MOHCD
@@ -148,7 +148,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               class="flex flex-col"
             >
               <span
-                class="translate"
+                class="links-space translate"
               >
                 <span>
                   SFPL

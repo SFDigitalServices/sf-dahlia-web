@@ -2,7 +2,6 @@ import { createReducer } from "typesafe-actions"
 import { ListingDetailsActions } from "./listingDetailsActions"
 import RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import { RailsAmiChart, RailsAmiChartMetaData } from "../../api/types/rails/listings/RailsAmiChart"
-import { consolidateAmiCharts } from "../../util/listingUtil"
 
 type ListingDetailsState = {
   fetchingUnits: boolean
@@ -34,12 +33,11 @@ const ListingDetailsReducer = createReducer({ units: [] } as ListingDetailsState
     state,
     { payload: { amiCharts, chartsToFetch } }
   ) => {
-    const consolidatedAmiCharts = consolidateAmiCharts(amiCharts)
     return {
       ...state,
       fetchingAmiCharts: false,
       fetchedAmiCharts: true,
-      amiCharts: consolidatedAmiCharts?.map((amiChart: RailsAmiChart) => {
+      amiCharts: amiCharts?.map((amiChart: RailsAmiChart) => {
         return {
           ...amiChart,
           /*
