@@ -22,3 +22,19 @@
         margin-bottom: 0;
     }
 }
+
+.educator1-eligiblity {
+    font-size: 13px;
+    ul {
+        @apply list-none;
+        li:before {
+            content: '✓';
+            @apply mr-2;
+        }
+    }
+    .markdown {
+        @apply p-6;
+        @apply m-0;
+    }
+
+}
