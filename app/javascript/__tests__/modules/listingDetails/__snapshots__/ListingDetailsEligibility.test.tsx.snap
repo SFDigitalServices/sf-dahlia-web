@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsEligibility displays listing details check if you're eligible section for Shirley Chisholm listing 1 1`] = `
+exports[`ListingDetailsEligibility displays custom listing details check if you're eligible section for Shirley Chisholm listing 1 1`] = `
 <DocumentFragment>
   <li
     class="responsive-content-item bg-primary-lighter"
