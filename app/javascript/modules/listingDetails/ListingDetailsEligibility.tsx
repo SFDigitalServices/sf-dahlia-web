@@ -151,7 +151,6 @@ export const ListingDetailsEligibility = ({
                   </p>
                   <p>
                     {t("listings.customListingType.educator.eligibility.part3")}
-                    <br />
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part4", {
                         emailListLink: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
