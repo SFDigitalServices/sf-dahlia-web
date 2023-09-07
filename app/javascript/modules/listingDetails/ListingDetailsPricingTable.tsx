@@ -200,7 +200,7 @@ const buildAccordions = (
               </span>
               <span className={"flex items-center mr-2 text-sm md:text-base"}>
                 {(() => {
-                  return occupancy?.absoluteMinIncome?.valueOf() <= 0 ? (
+                  return occupancy?.absoluteMinIncome <= 0 ? (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.upToMaxPerMonth", {
