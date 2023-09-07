@@ -729,7 +729,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $100 to $5,941
+                    $5,109 to $5,941
                   </span>
                    per month
                 </span>
@@ -789,7 +789,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $7 to $6,550
+                    $4,884 to $6,550
                   </span>
                    per month
                 </span>
@@ -849,7 +849,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $7 to $6,329
+                    $5,496 to $6,329
                   </span>
                    per month
                 </span>
@@ -909,7 +909,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $7 to $6,937
+                    up to $6,937
                   </span>
                    per month
                 </span>
@@ -969,7 +969,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $7 to $11,666
+                    up to $11,666
                   </span>
                    per month
                 </span>
@@ -1029,7 +1029,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
                   <span
                     class="font-semibold"
                   >
-                    $10 to $7,916
+                    up to $7,916
                   </span>
                    per month
                 </span>

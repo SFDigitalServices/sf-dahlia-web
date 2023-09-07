@@ -72,8 +72,8 @@ const isNumber = (val: number) => val || val === 0
 // 100, 200, true, null --> $100 - $200
 // 100, 100, false, "%" --> 100%
 export const getRangeString = (min: number, max: number, currency?: boolean, suffix?: string) => {
-  // If min is 0, return "up to {max}"
-  if (isNumber(min) && isNumber(max) && min === 0 && max !== 0) {
+  // If min is less than or equal to 0, return "up to {max}"
+  if (isNumber(min) && isNumber(max) && min <= 0 && max !== 0) {
     const maxString = getNumberString(max, currency)
     return `${t("t.upTo")} ${maxString}`
   }
