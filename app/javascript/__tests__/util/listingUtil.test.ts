@@ -280,7 +280,7 @@ describe("buildAmiArray", () => {
 describe("getAbsoluteMinAndMaxIncome", () => {
   it("should return the correct min and max income when units is not empty", () => {
     const result = getAbsoluteMinAndMaxIncome(unitsWithOccupancyAndMaxIncome)
-    expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 7 })
+    expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 100 })
   })
 })
 

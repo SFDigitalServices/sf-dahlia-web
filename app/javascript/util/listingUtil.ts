@@ -3,7 +3,7 @@ import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
 import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
 import type {
   RailsUnitWithOccupancy,
-  RailsUnitWithOccupancyAndMaxIncome,
+  RailsUnitWithOccupancyAndMinMaxIncome,
 } from "../api/types/rails/listings/RailsUnit"
 import type RailsUnit from "../api/types/rails/listings/RailsUnit"
 import type {
@@ -181,7 +181,8 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
 export const deriveIncomeFromAmiCharts = (
   unit: RailsUnit,
   occupancy: number,
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  min?: boolean
 ): number => {
   if (!unit || !occupancy || !amiCharts) {
     return null
@@ -189,7 +190,8 @@ export const deriveIncomeFromAmiCharts = (
 
   const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
     return (
-      Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
+      Number(amiData.percent) ===
+        unit[min ? "Min_AMI_for_Qualifying_Unit" : "Max_AMI_for_Qualifying_Unit"] &&
       amiData.chartType === unit.AMI_chart_type &&
       amiData.year === unit.AMI_chart_year?.toString()
     )
@@ -200,17 +202,38 @@ export const deriveIncomeFromAmiCharts = (
   })
 
   if (occupancyAmi) {
-    return Math.floor(occupancyAmi?.amount / 12)
+    if (min) {
+      return Math.ceil(occupancyAmi?.amount / 12)
+    }
+    return Math[min ? "ceil" : "floor"](occupancyAmi?.amount / 12)
   }
 
   return null
 }
 
-export const applyMaxIncomeToUnit =
-  (amiCharts: RailsAmiChart[]) =>
-  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMaxIncome => {
-    const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-    return { ...unit, maxMonthlyIncomeNeeded }
+/**
+ *
+ * For rental listings, we ignore the minimum AMI Value in ~all~ cases, including 415.
+ * For Sale listings, we try to derive the minimum AMI, if we can't then we return -1.
+ */
+const determineMinIncomeNeeded = (
+  unit: RailsUnitWithOccupancy,
+  amiCharts: RailsAmiChart[],
+  isSale: boolean
+) => {
+  return isSale
+    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true) || -1
+    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || -1
+}
+
+export const applyMinMaxIncomeToUnit =
+  (amiCharts: RailsAmiChart[], isSale?: boolean) =>
+  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
+    const maxMonthlyIncomeNeeded = Math.round(
+      deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+    )
+    const minMonthlyIncomeNeeded = Math.round(determineMinIncomeNeeded(unit, amiCharts, isSale))
+    return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
   }
 
 export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
@@ -228,10 +251,10 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
 }
 
 export const buildAmiArray = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): Array<{ min: number | undefined; max: number }> => {
   const arrayOfAmis: Array<{ min: number | undefined; max: number }> = []
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (arrayOfAmis.some((ami) => ami.max === unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
@@ -263,12 +286,12 @@ export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<nu
 
 /**
  * Returns a collapsed array of units grouped by matching criteria with updated availability
- * @param {RailsUnitWithOccupancyAndMaxIncome[]} units
- * @returns {RailsUnitWithOccupancyAndMaxIncome[]}
+ * @param {RailsUnitWithOccupancyAndMinMaxIncome[]} units
+ * @returns {RailsUnitWithOccupancyAndMinMaxIncome[]}
  */
 export const matchSharedUnitFields = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
-): RailsUnitWithOccupancyAndMaxIncome[] => {
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
+): RailsUnitWithOccupancyAndMinMaxIncome[] => {
   const collapsedUnits = []
   // Process each unit in units by finding its matchingUnits
   const unitsCopy = units.map((unit) => {
@@ -276,7 +299,7 @@ export const matchSharedUnitFields = (
   })
   while (unitsCopy.length > 0) {
     const unit = unitsCopy[0]
-    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       return (
         unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
         unit.Unit_Type === curUnit.Unit_Type &&
@@ -288,7 +311,7 @@ export const matchSharedUnitFields = (
       )
     })
     // Remove duplicate matchingUnits from units
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       unitsCopy.splice(unitsCopy.indexOf(curUnit), 1)
     })
     // If min / max range exists, update unit for sales and HOA price with/out parking
@@ -334,7 +357,7 @@ export const matchSharedUnitFields = (
     }
     // Update availiability based on availability in matchingUnits
     let numAvailable = 0
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       numAvailable += curUnit.Availability
     })
     unit.Availability = numAvailable
@@ -344,17 +367,17 @@ export const matchSharedUnitFields = (
 }
 
 export const getAbsoluteMinAndMaxIncome = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): { absoluteMaxIncome: number; absoluteMinIncome: number } => {
   let absoluteMaxIncome = 0
-  let absoluteMinIncome = units[0]?.BMR_Rental_Minimum_Monthly_Income_Needed
+  let absoluteMinIncome = units[0]?.minMonthlyIncomeNeeded
 
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (unit?.maxMonthlyIncomeNeeded > absoluteMaxIncome) {
       absoluteMaxIncome = unit.maxMonthlyIncomeNeeded
     }
-    if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed < absoluteMinIncome) {
-      absoluteMinIncome = unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+    if (unit?.minMonthlyIncomeNeeded < absoluteMinIncome) {
+      absoluteMinIncome = unit?.minMonthlyIncomeNeeded
     }
   })
 
@@ -363,7 +386,8 @@ export const getAbsoluteMinAndMaxIncome = (
 
 export const groupAndSortUnitsByOccupancy = (
   units: RailsUnit[],
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  isSale?: boolean
 ): GroupedUnitsByOccupancy[] => {
   /*
    * make a deep copy
@@ -379,16 +403,23 @@ export const groupAndSortUnitsByOccupancy = (
    */
   const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
-   * We have to derive the max income using ami charts, so this mapping goes through each unit
-   * and does that and adds that max income to the unit object
+   * We have to derive the max and min income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max and min income to the unit object.
+   * The Min income is derived through two means: by the AMI Chart for that value or via the BMR_Rental_Minimum_Monthly_Income_Needed field.
+   * The former is only applicable when the listing is a Section 415 housing listing (meaning there are discrete AMI ranges), while the latter
+   * is calculated in Salesforce by multiplying the base rent by the rent multiple (usually 2x).
+   * To determine this, we check if there is a BMR value and use that if there is, if not, we try to use the minimum AMI field.
+   * If neither of those are available, the value becomes -1, which forces the table to display "Up To".
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMinMaxIncome = unitsWithOccupancy.map(
+    applyMinMaxIncomeToUnit(amiCharts, isSale)
+  )
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
    * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
    */
-  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMinMaxIncome)
 
   /*
    * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
@@ -497,7 +528,7 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMinMaxIncomeToUnit(amiCharts))
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
