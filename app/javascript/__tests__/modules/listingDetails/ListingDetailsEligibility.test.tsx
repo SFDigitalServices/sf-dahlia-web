@@ -12,6 +12,7 @@ import {
   sroRentalListing,
 } from "../../data/RailsRentalListing/listing-rental-sro"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
+import { rentalEducatorListing } from "../../data/RailsRentalListing/listing-rental-educator"
 
 const axios = require("axios")
 
@@ -196,6 +197,34 @@ describe("ListingDetailsEligibility", () => {
     )
 
     expect(await findByText("Eligibility")).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
+  })
+
+  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 1", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const { asFragment, findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={rentalEducatorListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(await findByText("Check if you're eligible")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
     done()
   })
