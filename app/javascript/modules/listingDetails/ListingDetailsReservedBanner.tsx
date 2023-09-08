@@ -2,6 +2,7 @@ import React from "react"
 import { Message, t } from "@bloom-housing/ui-components"
 import { RESERVED_COMMUNITY_TYPES } from "../constants"
 import { getCustomListingType } from "../../util/languageUtil"
+import "./ListingDetailsReservedBanner.scss"
 
 export interface ListingDetailsReservedBannerProps {
   reservedCommunityMinimumAge?: number
@@ -11,7 +12,7 @@ export interface ListingDetailsReservedBannerProps {
 
 const buildMultiLineMessage = (): React.JSX.Element => {
   return (
-    <div className="normal-case space-y-1">
+    <div className="educator1-banner">
       <b>{`${t("listings.customListingType.educator.banner.header")}`}</b>
       <p>
         <a target="_self" href="#listing-details-eligibility">
