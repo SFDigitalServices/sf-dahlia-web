@@ -47,9 +47,19 @@ export const isOpen = (listing: RailsRentalListing | RailsSaleListing) =>
   dayjs(listing.Application_Due_Date) > dayjs()
 
 /**
- * Check if a listing is educator listing 1
+ * Check if a listing is one of the three Shirley Chisholm listing
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the listing is educator listing 1, false otherwise
+ * @returns {boolean} returns true if the listing is a Shirley Chisholm listing, false otherwise
+ */
+export const isEducator = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE ||
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_TWO ||
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_THREE
+
+/**
+ * Check if a listing is Shirley Chisholm listing 1
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is Shirley Chisholm listing 1, false otherwise
  */
 export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
