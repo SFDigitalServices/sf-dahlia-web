@@ -146,19 +146,16 @@ const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
 
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
-  listingIsSale: boolean
+  listingIsSale: boolean,
+  forceZeroInRange: boolean
 ) => {
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
-      let forceZeroInRange = false
 
       const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
         const responsiveTableRows = amiRow.units.map(
           (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
-            if (unit.Rent_percent_of_income) {
-              forceZeroInRange = true
-            }
             return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
           }
         )
@@ -332,6 +329,8 @@ const buildContent = (
     )
   }
 
+  const forceZeroInRange = units?.some((unit) => unit.Rent_percent_of_income)
+
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
   if (units?.length) {
@@ -344,7 +343,7 @@ const buildContent = (
 
   return (
     <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
-      {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
+      {buildAccordions(groupedUnitsByOccupancy, listingIsSale, forceZeroInRange)}
     </div>
   )
 }
