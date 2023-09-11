@@ -1080,7 +1080,7 @@
   "listings.customListingType.educator.preferences.part1": "If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. ",
   "listings.customListingType.educator.preferences.part2": "<b>Priority for certain groups - San Francisco Unified School District employees</b> ",
   "listings.customListingType.educator.preferences.part3": "Only San Francisco Unified School District (SFUSD) employees will be included in the lottery for this listing. ",
-  "listings.customListingType.educator.preferences.part4a": "<a target='_blank' href='%{chisholmLink}'>Check if you qualify and see how preferences are ranked for this listing</a>",
+  "listings.customListingType.educator.preferences.part4a": "<a target='_blank' href='%{chisholmLotteryLink}'>Check if you qualify and see how preferences are ranked for this listing</a>",
   "listings.customListingType.educator.preferences.part4b": "<a target='_blank' href='%{preferencesLink}'>Learn more about housing lottery preference programs</a>",
   "listings.reservedFor": "Reserved for %{type}",
   "listings.reservedUnits": "Reserved Units",
