@@ -111,6 +111,7 @@ export const ListingDetailsEligibility = ({
       title={t("listings.eligibility.header")}
       subtitle={isSale(listing) ? "" : t("listings.eligibility.subheader")}
       desktopClass="bg-primary-lighter"
+      hideHeader={true}
     >
       <ul>
         {isSale(listing) && (
