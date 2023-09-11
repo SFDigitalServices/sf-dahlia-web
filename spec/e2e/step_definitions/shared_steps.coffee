@@ -38,6 +38,7 @@ When /^I go to the "([^"]*)" page$/, (pageName) ->
 When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
   i = parseInt(buttonClicks)
   while i > 0
+    browser.waitForAngular()
     Utils.Page.submit()
     i--
 
