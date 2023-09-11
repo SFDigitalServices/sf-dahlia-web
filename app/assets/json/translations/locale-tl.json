@@ -451,10 +451,10 @@
             "address": "Pakipasok ang inyong address",
             "address_validation": {
                 "not_found": "Hindi nahanap ang address na ito. Pakitingnan ang house number, street, at lungsod na nailagay. Hindi pinapayagan ang mga PO Box.<br><br>Kung wasto ang nailagay ninyong address, <a href={{mailInfo}} target=\"_blank\">mag-email sa amin sa lotteryappeals@sfgov.org</a> para sa tulong.",
-                "not_found_body": "Minamahal na MOHCD,\n\nHindi ko makumpleto ang aking aplikasyon para sa {{listing_name}}. Ang address ko ay {{home_address}} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin.\n\nSalamat,\n{{first_name}} {{last_name}}\n{{email}}\n{{phone_number}}",
+                "not_found_body": "Minamahal na MOHCD, hindi ko makumpleto ang aking aplikasyon para sa {{listing_name}}. Ang address ko ay {{home_address}} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin. Salamat, {{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "Hindi mailagay ang aking address sa aplikasyon sa DAHLIA"
             },
-            "address_validation_duplicate_unit": "Kung mayroon kayong numero ng apartment o yunit, ilagay lang ito sa kahong Numero ng Apt o Unit.",
+            "address_validation_duplicate_unit": "Kung mayroon kayong numero ng apartment o yunit, ilagay lang ito sa kahong Apt o Yunit #",
             "address_validation_po_box": "Kailangan namin ang address ng kung saan ka kasalukuyang nakatira. Hindi puwedeng maglagay ng mga PO Box.",
             "alert": {
                 "bad_request": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
@@ -479,6 +479,7 @@
             "file_upload_failed": "May problema sa pag-a-upload sa inyong file. Pakisubukang muli. ",
             "first_name": "Pakilagay ang Unang Pangalan ninyo",
             "form_submission": "Kailangan muna ninyo maayos ang mga pagkakamali bago kayo makapagpapatuloy.",
+            "get_assistance": "Kumuha ng Tulong",
             "habitat": "Dapat dumalo ang kahit isang miyembro ng iyong kabahayan sa isang sesyon para sa pagbibigay ng impormasyon ng Habitat for Humanity.",
             "household_income_too_high": "Masyadong mataas ang kita ng inyong kabahayan.",
             "household_income_too_low": "Masyadong mababa ang kita ng inyong kabahayan.",
@@ -942,6 +943,8 @@
                     "title": "Proseso ng Aplikasyon"
                 },
                 "income_range": {
+                    "income_range_plural": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
+                    "income_range_singular": "Kabahayang may {{number}} tao: {{minIncome}} hanggang {{maxIncome}} kada taon",
                     "p1": "Para maging kwalipikado para sa bahay mula sa Habitat for Humanity Greater San Francisco sa listahan na ito, kailangang nasa pagitan ng 82% at 109.8% AMI ang kita ng iyong kabahayan, gaya ng nakalista sa ibaba.",
                     "p2": "Para sa mga kalkulasyon ng kita, kasama sa laki ng sambahayan ang lahat (anuman ang edad) ng nakatira sa yunit.",
                     "p4": "Dapat ay nasa saklaw na ito ang iyong kita:",
@@ -970,7 +973,7 @@
             },
             "lottery_preference": {
                 "all_remaining_units": "Lahat ng natitirang unit",
-                "up_to_units": "Hanggang sa {{units}} unit na puwedeng makuha"
+                "up_to_units": "Hanggang sa  {{units}} unit na puwedeng makuha"
             },
             "lottery_results": {
                 "hide": "Itago ang mga Resulta ng Lottery",
