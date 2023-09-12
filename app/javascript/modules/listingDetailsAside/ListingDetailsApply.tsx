@@ -19,6 +19,7 @@ import {
   paperApplicationURLs,
 } from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { getHousingCounselorsPath } from "../../util/routeUtil"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -154,7 +155,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         href={
           !isListingRental
             ? "https://www.homeownershipsf.org/buyerapplications/"
-            : "/housing-counselors"
+            : getHousingCounselorsPath()
         }
         className={"w-full"}
       >
