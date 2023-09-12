@@ -68,6 +68,7 @@ const MetaTags = (props: MetaTagsProps) => {
           sizes="192x192"
           type="image/png"
         />
+        <link href={getAssetPath("favicon.ico")} rel="icon" />
         <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
         <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />
         <link href={getAssetPath("favicon-16x16.png")} rel="icon" sizes="16x16" type="image/png" />
