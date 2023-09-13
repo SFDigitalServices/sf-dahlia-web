@@ -7,6 +7,15 @@ const axios = require("axios")
 
 jest.mock("axios")
 
+jest.mock("react-helmet-async", () => {
+  return {
+    // eslint-disable-next-line react/prop-types
+    HelmetProvider: ({ children }) => <div>{children}</div>, // Mock HelmetProvider
+    // eslint-disable-next-line react/prop-types
+    Helmet: ({ children }) => <div>{children}</div>, // Mock Helmet component
+  }
+})
+
 describe("For Sale", () => {
   afterEach(() => {
     cleanup()

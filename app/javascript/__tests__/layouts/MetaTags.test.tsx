@@ -2,6 +2,15 @@ import React from "react"
 import { render } from "@testing-library/react"
 import MetaTags from "../../layouts/MetaTags"
 
+jest.mock("react-helmet-async", () => {
+  return {
+    // eslint-disable-next-line react/prop-types
+    HelmetProvider: ({ children }) => <div>{children}</div>, // Mock HelmetProvider
+    // eslint-disable-next-line react/prop-types
+    Helmet: ({ children }) => <div>{children}</div>, // Mock Helmet component
+  }
+})
+
 describe("<MetaTags />", () => {
   it("renders a title correctly", () => {
     render(<MetaTags title="The Title" />)

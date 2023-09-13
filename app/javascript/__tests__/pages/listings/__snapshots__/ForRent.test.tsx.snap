@@ -2,579 +2,583 @@
 
 exports[`For Rent renders ForRent component 1`] = `
 <DocumentFragment>
-  <div
-    class="notranslate site-wrapper"
-  >
+  <div>
     <div
-      class="site-content"
+      class="notranslate site-wrapper"
     >
-      <title>
-        Rental Listings
-      </title>
-      <meta
-        charset="utf-8"
-      />
-      <meta
-        content="IE=edge"
-        http-equiv="X-UA-Compatible"
-      />
-      <meta
-        content="width=device-width, initial-scale=1"
-        name="viewport"
-      />
-      <meta
-        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
-        name="google-site-verification"
-      />
-      <meta
-        content="Rental Listings"
-        property="og:title"
-      />
-      <meta
-        property="og:image"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="57x57"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="60x60"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="72x72"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="76x76"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="114x114"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="120x120"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="144x144"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="152x152"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-      />
-      <link
-        rel="icon"
-        sizes="192x192"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="32x32"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="96x96"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="16x16"
-        type="image/png"
-      />
-      <link
-        rel="manifest"
-      />
-      <meta
-        name="msapplication-TileImage"
-      />
-      <header
-        class="site-header"
+      <div
+        class="site-content"
       >
-        <a
-          class="site-header__skip-link"
-          href="#main-content"
-        >
-          Skip to main content
-        </a>
-        <div
-          class="language-bar"
-        >
-          <div
-            class="language-bar__inner"
-          >
-            <nav
-              aria-label="Choose your language"
-              class="language-nav"
-            >
-              <ul
-                class="language-nav__list"
-              >
-                <li>
-                  <button
-                    class="language-nav__list-button is-active"
-                    type="button"
-                  >
-                    English
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    Español
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    中文
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    Filipino
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
+        <div>
+          <title>
+            Rental Listings
+          </title>
+          <meta
+            charset="utf-8"
+          />
+          <meta
+            content="IE=edge"
+            http-equiv="X-UA-Compatible"
+          />
+          <meta
+            content="width=device-width, initial-scale=1"
+            name="viewport"
+          />
+          <meta
+            content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+            name="google-site-verification"
+          />
+          <meta
+            content="Rental Listings"
+            property="og:title"
+          />
+          <meta
+            property="og:image"
+          />
+          <meta
+            content="website"
+            property="og:type"
+          />
+          <link
+            rel="icon"
+            sizes="32x32"
+            type="image/png"
+          />
+          <link
+            rel="icon"
+            sizes="96x96"
+            type="image/png"
+          />
+          <link
+            rel="icon"
+            sizes="16x16"
+            type="image/png"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="57x57"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="60x60"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="72x72"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="76x76"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="114x114"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="120x120"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="144x144"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="152x152"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+          />
+          <link
+            rel="icon"
+            sizes="192x192"
+            type="image/png"
+          />
+          <link
+            rel="manifest"
+          />
+          <meta
+            name="msapplication-TileImage"
+          />
         </div>
-        <div
-          class="site-header__notice "
+        <header
+          class="site-header"
         >
-          <div
-            class="site-header__notice-text"
+          <a
+            class="site-header__skip-link"
+            href="#main-content"
           >
-            <span>
-              We'd love to get 
-              <a
-                href="https://airtable.com/shrw64DubWTQfRkdo"
-                target="_blank"
-              >
-                your feedback.
-              </a>
-            </span>
-          </div>
-        </div>
-        <nav
-          aria-label="main navigation"
-          class="site-header__container"
-          role="navigation"
-        >
+            Skip to main content
+          </a>
           <div
-            class="site-header__base "
+            class="language-bar"
           >
             <div
-              class="site-header__logo-container site-header__logo-width-med"
+              class="language-bar__inner"
             >
-              <a
-                aria-label="DAHLIA San Francisco Housing Portal"
-                class="site-header__logo translate site-header__custom-width"
-                href="/"
-                target="_self"
+              <nav
+                aria-label="Choose your language"
+                class="language-nav"
               >
-                <div
-                  class="site-header__logo-content site-header__image-only-container"
+                <ul
+                  class="language-nav__list"
                 >
-                  <img
-                    alt="Site logo"
-                    class="site-header__logo-image site-header__image-only"
-                  />
-                </div>
-              </a>
-            </div>
-            <div
-              class="site-header__navbar-menu"
-            >
-              <a
-                class="site-header__link pb-4 pt-1 flex items-end "
-                data-testid="Rent-0"
-                href="/listings/for-rent"
-                target="_self"
-              >
-                <div>
-                  Rent
-                </div>
-              </a>
-              <a
-                class="site-header__link pb-4 pt-1 flex items-end "
-                data-testid="Buy-1"
-                href="/listings/for-sale"
-                target="_self"
-              >
-                <div>
-                  Buy
-                </div>
-              </a>
-              <a
-                class="site-header__link pb-4 pt-1 flex items-end "
-                data-testid="My Favorites-2"
-                href="/favorites"
-                target="_self"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link pb-4 pt-1 flex items-end "
-                data-testid="Get Assistance-3"
-                href="/get-assistance"
-                target="_self"
-              >
-                <div>
-                  Get Assistance
-                </div>
-              </a>
-              <a
-                class="site-header__link pb-4 pt-1 flex items-end "
-                data-testid="Sign In-4"
-                href="/sign-in"
-                target="_self"
-              >
-                <div>
-                  Sign In
-                </div>
-              </a>
+                  <li>
+                    <button
+                      class="language-nav__list-button is-active"
+                      type="button"
+                    >
+                      English
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Español
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      中文
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Filipino
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
-        </nav>
-      </header>
-      <main
-        class="md:overflow-x-hidden"
-        data-testid="main-content-test-id"
-        id="main-content"
-      >
-        <div
-          aria-live="assertive"
-          role="alert"
-        >
-          <div>
-            <header
-              class="page-header"
+          <div
+            class="site-header__notice "
+          >
+            <div
+              class="site-header__notice-text"
             >
-              <hgroup
-                class="page-header__group"
-              >
-                <h1
-                  class="page-header__title"
-                  data-testid="page-header"
-                >
-                  Rent affordable housing
-                </h1>
-                <p
-                  class="page-header__lead"
-                >
-                   If you tell us your household size and income, we can show you listings you may qualify for.
-                </p>
-                <p
-                  class="mt-4 md:mt-8 mb-2"
-                >
-                  <a
-                    class="button"
-                    href="/eligibility-estimator/rental"
-                    tabindex="0"
-                    target="_self"
-                  >
-                    Find matching listings
-                  </a>
-                </p>
+              <span>
+                We'd love to get 
                 <a
-                  class="text-base text-primary-dark"
-                  href="/income-calculator/rental/intro"
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
+                  target="_blank"
                 >
-                  or get help calculating your income
+                  your feedback.
                 </a>
-              </hgroup>
-            </header>
+              </span>
+            </div>
+          </div>
+          <nav
+            aria-label="main navigation"
+            class="site-header__container"
+            role="navigation"
+          >
             <div
-              id="listing-results"
+              class="site-header__base "
             >
               <div
-                class="bg-primary-darker"
+                class="site-header__logo-container site-header__logo-width-med"
               >
-                <div
-                  class="max-w-5xl mx-auto p-2 md:p-4"
+                <a
+                  aria-label="DAHLIA San Francisco Housing Portal"
+                  class="site-header__logo translate site-header__custom-width"
+                  href="/"
+                  target="_self"
                 >
                   <div
-                    class="action-block  primary-darker action-block__inline"
+                    class="site-header__logo-content site-header__image-only-container"
+                  >
+                    <img
+                      alt="Site logo"
+                      class="site-header__logo-image site-header__image-only"
+                    />
+                  </div>
+                </a>
+              </div>
+              <div
+                class="site-header__navbar-menu"
+              >
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Rent-0"
+                  href="/listings/for-rent"
+                  target="_self"
+                >
+                  <div>
+                    Rent
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Buy-1"
+                  href="/listings/for-sale"
+                  target="_self"
+                >
+                  <div>
+                    Buy
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="My Favorites-2"
+                  href="/favorites"
+                  target="_self"
+                >
+                  <div>
+                    My Favorites
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Get Assistance-3"
+                  href="/get-assistance"
+                  target="_self"
+                >
+                  <div>
+                    Get Assistance
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Sign In-4"
+                  href="/sign-in"
+                  target="_self"
+                >
+                  <div>
+                    Sign In
+                  </div>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main
+          class="md:overflow-x-hidden"
+          data-testid="main-content-test-id"
+          id="main-content"
+        >
+          <div
+            aria-live="assertive"
+            role="alert"
+          >
+            <div>
+              <header
+                class="page-header"
+              >
+                <hgroup
+                  class="page-header__group"
+                >
+                  <h1
+                    class="page-header__title"
+                    data-testid="page-header"
+                  >
+                    Rent affordable housing
+                  </h1>
+                  <p
+                    class="page-header__lead"
+                  >
+                     If you tell us your household size and income, we can show you listings you may qualify for.
+                  </p>
+                  <p
+                    class="mt-4 md:mt-8 mb-2"
+                  >
+                    <a
+                      class="button"
+                      href="/eligibility-estimator/rental"
+                      tabindex="0"
+                      target="_self"
+                    >
+                      Find matching listings
+                    </a>
+                  </p>
+                  <a
+                    class="text-base text-primary-dark"
+                    href="/income-calculator/rental/intro"
+                  >
+                    or get help calculating your income
+                  </a>
+                </hgroup>
+              </header>
+              <div
+                id="listing-results"
+              >
+                <div
+                  class="bg-primary-darker"
+                >
+                  <div
+                    class="max-w-5xl mx-auto p-2 md:p-4"
                   >
                     <div
-                      class="action-block__head"
+                      class="action-block  primary-darker action-block__inline"
                     >
                       <div
-                        class="action-block__header"
+                        class="action-block__head"
                       >
-                        <h2
-                          class=""
+                        <div
+                          class="action-block__header"
                         >
-                          See more listings from our community partners.
-                        </h2>
+                          <h2
+                            class=""
+                          >
+                            See more listings from our community partners.
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      class="action-block__actions"
-                    >
-                      <a
-                        class="button"
-                        href="/additional-resources"
-                        target="_self"
+                      <div
+                        class="action-block__actions"
                       >
-                        View opportunities
-                      </a>
+                        <a
+                          class="button"
+                          href="/additional-resources"
+                          target="_self"
+                        >
+                          View opportunities
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="action-block mt-4 primary-lighter action-block__block"
-            >
               <div
-                class="action-block__head"
+                class="action-block mt-4 primary-lighter action-block__block"
               >
                 <div
-                  class="action-block__icon"
+                  class="action-block__head"
                 >
-                  <span
-                    class="ui-icon ui-3xl"
+                  <div
+                    class="action-block__icon"
                   >
-                    <svg
-                      fill="transparent"
-                      height="35"
-                      viewBox="0 0 80 35"
-                      width="80"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      class="ui-icon ui-3xl"
                     >
-                      <rect
+                      <svg
                         fill="transparent"
-                        height="75"
+                        height="35"
+                        viewBox="0 0 80 35"
                         width="80"
-                      />
-                      <g
-                        clip-path="url(#clip0)"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
                         <rect
                           fill="transparent"
-                          height="1390"
-                          transform="translate(-284 -530)"
-                          width="1280"
+                          height="75"
+                          width="80"
                         />
-                        <path
-                          d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M49.1858 41.271L61.375 50.878"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M32.1668 41.271L19.9775 50.878"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                        <path
-                          d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
-                          stroke="black"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-miterlimit="10"
-                          stroke-width="2"
-                        />
-                      </g>
-                      <defs>
-                        <clippath
-                          id="clip0"
+                        <g
+                          clip-path="url(#clip0)"
                         >
                           <rect
-                            fill="white"
+                            fill="transparent"
                             height="1390"
                             transform="translate(-284 -530)"
                             width="1280"
                           />
-                        </clippath>
-                      </defs>
-                    </svg>
-                  </span>
+                          <path
+                            d="M61.3749 24.2402L43.2061 39.7424C41.8262 40.8341 39.7563 40.8341 38.3764 39.7424L19.9775 24.2402"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M49.1858 41.271L61.375 50.878"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M32.1668 41.271L19.9775 50.878"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                          <path
+                            d="M14.458 24.0218V51.0961C14.458 53.9345 16.7579 56.1179 19.7477 56.1179H61.835C64.8248 56.1179 67.1247 53.9345 67.1247 51.0961V24.0218C67.1247 21.1834 64.8248 19 61.835 19H19.7477C16.7579 19 14.458 21.1834 14.458 24.0218Z"
+                            stroke="black"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            stroke-width="2"
+                          />
+                        </g>
+                        <defs>
+                          <clippath
+                            id="clip0"
+                          >
+                            <rect
+                              fill="white"
+                              height="1390"
+                              transform="translate(-284 -530)"
+                              width="1280"
+                            />
+                          </clippath>
+                        </defs>
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="action-block__header"
+                  >
+                    <h2
+                      class=""
+                    >
+                      Get emailed whenever a new listing is posted.
+                    </h2>
+                  </div>
                 </div>
                 <div
-                  class="action-block__header"
+                  class="action-block__actions"
                 >
-                  <h2
-                    class=""
+                  <a
+                    class="button"
+                    href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                    target="_blank"
                   >
-                    Get emailed whenever a new listing is posted.
-                  </h2>
+                    Sign Up today
+                  </a>
                 </div>
-              </div>
-              <div
-                class="action-block__actions"
-              >
-                <a
-                  class="button"
-                  href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
-                  target="_blank"
-                >
-                  Sign Up today
-                </a>
               </div>
             </div>
           </div>
+        </main>
+      </div>
+      <footer
+        class="site-footer"
+      >
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <img
+              alt=""
+              data-testid="footer-logo-test-id"
+            />
+          </div>
         </div>
-      </main>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section py-2"
+          >
+            <p
+              class="text-gray-500"
+            >
+              <span>
+                DAHLIA: San Francisco Housing Portal is a project of the 
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/mohcd"
+                  target="_blank"
+                >
+                  Mayor's Office of Housing and Community Development
+                </a>
+              </span>
+            </p>
+            <p
+              class="text-xs mt-4 text-gray-500"
+            >
+              <span>
+                in partnership with
+                <br />
+                <a
+                  class="text-white"
+                  href="https://digitalservices.sfgov.org/"
+                  target="_blank"
+                >
+                  San Francisco Digital Services
+                </a>
+                <br />
+                <a
+                  class="text-white"
+                  href="https://www.innovation.sfgov.org/"
+                  target="_blank"
+                >
+                  Mayor's Office of Civic Innovation
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <p
+              class="text-sm"
+            >
+              For listing and application questions, please contact the agent displayed on the listing. 
+              <br />
+              For general program inquiries, you may call MOHCD at 415-701-5500.
+            </p>
+          </div>
+        </div>
+        <section
+          class="footer-sock"
+        >
+          <div
+            class="footer-sock__inner"
+          >
+            <p
+              class="footer-copyright"
+            >
+              © City & County of San Francisco
+            </p>
+            <nav
+              aria-label="Footer"
+              class="footer-nav"
+            >
+              <a
+                class="text-gray-500"
+                href="https://airtable.com/shrw64DubWTQfRkdo"
+                target="_blank"
+              >
+                Give Feedback
+              </a>
+              <a
+                class="text-gray-500"
+                href="mailto:sfhousinginfo@sfgov.org"
+                target="_self"
+              >
+                Contact
+              </a>
+              <a
+                class="text-gray-500"
+                href="/disclaimer"
+                target="_self"
+              >
+                Disclaimer
+              </a>
+              <a
+                class="text-gray-500"
+                href="/privacy"
+                target="_self"
+              >
+                Privacy Policy
+              </a>
+            </nav>
+          </div>
+        </section>
+      </footer>
     </div>
-    <footer
-      class="site-footer"
-    >
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section pb-8"
-        >
-          <img
-            alt=""
-            data-testid="footer-logo-test-id"
-          />
-        </div>
-      </div>
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section py-2"
-        >
-          <p
-            class="text-gray-500"
-          >
-            <span>
-              DAHLIA: San Francisco Housing Portal is a project of the 
-              <br />
-              <a
-                class="text-white"
-                href="https://sf.gov/mohcd"
-                target="_blank"
-              >
-                Mayor's Office of Housing and Community Development
-              </a>
-            </span>
-          </p>
-          <p
-            class="text-xs mt-4 text-gray-500"
-          >
-            <span>
-              in partnership with
-              <br />
-              <a
-                class="text-white"
-                href="https://digitalservices.sfgov.org/"
-                target="_blank"
-              >
-                San Francisco Digital Services
-              </a>
-              <br />
-              <a
-                class="text-white"
-                href="https://www.innovation.sfgov.org/"
-                target="_blank"
-              >
-                Mayor's Office of Civic Innovation
-              </a>
-            </span>
-          </p>
-        </div>
-      </div>
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section pb-8"
-        >
-          <p
-            class="text-sm"
-          >
-            For listing and application questions, please contact the agent displayed on the listing. 
-            <br />
-            For general program inquiries, you may call MOHCD at 415-701-5500.
-          </p>
-        </div>
-      </div>
-      <section
-        class="footer-sock"
-      >
-        <div
-          class="footer-sock__inner"
-        >
-          <p
-            class="footer-copyright"
-          >
-            © City & County of San Francisco
-          </p>
-          <nav
-            aria-label="Footer"
-            class="footer-nav"
-          >
-            <a
-              class="text-gray-500"
-              href="https://airtable.com/shrw64DubWTQfRkdo"
-              target="_blank"
-            >
-              Give Feedback
-            </a>
-            <a
-              class="text-gray-500"
-              href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
-            >
-              Contact
-            </a>
-            <a
-              class="text-gray-500"
-              href="/disclaimer"
-              target="_self"
-            >
-              Disclaimer
-            </a>
-            <a
-              class="text-gray-500"
-              href="/privacy"
-              target="_self"
-            >
-              Privacy Policy
-            </a>
-          </nav>
-        </div>
-      </section>
-    </footer>
   </div>
 </DocumentFragment>
 `;

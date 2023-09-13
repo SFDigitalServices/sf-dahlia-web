@@ -5,6 +5,15 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 const CHILD_CONTENT = "Content!"
 
+jest.mock("react-helmet-async", () => {
+  return {
+    // eslint-disable-next-line react/prop-types
+    HelmetProvider: ({ children }) => <div>{children}</div>, // Mock HelmetProvider
+    // eslint-disable-next-line react/prop-types
+    Helmet: ({ children }) => <div>{children}</div>, // Mock Helmet component
+  }
+})
+
 describe("<AssistanceLayout />", () => {
   it("renders children", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(
