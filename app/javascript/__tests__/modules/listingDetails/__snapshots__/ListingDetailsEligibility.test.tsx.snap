@@ -1,5 +1,633 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences for educator listing 1 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item bg-primary-lighter"
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-eligibility.svg"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Eligibility
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Income, occupancy, preferences, and subsidies
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <ul>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Check if you're eligible
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            />
+          </hgroup>
+        </header>
+        <article
+          class="card educator1-eligiblity"
+        >
+          <div
+            class="card__section markdown"
+          >
+            <div>
+              To apply you must:
+              <ul
+                class="ml-0 mt-1"
+              >
+                <li>
+                  <span>
+                    Be an employee of 
+                    <b>
+                      <a
+                        href="https://www.sfusd.edu/"
+                        target="_blank"
+                      >
+                        San Francisco Unified School District (SFUSD)
+                      </a>
+                    </b>
+                  </span>
+                </li>
+                <li>
+                  Provide your Job Code
+                </li>
+              </ul>
+              <p>
+                <a
+                  href="https://sf.gov/apply-shirley-chisholm-village-housing"
+                  target="_blank"
+                >
+                  SFUSD employees: Learn about applying to Shirley Chisholm Village.
+                </a>
+              </p>
+              <p>
+                If you do not work at SF Unified School District, check back in Spring 2024 to apply. 
+                <a
+                  href="https://confirmsubscription.com/h/y/C3BAFCD742D47910"
+                  target="_blank"
+                >
+                  To find out when new listings are posted join our email list.
+                </a>
+              </p>
+            </div>
+          </div>
+        </article>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Household Maximum Income
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              <div>
+                <div
+                  class="mb-4"
+                >
+                  <p>
+                    For income calculations, household size includes everyone (all ages) living in the unit.
+                  </p>
+                </div>
+                <div
+                  class="mb-4 primary-lighter-markup-link-desktop"
+                >
+                  <p>
+                    People in your household may need 
+                    <a
+                      href="https://sfmohcd.org/special-calculations-household-income"
+                      target="_blank"
+                    >
+                      special income calculations
+                    </a>
+                     if they:
+                  </p>
+                </div>
+                <ul
+                  class="list-disc ml-5"
+                >
+                  <li>
+                    Are full-time students (but not the primary applicant).
+                  </li>
+                  <li>
+                    Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Occupancy
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Occupancy for this building is limited to 1 person per unit.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Unit Type
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Occupancy
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="Unit Type"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    SRO
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="Occupancy"
+                >
+                  1 person
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Lottery Preferences
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              <div
+                class="space-y-4"
+              >
+                <p>
+                  If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
+                </p>
+                <p>
+                  <b>
+                    Priority for certain groups - San Francisco Unified School District employees
+                  </b>
+                  <br />
+                  Only San Francisco Unified School District (SFUSD) employees will be included in the lottery for this listing. 
+                </p>
+                <ul
+                  class="list-disc ml-7"
+                >
+                  <li>
+                    <a
+                      href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                      target="_blank"
+                    >
+                      Check if you qualify and see how preferences are ranked for this listing
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
+                      target="_blank"
+                    >
+                      Learn more about housing lottery preference programs
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </hgroup>
+        </header>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Rental Assistance
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+            </span>
+          </hgroup>
+        </header>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Additional Eligibility Rules
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Applicants must also qualify under the rules of the building.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Credit History
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
+          >
+             
+            <div>
+              <p>
+                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
+              </p>
+              <p>
+                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
+              </p>
+              <p>
+                Collection accounts...
+              </p>
+            </div>
+            <button
+              aria-expanded="false"
+              aria-label="Read more about credit history guidelines"
+              class="button-toggle mt-2 has-toggle"
+            >
+              Show more
+            </button>
+          </div>
+        </div>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Rental History
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
+          >
+             
+            <div>
+              <p>
+                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
+              </p>
+              <p>
+                Previous rental history will be reviewed and must exhibit no derogatory references.
+              </p>
+              <p>
+                Landlord references will only check for...
+              </p>
+            </div>
+            <button
+              aria-expanded="false"
+              aria-label="Read more about rental history guidelines"
+              class="button-toggle mt-2 has-toggle"
+            >
+              Show more
+            </button>
+          </div>
+        </div>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Criminal Background
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
+          >
+             
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <a
+                href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                target="_blank"
+              >
+                Article 49
+              </a>
+               of the San Francisco Police Code: 
+              <a
+                href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                target="_blank"
+              >
+                Fair Chance Ordinance
+              </a>
+              .
+            </span>
+          </div>
+        </div>
+        <p>
+          <a
+            class="md:text-blue-700"
+            href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
+            target="_blank"
+          >
+            Find out more about Building Selection Criteria
+          </a>
+        </p>
+      </li>
+    </ul>
+  </li>
+</DocumentFragment>
+`;
+
 exports[`ListingDetailsEligibility displays custom listing details check if you're eligible section for Shirley Chisholm listing 1 1`] = `
 <DocumentFragment>
   <li
@@ -430,154 +1058,42 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               class="custom-counter__subtitle"
             >
               <div
-                class="mb-4"
+                class="space-y-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                <p>
+                  If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. 
+                </p>
+                <p>
+                  <b>
+                    Priority for certain groups - San Francisco Unified School District employees
+                  </b>
+                  <br />
+                  Only San Francisco Unified School District (SFUSD) employees will be included in the lottery for this listing. 
+                </p>
+                <ul
+                  class="list-disc ml-7"
+                >
+                  <li>
+                    <a
+                      href="https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village"
+                      target="_blank"
+                    >
+                      Check if you qualify and see how preferences are ranked for this listing
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://sf.gov/information/learn-about-housing-lottery-preference-programs"
+                      target="_blank"
+                    >
+                      Learn more about housing lottery preference programs
+                    </a>
+                  </li>
+                </ul>
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
             </span>
           </hgroup>
         </header>
-        <ol
-          class="preferences-list"
-        >
-          <li
-            class="preferences-list__item info-card"
-          >
-            <div
-              class="preferences-list__number"
-            >
-              1
-              <sup>
-                st
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Certificate of Preference (COP)
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 6 units available
-            </div>
-            <div
-              class="preferences-list__description "
-            >
-              For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Certificate of Preference"
-                  href="http://sfmohcd.org/certificate-preference"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-            </div>
-          </li>
-          <li
-            class="preferences-list__item info-card"
-          >
-            <div
-              class="preferences-list__number"
-            >
-              2
-              <sup>
-                nd
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Displaced Tenant Housing Preference (DTHP)
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 1 units available
-            </div>
-            <div
-              class="preferences-list__description "
-            >
-              For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Displaced Tenant Housing Preference"
-                  href="http://sfmohcd.org/displaced-tenant-housing-preference"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-            </div>
-          </li>
-          <li
-            class="preferences-list__item info-card"
-          >
-            <div
-              class="preferences-list__number"
-            >
-              3
-              <sup>
-                rd
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Live or Work in San Francisco Preference
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 6 units available
-            </div>
-            <div
-              class="preferences-list__description translate"
-            >
-              This is a custom description - For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Live or Work in San Francisco Preference"
-                  href="http://sfmohcd.org/housing-preference-programs"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-              <span>
-                <a
-                  aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist#live-or-work-sf"
-                  target="_blank"
-                >
-                  View Document Checklist
-                </a>
-              </span>
-            </div>
-          </li>
-        </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -4488,6 +5004,547 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           class="text-gray-750 text-sm"
         >
           After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
+        </p>
+      </li>
+    </ul>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPreferences for a non-Chisholm listing 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item bg-primary-lighter"
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-eligibility.svg"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Eligibility
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Income, occupancy, preferences, and subsidies
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <ul>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Household Maximum Income
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              <div>
+                <div
+                  class="mb-4"
+                >
+                  <p>
+                    For income calculations, household size includes everyone (all ages) living in the unit.
+                  </p>
+                </div>
+                <div
+                  class="mb-4 primary-lighter-markup-link-desktop"
+                >
+                  <p>
+                    People in your household may need 
+                    <a
+                      href="https://sfmohcd.org/special-calculations-household-income"
+                      target="_blank"
+                    >
+                      special income calculations
+                    </a>
+                     if they:
+                  </p>
+                </div>
+                <ul
+                  class="list-disc ml-5"
+                >
+                  <li>
+                    Are full-time students (but not the primary applicant).
+                  </li>
+                  <li>
+                    Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Occupancy
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Occupancy for this building is limited to 1 person per unit.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Unit Type
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Occupancy
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="Unit Type"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    SRO
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="Occupancy"
+                >
+                  1 person
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Lottery Preferences
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              <div
+                class="mb-4"
+              >
+                <span>
+                  Preference holders will be given highest ranking in the lottery process.
+                </span>
+              </div>
+              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          class="p-4 text-center"
+        >
+          An error occurred. Check back later.
+        </div>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Rental Assistance
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+            </span>
+          </hgroup>
+        </header>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Additional Eligibility Rules
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Applicants must also qualify under the rules of the building.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Credit History
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
+          >
+             
+            <div>
+              <p>
+                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
+              </p>
+              <p>
+                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
+              </p>
+              <p>
+                Collection accounts...
+              </p>
+            </div>
+            <button
+              aria-expanded="false"
+              aria-label="Read more about credit history guidelines"
+              class="button-toggle mt-2 has-toggle"
+            >
+              Show more
+            </button>
+          </div>
+        </div>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Rental History
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 translate additional-rule-card"
+          >
+             
+            <div>
+              <p>
+                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
+              </p>
+              <p>
+                Previous rental history will be reviewed and must exhibit no derogatory references.
+              </p>
+              <p>
+                Landlord references will only check for...
+              </p>
+            </div>
+            <button
+              aria-expanded="false"
+              aria-label="Read more about rental history guidelines"
+              class="button-toggle mt-2 has-toggle"
+            >
+              Show more
+            </button>
+          </div>
+        </div>
+        <div
+          class="info-card"
+        >
+          <div
+            class="info-card__header"
+          >
+            <h3
+              class="info-card__title"
+            >
+              Criminal Background
+            </h3>
+          </div>
+          <div
+            class="expandable-text text-xs text-gray-700 additional-rule-card"
+          >
+             
+            <span>
+              Qualified applicants with criminal history will be considered for housing in compliance with 
+              <a
+                href="https://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf"
+                target="_blank"
+              >
+                Article 49
+              </a>
+               of the San Francisco Police Code: 
+              <a
+                href="https://sfgov.org/olse/fair-chance-ordinance-fco"
+                target="_blank"
+              >
+                Fair Chance Ordinance
+              </a>
+              .
+            </span>
+          </div>
+        </div>
+        <p>
+          <a
+            class="md:text-blue-700"
+            href="https://us.awp.autotask.net/1/filelink/113bd-37ed41a1-53a7f01459-2"
+            target="_blank"
+          >
+            Find out more about Building Selection Criteria
+          </a>
         </p>
       </li>
     </ul>
