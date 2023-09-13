@@ -52,12 +52,17 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
-    if cache_listing_images
-      image_processor = ListingImageService.new(listing).process_image
-      Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
-    end
+    cache_listing_images && process_listing_images(listing)
   rescue Faraday::ClientError => e
     Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
+  end
+
+  def process_listing_images(listing)
+    image_processor = ListingImageService.new(listing).process_image
+    Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
+
+    multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
+    Rails.logger.error multiple_listing_image_processor&.errors&.join(',') if multiple_listing_image_processor&.errors&.present?
   end
 
   def listing_closed?(listing)
