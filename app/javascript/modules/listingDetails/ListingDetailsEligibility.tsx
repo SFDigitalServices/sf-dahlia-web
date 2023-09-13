@@ -10,6 +10,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
+  isEducator,
   isEducatorOne,
   isHabitatListing,
   isPluralSRO,
@@ -25,6 +26,7 @@ import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
+import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -186,21 +188,27 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        <ListSection
-          title={t("listings.lottery.title")}
-          subtitle={
-            <>
-              <div className="mb-4">
-                {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
-              </div>
-              {t("listingsForSale.lotteryPreferences.hasPreferences")}
-            </>
-          }
-        >
+        {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
-            <ListingDetailsPreferences listingID={listing.listingID} />
+            <ListingDetailsChisholmPreferences />
           </ErrorBoundary>
-        </ListSection>
+        ) : (
+          <ListSection
+            title={t("listings.lottery.title")}
+            subtitle={
+              <>
+                <div className="mb-4">
+                  {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+                </div>
+                {t("listingsForSale.lotteryPreferences.hasPreferences")}
+              </>
+            }
+          >
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsPreferences listingID={listing.listingID} />
+            </ErrorBoundary>
+          </ListSection>
+        )}
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}
