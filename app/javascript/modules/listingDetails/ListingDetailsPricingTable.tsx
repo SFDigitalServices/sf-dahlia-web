@@ -114,7 +114,13 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       cellSubText: `${unit.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: getRangeString(unit?.minMonthlyIncomeNeeded, unit?.maxMonthlyIncomeNeeded, true),
+      cellText: getRangeString(
+        unit?.minMonthlyIncomeNeeded,
+        unit?.maxMonthlyIncomeNeeded,
+        true,
+        undefined,
+        !!unit?.Rent_percent_of_income
+      ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
@@ -140,7 +146,8 @@ const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
 
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
-  listingIsSale: boolean
+  listingIsSale: boolean,
+  forceZeroInRange: boolean
 ) => {
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
@@ -200,7 +207,7 @@ const buildAccordions = (
               </span>
               <span className={"flex items-center mr-2 text-sm md:text-base"}>
                 {(() => {
-                  return occupancy?.absoluteMinIncome <= 0 ? (
+                  return occupancy?.absoluteMinIncome <= 0 && !forceZeroInRange ? (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.upToMaxPerMonth", {
@@ -213,7 +220,9 @@ const buildAccordions = (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.minMaxPerMonth", {
-                          min: Math.round(occupancy?.absoluteMinIncome).toLocaleString(),
+                          min: Math.round(
+                            forceZeroInRange ? 0 : occupancy?.absoluteMinIncome
+                          ).toLocaleString(),
                           max: Math.round(occupancy?.absoluteMaxIncome).toLocaleString(),
                         }),
                         "<span>"
@@ -320,6 +329,8 @@ const buildContent = (
     )
   }
 
+  const forceZeroInRange = units?.some((unit) => unit.Rent_percent_of_income)
+
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
   if (units?.length) {
@@ -332,7 +343,7 @@ const buildContent = (
 
   return (
     <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
-      {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
+      {buildAccordions(groupedUnitsByOccupancy, listingIsSale, forceZeroInRange)}
     </div>
   )
 }
