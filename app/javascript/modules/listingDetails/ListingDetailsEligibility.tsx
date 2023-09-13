@@ -189,7 +189,9 @@ export const ListingDetailsEligibility = ({
         </ListSection>
 
         {isEducator(listing) ? (
-          <ListingDetailsChisholmPreferences />
+          <ErrorBoundary boundaryScope={BoundaryScope.component}>
+            <ListingDetailsChisholmPreferences />
+          </ErrorBoundary>
         ) : (
           <ListSection
             title={t("listings.lottery.title")}
