@@ -129,7 +129,7 @@ export const ListingDetailsEligibility = ({
             title={t("listings.customListingType.educator.eligibility.title")}
             subtitle=""
           >
-            <Card className="educator1-eligiblity">
+            <Card className="educator-eligibility">
               <Card.Section className="markdown">
                 <div>
                   {t("listings.customListingType.educator.eligibility.part1a")}
@@ -164,6 +164,52 @@ export const ListingDetailsEligibility = ({
             </Card>
           </ListSection>
         )}
+        {isEducator(listing) && !isEducatorOne(listing) && (
+          <ListSection
+            title={t("listings.customListingType.educator.eligibility.title")}
+            subtitle=""
+          >
+            <Card className="educator-eligibility">
+              <Card.Section className="markdown">
+                <div>
+                  <p>
+                    <b>{t("listings.customListingType.educator.eligibility.priority")}</b>
+                  </p>
+                  <p>{t("listings.customListingType.educator.eligibility.priority1")}</p>
+                  <p className="mb-0">
+                    {t("listings.customListingType.educator.eligibility.priority2")}
+                  </p>
+                  <ul className="ml-0 mt-1">
+                    <li>
+                      {renderInlineMarkup(
+                        t("listings.customListingType.educator.eligibility.part1b", {
+                          sfusdLink: "https://www.sfusd.edu/",
+                        }),
+                        "<a><b>"
+                      )}
+                    </li>
+                    <li>{t("listings.customListingType.educator.eligibility.part1c")}</li>
+                  </ul>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part2", {
+                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                      })
+                    )}
+                  </p>
+                  <p>{t("listings.customListingType.educator.eligibility.priority3")}</p>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.priority4", {
+                        learnMoreLink: `${window.location.href}#chisholm-preferences`,
+                      })
+                    )}
+                  </p>
+                </div>
+              </Card.Section>
+            </Card>
+          </ListSection>
+        )}
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection
             title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
@@ -190,7 +236,9 @@ export const ListingDetailsEligibility = ({
 
         {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
-            <ListingDetailsChisholmPreferences />
+            <span id="chisholm-preferences">
+              <ListingDetailsChisholmPreferences />
+            </span>
           </ErrorBoundary>
         ) : (
           <ListSection
