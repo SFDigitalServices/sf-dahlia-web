@@ -1310,7 +1310,7 @@
   "rentalDirectory.callouttitle": "透過社區夥伴查看更多物業名單。",
   "rentalDirectory.findMatchingListings": "尋找符合的物業項目",
   "rentalDirectory.ifYouTellUs": "如果您告知我們您的家庭人數以及收入，我們可以列出您可能符合資格的房源。",
-  "rentalDirectory.orGetHelpCalculating": "或者 尋求協助如何計算您的收入",
+  "rentalDirectory.orGetHelpCalculating": "或者 <a href='%{incomeLink}'>尋求協助如何計算您的收入</a>",
   "rentalDirectory.title": "租用可負擔房屋",
   "resetPassword.title": "重設密碼",
   "resetPassword.updatePassword": "更新密碼",

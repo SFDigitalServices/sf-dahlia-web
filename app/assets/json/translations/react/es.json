@@ -1310,7 +1310,7 @@
   "rentalDirectory.callouttitle": "Vea otros anuncios de nuestros asociados comunitarios.",
   "rentalDirectory.findMatchingListings": "Encuentre anuncios compatibles",
   "rentalDirectory.ifYouTellUs": "Si nos dice el número de personas que viven con usted y sus ingresos, podemos mostrarle viviendas para las que podría ser elegible.",
-  "rentalDirectory.orGetHelpCalculating": "u obtenga ayuda para calcular sus ingresos",
+  "rentalDirectory.orGetHelpCalculating": "u <a href='%{incomeLink}'>obtenga ayuda para calcular sus ingresos</a>",
   "rentalDirectory.title": "Alquile una vivienda asequible",
   "resetPassword.title": "Restablecer la contraseña",
   "resetPassword.updatePassword": "Actualice la contraseña",

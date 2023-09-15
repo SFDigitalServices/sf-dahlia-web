@@ -1310,7 +1310,7 @@
   "rentalDirectory.callouttitle": "Tingnan ang mas maraming nakalistang pabahay mula sa aming mga ka-partner sa komunidad. ",
   "rentalDirectory.findMatchingListings": "Humanap ng mga nagtutugmang nakalistang pabahay",
   "rentalDirectory.ifYouTellUs": "Kung sasabihin mo sa amin ang laki at kita ng iyong sambahayan, puwede naming ipakita sa iyo ang mga listing kung saan posible kang kwalipikado.",
-  "rentalDirectory.orGetHelpCalculating": "o kumuha ng tulong sa pagkalkula sa inyong kita",
+  "rentalDirectory.orGetHelpCalculating": "o <a href='%{incomeLink}'>kumuha ng tulong sa pagkalkula sa inyong kita</a>",
   "rentalDirectory.title": "Umupa ng abot-kayang pabahay",
   "resetPassword.title": "I-reset ang Password",
   "resetPassword.updatePassword": "I-update ang password ",
