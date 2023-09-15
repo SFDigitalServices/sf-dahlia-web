@@ -946,7 +946,7 @@
   "listings.includesPriorityUnits": "Kasama ang mga Unit na Nagbibigay Prayoridad para sa %{priorities}",
   "listings.includingChildren": "(kasama ang <span class='eligibility-subtext'>%{number} %{children}</span> mas bata sa edad na 6)",
   "listings.incomeExceptions.intro": "Posibleng kailangan ng mga tao sa inyong kabahayan ng  <a href='%{url}' target='_blank'>espesyal na pagkakalkula ng kita </a> kung sila ay:",
-  "listings.incomeExceptions.nontaxable": "Tumatanggap ng hindi binubuwisan (non-taxable) na kita",
+  "listings.incomeExceptions.nontaxable": "Tumatanggap ng <span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>hindi binubuwisan (non-taxable) na kita</span>",
   "listings.incomeExceptions.nontaxableTooltip": "Kasama sa hindi binubuwisang kita ang SSI, SSDI, bayad na pangsuporta sa anak at nga benepisyo sa worker's compensation (bayad-pinsala para sa manggagawa).",
   "listings.incomeExceptions.students": "Mga buong oras na estudyante (pero hindi ang pangunahing aplikante)",
   "listings.incomeRange.minMaxPerMonth": "Kitang <span className='font-semibold'>$%{min} hanggang $%{max}</span> kada buwan",

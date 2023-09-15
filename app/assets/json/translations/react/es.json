@@ -946,7 +946,7 @@
   "listings.includesPriorityUnits": "Incluye unidades con prioridad para %{priorities}",
   "listings.includingChildren": "(incluidos <span class='eligibility-subtext'>%{number} %{children}</span> menores de 6 años)",
   "listings.incomeExceptions.intro": "Las personas en su hogar pueden necesitar <a href='%{url}' target='_blank'> cálculos de ingresos especiales</a> en el caso que ellos",
-  "listings.incomeExceptions.nontaxable": "Reciban ingresos no reportables",
+  "listings.incomeExceptions.nontaxable": "Reciban <span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>ingresos no reportables</span>",
   "listings.incomeExceptions.nontaxableTooltip": "Los ingresos no reportables pueden incluir el SSI (Seguo de Ingreso Suplementario), el SSDI (Seguro Social por Incapacidad), los pagos de manutención de menores  y los beneficios de Compensación al trabajador, ( accidente en el trabajo)",
   "listings.incomeExceptions.students": "Sean estudiantes de tiempo completo (no se aplica al solicitante principal)",
   "listings.incomeRange.minMaxPerMonth": "Ingresos comprendidos entre <span className='font-semibold'>$%{min} y hasta $%{max}</span> por mes",

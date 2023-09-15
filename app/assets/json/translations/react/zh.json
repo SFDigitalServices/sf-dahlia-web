@@ -946,7 +946,7 @@
   "listings.includesPriorityUnits": "包括 %{priorities} 的優先單位",
   "listings.includingChildren": "(包括<span class='eligibility-subtext'>%{number} %{children}</span>6歲以下兒童)",
   "listings.incomeExceptions.intro": "如果您家中的成員符合以下情況，可能需要<a href='%{url}' target='_blank'>特別收入計算方式</a>：",
-  "listings.incomeExceptions.nontaxable": "有不納稅收入 ",
+  "listings.incomeExceptions.nontaxable": "有<span data-tooltip='%{tooltip}' title='%{tooltip}' aria-haspopup='true' class='has-tip'>不納稅收入</span> ",
   "listings.incomeExceptions.nontaxableTooltip": "不納稅收入可能包括 SSI、SSDI、子女撫養費和工傷補償福利。",
   "listings.incomeExceptions.students": "是全日制學生（但不是主申請人）",
   "listings.incomeRange.minMaxPerMonth": "每月收入介於 <span className='font-semibold'>$%{min} 至 $%{max}</span>",
