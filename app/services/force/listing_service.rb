@@ -12,7 +12,7 @@ module Force
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
       force = attrs[:force].present? ? attrs[:force] : false
-      get_listings(params: params, force_recache: force)
+      get_listings(params:, force_recache: force)
     end
 
     # get listings with eligibility matches applied
@@ -31,7 +31,8 @@ module Force
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      add_image_urls(results).first
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images).first
     end
 
     # get all units for a given listing
@@ -107,7 +108,8 @@ module Force
       params[:subset] ||= 'browse'
       results = Request.new(parse_response: true)
                        .cached_get('/ListingDetails', params, force_recache)
-      add_image_urls(results)
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images)
     end
 
     private_class_method def self.add_image_urls(listings)
@@ -121,6 +123,34 @@ module Force
         listing['imageURL'] = url
       end
       listings
+    end
+
+    private_class_method def self.add_cloudfront_urls_for_listing_images(listings)
+      listing_images = ListingImage.all
+
+      listings.each do |listing|
+        next unless listing['Listing_Images']&.length&.positive?
+
+        listing_images_array = listing_images.select do |li|
+          li.salesforce_listing_id == listing['Id']
+        end
+
+        multiple_listing_images = set_cloudfront_url(listing['Listing_Images'],
+                                                     listing_images_array)
+        listing['Listing_Images'] = multiple_listing_images
+      end
+      listings
+    end
+
+    private_class_method def self.set_cloudfront_url(sf_listing_images, cf_listing_images)
+      sf_listing_images.each do |li|
+        cf_listing_image = cf_listing_images.select do |cf_li|
+          cf_li.raw_image_url == li['Image_URL']
+        end.first
+        url = cf_listing_image && ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero? ? cf_listing_image.image_url : li['Image_URL']
+        li['imageURL'] = url
+      end
+      sf_listing_images
     end
   end
 end

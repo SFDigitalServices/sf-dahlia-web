@@ -16,7 +16,7 @@ export interface ListingDetailsImageCardProps {
 const createImageCardProps = (listing: RailsListing) => {
   const listingImages: ImageItem[] = listing?.Listing_Images?.map((listingImage) => {
     return {
-      url: listingImage.Image_URL,
+      url: listingImage.imageURL,
       description: listingImage.Image_Description,
     }
   })

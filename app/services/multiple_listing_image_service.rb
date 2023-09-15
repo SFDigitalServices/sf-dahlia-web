@@ -23,6 +23,9 @@ class MultipleListingImageService
 
     @listing_images.each do |listing_image|
       li_raw_image_url = listing_image['Image_URL']
+
+      li_raw_image_url.blank? && next
+
       cache_string = get_cache_string(@listing_id, li_raw_image_url)
       image_name = get_image_name(@listing_id, cache_string)
       tmp_image_path = get_tmp_image_path(image_name)
