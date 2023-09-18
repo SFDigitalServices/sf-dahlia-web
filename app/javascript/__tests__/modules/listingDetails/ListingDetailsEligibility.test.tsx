@@ -230,7 +230,7 @@ describe("ListingDetailsEligibility", () => {
     )
 
     expect(
-      await findByText(t("listings.customListingType.educator.eligibility.part1a"))
+      await findByText(t("listings.customListingType.educator.eligibility.part1"))
     ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
     done()
