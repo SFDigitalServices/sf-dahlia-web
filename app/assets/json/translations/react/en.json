@@ -1080,7 +1080,7 @@
   "listings.customListingType.educator.eligibility.priority1": "Anyone can apply, but certain groups get priority. ",
   "listings.customListingType.educator.eligibility.priority2": "To get priority you must:",
   "listings.customListingType.educator.eligibility.priority3": "If you do not work at SF Unified School District, you can still apply. You will be ranked below SFUSD employees in the lottery. ",
-  "listings.customListingType.educator.eligibility.priority4": "<a target='_blank' href='%{learnMoreLink}'>Learn more about the lottery for this listing.</a>",
+  "listings.customListingType.educator.eligibility.priority4": "<a target='_self' href='%{learnMoreLink}'>Learn more about the lottery for this listing.</a>",
   "listings.customListingType.educator.eligibility.title": "Check if you're eligible",
   "listings.customListingType.educator.preferences.part1": "If you qualify for a preference, you have a better chance in the lottery. After the lottery, all applicants are ranked and ordered by preference category. If you do not qualify for a preference, you will be ranked below those who do. ",
   "listings.customListingType.educator.preferences.part2": "<b>Priority for certain groups - San Francisco Unified School District employees</b> ",
