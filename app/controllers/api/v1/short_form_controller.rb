@@ -464,10 +464,8 @@ class Api::V1::ShortFormController < ApiController
             :lendingAgent,
             :homebuyerEducationAgency,
             :isNonPrimaryMemberVeteran,
-            # TODO WIP these params eventually get posted salesforce endpoint '/shortForm' to Force::ShortFormService.create_or_update
-            # check with Larry, that the endppoint can handle the new params
-            :customEducatorScreeningAnswer,
-            :customEducatorJobClassificationNumber,
+            :isSFUSDEmployee,
+            :jobClassification,
           )
           .to_h
   end

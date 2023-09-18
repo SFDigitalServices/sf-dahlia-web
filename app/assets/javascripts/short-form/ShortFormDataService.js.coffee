@@ -121,9 +121,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.formMetadata = Service._formatMetadata(application)
 
     # custom educator
-    sfApp.customEducatorScreeningAnswer = application.customEducatorScreeningAnswer
-    sfApp.customEducatorJobClassificationNumber = application.customEducatorJobClassificationNumber
-    sfApp.customEducatorUnlistedJobClassificationNumber = application.customEducatorUnlistedJobClassificationNumber
+    sfApp.isSFUSDEmployee = Service._formatBoolean(application.customEducatorScreeningAnswer)
+    sfApp.jobClassification = application.customEducatorJobClassificationNumber
 
     # add preferences and return
     sfApp.shortFormPreferences = Service._formatPreferences(application)
@@ -366,6 +365,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.householdIncome = Service._reformatIncome(sfApp)
     data.documents = Service._reformatDocuments(uploadedFiles)
     Service._reformatMetadata(sfApp, data)
+
+    # custom educator
+    data.customEducatorScreeningAnswer = Service._reformatBoolean(sfApp.isSFUSDEmployee)
+    data.customEducatorJobClassificationNumber = sfApp.jobClassification
 
     allHousehold = angular.copy(data.householdMembers)
     allHousehold.unshift(data.applicant)
