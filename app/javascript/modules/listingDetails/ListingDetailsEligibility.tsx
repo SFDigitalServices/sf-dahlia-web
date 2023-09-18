@@ -132,17 +132,17 @@ export const ListingDetailsEligibility = ({
             <Card className="educator-eligibility">
               <Card.Section className="markdown">
                 <div>
-                  {t("listings.customListingType.educator.eligibility.part1a")}
+                  {t("listings.customListingType.educator.eligibility.part1")}
                   <ul className="ml-0 mt-1">
                     <li>
                       {renderInlineMarkup(
-                        t("listings.customListingType.educator.eligibility.part1b", {
+                        t("listings.customListingType.educator.eligibility.sfusd", {
                           sfusdLink: "https://www.sfusd.edu/",
                         }),
                         "<a><b>"
                       )}
                     </li>
-                    <li>{t("listings.customListingType.educator.eligibility.part1c")}</li>
+                    <li>{t("listings.customListingType.educator.eligibility.code")}</li>
                   </ul>
                   <p>
                     {renderInlineMarkup(
@@ -182,13 +182,13 @@ export const ListingDetailsEligibility = ({
                   <ul className="ml-0 my-1">
                     <li>
                       {renderInlineMarkup(
-                        t("listings.customListingType.educator.eligibility.part1b", {
+                        t("listings.customListingType.educator.eligibility.sfusd", {
                           sfusdLink: "https://www.sfusd.edu/",
                         }),
                         "<a><b>"
                       )}
                     </li>
-                    <li>{t("listings.customListingType.educator.eligibility.part1c")}</li>
+                    <li>{t("listings.customListingType.educator.eligibility.code")}</li>
                   </ul>
                   <p>
                     {renderInlineMarkup(
