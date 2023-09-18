@@ -179,7 +179,7 @@ export const ListingDetailsEligibility = ({
                   <p className="mb-0">
                     {t("listings.customListingType.educator.eligibility.priority2")}
                   </p>
-                  <ul className="ml-0 mt-1">
+                  <ul className="ml-0 my-1">
                     <li>
                       {renderInlineMarkup(
                         t("listings.customListingType.educator.eligibility.part1b", {
