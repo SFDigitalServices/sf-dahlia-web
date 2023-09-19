@@ -38,6 +38,21 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
         property="og:type"
       />
       <link
+        rel="icon"
+        sizes="32x32"
+        type="image/png"
+      />
+      <link
+        rel="icon"
+        sizes="96x96"
+        type="image/png"
+      />
+      <link
+        rel="icon"
+        sizes="16x16"
+        type="image/png"
+      />
+      <link
         rel="apple-touch-icon"
         sizes="57x57"
       />
@@ -76,21 +91,6 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
       <link
         rel="icon"
         sizes="192x192"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="32x32"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="96x96"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="16x16"
         type="image/png"
       />
       <link
