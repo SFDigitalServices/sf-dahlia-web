@@ -167,7 +167,7 @@ const HousingCounselors = () => {
         return t("assistance.housingCounselors.findACounselor.filter.all")
       }
       case 1: {
-        return t("assistance.housingCounselors.findACounselor.filter.one")
+        return t("assistance.housingCounselors.findACounselor.filter.singular")
       }
       case 0: {
         return (
