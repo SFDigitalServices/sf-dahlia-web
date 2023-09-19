@@ -11,6 +11,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { faYoutube } from "@fortawesome/free-brands-svg-icons"
 import bloomTheme from "../../../../tailwind.config"
+import {
+  getAdditionalResourcesPath,
+  getDocumentChecklistPath,
+  getHousingCounselorsPath,
+} from "../../util/routeUtil"
 
 const GetAssistance = () => {
   return (
@@ -29,7 +34,7 @@ const GetAssistance = () => {
             key="housing-counselors"
             className="button"
             external={true}
-            href={"/housing-counselors"}
+            href={getHousingCounselorsPath()}
             target="_blank"
           >
             {t("housingCounselor.findAHousingCounselor")}
@@ -50,7 +55,7 @@ const GetAssistance = () => {
             key="additional-resources"
             className="button w-3/4 md:w-auto"
             external={true}
-            href={"/additional-resources"}
+            href={getAdditionalResourcesPath()}
             target="_blank"
           >
             {t("assistance.title.additionalHousingOpportunities.button")}
@@ -86,7 +91,7 @@ const GetAssistance = () => {
             key="document-checklist"
             className="button"
             external={true}
-            href={"/document-checklist"}
+            href={getDocumentChecklistPath()}
             target="_blank"
           >
             {t("label.viewDocumentChecklist")}
