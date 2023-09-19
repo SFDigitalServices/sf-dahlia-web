@@ -13,6 +13,8 @@ import {
 } from "../../data/RailsRentalListing/listing-rental-sro"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { rentalEducatorListing } from "../../data/RailsRentalListing/listing-rental-educator"
+import { t } from "@bloom-housing/ui-components"
+import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 const axios = require("axios")
 
@@ -224,7 +226,63 @@ describe("ListingDetailsEligibility", () => {
       </ListingDetailsContext.Provider>
     )
 
-    expect(await findByText("Check if you're eligible")).toBeDefined()
+    expect(
+      await findByText(t("listings.customListingType.educator.eligibility.title"))
+    ).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
+  })
+
+  it("displays ListingDetailsChisholmPreferences for educator listing 1", async (done) => {
+    axios.get.mockResolvedValue({ data: { listings: [rentalEducatorListing] } })
+    const { asFragment, findByText } = await renderAndLoadAsync(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={rentalEducatorListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(findByText(t("listings.customListingType.educator.preferences.part1"))).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
+  })
+
+  it("does not display ListingDetailsChisholmPreferences for a non-Chisholm listing", async (done) => {
+    axios.get.mockResolvedValue({ data: { listings: [sroRentalListing] } })
+    const { asFragment, findByText } = await renderAndLoadAsync(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={sroRentalListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(findByText(t("listings.customListingType.educator.preferences.part1"))).not.toBeNull()
     expect(asFragment()).toMatchSnapshot()
     done()
   })
