@@ -5,10 +5,8 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 jest.mock("react-helmet-async", () => {
   return {
-    // eslint-disable-next-line react/prop-types
-    HelmetProvider: ({ children }) => <div>{children}</div>, // Mock HelmetProvider
-    // eslint-disable-next-line react/prop-types
-    Helmet: ({ children }) => <div>{children}</div>, // Mock Helmet component
+    HelmetProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>, // Mock HelmetProvider
+    Helmet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>, // Mock Helmet component
   }
 })
 
