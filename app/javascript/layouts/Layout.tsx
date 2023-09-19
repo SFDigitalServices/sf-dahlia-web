@@ -24,6 +24,7 @@ import {
 } from "../util/routeUtil"
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
+import { HelmetProvider } from "react-helmet-async"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -152,87 +153,93 @@ const Layout = (props: LayoutProps) => {
   )
 
   return (
-    <div className="notranslate site-wrapper">
-      <div className="site-content">
-        <MetaTags title={props.title} description={props.description} image={props.image} />
-        {topAlert}
-        <SiteHeader
-          homeURL={"/"}
-          dropdownItemClassName={"text-2xs"}
-          menuItemClassName={"pb-4 pt-1 flex items-end"}
-          languageNavLabel={t("languages.choose")}
-          languages={getLanguageItems()}
-          logoSrc={getAssetPath("DAHLIA-logo.svg")}
-          notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
-          noticeMobile={true}
-          mobileDrawer={true}
-          flattenSubMenus={true}
-          imageOnly={true}
-          mobileText={true}
-          logoWidth={"medium"}
-          logoClass="translate"
-          menuLinks={getMenuLinks(!!profile, signOut)}
-          strings={{
-            skipToMainContent: t("t.skipToMainContent"),
-            logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
-          }}
-          mainContentId={"main-content"}
-        />
+    <HelmetProvider>
+      <div className="notranslate site-wrapper">
+        <div className="site-content">
+          <MetaTags title={props.title} description={props.description} image={props.image} />
+          {topAlert}
+          <SiteHeader
+            homeURL={"/"}
+            dropdownItemClassName={"text-2xs"}
+            menuItemClassName={"pb-4 pt-1 flex items-end"}
+            languageNavLabel={t("languages.choose")}
+            languages={getLanguageItems()}
+            logoSrc={getAssetPath("DAHLIA-logo.svg")}
+            notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
+            noticeMobile={true}
+            mobileDrawer={true}
+            flattenSubMenus={true}
+            imageOnly={true}
+            mobileText={true}
+            logoWidth={"medium"}
+            logoClass="translate"
+            menuLinks={getMenuLinks(!!profile, signOut)}
+            strings={{
+              skipToMainContent: t("t.skipToMainContent"),
+              logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
+            }}
+            mainContentId={"main-content"}
+          />
 
-        <main data-testid="main-content-test-id" id="main-content" className="md:overflow-x-hidden">
-          <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
-        </main>
-      </div>
-
-      <SiteFooter>
-        <FooterSection>
-          <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
-        </FooterSection>
-        <FooterSection small>
-          <p className="text-gray-500">
-            <Markdown>
-              {t("footer.dahliaDescription", {
-                mohcdUrl: "https://sf.gov/mohcd",
-              })}
-            </Markdown>
-          </p>
-          <p className="text-xs mt-4 text-gray-500">
-            <Markdown>
-              {t("footer.inPartnershipWith", {
-                sfdsUrl: "https://digitalservices.sfgov.org/",
-                mayorUrl: "https://www.innovation.sfgov.org/",
-              })}
-            </Markdown>
-          </p>
-        </FooterSection>
-
-        <FooterSection>
-          <p className="text-sm">
-            {t("footer.forListingQuestions")} <br />
-            {t("footer.forGeneralQuestions")}
-          </p>
-        </FooterSection>
-        <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
-          <Link
-            className="text-gray-500"
-            href="https://airtable.com/shrw64DubWTQfRkdo"
-            target="_blank"
-            external={true}
+          <main
+            data-testid="main-content-test-id"
+            id="main-content"
+            className="md:overflow-x-hidden"
           >
-            {t("footer.giveFeedback")}
-          </Link>
-          <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
-            {t("footer.contact")}
-          </Link>
-          <Link className="text-gray-500" href={getDisclaimerPath()}>
-            {t("footer.disclaimer")}
-          </Link>
-          <Link className="text-gray-500" href={getPrivacyPolicyPath()}>
-            {t("footer.privacyPolicy")}
-          </Link>
-        </FooterNav>
-      </SiteFooter>
-    </div>
+            <ErrorBoundary boundaryScope={BoundaryScope.content}>{props.children}</ErrorBoundary>
+          </main>
+        </div>
+
+        <SiteFooter>
+          <FooterSection>
+            <img src={getAssetPath("logo-city.png")} alt="" data-testid="footer-logo-test-id" />
+          </FooterSection>
+          <FooterSection small>
+            <p className="text-gray-500">
+              <Markdown>
+                {t("footer.dahliaDescription", {
+                  mohcdUrl: "https://sf.gov/mohcd",
+                })}
+              </Markdown>
+            </p>
+            <p className="text-xs mt-4 text-gray-500">
+              <Markdown>
+                {t("footer.inPartnershipWith", {
+                  sfdsUrl: "https://digitalservices.sfgov.org/",
+                  mayorUrl: "https://www.innovation.sfgov.org/",
+                })}
+              </Markdown>
+            </p>
+          </FooterSection>
+
+          <FooterSection>
+            <p className="text-sm">
+              {t("footer.forListingQuestions")} <br />
+              {t("footer.forGeneralQuestions")}
+            </p>
+          </FooterSection>
+          <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
+            <Link
+              className="text-gray-500"
+              href="https://airtable.com/shrw64DubWTQfRkdo"
+              target="_blank"
+              external={true}
+            >
+              {t("footer.giveFeedback")}
+            </Link>
+            <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
+              {t("footer.contact")}
+            </Link>
+            <Link className="text-gray-500" href={getDisclaimerPath()}>
+              {t("footer.disclaimer")}
+            </Link>
+            <Link className="text-gray-500" href={getPrivacyPolicyPath()}>
+              {t("footer.privacyPolicy")}
+            </Link>
+          </FooterNav>
+        </SiteFooter>
+      </div>
+    </HelmetProvider>
   )
 }
 
