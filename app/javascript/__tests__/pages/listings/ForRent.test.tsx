@@ -9,8 +9,8 @@ jest.mock("axios")
 
 jest.mock("react-helmet-async", () => {
   return {
-    HelmetProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>, // Mock HelmetProvider
-    Helmet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>, // Mock Helmet component
+    HelmetProvider: ({ children }: { children: React.ReactNode }) => children, // Mock HelmetProvider
+    Helmet: ({ children }: { children: React.ReactNode }) => children, // Mock Helmet component
   }
 })
 
