@@ -2,9 +2,9 @@
 class MultipleListingImageService
   attr_reader :errors
 
-  #TMP_DIR = 'tmp/images'.freeze
-  #REMOTE_IMAGE_PATH = 'images/listings'.freeze
-  #IMAGE_WIDTH = 768
+  # TMP_DIR = 'tmp/images'.freeze
+  # REMOTE_IMAGE_PATH = 'images/listings'.freeze
+  # IMAGE_WIDTH = 768
 
   def initialize(listing_hash)
     @errors = []
@@ -16,10 +16,10 @@ class MultipleListingImageService
 
   def process_images
     unless @listing_images
-      puts "No listing Images for #{@listing_id}"
       add_error(@errors, "No listing images provided for listing #{@listing_id}")
       return self
     end
+    Rails.logger.info("Processing Listing Images for #{@listing_id}")
 
     @listing_images.each do |listing_image|
       li_raw_image_url = listing_image['Image_URL']
@@ -31,20 +31,17 @@ class MultipleListingImageService
       tmp_image_path = get_tmp_image_path(image_name)
       remote_image_path = get_remote_image_path(image_name)
       image_url = get_image_url(remote_image_path)
-      p "   LI #{li_raw_image_url}"
 
       if !resized_image(image_name, @resized_listing_images)
-        p '     resizing and uploading'
-        if resize_and_upload_image(li_raw_image_url, tmp_image_path, remote_image_path, @listing_id)
-          p '     create or update'
+        Rails.logger.info("Resizing and uploading #{image_name}")
+        if resize_and_upload_image(li_raw_image_url, tmp_image_path, remote_image_path,
+                                   @listing_id)
           create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
         end
-      else
+      elsif !listing_image_current(@listing_id,
+                                   image_url) || ENV['FORCE_MULTIPLE_LISTING_IMAGE_UPDATE'].to_s.casecmp('true').zero?
         create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
       end
-      # elsif !listing_image_current(@listing_id, image_url)
-      #   create_or_update_listing_image(@listing_id, image_url)
-      # end
     end
     self
   end
@@ -130,6 +127,7 @@ def create_or_update_listing_image(listing_id, image_url, li_raw_image_url)
   listing_image = ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id,
                                                      image_url:, raw_image_url: li_raw_image_url)
   listing_image.update(raw_image_url: li_raw_image_url, image_url:)
+  Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
 end
 
 def add_error(errors, error_message)

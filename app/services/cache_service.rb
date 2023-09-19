@@ -11,6 +11,7 @@ class CacheService
     else
       cache_only_updated_listings
     end
+    Rails.logger.info('Cache Service Finished')
   end
 
   private
@@ -33,8 +34,11 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
-      cache_single_listing(fresh_listing) unless
-        listing_unchanged?(prev_cached_listing, fresh_listing)
+      unless listing_unchanged?(prev_cached_listing, fresh_listing)
+        Rails.logger.info("Listing is changed #{prev_cached_listing['Id']}")
+      end
+
+      cache_single_listing(fresh_listing)
     end
   end
 
@@ -58,9 +62,10 @@ class CacheService
   end
 
   def process_listing_images(listing)
+    Rails.logger.info("Calling ListingImageService for #{listing['Id']} ")
     image_processor = ListingImageService.new(listing).process_image
     Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
-
+    Rails.logger.info("Calling MultipleListingImageService for #{listing['Id']} ")
     multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
     Rails.logger.error multiple_listing_image_processor&.errors&.join(',') if multiple_listing_image_processor&.errors&.present?
   end
