@@ -4,7 +4,7 @@ import { ListingDetailsImageCard } from "../../../modules/listingDetails/Listing
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../../data/RailsSaleListing/listing-sale-educator"
-import { rentalEducatorListing } from "../../data/RailsRentalListing/listing-rental-educator"
+import { rentalEducatorListing1 } from "../../data/RailsRentalListing/listing-rental-educator"
 
 describe("ListingDetailsImageCard", () => {
   it("displays image card when no tag", () => {
@@ -26,7 +26,7 @@ describe("ListingDetailsImageCard", () => {
   })
 
   it("displays tag when rental listing is for educators", () => {
-    const { asFragment } = render(<ListingDetailsImageCard listing={rentalEducatorListing} />)
+    const { asFragment } = render(<ListingDetailsImageCard listing={rentalEducatorListing1} />)
 
     expect(asFragment()).toMatchSnapshot()
   })
