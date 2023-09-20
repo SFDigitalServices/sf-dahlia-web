@@ -126,29 +126,20 @@ module Force
     end
 
     private_class_method def self.add_cloudfront_urls_for_listing_images(listings)
-      listing_images = ListingImage.all
-
       listings.each do |listing|
-        next unless listing['Listing_Images']&.length&.positive?
+        next unless listing['Listing_Images'].present?
 
-        listing_images_array = listing_images.select do |li|
-          li.salesforce_listing_id == listing['Id']
-        end
-
-        multiple_listing_images = set_cloudfront_url(listing['Listing_Images'],
-                                                     listing_images_array)
-        listing['Listing_Images'] = multiple_listing_images
+        listing['Listing_Images'] = set_cloudfront_url(listing['Listing_Images'],
+                                                       ListingImage.where(salesforce_listing_id: listing['Id']))
       end
       listings
     end
 
     private_class_method def self.set_cloudfront_url(sf_listing_images, cf_listing_images)
       sf_listing_images.each do |li|
-        cf_listing_image = cf_listing_images.select do |cf_li|
-          cf_li.raw_image_url == li['Image_URL']
-        end.first
+        cf_listing_image = cf_listing_images.where(raw_image_url: li['Image_URL']).first
         url = cf_listing_image && ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero? ? cf_listing_image.image_url : li['Image_URL']
-        li['imageURL'] = url
+        li['displayImageURL'] = url
       end
       sf_listing_images
     end

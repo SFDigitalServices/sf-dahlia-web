@@ -45,92 +45,85 @@ class MultipleListingImageService
     end
     self
   end
-end
 
   private
 
-def get_cache_string(listing_id, raw_image_url)
-  cache_string ||= Digest::MD5.hexdigest(listing_id + raw_image_url)
-  cache_string
-end
-
-def get_image_name(listing_id, cache_string)
-  "#{listing_id}-#{cache_string}.jpg"
-end
-
-def get_remote_image_path(image_name)
-  "images/listings/#{image_name}"
-end
-
-def get_image_url(remote_image_path)
-  base_image_url = ENV['RESOURCE_URL']
-  "#{base_image_url}/#{remote_image_path}"
-end
-
-def get_tmp_image_path(image_name)
-  "tmp/images/#{image_name}"
-end
-
-def resized_image(image_name, resized_listing_images)
-  resized_listing_images.count { |file| file.key.end_with?(image_name) }.positive?
-end
-
-def listing_image_current(listing_id, image_url)
-  listing_images_by_id = ListingImage.where(salesforce_listing_id: listing_id)
-  current_listing_image = listing_images_by_id.select do |li|
-    li && li.image_url == image_url
+  def get_cache_string(listing_id, raw_image_url)
+    Digest::MD5.hexdigest(listing_id + raw_image_url)
   end
-  current_listing_image&.length&.positive?
-end
 
-def resize_and_upload_image(raw_image_url, tmp_image_path, remote_image_path,
-                            listing_id)
-  if resize_image(raw_image_url, listing_id, tmp_image_path)
-    uploaded = false
-    File.open(tmp_image_path) do |file|
-      # cache images for 1 yr since we change the filename when image changes
-      uploaded = FileStorageService.upload(
-        remote_image_path,
-        file,
-        cache_control: 'max-age=31536000',
-      )
+  def get_image_name(listing_id, cache_string)
+    "#{listing_id}-#{cache_string}.jpg"
+  end
+
+  def get_remote_image_path(image_name)
+    "images/listings/#{image_name}"
+  end
+
+  def get_image_url(remote_image_path)
+    base_image_url = ENV['RESOURCE_URL']
+    "#{base_image_url}/#{remote_image_path}"
+  end
+
+  def get_tmp_image_path(image_name)
+    "tmp/images/#{image_name}"
+  end
+
+  def resized_image(image_name, resized_listing_images)?
+    resized_listing_images.count { |file| file.key.end_with?(image_name) }.positive?
+  end
+
+  def listing_image_current(listing_id, image_url)?
+    listing_images_by_id = ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
+  end
+
+  def resize_and_upload_image(raw_image_url, tmp_image_path, remote_image_path,
+                              listing_id)
+    if resize_image(raw_image_url, listing_id, tmp_image_path)
+      uploaded = false
+      File.open(tmp_image_path) do |file|
+        # cache images for 1 yr since we change the filename when image changes
+        uploaded = FileStorageService.upload(
+          remote_image_path,
+          file,
+          cache_control: 'max-age=31536000',
+        )
+      end
+      File.delete(tmp_image_path)
+      uploaded
+    else
+      false
     end
-    File.delete(tmp_image_path)
-    uploaded
-  else
+  end
+
+  def resize_image(image_url, listing_id, tmp_image_path)
+    Dir.mkdir('tmp/images') unless Dir.exist?('tmp/images')
+    image = MiniMagick::Image.open(image_url)
+    throw MiniMagick::Invalid unless image.valid?
+    # set width only and height is adjusted to maintain aspect ratio
+    image.resize(768.to_s)
+    image.format('jpg')
+    image.write(tmp_image_path)
+    ImageOptimizer.new(tmp_image_path, quality: 75).optimize
+    true
+  rescue MiniMagick::Invalid => e
+    add_error(@errors, "Image for listing #{listing_id} is unreadable. Error: #{e}")
+    false
+  rescue StandardError => e
+    add_error(@errors, "Unable to process image for listing #{listing_id} with image"\
+      " #{image} - #{e.class.name}, #{e.message}")
     false
   end
-end
 
-def resize_image(image_url, listing_id, tmp_image_path)
-  Dir.mkdir('tmp/images') unless Dir.exist?('tmp/images')
-  image = MiniMagick::Image.open(image_url)
-  p image
-  throw MiniMagick::Invalid unless image.valid?
-  # set width only and height is adjusted to maintain aspect ratio
-  image.resize(768.to_s)
-  image.format('jpg')
-  image.write(tmp_image_path)
-  ImageOptimizer.new(tmp_image_path, quality: 75).optimize
-  true
-rescue MiniMagick::Invalid => e
-  puts e
-  add_error(@errors, "Image for listing #{listing_id} is unreadable")
-  false
-rescue StandardError => e
-  add_error(@errors, "Unable to process image for listing #{listing_id} with image"\
-    " #{image} - #{e.class.name}, #{e.message}")
-  false
-end
+  def create_or_update_listing_image(listing_id, image_url, li_raw_image_url)
+    listing_image = ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id,
+                                                       image_url:, raw_image_url: li_raw_image_url)
+    listing_image.update(raw_image_url: li_raw_image_url, image_url:)
+    Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
+  end
 
-def create_or_update_listing_image(listing_id, image_url, li_raw_image_url)
-  listing_image = ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id,
-                                                     image_url:, raw_image_url: li_raw_image_url)
-  listing_image.update(raw_image_url: li_raw_image_url, image_url:)
-  Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
-end
-
-def add_error(errors, error_message)
-  errors << "MultipleListingImageService error: #{error_message}"
-  errors
+  def add_error(errors, error_message)
+    errors << "MultipleListingImageService error: #{error_message}"
+    errors
+  end
 end
