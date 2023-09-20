@@ -7,6 +7,13 @@ const axios = require("axios")
 
 jest.mock("axios")
 
+jest.mock("react-helmet-async", () => {
+  return {
+    HelmetProvider: ({ children }: { children: React.ReactNode }) => children, // Mock HelmetProvider
+    Helmet: ({ children }: { children: React.ReactNode }) => children, // Mock Helmet component
+  }
+})
+
 describe("For Sale", () => {
   afterEach(() => {
     cleanup()
