@@ -115,7 +115,7 @@ export const ListingDetailsProcess = ({
       {isListingSale && (
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock title={t("listings.housingProgram")}>
-            <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+            <a href={`https://sf.gov`} target="_blank" className="text-base">
               "TEST"
             </a>
           </SidebarBlock>
