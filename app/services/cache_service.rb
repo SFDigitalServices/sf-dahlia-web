@@ -68,7 +68,7 @@ class CacheService
     Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
     Rails.logger.info("Calling MultipleListingImageService for #{listing['Id']} ")
     multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
-    Rails.logger.error multiple_listing_image_processor&.errors&.join(',') if multiple_listing_image_processor.errors.present?
+    Rails.logger.error multiple_listing_image_processor.errors.join(',') if multiple_listing_image_processor.errors.present?
   end
 
   def listing_closed?(listing)
