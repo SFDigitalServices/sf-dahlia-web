@@ -69,11 +69,11 @@ class MultipleListingImageService
     "tmp/images/#{image_name}"
   end
 
-  def resized_image(image_name, resized_listing_images)?
+  def resized_image(image_name, resized_listing_images)
     resized_listing_images.count { |file| file.key.end_with?(image_name) }.positive?
   end
 
-  def listing_image_current(listing_id, image_url)?
+  def listing_image_current(listing_id, image_url)
     listing_images_by_id = ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
   end
 
