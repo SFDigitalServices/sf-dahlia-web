@@ -251,17 +251,17 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
   },
   Listing_Images: [
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
       Image_Description: "This is a listing image",
     },
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
       Image_Description: "This is a second listing image",
     },
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
       Image_Description: "This is a third listing image",
     },

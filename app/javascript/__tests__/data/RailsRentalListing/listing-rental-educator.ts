@@ -299,17 +299,17 @@ export const rentalEducatorListing: RailsRentalListing = {
   },
   Listing_Images: [
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a listing image",
     },
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a second listing image",
     },
     {
-      imageURL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a third listing image",
     },
