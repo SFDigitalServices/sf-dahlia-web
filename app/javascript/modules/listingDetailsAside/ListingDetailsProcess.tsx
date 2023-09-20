@@ -116,7 +116,7 @@ export const ListingDetailsProcess = ({
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock title={t("listings.housingProgram")}>
             <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
-              {t("listings.belowMarketRate")}
+              "TEST"
             </a>
           </SidebarBlock>
         </div>
