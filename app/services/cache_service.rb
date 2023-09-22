@@ -42,14 +42,18 @@ class CacheService
   end
 
   def listing_unchanged?(prev_cached_listing, fresh_listing)
+    Rails.logger.info("Calling listing_unchanged for #{prev_cached_listing ['Id']} ")
+
     prev_cached_listing.present? &&
       (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def listing_images_unchanged?(prev_cached_listing, fresh_listing)
+    Rails.logger.info("Calling listing_images_unchanged for #{prev_cached_listing['Id']} ")
+
     prev_cached_listing_images = prev_cached_listing.present? && prev_cached_listing['Listing_Images']
     fresh_listing_images = fresh_listing.present? && fresh_listing['Listing_Images']
-
+    Rails.logger.info("Is listing images the same , #{prev_cached_listing_images == fresh_listing_images}")
     prev_cached_listing_images == fresh_listing_images
   end
 
