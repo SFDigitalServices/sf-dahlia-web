@@ -54,9 +54,12 @@ class CacheService
 
     return false if prev_cached_listing_images&.length != fresh_listing_images&.length
 
-    listing_images_equal = Set.new(prev_cached_listing_images) == Set.new(fresh_listing_images)
-    Rails.logger.info("Is listing images the same for #{prev_cached_listing['Id']}: #{listing_images_equal}")
-    listing_images_equal
+    unchanged = true
+    fresh_listing_images.each_with_index do |li, idx|
+      unchanged = listing_image_unchanged?(prev_cached_listing_images[idx], li)
+      break unless unchanged
+    end
+    unchanged
   end
 
   def listing_image_unchanged?(prev_cached_listing_li, fresh_li)
