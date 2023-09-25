@@ -42,19 +42,23 @@ class CacheService
   end
 
   def listing_unchanged?(prev_cached_listing, fresh_listing)
-    Rails.logger.info("Calling listing_unchanged for #{prev_cached_listing ['Id']} ")
-
     prev_cached_listing.present? &&
       (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def listing_images_unchanged?(prev_cached_listing, fresh_listing)
-    Rails.logger.info("Calling listing_images_unchanged for #{prev_cached_listing['Id']} ")
-
     prev_cached_listing_images = prev_cached_listing.present? && prev_cached_listing['Listing_Images']
     fresh_listing_images = fresh_listing.present? && fresh_listing['Listing_Images']
-    Rails.logger.info("Is listing images the same , #{prev_cached_listing_images == fresh_listing_images}")
-    prev_cached_listing_images == fresh_listing_images
+
+    return false if prev_cached_listing_images.length != fresh_listing_images.length
+
+    listing_images_equal = Set.new(prev_cached_listing_images) == Set.new(fresh_listing_images)
+    Rails.logger.info("Is listing images the same for #{prev_cached_listing['Id']}: #{listing_images_equal}")
+    return listing_images_equal
+  end
+
+  def listing_image_unchanged?(prev_cached_listing_li, fresh_li)
+    prev_cached_listing_li['Image_URL'] == fresh_li['Image_URL']
   end
 
   def cache_single_listing(listing)
@@ -77,7 +81,9 @@ class CacheService
     Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
     Rails.logger.info("Calling MultipleListingImageService for #{listing['Id']} ")
     multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
-    Rails.logger.error multiple_listing_image_processor.errors.join(',') if multiple_listing_image_processor.errors.present?
+    return unless multiple_listing_image_processor.errors.present?
+
+    Rails.logger.error multiple_listing_image_processor.errors.join(',')
   end
 
   def listing_closed?(listing)
