@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 
 import { t } from "@bloom-housing/ui-components"
-import { HelmetProvider } from "react-helmet-async"
+import { Helmet } from "react-helmet-async"
 
 import { ConfigContext } from "../lib/ConfigContext"
 
@@ -16,7 +16,7 @@ const MetaTags = (props: MetaTagsProps) => {
   // Description is separated into two check as Helmet can't handle nested elements
   return (
     <>
-      <HelmetProvider>
+      <Helmet>
         <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -33,6 +33,9 @@ const MetaTags = (props: MetaTagsProps) => {
           content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
         />
         <meta property="og:type" content="website" />
+        <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
+        <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />
+        <link href={getAssetPath("favicon-16x16.png")} rel="icon" sizes="16x16" type="image/png" />
         <link href={getAssetPath("apple-icon-57x57.png")} rel="apple-touch-icon" sizes="57x57" />
         <link href={getAssetPath("apple-icon-60x60.png")} rel="apple-touch-icon" sizes="60x60" />
         <link href={getAssetPath("apple-icon-72x72.png")} rel="apple-touch-icon" sizes="72x72" />
@@ -68,12 +71,9 @@ const MetaTags = (props: MetaTagsProps) => {
           sizes="192x192"
           type="image/png"
         />
-        <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
-        <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />
-        <link href={getAssetPath("favicon-16x16.png")} rel="icon" sizes="16x16" type="image/png" />
         <link href={getAssetPath("manifest.json")} rel="manifest" />
         <meta content={getAssetPath("ms-icon-144x144.png")} name="msapplication-TileImage" />
-      </HelmetProvider>
+      </Helmet>
     </>
   )
 }

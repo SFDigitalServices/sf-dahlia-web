@@ -12,7 +12,10 @@ import {
   sroRentalListing,
 } from "../../data/RailsRentalListing/listing-rental-sro"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
-import { rentalEducatorListing } from "../../data/RailsRentalListing/listing-rental-educator"
+import {
+  rentalEducatorListing1,
+  rentalEducatorListing2,
+} from "../../data/RailsRentalListing/listing-rental-educator"
 import { t } from "@bloom-housing/ui-components"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
@@ -220,21 +223,51 @@ describe("ListingDetailsEligibility", () => {
         }}
       >
         <ListingDetailsEligibility
-          listing={rentalEducatorListing}
+          listing={rentalEducatorListing1}
           imageSrc={"listing-eligibility.svg"}
         />
       </ListingDetailsContext.Provider>
     )
 
     expect(
-      await findByText(t("listings.customListingType.educator.eligibility.title"))
+      await findByText(t("listings.customListingType.educator.eligibility.part1"))
+    ).toBeDefined()
+    expect(asFragment()).toMatchSnapshot()
+    done()
+  })
+
+  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 2", async (done) => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+
+    const { asFragment, findByText } = render(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={rentalEducatorListing2}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    expect(
+      await findByText(t("listings.customListingType.educator.eligibility.priority"))
     ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
     done()
   })
 
   it("displays ListingDetailsChisholmPreferences for educator listing 1", async (done) => {
-    axios.get.mockResolvedValue({ data: { listings: [rentalEducatorListing] } })
+    axios.get.mockResolvedValue({ data: { listings: [rentalEducatorListing1] } })
     const { asFragment, findByText } = await renderAndLoadAsync(
       <ListingDetailsContext.Provider
         value={{
@@ -249,7 +282,7 @@ describe("ListingDetailsEligibility", () => {
         }}
       >
         <ListingDetailsEligibility
-          listing={rentalEducatorListing}
+          listing={rentalEducatorListing1}
           imageSrc={"listing-eligibility.svg"}
         />
       </ListingDetailsContext.Provider>

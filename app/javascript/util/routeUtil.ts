@@ -58,6 +58,7 @@ export const getMyApplicationsPath = localizedPathGetter("/my-applications")
 export const getMyAccountSettingsPath = localizedPathGetter("/account-settings")
 export const getAdditionalResourcesPath = localizedPathGetter("/additional-resources")
 export const getHousingCounselorsPath = localizedPathGetter("/housing-counselors")
+export const getDocumentChecklistPath = localizedPathGetter("/document-checklist")
 export const getShareListingPath = localizedPathGetter("/share")
 
 // Rental Listing Directory

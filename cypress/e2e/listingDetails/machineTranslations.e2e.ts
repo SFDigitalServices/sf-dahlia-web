@@ -38,7 +38,7 @@ const INFORMATION_SESSION_SALE_TEXT = {
   en: "Attendance at an information session by one applicant is mandatory",
   es: "La asistencia a una sesión informativa",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon",
-  zh: "一名申請人必須參加信息發布會。",
+  zh: "一名申請人必須參加資訊發布會。",
 }
 
 describe("Listing Detail Machine Translations", () => {
