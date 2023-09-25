@@ -106,6 +106,7 @@ export const ListingDetailsLotterySearchForm = ({
         <Heading>{t("lottery.lotteryResults")}</Heading>
         <h2 className="font-sans font-semibold text-xs uppercase">{listing.Name}</h2>
       </header>
+      <p className="px-8 pb-4 text-xs">{t("lottery.bucketsIntro")}</p>
       <form
         id="search-form"
         className="bg-gray-100 flex mb-4 px-6 py-4"
