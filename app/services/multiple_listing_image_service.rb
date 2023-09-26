@@ -74,7 +74,7 @@ class MultipleListingImageService
   end
 
   def listing_image_current(listing_id, image_url)
-    listing_images_by_id = ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
+    ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
   end
 
   def resize_and_upload_image(raw_image_url, tmp_image_path, remote_image_path,

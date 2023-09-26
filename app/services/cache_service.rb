@@ -38,9 +38,9 @@ class CacheService
                                                                     fresh_listing) && listing_images_unchanged?(
                                                                       prev_cached_listing, fresh_listing
                                                                     )
-      Rails.logger.info("Calling process_listing_images for #{fresh_listing['Id']}")
+      #Rails.logger.info("Calling process_listing_images for #{fresh_listing['Id']}")
 
-      cache_listing_images && process_listing_images(fresh_listing)
+      #cache_listing_images && process_listing_images(fresh_listing)
     end
   end
 
@@ -54,6 +54,9 @@ class CacheService
     fresh_listing_images = fresh_listing.present? && fresh_listing['Listing_Images']
 
     return true if fresh_listing_images.blank?
+    Rails.logger.info("#{fresh_listing['Id']}: Listing_Images length: Prev: #{prev_cached_listing_images&.length} Fresh: #{fresh_listing_images&.length}")
+
+
 
     return false if prev_cached_listing_images&.length != fresh_listing_images&.length
 
@@ -71,6 +74,8 @@ class CacheService
   end
 
   def cache_single_listing(listing)
+    Rails.logger.info("Calling cache_single_listing for #{listing['Id']}")
+
     id = listing['Id']
     # cache this listing from API
     Force::ListingService.listing(id, force: true)
