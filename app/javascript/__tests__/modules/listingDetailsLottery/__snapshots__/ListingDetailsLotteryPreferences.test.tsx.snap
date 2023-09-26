@@ -5,11 +5,6 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
   <div
     class="text-sm"
   >
-    <p
-      class="px-8 pb-4 text-xs"
-    >
-      Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
-    </p>
     <header
       class="border-b border-gray-450 mb-4"
     >
@@ -118,11 +113,6 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
   <div
     class="text-sm"
   >
-    <p
-      class="px-8 pb-4 text-xs"
-    >
-      Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
-    </p>
     <header
       class="border-b border-gray-450 mb-4"
     >
