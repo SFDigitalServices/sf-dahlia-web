@@ -38,6 +38,8 @@ class CacheService
                                                                     fresh_listing) && listing_images_unchanged?(
                                                                       prev_cached_listing, fresh_listing
                                                                     )
+      Rails.logger.info("Calling process_listing_images for #{listing['Id']} ")
+
       cache_listing_images && process_listing_images(listing)
 
     end
