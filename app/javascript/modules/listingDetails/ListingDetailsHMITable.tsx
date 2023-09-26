@@ -247,6 +247,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           icon={tableCollapsed ? faAngleDown : faAngleUp}
           onClick={expandTableHandler}
           ariaLabel={t("listings.householdMaximumIncome.showMore.aria")}
+          ariaExpanded={!tableCollapsed}
         >
           {tableCollapsed ? t("label.showMore") : t("label.showLess")}
         </Button>
