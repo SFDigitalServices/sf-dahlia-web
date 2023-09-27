@@ -27,8 +27,6 @@ class CacheService
   end
 
   def cache_only_updated_listings
-    # TODO: consider adding logging for how many items to process in a given run of the
-    # cache service
     fresh_listings.each do |fresh_listing|
       prev_cached_listing = prev_cached_listings.find do |l|
         l['Id'] == fresh_listing['Id']
@@ -38,9 +36,6 @@ class CacheService
                                                                     fresh_listing) && listing_images_unchanged?(
                                                                       prev_cached_listing, fresh_listing
                                                                     )
-      # Rails.logger.info("Calling process_listing_images for #{fresh_listing['Id']}")
-
-      # cache_listing_images && process_listing_images(fresh_listing)
     end
   end
 
@@ -54,9 +49,8 @@ class CacheService
     fresh_listing_images = fresh_listing.present? && fresh_listing['Listing_Images']
 
     return true if fresh_listing_images.blank?
+
     Rails.logger.info("#{fresh_listing['Id']}: Listing_Images length: Prev: #{prev_cached_listing_images&.length} Fresh: #{fresh_listing_images&.length}")
-
-
 
     return false if prev_cached_listing_images&.length != fresh_listing_images&.length
 
@@ -70,6 +64,8 @@ class CacheService
   end
 
   def listing_image_unchanged?(prev_cached_listing_li, fresh_li)
+    Rails.logger.info("#{fresh_listing['Id']}: Prev: #{prev_cached_listing_li['Image_URL']} Fresh: #{prev_cached_listing_li['Image_URL']}")
+
     prev_cached_listing_li['Image_URL'] == fresh_li['Image_URL']
   end
 
