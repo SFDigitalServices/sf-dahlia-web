@@ -64,18 +64,10 @@ export const ListingDetailsEligibility = ({
     occupancySubtitle = t("listings.occupancyDescriptionMinOne")
   } else if (
     isAllSRO &&
-    !(
-      isPluralSRO("1335 Folsom Street", listing) ||
-      isPluralSRO("750 Harrison", listing) ||
-      isPluralSRO("750 Harrison Unit 604", listing)
-    )
+    !(isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing))
   ) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSro")
-  } else if (
-    isPluralSRO("1335 Folsom Street", listing) ||
-    isPluralSRO("750 Harrison", listing) ||
-    isPluralSRO("750 Harrison Unit 604", listing)
-  ) {
+  } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
