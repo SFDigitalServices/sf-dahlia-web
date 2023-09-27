@@ -81,9 +81,9 @@ accordion-heading.lead
           p.custom-counter_text ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
             | {{'listings.occupancy_description_min_one' | translate}}
           / TODO: Remove case for hardcoded listings - still needs Folsom 3/3/19
-          p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing))"
+          p.custom-counter_text ng-if="::$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison Unit 604', $ctrl.parent.listing))"
             | {{'listings.occupancy_description_all_sro' | translate}}
-          p.custom-counter_text ng-if="::($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing))"
+          p.custom-counter_text ng-if="::($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison Unit 604', $ctrl.parent.listing))"
             | {{'listings.occupancy_description_all_sro_plural' | translate:"{ numberOfPeople: '2' }"}}
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && $ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
             | {{'listings.occupancy_description_some_sro' | translate}}

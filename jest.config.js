@@ -9,6 +9,7 @@ process.env.SRO_PLURAL_LISTINGS = JSON.stringify({
   a0W4U00000HlubxUAB: "1335 Folsom Street",
   a0W4U00000KGFDWUA5: "1335 Folsom Street",
   a0W4U00000KKtXyUAL: "750 Harrison",
+  a0W4U00000IXVL8UAP: '750 Harrison Unit 604',
 })
 
 module.exports = {

@@ -118,7 +118,9 @@ const ListingDetail = () => {
             </ErrorBoundary>
             {listingHasSROUnits(listing) &&
               !(
-                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
+                isPluralSRO("1335 Folsom Street", listing) ||
+                isPluralSRO("750 Harrison", listing) ||
+                isPluralSRO("750 Harrison Unit 604", listing)
               ) && (
                 <div className="md:w-2/3 md:pr-8">
                   <ListingDetailsSROInfo listing={listing} />

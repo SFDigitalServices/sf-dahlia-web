@@ -88,7 +88,7 @@
 
 
   / TODO: remove case for hardcoded listings
-  .content-card ng-if="::$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && !($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing))"
+  .content-card ng-if="::$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && !($ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison Unit 604', $ctrl.parent.listing))"
     h4.content-card_title translate="listings.single_room_occupancy"
     / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
     p.c-steel translate="listings.single_room_occupancy_description" ng-if="::!$ctrl.parent.listingIs('Merry Go Round Shared Housing', $ctrl.parent.listing)"
