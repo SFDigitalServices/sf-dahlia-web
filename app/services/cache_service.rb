@@ -64,7 +64,7 @@ class CacheService
   end
 
   def listing_image_unchanged?(prev_cached_listing_li, fresh_li)
-    Rails.logger.info("#{fresh_listing['Id']}: Prev: #{prev_cached_listing_li['Image_URL']} Fresh: #{prev_cached_listing_li['Image_URL']}")
+    Rails.logger.info("#{fresh_li['Id']}: Prev: #{prev_cached_listing_li['Image_URL']} Fresh: #{fresh_li['Image_URL']}")
 
     prev_cached_listing_li['Image_URL'] == fresh_li['Image_URL']
   end
