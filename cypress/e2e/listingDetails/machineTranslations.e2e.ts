@@ -8,7 +8,7 @@ const verifyMachineTranslations = (language, id, translation) => {
 const TEST_LISTINGS = {
   OPEN_RENTAL: {
     id: "a0W0P00000F8YG4UAN",
-    title: "TEST Automated Listing (do not modify)",
+    title: "TEST Automated Listing (do not modify please)",
   },
   OPEN_SALE: {
     id: "a0W0P00000GlKfB",
@@ -28,7 +28,7 @@ const INFORMATION_SESSION_SALE_TEXT = {
   en: "Attendance at an information session by one applicant is mandatory",
   es: "La asistencia a una sesión informativa",
   tl: "Ang pagdalo sa isang sesyon ng impormasyon",
-  zh: "一名申請人必須參加信息發布會。",
+  zh: "一名申請人必須參加資訊發布會。",
 }
 
 describe("Listing Detail Machine Translations", () => {
