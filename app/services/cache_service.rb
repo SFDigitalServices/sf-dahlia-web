@@ -3,7 +3,9 @@ class CacheService
   def prefetch_listings(opts = {})
     # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
+    Rails.logger.info('Getting prev_cached_listings')
     @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    Rails.logger.info('Getting fresh_listings')
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
     if opts[:refresh_all]
@@ -36,6 +38,7 @@ class CacheService
                                                                     fresh_listing) && listing_images_unchanged?(
                                                                       prev_cached_listing, fresh_listing
                                                                     )
+      cache_listing_images && process_listing_images(listing)
     end
   end
 
@@ -80,7 +83,6 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
-    cache_listing_images && process_listing_images(listing)
   rescue Faraday::ClientError => e
     Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
   end

@@ -83,7 +83,7 @@ describe CacheService do
     end
 
     it 'logs image processing errors, if present' do
-      errors = ['error']
+      errors = ['MultipleListingImageService error: No listing images provided for listing a0W0P00000GlKfBUAV']
       allow(listing_image_service).to receive(:process_image)
         .and_return(OpenStruct.new(errors: errors))
 
