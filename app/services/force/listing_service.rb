@@ -30,6 +30,7 @@ module Force
     def self.listing(id, opts = {})
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
+      Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       add_image_urls(results_with_cached_listing_images).first
@@ -106,6 +107,8 @@ module Force
 
     private_class_method def self.get_listings(params: {}, force_recache: false)
       params[:subset] ||= 'browse'
+      Rails.logger.info("Calling self.get_listings with force: #{force_recache}")
+
       results = Request.new(parse_response: true)
                        .cached_get('/ListingDetails', params, force_recache)
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
