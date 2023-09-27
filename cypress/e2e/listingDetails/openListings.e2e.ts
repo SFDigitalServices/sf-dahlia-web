@@ -29,7 +29,7 @@ function verifyListing(language, id, altPhotoText, title, address, applyButtonTe
 const testListings = {
   OPEN_RENTAL: {
     id: "a0W0P00000F8YG4UAN",
-    title: "TEST Automated Listing (do not modify please)",
+    title: "TEST Automated Listing (do not modify)",
   },
   OPEN_SALE: {
     id: "a0W0P00000GlKfBUAV",
