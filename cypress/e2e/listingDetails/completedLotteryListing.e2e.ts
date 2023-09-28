@@ -7,6 +7,15 @@ const listings = {
   },
 }
 
+Cypress.on("fail", (error) => {
+  console.log("ERROR", error)
+
+  // we now have access to the err instance
+  // and the mocha runnable this failed on
+
+  throw error // throw error to have test still fail
+})
+
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
 
