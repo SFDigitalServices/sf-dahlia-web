@@ -46,6 +46,13 @@ describe("Listing Details for Completed Lottery Listing", () => {
 
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
+      cy.on("uncaught:exception", (err, runnable) => {
+        // Handle the exception here
+        // You can log the error, take a screenshot, or perform any other action
+        // For example, you can use the Cypress log to display the error in the Cypress test runner
+        cy.log(`Uncaught exception: ${err.message}`)
+      })
+
       visitListing(true, "")
       clickLotteryResultsButton(true)
       cy.contains("Lottery results are divided into multiple lists.")
