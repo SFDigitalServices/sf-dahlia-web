@@ -18,10 +18,10 @@ const TEST_LISTINGS = {
 }
 
 const INFORMATION_SESSION_RENTAL_TEXT = {
-  en: "test info session",
-  es: "sesión de información de prueba",
-  tl: "sesyon ng impormasyon ng pagsubok",
-  zh: "測試資訊會話",
+  en: "July 29, 2021",
+  es: "29 de julio de 2021",
+  zh: "2021年7月29日",
+  tl: "Hulyo 29, 2021",
 }
 
 const INFORMATION_SESSION_SALE_TEXT = {
