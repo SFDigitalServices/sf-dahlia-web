@@ -1,19 +1,24 @@
 import { t } from "@bloom-housing/ui-components"
 import React from "react"
+import { isEducatorTwo } from "../../util/listingUtil"
+import { getPriorityTypes } from "./DirectoryHelpers"
+import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 
 type TableSubHeaderProps = {
-  priorityTypes: string[] | null
+  listing: RailsRentalListing
 }
 
-const TableSubHeader = ({ priorityTypes }: TableSubHeaderProps) => {
+const TableSubHeader = ({ listing }: TableSubHeaderProps) => {
+  const priorityTypes = getPriorityTypes(listing)
   return (
-    priorityTypes && (
+    (priorityTypes || isEducatorTwo(listing)) && (
       <div>
         {t("listings.includesPriorityUnits")}
         <ul className="list-disc ml-4">
-          {priorityTypes.map((name) => (
-            <li key={name}>{name}</li>
-          ))}
+          {isEducatorTwo(listing) && (
+            <li>{t("listings.customListingType.educator.priorityUnits")}</li>
+          )}
+          {priorityTypes && priorityTypes.map((name) => <li key={name}>{name}</li>)}
         </ul>
       </div>
     )

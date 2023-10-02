@@ -1088,6 +1088,7 @@
   "listings.customListingType.educator.preferences.part3": "Only San Francisco Unified School District (SFUSD) employees will be included in the lottery for this listing. ",
   "listings.customListingType.educator.preferences.part4a": "<a target='_blank' href='%{chisholmLotteryLink}'>Check if you qualify and see how preferences are ranked for this listing</a>",
   "listings.customListingType.educator.preferences.part4b": "<a target='_blank' href='%{preferencesLink}'>Learn more about housing lottery preference programs</a>",
+  "listings.customListingType.educator.priorityUnits": "San Francisco Unified School District employees",
   "listings.reservedFor": "Reserved for %{type}",
   "listings.reservedUnits": "Reserved Units",
   "listings.reservedUnitsDescription": "In order to qualify for these units one of the following must apply to you or someone in your household:",

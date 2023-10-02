@@ -191,7 +191,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
             : {
                 tableHeader: { content: getTableHeader(listing) },
                 tableSubheader: {
-                  content: <TableSubHeader priorityTypes={getPriorityTypes(listing)} />,
+                  content: <TableSubHeader listing={listing} />,
                 },
                 contentHeader: { content: listing.Name },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
