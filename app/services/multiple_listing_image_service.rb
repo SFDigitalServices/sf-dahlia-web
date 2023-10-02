@@ -2,16 +2,16 @@
 class MultipleListingImageService
   attr_reader :errors
 
-  # TMP_DIR = 'tmp/images'.freeze
-  # REMOTE_IMAGE_PATH = 'images/listings'.freeze
-  # IMAGE_WIDTH = 768
+  TMP_DIR = 'tmp/images'.freeze
+  REMOTE_IMAGE_PATH = 'images/listings'.freeze
+  IMAGE_WIDTH = 768
 
   def initialize(listing_hash)
     @errors = []
     @listing = listing_hash
     @listing_id = listing_hash['Id']
     @listing_images = listing_hash['Listing_Images']
-    @resized_listing_images = FileStorageService.find('images/listings')
+    @resized_listing_images = FileStorageService.find(REMOTE_IMAGE_PATH)
   end
 
   def process_images
@@ -57,7 +57,7 @@ class MultipleListingImageService
   end
 
   def get_remote_image_path(image_name)
-    "images/listings/#{image_name}"
+    "#{REMOTE_IMAGE_PATH}/#{image_name}"
   end
 
   def get_image_url(remote_image_path)
@@ -66,14 +66,14 @@ class MultipleListingImageService
   end
 
   def get_tmp_image_path(image_name)
-    "tmp/images/#{image_name}"
+    "#{TMP_DIR}/#{image_name}"
   end
 
-  def resized_image(image_name, resized_listing_images)
+  def resized_image?(image_name, resized_listing_images)
     resized_listing_images.count { |file| file.key.end_with?(image_name) }.positive?
   end
 
-  def listing_image_current(listing_id, image_url)
+  def listing_image_current?(listing_id, image_url)
     ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
   end
 
@@ -97,7 +97,7 @@ class MultipleListingImageService
   end
 
   def resize_image(image_url, listing_id, tmp_image_path)
-    Dir.mkdir('tmp/images') unless Dir.exist?('tmp/images')
+    Dir.mkdir(TMP_DIR) unless Dir.exist?(TMP_DIR)
     image = MiniMagick::Image.open(image_url)
     throw MiniMagick::Invalid unless image.valid?
     # set width only and height is adjusted to maintain aspect ratio
