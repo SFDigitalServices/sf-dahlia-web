@@ -15,10 +15,10 @@ const TableSubHeader = ({ listing }: TableSubHeaderProps) => {
       <div>
         {t("listings.includesPriorityUnits")}
         <ul className="list-disc ml-4">
-          {isEducatorTwo(listing) && 
+          {isEducatorTwo(listing) && (
             <li>{t("listings.customListingType.educator.priorityUnits")}</li>
-          }
-          {priorityTypes && priorityTypes.map((name) => (<li key={name}>{name}</li>))}
+          )}
+          {priorityTypes && priorityTypes.map((name) => <li key={name}>{name}</li>)}
         </ul>
       </div>
     )
