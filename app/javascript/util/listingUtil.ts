@@ -65,6 +65,14 @@ export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
 
 /**
+ * Check if a listing is Shirley Chisholm listing 2
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is Shirley Chisholm listing 2, false otherwise
+ */
+export const isEducatorTwo = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_TWO
+
+/**
  * Check if a listing is a rental
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing is a rental, false otherwise
@@ -180,12 +188,14 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   ]
 
   const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
-  return paperAppLanguages.map((lang): PaperApplication => {
-    return {
-      languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
-      fileURL: urlBase.replace("{lang}", lang.language),
+  return paperAppLanguages.map(
+    (lang): PaperApplication => {
+      return {
+        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+        fileURL: urlBase.replace("{lang}", lang.language),
+      }
     }
-  })
+  )
 }
 
 export const deriveIncomeFromAmiCharts = (
@@ -236,15 +246,15 @@ const determineMinIncomeNeeded = (
     : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || -1
 }
 
-export const applyMinMaxIncomeToUnit =
-  (amiCharts: RailsAmiChart[], isSale?: boolean) =>
-  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
-    const maxMonthlyIncomeNeeded = Math.round(
-      deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-    )
-    const minMonthlyIncomeNeeded = Math.round(determineMinIncomeNeeded(unit, amiCharts, isSale))
-    return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
-  }
+export const applyMinMaxIncomeToUnit = (amiCharts: RailsAmiChart[], isSale?: boolean) => (
+  unit: RailsUnitWithOccupancy
+): RailsUnitWithOccupancyAndMinMaxIncome => {
+  const maxMonthlyIncomeNeeded = Math.round(
+    deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+  )
+  const minMonthlyIncomeNeeded = Math.round(determineMinIncomeNeeded(unit, amiCharts, isSale))
+  return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
+}
 
 export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
   const totalUnits = []
