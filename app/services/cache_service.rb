@@ -51,22 +51,15 @@ class CacheService
   end
 
   def listing_images_unchanged?(prev_cached_listing, fresh_listing)
-    prev_cached_listing_images = prev_cached_listing.present? && prev_cached_listing['Listing_Images']
-    fresh_listing_images = fresh_listing.present? && fresh_listing['Listing_Images']
+    prev_cached_listing_images = prev_cached_listing&.dig('Listing_Images')
+    fresh_listing_images = fresh_listing_images&.dig('Listing_Images')
 
     return true if fresh_listing_images.blank?
 
-    Rails.logger.info("#{fresh_listing['Id']}: Listing_Images length: Prev: #{prev_cached_listing_images&.length} Fresh: #{fresh_listing_images&.length}")
-
-    return false if prev_cached_listing_images&.length != fresh_listing_images&.length
-
-    unchanged = true
-    fresh_listing_images.each_with_index do |li, idx|
-      unchanged = listing_image_unchanged?(prev_cached_listing_images[idx], li)
-      break unless unchanged
-    end
-    Rails.logger.info("Listing Images for  #{fresh_listing['Id']} is unchanged: #{unchanged}")
-    unchanged
+    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
+    prev_li_slice = prev_cached_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
+    Rails.logger.info("fresh #{fresh_li_slice}, prev #{prev_li_slice}")
+    (fresh_li_slice - prev_li_slice).empty? && (prev_li_slice - fresh_li_slice).empty?
   end
 
   def listing_image_unchanged?(prev_cached_listing_li, fresh_li)

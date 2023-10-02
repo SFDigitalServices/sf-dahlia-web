@@ -32,13 +32,13 @@ class MultipleListingImageService
       remote_image_path = get_remote_image_path(image_name)
       image_url = get_image_url(remote_image_path)
 
-      if !resized_image(image_name, @resized_listing_images)
+      if !resized_image?(image_name, @resized_listing_images)
         Rails.logger.info("Resizing and uploading #{image_name}")
         if resize_and_upload_image(li_raw_image_url, tmp_image_path, remote_image_path,
                                    @listing_id)
           create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
         end
-      elsif !listing_image_current(@listing_id,
+      elsif !listing_image_current?(@listing_id,
                                    image_url) || ENV['FORCE_MULTIPLE_LISTING_IMAGE_UPDATE'].to_s.casecmp('true').zero?
         create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
       end
