@@ -25,7 +25,10 @@ class CacheService
   end
 
   def cache_all_listings
-    fresh_listings.each { |l| cache_single_listing(l) }
+    fresh_listings.each do |l|
+      cache_single_listing(l)
+      cache_listing_images && process_listing_images(l)
+    end
   end
 
   def cache_only_updated_listings
