@@ -188,14 +188,12 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   ]
 
   const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
-  return paperAppLanguages.map(
-    (lang): PaperApplication => {
-      return {
-        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
-        fileURL: urlBase.replace("{lang}", lang.language),
-      }
+  return paperAppLanguages.map((lang): PaperApplication => {
+    return {
+      languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+      fileURL: urlBase.replace("{lang}", lang.language),
     }
-  )
+  })
 }
 
 export const deriveIncomeFromAmiCharts = (
@@ -246,9 +244,9 @@ const determineMinIncomeNeeded = (
     : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || -1
 }
 
-export const applyMinMaxIncomeToUnit = (amiCharts: RailsAmiChart[], isSale?: boolean) => (
-  unit: RailsUnitWithOccupancy
-): RailsUnitWithOccupancyAndMinMaxIncome => {
+export const applyMinMaxIncomeToUnit =
+  (amiCharts: RailsAmiChart[], isSale?: boolean) =>
+  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
   const maxMonthlyIncomeNeeded = Math.round(
     deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
   )
