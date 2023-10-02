@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TableSubHeader renders TableSubHeader component 1`] = `
+exports[`TableSubHeader renders the priority units for Shirley Chisholm listing 2 1`] = `
 <DocumentFragment>
   <div>
     Includes Priority Units for:
@@ -8,7 +8,7 @@ exports[`TableSubHeader renders TableSubHeader component 1`] = `
       class="list-disc ml-4"
     >
       <li>
-        test
+        San Francisco Unified School District employees
       </li>
     </ul>
   </div>
