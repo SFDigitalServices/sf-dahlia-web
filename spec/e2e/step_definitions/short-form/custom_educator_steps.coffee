@@ -5,12 +5,12 @@ Pages = require('../../pages/short-form').Pages
 When /^I answer "([^"]*)" to the custom educator screening question$/, (answer) ->
   element(By.id("customEducatorScreeningAnswer_#{answer.toLowerCase()}")).click()
 
-When 'I fill out the Job Code field with a valid Job Classiication Number', ->
+When 'I fill out the Job Code field with a valid Job Classification Number', ->
   Pages.CustomEducatorScreening.fill(
     Pages.CustomEducatorScreening.defaults.customEducatorJobClassificationNumber
   )
 
-When 'I fill out the Job Code field with an invalid Job Classiication Number', ->
+When 'I fill out the Job Code field with an invalid Job Classification Number', ->
   Pages.CustomEducatorScreening.fill('123INVALIDNUMBER')
 
 Then 'I should see a Job Code field error', ->

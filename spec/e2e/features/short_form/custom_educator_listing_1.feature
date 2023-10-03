@@ -8,7 +8,7 @@ Feature: Short Form Application - Custom Educator Listing 1
         And I select "English" as my language
         Then the application page title should be "Do you work at San Francisco Unified School District?"
         When I answer "Yes" to the custom educator screening question
-        And I fill out the Job Code field with an invalid Job Classiication Number
+        And I fill out the Job Code field with an invalid Job Classification Number
         And I hit the Next button "2" times
         Then I should see a Job Code field error
         When I fill out the Job Code field with a valid Job Classification Number
