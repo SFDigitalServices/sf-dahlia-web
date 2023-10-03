@@ -36,6 +36,8 @@ Given /^I go to the welcome page of the "([^"]*)" application$/, (listing) ->
       Utils.Page.seniorListingId
     when 'Sale Test Listing'
       Utils.Page.saleListingId
+    when 'Custom Educator 1 Test Listing'
+      Utils.Page.customEducatorListing1Id
     when 'Custom Educator 2 Test Listing'
       Utils.Page.customEducatorListing2Id
   Utils.Page.goTo("/listings/#{listingId}/apply-welcome/intro")
