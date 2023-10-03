@@ -50,9 +50,9 @@ class CacheService
       (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
-  def listing_images_unchanged?(prev_cached_listing, _fresh_listing)
+  def listing_images_unchanged?(prev_cached_listing, fresh_listing)
     prev_cached_listing_images = prev_cached_listing&.dig('Listing_Images')
-    fresh_listing_images = _fresh_listing&.dig('Listing_Images')
+    fresh_listing_images = fresh_listing&.dig('Listing_Images')
 
     return true if fresh_listing_images.blank?
 
