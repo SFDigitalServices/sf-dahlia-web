@@ -298,17 +298,17 @@ export const closedRentalListing: RailsRentalListing = {
   },
   Listing_Images: [
     {
-      Image_URL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a listing image",
     },
     {
-      Image_URL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a second listing image",
     },
     {
-      Image_URL:
+      displayImageURL:
         "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
       Image_Description: "This is a third listing image",
     },

@@ -12,7 +12,7 @@ module Force
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
       force = attrs[:force].present? ? attrs[:force] : false
-      get_listings(params: params, force_recache: force)
+      get_listings(params:, force_recache: force)
     end
 
     # get listings with eligibility matches applied
@@ -30,8 +30,10 @@ module Force
     def self.listing(id, opts = {})
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
+      Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      add_image_urls(results).first
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images).first
     end
 
     # get all units for a given listing
@@ -105,9 +107,12 @@ module Force
 
     private_class_method def self.get_listings(params: {}, force_recache: false)
       params[:subset] ||= 'browse'
+      Rails.logger.info("Calling self.get_listings with force: #{force_recache}")
+
       results = Request.new(parse_response: true)
                        .cached_get('/ListingDetails', params, force_recache)
-      add_image_urls(results)
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images)
     end
 
     private_class_method def self.add_image_urls(listings)
@@ -121,6 +126,25 @@ module Force
         listing['imageURL'] = url
       end
       listings
+    end
+
+    private_class_method def self.add_cloudfront_urls_for_listing_images(listings)
+      listings.each do |listing|
+        next unless listing['Listing_Images'].present?
+
+        listing['Listing_Images'] = set_cloudfront_url(listing['Listing_Images'],
+                                                       ListingImage.where(salesforce_listing_id: listing['Id']))
+      end
+      listings
+    end
+
+    private_class_method def self.set_cloudfront_url(sf_listing_images, cf_listing_images)
+      sf_listing_images.each do |li|
+        cf_listing_image = cf_listing_images.where(raw_image_url: li['Image_URL']).first
+        url = cf_listing_image && ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero? ? cf_listing_image.image_url : li['Image_URL']
+        li['displayImageURL'] = url
+      end
+      sf_listing_images
     end
   end
 end

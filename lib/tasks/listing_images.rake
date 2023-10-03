@@ -4,6 +4,7 @@ namespace :listing_images do
     listings = Force::ListingService.listings
     listings.each do |listing|
       ListingImageService.new(listing).process_image
+      MultipleListingImageService.new(listing).process_images
     end
   end
 end

@@ -32,6 +32,7 @@ export type ListingEvent = {
 }
 
 export type ImageItem = {
+  displayImageURL: string
   attributes?: { type: string; url: string }
   Listing?: string
   Id?: string

@@ -229,15 +229,15 @@ export const lotteryCompleteRentalListing: RailsRentalListing = {
   },
   Listing_Images: [
     {
-      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
       Image_Description: "This is a listing image",
     },
     {
-      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
       Image_Description: "This is a second listing image",
     },
     {
-      Image_URL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
       Image_Description: "This is a third listing image",
     },
   ],
