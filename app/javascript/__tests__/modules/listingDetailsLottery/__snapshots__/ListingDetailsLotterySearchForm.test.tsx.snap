@@ -34,7 +34,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         <label
           class="label"
           for="lotterySearchNumber"
-        />
+        >
+          Enter Your Lottery Number
+        </label>
         <div
           class="control"
         >
