@@ -6,4 +6,8 @@
     #search-form input::placeholder {
         @apply text-gray-750;
     }
+
+    #search-form label[for=lotterySearchNumber] {
+        display: none;
+    }
 }
