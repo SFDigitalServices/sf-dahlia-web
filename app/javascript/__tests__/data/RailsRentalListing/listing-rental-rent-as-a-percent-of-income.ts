@@ -2,6 +2,12 @@ import { RailsAmiChart } from "../../../api/types/rails/listings/RailsAmiChart"
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 import RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
+/**
+ * Rent as a percent of income listings are similar to open listings, but the lower
+ * bound of the rent range is a percentage of the applicants income. This lower limit can
+ * be zero.
+ */
+
 export const rpiRentalListing: RailsRentalListing = {
   unitSummaries: {
     reserved: null,

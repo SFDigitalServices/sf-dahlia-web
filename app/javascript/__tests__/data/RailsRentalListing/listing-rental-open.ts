@@ -2,6 +2,11 @@ import { RailsAmiChart } from "../../../api/types/rails/listings/RailsAmiChart"
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 import RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
+/**
+ * This is a generic open rental listing. It has a variety of bedrooms and occupancy limits.
+ * This will constitute the bulk of all listings on the app.
+ */
+
 export const openRentalListing: RailsRentalListing = {
   unitSummaries: {
     reserved: null,

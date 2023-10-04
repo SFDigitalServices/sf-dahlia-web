@@ -2,6 +2,13 @@ import { RailsAmiChart } from "../../../api/types/rails/listings/RailsAmiChart"
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 import RailsUnit from "../../../api/types/rails/listings/RailsUnit"
 
+/**
+ * Section 415 listings contain three discrete AMI bands: Up to 65%, 65% - 90%, and 90% - 130%
+ * A listing can have all three, or some of these bands.
+ * We disregard the lower band of the AMI range (and instead use base rent * rent multiple),
+ * but use the upper AMI value to calculate income max.
+ */
+
 export const fourOneFiveRentalListing: RailsRentalListing = {
   unitSummaries: {
     reserved: null,
