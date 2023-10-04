@@ -210,6 +210,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
       Image_URL:
         "https://sf.gov/sites/default/files/styles/default/public/2023-08/Image%20copy%2001.jpg?itok=eoaWFj3G",
       Image_Description: "This is what screenreaders will hear when on the webpage.",
+      displayImageURL: "",
     },
     {
       attributes: {
@@ -222,6 +223,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
       Image_URL:
         "https://sf.gov/sites/default/files/styles/default/public/2023-08/image_copy_2.jpg?itok=h4nE5L-U",
       Image_Description: "Example",
+      displayImageURL: "",
     },
     {
       attributes: {
@@ -234,6 +236,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
       Image_URL:
         "https://sf.gov/sites/default/files/styles/default/public/2023-08/Image%20copy%203.jpg?itok=BaAzb767",
       Image_Description: "Example",
+      displayImageURL: "",
     },
     {
       attributes: {
@@ -246,6 +249,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
       Image_URL:
         "https://sf.gov/sites/default/files/styles/default/public/2023-08/Image%20copy%204.jpg?itok=SC5ZCz4_",
       Image_Description: "example",
+      displayImageURL: "",
     },
     {
       attributes: {
@@ -258,6 +262,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
       Image_URL:
         "https://sf.gov/sites/default/files/styles/default/public/2023-08/Image%20copy%205.jpg?itok=5oQF-AnD",
       Image_Description: "example",
+      displayImageURL: "",
     },
   ],
   Listing_Lottery_Preferences: [
