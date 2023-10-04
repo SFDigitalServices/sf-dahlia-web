@@ -312,6 +312,8 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -944,6 +946,8 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -1590,6 +1594,8 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -2156,6 +2162,8 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -2821,6 +2829,8 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -3580,6 +3590,8 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -4140,6 +4152,8 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -4835,6 +4849,8 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
@@ -5911,6 +5927,8 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
           </table>
         </div>
         <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
           class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           tabindex="0"
         >
