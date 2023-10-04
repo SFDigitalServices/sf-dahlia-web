@@ -1,5 +1,5 @@
 import React from "react"
-import { render, cleanup, within, fireEvent, screen } from "@testing-library/react"
+import { render, cleanup, within, fireEvent } from "@testing-library/react"
 import { ListingDetailsPricingTable } from "../../../modules/listingDetails/ListingDetailsPricingTable"
 import { closedRentalListing } from "../../data/RailsRentalListing/listing-rental-closed"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
@@ -50,6 +50,7 @@ describe("ListingDetailsPricingTable", () => {
         </ListingDetailsContext.Provider>
       )
 
+      // Expand all the accordions so their content is rendered
       getAllByRole("button").forEach((button) => {
         fireEvent.click(button)
       })
@@ -76,14 +77,15 @@ describe("ListingDetailsPricingTable", () => {
       )
 
       // There should be 7 accordions
-      expect(getAllByRole("button")).toHaveLength(7)
+      const accordions = getAllByRole("button")
+      expect(accordions).toHaveLength(7)
 
       // Four person household
       const fourPersonHouseholdButton = getAllByRole("button")[3]
       fireEvent.click(fourPersonHouseholdButton)
       expect(within(fourPersonHouseholdButton).getByText(/\$1,776 to \$9,433/i)).toBeInTheDocument()
-      expect(getAllByRole("heading", { level: 3 })).toHaveLength(5)
-      // Test a few income levels
+      const fourPersonAMITiers = getAllByRole("heading", { level: 3 })
+      expect(fourPersonAMITiers).toHaveLength(5)
       expect(getByText(/\$2,254 to \$4,441/i)).toBeInTheDocument()
       expect(getByText(/\$5,248 to \$9,433/i)).toBeInTheDocument()
       fireEvent.click(fourPersonHouseholdButton)
@@ -94,8 +96,8 @@ describe("ListingDetailsPricingTable", () => {
       expect(
         within(sevenPersonHouseholdButton).getByText(/\$1,918 to \$11,700/i)
       ).toBeInTheDocument()
-      expect(getAllByRole("heading", { level: 3 })).toHaveLength(5)
-      // Test a few income levels
+      const sevenPersonAMITiers = getAllByRole("heading", { level: 3 })
+      expect(sevenPersonAMITiers).toHaveLength(5)
       expect(getByText(/\$2,918 to \$6,883/i)).toBeInTheDocument()
       expect(getByText(/\$5,248 to \$11,700/i)).toBeInTheDocument()
     })
@@ -145,8 +147,8 @@ describe("ListingDetailsPricingTable", () => {
         </ListingDetailsContext.Provider>
       )
 
-      // There should be 5 accordions
-      expect(getAllByRole("button")).toHaveLength(5)
+      const accordions = getAllByRole("button")
+      expect(accordions).toHaveLength(5)
 
       // Two person household
       const twoPersonExpectedAMITiers = [
@@ -156,18 +158,15 @@ describe("ListingDetailsPricingTable", () => {
       ]
       const twoPersonHouseholdButton = getAllByRole("button")[1]
       fireEvent.click(twoPersonHouseholdButton)
-
       expect(within(twoPersonHouseholdButton).getByText(/\$2,364 to \$11,104/i)).toBeInTheDocument()
-
       const twoPersonHouseholdAMITiers = getAllByRole("heading", { level: 3 })
       expect(twoPersonHouseholdAMITiers).toHaveLength(3)
       twoPersonHouseholdAMITiers.forEach((tier, index) => {
         expect(within(tier).getByText(twoPersonExpectedAMITiers[index])).toBeInTheDocument()
       })
-
       expect(getByText(/\$2,988 to \$5,554/i)).toBeInTheDocument()
       expect(getByText(/\$5,480 to \$11,104/i)).toBeInTheDocument()
-      fireEvent.click(twoPersonHouseholdButton) // close the accordion
+      fireEvent.click(twoPersonHouseholdButton)
 
       // Four person household
       const fourPersonHouseholdButton = getAllByRole("button")[3]
@@ -234,9 +233,6 @@ describe("ListingDetailsPricingTable", () => {
       expect(getAllByRole("button")).toHaveLength(3)
 
       // Two person household
-      // const twoPersonExpectedAMITiers = [
-
-      screen.logTestingPlaygroundURL()
       const twoPersonHouseholdButton = getAllByRole("button")[1]
       expect(within(twoPersonHouseholdButton).getByText(/\$0 to \$3,729/i)).toBeInTheDocument()
 
