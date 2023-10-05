@@ -180,10 +180,11 @@ exports[`For Rent renders ForRent component 1`] = `
           role="navigation"
         >
           <div
-            class="site-header__base "
+            class="site-header__base  site-header__base-wrapped"
           >
             <div
               class="site-header__logo-container site-header__logo-width-med"
+              id="site-header-logo"
             >
               <a
                 aria-label="DAHLIA San Francisco Housing Portal"
@@ -202,7 +203,8 @@ exports[`For Rent renders ForRent component 1`] = `
               </a>
             </div>
             <div
-              class="site-header__navbar-menu"
+              class="site-header__navbar-menu site-header__navbar-wrapped"
+              id="site-header-links"
             >
               <a
                 class="site-header__link pb-4 pt-1 flex items-end "

@@ -60,6 +60,7 @@ export const ListingDetailsProcess = ({
             title: t("label.whatToExpect"),
             readMore: t("label.showMore"),
             readLess: t("label.showLess"),
+            buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
           }}
         />
       </div>
