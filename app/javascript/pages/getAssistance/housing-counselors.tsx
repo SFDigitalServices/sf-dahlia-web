@@ -86,7 +86,7 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             size={AppearanceSizeType.small}
             iconSize="medium"
             onClick={() => {
-              window.open(`tel:+1${housingCounselor.phone}`)
+              window.location.href = `tel:+1${housingCounselor.phone}`
             }}
           >
             {t("assistance.housingCounselors.counselor.call.upper", {
