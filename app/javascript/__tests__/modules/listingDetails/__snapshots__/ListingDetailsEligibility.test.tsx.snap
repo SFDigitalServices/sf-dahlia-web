@@ -2959,144 +2959,28 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <ol
-          class="preferences-list"
+        <div
+          class="flex justify-center"
         >
-          <li
-            class="preferences-list__item info-card"
+          <span
+            class="ui-icon ui-large spinner-animation"
           >
-            <div
-              class="preferences-list__number"
+            <svg
+              fill="currentColor"
+              viewBox="0 0 100 100"
             >
-              1
-              <sup>
-                st
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Certificate of Preference (COP)
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 6 units available
-            </div>
-            <div
-              class="preferences-list__description "
-            >
-              For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Certificate of Preference"
-                  href="http://sfmohcd.org/certificate-preference"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-            </div>
-          </li>
-          <li
-            class="preferences-list__item info-card"
-          >
-            <div
-              class="preferences-list__number"
-            >
-              2
-              <sup>
-                nd
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Displaced Tenant Housing Preference (DTHP)
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 1 units available
-            </div>
-            <div
-              class="preferences-list__description "
-            >
-              For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Displaced Tenant Housing Preference"
-                  href="http://sfmohcd.org/displaced-tenant-housing-preference"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-            </div>
-          </li>
-          <li
-            class="preferences-list__item info-card"
-          >
-            <div
-              class="preferences-list__number"
-            >
-              3
-              <sup>
-                rd
-              </sup>
-            </div>
-            <h4
-              class="info-card__title"
-            >
-              Live or Work in San Francisco Preference
-            </h4>
-            <div
-              class="preferences-list__subtitle"
-            >
-              Up to 6 units available
-            </div>
-            <div
-              class="preferences-list__description translate"
-            >
-              This is a custom description - For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.
-            </div>
-            <div
-              class="preferences-list__links"
-            >
-              <span>
-                <a
-                  aria-label="Read more about the Live or Work in San Francisco Preference"
-                  href="http://sfmohcd.org/housing-preference-programs"
-                  target="_blank"
-                >
-                  Read More
-                </a>
-              </span>
-              <span>
-                <a
-                  aria-label="View document checklist for the Live or Work in San Francisco Preference"
-                  href="/document-checklist#live-or-work-sf"
-                  target="_blank"
-                >
-                  View Document Checklist
-                </a>
-              </span>
-            </div>
-          </li>
-        </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
+              <circle
+                cx="50"
+                cy="50"
+                fill="none"
+                r="32"
+                stroke="currentColor"
+                stroke-dasharray="150.79644737231007 52.26548245743669"
+                stroke-width="9"
+              />
+            </svg>
+          </span>
+        </div>
       </li>
       <li
         class="list-section custom-counter__item"
