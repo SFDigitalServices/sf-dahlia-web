@@ -39,6 +39,10 @@ exports[`For Sale renders ForSale component 1`] = `
       />
       <link
         rel="icon"
+        type="image/x-icon"
+      />
+      <link
+        rel="icon"
         sizes="32x32"
         type="image/png"
       />
