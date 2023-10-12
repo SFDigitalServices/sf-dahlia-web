@@ -20,7 +20,7 @@ div ng-show="showAlert()"
     p.alert-notice_title
       | {{customSubMessage}}
 
-  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length"
+  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length" style="background-color:#fff;"
     p.t-tiny.c-alert ng-repeat="error in eligibilityErrors" ng-class="{ 'margin-bottom': !shortEligibilityError }"
       | {{error}}
 

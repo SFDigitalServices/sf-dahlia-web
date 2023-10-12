@@ -251,6 +251,9 @@ ShortFormApplicationController = (
   $scope.customEducatorIsNotEducator = ->
     $scope.application.customEducatorScreeningAnswer == 'No'
 
+  $scope.customEducatorCheckScreening = ->
+    $scope.clearEligibilityErrors()
+
   $scope.customEducatorCapitalizeJobClassifcationNumber = ->
     form = $scope.form.applicationForm
     form['customEducatorJobClassificationNumber'].$setViewValue(

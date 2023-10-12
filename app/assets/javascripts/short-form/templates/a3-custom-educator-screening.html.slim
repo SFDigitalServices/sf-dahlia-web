@@ -6,13 +6,26 @@ section.app-container.focus-container
         short-form-header
           h2.app-card_question
             | {{ 'a3_custom_educator_screening.title' | translate }}
+          p.form-note ng-if="customEducatorIsListing1()"
+            | {{ 'a3_custom_educator_screening.to_apply_you_must' | translate }}
+          p.form-note ng-if="customEducatorIsListing1()"
+            span.ui-icon.ui-medium style="padding-right:4px;"
+              | ✓
+            span
+              | {{ 'a3_custom_educator_screening.be_a_current_employee' | translate }}
+          p.form-note.margin-bottom ng-if="customEducatorIsListing1()"
+            span.ui-icon.ui-medium style="padding-right:4px;"
+              | ✓
+            span
+              | {{ 'a3_custom_educator_screening.provide_your_job_code' | translate }}
+
 
         .app-inner.inset
           .form-group
             p.form-note.margin-bottom translate="label.please_select_one"
             .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
 
-            radio-block-item value='Yes' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducator.checkScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+            radio-block-item value='Yes' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
               | {{ 'a3_custom_educator_screening.yes_i_work' | translate }}
             div.form-group.margin-left--2x ng-if="customEducatorIsEducator()" ng-class="{ error: inputInvalidOnTouched('customEducatorJobClassificationNumber') }"
               // job classification text field
@@ -33,7 +46,7 @@ section.app-container.focus-container
                 | {{ 'a3_custom_educator_screening.job_code_is_incorrect' | translate }}
               small.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')" translate="a3_custom_educator_screening.if_you_entered_the_right_information" translate-value-email="housing@sfusd.edu"
 
-            radio-block-item value='No' user='application' name='customEducatorScreeningAnswer' ng-required='true' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+            radio-block-item value='No' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
               | {{ 'a3_custom_educator_screening.no_i_do_not_work' | translate }}
             .margin-left--2x ng-show="customEducatorIsNotEducator() && (customEducatorIsListing2() || customEducatorIsListing3())"
               p.form-note
