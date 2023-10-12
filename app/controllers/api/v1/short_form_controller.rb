@@ -464,6 +464,8 @@ class Api::V1::ShortFormController < ApiController
             :lendingAgent,
             :homebuyerEducationAgency,
             :isNonPrimaryMemberVeteran,
+            :isSFUSDEmployee,
+            :jobClassification,
           )
           .to_h
   end

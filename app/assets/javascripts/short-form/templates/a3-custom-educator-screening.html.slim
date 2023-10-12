@@ -1,0 +1,50 @@
+section.app-container.focus-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      short-form-nav
+      .app-card.form-card
+        short-form-header
+          h2.app-card_question
+            | {{ 'a3_custom_educator_screening.title' | translate }}
+
+        .app-inner.inset
+          .form-group
+            p.form-note.margin-bottom translate="label.please_select_one"
+            .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
+
+            radio-block-item value='Yes' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducator.checkScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+              | {{ 'a3_custom_educator_screening.yes_i_work' | translate }}
+            div.form-group.margin-left--2x ng-if="customEducatorIsEducator()" ng-class="{ error: inputInvalidOnTouched('customEducatorJobClassificationNumber') }"
+              // job classification text field
+              label.form-label for="customEducatorJobClassificationNumber"
+                | {{ 'a3_custom_educator_screening.enter_your_job_code' | translate }}
+              p.form-note.margin-bottom--half translate="a3_custom_educator_screening.job_classification_number_info" translate-value-url="https://www.todo-wip.com"
+              input(
+                ng-model="application.customEducatorJobClassificationNumber"
+                name="customEducatorJobClassificationNumber"
+                placeholder="Job Code"
+                type="text"
+                autocomplete="off"
+                style="margin-bottom:0;"
+                ui-validate="'customEducatorValidJobClassificationNumber($value)'"
+                ng-change="customEducatorCapitalizeJobClassifcationNumber()"
+              )
+              small.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')"
+                | {{ 'a3_custom_educator_screening.job_code_is_incorrect' | translate }}
+              small.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')" translate="a3_custom_educator_screening.if_you_entered_the_right_information" translate-value-email="housing@sfusd.edu"
+
+            radio-block-item value='No' user='application' name='customEducatorScreeningAnswer' ng-required='true' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
+              | {{ 'a3_custom_educator_screening.no_i_do_not_work' | translate }}
+            .margin-left--2x ng-show="customEducatorIsNotEducator() && (customEducatorIsListing2() || customEducatorIsListing3())"
+              p.form-note
+                span.ui-icon.ui-medium style="padding-right:4px;"
+                  svg
+                    use xlink:href="#i-info-green"
+                span.t-bold  style="color:#2E8540;"
+                  | {{ 'a3_custom_educator_screening.you_are_not_in' | translate }}
+              p.form-note style="color:#2E8540;"
+                | {{ 'a3_custom_educator_screening.you_can_still_apply' | translate }}
+
+        .button-pager
+          .button-pager_row.primary.text-center
+            input#submit.button.primary.radius type="submit" value="{{'t.next' | translate}}" ng-disabled="inputInvalid('customEducatorScreeningAnswer') || eligibilityErrors.length > 0"

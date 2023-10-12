@@ -7,6 +7,7 @@ PageUtil = {
   testListingId: 'a0W0P00000F8YG4UAN'
   seniorListingId: 'a0W0P00000GwGl3'
   saleListingId: process.env.TEST_SALE_LISTING_ID || 'a0W0P00000GlKfBUAV'
+  customEducatorListing2Id: 'a0W8H00000140LvUAI'
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
     browser.wait(EC.presenceOf(checkbox), 5000)
