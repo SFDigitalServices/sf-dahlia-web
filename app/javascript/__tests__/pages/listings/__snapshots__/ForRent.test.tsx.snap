@@ -37,17 +37,6 @@ exports[`For Rent renders ForRent component 1`] = `
         content="website"
         property="og:type"
       />
-      <link
-        rel="icon"
-        sizes="192x192"
-        type="image/png"
-      />
-      <link
-        rel="manifest"
-      />
-      <meta
-        name="msapplication-TileImage"
-      />
       <header
         class="site-header"
       >
