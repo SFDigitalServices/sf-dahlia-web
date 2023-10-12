@@ -66,7 +66,6 @@ const MetaTags = (props: MetaTagsProps) => {
           rel="apple-touch-icon"
           sizes="180x180"
         />
-        */}
         <link
           href={getAssetPath("android-icon-192x192.png")}
           rel="icon"
@@ -75,6 +74,7 @@ const MetaTags = (props: MetaTagsProps) => {
         />
         <link href={getAssetPath("manifest.json")} rel="manifest" />
         <meta content={getAssetPath("ms-icon-144x144.png")} name="msapplication-TileImage" />
+        */}
       </Helmet>
     </>
   )
