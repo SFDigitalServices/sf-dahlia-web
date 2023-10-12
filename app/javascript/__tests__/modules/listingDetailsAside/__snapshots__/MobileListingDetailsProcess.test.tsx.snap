@@ -198,6 +198,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             <div>
               <button
                 aria-expanded="false"
+                aria-label="Show more about what to expect"
                 class="button is-unstyled m-0 no-underline has-toggle"
                 type="button"
               >

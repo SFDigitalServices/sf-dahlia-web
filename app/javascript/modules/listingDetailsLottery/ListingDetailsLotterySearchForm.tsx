@@ -121,6 +121,7 @@ export const ListingDetailsLotterySearchForm = ({
           placeholder={t("lottery.enterLotteryNumber")}
           type="text"
           validation={{ pattern: /^\d+$/, required: true }}
+          label={t("lottery.enterLotteryNumber")}
         />
         <button
           className="bg-blue-500 h-12 mt-2 p-3 translate"
