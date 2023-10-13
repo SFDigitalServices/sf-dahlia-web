@@ -62,6 +62,9 @@ module Force
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id, opts = {})
+      # Temporary workaround for `lottery_buckets` API issues, revert once fixed
+      return nil if listing_id == 'a0W4U00000IXRHWUA5'
+
       esc_listing_id = CGI.escape(listing_id)
       force = opts[:force] || false
       data = Request.new
