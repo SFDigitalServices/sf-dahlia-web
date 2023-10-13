@@ -41,3 +41,6 @@ We use [JMeter](https://jmeter.apache.org/) to stress test our Salesforce API wh
 1. To update the request/minute througput, update the "Target Throughput" under the "Constant Throughput Timer". This number controls the total request throughput, so to find the equivalent for applications submitted / minute, divide by 4.
 1. To update the base URL for requests, update the url under "Server Name or IP" under "HTTP Requests Defaults"
 
+## To run the JMeter test for stress testing Multiple Listing Image performance:
+1. Open the DAHLIA-Full-Listing-Images.jmx file in the JMeter GUI
+2. Run the test and view the Graph Results
