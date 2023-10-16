@@ -6,7 +6,7 @@ describe("Additional Housing Opportunities", () => {
     })
     it(`displays San Francisco Housing Programs`, () => {
       cy.visit(`additional-resources?react=true`)
-      cy.contains("San Fransciso Housing Programs")
+      cy.contains("San Francisco Housing Programs")
     })
     it(`displays Non-MOHCD housing programs`, () => {
       cy.visit(`additional-resources?react=true`)
