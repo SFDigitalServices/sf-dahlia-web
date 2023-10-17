@@ -42,7 +42,7 @@
             "job_code": "Job Code",
             "job_code_is_incorrect": "Job Code is incorrect. Check for mistakes and try again.",
             "no_i_do_not_work": "No, I do not work at SF Unified School District",
-            "not_eligible_description": "You might be eligible for something else<br>See if you're eligible for  <a href='{{rentalListingDirectoryUrl}}' target='_blank'>other open listings</a> or check our <a href='{{additionalHousingOpportunitiesUrl}}' target='_blank'>additional housing opportunities.</a>",
+            "not_eligible_description": "See if you're eligible for  <a href='{{rentalListingDirectoryUrl}}' target='_blank'>other open listings</a> or check our <a href='{{additionalHousingOpportunitiesUrl}}' target='_blank'>additional housing opportunities.</a>",
             "provide_your_job_code": "Provide your Job Code",
             "title": "Do you work at San Francisco Unified School District?",
             "to_apply_you_must": "To apply you must:",
