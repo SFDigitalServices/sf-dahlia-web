@@ -37,7 +37,7 @@
         "a3_custom_educator_screening": {
             "be_a_current_employee": "Be a current employee of SF Unified School District",
             "enter_your_job_code": "Enter your Job Code",
-            "if_you_entered_the_right_information": "If you entered the right information and think this is a mistake, email SFUSD at {{email}}.",
+            "if_you_entered_the_right_information": "If you entered the right information and think this is a mistake, email SFUSD at {{email}}",
             "job_classification_number_info": "Your Job Code is 3 to 6 characters and may contain both numbers and letters. <a href='{{url}}' target='_blank'>Find it on EMPowerSF</a>",
             "job_code": "Job Code",
             "job_code_is_incorrect": "Job Code is incorrect. Check for mistakes and try again.",
