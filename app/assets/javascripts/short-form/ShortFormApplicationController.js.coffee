@@ -272,6 +272,7 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
     else if $scope.customEducatorIsListing1() && $scope.customEducatorIsNotEducator()
       $scope.eligibilityErrors = [$translate.instant('a3_custom_educator_screening.you_must_work_at')]
+      $scope.notEligibleErrorMessage = $translate.instant('a3_custom_educator_screening.you_are_not_eligible')
       $scope.handleErrorState()
     else if $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
       $scope.clearEligibilityErrors()
