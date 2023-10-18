@@ -31,12 +31,46 @@ export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing)
   listing.Reserved_community_type === RESERVED_COMMUNITY_TYPES.HABITAT
 
 /**
- * Check if lottery is complete for a listing
+ * Check if lottery is complete for a listing, this will be deprecated once Publish_Lottery_Results is deprecated
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the lottery is complete and has a lottery date, false otherwise
  */
+export const isLotteryCompleteDeprecated = (listing: RailsRentalListing | RailsSaleListing) =>
+  (listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete") ||
+  (listing.Publish_Lottery_Results_On_Dahlia &&
+    listing.Publish_Lottery_Results_On_Dahlia !== "Not published" &&
+    listing.Lottery_Status === "Lottery Complete")
+
+/**
+ * Check if lottery is complete for a listing
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
+ */
 export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
+  listing.Publish_Lottery_Results_On_Dahlia &&
+  listing.Publish_Lottery_Results_On_Dahlia !== "Not published" &&
+  listing.Lottery_Status === "Lottery Complete"
+
+/**
+ * Check if lottery is complete for a listing
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
+ */
+export const showLotteryResultsModal = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Publish_Lottery_Results_On_Dahlia === "Publish results in lottery modal on DAHLIA" &&
+  listing.Lottery_Status === "Lottery Complete"
+
+// TODO WIP check for all instances of Publish_Lottery_Results in the code (e.g. test data) and add Publish_Lottery_Results_On_Dahlia along side it
+
+/**
+ * Check if lottery is complete for a listing
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
+ */
+export const showLotteryResultsPDF = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.LotteryResultsURL &&
+  listing.Publish_Lottery_Results_On_Dahlia === "Publish only PDF results on DAHLIA" &&
+  listing.Lottery_Status === "Lottery Complete"
 
 /**
  * Check if a listing is open for applying

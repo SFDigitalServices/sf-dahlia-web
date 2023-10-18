@@ -8,7 +8,7 @@ import {
   t,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isLotteryComplete } from "../../util/listingUtil"
+import { isLotteryCompleteDeprecated } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
@@ -24,7 +24,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    if (isLotteryComplete(listing)) {
+    if (isLotteryCompleteDeprecated(listing)) {
       void getLotteryBucketDetails(listing.Id).then((lotteryBucketDetails) => {
         setLotteryBucketDetails(lotteryBucketDetails)
       })
@@ -32,7 +32,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
   }, [listing, listing.Id])
 
   return (
-    isLotteryComplete(listing) && (
+    isLotteryCompleteDeprecated(listing) && (
       <ErrorBoundary boundaryScope={BoundaryScope.component}>
         <div className="border-b pt-4 text-center">
           <Heading className="mb-4" priority={3}>
