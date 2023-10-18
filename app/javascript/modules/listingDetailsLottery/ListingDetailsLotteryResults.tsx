@@ -12,6 +12,7 @@ import { isLotteryComplete } from "../../util/listingUtil"
 import { getLotteryBucketDetails } from "../../api/listingApiService"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
+import { ListingDetailsLotterySearchFormWithoutBuckets } from "./ListingDetailsLotterySearchFormWithoutBuckets"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
@@ -70,6 +71,21 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
                 listing={listing}
                 lotteryBucketDetails={lotteryBucketDetails}
               />
+            </Modal>
+          )}
+
+          {/* Temporary workaround for `lottery_buckets` API issues, revert once fixed */}
+          {!lotteryBucketDetails && listing.Id === "a0W4U00000IXRHWUA5" && (
+            <Modal
+              onClose={() => setIsModalOpen(false)}
+              open={isModalOpen}
+              title=""
+              modalClassNames="md:max-w-0 w-screen"
+              innerClassNames="p-0"
+              closeClassNames="z-50"
+              scrollable
+            >
+              <ListingDetailsLotterySearchFormWithoutBuckets listing={listing} />
             </Modal>
           )}
         </div>
