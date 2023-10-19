@@ -11,7 +11,7 @@ section.app-container
         .property-card_figure-wrapper
           figure.property-card_figure
             .property-card_overlay
-              img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.imageURL}}"
+              img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{ propertyCardImageURL() }}"
             figcaption.property-card_info.skiptranslate
               h2.property-card_title.show-for-medium-up
                 | {{listing.Name}}
