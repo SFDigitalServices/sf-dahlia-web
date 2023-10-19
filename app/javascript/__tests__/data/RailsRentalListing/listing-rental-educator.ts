@@ -382,7 +382,6 @@ export const rentalEducatorListing2: RailsRentalListing = {
   Units_Available: 1,
   SASE_Required_for_Lottery_Ticket: true,
   nGeneral_Application_Total: 2041,
-  Lottery_Status: "Not Yet Run",
   Building_Name: "Automated Test Building",
   Project_ID: "Test 001",
   Building_City: "San Francisco",

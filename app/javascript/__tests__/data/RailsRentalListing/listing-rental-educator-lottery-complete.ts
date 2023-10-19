@@ -65,7 +65,7 @@ export const rentalEducatorListing1complete: RailsRentalListing = {
   Units_Available: 1,
   SASE_Required_for_Lottery_Ticket: true,
   nGeneral_Application_Total: 2041,
-  Lottery_Status: "Not Yet Run",
+  Lottery_Status: "Lottery Complete",
   Building_Name: "Automated Test Building",
   Project_ID: "Test 001",
   Building_City: "San Francisco",
@@ -92,6 +92,8 @@ export const rentalEducatorListing1complete: RailsRentalListing = {
   Lottery_Date: "2023-03-22T18:00:00.000+0000",
   Publish_Lottery_Results: true,
   Publish_Lottery_Results_on_DAHLIA: "Publish only PDF results on DAHLIA",
+  LotteryResultsURL:
+    "https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf",
   Accepting_Online_Applications: false,
   Lottery_Winners: 0,
   Credit_Rating:
@@ -382,7 +384,6 @@ export const rentalEducatorListing2: RailsRentalListing = {
   Units_Available: 1,
   SASE_Required_for_Lottery_Ticket: true,
   nGeneral_Application_Total: 2041,
-  Lottery_Status: "Not Yet Run",
   Building_Name: "Automated Test Building",
   Project_ID: "Test 001",
   Building_City: "San Francisco",
@@ -407,16 +408,16 @@ export const rentalEducatorListing2: RailsRentalListing = {
   Lottery_Venue:
     '<p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style="font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;"> </span></p><p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>',
   Lottery_Date: "2023-03-22T18:00:00.000+0000",
-  Publish_Lottery_Results: false,
-  Publish_Lottery_Results_on_DAHLIA: "Not published",
-  Accepting_Online_Applications: true,
+  Publish_Lottery_Results: true,
+  Publish_Lottery_Results_on_DAHLIA: "Publish only PDF results on DAHLIA",
+  Accepting_Online_Applications: false,
   Lottery_Winners: 0,
   Credit_Rating:
     "Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. \r\n\r\nAccounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. \r\n\r\nCollection accounts exceeding a combined amount of $1,000.00 (excluding student loans and medical debt) will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. \r\n\r\nBankruptcy if not cleared will be an automatic denial of the rental application. \r\n\r\nNo Guarantors permitted.\r\n\r\nMitigating circumstances may be considered.",
   Eviction_History:
     "Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. \r\n\r\nPrevious rental history will be reviewed and must exhibit no derogatory references. \r\n\r\nLandlord references will only check for evictions, payment history, and documented lease violations. No-fault evictions (Ellis Act, Owner Move-in evictions) will not be held against a household. \r\n\r\nAll debt owed to an apartment community must be satisfied. \r\n\r\nMitigating circumstances may be considered.",
   Accepting_applications_at_leasing_agent: false,
-  Accepting_applications_by_PO_Box: true,
+  Accepting_applications_by_PO_Box: false,
   Blank_paper_application_can_be_picked_up: false,
   Deposit_Min: 2102,
   Deposit_Max: 2355,

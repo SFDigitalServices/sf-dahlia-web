@@ -47,16 +47,7 @@ export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing
  */
 export const isLotteryCompleteDeprecated = (listing: RailsRentalListing | RailsSaleListing) =>
   (listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete") ||
-  isLotteryCompleteDeprecated(listing)
-
-/**
- * Check if lottery results modal should be shown
- * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
- */
-export const showLotteryResultsModal = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results_on_DAHLIA === "Publish results in lottery modal on DAHLIA" &&
-  listing.Lottery_Status === "Lottery Complete"
+  isLotteryComplete(listing)
 
 /**
  * Check if only the lottery results PDF URL should be shown
@@ -64,7 +55,7 @@ export const showLotteryResultsModal = (listing: RailsRentalListing | RailsSaleL
  * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
  */
 export const showLotteryResultsPDFonly = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.LotteryResultsURL &&
+  !!listing.LotteryResultsURL &&
   listing.Publish_Lottery_Results_on_DAHLIA === "Publish only PDF results on DAHLIA" &&
   listing.Lottery_Status === "Lottery Complete"
 

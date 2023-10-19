@@ -3,6 +3,7 @@ import {
   isHabitatListing,
   isLotteryComplete,
   isLotteryCompleteDeprecated,
+  showLotteryResultsPDFonly,
   isOpen,
   isRental,
   isSale,
@@ -57,24 +58,26 @@ describe("listingUtil", () => {
   })
 
   describe("isLotteryComplete", () => {
-    it("should return 'Not published' when listing is open", () => {
-      expect(isLotteryComplete(openSaleListing)).toBe("Not published")
+    it("should return false when listing is open", () => {
+      expect(isLotteryComplete(openSaleListing)).toBe(false)
     })
 
-    it("should return 'Not published' when lottery status is 'Not Yet Run'", () => {
-      expect(isLotteryComplete(closedRentalListing)).toBe("Not published")
+    it("should return false when lottery status is 'Not Yet Run'", () => {
+      expect(isLotteryComplete(closedRentalListing)).toBe(false)
     })
 
-    it("should return 'Publish results in lottery modal on DAHLIA' when lottery status is complete", () => {
-      expect(isLotteryComplete(lotteryCompleteRentalListing)).toBe(
-        "Publish results in lottery modal on DAHLIA"
-      )
+    it("should return true when lottery status is complete foro Educator listings", () => {
+      expect(isLotteryComplete(lotteryCompleteRentalListing)).toBe(true)
+    })
+  })
+
+  describe("showLotteryResultsPDFonly", () => {
+    it("should return false when lottery status is complete for non-Educator listings", () => {
+      expect(showLotteryResultsPDFonly(lotteryCompleteRentalListing)).toBe(false)
     })
 
-    it("should return 'Publish results in lottery modal on DAHLIA' when lottery status is complete for Educator listing", () => {
-      expect(isLotteryComplete(rentalEducatorListing1complete)).toBe(
-        "Publish only PDF results on DAHLIA"
-      )
+    it("should return true when lottery status is complete for Educator listings", () => {
+      expect(showLotteryResultsPDFonly(rentalEducatorListing1complete)).toBe(true)
     })
   })
 
