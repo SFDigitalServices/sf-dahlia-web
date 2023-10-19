@@ -112,6 +112,7 @@ export const rpiRentalListing: RailsRentalListing = {
     '<p><span style="font-size: 15px; color: rgb(34, 34, 34);">Virtual lottery (not in person). We will post a link to the virtual lottery on September 30th. Check back then.</span></p>',
   Lottery_Date: "2022-09-30T18:00:00.000+0000",
   Publish_Lottery_Results: false,
+  Publish_Lottery_Results_On_Dahlia: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
   Credit_Rating:

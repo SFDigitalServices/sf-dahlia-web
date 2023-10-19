@@ -90,6 +90,7 @@ export const lotteryCompleteRentalListing: RailsRentalListing = {
     '<p><span style="background-color: transparent; color: rgb(0, 0, 0); font-family: Arial; font-size: 10pt;">Lottery today. </span><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODYzYjMyNGItMzEzMy00YTI1LTk3Y2EtYmI1MThhZWYzY2M0%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%227de896e3-bd7a-4b1e-893c-64424a3d706a%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0); font-family: Arial; font-size: 10pt;">Watch it live</a><span style="background-color: transparent; color: rgb(0, 0, 0); font-family: Arial; font-size: 10pt;">.</span></p>',
   Lottery_Date: "2022-01-25T19:00:00.000+0000",
   Publish_Lottery_Results: true,
+  Publish_Lottery_Results_On_Dahlia: "Publish results in lottery modal on DAHLIA",
   LotteryResultsURL:
     "https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/855%20Brannan%20%23318%20Lottery%20Results%201.26.22.pdf",
   Accepting_Online_Applications: true,
