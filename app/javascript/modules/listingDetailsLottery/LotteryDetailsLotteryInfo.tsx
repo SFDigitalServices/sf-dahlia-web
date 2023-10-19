@@ -2,14 +2,14 @@ import React from "react"
 import { SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { localizedFormat, renderMarkup } from "../../util/languageUtil"
-import { isLotteryComplete, isOpen } from "../../util/listingUtil"
+import { isLotteryCompleteDeprecated, isOpen } from "../../util/listingUtil"
 
 export interface ListingDetailsLotteryInfoProps {
   listing: RailsListing
 }
 
 export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfoProps) => {
-  if (isOpen(listing) || !listing.Lottery_Date || isLotteryComplete(listing)) {
+  if (isOpen(listing) || !listing.Lottery_Date || isLotteryCompleteDeprecated(listing)) {
     return null
   }
 

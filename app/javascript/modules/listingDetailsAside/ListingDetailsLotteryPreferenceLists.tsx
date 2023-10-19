@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { AppearanceStyleType, t, SidebarBlock, LinkButton } from "@bloom-housing/ui-components"
-import { isLotteryComplete } from "../../util/listingUtil"
+import { isLotteryCompleteDeprecated } from "../../util/listingUtil"
 import type { ListingLotteryPreference } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface ListingDetailsLotteryPreferenceLists {
@@ -13,7 +13,7 @@ export const ListingDetailsLotteryPreferenceLists = ({
   listing,
   isApplicationOpen,
 }: ListingDetailsLotteryPreferenceLists) => {
-  if (isLotteryComplete(listing) || isApplicationOpen) {
+  if (isLotteryCompleteDeprecated(listing) || isApplicationOpen) {
     return null
   }
 
