@@ -36,8 +36,8 @@ export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing)
  * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
  */
 export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results_On_Dahlia &&
-  listing.Publish_Lottery_Results_On_Dahlia !== "Not published" &&
+  listing.Publish_Lottery_Results_on_DAHLIA &&
+  listing.Publish_Lottery_Results_on_DAHLIA !== "Not published" &&
   listing.Lottery_Status === "Lottery Complete"
 
 /**
@@ -55,7 +55,7 @@ export const isLotteryCompleteDeprecated = (listing: RailsRentalListing | RailsS
  * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
  */
 export const showLotteryResultsModal = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results_On_Dahlia === "Publish results in lottery modal on DAHLIA" &&
+  listing.Publish_Lottery_Results_on_DAHLIA === "Publish results in lottery modal on DAHLIA" &&
   listing.Lottery_Status === "Lottery Complete"
 
 /**
@@ -65,7 +65,7 @@ export const showLotteryResultsModal = (listing: RailsRentalListing | RailsSaleL
  */
 export const showLotteryResultsPDFonly = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.LotteryResultsURL &&
-  listing.Publish_Lottery_Results_On_Dahlia === "Publish only PDF results on DAHLIA" &&
+  listing.Publish_Lottery_Results_on_DAHLIA === "Publish only PDF results on DAHLIA" &&
   listing.Lottery_Status === "Lottery Complete"
 
 /**

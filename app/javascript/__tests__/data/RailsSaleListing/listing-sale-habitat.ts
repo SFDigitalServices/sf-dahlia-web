@@ -140,7 +140,7 @@ export const habitatListing: RailsSaleListing = {
   Lottery_City: "San Francisco",
   Lottery_Date: "2022-12-15T20:00:00.000+0000",
   Publish_Lottery_Results: false,
-  Publish_Lottery_Results_On_Dahlia: "Not published",
+  Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
   Accepting_applications_at_leasing_agent: false,

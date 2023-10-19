@@ -168,7 +168,7 @@ export const fourOneFiveRentalListing: RailsRentalListing = {
     "As of March 12, 2020 lotteries will be closed to the public; they will continue as scheduled.",
   Lottery_Date: "2021-01-08T20:00:00.000+0000",
   Publish_Lottery_Results: true,
-  Publish_Lottery_Results_On_Dahlia: "Publish results in lottery modal on DAHLIA",
+  Publish_Lottery_Results_on_DAHLIA: "Publish results in lottery modal on DAHLIA",
   LotteryResultsURL:
     "https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/235%20Valencia%20FINAL%20Results%201.15.2021.pdf",
   Accepting_Online_Applications: true,

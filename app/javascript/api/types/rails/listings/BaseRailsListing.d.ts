@@ -128,7 +128,7 @@ type BaseRailsListing = {
   Program_Type: string
   Project_ID: string
   Publish_Lottery_Results: boolean
-  Publish_Lottery_Results_On_Dahlia?: string
+  Publish_Lottery_Results_on_DAHLIA?: string
   Realtor_Commission_Amount?: number
   Realtor_Commission_Info?: string
   Realtor_Commission_Unit?: string

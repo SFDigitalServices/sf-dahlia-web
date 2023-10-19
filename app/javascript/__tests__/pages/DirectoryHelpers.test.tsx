@@ -20,7 +20,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
           [{ status: 0, content: "Application Deadline: October 30, 2100" }]
@@ -32,7 +32,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
           [
@@ -46,7 +46,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2000-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: true,
-          Publish_Lottery_Results_On_Dahlia: "Publish results in lottery modal on DAHLIA",
+          Publish_Lottery_Results_on_DAHLIA: "Publish results in lottery modal on DAHLIA",
           Lottery_Status: "Lottery Complete",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
@@ -58,7 +58,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: true,
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
@@ -72,7 +72,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: true,
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
@@ -84,7 +84,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: false,
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
@@ -96,7 +96,7 @@ describe("DirectoryHelpers", () => {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
           Publish_Lottery_Results: false,
-          Publish_Lottery_Results_On_Dahlia: "Not published",
+          Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
           { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
