@@ -77,7 +77,7 @@ ShortFormApplicationController = (
 
   $scope.propertyCardImageURL = ->
     if _.isArray($scope.listing.Listing_Images)
-      return $scope.listing.Listing_Images[0].Image_URL
+      return $scope.listing.Listing_Images[0].displayImageURL
     else
       return $scope.listing.imageURL
 
