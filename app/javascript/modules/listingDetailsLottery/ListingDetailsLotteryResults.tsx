@@ -9,7 +9,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isLotteryComplete } from "../../util/listingUtil"
-import { getLotteryBucketDetails } from "../../api/listingApiService"
+import { getLotteryBucketDetailsWorkaround } from "../../api/listingApiService"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
@@ -25,7 +25,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
 
   useEffect(() => {
     if (isLotteryComplete(listing)) {
-      void getLotteryBucketDetails(listing.Id).then((lotteryBucketDetails) => {
+      void getLotteryBucketDetailsWorkaround(listing.Id).then((lotteryBucketDetails) => {
         setLotteryBucketDetails(lotteryBucketDetails)
       })
     }
