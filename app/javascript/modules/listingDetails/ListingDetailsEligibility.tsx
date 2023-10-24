@@ -201,7 +201,7 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.priority4", {
-                        learnMoreLink: `${window.location.href}#chisholm-preferences`,
+                        learnMoreLink: `${window.location.href.split("#")[0]}#chisholm-preferences`,
                       })
                     )}
                   </p>
