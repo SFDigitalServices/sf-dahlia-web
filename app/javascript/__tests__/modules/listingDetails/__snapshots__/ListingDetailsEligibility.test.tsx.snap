@@ -1383,7 +1383,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               </p>
               <p>
                 <a
-                  href="http://localhost/#chisholm-preferences"
+                  href="#chisholm-preferences"
                   target="_self"
                 >
                   Learn more about the lottery for this listing.
