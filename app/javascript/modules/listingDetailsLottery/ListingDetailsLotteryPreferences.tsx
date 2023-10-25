@@ -27,7 +27,9 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter(
           (bucket) =>
-            bucket.preferenceName !== "generalLottery" && bucket.preferenceResults?.length > 0
+            bucket.preferenceName !== "generalLottery" &&
+            bucket.totalSubmittedApps &&
+            bucket.unitsAvailable
         )
         .map((bucket, index, arr) => (
           <div key={bucket.preferenceOrder}>
