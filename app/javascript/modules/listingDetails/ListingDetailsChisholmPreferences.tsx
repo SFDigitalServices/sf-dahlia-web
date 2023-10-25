@@ -17,8 +17,10 @@ export const ListingDetailsChisholmPreferences = () => (
           <li>
             {renderInlineMarkup(
               t("listings.customListingType.educator.preferences.part4a", {
-                chisholmLotteryLink:
+                chisholmLotteryLink: getSfGovUrl(
                   "https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village",
+                  10493
+                ),
               })
             )}
           </li>
