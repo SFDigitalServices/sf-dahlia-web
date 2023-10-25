@@ -353,6 +353,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                   <div>
                     <span>
                       <a
+                        href="https://sf.gov/departments/mayors-office-housing-and-community-development"
                         target="_blank"
                       >
                         Visit the website for the Mayor’s Office of Housing and Community Development 
