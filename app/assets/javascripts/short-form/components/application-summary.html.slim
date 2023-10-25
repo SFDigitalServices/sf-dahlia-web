@@ -18,7 +18,10 @@ review-summary-section header="{{'t.you' | translate}}" section-name="name" edit
   / custom educator
   div ng-if="::$ctrl.isCustomEducatorListing"
     review-summary-item label="{{'a3_custom_educator_screening.work_at_sf_unified' | translate}}" identifier="custom-educator-screening-answer"
-      | {{::$ctrl.application.customEducatorScreeningAnswer}}
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
+        | {{'t.yes' | translate}}
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'No'"
+        | {{'t.no' | translate}}
     review-summary-item label="{{'a3_custom_educator_screening.job_code' | translate}}" identifier="custom-educator-job-classification-number" ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
       | {{::$ctrl.application.customEducatorJobClassificationNumber}}
 
