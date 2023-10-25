@@ -142,6 +142,23 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
 }
 
 /**
+ * Get an SF.gov url given the DAHLIA language prefix using the sf.gov node suffix
+ *
+ */
+export const getSfGovUrl = (enLink: string, node: number) => {
+  switch (getCurrentLanguage()) {
+    case "es":
+      return `https://sf.gov/es/node/${node}`
+    case "tl":
+      return `https://sf.gov/fil/node/${node}`
+    case "zh":
+      return `https://sf.gov/zh-hant/node/${node}`
+    default:
+      return enLink
+  }
+}
+
+/**
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {

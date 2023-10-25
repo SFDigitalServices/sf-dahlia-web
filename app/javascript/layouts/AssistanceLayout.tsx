@@ -1,23 +1,10 @@
 import React from "react"
 import Layout from "./Layout"
 import { PageHeader, SidebarBlock, t } from "@bloom-housing/ui-components"
-import { getCurrentLanguage, renderInlineMarkup } from "../util/languageUtil"
+import { renderInlineMarkup, getSfGovUrl } from "../util/languageUtil"
 import { ConfigContext } from "../lib/ConfigContext"
 
 import "./AssistanceLayout.scss"
-
-export const languageToSFGovMap = (lang: string) => {
-  switch (lang) {
-    case "es":
-      return "https://sf.gov/es/node/55"
-    case "tl":
-      return "https://sf.gov/fil/node/55"
-    case "zh":
-      return "https://sf.gov/zh-hant/node/55"
-    default:
-      return "https://sf.gov/departments/mayors-office-housing-and-community-development"
-  }
-}
 
 export interface Props {
   children: React.ReactNode
@@ -28,9 +15,6 @@ export interface Props {
 
 const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
   const { getAssetPath } = React.useContext(ConfigContext)
-
-  const lang = languageToSFGovMap(getCurrentLanguage(window.location.pathname))
-
   const classNames = mainPage
     ? "flex flex-wrap flex-col md:flex-row relative m-auto w-full"
     : "flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
@@ -68,7 +52,13 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
               <br />
               <div>
                 {renderInlineMarkup(
-                  t("assistance.contact.questionsAboutPrograms.contactWebsite", { lang })
+                  t(
+                    "assistance.contact.questionsAboutPrograms.contactWebsite",
+                    getSfGovUrl(
+                      "https://sf.gov/departments/mayors-office-housing-and-community-development",
+                      55
+                    )
+                  )
                 )}
               </div>
               <div className="mt-1">
