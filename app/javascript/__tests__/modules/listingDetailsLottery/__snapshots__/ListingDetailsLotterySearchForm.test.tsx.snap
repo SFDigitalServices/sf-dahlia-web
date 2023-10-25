@@ -52,6 +52,9 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             value=""
           />
         </div>
+        <span
+          id="lotterySearchNumber-error"
+        />
       </div>
       <button
         aria-label="Submit number"
