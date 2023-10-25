@@ -52,13 +52,12 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
               <br />
               <div>
                 {renderInlineMarkup(
-                  t(
-                    "assistance.contact.questionsAboutPrograms.contactWebsite",
-                    getSfGovUrl(
+                  t("assistance.contact.questionsAboutPrograms.contactWebsite", {
+                    lang: getSfGovUrl(
                       "https://sf.gov/departments/mayors-office-housing-and-community-development",
                       55
-                    )
-                  )
+                    ),
+                  })
                 )}
               </div>
               <div className="mt-1">
