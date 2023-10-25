@@ -483,7 +483,7 @@ exports[`For Rent renders ForRent component 1`] = `
               <br />
               <a
                 class="text-white"
-                href="https://sf.gov/mohcd"
+                href="https://sf.gov/departments/mayors-office-housing-and-community-development"
                 target="_blank"
               >
                 Mayor's Office of Housing and Community Development
