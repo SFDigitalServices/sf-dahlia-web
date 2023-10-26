@@ -182,7 +182,7 @@ const DocumentChecklist = () => {
             <p>
               {renderInlineMarkup(
                 t("documentChecklist.p3", {
-                  lang: getSfGovUrl(
+                  url: getSfGovUrl(
                     "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
                     3274
                   ),
@@ -203,7 +203,7 @@ const DocumentChecklist = () => {
               <li>
                 {renderInlineMarkup(
                   t("documentChecklist.homebuyerLoanDesc", {
-                    lang: getSfGovUrl(
+                    url: getSfGovUrl(
                       "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program",
                       6953
                     ),
