@@ -2,7 +2,7 @@ import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
 import "./BuyHeader.scss"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
@@ -13,9 +13,27 @@ const GetHelp = () => (
     <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.body2")}</p>
     <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.options.header")}</p>
     <ul className="list-disc ml-6">
-      <li>{renderInlineMarkup(t("listingsForSale.buyHeader.getHelp.option.BMR"))}</li>
+      <li>
+        {renderInlineMarkup(
+          t("listingsForSale.buyHeader.getHelp.option.BMR", {
+            url: getSfGovUrl(
+              "https://sf.gov/reports/august-2023/first-come-first-served-bmr-listings",
+              6396
+            ),
+          })
+        )}
+      </li>
       <br />
-      <li>{renderInlineMarkup(t("listingsForSale.buyHeader.getHelp.option.firmPrice"))}</li>
+      <li>
+        {renderInlineMarkup(
+          t("listingsForSale.buyHeader.getHelp.option.firmPrice", {
+            url: getSfGovUrl(
+              "https://sf.gov/reports/august-2023/city-second-program-current-listings",
+              7189
+            ),
+          })
+        )}
+      </li>
     </ul>
   </div>
 )

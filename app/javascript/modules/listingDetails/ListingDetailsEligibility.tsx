@@ -201,7 +201,10 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
-                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
                       })
                     )}
                   </p>
