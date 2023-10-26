@@ -145,8 +145,9 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  * Get an SF.gov url given the DAHLIA language prefix using the sf.gov node suffix
  *
  */
-export const getSfGovUrl = (enLink: string, node: number) => {
-  switch (getCurrentLanguage()) {
+export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
+  if (!enLink.includes("sf.gov") || enLink.includes("pdf")) return enLink
+  switch (getCurrentLanguage(path || window.location.pathname)) {
     case "es":
       return `https://sf.gov/es/node/${node}`
     case "tl":
