@@ -101,6 +101,8 @@ To run E2E (React) tests:
 
 Note: These tests will run on [CircleCi](https://app.circleci.com/pipelines/github/SFDigitalServices/sf-dahlia-web) as well for every review app and QA deploy.
 
+Note: If you want to output logs to the terminal locally and in CircleCI, replace the `yarn test:e2e` command with `ELECTRON_ENABLE_LOGGING=true DEBUG=cypress:electron yarn test:e2e`
+
 ## Importing pattern library styles
 
 We currently manually transfer the application's CSS from [our pattern library](https://github.com/SFDigitalServices/sf-dahlia-pattern-library) using Grunt.
