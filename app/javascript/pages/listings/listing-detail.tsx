@@ -143,12 +143,10 @@ const ListingDetail = () => {
                 imageSrc={getAssetPath("listing-units.svg")}
                 listing={listing}
               />
-              <div id="listing-details-eligibility">
-                <ListingDetailsEligibility
-                  listing={listing}
-                  imageSrc={getAssetPath("listing-eligibility.svg")}
-                />
-              </div>
+              <ListingDetailsEligibility
+                listing={listing}
+                imageSrc={getAssetPath("listing-eligibility.svg")}
+              />
               <MobileListingDetailsProcess
                 listing={listing}
                 imageSrc={getAssetPath("listing-units.svg")}

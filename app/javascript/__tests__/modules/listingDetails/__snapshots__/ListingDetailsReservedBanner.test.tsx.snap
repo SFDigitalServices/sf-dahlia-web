@@ -14,14 +14,6 @@ exports[`ListingDetailsReservedBanner displays banner when custom listing type i
         <b>
           Special housing for San Francisco public school employees.
         </b>
-        <p>
-          <a
-            href="#listing-details-eligibility"
-            target="_self"
-          >
-            Learn more about who can apply.
-          </a>
-        </p>
       </div>
     </div>
   </div>
@@ -98,14 +90,6 @@ exports[`ListingDetailsReservedBanner displays custom listing type banner when b
         <b>
           Special housing for San Francisco public school employees.
         </b>
-        <p>
-          <a
-            href="#listing-details-eligibility"
-            target="_self"
-          >
-            Learn more about who can apply.
-          </a>
-        </p>
       </div>
     </div>
   </div>
