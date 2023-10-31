@@ -5,7 +5,7 @@ import React from "react"
 
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
-import { CUSTOM_LISTING_TYPES } from "../modules/constants"
+import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -146,7 +146,7 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
  *
  */
 export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
-  if (!enLink.includes("sf.gov") || enLink.includes("pdf")) return enLink
+  if (!SFGOV_LINKS.includes(enLink) || enLink.includes("pdf")) return enLink
   switch (getCurrentLanguage(path || window.location.pathname)) {
     case "es":
       return `https://sf.gov/es/node/${node}`
