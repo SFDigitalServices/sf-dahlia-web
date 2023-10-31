@@ -10,15 +10,10 @@ export interface ListingDetailsReservedBannerProps {
   customListingType?: string
 }
 
-const buildMultiLineMessage = (): React.JSX.Element => {
+const buildCustomMessage = (): React.JSX.Element => {
   return (
     <div className="educator1-banner">
-      <b>{`${t("listings.customListingType.educator.banner.header")}`}</b>
-      <p>
-        <a target="_self" href="#listing-details-eligibility">
-          {`${t("listings.customListingType.educator.banner.body")}`}
-        </a>
-      </p>
+      <b>{`${t("listings.customListingType.educator.banner")}`}</b>
     </div>
   )
 }
@@ -29,7 +24,7 @@ const buildMessage = (
   customListingType?: string
 ): React.JSX.Element => {
   if (customListingType && getCustomListingType(customListingType)) {
-    return <Message warning={true}>{buildMultiLineMessage()}</Message>
+    return <Message warning={true}>{buildCustomMessage()}</Message>
   }
 
   if (
