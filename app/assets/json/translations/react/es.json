@@ -864,8 +864,6 @@
   "listings.confirmedPreferenceList": "Lista de %{preference} confirmada",
   "listings.currentWaitlistSize": "Tamaño de la lista de espera actual",
   "listings.customListingType.educator": "Viviendas para empleados de las escuelas públicas de SF",
-  "listings.customListingType.educator.banner.body": "Obtenga más información sobre quién puede presentar una solicitud.",
-  "listings.customListingType.educator.banner.header": "Viviendas especiales para empleados de escuelas públicas de San Francisco.",
   "listings.customListingType.educator.eligibility.code": "Proporcione su código de trabajo",
   "listings.customListingType.educator.eligibility.part1": "Para presentar la solicitud, usted debe:",
   "listings.customListingType.educator.eligibility.part2": "<a target='_blank' href='%{chisholmLink}'>Empleados de SFUSD: Infórmese sobre cómo solicitar en Shirley Chisholm Village.</a>",

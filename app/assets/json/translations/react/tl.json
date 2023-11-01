@@ -864,8 +864,6 @@
   "listings.confirmedPreferenceList": "Kumpirmadong Listahan para sa %{preference} ",
   "listings.currentWaitlistSize": "Kasalukuyang Laki ng Waitlist (listahan ng mga naghihintay magkaroon ng pabahay)",
   "listings.customListingType.educator": "Pabahay para sa empleyado ng mga pampublikong paaralan ng SF",
-  "listings.customListingType.educator.banner.body": "Matuto nang higit pa tungkol sa kung sino ang puwedeng mag-apply.",
-  "listings.customListingType.educator.banner.header": "Espesyal na pabahay para sa mga empleyado ng pampublikong paaralan ng San Francisco.",
   "listings.customListingType.educator.eligibility.code": "Ibigay ang iyong Job Code",
   "listings.customListingType.educator.eligibility.part1": "Para mag-apply, dapat kang:",
   "listings.customListingType.educator.eligibility.part2": "<a target='_blank' href='%{chisholmLink}'>Mga empleyado ng SFUSD: Alamin ang tungkol sa pag-a-apply sa Shirley Chisholm Village.</a>",

@@ -865,8 +865,6 @@
   "listings.currentWaitlistSize": "Current Waitlist Size",
   "listings.customListingType.educator": "SF public schools employee housing",
   "listings.customListingType.educator.banner": "Special housing for San Francisco public school employees.",
-  "listings.customListingType.educator.banner.body": "Learn more about who can apply.",
-  "listings.customListingType.educator.banner.header": "Special housing for San Francisco public school employees.",
   "listings.customListingType.educator.eligibility.code": "Provide your Job Code",
   "listings.customListingType.educator.eligibility.part1": "To apply you must:",
   "listings.customListingType.educator.eligibility.part2": "<a target='_blank' href='%{chisholmLink}'>SFUSD employees: Learn about applying to Shirley Chisholm Village.</a>",

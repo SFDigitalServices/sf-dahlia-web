@@ -864,8 +864,6 @@
   "listings.confirmedPreferenceList": "確認的 %{preference} 名單",
   "listings.currentWaitlistSize": "目前等候名單中的人數",
   "listings.customListingType.educator": "三藩市公共學校雇員住房",
-  "listings.customListingType.educator.banner.body": "進一步了解哪些人符合申請條件。",
-  "listings.customListingType.educator.banner.header": "三藩市公共學校雇員的特殊住房。",
   "listings.customListingType.educator.eligibility.code": "提供您的職業代碼",
   "listings.customListingType.educator.eligibility.part1": "申請者必須符合以下條件：",
   "listings.customListingType.educator.eligibility.part2": "<a target='_blank' href='%{chisholmLink}'>三藩市聯合校區 (San Francisco Unified School District, SFUSD) 雇員：了解如何申請 Shirley Chisholm Village。</a>",
