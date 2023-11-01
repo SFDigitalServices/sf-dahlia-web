@@ -28,7 +28,7 @@ export const getHabitatContent = (listing, stackedDataFxn) => {
   return (
     <>
       <Heading priority={2} styleType={"largePrimary"} className={"order-1"}>
-        {<a href={`/listings/${listing.listingID}`}>{listing.Name}</a>}
+        <a href={`/listings/${listing.listingID}`}>{listing.Name}</a>
       </Heading>
       <Heading priority={3} styleType={"mediumNormal"} className={"order-2"}>
         <ListingAddress listing={listing} />
