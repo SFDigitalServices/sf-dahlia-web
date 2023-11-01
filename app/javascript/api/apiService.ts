@@ -31,8 +31,13 @@ export const post = <T>(
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => axios.post(url, data, config)
 
-export const get = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
-  axios.get(url, config)
+export const get = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  const queryParams = config ? { ...config.params } : {}
+  if (window.location.search.includes("preview=true")) {
+    queryParams.force = "true"
+  }
+  return axios.get(url, { ...config, params: queryParams })
+}
 
 /*
  * "delete" is a reserved word in TS so we couldn't name it that
