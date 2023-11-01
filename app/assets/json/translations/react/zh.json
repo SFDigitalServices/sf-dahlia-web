@@ -68,7 +68,7 @@
   "assistance.additionalResources.sfHousingResources.support.description": "如果您需要住所，請向 Access Point 尋求協助。Access Points 是當地的非營利組織，可以協助您找到合適的房屋及服務。",
   "assistance.additionalResources.sfHousingResources.support.title": "為無家可歸者提供支援",
   "assistance.additionalResources.sfHousingResources.title": "三藩市住房計畫",
-  "assistance.contact.helpLine.subtitle": "請撥打 <a href='tel:311'>311</a>，或是<a target='_blank' href='https://sf311.org/'>造訪 311 網站</a>。",
+  "assistance.contact.helpLine.subtitle": "請撥打 <a href='tel:311'>311</a>，或是<a target='_blank' href='%{url}'>造訪 311 網站</a>。",
   "assistance.contact.helpLine.title1": "三藩市政府服務每週 7 天、全天 24 小時提供，歡迎隨時聯繫：",
   "assistance.contact.questionsAboutListings.subtitle": "請聯絡房源頁面上的代理人。",
   "assistance.contact.questionsAboutListings.title1": "如果您對 DAHLIA 房源有任何問題：",

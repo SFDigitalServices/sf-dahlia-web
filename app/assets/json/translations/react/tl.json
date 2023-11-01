@@ -68,7 +68,7 @@
   "assistance.additionalResources.sfHousingResources.support.description": "Kung kailangan mo ng matutuluyan, lumapit sa isang Access Point para humingi ng tulong. Ang mga Access Point ay mga lokal na nonprofit na makakapagturo sa iyo sa pabahay at mga serbisyo.",
   "assistance.additionalResources.sfHousingResources.support.title": "Suporta para sa kawalan ng tirahan",
   "assistance.additionalResources.sfHousingResources.title": "Mga Programa sa Pabahay ng San Fransciso",
-  "assistance.contact.helpLine.subtitle": "Tumawag sa <a href='tel:311'>311</a> o <a target='_blank' href='https://sf311.org/'>bisitahin ang 311 website.</a>",
+  "assistance.contact.helpLine.subtitle": "Tumawag sa <a href='tel:311'>311</a> o <a target='_blank' href='%{url}'>bisitahin ang 311 website.</a>",
   "assistance.contact.helpLine.title1": "Para sa tulong sa mga serbisyo sa San Francisco 24 na oras sa isang araw, 7 araw sa isang linggo:",
   "assistance.contact.questionsAboutListings.subtitle": "Kontakin ang ahenteng ipinapakita sa page ng nakalistang pabahay.",
   "assistance.contact.questionsAboutListings.title1": "Para sa mga tanong tungkol sa mga nakalistang pabahay sa DAHLIA:",
