@@ -74,7 +74,6 @@ const ListingDetail = () => {
 
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
-
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
       setListing(listing)
     })
