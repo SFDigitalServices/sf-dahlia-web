@@ -19,8 +19,15 @@ type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
 type ListingUnitsResponse = { units: RailsUnit[] }
 type ListingAmiChartsResponse = { ami: RailsAmiChart[] }
 
-export const getListing = async (listingId?: string): Promise<RailsListing> =>
-  get<ListingsResponse>(listing(listingId)).then(({ data }) => data.listing)
+export const getListing = async (listingId?: string): Promise<RailsListing> => {
+  let force = "false"
+  if (window.location.search.includes("preview=true")) {
+    force = "true"
+  }
+  return get<ListingsResponse>(listing(listingId), { params: { force } }).then(
+    ({ data }) => data.listing
+  )
+}
 
 /**
  * Get the lottery buckets with rankings for the given listing
