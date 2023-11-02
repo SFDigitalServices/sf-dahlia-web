@@ -36,7 +36,9 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
 
   useEffect(() => {
     void getPreferences(listingID).then((preferences) => {
-      setPreferences(preferences)
+      setPreferences(
+        preferences?.filter((preference) => !preference.preferenceName.includes("Veterans"))
+      )
     })
     return () => {
       setPreferences([])
