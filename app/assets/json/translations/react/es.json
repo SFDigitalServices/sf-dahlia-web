@@ -68,7 +68,7 @@
   "assistance.additionalResources.sfHousingResources.support.description": "Si necesita un lugar donde alojarse, póngase en contacto con un representante de un Punto de Acceso y obtenga ayuda. Los Puntos de Acceso son organizaciones sin fines de lucro que se encargan de vincularlo con oportunidades de viviendas y servicios.",
   "assistance.additionalResources.sfHousingResources.support.title": "Recursos de ayuda para la falta de vivienda",
   "assistance.additionalResources.sfHousingResources.title": "Programas de viviendas de San Francisco",
-  "assistance.contact.helpLine.subtitle": "Llame al <a href='tel:311'>311</a> o <a target='_blank' href='https://sf311.org/'>visite el sitio web de 311.</a>",
+  "assistance.contact.helpLine.subtitle": "Llame al <a href='tel:311'>311</a> o <a target='_blank' href='%{url}'>visite el sitio web de 311.</a>",
   "assistance.contact.helpLine.title1": "Para obtener ayuda con los servicios de San Francisco las 24 horas, los 7 días de la semana, comuníquese con estos contactos:",
   "assistance.contact.questionsAboutListings.subtitle": "Póngase en contacto con el agente que figura en la página del listado.",
   "assistance.contact.questionsAboutListings.title1": "Si tiene alguna duda relacionada con el listado del portal de vivienda DAHLIA, comuníquese con estos contactos:",
