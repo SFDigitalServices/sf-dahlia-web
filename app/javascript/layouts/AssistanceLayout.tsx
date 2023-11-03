@@ -43,7 +43,12 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
             </p>
             <p className="mb-4">
               <span className="font-semibold">{t("assistance.contact.helpLine.title1")}</span>
-              <br /> {renderInlineMarkup(t("assistance.contact.helpLine.subtitle"))}
+              <br />
+              {renderInlineMarkup(
+                t("assistance.contact.helpLine.subtitle", {
+                  url: getSfGovUrl("https://sf.gov/departments/311-customer-service-center", 217),
+                })
+              )}
             </p>
             <div>
               <span className="font-semibold">
@@ -53,7 +58,7 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
               <div>
                 {renderInlineMarkup(
                   t("assistance.contact.questionsAboutPrograms.contactWebsite", {
-                    lang: getSfGovUrl(
+                    url: getSfGovUrl(
                       "https://sf.gov/departments/mayors-office-housing-and-community-development",
                       55
                     ),

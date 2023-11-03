@@ -326,7 +326,6 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                     For help with San Francisco services 24 hours a day, 7 days a week:
                   </span>
                   <br />
-                   
                   <span>
                     Call 
                     <a
@@ -336,7 +335,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                     </a>
                      or 
                     <a
-                      href="https://sf311.org/"
+                      href="https://sf.gov/departments/311-customer-service-center"
                       target="_blank"
                     >
                       visit the 311 website.
