@@ -60,6 +60,7 @@ ShortFormApplicationService = (
       rentBurden: null
       aliceGriffith: null
       rightToReturnSunnydale: null
+      veterans: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -528,6 +529,13 @@ ShortFormApplicationService = (
       member.preferenceAddressMatch == 'Matched' &&
         ((member.hasSameAddressAsApplicant == 'Yes' && _.lowerCase(Service.applicant.home_address.city) == 'san francisco') ||
         (member.home_address && _.lowerCase(member.home_address.city) == 'san francisco'))
+
+  Service.eligibleVeteransMembers = ->
+    Service.fullHousehold().filter (member) ->
+      dob = "#{member.dob_year}-#{member.dob_month}-#{member.dob_day}"
+      dob = moment(dob, 'YYYY-MM-DD')
+      age = moment().diff(dob, 'years')
+      age >= 17
 
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant

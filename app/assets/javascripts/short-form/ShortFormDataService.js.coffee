@@ -279,7 +279,18 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       # remove blank values
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       shortFormPreferences.push(shortFormPref)
+
+      # TODO WIP print objects to see the shape of saved pref objects, and the shape of formatted pref objects
+      console.log('listingPref', listingPref)
+      console.log('shortFormPref', shortFormPref)
     )
+
+    # TODO WIP all listings will have the veterans preference
+    shortFormPreferences.push({
+
+    })
+
+
     return shortFormPreferences
 
   Service._getPreferenceRecordType = (preference) ->

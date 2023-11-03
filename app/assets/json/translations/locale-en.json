@@ -417,6 +417,20 @@
             "need_certificate_for_preference": "You need a certificate to get this preference. If you don't know your certificate number <a href='https://sfmohcd.org/contact-us' target='_blank'>contact MOHCD</a>.",
             "title": "There are lottery preferences for people who already have special certificates."
         },
+        "e7a_veterans_preference": {
+            "if_more_than_1_veteran": "If more than 1 Veteran is applying, just pick 1. Having more Veteran applicants will not change your lottery ranking.",
+            "if_someone_on_the_application_is_a_veteran": "If someone on the application is a Veteran, you might qualify for higher lottery ranking.",
+            "instructions_p1": "You or someone on the application must:",
+            "instructions_p2": "Be able to provide proof of military service",
+            "instructions_p3": "Qualify for at least one other lottery preference",
+            "instructions_p4": "You might rank higher in the lottery",
+            "instructions_p5": "Find out more about this preference",
+            "select_which_application": "Select which applicant is a Veteran.",
+            "title": "Any Veterans?",
+            "who_is_a_veteran": "Who is a Veteran?",
+            "yes_someone_is_a_veteran": "Yes, someone is a veteran",
+            "your_answer_could_affect_lottery_ranking": "Your answer could affect lottery ranking."
+        },
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "Cannot work due to disability",
@@ -431,7 +445,7 @@
             },
             "title": "This listing has other special lottery preferences"
         },
-        "e8_general_lottery_notice": {
+        "e9_general_lottery_notice": {
             "title": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
             "you_will_be_in_general_lottery": "You will be in the general lottery."
         },
