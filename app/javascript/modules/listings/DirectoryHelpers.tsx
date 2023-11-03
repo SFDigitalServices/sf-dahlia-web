@@ -193,7 +193,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
                 tableSubheader: {
                   content: <TableSubHeader listing={listing} />,
                 },
-                contentHeader: { content: listing.Name },
+                contentHeader: { content: listing.Name, href: `/listings/${listing.listingID}` },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
               }
         }
