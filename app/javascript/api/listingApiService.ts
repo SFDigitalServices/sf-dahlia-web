@@ -19,14 +19,12 @@ type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
 type ListingUnitsResponse = { units: RailsUnit[] }
 type ListingAmiChartsResponse = { ami: RailsAmiChart[] }
 
+const forceRecache = (): boolean => window.location.search.includes("preview=true")
+
 export const getListing = async (listingId?: string): Promise<RailsListing> => {
-  let force = "false"
-  if (window.location.search.includes("preview=true")) {
-    force = "true"
-  }
-  return get<ListingsResponse>(listing(listingId), { params: { force } }).then(
-    ({ data }) => data.listing
-  )
+  const httpConfig = { params: {} }
+  httpConfig.params = { force: forceRecache() }
+  return get<ListingsResponse>(listing(listingId), httpConfig).then(({ data }) => data.listing)
 }
 
 /**
@@ -34,8 +32,13 @@ export const getListing = async (listingId?: string): Promise<RailsListing> => {
  * @param {string} listingId
  * @returns {RailsLotteryResult} lottery result info
  */
-export const getLotteryBucketDetails = async (listingId: string): Promise<RailsLotteryResult> =>
-  get<RailsLotteryResult>(lotteryBuckets(listingId)).then((response) => response.data)
+export const getLotteryBucketDetails = async (listingId: string): Promise<RailsLotteryResult> => {
+  const httpConfig = { params: {} }
+  httpConfig.params = { force: forceRecache() }
+  return get<RailsLotteryResult>(lotteryBuckets(listingId), httpConfig).then(
+    (response) => response.data
+  )
+}
 
 // TODO: remove this function and calls to it once getLotteryBucketDetails has been fixed
 /**
@@ -71,18 +74,25 @@ export const getLotteryResults = async (
  * @param {string} listingId
  * @returns {RailsListingPreference[]} list of preferences for the listing
  */
-export const getPreferences = async (listingId: string): Promise<RailsListingPreference[]> =>
-  get<ListingPreferencesResponse>(listingPreferences(listingId)).then(
+export const getPreferences = async (listingId: string): Promise<RailsListingPreference[]> => {
+  const httpConfig = { params: {} }
+  httpConfig.params = { force: forceRecache() }
+  return get<ListingPreferencesResponse>(listingPreferences(listingId), httpConfig).then(
     ({ data }) => data.preferences
   )
-
+}
 /**
  * Get the unit details for the given listing
  * @param {string} listingId
  * @returns {RailsListingUnits[]} list of Unitss for the listing
  */
-export const getUnits = async (listingId: string): Promise<RailsUnit[]> =>
-  get<ListingUnitsResponse>(listingUnits(listingId)).then(({ data }) => data.units)
+export const getUnits = async (listingId: string): Promise<RailsUnit[]> => {
+  const httpConfig = { params: {} }
+  httpConfig.params = { force: forceRecache() }
+  return get<ListingUnitsResponse>(listingUnits(listingId), httpConfig).then(
+    ({ data }) => data.units
+  )
+}
 
 /**
  * Get the ami charts for the given listing in a given year in a given set of ami percentages
