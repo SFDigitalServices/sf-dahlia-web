@@ -106,6 +106,7 @@ class ListingImageService
     listing_image =
       ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id)
     listing_image.update(image_url: image_url)
+    Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
   end
 
   def add_error(error_message)

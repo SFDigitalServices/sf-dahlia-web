@@ -1,4 +1,4 @@
-import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 /**
  * ListingDetails response for rental listing with status of Lottery Complete
@@ -227,5 +227,19 @@ export const lotteryCompleteRentalListing: RailsRentalListing = {
     Id: "0120P000000kPUSQA2",
     Name: "Rental",
   },
+  Listing_Images: [
+    {
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a listing image",
+    },
+    {
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      displayImageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
+      Image_Description: "This is a third listing image",
+    },
+  ],
   imageURL: "http://sfmohcd.org/sites/default/files/855%20Brannan.png",
 }

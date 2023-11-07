@@ -1,19 +1,20 @@
-import RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
-import RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
-import RailsUnit, {
+import type RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
+import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
+import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import type {
   RailsUnitWithOccupancy,
-  RailsUnitWithOccupancyAndMaxIncome,
+  RailsUnitWithOccupancyAndMinMaxIncome,
 } from "../api/types/rails/listings/RailsUnit"
-import {
+import type RailsUnit from "../api/types/rails/listings/RailsUnit"
+import type {
   RailsAmiChart,
   RailsAmiChartMetaData,
   RailsAmiChartValue,
 } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
-import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES } from "../modules/constants"
+import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES, CUSTOM_LISTING_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
-import { LANGUAGE_CONFIGS } from "./languageUtil"
+import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
@@ -44,6 +45,32 @@ export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing
  */
 export const isOpen = (listing: RailsRentalListing | RailsSaleListing) =>
   dayjs(listing.Application_Due_Date) > dayjs()
+
+/**
+ * Check if a listing is one of the three Shirley Chisholm listing
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is a Shirley Chisholm listing, false otherwise
+ */
+export const isEducator = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE ||
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_TWO ||
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_THREE
+
+/**
+ * Check if a listing is Shirley Chisholm listing 1
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is Shirley Chisholm listing 1, false otherwise
+ */
+export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
+
+/**
+ * Check if a listing is Shirley Chisholm listing 2
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the listing is Shirley Chisholm listing 2, false otherwise
+ */
+export const isEducatorTwo = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_TWO
 
 /**
  * Check if a listing is a rental
@@ -91,9 +118,9 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * @returns {boolean} returns true if the listing is in the harcoded list of SROs that
  * permit multiple occupancy, false otherwise
  */
-export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) =>
-  process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
-
+export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) => {
+  return process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
+}
 /**
  * Builds and return an address string. Not to be used for display. Use
  * {@link ListingAddress} instead.
@@ -161,20 +188,19 @@ export const paperApplicationURLs = (isRental: boolean): PaperApplication[] => {
   ]
 
   const urlBase = isRental ? mohcdRentalPaperAppURLTemplate : mohcdSalePaperAppURLTemplate
-  return paperAppLanguages.map(
-    (lang): PaperApplication => {
-      return {
-        languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
-        fileURL: urlBase.replace("{lang}", lang.language),
-      }
+  return paperAppLanguages.map((lang): PaperApplication => {
+    return {
+      languageString: LANGUAGE_CONFIGS[lang.prefix].getLabel(),
+      fileURL: urlBase.replace("{lang}", lang.language),
     }
-  )
+  })
 }
 
 export const deriveIncomeFromAmiCharts = (
   unit: RailsUnit,
   occupancy: number,
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  min?: boolean
 ): number => {
   if (!unit || !occupancy || !amiCharts) {
     return null
@@ -182,7 +208,8 @@ export const deriveIncomeFromAmiCharts = (
 
   const amiFromAmiChart = amiCharts.find((amiData: RailsAmiChart) => {
     return (
-      Number(amiData.percent) === unit.Max_AMI_for_Qualifying_Unit &&
+      Number(amiData.percent) ===
+        unit[min ? "Min_AMI_for_Qualifying_Unit" : "Max_AMI_for_Qualifying_Unit"] &&
       amiData.chartType === unit.AMI_chart_type &&
       amiData.year === unit.AMI_chart_year?.toString()
     )
@@ -193,18 +220,39 @@ export const deriveIncomeFromAmiCharts = (
   })
 
   if (occupancyAmi) {
-    return Math.floor(occupancyAmi?.amount / 12)
+    if (min) {
+      return Math.ceil(occupancyAmi?.amount / 12)
+    }
+    return Math[min ? "ceil" : "floor"](occupancyAmi?.amount / 12)
   }
 
   return null
 }
 
-export const applyMaxIncomeToUnit = (amiCharts: RailsAmiChart[]) => (
-  unit: RailsUnitWithOccupancy
-): RailsUnitWithOccupancyAndMaxIncome => {
-  const maxMonthlyIncomeNeeded = deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
-  return { ...unit, maxMonthlyIncomeNeeded }
+/**
+ *
+ * For rental listings, we ignore the minimum AMI Value in ~all~ cases, including 415.
+ * For Sale listings, we try to derive the minimum AMI, if we can't then we return -1.
+ */
+const determineMinIncomeNeeded = (
+  unit: RailsUnitWithOccupancy,
+  amiCharts: RailsAmiChart[],
+  isSale: boolean
+) => {
+  return isSale
+    ? deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts, true) || -1
+    : unit?.BMR_Rental_Minimum_Monthly_Income_Needed || -1
 }
+
+export const applyMinMaxIncomeToUnit =
+  (amiCharts: RailsAmiChart[], isSale?: boolean) =>
+  (unit: RailsUnitWithOccupancy): RailsUnitWithOccupancyAndMinMaxIncome => {
+    const maxMonthlyIncomeNeeded = Math.round(
+      deriveIncomeFromAmiCharts(unit, unit.occupancy, amiCharts)
+    )
+    const minMonthlyIncomeNeeded = Math.round(determineMinIncomeNeeded(unit, amiCharts, isSale))
+    return { ...unit, maxMonthlyIncomeNeeded, minMonthlyIncomeNeeded }
+  }
 
 export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccupancy[] => {
   const totalUnits = []
@@ -221,10 +269,10 @@ export const addUnitsWithEachOccupancy = (units: RailsUnit[]): RailsUnitWithOccu
 }
 
 export const buildAmiArray = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): Array<{ min: number | undefined; max: number }> => {
   const arrayOfAmis: Array<{ min: number | undefined; max: number }> = []
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (arrayOfAmis.some((ami) => ami.max === unit.Max_AMI_for_Qualifying_Unit)) {
       return
     }
@@ -256,12 +304,12 @@ export const buildOccupanciesArray = (units: RailsUnitWithOccupancy[]): Array<nu
 
 /**
  * Returns a collapsed array of units grouped by matching criteria with updated availability
- * @param {RailsUnitWithOccupancyAndMaxIncome[]} units
- * @returns {RailsUnitWithOccupancyAndMaxIncome[]}
+ * @param {RailsUnitWithOccupancyAndMinMaxIncome[]} units
+ * @returns {RailsUnitWithOccupancyAndMinMaxIncome[]}
  */
 export const matchSharedUnitFields = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
-): RailsUnitWithOccupancyAndMaxIncome[] => {
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
+): RailsUnitWithOccupancyAndMinMaxIncome[] => {
   const collapsedUnits = []
   // Process each unit in units by finding its matchingUnits
   const unitsCopy = units.map((unit) => {
@@ -269,7 +317,7 @@ export const matchSharedUnitFields = (
   })
   while (unitsCopy.length > 0) {
     const unit = unitsCopy[0]
-    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    const matchingUnits = unitsCopy.filter((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       return (
         unit.BMR_Rent_Monthly === curUnit.BMR_Rent_Monthly &&
         unit.Unit_Type === curUnit.Unit_Type &&
@@ -281,7 +329,7 @@ export const matchSharedUnitFields = (
       )
     })
     // Remove duplicate matchingUnits from units
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       unitsCopy.splice(unitsCopy.indexOf(curUnit), 1)
     })
     // If min / max range exists, update unit for sales and HOA price with/out parking
@@ -327,7 +375,7 @@ export const matchSharedUnitFields = (
     }
     // Update availiability based on availability in matchingUnits
     let numAvailable = 0
-    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMaxIncome) => {
+    matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       numAvailable += curUnit.Availability
     })
     unit.Availability = numAvailable
@@ -337,17 +385,17 @@ export const matchSharedUnitFields = (
 }
 
 export const getAbsoluteMinAndMaxIncome = (
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 ): { absoluteMaxIncome: number; absoluteMinIncome: number } => {
   let absoluteMaxIncome = 0
-  let absoluteMinIncome = units[0]?.BMR_Rental_Minimum_Monthly_Income_Needed
+  let absoluteMinIncome = units[0]?.minMonthlyIncomeNeeded
 
-  units.forEach((unit: RailsUnitWithOccupancyAndMaxIncome) => {
+  units.forEach((unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
     if (unit?.maxMonthlyIncomeNeeded > absoluteMaxIncome) {
       absoluteMaxIncome = unit.maxMonthlyIncomeNeeded
     }
-    if (unit?.BMR_Rental_Minimum_Monthly_Income_Needed < absoluteMinIncome) {
-      absoluteMinIncome = unit?.BMR_Rental_Minimum_Monthly_Income_Needed
+    if (unit?.minMonthlyIncomeNeeded < absoluteMinIncome) {
+      absoluteMinIncome = unit?.minMonthlyIncomeNeeded
     }
   })
 
@@ -356,7 +404,8 @@ export const getAbsoluteMinAndMaxIncome = (
 
 export const groupAndSortUnitsByOccupancy = (
   units: RailsUnit[],
-  amiCharts: RailsAmiChart[]
+  amiCharts: RailsAmiChart[],
+  isSale?: boolean
 ): GroupedUnitsByOccupancy[] => {
   /*
    * make a deep copy
@@ -372,16 +421,23 @@ export const groupAndSortUnitsByOccupancy = (
    */
   const unitsWithOccupancy = addUnitsWithEachOccupancy(unitsCopy)
   /*
-   * We have to derive the max income using ami charts, so this mapping goes through each unit
-   * and does that and adds that max income to the unit object
+   * We have to derive the max and min income using ami charts, so this mapping goes through each unit
+   * and does that and adds that max and min income to the unit object.
+   * The Min income is derived through two means: by the AMI Chart for that value or via the BMR_Rental_Minimum_Monthly_Income_Needed field.
+   * The former is only applicable when the listing is a Section 415 housing listing (meaning there are discrete AMI ranges), while the latter
+   * is calculated in Salesforce by multiplying the base rent by the rent multiple (usually 2x).
+   * To determine this, we check if there is a BMR value and use that if there is, if not, we try to use the minimum AMI field.
+   * If neither of those are available, the value becomes -1, which forces the table to display "Up To".
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMinMaxIncome = unitsWithOccupancy.map(
+    applyMinMaxIncomeToUnit(amiCharts, isSale)
+  )
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
    * two units with the same occupancy and unit type will only display one row with an availability of 2 units.
    */
-  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMaxIncome)
+  const unitSummaries = matchSharedUnitFields(unitsWithOccupancyAndMinMaxIncome)
 
   /*
    * Using the unit summaries, we build a sorted array of the occupancies values, e.g. [1, 3, 4, 5].
@@ -490,7 +546,7 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
    * We have to derive the max income using ami charts, so this mapping goes through each unit
    * and does that and adds that max income to the unit object
    */
-  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMaxIncomeToUnit(amiCharts))
+  const unitsWithOccupancyAndMaxIncome = unitsWithOccupancy.map(applyMinMaxIncomeToUnit(amiCharts))
 
   /*
    * There's a certain number of fields where we only want to show one row, but increase the availability field. e.g.
@@ -534,8 +590,24 @@ export const getPriorityTypeText = (priortyType: string): string => {
     case "Mobility impairments":
       text = t("listings.prioritiesDescriptor.mobility")
       break
+    case "Hearing/Vision (Communication)":
+      text = t("listings.Hearing/Vision (Communication).title")
+      break
     default:
       text = ""
   }
   return text
+}
+
+// return content to display in image tag
+export const getTagContent = (listing: RailsListing) => {
+  // Custom_Listing_Type takes precedence for deciding tag content
+  if (listing.Custom_Listing_Type) {
+    const text: string = getCustomListingType(listing.Custom_Listing_Type)
+    if (text) return [{ text }]
+  }
+  // else use Reserved_community_type for deciding tag content
+  return listing.Reserved_community_type
+    ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
+    : undefined
 }

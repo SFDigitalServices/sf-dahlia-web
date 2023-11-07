@@ -5,16 +5,33 @@ import { within } from "@testing-library/dom"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<HousingCounselors />", () => {
-  it("shows the correct header text", async () => {
+  beforeEach(() => {
+    window.matchMedia = jest.fn().mockImplementation((query) => {
+      return {
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }
+    })
+  })
+
+  it("shows the correct header text", async (done) => {
     const { getByTestId } = await renderAndLoadAsync(<HousingCounselors assetPaths={{}} />)
     const header = getByTestId("page-header")
 
     expect(within(header).getByText(t("assistance.title.housingCouneslors"))).not.toBeNull()
+    done()
   })
 
-  it("shows the correct subtitle text", async () => {
+  it("shows the correct subtitle text", async (done) => {
     const { getByText } = await renderAndLoadAsync(<HousingCounselors assetPaths={{}} />)
 
     expect(getByText(t("assistance.subtitle.housingCouneslors"))).not.toBeNull()
+    done()
   })
 })

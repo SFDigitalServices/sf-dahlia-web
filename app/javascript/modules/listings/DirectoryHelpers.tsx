@@ -13,8 +13,8 @@ import {
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
 import { areLotteryResultsShareable, getPriorityTypeText } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
@@ -69,17 +69,28 @@ export const getNumberString = (num: number, currency?: boolean) =>
 const isNumber = (val: number) => val || val === 0
 
 // Transforms two numbers into a range string with optional currency formatting and optional suffix
-// 100, 200, true, null --> $100 - $200
-// 100, 100, false, "%" --> 100%
-export const getRangeString = (min: number, max: number, currency?: boolean, suffix?: string) => {
-  // If min is 0, return "up to {max}"
-  if (isNumber(min) && isNumber(max) && min === 0 && max !== 0) {
+// 100, 200, true, null, false --> $100 - $200
+// 100, 100, false, "%", false --> 100%
+// 100, 100, true, null, true --> $0 - $100
+// 0, 100, true, null, true --> $0 - $100
+// 0, 100, true, null, false --> Up to $100
+export const getRangeString = (
+  min: number,
+  max: number,
+  currency?: boolean,
+  suffix?: string,
+  forceZeroInRange = false
+) => {
+  // If min is less than or equal to 0, return "up to {max}"
+  // unless the forceZeroInRange arguemtn is true, then we will drop the Up To and just use zero
+  if (isNumber(min) && isNumber(max) && min <= 0 && max !== 0 && !forceZeroInRange) {
     const maxString = getNumberString(max, currency)
     return `${t("t.upTo")} ${maxString}`
   }
   // If the numbers differ, return as a range.
+  // If the forceZero argument is true then we will ignore the min and just display 0 (only needed for rent as a percent of income listings)
   if (isNumber(min) && isNumber(max) && min !== max) {
-    const minString = getNumberString(min, currency)
+    const minString = getNumberString(forceZeroInRange ? 0 : min, currency)
     const maxString = getNumberString(max, currency)
     const range = t("t.numberRange", {
       minValue: minString,
@@ -180,7 +191,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
             : {
                 tableHeader: { content: getTableHeader(listing) },
                 tableSubheader: {
-                  content: <TableSubHeader priorityTypes={getPriorityTypes(listing)} />,
+                  content: <TableSubHeader listing={listing} />,
                 },
                 contentHeader: { content: listing.Name },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },

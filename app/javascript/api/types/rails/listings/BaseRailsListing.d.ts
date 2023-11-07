@@ -1,5 +1,5 @@
-import RailsListingDescriptor from "./RailsListingDescriptor"
-import RailsUnit from "./RailsUnit"
+import type RailsListingDescriptor from "./RailsListingDescriptor"
+import type RailsUnit from "./RailsUnit"
 
 type ListingBuilding = {
   attributes: ListingAttributes
@@ -29,6 +29,16 @@ export type ListingEvent = {
   Street_Address?: string
   Venue?: string
   attributes?: { type: string; url: string }
+}
+
+export type ImageItem = {
+  displayImageURL: string
+  attributes?: { type: string; url: string }
+  Listing?: string
+  Id?: string
+  Name?: string
+  Image_URL?: string
+  Image_Description?: string
 }
 
 export type ListingLotteryPreference = {
@@ -71,6 +81,7 @@ type BaseRailsListing = {
   Costs_Not_Included?: string
   Credit_Rating?: string
   Criminal_History?: string
+  Custom_Listing_Type?: string
   Deposit_Max?: number
   Deposit_Min?: number
   Developer?: string
@@ -113,6 +124,7 @@ type BaseRailsListing = {
   Open_Houses?: ListingEvent[]
   Parking_Information?: string
   Pet_Policy?: string
+  Pricing_Matrix?: string
   Program_Type: string
   Project_ID: string
   Publish_Lottery_Results: boolean
@@ -133,6 +145,7 @@ type BaseRailsListing = {
   Tenure: string
   Total_number_of_building_units: number
   Total_waitlist_openings?: number
+  Utilities?: string
   Units: Array<RailsUnit>
   Units_Available: number
   Year_Built?: number
@@ -140,6 +153,7 @@ type BaseRailsListing = {
   chartTypes?: unknown
   current_waitlist_size?: number
   hasWaitlist: boolean
+  Listing_Images: ImageItem[]
   imageURL?: string
   listingID: string
   nGeneral_Application_Total: number

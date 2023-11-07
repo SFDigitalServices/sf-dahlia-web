@@ -1,14 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TableSubHeader renders TableSubHeader component 1`] = `
-<div>
-  Includes Priority Units for:
-  <ul
-    className="list-disc ml-4"
-  >
-    <li>
-      test
-    </li>
-  </ul>
-</div>
+exports[`TableSubHeader renders the priority units for Shirley Chisholm listing 2 1`] = `
+<DocumentFragment>
+  <div>
+    Includes Priority Units for:
+    <ul
+      class="list-disc ml-4"
+    >
+      <li>
+        San Francisco Unified School District employees
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TableSubHeader renders the priority units for Shirley Chisholm listing 2 with other priority units 1`] = `
+<DocumentFragment>
+  <div>
+    Includes Priority Units for:
+    <ul
+      class="list-disc ml-4"
+    >
+      <li>
+        San Francisco Unified School District employees
+      </li>
+      <li>
+        Mobility, Hearing and/or Vision Impairments
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
 `;

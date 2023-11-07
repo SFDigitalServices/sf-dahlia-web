@@ -1,19 +1,33 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import { render } from "@testing-library/react"
 import { ListingDetailsImageCard } from "../../../modules/listingDetails/ListingDetailsImageCard"
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import { saleEducatorListing } from "../../data/RailsSaleListing/listing-sale-educator"
+import { rentalEducatorListing1 } from "../../data/RailsRentalListing/listing-rental-educator"
 
 describe("ListingDetailsImageCard", () => {
   it("displays image card when no tag", () => {
-    const tree = renderer.create(<ListingDetailsImageCard listing={openSaleListing} />).toJSON()
+    const { asFragment } = render(<ListingDetailsImageCard listing={openSaleListing} />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
   })
 
   it("displays tag when listing is habitat for humanity", () => {
-    const tree = renderer.create(<ListingDetailsImageCard listing={habitatListing} />).toJSON()
+    const { asFragment } = render(<ListingDetailsImageCard listing={habitatListing} />)
 
-    expect(tree).toMatchSnapshot()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays tag when sale listing is for educators", () => {
+    const { asFragment } = render(<ListingDetailsImageCard listing={saleEducatorListing} />)
+
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays tag when rental listing is for educators", () => {
+    const { asFragment } = render(<ListingDetailsImageCard listing={rentalEducatorListing1} />)
+
+    expect(asFragment()).toMatchSnapshot()
   })
 })

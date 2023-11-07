@@ -33,6 +33,15 @@ const buildHmiHeadersWithOneAmi = () => {
   }
 }
 
+const hasMultipleUniqueChartsByPercent = (amiCharts: RailsAmiChart[]) => {
+  return (
+    amiCharts
+      .map((chart) => chart.percent)
+      .filter((currentPercent, idx, allPercents) => allPercents.indexOf(currentPercent) === idx)
+      .length > 1
+  )
+}
+
 const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
@@ -44,7 +53,7 @@ const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
 }
 
 const buildHmiChartHeaders = (amiCharts: RailsAmiChart[]) => {
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiHeadersWithMultipleAmis(amiCharts)
     : buildHmiHeadersWithOneAmi()
 }
@@ -68,8 +77,9 @@ const buildHmiTableWithOneAmiChart = (
   amiCharts: RailsAmiChart[]
 ) => {
   const tableData = []
+  const mostRecentAmiChart = amiCharts[amiCharts.length - 1]
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
-    const amiChart = amiCharts[0]?.values?.find((amiChart: RailsAmiChartValue) => {
+    const amiChart = mostRecentAmiChart?.values?.find((amiChart: RailsAmiChartValue) => {
       return amiChart.numOfHousehold === i
     })
 
@@ -122,6 +132,7 @@ const buildHmiTableWithMultipleAmis = (
         return amiChart.numOfHousehold === i
       })
       if (amiChart) {
+        // if there are charts with the same percent, the chart with the largest index is used
         tableRow[`ami${chart.percent}`] = {
           content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
         }
@@ -147,7 +158,7 @@ const buildHmiCharts = (
     maxOccupancy += 2
   }
 
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiTableWithMultipleAmis(minOccupancy, maxOccupancy, amiCharts)
     : buildHmiTableWithOneAmiChart(minOccupancy, maxOccupancy, amiCharts)
 }
@@ -231,10 +242,12 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
       {toShowButton(maxOccupancy, minOccupancy, hmiCutoff) && (
         <Button
           inlineIcon="right"
-          className="underline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          className="font-medium md:bg-primary-lighter mt-3 text-primary-dark"
           iconSize="small"
           icon={tableCollapsed ? faAngleDown : faAngleUp}
           onClick={expandTableHandler}
+          ariaLabel={t("listings.householdMaximumIncome.showMore.aria")}
+          ariaExpanded={!tableCollapsed}
         >
           {tableCollapsed ? t("label.showMore") : t("label.showLess")}
         </Button>

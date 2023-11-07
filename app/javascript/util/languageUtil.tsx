@@ -5,6 +5,7 @@ import React from "react"
 
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
+import { CUSTOM_LISTING_TYPES } from "../modules/constants"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -172,6 +173,16 @@ export function getReservedCommunityType(type: string | undefined): string {
       return t("listings.reservedCommunityType.disability")
     default:
       return type
+  }
+}
+
+// Get the translated custom listing
+export function getCustomListingType(type: string | undefined): string {
+  switch (type) {
+    case CUSTOM_LISTING_TYPES.EDUCATOR_ONE:
+      return t("listings.customListingType.educator")
+    default:
+      return undefined
   }
 }
 

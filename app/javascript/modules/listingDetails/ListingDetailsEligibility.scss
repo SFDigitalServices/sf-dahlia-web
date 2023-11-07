@@ -1,3 +1,40 @@
 .info-card{
     --title-color:var(--bloom-color-gray-950);
 }
+
+.detail-header {
+    min-height: var(--bloom-s20);
+    .detail-header__hgroup {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.additional-rule-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    p:not(:last-child) {
+        margin-bottom: 0;
+    }
+    ul:not(:last-child) {
+        margin-bottom: 0;
+    }
+}
+
+.educator-eligibility {
+    font-size: 13px;
+    ul {
+        @apply list-none;
+        li:before {
+            content: '✓';
+            @apply mr-2;
+        }
+    }
+    .markdown {
+        @apply p-6;
+        @apply md:pr-8;
+        @apply m-0;
+    }
+}

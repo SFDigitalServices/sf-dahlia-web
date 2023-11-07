@@ -1,4 +1,4 @@
-import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 /**
  * ListingDetails response for rental listing with status of Lottery Complete and
@@ -249,6 +249,21 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
     Id: "0120P000000kPURQA2",
     Name: "Ownership",
   },
-  imageURL:
-    "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+  Listing_Images: [
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a listing image",
+    },
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/55%20Page%20Ext%20FCFS.jpg",
+      Image_Description: "This is a third listing image",
+    },
+  ],
 }

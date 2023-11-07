@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Field, Heading, Icon, IconFillColors, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsLotteryPreferences } from "./ListingDetailsLotteryPreferences"
 import { getLotteryResults } from "../../api/listingApiService"
@@ -36,7 +36,7 @@ export const ListingDetailsLotterySearchForm = ({
   )
 
   const onSubmit = (data: { lotterySearchNumber: string }) => {
-    const { lotterySearchNumber } = data
+    const lotterySearchNumber = data.lotterySearchNumber
     setLotteryFormStatus(LOTTERY_SEARCH_FORM_STATUS.LOADING)
 
     void getLotteryResults(listing.Id, lotterySearchNumber).then((lotterySearchResults) => {
@@ -106,6 +106,7 @@ export const ListingDetailsLotterySearchForm = ({
         <Heading>{t("lottery.lotteryResults")}</Heading>
         <h2 className="font-sans font-semibold text-xs uppercase">{listing.Name}</h2>
       </header>
+      <p className="px-8 pb-4 text-xs">{t("lottery.bucketsIntro")}</p>
       <form
         id="search-form"
         className="bg-gray-100 flex mb-4 px-6 py-4"
@@ -120,6 +121,7 @@ export const ListingDetailsLotterySearchForm = ({
           placeholder={t("lottery.enterLotteryNumber")}
           type="text"
           validation={{ pattern: /^\d+$/, required: true }}
+          label={t("lottery.enterLotteryNumber")}
         />
         <button
           className="bg-blue-500 h-12 mt-2 p-3 translate"

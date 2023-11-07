@@ -1,4 +1,4 @@
-import RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
+import type RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 
 export const habitatListing: RailsSaleListing = {
   unitSummaries: {
@@ -355,6 +355,21 @@ export const habitatListing: RailsSaleListing = {
     Id: "0120P000000kPURQA2",
     Name: "Ownership",
   },
-  imageURL:
-    "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
+  Listing_Images: [
+    {
+      displayImageURL:
+        "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
+      Image_Description: "This is a listing image",
+    },
+    {
+      displayImageURL:
+        "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      displayImageURL:
+        "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
+      Image_Description: "This is a third listing image",
+    },
+  ],
 }

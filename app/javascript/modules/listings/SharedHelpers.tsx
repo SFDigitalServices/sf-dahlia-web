@@ -1,12 +1,13 @@
 import React from "react"
 import Markdown from "markdown-to-jsx"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { areLotteryResultsShareable } from "../../util/listingUtil"
-import { getReservedCommunityType, localizedFormat } from "../../util/languageUtil"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import { areLotteryResultsShareable, getTagContent } from "../../util/listingUtil"
+import { localizedFormat } from "../../util/languageUtil"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
+import "./SharedHelpers.scss"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -63,23 +64,27 @@ export const getListingImageCardStatuses = (
 }
 
 // Get imageCardProps for a given listing
-export const getImageCardProps = (listing, hasFiltersSet?: boolean) => {
+export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean) => {
+  const imageUrl =
+    listing?.Listing_Images?.length > 0
+      ? listing.Listing_Images[0].displayImageURL
+      : listing?.imageURL ?? fallbackImg
+
   return {
-    imageUrl: listing?.imageURL ?? fallbackImg,
+    imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
-    tags: listing.Reserved_community_type
-      ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-      : undefined,
+    tags: getTagContent(listing),
     statuses: getListingImageCardStatuses(listing, hasFiltersSet),
     description: `${listing.Building_Name} Building`,
   }
 }
 
 export const getEventNote = (listingEvent: ListingEvent) => {
+  if (!listingEvent.Venue) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="translate">
+        <span className="links-space translate">
           <Markdown>{listingEvent.Venue}</Markdown>
         </span>
       )}

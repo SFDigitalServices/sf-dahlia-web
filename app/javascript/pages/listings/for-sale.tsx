@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ActionBlock, ActionBlockLayout, t } from "@bloom-housing/ui-components"
+import { ActionBlock, ActionBlockLayout, Heading, t } from "@bloom-housing/ui-components"
 
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Link from "../../navigation/Link"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
@@ -42,16 +42,20 @@ const getForSaleSummaryTable = (listing: RailsSaleListing) => {
       },
       colThree: {
         cellText: getRangeString(
-          getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min"),
-          getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max"),
+          Math.round(
+            getMinMax(summary.minHoaDuesWithoutParking, summary.minHoaDuesWithParking, "min")
+          ),
+          Math.round(
+            getMinMax(summary.maxHoaDuesWithoutParking, summary.maxHoaDuesWithParking, "max")
+          ),
           true
         ),
         cellSubText: t("t.perMonth"),
       },
       colFour: {
         cellText: getRangeString(
-          getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min"),
-          getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max"),
+          Math.round(getMinMax(summary.minPriceWithoutParking, summary.minPriceWithParking, "min")),
+          Math.round(getMinMax(summary.maxPriceWithoutParking, summary.maxPriceWithParking, "max")),
           true
         ),
       },
@@ -87,7 +91,7 @@ const getFindMoreActionBlock = () => {
       <div className="bg-primary-darker">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
-            header={t("saleDirectory.callout.title")}
+            header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[

@@ -58,8 +58,9 @@ export const ListingDetailsProcess = ({
           }
           strings={{
             title: t("label.whatToExpect"),
-            readMore: t("label.readMore"),
-            readLess: t("label.readLess"),
+            readMore: t("label.showMore"),
+            readLess: t("label.showLess"),
+            buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
           }}
         />
       </div>

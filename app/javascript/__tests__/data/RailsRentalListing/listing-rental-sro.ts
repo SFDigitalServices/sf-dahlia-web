@@ -1,4 +1,4 @@
-import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 export const sroRentalListing: RailsRentalListing = {
   unitSummaries: {
@@ -296,8 +296,23 @@ export const sroRentalListing: RailsRentalListing = {
     Id: "0120P000000kPUSQA2",
     Name: "Rental",
   },
-  imageURL:
-    "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+  Listing_Images: [
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a listing image",
+    },
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a second listing image",
+    },
+    {
+      displayImageURL:
+        "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
+      Image_Description: "This is a third listing image",
+    },
+  ],
 }
 
 export const sroMixedRentalListing: RailsRentalListing = {

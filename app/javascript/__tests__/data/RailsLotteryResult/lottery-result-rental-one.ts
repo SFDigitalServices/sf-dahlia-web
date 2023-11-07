@@ -1,4 +1,4 @@
-import { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../../api/types/rails/listings/RailsLotteryResult"
 
 /**
  * LotteryResult for a rental listing with L/W preference rank

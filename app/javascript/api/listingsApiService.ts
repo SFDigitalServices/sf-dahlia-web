@@ -1,5 +1,5 @@
 import { get } from "./apiService"
-import RailsRentalListing from "./types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "./types/rails/listings/RailsRentalListing"
 
 type ListingsResponse = { listings: RailsRentalListing[] }
 

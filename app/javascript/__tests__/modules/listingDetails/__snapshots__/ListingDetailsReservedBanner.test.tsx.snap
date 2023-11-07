@@ -1,55 +1,121 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsReservedBanner displays banner when reserved community type is Accessible Units Only 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+exports[`ListingDetailsReservedBanner displays banner when custom listing type is Educator One 1`] = `
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
-    All units reserved for people who need accessibility features
+    <div
+      class="message is-warning"
+    >
+      <div
+        class="educator1-banner"
+      >
+        <b>
+          Special housing for San Francisco public school employees.
+        </b>
+        <p>
+          <a
+            href="#listing-details-eligibility"
+            target="_self"
+          >
+            Learn more about who can apply.
+          </a>
+        </p>
+      </div>
+    </div>
   </div>
-</div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsReservedBanner displays banner when reserved community type is Accessible Units Only 1`] = `
+<DocumentFragment>
+  <div
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
+  >
+    <div
+      class="message is-warning"
+    >
+      All units reserved for people who need accessibility features
+    </div>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Artist Live/Work 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
-    All units reserved for artists to live and work in
+    <div
+      class="message is-warning"
+    >
+      All units reserved for artists to live and work in
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Senior 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
-    All units reserved for ages 65+
+    <div
+      class="message is-warning"
+    >
+      All units reserved for ages 65+
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsReservedBanner displays banner when reserved community type is Veteran 1`] = `
-<div
-  className="md:pr-8 md:w-2/3 mt-4 w-full"
->
+<DocumentFragment>
   <div
-    className="message is-warning"
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
   >
-    All units reserved for veterans
+    <div
+      class="message is-warning"
+    >
+      All units reserved for veterans
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
-exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `null`;
+exports[`ListingDetailsReservedBanner displays custom listing type banner when both custom listing and reserved community types are selected 1`] = `
+<DocumentFragment>
+  <div
+    class="md:pr-8 md:w-2/3 mt-4 w-full mb-8 md:mb-0 md:pl-4 lg:pl-0"
+  >
+    <div
+      class="message is-warning"
+    >
+      <div
+        class="educator1-banner"
+      >
+        <b>
+          Special housing for San Francisco public school employees.
+        </b>
+        <p>
+          <a
+            href="#listing-details-eligibility"
+            target="_self"
+          >
+            Learn more about who can apply.
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
 
-exports[`ListingDetailsReservedBanner does not display banner when reserved community type is blank 1`] = `null`;
+exports[`ListingDetailsReservedBanner does not display banner when custom listing type is unknown 1`] = `<DocumentFragment />`;
 
-exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `null`;
+exports[`ListingDetailsReservedBanner does not display banner when reserved community and custom listing types are blank 1`] = `<DocumentFragment />`;
+
+exports[`ListingDetailsReservedBanner does not display banner when reserved community type is Habitat for Humanity 1`] = `<DocumentFragment />`;
+
+exports[`ListingDetailsReservedBanner does not display banner when unknown reserved community type 1`] = `<DocumentFragment />`;

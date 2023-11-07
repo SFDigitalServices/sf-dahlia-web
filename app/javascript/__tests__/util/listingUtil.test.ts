@@ -19,8 +19,11 @@ import {
   groupAndSortUnitsByOccupancy,
   getAmiChartDataFromUnits,
   getPriorityTypeText,
+  getTagContent,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
+import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
+import { saleListingReservedAndCustom } from "../data/RailsSaleListing/listing-sale-reserved-and-custom"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
@@ -277,7 +280,7 @@ describe("buildAmiArray", () => {
 describe("getAbsoluteMinAndMaxIncome", () => {
   it("should return the correct min and max income when units is not empty", () => {
     const result = getAbsoluteMinAndMaxIncome(unitsWithOccupancyAndMaxIncome)
-    expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 7 })
+    expect(result).toEqual({ absoluteMaxIncome: 1500, absoluteMinIncome: 100 })
   })
 })
 
@@ -450,5 +453,27 @@ describe("getPriorityTypeText", () => {
     ${"Mobility impairments"}                | ${"Mobility Impairments"}
   `("returns text $text when priority type is $priorityType", ({ priorityType, text }) => {
     expect(getPriorityTypeText(priorityType)).toBe(text)
+  })
+})
+
+describe("getTagContent", () => {
+  test("returns undefined for listing without a reserved community or custom listing type", () => {
+    expect(getTagContent(openSaleListing)).toBeUndefined()
+  })
+
+  test("returns tag content for custom listing type", () => {
+    expect(getTagContent(saleEducatorListing)).toStrictEqual([
+      { text: "SF public schools employee housing" },
+    ])
+  })
+
+  test("returns tag content for reserved community type", () => {
+    expect(getTagContent(habitatListing)).toStrictEqual([{ text: "Habitat Greater San Francisco" }])
+  })
+
+  test("tag content gives custom listing type precedence over reserved community type", () => {
+    expect(getTagContent(saleListingReservedAndCustom)).toStrictEqual([
+      { text: "SF public schools employee housing" },
+    ])
   })
 })

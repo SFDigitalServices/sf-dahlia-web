@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryBucket"
+import type { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryBucket"
 import "./ListingDetailsLotteryResultsRow.scss"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
 

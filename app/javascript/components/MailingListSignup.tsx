@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
-import { ActionBlock, Icon, t } from "@bloom-housing/ui-components"
+import { ActionBlock, Heading, Icon, t } from "@bloom-housing/ui-components"
 import Link from "../navigation/Link"
-import ConfigContext from "../lib/ConfigContext"
+import { ConfigContext } from "../lib/ConfigContext"
 
 export const MailingListSignup = () => {
   const { listingsAlertUrl } = useContext(ConfigContext)
@@ -9,7 +9,7 @@ export const MailingListSignup = () => {
   return (
     <ActionBlock
       className={"mt-4"}
-      header={t("welcome.newListingEmailAlert")}
+      header={<Heading priority={2}>{t("welcome.newListingEmailAlert")}</Heading>}
       background="primary-lighter"
       icon={<Icon size="3xl" symbol="mailThin" fill="transparent" />}
       actions={[

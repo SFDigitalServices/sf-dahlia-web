@@ -6,13 +6,14 @@ import {
   t,
   LinkButton,
   PageHeader,
+  Heading,
 } from "@bloom-housing/ui-components"
 
 import { getRentalListings, EligibilityFilters } from "../../api/listingsApiService"
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
+import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import Link from "../../navigation/Link"
 import {
   getAdditionalResourcesPath,
@@ -97,7 +98,7 @@ const getFindMoreActionBlock = () => {
       <div className="bg-primary-darker">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
-            header={t("rentalDirectory.callouttitle")}
+            header={<Heading priority={2}>{t("rentalDirectory.callouttitle")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[

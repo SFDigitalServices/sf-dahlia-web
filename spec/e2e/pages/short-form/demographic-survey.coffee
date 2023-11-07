@@ -1,4 +1,5 @@
 AngularPage = require('../angular-page').AngularPage
+EC = protractor.ExpectedConditions
 
 setCheckboxSelected = (checkboxElement, newSelectedValue) ->
   checkboxElement.isSelected().then (selected) ->

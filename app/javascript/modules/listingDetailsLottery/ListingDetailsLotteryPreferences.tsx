@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
+import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsLotteryPreferencesProps {
@@ -12,7 +12,6 @@ export const ListingDetailsLotteryPreferences = ({
 }: ListingDetailsLotteryPreferencesProps) => {
   return (
     <div className="text-sm">
-      <p className="px-8 pb-4 text-xs">{t("lottery.bucketsIntro")}</p>
       <header className="border-b border-gray-450 mb-4">
         <Heading styleType="underlineWeighted" className="mx-8" priority={2}>
           {t("lottery.housingPreferences")}
@@ -28,7 +27,9 @@ export const ListingDetailsLotteryPreferences = ({
       {lotteryBucketsDetails.lotteryBuckets
         .filter(
           (bucket) =>
-            bucket.preferenceName !== "generalLottery" && bucket.preferenceResults?.length > 0
+            bucket.preferenceName !== "generalLottery" &&
+            bucket.totalSubmittedApps &&
+            bucket.unitsAvailable
         )
         .map((bucket, index, arr) => (
           <div key={bucket.preferenceOrder}>

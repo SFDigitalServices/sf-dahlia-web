@@ -1,4 +1,4 @@
-import { ListingAttributes } from "./BaseRailsListing"
+import type { ListingAttributes } from "./BaseRailsListing"
 
 type RailsUnit = {
   AMI_chart_type: string
@@ -33,8 +33,9 @@ export interface RailsUnitWithOccupancy extends RailsUnit {
   occupancy: number
 }
 
-export interface RailsUnitWithOccupancyAndMaxIncome extends RailsUnitWithOccupancy {
+export interface RailsUnitWithOccupancyAndMinMaxIncome extends RailsUnitWithOccupancy {
   maxMonthlyIncomeNeeded: number
+  minMonthlyIncomeNeeded: number
 }
 
 export default RailsUnit

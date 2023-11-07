@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/W 1`] = `
-Array [
+<DocumentFragment>
   <ol
-    className="preferences-list"
+    class="preferences-list"
   >
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         1
         <sup>
@@ -17,22 +17,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Certificate of Preference (COP)
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 6 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -46,10 +46,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         2
         <sup>
@@ -57,22 +57,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Displaced Tenant Housing Preference (DTHP)
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 1 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -86,10 +86,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         3
         <sup>
@@ -97,22 +97,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Live or Work in San Francisco Preference
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 6 units available
       </div>
       <div
-        className="preferences-list__description translate"
+        class="preferences-list__description translate"
       >
         This is a custom description - For households in which at least one member lives or works in San Francisco.  Requires submission of proof.  Please note in order to claim Work Preference, the applicant currently work in San Francisco at least 75% of their working hours.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -134,25 +134,25 @@ Array [
         </span>
       </div>
     </li>
-  </ol>,
+  </ol>
   <p
-    className="text-gray-750 text-sm"
+    class="text-gray-750 text-sm"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>,
-]
+  </p>
+</DocumentFragment>
 `;
 
 exports[`ListingDetailsPreferences display 6 preferences 1`] = `
-Array [
+<DocumentFragment>
   <ol
-    className="preferences-list"
+    class="preferences-list"
   >
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         1
         <sup>
@@ -160,22 +160,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Certificate of Preference (COP)
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 1 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -189,10 +189,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         2
         <sup>
@@ -200,22 +200,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Rent Burdened / Assisted Housing Preference
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 2 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households who are currently paying more than 50% of income for housing costs or are living in public housing or project based Section 8 housing within San Francisco.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -238,10 +238,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         3
         <sup>
@@ -249,22 +249,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Displaced Tenant Housing Preference (DTHP)
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 3 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, have been displaced by a fire, or who will experience an unaffordable rent increase due to affordability restrictions expiring. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current residence or work location.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -278,10 +278,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         4
         <sup>
@@ -289,22 +289,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Neighborhood Resident Housing Preference (NRHP)
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 4 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member either lives within the Supervisor district of the project or within a half-mile of the project. Requires submission of proof of address.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -327,10 +327,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         5
         <sup>
@@ -338,22 +338,22 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Live or Work in San Francisco Preference
       </h4>
       <div
-        className="preferences-list__subtitle"
+        class="preferences-list__subtitle"
       >
         Up to 5 units available
       </div>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         For households in which at least one member lives or works in San Francisco. Requires submission of proof. Please note in order to claim Work Preference, the applicant must currently work in San Francisco at least 75% of their working hours.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -376,10 +376,10 @@ Array [
       </div>
     </li>
     <li
-      className="preferences-list__item info-card"
+      class="preferences-list__item info-card"
     >
       <div
-        className="preferences-list__number"
+        class="preferences-list__number"
       >
         6
         <sup>
@@ -387,17 +387,17 @@ Array [
         </sup>
       </div>
       <h4
-        className="info-card__title"
+        class="info-card__title"
       >
         Alice Griffith Housing Development Resident
       </h4>
       <div
-        className="preferences-list__description "
+        class="preferences-list__description "
       >
         Right to Return - Alice Griffith. For households in which at least one member is a former or current resident of Alice Griffith public housing. Please note, these units are not subsidized — the rent will not change if your income changes.
       </div>
       <div
-        className="preferences-list__links"
+        class="preferences-list__links"
       >
         <span>
           <a
@@ -410,11 +410,11 @@ Array [
         </span>
       </div>
     </li>
-  </ol>,
+  </ol>
   <p
-    className="text-gray-750 text-sm"
+    class="text-gray-750 text-sm"
   >
     After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>,
-]
+  </p>
+</DocumentFragment>
 `;

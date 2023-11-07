@@ -23,13 +23,17 @@ export interface Props {
   children: React.ReactNode
   title: string
   subtitle: string
+  mainPage?: boolean
 }
 
-const AssistanceLayout = ({ children, title, subtitle }: Props) => {
+const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
   const { getAssetPath } = React.useContext(ConfigContext)
 
   const lang = languageToSFGovMap(getCurrentLanguage(window.location.pathname))
 
+  const classNames = mainPage
+    ? "flex flex-wrap flex-col md:flex-row relative m-auto w-full"
+    : "flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
   return (
     <Layout title={title}>
       <PageHeader
@@ -38,12 +42,12 @@ const AssistanceLayout = ({ children, title, subtitle }: Props) => {
         inverse
         backgroundImage={getAssetPath("bg@1200.jpg")}
       />
-      <article className="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full">
-        <div className="w-full md:w-2/3" data-test-id="assistance-main-content">
+      <article className={classNames}>
+        <div className="w-full md:w-2/3" data-testid="assistance-main-content">
           {children}
         </div>
         <SidebarBlock
-          className="w-full md:w-1/3 text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
+          className="w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
           title={t("footer.contact")}
         >
           <span className="text-gray-950">

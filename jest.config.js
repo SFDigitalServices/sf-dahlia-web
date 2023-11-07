@@ -42,4 +42,6 @@ module.exports = {
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
   reporters: ["default", "jest-junit"],
+  moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
+  testEnvironment: "jsdom",
 }

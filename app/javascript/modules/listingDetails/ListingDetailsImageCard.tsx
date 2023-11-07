@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
-import { getReservedCommunityType } from "../../util/languageUtil"
+import type { ImageItem } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
-import { getListingAddressString } from "../../util/listingUtil"
+import { getListingAddressString, getTagContent } from "../../util/listingUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
@@ -13,6 +13,54 @@ export interface ListingDetailsImageCardProps {
   listing: RailsListing
 }
 
+const createImageCardProps = (listing: RailsListing) => {
+  const listingImages: ImageItem[] = listing?.Listing_Images?.map((listingImage) => {
+    return {
+      url: listingImage.displayImageURL,
+      description: listingImage.Image_Description,
+    }
+  })
+
+  // We want to support both the imageURL and listing images fields for now
+  // but the hope is to ultimately deprecate that field.
+  // If we have to use the fallback image then we want to disable the image
+  // field from A11Y tools since at that point it is purely decorative.
+  if (!listingImages) {
+    return listing?.imageURL
+      ? {
+          props: {
+            imageUrl: listing.imageURL,
+            description: t("listings.buildingImageAltText"),
+          },
+          fallbackUsed: false,
+        }
+      : {
+          props: {
+            imageUrl: fallbackImg,
+            description: "",
+          },
+          fallbackUsed: true,
+        }
+  } else {
+    return listingImages.length > 0
+      ? {
+          props: {
+            images: listingImages,
+            description: t("listings.buildingImageAltText"),
+            moreImagesLabel: t("listings.morePhotos"),
+          },
+          fallbackUsed: false,
+        }
+      : {
+          props: {
+            imageUrl: fallbackImg,
+            description: "",
+          },
+          fallbackUsed: true,
+        }
+  }
+}
+
 export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const listingAddress = getListingAddressString(listing)
@@ -20,18 +68,13 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
 
+  const { fallbackUsed, props: imageCardProps } = createImageCardProps(listing)
+
   return (
     <header className="image-card--leader">
-      <ImageCard
-        imageUrl={listing?.imageURL ?? fallbackImg}
-        href={`/listings/${listing.listingID}`}
-        tags={
-          listing.Reserved_community_type
-            ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-            : undefined
-        }
-        description={t("listings.buildingImageAltText")}
-      />
+      <span aria-hidden={fallbackUsed}>
+        <ImageCard {...imageCardProps} tags={getTagContent(listing)} modalAriaTitle="true" />
+      </span>
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>
         <p className="my-1">
