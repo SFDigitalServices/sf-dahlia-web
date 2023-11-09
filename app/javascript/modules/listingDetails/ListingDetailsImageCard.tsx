@@ -53,7 +53,7 @@ const createImageCardProps = (listing: RailsListing) => {
         }
       : {
           props: {
-            iamgeUrl: fallbackImg,
+            imageUrl: fallbackImg,
             description: "",
           },
           fallbackUsed: true,
@@ -73,7 +73,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   return (
     <header className="image-card--leader">
       <span aria-hidden={fallbackUsed}>
-        <ImageCard {...imageCardProps} tags={getTagContent(listing)} />
+        <ImageCard {...imageCardProps} tags={getTagContent(listing)} modalAriaTitle="true" />
       </span>
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>
