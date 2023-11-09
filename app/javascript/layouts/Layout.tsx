@@ -208,8 +208,14 @@ const Layout = (props: LayoutProps) => {
             <p className="text-xs mt-4 text-gray-500">
               <Markdown>
                 {t("footer.inPartnershipWith", {
-                  sfdsUrl: "https://digitalservices.sfgov.org/",
-                  mayorUrl: "https://www.innovation.sfgov.org/",
+                  sfdsUrl: getSfGovUrl(
+                    "https://sf.gov/departments/city-administrator/digital-services",
+                    1788
+                  ),
+                  mayorUrl: getSfGovUrl(
+                    "https://sf.gov/departments/mayors-office-innovation",
+                    3095
+                  ),
                 })}
               </Markdown>
             </p>
