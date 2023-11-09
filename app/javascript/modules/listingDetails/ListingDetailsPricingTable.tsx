@@ -205,7 +205,9 @@ const buildAccordions = (
                     : `${t("listings.stats.numInHouseholdSingular")}`}
                 </span>
               </span>
-              <span className={"flex items-center mr-2 text-sm md:text-base"}>
+              <span
+                className={"flex items-center mr-2 text-sm md:text-base text-left md:text-center"}
+              >
                 {(() => {
                   return occupancy?.absoluteMinIncome <= 0 && !forceZeroInRange ? (
                     <div>

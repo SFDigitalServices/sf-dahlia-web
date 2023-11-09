@@ -16,7 +16,7 @@ class MultipleListingImageService
 
   def process_images
     unless @listing_images
-      add_error(@errors, "No listing images provided for listing #{@listing_id}")
+      Rails.logger.info("No listing images provided for listing #{@listing_id}")
       return self
     end
     Rails.logger.info("Processing Listing Images for #{@listing_id}")

@@ -844,7 +844,7 @@
   "listings.availableUnits": "可用單位",
   "listings.availableUnitsAndOpenWaitlist": "現有單位與開放等候名單",
   "listings.availableUnitsAndWaitlist": "現有單位與等候名單",
-  "listings.availableUnitsAndWaitlistDescription": "中籤人填滿所有現有單位之後，其他中籤人將排入 {number} 個單位的候補名單",
+  "listings.availableUnitsAndWaitlistDescription": "中籤人填滿所有現有單位之後，其他中籤人將排入 %{number} 個單位的候補名單",
   "listings.bath": "浴室",
   "listings.belowMarketRate": "低於市價",
   "listings.browseRentals": "流覽出租物業",

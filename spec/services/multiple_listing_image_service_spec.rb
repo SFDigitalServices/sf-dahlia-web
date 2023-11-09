@@ -18,16 +18,6 @@ describe MultipleListingImageService do
   end
 
   describe '.process_images' do
-    it 'should return an error if listing images array is empty' do
-      listing_copy = listing.dup
-      listing_copy['Listing_Images'] = nil
-
-      image_processor = MultipleListingImageService.new(listing_copy).process_images
-
-      error_message =
-        "MultipleListingImageService error: No listing images provided for listing #{listing_id}"
-      expect(image_processor.errors).to include(error_message)
-    end
 
     it 'should return an error if the image is unreadable' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)

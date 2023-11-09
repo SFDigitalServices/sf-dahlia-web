@@ -75,6 +75,12 @@ ShortFormApplicationController = (
 
   $scope.emailRegex = SharedService.emailRegex
 
+  $scope.propertyCardImageURL = ->
+    if _.isArray($scope.listing.Listing_Images)
+      return $scope.listing.Listing_Images[0].displayImageURL
+    else
+      return $scope.listing.imageURL
+
   $scope.startAutofilledApp = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
     $scope.go(ShortFormNavigationService.initialState())
