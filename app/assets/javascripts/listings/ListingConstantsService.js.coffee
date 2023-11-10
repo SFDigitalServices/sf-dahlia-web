@@ -92,7 +92,7 @@ ListingConstantsService = () ->
     antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
     aliceGriffith: "Alice Griffith Housing Development Resident"
     rightToReturnSunnydale: "Right to Return - Sunnydale"
-    veterans: "Veterans Preference"
+    veterans: "Veterans Preference" # TODO VETERANS check with salesforce that this will be the name
 
   # List of preferences that follow the right to return pattern.
   Service.rightToReturnPreferences =

@@ -147,6 +147,24 @@ angular.module('dahlia.components')
             }
             selectedApplicationPrefs.push(selectedPrefInfo)
 
+        # veterans preference exists for all listings
+        if ctrl.preferences.veterans_household_member
+          allMembers = angular.copy(ctrl.application.householdMembers)
+          allMembers.push(ctrl.application.applicant)
+          memberId = parseInt(ctrl.preferences.veterans_household_member, 10)
+          member = _.find(allMembers, { id: memberId })
+          name = if member then "#{member.firstName} #{member.lastName}" else ''
+
+          veteransPrefInfo = {
+            identifier: 'veterans',
+            displayName: $translate.instant(flagForI18n('e7a_veterans_preference.yes_someone_is_a_veteran')),
+            order: 999, # hack to make the veterans preference displayed last
+            subLabel: $translate.instant('label.for_user', { user: name }),
+            boldSubLabel: null,
+            rentBurdenSubLabels: null
+          }
+          selectedApplicationPrefs.push(veteransPrefInfo)
+
         # Sort the selected preferences by order
         ctrl.sortedApplicationPrefs = _.sortBy(selectedApplicationPrefs, 'order')
 

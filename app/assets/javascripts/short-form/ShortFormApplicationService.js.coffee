@@ -60,7 +60,7 @@ ShortFormApplicationService = (
       rentBurden: null
       aliceGriffith: null
       rightToReturnSunnydale: null
-      veterans: null
+      veterans_household_member: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -92,6 +92,7 @@ ShortFormApplicationService = (
     overwrittenApplicantInfo: {}
     customEducatorScreeningAnswer: null
     customEducatorJobClassificationNumber: null
+    isAnyoneAVeteran: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}

@@ -705,17 +705,14 @@ ShortFormApplicationController = (
     ShortFormApplicationService.eligibleVeteransMembers()
 
   $scope.hasVeteranMemberYes = ->
-    $scope.applicant.isVeteran == 'Yes'
+    $scope.application.isAnyoneAVeteran == 'Yes'
 
   $scope.hasVeteranMemberDeclineToState = ->
-    $scope.applicant.isVeteran == 'Decline to state'
+    $scope.application.isAnyoneAVeteran == 'Decline to state'
 
   $scope.onChangeHasVeteranMember = ->
-    if $scope.applicant.isVeteran != 'Yes'
-      $scope.preferences.veterans = null
-
-  $scope.onChangeSelectedVeteranMember = ->
-    'TODO WIP check if we need to to anything after selecting an application member'
+    if $scope.application.isAnyoneAVeteran != 'Yes'
+      $scope.preferences.veterans_household_member = null
 
   $scope.checkAfterVeteransPreference = ->
     $scope.checkForCustomPreferences()

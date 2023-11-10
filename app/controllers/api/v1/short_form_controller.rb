@@ -423,6 +423,7 @@ class Api::V1::ShortFormController < ApiController
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
+                isVeteran
               ],
             },
             :listingID,

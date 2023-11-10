@@ -21,14 +21,14 @@
       p.form-note.margin-bottom translate="label.please_select_one"
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
 
-        / TODO WIP check if we can reuse applicant.isVeteran, or if we should create a new field to save this answer
-        radio-block-item value='Yes' user='applicant' name='isVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isVeteran') }"
+        radio-block-item value='Yes' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
           | {{'t.yes' | translate}}
         div.form-group.margin-left--2x ng-if="hasVeteranMemberYes()" ng-class="{ error: inputInvalid('selected_veteran_member') }"
           label.form-label for="selected_veteran_member"
             | {{ 'e7a_veterans_preference.who_is_a_veteran' | translate }}
           p.form-note.margin-bottom--half translate="e7a_veterans_preference.if_more_than_1_veteran"
-          select#selected_veteran_member name="selected_veteran_member" ng-required="true" ng-model="application.preferences.veterans" ng-change="onChangeSelectedVeteranMember()" aria-describedby="selected_veteran_member_error"
+          / member.id is derived from the index of the members array and is not saved to salesforce, see ShortFormApplicationService.addHouseholdMember
+          select#selected_veteran_member name="selected_veteran_member" ng-required="true" ng-model="application.preferences.veterans_household_member" ng-change="onChangeSelectedVeteranMember()" aria-describedby="selected_veteran_member_error"
             option disabled="" selected="" value=""
               | {{ 'label.select_one' | translate }}
             option ng-repeat="member in eligibleVeteransMembers()" value="{{member.id}}"
@@ -36,10 +36,10 @@
           small.error.margin-bottom#selected_veteran_member_error ng-if="inputInvalid('selected_veteran_member')"
             | {{ 'e7a_veterans_preference.select_which_application' | translate }}
 
-        radio-block-item value='No' user='applicant' name='isVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isVeteran') }"
+        radio-block-item value='No' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
           | {{'t.no' | translate}}
 
-        radio-block-item value='Decline to state' user='applicant' name='isVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isVeteran') }"
+        radio-block-item value='Decline to state' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
           | {{'t.prefer_not_to_answer' | translate}}
         .margin-left--2x ng-show="hasVeteranMemberDeclineToState()"
           p.form-note
