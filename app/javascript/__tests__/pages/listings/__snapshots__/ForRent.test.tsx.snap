@@ -115,6 +115,7 @@ exports[`For Rent renders ForRent component 1`] = `
         <nav
           aria-label="main navigation"
           class="site-header__container"
+          role="navigation"
         >
           <div
             class="site-header__base  site-header__base-wrapped"
