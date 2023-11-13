@@ -74,7 +74,7 @@
   "assistance.contact.questionsAboutListings.title1": "Si tiene alguna duda relacionada con el listado del portal de vivienda DAHLIA, comuníquese con estos contactos:",
   "assistance.contact.questionsAboutPrograms.contactCall.title": "Llame a la MOHCD a este número:",
   "assistance.contact.questionsAboutPrograms.contactEmail": "Envíe un correo electrónico a <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a>",
-  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{lang}'>Visite el sitio web de la Oficina de Vivienda y Desarrollo Comunitario de la Alcaldía </a>(MOHCD, siglas en inglés)",
+  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{url}'>Visite el sitio web de la Oficina de Vivienda y Desarrollo Comunitario de la Alcaldía </a>(MOHCD, siglas en inglés)",
   "assistance.contact.questionsAboutPrograms.title1": "Si tiene alguna duda relacionada con los programas de vivienda, comuníquese con estos contactos:",
   "assistance.housingCounselors.counselor.call.lower": "Llame al %{phoneNumber}",
   "assistance.housingCounselors.counselor.call.upper": "LLAME AL %{phoneNumber}",
