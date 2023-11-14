@@ -9,6 +9,7 @@ angular.module('dahlia.components')
     isRental: '<'
     isSale: '<'
     isHabitatListing: '<'
+    isCustomEducatorListing: '<'
     listing: '<'
     preferences: '<'
   controller: [

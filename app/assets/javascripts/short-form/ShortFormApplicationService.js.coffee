@@ -89,6 +89,8 @@ ShortFormApplicationService = (
     lastPage: 'name'
     # for storing any applicant info that we are about to override, for comparison
     overwrittenApplicantInfo: {}
+    customEducatorScreeningAnswer: null
+    customEducatorJobClassificationNumber: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -133,6 +135,14 @@ ShortFormApplicationService = (
       if fieldName == 'email' && field.$error.pattern
         field.$error.email = true
       field.$invalid && (!field.$pristine || form.$submitted)
+    else
+      false
+
+  Service.inputInvalidOnTouched = (fieldName, form = Service.form.applicationForm) ->
+    return false unless form
+    field = form[fieldName]
+    if form && field
+      field.$invalid && (field.$touched || form.$submitted)
     else
       false
 
@@ -889,6 +899,15 @@ ShortFormApplicationService = (
 
     # pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
+
+    # this function is executed right before the first .../<listing_id>/apply/... page
+    #  therefore, any updates to the application _object_ before that page will be cleared,
+    #  unless we implement some side-effect logic within this function to preserve that data.
+    #  For example, the line above this comment will preserve the application.answeredCommunityScreening value.
+    #  Similar logic needs to be added to the `resetAndStartNewApp` function
+    formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
+    formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
+
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data

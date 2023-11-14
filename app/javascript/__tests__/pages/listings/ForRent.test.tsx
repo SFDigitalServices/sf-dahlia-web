@@ -49,7 +49,7 @@ describe("For Rent", () => {
       }
     )
 
-    const image = await findByAltText(`${sroRentalListing.Building_Name} Building`)
+    const image = await findByAltText("This is a listing image")
     expect(image.getAttribute("src")).toBe(sroRentalListing.Listing_Images[0].displayImageURL)
     done()
   })

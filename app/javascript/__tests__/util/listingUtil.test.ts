@@ -2,6 +2,8 @@ import {
   getListingAddressString,
   isHabitatListing,
   isLotteryComplete,
+  isLotteryCompleteDeprecated,
+  showLotteryResultsPDFonly,
   isOpen,
   isRental,
   isSale,
@@ -26,6 +28,7 @@ import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educa
 import { saleListingReservedAndCustom } from "../data/RailsSaleListing/listing-sale-reserved-and-custom"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
+import { rentalEducatorListing1complete } from "../data/RailsRentalListing/listing-rental-educator-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
@@ -44,6 +47,16 @@ describe("listingUtil", () => {
     process.env = OLD_ENV
   })
 
+  describe("isLotteryCompleteDeprecated", () => {
+    it("should return false when listing is open", () => {
+      expect(isLotteryCompleteDeprecated(openSaleListing)).toBe(false)
+    })
+
+    it("should return false when lottery status is 'Not Yet Run'", () => {
+      expect(isLotteryCompleteDeprecated(closedRentalListing)).toBe(false)
+    })
+  })
+
   describe("isLotteryComplete", () => {
     it("should return false when listing is open", () => {
       expect(isLotteryComplete(openSaleListing)).toBe(false)
@@ -51,6 +64,20 @@ describe("listingUtil", () => {
 
     it("should return false when lottery status is 'Not Yet Run'", () => {
       expect(isLotteryComplete(closedRentalListing)).toBe(false)
+    })
+
+    it("should return true when lottery status is complete foro Educator listings", () => {
+      expect(isLotteryComplete(lotteryCompleteRentalListing)).toBe(true)
+    })
+  })
+
+  describe("showLotteryResultsPDFonly", () => {
+    it("should return false when lottery status is complete for non-Educator listings", () => {
+      expect(showLotteryResultsPDFonly(lotteryCompleteRentalListing)).toBe(false)
+    })
+
+    it("should return true when lottery status is complete for Educator listings", () => {
+      expect(showLotteryResultsPDFonly(rentalEducatorListing1complete)).toBe(true)
     })
   })
 
