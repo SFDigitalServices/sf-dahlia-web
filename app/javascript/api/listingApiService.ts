@@ -34,7 +34,7 @@ export const getListing = async (listingId?: string): Promise<RailsListing> => {
  */
 export const getLotteryBucketDetails = async (listingId: string): Promise<RailsLotteryResult> => {
   const httpConfig = { params: {} }
-  httpConfig.params = forceRecache
+  httpConfig.params = forceRecache()
   return get<RailsLotteryResult>(lotteryBuckets(listingId), httpConfig).then(
     (response) => response.data
   )
