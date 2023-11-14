@@ -38,7 +38,7 @@ const testListings = {
   },
 }
 const ALT_PHOTO_TEXT = {
-  en: "A picture of the building",
+  en: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
 }
 
 const APPLY_BUTTON_TEXT = {
