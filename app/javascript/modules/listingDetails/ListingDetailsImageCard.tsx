@@ -71,7 +71,7 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const { fallbackUsed, props: imageCardProps } = createImageCardProps(listing)
 
   return (
-    <header className="image-card--leader">
+    <header className="image-card--leader translate">
       <span aria-hidden={fallbackUsed}>
         <ImageCard {...imageCardProps} tags={getTagContent(listing)} modalAriaTitle="true" />
       </span>
