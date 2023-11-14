@@ -30,7 +30,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'lendingAgent'
       'homebuyerEducationAgency'
       'referral',
-      'isNonPrimaryMemberVeteran'
     ]
     primaryApplicant: [
       'alternatePhone',
