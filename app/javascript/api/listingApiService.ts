@@ -88,7 +88,7 @@ export const getPreferences = async (listingId: string): Promise<RailsListingPre
  */
 export const getUnits = async (listingId: string): Promise<RailsUnit[]> => {
   const httpConfig = { params: {} }
-  httpConfig.params = { force: forceRecache() }
+  httpConfig.params = forceRecache()
   return get<ListingUnitsResponse>(listingUnits(listingId), httpConfig).then(
     ({ data }) => data.units
   )
