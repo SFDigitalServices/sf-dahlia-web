@@ -82,7 +82,6 @@ angular.module('dahlia.components')
               when 'rentBurden' then flagForI18n('e3b_rent_burden_preference.rent_burden_preference')
               when 'aliceGriffith' then flagForI18n('preferences.alice_griffith.title')
               when 'rightToReturnSunnydale' then flagForI18n('preferences.rtr_sunnydale.title')
-              when 'veterans' then flagForI18n('e7a_veterans_preference.yes_someone_is_a_veteran')
 
             # If we didn't find a display name for this key, skip over it
             return unless displayNameTranslateKey
@@ -148,7 +147,7 @@ angular.module('dahlia.components')
             selectedApplicationPrefs.push(selectedPrefInfo)
 
         # veterans preference exists for all listings
-        if ctrl.preferences.veterans_household_member
+        if ctrl.preferences && ctrl.preferences.veterans_household_member
           allMembers = angular.copy(ctrl.application.householdMembers)
           allMembers.push(ctrl.application.applicant)
           memberId = parseInt(ctrl.preferences.veterans_household_member, 10)
