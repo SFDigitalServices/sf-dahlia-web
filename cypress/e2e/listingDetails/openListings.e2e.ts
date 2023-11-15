@@ -30,15 +30,14 @@ const testListings = {
   OPEN_RENTAL: {
     id: "a0W0P00000F8YG4UAN",
     title: "TEST Automated Listing (do not modify)",
+    alt: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
   },
   OPEN_SALE: {
     id: "a0W0P00000GlKfBUAV",
     address: "1 South Van Ness Ave, San Francisco, CA 94103",
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
+    alt: "Listing Name:TEST Sale Listing (do not modify) - Homeownership Acres, Address:1 South Van Ness Ave, San Francisco CA, 94103",
   },
-}
-const ALT_PHOTO_TEXT = {
-  en: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
 }
 
 const APPLY_BUTTON_TEXT = {
@@ -57,7 +56,7 @@ describe("Listing Details for Open Listings", () => {
       verifyListing(
         null,
         testListings.OPEN_RENTAL.id,
-        ALT_PHOTO_TEXT.en,
+        testListings.OPEN_RENTAL.alt,
         testListings.OPEN_RENTAL.title,
         null,
         APPLY_BUTTON_TEXT.en
@@ -71,7 +70,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_RENTAL.alt)
     })
 
     it("displays in Chinese", () => {
@@ -81,7 +80,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_RENTAL.alt)
     })
 
     it("displays in Filipino", () => {
@@ -91,7 +90,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_RENTAL.alt)
     })
   })
 
@@ -100,7 +99,7 @@ describe("Listing Details for Open Listings", () => {
       verifyListing(
         null,
         testListings.OPEN_SALE.id,
-        ALT_PHOTO_TEXT.en,
+        testListings.OPEN_SALE.alt,
         testListings.OPEN_SALE.title,
         testListings.OPEN_SALE.address,
         APPLY_BUTTON_TEXT.en
@@ -114,7 +113,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_SALE.alt)
     })
 
     it("displays in Chinese", () => {
@@ -124,7 +123,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_SALE.alt)
     })
 
     it("displays in Filipino", () => {
@@ -134,7 +133,7 @@ describe("Listing Details for Open Listings", () => {
       cy.get(".image-card__inner > img")
         .should("be.visible")
         .should("have.attr", "alt")
-        .should("not.be", ALT_PHOTO_TEXT.en)
+        .should("not.be", testListings.OPEN_SALE.alt)
     })
   })
 })
