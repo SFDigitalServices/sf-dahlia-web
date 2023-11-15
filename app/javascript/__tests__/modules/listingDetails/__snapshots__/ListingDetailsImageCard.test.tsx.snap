@@ -3,7 +3,7 @@
 exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader"
+    class="image-card--leader translate"
   >
     <span
       aria-hidden="false"
@@ -101,7 +101,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
 exports[`ListingDetailsImageCard displays tag when listing is habitat for humanity 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader"
+    class="image-card--leader translate"
   >
     <span
       aria-hidden="false"
@@ -203,7 +203,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
 exports[`ListingDetailsImageCard displays tag when rental listing is for educators 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader"
+    class="image-card--leader translate"
   >
     <span
       aria-hidden="false"
@@ -296,7 +296,7 @@ exports[`ListingDetailsImageCard displays tag when rental listing is for educato
 exports[`ListingDetailsImageCard displays tag when sale listing is for educators 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader"
+    class="image-card--leader translate"
   >
     <span
       aria-hidden="false"
