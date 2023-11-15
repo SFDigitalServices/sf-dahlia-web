@@ -74,7 +74,7 @@
   "assistance.contact.questionsAboutListings.title1": "Para sa mga tanong tungkol sa mga nakalistang pabahay sa DAHLIA:",
   "assistance.contact.questionsAboutPrograms.contactCall.title": "Tumawag sa MOHCD sa:",
   "assistance.contact.questionsAboutPrograms.contactEmail": "Mag-email sa <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a>",
-  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{lang}'>Bisitahin ang website para sa Opisina ng Meyor para sa Pabahay at Pag-unlad ng Komunidad </a>(Mayor’s Office of Housing and Community Development, MOHCD)",
+  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{url}'>Bisitahin ang website para sa Opisina ng Meyor para sa Pabahay at Pag-unlad ng Komunidad </a>(Mayor’s Office of Housing and Community Development, MOHCD)",
   "assistance.contact.questionsAboutPrograms.title1": "Para sa mga tanong tungkol sa mga programa sa pabahay:",
   "assistance.housingCounselors.counselor.call.lower": "Tumawag sa %{phoneNumber}",
   "assistance.housingCounselors.counselor.call.upper": "TUMAWAG SA %{phoneNumber}",

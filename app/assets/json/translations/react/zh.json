@@ -74,7 +74,7 @@
   "assistance.contact.questionsAboutListings.title1": "如果您對 DAHLIA 房源有任何問題：",
   "assistance.contact.questionsAboutPrograms.contactCall.title": "請致電 MOHCD：",
   "assistance.contact.questionsAboutPrograms.contactEmail": "傳送電子郵件至 <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a>",
-  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{lang}'>造訪市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development, MOHCD) 網站</a>",
+  "assistance.contact.questionsAboutPrograms.contactWebsite": "<a target='_blank' href='%{url}'>造訪市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development, MOHCD) 網站</a>",
   "assistance.contact.questionsAboutPrograms.title1": "如果您對住房計畫有任何問題：",
   "assistance.housingCounselors.counselor.call.lower": "致電 %{phoneNumber}",
   "assistance.housingCounselors.counselor.call.upper": "致電 %{phoneNumber}",
