@@ -165,7 +165,7 @@
   "c4HouseholdPublicHousing.titleHousehold": "您本人或此申請內的任何人，目前是否居住於公共住宅或 HUD 計畫住宅？",
   "c4HouseholdPublicHousing.titleYou": "您本人目前是否居住於公共住宅或 HUD 計畫的住宅？",
   "c5HouseholdMonthlyRent.description": "請輸入您個人支付的租金總額。",
-  "c5HouseholdMonthlyRent.howMuchDoesMemberPay": "%{member} 在 {address}% 支付多少費用？",
+  "c5HouseholdMonthlyRent.howMuchDoesMemberPay": "%{member} 在 %{address} 支付多少費用？",
   "c5HouseholdMonthlyRent.howMuchDoMembersPay": "%{members} 在 %{address} 支付多少錢？",
   "c5HouseholdMonthlyRent.howMuchDoYouAndMembersPay": "%{members} 在 %{address} 支付多少錢？",
   "c5HouseholdMonthlyRent.howMuchDoYouPay": "您在 %{address} 支付多少錢？",
