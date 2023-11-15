@@ -120,8 +120,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
     if application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null
       allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
+      console.log('allAppMembers', allAppMembers)
       _.each(allAppMembers, (member) ->
-        member.isVeteran = application.isAnyoneAVeteran
+        if member
+          member.isVeteran = application.isAnyoneAVeteran
       )
 
     # add other data

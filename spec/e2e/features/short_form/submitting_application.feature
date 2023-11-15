@@ -19,6 +19,7 @@ Feature: Short Form Application
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I continue past the general lottery notice page
         And I fill out the optional survey
         And I confirm details on the review page
@@ -79,6 +80,8 @@ Feature: Short Form Application
         And I fill out my "displaced" certificate number
         And I submit my preferences
 
+        And I answer "Yes" to the Veterans preference question and select "Jane Doe"
+
         # review
         And I fill out the optional survey
         # confirm everything has shown up
@@ -123,6 +126,7 @@ Feature: Short Form Application
         And on the Live in the Neighborhood page I should see my correct info
         And on the Alice Griffith page I should see my correct info
         And on the Preferences Programs page I should see my correct info
+        And on the Veterans preference page I should see my correct info
 
         # review
         Then on the optional survey page I should see my correct info

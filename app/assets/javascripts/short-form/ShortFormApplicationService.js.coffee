@@ -532,7 +532,8 @@ ShortFormApplicationService = (
         (member.home_address && _.lowerCase(member.home_address.city) == 'san francisco'))
 
   Service.eligibleVeteransMembers = ->
-    Service.fullHousehold().filter (member) ->
+    sortedMembers = _.sortBy(Service.fullHousehold(), 'id')
+    sortedMembers.filter (member) ->
       dob = "#{member.dob_year}-#{member.dob_month}-#{member.dob_day}"
       dob = moment(dob, 'YYYY-MM-DD')
       age = moment().diff(dob, 'years')

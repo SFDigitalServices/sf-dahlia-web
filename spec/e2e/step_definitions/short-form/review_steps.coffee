@@ -97,6 +97,8 @@ Then /^on the Review Page I should see my preference details on my "([^"]*)" app
       '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     Utils.Expect.byCss(@,
       '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
+    Utils.Expect.byCss(@, '#review-veterans .info-item_name', 'Yes, someone is a veteran')
+    Utils.Expect.byCss(@, '#review-veterans .info-item_note', 'for Jane Doe')
 
     if status == 'draft'
       # rentBurden displays more detailed info in draft
@@ -116,3 +118,7 @@ Then 'on the Review Page I should see my Rent Burdened preference details', ->
 
 Then 'on the View Submitted App Page I should see Assisted Housing preference claimed', ->
   Utils.Expect.byCss(@, '#review-assistedHousing .info-item_name', 'Assisted Housing Preference')
+
+Then /^on the View Submitted App Page I should see Veterans preference claimed for "([^"]*)"$/, (fullName) ->
+  Utils.Expect.byCss(@, '#review-veterans .info-item_name', 'Yes, someone is a veteran')
+  Utils.Expect.byCss(@, '#review-veterans .info-item_note', "for #{fullName}")
