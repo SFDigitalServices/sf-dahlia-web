@@ -479,7 +479,6 @@
             "file_upload_failed": "Hubo un problema durante la carga de su archivo. Intente nuevamente.",
             "first_name": "Ingrese el primer nombre",
             "form_submission": "Deberá resolver algunos errores antes de avanzar.",
-            "get_assistance": "Obtener asistencia",
             "habitat": "Al menos un miembro de su hogar debe asistir a una sesión informativa de Habitat for Humanity.",
             "household_income_too_high": "Sus ingresos familiares son muy altos.",
             "household_income_too_low": "Sus ingresos familiares son muy bajos.",
@@ -943,8 +942,6 @@
                     "title": "Proceso de solicitud"
                 },
                 "income_range": {
-                    "income_range_plural": "Hogar de {{number}} personas: de {{minIncome}} a {{maxIncome}} por año",
-                    "income_range_singular": "Hogar de {{number}} persona: de {{minIncome}} a {{maxIncome}} por año",
                     "p1": "Para poder ser elegible para una casa de Habitat for Humanity Greater San Francisco en este anuncio, los ingresos de su hogar deben ser de entre el 82 % y el 109.8 % del Ingreso promedio del área (AMI, siglas en inglés), como se indica a continuación.",
                     "p2": "Para el cálculo de los ingresos, las personas que viven en el hogar incluyen a todas las personas (de todas las edades) que viven en la unidad.",
                     "p4": "Sus ingresos deben estar en este rango:",
