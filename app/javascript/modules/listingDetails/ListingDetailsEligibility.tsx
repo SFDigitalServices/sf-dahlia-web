@@ -32,6 +32,7 @@ import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
+import { render } from "@testing-library/react"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -307,7 +308,12 @@ export const ListingDetailsEligibility = ({
         {isRental(listing) && (
           <ListSection
             title={t("listingsForRent.rentalAssistance.title")}
-            subtitle={t("listingsForRent.rentalAssitance.subtitle")}
+            subtitle={
+              <>
+                <div className="mb-4">{t("listingsForRent.rentalAssistance.info1")}</div>
+                {t("listingsForRent.rentalAssistance.info2")}
+              </>
+            }
           />
         )}
         {(listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History) && (
