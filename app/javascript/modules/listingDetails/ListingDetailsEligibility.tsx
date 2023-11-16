@@ -32,7 +32,6 @@ import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
-import { render } from "@testing-library/react"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
