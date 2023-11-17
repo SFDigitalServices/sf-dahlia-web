@@ -102,7 +102,7 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
  */
 export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general.every((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.every((unit) => unit.unitType === "SRO")
 
 /**
  * Check if a listing has at least one SRO unit
@@ -110,7 +110,7 @@ export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleLi
  * @returns {boolean} returns true if the listing has at least one SRO unit type, false otherwise
  */
 export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general.some((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.some((unit) => unit.unitType === "SRO")
 /**
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
@@ -476,7 +476,7 @@ export const groupAndSortUnitsByOccupancy = (
 export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaData[] => {
   const uniqueCharts = []
 
-  units.forEach((unit: RailsUnit) => {
+  units?.forEach((unit: RailsUnit) => {
     const uniqueChartMatchForMax = uniqueCharts.find((uniqueChart) => {
       return (
         uniqueChart.year === unit.AMI_chart_year &&
@@ -559,7 +559,7 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
    */
   const occupanciesArray = buildOccupanciesArray(unitSummaries)
 
-  const unprocessedUnitsHaveMaxOccupancy = units.some((unit) => {
+  const unprocessedUnitsHaveMaxOccupancy = units?.some((unit) => {
     return unit.Max_Occupancy
   })
 

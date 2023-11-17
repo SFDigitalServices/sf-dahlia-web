@@ -167,7 +167,7 @@ export const getTableHeader = (listing: RailsRentalListing) => {
 export const getPriorityTypes = (listing: RailsRentalListing): string[] | null => {
   if (listing.prioritiesDescriptor && listing.prioritiesDescriptor.length > 0) {
     const priorityNames = []
-    listing.prioritiesDescriptor.forEach((priority) => {
+    listing.prioritiesDescriptor?.forEach((priority) => {
       const text = getPriorityTypeText(priority.name)
       text ? priorityNames.push(text) : priorityNames.push(priority.name)
     })
