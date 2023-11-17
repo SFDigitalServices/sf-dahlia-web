@@ -173,8 +173,8 @@ export const sortByDateTimeString = (listingEventA: ListingEvent, listingEventB:
   let startTimeA = listingEventA.Start_Time
   let startTimeB = listingEventB.Start_Time
 
-  startTimeA = startTimeA.includes(":") ? startTimeA : `${startTimeA.charAt(0)}:00`
-  startTimeB = startTimeB.includes(":") ? startTimeB : `${startTimeB.charAt(0)}:00`
+  startTimeA = startTimeA?.includes(":") ? startTimeA : `${startTimeA?.charAt(0)}:00`
+  startTimeB = startTimeB?.includes(":") ? startTimeB : `${startTimeB?.charAt(0)}:00`
   const dateTimeA = new Date(`${listingEventA.Date} ${startTimeA}`)
   const dateTimeB = new Date(`${listingEventB.Date} ${startTimeB}`)
   return dateTimeA.getTime() - dateTimeB.getTime()
