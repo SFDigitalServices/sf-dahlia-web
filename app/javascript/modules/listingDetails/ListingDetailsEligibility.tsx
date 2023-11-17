@@ -310,7 +310,7 @@ export const ListingDetailsEligibility = ({
             subtitle={
               <>
                 <div className="mb-4">{t("listingsForRent.rentalAssistance.info1")}</div>
-                {t("listingsForRent.rentalAssistance.info2")}
+                <div>{t("listingsForRent.rentalAssistance.info2")}</div>
               </>
             }
           />
