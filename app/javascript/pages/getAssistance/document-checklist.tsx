@@ -157,7 +157,7 @@ const DocumentChecklist = () => {
       ),
     },
   ].map((pref) => (
-    <div id={pref.id}>
+    <div id={pref.id} key={pref.id}>
       <ContentAccordion
         customBarContent={pref.title}
         customExpandedContent={
