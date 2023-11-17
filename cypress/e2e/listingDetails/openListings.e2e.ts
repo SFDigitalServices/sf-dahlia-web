@@ -64,7 +64,7 @@ describe("Listing Details for Open Listings", () => {
     })
 
     it("displays in Spanish", () => {
-      const langPart = "en"
+      const langPart = "es"
       cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
 
       cy.get(".image-card__inner > img")
@@ -107,7 +107,7 @@ describe("Listing Details for Open Listings", () => {
     })
 
     it("displays in Spanish", () => {
-      const langPart = "en"
+      const langPart = "es"
       cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
 
       cy.get(".image-card__inner > img")
