@@ -169,6 +169,17 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
   return ""
 }
 
+export const sortByDateTimeString = (listingEventA: ListingEvent, listingEventB: ListingEvent) => {
+  let startTimeA = listingEventA.Start_Time
+  let startTimeB = listingEventB.Start_Time
+
+  startTimeA = startTimeA.includes(":") ? startTimeA : `${startTimeA.charAt(0)}:00`
+  startTimeB = startTimeB.includes(":") ? startTimeB : `${startTimeB.charAt(0)}:00`
+  const dateTimeA = new Date(`${listingEventA.Date} ${startTimeA}`)
+  const dateTimeB = new Date(`${listingEventB.Date} ${startTimeB}`)
+  return dateTimeA.getTime() - dateTimeB.getTime()
+}
+
 /**
  * Check if a listing is accepting paper applications
  * @param {RailsRentalListing | RailsRentalListing} listing
