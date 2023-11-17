@@ -2,7 +2,7 @@ import { ContentAccordion, t } from "@bloom-housing/ui-components"
 import React from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
 
 const DocumentChecklist = () => {
@@ -67,7 +67,13 @@ const DocumentChecklist = () => {
       expanded: (
         <div className="space-y-2.5">
           <p>{t("documentChecklist.copDoc1")}</p>
-          <p>{renderInlineMarkup(t("documentChecklist.copDoc2"))}</p>
+          <p>
+            {renderInlineMarkup(
+              t("documentChecklist.copDoc2", {
+                url: getSfGovUrl("https://sf.gov/learn-about-certificate-preference-cop", 3275),
+              })
+            )}
+          </p>
         </div>
       ),
     },
@@ -78,7 +84,16 @@ const DocumentChecklist = () => {
         <div className="space-y-2.5">
           <p>{renderInlineMarkup(t("documentChecklist.dthpDoc1"))}</p>
           <p>{renderInlineMarkup(t("documentChecklist.dthpDoc2"), "<ul><li>")}</p>
-          <p>{renderInlineMarkup(t("documentChecklist.dthpDoc3"))}</p>
+          <p>
+            {renderInlineMarkup(
+              t("documentChecklist.dthpDoc3", {
+                url: getSfGovUrl(
+                  "https://sf.gov/displaced-tenant-housing-preference-program-dthp",
+                  7488
+                ),
+              })
+            )}
+          </p>
         </div>
       ),
     },
@@ -164,7 +179,17 @@ const DocumentChecklist = () => {
             <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
             <p>{t("documentChecklist.p2")}</p>
-            <p>{renderInlineMarkup(t("documentChecklist.p3"))}</p>
+            <p>
+              {renderInlineMarkup(
+                t("documentChecklist.p3", {
+                  url: getSfGovUrl(
+                    "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
+                    3274
+                  ),
+                })
+              )}
+            </p>
+
             {preferences}
           </div>
           <div className="md:pr-11 md:pl-0">
@@ -175,7 +200,16 @@ const DocumentChecklist = () => {
             <p>{t("documentChecklist.homebuyerDesc")}</p>
             <ol className="list-decimal ml-7">
               <li>{t("documentChecklist.homebuyerEducationDesc")}</li>
-              <li>{renderInlineMarkup(t("documentChecklist.homebuyerLoanDesc"))}</li>
+              <li>
+                {renderInlineMarkup(
+                  t("documentChecklist.homebuyerLoanDesc", {
+                    url: getSfGovUrl(
+                      "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program",
+                      6953
+                    ),
+                  })
+                )}
+              </li>
             </ol>
             <p>{t("label.applicationUploadBothDocuments")}</p>
           </div>

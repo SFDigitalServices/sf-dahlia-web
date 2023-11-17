@@ -86,6 +86,8 @@ ShortFormNavigationService = (
     # intro
     'community-screening':
       scopedCallbacks: [{func: 'validateCommunityEligibility'}]
+    'custom-educator-screening':
+      scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
     # you
     'prerequisites':
       callbacks: [
@@ -287,6 +289,7 @@ ShortFormNavigationService = (
     hideBackButton = [
       'intro',
       'community-screening',
+      'custom-educator-screening',
       'overview',
       'verify-address',
       'household-members',

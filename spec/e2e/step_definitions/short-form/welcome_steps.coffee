@@ -10,3 +10,4 @@ When 'I continue past the welcome overview', ->
   Utils.Page.submit()
 
 
+

@@ -664,6 +664,7 @@ do ->
     describe 'beginApplication', ->
       it 'expects fakeShortFormNavigationService.goToApplicationPage to be called with community screening page if listing is a community building', ->
         scope.listing.Reserved_community_type = 'Veteran'
+        scope.listing.Custom_Listing_Type = null
         lang = 'en'
         scope.beginApplication(lang)
         path = 'dahlia.short-form-welcome.community-screening'
@@ -671,6 +672,7 @@ do ->
 
       it 'expects fakeShortFormNavigationService.goToApplicationPage to be called with overview page and language param', ->
         scope.listing.Reserved_community_type = null
+        scope.listing.Custom_Listing_Type = null
         lang = 'es'
         scope.beginApplication(lang)
         path = 'dahlia.short-form-welcome.overview'
@@ -1181,3 +1183,25 @@ do ->
         scope.listingIsSale()
         expect(fakeShortFormApplicationService.listingIsSale)
           .toHaveBeenCalled()
+
+    describe 'custom educator listing 2', ->
+      beforeEach ->
+        scope.listing.Custom_Listing_Type = 'Educator 2: SFUSD employees & public'
+
+      it 'shows the custom educator screening page', ->
+        lang = 'en'
+        scope.beginApplication(lang)
+        path = 'dahlia.short-form-welcome.custom-educator-screening'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path, {lang: lang})
+
+      it 'shows the short form overview page if applicant answered Yes to the screening question', ->
+        scope.application.customEducatorScreeningAnswer = 'Yes'
+        scope.customEducatorValidateEligibility()
+        path = 'dahlia.short-form-welcome.overview'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)
+
+      it 'shows the short form overview page if applicant answered No to the screening question', ->
+        scope.application.customEducatorScreeningAnswer = 'No'
+        scope.customEducatorValidateEligibility()
+        path = 'dahlia.short-form-welcome.overview'
+        expect(fakeShortFormNavigationService.goToApplicationPage).toHaveBeenCalledWith(path)

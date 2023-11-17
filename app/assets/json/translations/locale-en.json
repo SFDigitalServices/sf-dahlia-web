@@ -3,6 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "Choose your language",
+            "sf_public_schools": "SF public schools employee housing",
             "sign_in_save_time": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
             "title": "Let's get started on your application"
         },
@@ -32,6 +33,25 @@
                 "you_or_anyone": "Are you or anyone on this application a veteran?",
                 "you_or_anyone_desc": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
             }
+        },
+        "a3_custom_educator_screening": {
+            "be_a_current_employee": "Be a current employee of SF Unified School District",
+            "enter_your_job_code": "Enter your Job Code",
+            "if_you_entered_the_right_information": "If you entered the right information and think this is a mistake, email SFUSD at {{email}}",
+            "job_classification_number_info": "Your Job Code is 3 to 6 characters and may contain both numbers and letters. <a href='{{url}}' target='_blank'>Find it on EMPowerSF</a>.",
+            "job_code": "Job Code",
+            "job_code_is_incorrect": "Job Code is incorrect. Check for mistakes and try again.",
+            "no_i_do_not_work": "No, I do not work at SF Unified School District",
+            "not_eligible_description": "See if you're eligible for <a href='{{rentalListingDirectoryUrl}}' target='_blank'>other open listings</a> or check our <a href='{{additionalHousingOpportunitiesUrl}}' target='_blank'>additional housing opportunities.</a>",
+            "provide_your_job_code": "Provide your Job Code",
+            "title": "Do you work at San Francisco Unified School District?",
+            "to_apply_you_must": "To apply you must:",
+            "work_at_sf_unified": "Work at SF Unified School District",
+            "yes_i_work": "Yes, I work at SF Unified School District",
+            "you_are_not_eligible": "You are not eligible",
+            "you_are_not_in": "You are not in a priority group.",
+            "you_can_still_apply": "You can still apply, but will be ranked below SF Unified School District employees in the lottery.",
+            "you_must_work_at": "You must work at SF Unified School District to apply."
         },
         "a4_overview": {
             "p1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",

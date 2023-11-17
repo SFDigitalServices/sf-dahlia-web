@@ -381,6 +381,8 @@ class Api::V1::ShortFormController < ApiController
                 isFirstTimeHomebuyer
                 hasMinimumCreditScore
                 hasLoanPreapproval
+                isSFUSDEmployee
+                jobClassification
               ],
             },
             {

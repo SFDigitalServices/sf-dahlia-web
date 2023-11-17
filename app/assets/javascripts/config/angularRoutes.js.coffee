@@ -548,6 +548,17 @@
         'container@dahlia.short-form-welcome.community-screening':
           templateUrl: 'short-form/templates/a2-community-screening.html'
     })
+    .state('dahlia.short-form-welcome.custom-educator-screening', {
+      url: '/custom-educator-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+        'container@dahlia.short-form-welcome.custom-educator-screening':
+          templateUrl: 'short-form/templates/a3-custom-educator-screening.html'
+    })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:

@@ -5,7 +5,7 @@ import React from "react"
 
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
-import { CUSTOM_LISTING_TYPES } from "../modules/constants"
+import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -139,6 +139,24 @@ export const getPathWithoutLanguagePrefix = (path: string): string => {
  */
 export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix => {
   return getRoutePrefix(path || window.location.pathname) || LanguagePrefix.English
+}
+
+/**
+ * Get an SF.gov url given the DAHLIA language prefix using the sf.gov node suffix
+ *
+ */
+export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
+  if (!SFGOV_LINKS.includes(enLink) || enLink.includes("pdf")) return enLink
+  switch (getCurrentLanguage(path || window.location.pathname)) {
+    case "es":
+      return `https://sf.gov/es/node/${node}`
+    case "tl":
+      return `https://sf.gov/fil/node/${node}`
+    case "zh":
+      return `https://sf.gov/zh-hant/node/${node}`
+    default:
+      return enLink
+  }
 }
 
 /**
