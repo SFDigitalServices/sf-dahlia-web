@@ -3,7 +3,7 @@
 exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader translate"
+    class="image-card--leader"
   >
     <span
       aria-hidden="false"
@@ -12,7 +12,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
         class="image-card"
       >
         <figure
-          class="image-card__inner has-grid-layout has-3-images"
+          class="image-card__inner has-grid-layout has-3-images translate"
         >
           <img
             alt="This is a listing image"
@@ -101,7 +101,7 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
 exports[`ListingDetailsImageCard displays tag when listing is habitat for humanity 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader translate"
+    class="image-card--leader"
   >
     <span
       aria-hidden="false"
@@ -110,7 +110,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
         class="image-card"
       >
         <figure
-          class="image-card__inner has-grid-layout has-3-images"
+          class="image-card__inner has-grid-layout has-3-images translate"
         >
           <img
             alt="This is a listing image"
@@ -203,7 +203,7 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
 exports[`ListingDetailsImageCard displays tag when rental listing is for educators 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader translate"
+    class="image-card--leader"
   >
     <span
       aria-hidden="false"
@@ -212,7 +212,7 @@ exports[`ListingDetailsImageCard displays tag when rental listing is for educato
         class="image-card"
       >
         <figure
-          class="image-card__inner has-grid-layout has-3-images"
+          class="image-card__inner has-grid-layout has-3-images translate"
         >
           <img
             alt="This is a listing image"
@@ -296,7 +296,7 @@ exports[`ListingDetailsImageCard displays tag when rental listing is for educato
 exports[`ListingDetailsImageCard displays tag when sale listing is for educators 1`] = `
 <DocumentFragment>
   <header
-    class="image-card--leader translate"
+    class="image-card--leader"
   >
     <span
       aria-hidden="false"
@@ -305,7 +305,7 @@ exports[`ListingDetailsImageCard displays tag when sale listing is for educators
         class="image-card"
       >
         <figure
-          class="image-card__inner has-grid-layout has-3-images"
+          class="image-card__inner has-grid-layout has-3-images translate"
         >
           <img
             alt="This is a listing image"
