@@ -18,7 +18,7 @@ class ListingImageService
 
   def process_image
     unless raw_image_url
-      add_error("No image provided for listing #{listing_id}")
+      Rails.logger.info("No Photo_URL image provided for listing #{@listing_id}")
       return self
     end
 
