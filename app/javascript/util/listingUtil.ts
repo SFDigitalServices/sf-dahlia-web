@@ -169,14 +169,19 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
   return ""
 }
 
-export const sortByDateTimeString = (listingEventA: ListingEvent, listingEventB: ListingEvent) => {
-  let startTimeA = listingEventA.Start_Time
-  let startTimeB = listingEventB.Start_Time
+const formatEventTime = (startTime: string) => {
+  const hour = Number.parseInt(startTime, 10)
+  const suffix = hour >= 12 ? "PM" : "AM"
+  const formattedHour = hour > 12 ? hour - 12 : hour
+  return `${formattedHour}:00 ${suffix}`
+}
 
-  startTimeA = startTimeA?.includes(":") ? startTimeA : `${startTimeA}:00`
-  startTimeB = startTimeB?.includes(":") ? startTimeB : `${startTimeB}:00`
-  const dateTimeA = new Date(`${listingEventA.Date} ${startTimeA}`)
-  const dateTimeB = new Date(`${listingEventB.Date} ${startTimeB}`)
+export const getEventDateTime = (eventDate: string, eventTime: string) => {
+  const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
+  return new Date(`${eventDate} ${startTime}`)
+}
+
+export const sortByDateTimeString = (dateTimeA: Date, dateTimeB: Date) => {
   return dateTimeA.getTime() - dateTimeB.getTime()
 }
 
