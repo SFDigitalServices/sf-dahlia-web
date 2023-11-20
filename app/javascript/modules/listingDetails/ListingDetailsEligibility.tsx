@@ -89,7 +89,7 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
 
-  const occupancyTableData = listing.unitSummaries.general.map((unit) => {
+  const occupancyTableData = listing.unitSummaries.general?.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
       occupancyLabel = t("listings.onePerson")
