@@ -35,7 +35,6 @@ class Api::V1::ListingsController < ApiController
   end
 
   def listingPricingTable
-
     @listing_pricing_table = Force::ListingService.listing_pricing_table(
       params[:id],
     )
@@ -63,7 +62,7 @@ class Api::V1::ListingsController < ApiController
     # loop through all the ami levels that you just sent me
     # call Force::ListingService.ami with each set of opts
     @ami_levels = []
-    params[:chartType].each_with_index do |chart_type, i|
+    params[:chartType]&.each_with_index do |chart_type, i|
       data = {
         chartType: chart_type,
         percent: params[:percent][i],
