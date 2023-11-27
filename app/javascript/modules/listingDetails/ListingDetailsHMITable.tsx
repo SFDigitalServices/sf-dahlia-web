@@ -46,7 +46,7 @@ const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
   }
-  amiCharts.forEach((chart: RailsAmiChart) => {
+  amiCharts?.forEach((chart: RailsAmiChart) => {
     headers[`ami${chart.percent}`] = `t.percentAMI*percent:${chart.percent}`
   })
   return headers
@@ -127,7 +127,7 @@ const buildHmiTableWithMultipleAmis = (
             content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
           }
 
-    amiCharts.forEach((chart) => {
+    amiCharts?.forEach((chart) => {
       const amiChart = chart.values?.find((amiChart) => {
         return amiChart.numOfHousehold === i
       })
