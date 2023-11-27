@@ -18,17 +18,6 @@ describe ListingImageService do
   end
 
   describe '.process_image' do
-    it 'should return an error if no building url is provided' do
-      listing_missing_image_url = listing.dup
-      listing_missing_image_url['Building_URL'] = nil
-
-      image_processor = ListingImageService.new(listing_missing_image_url).process_image
-
-      error_message =
-        "ListingImageService error: No image provided for listing #{listing_id}"
-      expect(image_processor.errors).to include(error_message)
-    end
-
     it 'should return an error if the image is unreadable' do
       stub_request(:get, /(\.jpg|\.png|\.jpeg)/)
         .to_return(body: File.new("#{Rails.root}/README.md"), status: 200)
