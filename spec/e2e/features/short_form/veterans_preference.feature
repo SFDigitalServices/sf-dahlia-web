@@ -1,7 +1,7 @@
-Feature: Short Form Application - Assisted Housing Preference
+Feature: Short Form Application - Veterans Preference
     As a web user
-    I should be able to claim the Rent Burdened / Assisted Housing preference on my application
-    In order to increase my chances of getting an affordable housing unit
+    I should be able to claim the Veterans preference on my application
+    In order to increase my chances of getting a housing unit
 
     Scenario: Claiming Assisted Housing preference
         Given I go to the first page of the "Test Listing" application
@@ -17,22 +17,14 @@ Feature: Short Form Application - Assisted Housing Preference
         And I indicate having vouchers
         And I fill out my income as "35000"
         And I continue past the Lottery Preferences intro
-        # See page when selecting public housing
-        Then I should see the "Assisted Housing" preference checkbox
-        And I select Assisted Housing Preference
-        And I hit the Next button "1" time
-        Then I should see an error about uploading proof
-        # Successfully opt-in and upload lease proof
-        And I select "Jen Doe" for "assistedHousing" preference
-        And I upload a Copy of Lease as my proof for Assisted Housing
-        And I hit the Next button "1" times
+        And I opt out of "Assisted Housing" preference
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
-        And I answer "No" to the Veterans preference question
-        And I hit the Next button "1" times
+        And I answer "Yes" to the Veterans preference question and select "Jen Doe"
+        And I fill out the optional survey
         # Submit app and see preference claimed
         And I confirm details on the review page
         And I agree to the terms and submit
         And I click to view submitted application
-        Then on the View Submitted App Page I should see Assisted Housing preference claimed
+        Then on the View Submitted App Page I should see Veterans preference claimed for "Jen Doe"

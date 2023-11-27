@@ -60,6 +60,7 @@ ShortFormApplicationService = (
       rentBurden: null
       aliceGriffith: null
       rightToReturnSunnydale: null
+      veterans_household_member: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -91,6 +92,7 @@ ShortFormApplicationService = (
     overwrittenApplicantInfo: {}
     customEducatorScreeningAnswer: null
     customEducatorJobClassificationNumber: null
+    isAnyoneAVeteran: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -529,6 +531,14 @@ ShortFormApplicationService = (
         ((member.hasSameAddressAsApplicant == 'Yes' && _.lowerCase(Service.applicant.home_address.city) == 'san francisco') ||
         (member.home_address && _.lowerCase(member.home_address.city) == 'san francisco'))
 
+  Service.eligibleVeteransMembers = ->
+    sortedMembers = _.sortBy(Service.fullHousehold(), 'id')
+    sortedMembers.filter (member) ->
+      dob = "#{member.dob_year}-#{member.dob_month}-#{member.dob_day}"
+      dob = moment(dob, 'YYYY-MM-DD')
+      age = moment().diff(dob, 'years')
+      age >= 17
+
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant
     # JS concat creates a new array (does not modify HH member array)
@@ -575,7 +585,7 @@ ShortFormApplicationService = (
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
-    return !_.some(_.pick(Service.preferences, prefList))
+    return !_.some(_.pick(Service.preferences, prefList)) && Service.application.isAnyoneAVeteran != 'Yes'
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]

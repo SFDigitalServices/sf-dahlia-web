@@ -332,3 +332,29 @@ Then 'on the Preferences Programs page I should see my correct info', ->
   Utils.Expect.inputValue(@, 'displaced_household_member', '2')
   Utils.Expect.inputValue(@, 'displaced-certificate', '11223344')
   Utils.Page.submit()
+
+##################
+# -- Veterans -- #
+##################
+
+When /^I answer "Yes" to the Veterans preference question and select "([^"]*)"$/, (fullName) ->
+  element(By.id("isAnyoneAVeteran_yes")).click()
+  element(By.id("selected_veteran_member")).click()
+  element.all(By.cssContainingText("#selected_veteran_member option", fullName))
+    .filter((elem) ->
+      elem.isDisplayed()
+  ).first().click()
+  Utils.Page.submit()
+
+When 'I answer "No" to the Veterans preference question', ->
+  element(By.id("isAnyoneAVeteran_no")).click()
+  Utils.Page.submit()
+
+When 'I answer "Prefer not to answer" to the Veterans preference question', ->
+  element(By.id("isAnyoneAVeteran_decline-to-state")).click()
+  Utils.Page.submit()
+
+Then 'on the Veterans preference page I should see my correct info', ->
+  Utils.Expect.radioValue(@, 'isAnyoneAVeteran', 'Yes')
+  Utils.Expect.inputValue(@, 'selected_veteran_member', '1')
+  Utils.Page.submit()

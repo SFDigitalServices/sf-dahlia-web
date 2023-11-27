@@ -986,6 +986,12 @@
         'container':
           templateUrl: 'short-form/templates/e7-preferences-programs.html'
     })
+    .state('dahlia.short-form-application.veterans-preference', {
+      url: '/veterans-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7a-veterans-preference.html'
+    })
     .state('dahlia.short-form-application.custom-preferences', {
       url: '/custom-preferences'
       views:
