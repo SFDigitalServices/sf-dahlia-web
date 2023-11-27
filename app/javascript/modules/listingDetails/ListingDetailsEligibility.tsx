@@ -19,7 +19,12 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
 } from "../../util/listingUtil"
-import { defaultIfNotTranslated, renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
+import {
+  defaultIfNotTranslated,
+  getSfGovUrl,
+  renderInlineMarkup,
+  renderMarkup,
+} from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -84,7 +89,7 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
 
-  const occupancyTableData = listing.unitSummaries.general.map((unit) => {
+  const occupancyTableData = listing.unitSummaries.general?.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
       occupancyLabel = t("listings.onePerson")
@@ -147,7 +152,10 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
-                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
                       })
                     )}
                   </p>
@@ -193,7 +201,10 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
-                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
                       })
                     )}
                   </p>

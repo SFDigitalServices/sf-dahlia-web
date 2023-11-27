@@ -1,0 +1,54 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question translate="e7a_veterans_preference.title"
+    p.margin-bottom translate="e7a_veterans_preference.instructions_p1"
+    p.no-margin
+      span.ui-icon.ui-medium style="padding-right:4px;"
+        | ✓
+      span
+        | {{ 'e7a_veterans_preference.instructions_p2' | translate }}
+    p.margin-bottom
+      span.ui-icon.ui-medium style="padding-right:4px;"
+        | ✓
+      span
+        | {{ 'e7a_veterans_preference.instructions_p3' | translate }}
+    p.t-bold.margin-bottom translate="e7a_veterans_preference.instructions_p4"
+    p.margin-bottom
+      a.lined target="_blank" href="https://sf.gov/node/3274" translate="e7a_veterans_preference.instructions_p5"
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('veteransPreference') }"
+      p.form-note.margin-bottom translate="label.please_select_one"
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
+
+        radio-block-item value='Yes' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
+          | {{'t.yes' | translate}}
+        div.form-group.margin-left--2x ng-if="hasVeteranMemberYes()" ng-class="{ error: inputInvalid('selected_veteran_member') }"
+          label.form-label for="selected_veteran_member"
+            | {{ 'e7a_veterans_preference.who_is_a_veteran' | translate }}
+          p.form-note.margin-bottom--half translate="e7a_veterans_preference.if_more_than_1_veteran"
+          / member.id is derived from the index of the members array and is not saved to salesforce, see ShortFormApplicationService.addHouseholdMember
+          select#selected_veteran_member name="selected_veteran_member" ng-required="true" ng-model="application.preferences.veterans_household_member" ng-change="onChangeSelectedVeteranMember()" aria-describedby="selected_veteran_member_error"
+            option disabled="" selected="" value=""
+              | {{ 'label.select_one' | translate }}
+            option ng-repeat="member in eligibleVeteransMembers()" value="{{member.id}}"
+              | {{ member.firstName }} {{ member.lastName }}
+          small.error.margin-bottom#selected_veteran_member_error ng-if="inputInvalid('selected_veteran_member')"
+            | {{ 'e7a_veterans_preference.select_which_application' | translate }}
+
+        radio-block-item value='No' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
+          | {{'t.no' | translate}}
+
+        radio-block-item value='Decline to state' user='application' name='isAnyoneAVeteran' ng-required='true' on-change='onChangeHasVeteranMember' ng-class="{ error: inputInvalid('isAnyoneAVeteran') }"
+          | {{'t.prefer_not_to_answer' | translate}}
+        .margin-left--2x ng-show="hasVeteranMemberDeclineToState()"
+          p.form-note
+            span.ui-icon.ui-medium style="padding-right:4px;"
+              svg
+                use xlink:href="#i-info-green"
+            span.t-bold  style="color:#2E8540;"
+              | {{ 'e7a_veterans_preference.your_answer_could_affect_lottery_ranking' | translate }}
+          p.form-note style="color:#2E8540;"
+            | {{ 'e7a_veterans_preference.if_someone_on_the_application_is_a_veteran' | translate }}
+
+  short-form-save-and-submit

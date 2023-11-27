@@ -8,6 +8,7 @@ import {
   defaultIfNotTranslated,
   localizedFormat,
   getCustomListingType,
+  getSfGovUrl,
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
@@ -219,6 +220,24 @@ describe("languageUtil", () => {
 
     it("formats date and time", () => {
       expect(localizedFormat(date, "LLL")).toBe("January 1, 2050 1:00 AM")
+    })
+  })
+
+  describe("getSfGovUrl", () => {
+    const node = 55
+    it("returns the correct url for a sf.gov link", () => {
+      const enLink = "https://sf.gov/departments/mayors-office-housing-and-community-development"
+      expect(getSfGovUrl(enLink, node, "https://housing.sfgov.org")).toBe(enLink)
+      expect(getSfGovUrl(enLink, node, "es")).toBe("https://sf.gov/es/node/55")
+      expect(getSfGovUrl(enLink, node, "zh")).toBe("https://sf.gov/zh-hant/node/55")
+      expect(getSfGovUrl(enLink, node, "tl")).toBe("https://sf.gov/fil/node/55")
+    })
+    it("returns the same url if not an sf.gov link", () => {
+      const enLink = "https://housing.acgov.org"
+      expect(getSfGovUrl(enLink, node, "https://housing.sfgov.org")).toBe(enLink)
+      expect(getSfGovUrl(enLink, node, "es")).toBe(enLink)
+      expect(getSfGovUrl(enLink, node, "zh")).toBe(enLink)
+      expect(getSfGovUrl(enLink, node, "tl")).toBe(enLink)
     })
   })
 })

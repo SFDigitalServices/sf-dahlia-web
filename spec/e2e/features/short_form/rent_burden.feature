@@ -85,5 +85,6 @@ Feature: Short Form Application - Rent Burdened Preference
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I fill out the optional survey
         Then on the Review Page I should see my Rent Burdened preference details

@@ -4,3 +4,4 @@ module.exports.Pages =
   AlternateContact: new (require('./you-alternate-contact').AlternateContact)()
   HouseholdMemberForm: new (require('./household-member-form').HouseholdMemberForm)()
   DemographicSurvey: new (require('./demographic-survey').DemographicSurvey)()
+  CustomEducatorScreening: new (require('./custom-educator-screening').CustomEducatorScreening)()

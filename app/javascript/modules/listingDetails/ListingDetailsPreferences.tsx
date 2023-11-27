@@ -36,7 +36,11 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
 
   useEffect(() => {
     void getPreferences(listingID).then((preferences) => {
-      setPreferences(preferences)
+      setPreferences(
+        preferences?.filter(
+          (preference) => !preference.preferenceName.toLowerCase().includes("veteran")
+        )
+      )
     })
     return () => {
       setPreferences([])
@@ -105,7 +109,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           }
         })}
       />
-      {preferences.length > 0 && (
+      {preferences?.length > 0 && (
         <p className="text-gray-750 text-sm">
           {t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration")}
         </p>

@@ -33,10 +33,31 @@ export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing)
 /**
  * Check if lottery is complete for a listing
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the lottery is complete and has a lottery date, false otherwise
+ * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
  */
 export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
+  listing.Publish_Lottery_Results_on_DAHLIA &&
+  listing.Publish_Lottery_Results_on_DAHLIA !== "Not published" &&
+  listing.Lottery_Status === "Lottery Complete"
+
+/**
+ * Check if lottery is complete for a listing, this will be deprecated once Publish_Lottery_Results is deprecated
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and has a lottery date, false otherwise
+ */
+export const isLotteryCompleteDeprecated = (listing: RailsRentalListing | RailsSaleListing) =>
+  (listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete") ||
+  isLotteryComplete(listing)
+
+/**
+ * Check if only the lottery results PDF URL should be shown
+ * @param {RailsRentalListing | RailsRentalListing} listing
+ * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
+ */
+export const showLotteryResultsPDFonly = (listing: RailsRentalListing | RailsSaleListing) =>
+  !!listing.LotteryResultsURL &&
+  listing.Publish_Lottery_Results_on_DAHLIA === "Publish only PDF results on DAHLIA" &&
+  listing.Lottery_Status === "Lottery Complete"
 
 /**
  * Check if a listing is open for applying
@@ -102,7 +123,7 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
  */
 export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general.every((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.every((unit) => unit.unitType === "SRO")
 
 /**
  * Check if a listing has at least one SRO unit
@@ -110,7 +131,7 @@ export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleLi
  * @returns {boolean} returns true if the listing has at least one SRO unit type, false otherwise
  */
 export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general.some((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.some((unit) => unit.unitType === "SRO")
 /**
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
@@ -146,6 +167,25 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
       : listingEvent.Start_Time
   }
   return ""
+}
+
+const formatEventTime = (eventTime: string) => {
+  if (eventTime) {
+    const hour = Number.parseInt(eventTime, 10)
+    const suffix = hour >= 12 ? "PM" : "AM"
+    const formattedHour = hour > 12 ? hour - 12 : hour
+    return `${formattedHour}:00 ${suffix}`
+  }
+  return ""
+}
+
+export const getEventDateTime = (eventDate: string, eventTime: string) => {
+  const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
+  return new Date(`${eventDate} ${startTime}`)
+}
+
+export const sortByDateTimeString = (dateTimeA: Date, dateTimeB: Date) => {
+  return dateTimeA.getTime() - dateTimeB.getTime()
 }
 
 /**
@@ -476,7 +516,7 @@ export const groupAndSortUnitsByOccupancy = (
 export const getAmiChartDataFromUnits = (units: RailsUnit[]): RailsAmiChartMetaData[] => {
   const uniqueCharts = []
 
-  units.forEach((unit: RailsUnit) => {
+  units?.forEach((unit: RailsUnit) => {
     const uniqueChartMatchForMax = uniqueCharts.find((uniqueChart) => {
       return (
         uniqueChart.year === unit.AMI_chart_year &&
@@ -559,7 +599,7 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
    */
   const occupanciesArray = buildOccupanciesArray(unitSummaries)
 
-  const unprocessedUnitsHaveMaxOccupancy = units.some((unit) => {
+  const unprocessedUnitsHaveMaxOccupancy = units?.some((unit) => {
     return unit.Max_Occupancy
   })
 

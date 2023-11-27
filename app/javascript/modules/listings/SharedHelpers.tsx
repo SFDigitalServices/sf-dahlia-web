@@ -70,12 +70,16 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
       ? listing.Listing_Images[0].displayImageURL
       : listing?.imageURL ?? fallbackImg
 
+  const imageDescription =
+    listing?.Listing_Images?.length > 0
+      ? listing.Listing_Images[0].Image_Description
+      : `${listing.Building_Name} Building`
   return {
     imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
     tags: getTagContent(listing),
     statuses: getListingImageCardStatuses(listing, hasFiltersSet),
-    description: `${listing.Building_Name} Building`,
+    description: imageDescription,
   }
 }
 
