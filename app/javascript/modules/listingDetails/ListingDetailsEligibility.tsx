@@ -308,7 +308,12 @@ export const ListingDetailsEligibility = ({
         {isRental(listing) && (
           <ListSection
             title={t("listingsForRent.rentalAssistance.title")}
-            subtitle={t("listingsForRent.rentalAssitance.subtitle")}
+            subtitle={
+              <>
+                <div className="mb-4">{t("listingsForRent.rentalAssistance.info1")}</div>
+                <div>{t("listingsForRent.rentalAssistance.info2")}</div>
+              </>
+            }
           />
         )}
         {(listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History) && (

@@ -488,7 +488,14 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -1122,7 +1129,14 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -1770,7 +1784,14 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -2446,7 +2467,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -3113,7 +3141,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -4457,7 +4492,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -5133,7 +5175,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -6076,7 +6125,14 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
