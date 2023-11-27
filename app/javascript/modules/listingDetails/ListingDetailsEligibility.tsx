@@ -32,6 +32,7 @@ import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
+import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -326,7 +327,7 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Credit_Rating}
+                  {stripMostTags(listing.Credit_Rating)}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -342,7 +343,7 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Eviction_History}
+                  {stripMostTags(listing.Eviction_History)}
                 </ExpandableText>
               </InfoCard>
             )}
