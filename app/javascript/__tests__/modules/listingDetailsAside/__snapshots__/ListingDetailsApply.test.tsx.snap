@@ -92,7 +92,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
           <span>
             Make sure you fulfill the 
             <a
-              href="https://sfmohcd.org/homebuyer-program-eligibility"
+              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
               target="_blank"
             >
               eligibility requirements

@@ -18,7 +18,7 @@ import {
   isSale,
   paperApplicationURLs,
 } from "../../util/listingUtil"
-import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { getHousingCounselorsPath } from "../../util/routeUtil"
 
 export interface ListingDetailsApplyProps {
@@ -52,7 +52,10 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
               t("listings.apply.fulfillEligibilityRequirements", {
                 url: isHabitatListing(listing)
                   ? "https://habitatgsf.org/amber-drive-info/"
-                  : "https://sfmohcd.org/homebuyer-program-eligibility",
+                  : getSfGovUrl(
+                      "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+                      7164
+                    ),
               })
             )}
           </p>

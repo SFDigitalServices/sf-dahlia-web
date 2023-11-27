@@ -73,4 +73,15 @@ export const SFGOV_LINKS = [
   "https://sf.gov/displaced-tenant-housing-preference-program-dthp",
   "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program",
   "https://sf.gov/departments/311-customer-service-center",
+  "https://sf.gov/sign-complete-homebuyer-education",
+  "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+  "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
+  "https://sf.gov/departments/city-administrator/digital-services",
+  "https://sf.gov/departments/mayors-office-innovation",
+  "https://sf.gov/information/special-calculations-household-income",
+  // Salesforce links that redirect to sf.gov pages
+  "http://sfmohcd.org/certificate-preference",
+  "http://sfmohcd.org/housing-preference-programs",
+  "http://sfmohcd.org/displaced-tenant-housing-preference",
+  "http://sfmohcd.org/neighborhood-resident-housing-preference",
 ]

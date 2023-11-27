@@ -5,7 +5,7 @@ import { PREFERENCES, PREFERENCES_IDS, PREFERENCES_WITH_PROOF } from "../constan
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 import { getLocalizedPath } from "../../util/routeUtil"
-import { getRoutePrefix } from "../../util/languageUtil"
+import { getRoutePrefix, getSfGovUrl } from "../../util/languageUtil"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -31,6 +31,22 @@ const determineDescription = (
 export interface ListingDetailsPreferencesProps {
   listingID: string
 }
+
+export const mapPreferenceLink = (link: string): string => {
+  switch (link) {
+    case "http://sfmohcd.org/certificate-preference":
+      return getSfGovUrl(link, 3275)
+    case "http://sfmohcd.org/displaced-tenant-housing-preference":
+      return getSfGovUrl(link, 7488)
+    case "http://sfmohcd.org/housing-preference-programs":
+      return getSfGovUrl(link, 3274)
+    case "http://sfmohcd.org/neighborhood-resident-housing-preference":
+      return getSfGovUrl(link, 3274)
+    default:
+      return link
+  }
+}
+
 export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferencesProps) => {
   const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
 
@@ -63,7 +79,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           if (preference.readMoreUrl) {
             links.push({
               title: t("label.readMore"),
-              url: preference.readMoreUrl,
+              url: mapPreferenceLink(preference.readMoreUrl),
               ariaLabel: t(`listings.lotteryPreference.${preference.preferenceName}.readMore`),
             })
           }
