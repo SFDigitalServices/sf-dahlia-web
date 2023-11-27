@@ -31,7 +31,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
@@ -367,7 +367,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
@@ -730,7 +730,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
