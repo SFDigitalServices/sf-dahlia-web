@@ -6106,11 +6106,9 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             </span>
           </hgroup>
         </header>
-        <div
-          class="p-4 text-center"
-        >
-          An error occurred. Check back later.
-        </div>
+        <ol
+          class="preferences-list"
+        />
       </li>
       <li
         class="list-section custom-counter__item"
