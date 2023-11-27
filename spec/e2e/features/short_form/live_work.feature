@@ -176,7 +176,9 @@ Feature: Short Form Application - Live-Work Preference
         When --I reach the "see general lottery notice" step--
         When I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
-        And I hit the Next button "3" times
+        And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
+        And I hit the Next button "2" times
         Then I should see the general lottery notice on the review page
 
     Scenario: Opting in to Live-Work then saying no to workInSf then uploading proof
@@ -226,6 +228,7 @@ Feature: Short Form Application - Live-Work Preference
         And I click the Next button on the Live-Work Preference page
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I fill out the optional survey
         And I navigate to the "You" section
         And I fill out the Name page as "Harper Lee"
