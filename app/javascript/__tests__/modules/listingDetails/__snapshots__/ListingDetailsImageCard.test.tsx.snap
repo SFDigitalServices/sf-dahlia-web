@@ -5,40 +5,36 @@ exports[`ListingDetailsImageCard displays image card when no tag 1`] = `
   <header
     class="image-card--leader"
   >
-    <span
-      aria-hidden="false"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images translate"
       >
-        <figure
-          class="image-card__inner has-grid-layout has-3-images translate"
-        >
-          <img
-            alt="This is a listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a second listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a third listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <button
-            aria-label="More Images"
-            data-testid="open-modal-button"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-      </div>
-    </span>
+        <img
+          alt="This is a third listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      />
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >
@@ -103,46 +99,42 @@ exports[`ListingDetailsImageCard displays tag when listing is habitat for humani
   <header
     class="image-card--leader"
   >
-    <span
-      aria-hidden="false"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images translate"
       >
-        <figure
-          class="image-card__inner has-grid-layout has-3-images translate"
-        >
-          <img
-            alt="This is a listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a second listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a third listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <button
-            aria-label="More Images"
-            data-testid="open-modal-button"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <img
+          alt="This is a third listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      >
+        <span
+          class="tag is-warning"
         >
-          <span
-            class="tag is-warning"
-          >
-            Habitat Greater San Francisco
-          </span>
-        </div>
+          Habitat Greater San Francisco
+        </span>
       </div>
-    </span>
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >
@@ -205,46 +197,42 @@ exports[`ListingDetailsImageCard displays tag when rental listing is for educato
   <header
     class="image-card--leader"
   >
-    <span
-      aria-hidden="false"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images translate"
       >
-        <figure
-          class="image-card__inner has-grid-layout has-3-images translate"
-        >
-          <img
-            alt="This is a listing image"
-            src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-          />
-          <img
-            alt="This is a second listing image"
-            src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-          />
-          <img
-            alt="This is a third listing image"
-            src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
-          />
-          <button
-            aria-label="More Images"
-            data-testid="open-modal-button"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
+        />
+        <img
+          alt="This is a third listing image"
+          src="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      >
+        <span
+          class="tag is-warning"
         >
-          <span
-            class="tag is-warning"
-          >
-            SF public schools employee housing
-          </span>
-        </div>
+          SF public schools employee housing
+        </span>
       </div>
-    </span>
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >
@@ -298,46 +286,42 @@ exports[`ListingDetailsImageCard displays tag when sale listing is for educators
   <header
     class="image-card--leader"
   >
-    <span
-      aria-hidden="false"
+    <div
+      class="image-card"
     >
-      <div
-        class="image-card"
+      <figure
+        class="image-card__inner has-grid-layout has-3-images translate"
       >
-        <figure
-          class="image-card__inner has-grid-layout has-3-images translate"
-        >
-          <img
-            alt="This is a listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a second listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <img
-            alt="This is a third listing image"
-            src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
-          />
-          <button
-            aria-label="More Images"
-            data-testid="open-modal-button"
-          />
-        </figure>
-        <aside
-          aria-label="A picture of the building Statuses"
+        <img
+          alt="This is a listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
         />
-        <div
-          class="image-card-tag__wrapper"
+        <img
+          alt="This is a second listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <img
+          alt="This is a third listing image"
+          src="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        />
+        <button
+          aria-label="More Images"
+          data-testid="open-modal-button"
+        />
+      </figure>
+      <aside
+        aria-label="A picture of the building Statuses"
+      />
+      <div
+        class="image-card-tag__wrapper"
+      >
+        <span
+          class="tag is-warning"
         >
-          <span
-            class="tag is-warning"
-          >
-            SF public schools employee housing
-          </span>
-        </div>
+          SF public schools employee housing
+        </span>
       </div>
-    </span>
+    </div>
     <div
       class="flex flex-col md:items-start md:text-left p-3 text-center"
     >
