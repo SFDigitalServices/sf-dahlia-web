@@ -181,11 +181,13 @@ const formatEventTime = (eventTime: string) => {
 
 export const getEventDateTime = (eventDate: string, eventTime: string) => {
   const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
-  return new Date(`${eventDate} ${startTime}`)
+  const customParseFormat = require("dayjs/plugin/customParseFormat")
+  dayjs.extend(customParseFormat)
+  return dayjs(`${eventDate} ${startTime}`, "YYYY-MM-DD h:mmA")
 }
 
-export const sortByDateTimeString = (dateTimeA: Date, dateTimeB: Date) => {
-  return dateTimeA.getTime() - dateTimeB.getTime()
+export const sortByDateTimeString = (dateTimeA: dayjs.Dayjs, dateTimeB: dayjs.Dayjs) => {
+  return dateTimeA.diff(dateTimeB)
 }
 
 /**
