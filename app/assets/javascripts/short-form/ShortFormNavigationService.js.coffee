@@ -172,7 +172,7 @@ ShortFormNavigationService = (
     'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
     'right-to-return-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
-    'preferences-programs': {path: 'veterans-preference'}
+    'preferences-programs': {scopedCallbacks: [{func: 'checkAfterPreferencesPrograms'}]}
     'veterans-preference': {scopedCallbacks: [{func: 'checkAfterVeteransPreference'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
@@ -389,7 +389,10 @@ ShortFormNavigationService = (
       when 'veterans-preference'
         'preferences-programs'
       when 'custom-preferences'
-        'veterans-preference'
+        if 'TODO WIP VETERANS FLAG ON'
+          'veterans-preference'
+        else
+          'preferences-programs'
       when 'custom-proof-preferences'
         Service.getPrevPageOfCustomProofPref()
       when 'general-lottery-notice'
@@ -399,6 +402,8 @@ ShortFormNavigationService = (
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else if Service.hasCustomPreferences()
+          'custom-preferences'
+        else if 'TODO WIP VETERANS FLAG OFF'
           'custom-preferences'
         else
           'veterans-preference'
@@ -487,6 +492,8 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
     else if Service.hasCustomPreferences()
       'custom-preferences'
+    else if 'TODO WIP VETERANS FLAG OFF'
+      'preferences-programs'
     else
       'veterans-preference'
 

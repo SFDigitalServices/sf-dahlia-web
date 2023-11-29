@@ -585,7 +585,7 @@ ShortFormApplicationService = (
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
-    return !_.some(_.pick(Service.preferences, prefList)) && Service.application.isAnyoneAVeteran != 'Yes'
+    return !_.some(_.pick(Service.preferences, prefList)) && ('TODO WIP VETERANS FLAG ON' && Service.application.isAnyoneAVeteran != 'Yes')
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]

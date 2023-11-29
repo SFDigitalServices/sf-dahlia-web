@@ -717,6 +717,12 @@ ShortFormApplicationController = (
   $scope.checkAfterVeteransPreference = ->
     $scope.checkForCustomPreferences()
 
+  $scope.checkAfterPreferencesPrograms = ->
+    if 'TODO WIP VETERANS FLAG ON'
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.veterans-preference')
+    else
+      $scope.checkForCustomPreferences()
+
 
 ########## END VETERANS PREFERENCE LOGIC ##########
 
