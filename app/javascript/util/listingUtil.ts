@@ -12,6 +12,7 @@ import type {
   RailsAmiChartValue,
 } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES, CUSTOM_LISTING_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -181,7 +182,6 @@ const formatEventTime = (eventTime: string) => {
 
 export const getEventDateTime = (eventDate: string, eventTime: string) => {
   const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
-  const customParseFormat = require("dayjs/plugin/customParseFormat")
   dayjs.extend(customParseFormat)
   return dayjs(`${eventDate} ${startTime}`, "YYYY-MM-DD h:mmA")
 }
