@@ -41,10 +41,11 @@ section.app-container.focus-container
                   style="margin-bottom:0;"
                   ui-validate="'customEducatorValidJobClassificationNumber($value)'"
                   ng-change="customEducatorCapitalizeJobClassifcationNumber()"
+                  aria-describedby="job_code_error_1 job_code_error_2"
                 )
-                small.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')"
+                small#job_code_error_1.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')"
                   | {{ 'a3_custom_educator_screening.job_code_is_incorrect' | translate }}
-                small.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')" translate="a3_custom_educator_screening.if_you_entered_the_right_information" translate-value-email="housing@sfusd.edu"
+                small#job_code_error_2.error.margin-bottom ng-if="inputInvalidOnTouched('customEducatorJobClassificationNumber')" translate="a3_custom_educator_screening.if_you_entered_the_right_information" translate-value-email="housing@sfusd.edu"
 
               radio-block-item value='No' user='application' name='customEducatorScreeningAnswer' ng-required='true' on-change='customEducatorCheckScreening' ng-class="{ error: inputInvalid('customEducatorScreeningAnswer') }"
                 | {{ 'a3_custom_educator_screening.no_i_do_not_work' | translate }}
