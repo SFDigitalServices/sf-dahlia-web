@@ -168,6 +168,10 @@ div
       | {{::$ctrl.applicant.genderOther ? $ctrl.applicant.genderOther : $ctrl.applicant.gender }}
     review-summary-item label="{{'label.sexual_orientation_or_sexual_identity' | translate}}" ng-if="::$ctrl.applicant.sexualOrientation"
       | {{::$ctrl.applicant.sexualOrientationOther ? $ctrl.applicant.sexualOrientationOther : $ctrl.applicant.sexualOrientation }}
+    review-summary-item label="{{'label.applicant_veteran' | translate}}" ng-if="::$ctrl.applicant.isVeteran && 'TODO WIP VETERANS FLAG OFF'"
+      | {{::$ctrl.getIsVeteran()}}
+    review-summary-item label="{{'label.household_veteran' | translate}}" ng-if="::$ctrl.application.isNonPrimaryMemberVeteran && 'TODO WIP VETERANS FLAG OFF'"
+      | {{::$ctrl.getIsNonPrimaryMemberVeteran()}}
 
     review-summary-item label="{{'label.how_you_heard_about_this_listing' | translate}}" ng-if="::$ctrl.applicant.referral"
       | {{::$ctrl.applicant.referral }}
