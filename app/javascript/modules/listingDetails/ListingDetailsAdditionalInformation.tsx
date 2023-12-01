@@ -3,6 +3,7 @@ import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
+import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -35,7 +36,7 @@ export const ListingDetailsAdditionalInformation = ({
             <TextTruncate
               className="primary-lighter-markup-link translate"
               buttonClassName="text-blue-700"
-              text={listing.Listing_Other_Notes}
+              text={stripMostTags(listing.Listing_Other_Notes)}
             />
           </div>
         )}
@@ -46,7 +47,7 @@ export const ListingDetailsAdditionalInformation = ({
               <TextTruncate
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-700"
-                text={listing.Required_Documents}
+                text={stripMostTags(listing.Required_Documents)}
               />
             </div>
             {isSale(listing) && !isHabitatListing(listing) && (
@@ -67,7 +68,7 @@ export const ListingDetailsAdditionalInformation = ({
             <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
             <div className="text-xs">
               <TextTruncate
-                text={listing.Legal_Disclaimers}
+                text={stripMostTags(listing.Legal_Disclaimers)}
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-500"
               />
@@ -109,7 +110,7 @@ export const ListingDetailsAdditionalInformation = ({
                     <TextTruncate
                       className="primary-lighter-markup-link translate"
                       buttonClassName="text-blue-500"
-                      text={listing.Realtor_Commission_Info}
+                      text={stripMostTags(listing.Realtor_Commission_Info)}
                     />
                   </span>
                 </div>
@@ -136,7 +137,7 @@ export const ListingDetailsAdditionalInformation = ({
               <TextTruncate
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-500"
-                text={listing.Repricing_Mechanism}
+                text={stripMostTags(listing.Repricing_Mechanism)}
               />
             </div>
           </div>
