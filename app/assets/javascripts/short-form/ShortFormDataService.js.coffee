@@ -119,7 +119,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       sfApp.householdMembers = householdMembers
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null
+    if 'TODO WIP VETERANS FLAG ON' && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
       allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
       _.each(allAppMembers, (member) ->
         if member
@@ -195,9 +195,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       _.merge householdMember, Service._formatGeocodingData(member)
       home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
       _.merge householdMember, home_address
-      if veteranMemberId && veteranMemberId == member.id
+      if 'TODO WIP VETERANS FLAG ON' && veteranMemberId && veteranMemberId == member.id
         householdMember.isVeteran = 'Yes'
-      else
+      else if 'TODO WIP VETERANS FLAG ON'
         householdMember.isVeteran = null
       householdMembers.push(householdMember)
     return householdMembers
@@ -397,16 +397,17 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    veteranMemberId = null
-    allAppMembers = _.concat(data.applicant, data.householdMembers)
-    veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
-    if veteranMember
-      data.preferences.veterans_household_member = veteranMember.id.toString()
-      data.isAnyoneAVeteran = 'Yes'
-    else if _.find(allAppMembers, { isVeteran: 'No' })
-      data.isAnyoneAVeteran = 'No'
-    else if _.find(allAppMembers, { isVeteran: 'Decline to state' })
-      data.isAnyoneAVeteran = 'Decline to state'
+    if 'TODO WIP VETERANS FLAG ON'
+      veteranMemberId = null
+      allAppMembers = _.concat(data.applicant, data.householdMembers)
+      veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
+      if veteranMember
+        data.preferences.veterans_household_member = veteranMember.id.toString()
+        data.isAnyoneAVeteran = 'Yes'
+      else if _.find(allAppMembers, { isVeteran: 'No' })
+        data.isAnyoneAVeteran = 'No'
+      else if _.find(allAppMembers, { isVeteran: 'Decline to state' })
+        data.isAnyoneAVeteran = 'Decline to state'
 
     # if sfApp.autofill == true that means the API returned an autofilled application
     # to be used as a new draft (i.e. some fields need to be cleared out)
