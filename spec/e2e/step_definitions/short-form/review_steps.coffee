@@ -121,6 +121,6 @@ Then 'on the View Submitted App Page I should see Assisted Housing preference cl
   Utils.Expect.byCss(@, '#review-assistedHousing .info-item_name', 'Assisted Housing Preference')
 
 Then /^on the View Submitted App Page I should see Veterans preference claimed for "([^"]*)"$/, (fullName) ->
-  if 'TODO WIP VETERANS FLAG OFF' return
+  if 'TODO WIP VETERANS FLAG OFF' then return
   Utils.Expect.byCss(@, '#review-veterans .info-item_name', 'Yes, someone is a veteran')
   Utils.Expect.byCss(@, '#review-veterans .info-item_note', "for #{fullName}")
