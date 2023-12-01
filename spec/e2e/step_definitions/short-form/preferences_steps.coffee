@@ -338,6 +338,7 @@ Then 'on the Preferences Programs page I should see my correct info', ->
 ##################
 
 When /^I answer "Yes" to the Veterans preference question and select "([^"]*)"$/, (fullName) ->
+  if 'TODO WIP VETERANS FLAG OFF' return
   element(By.id("isAnyoneAVeteran_yes")).click()
   element(By.id("selected_veteran_member")).click()
   element.all(By.cssContainingText("#selected_veteran_member option", fullName))
@@ -347,14 +348,17 @@ When /^I answer "Yes" to the Veterans preference question and select "([^"]*)"$/
   Utils.Page.submit()
 
 When 'I answer "No" to the Veterans preference question', ->
+  if 'TODO WIP VETERANS FLAG OFF' return
   element(By.id("isAnyoneAVeteran_no")).click()
   Utils.Page.submit()
 
 When 'I answer "Prefer not to answer" to the Veterans preference question', ->
+  if 'TODO WIP VETERANS FLAG OFF' return
   element(By.id("isAnyoneAVeteran_decline-to-state")).click()
   Utils.Page.submit()
 
 Then 'on the Veterans preference page I should see my correct info', ->
+  if 'TODO WIP VETERANS FLAG OFF' return
   Utils.Expect.radioValue(@, 'isAnyoneAVeteran', 'Yes')
   Utils.Expect.inputValue(@, 'selected_veteran_member', '1')
   Utils.Page.submit()

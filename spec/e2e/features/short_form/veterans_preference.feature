@@ -3,7 +3,7 @@ Feature: Short Form Application - Veterans Preference
     I should be able to claim the Veterans preference on my application
     In order to increase my chances of getting a housing unit
 
-    Scenario: Claiming Assisted Housing preference
+    Scenario: Claiming Veterans Preference
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jen Doe"
         And I fill out the Contact page with an address, non-NRHP match, no WorkInSF
