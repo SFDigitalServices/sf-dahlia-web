@@ -12,6 +12,7 @@ import type {
   RailsAmiChartValue,
 } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
 import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES, CUSTOM_LISTING_TYPES } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -146,6 +147,26 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
       : listingEvent.Start_Time
   }
   return ""
+}
+
+const formatEventTime = (eventTime: string) => {
+  if (eventTime) {
+    const hour = Number.parseInt(eventTime, 10)
+    const suffix = hour >= 12 ? "PM" : "AM"
+    const formattedHour = hour > 12 ? hour - 12 : hour
+    return `${formattedHour}:00 ${suffix}`
+  }
+  return ""
+}
+
+export const getEventDateTime = (eventDate: string, eventTime: string) => {
+  const startTime = eventTime?.includes(":") ? eventTime : `${formatEventTime(eventTime)}`
+  dayjs.extend(customParseFormat)
+  return dayjs(`${eventDate} ${startTime}`, "YYYY-MM-DD h:mmA")
+}
+
+export const sortByDateTimeString = (dateTimeA: dayjs.Dayjs, dateTimeB: dayjs.Dayjs) => {
+  return dateTimeA.diff(dateTimeB)
 }
 
 /**
