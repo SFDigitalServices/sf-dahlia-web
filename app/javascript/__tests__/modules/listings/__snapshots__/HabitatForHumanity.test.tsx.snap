@@ -5,7 +5,11 @@ exports[`HabitatForHumanity renders HabitatForHumanity component 1`] = `
   <h2
     class="text__large-primary order-1"
   >
-    TEST: 36 Amber Drive
+    <a
+      href="/listings/a0W8H000000HI2uUAG"
+    >
+      TEST: 36 Amber Drive
+    </a>
   </h2>
   <h3
     class="text__medium-normal order-2"

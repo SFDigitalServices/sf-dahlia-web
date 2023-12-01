@@ -1,9 +1,11 @@
 const listings = {
   COMPLETED_LOTTERY_FULL: {
     id: "a0W8H000000AmpKUAS",
+    lotteryNumber: "01150047",
   },
   COMPLETED_LOTTER_PROD: {
     id: "a0W4U00000IhGZcUAN",
+    lotteryNumber: "01171676",
   },
 }
 
@@ -18,7 +20,7 @@ const visitListing = (mobile, language) => {
 
   // TODO: Temporary check. Remove with DAH-1420
   const listingId =
-    window.location.host === "housing.sfgov.org"
+    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
       ? listings.COMPLETED_LOTTER_PROD.id
       : listings.COMPLETED_LOTTERY_FULL.id
 
@@ -33,7 +35,13 @@ const clickLotteryResultsButton = (mobile: boolean) => {
 }
 
 const searchForLotteryResults = () => {
-  cy.get('input[placeholder="Enter Your Lottery Number"]').type("01150047")
+  // TODO: Temporary check. Remove with DAH-1420
+  const lotteryNumber =
+    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
+      ? listings.COMPLETED_LOTTER_PROD.lotteryNumber
+      : listings.COMPLETED_LOTTERY_FULL.lotteryNumber
+
+  cy.get('input[placeholder="Enter Your Lottery Number"]').type(lotteryNumber)
   cy.get('[aria-label="Submit number"]').click()
 }
 

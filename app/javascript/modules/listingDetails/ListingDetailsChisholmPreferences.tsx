@@ -1,6 +1,6 @@
 import React from "react"
 import { ListSection, t } from "@bloom-housing/ui-components"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { renderInlineMarkup, getSfGovUrl } from "../../util/languageUtil"
 
 export const ListingDetailsChisholmPreferences = () => (
   <ListSection
@@ -17,16 +17,20 @@ export const ListingDetailsChisholmPreferences = () => (
           <li>
             {renderInlineMarkup(
               t("listings.customListingType.educator.preferences.part4a", {
-                chisholmLotteryLink:
+                chisholmLotteryLink: getSfGovUrl(
                   "https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village",
+                  10493
+                ),
               })
             )}
           </li>
           <li>
             {renderInlineMarkup(
               t("listings.customListingType.educator.preferences.part4b", {
-                preferencesLink:
+                preferencesLink: getSfGovUrl(
                   "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
+                  3274
+                ),
               })
             )}
           </li>

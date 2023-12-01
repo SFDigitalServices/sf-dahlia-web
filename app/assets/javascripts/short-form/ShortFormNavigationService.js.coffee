@@ -86,6 +86,8 @@ ShortFormNavigationService = (
     # intro
     'community-screening':
       scopedCallbacks: [{func: 'validateCommunityEligibility'}]
+    'custom-educator-screening':
+      scopedCallbacks: [{func: 'customEducatorValidateEligibility'}]
     # you
     'prerequisites':
       callbacks: [
@@ -170,7 +172,8 @@ ShortFormNavigationService = (
     'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
     'right-to-return-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
-    'preferences-programs': {scopedCallbacks: [{func: 'checkForCustomPreferences'}]}
+    'preferences-programs': {path: 'veterans-preference'}
+    'veterans-preference': {scopedCallbacks: [{func: 'checkAfterVeteransPreference'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'general-lottery-notice': {callbacks: [Service.goToSection.bind(null, 'Review')]}
@@ -243,6 +246,7 @@ ShortFormNavigationService = (
           'right-to-return-preference'
           'alice-griffith-verify-address'
           'preferences-programs'
+          'veterans-preference'
           'custom-preferences'
           'custom-proof-preferences'
           'general-lottery-notice'
@@ -287,6 +291,7 @@ ShortFormNavigationService = (
     hideBackButton = [
       'intro',
       'community-screening',
+      'custom-educator-screening',
       'overview',
       'verify-address',
       'household-members',
@@ -381,8 +386,10 @@ ShortFormNavigationService = (
           'right-to-return-preference'
         else
           Service.goBackToLiveWorkNeighborhood()
-      when 'custom-preferences'
+      when 'veterans-preference'
         'preferences-programs'
+      when 'custom-preferences'
+        'veterans-preference'
       when 'custom-proof-preferences'
         Service.getPrevPageOfCustomProofPref()
       when 'general-lottery-notice'
@@ -394,7 +401,7 @@ ShortFormNavigationService = (
         else if Service.hasCustomPreferences()
           'custom-preferences'
         else
-          'preferences-programs'
+          'veterans-preference'
       when 'review-submitted'
         'confirmation'
       when 'name'
@@ -481,7 +488,7 @@ ShortFormNavigationService = (
     else if Service.hasCustomPreferences()
       'custom-preferences'
     else
-      'preferences-programs'
+      'veterans-preference'
 
   Service.getStartOfHouseholdDetails = ->
     # This returns the page in the household section that comes directly after

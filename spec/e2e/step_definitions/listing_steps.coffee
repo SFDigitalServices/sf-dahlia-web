@@ -17,7 +17,7 @@ Given /^I go to the "([^"]*)" listing page$/, (listing) ->
       "/listings/#{Utils.Page.seniorListingId}"
     when 'Sale Test Listing'
       "/listings/#{Utils.Page.saleListingId}"
-  Utils.Page.goTo(url)
+  Utils.Page.goTo(url + "?react=false")
 
 When 'I click the Download Application button', ->
   element.all(By.id('download-application')).filter((elem) ->

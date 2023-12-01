@@ -1,6 +1,6 @@
 import React from "react"
 import { Heading, ListSection, t } from "@bloom-housing/ui-components"
-import { renderMarkup } from "../util/languageUtil"
+import { getSfGovUrl, renderInlineMarkup, renderMarkup } from "../util/languageUtil"
 
 export enum BeforeApplyingType {
   DIRECTORY,
@@ -55,32 +55,40 @@ export const BeforeApplyingForSale = ({ beforeApplyingType }: BeforeApplyingForS
     beforeApplyingType === BeforeApplyingType.DIRECTORY ||
     beforeApplyingType === BeforeApplyingType.LISTING_DETAILS
   ) {
-    requirements = renderMarkup(
+    requirements = renderInlineMarkup(
       `${t("saleDirectory.beforeApplying.readFullList", {
-        url: "https://sfmohcd.org/homebuyer-program-eligibility",
+        url: getSfGovUrl(
+          "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+          7164
+        ),
       })}`
     )
-
     listItems = [
       { content: t("saleDirectory.beforeApplying.step1") },
       {
-        content: renderMarkup(
+        content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step2", {
-            url: "https://sfmohcd.org/homebuyer-program-eligibility",
+            url: getSfGovUrl(
+              "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+              7164
+            ),
           })}`
         ),
       },
       {
-        content: renderMarkup(
+        content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step3", {
-            url: "https://sfmohcd.org/homebuyer-application-requirements#education",
+            url: getSfGovUrl("https://sf.gov/sign-complete-homebuyer-education", 212),
           })}`
         ),
       },
       {
-        content: renderMarkup(
+        content: renderInlineMarkup(
           `${t("saleDirectory.beforeApplying.step4", {
-            url: "https://sfmohcd.org/lender-list",
+            url: getSfGovUrl(
+              "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
+              6953
+            ),
           })}`
         ),
       },

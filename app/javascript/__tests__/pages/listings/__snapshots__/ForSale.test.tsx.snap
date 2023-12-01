@@ -37,68 +37,6 @@ exports[`For Sale renders ForSale component 1`] = `
         content="website"
         property="og:type"
       />
-      <link
-        rel="icon"
-        sizes="32x32"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="96x96"
-        type="image/png"
-      />
-      <link
-        rel="icon"
-        sizes="16x16"
-        type="image/png"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="57x57"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="60x60"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="72x72"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="76x76"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="114x114"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="120x120"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="144x144"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="152x152"
-      />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-      />
-      <link
-        rel="icon"
-        sizes="192x192"
-        type="image/png"
-      />
-      <link
-        rel="manifest"
-      />
-      <meta
-        name="msapplication-TileImage"
-      />
       <header
         class="site-header"
       >
@@ -321,41 +259,41 @@ exports[`For Sale renders ForSale component 1`] = `
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <span>
                             Meet our 
                             <a
-                              href="https://sfmohcd.org/homebuyer-program-eligibility"
+                              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                               target="_blank"
                             >
                               income requirements
                             </a>
-                          </p>
+                          </span>
                         </li>
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <span>
                             Complete 
                             <a
-                              href="https://sfmohcd.org/homebuyer-application-requirements#education"
+                              href="https://sf.gov/sign-complete-homebuyer-education"
                               target="_blank"
                             >
                               homebuyer education
                             </a>
-                          </p>
+                          </span>
                         </li>
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
                         >
-                          <p>
+                          <span>
                             Get pre-approved for a mortgage loan by a 
                             <a
-                              href="https://sfmohcd.org/lender-list"
+                              href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
                               target="_blank"
                             >
                               lender on our list
                             </a>
-                          </p>
+                          </span>
                         </li>
                         <li
                           class="text-gray-750 primary-lighter-markup-link"
@@ -366,16 +304,16 @@ exports[`For Sale renders ForSale component 1`] = `
                       <div
                         class="text-gray-750 primary-lighter-markup-link-desktop"
                       >
-                        <p>
+                        <span>
                           Read 
                           <a
-                            href="https://sfmohcd.org/homebuyer-program-eligibility"
+                            href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                             target="_blank"
                           >
                             our full list of requirements
                           </a>
                            for more details.
-                        </p>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -622,7 +560,7 @@ exports[`For Sale renders ForSale component 1`] = `
               <br />
               <a
                 class="text-white"
-                href="https://sf.gov/mohcd"
+                href="https://sf.gov/departments/mayors-office-housing-and-community-development"
                 target="_blank"
               >
                 Mayor's Office of Housing and Community Development
@@ -637,7 +575,7 @@ exports[`For Sale renders ForSale component 1`] = `
               <br />
               <a
                 class="text-white"
-                href="https://digitalservices.sfgov.org/"
+                href="https://sf.gov/departments/city-administrator/digital-services"
                 target="_blank"
               >
                 San Francisco Digital Services
@@ -645,7 +583,7 @@ exports[`For Sale renders ForSale component 1`] = `
               <br />
               <a
                 class="text-white"
-                href="https://www.innovation.sfgov.org/"
+                href="https://sf.gov/departments/mayors-office-innovation"
                 target="_blank"
               >
                 Mayor's Office of Civic Innovation

@@ -30,7 +30,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'lendingAgent'
       'homebuyerEducationAgency'
       'referral',
-      'isNonPrimaryMemberVeteran'
     ]
     primaryApplicant: [
       'alternatePhone',
@@ -78,6 +77,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'appMemberId', 'firstName', 'middleName', 'lastName',
       'relationship', 'preferenceAddressMatch', 'noAddress',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+      'isVeteran',
     ]
 
   # Format application for Salesforce Processing.
@@ -94,6 +94,11 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         address = Service._formatAddress(application.alternateContact, 'mailing_address')
         _.merge sfApp.alternateContact, address
 
+    # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
+    veteranMemberId = null
+    if application.isAnyoneAVeteran == 'Yes' && application.preferences.veterans_household_member
+      veteranMemberId = parseInt(application.preferences.veterans_household_member, 10)
+
     # primaryApplicant
     sfApp.primaryApplicant = _.pick application.applicant, Service.WHITELIST_FIELDS.primaryApplicant
     sfApp.primaryApplicant.dob = Service.formatUserDOB(application.applicant)
@@ -103,11 +108,22 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
     _.merge sfApp.primaryApplicant, home_address
     _.merge sfApp.primaryApplicant, mailing_address
-
+    if veteranMemberId && veteranMemberId == application.applicant.id
+      sfApp.primaryApplicant.isVeteran = 'Yes'
+    else
+      sfApp.primaryApplicant.isVeteran = null
     # householdMembers
-    householdMembers = Service._formatHouseholdMembers(application)
+    householdMembers = Service._formatHouseholdMembers(application, veteranMemberId)
     unless _.isEmpty(householdMembers)
       sfApp.householdMembers = householdMembers
+
+    # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
+    if application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null
+      allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
+      _.each(allAppMembers, (member) ->
+        if member
+          member.isVeteran = application.isAnyoneAVeteran
+      )
 
     # add other data
     sfApp.adaPrioritiesSelected = Service._formatPickList(application.adaPrioritiesSelected)
@@ -119,6 +135,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     _.merge sfApp, Service._formatIncome(application.householdIncome)
     sfApp.totalMonthlyRent = Service._calculateTotalMonthlyRent(application)
     sfApp.formMetadata = Service._formatMetadata(application)
+
+    # custom educator
+    sfApp.primaryApplicant.isSFUSDEmployee = application.customEducatorScreeningAnswer
+    sfApp.primaryApplicant.jobClassification = application.customEducatorJobClassificationNumber
 
     # add preferences and return
     sfApp.shortFormPreferences = Service._formatPreferences(application)
@@ -165,7 +185,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
 
     return addressData
 
-  Service._formatHouseholdMembers = (application) ->
+  Service._formatHouseholdMembers = (application, veteranMemberId) ->
     householdMembers = []
     members = _.each application.householdMembers, (member) ->
       householdMember = _.pick member, Service.WHITELIST_FIELDS.householdMember
@@ -174,6 +194,10 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       _.merge householdMember, Service._formatGeocodingData(member)
       home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
       _.merge householdMember, home_address
+      if veteranMemberId && veteranMemberId == member.id
+        householdMember.isVeteran = 'Yes'
+      else
+        householdMember.isVeteran = null
       householdMembers.push(householdMember)
     return householdMembers
 
@@ -276,6 +300,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       shortFormPreferences.push(shortFormPref)
     )
+
     return shortFormPreferences
 
   Service._getPreferenceRecordType = (preference) ->
@@ -362,9 +387,26 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.documents = Service._reformatDocuments(uploadedFiles)
     Service._reformatMetadata(sfApp, data)
 
+    # custom educator
+    data.customEducatorScreeningAnswer = sfApp.primaryApplicant.isSFUSDEmployee
+    data.customEducatorJobClassificationNumber = sfApp.primaryApplicant.jobClassification
+
     allHousehold = angular.copy(data.householdMembers)
     allHousehold.unshift(data.applicant)
     data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
+
+    # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
+    veteranMemberId = null
+    allAppMembers = _.concat(data.applicant, data.householdMembers)
+    veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
+    if veteranMember
+      data.preferences.veterans_household_member = veteranMember.id.toString()
+      data.isAnyoneAVeteran = 'Yes'
+    else if _.find(allAppMembers, { isVeteran: 'No' })
+      data.isAnyoneAVeteran = 'No'
+    else if _.find(allAppMembers, { isVeteran: 'Decline to state' })
+      data.isAnyoneAVeteran = 'Decline to state'
+
     # if sfApp.autofill == true that means the API returned an autofilled application
     # to be used as a new draft (i.e. some fields need to be cleared out)
     Service._autofillReset(data) if sfApp.autofill
@@ -498,6 +540,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
         preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
 
     )
+
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
       preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
