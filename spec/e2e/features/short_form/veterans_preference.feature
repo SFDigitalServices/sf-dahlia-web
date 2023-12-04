@@ -22,6 +22,7 @@ Feature: Short Form Application - Veterans Preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
         And I answer "Yes" to the Veterans preference question and select "Jen Doe"
+        And I conditionally continue past the general lottery notice page
         And I fill out the optional survey
         # Submit app and see preference claimed
         And I confirm details on the review page

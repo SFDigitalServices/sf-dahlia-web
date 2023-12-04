@@ -1,7 +1,8 @@
 ShortFormNavigationService = (
   $state,
   AccountService, AnalyticsService, bsLoadingOverlayService,
-  ListingConstantsService, ListingIdentityService, ShortFormApplicationService
+  ListingConstantsService, ListingIdentityService, ShortFormApplicationService,
+  SharedService
 ) ->
   Service = {}
   Service.RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
@@ -389,7 +390,7 @@ ShortFormNavigationService = (
       when 'veterans-preference'
         'preferences-programs'
       when 'custom-preferences'
-        if 'TODO WIP VETERANS FLAG ON'
+        if SharedService.showVeteransApplicationQuestion
           'veterans-preference'
         else
           'preferences-programs'
@@ -403,8 +404,8 @@ ShortFormNavigationService = (
           'general-lottery-notice'
         else if Service.hasCustomPreferences()
           'custom-preferences'
-        else if 'TODO WIP VETERANS FLAG OFF'
-          'custom-preferences'
+        else if !SharedService.showVeteransApplicationQuestion
+          'preferences-programs'
         else
           'veterans-preference'
       when 'review-submitted'
@@ -492,7 +493,7 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
     else if Service.hasCustomPreferences()
       'custom-preferences'
-    else if 'TODO WIP VETERANS FLAG OFF'
+    else if !ShortFormApplicationService.showVeteransApplicationQuestion
       'preferences-programs'
     else
       'veterans-preference'
@@ -564,7 +565,8 @@ ShortFormNavigationService = (
 ShortFormNavigationService.$inject = [
   '$state',
   'AccountService', 'AnalyticsService', 'bsLoadingOverlayService',
-  'ListingConstantsService', 'ListingIdentityService', 'ShortFormApplicationService'
+  'ListingConstantsService', 'ListingIdentityService', 'ShortFormApplicationService',
+  'SharedService'
 ]
 
 angular

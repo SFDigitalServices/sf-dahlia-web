@@ -1,4 +1,4 @@
-ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService) ->
+ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService, SharedService) ->
   Service = {}
   Service.preferences = _.keys(ListingDataService.preferenceMap)
   Service.metaFields = [
@@ -119,7 +119,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       sfApp.householdMembers = householdMembers
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if 'TODO WIP VETERANS FLAG ON' && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
+    if SharedService.showVeteransApplicationQuestion && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
       allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
       _.each(allAppMembers, (member) ->
         if member
@@ -195,9 +195,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       _.merge householdMember, Service._formatGeocodingData(member)
       home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
       _.merge householdMember, home_address
-      if 'TODO WIP VETERANS FLAG ON' && veteranMemberId && veteranMemberId == member.id
+      if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == member.id
         householdMember.isVeteran = 'Yes'
-      else if 'TODO WIP VETERANS FLAG ON'
+      else if SharedService.showVeteransApplicationQuestion
         householdMember.isVeteran = null
       householdMembers.push(householdMember)
     return householdMembers
@@ -397,7 +397,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if 'TODO WIP VETERANS FLAG ON'
+    if SharedService.showVeteransApplicationQuestion
       veteranMemberId = null
       allAppMembers = _.concat(data.applicant, data.householdMembers)
       veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
@@ -710,7 +710,8 @@ ShortFormDataService.$inject = [
   'ListingDataService',
   'ListingConstantsService',
   'ListingPreferenceService',
-  'ListingUnitService'
+  'ListingUnitService',
+  'SharedService'
 ]
 
 angular

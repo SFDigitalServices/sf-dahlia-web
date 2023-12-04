@@ -12,6 +12,7 @@ angular.module('dahlia.components')
     isCustomEducatorListing: '<'
     listing: '<'
     preferences: '<'
+    showVeteransApplicationQuestion: '<'
   controller: [
     '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
     ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
@@ -105,8 +106,8 @@ angular.module('dahlia.components')
           ctrl.applicant.primaryLanguage or
           ctrl.applicant.gender or
           ctrl.applicant.sexualOrientation or
-          ('TODO WIP VETERANS FLAG OFF' && ctrl.applicant.isVeteran) or
-          ('TODO WIP VETERANS FLAG OFF' && ctrl.application.isNonPrimaryMemberVeteran) or
+          (!ctrl.showVeteransApplicationQuestion && ctrl.applicant.isVeteran) or
+          (!ctrl.showVeteransApplicationQuestion && ctrl.application.isNonPrimaryMemberVeteran) or
           ctrl.applicant.referral
         )
 
