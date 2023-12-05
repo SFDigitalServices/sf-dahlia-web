@@ -2,57 +2,7 @@
 
 exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when habitat listing 1`] = `
 <DocumentFragment>
-  <li
-    class="list-section custom-counter__item"
-  >
-    <header
-      class="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h3
-          class="custom-counter__title"
-        >
-          Household Maximum Income
-        </h3>
-        <span
-          class="custom-counter__subtitle"
-        >
-          <div>
-            <div
-              class="mb-4"
-            >
-              <p>
-                For income calculations, household size includes everyone (all ages) living in the unit.
-              </p>
-            </div>
-            <div
-              class="mb-4 primary-lighter-markup-link-desktop"
-            >
-              <p>
-                People in your household may need 
-                <a
-                  href="https://sf.gov/information/special-calculations-household-income"
-                  target="_blank"
-                >
-                  special income calculations
-                </a>
-                 if they:
-              </p>
-            </div>
-            <ul
-              class="list-disc ml-5"
-            >
-              <li>
-                Are full-time students (but not the primary applicant).
-              </li>
-              <li>
-                Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-              </li>
-            </ul>
-          </div>
-        </span>
-      </hgroup>
-    </header>
+  <span>
     <div
       style="overflow-x: auto;"
     >
@@ -332,63 +282,13 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
         </svg>
       </span>
     </button>
-  </li>
+  </span>
 </DocumentFragment>
 `;
 
 exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with rental listing 1`] = `
 <DocumentFragment>
-  <li
-    class="list-section custom-counter__item"
-  >
-    <header
-      class="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h3
-          class="custom-counter__title"
-        >
-          Household Maximum Income
-        </h3>
-        <span
-          class="custom-counter__subtitle"
-        >
-          <div>
-            <div
-              class="mb-4"
-            >
-              <p>
-                For income calculations, household size includes everyone (all ages) living in the unit.
-              </p>
-            </div>
-            <div
-              class="mb-4 primary-lighter-markup-link-desktop"
-            >
-              <p>
-                People in your household may need 
-                <a
-                  href="https://sf.gov/information/special-calculations-household-income"
-                  target="_blank"
-                >
-                  special income calculations
-                </a>
-                 if they:
-              </p>
-            </div>
-            <ul
-              class="list-disc ml-5"
-            >
-              <li>
-                Are full-time students (but not the primary applicant).
-              </li>
-              <li>
-                Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-              </li>
-            </ul>
-          </div>
-        </span>
-      </hgroup>
-    </header>
+  <span>
     <div
       style="overflow-x: auto;"
     >
@@ -668,7 +568,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
         </svg>
       </span>
     </button>
-  </li>
+  </span>
 </DocumentFragment>
 `;
 
@@ -701,57 +601,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with sp
 
 exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component with open sale listing 1`] = `
 <DocumentFragment>
-  <li
-    class="list-section custom-counter__item"
-  >
-    <header
-      class="list-section__header custom-counter__header"
-    >
-      <hgroup>
-        <h3
-          class="custom-counter__title"
-        >
-          Household Maximum Income
-        </h3>
-        <span
-          class="custom-counter__subtitle"
-        >
-          <div>
-            <div
-              class="mb-4"
-            >
-              <p>
-                For income calculations, household size includes everyone (all ages) living in the unit.
-              </p>
-            </div>
-            <div
-              class="mb-4 primary-lighter-markup-link-desktop"
-            >
-              <p>
-                People in your household may need 
-                <a
-                  href="https://sf.gov/information/special-calculations-household-income"
-                  target="_blank"
-                >
-                  special income calculations
-                </a>
-                 if they:
-              </p>
-            </div>
-            <ul
-              class="list-disc ml-5"
-            >
-              <li>
-                Are full-time students (but not the primary applicant).
-              </li>
-              <li>
-                Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
-              </li>
-            </ul>
-          </div>
-        </span>
-      </hgroup>
-    </header>
+  <span>
     <div
       style="overflow-x: auto;"
     >
@@ -1031,6 +881,6 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
         </svg>
       </span>
     </button>
-  </li>
+  </span>
 </DocumentFragment>
 `;
