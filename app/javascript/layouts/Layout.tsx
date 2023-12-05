@@ -154,7 +154,7 @@ const Layout = (props: LayoutProps) => {
 
   return (
     <HelmetProvider>
-      <div className="notranslate site-wrapper">
+      <div className="site-wrapper">
         <div className="site-content">
           <MetaTags title={props.title} description={props.description} image={props.image} />
           {topAlert}

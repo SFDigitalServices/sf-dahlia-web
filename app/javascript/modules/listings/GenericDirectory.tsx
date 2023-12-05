@@ -15,6 +15,7 @@ import {
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import useTranslate from "../../hooks/useTranslate"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -30,6 +31,8 @@ interface RentalDirectoryProps {
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
+  useTranslate()
+
   const [rawListings, setRawListings] = useState([])
   const [listings, setListings] = useState<ListingsGroups>({
     open: [],

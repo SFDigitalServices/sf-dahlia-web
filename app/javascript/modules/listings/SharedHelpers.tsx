@@ -80,6 +80,7 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
     tags: getTagContent(listing),
     statuses: getListingImageCardStatuses(listing, hasFiltersSet),
     description: imageDescription,
+    innerClassName: "translate",
   }
 }
 
