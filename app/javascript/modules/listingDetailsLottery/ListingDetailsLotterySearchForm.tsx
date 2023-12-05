@@ -122,6 +122,7 @@ export const ListingDetailsLotterySearchForm = ({
           type="text"
           validation={{ pattern: /^\d+$/, required: true }}
           label={t("lottery.enterLotteryNumber")}
+          labelClassName="sr-only"
         />
         <button
           className="bg-blue-500 h-12 mt-2 p-3 translate"
