@@ -109,9 +109,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
     _.merge sfApp.primaryApplicant, home_address
     _.merge sfApp.primaryApplicant, mailing_address
-    if veteranMemberId && veteranMemberId == application.applicant.id
+    if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == application.applicant.id
       sfApp.primaryApplicant.isVeteran = 'Yes'
-    else
+    else if SharedService.showVeteransApplicationQuestion
       sfApp.primaryApplicant.isVeteran = null
     # householdMembers
     householdMembers = Service._formatHouseholdMembers(application, veteranMemberId)
