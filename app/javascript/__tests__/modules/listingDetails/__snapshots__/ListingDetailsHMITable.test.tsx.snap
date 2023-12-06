@@ -574,7 +574,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
 
 exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with spinner before api call 1`] = `
 <DocumentFragment>
-  <li
+  <div
     class="flex w-full justify-center"
   >
     <span
@@ -595,7 +595,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with sp
         />
       </svg>
     </span>
-  </li>
+  </div>
 </DocumentFragment>
 `;
 
