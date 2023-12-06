@@ -224,9 +224,9 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
 
   if (fetchingUnits || fetchingAmiCharts) {
     return (
-      <li className="flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <Icon symbol="spinner" size="large" />
-      </li>
+      </div>
     )
   }
 
