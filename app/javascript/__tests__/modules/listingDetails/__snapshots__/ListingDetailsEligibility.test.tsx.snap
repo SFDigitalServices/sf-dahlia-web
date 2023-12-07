@@ -162,188 +162,186 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -805,188 +803,186 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -1462,188 +1458,186 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -2039,188 +2033,186 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -2715,188 +2707,186 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -3485,188 +3475,186 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -4049,188 +4037,186 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -4755,188 +4741,186 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -5842,188 +5826,186 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             </span>
           </hgroup>
         </header>
-        <span>
-          <div
-            style="overflow-x: auto;"
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
           >
-            <table
-              class="w-full text-xs"
-            >
-              <thead>
-                <tr>
-                  <th
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      household size
-                    </span>
-                  </th>
-                  <th
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per month
-                    </span>
-                  </th>
-                  <th
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
                     class=""
                   >
-                    <span
-                      class=""
-                    >
-                      maximum income per year
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                  id="standardrow-0"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      1 person
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,275 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $51,300 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-1"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      2 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $4,883 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $58,600 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-2"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      3 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $5,495 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $65,950 per year
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                  id="standardrow-3"
-                >
-                  <td
-                    class="p-5"
-                    data-label="household size"
-                  >
-                    <span
-                      class="font-semibold"
-                    >
-                      4 people
-                    </span>
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per month"
-                  >
-                    $6,104 per month
-                  </td>
-                  <td
-                    class="p-5"
-                    data-label="maximum income per year"
-                  >
-                    $73,250 per year
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            aria-expanded="false"
-            aria-label="Show more about maximum income based on household size"
-            class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
-            tabindex="0"
-          >
-            <span
-              class="button__content"
-            >
-              Show more
-            </span>
-            <span
-              class="ui-icon ui-small button__icon "
-            >
-              <svg
-                aria-hidden="true"
-                class="svg-inline--fa fa-angle-down "
-                data-icon="angle-down"
-                data-prefix="fas"
-                focusable="false"
-                role="img"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
               >
-                <path
-                  d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-          </button>
-        </span>
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
       </li>
       <li
         class="list-section custom-counter__item"
