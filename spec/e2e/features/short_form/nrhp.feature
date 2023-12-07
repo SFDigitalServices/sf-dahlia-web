@@ -65,5 +65,6 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
         And I click the Next button on the Live in the Neighborhood page
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I fill out the optional survey
         Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jeremy Doe"

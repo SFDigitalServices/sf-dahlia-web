@@ -15,7 +15,7 @@ import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
-import { getCurrentLanguage, LANGUAGE_CONFIGS } from "../util/languageUtil"
+import { getCurrentLanguage, getSfGovUrl, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getDisclaimerPath,
   getLocalizedPath,
@@ -198,15 +198,24 @@ const Layout = (props: LayoutProps) => {
             <p className="text-gray-500">
               <Markdown>
                 {t("footer.dahliaDescription", {
-                  mohcdUrl: "https://sf.gov/mohcd",
+                  mohcdUrl: getSfGovUrl(
+                    "https://sf.gov/departments/mayors-office-housing-and-community-development",
+                    55
+                  ),
                 })}
               </Markdown>
             </p>
             <p className="text-xs mt-4 text-gray-500">
               <Markdown>
                 {t("footer.inPartnershipWith", {
-                  sfdsUrl: "https://digitalservices.sfgov.org/",
-                  mayorUrl: "https://www.innovation.sfgov.org/",
+                  sfdsUrl: getSfGovUrl(
+                    "https://sf.gov/departments/city-administrator/digital-services",
+                    1788
+                  ),
+                  mayorUrl: getSfGovUrl(
+                    "https://sf.gov/departments/mayors-office-innovation",
+                    3095
+                  ),
                 })}
               </Markdown>
             </p>

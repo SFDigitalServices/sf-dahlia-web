@@ -75,6 +75,12 @@ ShortFormApplicationController = (
 
   $scope.emailRegex = SharedService.emailRegex
 
+  $scope.propertyCardImageURL = ->
+    if _.isArray($scope.listing.Listing_Images)
+      return $scope.listing.Listing_Images[0].displayImageURL
+    else
+      return $scope.listing.imageURL
+
   $scope.startAutofilledApp = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
     $scope.go(ShortFormNavigationService.initialState())
@@ -425,7 +431,7 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
 
   ##### Custom Preferences Logic ####
-  # this called after preferences programs
+  # this called after veterans-preference
   $scope.checkForCustomPreferences = ->
     if _.isEmpty($scope.listing.customPreferences)
       $scope.checkForCustomProofPreferences()
@@ -692,6 +698,27 @@ ShortFormApplicationController = (
     else if error == 'too high'
       message = $translate.instant("error.household_income_too_high")
     $scope.eligibilityErrors = [message]
+
+########## BEGIN VETERANS PREFERENCE LOGIC ##########
+
+  $scope.eligibleVeteransMembers = ->
+    ShortFormApplicationService.eligibleVeteransMembers()
+
+  $scope.hasVeteranMemberYes = ->
+    $scope.application.isAnyoneAVeteran == 'Yes'
+
+  $scope.hasVeteranMemberDeclineToState = ->
+    $scope.application.isAnyoneAVeteran == 'Decline to state'
+
+  $scope.onChangeHasVeteranMember = ->
+    if $scope.application.isAnyoneAVeteran != 'Yes'
+      $scope.preferences.veterans_household_member = null
+
+  $scope.checkAfterVeteransPreference = ->
+    $scope.checkForCustomPreferences()
+
+
+########## END VETERANS PREFERENCE LOGIC ##########
 
   $scope.checkIfPublicHousing = ->
     if $scope.application.hasPublicHousing == 'No'

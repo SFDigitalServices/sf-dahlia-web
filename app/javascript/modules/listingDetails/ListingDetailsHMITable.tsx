@@ -1,7 +1,7 @@
 import React, { useContext, useState, useMemo } from "react"
 import { Icon, ListSection, StandardTable, Button, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { renderMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
@@ -46,7 +46,7 @@ const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
   }
-  amiCharts.forEach((chart: RailsAmiChart) => {
+  amiCharts?.forEach((chart: RailsAmiChart) => {
     headers[`ami${chart.percent}`] = `t.percentAMI*percent:${chart.percent}`
   })
   return headers
@@ -127,7 +127,7 @@ const buildHmiTableWithMultipleAmis = (
             content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
           }
 
-    amiCharts.forEach((chart) => {
+    amiCharts?.forEach((chart) => {
       const amiChart = chart.values?.find((amiChart) => {
         return amiChart.numOfHousehold === i
       })
@@ -224,7 +224,10 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           <div className="mb-4 primary-lighter-markup-link-desktop">
             {renderMarkup(
               t("listings.incomeExceptions.intro", {
-                url: "https://sfmohcd.org/special-calculations-household-income",
+                url: getSfGovUrl(
+                  "https://sf.gov/information/special-calculations-household-income",
+                  7080
+                ),
               })
             )}
           </div>

@@ -34,7 +34,7 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -343,7 +343,7 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -835,7 +835,7 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -1262,7 +1262,7 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -1571,7 +1571,7 @@ exports[`ListingDetailsPricingTable 415 rental listing renders ListingDetailsPri
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -1889,7 +1889,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -2942,7 +2942,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -4385,7 +4385,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -5438,7 +5438,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -6491,7 +6491,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -7544,7 +7544,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -8207,7 +8207,7 @@ exports[`ListingDetailsPricingTable open rental listing renders ListingDetailsPr
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -8879,7 +8879,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -9070,7 +9070,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -9379,7 +9379,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -9818,7 +9818,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -10257,7 +10257,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -10696,7 +10696,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -10896,7 +10896,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -10965,7 +10965,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11025,7 +11025,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11085,7 +11085,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11145,7 +11145,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11205,7 +11205,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11265,7 +11265,7 @@ exports[`ListingDetailsPricingTable renders ListingDetailsPricingTable component
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11417,7 +11417,7 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11608,7 +11608,7 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>
@@ -11799,7 +11799,7 @@ exports[`ListingDetailsPricingTable rent as a percent of income listings renders
               </span>
             </span>
             <span
-              class="flex items-center mr-2 text-sm md:text-base"
+              class="flex items-center mr-2 text-sm md:text-base text-left md:text-center"
             >
               <div>
                 <span>

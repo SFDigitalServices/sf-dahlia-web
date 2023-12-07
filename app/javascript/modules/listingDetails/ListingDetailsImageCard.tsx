@@ -32,14 +32,12 @@ const createImageCardProps = (listing: RailsListing) => {
             imageUrl: listing.imageURL,
             description: t("listings.buildingImageAltText"),
           },
-          fallbackUsed: false,
         }
       : {
           props: {
             imageUrl: fallbackImg,
             description: "",
           },
-          fallbackUsed: true,
         }
   } else {
     return listingImages.length > 0
@@ -49,14 +47,12 @@ const createImageCardProps = (listing: RailsListing) => {
             description: t("listings.buildingImageAltText"),
             moreImagesLabel: t("listings.morePhotos"),
           },
-          fallbackUsed: false,
         }
       : {
           props: {
-            iamgeUrl: fallbackImg,
+            imageUrl: fallbackImg,
             description: "",
           },
-          fallbackUsed: true,
         }
   }
 }
@@ -68,13 +64,16 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
 
-  const { fallbackUsed, props: imageCardProps } = createImageCardProps(listing)
+  const { props: imageCardProps } = createImageCardProps(listing)
 
   return (
     <header className="image-card--leader">
-      <span aria-hidden={fallbackUsed}>
-        <ImageCard {...imageCardProps} tags={getTagContent(listing)} />
-      </span>
+      <ImageCard
+        innerClassName="translate"
+        {...imageCardProps}
+        tags={getTagContent(listing)}
+        modalAriaTitle="true"
+      />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>
         <p className="my-1">

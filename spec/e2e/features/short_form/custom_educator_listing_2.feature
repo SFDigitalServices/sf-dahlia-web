@@ -29,6 +29,7 @@ Feature: Short Form Application - Custom Educator Listing 2
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I continue past the general lottery notice page
         And I fill out the optional survey
         # Review page
@@ -61,6 +62,7 @@ Feature: Short Form Application - Custom Educator Listing 2
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I continue past the general lottery notice page
         And I fill out the optional survey
         # Review page

@@ -140,7 +140,7 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -488,7 +488,14 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -528,17 +535,17 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -564,17 +571,17 @@ exports[`ListingDetailsEligibility displays ListingDetailsChisholmPreferences fo
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -774,7 +781,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -1122,7 +1129,14 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -1162,17 +1176,17 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -1198,17 +1212,17 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -1383,7 +1397,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
               </p>
               <p>
                 <a
-                  href="http://localhost/#chisholm-preferences"
+                  href="#chisholm-preferences"
                   target="_self"
                 >
                   Learn more about the lottery for this listing.
@@ -1422,7 +1436,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -1770,7 +1784,14 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -1810,17 +1831,17 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -1846,17 +1867,17 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -1990,7 +2011,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -2446,7 +2467,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -2486,17 +2514,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -2522,17 +2550,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -2657,7 +2685,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -3113,7 +3141,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -3153,17 +3188,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -3189,17 +3224,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -3332,41 +3367,41 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <p>
+            <span>
               Meet our 
               <a
-                href="https://sfmohcd.org/homebuyer-program-eligibility"
+                href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                 target="_blank"
               >
                 income requirements
               </a>
-            </p>
+            </span>
           </li>
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <p>
+            <span>
               Complete 
               <a
-                href="https://sfmohcd.org/homebuyer-application-requirements#education"
+                href="https://sf.gov/sign-complete-homebuyer-education"
                 target="_blank"
               >
                 homebuyer education
               </a>
-            </p>
+            </span>
           </li>
           <li
             class="text-gray-750 primary-lighter-markup-link"
           >
-            <p>
+            <span>
               Get pre-approved for a mortgage loan by a 
               <a
-                href="https://sfmohcd.org/lender-list"
+                href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
                 target="_blank"
               >
                 lender on our list
               </a>
-            </p>
+            </span>
           </li>
           <li
             class="text-gray-750 primary-lighter-markup-link"
@@ -3377,16 +3412,16 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
         <div
           class="text-gray-750 primary-lighter-markup-link-desktop"
         >
-          <p>
+          <span>
             Read 
             <a
-              href="https://sfmohcd.org/homebuyer-program-eligibility"
+              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
               target="_blank"
             >
               our full list of requirements
             </a>
              for more details.
-          </p>
+          </span>
         </div>
       </li>
       <li
@@ -3418,7 +3453,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -3980,7 +4015,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -4457,7 +4492,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -4497,17 +4539,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -4533,17 +4575,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -4677,7 +4719,7 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -5133,7 +5175,14 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -5173,17 +5222,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -5209,17 +5258,17 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"
@@ -5755,7 +5804,7 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
                   <p>
                     People in your household may need 
                     <a
-                      href="https://sfmohcd.org/special-calculations-household-income"
+                      href="https://sf.gov/information/special-calculations-household-income"
                       target="_blank"
                     >
                       special income calculations
@@ -6057,11 +6106,9 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             </span>
           </hgroup>
         </header>
-        <div
-          class="p-4 text-center"
-        >
-          An error occurred. Check back later.
-        </div>
+        <ol
+          class="preferences-list"
+        />
       </li>
       <li
         class="list-section custom-counter__item"
@@ -6078,7 +6125,14 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             <span
               class="custom-counter__subtitle"
             >
-              Section 8 housing vouchers and other valid rental assistance programs can be used for this property. In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              <div
+                class="mb-4"
+              >
+                Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+              </div>
+              <div>
+                In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -6118,17 +6172,17 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application.
-              </p>
-              <p>
-                Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required.
-              </p>
-              <p>
-                Collection accounts...
-              </p>
-            </div>
+            <span>
+              Provide a credit report with score from Equifax, Experian, or TransUnion dated within thirty (30) days of the application. 
+
+              <br />
+              <br />
+              Accounts that are not current or that are derogatory will negatively affect the overall scoring, which could result in the denial of the application or an additional deposit may be required. 
+
+              <br />
+              <br />
+              Collection...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about credit history guidelines"
@@ -6154,17 +6208,17 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             class="expandable-text text-xs text-gray-700 translate additional-rule-card"
           >
              
-            <div>
-              <p>
-                Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted.
-              </p>
-              <p>
-                Previous rental history will be reviewed and must exhibit no derogatory references.
-              </p>
-              <p>
-                Landlord references will only check for...
-              </p>
-            </div>
+            <span>
+              Provide minimum of 4 years rental history with at least two prior rentals in which you were responsible for paying the rent.  Applicants without rental history will still be considered. No Guarantors permitted. 
+
+              <br />
+              <br />
+              Previous rental history will be reviewed and must exhibit no derogatory references. 
+
+              <br />
+              <br />
+              Landlord references will only check...
+            </span>
             <button
               aria-expanded="false"
               aria-label="Read more about rental history guidelines"

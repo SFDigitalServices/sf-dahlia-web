@@ -57,3 +57,31 @@ export const TENURE_TYPES = {
   NEW_RENTAL: "New rental",
   RE_RENTAL: "Re-rental",
 }
+
+// Whitelist of allowed SF.gov links for secure redirection
+export const SFGOV_LINKS = [
+  "https://sf.gov/departments/mayors-office-housing-and-community-development",
+  "https://sf.gov/information/learn-about-housing-lottery-preference-programs",
+  "https://sf.gov/information/learn-how-lottery-works-shirley-chisholm-village",
+  "https://sf.gov/apply-shirley-chisholm-village-housing",
+  "https://sf.gov/reports/january-2023/first-come-first-served-bmr-listings",
+  "https://sf.gov/reports/december-2022/city-second-program-current-listings",
+  "https://sf.gov/information/san-francisco-rental-opportunities",
+  "https://sf.gov/reports/august-2023/first-come-first-served-bmr-listings",
+  "https://sf.gov/reports/august-2023/city-second-program-current-listings",
+  "https://sf.gov/learn-about-certificate-preference-cop",
+  "https://sf.gov/displaced-tenant-housing-preference-program-dthp",
+  "https://sf.gov/reports/february-2023/find-lender-below-market-rate-program",
+  "https://sf.gov/departments/311-customer-service-center",
+  "https://sf.gov/sign-complete-homebuyer-education",
+  "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+  "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
+  "https://sf.gov/departments/city-administrator/digital-services",
+  "https://sf.gov/departments/mayors-office-innovation",
+  "https://sf.gov/information/special-calculations-household-income",
+  // Salesforce links that redirect to sf.gov pages
+  "http://sfmohcd.org/certificate-preference",
+  "http://sfmohcd.org/housing-preference-programs",
+  "http://sfmohcd.org/displaced-tenant-housing-preference",
+  "http://sfmohcd.org/neighborhood-resident-housing-preference",
+]

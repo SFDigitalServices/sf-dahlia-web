@@ -85,6 +85,9 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             iconPlacement="left"
             size={AppearanceSizeType.small}
             iconSize="medium"
+            onClick={() => {
+              window.location.href = `tel:+1${housingCounselor.phone}`
+            }}
           >
             {t("assistance.housingCounselors.counselor.call.upper", {
               phoneNumber: housingCounselor.phone,
@@ -95,6 +98,9 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             icon={faEnvelope}
             iconPlacement="left"
             iconSize="medium"
+            onClick={() => {
+              window.open(`mailto:${housingCounselor.email}`)
+            }}
           >
             {t("assistance.housingCounselors.counselor.email.upper", {
               counselorName: housingCounselor.shortName || housingCounselor.fullName,
@@ -105,6 +111,9 @@ const HousingCounselor = (housingCounselor: CounselorData) => {
             icon="link"
             iconPlacement="left"
             iconSize="medium"
+            onClick={() => {
+              window.open(housingCounselor.website, "_blank")
+            }}
           >
             {t("assistance.housingCounselors.counselor.visitWebsite.upper", {
               counselorName: housingCounselor.shortName || housingCounselor.fullName,
