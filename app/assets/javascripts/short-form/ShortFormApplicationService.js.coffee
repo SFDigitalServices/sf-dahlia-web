@@ -60,6 +60,7 @@ ShortFormApplicationService = (
       rentBurden: null
       aliceGriffith: null
       rightToReturnSunnydale: null
+      veterans_household_member: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -89,6 +90,9 @@ ShortFormApplicationService = (
     lastPage: 'name'
     # for storing any applicant info that we are about to override, for comparison
     overwrittenApplicantInfo: {}
+    customEducatorScreeningAnswer: null
+    customEducatorJobClassificationNumber: null
+    isAnyoneAVeteran: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -133,6 +137,14 @@ ShortFormApplicationService = (
       if fieldName == 'email' && field.$error.pattern
         field.$error.email = true
       field.$invalid && (!field.$pristine || form.$submitted)
+    else
+      false
+
+  Service.inputInvalidOnTouched = (fieldName, form = Service.form.applicationForm) ->
+    return false unless form
+    field = form[fieldName]
+    if form && field
+      field.$invalid && (field.$touched || form.$submitted)
     else
       false
 
@@ -519,6 +531,14 @@ ShortFormApplicationService = (
         ((member.hasSameAddressAsApplicant == 'Yes' && _.lowerCase(Service.applicant.home_address.city) == 'san francisco') ||
         (member.home_address && _.lowerCase(member.home_address.city) == 'san francisco'))
 
+  Service.eligibleVeteransMembers = ->
+    sortedMembers = _.sortBy(Service.fullHousehold(), 'id')
+    sortedMembers.filter (member) ->
+      dob = "#{member.dob_year}-#{member.dob_month}-#{member.dob_day}"
+      dob = moment(dob, 'YYYY-MM-DD')
+      age = moment().diff(dob, 'years')
+      age >= 17
+
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant
     # JS concat creates a new array (does not modify HH member array)
@@ -565,7 +585,7 @@ ShortFormApplicationService = (
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
-    return !_.some(_.pick(Service.preferences, prefList))
+    return !_.some(_.pick(Service.preferences, prefList)) && Service.application.isAnyoneAVeteran != 'Yes'
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
@@ -889,6 +909,15 @@ ShortFormApplicationService = (
 
     # pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
+
+    # this function is executed right before the first .../<listing_id>/apply/... page
+    #  therefore, any updates to the application _object_ before that page will be cleared,
+    #  unless we implement some side-effect logic within this function to preserve that data.
+    #  For example, the line above this comment will preserve the application.answeredCommunityScreening value.
+    #  Similar logic needs to be added to the `resetAndStartNewApp` function
+    formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
+    formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
+
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data

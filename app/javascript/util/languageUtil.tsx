@@ -5,6 +5,7 @@ import React from "react"
 
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
+import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -141,6 +142,24 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
 }
 
 /**
+ * Get an SF.gov url given the DAHLIA language prefix using the sf.gov node suffix
+ *
+ */
+export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
+  if (!SFGOV_LINKS.includes(enLink) || enLink.includes("pdf")) return enLink
+  switch (getCurrentLanguage(path || window.location.pathname)) {
+    case "es":
+      return `https://sf.gov/es/node/${node}`
+    case "tl":
+      return `https://sf.gov/fil/node/${node}`
+    case "zh":
+      return `https://sf.gov/zh-hant/node/${node}`
+    default:
+      return enLink
+  }
+}
+
+/**
  * Get a renderable version of a translated string with e.g. a link in it as an alternative to using <Markdown />
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
@@ -172,6 +191,16 @@ export function getReservedCommunityType(type: string | undefined): string {
       return t("listings.reservedCommunityType.disability")
     default:
       return type
+  }
+}
+
+// Get the translated custom listing
+export function getCustomListingType(type: string | undefined): string {
+  switch (type) {
+    case CUSTOM_LISTING_TYPES.EDUCATOR_ONE:
+      return t("listings.customListingType.educator")
+    default:
+      return undefined
   }
 }
 

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react"
 import { ImageCard, t } from "@bloom-housing/ui-components"
-import { getReservedCommunityType } from "../../util/languageUtil"
 import type { ImageItem } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { getShareListingPath } from "../../util/routeUtil"
-import { getListingAddressString } from "../../util/listingUtil"
+import { getListingAddressString, getTagContent } from "../../util/listingUtil"
 import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
@@ -17,7 +16,7 @@ export interface ListingDetailsImageCardProps {
 const createImageCardProps = (listing: RailsListing) => {
   const listingImages: ImageItem[] = listing?.Listing_Images?.map((listingImage) => {
     return {
-      url: listingImage.Image_URL,
+      url: listingImage.displayImageURL,
       description: listingImage.Image_Description,
     }
   })
@@ -33,14 +32,12 @@ const createImageCardProps = (listing: RailsListing) => {
             imageUrl: listing.imageURL,
             description: t("listings.buildingImageAltText"),
           },
-          fallbackUsed: false,
         }
       : {
           props: {
             imageUrl: fallbackImg,
             description: "",
           },
-          fallbackUsed: true,
         }
   } else {
     return listingImages.length > 0
@@ -50,14 +47,12 @@ const createImageCardProps = (listing: RailsListing) => {
             description: t("listings.buildingImageAltText"),
             moreImagesLabel: t("listings.morePhotos"),
           },
-          fallbackUsed: false,
         }
       : {
           props: {
-            iamgeUrl: fallbackImg,
+            imageUrl: fallbackImg,
             description: "",
           },
-          fallbackUsed: true,
         }
   }
 }
@@ -69,20 +64,16 @@ export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProp
   const shareButtonSelected = getAssetPath("share-button-selected.svg")
   const [shareImage, setShareImage] = useState(shareButton)
 
-  const { fallbackUsed, props: imageCardProps } = createImageCardProps(listing)
+  const { props: imageCardProps } = createImageCardProps(listing)
 
   return (
     <header className="image-card--leader">
-      <span aria-hidden={fallbackUsed}>
-        <ImageCard
-          {...imageCardProps}
-          tags={
-            listing.Reserved_community_type
-              ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
-              : undefined
-          }
-        />
-      </span>
+      <ImageCard
+        innerClassName="translate"
+        {...imageCardProps}
+        tags={getTagContent(listing)}
+        modalAriaTitle="true"
+      />
       <div className="flex flex-col md:items-start md:text-left p-3 text-center">
         <h1 className="font-sans font-semibold text-2xl">{listing.Name}</h1>
         <p className="my-1">

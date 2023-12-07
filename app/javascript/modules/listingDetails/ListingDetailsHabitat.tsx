@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { Heading, t } from "@bloom-housing/ui-components"
-import { renderMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 import { isHabitatListing } from "../../util/listingUtil"
 
 export interface ListingDetailsHabitatProps {
@@ -58,7 +58,10 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <p className="mt-4">
         {renderMarkup(
           t("listings.incomeExceptions.intro", {
-            url: "https://sfmohcd.org/special-calculations-household-income",
+            url: getSfGovUrl(
+              "https://sf.gov/information/special-calculations-household-income",
+              7080
+            ),
           })
         )}
       </p>

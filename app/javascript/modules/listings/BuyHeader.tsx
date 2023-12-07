@@ -1,34 +1,40 @@
 import { Heading, PageHeader, t } from "@bloom-housing/ui-components"
 import React from "react"
-import Link from "../../navigation/Link"
 import "./BuyHeader.scss"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 
 const GetHelp = () => (
   <div className="md:bg-white md:p-4">
     <Heading styleType="underlineWeighted" className="mb-5" priority={2}>
-      {t("listingsForSale.getHelp.helpWithDownpayment")}
+      {t("listingsForSale.buyHeader.getHelp.title")}
     </Heading>
-    <span>
-      <p className="mb-4">
-        {t("listingsForSale.getHelp.dalpProgramInfo")}{" "}
-        <Link
-          external={true}
-          target="_blank"
-          href="https://sf.gov/reports/may-2023/downpayment-assistance-loan-program-dalp"
-        >
-          {t("listingsForSale.getHelp.learnMoreAndHowToApply")}
-        </Link>
-      </p>
-    </span>
-    <p className="mb-4">
-      {renderInlineMarkup(
-        t("listingsForSale.getHelp.otherAssistancePrograms", {
-          url: "https://sf.gov/resource/2022/mohcd-loan-programs",
-        })
-      )}
-    </p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.body1")}</p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.body2")}</p>
+    <p className="mb-4">{t("listingsForSale.buyHeader.getHelp.options.header")}</p>
+    <ul className="list-disc ml-6">
+      <li>
+        {renderInlineMarkup(
+          t("listingsForSale.buyHeader.getHelp.option.BMR", {
+            url: getSfGovUrl(
+              "https://sf.gov/reports/august-2023/first-come-first-served-bmr-listings",
+              6396
+            ),
+          })
+        )}
+      </li>
+      <br />
+      <li>
+        {renderInlineMarkup(
+          t("listingsForSale.buyHeader.getHelp.option.firmPrice", {
+            url: getSfGovUrl(
+              "https://sf.gov/reports/august-2023/city-second-program-current-listings",
+              7189
+            ),
+          })
+        )}
+      </li>
+    </ul>
   </div>
 )
 const BuyHeader = () => (

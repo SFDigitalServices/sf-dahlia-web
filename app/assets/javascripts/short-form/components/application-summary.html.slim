@@ -15,6 +15,16 @@ span ng-show="::$ctrl.isSale"
 review-summary-section header="{{'t.you' | translate}}" section-name="name" editable="::$ctrl.sectionsAreEditable"
 
 .app-inner
+  / custom educator
+  div ng-if="::$ctrl.isCustomEducatorListing"
+    review-summary-item label="{{'a3_custom_educator_screening.work_at_sf_unified' | translate}}" identifier="custom-educator-screening-answer"
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
+        | {{'t.yes' | translate}}
+      span ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'No'"
+        | {{'t.no' | translate}}
+    review-summary-item label="{{'a3_custom_educator_screening.job_code' | translate}}" identifier="custom-educator-job-classification-number" ng-if="::$ctrl.application.customEducatorScreeningAnswer == 'Yes'"
+      | {{::$ctrl.application.customEducatorJobClassificationNumber}}
+
   / name
   div ng-if="::$ctrl.atContinuePreviousDraft && $ctrl.continueDraftApplicantHasUpdatedInfo('name')"
     review-summary-item label="{{'label.name' | translate}}" identifier="full-name"
@@ -158,10 +168,6 @@ div
       | {{::$ctrl.applicant.genderOther ? $ctrl.applicant.genderOther : $ctrl.applicant.gender }}
     review-summary-item label="{{'label.sexual_orientation_or_sexual_identity' | translate}}" ng-if="::$ctrl.applicant.sexualOrientation"
       | {{::$ctrl.applicant.sexualOrientationOther ? $ctrl.applicant.sexualOrientationOther : $ctrl.applicant.sexualOrientation }}
-    review-summary-item label="{{'label.applicant_veteran' | translate}}" ng-if="::$ctrl.applicant.isVeteran"
-      | {{::$ctrl.getIsVeteran()}}
-    review-summary-item label="{{'label.household_veteran' | translate}}" ng-if="::$ctrl.application.isNonPrimaryMemberVeteran"
-      | {{::$ctrl.getIsNonPrimaryMemberVeteran()}}
 
     review-summary-item label="{{'label.how_you_heard_about_this_listing' | translate}}" ng-if="::$ctrl.applicant.referral"
       | {{::$ctrl.applicant.referral }}

@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react"
 import { CategoryTable, ContentAccordion, Icon, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { isHabitatListing, isSale, groupAndSortUnitsByOccupancy } from "../../util/listingUtil"
-import type { RailsUnitWithOccupancyAndMaxIncome } from "../../api/types/rails/listings/RailsUnit"
+import type { RailsUnitWithOccupancyAndMinMaxIncome } from "../../api/types/rails/listings/RailsUnit"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import type { RailsAmiChart } from "../../api/types/rails/listings/RailsAmiChart"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
-import { getRangeString } from "../listings/DirectoryHelpers"
+import { getCurrencyString, getRangeString } from "../listings/DirectoryHelpers"
 import { defaultIfNotTranslated, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsPricingTable.scss"
 
@@ -16,7 +16,7 @@ export interface ListingDetailsPricingTableProps {
 
 export interface AmiRow {
   ami: { min: number | undefined; max: number }
-  units: RailsUnitWithOccupancyAndMaxIncome[]
+  units: RailsUnitWithOccupancyAndMinMaxIncome[]
 }
 
 export interface GroupedUnitsByOccupancy {
@@ -26,7 +26,7 @@ export interface GroupedUnitsByOccupancy {
   amiRows: AmiRow[]
 }
 
-const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
   if (unit.Price_With_Parking && unit.Price_Without_Parking) {
     return [
       {
@@ -59,7 +59,7 @@ const buildSalePriceCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
-const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
   if (unit?.HOA_Dues_With_Parking && unit?.HOA_Dues_Without_Parking) {
     return [
       {
@@ -92,18 +92,14 @@ const buildSaleHoaDuesCellRow = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
-const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+const buildSaleCells = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
   return {
     units: {
       cellText: defaultIfNotTranslated(`listings.unitTypes.${unit.Unit_Type}`, unit.Unit_Type),
       cellSubText: `${unit?.Availability} ${t("t.available")}`,
     },
     income: {
-      cellText: getRangeString(
-        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
-        unit?.maxMonthlyIncomeNeeded,
-        true
-      ),
+      cellText: getRangeString(unit?.minMonthlyIncomeNeeded, unit?.maxMonthlyIncomeNeeded, true),
       cellSubText: t("t.perMonth"),
     },
     sale: buildSalePriceCellRow(unit),
@@ -111,7 +107,7 @@ const buildSaleCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
   }
 }
 
-const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
+const buildRentalCells = (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
   return {
     units: {
       cellText: defaultIfNotTranslated(`listings.unitTypes.${unit.Unit_Type}`, unit.Unit_Type),
@@ -119,15 +115,17 @@ const buildRentalCells = (unit: RailsUnitWithOccupancyAndMaxIncome) => {
     },
     income: {
       cellText: getRangeString(
-        unit?.BMR_Rental_Minimum_Monthly_Income_Needed,
+        unit?.minMonthlyIncomeNeeded,
         unit?.maxMonthlyIncomeNeeded,
-        true
+        true,
+        undefined,
+        !!unit?.Rent_percent_of_income
       ),
       cellSubText: t("t.perMonth"),
     },
     rent: {
       cellText: unit?.BMR_Rent_Monthly
-        ? `$${unit?.BMR_Rent_Monthly?.toLocaleString()}`
+        ? getCurrencyString(Math.round(unit?.BMR_Rent_Monthly))
         : `${unit?.Rent_percent_of_income}%`,
       cellSubText: unit?.BMR_Rent_Monthly ? t("t.perMonth") : t("t.income"),
     },
@@ -148,16 +146,19 @@ const buildHeader = (amiRow: AmiRow, showFullText: boolean): string => {
 
 const buildAccordions = (
   groupedUnitsByOccupancy: GroupedUnitsByOccupancy[],
-  listingIsSale: boolean
+  listingIsSale: boolean,
+  forceZeroInRange: boolean
 ) => {
   return groupedUnitsByOccupancy?.map(
     (occupancy: GroupedUnitsByOccupancy, index: number, array) => {
       const accordionLength = array.length
 
       const categoryData = occupancy?.amiRows?.map((amiRow: AmiRow, amiRowIndex: number) => {
-        const responsiveTableRows = amiRow.units.map((unit: RailsUnitWithOccupancyAndMaxIncome) => {
-          return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
-        })
+        const responsiveTableRows = amiRow.units.map(
+          (unit: RailsUnitWithOccupancyAndMinMaxIncome) => {
+            return listingIsSale ? buildSaleCells(unit) : buildRentalCells(unit)
+          }
+        )
 
         const responsiveTableHeaders = listingIsSale
           ? {
@@ -204,9 +205,11 @@ const buildAccordions = (
                     : `${t("listings.stats.numInHouseholdSingular")}`}
                 </span>
               </span>
-              <span className={"flex items-center mr-2 text-sm md:text-base"}>
+              <span
+                className={"flex items-center mr-2 text-sm md:text-base text-left md:text-center"}
+              >
                 {(() => {
-                  return occupancy?.absoluteMinIncome?.valueOf() === 0 ? (
+                  return occupancy?.absoluteMinIncome <= 0 && !forceZeroInRange ? (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.upToMaxPerMonth", {
@@ -219,8 +222,10 @@ const buildAccordions = (
                     <div>
                       {renderInlineMarkup(
                         t("listings.incomeRange.minMaxPerMonth", {
-                          min: occupancy?.absoluteMinIncome?.toLocaleString(),
-                          max: occupancy?.absoluteMaxIncome?.toLocaleString(),
+                          min: Math.round(
+                            forceZeroInRange ? 0 : occupancy?.absoluteMinIncome
+                          ).toLocaleString(),
+                          max: Math.round(occupancy?.absoluteMaxIncome).toLocaleString(),
                         }),
                         "<span>"
                       )}
@@ -326,10 +331,12 @@ const buildContent = (
     )
   }
 
+  const forceZeroInRange = units?.some((unit) => unit.Rent_percent_of_income)
+
   let groupedUnitsByOccupancy: GroupedUnitsByOccupancy[] = []
 
   if (units?.length) {
-    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts)
+    groupedUnitsByOccupancy = groupAndSortUnitsByOccupancy(units, amiCharts, listingIsSale)
   }
 
   if (listingIsHabitat) {
@@ -338,7 +345,7 @@ const buildContent = (
 
   return (
     <div className="md:my-6 md:pr-8 sm:px-4 lg:pl-0 lg:pr-8 md:w-2/3 px-2 w-full">
-      {buildAccordions(groupedUnitsByOccupancy, listingIsSale)}
+      {buildAccordions(groupedUnitsByOccupancy, listingIsSale, forceZeroInRange)}
     </div>
   )
 }

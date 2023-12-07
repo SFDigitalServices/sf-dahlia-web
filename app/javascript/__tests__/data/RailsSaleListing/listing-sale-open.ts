@@ -171,6 +171,7 @@ export const openSaleListing: RailsSaleListing = {
   Lottery_City: "San Francisco",
   Lottery_Date: "2021-01-17T19:00:00.000+0000",
   Publish_Lottery_Results: false,
+  Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
   Leasing_Agent_Name: "Matthew Burns",
@@ -437,17 +438,17 @@ export const openSaleListing: RailsSaleListing = {
   },
   Listing_Images: [
     {
-      Image_URL:
+      displayImageURL:
         "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
       Image_Description: "This is a listing image",
     },
     {
-      Image_URL:
+      displayImageURL:
         "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
       Image_Description: "This is a second listing image",
     },
     {
-      Image_URL:
+      displayImageURL:
         "https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg",
       Image_Description: "This is a third listing image",
     },

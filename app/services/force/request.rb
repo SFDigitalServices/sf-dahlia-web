@@ -20,15 +20,23 @@ module Force
       send(:get, endpoint, params)
     end
 
+    def env_variable_true(variable)
+      variable.to_s.casecmp('true').zero?
+    end
+
     def cached_get(endpoint, params = nil, force = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force = ActiveModel::Type::Boolean.new.cast(force)
-      force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
-      if ENV['FREEZE_SALESFORCE_CACHE']
+
+      force_refresh = force || !env_variable_true(ENV['CACHE_SALESFORCE_REQUESTS'])
+      if env_variable_true(ENV['FREEZE_SALESFORCE_CACHE'])
         expires_in = 10.years
       else
         expires_in = params ? 10.minutes : 1.day
       end
+      Rails.logger.info(
+        "running cached_get for #{endpoint} with force set to #{force}",
+      )
       @cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         get(endpoint, params)
       end

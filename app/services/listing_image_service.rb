@@ -18,7 +18,7 @@ class ListingImageService
 
   def process_image
     unless raw_image_url
-      add_error("No image provided for listing #{listing_id}")
+      Rails.logger.info("No Photo_URL image provided for listing #{@listing_id}")
       return self
     end
 
@@ -106,6 +106,7 @@ class ListingImageService
     listing_image =
       ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id)
     listing_image.update(image_url: image_url)
+    Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
   end
 
   def add_error(error_message)

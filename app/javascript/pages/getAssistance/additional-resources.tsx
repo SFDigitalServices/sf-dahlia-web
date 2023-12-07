@@ -4,6 +4,7 @@ import AssistanceLayout from "../../layouts/AssistanceLayout"
 import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"
+import { getSfGovUrl } from "../../util/languageUtil"
 
 const AdditionalResources = () => {
   return (
@@ -25,7 +26,7 @@ const AdditionalResources = () => {
                     <InfoCard
                       title={t(resource.title)}
                       subtitle={t(resource.agency)}
-                      externalHref={resource.externalUrl}
+                      externalHref={getSfGovUrl(resource.externalUrl, resource.sfGovNode)}
                       className="info-card-additional-resources is-normal-primary-lighter"
                       key={resource.title}
                     >

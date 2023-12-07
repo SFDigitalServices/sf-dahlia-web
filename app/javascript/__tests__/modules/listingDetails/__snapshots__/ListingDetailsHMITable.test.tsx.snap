@@ -31,7 +31,7 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
@@ -302,6 +302,8 @@ exports[`ListingDetailsHMITable does not render ListingDetailsPricingTable when 
       </table>
     </div>
     <button
+      aria-expanded="false"
+      aria-label="Show more about maximum income based on household size"
       class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >
@@ -365,7 +367,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
@@ -636,6 +638,8 @@ exports[`ListingDetailsHMITable renders ListingDetailsHMITable component with re
       </table>
     </div>
     <button
+      aria-expanded="false"
+      aria-label="Show more about maximum income based on household size"
       class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >
@@ -726,7 +730,7 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
               <p>
                 People in your household may need 
                 <a
-                  href="https://sfmohcd.org/special-calculations-household-income"
+                  href="https://sf.gov/information/special-calculations-household-income"
                   target="_blank"
                 >
                   special income calculations
@@ -997,6 +1001,8 @@ exports[`ListingDetailsHMITable renders ListingDetailsPricingTable component wit
       </table>
     </div>
     <button
+      aria-expanded="false"
+      aria-label="Show more about maximum income based on household size"
       class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
       tabindex="0"
     >

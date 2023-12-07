@@ -81,7 +81,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               class="flex flex-col"
             >
               <span
-                class="translate"
+                class="links-space translate"
               >
                 <span>
                   MOHCD
@@ -148,7 +148,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               class="flex flex-col"
             >
               <span
-                class="translate"
+                class="links-space translate"
               >
                 <span>
                   SFPL
@@ -198,6 +198,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             <div>
               <button
                 aria-expanded="false"
+                aria-label="Show more about what to expect"
                 class="button is-unstyled m-0 no-underline has-toggle"
                 type="button"
               >
@@ -282,7 +283,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           <span>
             1 South Van Ness Ave  
             <br />
-            San Francisco , CA 94131
+            San Francisco, CA 94131
           </span>
         </p>
         <p

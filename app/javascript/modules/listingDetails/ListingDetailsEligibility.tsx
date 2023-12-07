@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  Card,
   ExpandableText,
   InfoCard,
   ListingDetailItem,
@@ -9,6 +10,8 @@ import {
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
+  isEducator,
+  isEducatorOne,
   isHabitatListing,
   isPluralSRO,
   isRental,
@@ -16,13 +19,20 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
 } from "../../util/listingUtil"
-import { defaultIfNotTranslated, renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
+import {
+  defaultIfNotTranslated,
+  getSfGovUrl,
+  renderInlineMarkup,
+  renderMarkup,
+} from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
+import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
+import { stripMostTags } from "../../util/filterUtil"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -80,7 +90,7 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
 
-  const occupancyTableData = listing.unitSummaries.general.map((unit) => {
+  const occupancyTableData = listing.unitSummaries.general?.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
       occupancyLabel = t("listings.onePerson")
@@ -120,6 +130,98 @@ export const ListingDetailsEligibility = ({
             }
           />
         )}
+        {isEducatorOne(listing) && (
+          <ListSection
+            title={t("listings.customListingType.educator.eligibility.title")}
+            subtitle=""
+          >
+            <Card className="educator-eligibility">
+              <Card.Section className="markdown">
+                <div>
+                  {t("listings.customListingType.educator.eligibility.part1")}
+                  <ul className="ml-0 mt-1">
+                    <li>
+                      {renderInlineMarkup(
+                        t("listings.customListingType.educator.eligibility.sfusd", {
+                          sfusdLink: "https://www.sfusd.edu/",
+                        }),
+                        "<a><b>"
+                      )}
+                    </li>
+                    <li>{t("listings.customListingType.educator.eligibility.code")}</li>
+                  </ul>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part2", {
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
+                      })
+                    )}
+                  </p>
+                  <p>
+                    {t("listings.customListingType.educator.eligibility.part3")}
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part4", {
+                        emailListLink: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
+                      })
+                    )}
+                  </p>
+                </div>
+              </Card.Section>
+            </Card>
+          </ListSection>
+        )}
+        {isEducator(listing) && !isEducatorOne(listing) && (
+          <ListSection
+            title={t("listings.customListingType.educator.eligibility.title")}
+            subtitle=""
+          >
+            <Card className="educator-eligibility">
+              <Card.Section className="markdown">
+                <div>
+                  <p>
+                    <b>{t("listings.customListingType.educator.eligibility.priority")}</b>
+                  </p>
+                  <p>{t("listings.customListingType.educator.eligibility.priority1")}</p>
+                  <p className="mb-0">
+                    {t("listings.customListingType.educator.eligibility.priority2")}
+                  </p>
+                  <ul className="ml-0 my-1">
+                    <li>
+                      {renderInlineMarkup(
+                        t("listings.customListingType.educator.eligibility.sfusd", {
+                          sfusdLink: "https://www.sfusd.edu/",
+                        }),
+                        "<a><b>"
+                      )}
+                    </li>
+                    <li>{t("listings.customListingType.educator.eligibility.code")}</li>
+                  </ul>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.part2", {
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
+                      })
+                    )}
+                  </p>
+                  <p>{t("listings.customListingType.educator.eligibility.priority3")}</p>
+                  <p>
+                    {renderInlineMarkup(
+                      t("listings.customListingType.educator.eligibility.priority4", {
+                        learnMoreLink: "#chisholm-preferences",
+                      })
+                    )}
+                  </p>
+                </div>
+              </Card.Section>
+            </Card>
+          </ListSection>
+        )}
         {!!listing.Reserved_community_type && !isHabitatListing(listing) && (
           <ListSection
             title={t(`listings.reservedCommunityType.${listing.Reserved_community_type}.title`)}
@@ -144,21 +246,29 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        <ListSection
-          title={t("listings.lottery.title")}
-          subtitle={
-            <>
-              <div className="mb-4">
-                {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
-              </div>
-              {t("listingsForSale.lotteryPreferences.hasPreferences")}
-            </>
-          }
-        >
+        {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
-            <ListingDetailsPreferences listingID={listing.listingID} />
+            <span id="chisholm-preferences">
+              <ListingDetailsChisholmPreferences />
+            </span>
           </ErrorBoundary>
-        </ListSection>
+        ) : (
+          <ListSection
+            title={t("listings.lottery.title")}
+            subtitle={
+              <>
+                <div className="mb-4">
+                  {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+                </div>
+                {t("listingsForSale.lotteryPreferences.hasPreferences")}
+              </>
+            }
+          >
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsPreferences listingID={listing.listingID} />
+            </ErrorBoundary>
+          </ListSection>
+        )}
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}
@@ -198,7 +308,12 @@ export const ListingDetailsEligibility = ({
         {isRental(listing) && (
           <ListSection
             title={t("listingsForRent.rentalAssistance.title")}
-            subtitle={t("listingsForRent.rentalAssitance.subtitle")}
+            subtitle={
+              <>
+                <div className="mb-4">{t("listingsForRent.rentalAssistance.info1")}</div>
+                <div>{t("listingsForRent.rentalAssistance.info2")}</div>
+              </>
+            }
           />
         )}
         {(listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History) && (
@@ -209,7 +324,7 @@ export const ListingDetailsEligibility = ({
             {listing.Credit_Rating && (
               <InfoCard title={t("listings.additionalEligibilityRules.creditHistory")}>
                 <ExpandableText
-                  className="text-xs text-gray-700 translate"
+                  className="text-xs text-gray-700 translate additional-rule-card"
                   strings={{
                     readMore: t("label.showMore"),
                     readLess: t("label.showLess"),
@@ -217,7 +332,7 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Credit_Rating}
+                  {stripMostTags(listing.Credit_Rating)}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -225,7 +340,7 @@ export const ListingDetailsEligibility = ({
             {listing.Eviction_History && (
               <InfoCard title={t("listings.additionalEligibilityRules.rentalHistory")}>
                 <ExpandableText
-                  className="text-xs text-gray-700 translate"
+                  className="text-xs text-gray-700 translate additional-rule-card"
                   strings={{
                     readMore: t("label.showMore"),
                     readLess: t("label.showLess"),
@@ -233,13 +348,13 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Eviction_History}
+                  {stripMostTags(listing.Eviction_History)}
                 </ExpandableText>
               </InfoCard>
             )}
             <InfoCard title={t("listings.additionalEligibilityRules.criminalBackground")}>
               <ExpandableText
-                className="text-xs text-gray-700"
+                className="text-xs text-gray-700 additional-rule-card"
                 strings={{
                   readMore: t("label.showMore"),
                   readLess: t("label.showLess"),

@@ -19,6 +19,11 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         855 Brannan Units 318
       </h2>
     </header>
+    <p
+      class="px-8 pb-4 text-xs"
+    >
+      Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
+    </p>
     <form
       class="bg-gray-100 flex mb-4 px-6 py-4"
       id="search-form"
@@ -27,23 +32,29 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
         class="field w-full"
       >
         <label
-          class="label"
+          class="label sr-only"
           for="lotterySearchNumber"
-        />
+        >
+          Enter Your Lottery Number
+        </label>
         <div
           class="control"
         >
           <input
-            aria-describedby="lotterySearchNumber"
+            aria-describedby="lotterySearchNumber-error"
             aria-invalid="false"
             class="input"
             id="lotterySearchNumber"
             name="lotterySearchNumber"
             placeholder="Enter Your Lottery Number"
+            title="Enter Your Lottery Number"
             type="text"
             value=""
           />
         </div>
+        <span
+          id="lotterySearchNumber-error"
+        />
       </div>
       <button
         aria-label="Submit number"
@@ -77,11 +88,6 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       <div
         class="text-sm"
       >
-        <p
-          class="px-8 pb-4 text-xs"
-        >
-          Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.
-        </p>
         <header
           class="border-b border-gray-450 mb-4"
         >

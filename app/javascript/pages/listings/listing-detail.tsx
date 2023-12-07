@@ -109,6 +109,7 @@ const ListingDetail = () => {
             <ListingDetailsReservedBanner
               reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
               reservedCommunityType={listing.Reserved_community_type}
+              customListingType={listing.Custom_Listing_Type}
             />
             <ErrorBoundary
               boundaryScope={BoundaryScope.component}

@@ -20,7 +20,7 @@ div ng-show="showAlert()"
     p.alert-notice_title
       | {{customSubMessage}}
 
-  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length"
+  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length" style="background-color:#fff;"
     p.t-tiny.c-alert ng-repeat="error in eligibilityErrors" ng-class="{ 'margin-bottom': !shortEligibilityError }"
       | {{error}}
 
@@ -28,5 +28,5 @@ div ng-show="showAlert()"
     / when you encounter the senior error we just want to show a short eligibility error message
     div ng-hide="shortEligibilityError"
       / otherwise we display the further message about not being eligible and the link to Get Assistance
-      p.t-tiny.margin-bottom translate="error.not_eligible_description"
-
+      p.t-tiny.margin-bottom ng-hide="customEducatorListing" translate="error.not_eligible_description"
+      p.t-tiny.margin-bottom ng-show="customEducatorListing" translate="a3_custom_educator_screening.not_eligible_description" translate-value-rental-listing-directory-url="/listings/for-rent" translate-value-additional-housing-opportunities-url="/additional-resources"

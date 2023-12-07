@@ -1,7 +1,7 @@
 import React, { useContext, useState, useMemo } from "react"
 import { Icon, ListSection, StandardTable, Button, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { renderMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
@@ -33,18 +33,27 @@ const buildHmiHeadersWithOneAmi = () => {
   }
 }
 
+const hasMultipleUniqueChartsByPercent = (amiCharts: RailsAmiChart[]) => {
+  return (
+    amiCharts
+      .map((chart) => chart.percent)
+      .filter((currentPercent, idx, allPercents) => allPercents.indexOf(currentPercent) === idx)
+      .length > 1
+  )
+}
+
 const buildHmiHeadersWithMultipleAmis = (amiCharts: RailsAmiChart[]) => {
   const headers = {
     householdSize: "t.householdSize",
   }
-  amiCharts.forEach((chart: RailsAmiChart) => {
+  amiCharts?.forEach((chart: RailsAmiChart) => {
     headers[`ami${chart.percent}`] = `t.percentAMI*percent:${chart.percent}`
   })
   return headers
 }
 
 const buildHmiChartHeaders = (amiCharts: RailsAmiChart[]) => {
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiHeadersWithMultipleAmis(amiCharts)
     : buildHmiHeadersWithOneAmi()
 }
@@ -68,8 +77,9 @@ const buildHmiTableWithOneAmiChart = (
   amiCharts: RailsAmiChart[]
 ) => {
   const tableData = []
+  const mostRecentAmiChart = amiCharts[amiCharts.length - 1]
   for (let i = minOccupancy; i <= maxOccupancy; i++) {
-    const amiChart = amiCharts[0]?.values?.find((amiChart: RailsAmiChartValue) => {
+    const amiChart = mostRecentAmiChart?.values?.find((amiChart: RailsAmiChartValue) => {
       return amiChart.numOfHousehold === i
     })
 
@@ -117,11 +127,12 @@ const buildHmiTableWithMultipleAmis = (
             content: <span className="font-semibold">{`${i} ${t("listings.people")}`}</span>,
           }
 
-    amiCharts.forEach((chart) => {
+    amiCharts?.forEach((chart) => {
       const amiChart = chart.values?.find((amiChart) => {
         return amiChart.numOfHousehold === i
       })
       if (amiChart) {
+        // if there are charts with the same percent, the chart with the largest index is used
         tableRow[`ami${chart.percent}`] = {
           content: t("t.perYearCost", { cost: `$${amiChart?.amount?.toLocaleString()}` }),
         }
@@ -147,7 +158,7 @@ const buildHmiCharts = (
     maxOccupancy += 2
   }
 
-  return amiCharts.length > 1
+  return hasMultipleUniqueChartsByPercent(amiCharts)
     ? buildHmiTableWithMultipleAmis(minOccupancy, maxOccupancy, amiCharts)
     : buildHmiTableWithOneAmiChart(minOccupancy, maxOccupancy, amiCharts)
 }
@@ -213,7 +224,10 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           <div className="mb-4 primary-lighter-markup-link-desktop">
             {renderMarkup(
               t("listings.incomeExceptions.intro", {
-                url: "https://sfmohcd.org/special-calculations-household-income",
+                url: getSfGovUrl(
+                  "https://sf.gov/information/special-calculations-household-income",
+                  7080
+                ),
               })
             )}
           </div>
@@ -235,6 +249,8 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           iconSize="small"
           icon={tableCollapsed ? faAngleDown : faAngleUp}
           onClick={expandTableHandler}
+          ariaLabel={t("listings.householdMaximumIncome.showMore.aria")}
+          ariaExpanded={!tableCollapsed}
         >
           {tableCollapsed ? t("label.showMore") : t("label.showLess")}
         </Button>

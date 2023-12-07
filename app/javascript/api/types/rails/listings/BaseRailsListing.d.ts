@@ -32,6 +32,7 @@ export type ListingEvent = {
 }
 
 export type ImageItem = {
+  displayImageURL: string
   attributes?: { type: string; url: string }
   Listing?: string
   Id?: string
@@ -80,6 +81,7 @@ type BaseRailsListing = {
   Costs_Not_Included?: string
   Credit_Rating?: string
   Criminal_History?: string
+  Custom_Listing_Type?: string
   Deposit_Max?: number
   Deposit_Min?: number
   Developer?: string
@@ -126,6 +128,7 @@ type BaseRailsListing = {
   Program_Type: string
   Project_ID: string
   Publish_Lottery_Results: boolean
+  Publish_Lottery_Results_on_DAHLIA?: string
   Realtor_Commission_Amount?: number
   Realtor_Commission_Info?: string
   Realtor_Commission_Unit?: string
