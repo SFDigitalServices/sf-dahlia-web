@@ -182,11 +182,9 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
 
   useEffect(() => {
     if (fetchingAmiChartsError) {
-      // TODO: Log error properly
       throw fetchingAmiChartsError
     }
     if (fetchingUnitsError) {
-      // TODO: Log error properly
       throw fetchingUnitsError
     }
   }, [fetchingAmiChartsError, fetchingUnitsError])
