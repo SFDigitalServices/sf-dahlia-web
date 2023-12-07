@@ -242,7 +242,7 @@ export const ListingDetailsEligibility = ({
           </ListSection>
         )}
 
-        {!isHabitatListing(listing) ? (
+        {!isHabitatListing(listing) && (
           <ListSection
             title={t("listings.householdMaximumIncome")}
             subtitle={
@@ -269,8 +269,6 @@ export const ListingDetailsEligibility = ({
               <ListingDetailsHMITable listing={listing} />
             </ErrorBoundary>
           </ListSection>
-        ) : (
-          <></>
         )}
 
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>

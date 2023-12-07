@@ -235,7 +235,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
   }
 
   return (
-    <span>
+    <>
       <StandardTable
         headers={HMITableHeaders}
         data={tableCollapsed ? HMITableData.slice(0, hmiCutoff) : HMITableData}
@@ -253,6 +253,6 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           {tableCollapsed ? t("label.showMore") : t("label.showLess")}
         </Button>
       )}
-    </span>
+    </>
   )
 }
