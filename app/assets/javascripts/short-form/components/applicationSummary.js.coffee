@@ -12,6 +12,7 @@ angular.module('dahlia.components')
     isCustomEducatorListing: '<'
     listing: '<'
     preferences: '<'
+    showVeteransApplicationQuestion: '<'
   controller: [
     '$filter', '$state', '$translate', 'LendingInstitutionService', 'ShortFormHelperService', 'ShortFormNavigationService', 'ShortFormRaceEthnicityService',
     ($filter, $state, $translate, LendingInstitutionService, ShortFormHelperService, ShortFormNavigationService, ShortFormRaceEthnicityService) ->
@@ -105,8 +106,24 @@ angular.module('dahlia.components')
           ctrl.applicant.primaryLanguage or
           ctrl.applicant.gender or
           ctrl.applicant.sexualOrientation or
+          (!ctrl.showVeteransApplicationQuestion && ctrl.applicant.isVeteran) or
+          (!ctrl.showVeteransApplicationQuestion && ctrl.application.isNonPrimaryMemberVeteran) or
           ctrl.applicant.referral
         )
+
+      ctrl.translatedYesNoNoAnswer = (val) ->
+        if val == 'Yes'
+          $translate.instant('t.yes')
+        else if val == 'No'
+          $translate.instant('t.no')
+        else if val == 'Decline to state'
+          $translate.instant('t.prefer_not_to_answer')
+
+      ctrl.getIsVeteran = ->
+        ctrl.translatedYesNoNoAnswer(ctrl.applicant.isVeteran)
+
+      ctrl.getIsNonPrimaryMemberVeteran = ->
+        ctrl.translatedYesNoNoAnswer(ctrl.application.isNonPrimaryMemberVeteran)
 
       return ctrl
   ]
