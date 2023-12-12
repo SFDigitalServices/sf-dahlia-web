@@ -1,4 +1,4 @@
-ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService) ->
+ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService, SharedService) ->
   Service = {}
   Service.preferences = _.keys(ListingDataService.preferenceMap)
   Service.metaFields = [
@@ -29,7 +29,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasMinimumCreditScore'
       'lendingAgent'
       'homebuyerEducationAgency'
-      'referral',
+      'referral'
+      'isNonPrimaryMemberVeteran'
     ]
     primaryApplicant: [
       'alternatePhone',
@@ -108,9 +109,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
     _.merge sfApp.primaryApplicant, home_address
     _.merge sfApp.primaryApplicant, mailing_address
-    if veteranMemberId && veteranMemberId == application.applicant.id
+    if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == application.applicant.id
       sfApp.primaryApplicant.isVeteran = 'Yes'
-    else
+    else if SharedService.showVeteransApplicationQuestion
       sfApp.primaryApplicant.isVeteran = null
     # householdMembers
     householdMembers = Service._formatHouseholdMembers(application, veteranMemberId)
@@ -118,7 +119,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       sfApp.householdMembers = householdMembers
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null
+    if SharedService.showVeteransApplicationQuestion && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
       allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
       _.each(allAppMembers, (member) ->
         if member
@@ -194,9 +195,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       _.merge householdMember, Service._formatGeocodingData(member)
       home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
       _.merge householdMember, home_address
-      if veteranMemberId && veteranMemberId == member.id
+      if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == member.id
         householdMember.isVeteran = 'Yes'
-      else
+      else if SharedService.showVeteransApplicationQuestion
         householdMember.isVeteran = null
       householdMembers.push(householdMember)
     return householdMembers
@@ -396,16 +397,17 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    veteranMemberId = null
-    allAppMembers = _.concat(data.applicant, data.householdMembers)
-    veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
-    if veteranMember
-      data.preferences.veterans_household_member = veteranMember.id.toString()
-      data.isAnyoneAVeteran = 'Yes'
-    else if _.find(allAppMembers, { isVeteran: 'No' })
-      data.isAnyoneAVeteran = 'No'
-    else if _.find(allAppMembers, { isVeteran: 'Decline to state' })
-      data.isAnyoneAVeteran = 'Decline to state'
+    if SharedService.showVeteransApplicationQuestion
+      veteranMemberId = null
+      allAppMembers = _.concat(data.applicant, data.householdMembers)
+      veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })
+      if veteranMember
+        data.preferences.veterans_household_member = veteranMember.id.toString()
+        data.isAnyoneAVeteran = 'Yes'
+      else if _.find(allAppMembers, { isVeteran: 'No' })
+        data.isAnyoneAVeteran = 'No'
+      else if _.find(allAppMembers, { isVeteran: 'Decline to state' })
+        data.isAnyoneAVeteran = 'Decline to state'
 
     # if sfApp.autofill == true that means the API returned an autofilled application
     # to be used as a new draft (i.e. some fields need to be cleared out)
@@ -708,7 +710,8 @@ ShortFormDataService.$inject = [
   'ListingDataService',
   'ListingConstantsService',
   'ListingPreferenceService',
-  'ListingUnitService'
+  'ListingUnitService',
+  'SharedService'
 ]
 
 angular

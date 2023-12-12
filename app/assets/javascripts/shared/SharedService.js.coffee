@@ -164,6 +164,8 @@ SharedService = ($http, $state, $window, $document) ->
       a
     ), []).join '&'
 
+  Service.showVeteransApplicationQuestion = $window.VETERANS_APPLICATION_QUESTION is 'true'
+
   return Service
 
 

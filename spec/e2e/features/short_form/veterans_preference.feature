@@ -3,7 +3,7 @@ Feature: Short Form Application - Veterans Preference
     I should be able to claim the Veterans preference on my application
     In order to increase my chances of getting a housing unit
 
-    Scenario: Claiming Assisted Housing preference
+    Scenario: Claiming Veterans Preference
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jen Doe"
         And I fill out the Contact page with an address, non-NRHP match, no WorkInSF
@@ -22,6 +22,7 @@ Feature: Short Form Application - Veterans Preference
         And I opt out of "Alice Griffith" preference
         And I don't choose COP-DTHP preferences
         And I answer "Yes" to the Veterans preference question and select "Jen Doe"
+        And I conditionally continue past the general lottery notice page
         And I fill out the optional survey
         # Submit app and see preference claimed
         And I confirm details on the review page

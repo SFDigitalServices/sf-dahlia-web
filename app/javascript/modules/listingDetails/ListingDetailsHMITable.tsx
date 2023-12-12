@@ -1,7 +1,6 @@
-import React, { useContext, useState, useMemo } from "react"
-import { Icon, ListSection, StandardTable, Button, t } from "@bloom-housing/ui-components"
+import React, { useContext, useState, useMemo, useEffect } from "react"
+import { Icon, StandardTable, Button, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 import { getMinMaxOccupancy, isSale } from "../../util/listingUtil"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons"
@@ -170,7 +169,25 @@ export interface ReducedUnit {
 
 export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityProps) => {
   const listingIsSale = isSale(listing)
-  const { fetchedAmiCharts, amiCharts, fetchedUnits, units } = useContext(ListingDetailsContext)
+  const {
+    fetchingAmiCharts,
+    fetchedAmiCharts,
+    amiCharts,
+    fetchingUnits,
+    fetchedUnits,
+    units,
+    fetchingAmiChartsError,
+    fetchingUnitsError,
+  } = useContext(ListingDetailsContext)
+
+  useEffect(() => {
+    if (fetchingAmiChartsError) {
+      throw fetchingAmiChartsError
+    }
+    if (fetchingUnitsError) {
+      throw fetchingUnitsError
+    }
+  }, [fetchingAmiChartsError, fetchingUnitsError])
 
   if (amiCharts?.length > 0) {
     amiCharts.sort(sortAmisByPercent)
@@ -203,11 +220,11 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
     return buildHmiChartHeaders(amiCharts)
   }, [fetchedAmiCharts, amiCharts])
 
-  if (!fetchedAmiCharts || !fetchedUnits) {
+  if (fetchingUnits || fetchingAmiCharts) {
     return (
-      <li className="flex w-full justify-center">
+      <div className="flex w-full justify-center">
         <Icon symbol="spinner" size="large" />
-      </li>
+      </div>
     )
   }
 
@@ -216,28 +233,7 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
   }
 
   return (
-    <ListSection
-      title={t("listings.householdMaximumIncome")}
-      subtitle={
-        <div>
-          <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
-          <div className="mb-4 primary-lighter-markup-link-desktop">
-            {renderMarkup(
-              t("listings.incomeExceptions.intro", {
-                url: getSfGovUrl(
-                  "https://sf.gov/information/special-calculations-household-income",
-                  7080
-                ),
-              })
-            )}
-          </div>
-          <ul className="list-disc ml-5">
-            <li>{t("listings.incomeExceptions.students")}</li>
-            <li>{t("listings.incomeExceptions.nontaxable")}</li>
-          </ul>
-        </div>
-      }
-    >
+    <>
       <StandardTable
         headers={HMITableHeaders}
         data={tableCollapsed ? HMITableData.slice(0, hmiCutoff) : HMITableData}
@@ -255,6 +251,6 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
           {tableCollapsed ? t("label.showMore") : t("label.showLess")}
         </Button>
       )}
-    </ListSection>
+    </>
   )
 }
