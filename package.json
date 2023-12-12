@@ -10,7 +10,7 @@
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@babel/runtime": "^7.22.5",
-    "@bloom-housing/ui-components": "^12.1.0",
+    "@bloom-housing/ui-components": "^12.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "ag-grid-community": "^29.0.0",
     "autoprefixer": "^10.4.7",
