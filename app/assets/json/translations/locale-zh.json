@@ -3,6 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "選擇您的語言",
+            "sf_public_schools": "Pabahay para sa empleyado ng mga pampublikong paaralan ng SF",
             "sign_in_save_time": "登入可節省不少時間，其能讓您沿用上次申請時的詳細資料，並且能讓您隨時查看該申請的狀況。",
             "title": "立即開始您的申請作業"
         },
@@ -32,6 +33,25 @@
                 "you_or_anyone": "您本人或本申請中的任何一位是退伍軍人嗎？",
                 "you_or_anyone_desc": "此為退伍軍人之家，必須至少有一名申請者曾於美國軍隊服役。<br><br>若您的申請獲選，將需提供更多相關資料，請預先準備。"
             }
+        },
+        "a3_custom_educator_screening": {
+            "be_a_current_employee": "Kasalukuyan kang empleyado ng SF Unified School District",
+            "enter_your_job_code": "Ilagay ang iyong Job Code",
+            "if_you_entered_the_right_information": "Kung tamang impormasyon ang inilagay mo at sa tingin mo ay pagkakamali ito, i-email ang SFUSD sa {{email}}",
+            "job_classification_number_info": "3 hanggang 6 na character ang iyong Job Code at posibleng mayroon itong mga numero at titik. <a href=\"{{url}}\" target=\"_blank\">Hanapin ito sa EMPowerSF</a>.",
+            "job_code": "Job Code",
+            "job_code_is_incorrect": "Mali ang Job Code. Suriin kung may mga pagkakamali at subukan ulit.",
+            "no_i_do_not_work": "Hindi ako nagtatrabaho sa SF Unified School District",
+            "not_eligible_description": "Tingnan kung kwalipikado ka para sa <a href=\"{{rentalListingDirectoryUrl}}\" target=\"_blank\">iba pang open listing</a> o tingnan ang aming <a href=\"{{additionalHousingOpportunitiesUrl}}\" target=\"_blank\">mga karagdagang oportunidad sa pabahay.</a>",
+            "provide_your_job_code": "Ibigay ang iyong Job Code",
+            "title": "Nagtatrabaho ka ba sa San Francisco Unified School District?",
+            "to_apply_you_must": "Para mag-apply, dapat kang:",
+            "work_at_sf_unified": "Nagtatrabaho sa SF Unified School District",
+            "yes_i_work": "Oo, nagtatrabaho ako sa SF Unified School District",
+            "you_are_not_eligible": "Hindi ka kwalipikado",
+            "you_are_not_in": "Wala ka sa isang priyoridad na grupo.",
+            "you_can_still_apply": "Maaari ka pa ring mag-apply, pero iraranggo ka sa ibaba ng mga empleyado ng SF Unified School District sa lottery.",
+            "you_must_work_at": "Nagtatrabaho ka dapat sa SF Unified School District para makapag-apply."
         },
         "a4_overview": {
             "p1": "首先，我們會詢問您本人以及要同住之成員的相關資料。然後我們會詢問您的收入情況。最後，我們會看您是否符合任何可負擔房屋的抽籤優先權利。若符合，便會要求您上傳這些優先權利的證明。",
@@ -397,6 +417,20 @@
             "need_certificate_for_preference": "您需要出具憑證以取得此優先權利。如果您不知道您的憑證號碼，<a href='https://sfmohcd.org/contact-us' target='_blank'>請聯絡住房和社區發展市長辦公室 (MOHCD)</a>。",
             "title": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
         },
+        "e7a_veterans_preference": {
+            "if_more_than_1_veteran": "Kung higit sa 1 Dating Sundalo ang nag-a-apply, pumili lang ng 1. Ang pagkakaroon ng mas maraming Dating Sundalong aplikante ay hindi mababago ang iyong ranking sa lottery.",
+            "if_someone_on_the_application_is_a_veteran": "Kung Dating Sundalo ang isang tao sa aplikasyon, posible kang maging kwalipikado para sa mas mataas na ranking sa lottery.",
+            "instructions_p1": "Kung ikaw o isang tao sa aplikasyon ay:",
+            "instructions_p2": "Isang Dating Sundalo ng hukbo ng US (dapat ay magpakita ng patunay)",
+            "instructions_p3": "Kwalipikado para sa kahit man lang isang iba pang kagustuhan sa lottery",
+            "instructions_p4": "Posibleng mas mataas ang maging rank mo sa lottery.",
+            "instructions_p5": "Alamin pa ang tungkol sa kagustuhang ito",
+            "select_which_application": "Piliin kung sinong aplikante ang Dating Sundalo.",
+            "title": "May Dating Sundalo ba?",
+            "who_is_a_veteran": "Sino ang Dating Sundalo?",
+            "yes_someone_is_a_veteran": "Oo, may isang dating sundalo",
+            "your_answer_could_affect_lottery_ranking": "Maaaring makaapekto ang sagot mo sa ranking sa lottery."
+        },
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "因身心障礙而無法工作",
@@ -455,7 +489,7 @@
                 "not_found_body": "親愛的 MOHCD，我無法完成有關 {{listing_name}} 的申請表。我的地址是 {{home_address}}，而表格顯示資料有誤。請告訴我接下來該如何處理。謝謝，{{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "無法在 DAHLIA 申請表輸入我的地址。"
             },
-            "address_validation_duplicate_unit": "如果您有公寓或單位號碼，只能在公寓 (Apt) 或單位號碼 (Unit#) 欄位填寫。",
+            "address_validation_duplicate_unit": "Kung mayroon kang numero ng apartment o unit, ilagay lang ito sa box ng Apt o Unit #.",
             "address_validation_po_box": "您需要提供目前的居住地址。請勿提供郵政信箱。",
             "alert": {
                 "bad_request": "糟糕！似乎發生了問題。請重試。 \n\n如果您仍然遇到問題，請聯絡 sfhousing.info@sfgov.org。",
@@ -490,7 +524,7 @@
             "last_name": "請輸入姓氏",
             "lottery_ranking_search": "似乎發生了連線問題。請重新嘗試搜尋。",
             "not_eligible": "很遺憾，您似乎不符合此清單的申請資格。",
-            "not_eligible_description": "若您認為您可能有地方弄錯，請加以修正。請注意，若您在申請上偽造任何資訊，將導致您喪失資格。<br><br>若您所輸入的資訊正確，建議您可在日後有更多可入住的單位時，再回來看看。",
+            "not_eligible_description": "Gumawa ng mga pagbabago kung naniniwala kang posibleng nakagawa ka ng pagkakamali. Pakitandaang kung mamemeke ka ng anumang impormasyon sa aplikasyon mo, madidiskwalipika ka.<br/><br/>Kung tumpak ang impormasyong inilagay mo, hinihikayat ka naming bumalik sa hinaharap dahil mas maraming property ang nagiging available.",
             "password": "請輸入有效的密碼",
             "password_confirmation": "密碼確認不符",
             "password_update": "更新密碼時發生錯誤。請重試或是與我們聯絡。",
@@ -587,7 +621,7 @@
             "applicant_homebuyer_education_agency": "購房者教育機構",
             "applicant_income_total": "您家庭的稅前收入總額是多少？",
             "applicant_lending_institution": "借貸機構",
-            "applicant_name_loan_officer": "貸款經紀人",
+            "applicant_name_loan_officer": "Tagapag-pautang",
             "applicant_no_email": "我沒有電子郵件地址",
             "applicant_no_phone": "我沒有市話號碼",
             "applicant_phone": "您的電話號碼",
