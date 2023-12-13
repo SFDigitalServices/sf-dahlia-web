@@ -945,7 +945,7 @@
   "listings.habitat.applicationProcess.title": "Proseso ng Aplikasyon",
   "listings.habitat.incomeRange.incomeRangePlural": "Kabahayang may %{number} tao: %{minIncome} hanggang %{maxIncome} kada taon",
   "listings.habitat.incomeRange.incomeRangeSingular": "Kabahayang may %{number} tao: %{minIncome} hanggang %{maxIncome} kada taon",
-  "listings.habitat.incomeRange.p1": "Para maging kwalipikado para sa bahay mula sa Habitat for Humanity Greater San Francisco sa listahan na ito, kailangang nasa pagitan ng 82% at 109.8% AMI ang kita ng iyong kabahayan, gaya ng nakalista sa ibaba.",
+  "listings.habitat.incomeRange.p1": "Para maging kwalipikado para sa bahay mula sa Habitat for Humanity Greater San Francisco sa listahan na ito, kailangang nasa pagitan ng 82% at 109.8% Area Median Income (AMI) ang kita ng iyong kabahayan, gaya ng nakalista sa ibaba.",
   "listings.habitat.incomeRange.p2": "Para sa mga kalkulasyon ng kita, kasama sa laki ng sambahayan ang lahat (anuman ang edad) ng nakatira sa yunit.",
   "listings.habitat.incomeRange.p4": "Dapat ay nasa saklaw na ito ang iyong kita:",
   "listings.habitat.incomeRange.title": "Saklaw ng Kita",
