@@ -943,7 +943,7 @@
   "listings.habitat.applicationProcess.title": "申請流程",
   "listings.habitat.incomeRange.incomeRangePlural": "%{number} 人一戶：每年 %{minIncome} 至 %{maxIncome}",
   "listings.habitat.incomeRange.incomeRangeSingular": "%{number} 人一戶：每年 %{minIncome} 至 %{maxIncome}",
-  "listings.habitat.incomeRange.p1": "若要符合本房源的 Habitat for Humanity Greater San Francisco 住戶申請資格，您的家庭收入必須介於下方所列的 82% 至 109.8% AMI 之間。",
+  "listings.habitat.incomeRange.p1": "若要符合本房源的 Habitat for Humanity Greater San Francisco 住戶申請資格，您的家庭收入必須介於下方所列的 82% 至 109.8% 區域中位收入 (Area Median Income, AMI) 之間。",
   "listings.habitat.incomeRange.p2": "計算收入時，家庭人數包含居住於該單位中的每個人 (不分年齡)。",
   "listings.habitat.incomeRange.p4": "您的收入必須在此範圍內：",
   "listings.habitat.incomeRange.title": "收入範圍",
