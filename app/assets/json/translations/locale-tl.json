@@ -3,6 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "Piliin ang inyong wika",
+            "sf_public_schools": "Pabahay para sa empleyado ng mga pampublikong paaralan ng SF",
             "sign_in_save_time": "Makatitipid kayo ng oras sa pagsa-sign in sa pamamagitan ng pagsisimula sa mga detalye ng huli ninyong aplikasyon, at mapahihintulutan kayo nito na makita ang estado ng aplikasyong ito sa anumang panahon.",
             "title": "Magsimula na tayo sa inyong aplikasyon\n"
         },
@@ -32,6 +33,25 @@
                 "you_or_anyone": "Beterano ba kayo o sinuman na nasa aplikasyong ito?",
                 "you_or_anyone_desc": "Isa itong veterans building (gusali para sa mga beterano) at kailangang nakapaglingkod ang isa o higit pang aplikante sa U.S. Military.<br><br>Sakaling mapili ang inyong aplikasyon, maging handa sa pagbibigay ng karagdagang impormasyon."
             }
+        },
+        "a3_custom_educator_screening": {
+            "be_a_current_employee": "Kasalukuyan kang empleyado ng SF Unified School District",
+            "enter_your_job_code": "Ilagay ang iyong Job Code",
+            "if_you_entered_the_right_information": "Kung tamang impormasyon ang inilagay mo at sa tingin mo ay pagkakamali ito, i-email ang SFUSD sa {{email}}",
+            "job_classification_number_info": "3 hanggang 6 na character ang iyong Job Code at posibleng mayroon itong mga numero at titik. <a href=\"{{url}}\" target=\"_blank\">Hanapin ito sa EMPowerSF</a>.",
+            "job_code": "Job Code",
+            "job_code_is_incorrect": "Mali ang Job Code. Suriin kung may mga pagkakamali at subukan ulit.",
+            "no_i_do_not_work": "Hindi ako nagtatrabaho sa SF Unified School District",
+            "not_eligible_description": "Tingnan kung kwalipikado ka para sa <a href=\"{{rentalListingDirectoryUrl}}\" target=\"_blank\">iba pang open listing</a> o tingnan ang aming <a href=\"{{additionalHousingOpportunitiesUrl}}\" target=\"_blank\">mga karagdagang oportunidad sa pabahay.</a>",
+            "provide_your_job_code": "Ibigay ang iyong Job Code",
+            "title": "Nagtatrabaho ka ba sa San Francisco Unified School District?",
+            "to_apply_you_must": "Para mag-apply, dapat kang:",
+            "work_at_sf_unified": "Nagtatrabaho sa SF Unified School District",
+            "yes_i_work": "Oo, nagtatrabaho ako sa SF Unified School District",
+            "you_are_not_eligible": "Hindi ka kwalipikado",
+            "you_are_not_in": "Wala ka sa isang priyoridad na grupo.",
+            "you_can_still_apply": "Maaari ka pa ring mag-apply, pero iraranggo ka sa ibaba ng mga empleyado ng SF Unified School District sa lottery.",
+            "you_must_work_at": "Nagtatrabaho ka dapat sa SF Unified School District para makapag-apply."
         },
         "a4_overview": {
             "p1": "Una, magtatanong kami tungkol sa inyo at sa mga taong pinaplano ninyong makasama sa pagtira sa bahay. Pagkatapos, tatanungin namin kayo tungkol sa inyong kita. Panghuli, titingnan namin kung kuwalipikado kayo para sa anumang preperensiya sa lottery o palabunutan sa abot-kayang pabahay (affordable housing).",
@@ -396,6 +416,20 @@
             "need_certificate_for_preference": "Kailangan ninyo ng sertipiko para makuha ang preperensiya na ito. Kung hindi ninyo alam ang numero ng inyong sertipiko  <a href='https://sfmohcd.org/contact-us' target='_blank'>kontakin ang MOHCD</a>.",
             "title": "May mga preperensiya para sa mga tao na mayroon nang mga espesyal na sertipiko."
         },
+        "e7a_veterans_preference": {
+            "if_more_than_1_veteran": "Kung higit sa 1 Dating Sundalo ang nag-a-apply, pumili lang ng 1. Ang pagkakaroon ng mas maraming Dating Sundalong aplikante ay hindi mababago ang iyong ranking sa lottery.",
+            "if_someone_on_the_application_is_a_veteran": "Kung Dating Sundalo ang isang tao sa aplikasyon, posible kang maging kwalipikado para sa mas mataas na ranking sa lottery.",
+            "instructions_p1": "Kung ikaw o isang tao sa aplikasyon ay:",
+            "instructions_p2": "Isang Dating Sundalo ng hukbo ng US (dapat ay magpakita ng patunay)",
+            "instructions_p3": "Kwalipikado para sa kahit man lang isang iba pang kagustuhan sa lottery",
+            "instructions_p4": "Posibleng mas mataas ang maging rank mo sa lottery.",
+            "instructions_p5": "Alamin pa ang tungkol sa kagustuhang ito",
+            "select_which_application": "Piliin kung sinong aplikante ang Dating Sundalo.",
+            "title": "May Dating Sundalo ba?",
+            "who_is_a_veteran": "Sino ang Dating Sundalo?",
+            "yes_someone_is_a_veteran": "Oo, may isang dating sundalo",
+            "your_answer_could_affect_lottery_ranking": "Maaaring makaapekto ang sagot mo sa ranking sa lottery."
+        },
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "Hindi makapagtrabaho dahil sa kapansanan",
@@ -454,7 +488,7 @@
                 "not_found_body": "Minamahal na MOHCD, hindi ko makumpleto ang aking aplikasyon para sa {{listing_name}}. Ang address ko ay {{home_address}} at sinasabi sa akin ng form na mayroong error. Pakipayuhan ako ng sunod na gagawin. Salamat, {{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "Hindi mailagay ang aking address sa aplikasyon sa DAHLIA"
             },
-            "address_validation_duplicate_unit": "Kung mayroon kayong numero ng apartment o yunit, ilagay lang ito sa kahong Apt o Yunit #",
+            "address_validation_duplicate_unit": "Kung mayroon kang numero ng apartment o unit, ilagay lang ito sa box ng Apt o Unit #.",
             "address_validation_po_box": "Kailangan namin ang address ng kung saan ka kasalukuyang nakatira. Hindi puwedeng maglagay ng mga PO Box.",
             "alert": {
                 "bad_request": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
@@ -489,7 +523,7 @@
             "last_name": "Pakilagay ang inyong Apelyido",
             "lottery_ranking_search": "Mukhang may problema tayo sa pagkonekta. Pakisubukang muli ang inyong pag-si-search. ",
             "not_eligible": "Sa kasamaang palad, mukhang hindi kayo kuwalipikado para sa nakalistang pabahay na ito.",
-            "not_eligible_description": "Mangyaring gumawa ng mga pagbabago kung naniniwala kayong posibleng nagkamali kayo sa pagsagot. Kailangang alam ninyo na kapag nagbigay kayo ng maling impormasyo sa inyong aplikasyon, hindi na kayo magiging kuwalipikado.<br><br>Kung tama ang impormasyon na ipinasok ninyo, hinihikayat namin kayong bumalik muli at tingnan ang website na ito sa hinaharap, kapag nagkaroon na ng iba pang maaaplayang pabahay.",
+            "not_eligible_description": "Gumawa ng mga pagbabago kung naniniwala kang posibleng nakagawa ka ng pagkakamali. Pakitandaang kung mamemeke ka ng anumang impormasyon sa aplikasyon mo, madidiskwalipika ka.<br/><br/>Kung tumpak ang impormasyong inilagay mo, hinihikayat ka naming bumalik sa hinaharap dahil mas maraming property ang nagiging available.",
             "password": "Mangyaring maglagay ng password na katanggap-tanggap",
             "password_confirmation": "Hindi nagtutugma ang password nang kinumpira ito. ",
             "password_update": "Nagkaroon ng pagkakamali nang binago ninyo ang inyong password. Pakisubukang muli o kontakin kami. ",
@@ -586,7 +620,7 @@
             "applicant_homebuyer_education_agency": "Ahensya para sa pagbibigay ng edukasyon para sa bumibili ng bahay",
             "applicant_income_total": "Ano ang kabuuang kita ng inyong kabahayan bago ito mabawasan ng buwis?",
             "applicant_lending_institution": "nagpapautang na institusyon",
-            "applicant_name_loan_officer": "Loan officer (opisyal na namamahala sa pagpapautang)",
+            "applicant_name_loan_officer": "Tagapag-pautang",
             "applicant_no_email": "Wala akong email address",
             "applicant_no_phone": "Wala akong numero ng telepono",
             "applicant_phone": "Ang numero ng inyong telepono",
