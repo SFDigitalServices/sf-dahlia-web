@@ -21,40 +21,20 @@ const createImageCardProps = (listing: RailsListing) => {
     }
   })
 
-  // We want to support both the imageURL and listing images fields for now
-  // but the hope is to ultimately deprecate that field.
-  // If we have to use the fallback image then we want to disable the image
-  // field from A11Y tools since at that point it is purely decorative.
-  if (!listingImages) {
-    return listing?.imageURL
-      ? {
-          props: {
-            imageUrl: listing.imageURL,
-            description: t("listings.buildingImageAltText"),
-          },
-        }
-      : {
-          props: {
-            imageUrl: fallbackImg,
-            description: "",
-          },
-        }
-  } else {
-    return listingImages.length > 0
-      ? {
-          props: {
-            images: listingImages,
-            description: t("listings.buildingImageAltText"),
-            moreImagesLabel: t("listings.morePhotos"),
-          },
-        }
-      : {
-          props: {
-            imageUrl: fallbackImg,
-            description: "",
-          },
-        }
-  }
+  return listingImages && listingImages.length > 0
+    ? {
+        props: {
+          images: listingImages,
+          description: t("listings.buildingImageAltText"),
+          moreImagesLabel: t("listings.morePhotos"),
+        },
+      }
+    : {
+        props: {
+          imageUrl: fallbackImg,
+          description: "",
+        },
+      }
 }
 
 export const ListingDetailsImageCard = ({ listing }: ListingDetailsImageCardProps) => {
