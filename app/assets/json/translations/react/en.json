@@ -949,7 +949,7 @@
   "listings.habitat.applicationProcess.title": "Application Process",
   "listings.habitat.incomeRange.incomeRangePlural": "%{number} people household: %{minIncome} to %{maxIncome} per year",
   "listings.habitat.incomeRange.incomeRangeSingular": "%{number} person household: %{minIncome} to %{maxIncome} per year",
-  "listings.habitat.incomeRange.p1": "To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 82% and 109.8% AMI as listed below.",
+  "listings.habitat.incomeRange.p1": "To be eligible for a Habitat for Humanity Greater San Francisco home in this listing, your household income needs to be between 82% and 109.8% Area Median Income (AMI) as listed below.",
   "listings.habitat.incomeRange.p2": "For income calculations, household size includes everyone (all ages) living in the unit.",
   "listings.habitat.incomeRange.p4": "Your income must be in this range:",
   "listings.habitat.incomeRange.title": "Income Range",
