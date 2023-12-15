@@ -3,6 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "選擇您的語言",
+            "sf_public_schools": "三藩市公共學校雇員住房",
             "sign_in_save_time": "登入可節省不少時間，其能讓您沿用上次申請時的詳細資料，並且能讓您隨時查看該申請的狀況。",
             "title": "立即開始您的申請作業"
         },
@@ -32,6 +33,25 @@
                 "you_or_anyone": "您本人或本申請中的任何一位是退伍軍人嗎？",
                 "you_or_anyone_desc": "此為退伍軍人之家，必須至少有一名申請者曾於美國軍隊服役。<br><br>若您的申請獲選，將需提供更多相關資料，請預先準備。"
             }
+        },
+        "a3_custom_educator_screening": {
+            "be_a_current_employee": "為三藩市聯合校區現任雇員",
+            "enter_your_job_code": "請輸入您的職業代碼",
+            "if_you_entered_the_right_information": "如果您輸入了正確資訊，並認為這是一項錯誤，請傳送電子郵件至 {{email}} 與 SFUSD 聯絡",
+            "job_classification_number_info": "您的職業代碼為 3 至 6 個字元，可包含數字和字母。<a href=\"{{url}}\" target=\"_blank\">在 EMPowerSF 上尋找</a>。",
+            "job_code": "職業代碼",
+            "job_code_is_incorrect": "職業代碼不正確。請檢查是否有錯誤，然後再試一次。",
+            "no_i_do_not_work": "不，我並不在三藩市聯合校區工作",
+            "not_eligible_description": "查看您是否符合申請<a href=\"{{rentalListingDirectoryUrl}}\" target=\"_blank\">其他現有房源</a>的資格，或查看我們的<a href=\"{{additionalHousingOpportunitiesUrl}}\" target=\"_blank\">其他住房機會。</a>",
+            "provide_your_job_code": "提供您的職業代碼",
+            "title": "您是否在三藩市聯合校區工作？",
+            "to_apply_you_must": "申請者必須符合以下條件：",
+            "work_at_sf_unified": "在三藩市聯合校區工作",
+            "yes_i_work": "是，我在三藩市聯合校區工作",
+            "you_are_not_eligible": "您不符合資格",
+            "you_are_not_in": "您不屬於優先群體。",
+            "you_can_still_apply": "您仍可以申請，但在抽籤時，您的排名將低於三藩市聯合校區的雇員。",
+            "you_must_work_at": "您必須在三藩市聯合校區工作，才能申請。"
         },
         "a4_overview": {
             "p1": "首先，我們會詢問您本人以及要同住之成員的相關資料。然後我們會詢問您的收入情況。最後，我們會看您是否符合任何可負擔房屋的抽籤優先權利。若符合，便會要求您上傳這些優先權利的證明。",
@@ -397,6 +417,20 @@
             "need_certificate_for_preference": "您需要出具憑證以取得此優先權利。如果您不知道您的憑證號碼，<a href='https://sfmohcd.org/contact-us' target='_blank'>請聯絡住房和社區發展市長辦公室 (MOHCD)</a>。",
             "title": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
         },
+        "e7a_veterans_preference": {
+            "if_more_than_1_veteran": "如果申請表上有 1 名以上退伍軍人，只需選擇 1 即可。申請表上有更多退伍軍人不會改變您的抽籤排名。",
+            "if_someone_on_the_application_is_a_veteran": "如果申請表上有退伍軍人，您可能符合資格獲得更高的抽籤排名。",
+            "instructions_p1": "如果您或申請表上的某人為：",
+            "instructions_p2": "美國退伍軍人 (必須出示證明)",
+            "instructions_p3": "符合至少一種其他抽籤優先條件",
+            "instructions_p4": "您可能會獲得較高的抽籤排名。",
+            "instructions_p5": "了解更多關於此優先權的資訊",
+            "select_which_application": "選擇哪位申請人為退伍軍人。",
+            "title": "有退伍軍人嗎？",
+            "who_is_a_veteran": "誰是退伍軍人？",
+            "yes_someone_is_a_veteran": "是，有人為退伍軍人",
+            "your_answer_could_affect_lottery_ranking": "您的答案可能會影響抽籤排名。"
+        },
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "因身心障礙而無法工作",
@@ -455,7 +489,7 @@
                 "not_found_body": "親愛的 MOHCD，我無法完成有關 {{listing_name}} 的申請表。我的地址是 {{home_address}}，而表格顯示資料有誤。請告訴我接下來該如何處理。謝謝，{{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "無法在 DAHLIA 申請表輸入我的地址。"
             },
-            "address_validation_duplicate_unit": "如果您有公寓或單位號碼，只能在公寓 (Apt) 或單位號碼 (Unit#) 欄位填寫。",
+            "address_validation_duplicate_unit": "如果您有公寓或單位號碼，只能在「Apt」(公寓) 或「Unit #」(單位號碼) 欄位填寫。",
             "address_validation_po_box": "您需要提供目前的居住地址。請勿提供郵政信箱。",
             "alert": {
                 "bad_request": "糟糕！似乎發生了問題。請重試。 \n\n如果您仍然遇到問題，請聯絡 sfhousing.info@sfgov.org。",
@@ -490,7 +524,7 @@
             "last_name": "請輸入姓氏",
             "lottery_ranking_search": "似乎發生了連線問題。請重新嘗試搜尋。",
             "not_eligible": "很遺憾，您似乎不符合此清單的申請資格。",
-            "not_eligible_description": "若您認為您可能有地方弄錯，請加以修正。請注意，若您在申請上偽造任何資訊，將導致您喪失資格。<br><br>若您所輸入的資訊正確，建議您可在日後有更多可入住的單位時，再回來看看。",
+            "not_eligible_description": "如果您認為可能有錯誤，請進行修改。請注意，如果您在申請表中偽造任何資訊，您將被取消資格。<br/><br/>如果您輸入的資訊準確無誤，我們鼓勵您在未來有更多房源時再回來查看。",
             "password": "請輸入有效的密碼",
             "password_confirmation": "密碼確認不符",
             "password_update": "更新密碼時發生錯誤。請重試或是與我們聯絡。",
