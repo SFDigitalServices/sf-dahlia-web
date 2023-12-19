@@ -1,6 +1,6 @@
 / Qualify
 span ng-show="::$ctrl.isSale"
-  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'short_form_nav.qualify' | translate}}" section-name="prerequisites" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_qualifications' | translate}}"
   .app-inner
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-is-first-time-homebuyer" ng-if="::$ctrl.application.isFirstTimeHomebuyer"
       | {{'label.application_is_first_time_homebuyer' | translate}}
@@ -12,7 +12,7 @@ span ng-show="::$ctrl.isSale"
     review-summary-item label="{{'label.you_have_confirmed' | translate}}" identifier="application-has-minimum-credit-score" ng-if="::($ctrl.application.hasMinimumCreditScore && $ctrl.isHabitatListing)"
       | {{'label.application_habitat_credit_score' | translate}}
 / You
-review-summary-section header="{{'t.you' | translate}}" section-name="name" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'t.you' | translate}}" section-name="name" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_you' | translate}}"
 
 .app-inner
   / custom educator
@@ -74,7 +74,7 @@ review-summary-section header="{{'t.you' | translate}}" section-name="name" edit
 
 / Alternate Contact
 span ng-hide="::$ctrl.alternateContact.alternateContactType == 'None'"
-  review-summary-section header="{{'label.alternate_contact' | translate}}" section-name="alternate-contact-type" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.alternate_contact' | translate}}" section-name="alternate-contact-type" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_alternate_contact' | translate}}"
 
   .app-inner
     p.form-note.margin-bottom
@@ -92,7 +92,7 @@ span ng-hide="::$ctrl.alternateContact.alternateContactType == 'None'"
       | {{::$ctrl.alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'label.household_members' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable"
+review-summary-section header="{{'label.household_members' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Household'})}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_household_members' | translate}}"
 
 .app-inner
   .info-item.margin-bottom ng-if="::!$ctrl.householdMembers || $ctrl.householdMembers.length == 0"
@@ -114,7 +114,7 @@ review-summary-section header="{{'label.household_members' | translate}}" sectio
 
 / Household Details
 div ng-if="::$ctrl.showHouseholdDetails()"
-  review-summary-section header="{{'label.household_details' | translate}}" section-name="{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.household_details' | translate}}" section-name="{{::$ctrl.getStartOfHouseholdDetails()}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_household_details' | translate}}"
 
   .app-inner
     review-summary-item label="{{'label.live_in_public_housing_or_hud' | translate}}" identifier="hasPublicHousing" ng-if="::$ctrl.application.hasPublicHousing"
@@ -138,7 +138,7 @@ div ng-if="::$ctrl.showHouseholdDetails()"
 
 / Income
 div ng-if="::$ctrl.application.householdIncome.incomeTotal"
-  review-summary-section header="{{'label.income' | translate}}" section-name="{{$ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.income' | translate}}" section-name="{{$ctrl.getStartOfSection({name: 'Income'})}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_income' | translate}}"
 
   .app-inner
     review-summary-item label="{{'label.vouchers_and_subsidies' | translate}}" identifier="income-vouchers" ng-if="::$ctrl.isRental"
@@ -149,12 +149,12 @@ div ng-if="::$ctrl.application.householdIncome.incomeTotal"
 
 / Preferences
 div ng-if="::!$ctrl.atAutofillPreview"
-  review-summary-section header="{{'label.preferences' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.preferences' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Preferences'})}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_preferences' | translate}}"
   preferences-summary application="$ctrl.application" listing="$ctrl.listing" preferences="$ctrl.preferences"
 
 / Demographics
 div
-  review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable"
+  review-summary-section header="{{'label.more_about_you' | translate}}" section-name="{{::$ctrl.getStartOfSection({name: 'Review'})}}" editable="::$ctrl.sectionsAreEditable" edit-description="{{'label.edit_more_about_you' | translate}}"
   .app-inner
     .info-item.margin-bottom ng-if="::!$ctrl.applicationHasDemographicInfo()"
         h4.info-item_name

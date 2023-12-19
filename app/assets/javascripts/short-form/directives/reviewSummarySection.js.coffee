@@ -6,8 +6,10 @@ angular.module('dahlia.components')
     editable: '<'
     header: '@'
     sectionName: '@'
+    editDescription: '@'
   controller: ['$state', ($state) ->
     ctrl = @
+    console.log(ctrl);
 
     ctrl.sectionHref = $state.href("dahlia.short-form-application.#{ctrl.sectionName}")
 
