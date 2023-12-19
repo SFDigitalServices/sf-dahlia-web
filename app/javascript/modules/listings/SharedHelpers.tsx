@@ -89,7 +89,9 @@ export const getEventNote = (listingEvent: ListingEvent) => {
     <div className="flex flex-col">
       {listingEvent.Venue && (
         <span className="links-space translate">
-          <Markdown>{listingEvent.Venue}</Markdown>
+          <Markdown options={{ namedCodesToUnicode: { "#39": "\u0027" } }}>
+            {listingEvent.Venue}
+          </Markdown>
         </span>
       )}
       {listingEvent.Street_Address && listingEvent.City && (
