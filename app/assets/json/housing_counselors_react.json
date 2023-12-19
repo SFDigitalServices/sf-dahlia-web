@@ -84,23 +84,6 @@
             "phone": "(415) 865–5555"
         },
         {
-            "fullName": "Bayview Hunters Point Multi-Purpose Senior Center (BHPMSS)",
-            "shortName": "BHPMSS",
-            "services": [
-                "rental",
-                "seniorOnly"
-            ],
-            "languages": [
-                "cantonese",
-                "english"
-            ],
-            "address": "1753 Carroll Ave",
-            "cityState": "San Francisco, CA 94124",
-            "website": "https://bhpmss.org/",
-            "email": "info@bhpmss.org",
-            "phone": "(415) 822-1444"
-        },
-        {
             "fullName": "Bill Sorro Housing Program (BiSHoP)",
             "shortName": "BiSHoP",
             "services": [
