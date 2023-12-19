@@ -111,6 +111,12 @@ angular.module('dahlia.components')
           ctrl.applicant.referral
         )
 
+      ctrl.showVeteransDemographics = ->
+        ctrl.application.isVeteran && !ctrl.showVeteransApplicationQuestion
+
+      ctrl.showNonPrimaryVeteransDemographics = ->
+        ctrl.application.isNonPrimaryMemberVeteran && !ctrl.showVeteransApplicationQuestion
+
       ctrl.translatedYesNoNoAnswer = (val) ->
         if val == 'Yes'
           $translate.instant('t.yes')
