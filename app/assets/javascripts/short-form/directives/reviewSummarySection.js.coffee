@@ -9,7 +9,6 @@ angular.module('dahlia.components')
     editDescription: '@'
   controller: ['$state', ($state) ->
     ctrl = @
-    console.log(ctrl);
 
     ctrl.sectionHref = $state.href("dahlia.short-form-application.#{ctrl.sectionName}")
 
