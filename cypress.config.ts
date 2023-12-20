@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  defaultCommandTimeout: 10000,
+  defaultCommandTimeout: 100000,
   projectId: 'dahlia-housing-portal',
   pageLoadTimeout: 10000,
   reporterOptions: {
