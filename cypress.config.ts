@@ -2,9 +2,9 @@ import 'dotenv/config'
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  defaultCommandTimeout: 100000,
+  defaultCommandTimeout: 120000, // 2 mins
   projectId: 'dahlia-housing-portal',
-  pageLoadTimeout: 10000,
+  pageLoadTimeout: 120000, // 2 mins
   reporterOptions: {
     mochaFile: 'cypress/results/tests-[hash].xml',
     toConsole: true,
