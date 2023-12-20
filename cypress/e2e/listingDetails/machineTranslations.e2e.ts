@@ -1,9 +1,7 @@
 const verifyMachineTranslations = (language, id, translation) => {
   cy.intercept("POST", /^https:\/\/translate/).as("getTranslate")
   cy.visit(`${language}/listings/${id}?react=true`)
-  cy.wait("@getTranslate", {
-    requestTimeout: 100000,
-  })
+  cy.wait("@getTranslate")
   return cy.contains(translation)
 }
 
@@ -92,31 +90,49 @@ describe("Listing Detail Machine Translations", () => {
         })
       })
       describe("When a user views sales listing detail in Filipino", () => {
-        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.tl}'`, () => {
-          verifyMachineTranslations(
-            "tl",
-            TEST_LISTINGS.OPEN_SALE.id,
-            INFORMATION_SESSION_SALE_TEXT.tl
-          )
-        })
+        it(
+          `should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.tl}'`,
+          {
+            defaultCommandTimeout: 100000,
+          },
+          () => {
+            verifyMachineTranslations(
+              "tl",
+              TEST_LISTINGS.OPEN_SALE.id,
+              INFORMATION_SESSION_SALE_TEXT.tl
+            )
+          }
+        )
       })
       describe("When a user views sales listing detail in Chinese", () => {
-        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.zh}'`, () => {
-          verifyMachineTranslations(
-            "zh",
-            TEST_LISTINGS.OPEN_SALE.id,
-            INFORMATION_SESSION_SALE_TEXT.zh
-          )
-        })
+        it(
+          `should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.zh}'`,
+          {
+            defaultCommandTimeout: 100000,
+          },
+          () => {
+            verifyMachineTranslations(
+              "zh",
+              TEST_LISTINGS.OPEN_SALE.id,
+              INFORMATION_SESSION_SALE_TEXT.zh
+            )
+          }
+        )
       })
       describe("When a user views sales listing detail in Spanish", () => {
-        it(`should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.es}'`, () => {
-          verifyMachineTranslations(
-            "es",
-            TEST_LISTINGS.OPEN_SALE.id,
-            INFORMATION_SESSION_SALE_TEXT.es
-          )
-        })
+        it(
+          `should translate '${INFORMATION_SESSION_SALE_TEXT.en}' to '${INFORMATION_SESSION_SALE_TEXT.es}'`,
+          {
+            defaultCommandTimeout: 100000,
+          },
+          () => {
+            verifyMachineTranslations(
+              "es",
+              TEST_LISTINGS.OPEN_SALE.id,
+              INFORMATION_SESSION_SALE_TEXT.es
+            )
+          }
+        )
       })
     })
   })
