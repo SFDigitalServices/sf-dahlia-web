@@ -44,6 +44,8 @@
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
+        # we don't want to show the beforeunload dialog, because it would allow the applicant to stay on the page after session expiration
+        $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
