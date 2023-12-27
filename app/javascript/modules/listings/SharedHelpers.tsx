@@ -1,8 +1,7 @@
 import React from "react"
-import Markdown from "markdown-to-jsx"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import { areLotteryResultsShareable, getTagContent } from "../../util/listingUtil"
-import { localizedFormat } from "../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
@@ -88,9 +87,7 @@ export const getEventNote = (listingEvent: ListingEvent) => {
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="links-space translate">
-          <Markdown>{listingEvent.Venue}</Markdown>
-        </span>
+        <span className="links-space translate">{renderInlineMarkup(listingEvent.Venue)}</span>
       )}
       {listingEvent.Street_Address && listingEvent.City && (
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
