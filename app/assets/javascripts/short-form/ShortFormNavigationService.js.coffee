@@ -1,7 +1,8 @@
 ShortFormNavigationService = (
   $state,
   AccountService, AnalyticsService, bsLoadingOverlayService,
-  ListingConstantsService, ListingIdentityService, ShortFormApplicationService
+  ListingConstantsService, ListingIdentityService, ShortFormApplicationService,
+  SharedService
 ) ->
   Service = {}
   Service.RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
@@ -172,7 +173,7 @@ ShortFormNavigationService = (
     'live-work-preference': {scopedCallbacks: [{func: 'checkAfterLiveWork'}]}
     'right-to-return-preference': {scopedCallbacks: [{func: 'checkAliceGriffithAddress'}]}
     'alice-griffith-verify-address': {path: 'preferences-programs'}
-    'preferences-programs': {path: 'veterans-preference'}
+    'preferences-programs': {scopedCallbacks: [{func: 'checkAfterPreferencesPrograms'}]}
     'veterans-preference': {scopedCallbacks: [{func: 'checkAfterVeteransPreference'}]}
     'custom-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
     'custom-proof-preferences': {scopedCallbacks: [{func: 'checkForCustomProofPreferences'}]}
@@ -389,7 +390,10 @@ ShortFormNavigationService = (
       when 'veterans-preference'
         'preferences-programs'
       when 'custom-preferences'
-        'veterans-preference'
+        if SharedService.showVeteransApplicationQuestion
+          'veterans-preference'
+        else
+          'preferences-programs'
       when 'custom-proof-preferences'
         Service.getPrevPageOfCustomProofPref()
       when 'general-lottery-notice'
@@ -398,8 +402,12 @@ ShortFormNavigationService = (
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
-        else if Service.hasCustomPreferences()
-          'custom-preferences'
+        # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
+        # We might want to re-enable them in the future
+        # else if Service.hasCustomPreferences()
+        #   'custom-preferences'
+        else if !SharedService.showVeteransApplicationQuestion
+          'preferences-programs'
         else
           'veterans-preference'
       when 'review-submitted'
@@ -482,11 +490,19 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{currentIndex - 1}})"
 
   Service.getPrevPageOfGeneralLottery = ->
-    customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
-    if customProofPreferences.length
-      "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
-    else if Service.hasCustomPreferences()
-      'custom-preferences'
+    # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
+    # We might want to re-enable them in the future
+    # customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
+    # if customProofPreferences.length
+    #   "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
+    # else if Service.hasCustomPreferences()
+    #   'custom-preferences'
+    # else if !ShortFormApplicationService.showVeteransApplicationQuestion
+    #   'preferences-programs'
+    # else
+    #   'veterans-preference'
+    if !ShortFormApplicationService.showVeteransApplicationQuestion
+      'preferences-programs'
     else
       'veterans-preference'
 
@@ -557,7 +573,8 @@ ShortFormNavigationService = (
 ShortFormNavigationService.$inject = [
   '$state',
   'AccountService', 'AnalyticsService', 'bsLoadingOverlayService',
-  'ListingConstantsService', 'ListingIdentityService', 'ShortFormApplicationService'
+  'ListingConstantsService', 'ListingIdentityService', 'ShortFormApplicationService',
+  'SharedService'
 ]
 
 angular

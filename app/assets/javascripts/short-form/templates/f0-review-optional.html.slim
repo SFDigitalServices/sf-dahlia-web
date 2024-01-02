@@ -17,9 +17,8 @@
   .app-inner.border-bottom
     sexual-orientation-form user='applicant'
 
-  / veteran-form has been replaced by e7a-veterans-preference
-  / .app-inner.border-bottom
-  /   veteran-form user='applicant'
+  .app-inner.border-bottom ng-if="!showVeteransApplicationQuestion"
+    veteran-form user='applicant'
 
   .app-inner
     referral-form user='applicant'

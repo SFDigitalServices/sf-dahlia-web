@@ -241,7 +241,36 @@ export const ListingDetailsEligibility = ({
             </InfoCard>
           </ListSection>
         )}
-        {!isHabitatListing(listing) && <ListingDetailsHMITable listing={listing} />}
+
+        {!isHabitatListing(listing) && (
+          <ListSection
+            title={t("listings.householdMaximumIncome")}
+            subtitle={
+              <div>
+                <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
+                <div className="mb-4 primary-lighter-markup-link-desktop">
+                  {renderMarkup(
+                    t("listings.incomeExceptions.intro", {
+                      url: getSfGovUrl(
+                        "https://sf.gov/information/special-calculations-household-income",
+                        7080
+                      ),
+                    })
+                  )}
+                </div>
+                <ul className="list-disc ml-5">
+                  <li>{t("listings.incomeExceptions.students")}</li>
+                  <li>{t("listings.incomeExceptions.nontaxable")}</li>
+                </ul>
+              </div>
+            }
+          >
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsHMITable listing={listing} />
+            </ErrorBoundary>
+          </ListSection>
+        )}
+
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>

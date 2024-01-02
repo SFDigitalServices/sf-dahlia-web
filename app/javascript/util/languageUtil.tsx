@@ -164,14 +164,18 @@ export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
  */
 export function renderMarkup(translatedString: string, allowedTags?: string) {
   return (
-    <Markdown options={{ forceBlock: true }}>
+    <Markdown options={{ forceBlock: true, namedCodesToUnicode: { "#39": "\u0027" } }}>
       {stripMostTags(translatedString, allowedTags)}
     </Markdown>
   )
 }
 
 export function renderInlineMarkup(translatedString: string, allowedTags?: string) {
-  return <Markdown>{stripMostTags(translatedString, allowedTags)}</Markdown>
+  return (
+    <Markdown options={{ namedCodesToUnicode: { "#39": "\u0027" } }}>
+      {stripMostTags(translatedString, allowedTags)}
+    </Markdown>
+  )
 }
 
 // Get the translated community type

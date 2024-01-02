@@ -3,6 +3,7 @@
         "415-701-5500": "415-701-5500",
         "a1_intro": {
             "choose_your_language": "Elija su idioma",
+            "sf_public_schools": "Viviendas para empleados de las escuelas públicas de SF",
             "sign_in_save_time": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría revisar el estatus de esta solicitud en cualquier momento.",
             "title": "Comencemos con su solicitud"
         },
@@ -32,6 +33,25 @@
                 "you_or_anyone": "¿Usted o alguna de las personas que figuran en esta solicitud son veteranos de guerra?",
                 "you_or_anyone_desc": "Este es un edificio para veteranos de guerra y al menos un solicitante debe haber prestado servicios en las Fuerzas Armadas de los Estados Unidos.<br><br>Si se acepta su solicitud, tenga en cuenta que deberá proporcionar más información."
             }
+        },
+        "a3_custom_educator_screening": {
+            "be_a_current_employee": "Prestar servicio como empleado del Distrito Unificado de Escuelas de SF",
+            "enter_your_job_code": "Ingrese su código de empleo",
+            "if_you_entered_the_right_information": "Si ingresó los datos correctos y considera que se trata de un error, envíe un correo electrónico al responsable del SFUSD a la siguiente dirección: {{email}}.",
+            "job_classification_number_info": "Su código de empleo tiene entre tres y seis caracteres y puede incluir tanto números como letras. <a href=\"{{url}}\" target=\"_blank\">Encuentre su código de empleo en el sistema EMPowerSF</a>.",
+            "job_code": "Código de empleo",
+            "job_code_is_incorrect": "El código de empleo es incorrecto. Compruebe si hay algún error y vuelva a intentarlo.",
+            "no_i_do_not_work": "No, no trabajo en el Distrito Unificado de Escuelas de SF.",
+            "not_eligible_description": "Compruebe si reúne los requisitos para <a href=\"{{rentalListingDirectoryUrl}}\" target=\"_blank\">otros anuncios vigentes</a> o consulte nuestras <a href=\"{{additionalHousingOpportunitiesUrl}}\" target=\"_blank\">oportunidades adicionales de vivienda.</a>",
+            "provide_your_job_code": "Proporcione su código de trabajo",
+            "title": "¿Trabaja en el Distrito Unificado de Escuelas de San Francisco?",
+            "to_apply_you_must": "Para presentar la solicitud, usted debe:",
+            "work_at_sf_unified": "Trabajo en el Distrito Unificado de Escuelas de SF",
+            "yes_i_work": "Sí, trabajo en el Distrito Unificado de Escuelas de SF.",
+            "you_are_not_eligible": "Usted no reúne los requisitos",
+            "you_are_not_in": "No se encuentra en ningún grupo prioritario.",
+            "you_can_still_apply": "Aún así, puede presentar una solicitud. Sin embargo, a los fines del sorteo, quedará en una clasificación por debajo de los empleados del Distrito Unificado de Escuelas de SF.",
+            "you_must_work_at": "Para presentar una solicitud, debe trabajar en el Distrito Unificado de Escuelas de SF."
         },
         "a4_overview": {
             "p1": "En primer lugar, haremos preguntas sobre usted y las personas con las que planea vivir. Luego, haremos preguntas sobre sus ingresos. Finalmente, veremos si cumple con los requisitos necesarios para alguna de las preferencias de sorteo de viviendas asequibles, y, si es así, le pediremos que suba una prueba de dichas preferencias.",
@@ -396,6 +416,20 @@
             "need_certificate_for_preference": "Necesita un certificado para obtener esta preferencia. Si no conoce su número de certificado, <a href='https://sfmohcd.org/contact-us' target='_blank'>comuniquese con la MOHCD</a>.",
             "title": "Existen preferencias de sorteo para personas que ya tienen certificados especiales."
         },
+        "e7a_veterans_preference": {
+            "if_more_than_1_veteran": "Si se presenta más de un veterano, debe elegir solo uno. Incluir más de un veterano en la solicitud no cambiará su clasificación en el sorteo.",
+            "if_someone_on_the_application_is_a_veteran": "Si alguna de las personas de la solicitud es veterano, es posible que tenga derecho a una clasificación más alta a los fines del sorteo.",
+            "instructions_p1": "Si usted o cualquier otra persona de la solicitud:",
+            "instructions_p2": "es veterano de las Fuerzas Armadas de los EE. UU. (debe presentar una prueba de ello); o",
+            "instructions_p3": "califica para acceder a al menos alguna otra preferencia a los fines del sorteo,",
+            "instructions_p4": "es posible que pueda acceder a una clasificación más alta en el sorteo.",
+            "instructions_p5": "Obtenga más información sobre esta preferencia",
+            "select_which_application": "Seleccione qué solicitante se considera veterano.",
+            "title": "¿Se incluye a algún veterano?",
+            "who_is_a_veteran": "¿Qué persona es el veterano?",
+            "yes_someone_is_a_veteran": "Sí, una de las personas es veterano.",
+            "your_answer_could_affect_lottery_ranking": "Tenga en cuenta que su respuesta podría afectar la clasificación a los fines del sorteo."
+        },
         "e7b_custom_preferences": {
             "employment_disability": {
                 "cannot_work_disability": "No puede trabajar debido a discapacidad",
@@ -454,7 +488,7 @@
                 "not_found_body": "Estimado(a) MOHCD, no puedo completar mi solicitud para {{listing_name}}. Mi dirección es {{home_address}} y el formulario me señala que hay un error. Indíqueme qué puedo hacer a continuación. Gracias, {{first_name}} {{last_name}} {{email}} {{phone_number}}",
                 "not_found_subject": "No puedo ingresar mi dirección en la solicitud en DAHLIA"
             },
-            "address_validation_duplicate_unit": "Si tiene un número de unidad o departamento, simplemente ingréselo en el casillero “Apt or Unit #” (N.° de departamento o unidad)",
+            "address_validation_duplicate_unit": "Si tiene un número de unidad o departamento, simplemente ingréselo en el casillero \"Apt or Unit #\" (N.° de departamento o unidad).",
             "address_validation_po_box": "Necesitamos la dirección donde vive actualmente. No se permiten los apartados postales.",
             "alert": {
                 "bad_request": "¡Vaya! Se ha detectado un problema. Por favor intente nuevamente. \n\nContacte a sfhousing.info@sfgov.org si continúa teniendo problemas.",
@@ -489,7 +523,7 @@
             "last_name": "Ingrese el apellido",
             "lottery_ranking_search": "Parece que tenemos problemas de coneccion. Por favor repita su búsqueda.",
             "not_eligible": "Lamentablemente, usted parece no reunir los requisitos necesarios para este anuncio de vivienda.",
-            "not_eligible_description": "Si cree que puede haber cometido un error, revise y corrija la información. Tenga en cuenta que si ingresa información falsa, su solicitud será descalificada.<br><br>Si la información que ingresó es correcta, lo invitamos a volver a visitar el sitio en el futuro para saber si hay más propiedades disponibles.",
+            "not_eligible_description": "Si considera que cometió un error, le solicitamos encarecidamente que lo corrija. Tenga en cuenta que si presenta cualquier información falsa en su solicitud quedará descalificado.<br/><br/>Si la información que ingresó es correcta, lo invitamos a que vuelva a consultar más adelante, ya que siempre se habilitan nuevas propiedades.",
             "password": "Ingrese el apellido",
             "password_confirmation": "La confirmación de la contraseña no coincide",
             "password_update": "Hubo un error al actualizar la contraseña. Intente nuevamente o comuníquese con nosotros.",
@@ -586,7 +620,7 @@
             "applicant_homebuyer_education_agency": "Agencia de capacitación para compradores de viviendas",
             "applicant_income_total": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
             "applicant_lending_institution": "entidad de préstamos",
-            "applicant_name_loan_officer": "Agente de préstamos",
+            "applicant_name_loan_officer": "Oficial de préstamos",
             "applicant_no_email": "No tengo dirección de correo electrónico",
             "applicant_no_phone": "No tengo teléfono",
             "applicant_phone": "Su número de teléfono",

@@ -1,5 +1,5 @@
 const verifyMachineTranslations = (language, id, translation) => {
-  cy.intercept("POST", "https://translate.googleapis.com/translate_a/t?*").as("getTranslate")
+  cy.intercept("POST", /^https:\/\/translate/).as("getTranslate")
   cy.visit(`${language}/listings/${id}?react=true`)
   cy.wait("@getTranslate")
   return cy.contains(translation)
