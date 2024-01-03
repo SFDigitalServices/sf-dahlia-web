@@ -4,6 +4,7 @@ import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
+import { ListingCard } from "@bloom-housing/ui-components"
 
 const DocumentChecklist = () => {
   const anchor = window.location.href.split("#").pop()
@@ -176,6 +177,15 @@ const DocumentChecklist = () => {
       {
         <div className="flex flex-col w-full ">
           <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
+            <ListingCard
+              imageCardProps={{}}
+              contentProps={{
+                contentHeader: { content: "Optional content header" },
+                contentSubheader: { content: "Optional content subheader" },
+                tableHeader: { content: "Optional table header" },
+                tableSubheader: { content: "Optional table subheader" },
+              }}
+            />
             <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
             <p>{t("documentChecklist.p2")}</p>
