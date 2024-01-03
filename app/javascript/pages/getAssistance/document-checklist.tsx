@@ -185,6 +185,34 @@ const DocumentChecklist = () => {
                 tableHeader: { content: "Optional table header" },
                 tableSubheader: { content: "Optional table subheader" },
               }}
+              tableProps={{
+                headers: {
+                  units: { name: "t.unitType" },
+                  availability: { name: "t.availability" },
+                  income: { name: "t.incomeRange" },
+                  rent: { name: "t.rent" },
+                },
+                stackedData: [
+                  {
+                    units: {
+                      cellText: "Studio",
+                      cellSubText: "23 available",
+                      // hideSubTextMobile: true,
+                    },
+                    availability: { cellText: "23", cellSubText: "available" },
+                    income: { cellText: "$0 to $6,854", cellSubText: "per month" },
+                    rent: { cellText: "30%", cellSubText: "income" },
+                  },
+                  {
+                    units: { cellText: "1 BR", cellSubText: "3 available" },
+                    availability: { cellText: "3", cellSubText: "available" },
+                    income: { cellText: "$2,194 to $6,854", cellSubText: "per month" },
+                    rent: { cellText: "$1,295", cellSubText: "income" },
+                  },
+                ],
+                // headersHiddenDesktop: ["availability"],
+              }}
+              stackedTable={true}
             />
             <h2>{t("documentChecklist.preferenceHeader")}</h2>
             <p>{t("documentChecklist.p1")}</p>
