@@ -1,6 +1,6 @@
 .app-sub-header.border-top
   h3.app-sub-header_title
     | {{::$ctrl.header}}
-  a.info-item_link.edit-link.hide-for-print ng-href="{{::$ctrl.sectionHref}}" ng-if="::$ctrl.editable"
+  a.info-item_link.edit-link.hide-for-print ng-href="{{::$ctrl.sectionHref}}" ng-if="::$ctrl.editable" aria-label="{{::$ctrl.editDescription}}"
     | {{'t.edit' | translate}}
   ng-transclude=""
