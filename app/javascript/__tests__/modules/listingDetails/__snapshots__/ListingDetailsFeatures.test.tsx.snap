@@ -571,16 +571,24 @@ exports[`ListingDetailsFeatures displays listing details features section when r
             class="info-card__column-2"
           >
             <p
-              class="translate"
-            >
+              class="whitespace-pre-wrap translate"
+            />
+            <p>
               Tenants pay for gas, electricity.
 
-For pet fees:  Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum.  
-
-Dogs are not allowed in the building.  
-
-One parking space per unit available for $175 a month.
+              <br />
+              <br />
+              For pet fees:  Cat is allowed with a $500 refundable deposit, $250 non-refundable cleaning fee and a pet addendum.
+              <br />
+              <br />
+              <br />
+              Dogs are not allowed in the building.
+              <br />
+              <br />
+              <br />
+              One parking space per unit available for $175 a month.
             </p>
+            <p />
           </div>
         </div>
       </div>
