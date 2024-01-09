@@ -15,6 +15,7 @@ class MultipleListingImageService
   end
 
   def process_images
+    return if @listing_images.blank?
     @listing_images.each do |listing_image|
       li_raw_image_url = listing_image['Image_URL']
 

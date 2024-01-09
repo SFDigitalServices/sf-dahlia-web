@@ -80,7 +80,7 @@ class CacheService
   def process_listing_images(listing)
     Rails.logger.info("Calling MultipleListingImageService #{listing['Id']}")
     multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
-    return unless multiple_listing_image_processor.errors.present?
+    return unless multiple_listing_image_processor&.errors.present?
 
     Rails.logger.error multiple_listing_image_processor.errors.join(',')
   end
