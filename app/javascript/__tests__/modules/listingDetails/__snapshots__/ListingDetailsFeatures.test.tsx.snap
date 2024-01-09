@@ -571,7 +571,7 @@ exports[`ListingDetailsFeatures displays listing details features section when r
             class="info-card__column-2"
           >
             <p
-              class="whitespace-pre-wrap translate"
+              class="translate"
             />
             <p>
               Tenants pay for gas, electricity.
