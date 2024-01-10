@@ -4,7 +4,8 @@ class CacheService
     # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
     Rails.logger.info('CacheService Started')
-    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    interim = Force::ListingService.listings(subset: 'browse')
+    @prev_cached_listings = Marshal.load(Marshal.dump(interim))
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
     if opts[:refresh_all]
@@ -32,9 +33,7 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
-      ## todo: remove listing_unchanged because it doesn't work?
-      unless listing_unchanged?(prev_cached_listing, fresh_listing) &&
-             listing_images_unchanged?(prev_cached_listing, fresh_listing)
+      unless listing_images_unchanged?(prev_cached_listing, fresh_listing)
         cache_single_listing(fresh_listing)
       end
 
@@ -42,18 +41,8 @@ class CacheService
     end
   end
 
-  def listing_unchanged?(prev_cached_listing, fresh_listing)
-    changed = prev_cached_listing.present? &&
-              (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
-    Rails.logger.info("Listing_unchanged for #{fresh_listing['Id']} is #{changed}")
-    Rails.logger.info("Last modified date for prev cached listing is #{prev_cached_listing['LastModifiedDate']}")
-    Rails.logger.info("Last modified date for the fresh listing is #{fresh_listing['LastModifiedDate']}")
-
-    changed
-  end
-
   def listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
-    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
+    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL')  }
     prev_li_slice = prev_cached_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
     (fresh_li_slice - prev_li_slice).empty? && (prev_li_slice - fresh_li_slice).empty?
   end
@@ -66,6 +55,7 @@ class CacheService
 
     notChanged = listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
     Rails.logger.info("Listing_images_equal for #{fresh_listing['Id']} is #{notChanged}")
+    puts "Listing_images_equal for #{fresh_listing['Id']} is #{notChanged}"
     notChanged
   end
 
