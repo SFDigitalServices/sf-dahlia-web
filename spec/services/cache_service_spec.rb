@@ -14,8 +14,8 @@ describe CacheService do
   let(:updated_listings) do
     # map from cached listings to prevent listing properties from
     # being passed by reference (and thus updated in both places)
-    updated_listings = cached_listings.map(&:clone)
-    updated_listings.first['LastModifiedDate'] = 'Very recent date time'
+    updated_listings = Marshal.load(Marshal.dump(cached_listings))
+    updated_listings.first['Listing_Images'].first['Image_URL'] = 'Updated image url'
     updated_listings
   end
 
