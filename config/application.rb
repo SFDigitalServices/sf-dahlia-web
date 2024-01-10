@@ -60,5 +60,8 @@ module SfDahliaWeb
       r301 %r{(.+)/\?(.*)$}, '$1?$2'
       r301 '/mohcd-plus-housing', 'https://sfmohcd.org/plus-housing-application'
     end
+
+    # TODO: remove this once we are on Rails 7, only needed as we incrementally upgrade
+    config.autoloader = :zeitwerk
   end
 end
