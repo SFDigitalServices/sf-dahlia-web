@@ -33,12 +33,21 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
+      unchanged = listing_unchanged?(prev_cached_listing, fresh_listing)
+      Rails.logger.info("Is it unchanged? #{unchanged}")
       unless listing_images_unchanged?(prev_cached_listing, fresh_listing)
         cache_single_listing(fresh_listing)
       end
 
       process_listing_images(fresh_listing)
     end
+  end
+
+  def listing_unchanged?(prev_cached_listing, fresh_listing)
+    Rails.logger.info("prev date #{prev_cached_listing['LastModifiedDate']}")
+    Rails.logger.info("fresh date #{fresh_listing['LastModifiedDate']}")
+    prev_cached_listing.present? &&
+      (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
