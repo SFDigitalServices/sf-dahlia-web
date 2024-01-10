@@ -46,6 +46,8 @@ class CacheService
     changed = prev_cached_listing.present? &&
               (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
     Rails.logger.info("Listing_unchanged for #{fresh_listing['Id']} is #{changed}")
+    Rails.logger.info("Last modified date for prev cached listing is #{prev_cached_listing['LastModifiedDate']}")
+    Rails.logger.info("Last modified date for the fresh listing is #{fresh_listing['LastModifiedDate']}")
 
     changed
   end
