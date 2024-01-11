@@ -12,7 +12,6 @@ module Force
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
       force = attrs[:force].present? ? attrs[:force] : false
-      puts force
       get_listings(params:, force_recache: force)
     end
 
