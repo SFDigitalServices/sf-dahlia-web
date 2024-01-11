@@ -4,8 +4,7 @@ class CacheService
     # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
     Rails.logger.info('CacheService Started')
-    interim = Force::ListingService.listings(subset: 'browse')
-    @prev_cached_listings = Marshal.load(Marshal.dump(interim))
+    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
     if opts[:refresh_all]
@@ -33,21 +32,12 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
-      unchanged = listing_unchanged?(prev_cached_listing, fresh_listing)
-      Rails.logger.info("Is it unchanged? #{unchanged}")
       unless listing_images_unchanged?(prev_cached_listing, fresh_listing)
         cache_single_listing(fresh_listing)
       end
 
       process_listing_images(fresh_listing)
     end
-  end
-
-  def listing_unchanged?(prev_cached_listing, fresh_listing)
-    Rails.logger.info("prev date #{prev_cached_listing['LastModifiedDate']}")
-    Rails.logger.info("fresh date #{fresh_listing['LastModifiedDate']}")
-    prev_cached_listing.present? &&
-      (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
 
   def listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
@@ -62,10 +52,7 @@ class CacheService
 
     return true if fresh_listing_images.blank?
 
-    notChanged = listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
-    Rails.logger.info("Listing_images_equal for #{fresh_listing['Id']} is #{notChanged}")
-    puts "Listing_images_equal for #{fresh_listing['Id']} is #{notChanged}"
-    notChanged
+    listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
   end
 
   def cache_single_listing(listing)
