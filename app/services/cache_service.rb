@@ -4,7 +4,11 @@ class CacheService
     # Refresh OAuth token, to avoid unauthorized errors in case it has expired
     Force::Request.new.refresh_oauth_token
     Rails.logger.info('CacheService Started')
-    @prev_cached_listings = Force::ListingService.listings(subset: 'browse')
+    # Marshal.load(Marshal.dump(cached_listings)) is a hack to make a deep clone of cached_listings
+    # so that prev_cached_listings isn't pointing to the same object as fresh_listings
+    cached_listings = Force::ListingService.listings(subset: 'browse')
+    @prev_cached_listings = Marshal.load(Marshal.dump(cached_listings))
+
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
     if opts[:refresh_all]

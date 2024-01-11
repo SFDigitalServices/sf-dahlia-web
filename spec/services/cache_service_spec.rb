@@ -14,7 +14,7 @@ describe CacheService do
   let(:updated_listings) do
     # map from cached listings to prevent listing properties from
     # being passed by reference (and thus updated in both places)
-    # Marshal.load(Marshal.dump(cached_listings)) is a hack to make a deep clone cached_listings
+    # Marshal.load(Marshal.dump(cached_listings)) is a hack to make a deep clone of cached_listings
     # so that updated_listings isn't pointing to the same object as cached_listings
     updated_listings = Marshal.load(Marshal.dump(cached_listings))
     updated_listings.first['Listing_Images'].first['Image_URL'] = 'Updated image url'
