@@ -537,6 +537,7 @@ DEPENDENCIES
   sitemap_generator!
   slim-rails
   spring
+  sprockets-rails
   sprockets_uglifier_with_source_maps
   uglifier (~> 3.2)
   vcr
