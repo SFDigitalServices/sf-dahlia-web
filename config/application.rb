@@ -71,7 +71,7 @@ module SfDahliaWeb
     # See https://guides.rubyonrails.org/configuring.html#config-active-support-disable-to-s-conversion for more information.
     config.active_support.disable_to_s_conversion = true
 
-    # Change the format of the cache entry to 7.0 after deploying the Rails 7 upgrade
+    # Change the format of the cache entry to 7.0 after deploying the 7.0 upgrade
     config.active_support.cache_format_version = 6.1
   end
 end
