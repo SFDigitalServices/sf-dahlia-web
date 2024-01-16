@@ -36,7 +36,7 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
-      unless listing_unchanged?(prev_cached_listing, fresh_listing) && 
+      unless listing_unchanged?(prev_cached_listing, fresh_listing) &&
              listing_images_unchanged?(prev_cached_listing, fresh_listing)
         cache_single_listing(fresh_listing)
       end
@@ -81,7 +81,6 @@ class CacheService
   end
 
   def process_listing_images(listing)
-    Rails.logger.info("Calling MultipleListingImageService #{listing['Id']}")
     multiple_listing_image_processor = MultipleListingImageService.new(listing).process_images
     return unless multiple_listing_image_processor&.errors.present?
 
