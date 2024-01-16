@@ -46,8 +46,6 @@ class CacheService
   end
 
   def listing_unchanged?(prev_cached_listing, fresh_listing)
-    Rails.logger.info("prev_cached_listing LastModifiedDate: #{prev_cached_listing['LastModifiedDate']}")
-    Rails.logger.info("fresh_listing LastModifiedDate: #{fresh_listing['LastModifiedDate']}")
     prev_cached_listing.present? &&
       (prev_cached_listing['LastModifiedDate'] == fresh_listing['LastModifiedDate'])
   end
