@@ -35,7 +35,7 @@ module Force
         expires_in = params ? 10.minutes : 1.day
       end
       Rails.logger.info(
-        "running cached_get for #{endpoint} with force set to #{force}",
+        "running cached_get for #{endpoint} with force set to #{force_refresh}",
       )
       @cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         get(endpoint, params)
