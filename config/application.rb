@@ -7,7 +7,7 @@ require 'rails/all'
 require_relative '../lib/rack_x_robots_tag'
 
 # Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
+# you've limited to :test, : elopment, or :production.
 Bundler.require(*Rails.groups)
 
 module SfDahliaWeb
@@ -73,5 +73,9 @@ module SfDahliaWeb
 
     # Change the format of the cache entry to 7.0 after deploying the 7.0 upgrade
     config.active_support.cache_format_version = 6.1
+
+    # Rails 7 can protect from open redirect attacks in `redirect_back_or_to` and `redirect_to`.
+    # This is not compatible with our authentication process so we disable it
+    config.action_controller.raise_on_open_redirects = false
   end
 end
