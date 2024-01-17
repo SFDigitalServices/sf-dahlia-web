@@ -4,7 +4,10 @@ import { areLotteryResultsShareable, getTagContent } from "../../util/listingUti
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
+import type {
+  ListingEvent,
+  ListingLotteryPreference,
+} from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./SharedHelpers.scss"
 
@@ -93,5 +96,11 @@ export const getEventNote = (listingEvent: ListingEvent) => {
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
       )}
     </div>
+  )
+}
+
+export const listingHasVeteransPreference = (listing: RailsListing): boolean => {
+  return !!listing.Listing_Lottery_Preferences?.some((preference: ListingLotteryPreference) =>
+    preference.Lottery_Preference.Name.toLowerCase().includes("veteran")
   )
 }

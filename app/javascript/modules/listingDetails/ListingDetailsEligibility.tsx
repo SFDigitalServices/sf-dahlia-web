@@ -8,7 +8,7 @@ import {
   StandardTable,
   t,
 } from "@bloom-housing/ui-components"
-import { RailsListing } from "../listings/SharedHelpers"
+import { RailsListing, listingHasVeteransPreference } from "../listings/SharedHelpers"
 import {
   isEducator,
   isEducatorOne,
@@ -293,7 +293,7 @@ export const ListingDetailsEligibility = ({
                 <div className="mb-4">
                   {t("listingsForSale.lotteryPreferences.weContactApplicants")}
                 </div>
-                {"TODO veterans listing flag" && (
+                {listingHasVeteransPreference(listing) && (
                   <>
                     <div>
                       <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
