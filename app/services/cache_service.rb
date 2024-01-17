@@ -26,7 +26,6 @@ class CacheService
   def cache_all_listings
     fresh_listings.each do |l|
       cache_single_listing(l)
-      process_listing_images(l)
     end
   end
 
@@ -40,7 +39,6 @@ class CacheService
               listing_images_unchanged?(prev_cached_listing, fresh_listing)
 
       cache_single_listing(fresh_listing)
-      process_listing_images(fresh_listing)
     end
   end
 
@@ -75,6 +73,7 @@ class CacheService
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
+    process_listing_images(listing)
   rescue Faraday::ClientError => e
     Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
   end
