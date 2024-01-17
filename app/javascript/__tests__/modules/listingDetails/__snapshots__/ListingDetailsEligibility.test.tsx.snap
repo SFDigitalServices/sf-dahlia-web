@@ -2305,11 +2305,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -2979,11 +2981,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -3789,11 +3793,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -4330,11 +4336,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -5013,11 +5021,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -5578,11 +5588,13 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
@@ -6098,11 +6110,13 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
               <div
                 class="mb-4"
               >
-                <span>
-                  Preference holders will be given highest ranking in the lottery process.
-                </span>
+                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
               </div>
-              Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+              <div
+                class="mb-4"
+              >
+                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
+              </div>
             </span>
           </hgroup>
         </header>
