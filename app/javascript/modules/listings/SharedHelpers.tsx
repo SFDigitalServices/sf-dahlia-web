@@ -101,6 +101,6 @@ export const getEventNote = (listingEvent: ListingEvent) => {
 
 export const listingHasVeteransPreference = (listing: RailsListing): boolean => {
   return !!listing.Listing_Lottery_Preferences?.some((preference: ListingLotteryPreference) =>
-    preference.Lottery_Preference.Name.toLowerCase().includes("veteran")
+    preference?.Lottery_Preference?.Name?.toLowerCase().includes("veteran")
   )
 }
