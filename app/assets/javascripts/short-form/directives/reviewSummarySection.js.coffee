@@ -6,6 +6,7 @@ angular.module('dahlia.components')
     editable: '<'
     header: '@'
     sectionName: '@'
+    editDescription: '@'
   controller: ['$state', ($state) ->
     ctrl = @
 
