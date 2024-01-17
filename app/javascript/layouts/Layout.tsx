@@ -126,11 +126,6 @@ const Layout = (props: LayoutProps) => {
     window.location.href = "/ie-deprecated.html"
     return
   }
-
-  const researchBanner = (
-    <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
-  )
-
   const feedbackBanner = (
     <Markdown>
       {t("nav.getFeedback", { feedbackUrl: "https://airtable.com/shrw64DubWTQfRkdo" })}
