@@ -36,11 +36,10 @@ class CacheService
         l['Id'] == fresh_listing['Id']
       end
 
-      unless listing_unchanged?(prev_cached_listing, fresh_listing) &&
-             listing_images_unchanged?(prev_cached_listing, fresh_listing)
-        cache_single_listing(fresh_listing)
-      end
+      next if listing_unchanged?(prev_cached_listing, fresh_listing) &&
+              listing_images_unchanged?(prev_cached_listing, fresh_listing)
 
+      cache_single_listing(fresh_listing)
       process_listing_images(fresh_listing)
     end
   end
