@@ -160,11 +160,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - TOP_MESSAGE_TYPE defaults to `alert`, other options: [`primary`, `success`]
 - TOP_MESSAGE_INVERTED default to `false`, when set to `true` sets AlertBox prop to inverted
 
-- SHOW_RESEARCH_BANNER controls visibility of the research banner
-
 ### Other
-
-- SHOW_RESEARCH_BANNER - If set to 'true', it displays research banner.
 - COVID_UPDATE -> If set to 'true', shows COVID-19 update info in the apply section and hides pre lottery info
 
 ## Contributing changes

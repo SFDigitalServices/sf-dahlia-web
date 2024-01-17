@@ -165,7 +165,7 @@ const Layout = (props: LayoutProps) => {
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
-            notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
+            notice={feedbackBanner}
             noticeMobile={true}
             mobileDrawer={true}
             flattenSubMenus={true}
