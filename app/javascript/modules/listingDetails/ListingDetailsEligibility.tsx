@@ -290,18 +290,16 @@ export const ListingDetailsEligibility = ({
                 <div className="mb-4">
                   {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
                 </div>
-                <div className="mb-4">
-                  {t("listingsForSale.lotteryPreferences.weContactApplicants")}
-                </div>
+                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
                 {listingHasVeteransPreference(listing) && (
                   <>
-                    <div>
+                    <div className="mt-4">
                       <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
                     </div>
                     <div className="mb-4">
                       {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
                     </div>
-                    <div className="mb-4">
+                    <div>
                       <Link
                         className="text-blue-700"
                         external={true}
