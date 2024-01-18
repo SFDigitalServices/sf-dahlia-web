@@ -2446,11 +2446,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -3120,11 +3115,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -3930,11 +3920,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
     </ul>
   </li>
@@ -4471,11 +4456,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -5154,11 +5134,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
       <li
         class="list-section custom-counter__item"
@@ -5719,11 +5694,6 @@ exports[`ListingDetailsEligibility displays listing details eligibility section 
             </div>
           </li>
         </ol>
-        <p
-          class="text-gray-750 text-sm"
-        >
-          After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-        </p>
       </li>
     </ul>
   </li>
