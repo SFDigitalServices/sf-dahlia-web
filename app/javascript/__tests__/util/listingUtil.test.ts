@@ -22,10 +22,13 @@ import {
   getAmiChartDataFromUnits,
   getPriorityTypeText,
   getTagContent,
+  listingHasVeteransPreference,
+  preferenceNameHasVeteran,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
 import { saleListingReservedAndCustom } from "../data/RailsSaleListing/listing-sale-reserved-and-custom"
+import { rentalVeteranPreferenceListing } from "../data/RailsRentalListing/listing-rental-veteran-preference"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { rentalEducatorListing1complete } from "../data/RailsRentalListing/listing-rental-educator-lottery-complete"
@@ -502,5 +505,25 @@ describe("getTagContent", () => {
     expect(getTagContent(saleListingReservedAndCustom)).toStrictEqual([
       { text: "SF public schools employee housing" },
     ])
+  })
+})
+
+describe("listingHasVeteransPreference", () => {
+  test("returns false for listings without Veterans-related preferences", () => {
+    expect(listingHasVeteransPreference(closedRentalListing)).toBe(false)
+  })
+
+  test("returns true for listings with Veterans-related preferences", () => {
+    expect(listingHasVeteransPreference(rentalVeteranPreferenceListing)).toBe(true)
+  })
+})
+
+describe("preferenceNameHasVeteran", () => {
+  test("returns true for strings that contain 'veteran'", () => {
+    expect(preferenceNameHasVeteran("Veteran with Certificate of Preference (V-COP)")).toBe(true)
+  })
+
+  test("returns false for strings that do not contain 'veteran'", () => {
+    expect(preferenceNameHasVeteran("Certificate of Preference (COP)")).toBe(false)
   })
 })

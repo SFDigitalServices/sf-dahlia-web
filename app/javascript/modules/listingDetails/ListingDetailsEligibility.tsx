@@ -18,6 +18,7 @@ import {
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
+  listingHasVeteransPreference,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -33,6 +34,7 @@ import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
+import Link from "../../navigation/Link"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -287,9 +289,29 @@ export const ListingDetailsEligibility = ({
             subtitle={
               <>
                 <div className="mb-4">
-                  {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
                 </div>
-                {t("listingsForSale.lotteryPreferences.hasPreferences")}
+                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                {listingHasVeteransPreference(listing) && (
+                  <>
+                    <div className="mt-4">
+                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
+                    </div>
+                    <div className="mb-4">
+                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                    </div>
+                    <div>
+                      <Link
+                        className="text-blue-700"
+                        external={true}
+                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                        target="_blank"
+                      >
+                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                      </Link>
+                    </div>
+                  </>
+                )}
               </>
             }
           >
