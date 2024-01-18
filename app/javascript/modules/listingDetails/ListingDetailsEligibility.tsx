@@ -8,7 +8,7 @@ import {
   StandardTable,
   t,
 } from "@bloom-housing/ui-components"
-import { RailsListing, listingHasVeteransPreference } from "../listings/SharedHelpers"
+import { RailsListing } from "../listings/SharedHelpers"
 import {
   isEducator,
   isEducatorOne,
@@ -18,6 +18,7 @@ import {
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
+  listingHasVeteransPreference,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
