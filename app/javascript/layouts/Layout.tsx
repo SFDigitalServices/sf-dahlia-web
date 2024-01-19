@@ -126,11 +126,6 @@ const Layout = (props: LayoutProps) => {
     window.location.href = "/ie-deprecated.html"
     return
   }
-
-  const researchBanner = (
-    <Markdown>{t("nav.researchFeedback", { researchUrl: process.env.RESEARCH_FORM_URL })}</Markdown>
-  )
-
   const feedbackBanner = (
     <Markdown>
       {t("nav.getFeedback", { feedbackUrl: "https://airtable.com/shrw64DubWTQfRkdo" })}
@@ -165,7 +160,7 @@ const Layout = (props: LayoutProps) => {
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
-            notice={process.env.SHOW_RESEARCH_BANNER ? researchBanner : feedbackBanner}
+            notice={feedbackBanner}
             noticeMobile={true}
             mobileDrawer={true}
             flattenSubMenus={true}

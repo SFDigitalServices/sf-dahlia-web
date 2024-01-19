@@ -1,6 +1,9 @@
 import type RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import type {
+  ListingEvent,
+  ListingLotteryPreference,
+} from "../api/types/rails/listings/BaseRailsListing"
 import type {
   RailsUnitWithOccupancy,
   RailsUnitWithOccupancyAndMinMaxIncome,
@@ -652,4 +655,13 @@ export const getTagContent = (listing: RailsListing) => {
   return listing.Reserved_community_type
     ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
     : undefined
+}
+
+export const preferenceNameHasVeteran = (preferenceName: string): boolean =>
+  typeof preferenceName === "string" && preferenceName.toLowerCase().includes("veteran")
+
+export const listingHasVeteransPreference = (listing: RailsListing): boolean => {
+  return !!listing.Listing_Lottery_Preferences?.some((preference: ListingLotteryPreference) =>
+    preferenceNameHasVeteran(preference?.Lottery_Preference?.Name)
+  )
 }
