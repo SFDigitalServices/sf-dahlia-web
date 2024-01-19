@@ -14,6 +14,8 @@
       getPreferenceById: ->
     fakeListingUnitService =
       listingHasReservedUnitType: ->
+    fakeSharedService =
+      showVeteransApplicationQuestion: () -> true
     $state = undefined
     $translate = {}
     $localStorage = undefined
@@ -26,7 +28,7 @@
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       $provide.value 'ListingUnitService', fakeListingUnitService
       $provide.value 'ListingIdentityService', jasmine.createSpy()
-      $provide.value 'SharedService', jasmine.createSpy()
+      $provide.value 'SharedService', fakeSharedService
       $provide.value 'ListingLotteryService', jasmine.createSpy()
       $provide.value 'ExternalTranslateService', jasmine.createSpy()
       $provide.value 'ListingEligibilityService', jasmine.createSpy()
