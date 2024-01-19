@@ -8,7 +8,7 @@ ShortFormNavigationService = (
   Service.RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
 
-  Service.showVeteransApplicationQuestion =
+  Service.showVeteransApplicationQuestion = ->
     SharedService.showVeteransApplicationQuestion(ShortFormApplicationService.listing)
 
   Service.goToApplicationPage = (path, params) ->
@@ -393,7 +393,7 @@ ShortFormNavigationService = (
       when 'veterans-preference'
         'preferences-programs'
       when 'custom-preferences'
-        if Service.showVeteransApplicationQuestion
+        if Service.showVeteransApplicationQuestion()
           'veterans-preference'
         else
           'preferences-programs'
@@ -409,7 +409,7 @@ ShortFormNavigationService = (
         # We might want to re-enable them in the future
         # else if Service.hasCustomPreferences()
         #   'custom-preferences'
-        else if !Service.showVeteransApplicationQuestion
+        else if !Service.showVeteransApplicationQuestion()
           'preferences-programs'
         else
           'veterans-preference'
@@ -500,11 +500,11 @@ ShortFormNavigationService = (
     #   "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
     # else if Service.hasCustomPreferences()
     #   'custom-preferences'
-    # else if !Service.showVeteransApplicationQuestion
+    # else if !Service.showVeteransApplicationQuestion()
     #   'preferences-programs'
     # else
     #   'veterans-preference'
-    if !Service.showVeteransApplicationQuestion
+    if !Service.showVeteransApplicationQuestion()
       'preferences-programs'
     else
       'veterans-preference'
