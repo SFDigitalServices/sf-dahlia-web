@@ -81,6 +81,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'isVeteran',
     ]
 
+  Service.showVeteransApplicationQuestion =
+    SharedService.showVeteransApplicationQuestion(ListingDataService.listing)
+
   # Format application for Salesforce Processing.
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
@@ -109,9 +112,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
     _.merge sfApp.primaryApplicant, home_address
     _.merge sfApp.primaryApplicant, mailing_address
-    if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == application.applicant.id
+    if Service.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == application.applicant.id
       sfApp.primaryApplicant.isVeteran = 'Yes'
-    else if SharedService.showVeteransApplicationQuestion
+    else if Service.showVeteransApplicationQuestion
       sfApp.primaryApplicant.isVeteran = null
     # householdMembers
     householdMembers = Service._formatHouseholdMembers(application, veteranMemberId)
@@ -119,7 +122,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       sfApp.householdMembers = householdMembers
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if SharedService.showVeteransApplicationQuestion && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
+    if Service.showVeteransApplicationQuestion && (application.isAnyoneAVeteran == 'No' || application.isAnyoneAVeteran == 'Decline to state' || application.isAnyoneAVeteran == null)
       allAppMembers = _.concat(sfApp.primaryApplicant, sfApp.householdMembers)
       _.each(allAppMembers, (member) ->
         if member
@@ -195,9 +198,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       _.merge householdMember, Service._formatGeocodingData(member)
       home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
       _.merge householdMember, home_address
-      if SharedService.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == member.id
+      if Service.showVeteransApplicationQuestion && veteranMemberId && veteranMemberId == member.id
         householdMember.isVeteran = 'Yes'
-      else if SharedService.showVeteransApplicationQuestion
+      else if Service.showVeteransApplicationQuestion
         householdMember.isVeteran = null
       householdMembers.push(householdMember)
     return householdMembers
@@ -397,7 +400,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
 
     # Veterans Preference is different from other preferences, the backend needs to know who is a veteran in the householdMember/primaryApplicant object
-    if SharedService.showVeteransApplicationQuestion
+    if Service.showVeteransApplicationQuestion
       veteranMemberId = null
       allAppMembers = _.concat(data.applicant, data.householdMembers)
       veteranMember = _.find(allAppMembers, { isVeteran: 'Yes' })

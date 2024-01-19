@@ -701,7 +701,8 @@ ShortFormApplicationController = (
 
 ########## BEGIN VETERANS PREFERENCE LOGIC ##########
 
-  $scope.showVeteransApplicationQuestion = SharedService.showVeteransApplicationQuestion
+  $scope.showVeteransApplicationQuestion =
+    SharedService.showVeteransApplicationQuestion($scope.listing)
 
   $scope.eligibleVeteransMembers = ->
     ShortFormApplicationService.eligibleVeteransMembers()

@@ -585,7 +585,7 @@ ShortFormApplicationService = (
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
-    if SharedService.showVeteransApplicationQuestion && Service.application.isAnyoneAVeteran == 'Yes'
+    if SharedService.showVeteransApplicationQuestion(Service.listing) && Service.application.isAnyoneAVeteran == 'Yes'
       return false
     return !_.some(_.pick(Service.preferences, prefList))
 
