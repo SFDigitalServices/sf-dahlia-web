@@ -514,6 +514,7 @@ ShortFormNavigationService = (
     # the household members page
     application = ShortFormApplicationService.application
     return '' if application.status.toLowerCase() == 'submitted'
+    listing = ShortFormApplicationService.listing
 
     if application.hasPublicHousing
       'household-public-housing'
