@@ -15,35 +15,39 @@ class MultipleListingImageService
   end
 
   def process_images
-    unless @listing_images
-      Rails.logger.info("No listing images provided for listing #{@listing_id}")
-      return self
-    end
-    Rails.logger.info("Processing Listing Images for #{@listing_id}")
+    return if @listing_images.blank?
 
     @listing_images.each do |listing_image|
-      li_raw_image_url = listing_image['Image_URL']
-
-      li_raw_image_url.blank? && next
-
-      cache_string = get_cache_string(@listing_id, li_raw_image_url)
-      image_name = get_image_name(@listing_id, cache_string)
-      tmp_image_path = get_tmp_image_path(image_name)
-      remote_image_path = get_remote_image_path(image_name)
-      image_url = get_image_url(remote_image_path)
-
-      if !resized_image?(image_name, @resized_listing_images)
-        Rails.logger.info("Resizing and uploading #{image_name}")
-        if resize_and_upload_image(li_raw_image_url, tmp_image_path, remote_image_path,
-                                   @listing_id)
-          create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
-        end
-      elsif !listing_image_current?(@listing_id,
-                                   image_url) || ENV['FORCE_MULTIPLE_LISTING_IMAGE_UPDATE'].to_s.casecmp('true').zero?
-        create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
-      end
+      process_image(listing_image)
     end
     self
+  end
+
+  def process_image(listing_image)
+    li_raw_image_url = listing_image['Image_URL']
+
+    return if li_raw_image_url.blank?
+
+    cache_string = get_cache_string(@listing_id, li_raw_image_url)
+    image_name = get_image_name(@listing_id, cache_string)
+    tmp_image_path = get_tmp_image_path(image_name)
+    remote_image_path = get_remote_image_path(image_name)
+    image_url = get_image_url(remote_image_path)
+
+    # Check if the image has been uploaded to S3 bucket before
+    if !resized_image?(image_name, @resized_listing_images)
+      # If not, resize the image and upload to S3 bucket
+      Rails.logger.info("Resizing and uploading #{image_name}")
+      if resize_and_upload_image(li_raw_image_url, tmp_image_path, remote_image_path, @listing_id)
+        # If upload was successful, create or update the record in Postgres
+        create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
+      end
+    # Else, if the image has been uploaded, check if we need to create the record in Postgres
+    elsif !listing_image_current?(@listing_id, image_url) ||
+          ENV['FORCE_MULTIPLE_LISTING_IMAGE_UPDATE'].to_s.casecmp('true').zero?
+      # if the listing_image record containing the image_url does not exist, create it
+      create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
+    end
   end
 
   private
@@ -74,9 +78,10 @@ class MultipleListingImageService
   end
 
   def listing_image_current?(listing_id, image_url)
-    ListingImage.where(salesforce_listing_id: listing_id).where(image_url: image_url).exists?
+    ListingImage.where(salesforce_listing_id: listing_id).where(image_url:).exists?
   end
 
+  # TODO: pull into a new image_upload service?
   def resize_and_upload_image(raw_image_url, tmp_image_path, remote_image_path,
                               listing_id)
     if resize_image(raw_image_url, listing_id, tmp_image_path)

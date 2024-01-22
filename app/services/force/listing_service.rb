@@ -125,7 +125,7 @@ module Force
           li.salesforce_listing_id == listing['Id']
         end.first
         # fallback to Building_URL for the case where ListingImages have not been set up
-        url = listing_image && ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero? ? listing_image.image_url : listing['Building_URL']
+        url = listing_image ? listing_image.image_url : listing['Building_URL']
         listing['imageURL'] = url
       end
       listings
@@ -144,7 +144,7 @@ module Force
     private_class_method def self.set_cloudfront_url(sf_listing_images, cf_listing_images)
       sf_listing_images.each do |li|
         cf_listing_image = cf_listing_images.where(raw_image_url: li['Image_URL']).first
-        url = cf_listing_image && ENV['CACHE_LISTING_IMAGES'].to_s.casecmp('true').zero? ? cf_listing_image.image_url : li['Image_URL']
+        url = cf_listing_image ? cf_listing_image.image_url : li['Image_URL']
         li['displayImageURL'] = url
       end
       sf_listing_images
