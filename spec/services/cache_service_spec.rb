@@ -14,8 +14,10 @@ describe CacheService do
   let(:updated_listings) do
     # map from cached listings to prevent listing properties from
     # being passed by reference (and thus updated in both places)
-    updated_listings = cached_listings.map(&:clone)
-    updated_listings.first['LastModifiedDate'] = 'Very recent date time'
+    # Marshal.load(Marshal.dump(cached_listings)) is a hack to make a deep clone of cached_listings
+    # so that updated_listings isn't pointing to the same object as cached_listings
+    updated_listings = Marshal.load(Marshal.dump(cached_listings))
+    updated_listings.first['Listing_Images'].first['Image_URL'] = 'Updated image url'
     updated_listings
   end
 
@@ -23,7 +25,6 @@ describe CacheService do
 
   let(:updated_listing_id) { updated_listing['Id'] }
 
-  let(:listing_image_service) { instance_double(ListingImageService) }
   let(:multiple_listing_image_service) { instance_double(MultipleListingImageService) }
 
   before do
@@ -34,11 +35,8 @@ describe CacheService do
     allow(Force::ListingService).to receive(:units)
     allow(Force::ListingService).to receive(:preferences)
     allow(Force::ListingService).to receive(:lottery_buckets)
-    allow(listing_image_service).to receive(:process_image)
-      .and_return(OpenStruct.new(errors: nil))
     allow(multiple_listing_image_service).to receive(:process_images)
       .and_return(OpenStruct.new(errors: nil))
-    allow(ListingImageService).to receive(:new).and_return(listing_image_service)
     allow(MultipleListingImageService).to receive(:new).and_return(multiple_listing_image_service)
   end
 
@@ -79,21 +77,7 @@ describe CacheService do
     end
 
     it 'processes an image for the updated listing' do
-      expect(listing_image_service).to receive(:process_image)
       expect(multiple_listing_image_service).to receive(:process_images)
-      VCR.use_cassette('force/initialize') do
-        CacheService.new.prefetch_listings(prefetch_args)
-      end
-    end
-
-    it 'logs image processing errors, if present' do
-      errors = [
-        'ListingImageService error: No image provided for listing a0W0P00000GlKfBUAV',
-      ]
-      allow(listing_image_service).to receive(:process_image)
-        .and_return(OpenStruct.new(errors:))
-      expect(Rails.logger).to receive(:error).with(errors.join(','))
-
       VCR.use_cassette('force/initialize') do
         CacheService.new.prefetch_listings(prefetch_args)
       end
@@ -103,7 +87,6 @@ describe CacheService do
   describe '#prefetch_listings' do
     context 'listing is updated' do
       before do
-        stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
         # simulate an updated listing
         allow(Force::ListingService).to receive(:listings)
           .with(subset: 'browse', force: true).and_return(updated_listings)
@@ -130,9 +113,6 @@ describe CacheService do
   end
 
   describe '#prefetch_listings(refresh_all: true)' do
-    before do
-      stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
-    end
     # simulate unchanged listings, because these should still get updated
     # when refreshing all
     let(:updated_listings) { cached_listings }

@@ -3,7 +3,6 @@ namespace :listing_images do
   task process_images: :environment do
     listings = Force::ListingService.listings
     listings.each do |listing|
-      ListingImageService.new(listing).process_image
       MultipleListingImageService.new(listing).process_images
     end
   end
