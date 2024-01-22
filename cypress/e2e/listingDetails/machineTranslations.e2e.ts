@@ -1,5 +1,5 @@
 const verifyMachineTranslations = (language, id, translation) => {
-  cy.intercept("POST", "https://translate.googleapis.com/translate_a/t?*").as("getTranslate")
+  cy.intercept("POST", /^https:\/\/translate/).as("getTranslate")
   cy.visit(`${language}/listings/${id}?react=true`)
   cy.wait("@getTranslate")
   return cy.contains(translation)
@@ -41,7 +41,10 @@ const INFORMATION_SESSION_SALE_TEXT = {
   zh: "一名申請人必須參加資訊發布會。",
 }
 
-describe("Listing Detail Machine Translations", () => {
+// These tests have been flaky, due to changes with the Google Translate implementation that are out of our control
+// Manual testing of machine translations will suffice
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Listing Detail Machine Translations", () => {
   describe(`Rental Listing: ${TEST_LISTINGS.OPEN_RENTAL.id}`, () => {
     describe("When a user views rental listing detail in English", () => {
       it(`should say '${INFORMATION_SESSION_RENTAL_TEXT.en}'`, () => {

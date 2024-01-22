@@ -93,6 +93,8 @@ ShortFormApplicationController = (
     data =
       # will be null if the listing didn't have a screening Q
       answeredCommunityScreening: $scope.application.answeredCommunityScreening
+      customEducatorScreeningAnswer: $scope.application.customEducatorScreeningAnswer
+      customEducatorJobClassificationNumber: $scope.application.customEducatorJobClassificationNumber
     ShortFormApplicationService.resetApplicationData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
@@ -197,6 +199,10 @@ ShortFormApplicationController = (
     form = $scope.currentForm()
     ShortFormApplicationService.inputInvalid(fieldName, form)
 
+  $scope.inputInvalidOnTouched = (fieldName) ->
+    form = $scope.currentForm()
+    ShortFormApplicationService.inputInvalidOnTouched(fieldName, form)
+
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
     return if !$scope.applicant[fieldName] || $scope.inputValid(fieldName)
@@ -205,13 +211,16 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.beginApplication = (lang = 'en') ->
-    if $scope.listing.Reserved_community_type
+    if $scope.isCustomEducatorListing()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.custom-educator-screening', {lang: lang})
+    else if $scope.listing.Reserved_community_type
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.community-screening', {lang: lang})
     else
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview', {lang: lang})
 
   $scope.onCommunityScreeningPage = ->
-    $state.current.name == 'dahlia.short-form-welcome.community-screening'
+    $state.current.name == 'dahlia.short-form-welcome.community-screening' ||
+    $state.current.name == 'dahlia.short-form-welcome.custom-educator-screening'
 
   $scope.checkCommunityScreening = ->
     # ng-change action for answering 'Yes' to screening
@@ -224,6 +233,58 @@ ShortFormApplicationController = (
       $scope.handleErrorState()
     else if $scope.application.answeredCommunityScreening ==  'Yes'
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
+
+  ########## BEGIN CUSTOM EDUCATOR SCREENING LOGIC ##########
+
+  # reserved for educators
+  $scope.customEducatorIsListing1 = ->
+    $scope.listing.Custom_Listing_Type == 'Educator 1: SFUSD employees only'
+
+  # anyone can apply
+  $scope.customEducatorIsListing2 = ->
+    $scope.listing.Custom_Listing_Type == 'Educator 2: SFUSD employees & public'
+
+  # waitlist only
+  $scope.customEducatorIsListing3 = ->
+    $scope.listing.Custom_Listing_Type == 'Educator 3: Waitlist - SFUSD employees & public'
+
+  $scope.isCustomEducatorListing = ->
+    $scope.customEducatorIsListing1() || $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
+
+  $scope.customEducatorIsEducator = ->
+    $scope.application.customEducatorScreeningAnswer == 'Yes'
+
+  $scope.customEducatorIsNotEducator = ->
+    $scope.application.customEducatorScreeningAnswer == 'No'
+
+  $scope.customEducatorCheckScreening = ->
+    $scope.clearEligibilityErrors()
+
+  $scope.customEducatorCapitalizeJobClassifcationNumber = ->
+    form = $scope.form.applicationForm
+    form['customEducatorJobClassificationNumber'].$setViewValue(
+      form['customEducatorJobClassificationNumber'].$viewValue.toUpperCase()
+    )
+
+  $scope.customEducatorValidJobClassificationNumber = (value) ->
+    _.includes(
+      ShortFormHelperService.customEducatorValidJobClassificationNumbers,
+      (value || '').toUpperCase()
+    )
+
+  $scope.customEducatorValidateEligibility = ->
+    if $scope.customEducatorIsListing1() && $scope.customEducatorIsEducator()
+      $scope.clearEligibilityErrors()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
+    else if $scope.customEducatorIsListing1() && $scope.customEducatorIsNotEducator()
+      $scope.eligibilityErrors = [$translate.instant('a3_custom_educator_screening.you_must_work_at')]
+      $scope.notEligibleErrorMessage = $translate.instant('a3_custom_educator_screening.you_are_not_eligible')
+      $scope.handleErrorState()
+    else if $scope.customEducatorIsListing2() || $scope.customEducatorIsListing3()
+      $scope.clearEligibilityErrors()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-welcome.overview')
+
+  ########## END CUSTOM SCREENING LOGIC ##########
 
   $scope.addressInputInvalid = (identifier = '') ->
     return true if $scope.addressValidationError(identifier)
@@ -370,7 +431,7 @@ ShortFormApplicationController = (
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.preferences-programs')
 
   ##### Custom Preferences Logic ####
-  # this called after preferences programs
+  # this called after veterans-preference
   $scope.checkForCustomPreferences = ->
     if _.isEmpty($scope.listing.customPreferences)
       $scope.checkForCustomProofPreferences()
@@ -637,6 +698,42 @@ ShortFormApplicationController = (
     else if error == 'too high'
       message = $translate.instant("error.household_income_too_high")
     $scope.eligibilityErrors = [message]
+
+########## BEGIN VETERANS PREFERENCE LOGIC ##########
+
+  $scope.showVeteransApplicationQuestion = ->
+    SharedService.showVeteransApplicationQuestion($scope.listing)
+
+  $scope.eligibleVeteransMembers = ->
+    ShortFormApplicationService.eligibleVeteransMembers()
+
+  $scope.hasVeteranMemberYes = ->
+    $scope.application.isAnyoneAVeteran == 'Yes'
+
+  $scope.hasVeteranMemberDeclineToState = ->
+    $scope.application.isAnyoneAVeteran == 'Decline to state'
+
+  $scope.onChangeHasVeteranMember = ->
+    if $scope.application.isAnyoneAVeteran != 'Yes'
+      $scope.preferences.veterans_household_member = null
+
+  $scope.checkAfterVeteransPreference = ->
+    # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
+    # We might want to re-enable them in the future
+    # $scope.checkForCustomPreferences()
+    $scope.checkIfNoPreferencesSelected()
+
+  $scope.checkAfterPreferencesPrograms = ->
+    if $scope.showVeteransApplicationQuestion()
+      ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.veterans-preference')
+    else
+      # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
+      # We might want to re-enable them in the future
+      # $scope.checkForCustomPreferences()
+      $scope.checkIfNoPreferencesSelected()
+
+
+########## END VETERANS PREFERENCE LOGIC ##########
 
   $scope.checkIfPublicHousing = ->
     if $scope.application.hasPublicHousing == 'No'

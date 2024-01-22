@@ -18,8 +18,14 @@ import {
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
+  listingHasVeteransPreference,
 } from "../../util/listingUtil"
-import { defaultIfNotTranslated, renderInlineMarkup, renderMarkup } from "../../util/languageUtil"
+import {
+  defaultIfNotTranslated,
+  getSfGovUrl,
+  renderInlineMarkup,
+  renderMarkup,
+} from "../../util/languageUtil"
 import { BeforeApplyingForSale, BeforeApplyingType } from "../../components/BeforeApplyingForSale"
 import { ListingDetailsPreferences } from "./ListingDetailsPreferences"
 import type RailsUnit from "../../api/types/rails/listings/RailsUnit"
@@ -27,6 +33,8 @@ import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
+import { stripMostTags } from "../../util/filterUtil"
+import Link from "../../navigation/Link"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -84,7 +92,7 @@ export const ListingDetailsEligibility = ({
     occupancy: "t.occupancy",
   }
 
-  const occupancyTableData = listing.unitSummaries.general.map((unit) => {
+  const occupancyTableData = listing.unitSummaries.general?.map((unit) => {
     let occupancyLabel = ""
     if (unit.maxOccupancy === 1) {
       occupancyLabel = t("listings.onePerson")
@@ -147,7 +155,10 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
-                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
                       })
                     )}
                   </p>
@@ -193,7 +204,10 @@ export const ListingDetailsEligibility = ({
                   <p>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part2", {
-                        chisholmLink: "https://sf.gov/apply-shirley-chisholm-village-housing",
+                        chisholmLink: getSfGovUrl(
+                          "https://sf.gov/apply-shirley-chisholm-village-housing",
+                          10543
+                        ),
                       })
                     )}
                   </p>
@@ -229,7 +243,36 @@ export const ListingDetailsEligibility = ({
             </InfoCard>
           </ListSection>
         )}
-        {!isHabitatListing(listing) && <ListingDetailsHMITable listing={listing} />}
+
+        {!isHabitatListing(listing) && (
+          <ListSection
+            title={t("listings.householdMaximumIncome")}
+            subtitle={
+              <div>
+                <div className="mb-4">{renderMarkup(t("listings.forIncomeCalculations"))}</div>
+                <div className="mb-4 primary-lighter-markup-link-desktop">
+                  {renderMarkup(
+                    t("listings.incomeExceptions.intro", {
+                      url: getSfGovUrl(
+                        "https://sf.gov/information/special-calculations-household-income",
+                        7080
+                      ),
+                    })
+                  )}
+                </div>
+                <ul className="list-disc ml-5">
+                  <li>{t("listings.incomeExceptions.students")}</li>
+                  <li>{t("listings.incomeExceptions.nontaxable")}</li>
+                </ul>
+              </div>
+            }
+          >
+            <ErrorBoundary boundaryScope={BoundaryScope.component}>
+              <ListingDetailsHMITable listing={listing} />
+            </ErrorBoundary>
+          </ListSection>
+        )}
+
         <ListSection title={t("t.occupancy")} subtitle={occupancySubtitle}>
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
@@ -246,9 +289,29 @@ export const ListingDetailsEligibility = ({
             subtitle={
               <>
                 <div className="mb-4">
-                  {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
                 </div>
-                {t("listingsForSale.lotteryPreferences.hasPreferences")}
+                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                {listingHasVeteransPreference(listing) && (
+                  <>
+                    <div className="mt-4">
+                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
+                    </div>
+                    <div className="mb-4">
+                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                    </div>
+                    <div>
+                      <Link
+                        className="text-blue-700"
+                        external={true}
+                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                        target="_blank"
+                      >
+                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                      </Link>
+                    </div>
+                  </>
+                )}
               </>
             }
           >
@@ -296,7 +359,12 @@ export const ListingDetailsEligibility = ({
         {isRental(listing) && (
           <ListSection
             title={t("listingsForRent.rentalAssistance.title")}
-            subtitle={t("listingsForRent.rentalAssitance.subtitle")}
+            subtitle={
+              <>
+                <div className="mb-4">{t("listingsForRent.rentalAssistance.info1")}</div>
+                <div>{t("listingsForRent.rentalAssistance.info2")}</div>
+              </>
+            }
           />
         )}
         {(listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History) && (
@@ -315,7 +383,7 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Credit_Rating}
+                  {stripMostTags(listing.Credit_Rating)}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -331,7 +399,7 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {listing.Eviction_History}
+                  {stripMostTags(listing.Eviction_History)}
                 </ExpandableText>
               </InfoCard>
             )}

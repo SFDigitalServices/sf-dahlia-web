@@ -91,6 +91,7 @@ export const rentalEducatorListing1: RailsRentalListing = {
     '<p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style="font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;"> </span></p><p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>',
   Lottery_Date: "2023-03-22T18:00:00.000+0000",
   Publish_Lottery_Results: false,
+  Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
   Credit_Rating:
@@ -381,7 +382,6 @@ export const rentalEducatorListing2: RailsRentalListing = {
   Units_Available: 1,
   SASE_Required_for_Lottery_Ticket: true,
   nGeneral_Application_Total: 2041,
-  Lottery_Status: "Not Yet Run",
   Building_Name: "Automated Test Building",
   Project_ID: "Test 001",
   Building_City: "San Francisco",
@@ -407,6 +407,7 @@ export const rentalEducatorListing2: RailsRentalListing = {
     '<p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">The lottery will not be in person, but instead will be a virtual lottery.</span></p><p><span style="font-size: 12pt; color: rgb(0, 0, 0); background-color: transparent;"> </span></p><p><span style="font-size: 10pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent;">Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.</span></p><p><br></p><p><br></p>',
   Lottery_Date: "2023-03-22T18:00:00.000+0000",
   Publish_Lottery_Results: false,
+  Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
   Credit_Rating:

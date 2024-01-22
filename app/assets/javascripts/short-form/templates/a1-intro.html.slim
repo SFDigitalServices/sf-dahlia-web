@@ -17,6 +17,7 @@ section.app-container
                 | {{listing.Name}}
               p.property-card_address.show-for-medium-up
                 | {{formattedBuildingAddress(listing)}}
+            span.property-hero_label.label.radius.bg-splash style="transform:none;top:1rem;left:1rem;" ng-if="customEducatorIsListing1()" translate="a1_intro.sf_public_schools"
 
           span.application-label.label.label--flag.primary
                 ' {{'t.application_due' | translate}}

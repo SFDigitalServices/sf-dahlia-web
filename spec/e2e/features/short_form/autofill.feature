@@ -26,6 +26,7 @@ Feature: Autofill application
         And I continue past the Lottery Preferences intro
         And I opt out of "Live/Work" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I continue past the general lottery notice page
         And I fill out the optional survey
         And I confirm details on the review page
@@ -57,6 +58,7 @@ Feature: Autofill application
         And I opt out of "Alice Griffith" preference
         And I opt out of "Live/Work" preference
         And I don't choose COP-DTHP preferences
+        And I answer "No" to the Veterans preference question
         And I continue past the general lottery notice page
         And I wait "2" seconds
         Then I should land on the optional survey page

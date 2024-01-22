@@ -103,9 +103,6 @@
     "DALP_PROGRAM_INFO": {
       "required": false
     },
-    "SHOW_RESEARCH_BANNER": {
-      "required": false
-    },
     "COVID_UPDATE": {
       "required": false
     },

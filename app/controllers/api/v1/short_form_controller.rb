@@ -381,6 +381,8 @@ class Api::V1::ShortFormController < ApiController
                 isFirstTimeHomebuyer
                 hasMinimumCreditScore
                 hasLoanPreapproval
+                isSFUSDEmployee
+                jobClassification
               ],
             },
             {
@@ -421,6 +423,7 @@ class Api::V1::ShortFormController < ApiController
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
+                isVeteran
               ],
             },
             :listingID,

@@ -22,7 +22,7 @@ section.app-container
               | {{'review_application.your_lottery_number' | translate}}
             p.beta.t-serif.no-margin
               | &#35;{{ application.lotteryNumber }}
-        application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()" is-habitat-listing="listingIsHabitat()"
+        application-summary application="application" applicant="applicant" alternate-contact="alternateContact" household-members="householdMembers" listing="listing" preferences="preferences" is-rental="listingIsRental()" is-sale="listingIsSale()" is-habitat-listing="listingIsHabitat()" is-custom-educator-listing="isCustomEducatorListing()" show-veterans-application-question="showVeteransApplicationQuestion"
 
         .padding--2x.text-center
           button.button-link.button-lined.t-small.lined.hide-for-print ng-click="print()"

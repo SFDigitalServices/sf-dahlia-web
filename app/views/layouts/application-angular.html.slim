@@ -37,7 +37,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta property="og:type" content="website"
 
     javascript:
-      window.env = {researchFormUrl: "#{ENV['RESEARCH_FORM_URL']}", advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}", covidUpdate: "#{ENV['COVID_UPDATE']}", directoryPageReact: "#{ENV['DIRECTORY_PAGE_REACT']}"}
+      window.env = {advertiseDALP: "#{ENV['ADVERTISE_DALP']}", dalpProgramInfo: "#{ENV['DALP_PROGRAM_INFO']}", covidUpdate: "#{ENV['COVID_UPDATE']}", directoryPageReact: "#{ENV['DIRECTORY_PAGE_REACT']}"}
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
@@ -102,6 +102,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
       var TOP_MESSAGE = "#{ENV['TOP_MESSAGE']}"
       var AUTOSAVE = "#{ENV['AUTOSAVE']}"
+      var VETERANS_APPLICATION_QUESTION = "#{ENV['VETERANS_APPLICATION_QUESTION']}"
       // Add react feature flags below this line
       var HOME_PAGE_REACT = "#{ENV['HOME_PAGE_REACT']}"
       var DIRECTORY_PAGE_REACT = "#{ENV['DIRECTORY_PAGE_REACT']}"

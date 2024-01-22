@@ -53,41 +53,41 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <p>
+                <span>
                   Meet our 
                   <a
-                    href="https://sfmohcd.org/homebuyer-program-eligibility"
+                    href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                     target="_blank"
                   >
                     income requirements
                   </a>
-                </p>
+                </span>
               </li>
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <p>
+                <span>
                   Complete 
                   <a
-                    href="https://sfmohcd.org/homebuyer-application-requirements#education"
+                    href="https://sf.gov/sign-complete-homebuyer-education"
                     target="_blank"
                   >
                     homebuyer education
                   </a>
-                </p>
+                </span>
               </li>
               <li
                 class="text-gray-750 primary-lighter-markup-link"
               >
-                <p>
+                <span>
                   Get pre-approved for a mortgage loan by a 
                   <a
-                    href="https://sfmohcd.org/lender-list"
+                    href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
                     target="_blank"
                   >
                     lender on our list
                   </a>
-                </p>
+                </span>
               </li>
               <li
                 class="text-gray-750 primary-lighter-markup-link"
@@ -98,16 +98,16 @@ exports[`BuyHeader renders BuyHeader component 1`] = `
             <div
               class="text-gray-750 primary-lighter-markup-link-desktop"
             >
-              <p>
+              <span>
                 Read 
                 <a
-                  href="https://sfmohcd.org/homebuyer-program-eligibility"
+                  href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                   target="_blank"
                 >
                   our full list of requirements
                 </a>
                  for more details.
-              </p>
+              </span>
             </div>
           </div>
         </div>
