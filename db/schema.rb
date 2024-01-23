@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_14_205521) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_205521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,8 +21,8 @@ ActiveRecord::Schema.define(version: 2023_09_14_205521) do
     t.string "listing_id"
     t.jsonb "member"
     t.jsonb "applicant"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "listing_name"
     t.string "state"
   end
@@ -31,8 +30,8 @@ ActiveRecord::Schema.define(version: 2023_09_14_205521) do
   create_table "listing_images", id: :serial, force: :cascade do |t|
     t.string "salesforce_listing_id"
     t.string "image_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "raw_image_url", default: "none", null: false
     t.index ["raw_image_url"], name: "index_raw_image_url_on_listing_images"
     t.index ["salesforce_listing_id"], name: "index_listing_images_on_salesforce_listing_id"
@@ -43,8 +42,8 @@ ActiveRecord::Schema.define(version: 2023_09_14_205521) do
     t.string "name"
     t.string "content_type"
     t.string "session_uid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "listing_id"
     t.string "document_type"
     t.integer "user_id"
@@ -53,7 +52,7 @@ ActiveRecord::Schema.define(version: 2023_09_14_205521) do
     t.string "rent_burden_index"
     t.string "listing_preference_id"
     t.string "application_id"
-    t.datetime "delivered_at"
+    t.datetime "delivered_at", precision: nil
     t.string "error"
     t.index ["rent_burden_type", "rent_burden_index", "address"], name: "rent_burden_idx"
     t.index ["session_uid"], name: "index_uploaded_files_on_session_uid"
@@ -67,18 +66,18 @@ ActiveRecord::Schema.define(version: 2023_09_14_205521) do
     t.string "uid", default: "", null: false
     t.json "tokens"
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.string "salesforce_contact_id"
     t.string "temp_session_id"
