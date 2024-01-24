@@ -44,6 +44,15 @@ const APPLY_BUTTON_TEXT = {
   en: "Apply Online",
 }
 
+const NON_ENGLISH_LANGUAGES = ["Spanish", "Chinese", "Tagalog"]
+
+enum LanguagePrefix {
+  English = "en",
+  Spanish = "es",
+  Chinese = "zh",
+  Tagalog = "tl",
+}
+
 describe("Listing Details for Open Listings", () => {
   afterEach(() => {
     // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
@@ -63,34 +72,16 @@ describe("Listing Details for Open Listings", () => {
       )
     })
 
-    it("displays in Spanish", () => {
-      const langPart = "es"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+    NON_ENGLISH_LANGUAGES.forEach((language) => {
+      it(`displays in ${language}`, () => {
+        const langPart = LanguagePrefix[language]
+        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
 
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
-    })
-
-    it("displays in Chinese", () => {
-      const langPart = "zh"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
-    })
-
-    it("displays in Filipino", () => {
-      const langPart = "tl"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
+        cy.get(".image-card__inner > img")
+          .should("be.visible")
+          .should("have.attr", "alt")
+          .should("not.be", testListings.OPEN_RENTAL.alt)
+      })
     })
   })
 
@@ -106,34 +97,16 @@ describe("Listing Details for Open Listings", () => {
       )
     })
 
-    it("displays in Spanish", () => {
-      const langPart = "es"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+    NON_ENGLISH_LANGUAGES.forEach((language) => {
+      it(`displays in ${language}`, () => {
+        const langPart = LanguagePrefix[language]
+        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
 
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
-    })
-
-    it("displays in Chinese", () => {
-      const langPart = "zh"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
-    })
-
-    it("displays in Filipino", () => {
-      const langPart = "tl"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
+        cy.get(".image-card__inner > img")
+          .should("be.visible")
+          .should("have.attr", "alt")
+          .should("not.be", testListings.OPEN_SALE.alt)
+      })
     })
   })
 })
