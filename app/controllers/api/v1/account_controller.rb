@@ -14,7 +14,7 @@ class Api::V1::AccountController < ApiController
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
     salesforce_contact = Force::AccountService.create_or_update(
-      webAppID: contact[:id],
+      webAppID: contact[:webAppID],
       contactId: contact[:contactID],
       email: contact[:email],
       firstName: contact[:firstName],
