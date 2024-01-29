@@ -6,13 +6,14 @@ class Api::V1::AccountController < ApiController
 
   def my_applications
     applications = map_listings_to_applications(current_user_applications)
-    render json: { applications: applications }
+    render json: { applications: }
   end
 
   def update
     contact = account_params
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
+    # forcing PR deploy
     salesforce_contact = Force::AccountService.create_or_update(
       webAppID: contact[:id],
       contactId: contact[:contactID],
@@ -38,6 +39,7 @@ class Api::V1::AccountController < ApiController
     unless Rails.env.development? || ENV['SAUCE_URL']
       return render plain: 'Forbidden', status: 403
     end
+
     user = User.find_by_email(params[:email])
     if user
       user.confirm
