@@ -40,24 +40,24 @@ describe Force::ListingService do
     it 'should pass type down to Salesforce request for ownership listing' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails',
-              { type: 'ownership', subset: 'browse' }, false).and_return(sale_listings)
+              { type: 'ownership', subset: 'browse' }, false, false).and_return(sale_listings)
       Force::ListingService.listings(type: 'ownership')
     end
     it 'should pass type down to Salesforce request for rental listings' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with('/ListingDetails',
-              { type: 'rental', subset: 'browse' }, false).and_return(rental_listings)
+              { type: 'rental', subset: 'browse' }, false, false).and_return(rental_listings)
       Force::ListingService.listings(type: 'rental')
     end
     it 'should pass ids down to Salesforce request if part of params' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', { ids: listing_ids, subset: 'browse' }, false)
+        .with('/ListingDetails', { ids: listing_ids, subset: 'browse' }, false, false)
         .and_return(listings_by_ids)
       Force::ListingService.listings(ids: listing_ids)
     end
     it 'should pass subset down to Salesforce request if part of params' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
-        .with('/ListingDetails', { subset: 'browse' }, false)
+        .with('/ListingDetails', { subset: 'browse' }, false, false)
         .and_return(all_listings_browse)
       Force::ListingService.listings
     end
