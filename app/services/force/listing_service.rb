@@ -12,7 +12,8 @@ module Force
       params[:type] = attrs[:type] if attrs[:type].present?
       params[:ids] = attrs[:ids] if attrs[:ids].present?
       force = attrs[:force].present? ? attrs[:force] : false
-      get_listings(params:, force_recache: force)
+      cache_only = attrs[:cache_only].present? ? attrs[:cache_only] : false
+      get_listings(params:, force_recache: force, cache_only:)
     end
 
     # get listings with eligibility matches applied
@@ -108,12 +109,15 @@ module Force
       end
     end
 
-    private_class_method def self.get_listings(params: {}, force_recache: false)
+    private_class_method def self.get_listings(params: {}, force_recache: false, cache_only: false)
       params[:subset] ||= 'browse'
       Rails.logger.info("Calling self.get_listings with force: #{force_recache}")
 
       results = Request.new(parse_response: true)
-                       .cached_get('/ListingDetails', params, force_recache)
+                       .cached_get('/ListingDetails', params, force_recache, cache_only)
+
+      return if results.nil?
+
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       add_image_urls(results_with_cached_listing_images)
     end

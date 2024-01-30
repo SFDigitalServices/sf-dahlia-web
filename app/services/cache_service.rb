@@ -6,12 +6,12 @@ class CacheService
     Rails.logger.info('CacheService Started')
     # Marshal.load(Marshal.dump(cached_listings)) is a hack to make a deep clone of cached_listings
     # so that prev_cached_listings isn't pointing to the same object as fresh_listings
-    cached_listings = Force::ListingService.listings(subset: 'browse')
+    cached_listings = Force::ListingService.listings(subset: 'browse', cache_only: true)
     @prev_cached_listings = Marshal.load(Marshal.dump(cached_listings))
 
     @fresh_listings = Force::ListingService.listings(subset: 'browse', force: true)
 
-    if opts[:refresh_all]
+    if opts[:refresh_all] || @prev_cached_listings.nil?
       cache_all_listings
     else
       cache_only_updated_listings

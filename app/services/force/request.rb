@@ -24,7 +24,7 @@ module Force
       variable.to_s.casecmp('true').zero?
     end
 
-    def cached_get(endpoint, params = nil, force = false)
+    def cached_get(endpoint, params = nil, force = false, cache_only = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force = ActiveModel::Type::Boolean.new.cast(force)
 
@@ -38,6 +38,8 @@ module Force
         "running cached_get for #{endpoint} with force set to #{force_refresh}",
       )
       @cache.fetch(key, force: force_refresh, expires_in: expires_in) do
+        next if cache_only
+
         get(endpoint, params)
       end
     end
