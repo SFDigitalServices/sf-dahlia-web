@@ -47,7 +47,6 @@ const APPLY_BUTTON_TEXT = {
 const NON_ENGLISH_LANGUAGES = ["Spanish", "Chinese", "Tagalog"]
 
 enum LanguagePrefix {
-  English = "en",
   Spanish = "es",
   Chinese = "zh",
   Tagalog = "tl",
