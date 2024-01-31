@@ -7,7 +7,14 @@
  * @param {string} address -(unfortunately) optional address for the listing
  * @param {string} applyButtonText - text for the apply button
  */
-function verifyListing(language, id, altPhotoText, title, address, applyButtonText) {
+function verifyListing(
+  id: string,
+  altPhotoText: string,
+  title: string,
+  address: string,
+  applyButtonText: string,
+  language?: string
+) {
   const langPart = language ? `/${language}` : ""
   cy.visit(`${langPart}/listings/${id}?react=true`)
 
@@ -62,12 +69,12 @@ describe("Listing Details for Open Listings", () => {
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
       verifyListing(
-        null,
         testListings.OPEN_RENTAL.id,
         testListings.OPEN_RENTAL.alt,
         testListings.OPEN_RENTAL.title,
         null,
-        APPLY_BUTTON_TEXT.en
+        APPLY_BUTTON_TEXT.en,
+        null
       )
     })
 
@@ -87,12 +94,12 @@ describe("Listing Details for Open Listings", () => {
   describe("Sale Listing " + testListings.OPEN_SALE.id, () => {
     it("displays in English", () => {
       verifyListing(
-        null,
         testListings.OPEN_SALE.id,
         testListings.OPEN_SALE.alt,
         testListings.OPEN_SALE.title,
         testListings.OPEN_SALE.address,
-        APPLY_BUTTON_TEXT.en
+        APPLY_BUTTON_TEXT.en,
+        null
       )
     })
 

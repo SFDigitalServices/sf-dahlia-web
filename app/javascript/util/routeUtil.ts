@@ -45,7 +45,12 @@ export const getNewLanguagePath = (
   currentPath: string | undefined,
   newLanguagePrefix: string,
   queryString: string | undefined
-): string => getLocalizedPath(currentPath, toLanguagePrefix(newLanguagePrefix), queryString)
+): string => {
+  if (Object.values(LanguagePrefix).includes(newLanguagePrefix as LanguagePrefix)) {
+    return getLocalizedPath(currentPath, newLanguagePrefix as LanguagePrefix, queryString)
+  }
+  return getLocalizedPath(currentPath, toLanguagePrefix(undefined), queryString)
+}
 
 export const getHomepagePath = localizedPathGetter("/")
 export const getRentalDirectoryPath = localizedPathGetter("/listings/for-rent")

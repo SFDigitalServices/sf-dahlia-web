@@ -9,6 +9,7 @@ import {
   ListingCard,
   ListingsGroup,
   PageHeader,
+  StackedTableRow,
   t,
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
@@ -226,8 +227,12 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
     )
   })
 
-export const openListingsView = (listings, directoryType, stackedDataFxn, filtersSet?) =>
-  listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+export const openListingsView = (
+  listings: RailsListing[],
+  directoryType: DirectoryType,
+  stackedDataFxn: (listing: RailsRentalListing) => Record<string, StackedTableRow>[],
+  filtersSet?: boolean
+) => listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
 
 // Get an expandable group of listings
 export const getListingGroup = (

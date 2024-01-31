@@ -5,7 +5,7 @@ export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
     email,
     password,
-  }).then(({ data }) => {
+  }).then(({ data }: AxiosResponse<UserData>) => {
     return data.data
   })
 

@@ -30,7 +30,7 @@ interface RentalDirectoryProps {
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
-  const [rawListings, setRawListings] = useState([])
+  const [rawListings, setRawListings] = useState<Array<RailsListing>>([])
   const [listings, setListings] = useState<ListingsGroups>({
     open: [],
     upcoming: [],

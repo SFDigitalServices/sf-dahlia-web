@@ -14,15 +14,14 @@ import {
 describe("languageUtil", () => {
   describe("toLanguagePrefix", () => {
     it("returns the correct prefix when a blank or invalid string is provided", () => {
-      expect(toLanguagePrefix("")).toBe(LanguagePrefix.English)
-      expect(toLanguagePrefix("abc")).toBe(LanguagePrefix.English)
+      expect(toLanguagePrefix(undefined)).toBe(LanguagePrefix.English)
     })
 
     it("returns the correct prefix", () => {
-      expect(toLanguagePrefix("en")).toBe(LanguagePrefix.English)
-      expect(toLanguagePrefix("es")).toBe(LanguagePrefix.Spanish)
-      expect(toLanguagePrefix("zh")).toBe(LanguagePrefix.Chinese)
-      expect(toLanguagePrefix("tl")).toBe(LanguagePrefix.Tagalog)
+      expect(toLanguagePrefix("en" as LanguagePrefix)).toBe(LanguagePrefix.English)
+      expect(toLanguagePrefix("es" as LanguagePrefix)).toBe(LanguagePrefix.Spanish)
+      expect(toLanguagePrefix("zh" as LanguagePrefix)).toBe(LanguagePrefix.Chinese)
+      expect(toLanguagePrefix("tl" as LanguagePrefix)).toBe(LanguagePrefix.Tagalog)
     })
   })
 

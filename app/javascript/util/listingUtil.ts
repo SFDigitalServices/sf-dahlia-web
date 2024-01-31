@@ -576,7 +576,10 @@ export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): numbe
   return longestChartLength
 }
 
-export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+export const getMinMaxOccupancy = (
+  units: RailsUnit[],
+  amiCharts: RailsAmiChart[]
+): { explicitMaxOccupancy: boolean; minOccupancy: number; maxOccupancy: number } => {
   const unitsCopy = units.map((unit) => {
     return { ...unit }
   })

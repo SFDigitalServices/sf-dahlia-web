@@ -45,7 +45,18 @@ const getTableData = (units: RailsUnit[]) => {
   })
 }
 
-const sortUnits = (units) => {
+type UnitType = {
+  units: RailsUnit[]
+  availability: number
+  minSqFt: number
+  maxSqFt: number
+}
+
+type PropertyType = {
+  [key: string]: UnitType
+}
+
+const sortUnits = (units: RailsUnit[]): PropertyType => {
   return units?.reduce((acc, unit) => {
     if (!acc[unit.Unit_Type]) {
       acc = {
@@ -75,6 +86,7 @@ const sortUnits = (units) => {
 export const ListingDetailsUnitAccordions = () => {
   const { fetchingUnits, fetchedUnits, units } = useContext(ListingDetailsContext)
   const processedUnits = sortUnits(units)
+  console.log("Chad", processedUnits)
 
   if (fetchingUnits || !fetchedUnits) {
     return (

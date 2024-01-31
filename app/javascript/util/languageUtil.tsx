@@ -1,6 +1,6 @@
 import { t, addTranslation } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
-import dayjs from "dayjs"
+import dayjs, { PluginFunc } from "dayjs"
 import React from "react"
 
 import { stripMostTags } from "./filterUtil"
@@ -83,7 +83,7 @@ export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> =>
   }
 
   // load the plugin for localized formats https://day.js.org/docs/en/plugin/localized-format
-  const localizedFormat = require("dayjs/plugin/localizedFormat")
+  const localizedFormat: PluginFunc<unknown> = require("dayjs/plugin/localizedFormat")
   dayjs.extend(localizedFormat)
 
   // load the locale
@@ -92,7 +92,7 @@ export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> =>
   }
 }
 
-export const toLanguagePrefix = (routePrefix: string | undefined): LanguagePrefix => {
+export const toLanguagePrefix = (routePrefix: LanguagePrefix | undefined): LanguagePrefix => {
   switch (routePrefix) {
     case LanguagePrefix.Spanish:
       return LanguagePrefix.Spanish
@@ -148,11 +148,11 @@ export const getCurrentLanguage = (path?: string | undefined): LanguagePrefix =>
 export const getSfGovUrl = (enLink: string, node?: number, path?: string) => {
   if (!SFGOV_LINKS.includes(enLink) || enLink.includes("pdf")) return enLink
   switch (getCurrentLanguage(path || window.location.pathname)) {
-    case "es":
+    case LanguagePrefix.Spanish:
       return `https://sf.gov/es/node/${node}`
-    case "tl":
+    case LanguagePrefix.Tagalog:
       return `https://sf.gov/fil/node/${node}`
-    case "zh":
+    case LanguagePrefix.Chinese:
       return `https://sf.gov/zh-hant/node/${node}`
     default:
       return enLink

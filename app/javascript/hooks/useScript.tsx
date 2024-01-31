@@ -24,6 +24,7 @@ const useScript = (src) => {
         // eslint-disable-next-line unicorn/prefer-dom-node-dataset
         script.setAttribute("data-status", "loading")
         // Add script to document body
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         document.body.append(script)
         // Store status in attribute on script
         // This can be read by other instances of this hook
@@ -35,6 +36,7 @@ const useScript = (src) => {
         script.addEventListener("error", setAttributeFromEvent)
       } else {
         // Grab existing script status from attribute and set to state.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setStatus(script.getAttribute("data-status"))
       }
       // Script event handler to update status in state
