@@ -159,7 +159,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
             footerContent={[
-              <p className="translate">{renderMarkup(listing.Costs_Not_Included)}</p>,
+              <div className="translate">{renderMarkup(listing.Costs_Not_Included)}</div>,
             ]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
