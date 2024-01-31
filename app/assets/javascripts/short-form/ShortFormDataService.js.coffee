@@ -253,9 +253,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
         proofOption = 'Lease and rent proof' unless optOut
-      # do not process preferences related to Veterans
-      else if listingPref.preferenceName.toLowerCase().includes("veteran")
-        return
       else
         prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
