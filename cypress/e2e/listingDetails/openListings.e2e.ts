@@ -1,11 +1,11 @@
 /**
  * Util function to verify a listing details page
- * @param {string} language - optional language code
  * @param {string } id - listing id
  * @param {string} altPhotoText - alternative text that displays for listing image
  * @param {string} title - title of the listing
  * @param {string} address -(unfortunately) optional address for the listing
  * @param {string} applyButtonText - text for the apply button
+ * @param {string} language - optional language code
  */
 function verifyListing(
   id: string,

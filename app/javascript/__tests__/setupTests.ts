@@ -12,6 +12,7 @@ const spies = {
   put: jest.spyOn(axios, "put"),
 }
 
+// The current nanoid implementation is not compatible with jest. This is a temporary workaround until the issue is resolved
 // https://github.com/ai/nanoid/issues/363
 jest.mock("nanoid", () => {
   return {

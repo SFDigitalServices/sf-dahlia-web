@@ -13,7 +13,7 @@ import {
 
 describe("languageUtil", () => {
   describe("toLanguagePrefix", () => {
-    it("returns the correct prefix when a blank or invalid string is provided", () => {
+    it("returns the correct prefix when undefined is provided", () => {
       expect(toLanguagePrefix(undefined)).toBe(LanguagePrefix.English)
     })
 
