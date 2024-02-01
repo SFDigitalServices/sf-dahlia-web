@@ -86,7 +86,6 @@ const sortUnits = (units: RailsUnit[]): PropertyType => {
 export const ListingDetailsUnitAccordions = () => {
   const { fetchingUnits, fetchedUnits, units } = useContext(ListingDetailsContext)
   const processedUnits = sortUnits(units)
-  console.log("Chad", processedUnits)
 
   if (fetchingUnits || !fetchedUnits) {
     return (
