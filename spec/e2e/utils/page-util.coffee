@@ -10,7 +10,8 @@ PageUtil = {
   # TODO: Temporary checks. Remove with DAH-1420
   customEducatorListing1Id: if (process.env.SALESFORCE_INSTANCE_URL == 'https://sfhousing.my.salesforce.com') then 'a0W4U00000NlQ30UAF' else 'a0W8H0000014M1cUAE'
   customEducatorListing2Id: if (process.env.SALESFORCE_INSTANCE_URL == 'https://sfhousing.my.salesforce.com') then 'a0W4U00000NlQ2wUAF' else 'a0W8H00000140LvUAI'
-  showVeteransApplicationQuestion: process.env.VETERANS_APPLICATION_QUESTION == 'true'
+  # We set this flag to false because there are complications to how the flag works currently, which are temporary
+  showVeteransApplicationQuestion: false # process.env.VETERANS_APPLICATION_QUESTION == 'true'
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
     browser.wait(EC.presenceOf(checkbox), 5000)

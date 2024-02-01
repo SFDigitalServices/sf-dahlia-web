@@ -701,7 +701,8 @@ ShortFormApplicationController = (
 
 ########## BEGIN VETERANS PREFERENCE LOGIC ##########
 
-  $scope.showVeteransApplicationQuestion = SharedService.showVeteransApplicationQuestion
+  $scope.showVeteransApplicationQuestion = ->
+    SharedService.showVeteransApplicationQuestion($scope.listing)
 
   $scope.eligibleVeteransMembers = ->
     ShortFormApplicationService.eligibleVeteransMembers()
@@ -723,7 +724,7 @@ ShortFormApplicationController = (
     $scope.checkIfNoPreferencesSelected()
 
   $scope.checkAfterPreferencesPrograms = ->
-    if $scope.showVeteransApplicationQuestion
+    if $scope.showVeteransApplicationQuestion()
       ShortFormNavigationService.goToApplicationPage('dahlia.short-form-application.veterans-preference')
     else
       # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce

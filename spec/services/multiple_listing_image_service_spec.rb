@@ -43,8 +43,6 @@ describe MultipleListingImageService do
     end
 
     it 'should upload a listing image' do
-      stub_const('ENV', ENV.to_hash.merge('CACHE_LISTING_IMAGES' => true))
-
       MultipleListingImageService.new(listing).process_images
 
       expect(FileStorageService).to have_received(:upload)
