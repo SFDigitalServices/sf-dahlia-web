@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios"
+import axios, { AxiosInstance, AxiosResponse } from "axios"
+import type { AxiosRequestConfig } from "axios"
 
 import { getHeaders } from "../authentication/token"
 
@@ -13,46 +14,42 @@ const createAxiosInstance = (): AxiosInstance => {
 export const put = <T>(
   url: string,
   data?: unknown,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => axios.put(url, data, config)
 
 export const post = <T>(
   url: string,
   data?: unknown,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => axios.post(url, data, config)
 
-export const get = <T>(
-  url: string,
-  config?: InternalAxiosRequestConfig
-): Promise<AxiosResponse<T>> => axios.get(url, config)
+export const get = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
+  axios.get(url, config)
 
 /*
  * "delete" is a reserved word in TS so we couldn't name it that
  */
-export const apiDelete = <T>(
-  url: string,
-  config?: InternalAxiosRequestConfig
-): Promise<AxiosResponse<T>> => axios.delete(url, config)
+export const apiDelete = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
+  axios.delete(url, config)
 
 export const authenticatedPut = <T>(
   url: string,
   data?: unknown,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => createAxiosInstance().put(url, data, config)
 
 export const authenticatedPost = <T>(
   url: string,
   data?: unknown,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => createAxiosInstance().post(url, data, config)
 
 export const authenticatedGet = <T>(
   url: string,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => createAxiosInstance().get(url, config)
 
 export const authenticatedDelete = <T>(
   url: string,
-  config?: InternalAxiosRequestConfig
+  config?: AxiosRequestConfig
 ): Promise<AxiosResponse<T>> => createAxiosInstance().delete(url, config)
