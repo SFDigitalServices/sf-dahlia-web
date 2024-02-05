@@ -36,6 +36,9 @@ Rails.application.configure do
     'Cache-Control' => 'public, max-age=31536000'
   }
 
+  # fix error "ExecJS::RuntimeError: SyntaxError: Unexpected token: name (FileChecksum)"
+  config.assets.uglifier = { harmony: true }
+
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier_with_source_maps
   # config.assets.css_compressor = :sass

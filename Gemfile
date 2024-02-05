@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 7.0.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -17,11 +17,13 @@ gem 'slim-rails'
 gem 'uglifier', '~> 3.2'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
+# As of Rails 7.0, sprocket-rails is no longer a dependency of rails itself
+gem "sprockets-rails"
 # Add ability to generate source maps in Sprockets
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-gem 'puma', '~> 4.3.12'
+gem 'puma', '~> 5.6.8'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
