@@ -92,19 +92,6 @@ export const loadTranslations = async (prefix: LanguagePrefix): Promise<void> =>
   }
 }
 
-export const toLanguagePrefix = (routePrefix: LanguagePrefix | undefined): LanguagePrefix => {
-  switch (routePrefix) {
-    case LanguagePrefix.Spanish:
-      return LanguagePrefix.Spanish
-    case LanguagePrefix.Chinese:
-      return LanguagePrefix.Chinese
-    case LanguagePrefix.Tagalog:
-      return LanguagePrefix.Tagalog
-    default:
-      return LanguagePrefix.English
-  }
-}
-
 /**
  * Get the language prefix from the url. Or null if no prefix is on the path
  */

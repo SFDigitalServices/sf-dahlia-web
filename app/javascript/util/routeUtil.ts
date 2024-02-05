@@ -4,7 +4,6 @@ import {
   LangConfig,
   LANGUAGE_CONFIGS,
   LanguagePrefix,
-  toLanguagePrefix,
 } from "./languageUtil"
 import { cleanPath } from "./urlUtil"
 
@@ -49,7 +48,7 @@ export const getNewLanguagePath = (
   if (Object.values(LanguagePrefix).includes(newLanguagePrefix as LanguagePrefix)) {
     return getLocalizedPath(currentPath, newLanguagePrefix as LanguagePrefix, queryString)
   }
-  return getLocalizedPath(currentPath, toLanguagePrefix(undefined), queryString)
+  return getLocalizedPath(currentPath, LanguagePrefix.English, queryString)
 }
 
 export const getHomepagePath = localizedPathGetter("/")
