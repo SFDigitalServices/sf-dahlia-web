@@ -39,6 +39,7 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
+    'axios': 'axios/dist/node/axios.cjs',
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
   reporters: ["default", "jest-junit"],
