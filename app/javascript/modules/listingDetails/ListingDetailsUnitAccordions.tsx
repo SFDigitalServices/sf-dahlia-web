@@ -52,11 +52,7 @@ type UnitType = {
   maxSqFt: number
 }
 
-type PropertyType = {
-  [key: string]: UnitType
-}
-
-const sortUnits = (units: RailsUnit[]): PropertyType => {
+const sortUnits = (units: RailsUnit[]): Record<RailsUnit["Unit_Type"], UnitType> => {
   return units?.reduce((acc, unit) => {
     if (!acc[unit.Unit_Type]) {
       acc = {
