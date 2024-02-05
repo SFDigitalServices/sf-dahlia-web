@@ -72,6 +72,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
             <Modal
               onClose={() => setIsModalOpen(false)}
               open={isModalOpen}
+              role="alertdialog"
               title=""
               modalClassNames="md:max-w-0 w-screen"
               innerClassNames="p-0"
