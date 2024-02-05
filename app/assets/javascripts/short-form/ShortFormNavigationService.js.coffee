@@ -8,6 +8,9 @@ ShortFormNavigationService = (
   Service.RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
 
+  Service.showVeteransApplicationQuestion = ->
+    SharedService.showVeteransApplicationQuestion(ShortFormApplicationService.listing)
+
   Service.goToApplicationPage = (path, params) ->
     # Every time the user completes an application page,
     # we track that in GTM/GA as a form success.
@@ -390,7 +393,7 @@ ShortFormNavigationService = (
       when 'veterans-preference'
         'preferences-programs'
       when 'custom-preferences'
-        if SharedService.showVeteransApplicationQuestion
+        if Service.showVeteransApplicationQuestion()
           'veterans-preference'
         else
           'preferences-programs'
@@ -402,11 +405,9 @@ ShortFormNavigationService = (
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
-        # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
-        # We might want to re-enable them in the future
-        # else if Service.hasCustomPreferences()
-        #   'custom-preferences'
-        else if !SharedService.showVeteransApplicationQuestion
+        else if Service.hasCustomPreferences()
+          'custom-preferences'
+        else if !Service.showVeteransApplicationQuestion()
           'preferences-programs'
         else
           'veterans-preference'
@@ -490,18 +491,12 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{currentIndex - 1}})"
 
   Service.getPrevPageOfGeneralLottery = ->
-    # We don't want to show custom-preference page at all right now, because of the new combo-preferences in salesforce
-    # We might want to re-enable them in the future
-    # customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
-    # if customProofPreferences.length
-    #   "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
-    # else if Service.hasCustomPreferences()
-    #   'custom-preferences'
-    # else if !ShortFormApplicationService.showVeteransApplicationQuestion
-    #   'preferences-programs'
-    # else
-    #   'veterans-preference'
-    if !ShortFormApplicationService.showVeteransApplicationQuestion
+    customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
+    if customProofPreferences.length
+      "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
+    else if Service.hasCustomPreferences()
+      'custom-preferences'
+    else if !ShortFormApplicationService.showVeteransApplicationQuestion
       'preferences-programs'
     else
       'veterans-preference'
@@ -511,6 +506,7 @@ ShortFormNavigationService = (
     # the household members page
     application = ShortFormApplicationService.application
     return '' if application.status.toLowerCase() == 'submitted'
+    listing = ShortFormApplicationService.listing
 
     if application.hasPublicHousing
       'household-public-housing'

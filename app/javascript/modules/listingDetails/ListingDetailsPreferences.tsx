@@ -6,6 +6,7 @@ import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 import { getLocalizedPath } from "../../util/routeUtil"
 import { getRoutePrefix, getSfGovUrl } from "../../util/languageUtil"
+import { preferenceNameHasVeteran } from "../../util/listingUtil"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -53,9 +54,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
   useEffect(() => {
     void getPreferences(listingID).then((preferences) => {
       setPreferences(
-        preferences?.filter(
-          (preference) => !preference.preferenceName.toLowerCase().includes("veteran")
-        )
+        preferences?.filter((preference) => !preferenceNameHasVeteran(preference.preferenceName))
       )
     })
     return () => {
@@ -125,11 +124,6 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           }
         })}
       />
-      {preferences?.length > 0 && (
-        <p className="text-gray-750 text-sm">
-          {t("listings.lotteryPreference.remainingUnitsAfterPreferenceConsideration")}
-        </p>
-      )}
     </>
   )
 }

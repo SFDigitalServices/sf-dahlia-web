@@ -65,6 +65,10 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
       !_.invert(Service.preferenceMap)[listingPref.preferenceName]
     customProofPreferences = _.remove customPreferences, (customPref) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
+
+    # custom preferences related to Veterans should not be seen by applicants
+    _.remove(customPreferences, (pref) -> _.includes(pref.preferenceName?.toLowerCase(), "veteran"))
+
     listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
