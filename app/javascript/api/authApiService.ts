@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
 import { authenticatedGet, post, put } from "./apiService"
 
