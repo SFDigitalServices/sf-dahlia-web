@@ -1,4 +1,4 @@
-const verifyMachineTranslations = (language, id, translation) => {
+const verifyMachineTranslations = (language: string, id: string, translation: string) => {
   cy.intercept("POST", /^https:\/\/translate/).as("getTranslate")
   cy.visit(`${language}/listings/${id}?react=true`)
   cy.wait("@getTranslate")

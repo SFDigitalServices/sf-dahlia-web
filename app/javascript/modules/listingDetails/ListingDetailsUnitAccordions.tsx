@@ -45,7 +45,14 @@ const getTableData = (units: RailsUnit[]) => {
   })
 }
 
-const sortUnits = (units) => {
+type UnitType = {
+  units: RailsUnit[]
+  availability: number
+  minSqFt: number
+  maxSqFt: number
+}
+
+const sortUnits = (units: RailsUnit[]): Record<RailsUnit["Unit_Type"], UnitType> => {
   return units?.reduce((acc, unit) => {
     if (!acc[unit.Unit_Type]) {
       acc = {

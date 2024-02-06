@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
 import { authenticatedGet, post, put } from "./apiService"
 
@@ -5,7 +6,7 @@ export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
     email,
     password,
-  }).then(({ data }) => {
+  }).then(({ data }: AxiosResponse<UserData>) => {
     return data.data
   })
 
