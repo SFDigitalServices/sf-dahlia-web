@@ -40,5 +40,6 @@ export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
 export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
 export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 
-const getTokenTtl = (): number => Number.parseInt(getAuthHeaders()?.expiry) * 1000 - Date.now()
+const getTokenTtl = (): number =>
+  Number.parseInt(getAuthHeaders()?.expiry as string) * 1000 - Date.now()
 export const isTokenValid = (): boolean => getAuthHeaders() && getTokenTtl() > 0

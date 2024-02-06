@@ -14,7 +14,7 @@ const createAxiosInstance = (): AxiosInstance => {
       if (headers["access-token"]) {
         setAuthHeaders(headers)
       }
-      return JSON.parse(res)
+      return JSON.parse(res as string)
     },
   })
 }
