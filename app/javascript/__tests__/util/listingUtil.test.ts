@@ -37,6 +37,10 @@ import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
 import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
+import RailsUnit, {
+  RailsUnitWithOccupancy,
+  RailsUnitWithOccupancyAndMinMaxIncome,
+} from "../../api/types/rails/listings/RailsUnit"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -275,7 +279,7 @@ describe("deriveIncomeFromAmiCharts", () => {
 
 describe("addUnitsWithEachOccupancy", () => {
   it("should return an empty array when units is empty", () => {
-    const units = []
+    const units: Array<RailsUnit> = []
     const result = addUnitsWithEachOccupancy(units)
     expect(result).toEqual([])
   })
@@ -293,7 +297,7 @@ describe("addUnitsWithEachOccupancy", () => {
 
 describe("buildAmiArray", () => {
   it("should return an empty array when units is empty", () => {
-    const units = []
+    const units: Array<RailsUnitWithOccupancyAndMinMaxIncome> = []
     const result = buildAmiArray(units)
     expect(result).toEqual([])
   })
@@ -382,7 +386,7 @@ describe("matchSharedUnitFields", () => {
   })
 
   it("should handle an empty input array", () => {
-    const inputUnits = []
+    const inputUnits: Array<RailsUnitWithOccupancyAndMinMaxIncome> = []
     const expectedOutput = inputUnits
     const actualOutput = matchSharedUnitFields(inputUnits)
     expect(actualOutput).toEqual(expectedOutput)
@@ -429,7 +433,7 @@ describe("buildOccupanciesArray", () => {
   })
 
   it("should handle an empty input array", () => {
-    const inputUnits = []
+    const inputUnits: Array<RailsUnitWithOccupancy> = []
     const expectedOutput = []
     const actualOutput = buildOccupanciesArray(inputUnits)
     expect(actualOutput).toEqual(expectedOutput)
@@ -452,7 +456,7 @@ describe("groupAndSortUnitsByOccupancy", () => {
 
 describe("getAmiChartDataFromUnits", () => {
   test("returns empty array when given empty array of units", () => {
-    const units = []
+    const units: Array<RailsUnit> = []
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([])
   })
@@ -481,9 +485,12 @@ describe("getPriorityTypeText", () => {
     ${"Hearing/Vision impairments"}          | ${"Vision and/or Hearing Impairments"}
     ${"Mobility/Hearing/Vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
     ${"Mobility impairments"}                | ${"Mobility Impairments"}
-  `("returns text $text when priority type is $priorityType", ({ priorityType, text }) => {
-    expect(getPriorityTypeText(priorityType)).toBe(text)
-  })
+  `(
+    "returns text $text when priority type is $priorityType",
+    ({ priorityType, text }: { priorityType: string; text: string }) => {
+      expect(getPriorityTypeText(priorityType)).toBe(text)
+    }
+  )
 })
 
 describe("getTagContent", () => {

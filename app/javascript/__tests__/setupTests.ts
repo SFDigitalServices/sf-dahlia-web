@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-standalone-expect */
-import "@testing-library/jest-dom/extend-expect"
+import "@testing-library/jest-dom"
 import axios from "axios"
 import { cleanup } from "@testing-library/react"
 
@@ -11,6 +11,14 @@ const spies = {
   post: jest.spyOn(axios, "post"),
   put: jest.spyOn(axios, "put"),
 }
+
+// The current nanoid implementation is not compatible with jest. This is a temporary workaround until the issue is resolved
+// https://github.com/ai/nanoid/issues/363
+jest.mock("nanoid", () => {
+  return {
+    nanoid: () => {},
+  }
+})
 
 beforeEach(() => {
   jest.resetAllMocks()

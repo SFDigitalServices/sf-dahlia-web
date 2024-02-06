@@ -13,7 +13,7 @@ jest.mock("react-helmet-async", () => {
 })
 
 describe("<AssistanceLayout />", () => {
-  it("renders children", async (done) => {
+  it("renders children", async () => {
     const { getByTestId } = await renderAndLoadAsync(
       <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
         <h1>{CHILD_CONTENT}</h1>
@@ -22,10 +22,9 @@ describe("<AssistanceLayout />", () => {
     const mainContent = getByTestId("assistance-main-content")
 
     expect(within(mainContent).getByText(CHILD_CONTENT)).not.toBeNull()
-    done()
   })
 
-  it("renders PageHeader", async (done) => {
+  it("renders PageHeader", async () => {
     const TitleText = "Title Text"
     const SubtitleText = "SubTitle Text"
     const { getAllByText } = await renderAndLoadAsync(
@@ -36,7 +35,6 @@ describe("<AssistanceLayout />", () => {
 
     expect(getAllByText(TitleText).length).not.toBeNull()
     expect(getAllByText(SubtitleText).length).not.toBeNull()
-    done()
   })
 
   describe("Contact Bar", () => {

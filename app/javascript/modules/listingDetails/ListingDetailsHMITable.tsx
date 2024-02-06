@@ -195,13 +195,18 @@ export const ListingDetailsHMITable = ({ listing }: ListingDetailsEligibilityPro
 
   const [tableCollapsed, setTableCollapsed] = useState(true)
 
-  const { minOccupancy, maxOccupancy, explicitMaxOccupancy } = useMemo(() => {
-    if (!fetchedAmiCharts || !fetchedUnits) {
-      return { minOccupancy: undefined, maxOccupnacy: undefined }
-    }
+  const {
+    minOccupancy,
+    maxOccupancy,
+    explicitMaxOccupancy,
+  }: { minOccupancy?: number; maxOccupancy?: number; explicitMaxOccupancy?: boolean } =
+    useMemo(() => {
+      if (!fetchedAmiCharts || !fetchedUnits) {
+        return { minOccupancy: undefined, maxOccupnacy: undefined }
+      }
 
-    return getMinMaxOccupancy(units, amiCharts)
-  }, [units, amiCharts, fetchedAmiCharts, fetchedUnits])
+      return getMinMaxOccupancy(units, amiCharts)
+    }, [units, amiCharts, fetchedAmiCharts, fetchedUnits])
 
   const HMITableData = useMemo(() => {
     if (!fetchedAmiCharts || !fetchedUnits) {

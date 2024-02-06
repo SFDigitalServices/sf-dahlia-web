@@ -9,45 +9,41 @@ const getLinkByText = (container: HTMLElement, text: string) =>
   within(container).getByRole("link", { name: text })
 
 describe("<HomePage />", () => {
-  it("shows the correct header text", async (done) => {
+  it("shows the correct header text", async () => {
     const { getByText } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
 
     expect(getByText("Apply for affordable housing")).not.toBeNull()
-    done()
   })
 
-  it("shows the correct footer logo path", async (done) => {
+  it("shows the correct footer logo path", async () => {
     const { getByTestId } = await renderAndLoadAsync(
       <HomePage assetPaths={{ "logo-city.png": "/public/logo.png" }} />
     )
     const sfLogo = getByTestId("footer-logo-test-id")
     expect(sfLogo).not.toBeNull()
     expect(sfLogo).toHaveAttribute("src", "/public/logo.png")
-    done()
   })
 
   describe("Main page content", () => {
-    it("renders a rent button", async (done) => {
+    it("renders a rent button", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")
       expect(getLinkByText(mainContentContainer, "Rent")).toHaveAttribute(
         "href",
         "/listings/for-rent"
       )
-      done()
     })
 
-    it("renders a buy button", async (done) => {
+    it("renders a buy button", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")
       expect(getLinkByText(mainContentContainer, "Buy")).toHaveAttribute(
         "href",
         "/listings/for-sale"
       )
-      done()
     })
 
-    it("renders the email sign up link", async (done) => {
+    it("renders the email sign up link", async () => {
       const { getByTestId } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
       const mainContentContainer = getByTestId("main-content-test-id")
       const signUpLink = getLinkByText(mainContentContainer, "Sign Up today")
@@ -55,7 +51,6 @@ describe("<HomePage />", () => {
         "href",
         "https://confirmsubscription.com/h/y/C3BAFCD742D47910"
       )
-      done()
     })
   })
 })
