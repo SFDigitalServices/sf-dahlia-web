@@ -26,19 +26,22 @@ module.exports = {
     },
   },
   preset: "ts-jest",
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.json",
-    },
-  },
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        // ts-jest configuration goes here
+        tsconfig: "tsconfig.json",
+      },
+    ],
   },
   setupFilesAfterEnv: ["<rootDir>/__tests__/setupTests.ts"],
+  setupFiles: ["<rootDir>/__tests__/jest.setup.js"],
   moduleNameMapper: {
     "\\.(scss|css|less|jpg)$": "identity-obj-proxy",
+    "^axios$": require.resolve("axios"),
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
   reporters: ["default", "jest-junit"],

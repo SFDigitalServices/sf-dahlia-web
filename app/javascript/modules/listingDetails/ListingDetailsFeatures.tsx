@@ -21,7 +21,7 @@ const getDepositString = (min?: string, max?: string) => {
 
 // TODO: add prop for items that should have machine translated content
 interface FeatureItemProps {
-  content: any
+  content: string
   title: string
   toTranslate?: boolean
 }

@@ -18,7 +18,7 @@ describe("ListingDetailsLotteryModal", () => {
     jest.resetAllMocks()
   })
 
-  it("displays initial view with form and listing preferences", async (done) => {
+  it("displays initial view with form and listing preferences", async () => {
     axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
 
     const { findByText, asFragment } = render(
@@ -30,10 +30,9 @@ describe("ListingDetailsLotteryModal", () => {
 
     expect(await findByText("Lottery Results")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays error when user submits form with empty lottery number", async (done) => {
+  it("displays error when user submits form with empty lottery number", async () => {
     const user = userEvent.setup()
     const { findByText, getByRole } = render(
       <ListingDetailsLotterySearchForm
@@ -47,10 +46,9 @@ describe("ListingDetailsLotteryModal", () => {
     })
 
     expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
-    done()
   })
 
-  it("displays error when user submits form with non numeric lottery number", async (done) => {
+  it("displays error when user submits form with non numeric lottery number", async () => {
     const user = userEvent.setup()
     const { findByText, getByRole } = render(
       <ListingDetailsLotterySearchForm
@@ -66,10 +64,9 @@ describe("ListingDetailsLotteryModal", () => {
     })
 
     expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
-    done()
   })
 
-  it("displays three results when lottery number found", async (done) => {
+  it("displays three results when lottery number found", async () => {
     axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
 
     const user = userEvent.setup()
@@ -90,10 +87,9 @@ describe("ListingDetailsLotteryModal", () => {
     expect(await findByText("Displaced Tenant Housing Preference (DTHP)")).toBeDefined()
     expect(await findByText("Certificate of Preference (COP)")).toBeDefined()
     expect(await findByText("Live or Work in San Francisco Preference")).toBeDefined()
-    done()
   })
 
-  it("displays error when invalid lottery number", async (done) => {
+  it("displays error when invalid lottery number", async () => {
     axios.get.mockResolvedValue({ data: lotteryResultRentalInvalidLotteryNumber })
 
     const user = userEvent.setup()
@@ -111,10 +107,9 @@ describe("ListingDetailsLotteryModal", () => {
     })
 
     expect(await findByText("The number you entered was not found.")).toBeDefined()
-    done()
   })
 
-  it("displays error when api error", async (done) => {
+  it("displays error when api error", async () => {
     axios.get.mockResolvedValue({ data: null })
 
     const user = userEvent.setup()
@@ -134,6 +129,5 @@ describe("ListingDetailsLotteryModal", () => {
     expect(
       await findByText("We seem to be having a connection issue. Please try your search again.")
     ).toBeDefined()
-    done()
   })
 })

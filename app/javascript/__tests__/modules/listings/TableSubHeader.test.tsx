@@ -6,14 +6,13 @@ import { rentalEducatorListing2 } from "../../data/RailsRentalListing/listing-re
 import RailsRentalListing from "../../../api/types/rails/listings/RailsRentalListing"
 
 describe("TableSubHeader", () => {
-  it("renders the priority units for Shirley Chisholm listing 2", async (done) => {
+  it("renders the priority units for Shirley Chisholm listing 2", async () => {
     const { asFragment, findByText } = render(<TableSubHeader listing={rentalEducatorListing2} />)
     expect(await findByText(t("listings.customListingType.educator.priorityUnits"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("renders the priority units for Shirley Chisholm listing 2 with other priority units", async (done) => {
+  it("renders the priority units for Shirley Chisholm listing 2 with other priority units", async () => {
     const testListing = {
       Custom_Listing_Type: "Educator 2: SFUSD employees & public",
       prioritiesDescriptor: [
@@ -28,6 +27,5 @@ describe("TableSubHeader", () => {
     expect(await findByText(t("listings.customListingType.educator.priorityUnits"))).toBeDefined()
     expect(await findByText(t("listings.prioritiesDescriptor.mobilityHearingVision"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 })

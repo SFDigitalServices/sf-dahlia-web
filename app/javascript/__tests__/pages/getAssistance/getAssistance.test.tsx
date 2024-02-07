@@ -5,22 +5,20 @@ import { within } from "@testing-library/dom"
 import { t } from "@bloom-housing/ui-components"
 
 describe("<GetAssistance />", () => {
-  it("shows the correct header text", async (done) => {
+  it("shows the correct header text", async () => {
     const { getByTestId } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
     const mainContent = getByTestId("page-header")
 
     expect(within(mainContent).getByText(t("assistance.title.getAssistance"))).not.toBeNull()
-    done()
   })
 
-  it("shows the correct subtitle text", async (done) => {
+  it("shows the correct subtitle text", async () => {
     const { getByText } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
 
     expect(getByText(t("assistance.subtitle.getAssistance"))).not.toBeNull()
-    done()
   })
 
-  it("shows the correct section title text", async (done) => {
+  it("shows the correct section title text", async () => {
     const { getByText } = await renderAndLoadAsync(<GetAssistance assetPaths={{}} />)
 
     expect(getByText(t("assistance.title.housingCouneslors"))).not.toBeNull()
@@ -28,6 +26,5 @@ describe("<GetAssistance />", () => {
     expect(getByText(t("assistance.title.sfServices"))).not.toBeNull()
     expect(getByText(t("assistance.title.documentChecklist"))).not.toBeNull()
     expect(getByText(t("assistance.title.dahliaVideos"))).not.toBeNull()
-    done()
   })
 })

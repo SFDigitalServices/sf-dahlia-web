@@ -23,7 +23,7 @@ describe("listingsApiService", () => {
         income_total: 70000,
         include_children_under_6: true,
         children_under_6: "2",
-        type: null,
+        type: "",
       }
       expect(getEligibilityQueryString(filters, "rental")).toEqual(
         "householdsize=4&incomelevel=70000&includeChildrenUnder6=true&childrenUnder6=2&listingsType=rental"
@@ -35,8 +35,8 @@ describe("listingsApiService", () => {
         income_timeframe: "per_year",
         income_total: 70000,
         include_children_under_6: false,
-        children_under_6: null,
-        type: null,
+        children_under_6: "",
+        type: "",
       }
       expect(getEligibilityQueryString(filters, "rental")).toEqual(
         "householdsize=4&incomelevel=70000&includeChildrenUnder6=false&childrenUnder6=&listingsType=rental"
@@ -49,7 +49,7 @@ describe("listingsApiService", () => {
         income_total: 5000,
         include_children_under_6: true,
         children_under_6: "4",
-        type: null,
+        type: "",
       }
       expect(getEligibilityQueryString(filters, "rental")).toContain("60000")
     })
@@ -60,7 +60,7 @@ describe("listingsApiService", () => {
         income_total: 5000,
         include_children_under_6: true,
         children_under_6: "4",
-        type: null,
+        type: "",
       }
       expect(getEligibilityQueryString(filters, "ownership")).toContain("&listingsType=ownership")
     })

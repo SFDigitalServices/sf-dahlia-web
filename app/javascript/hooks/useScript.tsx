@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/prefer-dom-node-dataset */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, useEffect } from "react"
 
 const useScript = (src) => {
@@ -14,21 +17,18 @@ const useScript = (src) => {
       // Fetch existing script element by src
       // It may have been added by another intance of this hook
       // TODO(DAH-1581): Remove any type on line 18
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let script: any = document.querySelector(`script[src="${src}"]`)
       if (!script) {
         // Create script
         script = document.createElement("script")
         script.src = src
         script.async = true
-        // eslint-disable-next-line unicorn/prefer-dom-node-dataset
         script.setAttribute("data-status", "loading")
         // Add script to document body
         document.body.append(script)
         // Store status in attribute on script
         // This can be read by other instances of this hook
         const setAttributeFromEvent = (event) => {
-          // eslint-disable-next-line unicorn/prefer-dom-node-dataset
           script.setAttribute("data-status", event.type === "load" ? "ready" : "error")
         }
         script.addEventListener("load", setAttributeFromEvent)

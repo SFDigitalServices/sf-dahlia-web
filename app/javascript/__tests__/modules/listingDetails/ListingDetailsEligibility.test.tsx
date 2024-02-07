@@ -46,7 +46,7 @@ describe("ListingDetailsEligibility", () => {
     jest.resetAllMocks()
   })
 
-  it("displays listing details eligibility section and no Building Selection Criteria Link", async (done) => {
+  it("displays listing details eligibility section and no Building Selection Criteria Link", async () => {
     const testListing = {
       ...closedRentalListing,
       Building_Selection_Criteria: "",
@@ -73,10 +73,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details eligibility section for a sales listing", async (done) => {
+  it("displays listing details eligibility section for a sales listing", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
@@ -98,10 +97,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details eligibility section for a listing with only SRO units", async (done) => {
+  it("displays listing details eligibility section for a listing with only SRO units", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
     const { asFragment, findByText } = render(
       <ListingDetailsContext.Provider
@@ -125,10 +123,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details eligibility section for an SRO listing with expanded occupancy units", async (done) => {
+  it("displays listing details eligibility section for an SRO listing with expanded occupancy units", async () => {
     const listing = { ...sroRentalListing, Id: "a0W0P00000FIuv3UAD" }
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
@@ -151,10 +148,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details eligibility section for an SRO listing with a mix of SRO units and non-SRO units", async (done) => {
+  it("displays listing details eligibility section for an SRO listing with a mix of SRO units and non-SRO units", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
@@ -178,10 +174,9 @@ describe("ListingDetailsEligibility", () => {
     )
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details eligibility section when habitat listing", async (done) => {
+  it("displays listing details eligibility section when habitat listing", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
@@ -203,10 +198,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(await findByText("Eligibility")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 1", async (done) => {
+  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 1", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
@@ -233,10 +227,9 @@ describe("ListingDetailsEligibility", () => {
       await findByText(t("listings.customListingType.educator.eligibility.part1"))
     ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 2", async (done) => {
+  it("displays custom listing details check if you're eligible section for Shirley Chisholm listing 2", async () => {
     axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
 
     const { asFragment, findByText } = render(
@@ -263,10 +256,9 @@ describe("ListingDetailsEligibility", () => {
       await findByText(t("listings.customListingType.educator.eligibility.priority"))
     ).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays ListingDetailsChisholmPreferences for educator listing 1", async (done) => {
+  it("displays ListingDetailsChisholmPreferences for educator listing 1", async () => {
     axios.get.mockResolvedValue({ data: { listings: [rentalEducatorListing1] } })
     const { asFragment, findByText } = await renderAndLoadAsync(
       <ListingDetailsContext.Provider
@@ -290,10 +282,9 @@ describe("ListingDetailsEligibility", () => {
 
     expect(findByText(t("listings.customListingType.educator.preferences.part1"))).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("does not display ListingDetailsChisholmPreferences for a non-Chisholm listing", async (done) => {
+  it("does not display ListingDetailsChisholmPreferences for a non-Chisholm listing", async () => {
     axios.get.mockResolvedValue({ data: { listings: [sroRentalListing] } })
     const { asFragment, findByText } = await renderAndLoadAsync(
       <ListingDetailsContext.Provider
@@ -317,6 +308,5 @@ describe("ListingDetailsEligibility", () => {
 
     expect(findByText(t("listings.customListingType.educator.preferences.part1"))).not.toBeNull()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 })

@@ -140,7 +140,7 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the listing is in the harcoded list of SROs that
+ * @returns {boolean} returns true if the listing is in the hardcoded list of SROs that
  * permit multiple occupancy, false otherwise
  */
 export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) => {
@@ -418,7 +418,7 @@ export const matchSharedUnitFields = (
         true
       )
     }
-    // Update availiability based on availability in matchingUnits
+    // Update availability based on availability in matchingUnits
     let numAvailable = 0
     matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       numAvailable += curUnit.Availability
@@ -576,7 +576,10 @@ export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): numbe
   return longestChartLength
 }
 
-export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+export const getMinMaxOccupancy = (
+  units: RailsUnit[],
+  amiCharts: RailsAmiChart[]
+): { explicitMaxOccupancy: boolean; minOccupancy: number; maxOccupancy: number } => {
   const unitsCopy = units.map((unit) => {
     return { ...unit }
   })
@@ -617,9 +620,9 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
   }
 }
 
-export const getPriorityTypeText = (priortyType: string): string => {
+export const getPriorityTypeText = (priorityType: string): string => {
   let text: string
-  switch (priortyType) {
+  switch (priorityType) {
     case "Vision impairments":
       text = t("listings.prioritiesDescriptor.vision")
       break

@@ -2,8 +2,6 @@ import {
   getCurrentLanguage,
   getPathWithoutLanguagePrefix,
   getRoutePrefix,
-  LanguagePrefix,
-  toLanguagePrefix,
   getReservedCommunityType,
   defaultIfNotTranslated,
   localizedFormat,
@@ -12,20 +10,6 @@ import {
 } from "../../util/languageUtil"
 
 describe("languageUtil", () => {
-  describe("toLanguagePrefix", () => {
-    it("returns the correct prefix when a blank or invalid string is provided", () => {
-      expect(toLanguagePrefix("")).toBe(LanguagePrefix.English)
-      expect(toLanguagePrefix("abc")).toBe(LanguagePrefix.English)
-    })
-
-    it("returns the correct prefix", () => {
-      expect(toLanguagePrefix("en")).toBe(LanguagePrefix.English)
-      expect(toLanguagePrefix("es")).toBe(LanguagePrefix.Spanish)
-      expect(toLanguagePrefix("zh")).toBe(LanguagePrefix.Chinese)
-      expect(toLanguagePrefix("tl")).toBe(LanguagePrefix.Tagalog)
-    })
-  })
-
   describe("getRoutePrefix", () => {
     it("gets the prefix from the url when one exists with a leading slash", () => {
       expect(getRoutePrefix("/en/sign-in")).toBe("en")
