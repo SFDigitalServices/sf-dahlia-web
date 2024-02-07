@@ -3,7 +3,7 @@ import { ListingDetailsLotterySearchForm } from "../../../modules/listingDetails
 import { lotteryCompleteRentalListing } from "../../data/RailsRentalListing/listing-rental-lottery-complete"
 import { lotteryResultRentalThree } from "../../data/RailsLotteryResult/lottery-result-rental-three"
 import userEvent from "@testing-library/user-event"
-import { render, cleanup, act } from "@testing-library/react"
+import { render, cleanup } from "@testing-library/react"
 import { lotteryResultRentalInvalidLotteryNumber } from "../../data/RailsLotteryResult/lottery-result-rental-invalid-lottery-number"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
@@ -41,9 +41,7 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    await act(async () => {
-      await user.click(getByRole("button"))
-    })
+    await user.click(getByRole("button"))
 
     expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
   })
@@ -57,11 +55,9 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    await act(async () => {
-      const input = getByRole("textbox")
-      await userEvent.type(input, "123abc")
-      await user.click(getByRole("button"))
-    })
+    const input = getByRole("textbox")
+    await userEvent.type(input, "123abc")
+    await user.click(getByRole("button"))
 
     expect(await findByText("Please enter a valid lottery number.")).toBeDefined()
   })
@@ -77,11 +73,9 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    await act(async () => {
-      const input = getByRole("textbox")
-      await userEvent.type(input, "123")
-      await user.click(getByRole("button"))
-    })
+    const input = getByRole("textbox")
+    await userEvent.type(input, "123")
+    await user.click(getByRole("button"))
 
     expect(await findByText("Your preference ranking")).toBeDefined()
     expect(await findByText("Displaced Tenant Housing Preference (DTHP)")).toBeDefined()
@@ -100,11 +94,9 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    await act(async () => {
-      const input = getByRole("textbox")
-      await userEvent.type(input, "123")
-      await user.click(getByRole("button"))
-    })
+    const input = getByRole("textbox")
+    await userEvent.type(input, "123")
+    await user.click(getByRole("button"))
 
     expect(await findByText("The number you entered was not found.")).toBeDefined()
   })
@@ -120,11 +112,9 @@ describe("ListingDetailsLotteryModal", () => {
       />
     )
 
-    await act(async () => {
-      const input = getByRole("textbox")
-      await userEvent.type(input, "123")
-      await user.click(getByRole("button"))
-    })
+    const input = getByRole("textbox")
+    await userEvent.type(input, "123")
+    await user.click(getByRole("button"))
 
     expect(
       await findByText("We seem to be having a connection issue. Please try your search again.")

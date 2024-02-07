@@ -25,13 +25,13 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       <Heading className="mt-8" priority={4} styleType="underlineWeighted">
         {t("listings.habitat.applicationProcess.title")}
       </Heading>
-      <p>
+      <span>
         {renderMarkup(
           t("listings.habitat.applicationProcess.p1", {
             habitatLink: "https://habitatgsf.org/amber-drive-info/",
           })
         )}
-      </p>
+      </span>
       <ol className="list-decimal ml-8 mt-4">
         <li>
           {renderMarkup(
@@ -55,7 +55,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
       </Heading>
       <p>{t("listings.habitat.incomeRange.p1")}</p>
       <p className="mt-4">{t("listings.habitat.incomeRange.p2")}</p>
-      <p className="mt-4">
+      <div className="mt-4">
         {renderMarkup(
           t("listings.incomeExceptions.intro", {
             url: getSfGovUrl(
@@ -64,7 +64,7 @@ export const ListingDetailsHabitat = ({ listing }: ListingDetailsHabitatProps) =
             ),
           })
         )}
-      </p>
+      </div>
       <ul className="list-disc ml-6">
         <li>{t("listings.incomeExceptions.students")}</li>
         <li>{t("listings.incomeExceptions.nontaxable")}</li>
