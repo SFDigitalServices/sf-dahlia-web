@@ -198,6 +198,7 @@ jobs:
     <<: *defaults
     steps:
       - setup
+      - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       - run: sudo apt-get update -y
       - run: sudo apt-get install graphicsmagick
       - run: RAILS_ENV=test bundle exec rails db:create
