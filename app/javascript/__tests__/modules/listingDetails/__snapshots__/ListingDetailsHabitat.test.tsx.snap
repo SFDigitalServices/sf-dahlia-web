@@ -31,18 +31,18 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     >
       Application Process
     </h4>
-    <p />
-    <p>
-      These units are offered by 
-      <a
-        href="https://habitatgsf.org/amber-drive-info/"
-        target="_blank"
-      >
-        Habitat for Humanity Greater San Francisco
-      </a>
-       in partnership with MOHCD
-    </p>
-    <p />
+    <span>
+      <p>
+        These units are offered by 
+        <a
+          href="https://habitatgsf.org/amber-drive-info/"
+          target="_blank"
+        >
+          Habitat for Humanity Greater San Francisco
+        </a>
+         in partnership with MOHCD
+      </p>
+    </span>
     <ol
       class="list-decimal ml-8 mt-4"
     >
@@ -99,20 +99,20 @@ exports[`ListingDetailsHabitat displays habitat info when habitat listing 1`] = 
     >
       For income calculations, household size includes everyone (all ages) living in the unit.
     </p>
-    <p
+    <div
       class="mt-4"
-    />
-    <p>
-      People in your household may need 
-      <a
-        href="https://sf.gov/information/special-calculations-household-income"
-        target="_blank"
-      >
-        special income calculations
-      </a>
-       if they:
-    </p>
-    <p />
+    >
+      <p>
+        People in your household may need 
+        <a
+          href="https://sf.gov/information/special-calculations-household-income"
+          target="_blank"
+        >
+          special income calculations
+        </a>
+         if they:
+      </p>
+    </div>
     <ul
       class="list-disc ml-6"
     >

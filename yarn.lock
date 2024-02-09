@@ -1312,11 +1312,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bloom-housing/ui-components@^12.1.4":
-  version "12.1.4"
-  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.1.4.tgz#febc0d8dbe4ebbb15d74846029e0fd6697b5a5cb"
-  integrity sha512-IhVytLerFo7V4ODb0q9bWZwaYfQX+QlvDQD0fg7aq0xikUmfWiRPh/Q9qN4G+6lRi6JHaEkscYg2I+EQTQDwTw==
-
+"@bloom-housing/ui-components@^12.1.5":
+  version "12.1.5"
+  resolved "https://registry.yarnpkg.com/@bloom-housing/ui-components/-/ui-components-12.1.5.tgz#7c4d85b8915041a9fbda9dcedf1827db5c1626ec"
+  integrity sha512-j49iIlAiQC0h0jRyLpqIX3LiLkBle3DiNnNrS2kpFnOHd8ozu5q+ovi2XxMIyVgUU0NlgzKX2nxEJyXn0STvGg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.1.1"
     "@fortawesome/free-regular-svg-icons" "^6.1.1"
@@ -6127,12 +6126,7 @@ focus-lock@^1.0.0:
   dependencies:
     tslib "^2.0.3"
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.0:
-  version "1.15.5"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
-  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
-
-follow-redirects@^1.15.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.0, follow-redirects@^1.15.0:
   version "1.15.5"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
   integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==

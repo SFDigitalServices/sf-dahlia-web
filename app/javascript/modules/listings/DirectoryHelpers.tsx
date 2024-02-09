@@ -200,6 +200,7 @@ export const getListingCards = (
                 tableHeader: { content: getTableHeader(listing) },
                 tableSubheader: {
                   content: <TableSubHeader listing={listing} />,
+                  isElement: true,
                 },
                 contentHeader: { content: listing.Name, href: `/listings/${listing.listingID}` },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
