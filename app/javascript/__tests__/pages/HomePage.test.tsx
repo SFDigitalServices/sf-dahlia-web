@@ -9,6 +9,13 @@ const getLinkByText = (container: HTMLElement, text: string) =>
   within(container).getByRole("link", { name: text })
 
 describe("<HomePage />", () => {
+  beforeEach(() => {
+    // The below line prevents @axe-core from throwing an error
+    // when the html tag does not have a lang attribute
+    document.documentElement.lang = "en"
+    HTMLCanvasElement.prototype.getContext = jest.fn()
+  })
+
   it("shows the correct header text", async () => {
     const { getByText } = await renderAndLoadAsync(<HomePage assetPaths={{}} />)
 
