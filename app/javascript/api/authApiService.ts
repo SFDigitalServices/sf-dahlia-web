@@ -1,12 +1,14 @@
 import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
 import { authenticatedGet, post, put } from "./apiService"
+import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
     email,
     password,
-  }).then(({ data }: AxiosResponse<UserData>) => {
+  }).then(({ data, headers }: AxiosResponse<UserData>) => {
+    setAuthHeaders(headers as AuthHeaders)
     return data.data
   })
 

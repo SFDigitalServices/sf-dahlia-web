@@ -1,3 +1,4 @@
+import { AxiosHeaders } from "axios"
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = "auth_headers"
 
 const getStorage = () => {
@@ -11,12 +12,12 @@ const getStorage = () => {
   }
 }
 
-const getAuthHeaders = (): AuthHeaders | undefined => {
+const getAuthHeaders = (): AuthHeaders | AxiosHeaders | undefined => {
   const headers: string = getStorage()[ACCESS_TOKEN_LOCAL_STORAGE_KEY]
   return headers && JSON.parse(headers)
 }
 
-export interface AuthHeaders {
+export interface AuthHeaders extends AxiosHeaders {
   expiry: string
   "access-token": string
   client: string
@@ -24,7 +25,7 @@ export interface AuthHeaders {
   "token-type": string
 }
 
-export const setAuthHeaders = (headers: AuthHeaders) => {
+export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
   // Set only relevant auth headers
   const headersToSet = {
     expiry: headers.expiry,
@@ -36,8 +37,9 @@ export const setAuthHeaders = (headers: AuthHeaders) => {
   getStorage().setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, JSON.stringify(headersToSet))
 }
 
-export const getHeaders = (): AuthHeaders | undefined => getAuthHeaders()
+export const getHeaders = (): AuthHeaders | AxiosHeaders | undefined => getAuthHeaders()
 export const clearHeaders = () => getStorage().removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
 
-const getTokenTtl = (): number => Number.parseInt(getAuthHeaders()?.expiry) * 1000 - Date.now()
+const getTokenTtl = (): number =>
+  Number.parseInt(getAuthHeaders()?.expiry as string) * 1000 - Date.now()
 export const isTokenValid = (): boolean => getAuthHeaders() && getTokenTtl() > 0
