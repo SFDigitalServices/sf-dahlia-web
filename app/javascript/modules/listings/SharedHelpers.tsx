@@ -65,9 +65,7 @@ export const getListingImageCardStatuses = (
 // Get imageCardProps for a given listing
 export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean) => {
   const imageUrl =
-    listing?.Listing_Images?.length > 0
-      ? listing.Listing_Images[0].displayImageURL
-      : listing?.imageURL ?? fallbackImg
+    listing?.Listing_Images?.length > 0 ? listing.Listing_Images[0].displayImageURL : fallbackImg
 
   const imageDescription =
     listing?.Listing_Images?.length > 0
