@@ -8,7 +8,9 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
     <div
       class="site-content"
     >
-      <title>
+      <title
+        class="notranslate"
+      >
         Title Text
       </title>
       <meta
