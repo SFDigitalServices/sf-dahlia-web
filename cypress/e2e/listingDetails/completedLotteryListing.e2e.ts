@@ -1,13 +1,5 @@
-const listings = {
-  COMPLETED_LOTTERY_FULL: {
-    id: "a0W8H000000AmpKUAS",
-    lotteryNumber: "01150047",
-  },
-  COMPLETED_LOTTER_PROD: {
-    id: "a0W4U00000IhGZcUAN",
-    lotteryNumber: "01171676",
-  },
-}
+const listingId = "fake-listing-id"
+const lotteryNumber = "123456"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
@@ -18,11 +10,21 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  // TODO: Temporary check. Remove with DAH-1420
-  const listingId =
-    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
-      ? listings.COMPLETED_LOTTER_PROD.id
-      : listings.COMPLETED_LOTTERY_FULL.id
+  cy.fixture("listingDetails.json")
+  cy.fixture("ami.json")
+  cy.fixture("units.json")
+  cy.fixture("preferences.json")
+  cy.fixture("lotteryRanking.json")
+  cy.fixture("listing.html")
+
+  cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" })
+  cy.intercept(`/listings/${listingId}?react=true`, { fixture: "listing.html" })
+  cy.intercept("ami.json**", { fixture: "ami.json" })
+  cy.intercept("units", { fixture: "units.json" })
+  cy.intercept("preferences", { fixture: "preferences.json" })
+  cy.intercept(`lottery_ranking?lottery_number=${lotteryNumber}`, {
+    fixture: "lotteryRanking.json",
+  })
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
 }
@@ -31,16 +33,11 @@ const clickLotteryResultsButton = (mobile: boolean) => {
   if (mobile) {
     cy.contains("Lottery selection, important dates and contact").click()
   }
+
   cy.contains("View Lottery Results").click()
 }
 
 const searchForLotteryResults = () => {
-  // TODO: Temporary check. Remove with DAH-1420
-  const lotteryNumber =
-    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
-      ? listings.COMPLETED_LOTTER_PROD.lotteryNumber
-      : listings.COMPLETED_LOTTERY_FULL.lotteryNumber
-
   cy.get('input[placeholder="Enter Your Lottery Number"]').type(lotteryNumber)
   cy.get('[aria-label="Submit number"]').click()
 }
