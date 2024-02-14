@@ -12,13 +12,24 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" })
-  cy.intercept(`/listings/${listingId}?react=true`, { fixture: "listing.html" })
-  cy.intercept("ami.json**", { fixture: "ami.json" })
-  cy.intercept("units", { fixture: "units.json" })
-  cy.intercept("preferences", { fixture: "preferences.json" })
-  cy.intercept(`lottery_ranking?lottery_number=${lotteryNumber}`, {
-    fixture: "lotteryRanking.json",
+  cy.fixture("listingDetails.json").then((listingDetails) => {
+    cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetails)
+  })
+  cy.fixture("listing.html").then((listingHtml) => {
+    cy.task("log", listingHtml)
+    cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtml)
+  })
+  cy.fixture("ami.json").then((amiJson) => {
+    cy.intercept("GET", "ami.json**", amiJson)
+  })
+  cy.fixture("units.json").then((unitsJson) => {
+    cy.intercept("GET", "units", unitsJson)
+  })
+  cy.fixture("preferences.json").then((preferencesJson) => {
+    cy.intercept("GET", "preferences", preferencesJson)
+  })
+  cy.fixture("lotteryRanking.json").then((lotteryRanking) => {
+    cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRanking)
   })
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
