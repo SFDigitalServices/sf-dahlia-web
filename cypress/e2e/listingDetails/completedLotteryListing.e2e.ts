@@ -19,12 +19,16 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetailsFixture)
-  cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtmlFixture)
-  cy.intercept("GET", "ami.json**", amiFixture)
-  cy.intercept("GET", "units", unitsFixture)
-  cy.intercept("GET", "preferences", preferencesFixture)
-  cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRankingFixture)
+  cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetailsFixture).as(
+    "listingDetails"
+  )
+  cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtmlFixture).as("listingHtml")
+  cy.intercept("GET", "ami.json**", amiFixture).as("ami")
+  cy.intercept("GET", "units", unitsFixture).as("units")
+  cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+  cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRankingFixture).as(
+    "lotteryRanking"
+  )
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
 }
@@ -72,12 +76,22 @@ describe("Listing Details for Completed Lottery Listing", () => {
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
       visitListing(true, "")
+      cy.wait("@listingDetails")
+      cy.wait("@listingHtml")
+      cy.wait("@units")
+      cy.wait("@ami")
+      cy.wait("@preferences")
       clickLotteryResultsButton(true)
       cy.contains("Lottery results are divided into multiple lists.")
     })
 
     it("searching for a lottery number returns results on mobile devices", () => {
       visitListing(true, "")
+      cy.wait("@listingDetails")
+      cy.wait("@listingHtml")
+      cy.wait("@units")
+      cy.wait("@ami")
+      cy.wait("@preferences")
       clickLotteryResultsButton(true)
       searchForLotteryResults()
       cy.contains("Your preference ranking")
@@ -85,17 +99,32 @@ describe("Listing Details for Completed Lottery Listing", () => {
 
     it("renders on desktop devices", () => {
       visitListing(false, "")
+      cy.wait("@listingDetails")
+      cy.wait("@listingHtml")
+      cy.wait("@units")
+      cy.wait("@ami")
+      cy.wait("@preferences")
       cy.contains("View Lottery Results")
     })
 
     it("clicking the View Lottery Results button opens the lottery results modal on desktop devices", () => {
       visitListing(false, "")
+      cy.wait("@listingDetails")
+      cy.wait("@listingHtml")
+      cy.wait("@units")
+      cy.wait("@ami")
+      cy.wait("@preferences")
       clickLotteryResultsButton(false)
       cy.contains("Lottery results are divided into multiple lists.")
     })
 
     it("searching for a lottery number returns results on desktop devices", () => {
       visitListing(false, "")
+      cy.wait("@listingDetails")
+      cy.wait("@listingHtml")
+      cy.wait("@units")
+      cy.wait("@ami")
+      cy.wait("@preferences")
       clickLotteryResultsButton(false)
       searchForLotteryResults()
       cy.contains("Your preference ranking")
