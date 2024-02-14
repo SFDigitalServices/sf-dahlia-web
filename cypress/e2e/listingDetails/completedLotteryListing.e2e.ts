@@ -1,36 +1,30 @@
+import { RouteHandler } from "cypress/types/net-stubbing"
+
 const listingId = "fake-listing-id"
 const lotteryNumber = "123456"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
 
-const visitListing = (mobile, language) => {
-  cy.task("log", "This will be output to the terminal")
+let listingDetailsFixture: RouteHandler
+let listingHtmlFixture: RouteHandler
+let amiFixture: RouteHandler
+let unitsFixture: RouteHandler
+let preferencesFixture: RouteHandler
+let lotteryRankingFixture: RouteHandler
 
+const visitListing = (mobile, language) => {
   const langPart = language ? `/${language}` : ""
   if (mobile) {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  cy.fixture("listingDetails.json").then((listingDetails) => {
-    cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetails)
-  })
-  cy.fixture("listing.html").then((listingHtml) => {
-    cy.task("log", listingHtml)
-    cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtml)
-  })
-  cy.fixture("ami.json").then((amiJson) => {
-    cy.intercept("GET", "ami.json**", amiJson)
-  })
-  cy.fixture("units.json").then((unitsJson) => {
-    cy.intercept("GET", "units", unitsJson)
-  })
-  cy.fixture("preferences.json").then((preferencesJson) => {
-    cy.intercept("GET", "preferences", preferencesJson)
-  })
-  cy.fixture("lotteryRanking.json").then((lotteryRanking) => {
-    cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRanking)
-  })
+  cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetailsFixture)
+  cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtmlFixture)
+  cy.intercept("GET", "ami.json**", amiFixture)
+  cy.intercept("GET", "units", unitsFixture)
+  cy.intercept("GET", "preferences", preferencesFixture)
+  cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRankingFixture)
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
 }
@@ -54,6 +48,26 @@ describe("Listing Details for Completed Lottery Listing", () => {
   //   // there is a rogue loading issue beyond the scope of this story
   //   cy.wait(6000)
   // })
+  beforeEach(() => {
+    cy.fixture("listingDetails.json").then((listingDetails) => {
+      listingDetailsFixture = listingDetails
+    })
+    cy.fixture("listing.html").then((listingHtml) => {
+      listingHtmlFixture = listingHtml
+    })
+    cy.fixture("ami.json").then((ami) => {
+      amiFixture = ami
+    })
+    cy.fixture("units.json").then((unitsJson) => {
+      unitsFixture = unitsJson
+    })
+    cy.fixture("preferences.json").then((preferencesJson) => {
+      preferencesFixture = preferencesJson
+    })
+    cy.fixture("lotteryRanking.json").then((lotteryRanking) => {
+      lotteryRankingFixture = lotteryRanking
+    })
+  })
 
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
