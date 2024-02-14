@@ -5,17 +5,12 @@ const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
 
 const visitListing = (mobile, language) => {
+  cy.task("log", "This will be output to the terminal")
+
   const langPart = language ? `/${language}` : ""
   if (mobile) {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
-
-  cy.fixture("listingDetails.json")
-  cy.fixture("ami.json")
-  cy.fixture("units.json")
-  cy.fixture("preferences.json")
-  cy.fixture("lotteryRanking.json")
-  cy.fixture("listing.html")
 
   cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" })
   cy.intercept(`/listings/${listingId}?react=true`, { fixture: "listing.html" })
