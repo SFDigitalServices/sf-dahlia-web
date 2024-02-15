@@ -8,7 +8,7 @@ const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
 
 let listingDetailsFixture: RouteHandler
-// let listingHtmlFixture: RouteHandler
+let listingHtmlFixture: RouteHandler
 let amiFixture: RouteHandler
 let unitsFixture: RouteHandler
 let preferencesFixture: RouteHandler
@@ -20,10 +20,10 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
+  cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtmlFixture).as("listingHtml")
   cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetailsFixture).as(
     "listingDetails"
   )
-  // cy.intercept("GET", `/listings/${listingId}?react=true`, listingHtmlFixture).as("listingHtml")
   cy.intercept("GET", "ami.json**", amiFixture).as("ami")
   cy.intercept("GET", "units", unitsFixture).as("units")
   cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
@@ -58,12 +58,12 @@ describe("Listing Details for Completed Lottery Listing", () => {
   //   cy.wait(6000)
   // })
   beforeEach(() => {
+    cy.fixture("listing.html").then((listingHtml) => {
+      listingHtmlFixture = listingHtml
+    })
     cy.fixture("listingDetails.json").then((listingDetails) => {
       listingDetailsFixture = listingDetails
     })
-    // cy.fixture("listing.html").then((listingHtml) => {
-    //   listingHtmlFixture = listingHtml
-    // })
     cy.fixture("ami.json").then((ami) => {
       amiFixture = ami
     })
