@@ -17,7 +17,9 @@ const MetaTags = (props: MetaTagsProps) => {
   return (
     <>
       <Helmet>
-        <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
+        <title className="notranslate">
+          {props.title || t("t.dahliaSanFranciscoHousingPortal")}
+        </title>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

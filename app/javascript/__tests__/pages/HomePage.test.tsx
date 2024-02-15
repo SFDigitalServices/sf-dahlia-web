@@ -13,7 +13,6 @@ describe("<HomePage />", () => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
-    HTMLCanvasElement.prototype.getContext = jest.fn()
   })
 
   it("shows the correct header text", async () => {
