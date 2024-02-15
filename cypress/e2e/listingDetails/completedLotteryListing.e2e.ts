@@ -19,6 +19,8 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
+  cy.intercept("*", (request) => console.log("[[[visitListing]]]", request))
+
   cy.intercept("GET", `/api/v1/listings/${listingId}.json`, listingDetailsFixture).as(
     "listingDetails"
   )
