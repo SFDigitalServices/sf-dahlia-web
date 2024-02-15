@@ -1,7 +1,7 @@
 import { RouteHandler } from "cypress/types/net-stubbing"
 
-// const listingId = "fake-listing-id"
-const listingId = "a0W8H000000AmpKUAS"
+const listingId = "fake-listing-id"
+// const listingId = "a0W8H000000AmpKUAS"
 const lotteryNumber = "123456"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
