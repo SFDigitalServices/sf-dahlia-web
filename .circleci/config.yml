@@ -223,7 +223,7 @@ jobs:
     steps:
       - setup
       - start-server
-      - run: ELECTRON_ENABLE_LOGGING=true DEBUG=cypress:electron yarn test:e2e
+      - run: yarn test:e2e
   e2e-legacy:
     <<: *defaults
     parallelism: 4
