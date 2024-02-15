@@ -32,7 +32,8 @@ module Force
       force = opts[:force] || false
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      add_cloudfront_urls_for_listing_images(results).first
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images).first
     end
 
     # get all units for a given listing
@@ -113,17 +114,29 @@ module Force
 
       results = Request.new(parse_response: true)
                        .cached_get('/ListingDetails', params, force_recache)
-      add_cloudfront_urls_for_listing_images(results)
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images)
+    end
+
+    private_class_method def self.add_image_urls(listings)
+      listing_images = ListingImage.all
+      listings.each do |listing|
+        listing_image = listing_images.select do |li|
+          li.salesforce_listing_id == listing['Id']
+        end.first
+        # fallback to Building_URL for the case where ListingImages have not been set up
+        url = listing_image ? listing_image.image_url : listing['Building_URL']
+        listing['imageURL'] = url
+      end
+      listings
     end
 
     private_class_method def self.add_cloudfront_urls_for_listing_images(listings)
       listings.each do |listing|
         next unless listing['Listing_Images'].present?
 
-        listing['Listing_Images'] = set_cloudfront_url(
-          listing['Listing_Images'],
-          ListingImage.where(salesforce_listing_id: listing['Id']),
-        )
+        listing['Listing_Images'] = set_cloudfront_url(listing['Listing_Images'],
+                                                       ListingImage.where(salesforce_listing_id: listing['Id']))
       end
       listings
     end
