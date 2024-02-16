@@ -1,3 +1,11 @@
+import { RouteHandler } from "cypress/types/net-stubbing"
+
+let openRentalListingFixture: RouteHandler
+let openSaleListingFixture: RouteHandler
+let amiFixture: RouteHandler
+let unitsFixture: RouteHandler
+let preferencesFixture: RouteHandler
+
 /**
  * Util function to verify a listing details page
  * @param {string } id - listing id
@@ -7,7 +15,7 @@
  * @param {string} applyButtonText - text for the apply button
  * @param {string} language - optional language code
  */
-function verifyListing(
+function verifyRentalListing(
   id: string,
   altPhotoText: string,
   title: string,
@@ -16,7 +24,50 @@ function verifyListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
+  cy.intercept("GET", `${id}.json`, openRentalListingFixture).as("openRentalListing")
+  cy.intercept("GET", "ami.json**", amiFixture).as("ami")
+  cy.intercept("GET", "units", unitsFixture).as("units")
+  cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+
   cy.visit(`${langPart}/listings/${id}?react=true`)
+  cy.wait("@openRentalListing")
+  cy.wait("@units")
+  cy.wait("@ami")
+  cy.wait("@preferences")
+
+  // verify image exists
+  cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
+
+  // verify listing title
+  cy.contains(title)
+
+  // unfortunately not all test listings have an address. verify if provided
+  if (address) {
+    cy.contains(address)
+  }
+
+  // verify the apply link is visible
+  cy.contains(applyButtonText)
+}
+
+function verifySaleListing(
+  id: string,
+  altPhotoText: string,
+  title: string,
+  address: string,
+  applyButtonText: string,
+  language?: string
+) {
+  const langPart = language ? `/${language}` : ""
+  cy.intercept("GET", `${id}.json`, openSaleListingFixture).as("openSaleListing")
+  cy.intercept("GET", "ami.json**", amiFixture).as("ami")
+  cy.intercept("GET", "units", unitsFixture).as("units")
+  cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+
+  cy.visit(`${langPart}/listings/${id}?react=true`)
+  cy.wait("@openSaleListing")
+  cy.wait("@units")
+  cy.wait("@ami")
 
   // verify image exists
   cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
@@ -35,12 +86,12 @@ function verifyListing(
 
 const testListings = {
   OPEN_RENTAL: {
-    id: "a0W0P00000F8YG4UAN",
+    id: "test-open-rental-listing",
     title: "TEST Automated Listing (do not modify)",
     alt: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
   },
   OPEN_SALE: {
-    id: "a0W0P00000GlKfBUAV",
+    id: "test-open-sale-listing",
     address: "1 South Van Ness Ave, San Francisco, CA 94103",
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
     alt: "Listing Name:TEST Sale Listing (do not modify) - Homeownership Acres, Address:1 South Van Ness Ave, San Francisco CA, 94103",
@@ -60,15 +111,27 @@ enum LanguagePrefix {
 }
 
 describe("Listing Details for Open Listings", () => {
-  afterEach(() => {
-    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-    // there is a rogue loading issue beyond the scope of this story
-    cy.wait(3000)
+  beforeEach(() => {
+    cy.fixture("openRentalListing.json").then((openRentalListing) => {
+      openRentalListingFixture = openRentalListing
+    })
+    cy.fixture("openSaleListing.json").then((openSaleListing) => {
+      openSaleListingFixture = openSaleListing
+    })
+    cy.fixture("ami.json").then((ami) => {
+      amiFixture = ami
+    })
+    cy.fixture("units.json").then((unitsJson) => {
+      unitsFixture = unitsJson
+    })
+    cy.fixture("preferences.json").then((preferencesJson) => {
+      preferencesFixture = preferencesJson
+    })
   })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
-      verifyListing(
+      verifyRentalListing(
         testListings.OPEN_RENTAL.id,
         testListings.OPEN_RENTAL.alt,
         testListings.OPEN_RENTAL.title,
@@ -81,7 +144,19 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
+
+        cy.intercept("GET", `${testListings.OPEN_RENTAL.id}.json`, openRentalListingFixture).as(
+          "openRentalListing"
+        )
+        cy.intercept("GET", "ami.json**", amiFixture).as("ami")
+        cy.intercept("GET", "units", unitsFixture).as("units")
+        cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+
         cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+        cy.wait("@openRentalListing")
+        cy.wait("@units")
+        cy.wait("@ami")
+        cy.wait("@preferences")
 
         cy.get(".image-card__inner > img")
           .should("be.visible")
@@ -93,7 +168,7 @@ describe("Listing Details for Open Listings", () => {
 
   describe("Sale Listing " + testListings.OPEN_SALE.id, () => {
     it("displays in English", () => {
-      verifyListing(
+      verifySaleListing(
         testListings.OPEN_SALE.id,
         testListings.OPEN_SALE.alt,
         testListings.OPEN_SALE.title,
@@ -106,7 +181,17 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
+        cy.intercept("GET", `${testListings.OPEN_SALE.id}.json`, openRentalListingFixture).as(
+          "openSaleListing"
+        )
+        cy.intercept("GET", "ami.json**", amiFixture).as("ami")
+        cy.intercept("GET", "units", unitsFixture).as("units")
+        cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+
         cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+        cy.wait("@openSaleListing")
+        cy.wait("@units")
+        cy.wait("@ami")
 
         cy.get(".image-card__inner > img")
           .should("be.visible")

@@ -24,9 +24,7 @@ const visitListing = (mobile, language) => {
   cy.intercept("GET", "ami.json**", amiFixture).as("ami")
   cy.intercept("GET", "units", unitsFixture).as("units")
   cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
-  cy.intercept("GET", `lottery_ranking?lottery_number=${lotteryNumber}`, lotteryRankingFixture).as(
-    "lotteryRanking"
-  )
+  cy.intercept("GET", "lottery_ranking**", lotteryRankingFixture).as("lotteryRanking")
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
 }
