@@ -195,7 +195,7 @@ jobs:
       - store_test_results:
           path: ./reports/junit/
       - store_artifacts:
-          path: coverage
+          path: app/javascript/test-coverage
   unit-rspec:
     <<: *defaults
     steps:
