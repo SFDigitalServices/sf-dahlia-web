@@ -194,6 +194,8 @@ jobs:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
       - store_test_results:
           path: ./reports/junit/
+      - store_artifacts:
+          path: coverage
   unit-rspec:
     <<: *defaults
     steps:
@@ -204,6 +206,8 @@ jobs:
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake spec
+      - store_artifacts:
+          path: coverage
   unit-angular:
     <<: *defaults
     steps:
