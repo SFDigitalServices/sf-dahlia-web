@@ -43,8 +43,7 @@ class MultipleListingImageService
         create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
       end
     # Else, if the image has been uploaded, check if we need to create the record in Postgres
-    elsif !listing_image_current?(@listing_id, image_url) ||
-          ENV['FORCE_MULTIPLE_LISTING_IMAGE_UPDATE'].to_s.casecmp('true').zero?
+    elsif !listing_image_current?(@listing_id, image_url)
       # if the listing_image record containing the image_url does not exist, create it
       create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
     end
