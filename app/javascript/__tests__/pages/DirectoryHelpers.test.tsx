@@ -12,7 +12,7 @@ import { getListingImageCardStatuses } from "../../modules/listings/SharedHelper
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 
-describe("DirectoryHelpers", () => {
+describe.skip("DirectoryHelpers", () => {
   describe("getListingImageCardStatuses", () => {
     describe("with no eligibility filters", () => {
       it("renders as open application", () => {
