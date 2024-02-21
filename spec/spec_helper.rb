@@ -18,6 +18,12 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'simplecov'
+SimpleCov.start 'rails' do
+  enable_coverage :branch
+  minimum_coverage line: 65, branch: 50
+end
+
 require 'database_cleaner'
 DatabaseCleaner[:active_record].strategy = :truncation
 
