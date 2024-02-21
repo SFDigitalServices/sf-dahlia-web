@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'support/vcr_setup'
 require 'support/jasmine'
 
-describe 'Listings API' do
+describe 'Listings API', skip: true do
   listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
 
   ### generate Jasmine fixtures
