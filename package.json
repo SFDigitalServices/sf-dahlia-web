@@ -123,7 +123,7 @@
   "scripts": {
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:e2e": "cypress run --browser chrome",
     "test:e2e:open": "cypress open --browser chrome",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app/javascript cypress",
