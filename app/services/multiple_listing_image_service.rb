@@ -43,7 +43,7 @@ class MultipleListingImageService
         create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
       end
     # Else, if the image has been uploaded, check if we need to create the record in Postgres
-    elsif !listing_image_current?(@listing_id, image_url)
+    elsif !listing_image_current?(@listing_id, image_url, li_raw_image_url)
       # if the listing_image record containing the image_url does not exist, create it
       create_or_update_listing_image(@listing_id, image_url, li_raw_image_url)
     end
@@ -76,8 +76,10 @@ class MultipleListingImageService
     resized_listing_images.count { |file| file.key.end_with?(image_name) }.positive?
   end
 
-  def listing_image_current?(listing_id, image_url)
-    ListingImage.where(salesforce_listing_id: listing_id).where(image_url:).exists?
+  def listing_image_current?(listing_id, image_url, li_raw_image_url)
+    ListingImage.where(salesforce_listing_id: listing_id,
+                       image_url:,
+                       raw_image_url: li_raw_image_url).exists?
   end
 
   # TODO: pull into a new image_upload service?
@@ -121,8 +123,8 @@ class MultipleListingImageService
 
   def create_or_update_listing_image(listing_id, image_url, li_raw_image_url)
     listing_image = ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id,
-                                                       image_url:, raw_image_url: li_raw_image_url)
-    listing_image.update(raw_image_url: li_raw_image_url, image_url:)
+                                                       raw_image_url: li_raw_image_url)
+    listing_image.update(image_url:)
     Rails.logger.info("Listing image for #{listing_id} updated to #{image_url}")
   end
 
