@@ -21,7 +21,6 @@ const clickLotteryResultsButton = (mobile: boolean) => {
   if (mobile) {
     cy.contains("Lottery selection, important dates and contact").click()
   }
-
   cy.contains("View Lottery Results").click()
 }
 
