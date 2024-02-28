@@ -90,6 +90,9 @@ describe("Homepage integration tests", () => {
   })
 
   describe("using the nav bar", () => {
+    beforeEach(() => {
+      cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+    })
     describe("navigating to the for-rent page", () => {
       it("navigates to the for-rent page in english by default", () => {
         cy.visit("/")
@@ -123,6 +126,9 @@ describe("Homepage integration tests", () => {
     })
 
     describe("navigating to the for-sale page", () => {
+      beforeEach(() => {
+        cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+      })
       it("navigates to the for-sale page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/listings/for-sale")
@@ -137,6 +143,9 @@ describe("Homepage integration tests", () => {
     })
 
     describe("navigating to the favorites page", () => {
+      beforeEach(() => {
+        cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+      })
       it("navigates to the favorites page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/favorites")
