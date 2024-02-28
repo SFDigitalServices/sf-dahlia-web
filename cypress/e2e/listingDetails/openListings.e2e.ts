@@ -1,11 +1,3 @@
-import { RouteHandler } from "cypress/types/net-stubbing"
-
-let openRentalListingFixture: RouteHandler
-let openSaleListingFixture: RouteHandler
-let amiFixture: RouteHandler
-let unitsFixture: RouteHandler
-let preferencesFixture: RouteHandler
-
 /**
  * Util function to verify a listing details page
  * @param {string } id - listing id
@@ -24,10 +16,7 @@ function verifyRentalListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  cy.intercept("GET", `${id}.json`, openRentalListingFixture).as("openRentalListing")
-  cy.intercept("GET", "ami.json**", amiFixture).as("ami")
-  cy.intercept("GET", "units", unitsFixture).as("units")
-  cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+  cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
   cy.wait("@openRentalListing")
@@ -59,10 +48,7 @@ function verifySaleListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  cy.intercept("GET", `${id}.json`, openSaleListingFixture).as("openSaleListing")
-  cy.intercept("GET", "ami.json**", amiFixture).as("ami")
-  cy.intercept("GET", "units", unitsFixture).as("units")
-  cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+  cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
   cy.wait("@openSaleListing")
@@ -112,21 +98,9 @@ enum LanguagePrefix {
 
 describe("Listing Details for Open Listings", () => {
   beforeEach(() => {
-    cy.fixture("openRentalListing.json").then((openRentalListing) => {
-      openRentalListingFixture = openRentalListing
-    })
-    cy.fixture("openSaleListing.json").then((openSaleListing) => {
-      openSaleListingFixture = openSaleListing
-    })
-    cy.fixture("ami.json").then((ami) => {
-      amiFixture = ami
-    })
-    cy.fixture("units.json").then((unitsJson) => {
-      unitsFixture = unitsJson
-    })
-    cy.fixture("preferences.json").then((preferencesJson) => {
-      preferencesFixture = preferencesJson
-    })
+    cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+    cy.intercept("units", { fixture: "units.json" }).as("units")
+    cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
   })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
@@ -145,12 +119,9 @@ describe("Listing Details for Open Listings", () => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
 
-        cy.intercept("GET", `${testListings.OPEN_RENTAL.id}.json`, openRentalListingFixture).as(
-          "openRentalListing"
-        )
-        cy.intercept("GET", "ami.json**", amiFixture).as("ami")
-        cy.intercept("GET", "units", unitsFixture).as("units")
-        cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
+        cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
+          fixture: "openRentalListing.json",
+        }).as("openRentalListing")
 
         cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
         cy.wait("@openRentalListing")
@@ -181,12 +152,9 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
-        cy.intercept("GET", `${testListings.OPEN_SALE.id}.json`, openRentalListingFixture).as(
+        cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
           "openSaleListing"
         )
-        cy.intercept("GET", "ami.json**", amiFixture).as("ami")
-        cy.intercept("GET", "units", unitsFixture).as("units")
-        cy.intercept("GET", "preferences", preferencesFixture).as("preferences")
 
         cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
         cy.wait("@openSaleListing")
