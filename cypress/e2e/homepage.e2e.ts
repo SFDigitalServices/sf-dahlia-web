@@ -91,70 +91,79 @@ describe("Homepage integration tests", () => {
 
   describe("using the nav bar", () => {
     beforeEach(() => {
-      cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+      cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
     })
     describe("navigating to the for-rent page", () => {
       it("navigates to the for-rent page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in english when specified", () => {
         cy.visit("/en")
         cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in spanish", () => {
         cy.visit("/es")
         cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Chinese", () => {
         cy.visit("/zh")
         cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/zh/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Tagalog", () => {
         cy.visit("/tl")
         cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/tl/listings/for-rent")
       })
     })
 
     describe("navigating to the for-sale page", () => {
       beforeEach(() => {
-        cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
       })
       it("navigates to the for-sale page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/listings/for-sale")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-sale")
       })
 
       it("navigates to the for-sale page in spanish", () => {
         cy.visit("/es")
         cy.findAndClickMenuItem("/listings/for-sale")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/listings/for-sale")
       })
     })
 
     describe("navigating to the favorites page", () => {
       beforeEach(() => {
-        cy.intercept("listings.json**", { fixture: "listings.json" }).as("listings")
+        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
       })
       it("navigates to the favorites page in english by default", () => {
         cy.visit("/")
         cy.findAndClickMenuItem("/favorites")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/favorites")
       })
 
       it("navigates to the favorites page in spanish", () => {
         cy.visit("/es")
         cy.findAndClickMenuItem("/favorites")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/favorites")
       })
     })
