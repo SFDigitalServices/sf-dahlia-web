@@ -40,6 +40,18 @@ export const getLotteryBucketDetails = async (listingId: string): Promise<RailsL
   )
 }
 
+// TODO: remove this function and calls to it once getLotteryBucketDetails has been fixed
+/**
+ * Get the lottery buckets with rankings for the given listing, this is a workaround for slow performance on larger Lottery API payloads
+ * We don't actually need the preferenceResults data that the lotteryBuckets endpoint provides
+ * @param {string} listingId
+ * @returns {RailsLotteryResult} lottery result info
+ */
+export const getLotteryBucketDetailsWorkaround = async (
+  listingId: string
+): Promise<RailsLotteryResult> =>
+  get<RailsLotteryResult>(lotteryRanking(listingId, "000000000")).then((response) => response.data)
+
 /**
  * Get the lottery ranking info for a given listing id and lottery number
  *
