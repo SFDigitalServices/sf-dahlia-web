@@ -1,17 +1,6 @@
-import { RouteHandler } from "cypress/types/net-stubbing"
-
-let listingsFixture: RouteHandler
-
 describe("Rental listings directory page", () => {
   beforeEach(() => {
-    cy.fixture("listings.json")
-      .as("listingsFixture")
-      .then((listings) => {
-        listingsFixture = listings
-      })
-
-    cy.intercept("GET", `listings.json**`, listingsFixture).as("listings")
-
+    cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
     cy.visit("/listings/for-rent?react=true")
     cy.wait("@listings")
   })
