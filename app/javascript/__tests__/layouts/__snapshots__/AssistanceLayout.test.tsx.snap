@@ -330,17 +330,17 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                       <li>
                         Español: 
                         <a
-                          href="tel:+14157015623"
+                          href="tel:+14157015624"
                         >
-                          (415) 701-5623
+                          (415) 701-5624
                         </a>
                       </li>
                       <li>
                         中文: 
                         <a
-                          href="tel:+14157015624"
+                          href="tel:+14157015623"
                         >
-                          (415) 701-5624
+                          (415) 701-5623
                         </a>
                       </li>
                       <li>
