@@ -18,7 +18,7 @@ describe("ListingDetailsUnitAccordion", () => {
     jest.resetAllMocks()
   })
 
-  it("displays the unit accordions for a given listing", async (done) => {
+  it("displays the unit accordions for a given listing", async () => {
     jest.setTimeout(30_000)
     axios.get.mockResolvedValue({ data: { listings: [], units: openSaleListing.Units } })
 
@@ -31,8 +31,8 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchedUnits: true,
           fetchingAmiCharts: false,
           fetchedAmiCharts: false,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsUnitAccordions />
@@ -42,7 +42,6 @@ describe("ListingDetailsUnitAccordion", () => {
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
 
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
   it("displays spinner if no units and not fetching units", () => {
@@ -55,8 +54,8 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchedUnits: false,
           fetchingAmiCharts: false,
           fetchedAmiCharts: false,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsUnitAccordions />
@@ -76,8 +75,8 @@ describe("ListingDetailsUnitAccordion", () => {
           fetchedUnits: false,
           fetchingAmiCharts: false,
           fetchedAmiCharts: false,
-          fetchingAmiChartsError: null,
-          fetchingUnitsError: null,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
         }}
       >
         <ListingDetailsUnitAccordions />

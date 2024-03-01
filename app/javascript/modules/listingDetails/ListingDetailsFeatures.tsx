@@ -21,7 +21,7 @@ const getDepositString = (min?: string, max?: string) => {
 
 // TODO: add prop for items that should have machine translated content
 interface FeatureItemProps {
-  content: any
+  content: string
   title: string
   toTranslate?: boolean
 }
@@ -159,7 +159,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
             footerContent={[
-              <p className="translate">{renderMarkup(listing.Costs_Not_Included)}</p>,
+              <span className="translate">{renderMarkup(listing.Costs_Not_Included)}</span>,
             ]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),

@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
+import axios, { AxiosInstance, AxiosResponse } from "axios"
+import type { AxiosRequestConfig } from "axios"
 
 import { setAuthHeaders, getHeaders } from "../authentication/token"
 
@@ -7,14 +8,13 @@ const createAxiosInstance = (): AxiosInstance => {
   if (!getHeaders()) {
     throw new Error("Unauthorized. Sign in first")
   }
-
   return axios.create({
     headers: getHeaders(),
     transformResponse: (res, headers) => {
       if (headers["access-token"]) {
         setAuthHeaders(headers)
       }
-      return JSON.parse(res)
+      return JSON.parse(res as string)
     },
   })
 }

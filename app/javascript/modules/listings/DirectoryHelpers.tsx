@@ -9,6 +9,7 @@ import {
   ListingCard,
   ListingsGroup,
   PageHeader,
+  StackedTableRow,
   t,
 } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
@@ -32,6 +33,8 @@ export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 export type DirectoryType = "forRent" | "forSale"
 
 export type minMax = "min" | "max"
+
+export type StackedDataFxnType = (listing: RailsRentalListing) => Record<string, StackedTableRow>[]
 
 export interface ListingsGroups {
   open: RailsListing[]
@@ -177,7 +180,12 @@ export const getPriorityTypes = (listing: RailsRentalListing): string[] | null =
 }
 
 // Get a set of Listing Cards for an array of listings, which includes both the image and summary table
-export const getListingCards = (listings, directoryType, stackedDataFxn, hasFiltersSet?: boolean) =>
+export const getListingCards = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType,
+  hasFiltersSet?: boolean
+) =>
   listings.map((listing: Listing, index) => {
     const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
     return (
@@ -192,6 +200,7 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
                 tableHeader: { content: getTableHeader(listing) },
                 tableSubheader: {
                   content: <TableSubHeader listing={listing} />,
+                  isElement: true,
                 },
                 contentHeader: { content: listing.Name, href: `/listings/${listing.listingID}` },
                 contentSubheader: { content: <ListingAddress listing={listing} /> },
@@ -226,14 +235,18 @@ export const getListingCards = (listings, directoryType, stackedDataFxn, hasFilt
     )
   })
 
-export const openListingsView = (listings, directoryType, stackedDataFxn, filtersSet?) =>
-  listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+export const openListingsView = (
+  listings: RailsListing[],
+  directoryType: DirectoryType,
+  stackedDataFxn: StackedDataFxnType,
+  filtersSet?: boolean
+) => listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
 
 // Get an expandable group of listings
 export const getListingGroup = (
   listings,
   directoryType,
-  stackedDataFxn,
+  stackedDataFxn: StackedDataFxnType,
   header,
   hide,
   show,
@@ -257,7 +270,11 @@ export const getListingGroup = (
   )
 }
 
-export const upcomingLotteriesView = (listings, directoryType, stackedDataFxn) => {
+export const upcomingLotteriesView = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType
+) => {
   return getListingGroup(
     listings,
     directoryType,
@@ -270,7 +287,7 @@ export const upcomingLotteriesView = (listings, directoryType, stackedDataFxn) =
   )
 }
 
-export const lotteryResultsView = (listings, directoryType, stackedDataFxn) => {
+export const lotteryResultsView = (listings, directoryType, stackedDataFxn: StackedDataFxnType) => {
   return getListingGroup(
     listings,
     directoryType,
@@ -284,7 +301,12 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn) => {
   )
 }
 
-export const additionalView = (listings, directoryType, stackedDataFxn, filtersSet?: boolean) => {
+export const additionalView = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType,
+  filtersSet?: boolean
+) => {
   return getListingGroup(
     listings,
     directoryType,

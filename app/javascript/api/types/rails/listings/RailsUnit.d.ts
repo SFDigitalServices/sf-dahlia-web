@@ -21,10 +21,10 @@ type RailsUnit = {
   Unit_Square_Footage?: number
   attributes: ListingAttributes
   isReservedCommunity: boolean
-  Price_Without_Parking?: any
-  Price_With_Parking?: any
-  HOA_Dues_Without_Parking?: any
-  HOA_Dues_With_Parking?: any
+  Price_Without_Parking?: number | string // Eventually these get transformed from numbers into price range strings, to be used in the pricing table
+  Price_With_Parking?: number | string
+  HOA_Dues_Without_Parking?: number | string
+  HOA_Dues_With_Parking?: number | string
   Priority_Type?: string
   Rent_percent_of_income?: number
 }

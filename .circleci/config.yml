@@ -194,15 +194,20 @@ jobs:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
       - store_test_results:
           path: ./reports/junit/
+      - store_artifacts:
+          path: app/javascript/test-coverage
   unit-rspec:
     <<: *defaults
     steps:
       - setup
+      - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       - run: sudo apt-get update -y
       - run: sudo apt-get install graphicsmagick
       - run: RAILS_ENV=test bundle exec rails db:create
       - run: RAILS_ENV=test bundle exec rails db:test:prepare
       - run: bundle exec rake spec
+      - store_artifacts:
+          path: coverage
   unit-angular:
     <<: *defaults
     steps:

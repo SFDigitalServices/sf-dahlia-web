@@ -21,23 +21,21 @@ describe("For Sale", () => {
     jest.resetAllMocks()
   })
 
-  it("renders ForSale component", async (done) => {
+  it("renders ForSale component", async () => {
     axios.get.mockResolvedValue({ data: { listings: [] } })
 
     const { findByText, asFragment } = render(<ForSale assetPaths="/" />)
 
     expect(await findByText("Buy affordable housing")).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("listings with multiple listings render the first image in the array", async (done) => {
+  it("listings with multiple listings render the first image in the array", async () => {
     axios.get.mockResolvedValue({ data: { listings: [openSaleListing] } })
 
     const { findByAltText } = render(<ForSale assetPaths="/" />)
 
     const image = await findByAltText("This is a listing image")
     expect(image.getAttribute("src")).toBe(openSaleListing.Listing_Images[0].displayImageURL)
-    done()
   })
 })
