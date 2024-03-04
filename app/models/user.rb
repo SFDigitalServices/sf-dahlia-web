@@ -33,7 +33,7 @@ class User < ApplicationRecord
     contact = Force::AccountService.get(salesforce_contact_id)
     return unless contact.present?
     Force::AccountService.create_or_update(
-      webAppID: ENV['TEST_ENVIRONMENT'] == 'true' ? "test-#{id}" : id,
+      webAppID: id,
       contactId: salesforce_contact_id,
       # send unconfirmed_email because it's about to be confirmed
       email: unconfirmed_email,
