@@ -12,7 +12,7 @@ const visitListing = (mobile, language) => {
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
   if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
-    cy.wait("@listingDetails")
+    cy.wait("@completedRentalListing")
     cy.wait("@units")
     cy.wait("@ami")
     cy.wait("@preferences")
@@ -39,9 +39,9 @@ describe("Listing Details for Completed Lottery Listing", () => {
   // })
   beforeEach(() => {
     if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
-      cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" }).as(
-        "listingDetails"
-      )
+      cy.intercept(`/api/v1/listings/${listingId}.json`, {
+        fixture: "completedRentalListing.json",
+      }).as("completedRentalListing")
       cy.intercept("lottery_buckets", { fixture: "lotteryRanking.json" }).as("lotteryBuckets")
       cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
       cy.intercept("units", { fixture: "units.json" }).as("units")
