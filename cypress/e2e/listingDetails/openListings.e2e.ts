@@ -85,7 +85,7 @@ const testListings = {
     alt: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
   },
   OPEN_SALE: {
-    id: "a0W0P00000F8YG4UAN",
+    id: "a0W0P00000GlKfBUAV",
     address: "1 South Van Ness Ave, San Francisco, CA 94103",
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
     alt: "Listing Name:TEST Sale Listing (do not modify) - Homeownership Acres, Address:1 South Van Ness Ave, San Francisco CA, 94103",
