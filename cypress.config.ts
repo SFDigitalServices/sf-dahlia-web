@@ -18,6 +18,7 @@ export default defineConfig({
     },
     env: {
       salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL,
+      production: process.env.PRODUCTION
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",

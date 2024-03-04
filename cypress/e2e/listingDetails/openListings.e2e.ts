@@ -16,13 +16,17 @@ function verifyRentalListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
+  if (Cypress.env("production") === "true") {
+    cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
+  }
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
-  cy.wait("@openRentalListing")
-  cy.wait("@units")
-  cy.wait("@ami")
-  cy.wait("@preferences")
+  if (Cypress.env("production") === "true") {
+    cy.wait("@openRentalListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+    cy.wait("@preferences")
+  }
 
   // verify image exists
   cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
@@ -48,12 +52,16 @@ function verifySaleListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
+  if (Cypress.env("production") === "true") {
+    cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
+  }
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
-  cy.wait("@openSaleListing")
-  cy.wait("@units")
-  cy.wait("@ami")
+  if (Cypress.env("production") === "true") {
+    cy.wait("@openSaleListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+  }
 
   // verify image exists
   cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
@@ -72,12 +80,12 @@ function verifySaleListing(
 
 const testListings = {
   OPEN_RENTAL: {
-    id: "test-open-rental-listing",
+    id: "a0W0P00000F8YG4UAN",
     title: "TEST Automated Listing (do not modify)",
     alt: "Listing Name:TEST Automated Listing (do not modify), Address:San Francisco CA,",
   },
   OPEN_SALE: {
-    id: "test-open-sale-listing",
+    id: "a0W0P00000F8YG4UAN",
     address: "1 South Van Ness Ave, San Francisco, CA 94103",
     title: "TEST Sale Listing (do not modify) - Homeownership Acres",
     alt: "Listing Name:TEST Sale Listing (do not modify) - Homeownership Acres, Address:1 South Van Ness Ave, San Francisco CA, 94103",
@@ -98,9 +106,11 @@ enum LanguagePrefix {
 
 describe("Listing Details for Open Listings", () => {
   beforeEach(() => {
-    cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
-    cy.intercept("units", { fixture: "units.json" }).as("units")
-    cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+    if (Cypress.env("production") === "true") {
+      cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+      cy.intercept("units", { fixture: "units.json" }).as("units")
+      cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+    }
   })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
@@ -119,16 +129,18 @@ describe("Listing Details for Open Listings", () => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
 
-        cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
-          fixture: "openRentalListing.json",
-        }).as("openRentalListing")
-
+        if (Cypress.env("production") === "true") {
+          cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
+            fixture: "openRentalListing.json",
+          }).as("openRentalListing")
+        }
         cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-        cy.wait("@openRentalListing")
-        cy.wait("@units")
-        cy.wait("@ami")
-        cy.wait("@preferences")
-
+        if (Cypress.env("production") === "true") {
+          cy.wait("@openRentalListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+          cy.wait("@preferences")
+        }
         cy.get(".image-card__inner > img")
           .should("be.visible")
           .should("have.attr", "alt")
@@ -152,15 +164,18 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
-        cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
-          "openSaleListing"
-        )
+        if (Cypress.env("production") === "true") {
+          cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
+            "openSaleListing"
+          )
+        }
 
         cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-        cy.wait("@openSaleListing")
-        cy.wait("@units")
-        cy.wait("@ami")
-
+        if (Cypress.env("production") === "true") {
+          cy.wait("@openSaleListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+        }
         cy.get(".image-card__inner > img")
           .should("be.visible")
           .should("have.attr", "alt")

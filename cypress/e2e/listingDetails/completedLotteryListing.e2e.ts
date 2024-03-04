@@ -1,5 +1,5 @@
-const listingId = "fake-listing-id"
-const lotteryNumber = "123456"
+const listingId = "a0W8H000000AmpKUAS"
+const lotteryNumber = "01150047"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
@@ -11,10 +11,12 @@ const visitListing = (mobile, language) => {
   }
 
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
-  cy.wait("@listingDetails")
-  cy.wait("@units")
-  cy.wait("@ami")
-  cy.wait("@preferences")
+  if (Cypress.env("production") === "true") {
+    cy.wait("@listingDetails")
+    cy.wait("@units")
+    cy.wait("@ami")
+    cy.wait("@preferences")
+  }
 }
 
 const clickLotteryResultsButton = (mobile: boolean) => {
@@ -36,14 +38,16 @@ describe("Listing Details for Completed Lottery Listing", () => {
   //   cy.wait(6000)
   // })
   beforeEach(() => {
-    cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" }).as(
-      "listingDetails"
-    )
-    cy.intercept("lottery_buckets", { fixture: "lotteryRanking.json" }).as("lotteryBuckets")
-    cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
-    cy.intercept("units", { fixture: "units.json" }).as("units")
-    cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
-    cy.intercept("lottery_ranking**", { fixture: "lotteryRanking.json" }).as("lotteryRanking")
+    if (Cypress.env("production") === "true") {
+      cy.intercept(`/api/v1/listings/${listingId}.json`, { fixture: "listingDetails.json" }).as(
+        "listingDetails"
+      )
+      cy.intercept("lottery_buckets", { fixture: "lotteryRanking.json" }).as("lotteryBuckets")
+      cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+      cy.intercept("units", { fixture: "units.json" }).as("units")
+      cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+      cy.intercept("lottery_ranking**", { fixture: "lotteryRanking.json" }).as("lotteryRanking")
+    }
   })
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
