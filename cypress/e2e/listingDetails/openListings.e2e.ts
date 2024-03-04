@@ -16,12 +16,12 @@ function verifyRentalListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  if (Cypress.env("production") === "true") {
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
   }
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
-  if (Cypress.env("production") === "true") {
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.wait("@openRentalListing")
     cy.wait("@units")
     cy.wait("@ami")
@@ -52,12 +52,12 @@ function verifySaleListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
-  if (Cypress.env("production") === "true") {
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
   }
 
   cy.visit(`${langPart}/listings/${id}?react=true`)
-  if (Cypress.env("production") === "true") {
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
     cy.wait("@openSaleListing")
     cy.wait("@units")
     cy.wait("@ami")
@@ -106,7 +106,7 @@ enum LanguagePrefix {
 
 describe("Listing Details for Open Listings", () => {
   beforeEach(() => {
-    if (Cypress.env("production") === "true") {
+    if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
       cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
       cy.intercept("units", { fixture: "units.json" }).as("units")
       cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
@@ -129,13 +129,13 @@ describe("Listing Details for Open Listings", () => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
 
-        if (Cypress.env("production") === "true") {
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
             fixture: "openRentalListing.json",
           }).as("openRentalListing")
         }
         cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-        if (Cypress.env("production") === "true") {
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.wait("@openRentalListing")
           cy.wait("@units")
           cy.wait("@ami")
@@ -164,14 +164,14 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
-        if (Cypress.env("production") === "true") {
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
             "openSaleListing"
           )
         }
 
         cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-        if (Cypress.env("production") === "true") {
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
           cy.wait("@openSaleListing")
           cy.wait("@units")
           cy.wait("@ami")
