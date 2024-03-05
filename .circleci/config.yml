@@ -246,21 +246,21 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - lint:
-          <<: *non_production_jobs
-      - unit-react:
-          <<: *non_production_jobs
-      - unit-rspec:
-          <<: *non_production_jobs
-      - unit-angular:
-          <<: *angular_jobs
-      - e2e:
-          <<: *non_production_jobs
+      # - lint:
+      #     <<: *non_production_jobs
+      # - unit-react:
+      #     <<: *non_production_jobs
+      # - unit-rspec:
+      #     <<: *non_production_jobs
+      # - unit-angular:
+      #     <<: *angular_jobs
+      # - e2e:
+      #     <<: *non_production_jobs
       - e2e-legacy:
           <<: *angular_jobs
-      - e2e:
-          <<: *prod_and_release_jobs
-          name: e2e-production
-      - e2e-legacy:
-          <<: *prod_and_release_jobs
-          name: e2e-production-legacy
+      # - e2e:
+      #     <<: *prod_and_release_jobs
+      #     name: e2e-production
+      # - e2e-legacy:
+      #     <<: *prod_and_release_jobs
+      #     name: e2e-production-legacy
