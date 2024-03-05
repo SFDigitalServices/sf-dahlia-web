@@ -12,7 +12,7 @@ class Api::V1::AccountController < ApiController
   def update
     contact = account_params
     contact[:contactID] = current_user.salesforce_contact_id
-    if ENV['TEST_ENVIRONMENT'] == 'true'
+    if ENV['TEST_ENVIRONMENT'].to_s.casecmp('true').zero?
       web_app_id = "test-#{current_user.id}"
     else
       web_app_id = 'else-block'

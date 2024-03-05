@@ -122,7 +122,7 @@ module Overrides
     def sync_with_salesforce
       return false if @resource.errors.any?
 
-      if ENV['TEST_ENVIRONMENT'] == 'true'
+      if ENV['TEST_ENVIRONMENT'].to_s.casecmp('true').zero?
         web_app_id = "test-#{current_user.id}"
       else
         web_app_id = current_user.id
