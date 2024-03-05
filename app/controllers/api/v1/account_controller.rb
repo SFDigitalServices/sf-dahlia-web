@@ -15,7 +15,7 @@ class Api::V1::AccountController < ApiController
     if ENV['TEST_ENVIRONMENT'].to_s.casecmp('true').zero?
       web_app_id = "test-#{current_user.id}"
     else
-      web_app_id = 'else-block'
+      web_app_id = current_user.id
     end
     contact[:webAppID] = web_app_id
     salesforce_contact = Force::AccountService.create_or_update(contact.as_json)
