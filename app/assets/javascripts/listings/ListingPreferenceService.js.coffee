@@ -69,6 +69,9 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
     # custom preferences related to Veterans should not be seen by applicants
     _.remove(customPreferences, (pref) -> _.includes(pref.preferenceName?.toLowerCase(), "veteran"))
 
+    # custom preferences related to Shirley Chisholm Village should not be seen by applicants
+    _.remove(customPreferences, (pref) -> _.includes(pref.preferenceName?.toLowerCase(), "sfusd"))
+
     listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
