@@ -115,7 +115,7 @@ export const ListingDetailsLotterySearchForm = ({
       >
         <Field
           error={!!errorMessage}
-          className="w-full"
+          className="w-full mb-0"
           errorMessage={errorMessage}
           register={register}
           name={lotteryNumberField}
