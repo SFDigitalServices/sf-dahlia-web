@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 
 import { t, SiteAlert, Hero, ActionBlock, Heading } from "@bloom-housing/ui-components"
+import { useFlag, useUnleashContext } from "@unleash/proxy-client-react"
 
 import Layout from "../layouts/Layout"
 import withAppSetup from "../layouts/withAppSetup"
@@ -15,6 +16,19 @@ interface HomePageProps {
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
+  const titleFlag = useFlag("title")
+  const updateContext = useUnleashContext()
+  const userId = "chad.brokaw@exygy.com"
+
+  async function run() {
+    // Can wait for the new flags to pull in from the different context
+    await updateContext({ userId })
+    console.log("new flags loaded for", userId)
+  }
+
+  React.useEffect(() => {
+    run()
+  })
 
   return (
     <Layout
@@ -27,7 +41,7 @@ const HomePage = (_props: HomePageProps) => {
         <SiteAlert type="success" className={alertClasses} timeout={30_000} />
       </div>
       <Hero
-        title={t("welcome.title")}
+        title={titleFlag ? "Feature Flag enabled" : "Feature Flag disabled"}
         backgroundImage={getAssetPath("bg@1200.jpg")}
         buttonLink={getRentalDirectoryPath()}
         buttonTitle={t("welcome.seeRentalListings")}
