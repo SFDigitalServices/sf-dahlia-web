@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,15 +21,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:57 GMT
+      - Fri, 08 Mar 2024 21:22:00 GMT
       Set-Cookie:
-      - BrowserId=bOzUwM8QEe2YW-cD7G9m5w; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:57 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:57 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:57
-        GMT; Max-Age=31536000
+      - BrowserId=5rgE5N2REe673t1S7_mqPA; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:22:00 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:00 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:00
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -46,8 +49,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190497443","signature":"mUqmInbsxQeepQLuMKXefJmkGNTWG0q2OuJONsbJFHw="}'
-  recorded_at: Thu, 30 Mar 2023 15:34:57 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709932920671","signature":"Fn872Map1KwOZJjEfuvVDUbRqkxH5iu+scbfMIO33kc="}'
+  recorded_at: Fri, 08 Mar 2024 21:22:00 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/Preferences/a0W0P00000F8YG4UAN"
@@ -56,7 +59,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -69,15 +72,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:57 GMT
+      - Fri, 08 Mar 2024 21:22:00 GMT
       Set-Cookie:
-      - BrowserId=bTBt3M8QEe2lEcVWgDxlSg; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:57 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:57 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:57
-        GMT; Max-Age=31536000
+      - BrowserId=5vIAtt2REe6NycWPMx01Ew; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:22:00 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:00 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:00
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -94,30 +100,30 @@ http_interactions:
         of Preference (COP)","pdfUrl":null,"order":1,"NRHPDistrict":null,"name":"LP-09774","listingPreferenceID":"a0l0P00001Lx8XKQAZ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member holds a Certificate of Preference
         from the former San Francisco Redevelopment Agency. COP holders were displaced
-        by Agency action generally during the 1960s and 1970s.","appTotal":null},{"unitsAvailable":2,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/housing-preference-programs","preferenceProofRequirementDescription":null,"preferenceName":"Rent
+        by Agency action generally during the 1960s and 1970s.","customPreferenceDescription":false,"appTotal":null},{"unitsAvailable":2,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/housing-preference-programs","preferenceProofRequirementDescription":null,"preferenceName":"Rent
         Burdened / Assisted Housing Preference","pdfUrl":null,"order":2,"NRHPDistrict":null,"name":"LP-09777","listingPreferenceID":"a0l0P00001Lx8XZQAZ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households who are currently paying more than 50% of income for housing costs
         or are living in public housing or project based Section 8 housing within
-        San Francisco.","appTotal":null},{"unitsAvailable":3,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/displaced-tenant-housing-preference","preferenceProofRequirementDescription":null,"preferenceName":"Displaced
+        San Francisco.","customPreferenceDescription":false,"appTotal":null},{"unitsAvailable":3,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/displaced-tenant-housing-preference","preferenceProofRequirementDescription":null,"preferenceName":"Displaced
         Tenant Housing Preference (DTHP)","pdfUrl":null,"order":3,"NRHPDistrict":null,"name":"LP-09775","listingPreferenceID":"a0l0P00001Lx8XPQAZ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member holds a Displaced Tenant Housing Preference
         Certificate. DTHP Certificate holders are tenants who were evicted through
         either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced
         by a fire. Once all units reserved for this preference are filled, remaining
         DTHP holders will receive Live/Work preference, regardless of their current
-        residence or work location.","appTotal":null},{"unitsAvailable":4,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/neighborhood-resident-housing-preference","preferenceProofRequirementDescription":null,"preferenceName":"Neighborhood
+        residence or work location.","customPreferenceDescription":true,"appTotal":null},{"unitsAvailable":4,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/neighborhood-resident-housing-preference","preferenceProofRequirementDescription":null,"preferenceName":"Neighborhood
         Resident Housing Preference (NRHP)","pdfUrl":null,"order":4,"NRHPDistrict":"10","name":"LP-09776","listingPreferenceID":"a0l0P00001Lx8XUQAZ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member either lives within Supervisor district
         of the project [District #], or within a half-mile of the project.  Requires
-        submission of proof of address.","appTotal":null},{"unitsAvailable":5,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/housing-preference-programs","preferenceProofRequirementDescription":null,"preferenceName":"Live
+        submission of proof of address.","customPreferenceDescription":false,"appTotal":null},{"unitsAvailable":5,"requiresProof":false,"readMoreUrl":"http://sfmohcd.org/housing-preference-programs","preferenceProofRequirementDescription":null,"preferenceName":"Live
         or Work in San Francisco Preference","pdfUrl":null,"order":5,"NRHPDistrict":null,"name":"LP-09778","listingPreferenceID":"a0l0P00001Lx8XeQAJ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member lives or works in San Francisco.  Requires
         submission of proof.  Please note in order to claim Work Preference, the applicant
-        currently work in San Francisco at least 75% of their working hours.","appTotal":null},{"unitsAvailable":null,"requiresProof":false,"readMoreUrl":null,"preferenceProofRequirementDescription":null,"preferenceName":"Alice
+        currently work in San Francisco at least 75% of their working hours.","customPreferenceDescription":false,"appTotal":null},{"unitsAvailable":null,"requiresProof":false,"readMoreUrl":null,"preferenceProofRequirementDescription":null,"preferenceName":"Alice
         Griffith Housing Development Resident","pdfUrl":null,"order":6,"NRHPDistrict":null,"name":"LP-32885","listingPreferenceID":"a0l0P00001PsqDoQAJ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member was a resident of the Alice Griffith
         housing development. This includes baseline and current residents that lived
         in the targeted redevelopment site on or after the time of application for
-        Choice Neighborhoods of October 26, 2010.","appTotal":null}]'
-  recorded_at: Thu, 30 Mar 2023 15:34:57 GMT
+        Choice Neighborhoods of October 26, 2010.","customPreferenceDescription":true,"appTotal":null}]'
+  recorded_at: Fri, 08 Mar 2024 21:22:01 GMT
 recorded_with: VCR 6.1.0

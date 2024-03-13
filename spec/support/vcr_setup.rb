@@ -48,7 +48,7 @@ VCR.configure do |config|
   end
 
   # Uncomment this line to force VCR to record all new cassettes
-  # config.default_cassette_options = { record: :new_episodes }
+  config.default_cassette_options = { record: :new_episodes }
 
   # needed for codeclimate to work
   config.ignore_hosts 'codeclimate.com'

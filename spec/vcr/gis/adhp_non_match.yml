@@ -4,22 +4,22 @@ http_interactions:
     method: get
     uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=2244%20Taraval%20St&f=pjson&outfields=loc_name
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     headers:
       Connection:
       - close
       User-Agent:
-      - http.rb/2.0.3
+      - http.rb/5.1.1
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - nginx/1.22.0
+      - nginx/1.24.0
       Date:
-      - Thu, 30 Mar 2023 15:34:28 GMT
+      - Fri, 08 Mar 2024 21:21:31 GMT
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
@@ -100,27 +100,27 @@ http_interactions:
           }
          ]
         }
-  recorded_at: Thu, 30 Mar 2023 15:34:28 GMT
+  recorded_at: Fri, 08 Mar 2024 21:21:31 GMT
 - request:
     method: get
     uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13635572.627741044,4543134.296113598&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%27ADHP%27
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     headers:
       Connection:
       - close
       User-Agent:
-      - http.rb/2.0.3
+      - http.rb/5.1.1
   response:
     status:
       code: 200
       message: OK
     headers:
       Server:
-      - nginx/1.22.0
+      - nginx/1.24.0
       Date:
-      - Thu, 30 Mar 2023 15:34:28 GMT
+      - Fri, 08 Mar 2024 21:21:31 GMT
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
@@ -130,7 +130,7 @@ http_interactions:
       Cache-Control:
       - max-age=315360000
       Etag:
-      - '1673990703'
+      - '1694638583'
       X-Content-Type-Options:
       - nosniff
       Vary:
@@ -145,5 +145,5 @@ http_interactions:
         {
          "count": 0
         }
-  recorded_at: Thu, 30 Mar 2023 15:34:28 GMT
+  recorded_at: Fri, 08 Mar 2024 21:21:31 GMT
 recorded_with: VCR 6.1.0
