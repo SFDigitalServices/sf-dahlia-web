@@ -1,0 +1,74 @@
+{
+    "test": true,
+    "units":[
+        {
+            "attributes": {
+                "type":"Unit",
+                "url":"/services/data/v35.0/sobjects/Unit/a0b8H000002OF22QAG"
+            },
+            "Unit_Type":"1 BR",
+            "Availability":1,
+            "BMR_Rent_Monthly":750.0,
+            "BMR_Rental_Minimum_Monthly_Income_Needed":0.0,
+            "Unit_Square_Footage":1100,
+            "Unit_Number":"501",
+            "Unit_Floor":"5",
+            "Number_of_Bathrooms":1.0,
+            "Status":"Available",
+            "Property_Type":"Apartment",
+            "isReservedCommunity":false,
+            "AMI_chart_type":"MOHCD",
+            "AMI_chart_year":2020,
+            "Max_AMI_for_Qualifying_Unit":120.0,
+            "Min_Occupancy":1,
+            "Max_Occupancy":3,
+            "Id":"a0b8H000002OF22QAG"
+        },
+        {
+            "attributes": {
+                "type":"Unit",
+                "url":"/services/data/v35.0/sobjects/Unit/a0b8H000002OF2VQAW"
+            },
+            "Unit_Type":"1 BR",
+            "Availability":1,
+            "BMR_Rent_Monthly":750.0,
+            "BMR_Rental_Minimum_Monthly_Income_Needed":0.0,
+            "Unit_Square_Footage":1100,
+            "Unit_Number":"503",
+            "Unit_Floor":"5",
+            "Number_of_Bathrooms":1.0,
+            "Status":"Available",
+            "Property_Type":"Apartment",
+            "isReservedCommunity":false,
+            "AMI_chart_type":"MOHCD",
+            "AMI_chart_year":2020,
+            "Max_AMI_for_Qualifying_Unit":120.0,
+            "Min_Occupancy":1,
+            "Max_Occupancy":3,
+            "Id":"a0b8H000002OF2VQAW"
+        },
+        {
+            "attributes": {
+               "type":"Unit",
+                "url":"/services/data/v35.0/sobjects/Unit/a0b8H000002OF2QQAW"
+            },
+            "Unit_Type":"1 BR",
+            "Availability":1,
+            "BMR_Rent_Monthly":750.0,
+            "BMR_Rental_Minimum_Monthly_Income_Needed":0.0,
+            "Unit_Square_Footage":1100,
+            "Unit_Number":"502",
+            "Unit_Floor":"5",
+            "Number_of_Bathrooms":1.0,
+            "Status":"Available",
+            "Property_Type":"Apartment",
+            "isReservedCommunity":false,
+            "AMI_chart_type":"MOHCD",
+            "AMI_chart_year":2020,
+            "Max_AMI_for_Qualifying_Unit":120.0,
+            "Min_Occupancy":1,
+            "Max_Occupancy":3,
+            "Id":"a0b8H000002OF2QQAW"
+        }
+    ]
+}
