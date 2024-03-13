@@ -117,6 +117,12 @@ ListingConstantsService = () ->
     'a0W4U00000IXVL8UAP': '750 Harrison',
   }
 
+  # These listings are not Rentals nor are they reserved for 'Accessible Units Only'
+  # But they still need to show the Household Priorities application question
+  Service.HOUSEHOLD_PRIORITIES_LISTINGS_IDS = [
+    'a0W4U00000Nlb5lUAB', # 400 China Basin
+  ]
+
   return Service
 
 
