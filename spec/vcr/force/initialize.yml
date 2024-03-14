@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,15 +21,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:35:44 GMT
+      - Fri, 08 Mar 2024 21:22:48 GMT
       Set-Cookie:
-      - BrowserId=iSQwgc8QEe2TeH0FQL4pXA; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:35:44 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:44 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:44
-        GMT; Max-Age=31536000
+      - BrowserId=A2MxQN2SEe6ITjlH8ZFWaA; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:22:48 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:48 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:48
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -46,6 +49,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190544673","signature":"M6BGuOUJU+g1JfcrLd9kGYsSQi/+0WH+AfxmGUxjOK0="}'
-  recorded_at: Thu, 30 Mar 2023 15:35:44 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709932968780","signature":"Bumpe6Nf1fAqnVcjEzvjah6YFQlrQh1vur8ZwedzSAM="}'
+  recorded_at: Fri, 08 Mar 2024 21:22:48 GMT
 recorded_with: VCR 6.1.0

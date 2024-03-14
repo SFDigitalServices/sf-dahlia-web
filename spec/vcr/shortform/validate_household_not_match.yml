@@ -58,7 +58,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -71,15 +71,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:35:00 GMT
+      - Fri, 08 Mar 2024 21:22:04 GMT
       Set-Cookie:
-      - BrowserId=bvUoh88QEe2ETjWzqJMcFw; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:35:00 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:00 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:00
-        GMT; Max-Age=31536000
+      - BrowserId=6QtD9d2REe6xbNl4X7vgnQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:22:04 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:04 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:04
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -96,8 +99,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190500739","signature":"F1oUijpsJrA//pGVP1GQfn2ODSjuPVio0UPvwpLw6mE="}'
-  recorded_at: Thu, 30 Mar 2023 15:35:00 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709932924579","signature":"nRrFmek8Lp4tDpUhkEU0BH6Q4DmQ244P3eHCJI5gdhk="}'
+  recorded_at: Fri, 08 Mar 2024 21:22:04 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/EligibilityCheck/a0W0P00000F8YG4UAN?childrenUnder6=0&householdsize=10&incomelevel=10000.0"
@@ -106,7 +109,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -119,15 +122,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:35:00 GMT
+      - Fri, 08 Mar 2024 21:22:04 GMT
       Set-Cookie:
-      - BrowserId=byaYAs8QEe2pVf3ya-9upQ; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:35:00 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:00 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:35:00
-        GMT; Max-Age=31536000
+      - BrowserId=6Udi2N2REe6XLcnxj5cYcw; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:22:04 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:04 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:22:04
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -142,5 +148,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"listingId":"a0W0P00000F8YG4UAN","incomeMatch":false,"incomeEligibilityResult":"Too
         Low","householdMatch":false,"householdEligibilityResult":"Too Big"}'
-  recorded_at: Thu, 30 Mar 2023 15:35:01 GMT
+  recorded_at: Fri, 08 Mar 2024 21:22:06 GMT
 recorded_with: VCR 6.1.0

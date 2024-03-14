@@ -115,7 +115,7 @@ export const ListingDetailsLotterySearchForm = ({
       >
         <Field
           error={!!errorMessage}
-          className="w-full"
+          className="w-full mb-0"
           errorMessage={errorMessage}
           register={register}
           name={lotteryNumberField}
@@ -126,7 +126,7 @@ export const ListingDetailsLotterySearchForm = ({
           labelClassName="sr-only"
         />
         <button
-          className="bg-blue-500 h-12 mt-2 p-3 translate"
+          className="bg-blue-500 h-12 p-3 translate"
           type="submit"
           aria-label={t("lottery.submitNumber")}
         >
