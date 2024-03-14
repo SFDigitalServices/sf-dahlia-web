@@ -7,7 +7,7 @@
  * @param {string} applyButtonText - text for the apply button
  * @param {string} language - optional language code
  */
-function verifyListing(
+function verifyRentalListing(
   id: string,
   altPhotoText: string,
   title: string,
@@ -16,7 +16,52 @@ function verifyListing(
   language?: string
 ) {
   const langPart = language ? `/${language}` : ""
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
+  }
+
   cy.visit(`${langPart}/listings/${id}?react=true`)
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.wait("@openRentalListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+    cy.wait("@preferences")
+  }
+
+  // verify image exists
+  cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
+
+  // verify listing title
+  cy.contains(title)
+
+  // unfortunately not all test listings have an address. verify if provided
+  if (address) {
+    cy.contains(address)
+  }
+
+  // verify the apply link is visible
+  cy.contains(applyButtonText)
+}
+
+function verifySaleListing(
+  id: string,
+  altPhotoText: string,
+  title: string,
+  address: string,
+  applyButtonText: string,
+  language?: string
+) {
+  const langPart = language ? `/${language}` : ""
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
+  }
+
+  cy.visit(`${langPart}/listings/${id}?react=true`)
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.wait("@openSaleListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+  }
 
   // verify image exists
   cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
@@ -60,15 +105,17 @@ enum LanguagePrefix {
 }
 
 describe("Listing Details for Open Listings", () => {
-  afterEach(() => {
-    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-    // there is a rogue loading issue beyond the scope of this story
-    cy.wait(3000)
+  beforeEach(() => {
+    if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+      cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+      cy.intercept("units", { fixture: "units.json" }).as("units")
+      cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+    }
   })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
-      verifyListing(
+      verifyRentalListing(
         testListings.OPEN_RENTAL.id,
         testListings.OPEN_RENTAL.alt,
         testListings.OPEN_RENTAL.title,
@@ -81,8 +128,19 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
-        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
 
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
+            fixture: "openRentalListing.json",
+          }).as("openRentalListing")
+        }
+        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.wait("@openRentalListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+          cy.wait("@preferences")
+        }
         cy.get(".image-card__inner > img")
           .should("be.visible")
           .should("have.attr", "alt")
@@ -93,7 +151,7 @@ describe("Listing Details for Open Listings", () => {
 
   describe("Sale Listing " + testListings.OPEN_SALE.id, () => {
     it("displays in English", () => {
-      verifyListing(
+      verifySaleListing(
         testListings.OPEN_SALE.id,
         testListings.OPEN_SALE.alt,
         testListings.OPEN_SALE.title,
@@ -106,8 +164,18 @@ describe("Listing Details for Open Listings", () => {
     NON_ENGLISH_LANGUAGES.forEach((language) => {
       it(`displays in ${language}`, () => {
         const langPart = LanguagePrefix[language]
-        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
+            "openSaleListing"
+          )
+        }
 
+        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.wait("@openSaleListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+        }
         cy.get(".image-card__inner > img")
           .should("be.visible")
           .should("have.attr", "alt")
