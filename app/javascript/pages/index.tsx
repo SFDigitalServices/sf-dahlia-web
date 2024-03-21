@@ -16,7 +16,7 @@ interface HomePageProps {
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
-  const titleFlag = useFeatureFlag("title")
+  const titleFlag = useFeatureFlag("title", true)
 
   return (
     <Layout
