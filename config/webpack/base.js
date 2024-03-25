@@ -40,6 +40,7 @@ generatedWebpackConfig.plugins.unshift(
       TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
       TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
       TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
+      GOOGLE_TAG_MANAGER_KEY: JSON.stringify(process.env.GOOGLE_TAG_MANAGER_KEY)
     },
   })
 )
