@@ -63,7 +63,7 @@ const ListingDetail = () => {
   } = useContext(ListingDetailsContext)
 
   useEffect(() => {
-    if (listing) {
+    if (!!listing && !!process.env.GOOGLE_TAG_MANAGER_KEY) {
       const tagManagerArgs = {
         gtmId: process.env.GOOGLE_TAG_MANAGER_KEY,
         dataLayer: {
