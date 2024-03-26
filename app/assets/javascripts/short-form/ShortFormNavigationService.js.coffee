@@ -498,7 +498,7 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
     else if Service.hasCustomPreferences()
       'custom-preferences'
-    else if !ShortFormApplicationService.showVeteransApplicationQuestion
+    else if !ShortFormApplicationService.showVeteransApplicationQuestion()
       'preferences-programs'
     else
       'veterans-preference'
