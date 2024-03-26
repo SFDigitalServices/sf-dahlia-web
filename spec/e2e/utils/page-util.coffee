@@ -4,7 +4,7 @@ defer = protractor.promise.defer()
 EC = protractor.ExpectedConditions
 
 PageUtil = {
-  testListingId: 'a0W0P00000F8YG4UAN'
+  testListingId: 'a0W8H000001i5RyUAI'
   seniorListingId: 'a0W0P00000GwGl3'
   saleListingId: process.env.TEST_SALE_LISTING_ID || 'a0W0P00000GlKfBUAV'
   # TODO: Temporary checks. Remove with DAH-1420
