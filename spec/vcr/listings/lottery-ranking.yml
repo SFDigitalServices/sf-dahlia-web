@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,15 +21,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:53 GMT
+      - Fri, 08 Mar 2024 21:21:55 GMT
       Set-Cookie:
-      - BrowserId=aoVxes8QEe2YW-cD7G9m5w; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:53 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:53 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:53
-        GMT; Max-Age=31536000
+      - BrowserId=44Sf6N2REe6pYOlLpir6bQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:21:55 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:55 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:55
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -46,8 +49,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190493329","signature":"Y6025XPFK4dSK4+0qnMppZRf5qV1a3dU8uS++ESXM88="}'
-  recorded_at: Thu, 30 Mar 2023 15:34:53 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709932915316","signature":"3RHJHpT5k+Uk6KpZJOIyU+q1UrA+gOeh1hiKr3WO8kM="}'
+  recorded_at: Fri, 08 Mar 2024 21:21:55 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/LotteryResult/a0W0P00000F8YG4UAN/00042084"
@@ -56,7 +59,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -69,15 +72,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:53 GMT
+      - Fri, 08 Mar 2024 21:21:55 GMT
       Set-Cookie:
-      - BrowserId=ar4OJM8QEe2Evqt_XEaqmA; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:53 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:53 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:53
-        GMT; Max-Age=31536000
+      - BrowserId=48GBs92REe6ITjlH8ZFWaA; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:21:55 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:55 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:55
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -90,13 +96,13 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"URL":null,"publishLotteryResults":false,"officeHours":null,"lotteryStatus":"Not
-        Yet Run","lotteryResultsURL":null,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2024-03-22T18:00:00.000Z","lotteryCity":null,"lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":683,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
-        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":1652,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
-        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":683,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
-        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":688,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
-        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":927,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
-        or Work in San Francisco Preference"},{"unitsAvailable":null,"totalSubmittedApps":668,"preferenceResults":[],"preferenceOrder":6,"preferenceName":"Alice
-        Griffith Housing Development Resident"},{"unitsAvailable":1,"totalSubmittedApps":3670,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":5584,"listingId":"a0W0P00000F8YG4UAN"}'
-  recorded_at: Thu, 30 Mar 2023 15:34:53 GMT
+      string: '{"URL":null,"publishLotteryResultsDAHLIA":null,"publishLotteryResults":false,"officeHours":null,"lotteryStatus":"Not
+        Yet Run","lotteryResultsURL":null,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2024-03-22T18:00:00.000Z","lotteryCity":null,"lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":1294,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":3257,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
+        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":1293,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
+        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":1299,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":1925,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":null,"totalSubmittedApps":1278,"preferenceResults":[],"preferenceOrder":6,"preferenceName":"Alice
+        Griffith Housing Development Resident"},{"unitsAvailable":2,"totalSubmittedApps":7926,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":11835,"listingId":"a0W0P00000F8YG4UAN"}'
+  recorded_at: Fri, 08 Mar 2024 21:21:55 GMT
 recorded_with: VCR 6.1.0

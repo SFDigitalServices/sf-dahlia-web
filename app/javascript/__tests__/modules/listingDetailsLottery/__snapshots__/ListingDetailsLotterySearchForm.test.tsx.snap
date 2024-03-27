@@ -29,7 +29,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       id="search-form"
     >
       <div
-        class="field w-full"
+        class="field w-full mb-0"
       >
         <label
           class="label sr-only"
@@ -58,7 +58,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
       </div>
       <button
         aria-label="Submit number"
-        class="bg-blue-500 h-12 mt-2 p-3 translate"
+        class="bg-blue-500 h-12 p-3 translate"
         type="submit"
       >
         <span

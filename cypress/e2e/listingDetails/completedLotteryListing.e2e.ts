@@ -1,13 +1,5 @@
-const listings = {
-  COMPLETED_LOTTERY_FULL: {
-    id: "a0W8H000000AmpKUAS",
-    lotteryNumber: "01150047",
-  },
-  COMPLETED_LOTTER_PROD: {
-    id: "a0W4U00000IhGZcUAN",
-    lotteryNumber: "01171676",
-  },
-}
+const listingId = "a0W8H000000AmpKUAS"
+const lotteryNumber = "01150047"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
@@ -18,13 +10,13 @@ const visitListing = (mobile, language) => {
     cy.viewport(MOBILE_VIEWPORT_WIDTH, MOBILE_VIEWPORT_HEIGHT)
   }
 
-  // TODO: Temporary check. Remove with DAH-1420
-  const listingId =
-    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
-      ? listings.COMPLETED_LOTTER_PROD.id
-      : listings.COMPLETED_LOTTERY_FULL.id
-
   cy.visit(`${langPart}/listings/${listingId}?react=true`)
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.wait("@completedRentalListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+    cy.wait("@preferences")
+  }
 }
 
 const clickLotteryResultsButton = (mobile: boolean) => {
@@ -35,12 +27,6 @@ const clickLotteryResultsButton = (mobile: boolean) => {
 }
 
 const searchForLotteryResults = () => {
-  // TODO: Temporary check. Remove with DAH-1420
-  const lotteryNumber =
-    Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com"
-      ? listings.COMPLETED_LOTTER_PROD.lotteryNumber
-      : listings.COMPLETED_LOTTERY_FULL.lotteryNumber
-
   cy.get('input[placeholder="Enter Your Lottery Number"]').type(lotteryNumber)
   cy.get('[aria-label="Submit number"]').click()
 }
@@ -51,7 +37,18 @@ describe("Listing Details for Completed Lottery Listing", () => {
   //   // there is a rogue loading issue beyond the scope of this story
   //   cy.wait(6000)
   // })
-
+  beforeEach(() => {
+    if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+      cy.intercept(`/api/v1/listings/${listingId}.json`, {
+        fixture: "completedRentalListing.json",
+      }).as("completedRentalListing")
+      cy.intercept("lottery_buckets", { fixture: "lotteryRanking.json" }).as("lotteryBuckets")
+      cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+      cy.intercept("units", { fixture: "units.json" }).as("units")
+      cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+      cy.intercept("lottery_ranking**", { fixture: "lotteryRanking.json" }).as("lotteryRanking")
+    }
+  })
   describe("Completed Lottery Rental Listing", () => {
     it("clicking the View Lottery Results button opens the lottery results modal on mobile devices", () => {
       visitListing(true, "")

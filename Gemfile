@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 7.0.8'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -91,7 +91,7 @@ gem 'prerender_rails', '~> 1.6.0'
 # http requests made easy
 gem 'http', '~> 5.1.1', require: false
 
-gem 'sidekiq', '~> 5.2.10'
+gem 'sidekiq', '~> 6.5.10'
 
 gem 'hashdiff'
 

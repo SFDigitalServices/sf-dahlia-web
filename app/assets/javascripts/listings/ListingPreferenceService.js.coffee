@@ -66,8 +66,8 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
     customProofPreferences = _.remove customPreferences, (customPref) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
 
-    # custom preferences related to Veterans should not be seen by applicants
-    _.remove(customPreferences, (pref) -> _.includes(pref.preferenceName?.toLowerCase(), "veteran"))
+    # Filter out custom preferences that should not be shown on the e7b-custom-preferences page
+    _.remove(customPreferences, (pref) -> !_.includes(ListingConstantsService.CUSTOM_PREFERENCE_NAMES, pref.preferenceName))
 
     listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order

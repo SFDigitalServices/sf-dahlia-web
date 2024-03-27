@@ -1,6 +1,6 @@
 ---
-# Set timeout to 8 on Heroku, longer if you manage your own systems.
-:timeout: 8
+# Set timeout to 25 to take advantage of the default 30 second Heroku shutdown timeout.
+:timeout: 25
 
 # Sidekiq will run this file through ERB when reading it so you can
 # even put in dynamic logic, like a host-specific queue.

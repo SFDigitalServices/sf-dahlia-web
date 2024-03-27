@@ -50,7 +50,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D1F000000I2yHUAS/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1594145239329","signature":"WVbRsYKuUorjvNJ2A92aIbs/uT/k7mDOZ1d8Mbl19cw="}'
-    http_version: 
   recorded_at: Tue, 07 Jul 2020 18:07:19 GMT
 - request:
     method: get
@@ -119,7 +118,6 @@ http_interactions:
         Francisco","mailingAddress":"100 Van Ness Ave","lendingAgentStatus":null,"latinoOther":null,"lastName":"Freud","indigenousOther":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Sigmund","ethnicity":null,"email":"siggy@psych.com","DOB":null,"DALPCertified":null,"contactId":null,"city":null,"candidateScore":null,"BMRCertified":null,"blackOther":null,"asianOther":null,"appMemberType":"Alternate
         Contact","appMemberId":"a0n1F0000017XqQQAU","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":"Psychiatrist","alternateContactType":"Other","agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null},"agreeToTerms":true,"adaPrioritiesSelected":"Vision
         impairments;Mobility impairments"}'
-    http_version: 
   recorded_at: Tue, 07 Jul 2020 18:07:20 GMT
 - request:
     method: delete
@@ -163,6 +161,299 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
   recorded_at: Tue, 07 Jul 2020 18:07:24 GMT
-recorded_with: VCR 5.0.0
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/a0o8H000002E8PpQAK"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:53 GMT
+      Set-Cookie:
+      - BrowserId=YIz0292VEe6ITjlH8ZFWaA; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:53 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:53 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:53
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Www-Authenticate:
+      - Token
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"message":"INVALID_AUTH_HEADER","errorCode":"INVALID_AUTH_HEADER"}]'
+  recorded_at: Fri, 08 Mar 2024 21:46:53 GMT
+- request:
+    method: post
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:53 GMT
+      Set-Cookie:
+      - BrowserId=YLsw6t2VEe6pYOlLpir6bQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:53 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:53 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:53
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709934413891","signature":"akSRv3SjIJjlPIIgP1O1RGUvudW753J78NN75CWKsTo="}'
+  recorded_at: Fri, 08 Mar 2024 21:46:53 GMT
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/a0o8H000002E8PpQAK"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:54 GMT
+      Set-Cookie:
+      - BrowserId=YPlynd2VEe6XLcnxj5cYcw; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:54 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:54 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:54
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Content-Type:
+      - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"totalMonthlyRent":null,"status":"Submitted","shortFormPreferences":[{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqR5QAK","requiresProof":false,"recordTypeDevName":"COP","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001Lx8XKQAZ","individualPreference":null,"customPreferenceType":"COP","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null},{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqR6QAK","requiresProof":false,"recordTypeDevName":"DTHP","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001Lx8XPQAZ","individualPreference":null,"customPreferenceType":"DTHP","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null},{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqR7QAK","requiresProof":false,"recordTypeDevName":"NRHP","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001Lx8XUQAZ","individualPreference":null,"customPreferenceType":"NRHP","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null},{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqR8QAK","requiresProof":false,"recordTypeDevName":"RB_AHP","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001Lx8XZQAZ","individualPreference":null,"customPreferenceType":"RB_AHP","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null},{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqR9QAK","requiresProof":false,"recordTypeDevName":"L_W","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001Lx8XeQAJ","individualPreference":null,"customPreferenceType":"L_W","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null},{"zip":null,"vetStatus":null,"vetPreferenceProof":null,"state":null,"shortformPreferenceID":"a0w8H000001BqRAQA0","requiresProof":false,"recordTypeDevName":"AG","preferenceProof":null,"postLotteryValidation":null,"optOut":false,"naturalKey":null,"lwPreferenceProof":null,"listingPreferenceID":"a0l0P00001PsqDoQAJ","individualPreference":null,"customPreferenceType":"AG","city":null,"certificateNumber":null,"appMemberID":null,"applicationID":"a0o8H000002E8PpQAK","address":null}],"referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whiteOther":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":"Decline
+        to state","sexAtBirth":null,"relationship":null,"raceEthnicity":null,"race":"Decline
+        to state","primaryLanguage":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"pacificIslanderOther":null,"otherLanguage":null,"noPhone":false,"noEmail":false,"noAddress":false,"MLSId":null,"middleName":null,"menaOther":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"latinoOther":null,"lastName":"VERY_LONG_LAST_NAME_THAT_IS_EXACTLY_40!!","jobClassification":null,"isVeteran":null,"isSFUSDEmployee":"No","indigenousOther":null,"indigenousNativeAmericanGroup":null,"indigenousCentralSouthAmericaGroup":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasDisability":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Decline
+        to state","firstName":"VERY_LONG_FIRST_NAME_THAT_IS_EXACTLY_40!","ethnicity":"Decline
+        to state","email":null,"DOB":"1983-03-04","DALPCertified":null,"contactId":"0038H00000Os1fwQAB","city":null,"candidateScore":null,"BMRCertified":null,"blackOther":null,"asianOther":null,"appMemberType":"Primary
+        Applicant","appMemberId":"a0n8H000001HZJaQAO","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null},"otherHousingCounselingAgency":null,"name":"APP-01259961","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"01259961","listingID":"a0W0P00000F8YG4UAN","lendingAgent":null,"jobClassification":null,"isVeteranInHousehold":false,"isSFUSDEmployee":"No","isPrimaryApplicantVeteran":null,"isNonPrimaryMemberVeteran":null,"isFirstTimeHomebuyer":false,"id":"a0o8H000002E8PpQAK","housingCounselingAgency":null,"householdVouchersSubsidies":null,"householdMembers":[],"homebuyerEducationAgency":null,"hasSenior":null,"hasPublicHousing":null,"hasMinimumCreditScore":false,"hasMilitaryService":null,"hasLoanPreapproval":false,"hasDisability":null,"hasDevelopmentalDisability":null,"hasCompletedHomebuyerEducation":false,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":null,"appRTType":"Rental_Short_Form","applicationSubmittedDate":"2024-03-08","applicationSubmissionType":"Paper","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":null,"alternateContact":null,"agreeToTerms":true,"adaPrioritiesSelected":"Vision
+        impairments;Mobility impairments;Hearing impairments"}'
+  recorded_at: Fri, 08 Mar 2024 21:46:54 GMT
+- request:
+    method: delete
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/delete/a0o8H000002E8PpQAK"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:54 GMT
+      Set-Cookie:
+      - BrowserId=YVipSN2VEe6NycWPMx01Ew; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:54 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:54 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:54
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Www-Authenticate:
+      - Token
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"message":"INVALID_AUTH_HEADER","errorCode":"INVALID_AUTH_HEADER"}]'
+  recorded_at: Fri, 08 Mar 2024 21:46:54 GMT
+- request:
+    method: post
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:55 GMT
+      Set-Cookie:
+      - BrowserId=YYZJQt2VEe6_28tMTqLHzw; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:55 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:55 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:55
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709934415223","signature":"+jOtqfrc2EGLZdZwstl/AkDOTFutZlCKnMjqy89I0Bo="}'
+  recorded_at: Fri, 08 Mar 2024 21:46:55 GMT
+- request:
+    method: delete
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/delete/a0o8H000002E8PpQAK"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.4
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 08 Mar 2024 21:46:55 GMT
+      Set-Cookie:
+      - BrowserId=YcPuc92VEe6pYOlLpir6bQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:46:55 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:55 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:46:55
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - upgrade-insecure-requests
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 08 Mar 2024 21:46:56 GMT
+recorded_with: VCR 6.1.0
