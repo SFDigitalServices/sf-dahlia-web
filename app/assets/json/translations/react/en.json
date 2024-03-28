@@ -869,6 +869,7 @@
   "listings.customListingType.educator.eligibility.part1": "To apply you must:",
   "listings.customListingType.educator.eligibility.part2": "<a target='_blank' href='%{chisholmLink}'>SFUSD employees: Learn about applying to Shirley Chisholm Village.</a>",
   "listings.customListingType.educator.eligibility.part3": "If you do not work at SF Unified School District, check back in Spring 2024 to apply. ",
+  "listings.customListingType.educator.eligibility.part3.v2": "If you do not work at SF Unified School District, check back in Summer 2024 to apply. ",
   "listings.customListingType.educator.eligibility.part4": "<a target='_blank' href='%{emailListLink}'>To find out when new listings are posted join our email list.</a>",
   "listings.customListingType.educator.eligibility.priority": "Special housing for San Francisco public school employees",
   "listings.customListingType.educator.eligibility.priority1": "Anyone can apply, but certain groups get priority. ",
