@@ -280,7 +280,7 @@ export const ListingDetailsEligibility = ({
         {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
-              <ListingDetailsChisholmPreferences />
+              <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
             </span>
           </ErrorBoundary>
         ) : (
