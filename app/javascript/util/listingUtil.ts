@@ -86,7 +86,7 @@ export const isEducator = (listing: RailsRentalListing | RailsSaleListing) =>
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing is Shirley Chisholm listing 1, false otherwise
  */
-export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
+export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing): boolean =>
   listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
 
 /**

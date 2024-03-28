@@ -2,7 +2,11 @@ import React from "react"
 import { ListSection, t } from "@bloom-housing/ui-components"
 import { renderInlineMarkup, getSfGovUrl } from "../../util/languageUtil"
 
-export const ListingDetailsChisholmPreferences = () => (
+export const ListingDetailsChisholmPreferences = ({
+  isEducatorOne,
+}: {
+  isEducatorOne: boolean
+}) => (
   <ListSection
     title={t("listings.lottery.title")}
     subtitle={
@@ -11,7 +15,14 @@ export const ListingDetailsChisholmPreferences = () => (
         <p>
           {renderInlineMarkup(t("listings.customListingType.educator.preferences.part2"), "<b>")}
           <br />
-          {t("listings.customListingType.educator.preferences.part3")}
+          {isEducatorOne ? (
+            t("listings.customListingType.educator.preferences.part3")
+          ) : (
+            /* TODO: insert human translations and remove google translations when ready */
+            <span className="translate">
+              {t("listings.customListingType.educator.preferences.part3.scv2")}
+            </span>
+          )}
         </p>
         <ul className="list-disc ml-7">
           <li>
