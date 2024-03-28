@@ -15,11 +15,9 @@ export const ListingDetailsChisholmPreferences = ({
         <p>
           {renderInlineMarkup(t("listings.customListingType.educator.preferences.part2"), "<b>")}
           <br />
-          {isEducatorOne ? (
-            t("listings.customListingType.educator.preferences.part3")
-          ) : (
-            t("listings.customListingType.educator.preferences.part3.scv2")
-          )}
+          {isEducatorOne
+            ? t("listings.customListingType.educator.preferences.part3")
+            : t("listings.customListingType.educator.preferences.part3.scv2")}
         </p>
         <ul className="list-disc ml-7">
           <li>
