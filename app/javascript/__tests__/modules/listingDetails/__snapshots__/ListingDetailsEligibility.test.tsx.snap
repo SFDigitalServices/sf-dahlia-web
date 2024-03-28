@@ -1741,11 +1741,7 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                       Priority for certain groups - San Francisco Unified School District employees
                     </b>
                     <br />
-                    <span
-                      class="translate"
-                    >
-                      San Francisco Unified School District employees rank highest in the lottery for this listing.
-                    </span>
+                    San Francisco Unified School District employees rank highest in the lottery for this listing.
                   </p>
                   <ul
                     class="list-disc ml-7"

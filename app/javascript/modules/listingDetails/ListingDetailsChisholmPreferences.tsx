@@ -18,7 +18,7 @@ export const ListingDetailsChisholmPreferences = ({
           {isEducatorOne ? (
             t("listings.customListingType.educator.preferences.part3")
           ) : (
-            {t("listings.customListingType.educator.preferences.part3.scv2")}
+            t("listings.customListingType.educator.preferences.part3.scv2")
           )}
         </p>
         <ul className="list-disc ml-7">
