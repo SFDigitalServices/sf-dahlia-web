@@ -1741,7 +1741,11 @@ exports[`ListingDetailsEligibility displays custom listing details check if you'
                       Priority for certain groups - San Francisco Unified School District employees
                     </b>
                     <br />
-                    Only San Francisco Unified School District (SFUSD) employees will be included in the lottery for this listing. 
+                    <span
+                      class="translate"
+                    >
+                      San Francisco Unified School District employees rank highest in the lottery for this listing.
+                    </span>
                   </p>
                   <ul
                     class="list-disc ml-7"

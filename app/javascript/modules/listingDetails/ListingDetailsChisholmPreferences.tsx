@@ -18,10 +18,7 @@ export const ListingDetailsChisholmPreferences = ({
           {isEducatorOne ? (
             t("listings.customListingType.educator.preferences.part3")
           ) : (
-            /* TODO: insert human translations and remove google translations when ready */
-            <span className="translate">
-              {t("listings.customListingType.educator.preferences.part3.scv2")}
-            </span>
+            {t("listings.customListingType.educator.preferences.part3.scv2")}
           )}
         </p>
         <ul className="list-disc ml-7">
