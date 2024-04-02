@@ -15,6 +15,7 @@ process.env.SRO_PLURAL_LISTINGS = JSON.stringify({
 module.exports = {
   testRegex: "/*.test.(tsx|ts)$",
   collectCoverageFrom: ["**/*.(tsx|ts)"],
+  coveragePathIgnorePatterns: ["<rootDir>/packs"],
   coverageReporters: ["lcov", "text"],
   coverageDirectory: "test-coverage",
   coverageThreshold: {

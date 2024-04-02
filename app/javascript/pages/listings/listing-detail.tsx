@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
+import TagManager from "react-gtm-module"
+
 import {
   ListingDetails,
   LoadingOverlay,
@@ -27,6 +29,7 @@ import {
   getAmiChartDataFromUnits,
   isOpen,
   isPluralSRO,
+  isRental,
   listingHasSROUnits,
 } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
@@ -58,6 +61,19 @@ const ListingDetail = () => {
     fetchedAmiCharts,
     fetchingAmiCharts,
   } = useContext(ListingDetailsContext)
+
+  useEffect(() => {
+    if (!!listing && !!process.env.GOOGLE_TAG_MANAGER_KEY) {
+      const tagManagerArgs = {
+        gtmId: process.env.GOOGLE_TAG_MANAGER_KEY,
+        dataLayer: {
+          event: "view_listing",
+          listingType: isRental(listing) ? "rental" : "sale",
+        },
+      }
+      TagManager.initialize(tagManagerArgs)
+    }
+  }, [listing])
 
   useEffect(() => {
     if (listing?.listingID && !fetchedUnits && !fetchingUnits) {

@@ -48,7 +48,9 @@ ShortFormNavigationService = (
   # We show it for all rentals, and for Sale listings that are
   # accessible units only.
   Service.showHouseholdPrioritiesPage = (listing) ->
-    ListingIdentityService.isRental(listing) || (listing?.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY)
+    _.includes(ListingConstantsService.HOUSEHOLD_PRIORITIES_LISTINGS_IDS, listing.Id) ||
+    ListingIdentityService.isRental(listing) ||
+    (listing?.Reserved_community_type == ListingConstantsService.RESERVED_TYPES.ACCESSIBLE_ONLY)
 
   Service.showIncomeVouchersPage = (listing) ->
     ListingIdentityService.isRental(listing)
@@ -496,7 +498,7 @@ ShortFormNavigationService = (
       "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
     else if Service.hasCustomPreferences()
       'custom-preferences'
-    else if !ShortFormApplicationService.showVeteransApplicationQuestion
+    else if !ShortFormApplicationService.showVeteransApplicationQuestion()
       'preferences-programs'
     else
       'veterans-preference'
