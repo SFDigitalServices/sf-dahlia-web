@@ -3,14 +3,6 @@
 
 process.env.TZ = "UTC"
 process.env.NODE_ENV = "test"
-process.env.SRO_PLURAL_LISTINGS = JSON.stringify({
-  a0W0P00000F7t4uUAB: "Merry Go Round Shared Housing",
-  a0W0P00000FIuv3UAD: "1335 Folsom Street",
-  a0W4U00000HlubxUAB: "1335 Folsom Street",
-  a0W4U00000KGFDWUA5: "1335 Folsom Street",
-  a0W4U00000KKtXyUAL: "750 Harrison",
-  a0W4U00000IXVL8UAP: "750 Harrison",
-})
 
 module.exports = {
   testRegex: "/*.test.(tsx|ts)$",
