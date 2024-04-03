@@ -36,10 +36,10 @@ generatedWebpackConfig.plugins.unshift(
       COVID_UPDATE: JSON.stringify(process.env.COVID_UPDATE),
       DIRECTORY_PAGE_REACT: JSON.stringify(process.env.DIRECTORY_PAGE_REACT),
       GOOGLE_PLACES_KEY: JSON.stringify(process.env.GOOGLE_PLACES_KEY),
-      SRO_PLURAL_LISTINGS: process.env.SRO_PLURAL_LISTINGS,
       TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
       TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
       TOP_MESSAGE_INVERTED: JSON.stringify(process.env.TOP_MESSAGE_INVERTED),
+      GOOGLE_TAG_MANAGER_KEY: JSON.stringify(process.env.GOOGLE_TAG_MANAGER_KEY)
     },
   })
 )

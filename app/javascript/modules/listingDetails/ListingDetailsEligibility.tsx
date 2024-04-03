@@ -74,12 +74,9 @@ export const ListingDetailsEligibility = ({
   let occupancySubtitle = ""
   if (isSale(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionMinOne")
-  } else if (
-    isAllSRO &&
-    !(isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing))
-  ) {
+  } else if (isAllSRO && !isPluralSRO(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSro")
-  } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
+  } else if (isPluralSRO(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
@@ -163,7 +160,10 @@ export const ListingDetailsEligibility = ({
                     )}
                   </p>
                   <p>
-                    {t("listings.customListingType.educator.eligibility.part3")}
+                    {/* TODO: replace google translations with human translations when ready */}
+                    <span className="translate">
+                      {t("listings.customListingType.educator.eligibility.part3.v2")}
+                    </span>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part4", {
                         emailListLink: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
