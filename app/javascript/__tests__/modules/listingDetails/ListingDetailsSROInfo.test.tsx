@@ -1,7 +1,10 @@
 import React from "react"
 import { render } from "@testing-library/react"
 import { ListingDetailsSROInfo } from "../../../modules/listingDetails/ListingDetailsSROInfo"
-import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
+import {
+  sroRentalListing,
+  pluralSroRentalListing,
+} from "../../data/RailsRentalListing/listing-rental-sro"
 
 describe("ListingDetailsLotteryInfo", () => {
   const OLD_ENV = process.env
@@ -36,8 +39,7 @@ describe("ListingDetailsLotteryInfo", () => {
   })
 
   it("displays the Merry Go Round Housing description for its listing", () => {
-    process.env.SRO_PLURAL_LISTINGS = JSON.parse(process.env.SRO_PLURAL_LISTINGS)
-    const listing = { ...sroRentalListing, Id: "a0W0P00000F7t4uUAB" }
+    const listing = { ...pluralSroRentalListing, Id: "a0W0P00000F7t4uUAB" }
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
