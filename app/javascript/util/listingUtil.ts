@@ -23,9 +23,6 @@ import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetail
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
 
-export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
-
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing
