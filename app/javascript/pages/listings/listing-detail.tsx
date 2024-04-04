@@ -91,9 +91,12 @@ const ListingDetail = () => {
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+      if (!listing) {
+        router.push("/")
+      }
       setListing(listing)
     })
-  }, [router.pathname])
+  }, [router, router.pathname])
 
   return (
     <LoadingOverlay isLoading={!listing}>
@@ -133,14 +136,11 @@ const ListingDetail = () => {
             >
               <ListingDetailsPricingTable listing={listing} />
             </ErrorBoundary>
-            {listingHasSROUnits(listing) &&
-              !(
-                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
-              ) && (
-                <div className="md:w-2/3 md:pr-8">
-                  <ListingDetailsSROInfo listing={listing} />
-                </div>
-              )}
+            {listingHasSROUnits(listing) && !isPluralSRO(listing) && (
+              <div className="md:w-2/3 md:pr-8">
+                <ListingDetailsSROInfo listing={listing} />
+              </div>
+            )}
             {isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate
