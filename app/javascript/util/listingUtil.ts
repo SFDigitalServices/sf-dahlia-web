@@ -23,9 +23,6 @@ import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetail
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
 
-export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
-
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing
@@ -140,11 +137,13 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the listing is in the hardcoded list of SROs that
+ * @returns {boolean} returns true if the listing id is has SROs that
  * permit multiple occupancy, false otherwise
  */
-export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) => {
-  return process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
+export const isPluralSRO = (listing: RailsRentalListing | RailsSaleListing): boolean => {
+  return listing.unitSummaries.general?.some(
+    (unit) => (unit.unitType === "SRO" || unit.unitType === "Room") && unit.maxOccupancy > 1
+  )
 }
 /**
  * Builds and return an address string. Not to be used for display. Use

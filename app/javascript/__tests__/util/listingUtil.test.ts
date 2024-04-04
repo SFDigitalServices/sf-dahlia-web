@@ -33,7 +33,10 @@ import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-c
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { rentalEducatorListing1complete } from "../data/RailsRentalListing/listing-rental-educator-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
-import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
+import {
+  sroRentalListing,
+  pluralSroRentalListing,
+} from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
 import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
@@ -139,14 +142,12 @@ describe("listingUtil", () => {
   })
 
   describe("isPluralSRO", () => {
-    it("should return false when listing is not in the list of plural SROs", () => {
-      expect(isPluralSRO("Merry Go Round Shared Housing", sroRentalListing)).toBe(false)
+    it("should return false for a standard (single tenant) SROs", () => {
+      expect(isPluralSRO(sroRentalListing)).toBe(false)
     })
 
-    it("should return true when listing is in the list of plural SROs", () => {
-      process.env.SRO_PLURAL_LISTINGS = JSON.parse(process.env.SRO_PLURAL_LISTINGS)
-      const listing = { ...sroRentalListing, Id: "a0W0P00000F7t4uUAB" }
-      expect(isPluralSRO("Merry Go Round Shared Housing", listing)).toBe(true)
+    it("should return true for a plural SROs", () => {
+      expect(isPluralSRO(pluralSroRentalListing)).toBe(true)
     })
   })
 

@@ -9,7 +9,7 @@ export interface ListingDetailsSROInfo {
 
 export const ListingDetailsSROInfo = ({ listing }: ListingDetailsSROInfo) => (
   <InfoCard title={t("listings.singleRoomOccupancy")}>
-    {!isPluralSRO("Merry Go Round Shared Housing", listing)
+    {!isPluralSRO(listing)
       ? t("listings.singleRoomOccupancyDescription")
       : t("listings.merryGoRoundSingleRoomOccupancyDescription")}
   </InfoCard>
