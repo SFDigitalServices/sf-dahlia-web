@@ -32,14 +32,8 @@ class User < ApplicationRecord
     # Salesforce requires that we repackage all of their info when making an update
     contact = Force::AccountService.get(salesforce_contact_id)
     return unless contact.present?
-
-    if ENV['TEST_ENVIRONMENT'].to_s.casecmp('true').zero?
-      web_app_id = "test-#{current_user.id}"
-    else
-      web_app_id = current_user.id
-    end
     Force::AccountService.create_or_update(
-      webAppID: web_app_id,
+      webAppID: id,
       contactId: salesforce_contact_id,
       # send unconfirmed_email because it's about to be confirmed
       email: unconfirmed_email,
