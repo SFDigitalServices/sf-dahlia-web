@@ -279,9 +279,14 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def applicant_attrs
+    if ENV['TEST_ENVIRONMENT'].to_s.casecmp('true').zero?
+      web_app_id = "test-#{current_user_id}"
+    else
+      web_app_id = current_user.id
+    end
     {
       contactId: user_contact_id,
-      webAppID: current_user_id,
+      webAppID: web_app_id,
     }
   end
 
