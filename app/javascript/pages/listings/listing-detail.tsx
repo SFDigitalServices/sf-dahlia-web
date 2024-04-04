@@ -91,9 +91,12 @@ const ListingDetail = () => {
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+      if (!listing) {
+        router.push("/")
+      }
       setListing(listing)
     })
-  }, [router.pathname])
+  }, [router, router.pathname])
 
   return (
     <LoadingOverlay isLoading={!listing}>
