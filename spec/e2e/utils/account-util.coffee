@@ -20,7 +20,7 @@ Account = {
     }
   get: (fullName) ->
     console.log(fullName)
-    console.log(Accounts._accounts[fullName])
+    console.log(Account._accounts[fullName])
     Account._accounts[fullName]
   getOrCreate: (fullName, birthDate) ->
     account = Account.get(fullName)
