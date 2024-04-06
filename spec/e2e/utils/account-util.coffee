@@ -19,6 +19,8 @@ Account = {
       password: chance.string({ length: 15, pool: passwordChars }) + 'tS9'
     }
   get: (fullName) ->
+    console.log(fullName)
+    console.log(Accounts._accounts[fullName])
     Account._accounts[fullName]
   getOrCreate: (fullName, birthDate) ->
     account = Account.get(fullName)
