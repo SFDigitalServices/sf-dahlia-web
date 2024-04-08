@@ -1133,6 +1133,12 @@ ShortFormApplicationService = (
   Service.listingHasReservedUnitType = (type) ->
     ListingUnitService.listingHasReservedUnitType(Service.listing, type)
 
+  Service.listingIsEducator = ->
+    _.includes(
+      ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
+      ListingDataService.listing.Custom_Listing_Type
+    )
+
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
 
