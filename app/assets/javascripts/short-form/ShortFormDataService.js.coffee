@@ -598,6 +598,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     }
 
   Service._reformatIncome = (sfApp) ->
+    console.log(sfApp)
     if sfApp.monthlyIncome
       return {
         incomeTimeframe: 'per_month'
