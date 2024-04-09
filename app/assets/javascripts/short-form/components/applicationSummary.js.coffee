@@ -63,7 +63,6 @@ angular.module('dahlia.components')
           $translate.instant('t.none')
 
       ctrl.applicationIncomeAmount = ->
-        console.log(ctrl.application.householdIncome)
         income = parseFloat(ctrl.application.householdIncome.incomeTotal)
         if ctrl.application.householdIncome.incomeTimeframe == 'per_month'
           phrase = $translate.instant('t.per_month')

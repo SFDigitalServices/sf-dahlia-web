@@ -598,15 +598,15 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     }
 
   Service._reformatIncome = (sfApp) ->
-    if sfApp.annualIncome
-      return {
-        incomeTimeframe: 'per_year'
-        incomeTotal: sfApp.annualIncome
-      }
     if sfApp.monthlyIncome
       return {
         incomeTimeframe: 'per_month'
         incomeTotal: sfApp.monthlyIncome
+      }
+    else if sfApp.annualIncome
+      return {
+        incomeTimeframe: 'per_year'
+        incomeTotal: sfApp.annualIncome
       }
 
   Service._reformatMultiSelect = (option = '') ->
