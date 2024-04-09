@@ -26,6 +26,7 @@ export interface AuthHeaders extends AxiosHeaders {
 }
 
 export const setAuthHeaders = (headers: AuthHeaders | AxiosHeaders) => {
+  console.log("asdfasdfasdf", headers)
   // Set only relevant auth headers
   const headersToSet = {
     expiry: headers.expiry,
