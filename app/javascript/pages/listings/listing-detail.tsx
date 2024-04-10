@@ -28,7 +28,6 @@ import {
   isHabitatListing,
   getAmiChartDataFromUnits,
   isOpen,
-  isPluralSRO,
   isRental,
   listingHasSROUnits,
 } from "../../util/listingUtil"
