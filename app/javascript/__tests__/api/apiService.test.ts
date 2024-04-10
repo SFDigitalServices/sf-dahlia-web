@@ -17,11 +17,12 @@ jest.mock("axios")
 Storage.prototype.getItem = (_key: string) => JSON.stringify({ "access-token": "test-token" })
 
 describe("apiService", () => {
+  const url = "test-url"
+  const data = "test-data"
+  const config = {}
+
   describe("put", () => {
     it("calls axios.put", async () => {
-      const url = "test-url"
-      const data = "test-data"
-      const config = {}
       const spy = jest.spyOn(axios, "put")
       await put(url, data, config)
       expect(spy).toHaveBeenCalledWith(url, data, config)
@@ -30,9 +31,6 @@ describe("apiService", () => {
 
   describe("post", () => {
     it("calls axios.post", async () => {
-      const url = "test-url"
-      const data = "test-data"
-      const config = {}
       const spy = jest.spyOn(axios, "post")
       await post(url, data, config)
       expect(spy).toHaveBeenCalledWith(url, data, config)
@@ -41,8 +39,6 @@ describe("apiService", () => {
 
   describe("get", () => {
     it("calls axios.get", async () => {
-      const url = "test-url"
-      const config = {}
       const spy = jest.spyOn(axios, "get")
       await get(url, config)
       expect(spy).toHaveBeenCalledWith(url, config)
@@ -51,8 +47,6 @@ describe("apiService", () => {
 
   describe("apiDelete", () => {
     it("calls axios.delete", async () => {
-      const url = "test-url"
-      const config = {}
       const spy = jest.spyOn(axios, "delete")
       await apiDelete(url, config)
       expect(spy).toHaveBeenCalledWith(url, config)
@@ -72,8 +66,6 @@ describe("apiService", () => {
 
     describe("authenticatedPut", () => {
       it("calls axios.put", async () => {
-        const url = "test-url"
-        const config = {}
         await authenticatedPut(url, config)
         const putSpy = createSpy.mock.results[0].value.put
         expect(createSpy).toHaveBeenCalled()
@@ -84,9 +76,6 @@ describe("apiService", () => {
 
     describe("authenticatedPost", () => {
       it("calls axios.post", async () => {
-        const url = "test-url"
-        const data = "test-data"
-        const config = {}
         await authenticatedPost(url, data, config)
         const postSpy = createSpy.mock.results[0].value.post
         expect(createSpy).toHaveBeenCalled()
@@ -96,8 +85,6 @@ describe("apiService", () => {
 
     describe("authenticatedGet", () => {
       it("calls axios.get", async () => {
-        const url = "test-url"
-        const config = {}
         await authenticatedGet(url, config)
         const getSpy = createSpy.mock.results[0].value.get
         expect(createSpy).toHaveBeenCalled()
@@ -107,8 +94,6 @@ describe("apiService", () => {
 
     describe("authenticatedDelete", () => {
       it("calls axios.delete", async () => {
-        const url = "test-url"
-        const config = {}
         await authenticatedDelete(url, config)
         const getSpy = createSpy.mock.results[0].value.delete
         expect(createSpy).toHaveBeenCalled()
