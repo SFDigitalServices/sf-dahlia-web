@@ -23,33 +23,33 @@ describe("apiService", () => {
 
   describe("put", () => {
     it("calls axios.put", async () => {
-      const spy = jest.spyOn(axios, "put")
+      const putSpy = jest.spyOn(axios, "put")
       await put(url, data, config)
-      expect(spy).toHaveBeenCalledWith(url, data, config)
+      expect(putSpy).toHaveBeenCalledWith(url, data, config)
     })
   })
 
   describe("post", () => {
     it("calls axios.post", async () => {
-      const spy = jest.spyOn(axios, "post")
+      const postSpy = jest.spyOn(axios, "post")
       await post(url, data, config)
-      expect(spy).toHaveBeenCalledWith(url, data, config)
+      expect(postSpy).toHaveBeenCalledWith(url, data, config)
     })
   })
 
   describe("get", () => {
     it("calls axios.get", async () => {
-      const spy = jest.spyOn(axios, "get")
+      const getSpy = jest.spyOn(axios, "get")
       await get(url, config)
-      expect(spy).toHaveBeenCalledWith(url, config)
+      expect(getSpy).toHaveBeenCalledWith(url, config)
     })
   })
 
   describe("apiDelete", () => {
     it("calls axios.delete", async () => {
-      const spy = jest.spyOn(axios, "delete")
+      const deleteSpy = jest.spyOn(axios, "delete")
       await apiDelete(url, config)
-      expect(spy).toHaveBeenCalledWith(url, config)
+      expect(deleteSpy).toHaveBeenCalledWith(url, config)
     })
   })
 
@@ -95,9 +95,9 @@ describe("apiService", () => {
     describe("authenticatedDelete", () => {
       it("calls axios.delete", async () => {
         await authenticatedDelete(url, config)
-        const getSpy = createSpy.mock.results[0].value.delete
+        const deleteSpy = createSpy.mock.results[0].value.delete
         expect(createSpy).toHaveBeenCalled()
-        expect(getSpy).toHaveBeenCalled()
+        expect(deleteSpy).toHaveBeenCalled()
       })
     })
   })
