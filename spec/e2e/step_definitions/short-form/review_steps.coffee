@@ -67,7 +67,7 @@ Then 'on the Review Page I should see my alternate contact details', ->
     Pages.AlternateContact.defaults.address)
 
 Then 'on the Review Page I should see my household member details', ->
-  Utils.Expect.byIdAndText(@, 'household-member-0-name', 'E2ETEST-Coleman Francis')
+  Utils.Expect.byIdAndText(@, 'household-member-0-name', 'Coleman Francis')
   Utils.Expect.byIdAndText(@, 'household-member-0-dob', '10/15/1985')
 
 Then 'on the Review Page I should see my income details', ->
