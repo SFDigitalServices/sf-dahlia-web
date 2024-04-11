@@ -92,7 +92,7 @@ Then /^on the Review Page I should see my preference details on my "([^"]*)" app
       '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
     Utils.Expect.byCss(@,
       '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
-    Utils.Expect.byCss(@, '#review-displaced .info-item_note', 'for E2ETEST-Coleman Francis')
+    Utils.Expect.byCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
     Utils.Expect.byCss(@,
       '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     Utils.Expect.byCss(@,
