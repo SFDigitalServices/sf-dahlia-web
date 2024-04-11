@@ -25,3 +25,7 @@
 .match-container {
   width: 64rem;
 }
+
+.listings-row_table .listings-row_headers {
+  @apply text-left;
+}
