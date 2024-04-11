@@ -13,7 +13,7 @@ const getStorage = () => {
 }
 
 const getAuthHeaders = (): AuthHeaders | AxiosHeaders | undefined => {
-  const headers: string = getStorage()[ACCESS_TOKEN_LOCAL_STORAGE_KEY]
+  const headers: string = getStorage().getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY)
   return headers && JSON.parse(headers)
 }
 
