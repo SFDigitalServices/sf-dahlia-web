@@ -93,9 +93,9 @@ When 'I fill out the household member form with missing data', ->
   Utils.Page.submit()
 
 Then 'on the Household page I should see my correct info', ->
-  Utils.Expect.byCss(@, '#household-primary .info-item_name', 'Jane Doe')
+  Utils.Expect.byCss(@, '#household-primary .info-item_name', 'E2ETEST-Jane Doe')
   Utils.Expect.byCss(@, '#household-primary .info-item_value', 'Primary Applicant')
-  Utils.Expect.byCss(@, '#household-member-0 .info-item_name', 'Coleman Francis')
+  Utils.Expect.byCss(@, '#household-member-0 .info-item_name', 'E2ETEST-Coleman Francis')
   Utils.Expect.byCss(@, '#household-member-0 .info-item_value', 'Household Member')
 
 Then 'on the Public Housing page I should see my correct info', ->
