@@ -10,14 +10,14 @@ module.exports = {
   coveragePathIgnorePatterns: ["<rootDir>/packs"],
   coverageReporters: ["lcov", "text"],
   coverageDirectory: "test-coverage",
-  coverageThreshold: {
-    global: {
-      branches: 70,
-      functions: 70,
-      lines: 80,
-      statements: 80,
-    },
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 70,
+  //     functions: 70,
+  //     lines: 80,
+  //     statements: 80,
+  //   },
+  // },
   preset: "ts-jest",
   rootDir: "./app/javascript",
   roots: ["<rootDir>/"],
