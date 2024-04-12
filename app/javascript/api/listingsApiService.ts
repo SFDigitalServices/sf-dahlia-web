@@ -30,7 +30,7 @@ export const getEligibilityQueryString = (
 ) => {
   const getIncomeLevel = () => {
     return filters?.income_timeframe === "per_month"
-      ? filters?.income_total * 12
+      ? filters.income_total * 12
       : filters?.income_total
   }
 

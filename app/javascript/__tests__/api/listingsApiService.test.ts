@@ -1,8 +1,15 @@
+import { get } from "../../api/apiService"
+
 import {
   EligibilityFilters,
   formatQueryString,
   getEligibilityQueryString,
+  getListings,
 } from "../../api/listingsApiService"
+
+jest.mock("../../api/apiService", () => ({
+  get: jest.fn(),
+}))
 
 describe("listingsApiService", () => {
   describe("formatQueryString", () => {
@@ -63,6 +70,41 @@ describe("listingsApiService", () => {
         type: "",
       }
       expect(getEligibilityQueryString(filters, "ownership")).toContain("&listingsType=ownership")
+    })
+    it("works when no filter is provided", () => {
+      expect(getEligibilityQueryString(null as unknown as EligibilityFilters, "rental")).toEqual(
+        "householdsize=&incomelevel=&includeChildrenUnder6=false&childrenUnder6=&listingsType=rental"
+      )
+    })
+  })
+  describe("getListings", () => {
+    beforeEach(() => {
+      ;(get as jest.Mock).mockResolvedValue({
+        data: { listings: ["test-listing", "test-listing"] },
+      })
+    })
+    const listingType = "rental"
+    it("calls apiService get with filters", async () => {
+      const filters = {
+        household_size: "1",
+        income_timeframe: "test-timeframe",
+        income_total: 12345,
+        include_children_under_6: false,
+        children_under_6: "0",
+        type: "test-type",
+      }
+      const url = `/api/v1/listings/eligibility.json?${getEligibilityQueryString(
+        filters,
+        listingType
+      )}`
+      await getListings(listingType, filters)
+      expect(get).toHaveBeenCalledWith(url)
+    })
+
+    it("calls apiService get without filters", async () => {
+      const url = `/api/v1/listings.json?type=${listingType}&subset=browse`
+      await getListings(listingType)
+      expect(get).toHaveBeenCalledWith(url)
     })
   })
 })

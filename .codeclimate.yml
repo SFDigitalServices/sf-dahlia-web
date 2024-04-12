@@ -7,6 +7,7 @@ exclude_paths:
   # code climate complains a bunch about our toolkit.css -- is it useful to validate our CSS?
   - "app/assets/stylesheets"
   - "refresh.sh"
+  - "app/javascript/__tests__"
 checks:
   method-complexity:
     config:
