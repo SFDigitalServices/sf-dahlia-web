@@ -22,6 +22,10 @@ do ->
         rentBurden: "Rent Burdened / Assisted Housing Preference"
         antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
         aliceGriffith: "Alice Griffith Housing Development Resident"
+      CUSTOM_PREFERENCE_NAMES: [
+          'DACA Fund',
+          'Households with Pet Zebras'
+      ]
     loading = {}
     fakeListingIdentityService =
       listingIs: ->
