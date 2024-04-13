@@ -897,7 +897,7 @@ ShortFormApplicationService = (
 
   Service.resetAndReplaceApp = ->
     Service.resetApplicationData({ id: Service.application.id })
-    $state.go('dahlia.short-form-application.name')
+    $state.go('dahlia.short-form-welcome.intro', { id: Service.listing.Id })
 
   Service.loadApplication = (data) ->
     formattedApp = {}
@@ -917,8 +917,10 @@ ShortFormApplicationService = (
     #  unless we implement some side-effect logic within this function to preserve that data.
     #  For example, the line above this comment will preserve the application.answeredCommunityScreening value.
     #  Similar logic needs to be added to the `resetAndStartNewApp` function
-    formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
-    formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
+    if Service.application.customEducatorScreeningAnswer
+      formattedApp.customEducatorScreeningAnswer = Service.application.customEducatorScreeningAnswer
+    if Service.application.customEducatorJobClassificationNumber
+      formattedApp.customEducatorJobClassificationNumber = Service.application.customEducatorJobClassificationNumber
 
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
