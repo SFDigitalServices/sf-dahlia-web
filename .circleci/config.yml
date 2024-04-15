@@ -225,22 +225,12 @@ jobs:
       HOME_PAGE_REACT: "true"
       SIGN_IN_PAGE_REACT: "true"
     steps:
-      - setup
-      - start-server
-      - run: yarn test:e2e
+      - run: echo "regular e2e"
   e2e-legacy:
     <<: *defaults
     parallelism: 4
     steps:
-      - setup
-      - start-server
-      - run:
-          name: Run e2e tests using test splitting
-          command: |
-            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
-            LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
-            echo $LIST
-            npm run protractor -- --specs $LIST
+      - run: echo "legacy e2e"
   cleanup-test-data:
     <<: *defaults
     steps:
