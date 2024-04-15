@@ -225,20 +225,26 @@ jobs:
       HOME_PAGE_REACT: "true"
       SIGN_IN_PAGE_REACT: "true"
     steps:
-      - run: echo "regular e2e"
+      - setup
+      - start-server
+      - run: yarn test:e2e
   e2e-legacy:
     <<: *defaults
     parallelism: 4
     steps:
-      - run: echo "legacy e2e"
+      - setup
+      - start-server
+      - run:
+          name: Run e2e tests using test splitting
+          command: |
+            TESTFILES=$(circleci tests glob "spec/e2e/features/**/*.feature" | circleci tests split --split-by=timings)
+            LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
+            echo $LIST
+            npm run protractor -- --specs $LIST
   cleanup-test-data:
     <<: *defaults
     steps:
       - run: echo test-log
-  test:
-    <<: *defaults
-    steps: 
-      - run: console.log("hello")
   waiter:
     docker: 
       - image: cimg/node:current
@@ -272,8 +278,6 @@ workflows:
       - e2e-legacy:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
-      - test:
-          <<: *angular_jobs
       - waiter:
           <<: *angular_jobs
       - cleanup-test-data:
