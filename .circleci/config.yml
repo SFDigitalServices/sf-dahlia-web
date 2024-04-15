@@ -274,6 +274,8 @@ workflows:
           name: e2e-production-legacy
       - test:
           <<: *angular_jobs
+      - waiter:
+          <<: *angular_jobs
       - cleanup-test-data:
           requires:
             - waiter
