@@ -29,7 +29,9 @@ export const post = <T>(
   url: string,
   data?: unknown,
   config?: AxiosRequestConfig
-): Promise<AxiosResponse<T>> => axios.post(url, data, config)
+): Promise<AxiosResponse<T>> => {
+  return axios.post(url, data, config)
+}
 
 export const get = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> =>
   axios.get(url, config)
