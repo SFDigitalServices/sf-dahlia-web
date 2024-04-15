@@ -245,6 +245,10 @@ jobs:
     <<: *defaults
     steps:
       - run: echo test-log
+  test:
+    <<: *defaults
+    steps: 
+      - run: console.log("hello")
 workflows:
   version: 2.1
   build-and-deploy:
@@ -268,7 +272,10 @@ workflows:
       - e2e-legacy:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
+      - test:
+          <<: *angular_jobs
       - cleanup-test-data:
           requires:
             - e2e-legacy
             - e2e
+            - test
