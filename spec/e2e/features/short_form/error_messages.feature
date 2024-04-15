@@ -22,7 +22,7 @@ Feature: Short Form Application
         # maxlength check: name should cut off
         When I fill out the Name page as "Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz"
         And I navigate to the "You" section
-        Then I should see the truncated name "Loremipsumloremipsumloremipsumloremipsum Loremipsumloremipsum Loremipsumloremipsumloremipsumloremipsum" on the Name page
+        Then I should see the truncated name "E2ETEST-Loremipsumloremipsumloremipsumlo Loremipsumloremipsum Loremipsumloremipsumloremipsumloremipsum" on the Name page
 
         When I navigate to the "You" section
         And I fill out the Name page as "Jane Doe"
