@@ -254,7 +254,7 @@ jobs:
             do
               sleep 5
             done
-      - run: echo "All required jobs have now completed"
+      - run: bundle exec rails tests:e2e_cleanup
 workflows:
   version: 2.1
   build-and-deploy:
