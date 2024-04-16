@@ -244,7 +244,9 @@ jobs:
   cleanup-test-data:
     <<: *defaults
     steps:
-      - run: echo test-log
+      - setup
+      - start-server
+      - run: bundle exec rails tests:e2e_cleanup
   waiter:
     docker: 
       - image: cimg/node:current
@@ -254,7 +256,7 @@ jobs:
             do
               sleep 5
             done
-      - run: bundle exec rails tests:e2e_cleanup
+      - run: echo "All required jobs have now completed"
 workflows:
   version: 2.1
   build-and-deploy:
