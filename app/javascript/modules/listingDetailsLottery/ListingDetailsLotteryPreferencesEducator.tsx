@@ -134,7 +134,7 @@ export const ListingDetailsLotteryPreferencesEducator = ({
             lastPref={arr.length - 1 === index}
           />
         ))}
-      {!isEducatorOne ?? (
+      {!isEducatorOne && (
         <>
           <header className="border-b border-gray-450 my-4">
             <Heading styleType="underlineWeighted" className="mx-8 text-xs" priority={2}>
