@@ -113,6 +113,9 @@ Then /^I should be on the "([^"]*)" page of the application$/, (pageName) ->
   urlFrag = "apply/#{pageUrls[pageName]}"
   Utils.Expect.urlContains(urlFrag)
 
+Then 'I should be on the welcome page of the application', ->
+  Utils.Expect.urlContains('/apply-welcome/intro')
+
 Then /^I should see a form alert that says "([^"]*)"$/, (message) ->
   Utils.Expect.alertBox(@, message)
 

@@ -105,6 +105,10 @@ Feature: Sign-in while filling out application
         And I sign in as "Alice Walker" with my email pre-filled
         Then the application page title should be "Pick up where you left off"
         And I choose to start from scratch
+        When I confirm the modal
+        Then I should be on the welcome page of the application
+        And I select "English" as my language
+        And I continue past the welcome overview
         Then I should be on the "Name" page of the application
         When I submit the Name page with my account info
         Then the Contact page fields should be empty
