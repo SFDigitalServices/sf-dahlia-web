@@ -9,6 +9,8 @@ import { ListingDetailsLotteryRanking } from "./ListingDetailsLotteryRanking"
 import { ListingDetailsLotterySearchFooter } from "./ListingDetailsLotterySearchFooter"
 import "./ListingDetailsLotterySearchForm.scss"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import { isEducator, isEducatorOne } from "../../util/listingUtil"
+import { ListingDetailsLotteryPreferencesEducator } from "./ListingDetailsLotteryPreferencesEducator"
 
 export enum LOTTERY_SEARCH_FORM_STATUS {
   INITIAL_STATE,
@@ -65,7 +67,14 @@ export const ListingDetailsLotterySearchForm = ({
   switch (lotteryFormStatus) {
     case LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE:
     case LOTTERY_SEARCH_FORM_STATUS.API_ERROR: {
-      content = <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryBucketDetails} />
+      content = isEducator(listing) ? (
+        <ListingDetailsLotteryPreferencesEducator
+          lotteryBucketsDetails={lotteryBucketDetails}
+          isEducatorOne={isEducatorOne(listing)}
+        />
+      ) : (
+        <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryBucketDetails} />
+      )
       break
     }
     case LOTTERY_SEARCH_FORM_STATUS.LOADING: {

@@ -1,0 +1,969 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP, L/W 1`] = `
+<DocumentFragment>
+  <div
+    class="text-sm"
+  >
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8"
+      >
+        Priority of Housing Preferences
+      </h2>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
+      >
+        <p>
+          Ranking in these lists is considered in the order shown here. 
+          <a
+            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            target="_blank"
+          >
+            Watch a video on how lottery ranking works.
+          </a>
+        </p>
+      </div>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8"
+      >
+        US Military Veterans rank at the top of each category.
+      </div>
+    </header>
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        Educators - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          3 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        All Other Employees - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preferences - COP, DTHP, L/W 1`] = `
+<DocumentFragment>
+  <div
+    class="text-sm"
+  >
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8"
+      >
+        Priority of Housing Preferences
+      </h2>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
+      >
+        <p>
+          Ranking in these lists is considered in the order shown here. 
+          <a
+            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            target="_blank"
+          >
+            Watch a video on how lottery ranking works.
+          </a>
+        </p>
+      </div>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8"
+      >
+        US Military Veterans rank at the top of each category.
+      </div>
+    </header>
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        Educators - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          3 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        All Other Employees - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 preferences - NRHP, L/W 1`] = `
+<DocumentFragment>
+  <div
+    class="text-sm"
+  >
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8"
+      >
+        Priority of Housing Preferences
+      </h2>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
+      >
+        <p>
+          Ranking in these lists is considered in the order shown here. 
+          <a
+            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            target="_blank"
+          >
+            Watch a video on how lottery ranking works.
+          </a>
+        </p>
+      </div>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8"
+      >
+        US Military Veterans rank at the top of each category.
+      </div>
+    </header>
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        Educators - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          3 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        All Other Employees - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default preferences - COP, DTHP, L/W 1`] = `
+<DocumentFragment>
+  <div
+    class="text-sm"
+  >
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8"
+      >
+        Priority of Housing Preferences
+      </h2>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8 translate"
+      >
+        <p>
+          Ranking in these lists is considered in the order shown here. 
+          <a
+            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            target="_blank"
+          >
+            Watch a video on how lottery ranking works.
+          </a>
+        </p>
+      </div>
+      <div
+        class="pb-4 text-gray-700 text-xs mx-8"
+      >
+        US Military Veterans rank at the top of each category.
+      </div>
+    </header>
+    <header
+      class="border-b border-gray-450 mb-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        Educators - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          3 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        All Other Employees - San Francisco Unified School District
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 0 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 Veterans are on this list
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 other applicants are on this list
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
