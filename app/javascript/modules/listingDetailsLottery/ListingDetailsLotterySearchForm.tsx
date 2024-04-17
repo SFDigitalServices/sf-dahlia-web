@@ -67,6 +67,8 @@ export const ListingDetailsLotterySearchForm = ({
   switch (lotteryFormStatus) {
     case LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE:
     case LOTTERY_SEARCH_FORM_STATUS.API_ERROR: {
+      // educator listings have a custom lottery modal because there are so many layered preferences
+      // the custom modal will make the preferences easier to understand
       content = isEducator(listing) ? (
         <ListingDetailsLotteryPreferencesEducator
           lotteryBucketsDetails={lotteryBucketDetails}
