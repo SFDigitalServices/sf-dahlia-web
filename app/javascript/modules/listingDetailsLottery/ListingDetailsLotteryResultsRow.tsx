@@ -23,13 +23,19 @@ export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowPro
           {bucket.preferenceName === "generalLottery"
             ? t("lottery.generalPool")
             : defaultIfNotTranslated(
-                `listings.lotteryPreference.${bucket.preferenceName}.title`,
-                bucket.preferenceName
+                `listings.lotteryPreference.${bucket.preferenceName
+                  .replace("Tier 1 ", "")
+                  .replace("Tier 2 ", "")}.title`,
+                bucket.preferenceName.replace("Tier 1 ", "").replace("Tier 2 ", "")
               )}
         </Heading>
+        {bucket.preferenceName.includes("Tier 1") &&
+          t("listings.lotteryPreference.sfusd.educators.shortTitle")}
+        {bucket.preferenceName.includes("Tier 2") &&
+          t("listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle")}
         {bucket.preferenceName !== "generalLottery" && (
           <p className="mb-1 text-gray-950 text-sm">
-            {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
+            {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable ?? 0 })}
           </p>
         )}
         {bucket.preferenceName === "generalLottery" && (
