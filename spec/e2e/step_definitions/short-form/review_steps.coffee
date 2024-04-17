@@ -78,16 +78,16 @@ Then /^on the Review Page I should see my preference details on my "([^"]*)" app
   (status) ->
     Utils.Expect.byCss(@,
       '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
-    Utils.Expect.byCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
+    Utils.Expect.byCss(@, '#review-neighborhoodResidence .info-item_note', 'for E2ETEST-Jane Doe')
     Utils.Expect.byCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached')
     Utils.Expect.byCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
-    Utils.Expect.byCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
+    Utils.Expect.byCss(@, '#review-liveInSf .info-item_note', 'for E2ETEST-Jane Doe')
     Utils.Expect.byCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
     Utils.Expect.byCss(@,
       '#review-aliceGriffith .info-item_note', 'Letter from SFHA verifying address')
     Utils.Expect.byCss(@,
       '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
-    Utils.Expect.byCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
+    Utils.Expect.byCss(@, '#review-certOfPreference .info-item_note', 'for E2ETEST-Jane Doe')
     Utils.Expect.byCss(@,
       '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
     Utils.Expect.byCss(@,
@@ -99,7 +99,7 @@ Then /^on the Review Page I should see my preference details on my "([^"]*)" app
       '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
     if Utils.Page.showVeteransApplicationQuestion
       Utils.Expect.byCss(@, '#review-veterans .info-item_name', 'Yes, someone is a veteran')
-      Utils.Expect.byCss(@, '#review-veterans .info-item_note', 'for Jane Doe')
+      Utils.Expect.byCss(@, '#review-veterans .info-item_note', 'for E2ETEST-Jane Doe')
 
     if status == 'draft'
       # rentBurden displays more detailed info in draft
