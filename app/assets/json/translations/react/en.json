@@ -1027,6 +1027,7 @@
   "listings.lotteryPreference.sfusd.educators.title": "Educators - San Francisco Unified School District",
   "listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle": "All other employees - SFUSD",
   "listings.lotteryPreference.sfusd.educators.shortTitle": "Educators - SFUSD",
+  "listings.lotteryPreference.sfusd.generalPublic.shortTitle": "General public",
   "listings.lotteryPreference.upToUnits": "Up to %{units} units available",
   "listings.lotteryResults.cardTitle": "Lottery Results Posted",
   "listings.lotteryResults.hide": "Hide Lottery Results",

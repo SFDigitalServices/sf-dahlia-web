@@ -10,7 +10,7 @@ interface LotteryResultsRowProps {
 
 export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowProps) => {
   return (
-    <div className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4">
+    <div className="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4">
       <div className="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white">
         <div className="rank-title uppercase">{t("lottery.rank")}</div>
         <div>{bucket.preferenceResults[0].preferenceRank}</div>
@@ -29,10 +29,11 @@ export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowPro
                 bucket.preferenceName.replace("Tier 1 ", "").replace("Tier 2 ", "")
               )}
         </Heading>
-        {bucket.preferenceName.includes("Tier 1") &&
-          t("listings.lotteryPreference.sfusd.educators.shortTitle")}
-        {bucket.preferenceName.includes("Tier 2") &&
-          t("listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle")}
+        {bucket.preferenceName.includes("Tier 1")
+          ? t("listings.lotteryPreference.sfusd.educators.shortTitle")
+          : (bucket.preferenceName.includes("Tier 2")
+          ? t("listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle")
+          : t("listings.lotteryPreference.sfusd.generalPublic.shortTitle"))}
         {bucket.preferenceName !== "generalLottery" && (
           <p className="mb-1 text-gray-950 text-sm">
             {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable ?? 0 })}
