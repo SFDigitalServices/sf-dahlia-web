@@ -896,8 +896,15 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.resetAndReplaceApp = ->
-    Service.resetApplicationData({ id: Service.application.id })
-    $state.go('dahlia.short-form-welcome.intro', { id: Service.listing.Id })
+    Service.resetApplicationData({
+      id: Service.application.id,
+      # screening questions appear before the application pages,
+      #   applicants cannot access them when restarting so we need to retain the previous answers
+      answeredCommunityScreening: Service.application.answeredCommunityScreening,
+      customEducatorScreeningAnswer: Service.application.customEducatorScreeningAnswer,
+      customEducatorJobClassificationNumber: Service.application.customEducatorJobClassificationNumber,
+    })
+    $state.go('dahlia.short-form-application.name')
 
   Service.loadApplication = (data) ->
     formattedApp = {}
@@ -917,10 +924,8 @@ ShortFormApplicationService = (
     #  unless we implement some side-effect logic within this function to preserve that data.
     #  For example, the line above this comment will preserve the application.answeredCommunityScreening value.
     #  Similar logic needs to be added to the `resetAndStartNewApp` function
-    if Service.application.customEducatorScreeningAnswer
-      formattedApp.customEducatorScreeningAnswer = Service.application.customEducatorScreeningAnswer
-    if Service.application.customEducatorJobClassificationNumber
-      formattedApp.customEducatorJobClassificationNumber = Service.application.customEducatorJobClassificationNumber
+    formattedApp.customEducatorScreeningAnswer ?= Service.application.customEducatorScreeningAnswer
+    formattedApp.customEducatorJobClassificationNumber ?= Service.application.customEducatorJobClassificationNumber
 
     # this will setup Service.application with the loaded data
     Service.resetApplicationData(formattedApp)
