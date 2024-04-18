@@ -37,11 +37,13 @@ const LotteryPreferences = ({
           <p className="text-gray-700 text-sm">
             {t("lottery.numberApplicantsQualifiedForPreference.veteran", {
               number: numVeteranApps,
+              plural: numVeteranApps > 1 ? "s" : "",
             })}
           </p>
           <p className="text-gray-700 text-sm">
             {t("lottery.numberApplicantsQualifiedForPreference.nonVeteran", {
               number: totalSubmittedApps,
+              plural: numVeteranApps > 1 ? "s" : "",
             })}
           </p>
         </>
@@ -49,6 +51,7 @@ const LotteryPreferences = ({
         <p className="text-gray-700 text-sm">
           {t("lottery.numberApplicantsQualifiedForPreference", {
             number: totalSubmittedApps,
+            plural: numVeteranApps > 1 ? "s" : "",
           })}
         </p>
       )}

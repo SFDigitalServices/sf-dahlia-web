@@ -38,6 +38,7 @@ export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowPro
         <p className="text-gray-700 text-sm">
           {t("lottery.numberApplicantsQualifiedForPreference", {
             number: bucket.totalSubmittedApps,
+            plural: bucket.totalSubmittedApps > 1 ? "s" : "",
           })}
         </p>
       </div>
