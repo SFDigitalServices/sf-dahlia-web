@@ -44,7 +44,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
         <p
           class="text-gray-700 text-sm"
         >
-          6 applicants are on this list.
+          6 applicants on this list.
         </p>
       </div>
       <hr
@@ -68,7 +68,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
         <p
           class="text-gray-700 text-sm"
         >
-          56 applicants are on this list.
+          56 applicants on this list.
         </p>
       </div>
       <hr
@@ -98,7 +98,7 @@ exports[`ListingDetailsLotteryPreferences displays 2 preferences - NRHP, L/W 1`]
       <p
         class="text-gray-700 text-sm"
       >
-        5 applicants are on this list. Please note, preference holders will be considered for all units first.
+        5 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
       </p>
     </div>
     <hr
@@ -152,7 +152,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicants on this list.
         </p>
       </div>
       <hr
@@ -176,7 +176,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
         <p
           class="text-gray-700 text-sm"
         >
-          4 applicants are on this list.
+          4 applicants on this list.
         </p>
       </div>
       <hr
@@ -200,7 +200,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
         <p
           class="text-gray-700 text-sm"
         >
-          905 applicants are on this list.
+          905 applicants on this list.
         </p>
       </div>
       <hr
@@ -230,7 +230,7 @@ exports[`ListingDetailsLotteryPreferences displays 3 default preferences - COP, 
       <p
         class="text-gray-700 text-sm"
       >
-        193 applicants are on this list. Please note, preference holders will be considered for all units first.
+        193 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
       </p>
     </div>
     <hr

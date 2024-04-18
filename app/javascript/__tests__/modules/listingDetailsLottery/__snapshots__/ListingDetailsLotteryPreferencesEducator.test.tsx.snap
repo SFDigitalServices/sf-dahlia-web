@@ -58,7 +58,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -82,12 +82,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -111,12 +111,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          2 Veterans are on this list
+          2 Veterans on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          3 other applicants are on this list
+          3 other applicants on this list
         </p>
       </div>
       <hr
@@ -149,7 +149,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -173,12 +173,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -202,7 +202,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -226,18 +226,152 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicants are on this list
+          2 other applicant on this list
         </p>
       </div>
       <hr
         class="mt-4"
       />
     </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        General Public
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference (COP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference (DTHP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference (NRHP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          5 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <div
+      class="bg-gray-100 border-b mb-4 p-4"
+    >
+      <hr
+        class="border-b-4 border-primary"
+      />
+    </div>
+    <div
+      class="px-8"
+    >
+      <h3
+        class="font-sans font-semibold text-sm tracking-wide uppercase"
+      >
+        General Pool
+      </h3>
+      <p
+        class="mb-1 text-sm"
+      >
+        Any remaining units
+      </p>
+      <p
+        class="text-gray-700 text-sm"
+      >
+        2 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
+      </p>
+    </div>
+    <hr
+      class="mt-4"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -300,7 +434,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -324,12 +458,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -353,12 +487,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          2 Veterans are on this list
+          2 Veterans on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          3 other applicants are on this list
+          3 other applicants on this list
         </p>
       </div>
       <hr
@@ -391,7 +525,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -415,12 +549,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -444,7 +578,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -468,18 +602,152 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicants are on this list
+          2 other applicant on this list
         </p>
       </div>
       <hr
         class="mt-4"
       />
     </div>
+    <header
+      class="border-b border-gray-450 my-4"
+    >
+      <h2
+        class="text__underline-weighted mx-8 text-xs"
+      >
+        General Public
+      </h2>
+    </header>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Certificate of Preference (COP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference (DTHP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference (NRHP)
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          5 applicant on this list.
+        </p>
+      </div>
+      <hr
+        class="mt-4"
+      />
+    </div>
+    <div
+      class="bg-gray-100 border-b mb-4 p-4"
+    >
+      <hr
+        class="border-b-4 border-primary"
+      />
+    </div>
+    <div
+      class="px-8"
+    >
+      <h3
+        class="font-sans font-semibold text-sm tracking-wide uppercase"
+      >
+        General Pool
+      </h3>
+      <p
+        class="mb-1 text-sm"
+      >
+        Any remaining units
+      </p>
+      <p
+        class="text-gray-700 text-sm"
+      >
+        2 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
+      </p>
+    </div>
+    <hr
+      class="mt-4"
+    />
   </div>
 </DocumentFragment>
 `;
@@ -542,7 +810,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -566,12 +834,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -595,12 +863,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          2 Veterans are on this list
+          2 Veterans on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          3 other applicants are on this list
+          3 other applicants on this list
         </p>
       </div>
       <hr
@@ -633,7 +901,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -657,12 +925,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -686,7 +954,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -710,12 +978,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicants are on this list
+          2 other applicant on this list
         </p>
       </div>
       <hr
@@ -784,7 +1052,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -808,12 +1076,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -837,12 +1105,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          2 Veterans are on this list
+          2 Veterans on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          3 other applicants are on this list
+          3 other applicants on this list
         </p>
       </div>
       <hr
@@ -875,7 +1143,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -899,12 +1167,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 other applicants are on this list
+          1 other applicant on this list
         </p>
       </div>
       <hr
@@ -928,7 +1196,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant on this list.
         </p>
       </div>
       <hr
@@ -952,12 +1220,12 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 Veterans are on this list
+          1 Veteran on this list
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicants are on this list
+          2 other applicant on this list
         </p>
       </div>
       <hr
