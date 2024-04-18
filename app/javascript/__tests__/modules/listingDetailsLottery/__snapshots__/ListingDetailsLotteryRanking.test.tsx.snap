@@ -47,7 +47,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
       </p>
     </div>
     <div
-      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
     >
       <div
         class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
@@ -69,6 +69,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
         >
           Live or Work in San Francisco Preference
         </h3>
+        General public
         <p
           class="mb-1 text-gray-950 text-sm"
         >
@@ -128,7 +129,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       </div>
     </header>
     <div
-      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
     >
       <div
         class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
@@ -150,6 +151,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         >
           Certificate of Preference (COP)
         </h3>
+        General public
         <p
           class="mb-1 text-gray-950 text-sm"
         >
@@ -163,7 +165,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
       </div>
     </div>
     <div
-      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
     >
       <div
         class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
@@ -185,6 +187,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         >
           Live or Work in San Francisco Preference
         </h3>
+        General public
         <p
           class="mb-1 text-gray-950 text-sm"
         >
@@ -263,7 +266,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
       </p>
     </div>
     <div
-      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 py-4"
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
     >
       <div
         class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
@@ -285,6 +288,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
         >
           General Pool
         </h3>
+        General public
         <p
           class="mb-1 text-gray-950 text-sm"
         >
