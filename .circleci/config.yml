@@ -280,7 +280,7 @@ workflows:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
       - waiter:
-          <<: *angular_jobs
+          <<: *non_production_jobs
       - cleanup-test-data:
           requires:
             - waiter
