@@ -241,6 +241,27 @@ jobs:
             LIST=$(echo $TESTFILES | awk '{ gsub(" ", ",") ; system( "echo "  $0) }')
             echo $LIST
             npm run protractor -- --specs $LIST
+  cleanup-test-data:
+    <<: *defaults
+    steps:
+      - setup
+      - start-server
+      - run: bundle exec rails tests:e2e_cleanup
+  waiter:
+    # This is workaround that lets us to run a job after all other jobs in the workflow are complete, regardless of prior jobs' success or failure.
+    # The waiter job uses a user's personal api token (CCI_TOKEN) to ping the circleci api every 5 seconds.
+    # CCI_TOKEN is a personal circleci token generated in the circle ci account ui that has been added as an environment variable for the project.
+    # The api request checks every 5 seconds if jobs are still running for this workflow until it receives the response that all jobs are finished.
+    # After the waiter job finishes, jobs that require waiter to complete will run.
+    docker: 
+      - image: cimg/node:current
+    steps:
+      - run: |
+          while [[ $(curl --location --request GET "https://circleci.com/api/v2/workflow/$CIRCLE_WORKFLOW_ID/job" --header "Circle-Token: $CCI_TOKEN"| jq -r '.items[]|select(.name != "waiter")|.status' | grep -c "running") -gt 0 ]]
+            do
+              sleep 5
+            done
+      - run: echo "All required jobs have now completed"
 workflows:
   version: 2.1
   build-and-deploy:
@@ -264,3 +285,8 @@ workflows:
       - e2e-legacy:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
+      - waiter:
+          <<: *angular_jobs
+      - cleanup-test-data:
+          requires:
+            - waiter
