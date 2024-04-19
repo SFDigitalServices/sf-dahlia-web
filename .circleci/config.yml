@@ -24,6 +24,14 @@ non_production_jobs: &non_production_jobs
       ignore: production
   requires:
     - build
+angular_jobs: &angular_jobs
+  filters:
+    branches:
+      only: 
+        - /^angular.*$/
+        - main
+  requires:
+    - build
 prod_and_release_jobs: &prod_and_release_jobs
   context: webapp-prod
   requires:
@@ -268,11 +276,11 @@ workflows:
       - unit-rspec:
           <<: *non_production_jobs
       - unit-angular:
-          <<: *non_production_jobs
+          <<: *angular_jobs
       - e2e:
           <<: *non_production_jobs
       - e2e-legacy:
-          <<: *non_production_jobs
+          <<: *angular_jobs
       - e2e:
           <<: *prod_and_release_jobs
           name: e2e-production
@@ -280,7 +288,7 @@ workflows:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
       - waiter:
-          <<: *non_production_jobs
+          <<: *angular_jobs
       - cleanup-test-data:
           requires:
             - waiter
