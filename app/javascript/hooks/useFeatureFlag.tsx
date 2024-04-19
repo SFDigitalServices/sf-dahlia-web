@@ -20,7 +20,9 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
     } else if (flagFromUrl === "false") {
       return false
     }
-  } else if (flagsError || unleashFlag === undefined) {
+  }
+
+  if (flagsError || unleashFlag === undefined) {
     console.error(flagsError)
     return defaultValue
   } else {

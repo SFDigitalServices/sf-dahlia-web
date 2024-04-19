@@ -16,8 +16,8 @@ interface ObjectWithAssets {
 }
 
 const config = {
-  url: "http://localhost:4242/api/frontend", // Your local instance Unleash API URL
-  clientKey: "default:development.unleash-insecure-frontend-api-token", // Your client-side API token
+  url: process.env.UNLEASH_URL,
+  clientKey: process.env.UNLEASH_TOKEN,
   refreshInterval: 15, // How often (in seconds) the client should poll the proxy for updates
   appName: "webapp", // The name of your application. It's only used for identifying your application
 }
