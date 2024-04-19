@@ -24,6 +24,10 @@ export const ListingDetailsLotteryResultsRow = ({ bucket }: LotteryResultsRowPro
             ? t("lottery.generalPool")
             : defaultIfNotTranslated(
                 `listings.lotteryPreference.${bucket.preferenceName
+                  // These are to accomodate Shirley Chisolm Village layered preferences
+                  // Tier 1 indicates an educator and another preference
+                  // Tier 2 is someone who works for the school district and has another preference
+                  // We don't want to display these values to users
                   .replace("Tier 1 ", "")
                   .replace("Tier 2 ", "")}.title`,
                 bucket.preferenceName.replace("Tier 1 ", "").replace("Tier 2 ", "")
