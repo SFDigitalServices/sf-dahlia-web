@@ -91,73 +91,79 @@ describe("Homepage integration tests", () => {
 
   describe("using the nav bar", () => {
     beforeEach(() => {
-      cy.visit("/")
-
-      cy.findByRole("navigation", { name: "main navigation" }).as("MainNav")
-
-      cy.get("@MainNav").find('a[href*="/listings/for-rent"]').as("NavBarRentButton")
-      cy.get("@MainNav").find('a[href*="/listings/for-sale"]').as("NavBarBuyButton")
-      cy.get("@MainNav").find('a[href*="/favorites"]').as("NavBarFavoritesButton")
-      cy.get("@MainNav").find('a[href*="/get-assistance"]').as("NavBarAssistanceButton")
-      cy.get("@MainNav").find('a[href*="/sign-in"]').as("SignInButton")
+      cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
     })
-
     describe("navigating to the for-rent page", () => {
       it("navigates to the for-rent page in english by default", () => {
         cy.visit("/")
-        cy.get("@NavBarRentButton").click()
+        cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in english when specified", () => {
         cy.visit("/en")
-        cy.get("@NavBarRentButton").click()
+        cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-rent")
       })
 
       it("navigates to the for-rent page in spanish", () => {
         cy.visit("/es")
-        cy.get("@NavBarRentButton").click()
+        cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Chinese", () => {
         cy.visit("/zh")
-        cy.get("@NavBarRentButton").click()
+        cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/zh/listings/for-rent")
       })
 
       it("navigates to the for-rent page in Tagalog", () => {
         cy.visit("/tl")
-        cy.get("@NavBarRentButton").click()
+        cy.findAndClickMenuItem("/listings/for-rent")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/tl/listings/for-rent")
       })
     })
 
     describe("navigating to the for-sale page", () => {
+      beforeEach(() => {
+        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
+      })
       it("navigates to the for-sale page in english by default", () => {
         cy.visit("/")
-        cy.get("@NavBarBuyButton").click()
+        cy.findAndClickMenuItem("/listings/for-sale")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/listings/for-sale")
       })
 
       it("navigates to the for-sale page in spanish", () => {
         cy.visit("/es")
-        cy.get("@NavBarBuyButton").click()
+        cy.findAndClickMenuItem("/listings/for-sale")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/listings/for-sale")
       })
     })
 
     describe("navigating to the favorites page", () => {
+      beforeEach(() => {
+        cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
+      })
       it("navigates to the favorites page in english by default", () => {
         cy.visit("/")
-        cy.get("@NavBarFavoritesButton").click()
+        cy.findAndClickMenuItem("/favorites")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/favorites")
       })
 
       it("navigates to the favorites page in spanish", () => {
         cy.visit("/es")
-        cy.get("@NavBarFavoritesButton").click()
+        cy.findAndClickMenuItem("/favorites")
+        cy.wait("@listings")
         cy.location("pathname").should("eq", "/es/favorites")
       })
     })
@@ -165,26 +171,26 @@ describe("Homepage integration tests", () => {
     describe("navigating to the get-assistance page", () => {
       it("navigates to the get-assistance page in english by default", () => {
         cy.visit("/")
-        cy.get("@NavBarAssistanceButton").click()
+        cy.findAndClickMenuItem("/get-assistance")
         cy.location("pathname").should("eq", "/get-assistance")
       })
 
       it("navigates to the get-assistance page in spanish", () => {
         cy.visit("/es")
-        cy.get("@NavBarAssistanceButton").click()
+        cy.findAndClickMenuItem("/get-assistance")
         cy.location("pathname").should("eq", "/es/get-assistance")
       })
     })
     describe("navigating to the sign-in page", () => {
       it("navigates to the sign-in page in english by default", () => {
         cy.visit("/")
-        cy.get("@SignInButton").click()
+        cy.findAndClickMenuItem("/sign-in")
         cy.location("pathname").should("eq", "/sign-in")
       })
 
       it("navigates to the sign-in page in spanish", () => {
         cy.visit("/es")
-        cy.get("@SignInButton").click()
+        cy.findAndClickMenuItem("/sign-in")
         cy.location("pathname").should("eq", "/es/sign-in")
       })
     })

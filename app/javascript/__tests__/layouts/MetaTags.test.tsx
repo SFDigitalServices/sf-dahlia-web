@@ -22,8 +22,7 @@ describe("<MetaTags />", () => {
 
   it("renders a description", () => {
     const { container } = render(<MetaTags description="The Description" />)
-    expect(container.querySelector("meta[name='description']").getAttribute("content")).toEqual(
-      "The Description"
-    )
+    const descriptionMeta = container.querySelector("meta[name='description']")
+    expect(descriptionMeta?.getAttribute("content")).toEqual("The Description")
   })
 })

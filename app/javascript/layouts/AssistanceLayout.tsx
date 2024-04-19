@@ -75,10 +75,10 @@ const AssistanceLayout = ({ children, title, subtitle, mainPage }: Props) => {
                     English: <a href="tel:+14157015622">(415) 701-5622</a>
                   </li>
                   <li>
-                    Español: <a href="tel:+14157015623">(415) 701-5623</a>
+                    Español: <a href="tel:+14157015624">(415) 701-5624</a>
                   </li>
                   <li>
-                    中文: <a href="tel:+14157015624">(415) 701-5624</a>
+                    中文: <a href="tel:+14157015623">(415) 701-5623</a>
                   </li>
                   <li>
                     Filipino: <a href="tel:+14157015570">(415) 701-5570</a>

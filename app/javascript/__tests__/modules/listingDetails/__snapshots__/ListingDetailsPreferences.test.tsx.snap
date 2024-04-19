@@ -135,11 +135,6 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
       </div>
     </li>
   </ol>
-  <p
-    class="text-gray-750 text-sm"
-  >
-    After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>
 </DocumentFragment>
 `;
 
@@ -411,10 +406,5 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
       </div>
     </li>
   </ol>
-  <p
-    class="text-gray-750 text-sm"
-  >
-    After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.
-  </p>
 </DocumentFragment>
 `;

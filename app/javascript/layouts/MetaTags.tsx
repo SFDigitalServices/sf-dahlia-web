@@ -4,6 +4,7 @@ import { t } from "@bloom-housing/ui-components"
 import { Helmet } from "react-helmet-async"
 
 import { ConfigContext } from "../lib/ConfigContext"
+import { getCurrentLanguage } from "../util/languageUtil"
 
 export interface MetaTagsProps {
   title?: string
@@ -13,11 +14,14 @@ export interface MetaTagsProps {
 
 const MetaTags = (props: MetaTagsProps) => {
   const { getAssetPath } = useContext(ConfigContext)
+  const lang = getCurrentLanguage(window.location.pathname)
   // Description is separated into two check as Helmet can't handle nested elements
   return (
     <>
-      <Helmet>
-        <title>{props.title || t("t.dahliaSanFranciscoHousingPortal")}</title>
+      <Helmet htmlAttributes={{ lang }}>
+        <title className="notranslate">
+          {props.title || t("t.dahliaSanFranciscoHousingPortal")}
+        </title>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -13,8 +13,11 @@ Bundler.require(*Rails.groups)
 module SfDahliaWeb
   # setting up config for application
   class Application < Rails::Application
+    config.load_defaults 7.0
+
     config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations')
+    config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations', 'react')
 
     # http://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
@@ -60,5 +63,13 @@ module SfDahliaWeb
       r301 %r{(.+)/\?(.*)$}, '$1?$2'
       r301 '/mohcd-plus-housing', 'https://sfmohcd.org/plus-housing-application'
     end
+
+    # Disables the deprecated #to_s override in some Ruby core classes
+    # See https://guides.rubyonrails.org/configuring.html#config-active-support-disable-to-s-conversion for more information.
+    config.active_support.disable_to_s_conversion = true
+
+    # Rails 7 can protect from open redirect attacks in `redirect_back_or_to` and `redirect_to`.
+    # This is not compatible with our authentication process so we disable it
+    config.action_controller.raise_on_open_redirects = false
   end
 end

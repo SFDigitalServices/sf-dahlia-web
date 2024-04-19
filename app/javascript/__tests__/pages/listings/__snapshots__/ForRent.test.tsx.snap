@@ -8,7 +8,9 @@ exports[`For Rent renders ForRent component 1`] = `
     <div
       class="site-content"
     >
-      <title>
+      <title
+        class="notranslate"
+      >
         Rental Listings
       </title>
       <meta

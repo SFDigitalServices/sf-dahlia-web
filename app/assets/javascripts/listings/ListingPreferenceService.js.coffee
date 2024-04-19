@@ -65,6 +65,10 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
       !_.invert(Service.preferenceMap)[listingPref.preferenceName]
     customProofPreferences = _.remove customPreferences, (customPref) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
+
+    # Filter out custom preferences that should not be shown on the e7b-custom-preferences page
+    _.remove(customPreferences, (pref) -> !_.includes(ListingConstantsService.CUSTOM_PREFERENCE_NAMES, pref.preferenceName))
+
     listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 

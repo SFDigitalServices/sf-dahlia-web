@@ -5,6 +5,7 @@ require 'support/jasmine'
 
 describe 'Listings API' do
   listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
+  completed_listing_id = 'a0W8H0000014Yo4UAE'
 
   ### generate Jasmine fixtures
   describe 'index' do
@@ -63,7 +64,7 @@ describe 'Listings API' do
   describe 'lottery buckets' do
     save_fixture do
       VCR.use_cassette('listings/lottery-buckets') do
-        get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
+        get "/api/v1/listings/#{completed_listing_id}/lottery_buckets.json"
       end
     end
   end
@@ -176,14 +177,14 @@ describe 'Listings API' do
   it 'gets lottery buckets for a Listing' do
     # require 'pry-byebug';binding.pry
     VCR.use_cassette('listings/lottery-buckets') do
-      get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
+      get "/api/v1/listings/#{completed_listing_id}/lottery_buckets.json"
     end
 
     json = JSON.parse(response.body)
 
     expect(response).to be_successful
 
-    expect(json['lotteryBuckets'].length).to eq(7)
+    expect(json['lotteryBuckets'].length).to eq(9)
   end
 
   it 'gets lottery preferences for a Listing' do

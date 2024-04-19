@@ -167,7 +167,12 @@ SharedService = ($http, $state, $window, $document) ->
       a
     ), []).join '&'
 
-  Service.showVeteransApplicationQuestion = $window.VETERANS_APPLICATION_QUESTION is 'true'
+  Service.showVeteransApplicationQuestion = (listing) ->
+    $window.VETERANS_APPLICATION_QUESTION is 'true' &&
+    !!listing.Listing_Lottery_Preferences &&
+    _.some(listing.Listing_Lottery_Preferences, (pref) ->
+      _.includes(pref?.Lottery_Preference?.Name?.toLowerCase(), "veteran")
+    )
 
   return Service
 

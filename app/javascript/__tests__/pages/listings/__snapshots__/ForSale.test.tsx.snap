@@ -8,7 +8,9 @@ exports[`For Sale renders ForSale component 1`] = `
     <div
       class="site-content"
     >
-      <title>
+      <title
+        class="notranslate"
+      >
         Sale Listings
       </title>
       <meta

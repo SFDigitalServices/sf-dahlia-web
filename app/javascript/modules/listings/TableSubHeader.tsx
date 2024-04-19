@@ -12,7 +12,7 @@ const TableSubHeader = ({ listing }: TableSubHeaderProps) => {
   const priorityTypes = getPriorityTypes(listing)
   return (
     (priorityTypes || isEducatorTwo(listing)) && (
-      <div>
+      <div className="text__small-normal">
         {t("listings.includesPriorityUnits")}
         <ul className="list-disc ml-4">
           {isEducatorTwo(listing) && (

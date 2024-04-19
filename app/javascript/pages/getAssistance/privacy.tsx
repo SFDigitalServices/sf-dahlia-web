@@ -63,7 +63,7 @@ const Privacy = () => {
             </div>
             <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
               <h2>{t("privacyPolicy.analyticsTitle")}</h2>
-              <p>
+              <div>
                 {renderMarkup(
                   `${t("privacyPolicy.analyticsP1", {
                     termsLink:
@@ -75,7 +75,7 @@ const Privacy = () => {
                     linkEnd: "</a>",
                   })}`
                 )}
-              </p>
+              </div>
             </div>
             <div className="md:pr-11 md:pl-0">
               <hr />
@@ -112,7 +112,7 @@ const Privacy = () => {
             </div>
             <div className="space-y-4 p-6 md:py-11 md:pr-11 lg:pl-0">
               <h2>{t("privacyPolicy.questionsTitle")}</h2>
-              <p>
+              <div>
                 {renderMarkup(
                   `${t("privacyPolicy.questionsP1", {
                     telLink: '<a href="tel:4157015500">' + t("415-701-5500") + "</a>",
@@ -122,7 +122,7 @@ const Privacy = () => {
                       "</a>",
                   })}`
                 )}
-              </p>
+              </div>
             </div>
           </div>
         </article>

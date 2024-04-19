@@ -8,6 +8,8 @@ module.exports = {
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly",
+    cy: "readonly",
+    Cypress: "readonly",
   },
   // Specifies the ESLint parser
   parser: "@typescript-eslint/parser",

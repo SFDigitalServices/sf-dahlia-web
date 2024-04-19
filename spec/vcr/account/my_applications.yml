@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,15 +21,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:19 GMT
+      - Fri, 08 Mar 2024 21:21:26 GMT
       Set-Cookie:
-      - BrowserId=VqMdC88QEe2TeH0FQL4pXA; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:19 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:19 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:19
-        GMT; Max-Age=31536000
+      - BrowserId=0jXG1d2REe6pYOlLpir6bQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:21:26 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:26 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:26
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -46,8 +49,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1680190459930","signature":"eyIACOrGGUBIFuFE5iOe8LnS/BkiD24RaMcHnUv5BPo="}'
-  recorded_at: Thu, 30 Mar 2023 15:34:19 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D8H0000004dNlUAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1709932886418","signature":"aJIu45PVZyzLA2WpwcPEc72P0cWA10kd17zKaJlZgoc="}'
+  recorded_at: Fri, 08 Mar 2024 21:21:26 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/shortForm/list/0030P000020bdxYQAQ"
@@ -56,7 +59,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -69,15 +72,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:20 GMT
+      - Fri, 08 Mar 2024 21:21:26 GMT
       Set-Cookie:
-      - BrowserId=VtQX088QEe2ETjWzqJMcFw; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:20 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:20 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:20
-        GMT; Max-Age=31536000
+      - BrowserId=0pCRAd2REe6ITjlH8ZFWaA; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:21:26 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:26 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:26
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -92,11 +98,11 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '[{"totalMonthlyRent":null,"status":"Submitted","shortFormPreferences":[],"referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whiteOther":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"raceEthnicity":null,"race":null,"primaryLanguage":"Not
         Listed","preferenceAddressMatch":null,"phoneType":"Home","phone":"2222222222","pacificIslanderOther":null,"otherLanguage":"other
-        language","noPhone":false,"noEmail":false,"noAddress":false,"MLSId":null,"middleName":null,"menaOther":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"latinoOther":null,"lastName":"Dolendo","isVeteran":null,"indigenousOther":null,"indigenousNativeAmericanGroup":null,"indigenousCentralSouthAmericaGroup":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasDisability":null,"hasAltMailingAddress":false,"genderOther":"other
+        language","noPhone":false,"noEmail":false,"noAddress":false,"MLSId":null,"middleName":null,"menaOther":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"latinoOther":null,"lastName":"Dolendo","jobClassification":null,"isVeteran":null,"isSFUSDEmployee":"No","indigenousOther":null,"indigenousNativeAmericanGroup":null,"indigenousCentralSouthAmericaGroup":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasDisability":null,"hasAltMailingAddress":false,"genderOther":"other
         gender","gender":"Not Listed","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","DALPCertified":null,"contactId":"0030P000020bdxYQAQ","city":null,"candidateScore":null,"BMRCertified":null,"blackOther":null,"asianOther":null,"appMemberType":"Primary
-        Applicant","appMemberId":"a0n0P00000AwpInQAJ","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null},"otherHousingCounselingAgency":null,"name":"APP-00038758","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00038758","listingID":"a0WU000000ClNXGMA3","lendingAgent":null,"isVeteranInHousehold":false,"isPrimaryApplicantVeteran":null,"isNonPrimaryMemberVeteran":null,"isFirstTimeHomebuyer":false,"id":"a0o0P00000FEUwHQAX","housingCounselingAgency":null,"householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whiteOther":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","raceEthnicity":null,"race":null,"primaryLanguage":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"pacificIslanderOther":null,"otherLanguage":null,"noPhone":false,"noEmail":false,"noAddress":false,"MLSId":null,"middleName":null,"menaOther":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"latinoOther":null,"lastName":"Kanobi","isVeteran":null,"indigenousOther":null,"indigenousNativeAmericanGroup":null,"indigenousCentralSouthAmericaGroup":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasDisability":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","DALPCertified":null,"contactId":null,"city":null,"candidateScore":null,"BMRCertified":null,"blackOther":null,"asianOther":null,"appMemberType":"Household
-        Member","appMemberId":"a0n8H000000t54zQAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null}],"homebuyerEducationAgency":null,"hasSenior":null,"hasPublicHousing":null,"hasMinimumCreditScore":false,"hasMilitaryService":null,"hasLoanPreapproval":false,"hasDisability":null,"hasDevelopmentalDisability":null,"hasCompletedHomebuyerEducation":false,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":null,"appRTType":"Rental_Short_Form","applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false,"adaPrioritiesSelected":null}]'
-  recorded_at: Thu, 30 Mar 2023 15:34:20 GMT
+        Applicant","appMemberId":"a0n0P00000AwpInQAJ","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null},"otherHousingCounselingAgency":null,"name":"APP-00038758","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00038758","listingID":"a0WU000000ClNXGMA3","lendingAgent":null,"jobClassification":null,"isVeteranInHousehold":false,"isSFUSDEmployee":"No","isPrimaryApplicantVeteran":null,"isNonPrimaryMemberVeteran":null,"isFirstTimeHomebuyer":false,"id":"a0o0P00000FEUwHQAX","housingCounselingAgency":null,"householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whiteOther":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","raceEthnicity":null,"race":null,"primaryLanguage":null,"preferenceAddressMatch":null,"phoneType":null,"phone":null,"pacificIslanderOther":null,"otherLanguage":null,"noPhone":false,"noEmail":false,"noAddress":false,"MLSId":null,"middleName":null,"menaOther":null,"MCCCertified":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lendingAgentStatus":null,"latinoOther":null,"lastName":"Kanobi","jobClassification":null,"isVeteran":null,"isSFUSDEmployee":"No","indigenousOther":null,"indigenousNativeAmericanGroup":null,"indigenousCentralSouthAmericaGroup":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasDisability":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","DALPCertified":null,"contactId":null,"city":null,"candidateScore":null,"BMRCertified":null,"blackOther":null,"asianOther":null,"appMemberType":"Household
+        Member","appMemberId":"a0n8H000000t54zQAA","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null,"accountId":null,"acceptingNewMOHCDClients":null}],"homebuyerEducationAgency":null,"hasSenior":null,"hasPublicHousing":null,"hasMinimumCreditScore":false,"hasMilitaryService":null,"hasLoanPreapproval":false,"hasDisability":null,"hasDevelopmentalDisability":null,"hasCompletedHomebuyerEducation":false,"formMetadata":null,"externalSessionId":"","didApplicantUseHousingCounselingAgency":null,"appRTType":"Rental_Short_Form","applicationSubmittedDate":"2024-03-08","applicationSubmissionType":"Electronic","applicationLanguage":"English","answeredCommunityScreening":null,"annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false,"adaPrioritiesSelected":null}]'
+  recorded_at: Fri, 08 Mar 2024 21:21:27 GMT
 - request:
     method: get
     uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ListingDetails?ids=a0WU000000ClNXGMA3&subset=browse"
@@ -105,7 +111,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.17.6
+      - Faraday v2.7.4
       Authorization:
       - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
@@ -118,15 +124,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Mar 2023 15:34:20 GMT
+      - Fri, 08 Mar 2024 21:21:27 GMT
       Set-Cookie:
-      - BrowserId=VzLZqM8QEe2lEcVWgDxlSg; domain=.salesforce.com; path=/; expires=Fri,
-        29-Mar-2024 15:34:20 GMT; Max-Age=31536000
-      - CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:20 GMT; Max-Age=31536000
-      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Fri, 29-Mar-2024 15:34:20
-        GMT; Max-Age=31536000
+      - BrowserId=0uOS7t2REe6KEaf99_pVTQ; domain=.salesforce.com; path=/; expires=Sat,
+        08-Mar-2025 21:21:27 GMT; Max-Age=31536000
+      - CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:27 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Sat, 08-Mar-2025 21:21:27
+        GMT; Max-Age=31536000; secure
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
       X-Robots-Tag:
       - none
       Cache-Control:
@@ -142,6 +151,8 @@ http_interactions:
       string: '[{"unitSummaries":{"reserved":null,"general":[{"unitType":"Studio","totalUnits":1,"minSquareFt":476,"minRentalMinIncome":2477.50,"minPriceWithParking":null,"minPriceWithoutParking":null,"minPercentIncome":null,"minOccupancy":1,"minMonthlyRent":991.00,"minHoaDuesWithParking":null,"minHoaDuesWithoutParking":null,"maxSquareFt":476,"maxRentalMinIncome":2477.50,"maxPriceWithParking":null,"maxPriceWithoutParking":null,"maxPercentIncome":null,"maxOccupancy":2,"maxMonthlyRent":991.00,"maxHoaDuesWithParking":null,"maxHoaDuesWithoutParking":null,"listingID":"a0WU000000ClNXGMA3","availability":null,"absoluteMinIncome":null,"absoluteMaxIncome":null}]},"reservedDescriptor":null,"prioritiesDescriptor":null,"listingID":"a0WU000000ClNXGMA3","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0WU000000ClNXGMA3"},"Id":"a0WU000000ClNXGMA3","Tenure__c":"Re-rental","Name":"8
         Tenth (NEMA) Unit 742","Lottery_Results_Date__c":"2016-06-10","Reserved_community_minimum_age__c":0,"hasWaitlist__c":false,"Units_Available__c":0,"Building_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/NEMA8-10thSt.jpg","Building_Name__c":"NEMA
         Phase 1","Building_Street_Address__c":"8 10th St","Building_City__c":"San
-        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94103","Publish_Lottery_Results__c":false},"chartTypes":null}]'
-  recorded_at: Thu, 30 Mar 2023 15:34:21 GMT
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94103","Publish_Lottery_Results__c":false,"LastModifiedDate":"2023-03-29T21:42:13.000+0000","Listing_Images__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Listing_Image__c","url":"/services/data/v35.0/sobjects/Listing_Image__c/a0t8H000001pvHJQAY"},"Listing__c":"a0WU000000ClNXGMA3","Id":"a0t8H000001pvHJQAY","Name":"8
+        Tenth (NEMA) Unit 742 Cover Image","Image_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/NEMA8-10thSt.jpg","Image_Description__c":"Listing
+        Name:8 Tenth (NEMA) Unit 742, Address:8 10th St, San Francisco CA, 94103","Display_Order__c":1}]}},"chartTypes":null}]'
+  recorded_at: Fri, 08 Mar 2024 21:21:27 GMT
 recorded_with: VCR 6.1.0

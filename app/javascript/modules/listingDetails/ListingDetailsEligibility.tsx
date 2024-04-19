@@ -18,6 +18,7 @@ import {
   isSale,
   listingHasOnlySROUnits,
   listingHasSROUnits,
+  listingHasVeteransPreference,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -33,6 +34,7 @@ import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
+import Link from "../../navigation/Link"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -72,12 +74,9 @@ export const ListingDetailsEligibility = ({
   let occupancySubtitle = ""
   if (isSale(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionMinOne")
-  } else if (
-    isAllSRO &&
-    !(isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing))
-  ) {
+  } else if (isAllSRO && !isPluralSRO(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSro")
-  } else if (isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)) {
+  } else if (isPluralSRO(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", { numberOfPeople: "2" })
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
@@ -161,7 +160,10 @@ export const ListingDetailsEligibility = ({
                     )}
                   </p>
                   <p>
-                    {t("listings.customListingType.educator.eligibility.part3")}
+                    {/* TODO: replace google translations with human translations when ready */}
+                    <span className="translate">
+                      {t("listings.customListingType.educator.eligibility.part3.v2")}
+                    </span>
                     {renderInlineMarkup(
                       t("listings.customListingType.educator.eligibility.part4", {
                         emailListLink: "https://confirmsubscription.com/h/y/C3BAFCD742D47910",
@@ -278,7 +280,7 @@ export const ListingDetailsEligibility = ({
         {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
-              <ListingDetailsChisholmPreferences />
+              <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
             </span>
           </ErrorBoundary>
         ) : (
@@ -287,9 +289,29 @@ export const ListingDetailsEligibility = ({
             subtitle={
               <>
                 <div className="mb-4">
-                  {renderInlineMarkup(t("listingsForSale.lotteryPreferences.noPreferences"))}
+                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
                 </div>
-                {t("listingsForSale.lotteryPreferences.hasPreferences")}
+                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                {listingHasVeteransPreference(listing) && (
+                  <>
+                    <div className="mt-4">
+                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
+                    </div>
+                    <div className="mb-4">
+                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                    </div>
+                    <div>
+                      <Link
+                        className="text-blue-700"
+                        external={true}
+                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                        target="_blank"
+                      >
+                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                      </Link>
+                    </div>
+                  </>
+                )}
               </>
             }
           >

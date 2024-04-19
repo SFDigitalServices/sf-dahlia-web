@@ -41,3 +41,7 @@ body .goog-te-banner-frame {
 #\:1\.container{
   display:none !important;
 }
+
+.app-card_nav {
+  overflow: auto;
+}

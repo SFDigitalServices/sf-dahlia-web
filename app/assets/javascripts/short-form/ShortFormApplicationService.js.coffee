@@ -585,7 +585,7 @@ ShortFormApplicationService = (
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
     customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
     prefList = prefList.concat(customPrefs, customProofPrefs)
-    if SharedService.showVeteransApplicationQuestion && Service.application.isAnyoneAVeteran == 'Yes'
+    if SharedService.showVeteransApplicationQuestion(Service.listing) && Service.application.isAnyoneAVeteran == 'Yes'
       return false
     return !_.some(_.pick(Service.preferences, prefList))
 
@@ -896,7 +896,14 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.resetAndReplaceApp = ->
-    Service.resetApplicationData({ id: Service.application.id })
+    Service.resetApplicationData({
+      id: Service.application.id,
+      # screening questions appear before the application pages,
+      #   applicants cannot access them when restarting so we need to retain the previous answers
+      answeredCommunityScreening: Service.application.answeredCommunityScreening,
+      customEducatorScreeningAnswer: Service.application.customEducatorScreeningAnswer,
+      customEducatorJobClassificationNumber: Service.application.customEducatorJobClassificationNumber,
+    })
     $state.go('dahlia.short-form-application.name')
 
   Service.loadApplication = (data) ->
@@ -1132,6 +1139,12 @@ ShortFormApplicationService = (
 
   Service.listingHasReservedUnitType = (type) ->
     ListingUnitService.listingHasReservedUnitType(Service.listing, type)
+
+  Service.listingIsEducator = ->
+    _.includes(
+      ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
+      ListingDataService.listing.Custom_Listing_Type
+    )
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)

@@ -1,0 +1,19 @@
+{
+    "test": true, 
+    "ami": [
+        {
+            "percent":"120",
+            "values": [
+               { "year":"2020", "percent":120.0, "numOfHousehold":1, "chartType":"MOHCD", "amount":107600 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":2, "chartType":"MOHCD", "amount":123000 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":3, "chartType":"MOHCD", "amount":138350 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":4, "chartType":"MOHCD", "amount":153700 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":5, "chartType":"MOHCD", "amount":166000 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":6, "chartType":"MOHCD", "amount":178300 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":7, "chartType":"MOHCD", "amount":190600 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":8, "chartType":"MOHCD", "amount":202900 },
+               { "year":"2020", "percent":120.0, "numOfHousehold":9, "chartType":"MOHCD", "amount":215200 }
+            ]
+        }
+    ]
+}
