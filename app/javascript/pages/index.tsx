@@ -7,7 +7,6 @@ import withAppSetup from "../layouts/withAppSetup"
 import { ConfigContext } from "../lib/ConfigContext"
 import Link from "../navigation/Link"
 import { getRentalDirectoryPath, getSaleDirectoryPath } from "../util/routeUtil"
-import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
 interface HomePageProps {
   assetPaths: unknown
@@ -16,7 +15,6 @@ interface HomePageProps {
 const HomePage = (_props: HomePageProps) => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { getAssetPath, listingsAlertUrl } = useContext(ConfigContext)
-  const titleFlag = useFeatureFlag("title", true)
 
   return (
     <Layout
@@ -29,7 +27,7 @@ const HomePage = (_props: HomePageProps) => {
         <SiteAlert type="success" className={alertClasses} timeout={30_000} />
       </div>
       <Hero
-        title={titleFlag ? "Feature Flag enabled" : "Feature Flag disabled"}
+        title={t("welcome.title")}
         backgroundImage={getAssetPath("bg@1200.jpg")}
         buttonLink={getRentalDirectoryPath()}
         buttonTitle={t("welcome.seeRentalListings")}
