@@ -27,7 +27,9 @@ non_production_jobs: &non_production_jobs
 angular_jobs: &angular_jobs
   filters:
     branches:
-      only: /^angular.*$/
+      only: 
+        - /^angular.*$/
+        - main
   requires:
     - build
 prod_and_release_jobs: &prod_and_release_jobs
