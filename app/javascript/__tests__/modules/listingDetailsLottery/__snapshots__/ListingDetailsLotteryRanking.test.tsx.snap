@@ -77,7 +77,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
         <p
           class="text-gray-700 text-sm"
         >
-          905 applicants on this list.
+          905 applicants are on this list.
         </p>
       </div>
     </div>
@@ -158,7 +158,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
     </div>
@@ -193,7 +193,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         <p
           class="text-gray-700 text-sm"
         >
-          905 applicants on this list.
+          905 applicants are on this list.
         </p>
       </div>
     </div>
@@ -293,7 +293,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
         <p
           class="text-gray-700 text-sm"
         >
-          2 applicants on this list.
+          2 applicants are on this list.
         </p>
       </div>
     </div>

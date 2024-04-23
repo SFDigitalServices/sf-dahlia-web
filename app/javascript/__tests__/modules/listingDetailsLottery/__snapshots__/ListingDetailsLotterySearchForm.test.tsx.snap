@@ -127,7 +127,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-gray-700 text-sm"
             >
-              1 applicants on this list.
+              1 applicants are on this list.
             </p>
           </div>
           <hr
@@ -151,7 +151,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-gray-700 text-sm"
             >
-              4 applicants on this list.
+              4 applicants are on this list.
             </p>
           </div>
           <hr
@@ -175,7 +175,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-gray-700 text-sm"
             >
-              905 applicants on this list.
+              905 applicants are on this list.
             </p>
           </div>
           <hr
@@ -205,7 +205,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
           <p
             class="text-gray-700 text-sm"
           >
-            193 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
+            193 applicants are on this list. Please note, preference holders will be considered for all units first.
           </p>
         </div>
         <hr

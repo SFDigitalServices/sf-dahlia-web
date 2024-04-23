@@ -58,7 +58,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -149,7 +149,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -202,7 +202,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -264,7 +264,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -288,7 +288,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          2 applicant on this list.
+          2 applicants are on this list.
         </p>
       </div>
       <hr
@@ -312,7 +312,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          2 applicant on this list.
+          2 applicants are on this list.
         </p>
       </div>
       <hr
@@ -336,7 +336,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          5 applicant on this list.
+          5 applicants are on this list.
         </p>
       </div>
       <hr
@@ -366,7 +366,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
       <p
         class="text-gray-700 text-sm"
       >
-        2 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
+        2 applicants are on this list. Please note, preference holders will be considered for all units first.
       </p>
     </div>
     <hr
@@ -434,7 +434,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -525,7 +525,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -578,7 +578,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -640,7 +640,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -664,7 +664,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          2 applicant on this list.
+          2 applicants are on this list.
         </p>
       </div>
       <hr
@@ -688,7 +688,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          2 applicant on this list.
+          2 applicants are on this list.
         </p>
       </div>
       <hr
@@ -712,7 +712,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          5 applicant on this list.
+          5 applicants are on this list.
         </p>
       </div>
       <hr
@@ -742,7 +742,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
       <p
         class="text-gray-700 text-sm"
       >
-        2 applicant%{plural} on this list. Please note, preference holders will be considered for all units first.
+        2 applicants are on this list. Please note, preference holders will be considered for all units first.
       </p>
     </div>
     <hr
@@ -810,7 +810,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -901,7 +901,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -954,7 +954,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -1052,7 +1052,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -1143,7 +1143,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
@@ -1196,7 +1196,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicant on this list.
+          1 applicants are on this list.
         </p>
       </div>
       <hr
