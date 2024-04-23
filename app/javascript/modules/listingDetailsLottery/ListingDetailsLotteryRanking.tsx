@@ -84,11 +84,6 @@ export const ListingDetailsLotteryRanking = ({
             }}
           >
             <div className="text-gray-700">
-              <p className="mb-2">
-                <a href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
-                  {t("lottery.nextStepsLink")}
-                </a>
-              </p>
               <p className="mb-2">{t("lottery.nextStepsP1")}</p>
               <p className="mb-2">{t("lottery.nextStepsP2")}</p>
               <p className="mb-2">{t("lottery.nextStepsP3")}</p>
