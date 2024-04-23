@@ -37,7 +37,7 @@ Rails.application.routes.draw do
           get 'eligibility' => 'listings#eligibility'
         end
       end
-      get 'email_confirmation' => 'email#confirmation'
+      get 'trk' => 'email#confirmation'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
