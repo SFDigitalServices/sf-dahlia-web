@@ -2,11 +2,13 @@ import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
+import { ListingDetailsLotteryResultsRowEducator } from "./ListingDetailsLotteryResultsRowEducator"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
+  listingIsEducator: boolean
 }
 
 interface TooltipProps {
@@ -23,6 +25,7 @@ const Tooltip = ({ text }: TooltipProps) => {
 }
 export const ListingDetailsLotteryRanking = ({
   lotteryResult,
+  listingIsEducator,
 }: ListingDetailsLotteryRankingProps) => {
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
@@ -62,9 +65,13 @@ export const ListingDetailsLotteryRanking = ({
         {!applicantSelectedForPreference && (
           <Tooltip text={t("lottery.rankingPreferencesConsideredOverGeneralNote")} />
         )}
-        {preferenceBuckets?.map((bucket) => (
-          <ListingDetailsLotteryResultsRow bucket={bucket} key={bucket.preferenceName} />
-        ))}
+        {preferenceBuckets?.map((bucket) =>
+          listingIsEducator ? (
+            <ListingDetailsLotteryResultsRowEducator bucket={bucket} key={bucket.preferenceName} />
+          ) : (
+            <ListingDetailsLotteryResultsRow bucket={bucket} key={bucket.preferenceName} />
+          )
+        )}
         {!applicantSelectedForPreference && (
           <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />
         )}
