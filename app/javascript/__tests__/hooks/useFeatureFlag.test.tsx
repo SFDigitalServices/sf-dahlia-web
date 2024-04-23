@@ -1,13 +1,17 @@
 import { renderHook } from "@testing-library/react"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
-// Note that in this test we are not using the global mock of Unleash
-jest.mock("@unleash/proxy-client-react")
-
 describe("useFeatureFlag", () => {
+  let consoleSpy
+
+  beforeEach(() => {
+    consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+  })
+
   afterEach(() => {
     jest.spyOn(require("@unleash/proxy-client-react"), "useFlag").mockRestore()
     jest.spyOn(require("@unleash/proxy-client-react"), "useFlagsStatus").mockRestore()
+    consoleSpy.mockRestore()
   })
 
   it("returns the default value when the flag is not set", () => {
@@ -16,12 +20,11 @@ describe("useFeatureFlag", () => {
       .mockImplementation(() => undefined)
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
-
+    expect(consoleSpy).toHaveBeenCalled()
     expect(result.current).toBe(false)
   })
 
   it("returns the default value when there is a flagError", () => {
-    const consoleSpy = jest.spyOn(console, "error")
     jest.spyOn(require("@unleash/proxy-client-react"), "useFlagsStatus").mockImplementation(() => {
       return { flagsError: true }
     })
@@ -33,8 +36,6 @@ describe("useFeatureFlag", () => {
   })
 
   it("returns the actual Unleash value when there is no URL flag or loading errors", () => {
-    const consoleSpy = jest.spyOn(console, "error")
-
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
     expect(consoleSpy).not.toHaveBeenCalled()
@@ -49,7 +50,6 @@ describe("useFeatureFlag", () => {
       writable: true,
       value: { search: "?featureFlag[testFlag]=true" },
     })
-    const consoleSpy = jest.spyOn(console, "error")
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
@@ -62,7 +62,6 @@ describe("useFeatureFlag", () => {
       writable: true,
       value: { search: "?featureFlag[testFlag]=false" },
     })
-    const consoleSpy = jest.spyOn(console, "error")
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", true))
 
@@ -75,7 +74,6 @@ describe("useFeatureFlag", () => {
       writable: true,
       value: { search: "?featureFlag[testFlag]=blablabla" },
     })
-    const consoleSpy = jest.spyOn(console, "error")
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
@@ -94,8 +92,6 @@ describe("useFeatureFlag", () => {
     jest.spyOn(require("@unleash/proxy-client-react"), "useFlag").mockImplementation(() => {
       return undefined
     })
-
-    const consoleSpy = jest.spyOn(console, "error")
 
     const { result } = renderHook(() => useFeatureFlag("testFlag", false))
 
