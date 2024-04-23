@@ -15,6 +15,7 @@ import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
+import ShortForm from "../pages/shortForm"
 import Privacy from "../pages/getAssistance/privacy"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
@@ -32,6 +33,7 @@ void loadTranslations(currentLanguage).then(() =>
     DocumentChecklist,
     AdditionalResources,
     Disclaimer,
+    ShortForm,
     Privacy,
   })
 )

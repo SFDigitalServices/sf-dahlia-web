@@ -30,6 +30,10 @@ class AssistanceController < ApplicationController
     render 'disclaimer'
   end
 
+  def short_form
+    render 'short_form'
+  end
+
   protected
 
   def use_react_app

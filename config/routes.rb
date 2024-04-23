@@ -91,6 +91,7 @@ Rails.application.routes.draw do
   get '(:lang)/additional-resources' => 'assistance#additional_resources', lang: /(en|es|zh|tl)/
   get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
+  get '(:lang)/short-form' => 'assistance#short_form', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
