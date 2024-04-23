@@ -36,9 +36,10 @@ export const ListingDetailsLotteryResultsRowEducator = ({ bucket }: LotteryResul
         </Heading>
         {bucket.preferenceName.includes("Tier 1")
           ? t("listings.lotteryPreference.sfusd.educators.shortTitle")
-          : (bucket.preferenceName.includes("Tier 2")
+          : // eslint-disable-next-line unicorn/no-nested-ternary
+          bucket.preferenceName.includes("Tier 2")
           ? t("listings.lotteryPreference.sfusd.allOtherEmployees.shortTitle")
-          : t("listings.lotteryPreference.sfusd.generalPublic.shortTitle"))}
+          : t("listings.lotteryPreference.sfusd.generalPublic.shortTitle")}
         {bucket.preferenceName !== "generalLottery" && (
           <p className="mb-1 text-gray-950 text-sm">
             {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
