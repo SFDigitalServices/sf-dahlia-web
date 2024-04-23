@@ -49,7 +49,6 @@ export const ListingDetailsLotteryPreferences = ({
               <p className="text-gray-700 text-sm">
                 {t("lottery.numberApplicantsQualifiedForPreference", {
                   number: bucket.totalSubmittedApps,
-                  plural: bucket.totalSubmittedApps > 0 ? "s" : "",
                 })}
               </p>
             </div>
