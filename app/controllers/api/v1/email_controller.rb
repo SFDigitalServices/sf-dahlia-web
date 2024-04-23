@@ -2,41 +2,62 @@ class Api::V1::EmailController < ApiController
   # TODO: controller vs service
   def confirmation
     token = params[:t]
+
     begin
       # TODO: sometimes rails complains it cant find JWT
+      # TODO: split token and pass to salesforce
+      # TODO: move secret to env variable
+      # TODO: tracking, monitoring, and logging activity
       resp = JWT.decode(
         token,
         '123',
       )
-      puts resp
+      b, a, r, s = resp[0].values_at('b', 'a', 'r', 's')
+      puts 'B & S'
+      puts b, s
+
+      header = { 'Content-Type' => 'application/json' }
+      body = build_request_body(r, a)
+
+      results = Force::Request.new(parse_response: true)
+                              .post_with_headers("/fieldUpdateComment/#{a}", body, header)
+
+      # TODO: redirect
+      render json: results
     rescue StandardError => e
-      # TODO: error handling
+      # TODO: error handling, including expired token page
       puts 'error'
       puts e
-      return e
+      e
     end
-
-    body_array = [{ 'Processing_Status__c': 'Disqualified',
-                    'Processing_Comment__c': 'adding a new comment from webapp this time',
-                    'Application__c': 'a0o4U00000KK8dxQAD',
-                    'Sub_Status__c': 'Missed 2 or more appointments' }]
-
-    puts 'body_array'
-    puts body_array.to_json
-
-    header = { 'Content-Type' => 'application/json' }
-
-    results = Force::Request.new(parse_response: true)
-                            .post_with_headers('/fieldUpdateComment/a0o4U00000KK8dxQAD', body_array, header)
-
-    puts results.to_json
-
-    render json: { hello: resp }
   end
 
   private
 
   def confirmation_params
     params.require(:t)
+  end
+
+  def listing_id_map(listing_number)
+    const array = ['', 'a0W4U00000KnLRMUA3', 'a0W4U00000IYEb4UAH', 'a0W4U00000IYSM4UAP',
+                   'a0W4U00000Ih1V2UAJ', 'a0W4U00000KnCZRUA3']
+    array[listing_number]
+  end
+
+  def build_request_body(token_resp, a)
+    case token_resp
+    when 'y'
+      [{ 'Processing_Status__c': 'Processing',
+         'Processing_Comment__c': 'MOHCD automated interest email sent on April 24, 2024. Applicant responded Yes.',
+         'Application__c': a }]
+    when 'n'
+      [{ 'Processing_Status__c': 'Withdrawn',
+         'Processing_Comment__c': 'MOHCD automated interest email sent on April 24, 2024. Applicant responded No.',
+         'Application__c': a,
+         'Sub_Status__c': 'Written withdrawal' }]
+    else
+      # TODO: what to do in this case?
+      []
+    end
   end
 end
