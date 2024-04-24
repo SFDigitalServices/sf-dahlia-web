@@ -2,7 +2,7 @@ import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import { FormCard, Heading } from "@bloom-housing/ui-components"
 import FormLayout from "../../layouts/FormLayout"
-// import Link from "../../navigation/Link"
+import Link from "../../navigation/Link"
 
 interface UrlParams {
   listing: string
@@ -15,11 +15,21 @@ interface HomePageProps {
   urlParams: UrlParams
 }
 
+// TODO: map here vs in rails email_controller.rb?
+// TODO: what happens if passed invalid listing, or any other params?
+const listingIdToNameMap = {
+  a0W4U00000KnLRMUA3: "1830 Alemany",
+  a0W4U00000IYEb4UAH: "The Canyon",
+  a0W4U00000IYSM4UAP: "The Fitzgerald",
+  a0W4U00000Ih1V2UAJ: "Ventana Residences",
+  a0W4U00000KnCZRUA3: "The George",
+}
+
 const ConfirmingEmail = (_props: HomePageProps) => {
   // TODO: change href urls based on env and listing, sfgov translations links?
   // TODO: deadline to respond leasing agent links, what happens if invalid or missing listing passed?
-  // TODO: remove hardcoding, including The Canyon
-  // TODO: move strings to json files and translate
+  // TODO: remove hardcoding, including token expired leasing agent contact (how to handle with invalid token)
+  // TODO: move strings to json files and translate, translation routes
   // TODO: move css to css file
   // TODO: custom JSX (move to own components) vs bloom
   // TODO: response type for error or invalid token (x?)
@@ -30,10 +40,10 @@ const ConfirmingEmail = (_props: HomePageProps) => {
   return (
     <FormLayout>
       {
-        <FormCard header={<Heading priority={1}>The Canyon</Heading>}>
-          <a href={`http://localhost:3000/listings/${_props.urlParams.listing}`}>
-            Go to building details
-          </a>
+        <FormCard
+          header={<Heading priority={1}>{listingIdToNameMap[_props.urlParams.listing]}</Heading>}
+        >
+          <Link href={`/listings/${_props.urlParams.listing}`}>Go to building details</Link>
         </FormCard>
       }
       {_props.urlParams.response === "y" && (
@@ -61,10 +71,6 @@ const ConfirmingEmail = (_props: HomePageProps) => {
             >
               Learn more about what happens after the housing lottery.
             </a>
-            {/* <Link key="action-2" external href="https://www.sf.gov/after-rental-housing-lottery">
-              Learn more about what happens after the housing lottery.
-            </Link>
-            , */}
           </div>
         </div>
       )}

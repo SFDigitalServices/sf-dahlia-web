@@ -7,6 +7,7 @@ class Api::V1::EmailController < ApiController
     begin
       # TODO: tracking, monitoring, and logging activity
       # TODO: sometimes rails complains it cant find JWT
+      # TODO: include application in url for debugging
 
       resp = JWT.decode(
         token,
