@@ -58,6 +58,8 @@ export const TENURE_TYPES = {
   RE_RENTAL: "Re-rental",
 }
 
+export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=4ZB35gagUl8"
+
 // Whitelist of allowed SF.gov links for secure redirection
 export const SFGOV_LINKS = [
   "https://sf.gov/departments/mayors-office-housing-and-community-development",

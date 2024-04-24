@@ -53,7 +53,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -77,7 +77,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -106,7 +106,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -120,11 +120,11 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -144,7 +144,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -168,7 +168,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -197,7 +197,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -221,7 +221,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -231,15 +231,15 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicant on this list
+          2 other applicants on this list
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -429,7 +429,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -453,7 +453,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -482,7 +482,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -496,11 +496,11 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -520,7 +520,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -544,7 +544,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -573,7 +573,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -597,7 +597,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -607,15 +607,15 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicant on this list
+          2 other applicants on this list
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -805,7 +805,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -829,7 +829,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -858,7 +858,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -872,11 +872,11 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -896,7 +896,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -920,7 +920,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -949,7 +949,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -973,7 +973,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -983,7 +983,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicant on this list
+          2 other applicants on this list
         </p>
       </div>
       <hr
@@ -1047,7 +1047,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1071,7 +1071,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1100,7 +1100,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1114,11 +1114,11 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         </p>
       </div>
       <hr
-        class="mt-4"
+        class="my-4"
       />
     </div>
     <header
-      class="border-b border-gray-450 my-4"
+      class="border-b border-gray-450 mb-4"
     >
       <h2
         class="text__underline-weighted mx-8 text-xs"
@@ -1138,7 +1138,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1162,7 +1162,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1191,7 +1191,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1215,7 +1215,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-sm"
         >
-          Up to 0 units
+          Up to %{units} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1225,7 +1225,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <p
           class="text-gray-700 text-sm"
         >
-          2 other applicant on this list
+          2 other applicants on this list
         </p>
       </div>
       <hr
