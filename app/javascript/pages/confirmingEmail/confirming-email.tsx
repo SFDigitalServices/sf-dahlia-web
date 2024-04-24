@@ -4,20 +4,25 @@ import { FormCard, Heading } from "@bloom-housing/ui-components"
 import FormLayout from "../../layouts/FormLayout"
 // import Link from "../../navigation/Link"
 
+interface UrlParams {
+  listing: string
+  response: string
+}
+
 // TODO: rename props & types
 interface HomePageProps {
   assetPaths: unknown
-  urlParams: unknown
+  urlParams: UrlParams
 }
 
 const ConfirmingEmail = (_props: HomePageProps) => {
+  // TODO: change href urls based on env and listing, sfgov translations links?
+  // TODO: deadline to respond leasing agent links, what happens if invalid or missing listing passed?
+  // TODO: remove hardcoding, including The Canyon
   // TODO: move strings to json files and translate
   // TODO: move css to css file
   // TODO: custom JSX (move to own components) vs bloom
-  // TODO: change href urls based on env and listing
-  // TODO: how to handle r lint errors
   // TODO: response type for error or invalid token (x?)
-  // TODO: deadline to respond leasing agent links
 
   console.log("_props")
   console.log(_props)
@@ -26,10 +31,12 @@ const ConfirmingEmail = (_props: HomePageProps) => {
     <FormLayout>
       {
         <FormCard header={<Heading priority={1}>The Canyon</Heading>}>
-          <a href="http://localhost:3000/listings/a0W4U00000NlolaUAB">Go to building details</a>
+          <a href={`http://localhost:3000/listings/${_props.urlParams.listing}`}>
+            Go to building details
+          </a>
         </FormCard>
       }
-      {_props.urlParams["response"] === "y" && (
+      {_props.urlParams.response === "y" && (
         <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
           <div className="flex flex-col px-20 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
             <div className="text-2xl text-neutral-800">Thank you for your response</div>
@@ -61,7 +68,7 @@ const ConfirmingEmail = (_props: HomePageProps) => {
           </div>
         </div>
       )}
-      {_props.urlParams["response"] === "n" && (
+      {_props.urlParams.response === "n" && (
         <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
           <div className="flex flex-col px-20 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
             <div className="text-2xl text-neutral-800">Thank you for your response</div>
@@ -72,7 +79,7 @@ const ConfirmingEmail = (_props: HomePageProps) => {
           </div>
         </div>
       )}
-      {_props.urlParams["response"] === "x" && (
+      {_props.urlParams.response === "x" && (
         <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
           <div className="flex flex-col px-8 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
             <div className="text-2xl leading-8 text-neutral-800 max-md:max-w-full">

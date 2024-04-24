@@ -2,33 +2,32 @@ class Api::V1::EmailController < ApiController
   # TODO: controller vs service
   def confirmation
     token = params[:t]
+    secret = get_secret
 
     begin
-      # TODO: sometimes rails complains it cant find JWT
-      # TODO: split token and pass to salesforce
-      # TODO: move secret to env variable
       # TODO: tracking, monitoring, and logging activity
+      # TODO: sometimes rails complains it cant find JWT
+
       resp = JWT.decode(
         token,
-        '123',
+        secret,
       )
       b, a, r, s = resp[0].values_at('b', 'a', 'r', 's')
-      puts 'B & S'
-      puts b, s
 
       header = { 'Content-Type' => 'application/json' }
       body = build_request_body(r, a, s)
 
-      results = Force::Request.new(parse_response: true)
-                              .post_with_headers("/fieldUpdateComment/#{a}", body, header)
+      Force::Request.new(parse_response: true)
+                    .post_with_headers("/fieldUpdateComment/#{a}", body, header)
 
-      # TODO: redirect
-      render json: results
+      listing_id = listing_id_map(b)
+      redirect_to "/confirming_email?listing=#{listing_id}&response=#{r}"
     rescue StandardError => e
       # TODO: error handling, including expired token page
+      # TODO: how to get listing if token decode fails?
       puts 'error'
       puts e
-      e
+      redirect_to "/confirming_email?listing=#{listing_id}&response=x"
     end
   end
 
@@ -39,16 +38,13 @@ class Api::V1::EmailController < ApiController
   end
 
   def listing_id_map(listing_number)
-    const array = ['', 'a0W4U00000KnLRMUA3', 'a0W4U00000IYEb4UAH', 'a0W4U00000IYSM4UAP',
-                   'a0W4U00000Ih1V2UAJ', 'a0W4U00000KnCZRUA3']
+    array = ['', 'a0W4U00000KnLRMUA3', 'a0W4U00000IYEb4UAH', 'a0W4U00000IYSM4UAP',
+             'a0W4U00000Ih1V2UAJ', 'a0W4U00000KnCZRUA3']
     array[listing_number]
   end
 
   # TODO: linting around a param name
   def build_request_body(token_resp, a, s)
-    # TODO: convert date format and add to comment
-    puts s
-    puts convet_date_format(s)
     formatted_date = convet_date_format(s)
 
     case token_resp
@@ -70,5 +66,9 @@ class Api::V1::EmailController < ApiController
   def convet_date_format(date)
     date = Date.parse(date)
     date.strftime('%B %d, %Y')
+  end
+
+  def get_secret
+    ENV['JWT_TOKEN_SECRET'] || ''
   end
 end

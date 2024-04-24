@@ -3,7 +3,7 @@ class ConfirmingEmailController < ApplicationController
   def confirming_email
     # TODO: assetPaths vs urlParams
     @confirming_email_props = { assetPaths: static_asset_paths,
-                                urlParams: { application_id: params['application_id'],
+                                urlParams: { listing: params['listing'],
                                              response: params['response'] } }
     render 'confirming_email'
   end
