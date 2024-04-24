@@ -17,7 +17,7 @@ class Api::V1::EmailController < ApiController
       puts b, s
 
       header = { 'Content-Type' => 'application/json' }
-      body = build_request_body(r, a)
+      body = build_request_body(r, a, s)
 
       results = Force::Request.new(parse_response: true)
                               .post_with_headers("/fieldUpdateComment/#{a}", body, header)
@@ -44,20 +44,31 @@ class Api::V1::EmailController < ApiController
     array[listing_number]
   end
 
-  def build_request_body(token_resp, a)
+  # TODO: linting around a param name
+  def build_request_body(token_resp, a, s)
+    # TODO: convert date format and add to comment
+    puts s
+    puts convet_date_format(s)
+    formatted_date = convet_date_format(s)
+
     case token_resp
     when 'y'
       [{ 'Processing_Status__c': 'Processing',
-         'Processing_Comment__c': 'MOHCD automated interest email sent on April 24, 2024. Applicant responded Yes.',
+         'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded Yes.",
          'Application__c': a }]
     when 'n'
       [{ 'Processing_Status__c': 'Withdrawn',
-         'Processing_Comment__c': 'MOHCD automated interest email sent on April 24, 2024. Applicant responded No.',
+         'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded No.",
          'Application__c': a,
          'Sub_Status__c': 'Written withdrawal' }]
     else
       # TODO: what to do in this case?
       []
     end
+  end
+
+  def convet_date_format(date)
+    date = Date.parse(date)
+    date.strftime('%B %d, %Y')
   end
 end

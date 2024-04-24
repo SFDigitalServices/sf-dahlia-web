@@ -49,10 +49,6 @@ module Force
     def post_with_headers(endpoint, body = '', headers = {})
       # Always refresh auth to help prevent unauthorized errors
       refresh_oauth_token
-      puts 'body'
-      puts body
-      puts 'endpoint'
-      puts endpoint
       process_request do
         response = post_request_with_headers_and_auth(endpoint, body, headers)
         raise Restforce::UnauthorizedError if response.status == 401
