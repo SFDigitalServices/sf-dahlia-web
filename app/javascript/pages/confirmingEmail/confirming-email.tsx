@@ -58,7 +58,6 @@ const listingIdToNameMap = {
 
 const ConfirmingEmail = (_props: HomePageProps) => {
   // TODO: sfgov translations links
-  // TODO: deadline to respond leasing agent links, what happens if invalid or missing listing passed?
   // TODO: move strings to json files and translate, translation routes
   // TODO: move css to css file
   // TODO: custom JSX (move to own components) vs bloom

@@ -6,7 +6,6 @@ class Api::V1::EmailController < ApiController
 
     begin
       # TODO: tracking, monitoring, and logging activity
-      # TODO: sometimes rails complains it cant find JWT
       # TODO: include application in url for debugging
 
       resp = JWT.decode(
@@ -14,27 +13,29 @@ class Api::V1::EmailController < ApiController
         secret,
       )
       b, a, r, s = resp[0].values_at('b', 'a', 'r', 's')
+      Rails.logger.info("Creating fieldUpdateComment for b: #{b}, a: #{a}, r: #{r}, s: #{s}")
 
       header = { 'Content-Type' => 'application/json' }
       body = build_request_body(r, a, s)
 
-      Force::Request.new(parse_response: true)
-                    .post_with_headers("/fieldUpdateComment/#{a}", body, header)
+      response = Force::Request.new(parse_response: true)
+                               .post_with_headers("/fieldUpdateComment/#{a}", body, header)
+      # TODO: other status?
+      if response.status == 404
+        raise 'Salesforce response to POST /fieldUpdateComment returned a 404'
+      end
 
       listing_id = listing_id_map(b)
       redirect_to "/confirming_email?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
-      puts 'token is expired'
+      Rails.logger.error('Token is expired!')
       decoded_expired_token = JWT.decode(token, secret, true,
                                          { verify_expiration: false })
       b = decoded_expired_token[0]['b']
       listing_id = listing_id_map(b)
       redirect_to "/confirming_email?listing=#{listing_id}&response=x"
     rescue StandardError => e
-      # TODO: error handling, including expired token page and Force call fails
-      # TODO: how to get listing if token decode fails?
-      puts 'error'
-      puts e
+      Rails.logger.error("Error when creating fieldUpdateComment #{e}")
       redirect_to "/confirming_email?listing=#{listing_id}&response=e"
     end
   end
