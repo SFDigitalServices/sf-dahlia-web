@@ -896,7 +896,14 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.resetAndReplaceApp = ->
-    Service.resetApplicationData({ id: Service.application.id })
+    Service.resetApplicationData({
+      id: Service.application.id,
+      # screening questions appear before the application pages,
+      #   applicants cannot access them when restarting so we need to retain the previous answers
+      answeredCommunityScreening: Service.application.answeredCommunityScreening,
+      customEducatorScreeningAnswer: Service.application.customEducatorScreeningAnswer,
+      customEducatorJobClassificationNumber: Service.application.customEducatorJobClassificationNumber,
+    })
     $state.go('dahlia.short-form-application.name')
 
   Service.loadApplication = (data) ->
