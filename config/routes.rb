@@ -63,7 +63,6 @@ Rails.application.routes.draw do
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
       end
-      get 'trk' => 'email_response#handle'
     end
   end
 
@@ -98,6 +97,4 @@ Rails.application.routes.draw do
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
-
-  get '(:lang)/confirming_email' => 'email_response_page#confirming_email', lang: /(en|es|zh|tl)/
 end

@@ -1,7 +1,6 @@
 # Controller for the get assistance pages
 class ConfirmingEmailController < ApplicationController
   def confirming_email
-    # TODO: assetPaths vs urlParams
     @confirming_email_props = { assetPaths: static_asset_paths,
                                 urlParams: { listing: params['listing'],
                                              response: params['response'] } }
