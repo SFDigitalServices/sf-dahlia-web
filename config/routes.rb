@@ -37,6 +37,7 @@ Rails.application.routes.draw do
           get 'eligibility' => 'listings#eligibility'
         end
       end
+      get 'trk' => 'email#confirmation'
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
         get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
@@ -62,6 +63,7 @@ Rails.application.routes.draw do
         get 'confirm' => 'account#confirm'
         get 'check-account' => 'account#check_account'
       end
+      get 'trk' => 'email_response#handle'
     end
   end
 
@@ -92,6 +94,10 @@ Rails.application.routes.draw do
   get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
+  get '(:lang)/confirming_email' => 'confirming_email#confirming_email', lang: /(en|es|zh|tl)/
+
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
+
+  get '(:lang)/confirming_email' => 'email_response_page#confirming_email', lang: /(en|es|zh|tl)/
 end
