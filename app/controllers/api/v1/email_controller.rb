@@ -23,12 +23,19 @@ class Api::V1::EmailController < ApiController
 
       listing_id = listing_id_map(b)
       redirect_to "/confirming_email?listing=#{listing_id}&response=#{r}"
+    rescue JWT::ExpiredSignature
+      puts 'token is expired'
+      decoded_expired_token = JWT.decode(token, secret, true,
+                                         { verify_expiration: false })
+      b = decoded_expired_token[0]['b']
+      listing_id = listing_id_map(b)
+      redirect_to "/confirming_email?listing=#{listing_id}&response=x"
     rescue StandardError => e
-      # TODO: error handling, including expired token page
+      # TODO: error handling, including expired token page and Force call fails
       # TODO: how to get listing if token decode fails?
       puts 'error'
       puts e
-      redirect_to "/confirming_email?listing=#{listing_id}&response=x"
+      redirect_to "/confirming_email?listing=#{listing_id}&response=e"
     end
   end
 
@@ -44,19 +51,18 @@ class Api::V1::EmailController < ApiController
     array[listing_number]
   end
 
-  # TODO: linting around a param name
-  def build_request_body(token_resp, a, s)
-    formatted_date = convet_date_format(s)
+  def build_request_body(token_resp, application, sent_date)
+    formatted_date = convet_date_format(sent_date)
 
     case token_resp
     when 'y'
       [{ 'Processing_Status__c': 'Processing',
          'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded Yes.",
-         'Application__c': a }]
+         'Application__c': application }]
     when 'n'
       [{ 'Processing_Status__c': 'Withdrawn',
          'Processing_Comment__c': "MOHCD automated interest email sent on #{formatted_date}. Applicant responded No.",
-         'Application__c': a,
+         'Application__c': application,
          'Sub_Status__c': 'Written withdrawal' }]
     else
       # TODO: what to do in this case?
