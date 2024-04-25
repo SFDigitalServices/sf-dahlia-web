@@ -277,7 +277,7 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        {isEducator(listing) ? (
+        {/* {isEducator(listing) ? (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
               <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
@@ -319,7 +319,7 @@ export const ListingDetailsEligibility = ({
               <ListingDetailsPreferences listingID={listing.listingID} />
             </ErrorBoundary>
           </ListSection>
-        )}
+        )} */}
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}

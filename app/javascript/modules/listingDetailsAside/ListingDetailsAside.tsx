@@ -6,7 +6,6 @@ import { ListingDetailsProcess } from "./ListingDetailsProcess"
 import { isOpen } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
-import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
 import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
@@ -35,8 +34,8 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
               isApplicationOpen={isApplicationOpen}
               listing={listing}
             />
-            <ListingDetailsLotteryInfo listing={listing} />
-            <ListingDetailsLotteryResults listing={listing} />
+            {/* <ListingDetailsLotteryInfo listing={listing} /> */}
+            {/* <ListingDetailsLotteryResults listing={listing} /> */}
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
