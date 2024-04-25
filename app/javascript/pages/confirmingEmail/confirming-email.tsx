@@ -9,7 +9,6 @@ interface UrlParams {
   response: string
 }
 
-// TODO: rename props & types
 interface HomePageProps {
   assetPaths: unknown
   urlParams: UrlParams
@@ -58,15 +57,11 @@ const listingIdToNameMap = {
 }
 
 const ConfirmingEmail = (_props: HomePageProps) => {
-  // TODO: remove hardcoding, including token expired leasing agent contact
   // TODO: sfgov translations links
   // TODO: deadline to respond leasing agent links, what happens if invalid or missing listing passed?
   // TODO: move strings to json files and translate, translation routes
   // TODO: move css to css file
   // TODO: custom JSX (move to own components) vs bloom
-  // TODO: response type for error or invalid token (x?)
-  // TODO: contnet change for yes response
-  // TODO: content for error page
 
   console.log("_props")
   console.log(_props)
@@ -139,7 +134,9 @@ const ConfirmingEmail = (_props: HomePageProps) => {
             <span className="text-neutral-600">, contact: </span>
             <br />
             <br />
-            <span className="text-lg leading-6">Sara Lipowsky</span>
+            <span className="text-lg leading-6">
+              {listingIdToNameMap[_props.urlParams.listing].agent}
+            </span>
             <br />
             <a href={`tel:${listingIdToNameMap[_props.urlParams.listing].phone}`}>
               {listingIdToNameMap[_props.urlParams.listing].phoneDisplay}
