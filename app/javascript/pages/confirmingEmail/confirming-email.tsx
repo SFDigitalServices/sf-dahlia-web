@@ -83,10 +83,13 @@ const ConfirmingEmail = (_props: HomePageProps) => {
             <span className="font-bold">What to expect</span>
             <br />
             <ul style={{ listStyleType: "disc" }}>
-              <li>Other applicants may be ahead of you in the original lottery order.</li>
               <li>
-                Depending on how many units are still available, you might not get contacted about
-                moving forward with your application.
+                The leasing agent will contact you when it's your turn to move forward with your
+                application.{" "}
+              </li>
+              <li>We will send you an email to let you know once all units get leased.</li>
+              <li>
+                We will contact you again if more units become available in the next 12 months.
               </li>
             </ul>
             <a
