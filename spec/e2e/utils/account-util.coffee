@@ -13,7 +13,7 @@ Account = {
   _accounts: {},
   create: (fullName, birthDate = '1/1/1902') ->
     Account._accounts[fullName] = {
-      fullName: fullName
+      fullName: "E2ETEST-#{fullName}"
       email: chance.email()
       birthDate: birthDate
       password: chance.string({ length: 15, pool: passwordChars }) + 'tS9'

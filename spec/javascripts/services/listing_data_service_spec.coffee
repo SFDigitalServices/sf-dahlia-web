@@ -39,6 +39,9 @@ do ->
           url: 'https://spanishsaleapp.com'
         }
       ]
+      CUSTOM_PREFERENCE_NAMES: [
+          'Households with Pet Zebras'
+      ]
     }
     fakeListingEligibilityService = {
       eligibilityYearlyIncome: jasmine.createSpy()
@@ -338,7 +341,7 @@ do ->
         expect(ListingDataService.listing.preferences[0].listingPreferenceID).toEqual prefId
       it 'should populate Service.listing.customPreferences', ->
         expectedCustomPref = {
-          listingPreferenceID: 'a0l6s000000CJ80AAG', preferenceName: 'Employment or Disability Preference'
+          listingPreferenceID: 'a0l6s000000CJ80AAG', preferenceName: 'Households with Pet Zebras'
         }
         expect(ListingDataService.listing.customPreferences).
         toContain(jasmine.objectContaining(expectedCustomPref))

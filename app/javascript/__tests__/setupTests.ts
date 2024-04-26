@@ -10,6 +10,7 @@ const spies = {
   get: jest.spyOn(axios, "get"),
   post: jest.spyOn(axios, "post"),
   put: jest.spyOn(axios, "put"),
+  create: jest.spyOn(axios, "create"),
 }
 
 // The current nanoid implementation is not compatible with jest. This is a temporary workaround until the issue is resolved

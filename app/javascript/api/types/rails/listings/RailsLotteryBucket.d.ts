@@ -11,4 +11,5 @@ export type RailsLotteryBucket = {
   preferenceResults?: Array<PreferenceResult>
   totalSubmittedApps: number
   unitsAvailable: number
+  preferenceShortCode: string
 }
