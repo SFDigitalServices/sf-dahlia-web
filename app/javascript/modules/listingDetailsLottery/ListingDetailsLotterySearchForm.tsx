@@ -38,7 +38,12 @@ export const ListingDetailsLotterySearchForm = ({
   )
 
   const onSubmit = (data: { lotterySearchNumber: string }) => {
-    const lotterySearchNumber = data.lotterySearchNumber
+    let lotterySearchNumber = data.lotterySearchNumber
+
+    if (lotterySearchNumber.length < 8) {
+      lotterySearchNumber = "0".repeat(8 - lotterySearchNumber.length) + lotterySearchNumber
+    }
+
     setLotteryFormStatus(LOTTERY_SEARCH_FORM_STATUS.LOADING)
 
     void getLotteryResults(listing.Id, lotterySearchNumber).then((lotterySearchResults) => {
