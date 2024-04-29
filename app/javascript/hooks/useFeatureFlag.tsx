@@ -15,12 +15,7 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const unleashFlag = useFlagUnleash(flagName)
 
-  console.log(process.env.NODE_ENV)
-  if (
-    doesURLHaveFlag &&
-    !urlBlockList.has(flagName) &&
-    (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test")
-  ) {
+  if (doesURLHaveFlag && !urlBlockList.has(flagName) && process.env.NODE_ENV === "development") {
     if (flagFromUrl === "true") {
       return true
     } else if (flagFromUrl === "false") {
