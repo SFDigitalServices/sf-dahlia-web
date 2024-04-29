@@ -103,7 +103,10 @@ export const ListingDetailsLotterySearchForm = ({
     }
     case LOTTERY_SEARCH_FORM_STATUS.SEARCH_RESULT_FOUND: {
       content = lotterySearchResult && (
-        <ListingDetailsLotteryRanking lotteryResult={lotterySearchResult} />
+        <ListingDetailsLotteryRanking
+          lotteryResult={lotterySearchResult}
+          listingIsEducator={isEducator(listing)}
+        />
       )
       break
     }

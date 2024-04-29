@@ -7,6 +7,7 @@ import { renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
+  listingIsEducator: boolean
 }
 
 interface TooltipProps {
@@ -23,6 +24,7 @@ const Tooltip = ({ text }: TooltipProps) => {
 }
 export const ListingDetailsLotteryRanking = ({
   lotteryResult,
+  listingIsEducator,
 }: ListingDetailsLotteryRankingProps) => {
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
@@ -63,10 +65,17 @@ export const ListingDetailsLotteryRanking = ({
           <Tooltip text={t("lottery.rankingPreferencesConsideredOverGeneralNote")} />
         )}
         {preferenceBuckets?.map((bucket) => (
-          <ListingDetailsLotteryResultsRow bucket={bucket} key={bucket.preferenceName} />
+          <ListingDetailsLotteryResultsRow
+            bucket={bucket}
+            key={bucket.preferenceName}
+            listingIsEducator={listingIsEducator}
+          />
         ))}
         {!applicantSelectedForPreference && (
-          <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />
+          <ListingDetailsLotteryResultsRow
+            bucket={generalLotteryBucket}
+            listingIsEducator={listingIsEducator}
+          />
         )}
         <div className="px-8">
           <ExpandableContent
