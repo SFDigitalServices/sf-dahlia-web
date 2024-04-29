@@ -21,6 +21,15 @@ jest.mock("nanoid", () => {
   }
 })
 
+jest.mock("@unleash/proxy-client-react", () => {
+  return {
+    __esModule: true,
+    useFlag: () => true,
+    useFlagsStatus: () => ({ flagsError: false }),
+    FlagProvider: ({ children }) => children,
+  }
+})
+
 beforeEach(() => {
   jest.resetAllMocks()
 })
