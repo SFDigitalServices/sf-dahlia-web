@@ -9,6 +9,7 @@ import BuyDirectory from "../pages/listings/for-sale"
 import HomePage from "../pages"
 import SignIn from "../pages/sign-in"
 import ListingDetail from "../pages/listings/listing-detail"
+import ListingApplication from "../pages/listings/listing-application"
 import { getCurrentLanguage, loadTranslations } from "../util/languageUtil"
 import HousingCounselors from "../pages/getAssistance/housing-counselors"
 import GetAssistance from "../pages/getAssistance/get-assistance"
@@ -25,6 +26,7 @@ void loadTranslations(currentLanguage).then(() =>
     BuyDirectory,
     HomePage,
     ListingDetail,
+    ListingApplication,
     RentDirectory,
     SignIn,
     HousingCounselors,

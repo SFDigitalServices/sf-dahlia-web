@@ -84,6 +84,7 @@ Rails.application.routes.draw do
   get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
   # TODO: Paths on Bloom needs to be configurable
   get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/apply' => 'shortform#index', lang: /(en|es|zh|tl)/
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
   get '(:lang)/housing-counselors' => 'assistance#housing_counselors', lang: /(en|es|zh|tl)/
   get '(:lang)/get-assistance' => 'assistance#get_assistance', lang: /(en|es|zh|tl)/
