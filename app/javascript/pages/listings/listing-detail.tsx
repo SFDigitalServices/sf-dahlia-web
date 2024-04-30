@@ -28,7 +28,6 @@ import {
   isHabitatListing,
   getAmiChartDataFromUnits,
   isOpen,
-  isPluralSRO,
   isRental,
   listingHasSROUnits,
 } from "../../util/listingUtil"
@@ -136,7 +135,7 @@ const ListingDetail = () => {
             >
               <ListingDetailsPricingTable listing={listing} />
             </ErrorBoundary>
-            {listingHasSROUnits(listing) && !isPluralSRO(listing) && (
+            {listingHasSROUnits(listing) && (
               <div className="md:w-2/3 md:pr-8">
                 <ListingDetailsSROInfo listing={listing} />
               </div>
