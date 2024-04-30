@@ -68,88 +68,86 @@ const ConfirmingEmail = (_props: HomePageProps) => {
             <Heading priority={1}>{listingIdToNameMap[_props.urlParams.listing].name}</Heading>
           }
         >
-          <Link href={`/listings/${_props.urlParams.listing}`}>Go to building details</Link>
+          <Link href={`/listings/${_props.urlParams.listing}`} target="_blank">
+            Go to building details
+          </Link>
         </FormCard>
       )}
       {_props.urlParams.response === "y" && (
-        <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
-          <div className="flex flex-col px-20 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
-            <div className="text-2xl text-neutral-800">Thank you for your response</div>
-            <div className="self-center mt-4 text-sm leading-4 text-black">
-              You answered: <span className="font-bold text-black">Yes, I'm still interested</span>
+        <div className="mt-4 bg-white rounded-lg border border-solid">
+          <div className="pt-8 pb-8 text-center border-b border-solid">
+            <div className="text-2xl">Thank you for your response</div>
+            <div className="mt-4 text-sm">
+              You answered: <span className="font-bold">Yes, I'm still interested</span>
             </div>
           </div>
-          <div className="justify-center p-8 text-base leading-6 text-sky-700 bg-slate-50 max-md:px-5 max-md:max-w-full">
+          <div className="p-8 bg-blue-100">
             <span className="font-bold">What to expect</span>
-            <br />
-            <ul style={{ listStyleType: "disc" }}>
+            <ul className="p-4 space-y-4 list-disc">
               <li>
                 The leasing agent will contact you when it's your turn to move forward with your
-                application.{" "}
+                application.
               </li>
               <li>We will send you an email to let you know once all units get leased.</li>
               <li>
                 We will contact you again if more units become available in the next 12 months.
               </li>
             </ul>
-            <a
-              href="https://www.sf.gov/after-rental-housing-lottery"
-              className="text-sky-700"
-              target="_blank"
-            >
+            <Link external href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
               Learn more about what happens after the housing lottery.
-            </a>
+            </Link>
           </div>
         </div>
       )}
       {_props.urlParams.response === "n" && (
-        <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
-          <div className="flex flex-col px-20 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
-            <div className="text-2xl text-neutral-800">Thank you for your response</div>
-            <div className="self-center mt-4 text-sm leading-4 text-black">
-              You answered:{" "}
-              <span className="font-bold text-black">No, withdraw my application</span>
+        <div className="mt-4 bg-white rounded-lg border border-solid">
+          <div className="pt-8 pb-8 text-center border-b border-solid">
+            <div className="text-2xl">Thank you for your response</div>
+            <div className="mt-4 text-sm">
+              You answered: <span className="font-bold">No, withdraw my application</span>
             </div>
           </div>
         </div>
       )}
       {_props.urlParams.response === "x" && (
-        <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
-          <div className="flex flex-col px-8 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
-            <div className="text-2xl leading-8 text-neutral-800 max-md:max-w-full">
-              The deadline to respond has already passed{" "}
-            </div>
-            <div className="self-center mt-4 text-sm text-neutral-600">
-              Your answer was not submitted
-            </div>
+        <div className="mt-4 bg-white rounded-lg border border-solid">
+          <div className="pt-8 pb-8 text-center border-b border-solid">
+            <div className="text-2xl">The deadline to respond has already passed</div>
+            <div className="mt-4 text-sm">Your answer was not submitted</div>
           </div>
-          <div className="justify-center p-8 text-base leading-6 bg-slate-50 text-neutral-600 max-md:px-5 max-md:max-w-full">
-            If you are still interested in an apartment at{" "}
-            <Link href={`/listings/${_props.urlParams.listing}`}>
-              {listingIdToNameMap[_props.urlParams.listing].name}
-            </Link>
-            <span className="text-neutral-600">, contact: </span>
-            <br />
-            <br />
-            <span className="text-lg leading-6">
-              {listingIdToNameMap[_props.urlParams.listing].agent}
-            </span>
-            <br />
-            <a href={`tel:${listingIdToNameMap[_props.urlParams.listing].phone}`}>
-              {listingIdToNameMap[_props.urlParams.listing].phoneDisplay}
-            </a>
-            <br />
-            <a href={`mailto:${listingIdToNameMap[_props.urlParams.listing].email}`}>
-              {listingIdToNameMap[_props.urlParams.listing].email}
-            </a>
+          <div className="p-8 bg-blue-100">
+            <p>
+              If you are still interested in an apartment at{" "}
+              <Link href={`/listings/${_props.urlParams.listing}`}>
+                {listingIdToNameMap[_props.urlParams.listing].name}
+              </Link>
+              <span className="text-neutral-600">, contact: </span>
+            </p>
+            <ul className="mt-6">
+              <li>
+                <span className="text-lg leading-6">
+                  {listingIdToNameMap[_props.urlParams.listing].agent}
+                </span>
+              </li>
+              <li>
+                <a href={`tel:${listingIdToNameMap[_props.urlParams.listing].phone}`}>
+                  {listingIdToNameMap[_props.urlParams.listing].phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${listingIdToNameMap[_props.urlParams.listing].email}`}>
+                  {listingIdToNameMap[_props.urlParams.listing].email}
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       )}
       {_props.urlParams.response === "e" && (
-        <div className="flex flex-col py-px mt-4 max-w-full bg-white rounded-lg border border-solid border-zinc-200 w-[512px]">
-          <div className="flex flex-col px-8 pt-8 pb-8 text-center border-b border-solid border-zinc-200 max-md:px-5 max-md:max-w-full">
-            <div className="text-2xl leading-8 text-neutral-800 max-md:max-w-full">ERROR</div>
-            <div className="self-center mt-4 text-sm text-neutral-600">INVALID REQUEST</div>
+        <div className="mt-4 bg-white rounded-lg border border-solid">
+          <div className="pt-8 pb-8 text-center border-b border-solid">
+            <div className="text-2xl">ERROR</div>
+            <div className="mt-4 text-sm">INVALID REQUEST</div>
           </div>
         </div>
       )}
