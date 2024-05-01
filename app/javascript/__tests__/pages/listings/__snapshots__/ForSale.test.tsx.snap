@@ -39,6 +39,10 @@ exports[`For Sale renders ForSale component 1`] = `
         content="website"
         property="og:type"
       />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
       <header
         class="site-header"
       >
