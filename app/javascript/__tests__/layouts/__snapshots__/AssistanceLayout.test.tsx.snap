@@ -39,6 +39,10 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
         content="website"
         property="og:type"
       />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
       <header
         class="site-header"
       >
