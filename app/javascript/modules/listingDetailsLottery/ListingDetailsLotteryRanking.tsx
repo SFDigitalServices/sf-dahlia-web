@@ -2,8 +2,9 @@ import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
+import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
-import { renderMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
@@ -86,6 +87,16 @@ export const ListingDetailsLotteryRanking = ({
             }}
           >
             <div className="text-gray-700">
+              <p className="mb-2">
+                <Link
+                  className="text-blue-700"
+                  external={true}
+                  href={getSfGovUrl("https://www.sf.gov/after-rental-housing-lottery", 12074)}
+                  target="_blank"
+                >
+                  {t("lottery.nextStepsLearnMore")}
+                </Link>
+              </p>
               <p className="mb-2">{t("lottery.nextStepsP1")}</p>
               <p className="mb-2">{t("lottery.nextStepsP2")}</p>
               <p className="mb-2">{t("lottery.nextStepsP3")}</p>
