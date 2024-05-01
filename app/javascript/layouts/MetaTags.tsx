@@ -45,8 +45,11 @@ const MetaTags = (props: MetaTagsProps) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="housing.sfgov.org" />
         <meta property="twitter:url" content={window.location.href} />
-        <meta name="twitter:title" content="Star View Court" />
-        <meta name="twitter:description" content="" />
+        <meta
+          name="twitter:title"
+          content={props.title ?? t("t.dahliaSanFranciscoHousingPortal")}
+        />
+        {props.description && <meta name="twitter:description" content={props.description} />}
         <meta
           name="twitter:image"
           content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
