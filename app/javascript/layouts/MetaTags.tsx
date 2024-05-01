@@ -37,6 +37,7 @@ const MetaTags = (props: MetaTagsProps) => {
           content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
         />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="DAHLIA San Francisco Housing Portal" />
         {/* react-helmet-async does not work with Safari, rely on server-side favicon tags for now in app/views/layouts/application-react.html.slim
         <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
         <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />
