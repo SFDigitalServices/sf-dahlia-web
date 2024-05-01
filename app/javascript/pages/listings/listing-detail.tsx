@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 import TagManager from "react-gtm-module"
+import { localizedFormat, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import dayjs from "dayjs"
+import {
+  isHabitatListing,
+  getAmiChartDataFromUnits,
+  isOpen,
+  isRental,
+  listingHasSROUnits,
+} from "../../util/listingUtil"
 
 import {
   ListingDetails,
@@ -7,6 +16,7 @@ import {
   Mobile,
   NavigationContext,
   SiteAlert,
+  t,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
@@ -21,16 +31,8 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
-import {
-  isHabitatListing,
-  getAmiChartDataFromUnits,
-  isOpen,
-  isRental,
-  listingHasSROUnits,
-} from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
@@ -97,9 +99,23 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
+  const getDescription = (listing: RailsListing) =>
+    t(
+      isApplicationOpen
+        ? "listingDetails.applicationDeadline.open"
+        : "listingDetails.applicationDeadline.closed",
+      {
+        date: localizedFormat(listing.Application_Due_Date, "ll"),
+        time: dayjs(listing.Application_Due_Date).format("h:mm A"),
+      }
+    )
   return (
     <LoadingOverlay isLoading={!listing}>
-      <Layout title={listing?.Name}>
+      <Layout
+        title={listing?.Name}
+        description={listing && getDescription(listing)}
+        image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
+      >
         <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
           <SiteAlert type="alert" className={alertClasses} />
           <SiteAlert type="success" className={alertClasses} timeout={30_000} />
