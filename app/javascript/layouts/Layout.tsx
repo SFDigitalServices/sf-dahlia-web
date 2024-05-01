@@ -147,7 +147,6 @@ const Layout = (props: LayoutProps) => {
     </>
   )
 
-  console.log(props.description)
   return (
     <HelmetProvider>
       <div className="notranslate site-wrapper">
