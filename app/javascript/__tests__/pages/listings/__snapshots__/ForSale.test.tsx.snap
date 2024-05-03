@@ -29,35 +29,15 @@ exports[`For Sale renders ForSale component 1`] = `
         name="google-site-verification"
       />
       <meta
-        content="http://localhost/"
-        property="og:url"
-      />
-      <meta
-        content="website"
-        property="og:type"
-      />
-      <meta
         content="Sale Listings"
         property="og:title"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:description"
-      />
-      <meta
-        content="DAHLIA San Francisco Housing Portal"
-        name="description"
       />
       <meta
         property="og:image"
       />
       <meta
-        content="DAHLIA San Francisco Housing Portal"
-        property="og:site_name"
-      />
-      <meta
-        content="summary_large_image"
-        name="twitter:card"
+        content="website"
+        property="og:type"
       />
       <header
         class="site-header"
