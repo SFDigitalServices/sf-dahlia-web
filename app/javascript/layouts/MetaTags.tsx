@@ -30,30 +30,23 @@ const MetaTags = (props: MetaTagsProps) => {
           name="google-site-verification"
         />
 
-        <meta property="og:url" content="https://housing.sfgov.org/listings/a0W4U00000RaypYUAR" />
+        <meta property="og:url" content={window.location.href} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={props.title ?? t("t.dahliaSanFranciscoHousingPortal")} />
-        {props.description && <meta property="og:description" content={props.description} />}
-        {props.description && <meta name="description" content={props.description} />}
+        <meta
+          property="og:description"
+          content={props.description ?? t("t.dahliaSanFranciscoHousingPortal")}
+        />
+        <meta
+          name="description"
+          content={props.description ?? t("t.dahliaSanFranciscoHousingPortal")}
+        />
         <meta
           property="og:image"
           content={props.image ?? getAssetPath("dahlia_social-media-preview.jpg")}
         />
-        <meta property="og:site_name" content="DAHLIA San Francisco Housing Portal" />
-        <meta property="og:url" content={window.location.href} />
-
+        <meta property="og:site_name" content={t("t.dahliaSanFranciscoHousingPortal")} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="housing.sfgov.org" />
-        <meta property="twitter:url" content={window.location.href} />
-        <meta
-          name="twitter:title"
-          content={props.title ?? t("t.dahliaSanFranciscoHousingPortal")}
-        />
-        {props.description && <meta name="twitter:description" content={props.description} />}
-        <meta
-          name="twitter:image"
-          content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
-        />
         {/* react-helmet-async does not work with Safari, rely on server-side favicon tags for now in app/views/layouts/application-react.html.slim
         <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
         <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />

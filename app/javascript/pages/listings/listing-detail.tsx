@@ -8,6 +8,7 @@ import {
   isOpen,
   isRental,
   listingHasSROUnits,
+  getListingAddressString,
 } from "../../util/listingUtil"
 
 import {
@@ -100,7 +101,7 @@ const ListingDetail = () => {
   }, [router, router.pathname])
 
   const getDescription = (listing: RailsListing) =>
-    t(
+    `${getListingAddressString(listing)}. ${t(
       isApplicationOpen
         ? "listingDetails.applicationDeadline.open"
         : "listingDetails.applicationDeadline.closed",
@@ -108,12 +109,12 @@ const ListingDetail = () => {
         date: localizedFormat(listing.Application_Due_Date, "ll"),
         time: dayjs(listing.Application_Due_Date).format("h:mm A"),
       }
-    )
+    )}`
   return (
     <LoadingOverlay isLoading={!listing}>
       <Layout
-        title={listing?.Name}
-        description={listing && getDescription(listing)}
+        title={listing?.Name ? listing?.Name : null}
+        description={listing ? getDescription(listing) : null}
         image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
       >
         <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
