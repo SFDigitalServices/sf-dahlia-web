@@ -1,15 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import TagManager from "react-gtm-module"
-import { localizedFormat, getPathWithoutLanguagePrefix } from "../../util/languageUtil"
-import dayjs from "dayjs"
-import {
-  isHabitatListing,
-  getAmiChartDataFromUnits,
-  isOpen,
-  isRental,
-  listingHasSROUnits,
-  getListingAddressString,
-} from "../../util/listingUtil"
 
 import {
   ListingDetails,
@@ -32,8 +22,16 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
+import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
+import {
+  isHabitatListing,
+  getAmiChartDataFromUnits,
+  isOpen,
+  isRental,
+  listingHasSROUnits,
+} from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
