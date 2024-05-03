@@ -22,7 +22,7 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { getPathWithoutLanguagePrefix } from "../../util/languageUtil"
+import { getPathWithoutLanguagePrefix, localizedFormat } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import {
@@ -31,6 +31,7 @@ import {
   isOpen,
   isRental,
   listingHasSROUnits,
+  getListingAddressString,
 } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
@@ -43,6 +44,7 @@ import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetails
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import dayjs from "dayjs"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
