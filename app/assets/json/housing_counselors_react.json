@@ -52,22 +52,6 @@
             "phone": "(415) 209-5143"
         },
         {
-            "fullName": "San Francisco Housing Development Corporation (SFHDC)",
-            "shortName": "SFHDC",
-            "services": [
-                "rental",
-                "ownership"
-            ],
-            "languages": [
-                "english"
-            ],
-            "address": "4439 3rd Street",
-            "cityState": "San Francisco, CA 94124",
-            "website": "https://sfhdc.org/financial-empowerment/",
-            "email": "fecstaff@sfhdc.org",
-            "phone": "(415) 822-1022"
-        },
-        {
             "fullName": "SF LGBT Center",
             "services": [
                 "rental",

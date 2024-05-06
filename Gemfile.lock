@@ -507,6 +507,7 @@ DEPENDENCIES
   jasmine-jquery-rails
   jbuilder (~> 2.8.0)
   jquery-rails
+  jwt
   memcachier
   mini_magick (~> 4.12.0)
   newrelic_rpm

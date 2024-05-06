@@ -29,15 +29,35 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
         name="google-site-verification"
       />
       <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
         content="681 Florida - Casa Adelante"
         property="og:title"
+      />
+      <meta
+        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        property="og:description"
+      />
+      <meta
+        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        name="description"
       />
       <meta
         property="og:image"
       />
       <meta
-        content="website"
-        property="og:type"
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
       />
       <header
         class="site-header"
@@ -386,15 +406,36 @@ exports[`Listing Detail renders a habitat listing 1`] = `
         name="google-site-verification"
       />
       <meta
-        content="TEST: 36 Amber Drive"
-        property="og:title"
-      />
-      <meta
-        property="og:image"
+        content="http://localhost/"
+        property="og:url"
       />
       <meta
         content="website"
         property="og:type"
+      />
+      <meta
+        content="TEST: 36 Amber Drive"
+        property="og:title"
+      />
+      <meta
+        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 2, 2022 at 1:00 AM"
+        property="og:description"
+      />
+      <meta
+        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 2, 2022 at 1:00 AM"
+        name="description"
+      />
+      <meta
+        content="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
       />
       <header
         class="site-header"
@@ -743,15 +784,36 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
         name="google-site-verification"
       />
       <meta
-        content="TEST Automated Listing (do not modify)"
-        property="og:title"
-      />
-      <meta
-        property="og:image"
+        content="http://localhost/"
+        property="og:url"
       />
       <meta
         content="website"
         property="og:type"
+      />
+      <meta
+        content="TEST Automated Listing (do not modify)"
+        property="og:title"
+      />
+      <meta
+        content=". Applications Closed Jan 1, 2000 at 1:00 AM"
+        property="og:description"
+      />
+      <meta
+        content=". Applications Closed Jan 1, 2000 at 1:00 AM"
+        name="description"
+      />
+      <meta
+        content="https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png"
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
       />
       <header
         class="site-header"
@@ -1100,15 +1162,35 @@ exports[`Listing Detail renders an open rental listing 1`] = `
         name="google-site-verification"
       />
       <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
         content="681 Florida - Casa Adelante"
         property="og:title"
+      />
+      <meta
+        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        property="og:description"
+      />
+      <meta
+        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        name="description"
       />
       <meta
         property="og:image"
       />
       <meta
-        content="website"
-        property="og:type"
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
       />
       <header
         class="site-header"
@@ -1457,15 +1539,36 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
         name="google-site-verification"
       />
       <meta
-        content="TEST: 36 Amber Drive"
-        property="og:title"
-      />
-      <meta
-        property="og:image"
+        content="http://localhost/"
+        property="og:url"
       />
       <meta
         content="website"
         property="og:type"
+      />
+      <meta
+        content="TEST: 36 Amber Drive"
+        property="og:title"
+      />
+      <meta
+        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 2, 2022 at 1:00 AM"
+        property="og:description"
+      />
+      <meta
+        content="36 Amber Drive, San Francisco, CA 94131. Applications Closed Dec 2, 2022 at 1:00 AM"
+        name="description"
+      />
+      <meta
+        content="https://d31h23p2gsu1kr.cloudfront.net/images/listings/a0W0P00000GlKfBUAV-4d20089ed488fce1a695b73a8a4f090d.jpg"
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
       />
       <header
         class="site-header"
