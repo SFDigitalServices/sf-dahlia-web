@@ -2,7 +2,7 @@
 class Api::V1::ListingInterestController < ApiController
   def index
     token = params[:t]
-    secret = get_secret
+    secret = env_secret
 
     begin
       resp = JWT.decode(
@@ -73,7 +73,7 @@ class Api::V1::ListingInterestController < ApiController
     date.strftime('%B %d, %Y')
   end
 
-  def get_secret
+  def env_secret
     ENV['JWT_TOKEN_SECRET'] || ''
   end
 end
