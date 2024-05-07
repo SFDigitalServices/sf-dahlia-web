@@ -7,7 +7,6 @@ import {
   Mobile,
   NavigationContext,
   SiteAlert,
-  t,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
@@ -22,7 +21,7 @@ import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDeta
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
 import { ListingDetailsAdditionalInformation } from "../../modules/listingDetails/ListingDetailsAdditionalInformation"
 import { ConfigContext } from "../../lib/ConfigContext"
-import { getPathWithoutLanguagePrefix, localizedFormat } from "../../util/languageUtil"
+import { getPathWithoutLanguagePrefix, getApplicationDeadlineString } from "../../util/languageUtil"
 import { ListingDetailsReservedBanner } from "../../modules/listingDetails/ListingDetailsReservedBanner"
 import { ListingDetailsApplicationDate } from "../../modules/listingDetailsAside/ListingDetailsApplicationDate"
 import {
@@ -44,7 +43,6 @@ import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetails
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import dayjs from "dayjs"
 
 const ListingDetail = () => {
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
@@ -102,15 +100,7 @@ const ListingDetail = () => {
 
   const getDescription = (listing: RailsListing) => {
     const address = getListingAddressString(listing)
-    const applyTime = t(
-      isApplicationOpen
-        ? "listingDetails.applicationDeadline.open"
-        : "listingDetails.applicationDeadline.closed",
-      {
-        date: localizedFormat(listing.Application_Due_Date, "ll"),
-        time: dayjs(listing.Application_Due_Date).format("h:mm A"),
-      }
-    )
+    const applyTime = getApplicationDeadlineString(isApplicationOpen, listing.Application_Due_Date)
     return `${address}. ${applyTime}`
   }
 

@@ -227,3 +227,14 @@ export function localizedFormat(date: string, format: string): string {
 
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
 }
+
+export const getApplicationDeadlineString = (isApplicationOpen: boolean, dueDate: string): string =>
+  t(
+    isApplicationOpen
+      ? "listingDetails.applicationDeadline.open"
+      : "listingDetails.applicationDeadline.closed",
+    {
+      date: localizedFormat(dueDate, "ll"),
+      time: dayjs(dueDate).format("h:mm A"),
+    }
+  )
