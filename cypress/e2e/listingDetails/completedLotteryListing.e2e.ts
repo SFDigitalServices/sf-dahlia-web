@@ -1,5 +1,5 @@
-const listingId = Cypress.env("completedLotteryListingId") || "a0W8H000000AmpKUAS"
-const lotteryNumber = Cypress.env("lotteryNumber") || "01150047"
+const listingId: string = Cypress.env("completedLotteryListingId") || "a0W8H000000AmpKUAS"
+const lotteryNumber: string = Cypress.env("lotteryNumber") || "01150047"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
