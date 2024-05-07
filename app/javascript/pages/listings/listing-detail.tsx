@@ -100,8 +100,9 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
-  const getDescription = (listing: RailsListing) =>
-    `${getListingAddressString(listing)}. ${t(
+  const getDescription = (listing: RailsListing) => {
+    const address = getListingAddressString(listing)
+    const applyTime = t(
       isApplicationOpen
         ? "listingDetails.applicationDeadline.open"
         : "listingDetails.applicationDeadline.closed",
@@ -109,13 +110,16 @@ const ListingDetail = () => {
         date: localizedFormat(listing.Application_Due_Date, "ll"),
         time: dayjs(listing.Application_Due_Date).format("h:mm A"),
       }
-    )}`
+    )
+    return `${address}. ${applyTime}`
+  }
+
   return (
     <LoadingOverlay isLoading={!listing}>
       <Layout
-        title={listing?.Name ? listing?.Name : null}
-        description={listing ? getDescription(listing) : null}
-        image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
+        title={listing?.Name}
+        description={listing && getDescription(listing)}
+        image={listing?.Listing_Images && listing?.Listing_Images[0].displayImageURL}
       >
         <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
           <SiteAlert type="alert" className={alertClasses} />

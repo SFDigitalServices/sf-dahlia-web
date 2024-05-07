@@ -22,6 +22,7 @@ const MetaTags = (props: MetaTagsProps) => {
         <title className="notranslate">
           {props.title || t("t.dahliaSanFranciscoHousingPortal")}
         </title>
+        {/* these meta tags already exist on the server-side html, we may not need them */}
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,21 +33,14 @@ const MetaTags = (props: MetaTagsProps) => {
 
         <meta property="og:url" content={window.location.href} />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={props.title ?? t("t.dahliaSanFranciscoHousingPortal")} />
-        <meta
-          property="og:description"
-          content={props.description ?? t("t.dahliaSanFranciscoHousingPortal")}
-        />
-        <meta
-          name="description"
-          content={props.description ?? t("t.dahliaSanFranciscoHousingPortal")}
-        />
+        <meta property="og:title" content={props.title || t("t.dahliaSanFranciscoHousingPortal")} />
+        {props.description && <meta property="og:description" content={props.description} />}
+        {props.description && <meta name="description" content={props.description} />}
         <meta
           property="og:image"
-          content={props.image ?? getAssetPath("dahlia_social-media-preview.jpg")}
+          content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
         />
         <meta property="og:site_name" content={t("t.dahliaSanFranciscoHousingPortal")} />
-        <meta name="twitter:card" content="summary_large_image" />
         {/* react-helmet-async does not work with Safari, rely on server-side favicon tags for now in app/views/layouts/application-react.html.slim
         <link href={getAssetPath("favicon-32x32.png")} rel="icon" sizes="32x32" type="image/png" />
         <link href={getAssetPath("favicon-96x96.png")} rel="icon" sizes="96x96" type="image/png" />

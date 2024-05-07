@@ -30,7 +30,12 @@ module.exports = {
   use: [
     // 'file-loader',
     // Creates `style` nodes from JS strings
-    'style-loader',
+    {
+      loader: 'style-loader',
+      options: {
+        injectType: 'singletonStyleTag'
+      }
+    },
     // Translates CSS into CommonJS
     // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
     { loader: 'css-loader', options: { sourceMap: true } },
