@@ -2,13 +2,6 @@ import React from "react"
 import { render } from "@testing-library/react"
 import ListingInterestPage from "../../../../javascript/pages/listingInterest/listing-interest-page"
 
-jest.mock("react-helmet-async", () => {
-  return {
-    HelmetProvider: ({ children }: { children: React.ReactNode }) => children, // Mock HelmetProvider
-    Helmet: ({ children }: { children: React.ReactNode }) => children, // Mock Helmet component
-  }
-})
-
 describe("Listing Interest Page", () => {
   it("renders listing interest page with yes response", () => {
     const { asFragment } = render(
