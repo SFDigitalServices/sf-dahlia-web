@@ -1,15 +1,18 @@
-class Api::V1::EmailController < ApiController
-  def confirmation
+# Backend API for are you interested email
+class Api::V1::ListingInterestController < ApiController
+  def index
     token = params[:t]
-    secret = get_secret
+    secret = env_secret
 
     begin
       resp = JWT.decode(
         token,
         secret,
       )
+      # token is generated with a building number (0-5, which corresponding to the id mapping in listing_id_map),
+      # the application id, the response from the email (y (yes) or n (no)), and the date the email was initially sent
       b, a, r, s = resp[0].values_at('b', 'a', 'r', 's')
-      Rails.logger.info("Creating fieldUpdateComment for b: #{b}, a: #{a}, r: #{r}, s: #{s}")
+      Rails.logger.info("Creating fieldUpdateComment for building: #{b}, application: #{a}, repsonse: #{r}, email send date: #{s}")
 
       header = { 'Content-Type' => 'application/json' }
       body = build_request_body(r, a, s)
@@ -24,17 +27,21 @@ class Api::V1::EmailController < ApiController
       end
 
       listing_id = listing_id_map(b)
-      redirect_to "/confirming_email?listing=#{listing_id}&response=#{r}"
+
+      # when fieldupdatecomment is successfully created redirect with a response of y (yes) or n (no)
+      redirect_to "/listing_interest?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
       Rails.logger.error('Token expired, not able to create fieldUpdateComment')
       decoded_expired_token = JWT.decode(token, secret, true,
                                          { verify_expiration: false })
       b = decoded_expired_token[0]['b']
       listing_id = listing_id_map(b)
-      redirect_to "/confirming_email?listing=#{listing_id}&response=x"
+      # when token is expired redirect with a response of x (expired)
+      redirect_to "/listing_interest?listing=#{listing_id}&response=x"
     rescue StandardError => e
       Rails.logger.error("Error when creating fieldUpdateComment #{e}")
-      redirect_to "/confirming_email?listing=#{listing_id}&response=e"
+      # when there is an error redirect with a response of e (error)
+      redirect_to "/listing_interest?listing=#{listing_id}&response=e"
     end
   end
 
@@ -45,9 +52,9 @@ class Api::V1::EmailController < ApiController
   end
 
   def listing_id_map(listing_number)
-    array = ['a0W0P00000DZYzVUAX', 'a0W4U00000KnLRMUA3', 
-             'a0W4U00000IYEb4UAH', 'a0W4U00000IYSM4UAP',
-             'a0W4U00000Ih1V2UAJ', 'a0W4U00000KnCZRUA3']
+    array = %w[a0W0P00000DZYzVUAX a0W4U00000KnLRMUA3
+               a0W4U00000IYEb4UAH a0W4U00000IYSM4UAP
+               a0W4U00000Ih1V2UAJ a0W4U00000KnCZRUA3]
     array[listing_number]
   end
 
@@ -72,7 +79,7 @@ class Api::V1::EmailController < ApiController
     date.strftime('%B %d, %Y')
   end
 
-  def get_secret
+  def env_secret
     ENV['JWT_TOKEN_SECRET'] || ''
   end
 end

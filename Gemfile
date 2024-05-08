@@ -69,6 +69,9 @@ gem 'oj_mimic_json'
 gem 'devise', '4.9.0'
 gem 'devise_token_auth', '~> 1.2.1'
 
+# listing interest email token
+gem 'jwt'
+
 # postgresql database
 gem 'pg'
 
@@ -99,8 +102,6 @@ gem 'fog-aws'
 
 # https://elements.heroku.com/addons/sentry
 gem 'sentry-raven'
-
-gem 'jwt'
 
 group :test do
   gem 'codeclimate-test-reporter', '= 0.6.0'
