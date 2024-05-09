@@ -22,6 +22,18 @@ const MetaTags = (props: MetaTagsProps) => {
         <title className="notranslate">
           {props.title || t("t.dahliaSanFranciscoHousingPortal")}
         </title>
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:title"
+          content={props.title || t("t.dahliaSanFranciscoHousingPortal")}
+        />
+        {props.description && <meta property="twitter:description" content={props.description} />}
+        <meta
+          property="twitter:image:src"
+          content={props.image || getAssetPath("dahlia_social-media-preview.jpg")}
+        />
+
         {/* these meta tags already exist on the server-side html, we may not need them */}
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
