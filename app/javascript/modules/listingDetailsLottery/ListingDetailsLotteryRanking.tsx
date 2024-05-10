@@ -4,6 +4,7 @@ import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { renderMarkup } from "../../util/languageUtil"
+import { isEducatorOne } from "../../util/listingUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
@@ -30,6 +31,10 @@ export const ListingDetailsLotteryRanking = ({
     if (!bucket.preferenceResults[0]) {
       return false
     }
+    if (isEducatorOne) {
+      return bucket.preferenceShortCode.includes("T1") || bucket.preferenceShortCode.includes("T2")
+    }
+
     return bucket.preferenceName !== "generalLottery" && bucket.preferenceResults[0].preferenceRank
   })
   const applicantSelectedForPreference = preferenceBuckets?.length > 0
