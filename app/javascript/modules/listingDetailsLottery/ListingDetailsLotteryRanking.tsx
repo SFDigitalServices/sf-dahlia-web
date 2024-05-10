@@ -4,11 +4,11 @@ import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { renderMarkup } from "../../util/languageUtil"
-import { isEducatorOne } from "../../util/listingUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
   listingIsEducator: boolean
+  listingIsEducatorOne?: boolean
 }
 
 interface TooltipProps {
@@ -26,12 +26,13 @@ const Tooltip = ({ text }: TooltipProps) => {
 export const ListingDetailsLotteryRanking = ({
   lotteryResult,
   listingIsEducator,
+  listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
     }
-    if (isEducatorOne) {
+    if (listingIsEducatorOne && bucket.preferenceShortCode) {
       return bucket.preferenceShortCode.includes("T1") || bucket.preferenceShortCode.includes("T2")
     }
 

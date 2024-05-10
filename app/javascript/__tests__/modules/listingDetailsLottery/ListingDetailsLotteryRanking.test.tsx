@@ -50,4 +50,16 @@ describe("ListingDetailsLotteryRanking", () => {
 
     expect(asFragment()).toMatchSnapshot()
   })
+
+  it("displays lottery ranking for educator one", () => {
+    const { asFragment } = render(
+      <ListingDetailsLotteryRanking
+        lotteryResult={lotteryResultRentalEducator}
+        listingIsEducator={true}
+        listingIsEducatorOne={true}
+      />
+    )
+
+    expect(asFragment()).toMatchSnapshot()
+  })
 })
