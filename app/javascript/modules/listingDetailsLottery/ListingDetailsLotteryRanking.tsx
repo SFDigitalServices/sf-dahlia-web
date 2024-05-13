@@ -8,6 +8,7 @@ import { renderMarkup } from "../../util/languageUtil"
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
   listingIsEducator: boolean
+  listingIsEducatorOne?: boolean
 }
 
 interface TooltipProps {
@@ -25,11 +26,16 @@ const Tooltip = ({ text }: TooltipProps) => {
 export const ListingDetailsLotteryRanking = ({
   lotteryResult,
   listingIsEducator,
+  listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
     }
+    if (listingIsEducatorOne && bucket.preferenceShortCode) {
+      return bucket.preferenceShortCode.includes("T1") || bucket.preferenceShortCode.includes("T2")
+    }
+
     return bucket.preferenceName !== "generalLottery" && bucket.preferenceResults[0].preferenceRank
   })
   const applicantSelectedForPreference = preferenceBuckets?.length > 0
