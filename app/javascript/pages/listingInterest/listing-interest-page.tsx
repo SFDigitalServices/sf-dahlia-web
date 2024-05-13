@@ -59,7 +59,7 @@ const listingIdToNameMap = {
   },
 }
 
-const ConfirmingEmail = (_props: HomePageProps) => {
+const ListingInterestPage = (_props: HomePageProps) => {
   return (
     <FormLayout>
       {_props.urlParams.response !== "e" && (
@@ -155,4 +155,4 @@ const ConfirmingEmail = (_props: HomePageProps) => {
   )
 }
 
-export default withAppSetup(ConfirmingEmail)
+export default withAppSetup(ListingInterestPage)
