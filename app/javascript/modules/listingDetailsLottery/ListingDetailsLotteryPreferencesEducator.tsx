@@ -125,7 +125,6 @@ export const ListingDetailsLotteryPreferencesEducator = ({
       veteranAppsByBucketMap[lotteryBucket.preferenceShortCode] = lotteryBucket.totalSubmittedApps
     })
 
-  console.log(veteranAppsByBucketMap)
   // Then, get all the tier 1 educator buckets, excluding the tier 1 veteran buckets
   const tier1EducatorBucketWithoutVeteran = lotteryBucketsDetails.lotteryBuckets.filter(
     (bucket) =>
