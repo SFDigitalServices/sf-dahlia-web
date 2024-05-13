@@ -13,7 +13,7 @@ import { getCurrentLanguage, loadTranslations } from "../util/languageUtil"
 import HousingCounselors from "../pages/getAssistance/housing-counselors"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
-import ConfirmingEmail from "../pages/confirmingEmail/confirming-email"
+import ListingInterestPage from "../pages/listingInterest/listing-interest-page"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
@@ -34,6 +34,6 @@ void loadTranslations(currentLanguage).then(() =>
     AdditionalResources,
     Disclaimer,
     Privacy,
-    ConfirmingEmail,
+    ListingInterestPage,
   })
 )
