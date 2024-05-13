@@ -288,7 +288,8 @@ workflows:
           <<: *prod_and_release_jobs
           name: e2e-production-legacy
       - waiter:
-          <<: *angular_jobs
+          requires:
+            - build
       - cleanup-test-data:
           requires:
             - waiter
