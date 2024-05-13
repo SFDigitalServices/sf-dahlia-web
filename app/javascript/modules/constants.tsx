@@ -58,7 +58,7 @@ export const TENURE_TYPES = {
   RE_RENTAL: "Re-rental",
 }
 
-export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=4ZB35gagUl8"
+export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=oW56bUsrSW4"
 
 // Whitelist of allowed SF.gov links for secure redirection
 export const SFGOV_LINKS = [
