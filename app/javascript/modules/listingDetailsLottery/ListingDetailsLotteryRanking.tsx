@@ -1,6 +1,6 @@
 import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
-import { PREFERENCES } from "../constants"
+import { LOTTERY_RANKING_VIDEO_URL, PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
@@ -59,7 +59,7 @@ export const ListingDetailsLotteryRanking = ({
           <div className="border-b border-gray-450 pb-4 text-gray-700 translate">
             {renderMarkup(
               `${t("lottery.rankingOrderNote", {
-                lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
+                lotteryRankingVideoUrl: LOTTERY_RANKING_VIDEO_URL,
               })}`
             )}
           </div>
