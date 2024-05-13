@@ -91,7 +91,7 @@ export const ListingDetailsLotteryRanking = ({
                 <Link
                   className="text-blue-700"
                   external={true}
-                  href={getSfGovUrl("https://www.sf.gov/after-rental-housing-lottery", 12074)}
+                  href={getSfGovUrl("https://sf.gov/after-rental-housing-lottery", 12704)}
                   target="_blank"
                 >
                   {t("lottery.nextStepsLearnMore")}
