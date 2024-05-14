@@ -6,6 +6,7 @@ import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { isValidUrl } from "../../util/urlUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import { renderMarkup } from "../../util/languageUtil"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -20,7 +21,7 @@ const getDepositString = (min?: string, max?: string) => {
 
 // TODO: add prop for items that should have machine translated content
 interface FeatureItemProps {
-  content: any
+  content: string
   title: string
   toTranslate?: boolean
 }
@@ -157,7 +158,9 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
               listing.Deposit_Max?.toLocaleString()
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
-            footerContent={[<p className="translate">{listing.Costs_Not_Included}</p>]}
+            footerContent={[
+              <span className="translate">{renderMarkup(listing.Costs_Not_Included)}</span>,
+            ]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),
               deposit: t("listings.features.deposit"),

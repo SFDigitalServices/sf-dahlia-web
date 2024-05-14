@@ -94,7 +94,7 @@ export const ListingDetailsLotterySearchForm = ({
   }
 
   const errorMessage =
-    (["required", "pattern"].includes(errors[lotteryNumberField]?.type) &&
+    (["required", "pattern"].includes(String(errors[lotteryNumberField]?.type)) &&
       t("lottery.lotteryNumberNotValid")) ||
     (lotteryFormStatus === LOTTERY_SEARCH_FORM_STATUS.INVALID_LOTTERY_NUMBER &&
       t("lottery.lotteryNumberNotFoundP1")) ||
@@ -110,11 +110,12 @@ export const ListingDetailsLotterySearchForm = ({
       <form
         id="search-form"
         className="bg-gray-100 flex mb-4 px-6 py-4"
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleSubmit(onSubmit)}
       >
         <Field
           error={!!errorMessage}
-          className="w-full"
+          className="w-full mb-0"
           errorMessage={errorMessage}
           register={register}
           name={lotteryNumberField}
@@ -125,7 +126,7 @@ export const ListingDetailsLotterySearchForm = ({
           labelClassName="sr-only"
         />
         <button
-          className="bg-blue-500 h-12 mt-2 p-3 translate"
+          className="bg-blue-500 h-12 p-3 translate"
           type="submit"
           aria-label={t("lottery.submitNumber")}
         >

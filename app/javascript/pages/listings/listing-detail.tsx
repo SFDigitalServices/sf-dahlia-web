@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
+import TagManager from "react-gtm-module"
+
 import {
   ListingDetails,
   LoadingOverlay,
@@ -27,6 +29,7 @@ import {
   getAmiChartDataFromUnits,
   isOpen,
   isPluralSRO,
+  isRental,
   listingHasSROUnits,
 } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
@@ -60,6 +63,19 @@ const ListingDetail = () => {
   } = useContext(ListingDetailsContext)
 
   useEffect(() => {
+    if (!!listing && !!process.env.GOOGLE_TAG_MANAGER_KEY) {
+      const tagManagerArgs = {
+        gtmId: process.env.GOOGLE_TAG_MANAGER_KEY,
+        dataLayer: {
+          event: "view_listing",
+          listingType: isRental(listing) ? "rental" : "sale",
+        },
+      }
+      TagManager.initialize(tagManagerArgs)
+    }
+  }, [listing])
+
+  useEffect(() => {
     if (listing?.listingID && !fetchedUnits && !fetchingUnits) {
       fetchUnits(listing.listingID)
     }
@@ -75,9 +91,12 @@ const ListingDetail = () => {
   useEffect(() => {
     const path = getPathWithoutLanguagePrefix(router.pathname)
     void getListing(path.split("/")[2]).then((listing: RailsListing) => {
+      if (!listing) {
+        router.push("/")
+      }
       setListing(listing)
     })
-  }, [router.pathname])
+  }, [router, router.pathname])
 
   return (
     <LoadingOverlay isLoading={!listing}>
@@ -117,14 +136,11 @@ const ListingDetail = () => {
             >
               <ListingDetailsPricingTable listing={listing} />
             </ErrorBoundary>
-            {listingHasSROUnits(listing) &&
-              !(
-                isPluralSRO("1335 Folsom Street", listing) || isPluralSRO("750 Harrison", listing)
-              ) && (
-                <div className="md:w-2/3 md:pr-8">
-                  <ListingDetailsSROInfo listing={listing} />
-                </div>
-              )}
+            {listingHasSROUnits(listing) && !isPluralSRO(listing) && (
+              <div className="md:w-2/3 md:pr-8">
+                <ListingDetailsSROInfo listing={listing} />
+              </div>
+            )}
             {isApplicationOpen && !listingIsHabitat && (
               <Mobile>
                 <ListingDetailsApplicationDate

@@ -18,7 +18,7 @@ describe("ListingDetailsFeatures", () => {
     jest.resetAllMocks()
   })
 
-  it("displays listing details features section when rental listing", async (done) => {
+  it("displays listing details features section when rental listing", async () => {
     // This component pulls in react-media, which needs this custom mock
     window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
@@ -52,10 +52,9 @@ describe("ListingDetailsFeatures", () => {
 
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays listing details features section when sales listing", async (done) => {
+  it("displays listing details features section when sales listing", async () => {
     axios.get.mockResolvedValue({
       data: { units: openSaleListing.Units, preferences: defaultPreferences },
     })
@@ -93,10 +92,9 @@ describe("ListingDetailsFeatures", () => {
 
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 
-  it("displays a pdf hyperlink when Pricing_Matrix url exists in sales listing", async (done) => {
+  it("displays a pdf hyperlink when Pricing_Matrix url exists in sales listing", async () => {
     axios.get.mockResolvedValue({
       data: { units: openSaleListing.Units, preferences: defaultPreferences },
     })
@@ -137,6 +135,5 @@ describe("ListingDetailsFeatures", () => {
 
     expect(await findAllByTestId("content-accordion-button")).toHaveLength(3)
     expect(asFragment()).toMatchSnapshot()
-    done()
   })
 })

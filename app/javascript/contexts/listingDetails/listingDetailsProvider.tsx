@@ -47,7 +47,7 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
         .then((units: RailsUnit[]) => {
           dispatch(finishFetchingUnits(units))
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           console.error(error)
           dispatch(setFetchingUnitsError(error))
         })
@@ -58,7 +58,7 @@ const ListingDetailsProvider = (props: ListingDetailsProviderProps) => {
         .then((amiCharts: RailsAmiChart[]) => {
           dispatch(finishFetchingAmiCharts({ amiCharts, chartsToFetch }))
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           console.error(error)
           dispatch(setFetchingAmiChartsError(error))
         })

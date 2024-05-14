@@ -1,6 +1,8 @@
 describe("Rental listings directory page", () => {
   beforeEach(() => {
+    cy.intercept("api/v1/listings.json**", { fixture: "listings.json" }).as("listings")
     cy.visit("/listings/for-rent?react=true")
+    cy.wait("@listings")
   })
 
   it("renders upcoming and results", () => {

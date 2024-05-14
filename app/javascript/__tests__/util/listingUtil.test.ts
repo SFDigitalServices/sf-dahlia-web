@@ -22,18 +22,28 @@ import {
   getAmiChartDataFromUnits,
   getPriorityTypeText,
   getTagContent,
+  listingHasVeteransPreference,
+  preferenceNameHasVeteran,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
 import { saleListingReservedAndCustom } from "../data/RailsSaleListing/listing-sale-reserved-and-custom"
+import { rentalVeteranPreferenceListing } from "../data/RailsRentalListing/listing-rental-veteran-preference"
 import { closedRentalListing } from "../data/RailsRentalListing/listing-rental-closed"
 import { lotteryCompleteRentalListing } from "../data/RailsRentalListing/listing-rental-lottery-complete"
 import { rentalEducatorListing1complete } from "../data/RailsRentalListing/listing-rental-educator-lottery-complete"
 import { habitatListing } from "../data/RailsSaleListing/listing-sale-habitat"
-import { sroRentalListing } from "../data/RailsRentalListing/listing-rental-sro"
+import {
+  sroRentalListing,
+  pluralSroRentalListing,
+} from "../data/RailsRentalListing/listing-rental-sro"
 import { unitsWithOccupancyAndMaxIncome, units } from "../data/RailsListingUnits/listing-units"
 import { amiCharts } from "../data/RailsAmiCharts/ami-charts"
 import { groupedUnitsByOccupancy } from "../data/RailsListingUnits/grouped-units-by-occupancy"
+import RailsUnit, {
+  RailsUnitWithOccupancy,
+  RailsUnitWithOccupancyAndMinMaxIncome,
+} from "../../api/types/rails/listings/RailsUnit"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -132,14 +142,12 @@ describe("listingUtil", () => {
   })
 
   describe("isPluralSRO", () => {
-    it("should return false when listing is not in the list of plural SROs", () => {
-      expect(isPluralSRO("Merry Go Round Shared Housing", sroRentalListing)).toBe(false)
+    it("should return false for a standard (single tenant) SROs", () => {
+      expect(isPluralSRO(sroRentalListing)).toBe(false)
     })
 
-    it("should return true when listing is in the list of plural SROs", () => {
-      process.env.SRO_PLURAL_LISTINGS = JSON.parse(process.env.SRO_PLURAL_LISTINGS)
-      const listing = { ...sroRentalListing, Id: "a0W0P00000F7t4uUAB" }
-      expect(isPluralSRO("Merry Go Round Shared Housing", listing)).toBe(true)
+    it("should return true for a plural SROs", () => {
+      expect(isPluralSRO(pluralSroRentalListing)).toBe(true)
     })
   })
 
@@ -272,7 +280,7 @@ describe("deriveIncomeFromAmiCharts", () => {
 
 describe("addUnitsWithEachOccupancy", () => {
   it("should return an empty array when units is empty", () => {
-    const units = []
+    const units: Array<RailsUnit> = []
     const result = addUnitsWithEachOccupancy(units)
     expect(result).toEqual([])
   })
@@ -290,7 +298,7 @@ describe("addUnitsWithEachOccupancy", () => {
 
 describe("buildAmiArray", () => {
   it("should return an empty array when units is empty", () => {
-    const units = []
+    const units: Array<RailsUnitWithOccupancyAndMinMaxIncome> = []
     const result = buildAmiArray(units)
     expect(result).toEqual([])
   })
@@ -379,7 +387,7 @@ describe("matchSharedUnitFields", () => {
   })
 
   it("should handle an empty input array", () => {
-    const inputUnits = []
+    const inputUnits: Array<RailsUnitWithOccupancyAndMinMaxIncome> = []
     const expectedOutput = inputUnits
     const actualOutput = matchSharedUnitFields(inputUnits)
     expect(actualOutput).toEqual(expectedOutput)
@@ -426,7 +434,7 @@ describe("buildOccupanciesArray", () => {
   })
 
   it("should handle an empty input array", () => {
-    const inputUnits = []
+    const inputUnits: Array<RailsUnitWithOccupancy> = []
     const expectedOutput = []
     const actualOutput = buildOccupanciesArray(inputUnits)
     expect(actualOutput).toEqual(expectedOutput)
@@ -449,7 +457,7 @@ describe("groupAndSortUnitsByOccupancy", () => {
 
 describe("getAmiChartDataFromUnits", () => {
   test("returns empty array when given empty array of units", () => {
-    const units = []
+    const units: Array<RailsUnit> = []
     const result = getAmiChartDataFromUnits(units)
     expect(result).toEqual([])
   })
@@ -478,9 +486,12 @@ describe("getPriorityTypeText", () => {
     ${"Hearing/Vision impairments"}          | ${"Vision and/or Hearing Impairments"}
     ${"Mobility/Hearing/Vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
     ${"Mobility impairments"}                | ${"Mobility Impairments"}
-  `("returns text $text when priority type is $priorityType", ({ priorityType, text }) => {
-    expect(getPriorityTypeText(priorityType)).toBe(text)
-  })
+  `(
+    "returns text $text when priority type is $priorityType",
+    ({ priorityType, text }: { priorityType: string; text: string }) => {
+      expect(getPriorityTypeText(priorityType)).toBe(text)
+    }
+  )
 })
 
 describe("getTagContent", () => {
@@ -502,5 +513,25 @@ describe("getTagContent", () => {
     expect(getTagContent(saleListingReservedAndCustom)).toStrictEqual([
       { text: "SF public schools employee housing" },
     ])
+  })
+})
+
+describe("listingHasVeteransPreference", () => {
+  test("returns false for listings without Veterans-related preferences", () => {
+    expect(listingHasVeteransPreference(closedRentalListing)).toBe(false)
+  })
+
+  test("returns true for listings with Veterans-related preferences", () => {
+    expect(listingHasVeteransPreference(rentalVeteranPreferenceListing)).toBe(true)
+  })
+})
+
+describe("preferenceNameHasVeteran", () => {
+  test("returns true for strings that contain 'veteran'", () => {
+    expect(preferenceNameHasVeteran("Veteran with Certificate of Preference (V-COP)")).toBe(true)
+  })
+
+  test("returns false for strings that do not contain 'veteran'", () => {
+    expect(preferenceNameHasVeteran("Certificate of Preference (COP)")).toBe(false)
   })
 })

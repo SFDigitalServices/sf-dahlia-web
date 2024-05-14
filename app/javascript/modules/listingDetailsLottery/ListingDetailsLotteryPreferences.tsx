@@ -16,13 +16,13 @@ export const ListingDetailsLotteryPreferences = ({
         <Heading styleType="underlineWeighted" className="mx-8" priority={2}>
           {t("lottery.housingPreferences")}
         </Heading>
-        <p className="pb-4 text-gray-700 text-xs mx-8 translate">
+        <div className="pb-4 text-gray-700 text-xs mx-8 translate">
           {renderMarkup(
             `${t("lottery.rankingOrderNote", {
               lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
             })}`
           )}
-        </p>
+        </div>
       </header>
       {lotteryBucketsDetails.lotteryBuckets
         .filter(

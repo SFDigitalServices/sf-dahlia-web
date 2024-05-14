@@ -1,15 +1,67 @@
 /**
  * Util function to verify a listing details page
- * @param {string} language - optional language code
  * @param {string } id - listing id
  * @param {string} altPhotoText - alternative text that displays for listing image
  * @param {string} title - title of the listing
  * @param {string} address -(unfortunately) optional address for the listing
  * @param {string} applyButtonText - text for the apply button
+ * @param {string} language - optional language code
  */
-function verifyListing(language, id, altPhotoText, title, address, applyButtonText) {
+function verifyRentalListing(
+  id: string,
+  altPhotoText: string,
+  title: string,
+  address: string,
+  applyButtonText: string,
+  language?: string
+) {
   const langPart = language ? `/${language}` : ""
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.intercept(`${id}.json`, { fixture: "openRentalListing.json" }).as("openRentalListing")
+  }
+
   cy.visit(`${langPart}/listings/${id}?react=true`)
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.wait("@openRentalListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+    cy.wait("@preferences")
+  }
+
+  // verify image exists
+  cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
+
+  // verify listing title
+  cy.contains(title)
+
+  // unfortunately not all test listings have an address. verify if provided
+  if (address) {
+    cy.contains(address)
+  }
+
+  // verify the apply link is visible
+  cy.contains(applyButtonText)
+}
+
+function verifySaleListing(
+  id: string,
+  altPhotoText: string,
+  title: string,
+  address: string,
+  applyButtonText: string,
+  language?: string
+) {
+  const langPart = language ? `/${language}` : ""
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.intercept(`${id}.json`, { fixture: "openSaleListing.json" }).as("openSaleListing")
+  }
+
+  cy.visit(`${langPart}/listings/${id}?react=true`)
+  if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+    cy.wait("@openSaleListing")
+    cy.wait("@units")
+    cy.wait("@ami")
+  }
 
   // verify image exists
   cy.get(`[alt="${altPhotoText}"]`).should("be.visible")
@@ -44,96 +96,91 @@ const APPLY_BUTTON_TEXT = {
   en: "Apply Online",
 }
 
+const NON_ENGLISH_LANGUAGES = ["Spanish", "Chinese", "Tagalog"]
+
+enum LanguagePrefix {
+  Spanish = "es",
+  Chinese = "zh",
+  Tagalog = "tl",
+}
+
 describe("Listing Details for Open Listings", () => {
-  afterEach(() => {
-    // TODO: remove me once this is fixed. we shouldn't have to wait in between tests, but
-    // there is a rogue loading issue beyond the scope of this story
-    cy.wait(3000)
+  beforeEach(() => {
+    if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+      cy.intercept("ami.json**", { fixture: "ami.json" }).as("ami")
+      cy.intercept("units", { fixture: "units.json" }).as("units")
+      cy.intercept("preferences", { fixture: "preferences.json" }).as("preferences")
+    }
   })
 
   describe("Rental Listing " + testListings.OPEN_RENTAL.id, () => {
     it("displays in English", () => {
-      verifyListing(
-        null,
+      verifyRentalListing(
         testListings.OPEN_RENTAL.id,
         testListings.OPEN_RENTAL.alt,
         testListings.OPEN_RENTAL.title,
         null,
-        APPLY_BUTTON_TEXT.en
+        APPLY_BUTTON_TEXT.en,
+        null
       )
     })
 
-    it("displays in Spanish", () => {
-      const langPart = "es"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+    NON_ENGLISH_LANGUAGES.forEach((language) => {
+      it(`displays in ${language}`, () => {
+        const langPart = LanguagePrefix[language]
 
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
-    })
-
-    it("displays in Chinese", () => {
-      const langPart = "zh"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
-    })
-
-    it("displays in Filipino", () => {
-      const langPart = "tl"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_RENTAL.alt)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.intercept(`${testListings.OPEN_RENTAL.id}.json`, {
+            fixture: "openRentalListing.json",
+          }).as("openRentalListing")
+        }
+        cy.visit(`${langPart}/listings/${testListings.OPEN_RENTAL.id}?react=true`)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.wait("@openRentalListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+          cy.wait("@preferences")
+        }
+        cy.get(".image-card__inner > img")
+          .should("be.visible")
+          .should("have.attr", "alt")
+          .should("not.be", testListings.OPEN_RENTAL.alt)
+      })
     })
   })
 
   describe("Sale Listing " + testListings.OPEN_SALE.id, () => {
     it("displays in English", () => {
-      verifyListing(
-        null,
+      verifySaleListing(
         testListings.OPEN_SALE.id,
         testListings.OPEN_SALE.alt,
         testListings.OPEN_SALE.title,
         testListings.OPEN_SALE.address,
-        APPLY_BUTTON_TEXT.en
+        APPLY_BUTTON_TEXT.en,
+        null
       )
     })
 
-    it("displays in Spanish", () => {
-      const langPart = "es"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+    NON_ENGLISH_LANGUAGES.forEach((language) => {
+      it(`displays in ${language}`, () => {
+        const langPart = LanguagePrefix[language]
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.intercept(`${testListings.OPEN_SALE.id}.json`, { fixture: "openSaleListing.json" }).as(
+            "openSaleListing"
+          )
+        }
 
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
-    })
-
-    it("displays in Chinese", () => {
-      const langPart = "zh"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
-    })
-
-    it("displays in Filipino", () => {
-      const langPart = "tl"
-      cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
-
-      cy.get(".image-card__inner > img")
-        .should("be.visible")
-        .should("have.attr", "alt")
-        .should("not.be", testListings.OPEN_SALE.alt)
+        cy.visit(`${langPart}/listings/${testListings.OPEN_SALE.id}?react=true`)
+        if (Cypress.env("salesforceInstanceUrl") === "https://sfhousing.my.salesforce.com") {
+          cy.wait("@openSaleListing")
+          cy.wait("@units")
+          cy.wait("@ami")
+        }
+        cy.get(".image-card__inner > img")
+          .should("be.visible")
+          .should("have.attr", "alt")
+          .should("not.be", testListings.OPEN_SALE.alt)
+      })
     })
   })
 })

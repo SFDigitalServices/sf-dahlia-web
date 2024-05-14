@@ -1,6 +1,9 @@
 import type RailsRentalListing from "../api/types/rails/listings/RailsRentalListing"
 import type RailsSaleListing from "../api/types/rails/listings/RailsSaleListing"
-import type { ListingEvent } from "../api/types/rails/listings/BaseRailsListing"
+import type {
+  ListingEvent,
+  ListingLotteryPreference,
+} from "../api/types/rails/listings/BaseRailsListing"
 import type {
   RailsUnitWithOccupancy,
   RailsUnitWithOccupancyAndMinMaxIncome,
@@ -19,9 +22,6 @@ import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
-
-export const areLotteryResultsShareable = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Publish_Lottery_Results && listing.Lottery_Status === "Lottery Complete"
 
 /**
  * Check if a listing is for Habitat for Humanity
@@ -83,7 +83,7 @@ export const isEducator = (listing: RailsRentalListing | RailsSaleListing) =>
  * @param {RailsRentalListing | RailsRentalListing} listing
  * @returns {boolean} returns true if the listing is Shirley Chisholm listing 1, false otherwise
  */
-export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing) =>
+export const isEducatorOne = (listing: RailsRentalListing | RailsSaleListing): boolean =>
   listing.Custom_Listing_Type === CUSTOM_LISTING_TYPES.EDUCATOR_ONE
 
 /**
@@ -137,11 +137,13 @@ export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListin
  * Check if a listing is multi-occupancy SRO
  * @param {string} name
  * @param {RailsRentalListing | RailsRentalListing} listing
- * @returns {boolean} returns true if the listing is in the harcoded list of SROs that
+ * @returns {boolean} returns true if the listing id is has SROs that
  * permit multiple occupancy, false otherwise
  */
-export const isPluralSRO = (name: string, listing: RailsRentalListing | RailsSaleListing) => {
-  return process.env.SRO_PLURAL_LISTINGS?.[listing.Id] === name
+export const isPluralSRO = (listing: RailsRentalListing | RailsSaleListing): boolean => {
+  return listing.unitSummaries.general?.some(
+    (unit) => (unit.unitType === "SRO" || unit.unitType === "Room") && unit.maxOccupancy > 1
+  )
 }
 /**
  * Builds and return an address string. Not to be used for display. Use
@@ -415,7 +417,7 @@ export const matchSharedUnitFields = (
         true
       )
     }
-    // Update availiability based on availability in matchingUnits
+    // Update availability based on availability in matchingUnits
     let numAvailable = 0
     matchingUnits.forEach((curUnit: RailsUnitWithOccupancyAndMinMaxIncome) => {
       numAvailable += curUnit.Availability
@@ -573,7 +575,10 @@ export const getLongestAmiChartValueLength = (amiCharts: RailsAmiChart[]): numbe
   return longestChartLength
 }
 
-export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[]): any => {
+export const getMinMaxOccupancy = (
+  units: RailsUnit[],
+  amiCharts: RailsAmiChart[]
+): { explicitMaxOccupancy: boolean; minOccupancy: number; maxOccupancy: number } => {
   const unitsCopy = units.map((unit) => {
     return { ...unit }
   })
@@ -614,9 +619,9 @@ export const getMinMaxOccupancy = (units: RailsUnit[], amiCharts: RailsAmiChart[
   }
 }
 
-export const getPriorityTypeText = (priortyType: string): string => {
+export const getPriorityTypeText = (priorityType: string): string => {
   let text: string
-  switch (priortyType) {
+  switch (priorityType) {
     case "Vision impairments":
       text = t("listings.prioritiesDescriptor.vision")
       break
@@ -652,4 +657,13 @@ export const getTagContent = (listing: RailsListing) => {
   return listing.Reserved_community_type
     ? [{ text: getReservedCommunityType(listing.Reserved_community_type) }]
     : undefined
+}
+
+export const preferenceNameHasVeteran = (preferenceName: string): boolean =>
+  typeof preferenceName === "string" && preferenceName.toLowerCase().includes("veteran")
+
+export const listingHasVeteransPreference = (listing: RailsListing): boolean => {
+  return !!listing.Listing_Lottery_Preferences?.some((preference: ListingLotteryPreference) =>
+    preferenceNameHasVeteran(preference?.Lottery_Preference?.Name)
+  )
 }
