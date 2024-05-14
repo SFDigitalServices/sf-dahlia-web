@@ -150,7 +150,6 @@ Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pa
 We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. This can be overridden with
 
 - HOME_PAGE_REACT='true'
-- DIRECTORY_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
 - GET_ASSISTANCE_PAGES_REACT='true'
 
