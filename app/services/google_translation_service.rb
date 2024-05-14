@@ -1,14 +1,14 @@
 require 'google/cloud/translate/v2'
 
-module Translate
+module GoogleTranslate
   # Translate
-  class TranslationService
+  class GoogleTranslationService
     puts 'Connecting to Google Cloud Translate...'
 
     translate = Google::Cloud::Translate::V2.new("project_id": 'housing-393518',
-                                                 "key": ENV['GOOGLE_TRANSLATE_KEY'])
+                                                 "key": 'AIzaSyDezm2LJY4CY9wtUWcQsw7Ldu93kBfFjP4')
 
-    translation = translate.translate 'Hello world!', to: 'la'
-    puts translation.text #=> "Salve mundi!"
+    translation = translate.translate 'Hello world!', 'Good Morning', to: 'es'
+    puts translation #=> "Salve mundi!"
   end
 end
