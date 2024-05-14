@@ -151,7 +151,6 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 
 - HOME_PAGE_REACT='true'
 - LISTING_DETAIL_PAGE_REACT='true'
-- GET_ASSISTANCE_PAGES_REACT='true'
 
 ### React env variables
 

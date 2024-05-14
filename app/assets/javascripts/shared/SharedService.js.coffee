@@ -50,22 +50,22 @@ SharedService = ($http, $state, $window, $document) ->
       shouldRailsRoute: (isFirstLoad) -> true
     'dahlia.housing-counselors':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/housing-counselors")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.get-assistance':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/get-assistance")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.additional-resources':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/additional-resources")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.document-checklist':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/document-checklist")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.privacy':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/privacy")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.disclaimer':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/disclaimer")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
 
 
   Service.getLanguageCode = (langName) ->
