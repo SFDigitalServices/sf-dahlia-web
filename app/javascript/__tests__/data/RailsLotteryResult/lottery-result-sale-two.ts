@@ -22,6 +22,7 @@ export const lotteryResultSaleTwo: RailsLotteryResult = {
       preferenceResults: [],
       preferenceOrder: 1,
       preferenceName: "Certificate of Preference (COP)",
+      preferenceShortCode: "",
     },
     {
       unitsAvailable: 2,
@@ -29,6 +30,7 @@ export const lotteryResultSaleTwo: RailsLotteryResult = {
       preferenceResults: [],
       preferenceOrder: 2,
       preferenceName: "Displaced Tenant Housing Preference (DTHP)",
+      preferenceShortCode: "",
     },
     {
       unitsAvailable: 5,
@@ -43,6 +45,7 @@ export const lotteryResultSaleTwo: RailsLotteryResult = {
       ],
       preferenceOrder: 3,
       preferenceName: "Neighborhood Resident Housing Preference (NRHP)",
+      preferenceShortCode: "",
     },
     {
       unitsAvailable: 13,
@@ -57,6 +60,7 @@ export const lotteryResultSaleTwo: RailsLotteryResult = {
       ],
       preferenceOrder: 4,
       preferenceName: "Live or Work in San Francisco Preference",
+      preferenceShortCode: "",
     },
     {
       unitsAvailable: 13,
@@ -71,6 +75,7 @@ export const lotteryResultSaleTwo: RailsLotteryResult = {
       ],
       preferenceOrder: null,
       preferenceName: "generalLottery",
+      preferenceShortCode: "",
     },
   ],
   lotteryAppTotal: 60,

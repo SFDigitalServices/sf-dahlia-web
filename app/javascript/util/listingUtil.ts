@@ -124,7 +124,9 @@ export const isBMR = (listing: RailsRentalListing | RailsSaleListing) =>
  * @returns {boolean} returns true if the listing has all SRO unit types, false otherwise
  */
 export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general?.every((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.every(
+    (unit) => unit.unitType === "SRO" || unit.unitType === "Room"
+  )
 
 /**
  * Check if a listing has at least one SRO unit
@@ -132,7 +134,7 @@ export const listingHasOnlySROUnits = (listing: RailsRentalListing | RailsSaleLi
  * @returns {boolean} returns true if the listing has at least one SRO unit type, false otherwise
  */
 export const listingHasSROUnits = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.unitSummaries.general?.some((unit) => unit.unitType === "SRO")
+  listing.unitSummaries.general?.some((unit) => unit.unitType === "SRO" || unit.unitType === "Room")
 /**
  * Check if a listing is multi-occupancy SRO
  * @param {string} name

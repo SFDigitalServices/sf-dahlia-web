@@ -2,6 +2,7 @@ import React from "react"
 import { Heading, t } from "@bloom-housing/ui-components"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
+import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
 
 export interface ListingDetailsLotteryPreferencesProps {
   lotteryBucketsDetails: RailsLotteryResult
@@ -19,7 +20,7 @@ export const ListingDetailsLotteryPreferences = ({
         <div className="pb-4 text-gray-700 text-xs mx-8 translate">
           {renderMarkup(
             `${t("lottery.rankingOrderNote", {
-              lotteryRankingVideoUrl: "https://www.youtube.com/watch?v=4ZB35gagUl8",
+              lotteryRankingVideoUrl: LOTTERY_RANKING_VIDEO_URL,
             })}`
           )}
         </div>

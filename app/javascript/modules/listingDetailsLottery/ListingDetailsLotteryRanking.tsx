@@ -2,11 +2,14 @@ import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
 import { PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
+import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
-import { renderMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 
 interface ListingDetailsLotteryRankingProps {
   lotteryResult: RailsLotteryResult
+  listingIsEducator: boolean
+  listingIsEducatorOne?: boolean
 }
 
 interface TooltipProps {
@@ -23,11 +26,17 @@ const Tooltip = ({ text }: TooltipProps) => {
 }
 export const ListingDetailsLotteryRanking = ({
   lotteryResult,
+  listingIsEducator,
+  listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
     }
+    if (listingIsEducatorOne && bucket.preferenceShortCode) {
+      return bucket.preferenceShortCode.includes("T1") || bucket.preferenceShortCode.includes("T2")
+    }
+
     return bucket.preferenceName !== "generalLottery" && bucket.preferenceResults[0].preferenceRank
   })
   const applicantSelectedForPreference = preferenceBuckets?.length > 0
@@ -63,10 +72,17 @@ export const ListingDetailsLotteryRanking = ({
           <Tooltip text={t("lottery.rankingPreferencesConsideredOverGeneralNote")} />
         )}
         {preferenceBuckets?.map((bucket) => (
-          <ListingDetailsLotteryResultsRow bucket={bucket} key={bucket.preferenceName} />
+          <ListingDetailsLotteryResultsRow
+            bucket={bucket}
+            key={bucket.preferenceName}
+            listingIsEducator={listingIsEducator}
+          />
         ))}
         {!applicantSelectedForPreference && (
-          <ListingDetailsLotteryResultsRow bucket={generalLotteryBucket} />
+          <ListingDetailsLotteryResultsRow
+            bucket={generalLotteryBucket}
+            listingIsEducator={listingIsEducator}
+          />
         )}
         <div className="px-8">
           <ExpandableContent
@@ -77,6 +93,16 @@ export const ListingDetailsLotteryRanking = ({
             }}
           >
             <div className="text-gray-700">
+              <p className="mb-2">
+                <Link
+                  className="text-blue-700"
+                  external={true}
+                  href={getSfGovUrl("https://sf.gov/after-rental-housing-lottery", 12704)}
+                  target="_blank"
+                >
+                  {t("lottery.nextStepsLearnMore")}
+                </Link>
+              </p>
               <p className="mb-2">{t("lottery.nextStepsP1")}</p>
               <p className="mb-2">{t("lottery.nextStepsP2")}</p>
               <p className="mb-2">{t("lottery.nextStepsP3")}</p>

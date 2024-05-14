@@ -9,6 +9,8 @@ import { ListingDetailsLotteryRanking } from "./ListingDetailsLotteryRanking"
 import { ListingDetailsLotterySearchFooter } from "./ListingDetailsLotterySearchFooter"
 import "./ListingDetailsLotterySearchForm.scss"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
+import { isEducator, isEducatorOne } from "../../util/listingUtil"
+import { ListingDetailsLotteryPreferencesEducator } from "./ListingDetailsLotteryPreferencesEducator"
 
 export enum LOTTERY_SEARCH_FORM_STATUS {
   INITIAL_STATE,
@@ -36,7 +38,12 @@ export const ListingDetailsLotterySearchForm = ({
   )
 
   const onSubmit = (data: { lotterySearchNumber: string }) => {
-    const lotterySearchNumber = data.lotterySearchNumber
+    let lotterySearchNumber = data.lotterySearchNumber
+
+    if (lotterySearchNumber.length < 8) {
+      lotterySearchNumber = "0".repeat(8 - lotterySearchNumber.length) + lotterySearchNumber
+    }
+
     setLotteryFormStatus(LOTTERY_SEARCH_FORM_STATUS.LOADING)
 
     void getLotteryResults(listing.Id, lotterySearchNumber).then((lotterySearchResults) => {
@@ -65,7 +72,16 @@ export const ListingDetailsLotterySearchForm = ({
   switch (lotteryFormStatus) {
     case LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE:
     case LOTTERY_SEARCH_FORM_STATUS.API_ERROR: {
-      content = <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryBucketDetails} />
+      // educator listings have a custom lottery modal because there are so many layered preferences
+      // the custom modal will make the preferences easier to understand
+      content = isEducator(listing) ? (
+        <ListingDetailsLotteryPreferencesEducator
+          lotteryBucketsDetails={lotteryBucketDetails}
+          isEducatorOne={isEducatorOne(listing)}
+        />
+      ) : (
+        <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryBucketDetails} />
+      )
       break
     }
     case LOTTERY_SEARCH_FORM_STATUS.LOADING: {
@@ -87,7 +103,11 @@ export const ListingDetailsLotterySearchForm = ({
     }
     case LOTTERY_SEARCH_FORM_STATUS.SEARCH_RESULT_FOUND: {
       content = lotterySearchResult && (
-        <ListingDetailsLotteryRanking lotteryResult={lotterySearchResult} />
+        <ListingDetailsLotteryRanking
+          lotteryResult={lotterySearchResult}
+          listingIsEducator={isEducator(listing)}
+          listingIsEducatorOne={isEducatorOne(listing)}
+        />
       )
       break
     }
