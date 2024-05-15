@@ -338,7 +338,6 @@ Then 'on the Preferences Programs page I should see my correct info', ->
 ##################
 
 When /^I answer "Yes" to the Veterans preference question and select "([^"]*)"$/, (fullName) ->
-  if !Utils.Page.showVeteransApplicationQuestion then return
   element(By.id("isAnyoneAVeteran_yes")).click()
   element(By.id("selected_veteran_member")).click()
   element.all(By.cssContainingText("#selected_veteran_member option", fullName))
@@ -348,17 +347,14 @@ When /^I answer "Yes" to the Veterans preference question and select "([^"]*)"$/
   Utils.Page.submit()
 
 When 'I answer "No" to the Veterans preference question', ->
-  if !Utils.Page.showVeteransApplicationQuestion then return
   element(By.id("isAnyoneAVeteran_no")).click()
   Utils.Page.submit()
 
 When 'I answer "Prefer not to answer" to the Veterans preference question', ->
-  if !Utils.Page.showVeteransApplicationQuestion then return
   element(By.id("isAnyoneAVeteran_decline-to-state")).click()
   Utils.Page.submit()
 
 Then 'on the Veterans preference page I should see my correct info', ->
-  if !Utils.Page.showVeteransApplicationQuestion then return
   Utils.Expect.radioValue(@, 'isAnyoneAVeteran', 'Yes')
   Utils.Expect.inputValue(@, 'selected_veteran_member', '1')
   Utils.Page.submit()
@@ -366,5 +362,4 @@ Then 'on the Veterans preference page I should see my correct info', ->
 # This is a workaround for the Veterans feature flag to work with e2e tests
 # TODO remove this when the Veterans feature flag is removed
 When 'I conditionally continue past the general lottery notice page', ->
-  if !Utils.Page.showVeteransApplicationQuestion
-    Utils.Page.submit()
+  Utils.Page.submit()
