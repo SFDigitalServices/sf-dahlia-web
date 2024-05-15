@@ -106,6 +106,7 @@ export const ListingDetailsLotterySearchForm = ({
         <ListingDetailsLotteryRanking
           lotteryResult={lotterySearchResult}
           listingIsEducator={isEducator(listing)}
+          listingIsEducatorOne={isEducatorOne(listing)}
         />
       )
       break

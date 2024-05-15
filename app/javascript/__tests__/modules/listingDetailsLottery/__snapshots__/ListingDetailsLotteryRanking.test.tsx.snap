@@ -19,7 +19,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p>
           Ranking in these lists is considered in the order shown here. 
           <a
-            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            href="https://www.youtube.com/watch?v=oW56bUsrSW4"
             target="_blank"
           >
             Watch a video on how lottery ranking works.
@@ -586,6 +586,467 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
 </DocumentFragment>
 `;
 
+exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 1`] = `
+<DocumentFragment>
+  <div
+    class="lottery-ranking text-sm"
+  >
+    <header
+      class="px-8"
+    >
+      <h2
+        class="text__underline-weighted"
+      >
+        Your preference ranking
+      </h2>
+      <div
+        class="border-b border-gray-450 pb-4 text-gray-700 translate"
+      >
+        <p>
+          Ranking in these lists is considered in the order shown here. 
+          <a
+            href="https://www.youtube.com/watch?v=oW56bUsrSW4"
+            target="_blank"
+          >
+            Watch a video on how lottery ranking works.
+          </a>
+        </p>
+      </div>
+    </header>
+    <div
+      class="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
+    >
+      <span
+        class="ui-icon ui-medium mx-4"
+      >
+        <svg
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
+          />
+        </svg>
+      </span>
+      <p>
+        Please note, there are other preferences that will be considered for units first.
+      </p>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        Educators - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Veteran with Neighborhood Resident Housing Preference
+        </h3>
+        Educators - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        Educators - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Veteran with Live or Work in San Francisco Preference
+        </h3>
+        Educators - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        Educators - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          3 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Certificate of Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Veteran with Displaced Tenant Housing Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Displaced Tenant Housing Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Neighborhood Resident Housing Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Veteran with Live or Work in San Francisco Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          1 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
+    >
+      <div
+        class="bg-blue-500 flex flex-col font-semibold h-full px-4 py-2 text-center text-white"
+      >
+        <div
+          class="rank-title uppercase"
+        >
+          Rank
+        </div>
+        <div>
+          1
+        </div>
+      </div>
+      <div
+        class="mx-4"
+      >
+        <h3
+          class="font-sans font-semibold mb-1 text-sm tracking-wide uppercase"
+        >
+          Live or Work in San Francisco Preference
+        </h3>
+        All other employees - SFUSD
+        <p
+          class="mb-1 text-gray-950 text-sm"
+        >
+          Up to %{units} units
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicants are on this list.
+        </p>
+      </div>
+    </div>
+    <div
+      class="px-8"
+    >
+      <div
+        class="pb-4"
+      >
+        <button
+          aria-expanded="false"
+          class="button is-unstyled m-0 no-underline has-toggle"
+          type="button"
+        >
+          What happens next?
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with one result - L/W 1`] = `
 <DocumentFragment>
   <div
@@ -605,7 +1066,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
         <p>
           Ranking in these lists is considered in the order shown here. 
           <a
-            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            href="https://www.youtube.com/watch?v=oW56bUsrSW4"
             target="_blank"
           >
             Watch a video on how lottery ranking works.
@@ -705,7 +1166,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         <p>
           Ranking in these lists is considered in the order shown here. 
           <a
-            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            href="https://www.youtube.com/watch?v=oW56bUsrSW4"
             target="_blank"
           >
             Watch a video on how lottery ranking works.
@@ -821,7 +1282,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for sale with gen
         <p>
           Ranking in these lists is considered in the order shown here. 
           <a
-            href="https://www.youtube.com/watch?v=4ZB35gagUl8"
+            href="https://www.youtube.com/watch?v=oW56bUsrSW4"
             target="_blank"
           >
             Watch a video on how lottery ranking works.

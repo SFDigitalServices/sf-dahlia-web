@@ -58,7 +58,7 @@ export const TENURE_TYPES = {
   RE_RENTAL: "Re-rental",
 }
 
-export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=4ZB35gagUl8"
+export const LOTTERY_RANKING_VIDEO_URL = "https://www.youtube.com/watch?v=oW56bUsrSW4"
 
 // Whitelist of allowed SF.gov links for secure redirection
 export const SFGOV_LINKS = [
@@ -81,6 +81,7 @@ export const SFGOV_LINKS = [
   "https://sf.gov/departments/city-administrator/digital-services",
   "https://sf.gov/departments/mayors-office-innovation",
   "https://sf.gov/information/special-calculations-household-income",
+  "https://sf.gov/after-rental-housing-lottery",
   // Salesforce links that redirect to sf.gov pages
   "http://sfmohcd.org/certificate-preference",
   "http://sfmohcd.org/housing-preference-programs",
