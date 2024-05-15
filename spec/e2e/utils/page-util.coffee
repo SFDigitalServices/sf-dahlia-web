@@ -10,7 +10,6 @@ PageUtil = {
   customEducatorListing1Id: 'a0W4U00000NlQ30UAF'
   customEducatorListing2Id: 'a0W4U00000NlQ2wUAF'
   # We set this flag to false because there are complications to how the flag works currently, which are temporary
-  showVeteransApplicationQuestion: false # process.env.VETERANS_APPLICATION_QUESTION == 'true'
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
     browser.wait(EC.presenceOf(checkbox), 5000)
