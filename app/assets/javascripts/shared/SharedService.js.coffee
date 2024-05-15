@@ -35,7 +35,7 @@ SharedService = ($http, $state, $window, $document) ->
   Service.railsRoutedPages =
     'dahlia.welcome':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.HOME_PAGE_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.listings-for-rent':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/for-rent")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad

@@ -27,7 +27,7 @@ non_production_jobs: &non_production_jobs
 angular_jobs: &angular_jobs
   filters:
     branches:
-      only: 
+      only:
         - /^angular.*$/
         - main
   requires:
@@ -224,7 +224,6 @@ jobs:
   e2e:
     <<: *defaults
     environment:
-      HOME_PAGE_REACT: "true"
       SIGN_IN_PAGE_REACT: "true"
     steps:
       - setup
@@ -255,7 +254,7 @@ jobs:
     # CCI_TOKEN is a personal circleci token generated in the circle ci account ui that has been added as an environment variable for the project.
     # The api request checks every 5 seconds if jobs are still running for this workflow until it receives the response that all jobs are finished.
     # After the waiter job finishes, jobs that require waiter to complete will run.
-    docker: 
+    docker:
       - image: cimg/node:current
     steps:
       - run: |
