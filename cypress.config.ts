@@ -18,6 +18,8 @@ export default defineConfig({
     },
     env: {
       salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL,
+      completedLotteryListingId: process.env.COMPLETED_LOTTERY_LISTING_ID,
+      lotteryNumber: process.env.LOTTERY_NUMBER
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
