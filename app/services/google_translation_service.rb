@@ -1,16 +1,27 @@
 require 'google/cloud/translate/v2'
 
-module GoogleTranslate
-  # Translate
-  class GoogleTranslationService
-    def translate
-      puts 'Connecting to Google Cloud Translate...'
+# Translate
+class GoogleTranslationService
+  class TranslationError < StandardError; end
 
-      translate = Google::Cloud::Translate::V2.new("project_id": 'housing-393518',
-                                                   "key": ENV['GOOGLE_TRANSLATE_KEY'])
+  def initialize(project_id:, key:)
+    Rails.logger.info('Connecting to Google Cloud Translate...')
+    @translate = Google::Cloud::Translate::V2.new("project_id": project_id, "key": key)
+  end
 
-      translation = translate.translate 'Hello world!', 'Good Morning', to: 'es'
-      puts translation #=> "Salve mundi!"
+  def translate(*text, to)
+    to.map do |target|
+      translation = @translate.translate(text, to: target)
+      { to: target, translation: parse_translations(translation) }
+    rescue StandardError => e
+      Rails.logger.error("An error occured: #{e.message}")
+      raise TranslationError, e.message
     end
+  end
+
+  def parse_translations(results)
+    return [results.text] unless results.count > 1
+
+    results.map(&:text)
   end
 end
