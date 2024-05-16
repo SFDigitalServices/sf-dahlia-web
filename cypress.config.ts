@@ -17,8 +17,7 @@ export default defineConfig({
       return require("./cypress/plugins/index.js")(on, config)
     },
     env: {
-      salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL,
-      E2E_LOTTERY_NUMBER: process.env.E2E_LOTTERY_NUMBER
+      salesforceInstanceUrl: process.env.SALESFORCE_INSTANCE_URL
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
