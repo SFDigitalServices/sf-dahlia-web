@@ -6,10 +6,9 @@ EC = protractor.ExpectedConditions
 PageUtil = {
   testListingId: 'a0W0P00000F8YG4UAN'
   seniorListingId: 'a0W0P00000GwGl3'
-  saleListingId: process.env.TEST_SALE_LISTING_ID || 'a0W0P00000GlKfBUAV'
-  # TODO: Temporary checks. Remove with DAH-1420
-  customEducatorListing1Id: if (process.env.SALESFORCE_INSTANCE_URL == 'https://sfhousing.my.salesforce.com') then 'a0W4U00000NlQ30UAF' else 'a0W8H0000014M1cUAE'
-  customEducatorListing2Id: if (process.env.SALESFORCE_INSTANCE_URL == 'https://sfhousing.my.salesforce.com') then 'a0W4U00000NlQ2wUAF' else 'a0W8H00000140LvUAI'
+  saleListingId: 'a0W0P00000GlKfBUAV'
+  customEducatorListing1Id: 'a0W4U00000NlQ30UAF'
+  customEducatorListing2Id: 'a0W4U00000NlQ2wUAF'
   # We set this flag to false because there are complications to how the flag works currently, which are temporary
   showVeteransApplicationQuestion: false # process.env.VETERANS_APPLICATION_QUESTION == 'true'
   checkCheckbox: (checkboxId, callback) ->

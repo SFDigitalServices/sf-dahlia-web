@@ -1,5 +1,6 @@
-const listingId: string = Cypress.env("completedLotteryListingId") || "a0W4U00000IhGZcUAN"
-const lotteryNumber: string = Cypress.env("lotteryNumber") || "01150047"
+const listingId: string = "a0W4U00000IhGZcUAN"
+// hopefully don't need environment variable check soon re: DAH-1420
+const lotteryNumber: string = Cypress.env("E2E_LOTTERY_NUMBER") || "01172081"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420
