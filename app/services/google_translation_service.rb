@@ -20,7 +20,7 @@ class GoogleTranslationService
   end
 
   def parse_translations(results)
-    return [results.text] unless results.count > 1
+    return [results.text] unless results.is_a?(Array)
 
     results.map(&:text)
   end
