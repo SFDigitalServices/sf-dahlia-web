@@ -669,3 +669,7 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
     preferenceNameHasVeteran(preference?.Lottery_Preference?.Name)
   )
 }
+
+export const forceRecacheParam = () => ({
+  params: window.location.search.includes("preview=true") ? { force: true } : {},
+})
