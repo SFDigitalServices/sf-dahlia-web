@@ -49,8 +49,8 @@ export const getEligibilityQueryString = (
 export const getListings = async (
   listingType: ListingsType,
   filters?: EligibilityFilters
-): Promise<RailsRentalListing[]> => {
-  return filters && Object.keys(filters).length > 0
+): Promise<RailsRentalListing[]> =>
+  filters && Object.keys(filters).length > 0
     ? get<ListingsResponse>(
         listingsWithFilters(getEligibilityQueryString(filters, listingType)),
         forceRecacheParam()
@@ -58,7 +58,6 @@ export const getListings = async (
     : get<ListingsResponse>(listings(listingType), forceRecacheParam()).then(
         ({ data }) => data.listings
       )
-}
 
 export const getRentalListings = async (
   filters?: EligibilityFilters
