@@ -3,6 +3,7 @@
 
 process.env.TZ = "UTC"
 process.env.NODE_ENV = "test"
+process.env.UNLEASH_ENV = "development"
 
 module.exports = {
   testRegex: "/*.test.(tsx|ts)$",

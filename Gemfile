@@ -71,6 +71,9 @@ gem 'oj_mimic_json'
 gem 'devise', '4.9.0'
 gem 'devise_token_auth', '~> 1.2.1'
 
+# listing interest email token
+gem 'jwt'
+
 # postgresql database
 gem 'pg'
 
