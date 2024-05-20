@@ -9,7 +9,7 @@ class GoogleTranslationService
     @translate = Google::Cloud::Translate::V2.new("project_id": project_id, "key": key)
   end
 
-  def translate(*text, to)
+  def translate(text, to)
     to.map do |target|
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
