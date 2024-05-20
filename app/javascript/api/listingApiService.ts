@@ -13,18 +13,17 @@ import {
   lotteryRanking,
   amiCharts,
 } from "./apiEndpoints"
+import { forceRecacheParam } from "../util/listingUtil"
 
 type ListingsResponse = { listing: RailsRentalListing }
 type ListingPreferencesResponse = { preferences: RailsListingPreference[] }
 type ListingUnitsResponse = { units: RailsUnit[] }
 type ListingAmiChartsResponse = { ami: RailsAmiChart[] }
 
-const forceRecache = () => (window.location.search.includes("preview=true") ? { force: true } : {})
-
 export const getListing = async (listingId?: string): Promise<RailsListing> => {
-  const httpConfig = { params: {} }
-  httpConfig.params = forceRecache()
-  return get<ListingsResponse>(listing(listingId), httpConfig).then(({ data }) => data.listing)
+  return get<ListingsResponse>(listing(listingId), forceRecacheParam()).then(
+    ({ data }) => data.listing
+  )
 }
 
 /**
@@ -33,9 +32,7 @@ export const getListing = async (listingId?: string): Promise<RailsListing> => {
  * @returns {RailsLotteryResult} lottery result info
  */
 export const getLotteryBucketDetails = async (listingId: string): Promise<RailsLotteryResult> => {
-  const httpConfig = { params: {} }
-  httpConfig.params = forceRecache()
-  return get<RailsLotteryResult>(lotteryBuckets(listingId), httpConfig).then(
+  return get<RailsLotteryResult>(lotteryBuckets(listingId), forceRecacheParam()).then(
     (response) => response.data
   )
 }
@@ -63,9 +60,7 @@ export const getLotteryResults = async (
  * @returns {RailsListingPreference[]} list of preferences for the listing
  */
 export const getPreferences = async (listingId: string): Promise<RailsListingPreference[]> => {
-  const httpConfig = { params: {} }
-  httpConfig.params = forceRecache()
-  return get<ListingPreferencesResponse>(listingPreferences(listingId), httpConfig).then(
+  return get<ListingPreferencesResponse>(listingPreferences(listingId), forceRecacheParam()).then(
     ({ data }) => data.preferences
   )
 }
@@ -75,9 +70,7 @@ export const getPreferences = async (listingId: string): Promise<RailsListingPre
  * @returns {RailsListingUnits[]} list of Unitss for the listing
  */
 export const getUnits = async (listingId: string): Promise<RailsUnit[]> => {
-  const httpConfig = { params: {} }
-  httpConfig.params = forceRecache()
-  return get<ListingUnitsResponse>(listingUnits(listingId), httpConfig).then(
+  return get<ListingUnitsResponse>(listingUnits(listingId), forceRecacheParam()).then(
     ({ data }) => data.units
   )
 }
