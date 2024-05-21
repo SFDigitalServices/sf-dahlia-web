@@ -98,13 +98,13 @@ describe("listingsApiService", () => {
         listingType
       )}`
       await getListings(listingType, filters)
-      expect(get).toHaveBeenCalledWith(url)
+      expect(get).toHaveBeenCalledWith(url, { params: {} })
     })
 
     it("calls apiService get without filters", async () => {
       const url = `/api/v1/listings.json?type=${listingType}&subset=browse`
       await getListings(listingType)
-      expect(get).toHaveBeenCalledWith(url)
+      expect(get).toHaveBeenCalledWith(url, { params: {} })
     })
   })
 })
