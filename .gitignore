@@ -26,8 +26,7 @@ lib/assets/bower_components
 .ruby-version
 
 # Ignore .env, can store protected information
-.env
-
+.env*
 dump.rdb
 
 ssl.sh
