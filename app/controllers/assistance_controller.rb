@@ -33,6 +33,6 @@ class AssistanceController < ApplicationController
   protected
 
   def use_react_app
-    ENV['GET_ASSISTANCE_PAGES_REACT'].to_s.casecmp('true').zero?
+    true
   end
 end

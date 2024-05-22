@@ -147,12 +147,9 @@ Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pa
 
 ### Rewrite feature flags
 
-We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. This can be overridden with
+We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. We phase out those flags when the rewritten pages have been live for some time. This can be overridden with
 
-- HOME_PAGE_REACT='true'
-- DIRECTORY_PAGE_REACT='true'
-- LISTING_DETAIL_PAGE_REACT='true'
-- GET_ASSISTANCE_PAGES_REACT='true'
+- <PAGE_NAME>_REACT='true'
 
 ### React env variables
 

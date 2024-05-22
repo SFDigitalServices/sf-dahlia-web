@@ -363,8 +363,6 @@ Then 'on the Veterans preference page I should see my correct info', ->
   Utils.Expect.inputValue(@, 'selected_veteran_member', '1')
   Utils.Page.submit()
 
-# This is a workaround for the Veterans feature flag to work with e2e tests
-# TODO remove this when the Veterans feature flag is removed
 When 'I conditionally continue past the general lottery notice page', ->
   if !Utils.Page.showVeteransApplicationQuestion
     Utils.Page.submit()
