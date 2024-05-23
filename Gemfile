@@ -61,6 +61,7 @@ gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # google translation
+gem 'faraday'
 gem 'google-cloud-translate-v2'
 # JSON optimization
 gem 'oj'
