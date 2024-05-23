@@ -93,6 +93,7 @@ GEM
       tilt
     ast (2.4.2)
     awesome_print (1.9.2)
+    base64 (0.2.0)
     bcrypt (3.1.18)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
@@ -159,7 +160,8 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faraday (2.7.4)
+    faraday (2.7.12)
+      base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-follow_redirects (0.3.0)
@@ -196,8 +198,8 @@ GEM
     google-cloud-env (2.1.1)
       faraday (>= 1.0, < 3.a)
     google-cloud-errors (1.4.0)
-    google-cloud-translate-v2 (0.5.0)
-      faraday (>= 0.17.3, < 2.a)
+    google-cloud-translate-v2 (0.5.1)
+      faraday (>= 1.0, < 3.a)
       google-cloud-core (~> 1.6)
       googleapis-common-protos (>= 1.3.10, < 2.a)
       googleapis-common-protos-types (>= 1.0.5, < 2.a)
@@ -542,6 +544,7 @@ DEPENDENCIES
   easypost (>= 3.0.1)
   facets
   factory_bot_rails
+  faraday
   fog-aws
   foreman
   google-cloud-translate-v2
