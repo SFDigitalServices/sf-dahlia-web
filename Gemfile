@@ -48,6 +48,8 @@ gem 'psych', '< 4'
 gem 'restforce', '~> 6.2.2', require: false
 gem 'faye'
 gem 'cometd-rails', '~> 3.0', '>= 3.0.3.1'
+gem 'em-http-request'
+
 # handy ruby extensions
 gem 'facets', require: false
 
