@@ -13,7 +13,8 @@ module Force
                               host: ENV['SALESFORCE_HOST'],
                               client_id: ENV['SALESFORCE_CLIENT_ID'],
                               client_secret: ENV['SALESFORCE_CLIENT_SECRET'],
-                              api_version: '26.0')
+                              api_version: '26.0',
+                              ssl: { verify_peer: true })
       puts 'Client Connected ', @client
     end
 
