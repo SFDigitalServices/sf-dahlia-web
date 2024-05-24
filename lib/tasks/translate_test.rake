@@ -49,4 +49,9 @@ namespace :translate_test do # rubocop:disable Metrics/BlockLength
     )
     puts response
   end
+
+  task subscribe: :environment do
+    subscriber = Force::StreamingSubscriberService.new
+    subscriber.subscribe
+  end
 end
