@@ -117,8 +117,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    cometd-rails (3.0.3.1)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
+    cookiejar (0.3.4)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -150,8 +152,17 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     easypost (4.12.0)
+    em-http-request (1.1.7)
+      addressable (>= 2.3.4)
+      cookiejar (!= 0.3.1)
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.2)
+      eventmachine (>= 1.0.0.beta.4)
     erubi (1.12.0)
     erubis (2.7.0)
+    eventmachine (1.2.7)
     excon (0.99.0)
     execjs (2.8.1)
     facets (3.1.0)
@@ -169,6 +180,16 @@ GEM
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
     faraday-net_http (3.0.2)
+    faye (0.8.9)
+      cookiejar (>= 0.3.0)
+      em-http-request (>= 0.3.0)
+      eventmachine (>= 0.12.0)
+      faye-websocket (>= 0.4.0)
+      rack (>= 1.0.0)
+      yajl-ruby (>= 1.0.0)
+    faye-websocket (0.11.3)
+      eventmachine (>= 0.12.0)
+      websocket-driver (>= 0.5.1)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -240,6 +261,7 @@ GEM
     http-cookie (1.0.5)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
+    http_parser.rb (0.8.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_optimizer (1.7.2)
@@ -519,6 +541,7 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yajl-ruby (1.4.3)
     zeitwerk (2.6.13)
 
 PLATFORMS
@@ -537,6 +560,7 @@ DEPENDENCIES
   bower-rails
   codeclimate-test-reporter (= 0.6.0)
   coffee-rails
+  cometd-rails (~> 3.0, >= 3.0.3.1)
   dalli
   database_cleaner
   devise (= 4.9.0)
@@ -546,6 +570,7 @@ DEPENDENCIES
   facets
   factory_bot_rails
   faraday
+  faye
   fog-aws
   foreman
   google-cloud-translate-v2

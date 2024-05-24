@@ -10,4 +10,8 @@ namespace :translate_test do
     translations = translation_service.translate(fields, languages)
     Rails.logger.info("Test translation results #{translations}")
   end
+  task subscribe: :environment do
+    subscriber = Force::StreamingSubscriberService.new
+    subscriber.subscribe
+  end
 end
