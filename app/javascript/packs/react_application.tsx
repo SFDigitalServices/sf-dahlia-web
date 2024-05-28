@@ -17,6 +17,7 @@ import ListingInterestPage from "../pages/listingInterest/listing-interest-page"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
+import ShortFormPage from "../pages/ShortFormPage"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -35,5 +36,6 @@ void loadTranslations(currentLanguage).then(() =>
     Disclaimer,
     Privacy,
     ListingInterestPage,
+    ShortFormPage,
   })
 )

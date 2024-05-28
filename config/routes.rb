@@ -94,6 +94,7 @@ Rails.application.routes.draw do
   get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
 
   get '(:lang)/listing_interest' => 'listing_interest_page#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id/apply-welcome/intro' => 'short_form_application#index', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }

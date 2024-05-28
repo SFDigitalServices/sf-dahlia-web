@@ -33,6 +33,9 @@ SharedService = ($http, $state, $window, $document) ->
     Service._appendLeadingSlash(langString + url)
 
   Service.railsRoutedPages =
+    'dahlia.short-form-welcome.intro':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
+      shouldRailsRoute: (isFirstLoad) -> true
     'dahlia.welcome':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
