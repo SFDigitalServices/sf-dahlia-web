@@ -138,6 +138,14 @@ To run stress testing against the Salesforce instance, refer to the documentatio
 
 Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pages/2775351453/Frontend+release+process) page on Confluence for the full release guide.
 
+## Feature Flags
+
+Feature flags are provided by our own instance of Unleash and you can add feature flags through that portal (view confluence for feature flag instructions and naming conventions).
+
+To use a feature flag, use the `useFeatureFlag` hook. The hook asks for the flag name (whatever is in Unleash) and the default value. The default value will be used if there is no url override and if Unleash is experiencing an outage. Therefore, an example usage of useFeatureFlag would be `useFeatureFlag("flagName", false)`
+
+On non-production environments, you can override the value of a feature flag by adding a search parameter to the URL. For example, ...&featureFlag[flagName]=true would override the value being provided by Unleash (or the default value) and force the feature flag to be true. This will only work in environments where the Unleash environment is set to development.
+
 ## Environment variable configurations
 
 ### DALP Advertising
@@ -149,7 +157,7 @@ Follow the [Webapp release process](https://sfgovdt.jira.com/wiki/spaces/HOUS/pa
 
 We have flags for each chunk of the rewrite we release. These will set those pages to default to the React version. We phase out those flags when the rewritten pages have been live for some time. This can be overridden with
 
-- <PAGE_NAME>_REACT='true'
+- <PAGE_NAME>\_REACT='true'
 
 ### React env variables
 
@@ -158,6 +166,7 @@ We have flags for each chunk of the rewrite we release. These will set those pag
 - TOP_MESSAGE_INVERTED default to `false`, when set to `true` sets AlertBox prop to inverted
 
 ### Other
+
 - COVID_UPDATE -> If set to 'true', shows COVID-19 update info in the apply section and hides pre lottery info
 
 ## Contributing changes
