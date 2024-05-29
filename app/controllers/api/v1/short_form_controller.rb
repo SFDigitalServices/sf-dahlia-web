@@ -386,6 +386,7 @@ class Api::V1::ShortFormController < ApiController
                 indigenousNativeAmericanGroup
                 hiv
                 dob
+                DOB
                 address
                 city
                 state
@@ -436,6 +437,7 @@ class Api::V1::ShortFormController < ApiController
                 workInSf
                 relationship
                 dob
+                DOB
                 address
                 city
                 state

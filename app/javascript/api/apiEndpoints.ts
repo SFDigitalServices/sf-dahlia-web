@@ -9,3 +9,6 @@ export const lotteryBuckets = (listingId) => `/api/v1/listings/${listingId}/lott
 export const lotteryRanking = (listingId, lotteryId) =>
   `/api/v1/listings/${listingId}/lottery_ranking?lottery_number=${lotteryId}`
 export const amiCharts = (queryParams: string) => `/api/v1/listings/ami.json?${queryParams}`
+export const draftApplication = (listingId) => `/api/v1/short-form/listing-application/${listingId}`
+export const updateApplication = (applicationId) =>
+  `/api/v1/short-form/application/${applicationId}`
