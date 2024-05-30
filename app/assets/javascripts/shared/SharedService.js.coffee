@@ -66,9 +66,6 @@ SharedService = ($http, $state, $window, $document) ->
     'dahlia.disclaimer':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/disclaimer")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
-    'dahlia.sign-in':
-      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/sign-in")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.SIGN_IN_PAGE_REACT is "true"
     'dahlia.my-account':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/my-account")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
