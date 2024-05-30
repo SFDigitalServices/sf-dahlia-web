@@ -7,7 +7,6 @@ interface MyAccountProps {
 }
 
 const MyAccount = (_props: MyAccountProps) => {
-  console.log("MyAccountProps", _props)
   return (
     <Layout title={"My Account"}>
       <h1>My Account</h1>
