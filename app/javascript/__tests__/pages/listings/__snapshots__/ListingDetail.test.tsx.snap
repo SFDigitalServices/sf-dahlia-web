@@ -41,11 +41,11 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
         property="og:title"
       />
       <meta
-        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 31, 2024 at 12:00 AM"
         property="og:description"
       />
       <meta
-        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 31, 2024 at 12:00 AM"
         name="description"
       />
       <meta
@@ -1174,11 +1174,11 @@ exports[`Listing Detail renders an open rental listing 1`] = `
         property="og:title"
       />
       <meta
-        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 31, 2024 at 12:00 AM"
         property="og:description"
       />
       <meta
-        content="681 Florida St, San Francisco, CA 94110. Application Deadline May 31, 2024 at 12:00 AM"
+        content="681 Florida St, San Francisco, CA 94110. Applications Closed May 31, 2024 at 12:00 AM"
         name="description"
       />
       <meta
