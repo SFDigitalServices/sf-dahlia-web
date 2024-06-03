@@ -14,6 +14,15 @@ interface HomePageProps {
   urlParams: UrlParams
 }
 
+const baysideVillage = {
+  name: "Bayside Village",
+  agent: "TaJuana Caruthers",
+  phoneDisplay: "(216) 273-1159",
+  phone: "+12162731159",
+  email: "tajuana.caruthers@bpapartments.com",
+  removeLinks: true,
+}
+
 const listingIdToNameMap = {
   a0W0P00000DZYzVUAX: {
     name: "TEST 1300 22nd (Knox)",
@@ -57,6 +66,7 @@ const listingIdToNameMap = {
     phone: "+19166864126",
     email: "imaginethatconsulting@gmail.com",
   },
+  a0W4U00000NlYn3UAF: baysideVillage,
 }
 
 const ListingInterestPage = (_props: HomePageProps) => {
@@ -68,9 +78,11 @@ const ListingInterestPage = (_props: HomePageProps) => {
             <Heading priority={1}>{listingIdToNameMap[_props.urlParams.listing].name}</Heading>
           }
         >
-          <Link href={`/listings/${_props.urlParams.listing}`} target="_blank">
-            Go to building details
-          </Link>
+          {!listingIdToNameMap[_props.urlParams.listing].removeLinks && (
+            <Link href={`/listings/${_props.urlParams.listing}`} target="_blank">
+              Go to building details
+            </Link>
+          )}
         </FormCard>
       )}
       {_props.urlParams.response === "y" && (
@@ -118,9 +130,13 @@ const ListingInterestPage = (_props: HomePageProps) => {
           <div className="p-8 bg-blue-100">
             <p>
               If you are still interested in an apartment at{" "}
-              <Link href={`/listings/${_props.urlParams.listing}`}>
-                {listingIdToNameMap[_props.urlParams.listing].name}
-              </Link>
+              {listingIdToNameMap[_props.urlParams.listing].removeLinks ? (
+                listingIdToNameMap[_props.urlParams.listing].name
+              ) : (
+                <Link href={`/listings/${_props.urlParams.listing}`}>
+                  {listingIdToNameMap[_props.urlParams.listing].name}
+                </Link>
+              )}
               <span className="text-neutral-600">, contact: </span>
             </p>
             <ul className="mt-6">
