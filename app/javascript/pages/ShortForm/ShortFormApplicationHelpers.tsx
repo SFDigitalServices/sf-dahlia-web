@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { DOBFieldValues } from "@bloom-housing/ui-components"
 import React, { ChangeEventHandler } from "react"
 
 export type RailsShortFormResponse = {
@@ -13,7 +14,10 @@ export type RailsShortFormApplication = {
     firstName?: string
     lastName?: string
     email?: string
-    dateOfBirth?: string
+    // rails
+    DOB?: string
+    // javascript
+    dateOfBirth?: DOBFieldValues
   }
   otherHousingCounselingAgency?: string
   name?: string
