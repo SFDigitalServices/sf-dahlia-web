@@ -17,6 +17,9 @@ import ListingInterestPage from "../pages/listingInterest/listing-interest-page"
 import AdditionalResources from "../pages/getAssistance/additional-resources"
 import Disclaimer from "../pages/getAssistance/disclaimer"
 import Privacy from "../pages/getAssistance/privacy"
+import MyApplications from "../pages/account/my-applications"
+import AccountSettings from "../pages/account/account-settings"
+import MyAccount from "../pages/account/my-account"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -35,5 +38,8 @@ void loadTranslations(currentLanguage).then(() =>
     Disclaimer,
     Privacy,
     ListingInterestPage,
+    MyApplications,
+    AccountSettings,
+    MyAccount,
   })
 )
