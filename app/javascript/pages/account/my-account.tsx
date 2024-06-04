@@ -3,8 +3,8 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
-
-import "./my-account.scss"
+import UserContext from "../../authentication/context/UserContext"
+import { getSignInPath } from "../../util/routeUtil"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -51,6 +51,14 @@ const AccountDashCard = ({
 }
 
 const MyAccount = (_props: MyAccountProps) => {
+  const { profile, loading, initialStateLoaded } = React.useContext(UserContext)
+
+  if (!profile && !loading && initialStateLoaded) {
+    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    window.location.href = getSignInPath()
+    return null
+  }
+
   return (
     <Layout title={"My Account"}>
       <section className="bg-gray-300 flex justify-center">
