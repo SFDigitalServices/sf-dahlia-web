@@ -15,31 +15,25 @@ class Api::V1::ListingInterestController < ApiController
       Rails.logger.info("Creating fieldUpdateComment for repsonse: #{r}, email send date: #{s}, listings => applications: #{m}")
 
       header = { 'Content-Type' => 'application/json' }
-      # TODO: how to handle if any of the looped calls succeed or fail?
       m.each do |_listing_number, application|
         body = build_request_body(r, application, s)
-
         response = Force::Request.new(parse_response: true)
                                  .post_with_headers("/fieldUpdateComment/#{application}", body, header)
-
         Rails.logger.info("response from salasforce when creating fieldUpdateComment is #{response.to_json}")
-
         if response.status == 404
           raise 'Salesforce response to POST /fieldUpdateComment returned a 404'
         end
       end
 
       # when fieldupdatecomment is successfully created redirect with a response of y (yes) or n (no)
-      # TODO: which listing ID to use?
-      listing_id = listing_id_map(m.keys.first.to_i)
+      listing_id = listing_id_map(m)
       redirect_to "/listing_interest?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
       Rails.logger.error('Token expired, not able to create fieldUpdateComment')
       decoded_expired_token = JWT.decode(token, secret, true,
                                          { verify_expiration: false })
-      # TODO: decode mapping
       m = decoded_expired_token[0]['m']
-      listing_id = listing_id_map(m.keys.first.to_i)
+      listing_id = listing_id_map(m)
       # when token is expired redirect with a response of x (expired)
       redirect_to "/listing_interest?listing=#{listing_id}&response=x"
     rescue StandardError => e
@@ -55,7 +49,10 @@ class Api::V1::ListingInterestController < ApiController
     params.require(:t)
   end
 
-  def listing_id_map(listing_number)
+  def listing_id_map(map)
+    # only bayside village will have multiple listings
+    # in that case we can use any of the listings for the landing page
+    listing_number = map.keys.first.to_i
     array = %w[a0W0P00000DZYzVUAX a0W4U00000KnLRMUA3
                a0W4U00000IYEb4UAH a0W4U00000IYSM4UAP
                a0W4U00000Ih1V2UAJ a0W4U00000KnCZRUA3
