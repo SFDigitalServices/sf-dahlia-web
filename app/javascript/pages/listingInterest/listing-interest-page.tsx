@@ -71,7 +71,6 @@ const listingIdToNameMap = {
   a0W4U00000IYLReUAP: baysideVillage,
 }
 
-// TODO: variable types
 const headingListingLink = (listing) => {
   const component = listingIdToNameMap[listing].removeLinks ? (
     <></>
