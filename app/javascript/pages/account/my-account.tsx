@@ -24,10 +24,13 @@ const AccountDashCard = ({
   removeBottomBorder?: boolean
 }) => {
   return (
-    <a href={link} className="text-black block outline-none focus:underline flex-1 w-full md:w-1/2">
+    <a
+      href={link}
+      className="text-black block outline-none focus:underline flex-1 w-full md:w-1/2  h-auto md:h-60"
+    >
       <Card
         spacing="md"
-        className={`cursor-pointer flex justify-center items-center text-center h-60 rounded-none md:rounded-lg ${
+        className={`cursor-pointer flex justify-center items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
           removeBottomBorder ? "border-b-0 md:border-b" : ""
         }`}
       >
