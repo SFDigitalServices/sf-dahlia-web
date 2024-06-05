@@ -1,5 +1,5 @@
-const listingId = "a0W8H000000AmpKUAS"
-const lotteryNumber = "01150047"
+const listingId: string = "a0W4U00000IhGZcUAN"
+const lotteryNumber: string = "01172081"
 
 const MOBILE_VIEWPORT_HEIGHT = 680
 const MOBILE_VIEWPORT_WIDTH = 420

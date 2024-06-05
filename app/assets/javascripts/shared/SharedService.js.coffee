@@ -35,37 +35,46 @@ SharedService = ($http, $state, $window, $document) ->
   Service.railsRoutedPages =
     'dahlia.welcome':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.HOME_PAGE_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.listings-for-rent':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/for-rent")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.DIRECTORY_PAGE_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.listings-for-sale':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/for-sale")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.DIRECTORY_PAGE_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.listing':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/#{params.id}")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.LISTING_DETAIL_PAGE_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.redirect-home':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "")
       shouldRailsRoute: (isFirstLoad) -> true
     'dahlia.housing-counselors':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/housing-counselors")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.get-assistance':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/get-assistance")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.additional-resources':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/additional-resources")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.document-checklist':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/document-checklist")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.privacy':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/privacy")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
     'dahlia.disclaimer':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/disclaimer")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.GET_ASSISTANCE_PAGES_REACT is "true"
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad
+    'dahlia.my-account':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/my-account")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
+    'dahlia.account-settings':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/account-settings")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
+    'dahlia.my-applications':
+      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/my-applications")
+      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
 
 
   Service.getLanguageCode = (langName) ->
@@ -168,7 +177,6 @@ SharedService = ($http, $state, $window, $document) ->
     ), []).join '&'
 
   Service.showVeteransApplicationQuestion = (listing) ->
-    $window.VETERANS_APPLICATION_QUESTION is 'true' &&
     !!listing.Listing_Lottery_Preferences &&
     _.some(listing.Listing_Lottery_Preferences, (pref) ->
       _.includes(pref?.Lottery_Preference?.Name?.toLowerCase(), "veteran")

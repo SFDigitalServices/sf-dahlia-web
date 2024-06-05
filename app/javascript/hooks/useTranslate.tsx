@@ -8,6 +8,7 @@
  * set in the url to dispatch an event setting that <select>'s <option>
  * to the corresponding language. This gives an experience to the end user that
  * the page automatically got translated.
+ * Soon to be deprecated
  */
 
 import { useEffect } from "react"

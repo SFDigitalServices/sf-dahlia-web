@@ -60,6 +60,9 @@ gem 'rack-cors', '~> 1.0.5'
 gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
+# google translation
+gem 'faraday'
+gem 'google-cloud-translate-v2'
 # JSON optimization
 gem 'oj'
 gem 'oj_mimic_json'

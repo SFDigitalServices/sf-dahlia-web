@@ -31,7 +31,6 @@ generatedWebpackConfig.plugins.unshift(
   new webpack.DefinePlugin({
     "process.env": {
       COVID_UPDATE: JSON.stringify(process.env.COVID_UPDATE),
-      DIRECTORY_PAGE_REACT: JSON.stringify(process.env.DIRECTORY_PAGE_REACT),
       GOOGLE_PLACES_KEY: JSON.stringify(process.env.GOOGLE_PLACES_KEY),
       TOP_MESSAGE: JSON.stringify(process.env.TOP_MESSAGE),
       TOP_MESSAGE_TYPE: JSON.stringify(process.env.TOP_MESSAGE_TYPE),
