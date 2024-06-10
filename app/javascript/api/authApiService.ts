@@ -17,10 +17,7 @@ export const getProfile = async (): Promise<User> =>
   authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
 export const getApplications = async (): Promise<Application[]> =>
-  authenticatedGet<Application[]>("/api/v1/account/my-applications").then((res) => {
-    console.log(res)
-    return res.data
-  })
+  authenticatedGet<Application[]>("/api/v1/account/my-applications").then((res) => res.data)
 
 export const forgotPassword = async (email: string): Promise<string> =>
   put<{ message: string }>("/user/forgot-password", {
