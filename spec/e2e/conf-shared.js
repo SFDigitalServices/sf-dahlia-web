@@ -6,6 +6,8 @@ module.exports = {
   allScriptsTimeout: 60000,
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
+  // prevents protractor from exiting due to uncaught exceptions
+  ignoreUncaughtExceptions: true,
   // path relative to the current config file
   specs: ['./features/**/*.feature'],
   cucumberOpts: {
