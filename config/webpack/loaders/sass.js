@@ -35,7 +35,8 @@ module.exports = {
     {
       loader: 'style-loader',
       options: {
-        injectType: 'singletonStyleTag',
+        // the singleton option crashes the browser in E2E tests
+        injectType: process.env.NODE_ENV === 'production' ? 'singletonStyleTag' : 'styleTag',
       }
     },
     // Translates CSS into CommonJS
