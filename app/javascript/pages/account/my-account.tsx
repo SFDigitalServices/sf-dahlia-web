@@ -4,7 +4,11 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon, t, type UniversalIconType } from "@bloom-housing/ui-components"
 import UserContext from "../../authentication/context/UserContext"
-import { getSignInPath } from "../../util/routeUtil"
+import {
+  getMyAccountSettingsPath,
+  getMyApplicationsPath,
+  getSignInPath,
+} from "../../util/routeUtil"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -70,7 +74,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("myApplications.title")}
               description={t("accountDashboard.myApplications.description")}
-              link="/my-applications"
+              link={getMyApplicationsPath()}
               icon="application"
               removeBottomBorder
             />
@@ -78,7 +82,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountSettings.title")}
               description={t("accountDashboard.accountSettings.description")}
-              link="/account-settings"
+              link={getMyAccountSettingsPath()}
               icon="settings"
             />
           </div>
