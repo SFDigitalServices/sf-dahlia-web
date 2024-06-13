@@ -71,6 +71,7 @@ class CacheService
     Force::ListingService.units(id, force: true)
     Force::ListingService.preferences(id, force: true)
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
+    Force::ListingService.ami(id, force: true)
     # NOTE: there is no call to Force::ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
     process_listing_images(listing)

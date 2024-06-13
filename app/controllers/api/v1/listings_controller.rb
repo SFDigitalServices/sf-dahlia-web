@@ -70,7 +70,7 @@ class Api::V1::ListingsController < ApiController
       }
       @ami_levels << {
         percent: data[:percent],
-        values: Force::ListingService.ami(data),
+        values: Force::ListingService.ami(data, force: params[:force]),
       }
     end
     render json: { ami: @ami_levels }
