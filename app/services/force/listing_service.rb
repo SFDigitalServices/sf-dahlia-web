@@ -53,9 +53,10 @@ module Force
     end
 
     # get AMI: opts are percent, chartType, year
-    def self.ami(opts = {}, force)
+    def self.ami(opts = {})
+      force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(
-        "/ami?#{opts.to_query}",
+        "/ami?#{opts[:data].to_query}",
         nil,
         force,
       )
