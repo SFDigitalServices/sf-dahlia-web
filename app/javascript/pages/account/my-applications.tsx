@@ -36,11 +36,11 @@ const MyApplications = () => {
     <Layout
       children={
         <section className="bg-gray-300 border-t border-gray-450">
-          <div className="flex flex-wrap relative max-w-3xl mx-auto sm:p-8">
-            <Card>
+          <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
+            <Card className="w-full">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
                 <div
-                  className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
+                  className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
                   style={{ borderBottom: "3px solid" }}
                 >
                   <Icon size="xlarge" className="md:hidden block" symbol={"application"} />
@@ -50,6 +50,13 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
+              {/* TODO: Headings only display if both rental and sales applications exist */}
+              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
+                {t("listings.rentalUnits")}
+              </Heading>
+              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
+                {t("listings.saleUnits")}
+              </Heading>
               {/* Component if application is submitted */}
               <ApplicationItem
                 applicationDueDate={"June 1, 2024"}
@@ -58,8 +65,10 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App submitted, no lottery results"}
+                listingName={"Submitted, no results"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryComplete={false}
+                submitted
               />
               {/* Component if application is submitted with lottery results and error */}
               <ApplicationItem
@@ -69,8 +78,12 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App submitted, download lottery results"}
+                listingName={"Submitted, download results"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryResultsURL={"lotteryResults.pdf"}
+                lotteryComplete
+                lotteryError
+                submitted
               />
               {/* Component if application is submitted with lottery results and no error */}
               <ApplicationItem
@@ -80,8 +93,11 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App submitted, view lottery results"}
+                listingName={"Submitted, view results"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryComplete
+                lotteryError={false}
+                submitted
               />
               {/* Component if application is not submitted with lottery results */}
               <ApplicationItem
@@ -91,8 +107,10 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App not submitted with lottery results"}
+                listingName={"Not submitted with results"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryComplete={true}
+                submitted={false}
               />
               {/* Component if application is not submitted and is past due */}
               <ApplicationItem
@@ -102,8 +120,11 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App not submitted, past due"}
+                listingName={"Not submitted, past due"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryComplete={false}
+                submitted={false}
+                pastDue
               />
               {/* Component if application is not submitted and is not past due */}
               <ApplicationItem
@@ -113,8 +134,11 @@ const MyApplications = () => {
                 confirmationNumber={"#12345678"}
                 editedDate={"June 1, 2024"}
                 listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"App not submitted, not past due"}
+                listingName={"Not submitted, not past due"}
                 listingURL={"/listing/abcd1234/listing-name"}
+                lotteryComplete={false}
+                submitted={false}
+                pastDue={false}
               />
               {/* Component if no applications */}
               {noApplications()}

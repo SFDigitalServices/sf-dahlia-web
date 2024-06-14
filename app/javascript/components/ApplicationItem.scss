@@ -50,6 +50,14 @@
   }
 }
 
+.application-item__bg {
+  background-color: var(--seeds-color-primary-lighter);
+}
+
+.application-item__delete {
+  color: var(--seeds-color-alert);
+}
+
 .application-item__footer {
   display: flex;
   gap: var(--seeds-s4);
@@ -72,7 +80,21 @@
   }
 }
 
+.application-item__status::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #99cd00;
+  border-radius: 50%;
+  @apply ml-2;
+  .not-submitted {
+    background-color: #e31c3d;
+  }
+  display: inline-block;
+}
+
 .application-item__confirm-text {
+  @apply text-left;
   font-size: var(--seeds-font-size-sm);
   margin-bottom: var(--seeds-s4);
 }
