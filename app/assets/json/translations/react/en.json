@@ -26,6 +26,8 @@
   "a4Overview.subtitle": "DO NOT TRANSLATE - Chinese-only",
   "a4Overview.title": "Here's what to expect for this application.",
   "a4Overview.warning": "Any fraudulent statements will cause your application to be removed from the lottery.",
+  "accountDashboard.accountSettings.description": "Account settings, email and password",
+  "accountDashboard.myApplications.description": "See lottery dates and listings for properties for which you've applied",
   "accountSettings.accountChangesSaved": "Your changes have been saved.",
   "accountSettings.accountSettings": "Account Settings",
   "accountSettings.contactInformationUpdated": "Contact Information Updated",
