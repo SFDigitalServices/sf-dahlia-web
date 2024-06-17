@@ -1,3 +1,14 @@
+.application-item {
+  @apply border-t;
+  @apply h-60;
+  position: relative;
+  padding: var(--seeds-s4);
+  @media (max-width: theme("screens.sm")) {
+    @apply h-auto;
+    display: block;
+  }
+}
+
 .application-item__header {
   display: flex;
   padding-bottom: var(--seeds-s4);
@@ -9,6 +20,7 @@
   @media (max-width: theme("screens.sm")) {
     padding-bottom: var(--seeds-s2);
     display: block;
+    @apply text-center;
   }
 }
 
@@ -27,6 +39,7 @@
   @media (max-width: theme("screens.sm")) {
     text-align: left;
     padding-top: var(--seeds-s2_5);
+    @apply text-center;
   }
 }
 
@@ -37,16 +50,15 @@
   padding-bottom: var(--seeds-s4);
   @media (max-width: theme("screens.sm")) {
     display: grid;
+    @apply justify-center;
   }
 }
 
 .application-item__action {
   text-align: right;
   @apply space-y-4;
-
   @media (max-width: theme("screens.sm")) {
     text-align: center;
-    padding-top: var(seeds-s4);
   }
 }
 
@@ -62,12 +74,18 @@
   display: flex;
   gap: var(--seeds-s4);
   flex-direction: row;
-  justify-content: flex-start;
   padding-top: var(--seeds-s4);
-  width: fit-content;
+  @apply w-full;
+  @apply pr-8;
+  position: absolute;
+  bottom: var(--seeds-s6);
+  justify-content: space-between;
   @media (max-width: theme("screens.sm")) {
+    position: relative;
     flex-direction: column;
-    padding-top: var(--seeds-s6);
+    @apply text-center;
+    @apply p-0;
+    @apply pt-10;
   }
 }
 
@@ -78,25 +96,35 @@
   @media (max-width: theme("screens.sm")) {
     padding-block: var(--seeds-s4);
   }
-}
 
-.application-item__status::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background-color: #99cd00;
-  border-radius: 50%;
-  @apply ml-2;
-  .not-submitted {
-    background-color: #e31c3d;
+  .never-submitted::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--seeds-color-alert);
+    border-radius: 50%;
+    @apply ml-2;
+    display: inline-block;
   }
-  display: inline-block;
+
+  .submitted::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #99cd00;
+    border-radius: 50%;
+    @apply ml-2;
+    display: inline-block;
+  }
 }
 
 .application-item__confirm-text {
   @apply text-left;
   font-size: var(--seeds-font-size-sm);
   margin-bottom: var(--seeds-s4);
+  @media (max-width: theme("screens.sm")) {
+    @apply text-center;
+  }
 }
 
 .application-item_edited-text {

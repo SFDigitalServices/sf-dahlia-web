@@ -99,19 +99,6 @@ const MyApplications = () => {
                 lotteryError={false}
                 submitted
               />
-              {/* Component if application is not submitted with lottery results */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Not submitted with results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={true}
-                submitted={false}
-              />
               {/* Component if application is not submitted and is past due */}
               <ApplicationItem
                 applicationDueDate={"June 1, 2024"}

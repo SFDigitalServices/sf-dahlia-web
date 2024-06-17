@@ -22,7 +22,7 @@ interface ApplicationItemProps {
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
-  const classNames = ["border-t h-60"]
+  const classNames = ["application-item"]
   if (!props.submitted) classNames.push("application-item__bg")
   return (
     <Card.Section className={classNames.join(" ")}>
@@ -46,25 +46,20 @@ const ApplicationItem = (props: ApplicationItemProps) => {
               })}
             </div>
           )}
-          <div className="text-sm inline-block space-x-3">
-            <Link href={getLocalizedPath(props.listingURL, getCurrentLanguage())}>
-              {t("label.seeListing")}
-            </Link>
-            {/* TODO: Add functionality to delete application in Link href */}
-            {!props.submitted && (
-              <Link className={"application-item__delete"} href={""}>
-                {t("t.delete")}
-              </Link>
-            )}
-          </div>
         </div>
         <div className={"application-item__action"}>
           <p className={"application-item__status"}>
             {t("t.status") + ": "}
-            {props.submitted && !props.lotteryComplete && t("t.submitted")}
+            {props.submitted && !props.lotteryComplete && (
+              <span className={"submitted"}>{t("t.submitted")}</span>
+            )}
             {!props.submitted && !props.pastDue && t("t.inProgress")}
-            {props.submitted && props.lotteryComplete && t("myApplications.resultsPosted")}
-            {!props.submitted && props.pastDue && t("t.neverSubmitted")}
+            {props.submitted && props.lotteryComplete && (
+              <span className={"submitted"}>{t("myApplications.resultsPosted")}</span>
+            )}
+            {!props.submitted && props.pastDue && (
+              <span className={"never-submitted"}>{t("t.neverSubmitted")}</span>
+            )}
           </p>
           {props.submitted && !props.lotteryComplete && (
             <Button
@@ -117,12 +112,25 @@ const ApplicationItem = (props: ApplicationItemProps) => {
               {t("label.continueApplication")}
             </Button>
           )}
-          <p className={"application-item_edited-text"}>
-            {t("label.edited") + ": "}
-            {props.editedDate}
-          </p>
         </div>
       </section>
+      <div className={"application-item__footer"}>
+        <span className="text-sm inline-block space-x-3">
+          <Link href={getLocalizedPath(props.listingURL, getCurrentLanguage())}>
+            {t("label.seeListing")}
+          </Link>
+          {/* TODO: Add functionality to delete application in Link href */}
+          {!props.submitted && (
+            <Link className={"application-item__delete"} href={""}>
+              {t("t.delete")}
+            </Link>
+          )}
+        </span>
+        <span className={"application-item_edited-text"}>
+          {t("label.edited") + ": "}
+          {props.editedDate}
+        </span>
+      </div>
     </Card.Section>
   )
 }
