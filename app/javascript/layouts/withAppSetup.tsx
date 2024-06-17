@@ -10,6 +10,7 @@ import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsPro
 import { ConfigProvider } from "../lib/ConfigContext"
 import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
+import "@bloom-housing/ui-seeds/src/global/app-css.scss"
 
 interface ObjectWithAssets {
   assetPaths: unknown

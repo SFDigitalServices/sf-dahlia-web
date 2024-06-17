@@ -21,7 +21,9 @@ const UserProvider = (props: UserProviderProps) => {
     if (!state.profile) {
       dispatch(startLoading())
       getProfile()
-        .then((profile) => dispatch(saveProfile(profile)))
+        .then((profile) => {
+          dispatch(saveProfile(profile))
+        })
         .catch(() => dispatch(signOut()))
         .finally(() => dispatch(stopLoading()))
     }
