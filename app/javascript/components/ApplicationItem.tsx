@@ -28,7 +28,7 @@ interface ApplicationItemProps {
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
-  const ApplicationButton = (url, text, style?) => (
+  const ApplicationButton = (url: string, text: string, style?: AppearanceStyleType) => (
     <LinkButton
       size={AppearanceSizeType.small}
       styleType={style}
@@ -37,7 +37,6 @@ const ApplicationItem = (props: ApplicationItemProps) => {
       {text}
     </LinkButton>
   )
-
   const classNames = ["application-item"]
   if (!props.submitted) classNames.push("application-item__bg")
   return (
