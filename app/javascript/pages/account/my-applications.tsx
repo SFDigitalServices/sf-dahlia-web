@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { t, Icon, Button } from "@bloom-housing/ui-components"
+import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { getLocalizedPath } from "../../util/routeUtil"
@@ -13,20 +13,12 @@ const MyApplications = () => {
       <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
         <h2 className="text-xl">{t("myApplications.noApplications")}</h2>
         <div className="flex flex-col gap-y-4 w-3/5 pt-4">
-          <Button
-            onClick={() =>
-              (window.location.href = getLocalizedPath("/listings/for-rent", getCurrentLanguage()))
-            }
-          >
+          <LinkButton href={getLocalizedPath("/listings/for-rent", getCurrentLanguage())}>
             {t("listings.browseRentals")}
-          </Button>
-          <Button
-            onClick={() =>
-              (window.location.href = getLocalizedPath("/listings/for-sale", getCurrentLanguage()))
-            }
-          >
+          </LinkButton>
+          <LinkButton href={getLocalizedPath("/listings/for-sale", getCurrentLanguage())}>
             {t("listings.browseSales")}
-          </Button>
+          </LinkButton>
         </div>
       </Card.Section>
     )
