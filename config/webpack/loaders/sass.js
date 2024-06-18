@@ -30,7 +30,15 @@ module.exports = {
   use: [
     // 'file-loader',
     // Creates `style` nodes from JS strings
-    'style-loader',
+    // the singleton option reduces the number of style tags injected into the page
+    // at one point we had more than 80 style tags, which could interfere with hyperlink previews
+    {
+      loader: 'style-loader',
+      options: {
+        // the singleton option crashes the browser in E2E tests
+        injectType: process.env.NODE_ENV === 'production' ? 'singletonStyleTag' : 'styleTag',
+      }
+    },
     // Translates CSS into CommonJS
     // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
     { loader: 'css-loader', options: { sourceMap: true } },
