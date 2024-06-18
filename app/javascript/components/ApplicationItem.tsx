@@ -1,5 +1,11 @@
 import React from "react"
-import { t, Button, AppearanceStyleType } from "@bloom-housing/ui-components"
+import {
+  t,
+  Button,
+  AppearanceStyleType,
+  LinkButton,
+  AppearanceSizeType,
+} from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
 import { getCurrentLanguage } from "../util/languageUtil"
@@ -22,6 +28,16 @@ interface ApplicationItemProps {
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
+  const ApplicationButton = (url, text, style?) => (
+    <LinkButton
+      size={AppearanceSizeType.small}
+      styleType={style}
+      href={getLocalizedPath(url, getCurrentLanguage())}
+    >
+      {text}
+    </LinkButton>
+  )
+
   const classNames = ["application-item"]
   if (!props.submitted) classNames.push("application-item__bg")
   return (
@@ -30,9 +46,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         <h3 className={"application-item__title"}>{props.listingName}</h3>
         {props.applicationDueDate && (
           <p className={"application-item__text"}>
-            {t("listings.applicationDeadline")}
-            {": "}
-            {props.applicationDueDate}
+            {`${t("listings.applicationDeadline")}: ${props.applicationDueDate}`}
           </p>
         )}
       </header>
@@ -48,8 +62,8 @@ const ApplicationItem = (props: ApplicationItemProps) => {
           )}
         </div>
         <div className={"application-item__action"}>
-          <p className={"application-item__status"}>
-            {t("t.status") + ": "}
+          <div className={"application-item__status"}>
+            {`${t("t.status")}: `}
             {props.submitted && !props.lotteryComplete && (
               <span className={"submitted"}>{t("t.submitted")}</span>
             )}
@@ -60,58 +74,33 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {!props.submitted && props.pastDue && (
               <span className={"never-submitted"}>{t("t.neverSubmitted")}</span>
             )}
-          </p>
-          {props.submitted && !props.lotteryComplete && (
-            <Button
-              onClick={() =>
-                (window.location.href = getLocalizedPath(
-                  props.applicationURL,
-                  getCurrentLanguage()
-                ))
-              }
-            >
-              {t("label.viewApplication")}
-            </Button>
-          )}
-          {props.submitted && props.lotteryComplete && props.lotteryError && (
-            <Button
-              className={AppearanceStyleType.primary}
-              onClick={() =>
-                (window.location.href = getLocalizedPath(
-                  props.lotteryResultsURL,
-                  getCurrentLanguage()
-                ))
-              }
-            >
-              {t("listings.downloadLotteryResults")}
-            </Button>
-          )}
-          {props.submitted && props.lotteryComplete && !props.lotteryError && (
-            <Button
-              className={AppearanceStyleType.primary}
-              onClick={() =>
-                (window.location.href = getLocalizedPath(
-                  props.applicationURL,
-                  getCurrentLanguage()
-                ))
-              }
-            >
-              {t("listings.viewLotteryResults")}
-            </Button>
-          )}
-          {!props.submitted && !props.pastDue && (
-            <Button
-              className={AppearanceStyleType.primary}
-              onClick={() =>
-                (window.location.href = getLocalizedPath(
-                  props.applicationURL,
-                  getCurrentLanguage()
-                ))
-              }
-            >
-              {t("label.continueApplication")}
-            </Button>
-          )}
+          </div>
+          {props.submitted &&
+            !props.lotteryComplete &&
+            ApplicationButton(props.applicationURL, t("label.viewApplication"))}
+          {props.submitted &&
+            props.lotteryComplete &&
+            props.lotteryError &&
+            ApplicationButton(
+              props.lotteryResultsURL,
+              t("listings.downloadLotteryResults"),
+              AppearanceStyleType.primary
+            )}
+          {props.submitted &&
+            props.lotteryComplete &&
+            !props.lotteryError &&
+            ApplicationButton(
+              props.applicationURL,
+              t("listings.viewLotteryResults"),
+              AppearanceStyleType.primary
+            )}
+          {!props.submitted &&
+            !props.pastDue &&
+            ApplicationButton(
+              props.applicationURL,
+              t("label.continueApplication"),
+              AppearanceStyleType.primary
+            )}
         </div>
       </section>
       <div className={"application-item__footer"}>
@@ -127,8 +116,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
           )}
         </span>
         <span className={"application-item_edited-text"}>
-          {t("label.edited") + ": "}
-          {props.editedDate}
+          {`${t("label.edited")}: ${props.editedDate}`}
         </span>
       </div>
     </Card.Section>
