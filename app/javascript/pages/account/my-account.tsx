@@ -1,12 +1,7 @@
 import React from "react"
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 
-interface MyAccountProps {
-  assetPaths: unknown
-}
-
-const MyAccount = (_props: MyAccountProps) => {
+const MyAccount = () => {
   return (
     <Layout title={"My Account"}>
       <h1>My Account</h1>
@@ -14,4 +9,4 @@ const MyAccount = (_props: MyAccountProps) => {
   )
 }
 
-export default withAppSetup(MyAccount)
+export default MyAccount

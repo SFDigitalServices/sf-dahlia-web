@@ -7,6 +7,7 @@ import {
   ListSection,
   StandardTable,
   t,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import {
@@ -34,7 +35,6 @@ import { ListingDetailsHMITable } from "./ListingDetailsHMITable"
 import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
-import Link from "../../navigation/Link"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -53,6 +53,7 @@ export const ListingDetailsEligibility = ({
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
   const priorityUnits = []
+  const { LinkComponent } = React.useContext(NavigationContext)
 
   listing.Units?.forEach((unit: RailsUnit) => {
     const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
@@ -301,14 +302,14 @@ export const ListingDetailsEligibility = ({
                       {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
                     </div>
                     <div>
-                      <Link
+                      <LinkComponent
                         className="text-blue-700"
-                        external={true}
+                        // external={true}
                         href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
                         target="_blank"
                       >
                         {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
-                      </Link>
+                      </LinkComponent>
                     </div>
                   </>
                 )}

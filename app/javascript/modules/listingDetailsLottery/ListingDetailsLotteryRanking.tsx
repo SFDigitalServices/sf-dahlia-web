@@ -1,8 +1,13 @@
-import React from "react"
-import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
+import React, { useContext } from "react"
+import {
+  ExpandableContent,
+  Heading,
+  Icon,
+  t,
+  NavigationContext,
+} from "@bloom-housing/ui-components"
 import { LOTTERY_RANKING_VIDEO_URL, PREFERENCES } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
-import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { getSfGovUrl, renderMarkup } from "../../util/languageUtil"
 
@@ -29,6 +34,7 @@ export const ListingDetailsLotteryRanking = ({
   listingIsEducator,
   listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
+  const { LinkComponent } = useContext(NavigationContext)
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
@@ -94,14 +100,14 @@ export const ListingDetailsLotteryRanking = ({
           >
             <div className="text-gray-700">
               <p className="mb-2">
-                <Link
+                <LinkComponent
                   className="text-blue-700"
-                  external={true}
+                  // external={true}
                   href={getSfGovUrl("https://sf.gov/after-rental-housing-lottery", 12704)}
                   target="_blank"
                 >
                   {t("lottery.nextStepsLearnMore")}
-                </Link>
+                </LinkComponent>
               </p>
               <p className="mb-2">{t("lottery.nextStepsP1")}</p>
               <p className="mb-2">{t("lottery.nextStepsP2")}</p>

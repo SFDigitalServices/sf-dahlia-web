@@ -79,25 +79,26 @@ Rails.application.routes.draw do
   get '/translations/:locale.json', to: 'application#asset_redirect'
 
   # React routes each use their own controllers (currently there's just one for the homepage)
+  # get '(:lang)/*path' => 'home#index', lang: /(en|es|zh|tl)/, constraints: { path: /listings\/for-rent|listings\/for-sale|listings\/\d+|sign-in|housing-counselors|get-assistance|document-checklist|additional-resources|privacy|disclaimer|my-account|account-settings|my-applications/ }
   get '(:lang)' => 'home#index', lang: /(en|es|zh|tl)/
 
-  get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
-  get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/for-rent' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/for-sale' => 'home#index', lang: /(en|es|zh|tl)/
   # TODO: Paths on Bloom needs to be configurable
-  get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/
-  get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
-  get '(:lang)/housing-counselors' => 'assistance#housing_counselors', lang: /(en|es|zh|tl)/
-  get '(:lang)/get-assistance' => 'assistance#get_assistance', lang: /(en|es|zh|tl)/
-  get '(:lang)/document-checklist' => 'assistance#document_checklist', lang: /(en|es|zh|tl)/
-  get '(:lang)/additional-resources' => 'assistance#additional_resources', lang: /(en|es|zh|tl)/
-  get '(:lang)/privacy' => 'assistance#privacy', lang: /(en|es|zh|tl)/
-  get '(:lang)/disclaimer' => 'assistance#disclaimer', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/housing-counselors' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/get-assistance' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/document-checklist' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/additional-resources' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/privacy' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/disclaimer' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/my-account' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/account-settings' => 'home#index', lang: /(en|es|zh|tl)/
+  get '(:lang)/my-applications' => 'home#index', lang: /(en|es|zh|tl)/
+
 
   get '(:lang)/listing_interest' => 'listing_interest_page#index', lang: /(en|es|zh|tl)/
-
-  get '(:lang)/my-account' => 'account#my_account', lang: /(en|es|zh|tl)/
-  get '(:lang)/account-settings' => 'account#account_settings', lang: /(en|es|zh|tl)/
-  get '(:lang)/my-applications' => 'account#my_applications', lang: /(en|es|zh|tl)/
+  get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
 
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }

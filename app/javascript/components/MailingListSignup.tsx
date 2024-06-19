@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
-import { ActionBlock, Heading, Icon, t } from "@bloom-housing/ui-components"
-import Link from "../navigation/Link"
+import { ActionBlock, Heading, Icon, t, NavigationContext } from "@bloom-housing/ui-components"
 import { ConfigContext } from "../lib/ConfigContext"
 
 export const MailingListSignup = () => {
   const { listingsAlertUrl } = useContext(ConfigContext)
+  const { LinkComponent } = useContext(NavigationContext)
 
   return (
     <ActionBlock
@@ -13,15 +13,15 @@ export const MailingListSignup = () => {
       background="primary-lighter"
       icon={<Icon size="3xl" symbol="mailThin" fill="transparent" />}
       actions={[
-        <Link
+        <LinkComponent
           className="button"
           key="action-1"
-          external={true}
+          // external={true}
           href={listingsAlertUrl}
           target="_blank"
         >
           {t("welcome.signUpToday")}
-        </Link>,
+        </LinkComponent>,
       ]}
     />
   )

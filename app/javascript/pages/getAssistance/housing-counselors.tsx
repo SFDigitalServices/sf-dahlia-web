@@ -11,7 +11,6 @@ import {
 } from "@bloom-housing/ui-components"
 import React, { useState } from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
-import withAppSetup from "../../layouts/withAppSetup"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import "./housing-counselors.scss"
 import housingCounselorsList from "../../../assets/json/housing_counselors_react.json"
@@ -247,4 +246,4 @@ const HousingCounselors = () => {
   )
 }
 
-export default withAppSetup(HousingCounselors)
+export default HousingCounselors

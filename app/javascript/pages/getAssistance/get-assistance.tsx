@@ -1,8 +1,6 @@
-import { ActionBlock, Icon, t, Heading } from "@bloom-housing/ui-components"
-import Link from "../../navigation/Link"
-import React from "react"
+import { ActionBlock, Icon, t, Heading, NavigationContext } from "@bloom-housing/ui-components"
+import React, { useContext } from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
-import withAppSetup from "../../layouts/withAppSetup"
 import {
   faClipboardList,
   faHouseChimney,
@@ -18,6 +16,7 @@ import {
 } from "../../util/routeUtil"
 
 const GetAssistance = () => {
+  const { LinkComponent } = useContext(NavigationContext)
   return (
     <AssistanceLayout
       title={t("assistance.title.getAssistance")}
@@ -30,15 +29,15 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faPeopleGroup} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
+          <LinkComponent
             key="housing-counselors"
             className="button"
-            external={true}
+            // external={true}
             href={getHousingCounselorsPath()}
             target="_blank"
           >
             {t("housingCounselor.findAHousingCounselor")}
-          </Link>,
+          </LinkComponent>,
         ]}
       />
       <ActionBlock
@@ -51,15 +50,15 @@ const GetAssistance = () => {
           <Icon size="2xl" symbol={faHouseChimney} fill={bloomTheme.theme.colors.gray["750"]} />
         }
         actions={[
-          <Link
+          <LinkComponent
             key="additional-resources"
             className="button w-3/4 md:w-auto"
-            external={true}
+            // external={true}
             href={getAdditionalResourcesPath()}
             target="_blank"
           >
             {t("assistance.title.additionalHousingOpportunities.button")}
-          </Link>,
+          </LinkComponent>,
         ]}
       />
       <ActionBlock
@@ -68,15 +67,15 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faDoorOpen} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
+          <LinkComponent
             key="sf-services"
             className="button"
-            external={true}
+            // external={true}
             href={"https://sfserviceguide.org/"}
             target="_blank"
           >
             {t("assistance.title.sfServices.button")}
-          </Link>,
+          </LinkComponent>,
         ]}
       />
       <ActionBlock
@@ -87,15 +86,15 @@ const GetAssistance = () => {
           <Icon size="2xl" symbol={faClipboardList} fill={bloomTheme.theme.colors.gray["750"]} />
         }
         actions={[
-          <Link
+          <LinkComponent
             key="document-checklist"
             className="button"
-            external={true}
+            // external={true}
             href={getDocumentChecklistPath()}
             target="_blank"
           >
             {t("label.viewDocumentChecklist")}
-          </Link>,
+          </LinkComponent>,
         ]}
       />
       <ActionBlock
@@ -104,19 +103,19 @@ const GetAssistance = () => {
         background="none"
         icon={<Icon size="2xl" symbol={faYoutube} fill={bloomTheme.theme.colors.gray["750"]} />}
         actions={[
-          <Link
+          <LinkComponent
             key="dahlia-videos"
             className="button"
-            external={true}
+            // external={true}
             href={"https://www.youtube.com/playlist?list=PL7dcWHJTcA51TBqhghJ9LfSGEGoFB7aWG"}
             target="_blank"
           >
             {t("assistance.title.dahliaVideos.button")}
-          </Link>,
+          </LinkComponent>,
         ]}
       />
     </AssistanceLayout>
   )
 }
 
-export default withAppSetup(GetAssistance)
+export default GetAssistance

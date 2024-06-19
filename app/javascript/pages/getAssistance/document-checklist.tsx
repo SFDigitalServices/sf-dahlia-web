@@ -1,7 +1,6 @@
 import { ContentAccordion, t } from "@bloom-housing/ui-components"
 import React from "react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
-import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
 
@@ -219,4 +218,4 @@ const DocumentChecklist = () => {
   )
 }
 
-export default withAppSetup(DocumentChecklist)
+export default DocumentChecklist

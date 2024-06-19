@@ -8,8 +8,8 @@ import IdleTimeout from "../authentication/components/IdleTimeout"
 import UserProvider from "../authentication/context/UserProvider"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
 import { ConfigProvider } from "../lib/ConfigContext"
-import NavigationProvider from "../navigation/NavigationProvider"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
+import { BrowserRouter as Router } from "react-router-dom"
 
 interface ObjectWithAssets {
   assetPaths: unknown
@@ -32,9 +32,10 @@ const withAppSetup =
     }
 
     return (
-      <FlagProvider config={config}>
-        <ErrorBoundary boundaryScope={BoundaryScope.page}>
-          <NavigationProvider>
+      <Router>
+        <FlagProvider config={config}>
+          <ErrorBoundary boundaryScope={BoundaryScope.page}>
+            {/* <NavigationProvider> */}
             <ListingDetailsProvider>
               <ConfigProvider assetPaths={props.assetPaths}>
                 <UserProvider>
@@ -46,9 +47,10 @@ const withAppSetup =
                 </UserProvider>
               </ConfigProvider>
             </ListingDetailsProvider>
-          </NavigationProvider>
-        </ErrorBoundary>
-      </FlagProvider>
+            {/* </NavigationProvider> */}
+          </ErrorBoundary>
+        </FlagProvider>
+      </Router>
     )
   }
 

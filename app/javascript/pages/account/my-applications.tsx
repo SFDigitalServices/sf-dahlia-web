@@ -1,6 +1,5 @@
 import React from "react"
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 
 const MyApplications = () => {
   return (
@@ -10,4 +9,4 @@ const MyApplications = () => {
   )
 }
 
-export default withAppSetup(MyApplications)
+export default MyApplications

@@ -1,8 +1,6 @@
 import React from "react"
-import withAppSetup from "../../layouts/withAppSetup"
 import { FormCard, Heading } from "@bloom-housing/ui-components"
 import FormLayout from "../../layouts/FormLayout"
-import Link from "../../navigation/Link"
 
 interface UrlParams {
   listing: string
@@ -71,25 +69,25 @@ const listingIdToNameMap = {
   a0W4U00000IYLReUAP: baysideVillage,
 }
 
-const headingListingLink = (listing) => {
-  const component = listingIdToNameMap[listing].removeLinks ? (
-    <></>
-  ) : (
-    <Link href={`/listings/${listing}`} target="_blank">
-      Go to building details
-    </Link>
-  )
-  return component
-}
+// const headingListingLink = (listing) => {
+//   const component = listingIdToNameMap[listing].removeLinks ? (
+//     <></>
+//   ) : (
+//     <Link href={`/listings/${listing}`} target="_blank">
+//       Go to building details
+//     </Link>
+//   )
+//   return component
+// }
 
-const leasingAgentListingLink = (listing) => {
-  const component = listingIdToNameMap[listing].removeLinks ? (
-    listingIdToNameMap[listing].name
-  ) : (
-    <Link href={`/listings/${listing}`}>{listingIdToNameMap[listing].name}</Link>
-  )
-  return component
-}
+// const leasingAgentListingLink = (listing) => {
+//   const component = listingIdToNameMap[listing].removeLinks ? (
+//     listingIdToNameMap[listing].name
+//   ) : (
+//     <Link href={`/listings/${listing}`}>{listingIdToNameMap[listing].name}</Link>
+//   )
+//   return component
+// }
 
 const ListingInterestPage = (_props: HomePageProps) => {
   return (
@@ -100,7 +98,8 @@ const ListingInterestPage = (_props: HomePageProps) => {
             <Heading priority={1}>{listingIdToNameMap[_props.urlParams.listing].name}</Heading>
           }
         >
-          {headingListingLink(_props.urlParams.listing)}
+          <div>hey</div>
+          {/* {headingListingLink(_props.urlParams.listing)} */}
         </FormCard>
       )}
       {_props.urlParams.response === "y" && (
@@ -123,9 +122,9 @@ const ListingInterestPage = (_props: HomePageProps) => {
                 We will contact you again if more units become available in the next 12 months.
               </li>
             </ul>
-            <Link external href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
+            {/* <Link external href="https://www.sf.gov/after-rental-housing-lottery" target="_blank">
               Learn more about what happens after the housing lottery.
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}
@@ -148,7 +147,7 @@ const ListingInterestPage = (_props: HomePageProps) => {
           <div className="p-8 bg-blue-100">
             <p>
               If you are still interested in an apartment at{" "}
-              {leasingAgentListingLink(_props.urlParams.listing)}
+              {/* {leasingAgentListingLink(_props.urlParams.listing)} */}
               <span className="text-neutral-600">, contact: </span>
             </p>
             <ul className="mt-6">
@@ -183,4 +182,4 @@ const ListingInterestPage = (_props: HomePageProps) => {
   )
 }
 
-export default withAppSetup(ListingInterestPage)
+export default ListingInterestPage

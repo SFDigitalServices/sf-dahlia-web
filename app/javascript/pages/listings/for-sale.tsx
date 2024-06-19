@@ -1,12 +1,16 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useContext } from "react"
 
-import { ActionBlock, ActionBlockLayout, Heading, t } from "@bloom-housing/ui-components"
+import {
+  ActionBlock,
+  ActionBlockLayout,
+  Heading,
+  t,
+  NavigationContext,
+} from "@bloom-housing/ui-components"
 
 import { getSaleListings, EligibilityFilters } from "../../api/listingsApiService"
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
-import Link from "../../navigation/Link"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {
@@ -85,7 +89,7 @@ const getBuyHeader = (
   )
 }
 
-const getFindMoreActionBlock = () => {
+const getFindMoreActionBlock = (LinkComponent) => () => {
   return (
     <>
       <div className="bg-primary-darker">
@@ -95,22 +99,22 @@ const getFindMoreActionBlock = () => {
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
-              <Link
+              <LinkComponent
                 className="button"
                 key="action-1"
-                external
+                // external
                 href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
               >
                 {t("saleDirectory.callout.firstComeFirstServed")}
-              </Link>,
-              <Link
+              </LinkComponent>,
+              <LinkComponent
                 className="button"
                 key="action-2"
-                external
+                // external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
                 {t("saleDirectory.callout.citySecondLoan")}
-              </Link>,
+              </LinkComponent>,
             ]}
           />
         </div>
@@ -122,6 +126,8 @@ const SaleDirectory = () => {
   const eligibilityFilters: EligibilityFilters = JSON.parse(
     localStorage.getItem("ngStorage-eligibility_filters")
   )
+
+  const { LinkComponent } = useContext(NavigationContext)
 
   const hasSetEligibilityFilters = () => {
     return (
@@ -140,10 +146,10 @@ const SaleDirectory = () => {
         filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
         getSummaryTable={getForSaleSummaryTable}
         getPageHeader={getBuyHeader}
-        findMoreActionBlock={getFindMoreActionBlock}
+        findMoreActionBlock={getFindMoreActionBlock(LinkComponent)}
       />
     </Layout>
   )
 }
 
-export default withAppSetup(SaleDirectory)
+export default SaleDirectory

@@ -1,5 +1,4 @@
 import React from "react"
-import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import { t, PageHeader } from "@bloom-housing/ui-components"
 import { renderMarkup } from "../../util/languageUtil"
@@ -142,4 +141,4 @@ const Privacy = () => {
   )
 }
 
-export default withAppSetup(Privacy)
+export default Privacy

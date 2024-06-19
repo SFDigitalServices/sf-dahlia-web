@@ -66,7 +66,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         styleType={AppearanceStyleType.primary}
         className={"w-full"}
         transition={true}
-        href={`listings/${listing.listingID}/apply-welcome/intro`}
+        href={`/listings/${listing.listingID}/apply-welcome/intro`}
       >
         {t("label.applyOnline")}
       </LinkButton>

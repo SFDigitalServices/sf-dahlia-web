@@ -1,5 +1,4 @@
 import React from "react"
-import withAppSetup from "../../layouts/withAppSetup"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
@@ -43,4 +42,4 @@ const AdditionalResources = () => {
   )
 }
 
-export default withAppSetup(AdditionalResources)
+export default AdditionalResources

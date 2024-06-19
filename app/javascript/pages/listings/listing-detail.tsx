@@ -5,13 +5,12 @@ import {
   ListingDetails,
   LoadingOverlay,
   Mobile,
-  NavigationContext,
   SiteAlert,
   t,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingDetailsImageCard } from "../../modules/listingDetails/ListingDetailsImageCard"
@@ -206,4 +205,4 @@ const ListingDetail = () => {
   )
 }
 
-export default withAppSetup(ListingDetail)
+export default ListingDetail

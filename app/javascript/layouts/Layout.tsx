@@ -10,11 +10,11 @@ import {
   SiteFooter,
   SiteHeader,
   t,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 import Markdown from "markdown-to-jsx"
 import UserContext from "../authentication/context/UserContext"
 import { ConfigContext } from "../lib/ConfigContext"
-import Link from "../navigation/Link"
 import { getCurrentLanguage, getSfGovUrl, LANGUAGE_CONFIGS } from "../util/languageUtil"
 import {
   getDisclaimerPath,
@@ -120,6 +120,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
   const { profile, signOut } = useContext(UserContext)
+  const { LinkComponent } = useContext(NavigationContext)
 
   // eslint-disable-next-line dot-notation
   if (window.document["documentMode"]) {
@@ -223,23 +224,27 @@ const Layout = (props: LayoutProps) => {
             </p>
           </FooterSection>
           <FooterNav copyright={`© ${t("footer.cityCountyOfSf")}`}>
-            <Link
+            <LinkComponent
               className="text-gray-500"
               href="https://airtable.com/shrw64DubWTQfRkdo"
               target="_blank"
-              external={true}
+              // external={true}
             >
               {t("footer.giveFeedback")}
-            </Link>
-            <Link className="text-gray-500" external={true} href="mailto:sfhousinginfo@sfgov.org">
+            </LinkComponent>
+            <LinkComponent
+              className="text-gray-500"
+              // external={true}
+              href="mailto:sfhousinginfo@sfgov.org"
+            >
               {t("footer.contact")}
-            </Link>
-            <Link className="text-gray-500" href={getDisclaimerPath()}>
+            </LinkComponent>
+            <LinkComponent className="text-gray-500" href={getDisclaimerPath()}>
               {t("footer.disclaimer")}
-            </Link>
-            <Link className="text-gray-500" href={getPrivacyPolicyPath()}>
+            </LinkComponent>
+            <LinkComponent className="text-gray-500" href={getPrivacyPolicyPath()}>
               {t("footer.privacyPolicy")}
-            </Link>
+            </LinkComponent>
           </FooterNav>
         </SiteFooter>
       </div>

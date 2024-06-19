@@ -4,15 +4,13 @@ import { t } from "@bloom-housing/ui-components"
 
 import { SignInForm } from "../authentication/SignInForm"
 import FormsLayout from "../layouts/FormLayout"
-import withAppSetup from "../layouts/withAppSetup"
-interface SignInProps {
-  assetPaths: unknown
-}
 
-const SignIn = (_props: SignInProps) => (
+const SignIn = () => (
   <FormsLayout title={t("pageTitle.signIn")}>
     <SignInForm />
   </FormsLayout>
 )
 
-export default withAppSetup(SignIn, true)
+// useFormTimeout Todo
+
+export default SignIn

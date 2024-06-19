@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useContext } from "react"
 
 import {
   ActionBlock,
@@ -7,14 +7,13 @@ import {
   LinkButton,
   PageHeader,
   Heading,
+  NavigationContext,
 } from "@bloom-housing/ui-components"
 
 import { getRentalListings, EligibilityFilters } from "../../api/listingsApiService"
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
-import Link from "../../navigation/Link"
 import {
   getAdditionalResourcesPath,
   getEligibilityEstimatorLink,
@@ -92,7 +91,7 @@ const getRentalHeader = (
   )
 }
 
-const getFindMoreActionBlock = () => {
+const getFindMoreActionBlock = (LinkComponent) => () => {
   return (
     <>
       <div className="bg-primary-darker">
@@ -102,9 +101,9 @@ const getFindMoreActionBlock = () => {
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
-              <Link className="button" key="action-1" href={getAdditionalResourcesPath()}>
+              <LinkComponent className="button" key="action-1" href={getAdditionalResourcesPath()}>
                 {t("rentalDirectory.calloutbutton")}
-              </Link>,
+              </LinkComponent>,
             ]}
           />
         </div>
@@ -128,6 +127,8 @@ const RentDirectory = () => {
     )
   }
 
+  const { LinkComponent } = useContext(NavigationContext)
+
   return (
     <Layout title={t("pageTitle.rentalListings")}>
       <GenericDirectory
@@ -136,10 +137,10 @@ const RentDirectory = () => {
         filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
         getSummaryTable={getForRentSummaryTable}
         getPageHeader={getRentalHeader}
-        findMoreActionBlock={getFindMoreActionBlock}
+        findMoreActionBlock={getFindMoreActionBlock(LinkComponent)}
       />
     </Layout>
   )
 }
 
-export default withAppSetup(RentDirectory)
+export default RentDirectory

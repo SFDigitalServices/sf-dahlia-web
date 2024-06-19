@@ -1,6 +1,5 @@
 import React from "react"
 import Layout from "../../layouts/Layout"
-import withAppSetup from "../../layouts/withAppSetup"
 
 const AccountSettings = () => {
   return (
@@ -10,4 +9,4 @@ const AccountSettings = () => {
   )
 }
 
-export default withAppSetup(AccountSettings)
+export default AccountSettings
