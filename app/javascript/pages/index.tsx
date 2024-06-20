@@ -3,7 +3,7 @@ import axe from "@axe-core/react"
 import { useRoutes, BrowserRouter } from "react-router-dom"
 import ReactDOM from "react-dom"
 
-import { FlagProvider } from "@unleash/proxy-client-react"
+import { FlagProvider, useFlagsStatus } from "@unleash/proxy-client-react"
 
 import UserProvider from "../authentication/context/UserProvider"
 import ListingDetailsProvider from "../contexts/listingDetails/listingDetailsProvider"
@@ -25,6 +25,7 @@ import Disclaimer from "../pages/getAssistance/disclaimer"
 import MyAccount from "../pages/account/my-account"
 import AccountSettings from "../pages/account/account-settings"
 import MyApplications from "../pages/account/my-applications"
+import { useFeatureFlag } from "../hooks/useFeatureFlag"
 
 interface RouterProps {
   assetPaths: unknown
@@ -42,12 +43,16 @@ const RouterChild = (props: RouterProps) => {
     void axe(React, ReactDOM, 1000)
   }
 
+  const isSignInEnabled = useFeatureFlag("router.test", false)
+  const { flagsReady } = useFlagsStatus()
+  console.log(isSignInEnabled)
+
   const routeArr = [
     { path: "/:lang?", element: <HomePage /> },
     { path: "/:lang?/listings/for-rent", element: <RentDirectory /> },
     { path: "/:lang?/listings/for-sale", element: <BuyDirectory /> },
     { path: "/:lang?/listings/:id", element: <ListingDetail /> },
-    true ? { path: "/:lang?/sign-in", element: <SignIn /> } : undefined,
+    isSignInEnabled ? { path: "/:lang?/sign-in", element: <SignIn /> } : undefined,
     { path: "/:lang?/housing-counselors", element: <HousingCounselors /> },
     { path: "/:lang?/get-assistance", element: <GetAssistance /> },
     { path: "/:lang?/document-checklist", element: <DocumentChecklist /> },
@@ -63,30 +68,30 @@ const RouterChild = (props: RouterProps) => {
   const routes = useRoutes(routeArr)
 
   return (
-    <FlagProvider config={config}>
-      <ErrorBoundary boundaryScope={BoundaryScope.page}>
-        <NavigationProvider routes={routeArr}>
-          <ListingDetailsProvider>
-            <ConfigProvider assetPaths={props.assetPaths}>
-              <UserProvider>
-                {/* <IdleTimeout
+    <ErrorBoundary boundaryScope={BoundaryScope.page}>
+      <NavigationProvider routes={routeArr}>
+        <ListingDetailsProvider>
+          <ConfigProvider assetPaths={props.assetPaths}>
+            <UserProvider>
+              {/* <IdleTimeout
                     onTimeout={() => console.log("Logout")}
                     useFormTimeout={useFormTimeout}
                   /> */}
-                {routes}
-              </UserProvider>
-            </ConfigProvider>
-          </ListingDetailsProvider>
-        </NavigationProvider>
-      </ErrorBoundary>
-    </FlagProvider>
+              {flagsReady && routes}
+            </UserProvider>
+          </ConfigProvider>
+        </ListingDetailsProvider>
+      </NavigationProvider>
+    </ErrorBoundary>
   )
 }
 
 const Router = (props: RouterProps) => (
-  <BrowserRouter>
-    <RouterChild {...props} />
-  </BrowserRouter>
+  <FlagProvider config={config}>
+    <BrowserRouter>
+      <RouterChild {...props} />
+    </BrowserRouter>
+  </FlagProvider>
 )
 
 export default Router

@@ -98,8 +98,19 @@ Rails.application.routes.draw do
 
 
   get '(:lang)/listing_interest' => 'listing_interest_page#index', lang: /(en|es|zh|tl)/
-  get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
 
+  # unleash_context = Unleash::Context.new()
+  puts "Unleash feature flag 'router.test': #{UNLEASH.is_enabled?('router.test')}"
+  puts "Unleash feature flag 'router.test' NEW: #{UNLEASH.is_enabled? 'router.test'}"
+  # Rails.logger.info("Unleash configuration: #{UNLEASH}")
+  # Rails.logger.info("Unleash strategies: #{unleash_context}")
+  if UNLEASH.is_enabled?("router.test") 
+  # if true
+    get '(:lang)/sign-in' => 'home#index', lang: /(en|es|zh|tl)/
+  else
+    get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
+  end
+  
   # fallback to Angular-only controller for all un-migrated pages.
   get '*path', to: 'angular#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

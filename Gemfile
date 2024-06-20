@@ -106,6 +106,8 @@ gem 'fog-aws'
 # https://elements.heroku.com/addons/sentry
 gem 'sentry-raven'
 
+gem 'unleash'
+
 group :test do
   gem 'codeclimate-test-reporter', '= 0.6.0'
 

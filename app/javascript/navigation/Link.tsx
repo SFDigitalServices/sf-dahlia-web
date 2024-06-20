@@ -2,6 +2,7 @@ import React, { AnchorHTMLAttributes, DetailedHTMLProps } from "react"
 
 import { match as matchPath } from "path-to-regexp"
 import { NavigateFunction, RouteObject } from "react-router-dom"
+import { localizedPath } from "../util/routeUtil"
 
 type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> & {
   target?: string
@@ -34,7 +35,7 @@ const Link =
 
       if (isRegistered) {
         event.preventDefault()
-        navigate(link)
+        navigate(localizedPath(link))
       } else {
         console.log(link)
         window.location.href = link
