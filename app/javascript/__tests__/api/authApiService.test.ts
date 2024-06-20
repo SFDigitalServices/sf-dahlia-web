@@ -1,6 +1,12 @@
 import { authenticatedGet, post, put } from "../../api/apiService"
 
-import { signIn, getProfile, forgotPassword, updatePassword } from "../../api/authApiService"
+import {
+  signIn,
+  getProfile,
+  forgotPassword,
+  updatePassword,
+  getApplications,
+} from "../../api/authApiService"
 
 jest.mock("axios")
 
@@ -35,6 +41,14 @@ describe("authApiService", () => {
     it("calls apiService authenticatedGet", async () => {
       const url = "/api/v1/auth/validate_token"
       await getProfile()
+      expect(authenticatedGet).toHaveBeenCalledWith(url)
+    })
+  })
+
+  describe("getApplications", () => {
+    it("calls apiService authenticatedGet", async () => {
+      const url = "/api/v1/account/my-applications"
+      await getApplications()
       expect(authenticatedGet).toHaveBeenCalledWith(url)
     })
   })

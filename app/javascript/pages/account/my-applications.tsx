@@ -4,10 +4,47 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getLocalizedPath } from "../../util/routeUtil"
+import { getLocalizedPath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
+import { getApplications } from "../../api/authApiService"
+import UserContext from "../../authentication/context/UserContext"
+import { Application } from "../../api/types/rails/application/RailsApplication"
 
 const MyApplications = () => {
+  const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
+  // Temporary until we complete DAH-2342
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [error, setError] = React.useState<string | null>(null)
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [loading, setLoading] = React.useState<boolean>(true)
+  // Temporary until we merge in way to display applications
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [applications, setApplications] = React.useState<Application[]>([])
+
+  React.useEffect(() => {
+    setLoading(true)
+    if (profile) {
+      getApplications()
+        .then((applications) => {
+          setApplications(applications)
+          setLoading(false)
+        })
+        .catch((error: string) => {
+          setError(error)
+          setLoading(false)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+  }, [authLoading, initialStateLoaded, profile])
+
+  if (!profile && !authLoading && initialStateLoaded) {
+    // TODO: Redirect to React sign in page and show a message that user needs to sign in
+    window.location.href = getSignInPath()
+    return null
+  }
+
   const noApplications = () => {
     return (
       <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
