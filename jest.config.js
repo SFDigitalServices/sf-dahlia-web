@@ -9,7 +9,7 @@ module.exports = {
   testRegex: "/*.test.(tsx|ts)$",
   collectCoverageFrom: ["**/*.(tsx|ts)"],
   coveragePathIgnorePatterns: ["<rootDir>/packs"],
-  coverageReporters: ["lcov", "text"],
+  coverageReporters: ["lcov"],
   coverageDirectory: "test-coverage",
   coverageThreshold: {
     global: {
@@ -38,7 +38,6 @@ module.exports = {
     "^axios$": require.resolve("axios"),
   },
   transformIgnorePatterns: ["node_modules/?!(@bloom-housing/ui-components)"],
-  reporters: ["default", "jest-junit"],
   moduleFileExtensions: ["js", "jsx", "ts", "tsx"],
   testEnvironment: "jsdom",
 }
