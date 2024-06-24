@@ -35,8 +35,6 @@ describe CacheService do
     allow(Force::ListingService).to receive(:units)
     allow(Force::ListingService).to receive(:preferences)
     allow(Force::ListingService).to receive(:lottery_buckets)
-    allow(Force::ListingService).to receive(:get_min_ami_chart_data_from_units)
-    allow(Force::ListingService).to receive(:get_max_ami_chart_data_from_units)
     allow(multiple_listing_image_service).to receive(:process_images)
       .and_return(OpenStruct.new(errors: nil))
     allow(MultipleListingImageService).to receive(:new).and_return(multiple_listing_image_service)
@@ -51,7 +49,6 @@ describe CacheService do
         .with(updated_listing_id, force: true)
       expect(Force::ListingService).to receive(:preferences)
         .with(updated_listing_id, force: true)
-      expect(Force::ListingService).to receive(:cache_ami_chart_data)
       VCR.use_cassette('force/initialize') do
         CacheService.new.prefetch_listings(prefetch_args)
       end
@@ -108,7 +105,6 @@ describe CacheService do
         expect(Force::ListingService).not_to receive(:units)
         expect(Force::ListingService).not_to receive(:preferences)
         expect(Force::ListingService).not_to receive(:lottery_buckets)
-        expect(Force::ListingService).not_to receive(:ami)
 
         VCR.use_cassette('force/initialize') { CacheService.new.prefetch_listings }
       end
