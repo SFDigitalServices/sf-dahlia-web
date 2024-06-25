@@ -189,15 +189,14 @@ jobs:
       - setup
       - run: yarn cache clean
       - run: yarn install
-      - run:
-          name: Run react unit tests
-          command: yarn test --maxWorkers=2 --reporters=default --reporters=jest-junit
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
-      - store_test_results:
-          path: ./reports/junit/
+      - run: yarn test
+      # path configured in jest.config.js as <rootDir>/<coverageDirectory>
       - store_artifacts:
           path: app/javascript/test-coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - app/javascript/test-coverage
   unit-rspec:
     <<: *defaults
     steps:
@@ -210,6 +209,10 @@ jobs:
       - run: bundle exec rake spec
       - store_artifacts:
           path: coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage
   unit-angular:
     <<: *defaults
     steps:
@@ -229,6 +232,19 @@ jobs:
       - setup
       - start-server
       - run: yarn test:e2e
+  coverage:
+    <<: *defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unit-react.json app/javascript/test-coverage/lcov.info
+      - run: ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.unit-rspec.json coverage/coverage.json
+      - run: ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+      - run: ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - tmp/codeclimate.*.json
   e2e-legacy:
     <<: *defaults
     parallelism: 4
@@ -277,6 +293,11 @@ workflows:
           <<: *angular_jobs
       - e2e:
           <<: *non_production_jobs
+      - coverage:
+          <<: *non_production_jobs
+          requires:
+            - unit-rspec
+            - unit-react
       - e2e-legacy:
           <<: *angular_jobs
       - e2e:
