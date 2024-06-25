@@ -9,33 +9,31 @@ class Api::V1::ListingInterestController < ApiController
         token,
         secret,
       )
-      # token is generated with a building number (0-5, which corresponding to the id mapping in listing_id_map),
-      # the application id, the response from the email (y (yes) or n (no)), and the date the email was initially sent
-      b, a, r, s = resp[0].values_at('b', 'a', 'r', 's')
-      Rails.logger.info("Creating fieldUpdateComment for building: #{b}, application: #{a}, repsonse: #{r}, email send date: #{s}")
+      # token is generated with a listing numbers (0-8, which corresponding to the id mapping in listing_id_map),
+      # the application ids, the response from the email (y (yes) or n (no)), and the date the email was initially sent
+      r, s, m = resp[0].values_at('r', 's', 'm')
+      Rails.logger.info("Creating fieldUpdateComment for repsonse: #{r}, email send date: #{s}, listings => applications: #{m}")
 
       header = { 'Content-Type' => 'application/json' }
-      body = build_request_body(r, a, s)
-
-      response = Force::Request.new(parse_response: true)
-                               .post_with_headers("/fieldUpdateComment/#{a}", body, header)
-
-      Rails.logger.info("response from salasforce when creating fieldUpdateComment is #{response.to_json}")
-
-      if response.status == 404
-        raise 'Salesforce response to POST /fieldUpdateComment returned a 404'
+      m.each do |_listing_number, application|
+        body = build_request_body(r, application, s)
+        response = Force::Request.new(parse_response: true)
+                                 .post_with_headers("/fieldUpdateComment/#{application}", body, header)
+        Rails.logger.info("response from salasforce when creating fieldUpdateComment is #{response.to_json}")
+        if response.status == 404
+          raise 'Salesforce response to POST /fieldUpdateComment returned a 404'
+        end
       end
 
-      listing_id = listing_id_map(b)
-
       # when fieldupdatecomment is successfully created redirect with a response of y (yes) or n (no)
+      listing_id = listing_id_map(m)
       redirect_to "/listing_interest?listing=#{listing_id}&response=#{r}"
     rescue JWT::ExpiredSignature
       Rails.logger.error('Token expired, not able to create fieldUpdateComment')
       decoded_expired_token = JWT.decode(token, secret, true,
                                          { verify_expiration: false })
-      b = decoded_expired_token[0]['b']
-      listing_id = listing_id_map(b)
+      m = decoded_expired_token[0]['m']
+      listing_id = listing_id_map(m)
       # when token is expired redirect with a response of x (expired)
       redirect_to "/listing_interest?listing=#{listing_id}&response=x"
     rescue StandardError => e
@@ -51,10 +49,15 @@ class Api::V1::ListingInterestController < ApiController
     params.require(:t)
   end
 
-  def listing_id_map(listing_number)
+  def listing_id_map(map)
+    # only bayside village will have multiple listings
+    # in that case we can use any of the listings for the landing page
+    listing_number = map.keys.first.to_i
     array = %w[a0W0P00000DZYzVUAX a0W4U00000KnLRMUA3
                a0W4U00000IYEb4UAH a0W4U00000IYSM4UAP
-               a0W4U00000Ih1V2UAJ a0W4U00000KnCZRUA3]
+               a0W4U00000Ih1V2UAJ a0W4U00000KnCZRUA3
+               a0W4U00000NlYn3UAF a0W4U00000NlTJxUAN
+               a0W4U00000IYLReUAP]
     array[listing_number]
   end
 

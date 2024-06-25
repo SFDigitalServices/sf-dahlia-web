@@ -16,9 +16,9 @@ describe Api::V1::ListingInterestController do
       # setup jwt decode mock
       allow(JWT).to receive(:decode) do |token|
         if token == yes_token
-          [{ 'b' => 0, 'a' => application_id, 'r' => 'y', 's' => '2024-04-26' }]
+          [{ 'r' => 'y', 's' => '2024-04-26', 'm' => { '0' => application_id } }]
         elsif token == no_token
-          [{ 'b' => 0, 'a' => application_id, 'r' => 'n', 's' => '2024-04-26' }]
+          [{ 'r' => 'n', 's' => '2024-04-26', 'm' => { '0' => application_id } }]
         elsif token == error_token
           raise StandardError
         else
