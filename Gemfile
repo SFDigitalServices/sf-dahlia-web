@@ -107,7 +107,7 @@ gem 'fog-aws'
 gem 'sentry-raven'
 
 group :test do
-  gem 'codeclimate-test-reporter', '= 0.6.0'
+  gem 'simplecov', '~> 0.22.0'
 
   # Provide some testing functions that were removed in Rails 5
   gem 'rails-controller-testing'
