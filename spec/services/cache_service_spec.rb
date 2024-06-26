@@ -49,6 +49,7 @@ describe CacheService do
         .with(updated_listing_id, force: true)
       expect(Force::ListingService).to receive(:preferences)
         .with(updated_listing_id, force: true)
+
       VCR.use_cassette('force/initialize') do
         CacheService.new.prefetch_listings(prefetch_args)
       end
