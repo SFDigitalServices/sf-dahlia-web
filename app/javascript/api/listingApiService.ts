@@ -90,7 +90,9 @@ export const getAmiCharts = async (
     )
   }, "")
 
-  return get<ListingAmiChartsResponse>(amiCharts(queryParams)).then(({ data }) => {
-    return data.ami
-  })
+  return get<ListingAmiChartsResponse>(amiCharts(queryParams), forceRecacheParam()).then(
+    ({ data }) => {
+      return data.ami
+    }
+  )
 }

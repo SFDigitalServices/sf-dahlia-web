@@ -1,0 +1,180 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/Units/a0W0P00000GlKfBUAV"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.12
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Wed, 26 Jun 2024 19:34:49 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - BrowserId=JubkPDPzEe-NPUGLpcHfkw; domain=.salesforce.com; path=/; expires=Thu,
+        26-Jun-2025 19:34:49 GMT; Max-Age=31536000; secure; SameSite=Lax
+      - CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:49 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:49
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Www-Authenticate:
+      - Token
+      Server:
+      - sfdcedge
+      X-Sfdc-Request-Id:
+      - 8b5818040ca5516d61e322df59926c04
+    body:
+      encoding: UTF-8
+      string: '[{"message":"INVALID_AUTH_HEADER","errorCode":"INVALID_AUTH_HEADER"}]'
+  recorded_at: Wed, 26 Jun 2024 19:34:49 GMT
+- request:
+    method: post
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/oauth2/token"
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v2.7.12
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 26 Jun 2024 19:34:49 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - BrowserId=JwBf1TPzEe-WLJmGG1Lqiw; domain=.salesforce.com; path=/; expires=Thu,
+        26-Jun-2025 19:34:49 GMT; Max-Age=31536000; secure; SameSite=Lax
+      - CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:49 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:49
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      X-Readonlymode:
+      - 'false'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - sfdcedge
+      X-Sfdc-Request-Id:
+      - 617031420edde876fc7121aa644e02c7
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D6s000000tHVMEA2/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1719430489733","signature":"bDoqKLzqgvckYBVgwnBcDHAIXoltLxTmCKu5hNDQ6vQ="}'
+  recorded_at: Wed, 26 Jun 2024 19:34:49 GMT
+- request:
+    method: get
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/Units/a0W0P00000GlKfBUAV"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.12
+      Authorization:
+      - OAuth <<ACCESS_TOKEN>>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 26 Jun 2024 19:34:50 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - BrowserId=J0AnbjPzEe-JVcUKOdBZ5g; domain=.salesforce.com; path=/; expires=Thu,
+        26-Jun-2025 19:34:50 GMT; Max-Age=31536000; secure; SameSite=Lax
+      - CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:50 GMT; Max-Age=31536000;
+        secure
+      - LSKey-c$CookieConsentPolicy=0:1; path=/; expires=Thu, 26-Jun-2025 19:34:50
+        GMT; Max-Age=31536000; secure
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
+      Vary:
+      - Accept-Encoding
+      Server:
+      - sfdcedge
+      X-Sfdc-Request-Id:
+      - 72dc8e3f5bcad2f44d3886f1791c7ea3
+      X-Sfdc-Edge-Cache:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI2tQAF"},"Price_Without_Parking__c":320000,"Price_With_Parking__c":380000,"HOA_Dues_Without_Parking__c":450.00,"HOA_Dues_With_Parking__c":650.00,"Unit_Type__c":"1
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":900,"Unit_Number__c":"101","Unit_Floor__c":"1","Number_of_Bathrooms__c":1.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
+        Unadjusted","AMI_chart_year__c":2017,"Max_AMI_for_Qualifying_Unit__c":55.0,"Min_Occupancy__c":1,"Id":"a0b0P00001GcI2tQAF"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI2yQAF"},"Price_Without_Parking__c":320000,"Price_With_Parking__c":380000,"HOA_Dues_Without_Parking__c":450.00,"HOA_Dues_With_Parking__c":650.00,"Unit_Type__c":"1
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":900,"Unit_Number__c":"201","Unit_Floor__c":"2","Number_of_Bathrooms__c":1.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
+        Unadjusted","AMI_chart_year__c":2017,"Max_AMI_for_Qualifying_Unit__c":55.0,"Min_Occupancy__c":1,"Id":"a0b0P00001GcI2yQAF"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI33QAF"},"Price_Without_Parking__c":420000,"Price_With_Parking__c":480000,"HOA_Dues_Without_Parking__c":550.00,"HOA_Dues_With_Parking__c":750.00,"Unit_Type__c":"2
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":1050,"Unit_Number__c":"102","Unit_Floor__c":"1","Number_of_Bathrooms__c":1.50,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"TCAC
+        - HERA","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":60.0,"Min_Occupancy__c":2,"Id":"a0b0P00001GcI33QAF"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI38QAF"},"Price_Without_Parking__c":420000,"Price_With_Parking__c":480000,"HOA_Dues_Without_Parking__c":550.00,"HOA_Dues_With_Parking__c":750.00,"Unit_Type__c":"2
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":1050,"Unit_Number__c":"202","Unit_Floor__c":"2","Number_of_Bathrooms__c":1.50,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"TCAC
+        - HERA","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":60.0,"Min_Occupancy__c":2,"Id":"a0b0P00001GcI38QAF"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI3DQAV"},"Price_Without_Parking__c":520000,"Price_With_Parking__c":580000,"HOA_Dues_Without_Parking__c":650.00,"HOA_Dues_With_Parking__c":850.00,"Unit_Type__c":"3
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":1050,"Unit_Number__c":"301","Unit_Floor__c":"3","Number_of_Bathrooms__c":2.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"TCAC
+        - HERA","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":60.0,"Min_Occupancy__c":3,"Id":"a0b0P00001GcI3DQAV"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI3IQAV"},"Price_Without_Parking__c":520000,"Price_With_Parking__c":580000,"HOA_Dues_Without_Parking__c":650.00,"HOA_Dues_With_Parking__c":850.00,"Unit_Type__c":"3
+        BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":2000,"Unit_Number__c":"302","Unit_Floor__c":"3","Number_of_Bathrooms__c":2.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
+        Unadjusted","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":55.0,"Min_Occupancy__c":3,"Id":"a0b0P00001GcI3IQAV"}]'
+  recorded_at: Wed, 26 Jun 2024 19:34:50 GMT
+recorded_with: VCR 6.1.0

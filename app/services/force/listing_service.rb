@@ -54,12 +54,13 @@ module Force
 
     # get AMI: opts are percent, chartType, year
     def self.ami(opts = {})
-      results = Request.new(parse_response: true).cached_get("/ami?#{opts.to_query}")
+      force = opts[:force] || false
+      results = Request.new(parse_response: true).cached_get(
+        "/ami?#{opts[:data].to_query}",
+        nil,
+        force,
+      )
       results.sort_by { |i| i['numOfHousehold'] }
-    end
-
-    def self.ami_charts
-      Request.new.get('/ami/charts')
     end
 
     # get Lottery Buckets with rankings

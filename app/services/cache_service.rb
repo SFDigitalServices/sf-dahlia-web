@@ -68,7 +68,8 @@ class CacheService
     id = listing['Id']
     # cache this listing from API
     Force::ListingService.listing(id, force: true)
-    Force::ListingService.units(id, force: true)
+    units = Force::ListingService.units(id, force: true)
+    AmiCacheService.new.cache_ami_chart_data(units)
     Force::ListingService.preferences(id, force: true)
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
     # NOTE: there is no call to Force::ListingService.ami
