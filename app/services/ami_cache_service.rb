@@ -17,13 +17,14 @@ class AmiCacheService
     }
     unique_charts.each do |unique_chart|
       if unique_chart['year'] == unit['AMI_chart_year'] and
-        unique_chart['type'] == unit['AMI_chart_type']
-        if unique_chart['percent'] == unit['Max_AMI_for_Qualifying_Unit']
+        unique_chart['type'] == unit['AMI_chart_type'] and
+        unique_chart['percent'] == unit['Max_AMI_for_Qualifying_Unit']
           match["max"] = true
-        end
-        if unique_chart['percent'] == unit['Min_AMI_for_Qualifying_Unit']
-          match["min"] = true
-        end
+      end
+      if unique_chart['year'] == unit['AMI_chart_year'] and
+        unique_chart['type'] == unit['AMI_chart_type'] and
+        unique_chart['percent'] == unit['Max_AMI_for_Qualifying_Unit']
+        match["min"] = true
       end
     end
     match
@@ -55,30 +56,6 @@ class AmiCacheService
           'derivedFrom' => 'MinAmi',
         }
       end
-    end
-    unique_charts
-  end
-
-  def get_min_ami_chart_data_from_units(units)
-    unique_charts = []
-
-    units.each do |unit|
-      unique_chart_match_for_min = nil
-      unique_charts.each do |unique_chart|
-        next unless min_ami_match(unique_chart, unit)
-
-        unique_chart_match_for_min = unique_chart
-        break
-      end
-
-      next unless !unique_chart_match_for_min && unit['Min_AMI_for_Qualifying_Unit']
-
-      unique_charts << {
-        'year' => unit['AMI_chart_year'],
-        'type' => unit['AMI_chart_type'],
-        'percent' => unit['Min_AMI_for_Qualifying_Unit'],
-        'derivedFrom' => 'MinAmi',
-      }
     end
     unique_charts
   end
