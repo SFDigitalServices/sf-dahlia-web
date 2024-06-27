@@ -4,6 +4,16 @@ class AuthController < ApplicationController
     @sign_in_props = { assetPaths: static_asset_paths }
   end
 
+  def create_account
+    @account_information_props = { assetPaths: static_asset_paths }
+    render 'create_account'
+  end
+
+  def forgot_password
+    @account_information_props = { assetPaths: static_asset_paths }
+    render 'forgot_password'
+  end
+
   protected
 
   def use_react_app

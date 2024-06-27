@@ -1296,6 +1296,7 @@
   "pageTitle.shareListing": "Share %{listing}",
   "pageTitle.shareThisListing": "Share this listing",
   "pageTitle.signIn": "Sign In",
+  "pageTitle.forgotPassword": "Forgot Password",
   "preferences.aliceGriffith.address": "Alice Griffith Address",
   "preferences.aliceGriffith.addressDesc": "Your address at Alice Griffith Housing Development",
   "preferences.aliceGriffith.desc": "For households in which at least one member was a resident of the Alice Griffith housing development.",

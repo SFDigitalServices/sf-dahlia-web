@@ -20,6 +20,8 @@ import Privacy from "../pages/getAssistance/privacy"
 import MyApplications from "../pages/account/my-applications"
 import AccountSettings from "../pages/account/account-settings"
 import MyAccount from "../pages/account/my-account"
+import CreateAccount from "../pages/create-account"
+import ForgotPassword from "../pages/forgot-password"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -31,6 +33,8 @@ void loadTranslations(currentLanguage).then(() =>
     ListingDetail,
     RentDirectory,
     SignIn,
+    CreateAccount,
+    ForgotPassword,
     HousingCounselors,
     GetAssistance,
     DocumentChecklist,
