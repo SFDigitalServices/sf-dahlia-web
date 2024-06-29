@@ -46,17 +46,6 @@ module Force
       send(:post, endpoint, params)
     end
 
-    def subscribe
-      listing_update_topic = '/data/Listing__ChangeEvent'
-      puts 'running subscribe'
-      EM.run do
-        # Subscribe to the PushTopic.
-        @client.subscription listing_update_topic do |message|
-          puts message.inspect
-        end
-      end
-    end
-
     def post_with_headers(endpoint, body = '', headers = {})
       # Always refresh auth to help prevent unauthorized errors
       refresh_oauth_token
