@@ -2,10 +2,8 @@ require 'restforce'
 require 'faye'
 
 module Force
-  # Subsribe
+  # Create an event subscription using restforce and faye
   class StreamingSubscriberService
-    # attr_reader :client
-
     def initialize
       @client = Restforce.new(username: ENV['SALESFORCE_USERNAME'],
                               password: ENV['SALESFORCE_PASSWORD'],
@@ -13,18 +11,24 @@ module Force
                               host: ENV['SALESFORCE_HOST'],
                               client_id: ENV['SALESFORCE_CLIENT_ID'],
                               client_secret: ENV['SALESFORCE_CLIENT_SECRET'],
-                              api_version: '26.0',
-                              ssl: { verify_peer: true })
-      puts 'Client Connected ', @client
+                              api_version: '26.0')
+
+      salesforce_credentials = @client.authenticate!
+
+      server = salesforce_credentials.instance_url
+      access_token  = salesforce_credentials.access_token
+      token_type    = 'OAuth'
+
+      @faye_client = Faye::Client.new("#{server}/cometd/31.0/")
+      @faye_client.set_header('Authorization', "#{token_type} #{access_token}")
     end
 
     def subscribe
       listing_update_topic = '/data/Listing__ChangeEvent'
 
-      puts 'Trying to get ', listing_update_topic
       EM.run do
-        # Subscribe to the PushTopic.
-        @client.subscription listing_update_topic do |message|
+        puts 'Waiting for Events...'
+        @faye_client.subscribe listing_update_topic do |message|
           puts message.inspect
         end
       end
