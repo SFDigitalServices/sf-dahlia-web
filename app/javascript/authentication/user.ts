@@ -11,11 +11,11 @@ interface User {
   /**  */
   updated_at: Date
 
-  firstName: string
+  firstName?: string
 
-  middleName: string
+  middleName?: string
 
-  lastName: string
+  lastName?: string
 
   dateOfBirth?: {
     birthDay: string

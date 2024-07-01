@@ -11,7 +11,6 @@ import {
   AlertTypes,
   DOBFieldValues,
   AlertBox,
-  UniversalIconType,
   Icon,
   t,
   emailRegex,
@@ -27,33 +26,6 @@ import PasswordEditFieldset from "./PasswordEditFieldset"
 type AlertMessage = {
   type: AlertTypes
   message: string
-}
-
-const AccountSettingsHeader = ({
-  title,
-  icon,
-  description,
-}: {
-  title: string
-  description: string
-  icon: UniversalIconType
-}) => {
-  return (
-    <Card.Header
-      divider="flush"
-      className="flex justify-center p-5 text-center w-full flex-col items-center"
-    >
-      <div
-        className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
-        style={{ borderBottom: "3px solid" }}
-      >
-        <Icon size="xlarge" className="md:hidden block" symbol={icon} />
-        <Icon size="2xl" className="md:block hidden" symbol={icon} />
-      </div>
-      <h1 className="text-xl md:text-2xl">{title}</h1>
-      <p className="pt-6 pb-8 field-note text-sm">{description}</p>
-    </Card.Header>
-  )
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
@@ -176,11 +148,23 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   return (
     <FormLayout title={t("accountSettings.title")}>
       <Card>
-        <AccountSettingsHeader
-          title={t("accountSettings.title")}
-          description={t("accountSettings.description")}
-          icon="settings"
-        />
+        <Card.Header
+          divider="flush"
+          className="flex justify-center p-5 text-center w-full flex-col items-center"
+        >
+          <div
+            className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
+            style={{ borderBottom: "3px solid" }}
+          >
+            <Icon size="xlarge" className="md:hidden block" symbol="settings" />
+            <Icon size="2xl" className="md:block hidden" symbol="settings" />
+          </div>
+          <h1 data-testid="account-settings-title" className="text-xl md:text-2xl">
+            {t("accountSettings.title")}
+          </h1>
+          <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
+        </Card.Header>
+
         {accountInfoAlert && (
           <AlertBox
             type={accountInfoAlert.type}
@@ -236,9 +220,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             <NameFieldset
               register={personalInfoRegister}
               errors={personalInfoErrors}
-              defaultFirstName={user.firstName ?? null}
-              defaultMiddleName={user.middleName ?? null}
-              defaultLastName={user.lastName ?? null}
+              defaultFirstName={user?.firstName ?? null}
+              defaultMiddleName={user?.middleName ?? null}
+              defaultLastName={user?.lastName ?? null}
             />
             <div className="px-4 pb-4">
               <DOBFieldset
