@@ -13,6 +13,8 @@ interface User {
 
   firstName: string
 
+  middleName: string
+
   lastName: string
 
   dateOfBirth?: {
