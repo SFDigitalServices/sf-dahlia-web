@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import FormLayout from "../../layouts/FormLayout"
 import UserContext from "../../authentication/context/UserContext"
@@ -15,27 +15,18 @@ import {
   Icon,
   t,
   emailRegex,
-  passwordRegex,
-  DOBField,
 } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 import { Card } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
+import NameFieldset from "./NameFieldset"
+import DOBFieldset from "./DOBFieldset"
+import PasswordEditFieldset from "./PasswordEditFieldset"
 
 type AlertMessage = {
   type: AlertTypes
   message: string
-}
-
-const NewPasswordInstructions = () => {
-  return (
-    <>
-      <li>{t("createAccount.passwordInstructions.numCharacters")}</li>
-      <li>{t("createAccount.passwordInstructions.numLetters")}</li>
-      <li>{t("createAccount.passwordInstructions.numNumbers")}</li>
-    </>
-  )
 }
 
 const AccountSettingsHeader = ({
@@ -83,6 +74,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     setUser(profile)
   }, [profile])
 
+  // create forms
   const {
     register: emailRegister,
     formState: { errors: emailErrors },
@@ -93,7 +85,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     register: pwdRegister,
     formState: { errors: pwdErrors },
     handleSubmit: pwdHandleSubmit,
-    watch: pwdWatch,
   } = useForm()
 
   const {
@@ -103,6 +94,8 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     watch: personalInfoWatch,
   } = useForm()
 
+  // handle submissions
+  // TODO: update after backend update calls exist
   const onEmailSubmit = (data: { email: string }) => {
     setAccountInfoLoading(true)
     const { email } = data
@@ -123,7 +116,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   }
 
   const onPasswordSubmit = (data: { password: string; oldPassword: string }) => {
-    console.log(data)
     setAccountInfoLoading(true)
     const { password, oldPassword } = data
     if (password === "") {
@@ -181,9 +173,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     }
   }
 
-  const password = useRef({})
-  password.current = pwdWatch("password", "")
-
   return (
     <FormLayout title={t("accountSettings.title")}>
       <Card>
@@ -203,6 +192,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
           </AlertBox>
         )}
         <Card.Section className="p-6" divider="inset">
+          {/* TODO: replace with email validation component */}
           <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
             <Field
               labelClassName=""
@@ -223,50 +213,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         </Card.Section>
         <Card.Section className="p-6" divider="inset">
           <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
-            <fieldset>
-              <legend>{t("label.password")}</legend>
-              <p className="field-note mt-2 mb-3">{t("accountSettings.rememberYourPassword")}</p>
-              <div className={"flex flex-col"}>
-                {/* Todo: DAH-2387 Adaptive password validation */}
-                <Field
-                  type="password"
-                  name="oldPassword"
-                  label={t("label.oldPassword")}
-                  error={pwdErrors.oldPassword}
-                  register={pwdRegister}
-                  className="mb-1 mt-2"
-                />
-                <span className="float-left text-sm">
-                  <a href="/forgot-password">{t("signIn.forgotPassword")}</a>
-                </span>
-              </div>
-
-              <div className={"flex flex-col"}>
-                <div className="field mb-0 mt-2">
-                  <label>{t("label.newPassword")}</label>
-                </div>
-                <span className="field-note float-left pl-5 text-sm mt-2">
-                  <NewPasswordInstructions />
-                </span>
-                <Field
-                  type="password"
-                  name="password"
-                  className="mt-0 mb-5"
-                  validation={{
-                    minLength: 8,
-                    pattern: passwordRegex,
-                  }}
-                  error={pwdErrors.password}
-                  errorMessage={t("error.password")}
-                  register={pwdRegister}
-                />
-              </div>
-              <div className="flex justify-center">
-                <Button type="submit" loading={accountInfoLoading}>
-                  {t("label.update")}
-                </Button>
-              </div>
-            </fieldset>
+            <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
+            <div className="flex justify-center">
+              <Button type="submit" loading={accountInfoLoading}>
+                {t("label.update")}
+              </Button>
+            </div>
           </Form>
         </Card.Section>
         <Card.Section className="p-6" divider="inset">
@@ -281,46 +233,18 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             </AlertBox>
           )}
           <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
-            <fieldset className="px-4 pb-4">
-              <legend>Name</legend>
-              <Field
-                name="firstName"
-                label={t("label.firstName")}
-                register={personalInfoRegister}
-                error={personalInfoErrors.firstName}
-                defaultValue={user ? user.firstName : null}
-                validation={{ required: true }}
-              />
-              <Field
-                name="middleName"
-                label={t("label.middleName")}
-                error={personalInfoErrors.middleName}
-                defaultValue={user ? user.middleName : null}
-                register={personalInfoRegister}
-              />
-              <Field
-                name="lastName"
-                label={t("label.lastName")}
-                defaultValue={user ? user.lastName : null}
-                error={personalInfoErrors.lastName}
-                register={personalInfoRegister}
-                validation={{ required: true }}
-              />
-            </fieldset>
+            <NameFieldset
+              register={personalInfoRegister}
+              errors={personalInfoErrors}
+              defaultFirstName={user.firstName ?? null}
+              defaultMiddleName={user.middleName ?? null}
+              defaultLastName={user.lastName ?? null}
+            />
             <div className="px-4 pb-4">
-              <DOBField
+              <DOBFieldset
                 required
-                prepend="For example, November 23, 1975 is 11-23-1975"
-                labelCaps={false}
-                strings={{
-                  day: t("label.dobDate"),
-                  month: t("label.dobMonth"),
-                  year: t("label.dobYear"),
-                }}
                 name="dob"
                 defaultDOB={user ? user.dateOfBirth : null}
-                label={t("label.dob")}
-                validateAge18
                 register={personalInfoRegister}
                 error={personalInfoErrors.dob}
                 watch={personalInfoWatch}
