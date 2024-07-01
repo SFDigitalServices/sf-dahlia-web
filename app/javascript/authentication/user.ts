@@ -10,6 +10,18 @@ interface User {
 
   /**  */
   updated_at: Date
+
+  firstName: string
+
+  lastName: string
+
+  dateOfBirth?: {
+    birthDay: string
+    birthMonth: string
+    birthYear: string
+  }
+
+  DOB?: string
 }
 
 interface UserData {
