@@ -4,11 +4,12 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
 import { getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
+import { isRental, isSale } from "../../util/listingUtil"
 
 const MyApplications = () => {
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
@@ -26,12 +27,10 @@ const MyApplications = () => {
     if (profile) {
       getApplications()
         .then((applications) => {
-          setApplications(applications)
-          setLoading(false)
+          setApplications(applications.applications)
         })
         .catch((error: string) => {
           setError(error)
-          setLoading(false)
         })
         .finally(() => {
           setLoading(false)
@@ -61,6 +60,80 @@ const MyApplications = () => {
     )
   }
 
+  const determineApplicationArray = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center pb-9">
+          <Icon symbol="spinner" size="large" />
+        </div>
+      )
+    }
+
+    if (error) {
+      return (
+        <p className="w-full text-center py-4">An error occurred when loading your applications.</p>
+      )
+    }
+
+    if (applications === undefined || applications.length === 0) {
+      return noApplications()
+    }
+
+    const rentalApplications = applications
+      .filter((app) => isRental(app.listing))
+      .sort(
+        (a, b) =>
+          new Date(b.applicationSubmittedDate).getTime() -
+          new Date(a.applicationSubmittedDate).getTime()
+      )
+
+    const saleApplications = applications
+      .filter((app) => isSale(app.listing))
+      .sort(
+        (a, b) =>
+          new Date(b.applicationSubmittedDate).getTime() -
+          new Date(a.applicationSubmittedDate).getTime()
+      )
+
+    const hasBothRentalAndSaleApplications =
+      rentalApplications.length > 0 && saleApplications.length > 0
+
+    return (
+      <>
+        {hasBothRentalAndSaleApplications && (
+          <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+            {t("listings.rentalUnits")}
+          </Heading>
+        )}
+        {rentalApplications.map((app) => (
+          <ApplicationItem
+            applicationURL={`${getApplicationPath()}/${app.id}`}
+            applicationUpdatedAt={app.applicationSubmittedDate}
+            confirmationNumber={app.lotteryNumber.toString()}
+            editedDate={app.applicationSubmittedDate}
+            submitted={app.status === "Submitted"}
+            listing={app.listing}
+          />
+        ))}
+        {hasBothRentalAndSaleApplications && (
+          <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+            {t("listings.saleUnits")}
+          </Heading>
+        )}
+        {saleApplications.map((app) => (
+          <ApplicationItem
+            applicationURL={`${getApplicationPath()}/${app.id}`}
+            applicationUpdatedAt={app.applicationSubmittedDate}
+            confirmationNumber={app.lotteryNumber.toString()}
+            editedDate={app.applicationSubmittedDate}
+            submitted={app.status === "Submitted"}
+            listing={app.listing}
+          />
+        ))}
+      </>
+    )
+  }
+
   return (
     <Layout
       children={
@@ -79,85 +152,7 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
-              {/* TODO: Headings only display if both rental and sales applications exist */}
-              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
-                {t("listings.rentalUnits")}
-              </Heading>
-              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
-                {t("listings.saleUnits")}
-              </Heading>
-              {/* Component if application is submitted */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, no results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted
-              />
-              {/* Component if application is submitted with lottery results and error */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, download results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryResultsURL={"lotteryResults.pdf"}
-                lotteryComplete
-                lotteryError
-                submitted
-              />
-              {/* Component if application is submitted with lottery results and no error */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, view results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete
-                lotteryError={false}
-                submitted
-              />
-              {/* Component if application is not submitted and is past due */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Not submitted, past due"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted={false}
-                pastDue
-              />
-              {/* Component if application is not submitted and is not past due */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Not submitted, not past due"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted={false}
-                pastDue={false}
-              />
-              {/* Component if no applications */}
-              {noApplications()}
+              {determineApplicationArray()}
             </Card>
           </div>
         </section>
