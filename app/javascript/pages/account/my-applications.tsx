@@ -1,14 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
-import { Card, Heading } from "@bloom-housing/ui-seeds"
+import {
+  t,
+  Icon,
+  LinkButton,
+  Button,
+  AppearanceStyleType,
+  AppearanceBorderType,
+} from "@bloom-housing/ui-components"
+import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { getLocalizedPath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage } from "../../util/languageUtil"
-import { getApplications } from "../../api/authApiService"
+import { getApplications, deleteApplication } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
+import "./my-applications.scss"
 
 const MyApplications = () => {
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
@@ -20,6 +28,31 @@ const MyApplications = () => {
   // Temporary until we merge in way to display applications
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [applications, setApplications] = React.useState<Application[]>([])
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [deleteApp, setDeleteApp] = useState("")
+
+  const handleDeleteApp = (id: string) => {
+    setDeleteApp(id)
+  }
+
+  const onDelete = () => {
+    deleteApplication("id")
+      .then(() => {
+        console.log("Deleted application")
+        // Get applications and refresh
+        setDeleteLoading(false)
+      })
+      .catch((error: string) => {
+        setError(error)
+        setDeleteLoading(false)
+      })
+      .finally(() => {
+        setDeleteLoading(false)
+      })
+
+    setOpenDeleteModal(false)
+  }
 
   React.useEffect(() => {
     setLoading(true)
@@ -38,6 +71,11 @@ const MyApplications = () => {
         })
     }
   }, [authLoading, initialStateLoaded, profile])
+
+  React.useEffect(() => {
+    if (deleteApp !== "") setOpenDeleteModal(true)
+    setDeleteApp("")
+  }, [deleteApp])
 
   if (!profile && !authLoading && initialStateLoaded) {
     // TODO: Redirect to React sign in page and show a message that user needs to sign in
@@ -79,6 +117,29 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
+              <Dialog
+                isOpen={openDeleteModal}
+                onClose={() => {
+                  setOpenDeleteModal(false)
+                }}
+                className="w-3/5"
+              >
+                <Dialog.Header>
+                  <div className="delete-title">{t("t.deleteApplication")}</div>
+                </Dialog.Header>
+                <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
+                <Dialog.Footer className="delete-buttons">
+                  <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
+                    {t("t.delete")}
+                  </Button>
+                  <Button
+                    className={AppearanceBorderType.borderless}
+                    onClick={() => setOpenDeleteModal(false)}
+                  >
+                    {t("label.cancel")}
+                  </Button>
+                </Dialog.Footer>
+              </Dialog>
               {/* TODO: Headings only display if both rental and sales applications exist */}
               <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
                 {t("listings.rentalUnits")}
@@ -98,6 +159,7 @@ const MyApplications = () => {
                 listingURL={"/listing/abcd1234/listing-name"}
                 lotteryComplete={false}
                 submitted
+                handleDeleteApp={handleDeleteApp}
               />
               {/* Component if application is submitted with lottery results and error */}
               <ApplicationItem
@@ -113,6 +175,7 @@ const MyApplications = () => {
                 lotteryComplete
                 lotteryError
                 submitted
+                handleDeleteApp={handleDeleteApp}
               />
               {/* Component if application is submitted with lottery results and no error */}
               <ApplicationItem
@@ -127,6 +190,7 @@ const MyApplications = () => {
                 lotteryComplete
                 lotteryError={false}
                 submitted
+                handleDeleteApp={handleDeleteApp}
               />
               {/* Component if application is not submitted and is past due */}
               <ApplicationItem
@@ -141,6 +205,7 @@ const MyApplications = () => {
                 lotteryComplete={false}
                 submitted={false}
                 pastDue
+                handleDeleteApp={handleDeleteApp}
               />
               {/* Component if application is not submitted and is not past due */}
               <ApplicationItem
@@ -155,6 +220,7 @@ const MyApplications = () => {
                 lotteryComplete={false}
                 submitted={false}
                 pastDue={false}
+                handleDeleteApp={handleDeleteApp}
               />
               {/* Component if no applications */}
               {noApplications()}
