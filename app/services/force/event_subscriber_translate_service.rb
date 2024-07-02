@@ -2,9 +2,19 @@ require 'restforce'
 require 'faye'
 
 module Force
+  # Create an event subscription using restforce and faye
   class EventSubscriberTranslateService
-    Event = Struct.new(:listing_id, :last_modified_date, :entity_name, :changed_fields,
-                       :replay_id, :updated_values, keyword_init: true)
+    Event = Struct.new(
+      :listing_id,
+      :last_modified_date,
+      :entity_name,
+      :changed_fields,
+      :replay_id,
+      :updated_values,
+      keyword_init: true,
+    )
+
+    UNSUBSCRIBE_CACHE_KEY = 'unsubscribe_from_listing_updates'.freeze
 
     def initialize
       setup_salesforce_client
@@ -12,9 +22,28 @@ module Force
     end
 
     def listen_and_process_events
+      EM.error_handler do |error|
+        Rails.logger.error(
+          "Error while listening for Salesforce Platform Events: #{error.message}" \
+          " ---- Backtrace: #{error.backtrace[0..5]}",
+        )
+      end
+
       EM.run do
-        puts 'Listening for Salesforce Platform Events...'
-        subscribe_to_listing_updates
+        # available methods for the subscription instance:
+        #   https://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Deferrable
+        #   https://www.rubydoc.info/gems/faye/Faye/Subscription
+        subscription = subscribe_to_listing_updates
+        subscription.callback do
+          Rails.logger.info('Subscribed to Salesforce Platform Events')
+        end
+        subscription.errback do |error|
+          Rails.logger.error(
+            "Error subscribing to Salesforce Platform Events: #{error.inspect}",
+          )
+        end
+        # check every 10 seconds for unsubscribe message in the cache
+        EM.add_timer(10, check_for_unsubscribe(subscription))
       end
     end
 
@@ -60,21 +89,29 @@ module Force
     end
 
     def parse_event(platform_event)
-      header = platform_event['payload']['ChangeEventHeader']
+      header = platform_event.dig('payload', 'ChangeEventHeader')
       Event.new(
-        listing_id: header['recordIds'].first,
-        last_modified_date: platform_event['payload']['LastModifiedDate'],
+        listing_id: header['recordIds'].try(:first),
+        last_modified_date: platform_event.dig('payload', 'LastModifiedDate'),
         entity_name: header['entityName'],
         changed_fields: header['changedFields'],
-        replay_id: platform_event['event']['replayId'],
+        replay_id: platform_event.dig('event', 'replayId'),
         updated_values: extract_updated_values(header['changedFields'], platform_event),
       )
     end
 
     def extract_updated_values(changed_fields, event)
       changed_fields.each_with_object({}) do |field, values|
-        values[field] = event['payload'][field] unless field == 'LastModifiedDate'
+        values[field] = event.dig('payload', field) unless field == 'LastModifiedDate'
       end
+    end
+
+    def check_for_unsubscribe(subscription)
+      return unless Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY)
+
+      subscription.unsubscribe
+      Rails.cache.delete(UNSUBSCRIBE_CACHE_KEY)
+      Rails.logger.info('Unsubscribed to Salesforce Platform Events')
     end
   end
 end

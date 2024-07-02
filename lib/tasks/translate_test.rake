@@ -54,4 +54,7 @@ namespace :translate_test do # rubocop:disable Metrics/BlockLength
     subscriber = Force::EventSubscriberTranslateService.new
     subscriber.listen_and_process_events
   end
+  task unsubscribe: :environment do
+    Rails.cache.write(EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY, true)
+  end
 end
