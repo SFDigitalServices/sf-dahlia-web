@@ -100,6 +100,7 @@ type PrimaryApplicant = {
   candidateScore: number
   isSFUSDEmployee: "Yes" | "No"
   jobClassification: string
+  webAppID: string
 }
 
 type AlternateContact = {

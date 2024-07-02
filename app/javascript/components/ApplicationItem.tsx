@@ -32,7 +32,7 @@ interface ApplicationItemProps {
   lotteryResultsURL?: string
 }
 
-const convertToReadableDate = (dateString: string) => {
+export const convertToReadableDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
