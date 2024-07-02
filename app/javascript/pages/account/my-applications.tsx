@@ -5,7 +5,7 @@ import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
 import { Card, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
+import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
@@ -42,7 +42,9 @@ export const determineApplicationItemList = (
 
   if (error) {
     return (
-      <p className="w-full text-center py-4">An error occurred when loading your applications.</p>
+      <p className="w-full text-center p-4">
+        {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+      </p>
     )
   }
 
