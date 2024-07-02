@@ -3,17 +3,7 @@ import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
-import {
-  Button,
-  Field,
-  Form,
-  AlertTypes,
-  DOBFieldValues,
-  AlertBox,
-  Icon,
-  t,
-  emailRegex,
-} from "@bloom-housing/ui-components"
+import { Form, AlertTypes, DOBFieldValues, AlertBox, Icon, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 import { Card } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
@@ -22,10 +12,31 @@ import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 import PasswordEditFieldset from "./PasswordEditFieldset"
 import Layout from "../../layouts/Layout"
+import EmailField from "./EmailField"
+import FormSubmitButton from "./FormSubmitButton"
 
 type AlertMessage = {
   type: AlertTypes
   message: string
+}
+
+const AccountSettingsHeader = () => {
+  return (
+    <Card.Header
+      divider="flush"
+      className="flex justify-center p-5 text-center w-full flex-col items-center"
+    >
+      <div
+        className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
+        style={{ borderBottom: "3px solid" }}
+      >
+        <Icon size="xlarge" className="md:hidden block" symbol="settings" />
+        <Icon size="2xl" className="md:block hidden" symbol="settings" />
+      </div>
+      <h1 className="text-xl md:text-2xl">{t("accountSettings.title")}</h1>
+      <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
+    </Card.Header>
+  )
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
@@ -148,24 +159,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
 
   return (
     <Layout title={t("accountSettings.title")}>
-      <section className="bg-gray-300 border-t border-gray-450">
-        <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
+      <section className="bg-gray-300 md:border-t md:border-gray-450">
+        <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
-            <Card.Header
-              divider="flush"
-              className="flex justify-center p-5 text-center w-full flex-col items-center"
-            >
-              <div
-                className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
-                style={{ borderBottom: "3px solid" }}
-              >
-                <Icon size="xlarge" className="md:hidden block" symbol="settings" />
-                <Icon size="2xl" className="md:block hidden" symbol="settings" />
-              </div>
-              <h1 className="text-xl md:text-2xl">{t("accountSettings.title")}</h1>
-              <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
-            </Card.Header>
-
+            <AccountSettingsHeader />
             {accountInfoAlert && (
               <AlertBox
                 type={accountInfoAlert.type}
@@ -179,31 +176,18 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             <Card.Section className="p-6" divider="inset">
               {/* TODO: replace with email validation component */}
               <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
-                <Field
-                  labelClassName=""
-                  type="email"
-                  name="email"
-                  label={t("label.emailAddress")}
-                  placeholder="example@web.com"
-                  validation={{ pattern: emailRegex }}
-                  error={emailErrors.email}
-                  errorMessage={t("error.email")}
+                <EmailField
                   register={emailRegister}
-                  defaultValue={user ? user.email : null}
+                  errors={emailErrors}
+                  defaultEmail={user?.email ?? null}
                 />
-                <div className="flex justify-center">
-                  <Button type="submit">{t("label.update")}</Button>
-                </div>
+                <FormSubmitButton loading={accountInfoLoading} label={t("label.update")} />
               </Form>
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
               <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
                 <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
-                <div className="flex justify-center">
-                  <Button type="submit" loading={accountInfoLoading}>
-                    {t("label.update")}
-                  </Button>
-                </div>
+                <FormSubmitButton label={t("label.update")} loading={accountInfoLoading} />
               </Form>
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
@@ -234,11 +218,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
                     watch={personalInfoWatch}
                   />
                 </div>
-                <div className="flex justify-center">
-                  <Button loading={personalInfoLoading} type="submit">
-                    {t("label.update")}
-                  </Button>
-                </div>
+                <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
               </Form>
             </Card.Section>
           </Card>
