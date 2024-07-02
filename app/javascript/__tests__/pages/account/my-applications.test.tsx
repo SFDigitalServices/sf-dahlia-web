@@ -137,8 +137,14 @@ describe("<MyApplications />", () => {
     it("should render applications", () => {
       const applications: Application[] = [
         applicationWithOpenListing,
+        { ...applicationWithOpenListing, id: "56789" },
         {
           ...applicationWithOpenListing,
+          listing: openSaleListing,
+        },
+        {
+          ...applicationWithOpenListing,
+          id: "123456",
           listing: openSaleListing,
         },
       ]
@@ -149,7 +155,7 @@ describe("<MyApplications />", () => {
 
       expect(getByRole("heading", { name: /Rental Units/i, level: 2 })).toBeInTheDocument()
       expect(getByRole("heading", { name: /Sale Units/i, level: 2 })).toBeInTheDocument()
-      expect(queryAllByRole("link", { name: /view application/i })).toHaveLength(2)
+      expect(queryAllByRole("link", { name: /view application/i })).toHaveLength(4)
     })
   })
 })
