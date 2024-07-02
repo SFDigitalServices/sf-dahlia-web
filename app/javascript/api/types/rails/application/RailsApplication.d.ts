@@ -3,6 +3,8 @@
 //   there may be validations in the recesses of Salesforce code that make some
 //   fields mandatory for some situations
 
+import { RailsListing } from "../../../../modules/listings/SharedHelpers"
+
 // POJO that can be serialized to JSON and sent to /shortForm endpoint as is
 export type Application = {
   id: string
@@ -35,6 +37,8 @@ export type Application = {
   hasMilitaryService: "Yes" | "No"
   hasDevelopmentalDisability?: "Yes" | "No"
   answeredCommunityScreening?: "Yes" | "No"
+  listing: RailsListing
+  lotteryNumber: number
   // isSFUSDEmployee: ; // calculated by Salesforce
   // jobClassification: ; // calculated by Salesforce
   // hasDisability: ; // calculated by Salesforce
@@ -96,6 +100,7 @@ type PrimaryApplicant = {
   candidateScore: number
   isSFUSDEmployee: "Yes" | "No"
   jobClassification: string
+  webAppID: string
 }
 
 type AlternateContact = {

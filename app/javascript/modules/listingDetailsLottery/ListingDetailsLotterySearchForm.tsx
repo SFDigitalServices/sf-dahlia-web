@@ -23,11 +23,13 @@ export enum LOTTERY_SEARCH_FORM_STATUS {
 interface ListingDetailsLotterySearchFormProps {
   listing: RailsListing
   lotteryBucketDetails: RailsLotteryResult
+  lotteryNumber?: string
 }
 
 export const ListingDetailsLotterySearchForm = ({
   listing,
   lotteryBucketDetails,
+  lotteryNumber,
 }: ListingDetailsLotterySearchFormProps) => {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { errors, handleSubmit, register } = useForm({ reValidateMode: "onSubmit" })
@@ -67,6 +69,14 @@ export const ListingDetailsLotterySearchForm = ({
       }
     })
   }
+
+  React.useEffect(() => {
+    if (lotteryNumber) {
+      register({ name: lotteryNumberField, value: lotteryNumber })
+      void onSubmit({ lotterySearchNumber: lotteryNumber })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   let content: JSX.Element
   switch (lotteryFormStatus) {
@@ -144,6 +154,7 @@ export const ListingDetailsLotterySearchForm = ({
           validation={{ pattern: /^\d+$/, required: true }}
           label={t("lottery.enterLotteryNumber")}
           labelClassName="sr-only"
+          defaultValue={lotteryNumber}
         />
         <button
           className="bg-blue-500 h-12 p-3 translate"

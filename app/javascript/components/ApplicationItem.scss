@@ -1,6 +1,5 @@
 .application-item {
   @apply border-t;
-  @apply h-60;
   position: relative;
   padding: var(--seeds-s4);
   @media (max-width: theme("screens.sm")) {
@@ -17,19 +16,26 @@
   border-style: solid;
   border-color: var(--seeds-color-gray-450);
   margin-bottom: var(seeds-s4);
+
   @media (max-width: theme("screens.sm")) {
     padding-bottom: var(--seeds-s2);
+    border-bottom: none;
     display: block;
-    @apply text-center;
+    @apply text-left;
   }
 }
 
 .application-item__title {
-  font-size: var(--seeds-font-size-lg);
+  font-size: var(--seeds-font-size-xl);
   @apply font-alt-sans;
   @apply tracking-wider;
   @apply mb-0;
   @apply uppercase;
+  @apply w-1/2;
+
+  @media (max-width: theme("screens.sm")) {
+    @apply w-full;
+  }
 }
 
 .application-item__text {
@@ -37,9 +43,7 @@
   font-size: var(--seeds-font-size-sm);
   color: var(--seeds-color-gray-750);
   @media (max-width: theme("screens.sm")) {
-    text-align: left;
-    padding-top: var(--seeds-s2_5);
-    @apply text-center;
+    @apply text-left;
   }
 }
 
@@ -47,9 +51,9 @@
   display: flex;
   justify-content: space-between;
   padding-top: var(--seeds-s4);
-  padding-bottom: var(--seeds-s4);
   @media (max-width: theme("screens.sm")) {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     @apply justify-center;
   }
 }
@@ -57,7 +61,10 @@
 .application-item__action {
   text-align: right;
   @apply space-y-4;
+  @apply w-1/2;
   @media (max-width: theme("screens.sm")) {
+    @apply w-full;
+    align-items: center;
     text-align: center;
   }
 }
@@ -76,25 +83,23 @@
   flex-direction: row;
   padding-top: var(--seeds-s4);
   @apply w-full;
-  @apply pr-8;
-  position: absolute;
+  padding-bottom: var(--seeds-s3);
   bottom: var(--seeds-s6);
   justify-content: space-between;
   @media (max-width: theme("screens.sm")) {
-    position: relative;
     flex-direction: column;
     @apply text-center;
     @apply p-0;
-    @apply pt-10;
+    @apply pt-5;
+    @apply pb-3;
   }
 }
 
 .application-item__status {
   padding-block: 0;
   font-size: var(--seeds-font-size-sm);
-  color: var(--seeds-color-gray-750);
   @media (max-width: theme("screens.sm")) {
-    padding-block: var(--seeds-s4);
+    padding-top: var(--seeds-s4);
   }
 
   .never-submitted::after {
@@ -121,9 +126,10 @@
 .application-item__confirm-text {
   @apply text-left;
   font-size: var(--seeds-font-size-sm);
-  margin-bottom: var(--seeds-s4);
+  margin: var(--seeds-s4) 0;
   @media (max-width: theme("screens.sm")) {
-    @apply text-center;
+    @apply text-left;
+    margin: var(--seeds-s4) 0 0 0;
   }
 }
 

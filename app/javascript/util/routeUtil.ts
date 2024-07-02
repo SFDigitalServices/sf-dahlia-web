@@ -64,6 +64,8 @@ export const getAdditionalResourcesPath = localizedPathGetter("/additional-resou
 export const getHousingCounselorsPath = localizedPathGetter("/housing-counselors")
 export const getDocumentChecklistPath = localizedPathGetter("/document-checklist")
 export const getShareListingPath = localizedPathGetter("/share")
+export const getApplicationPath = localizedPathGetter("/applications")
+export const getListingDetailPath = localizedPathGetter("/listings")
 
 // Rental Listing Directory
 export const getHelpCalculatingIncomeLink = localizedPathGetter("/income-calculator/rental/intro")
