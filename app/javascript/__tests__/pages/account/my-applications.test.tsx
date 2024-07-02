@@ -119,8 +119,10 @@ describe("<MyApplications />", () => {
     })
 
     it("should render error state", () => {
-      const { getByText } = render(determineApplicationItemList(false, "Error", []))
-      expect(getByText("An error occurred when loading your applications.")).toBeInTheDocument()
+      const { container } = render(determineApplicationItemList(false, "Error", []))
+      expect(container.textContent).toBe(
+        "There was a problem loading your applications. Try refreshing the page. If the problem continues, send an email to sfhousinginfo@sfgov.org."
+      )
     })
 
     it("should render no applications state", () => {
