@@ -23,9 +23,10 @@ module Force
 
     def listen_and_process_events
       EM.error_handler do |error|
-        Rails.logger.error(
-          "Error while listening for Salesforce Platform Events: #{error.message}" \
-          " ---- Backtrace: #{error.backtrace[0..5]}",
+        logger(
+          "Error while listening for Salesforce Platform Events: #{error.message}; " \
+          "Backtrace: #{error.backtrace[0..5]}",
+          error: true,
         )
       end
 
@@ -38,12 +39,12 @@ module Force
           Rails.logger.info('Subscribed to Salesforce Platform Events')
         end
         subscription.errback do |error|
-          Rails.logger.error(
+          logger(
             "Error subscribing to Salesforce Platform Events: #{error.inspect}",
+            error: true,
           )
         end
-        # check every 10 seconds for unsubscribe message in the cache
-        EM.add_timer(10, check_for_unsubscribe(subscription))
+        EM.add_periodic_timer(10, proc { check_for_unsubscribe(subscription) })
       end
     end
 
@@ -69,6 +70,10 @@ module Force
 
     def subscribe_to_listing_updates
       @faye_client.subscribe('/data/Listing__ChangeEvent') do |platform_event|
+        logger(
+          'New Salesforce event via /data/Listing__ChangeEvent: ' \
+          "#{platform_event.inspect}",
+        )
         event = parse_event(platform_event)
         translate_and_log_event(event)
       end
@@ -76,7 +81,9 @@ module Force
 
     def translate_and_log_event(event)
       translations = translate_event_values(event.updated_values)
-      puts "Event Translations: #{translations}"
+      logger(
+        "Event Translations: #{translations.inspect}",
+      )
     end
 
     def translate_event_values(values)
@@ -111,7 +118,16 @@ module Force
 
       subscription.unsubscribe
       Rails.cache.delete(UNSUBSCRIBE_CACHE_KEY)
-      Rails.logger.info('Unsubscribed to Salesforce Platform Events')
+      logger('Unsubscribed to Salesforce Platform Events')
+      EM.stop_event_loop
+    end
+
+    def logger(message, error: false)
+      if error
+        Rails.logger.error("EventSubscriberTranslateService #{message}")
+      else
+        Rails.logger.info("EventSubscriberTranslateService #{message}")
+      end
     end
   end
 end
