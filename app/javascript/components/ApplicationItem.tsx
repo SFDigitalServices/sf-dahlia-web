@@ -4,6 +4,7 @@ import {
   AppearanceStyleType,
   LinkButton,
   AppearanceSizeType,
+  Button,
 } from "@bloom-housing/ui-components"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import "./ApplicationItem.scss"
@@ -24,6 +25,7 @@ interface ApplicationItemProps {
   lotteryResultsURL?: string
   submitted: boolean
   pastDue?: boolean
+  handleDeleteApp?: (id: string) => void
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
@@ -38,6 +40,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   )
   const classNames = ["application-item"]
   if (!props.submitted) classNames.push("application-item__bg")
+
   return (
     <Card.Section className={classNames.join(" ")}>
       <header className={"application-item__header"}>
@@ -106,11 +109,16 @@ const ApplicationItem = (props: ApplicationItemProps) => {
           <Link href={getLocalizedPath(props.listingURL, getCurrentLanguage())}>
             {t("label.seeListing")}
           </Link>
-          {/* TODO: Add functionality to delete application in Link href */}
           {!props.submitted && (
-            <Link className={"application-item__delete"} href={""}>
+            <Button
+              unstyled
+              className={"application-item__delete"}
+              onClick={() => {
+                props.handleDeleteApp("test-id")
+              }}
+            >
               {t("t.delete")}
-            </Link>
+            </Button>
           )}
         </span>
         <span className={"application-item_edited-text"}>
