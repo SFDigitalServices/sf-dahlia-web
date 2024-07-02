@@ -19,9 +19,11 @@ const PasswordEditFieldset = ({
   register: UseFormMethods["register"]
   errors: UseFormMethods["errors"]
 }) => {
+  const hasError = errors.oldPassword || errors.password
+
   return (
     <fieldset>
-      <legend>{t("label.password")}</legend>
+      <legend className={hasError ? "text-alert" : ""}>{t("label.password")}</legend>
       <p className="field-note mt-2 mb-3">{t("accountSettings.rememberYourPassword")}</p>
       <div className={"flex flex-col"}>
         {/* Todo: DAH-2387 Adaptive password validation */}

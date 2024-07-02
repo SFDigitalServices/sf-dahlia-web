@@ -21,16 +21,11 @@ export interface DOBFieldProps {
   required?: boolean
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, id, name, required }: DOBFieldProps) => {
-  const getFieldName = (baseName: string) => {
-    // Append overall date field name to individual date field name
-    return [name, baseName].filter((item) => item).join(".")
-  }
-
+const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFieldProps) => {
   const hasError = error?.birthMonth || error?.birthDay || error?.birthYear
 
-  const birthDay = watch(getFieldName("birthDay")) ?? defaultDOB?.birthDay
-  const birthMonth = watch(getFieldName("birthMonth")) ?? defaultDOB?.birthMonth
+  const birthDay = watch("birthDay") ?? defaultDOB?.birthDay
+  const birthMonth = watch("birthMonth") ?? defaultDOB?.birthMonth
 
   const validateAge = (value: string) => {
     return (
@@ -39,19 +34,16 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, name, required }:
     )
   }
 
-  const labelClasses = []
-  if (hasError) labelClasses.push("text-alert")
-
   return (
     <fieldset id={id}>
-      <legend className={labelClasses.join(" ")}>{t("label.dob")}</legend>
+      <legend className={hasError ? "text-alert" : ""}>{t("label.dob")}</legend>
 
       <div className="field-note my-3">For example, November 23, 1975 is 11-23-1975</div>
       <div className="field-group--date">
         <Field
-          name={getFieldName("birthMonth")}
+          name="dob.birthMonth"
           label={t("label.dobDate")}
-          defaultValue={defaultDOB?.birthMonth ? defaultDOB.birthMonth : ""}
+          defaultValue={defaultDOB?.birthMonth ?? ""}
           error={error?.birthMonth !== undefined}
           validation={{
             required: required,
@@ -67,9 +59,9 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, name, required }:
           register={register}
         />
         <Field
-          name={getFieldName("birthDay")}
+          name="dob.birthDay"
           label={t("label.dobMonth")}
-          defaultValue={defaultDOB?.birthDay ? defaultDOB.birthDay : ""}
+          defaultValue={defaultDOB?.birthDay ?? ""}
           error={error?.birthDay !== undefined}
           validation={{
             required: required,
@@ -85,17 +77,15 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, name, required }:
           register={register}
         />
         <Field
-          name={getFieldName("birthYear")}
+          onChange={(value) => console.log(validateAge(value.target.value))}
+          name="dob.birthYear"
           label={t("label.dobYear")}
-          defaultValue={defaultDOB?.birthYear ? defaultDOB.birthYear : ""}
+          defaultValue={defaultDOB?.birthYear ?? ""}
           error={error?.birthYear !== undefined}
           validation={{
             required: required,
             validate: {
               yearRange: (value: string) => {
-                if (required && value && Number.parseInt(value) < 1900) return false
-                if (required && value && Number.parseInt(value) > dayjs().year() + 10) return false
-                if (!required && !value?.length) return true
                 if (value?.length) return validateAge(value)
                 return true
               },

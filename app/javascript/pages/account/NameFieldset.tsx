@@ -17,9 +17,11 @@ const NameFieldset = ({
   defaultMiddleName,
   defaultLastName,
 }: NameFieldsetProps) => {
+  const hasError = errors?.firstName || errors?.lastName || errors?.middleName
+
   return (
     <fieldset className="px-4 pb-4">
-      <legend>Name</legend>
+      <legend className={hasError ? "text-alert" : ""}>{t("label.name")}</legend>
       <Field
         name="firstName"
         label={t("label.firstName")}
