@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
-import FormLayout from "../../layouts/FormLayout"
 import UserContext from "../../authentication/context/UserContext"
 
 import {
@@ -22,6 +21,7 @@ import { User } from "../../authentication/user"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 import PasswordEditFieldset from "./PasswordEditFieldset"
+import Layout from "../../layouts/Layout"
 
 type AlertMessage = {
   type: AlertTypes
@@ -51,20 +51,20 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     register: emailRegister,
     formState: { errors: emailErrors },
     handleSubmit: emailHandleSubmit,
-  } = useForm()
+  } = useForm({ mode: "all" })
 
   const {
     register: pwdRegister,
     formState: { errors: pwdErrors },
     handleSubmit: pwdHandleSubmit,
-  } = useForm()
+  } = useForm({ mode: "all" })
 
   const {
     register: personalInfoRegister,
     formState: { errors: personalInfoErrors },
     handleSubmit: personalInfoHandleSubmit,
     watch: personalInfoWatch,
-  } = useForm()
+  } = useForm({ mode: "all" })
 
   // handle submissions
   // TODO: update after backend update calls exist
@@ -136,113 +136,115 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       console.log("Save User", newUser)
 
       setPersonalInfoLoading(false)
-    } catch {
+    } catch (error) {
       setPersonalInfoLoading(false)
       setPersonalInfoAlert({
         type: "alert",
         message: `${t("error.formSubmission")}`,
       })
+      console.error(error)
     }
   }
 
   return (
-    <FormLayout title={t("accountSettings.title")}>
-      <Card>
-        <Card.Header
-          divider="flush"
-          className="flex justify-center p-5 text-center w-full flex-col items-center"
-        >
-          <div
-            className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
-            style={{ borderBottom: "3px solid" }}
-          >
-            <Icon size="xlarge" className="md:hidden block" symbol="settings" />
-            <Icon size="2xl" className="md:block hidden" symbol="settings" />
-          </div>
-          <h1 data-testid="account-settings-title" className="text-xl md:text-2xl">
-            {t("accountSettings.title")}
-          </h1>
-          <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
-        </Card.Header>
-
-        {accountInfoAlert && (
-          <AlertBox
-            type={accountInfoAlert.type}
-            onClose={() => setAccountInfoAlert(null)}
-            closeable
-            className="mb-4"
-          >
-            {accountInfoAlert.message}
-          </AlertBox>
-        )}
-        <Card.Section className="p-6" divider="inset">
-          {/* TODO: replace with email validation component */}
-          <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
-            <Field
-              labelClassName=""
-              type="email"
-              name="email"
-              label={t("label.emailAddress")}
-              placeholder="example@web.com"
-              validation={{ pattern: emailRegex }}
-              error={emailErrors.email}
-              errorMessage={t("error.email")}
-              register={emailRegister}
-              defaultValue={user ? user.email : null}
-            />
-            <div className="flex justify-center">
-              <Button type="submit">{t("label.update")}</Button>
-            </div>
-          </Form>
-        </Card.Section>
-        <Card.Section className="p-6" divider="inset">
-          <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
-            <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
-            <div className="flex justify-center">
-              <Button type="submit" loading={accountInfoLoading}>
-                {t("label.update")}
-              </Button>
-            </div>
-          </Form>
-        </Card.Section>
-        <Card.Section className="p-6" divider="inset">
-          {personalInfoAlert && (
-            <AlertBox
-              type={personalInfoAlert.type}
-              onClose={() => setPersonalInfoAlert(null)}
-              className="mb-4"
-              closeable
+    <Layout title={t("accountSettings.title")}>
+      <section className="bg-gray-300 border-t border-gray-450">
+        <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
+          <Card className="w-full">
+            <Card.Header
+              divider="flush"
+              className="flex justify-center p-5 text-center w-full flex-col items-center"
             >
-              {personalInfoAlert.message}
-            </AlertBox>
-          )}
-          <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
-            <NameFieldset
-              register={personalInfoRegister}
-              errors={personalInfoErrors}
-              defaultFirstName={user?.firstName ?? null}
-              defaultMiddleName={user?.middleName ?? null}
-              defaultLastName={user?.lastName ?? null}
-            />
-            <div className="px-4 pb-4">
-              <DOBFieldset
-                required
-                name="dob"
-                defaultDOB={user ? user.dateOfBirth : null}
-                register={personalInfoRegister}
-                error={personalInfoErrors.dob}
-                watch={personalInfoWatch}
-              />
-            </div>
-            <div className="flex justify-center">
-              <Button loading={personalInfoLoading} type="submit">
-                {t("label.update")}
-              </Button>
-            </div>
-          </Form>
-        </Card.Section>
-      </Card>
-    </FormLayout>
+              <div
+                className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
+                style={{ borderBottom: "3px solid" }}
+              >
+                <Icon size="xlarge" className="md:hidden block" symbol="settings" />
+                <Icon size="2xl" className="md:block hidden" symbol="settings" />
+              </div>
+              <h1 className="text-xl md:text-2xl">{t("accountSettings.title")}</h1>
+              <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
+            </Card.Header>
+
+            {accountInfoAlert && (
+              <AlertBox
+                type={accountInfoAlert.type}
+                onClose={() => setAccountInfoAlert(null)}
+                closeable
+                className="mb-4"
+              >
+                {accountInfoAlert.message}
+              </AlertBox>
+            )}
+            <Card.Section className="p-6" divider="inset">
+              {/* TODO: replace with email validation component */}
+              <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
+                <Field
+                  labelClassName=""
+                  type="email"
+                  name="email"
+                  label={t("label.emailAddress")}
+                  placeholder="example@web.com"
+                  validation={{ pattern: emailRegex }}
+                  error={emailErrors.email}
+                  errorMessage={t("error.email")}
+                  register={emailRegister}
+                  defaultValue={user ? user.email : null}
+                />
+                <div className="flex justify-center">
+                  <Button type="submit">{t("label.update")}</Button>
+                </div>
+              </Form>
+            </Card.Section>
+            <Card.Section className="p-6" divider="inset">
+              <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
+                <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
+                <div className="flex justify-center">
+                  <Button type="submit" loading={accountInfoLoading}>
+                    {t("label.update")}
+                  </Button>
+                </div>
+              </Form>
+            </Card.Section>
+            <Card.Section className="p-6" divider="inset">
+              {personalInfoAlert && (
+                <AlertBox
+                  type={personalInfoAlert.type}
+                  onClose={() => setPersonalInfoAlert(null)}
+                  className="mb-4"
+                  closeable
+                >
+                  {personalInfoAlert.message}
+                </AlertBox>
+              )}
+              <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
+                <NameFieldset
+                  register={personalInfoRegister}
+                  errors={personalInfoErrors}
+                  defaultFirstName={user?.firstName ?? null}
+                  defaultMiddleName={user?.middleName ?? null}
+                  defaultLastName={user?.lastName ?? null}
+                />
+                <div className="px-4 pb-4">
+                  <DOBFieldset
+                    required
+                    defaultDOB={user ? user.dateOfBirth : null}
+                    register={personalInfoRegister}
+                    error={personalInfoErrors.dob}
+                    watch={personalInfoWatch}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <Button loading={personalInfoLoading} type="submit">
+                    {t("label.update")}
+                  </Button>
+                </div>
+              </Form>
+            </Card.Section>
+          </Card>
+        </div>
+      </section>
+    </Layout>
   )
 }
 
