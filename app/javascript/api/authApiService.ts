@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
-import { authenticatedGet, post, put } from "./apiService"
+import { authenticatedDelete, authenticatedGet, post, put } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 
@@ -18,6 +18,9 @@ export const getProfile = async (): Promise<User> =>
 
 export const getApplications = async (): Promise<Application[]> =>
   authenticatedGet<Application[]>("/api/v1/account/my-applications").then((res) => res.data)
+
+export const deleteApplication = async (id: string): Promise<Application> =>
+  authenticatedDelete<Application>(`/api/v1/short-form/application/${id}`).then((res) => res.data)
 
 export const forgotPassword = async (email: string): Promise<string> =>
   put<{ message: string }>("/user/forgot-password", {
