@@ -1,8 +1,14 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import MyApplications from "../../../pages/account/my-applications"
+import MyApplications, {
+  determineApplicationItemList,
+} from "../../../pages/account/my-applications"
 import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { authenticatedGet } from "../../../api/apiService"
+import { render } from "@testing-library/react"
+import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
+import { Application } from "../../../api/types/rails/application/RailsApplication"
+import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
 
 jest.mock("axios")
 
@@ -103,6 +109,47 @@ describe("<MyApplications />", () => {
 
       expect(window.location.href).toBe("/sign-in")
       expect(queryByText("My Applications")).toBeNull()
+    })
+  })
+
+  describe("display applications", () => {
+    it("should render loading state", () => {
+      const { getByTestId } = render(determineApplicationItemList(true, "", []))
+      expect(getByTestId("loading-spinner")).toBeInTheDocument()
+    })
+
+    it("should render error state", () => {
+      const { container } = render(determineApplicationItemList(false, "Error", []))
+      expect(container.textContent).toBe(
+        "There was a problem loading your applications. Try refreshing the page. If the problem continues, send an email to sfhousinginfo@sfgov.org."
+      )
+    })
+
+    it("should render no applications state", () => {
+      const { getByText, getByRole } = render(determineApplicationItemList(false, "", []))
+      expect(
+        getByText("It looks like you haven't applied to any listings yet.")
+      ).toBeInTheDocument()
+      expect(getByRole("link", { name: /browse rentals/i })).toBeInTheDocument()
+      expect(getByRole("link", { name: /browse sales/i })).toBeInTheDocument()
+    })
+
+    it("should render applications", () => {
+      const applications: Application[] = [
+        applicationWithOpenListing,
+        {
+          ...applicationWithOpenListing,
+          listing: openSaleListing,
+        },
+      ]
+
+      const { getByRole, queryAllByRole } = render(
+        determineApplicationItemList(false, "", applications)
+      )
+
+      expect(getByRole("heading", { name: /Rental Units/i, level: 2 })).toBeInTheDocument()
+      expect(getByRole("heading", { name: /Sale Units/i, level: 2 })).toBeInTheDocument()
+      expect(queryAllByRole("link", { name: /view application/i })).toHaveLength(2)
     })
   })
 })

@@ -16,8 +16,10 @@ export const signIn = async (email: string, password: string): Promise<User> =>
 export const getProfile = async (): Promise<User> =>
   authenticatedGet<UserData>("/api/v1/auth/validate_token").then((res) => res.data.data)
 
-export const getApplications = async (): Promise<Application[]> =>
-  authenticatedGet<Application[]>("/api/v1/account/my-applications").then((res) => res.data)
+export const getApplications = async (): Promise<{ applications: Application[] }> =>
+  authenticatedGet<{ applications: Application[] }>("/api/v1/account/my-applications").then(
+    (res) => res.data
+  )
 
 export const deleteApplication = async (id: string): Promise<Application> =>
   authenticatedDelete<Application>(`/api/v1/short-form/application/${id}`).then((res) => res.data)
