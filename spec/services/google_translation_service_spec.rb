@@ -8,7 +8,7 @@ describe GoogleTranslationService do
     expected_result = [{ to: 'ES', translation: %w[Hello World] }]
     listing_id = 'a0W0P00000F8YG4UAN'
     let(:single_listing) do
-      VCR.use_cassette('listings/single_listing') do
+      VCR.use_cassette('listings/single_listing_translation_service') do
         Force::ListingService.send :listing, listing_id
       end
     end
