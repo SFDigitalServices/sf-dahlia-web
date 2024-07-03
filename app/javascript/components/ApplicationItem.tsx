@@ -175,7 +175,6 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                 unstyled
                 className={"application-item__delete"}
                 onClick={() => {
-                  console.log("delete button", applicationID)
                   props.handleDeleteApp(applicationID)
                 }}
               >

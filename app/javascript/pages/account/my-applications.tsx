@@ -129,39 +129,34 @@ const MyApplications = () => {
   const [deleteApp, setDeleteApp] = useState("")
 
   const handleDeleteApp = (id: string) => {
-    console.log("handleDelete", id)
     setDeleteApp(id)
     setOpenDeleteModal(true)
   }
 
   const onDelete = () => {
-    console.log("clicked delete modal button", deleteApp)
+    setLoading(true)
     deleteApplication(deleteApp)
       .then(() => {
-        console.log("Deleted application", deleteApp)
-        setLoading(true)
+        const newApplications = applications.filter((application) => application.id !== deleteApp)
+        setApplications(newApplications)
       })
       .catch((error: string) => {
-        console.log("onDelete error", error)
         setError(error)
       })
-    console.log("applications", applications)
-    setApplications(applications.filter((application) => application.id === deleteApp))
-    console.log("applications after filter", applications)
-    console.log("deleteApp is now", deleteApp)
+      .finally(() => {
+        setLoading(false)
+      })
     setOpenDeleteModal(false)
   }
 
   React.useEffect(() => {
     setLoading(true)
-    console.log("useEffect")
     if (profile) {
       getApplications()
         .then((applications) => {
           setApplications(applications.applications)
         })
         .catch((error: string) => {
-          console.log("useEffect error")
           setError(error)
         })
         .finally(() => {
