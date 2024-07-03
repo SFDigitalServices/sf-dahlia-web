@@ -51,6 +51,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   const listingURL = `${getListingDetailPath()}/${props.listing.listingID}`
   const lotteryComplete = isLotteryComplete(props.listing)
   const pastDue = new Date() > new Date(props.listing.Application_Due_Date)
+  const applicationID = props.applicationURL.split("/").pop()
 
   React.useEffect(() => {
     if (isLotteryCompleteDeprecated(props.listing)) {
@@ -169,13 +170,13 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {lotteryComplete && (
               <Link href={props.applicationURL}>{t("label.viewApplication")}</Link>
             )}
-            {/* TODO: Add functionality to delete application in Link href */}
             {!props.submitted && (
               <Button
                 unstyled
                 className={"application-item__delete"}
                 onClick={() => {
-                  props.handleDeleteApp("test-id")
+                  console.log("delete button", applicationID)
+                  props.handleDeleteApp(applicationID)
                 }}
               >
                 {t("t.delete")}

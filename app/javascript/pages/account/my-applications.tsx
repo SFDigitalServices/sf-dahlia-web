@@ -126,39 +126,42 @@ const MyApplications = () => {
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
-  const [deleteLoading, setDeleteLoading] = useState(false)
   const [deleteApp, setDeleteApp] = useState("")
 
   const handleDeleteApp = (id: string) => {
+    console.log("handleDelete", id)
     setDeleteApp(id)
+    setOpenDeleteModal(true)
   }
 
   const onDelete = () => {
-    deleteApplication("id")
+    console.log("clicked delete modal button", deleteApp)
+    deleteApplication(deleteApp)
       .then(() => {
-        console.log("Deleted application")
-        // Get applications and refresh
-        setDeleteLoading(false)
+        console.log("Deleted application", deleteApp)
+        setLoading(true)
       })
       .catch((error: string) => {
+        console.log("onDelete error", error)
         setError(error)
-        setDeleteLoading(false)
       })
-      .finally(() => {
-        setDeleteLoading(false)
-      })
-
+    console.log("applications", applications)
+    setApplications(applications.filter((application) => application.id === deleteApp))
+    console.log("applications after filter", applications)
+    console.log("deleteApp is now", deleteApp)
     setOpenDeleteModal(false)
   }
 
   React.useEffect(() => {
     setLoading(true)
+    console.log("useEffect")
     if (profile) {
       getApplications()
         .then((applications) => {
           setApplications(applications.applications)
         })
         .catch((error: string) => {
+          console.log("useEffect error")
           setError(error)
         })
         .finally(() => {
@@ -166,11 +169,6 @@ const MyApplications = () => {
         })
     }
   }, [authLoading, initialStateLoaded, profile])
-
-  React.useEffect(() => {
-    if (deleteApp !== "") setOpenDeleteModal(true)
-    setDeleteApp("")
-  }, [deleteApp])
 
   if (!profile && !authLoading && initialStateLoaded) {
     // TODO: Redirect to React sign in page and show a message that user needs to sign in

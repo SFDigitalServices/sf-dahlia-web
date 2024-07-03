@@ -21,8 +21,11 @@ export const getApplications = async (): Promise<{ applications: Application[] }
     (res) => res.data
   )
 
-export const deleteApplication = async (id: string): Promise<Application> =>
-  authenticatedDelete<Application>(`/api/v1/short-form/application/${id}`).then((res) => res.data)
+export const deleteApplication = async (id: string) =>
+  authenticatedDelete(`/api/v1/short-form/application/${id}`).then((res) => {
+    console.log("res.data", res.data)
+    return res.data
+  })
 
 export const forgotPassword = async (email: string): Promise<string> =>
   put<{ message: string }>("/user/forgot-password", {
