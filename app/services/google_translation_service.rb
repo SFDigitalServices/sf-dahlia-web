@@ -11,10 +11,7 @@ class GoogleTranslationService
   end
 
   def transform_translations_for_caching(listing_id, keys, translations)
-    puts listing_id
-    puts keys
-    puts translations
-    listing = Force::ListingService.listing(listing_id)
+    listing = Force::ListingService.cached_listing(listing_id)
     # keys can come from updated_values.keys in the event_subscriber_translate_service
     # they will be in the same order as the translations because the translation service uses the values from that object
     # this would make the assumption that every value comes back with 1 translation for each translation language
@@ -30,13 +27,13 @@ class GoogleTranslationService
     # alternatively, we could splat translations into the listing object
     # so they aren't nested under the translations key, but instead under each key: {**listing, **return_value}
     # gets complicated with nested translations (like listing image descriptions)
-    listing[:translations] = return_value
+    listing[0][:translations] = return_value
     listing
   end
 
   def cache_listing_translations(listing_id, keys, translations)
     listing = transform_translations_for_caching(listing_id, keys, translations)
-    if @cache.write("ListingDetails/#{listing_id}", listing)
+    if @cache.write("/ListingDetails/#{listing_id}", listing)
       Rails.logger.info("Successfully cached listing translations for listing id: #{listing_id}")
     else
       Rails.logger.error("Error caching listing translations for listing id: #{listing_id}")
