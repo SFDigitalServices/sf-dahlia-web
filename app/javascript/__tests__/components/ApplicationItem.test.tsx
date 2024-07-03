@@ -120,7 +120,7 @@ describe("Application Item", () => {
     expect(screen.getByText(new RegExp(readableDate, "i"))).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /continue application/i })).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /see listing/i })).toBeInTheDocument()
-    expect(screen.queryByRole("link", { name: /delete/i })).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: /delete/i })).toBeInTheDocument()
     expect(screen.queryByText(/Your lottery number is/i)).not.toBeInTheDocument()
   })
 
