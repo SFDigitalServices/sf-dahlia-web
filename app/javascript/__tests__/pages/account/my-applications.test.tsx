@@ -114,19 +114,19 @@ describe("<MyApplications />", () => {
 
   describe("display applications", () => {
     it("should render loading state", () => {
-      const { getByTestId } = render(determineApplicationItemList(true, "", []))
+      const { getByTestId } = render(determineApplicationItemList(true, "", [], () => {}))
       expect(getByTestId("loading-spinner")).toBeInTheDocument()
     })
 
     it("should render error state", () => {
-      const { container } = render(determineApplicationItemList(false, "Error", []))
+      const { container } = render(determineApplicationItemList(false, "Error", [], () => {}))
       expect(container.textContent).toBe(
         "There was a problem loading your applications. Try refreshing the page. If the problem continues, send an email to sfhousinginfo@sfgov.org."
       )
     })
 
     it("should render no applications state", () => {
-      const { getByText, getByRole } = render(determineApplicationItemList(false, "", []))
+      const { getByText, getByRole } = render(determineApplicationItemList(false, "", [], () => {}))
       expect(
         getByText("It looks like you haven't applied to any listings yet.")
       ).toBeInTheDocument()
@@ -144,7 +144,7 @@ describe("<MyApplications />", () => {
       ]
 
       const { getByRole, queryAllByRole } = render(
-        determineApplicationItemList(false, "", applications)
+        determineApplicationItemList(false, "", applications, () => {})
       )
 
       expect(getByRole("heading", { name: /Rental Units/i, level: 2 })).toBeInTheDocument()
