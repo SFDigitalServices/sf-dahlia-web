@@ -8,8 +8,8 @@ describe GoogleTranslationService do
     expected_result = [{ to: 'ES', translation: %w[Hello World] }]
     listing_id = 'a0W0P00000F8YG4UAN'
     let(:single_listing) do
-      VCR.use_cassette('listings/single_listing_translation_service') do
-        Force::ListingService.send :listing, listing_id
+      VCR.use_cassette('listings/single_cached_listing') do
+        Force::ListingService.send :cached_listing, listing_id
       end
     end
 
@@ -27,7 +27,7 @@ describe GoogleTranslationService do
     it 'appends translations to listing for caching' do
       mock_translate = instance_double('Google::Cloud::Translate::V2::Api')
       service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
-      allow(Force::ListingService).to receive(:listing).and_return(single_listing)
+      allow(Force::ListingService).to receive(:cached_listing).and_return(single_listing)
 
       result = service.transform_translations_for_caching(listing_id, fields, expected_result)
 
