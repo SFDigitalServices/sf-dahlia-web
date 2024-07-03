@@ -31,7 +31,7 @@ describe GoogleTranslationService do
 
       result = service.transform_translations_for_caching(listing_id, fields, expected_result)
 
-      expect(result[:translations]).to eq({:Hello=>{:ES=>"Hello"}, :World=>{:ES=>"World"}})
+      expect(result[0][:translations]).to eq({:Hello=>{:ES=>"Hello"}, :World=>{:ES=>"World"}})
     end
   end
 end
