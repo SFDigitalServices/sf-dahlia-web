@@ -5,13 +5,18 @@ class AuthController < ApplicationController
   end
 
   def create_account
-    @account_information_props = { assetPaths: static_asset_paths }
+    @create_account_props = { assetPaths: static_asset_paths }
     render 'create_account'
   end
 
   def forgot_password
-    @account_information_props = { assetPaths: static_asset_paths }
+    @forgot_password_props = { assetPaths: static_asset_paths }
     render 'forgot_password'
+  end
+
+  def reset_password
+    @reset_password_props = { assetPaths: static_asset_paths }
+    render 'reset_password'
   end
 
   protected
