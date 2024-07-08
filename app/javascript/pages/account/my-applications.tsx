@@ -27,6 +27,26 @@ export const noApplications = () => {
   )
 }
 
+export const generateApplicationList = (applications: Application[]) => {
+  return applications
+    .sort(
+      (a, b) =>
+        new Date(b.applicationSubmittedDate).getTime() -
+        new Date(a.applicationSubmittedDate).getTime()
+    )
+    .map((app) => (
+      <ApplicationItem
+        applicationURL={`${getApplicationPath()}/${app.id}`}
+        applicationUpdatedAt={app.applicationSubmittedDate}
+        confirmationNumber={app.lotteryNumber.toString()}
+        editedDate={app.applicationSubmittedDate}
+        submitted={app.status === "Submitted"}
+        listing={app.listing}
+        key={app.id}
+      />
+    ))
+}
+
 export const determineApplicationItemList = (
   loading: boolean,
   error: string,
@@ -52,21 +72,21 @@ export const determineApplicationItemList = (
     return noApplications()
   }
 
-  const rentalApplications = applications
-    .filter((app) => isRental(app.listing))
-    .sort(
-      (a, b) =>
-        new Date(b.applicationSubmittedDate).getTime() -
-        new Date(a.applicationSubmittedDate).getTime()
-    )
+  const { rentalApplications, saleApplications } = applications.reduce<{
+    rentalApplications: Application[]
+    saleApplications: Application[]
+  }>(
+    (acc, app) => {
+      if (isRental(app.listing)) {
+        acc.rentalApplications.push(app)
+      } else if (isSale(app.listing)) {
+        acc.saleApplications.push(app)
+      }
 
-  const saleApplications = applications
-    .filter((app) => isSale(app.listing))
-    .sort(
-      (a, b) =>
-        new Date(b.applicationSubmittedDate).getTime() -
-        new Date(a.applicationSubmittedDate).getTime()
-    )
+      return acc
+    },
+    { rentalApplications: [], saleApplications: [] }
+  )
 
   const hasBothRentalAndSaleApplications =
     rentalApplications.length > 0 && saleApplications.length > 0
@@ -78,33 +98,13 @@ export const determineApplicationItemList = (
           {t("listings.rentalUnits")}
         </Heading>
       )}
-      {rentalApplications.map((app) => (
-        <ApplicationItem
-          applicationURL={`${getApplicationPath()}/${app.id}`}
-          applicationUpdatedAt={app.applicationSubmittedDate}
-          confirmationNumber={app.lotteryNumber.toString()}
-          editedDate={app.applicationSubmittedDate}
-          submitted={app.status === "Submitted"}
-          listing={app.listing}
-          key={app.id}
-        />
-      ))}
+      {generateApplicationList(rentalApplications)}
       {hasBothRentalAndSaleApplications && (
         <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
           {t("listings.saleUnits")}
         </Heading>
       )}
-      {saleApplications.map((app) => (
-        <ApplicationItem
-          applicationURL={`${getApplicationPath()}/${app.id}`}
-          applicationUpdatedAt={app.applicationSubmittedDate}
-          confirmationNumber={app.lotteryNumber.toString()}
-          editedDate={app.applicationSubmittedDate}
-          submitted={app.status === "Submitted"}
-          listing={app.listing}
-          key={app.id}
-        />
-      ))}
+      {generateApplicationList(saleApplications)}
     </>
   )
 }
