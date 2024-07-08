@@ -26,18 +26,18 @@ describe GoogleTranslationService do
       expect(result).to eq(expected_result)
     end
 
-    it 'caches translations for a listing' do
+    it 'transforms translations from api to an object for a listing' do
       service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
       allow(Force::ListingService).to receive(:cached_listing).and_return(single_listing)
 
-      result = service.transform_translations_for_caching(listing_id, fields,
+      result = service.cache_listing_translations(listing_id, fields,
                                                           expected_result)
 
       expect(result[0][:translations]).to eq({ Hello: { ES: 'Hello' },
                                                World: { ES: 'World' } })
     end
 
-    it 'updates cached translations for a listing' do
+    it 'updates translation object for a listing' do
       service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
       # add translations
       single_listing[0][:translations] =
@@ -47,7 +47,7 @@ describe GoogleTranslationService do
       fields_updated = %w[World]
       translations = [{ to: 'ES', translation: %w[Mundo] }]
 
-      result = service.transform_translations_for_caching(
+      result = service.cache_listing_translations(
         listing_id,
         fields_updated,
         translations,

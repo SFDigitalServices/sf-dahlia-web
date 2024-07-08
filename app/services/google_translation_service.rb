@@ -6,8 +6,40 @@ class GoogleTranslationService
 
   def initialize(project_id:, key:)
     Rails.logger.info('Connecting to Google Cloud Translate...')
-    @translate = Google::Cloud::Translate::V2.new("project_id": project_id, "key": key)
+    @translate = Google::Cloud::Translate::V2.new(project_id:, key:)
     @cache = Rails.cache
+  end
+
+  def translate(text, to)
+    to.map do |target|
+      translation = @translate.translate(text, to: target)
+      { to: target, translation: parse_translations(translation) }
+    rescue StandardError => e
+      Rails.logger.error("An error occured: #{e.message}")
+      raise TranslationError, e.message
+    end
+  end
+
+  def cache_listing_translations(listing_id, keys, translations)
+    listing = transform_translations_for_caching(listing_id, keys, translations)
+    if @cache.write("/ListingDetails/#{listing_id}", listing)
+      Rails.logger.info(
+        "Successfully cached listing translations for listing id: #{listing_id}",
+      )
+    else
+      Rails.logger.error(
+        "Error caching listing translations for listing id: #{listing_id}",
+      )
+    end
+    listing
+  end
+
+  private
+
+  def parse_translations(results)
+    return [results.text] unless results.is_a?(Array)
+
+    results.map(&:text)
   end
 
   def transform_translations_for_caching(listing_id, keys, translations)
@@ -32,35 +64,5 @@ class GoogleTranslationService
     # gets complicated with nested translations (like listing image descriptions)
     listing[0][:translations] = { **prev_cached_translations, **return_value }
     listing
-  end
-
-  def cache_listing_translations(listing_id, keys, translations)
-    listing = transform_translations_for_caching(listing_id, keys, translations)
-    if @cache.write("/ListingDetails/#{listing_id}", listing)
-      Rails.logger.info(
-        "Successfully cached listing translations for listing id: #{listing_id}",
-      )
-    else
-      Rails.logger.error(
-        "Error caching listing translations for listing id: #{listing_id}",
-      )
-    end
-    listing
-  end
-
-  def translate(text, to)
-    to.map do |target|
-      translation = @translate.translate(text, to: target)
-      { to: target, translation: parse_translations(translation) }
-    rescue StandardError => e
-      Rails.logger.error("An error occured: #{e.message}")
-      raise TranslationError, e.message
-    end
-  end
-
-  def parse_translations(results)
-    return [results.text] unless results.is_a?(Array)
-
-    results.map(&:text)
   end
 end
