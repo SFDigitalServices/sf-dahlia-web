@@ -38,7 +38,8 @@ module Overrides
     end
 
     def name_fields_have_invalid_characters?
-      includes_url_characters(params[:contact][:firstName]) || includes_url_characters(params[:contact][:lastName])
+      contact_names = [params[:contact][:firstName], params[:contact][:lastName]]
+      contact_names.any? { |name| includes_url_characters(name) }
     end
 
     def includes_url_characters(value)
