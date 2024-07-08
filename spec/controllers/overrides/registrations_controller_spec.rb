@@ -97,7 +97,28 @@ describe Overrides::RegistrationsController do
         },
         confirm_success_url: 'http://localhost/my-account',
       }
+      expect(response.status).to eq 422
+    end
+    it 'throws error if lastName includes "."' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
 
+      post :create, params: {
+        user: {
+          id: 1,
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'John',
+          lastName: 'bit.ly',
+          DOB: '1985-07-23',
+          email: 'jane@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
       expect(response.status).to eq 422
     end
   end

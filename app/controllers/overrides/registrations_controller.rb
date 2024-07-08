@@ -43,7 +43,7 @@ module Overrides
     end
 
     def includes_url_characters(value)
-      value.include?('www') || value.include?('http')
+      value.include?('www') || value.include?('http') || value.include?('.')
     end
 
     def setup_resource_for_create
