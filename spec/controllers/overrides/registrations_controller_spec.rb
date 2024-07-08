@@ -29,6 +29,24 @@ describe Overrides::RegistrationsController do
     }
   end
 
+  let(:invalid_user_params) do
+    {
+      user: {
+        id: 1,
+        email: 'jane@doe.com',
+        password: 'somepassword',
+        password_confirmation: 'somepassword',
+      },
+      contact: {
+        firstName: 'http',
+        lastName: 'Doe',
+        DOB: '1985-07-23',
+        email: 'jane@doe.com',
+      },
+      confirm_success_url: 'http://localhost/my-account',
+    }
+  end
+
   let!(:user) do
     @user ||= User.create(
       email: 'jack@doe.com',
@@ -51,6 +69,16 @@ describe Overrides::RegistrationsController do
 
       expect(assigns(:resource).salesforce_contact_id)
         .to eq('0036C000001sI5oQAE')
+    end
+
+    it 'throws error if firstName includes invalid characters' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
+
+      post :create, params: invalid_user_params
+
+      expect(response.status).to eq 422
     end
   end
 
