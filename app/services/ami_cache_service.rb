@@ -35,7 +35,7 @@ class AmiCacheService
     match
   end
 
-  def build_uniq_chart(unit, max: true)
+  def build_uniq_chart(unit, max)
     {
       'year' => unit['AMI_chart_year'],
       'type' => unit['AMI_chart_type'],
@@ -57,7 +57,7 @@ class AmiCacheService
 
       # if max ami is not already in the list of ami charts
       if !match['max'] && unit['Max_AMI_for_Qualifying_Unit']
-        unique_charts << build_uniq_chart(unit)
+        unique_charts << build_uniq_chart(unit, true)
       end
 
       # if min ami is not already in the list of ami charts

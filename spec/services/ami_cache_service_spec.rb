@@ -31,7 +31,9 @@ describe AmiCacheService do
       it 'recaches ami' do
         expect(Force::ListingService).to receive(:ami).exactly(3).times
 
-        VCR.use_cassette('force/ami_cache_service') { AmiCacheService.new.cache_ami_chart_data(units) }
+        VCR.use_cassette('force/ami_cache_service') do
+          AmiCacheService.new.cache_ami_chart_data(units)
+        end
       end
     end
   end

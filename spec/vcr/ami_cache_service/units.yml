@@ -175,6 +175,6 @@ http_interactions:
         BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":1050,"Unit_Number__c":"301","Unit_Floor__c":"3","Number_of_Bathrooms__c":2.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"TCAC
         - HERA","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":60.0,"Min_Occupancy__c":3,"Id":"a0b0P00001GcI3DQAV"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001GcI3IQAV"},"Price_Without_Parking__c":520000,"Price_With_Parking__c":580000,"HOA_Dues_Without_Parking__c":650.00,"HOA_Dues_With_Parking__c":850.00,"Unit_Type__c":"3
         BR","Availability__c":1,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":2000,"Unit_Number__c":"302","Unit_Floor__c":"3","Number_of_Bathrooms__c":2.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
-        Unadjusted","AMI_chart_year__c":2018,"Max_AMI_for_Qualifying_Unit__c":55.0,"Min_Occupancy__c":3,"Id":"a0b0P00001GcI3IQAV"}]'
+        Unadjusted","AMI_chart_year__c":2018,"Min_AMI_for_Qualifying_Unit__c":55.0,"Min_Occupancy__c":3,"Id":"a0b0P00001GcI3IQAV"}]'
   recorded_at: Wed, 26 Jun 2024 19:34:50 GMT
 recorded_with: VCR 6.1.0
