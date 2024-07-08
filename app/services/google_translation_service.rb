@@ -12,10 +12,12 @@ class GoogleTranslationService
 
   def transform_translations_for_caching(listing_id, keys, translations)
     listing = Force::ListingService.cached_listing(listing_id)
+    prev_cached_translations = listing[0][:translations] || {}
     # keys can come from updated_values.keys in the event_subscriber_translate_service
-    # they will be in the same order as the translations because the translation service uses the values from that object
-    # this would make the assumption that every value comes back with 1 translation for each translation language
-    # (we would have a problem if it came back with just 2 in the translation array but were expecting 3 fields)
+    # they will be in the same order as the translations because the translation service
+    # uses the values from that object this would make the assumption that every value
+    # comes back with 1 translation for each translation language (we would have a problem
+    # if it came back with just 2 in the translation array but were expecting 3 fields)
     return_value = {}
     translations.each do |target|
       target[:translation].each_with_index do |value, i|
@@ -25,18 +27,23 @@ class GoogleTranslationService
       end
     end
     # alternatively, we could splat translations into the listing object
-    # so they aren't nested under the translations key, but instead under each key: {**listing, **return_value}
+    # so they aren't nested under the translations key, but instead under each key:
+    # {**listing, **return_value}
     # gets complicated with nested translations (like listing image descriptions)
-    listing[0][:translations] = return_value
+    listing[0][:translations] = { **prev_cached_translations, **return_value }
     listing
   end
 
   def cache_listing_translations(listing_id, keys, translations)
     listing = transform_translations_for_caching(listing_id, keys, translations)
     if @cache.write("/ListingDetails/#{listing_id}", listing)
-      Rails.logger.info("Successfully cached listing translations for listing id: #{listing_id}")
+      Rails.logger.info(
+        "Successfully cached listing translations for listing id: #{listing_id}",
+      )
     else
-      Rails.logger.error("Error caching listing translations for listing id: #{listing_id}")
+      Rails.logger.error(
+        "Error caching listing translations for listing id: #{listing_id}",
+      )
     end
     listing
   end
