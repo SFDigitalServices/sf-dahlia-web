@@ -4,19 +4,20 @@ module Overrides
     # method copied from original gem; refactored to please Rubocop
     def create
       setup_resource_for_create
+      return render_create_error if name_fields_have_invalid_characters?
+
       if resource_class.devise_modules.include?(:confirmable) && !@redirect_url
         return render_create_error_missing_confirm_success_url
       end
 
       # if whitelist is set, validate redirect_url against whitelist
-      if DeviseTokenAuth.redirect_whitelist
-        unless DeviseTokenAuth.redirect_whitelist.include?(@redirect_url)
-          return render_create_error_redirect_url_not_allowed
-        end
+      if DeviseTokenAuth.redirect_whitelist && !DeviseTokenAuth.redirect_whitelist.include?(@redirect_url)
+        return render_create_error_redirect_url_not_allowed
       end
 
       begin
         # override email confirmation, must be sent manually from ctrl
+
         resource_class.set_callback('create',
                                     :after,
                                     :send_on_create_confirmation_instructions)
@@ -34,6 +35,15 @@ module Overrides
 
     def error_checks_for_create
       # success redirect url is required
+    end
+
+    def name_fields_have_invalid_characters?
+      contact_names = [params[:contact][:firstName], params[:contact][:lastName]]
+      contact_names.any? { |name| includes_url_characters(name) }
+    end
+
+    def includes_url_characters(value)
+      value.include?('www') || value.include?('http') || value.include?('.')
     end
 
     def setup_resource_for_create
@@ -100,7 +110,7 @@ module Overrides
     def render_create_error
       render json: {
         status: 'error',
-        data:   @resource.as_json,
+        data: @resource.as_json,
         errors: resource_errors,
       }, status: 422
     end
@@ -110,17 +120,18 @@ module Overrides
       resource['confirmed_at'] = @resource.confirmed_at
       render json: {
         status: 'success',
-        data:   resource,
+        data: resource,
       }
     end
 
     def resource_errors
       full_messages = @resource.errors.full_messages
-      @resource.errors.to_hash.merge(full_messages: full_messages)
+      @resource.errors.to_hash.merge(full_messages:)
     end
 
     def sync_with_salesforce
       return false if @resource.errors.any?
+
       attrs = account_params.merge(webAppID: current_user.id)
       salesforce_contact = Force::AccountService.create_or_update(attrs)
       unless salesforce_contact && salesforce_contact['contactId'].present?
