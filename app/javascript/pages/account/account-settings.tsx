@@ -11,7 +11,7 @@ import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import EmailField from "./EmailField"
 import FormSubmitButton from "./FormSubmitButton"
-import PasswordEditFieldset from "./PasswordEditFieldset"
+import PasswordEditFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 
