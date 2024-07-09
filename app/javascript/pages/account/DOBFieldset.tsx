@@ -16,18 +16,21 @@ export interface DOBFieldProps {
   watch: UseFormMethods["watch"]
   defaultDOB?: DOBFieldValues
   error?: DeepMap<DOBFieldValues, FieldError>
-  id?: string
-  name?: string
   required?: boolean
+  id?: string
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFieldProps) => {
-  const hasError = error?.birthMonth || error?.birthDay || error?.birthYear
+const validateNumber = (required: boolean, value: string, maxValue: number) => {
+  if (!required && !value?.length) return true
 
-  const birthDay = watch("birthDay") ?? defaultDOB?.birthDay
-  const birthMonth = watch("birthMonth") ?? defaultDOB?.birthMonth
+  return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue
+}
 
+const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
   const validateAge = (value: string) => {
+    const birthDay = watch("birthDay") ?? defaultDOB?.birthDay
+    const birthMonth = watch("birthMonth") ?? defaultDOB?.birthMonth
+
     return (
       dayjs(`${birthMonth}/${birthDay}/${value}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
       dayjs(`${birthMonth}/${birthDay}/${value}`, "M/D/YYYY") > dayjs().subtract(117, "years")
@@ -35,64 +38,75 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFi
   }
 
   return (
+    <>
+      <Field
+        name="dob.birthMonth"
+        label={t("label.dobDate")}
+        defaultValue={defaultDOB?.birthMonth ?? ""}
+        error={error?.birthMonth !== undefined}
+        validation={{
+          required: required,
+          validate: {
+            monthRange: (value: string) => {
+              return validateNumber(required, value, 12)
+            },
+          },
+        }}
+        inputProps={{ maxLength: 2 }}
+        register={register}
+      />
+      <Field
+        name="dob.birthDay"
+        label={t("label.dobMonth")}
+        defaultValue={defaultDOB?.birthDay ?? ""}
+        error={error?.birthDay !== undefined}
+        validation={{
+          required: required,
+          validate: {
+            dayRange: (value: string) => {
+              return validateNumber(required, value, 31)
+            },
+          },
+        }}
+        inputProps={{ maxLength: 2 }}
+        register={register}
+      />
+      <Field
+        name="dob.birthYear"
+        label={t("label.dobYear")}
+        defaultValue={defaultDOB?.birthYear ?? ""}
+        error={error?.birthYear !== undefined}
+        validation={{
+          required: required,
+          validate: {
+            yearRange: (value: string) => {
+              if (value?.length) return validateAge(value)
+              return true
+            },
+          },
+        }}
+        inputProps={{ maxLength: 4 }}
+        register={register}
+      />
+    </>
+  )
+}
+
+const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFieldProps) => {
+  const hasError = error?.birthMonth || error?.birthDay || error?.birthYear
+
+  return (
     <fieldset id={id}>
       <legend className={hasError ? "text-alert" : ""}>{t("label.dob")}</legend>
 
       <div className="field-note my-3">For example, November 23, 1975 is 11-23-1975</div>
       <div className="field-group--date">
-        <Field
-          name="dob.birthMonth"
-          label={t("label.dobDate")}
-          defaultValue={defaultDOB?.birthMonth ?? ""}
-          error={error?.birthMonth !== undefined}
-          validation={{
-            required: required,
-            validate: {
-              monthRange: (value: string) => {
-                if (!required && !value?.length) return true
-
-                return Number.parseInt(value) > 0 && Number.parseInt(value) <= 12
-              },
-            },
-          }}
-          inputProps={{ maxLength: 2 }}
+        <DOBFields
           register={register}
-        />
-        <Field
-          name="dob.birthDay"
-          label={t("label.dobMonth")}
-          defaultValue={defaultDOB?.birthDay ?? ""}
-          error={error?.birthDay !== undefined}
-          validation={{
-            required: required,
-            validate: {
-              dayRange: (value: string) => {
-                if (!required && !value?.length) return true
-
-                return Number.parseInt(value) > 0 && Number.parseInt(value) <= 31
-              },
-            },
-          }}
-          inputProps={{ maxLength: 2 }}
-          register={register}
-        />
-        <Field
-          onChange={(value) => console.log(validateAge(value.target.value))}
-          name="dob.birthYear"
-          label={t("label.dobYear")}
-          defaultValue={defaultDOB?.birthYear ?? ""}
-          error={error?.birthYear !== undefined}
-          validation={{
-            required: required,
-            validate: {
-              yearRange: (value: string) => {
-                if (value?.length) return validateAge(value)
-                return true
-              },
-            },
-          }}
-          inputProps={{ maxLength: 4 }}
-          register={register}
+          watch={watch}
+          defaultDOB={defaultDOB}
+          error={error}
+          required={required}
         />
       </div>
 
