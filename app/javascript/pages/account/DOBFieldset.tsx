@@ -27,25 +27,26 @@ const validateNumber = (required: boolean, value: string, maxValue: number) => {
 }
 
 const DateField = ({
-  key,
+  fieldKey,
   defaultDOB,
   error,
   required,
   register,
 }: {
-  key: string
+  fieldKey: string
   defaultDOB: DOBFieldValues
   error: DeepMap<DOBFieldValues, FieldError>
   required: boolean
   register: UseFormMethods["register"]
 }) => {
-  const isMonthField = key === "birthMonth"
+  const isMonthField = fieldKey === "birthMonth"
+
   return (
     <Field
-      name={`dob.${key}`}
+      name={`dob.${fieldKey}`}
       label={isMonthField ? t("label.dobMonth") : t("label.dobDate")}
-      defaultValue={defaultDOB?.[key] ?? ""}
-      error={error?.[key] !== undefined}
+      defaultValue={defaultDOB?.[fieldKey] ?? ""}
+      error={error?.[fieldKey] !== undefined}
       validation={{
         required: required,
         validate: {
@@ -109,14 +110,14 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
   return (
     <>
       <DateField
-        key="birthMonth"
+        fieldKey="birthMonth"
         defaultDOB={defaultDOB}
         error={error}
         register={register}
         required={required}
       />
       <DateField
-        key="birthDay"
+        fieldKey="birthDay"
         defaultDOB={defaultDOB}
         error={error}
         register={register}
