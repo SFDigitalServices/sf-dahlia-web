@@ -68,11 +68,10 @@ class CacheService
     id = listing['Id']
     # cache this listing from API
     Force::ListingService.listing(id, force: true)
-    Force::ListingService.units(id, force: true)
+    units = Force::ListingService.units(id, force: true)
+    AmiCacheService.new.cache_ami_chart_data(units)
     Force::ListingService.preferences(id, force: true)
     Force::ListingService.lottery_buckets(id, force: true) if listing_closed?(listing)
-    # NOTE: there is no call to Force::ListingService.ami
-    # because it is parameter-based and values will rarely change (1x/year?)
     process_listing_images(listing)
   rescue Faraday::ClientError => e
     Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
