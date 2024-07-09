@@ -26,6 +26,68 @@ const validateNumber = (required: boolean, value: string, maxValue: number) => {
   return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue
 }
 
+const MonthField = ({
+  defaultValue,
+  error,
+  required,
+  register,
+}: {
+  defaultValue: string
+  error: boolean
+  required: boolean
+  register: UseFormMethods["register"]
+}) => {
+  return (
+    <Field
+      name="dob.birthMonth"
+      label={t("label.dobMonth")}
+      defaultValue={defaultValue}
+      error={error}
+      validation={{
+        required: required,
+        validate: {
+          monthRange: (value: string) => {
+            return validateNumber(required, value, 12)
+          },
+        },
+      }}
+      inputProps={{ maxLength: 2 }}
+      register={register}
+    />
+  )
+}
+
+const DayField = ({
+  defaultValue,
+  error,
+  required,
+  register,
+}: {
+  defaultValue: string
+  error: boolean
+  required: boolean
+  register: UseFormMethods["register"]
+}) => {
+  return (
+    <Field
+      name="dob.birthDay"
+      label={t("label.dobDate")}
+      defaultValue={defaultValue}
+      error={error}
+      validation={{
+        required: required,
+        validate: {
+          dayRange: (value: string) => {
+            return validateNumber(required, value, 31)
+          },
+        },
+      }}
+      inputProps={{ maxLength: 2 }}
+      register={register}
+    />
+  )
+}
+
 const YearField = ({
   defaultDOB,
   error,
@@ -73,44 +135,24 @@ const YearField = ({
 const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
   return (
     <>
-      <Field
-        name="dob.birthMonth"
-        label={t("label.dobDate")}
+      <MonthField
         defaultValue={defaultDOB?.birthMonth ?? ""}
         error={error?.birthMonth !== undefined}
-        validation={{
-          required: required,
-          validate: {
-            monthRange: (value: string) => {
-              return validateNumber(required, value, 12)
-            },
-          },
-        }}
-        inputProps={{ maxLength: 2 }}
         register={register}
+        required={required}
       />
-      <Field
-        name="dob.birthDay"
-        label={t("label.dobMonth")}
+      <DayField
         defaultValue={defaultDOB?.birthDay ?? ""}
         error={error?.birthDay !== undefined}
-        validation={{
-          required: required,
-          validate: {
-            dayRange: (value: string) => {
-              return validateNumber(required, value, 31)
-            },
-          },
-        }}
-        inputProps={{ maxLength: 2 }}
         register={register}
+        required={required}
       />
       <YearField
+        defaultDOB={defaultDOB}
+        error={error?.birthYear !== undefined}
         register={register}
         watch={watch}
-        defaultDOB={defaultDOB}
         required={required}
-        error={error?.birthYear !== undefined}
       />
     </>
   )
