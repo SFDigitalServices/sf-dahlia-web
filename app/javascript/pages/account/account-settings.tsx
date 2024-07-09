@@ -34,24 +34,34 @@ const AccountSettingsHeader = () => {
   )
 }
 
-const EmailForm = ({
-  user,
-  accountInfoLoading,
-  setAccountInfoLoading,
+const UpdateForm = ({
+  children,
+  loading,
+  onSubmit,
 }: {
-  user: User
-  accountInfoLoading: boolean
-  setAccountInfoLoading: React.Dispatch<boolean>
+  children: React.ReactNode
+  loading: boolean
+  onSubmit?: () => unknown
 }) => {
-  // create forms
+  return (
+    <Form onSubmit={onSubmit}>
+      {children}
+      <FormSubmitButton loading={loading} label={t("label.update")} />
+    </Form>
+  )
+}
+
+const EmailForm = ({ user }: { user: User }) => {
+  const [loading, setLoading] = useState(false)
+
   const {
-    register: emailRegister,
-    formState: { errors: emailErrors },
-    handleSubmit: emailHandleSubmit,
+    register,
+    formState: { errors },
+    handleSubmit,
   } = useForm({ mode: "all" })
 
-  const onEmailSubmit = (data: { email: string }) => {
-    setAccountInfoLoading(true)
+  const onSubmit = (data: { email: string }) => {
+    setLoading(true)
     const { email } = data
     try {
       const newUser = {
@@ -59,87 +69,73 @@ const EmailForm = ({
         email,
       }
       console.log("Update user email:", newUser)
-      setAccountInfoLoading(false)
+      setLoading(false)
     } catch (error) {
-      setAccountInfoLoading(false)
+      setLoading(false)
       console.log("err =", error)
       console.warn(error)
     }
   }
 
   return (
-    <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
-      <EmailField
-        register={emailRegister}
-        errors={emailErrors}
-        defaultEmail={user?.email ?? null}
-      />
-      <FormSubmitButton loading={accountInfoLoading} label={t("label.update")} />
-    </Form>
+    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <EmailField register={register} errors={errors} defaultEmail={user?.email ?? null} />
+    </UpdateForm>
   )
 }
 
-const PasswordForm = ({
-  accountInfoLoading,
-  setAccountInfoLoading,
-  user,
-  setUser,
-}: {
-  accountInfoLoading: boolean
-  setAccountInfoLoading: React.Dispatch<boolean>
-  user: User
-  setUser: React.Dispatch<User>
-}) => {
+const PasswordForm = ({ user, setUser }: { user: User; setUser: React.Dispatch<User> }) => {
+  const [loading, setLoading] = useState(false)
+
   const {
-    register: pwdRegister,
-    formState: { errors: pwdErrors },
-    handleSubmit: pwdHandleSubmit,
+    register,
+    formState: { errors },
+    handleSubmit,
   } = useForm({ mode: "all" })
 
-  const onPasswordSubmit = (data: { password: string; oldPassword: string }) => {
-    setAccountInfoLoading(true)
+  const onSubmit = (data: { password: string; oldPassword: string }) => {
+    setLoading(true)
     const { password, oldPassword } = data
     if (password === "") {
       console.error("Empty password")
-      setAccountInfoLoading(false)
+      setLoading(false)
       return
     }
     try {
       const newUser = { ...user, password, oldPassword }
       setUser(newUser)
       console.log("Password updated:", password)
-      setAccountInfoLoading(false)
+      setLoading(false)
     } catch (error) {
-      setAccountInfoLoading(false)
+      setLoading(false)
       console.warn(error)
     }
   }
 
   return (
-    <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
-      <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
-      <FormSubmitButton label={t("label.update")} loading={accountInfoLoading} />
-    </Form>
+    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <PasswordEditFieldset register={register} errors={errors} />
+    </UpdateForm>
   )
 }
 
 const PersonalInfoForm = ({ user }: { user: User }) => {
-  const [personalInfoLoading, setPersonalInfoLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const {
-    register: personalInfoRegister,
-    formState: { errors: personalInfoErrors },
-    handleSubmit: personalInfoHandleSubmit,
-    watch: personalInfoWatch,
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
   } = useForm({ mode: "all" })
 
-  const onPersonalInfoSubmit = (data: {
+  const onSubmit = (data: {
     firstName: string
     middleName: string
     lastName: string
     dob: DOBFieldValues
   }) => {
-    setPersonalInfoLoading(true)
+    setLoading(true)
     const { firstName, middleName, lastName, dob } = data
 
     try {
@@ -155,18 +151,18 @@ const PersonalInfoForm = ({ user }: { user: User }) => {
 
       console.log("Save User", newUser)
 
-      setPersonalInfoLoading(false)
+      setLoading(false)
     } catch (error) {
-      setPersonalInfoLoading(false)
+      setLoading(false)
       console.error(error)
     }
   }
 
   return (
-    <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
+    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <NameFieldset
-        register={personalInfoRegister}
-        errors={personalInfoErrors}
+        register={register}
+        errors={errors}
         defaultFirstName={user?.firstName ?? null}
         defaultMiddleName={user?.middleName ?? null}
         defaultLastName={user?.lastName ?? null}
@@ -175,18 +171,16 @@ const PersonalInfoForm = ({ user }: { user: User }) => {
         <DOBFieldset
           required
           defaultDOB={user ? user.dateOfBirth : null}
-          register={personalInfoRegister}
-          error={personalInfoErrors.dob}
-          watch={personalInfoWatch}
+          register={register}
+          error={errors.dob}
+          watch={watch}
         />
       </div>
-      <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
-    </Form>
+    </UpdateForm>
   )
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
-  const [accountInfoLoading, setAccountInfoLoading] = useState(false)
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -200,9 +194,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     setUser(profile)
   }, [profile])
 
-  // handle submissions
-  // TODO: update after backend update calls exist
-
   return (
     <Layout title={t("accountSettings.title")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
@@ -210,20 +201,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
           <Card className="w-full">
             <AccountSettingsHeader />
             <Card.Section className="p-6" divider="inset">
-              {/* TODO: replace with email validation component */}
-              <EmailForm
-                user={user}
-                accountInfoLoading={accountInfoLoading}
-                setAccountInfoLoading={setAccountInfoLoading}
-              />
+              <EmailForm user={user} />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
-              <PasswordForm
-                user={user}
-                setUser={setUser}
-                accountInfoLoading={accountInfoLoading}
-                setAccountInfoLoading={setAccountInfoLoading}
-              />
+              <PasswordForm user={user} setUser={setUser} />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
               <PersonalInfoForm user={user} />
