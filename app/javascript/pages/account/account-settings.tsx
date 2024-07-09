@@ -80,7 +80,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      console.warn(error)
+      console.log(error)
     }
   }
 
@@ -104,7 +104,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
     setLoading(true)
     const { password, oldPassword } = data
     if (password === "") {
-      console.error("Empty password")
+      console.log("Empty password")
       setLoading(false)
       return
     }
@@ -115,7 +115,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      console.warn(error)
+      console.log(error)
     }
   }
 
@@ -154,14 +154,13 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
       }
 
-      delete newUser.dateOfBirth
-
       setUser(newUser)
+
       console.log("Updated user's personal info:", newUser)
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -177,7 +176,7 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
       <div className="px-4 pb-4">
         <DOBFieldset
           required
-          defaultDOB={user ? user.dateOfBirth : null}
+          defaultDOB={user ? user.dob : null}
           register={register}
           error={errors.dob}
           watch={watch}
@@ -195,7 +194,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     if (dob) {
       const parts = dob.split("-")
       const birth = { birthYear: parts[0], birthMonth: parts[1], birthDay: parts[2] }
-      profile.dateOfBirth = birth
+      profile.dob = birth
     }
 
     setUser(profile)

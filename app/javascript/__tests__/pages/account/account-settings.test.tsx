@@ -2,11 +2,14 @@ import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
+import { act } from "react-dom/test-utils"
 
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
+    let getAllByText
     let originalUseContext
+    let promise
 
     beforeEach(async () => {
       originalUseContext = React.useContext
@@ -16,6 +19,7 @@ describe("<AccountSettingsPage />", () => {
           email: "email@email.com",
           created_at: new Date(),
           updated_at: new Date(),
+          DOB: "1999-01-01",
         },
         signIn: jest.fn(),
         signOut: jest.fn(),
@@ -30,8 +34,11 @@ describe("<AccountSettingsPage />", () => {
         return originalUseContext(context)
       })
 
+      promise = Promise.resolve()
+
       const renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
+      getAllByText = renderResult.getAllByText
     })
 
     afterEach(() => {
@@ -41,6 +48,19 @@ describe("<AccountSettingsPage />", () => {
       const title = getByText("Account Settings")
 
       expect(title).not.toBeNull()
+    })
+
+    it("updates when clicked", async () => {
+      const button = getAllByText("Update")
+      await act(async () => {
+        console.log(button[0])
+        console.log(button[2])
+        button[0].dispatchEvent(new MouseEvent("click"))
+        button[1].dispatchEvent(new MouseEvent("click"))
+        await promise
+      })
+
+      // confirm that apis are called
     })
   })
 
