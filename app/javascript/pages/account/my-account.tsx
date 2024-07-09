@@ -9,6 +9,7 @@ import {
   getMyApplicationsPath,
   getSignInPath,
 } from "../../util/routeUtil"
+import { renderInlineMarkup } from "../../util/languageUtil"
 
 interface MyAccountProps {
   assetPaths: unknown
@@ -34,7 +35,7 @@ const AccountDashCard = ({
     >
       <Card
         spacing="md"
-        className={`cursor-pointer flex justify-center items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
+        className={`cursor-pointer flex justify-start items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
           removeBottomBorder ? "border-b-0 md:border-b" : ""
         }`}
       >
@@ -46,11 +47,11 @@ const AccountDashCard = ({
             <Icon size="xlarge" className="md:hidden block" symbol={icon} />
             <Icon size="2xl" className="md:block hidden" symbol={icon} />
           </div>
-          <h1 className="text-xl md:text-2xl">{title}</h1>
+          <h1 className="text-xl md:text-2xl text-gray-850">{title}</h1>
         </Card.Header>
 
         <Card.Section>
-          <p className="text-sm">{description}</p>
+          <p className="text-base text-gray-850">{renderInlineMarkup(description)}</p>
         </Card.Section>
       </Card>
     </a>
@@ -72,7 +73,7 @@ const MyAccount = (_props: MyAccountProps) => {
         <div className="w-full md:py-16 max-w-5xl">
           <div className="bg-gray-300 h-full flex flex-grow flex-col md:flex-row md:gap-7">
             <AccountDashCard
-              title={t("myApplications.title")}
+              title={t("accountDashboard.myApplications.title")}
               description={t("accountDashboard.myApplications.description")}
               link={getMyApplicationsPath()}
               icon="application"
@@ -80,7 +81,7 @@ const MyAccount = (_props: MyAccountProps) => {
             />
 
             <AccountDashCard
-              title={t("accountSettings.title")}
+              title={t("accountDashboard.accountSettings.title")}
               description={t("accountDashboard.accountSettings.description")}
               link={getMyAccountSettingsPath()}
               icon="settings"
