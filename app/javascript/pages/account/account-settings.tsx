@@ -44,10 +44,12 @@ const UpdateForm = ({
   onSubmit?: () => unknown
 }) => {
   return (
-    <Form onSubmit={onSubmit}>
-      {children}
-      <FormSubmitButton loading={loading} label={t("label.update")} />
-    </Form>
+    <Card.Section className="p-6" divider="inset">
+      <Form onSubmit={onSubmit}>
+        {children}
+        <FormSubmitButton loading={loading} label={t("label.update")} />
+      </Form>
+    </Card.Section>
   )
 }
 
@@ -200,15 +202,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
-            <Card.Section className="p-6" divider="inset">
-              <EmailForm user={user} />
-            </Card.Section>
-            <Card.Section className="p-6" divider="inset">
-              <PasswordForm user={user} setUser={setUser} />
-            </Card.Section>
-            <Card.Section className="p-6" divider="inset">
-              <PersonalInfoForm user={user} />
-            </Card.Section>
+            <EmailForm user={user} />
+            <PasswordForm user={user} setUser={setUser} />
+            <PersonalInfoForm user={user} />
           </Card>
         </div>
       </section>
