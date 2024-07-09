@@ -36,7 +36,7 @@ describe("when the user is signed in", () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
-  it("contains two links within the main content", async () => {
+  it("contains two links within the main content", () => {
     const title = getByText("Account Settings")
 
     expect(title).not.toBeNull()

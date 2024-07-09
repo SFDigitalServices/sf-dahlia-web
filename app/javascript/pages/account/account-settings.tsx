@@ -8,12 +8,12 @@ import { useForm } from "react-hook-form"
 import { Card } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
-import NameFieldset from "./NameFieldset"
-import DOBFieldset from "./DOBFieldset"
-import PasswordEditFieldset from "./PasswordEditFieldset"
 import Layout from "../../layouts/Layout"
 import EmailField from "./EmailField"
 import FormSubmitButton from "./FormSubmitButton"
+import PasswordEditFieldset from "./PasswordEditFieldset"
+import NameFieldset from "./NameFieldset"
+import DOBFieldset from "./DOBFieldset"
 
 type AlertMessage = {
   type: AlertTypes
@@ -39,24 +39,17 @@ const AccountSettingsHeader = () => {
   )
 }
 
-const AccountSettings = ({ profile }: { profile: User }) => {
-  const [accountInfoAlert, setAccountInfoAlert] = useState<AlertMessage>()
-  const [accountInfoLoading, setAccountInfoLoading] = useState(false)
-  const [personalInfoAlert, setPersonalInfoAlert] = useState<AlertMessage>()
-  const [personalInfoLoading, setPersonalInfoLoading] = useState(false)
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const dob = profile?.DOB
-    if (dob) {
-      const parts = dob.split("-")
-      const birth = { birthYear: parts[0], birthMonth: parts[1], birthDay: parts[2] }
-      profile.dateOfBirth = birth
-    }
-
-    setUser(profile)
-  }, [profile])
-
+const EmailForm = ({
+  user,
+  accountInfoLoading,
+  setAccountInfoLoading,
+  setAccountInfoAlert,
+}: {
+  user: User
+  accountInfoLoading: boolean
+  setAccountInfoLoading: React.Dispatch<boolean>
+  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
+}) => {
   // create forms
   const {
     register: emailRegister,
@@ -64,21 +57,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     handleSubmit: emailHandleSubmit,
   } = useForm({ mode: "all" })
 
-  const {
-    register: pwdRegister,
-    formState: { errors: pwdErrors },
-    handleSubmit: pwdHandleSubmit,
-  } = useForm({ mode: "all" })
-
-  const {
-    register: personalInfoRegister,
-    formState: { errors: personalInfoErrors },
-    handleSubmit: personalInfoHandleSubmit,
-    watch: personalInfoWatch,
-  } = useForm({ mode: "all" })
-
-  // handle submissions
-  // TODO: update after backend update calls exist
   const onEmailSubmit = (data: { email: string }) => {
     setAccountInfoLoading(true)
     const { email } = data
@@ -97,6 +75,37 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       console.warn(error)
     }
   }
+
+  return (
+    <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
+      <EmailField
+        register={emailRegister}
+        errors={emailErrors}
+        defaultEmail={user?.email ?? null}
+      />
+      <FormSubmitButton loading={accountInfoLoading} label={t("label.update")} />
+    </Form>
+  )
+}
+
+const PasswordForm = ({
+  accountInfoLoading,
+  setAccountInfoLoading,
+  user,
+  setUser,
+  setAccountInfoAlert,
+}: {
+  accountInfoLoading: boolean
+  setAccountInfoLoading: React.Dispatch<boolean>
+  user: User
+  setUser: React.Dispatch<User>
+  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
+}) => {
+  const {
+    register: pwdRegister,
+    formState: { errors: pwdErrors },
+    handleSubmit: pwdHandleSubmit,
+  } = useForm({ mode: "all" })
 
   const onPasswordSubmit = (data: { password: string; oldPassword: string }) => {
     setAccountInfoLoading(true)
@@ -122,6 +131,25 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       console.warn(error)
     }
   }
+
+  return (
+    <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
+      <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
+      <FormSubmitButton label={t("label.update")} loading={accountInfoLoading} />
+    </Form>
+  )
+}
+
+const PersonalInfoForm = ({ user }: { user: User }) => {
+  const [personalInfoAlert, setPersonalInfoAlert] = useState<AlertMessage>()
+  const [personalInfoLoading, setPersonalInfoLoading] = useState(false)
+
+  const {
+    register: personalInfoRegister,
+    formState: { errors: personalInfoErrors },
+    handleSubmit: personalInfoHandleSubmit,
+    watch: personalInfoWatch,
+  } = useForm({ mode: "all" })
 
   const onPersonalInfoSubmit = (data: {
     firstName: string
@@ -158,6 +186,60 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   }
 
   return (
+    <>
+      {personalInfoAlert && (
+        <AlertBox
+          type={personalInfoAlert.type}
+          onClose={() => setPersonalInfoAlert(null)}
+          className="mb-4"
+          closeable
+        >
+          {personalInfoAlert.message}
+        </AlertBox>
+      )}
+      <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
+        <NameFieldset
+          register={personalInfoRegister}
+          errors={personalInfoErrors}
+          defaultFirstName={user?.firstName ?? null}
+          defaultMiddleName={user?.middleName ?? null}
+          defaultLastName={user?.lastName ?? null}
+        />
+        <div className="px-4 pb-4">
+          <DOBFieldset
+            required
+            defaultDOB={user ? user.dateOfBirth : null}
+            register={personalInfoRegister}
+            error={personalInfoErrors.dob}
+            watch={personalInfoWatch}
+          />
+        </div>
+        <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
+      </Form>
+    </>
+  )
+}
+
+const AccountSettings = ({ profile }: { profile: User }) => {
+  const [accountInfoAlert, setAccountInfoAlert] = useState<AlertMessage>()
+  const [accountInfoLoading, setAccountInfoLoading] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const dob = profile?.DOB
+    if (dob) {
+      const parts = dob.split("-")
+      const birth = { birthYear: parts[0], birthMonth: parts[1], birthDay: parts[2] }
+      profile.dateOfBirth = birth
+    }
+
+    setUser(profile)
+  }, [profile])
+
+  // handle submissions
+  // TODO: update after backend update calls exist
+
+  return (
     <Layout title={t("accountSettings.title")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
@@ -175,51 +257,24 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             )}
             <Card.Section className="p-6" divider="inset">
               {/* TODO: replace with email validation component */}
-              <Form onSubmit={emailHandleSubmit(onEmailSubmit)}>
-                <EmailField
-                  register={emailRegister}
-                  errors={emailErrors}
-                  defaultEmail={user?.email ?? null}
-                />
-                <FormSubmitButton loading={accountInfoLoading} label={t("label.update")} />
-              </Form>
+              <EmailForm
+                user={user}
+                accountInfoLoading={accountInfoLoading}
+                setAccountInfoLoading={setAccountInfoLoading}
+                setAccountInfoAlert={setAccountInfoAlert}
+              />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
-              <Form onSubmit={pwdHandleSubmit(onPasswordSubmit)}>
-                <PasswordEditFieldset register={pwdRegister} errors={pwdErrors} />
-                <FormSubmitButton label={t("label.update")} loading={accountInfoLoading} />
-              </Form>
+              <PasswordForm
+                accountInfoLoading={accountInfoLoading}
+                setAccountInfoLoading={setAccountInfoLoading}
+                user={user}
+                setUser={setUser}
+                setAccountInfoAlert={setAccountInfoAlert}
+              />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
-              {personalInfoAlert && (
-                <AlertBox
-                  type={personalInfoAlert.type}
-                  onClose={() => setPersonalInfoAlert(null)}
-                  className="mb-4"
-                  closeable
-                >
-                  {personalInfoAlert.message}
-                </AlertBox>
-              )}
-              <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
-                <NameFieldset
-                  register={personalInfoRegister}
-                  errors={personalInfoErrors}
-                  defaultFirstName={user?.firstName ?? null}
-                  defaultMiddleName={user?.middleName ?? null}
-                  defaultLastName={user?.lastName ?? null}
-                />
-                <div className="px-4 pb-4">
-                  <DOBFieldset
-                    required
-                    defaultDOB={user ? user.dateOfBirth : null}
-                    register={personalInfoRegister}
-                    error={personalInfoErrors.dob}
-                    watch={personalInfoWatch}
-                  />
-                </div>
-                <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
-              </Form>
+              <PersonalInfoForm user={user} />
             </Card.Section>
           </Card>
         </div>
