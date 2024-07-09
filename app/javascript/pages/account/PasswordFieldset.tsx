@@ -12,7 +12,7 @@ const NewPasswordInstructions = () => {
   )
 }
 
-const PasswordEditFieldset = ({
+const PasswordFieldset = ({
   register,
   errors,
 }: {
@@ -41,7 +41,7 @@ const PasswordEditFieldset = ({
       </div>
       <div className={"flex flex-col"}>
         <div className="field mb-0 mt-2">
-          <label>{t("label.newPassword")}</label>
+          <label htmlFor="password">{t("label.newPassword")}</label>
         </div>
         <span className="field-note float-left pl-5 text-sm mt-2">
           <NewPasswordInstructions />
@@ -64,4 +64,4 @@ const PasswordEditFieldset = ({
   )
 }
 
-export default PasswordEditFieldset
+export default PasswordFieldset

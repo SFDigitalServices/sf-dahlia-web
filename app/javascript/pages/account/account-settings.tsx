@@ -11,7 +11,7 @@ import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import EmailField from "./EmailField"
 import FormSubmitButton from "./FormSubmitButton"
-import PasswordEditFieldset from "./PasswordFieldset"
+import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 
@@ -45,7 +45,7 @@ const UpdateForm = ({
 }) => {
   return (
     <Card.Section className="p-6" divider="inset">
-      <Form onSubmit={onSubmit}>
+      <Form data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={t("label.update")} />
       </Form>
@@ -121,7 +121,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <PasswordEditFieldset register={register} errors={errors} />
+      <PasswordFieldset register={register} errors={errors} />
     </UpdateForm>
   )
 }

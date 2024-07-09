@@ -3,11 +3,13 @@ import UserContext, { ContextProps } from "../../../authentication/context/UserC
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
 import { act } from "react-dom/test-utils"
+import { fireEvent } from "@testing-library/dom"
 
 describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
     let getAllByText
+    let getByLabelText
     let originalUseContext
     let promise
 
@@ -39,6 +41,7 @@ describe("<AccountSettingsPage />", () => {
       const renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
+      getByLabelText = renderResult.getByLabelText
     })
 
     afterEach(() => {
@@ -52,11 +55,14 @@ describe("<AccountSettingsPage />", () => {
 
     it("updates when clicked", async () => {
       const button = getAllByText("Update")
+      const passwordField: Element = getByLabelText("New Password")
+
       await act(async () => {
-        console.log(button[0])
-        console.log(button[2])
         button[0].dispatchEvent(new MouseEvent("click"))
         button[1].dispatchEvent(new MouseEvent("click"))
+        fireEvent.change(passwordField, { target: { value: "1234test" } })
+        button[1].dispatchEvent(new MouseEvent("click"))
+        button[2].dispatchEvent(new MouseEvent("click"))
         await promise
       })
 
