@@ -53,7 +53,12 @@ const UpdateForm = ({
   )
 }
 
-const EmailForm = ({ user }: { user: User }) => {
+interface SectionProps {
+  user: User
+  setUser: React.Dispatch<User>
+}
+
+const EmailSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -70,11 +75,11 @@ const EmailForm = ({ user }: { user: User }) => {
         ...user,
         email,
       }
-      console.log("Update user email:", newUser)
+      setUser(newUser)
+      console.log("Updated user's email:", newUser)
       setLoading(false)
     } catch (error) {
       setLoading(false)
-      console.log("err =", error)
       console.warn(error)
     }
   }
@@ -86,7 +91,7 @@ const EmailForm = ({ user }: { user: User }) => {
   )
 }
 
-const PasswordForm = ({ user, setUser }: { user: User; setUser: React.Dispatch<User> }) => {
+const PasswordSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -106,7 +111,7 @@ const PasswordForm = ({ user, setUser }: { user: User; setUser: React.Dispatch<U
     try {
       const newUser = { ...user, password, oldPassword }
       setUser(newUser)
-      console.log("Password updated:", password)
+      console.log("Updated user's password:", newUser)
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -121,7 +126,7 @@ const PasswordForm = ({ user, setUser }: { user: User; setUser: React.Dispatch<U
   )
 }
 
-const PersonalInfoForm = ({ user }: { user: User }) => {
+const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -151,8 +156,8 @@ const PersonalInfoForm = ({ user }: { user: User }) => {
 
       delete newUser.dateOfBirth
 
-      console.log("Save User", newUser)
-
+      setUser(newUser)
+      console.log("Updated user's personal info:", newUser)
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -202,9 +207,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
-            <EmailForm user={user} />
-            <PasswordForm user={user} setUser={setUser} />
-            <PersonalInfoForm user={user} />
+            <EmailSection user={user} />
+            <PasswordSection user={user} setUser={setUser} />
+            <PersonalInfoSection user={user} />
           </Card>
         </div>
       </section>
