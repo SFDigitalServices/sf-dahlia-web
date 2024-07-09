@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
-import { Form, AlertTypes, DOBFieldValues, AlertBox, Icon, t } from "@bloom-housing/ui-components"
+import { Form, DOBFieldValues, Icon, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 import { Card } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
@@ -14,11 +14,6 @@ import FormSubmitButton from "./FormSubmitButton"
 import PasswordEditFieldset from "./PasswordEditFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
-
-type AlertMessage = {
-  type: AlertTypes
-  message: string
-}
 
 const AccountSettingsHeader = () => {
   return (
@@ -39,39 +34,14 @@ const AccountSettingsHeader = () => {
   )
 }
 
-const AccountInfoAlert = ({
-  accountInfoAlert,
-  setAccountInfoAlert,
-}: {
-  accountInfoAlert: AlertMessage
-  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
-}) => {
-  return (
-    <>
-      {accountInfoAlert && (
-        <AlertBox
-          type={accountInfoAlert.type}
-          onClose={() => setAccountInfoAlert(null)}
-          closeable
-          className="mb-4"
-        >
-          {accountInfoAlert.message}
-        </AlertBox>
-      )}
-    </>
-  )
-}
-
 const EmailForm = ({
   user,
   accountInfoLoading,
   setAccountInfoLoading,
-  setAccountInfoAlert,
 }: {
   user: User
   accountInfoLoading: boolean
   setAccountInfoLoading: React.Dispatch<boolean>
-  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
 }) => {
   // create forms
   const {
@@ -89,12 +59,10 @@ const EmailForm = ({
         email,
       }
       console.log("Update user email:", newUser)
-      setAccountInfoAlert({ type: "success", message: `${t("accountSettings.verifyEmail")}` })
       setAccountInfoLoading(false)
     } catch (error) {
       setAccountInfoLoading(false)
       console.log("err =", error)
-      setAccountInfoAlert({ type: "alert", message: `${t("error.formSubmission")}` })
       console.warn(error)
     }
   }
@@ -116,13 +84,11 @@ const PasswordForm = ({
   setAccountInfoLoading,
   user,
   setUser,
-  setAccountInfoAlert,
 }: {
   accountInfoLoading: boolean
   setAccountInfoLoading: React.Dispatch<boolean>
   user: User
   setUser: React.Dispatch<User>
-  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
 }) => {
   const {
     register: pwdRegister,
@@ -145,12 +111,6 @@ const PasswordForm = ({
       setAccountInfoLoading(false)
     } catch (error) {
       setAccountInfoLoading(false)
-      const { status } = error.response || {}
-      if (status === 401) {
-        setAccountInfoAlert({ type: "alert", message: `${t("error.currentPasswordInvalid")}` })
-      } else {
-        setAccountInfoAlert({ type: "alert", message: `${t("error.formSubmission")}` })
-      }
       console.warn(error)
     }
   }
@@ -164,7 +124,6 @@ const PasswordForm = ({
 }
 
 const PersonalInfoForm = ({ user }: { user: User }) => {
-  const [personalInfoAlert, setPersonalInfoAlert] = useState<AlertMessage>()
   const [personalInfoLoading, setPersonalInfoLoading] = useState(false)
 
   const {
@@ -183,7 +142,6 @@ const PersonalInfoForm = ({ user }: { user: User }) => {
     setPersonalInfoLoading(true)
     const { firstName, middleName, lastName, dob } = data
 
-    setPersonalInfoAlert(null)
     try {
       const newUser = {
         ...user,
@@ -200,51 +158,34 @@ const PersonalInfoForm = ({ user }: { user: User }) => {
       setPersonalInfoLoading(false)
     } catch (error) {
       setPersonalInfoLoading(false)
-      setPersonalInfoAlert({
-        type: "alert",
-        message: `${t("error.formSubmission")}`,
-      })
       console.error(error)
     }
   }
 
   return (
-    <>
-      {personalInfoAlert && (
-        <AlertBox
-          type={personalInfoAlert.type}
-          onClose={() => setPersonalInfoAlert(null)}
-          className="mb-4"
-          closeable
-        >
-          {personalInfoAlert.message}
-        </AlertBox>
-      )}
-      <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
-        <NameFieldset
+    <Form onSubmit={personalInfoHandleSubmit(onPersonalInfoSubmit)}>
+      <NameFieldset
+        register={personalInfoRegister}
+        errors={personalInfoErrors}
+        defaultFirstName={user?.firstName ?? null}
+        defaultMiddleName={user?.middleName ?? null}
+        defaultLastName={user?.lastName ?? null}
+      />
+      <div className="px-4 pb-4">
+        <DOBFieldset
+          required
+          defaultDOB={user ? user.dateOfBirth : null}
           register={personalInfoRegister}
-          errors={personalInfoErrors}
-          defaultFirstName={user?.firstName ?? null}
-          defaultMiddleName={user?.middleName ?? null}
-          defaultLastName={user?.lastName ?? null}
+          error={personalInfoErrors.dob}
+          watch={personalInfoWatch}
         />
-        <div className="px-4 pb-4">
-          <DOBFieldset
-            required
-            defaultDOB={user ? user.dateOfBirth : null}
-            register={personalInfoRegister}
-            error={personalInfoErrors.dob}
-            watch={personalInfoWatch}
-          />
-        </div>
-        <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
-      </Form>
-    </>
+      </div>
+      <FormSubmitButton loading={personalInfoLoading} label={t("label.update")} />
+    </Form>
   )
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
-  const [accountInfoAlert, setAccountInfoAlert] = useState<AlertMessage>()
   const [accountInfoLoading, setAccountInfoLoading] = useState(false)
   const [user, setUser] = useState(null)
 
@@ -268,17 +209,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
-            <AccountInfoAlert
-              accountInfoAlert={accountInfoAlert}
-              setAccountInfoAlert={setAccountInfoAlert}
-            />
             <Card.Section className="p-6" divider="inset">
               {/* TODO: replace with email validation component */}
               <EmailForm
                 user={user}
                 accountInfoLoading={accountInfoLoading}
                 setAccountInfoLoading={setAccountInfoLoading}
-                setAccountInfoAlert={setAccountInfoAlert}
               />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
@@ -287,7 +223,6 @@ const AccountSettings = ({ profile }: { profile: User }) => {
                 setUser={setUser}
                 accountInfoLoading={accountInfoLoading}
                 setAccountInfoLoading={setAccountInfoLoading}
-                setAccountInfoAlert={setAccountInfoAlert}
               />
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
