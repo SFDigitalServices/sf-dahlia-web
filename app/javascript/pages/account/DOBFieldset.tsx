@@ -26,59 +26,32 @@ const validateNumber = (required: boolean, value: string, maxValue: number) => {
   return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue
 }
 
-const MonthField = ({
-  defaultValue,
+const DateField = ({
+  key,
+  defaultDOB,
   error,
   required,
   register,
 }: {
-  defaultValue: string
-  error: boolean
+  key: string
+  defaultDOB: DOBFieldValues
+  error: DeepMap<DOBFieldValues, FieldError>
   required: boolean
   register: UseFormMethods["register"]
 }) => {
+  const isMonthField = key === "birthMonth"
   return (
     <Field
-      name="dob.birthMonth"
-      label={t("label.dobMonth")}
-      defaultValue={defaultValue}
-      error={error}
+      name={`dob.${key}`}
+      label={isMonthField ? t("label.dobMonth") : t("label.dobDate")}
+      defaultValue={defaultDOB?.[key] ?? ""}
+      error={error?.[key] !== undefined}
       validation={{
         required: required,
         validate: {
           monthRange: (value: string) => {
-            return validateNumber(required, value, 12)
-          },
-        },
-      }}
-      inputProps={{ maxLength: 2 }}
-      register={register}
-    />
-  )
-}
-
-const DayField = ({
-  defaultValue,
-  error,
-  required,
-  register,
-}: {
-  defaultValue: string
-  error: boolean
-  required: boolean
-  register: UseFormMethods["register"]
-}) => {
-  return (
-    <Field
-      name="dob.birthDay"
-      label={t("label.dobDate")}
-      defaultValue={defaultValue}
-      error={error}
-      validation={{
-        required: required,
-        validate: {
-          dayRange: (value: string) => {
-            return validateNumber(required, value, 31)
+            const maxNumber = isMonthField ? 12 : 31
+            return validateNumber(required, value, maxNumber)
           },
         },
       }}
@@ -135,15 +108,17 @@ const YearField = ({
 const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
   return (
     <>
-      <MonthField
-        defaultValue={defaultDOB?.birthMonth ?? ""}
-        error={error?.birthMonth !== undefined}
+      <DateField
+        key="birthMonth"
+        defaultDOB={defaultDOB}
+        error={error}
         register={register}
         required={required}
       />
-      <DayField
-        defaultValue={defaultDOB?.birthDay ?? ""}
-        error={error?.birthDay !== undefined}
+      <DateField
+        key="birthDay"
+        defaultDOB={defaultDOB}
+        error={error}
         register={register}
         required={required}
       />
