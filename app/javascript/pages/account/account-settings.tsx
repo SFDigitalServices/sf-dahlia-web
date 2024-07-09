@@ -39,6 +39,29 @@ const AccountSettingsHeader = () => {
   )
 }
 
+const AccountInfoAlert = ({
+  accountInfoAlert,
+  setAccountInfoAlert,
+}: {
+  accountInfoAlert: AlertMessage
+  setAccountInfoAlert: React.Dispatch<React.SetStateAction<AlertMessage>>
+}) => {
+  return (
+    <>
+      {accountInfoAlert && (
+        <AlertBox
+          type={accountInfoAlert.type}
+          onClose={() => setAccountInfoAlert(null)}
+          closeable
+          className="mb-4"
+        >
+          {accountInfoAlert.message}
+        </AlertBox>
+      )}
+    </>
+  )
+}
+
 const EmailForm = ({
   user,
   accountInfoLoading,
@@ -245,16 +268,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
-            {accountInfoAlert && (
-              <AlertBox
-                type={accountInfoAlert.type}
-                onClose={() => setAccountInfoAlert(null)}
-                closeable
-                className="mb-4"
-              >
-                {accountInfoAlert.message}
-              </AlertBox>
-            )}
+            <AccountInfoAlert
+              accountInfoAlert={accountInfoAlert}
+              setAccountInfoAlert={setAccountInfoAlert}
+            />
             <Card.Section className="p-6" divider="inset">
               {/* TODO: replace with email validation component */}
               <EmailForm
@@ -266,10 +283,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             </Card.Section>
             <Card.Section className="p-6" divider="inset">
               <PasswordForm
-                accountInfoLoading={accountInfoLoading}
-                setAccountInfoLoading={setAccountInfoLoading}
                 user={user}
                 setUser={setUser}
+                accountInfoLoading={accountInfoLoading}
+                setAccountInfoLoading={setAccountInfoLoading}
                 setAccountInfoAlert={setAccountInfoAlert}
               />
             </Card.Section>
