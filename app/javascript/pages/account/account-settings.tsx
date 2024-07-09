@@ -207,9 +207,9 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
-            <EmailSection user={user} />
+            <EmailSection user={user} setUser={setUser} />
             <PasswordSection user={user} setUser={setUser} />
-            <PersonalInfoSection user={user} />
+            <PersonalInfoSection user={user} setUser={setUser} />
           </Card>
         </div>
       </section>
