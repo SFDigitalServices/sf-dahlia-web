@@ -23,7 +23,6 @@ export const getApplications = async (): Promise<{ applications: Application[] }
 
 export const deleteApplication = async (id: string) =>
   authenticatedDelete(`/api/v1/short-form/application/${id}`).then((res) => {
-    console.log("res.data", res.data)
     return res.data
   })
 
