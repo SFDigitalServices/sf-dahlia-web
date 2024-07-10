@@ -38,9 +38,11 @@ export const noApplications = () => {
 export const determineApplicationItemList = (
   loading: boolean,
   error: string,
+  deleteError: string,
   applications: Application[],
   handleDeleteApp: (id: string) => void
 ) => {
+
   if (loading) {
     return (
       <div data-testid="loading-spinner" className="flex justify-center pb-9">
@@ -53,6 +55,14 @@ export const determineApplicationItemList = (
     return (
       <p className="w-full text-center p-4">
         {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+      </p>
+    )
+  }
+
+  if (deleteError) {
+    return (
+      <p className="w-full text-center p-4">
+        {renderInlineMarkup(`${t("error.alert.badRequest")}`)}
       </p>
     )
   }
@@ -127,6 +137,7 @@ const MyApplications = () => {
   const [applications, setApplications] = React.useState<Application[]>([])
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
   const [deleteApp, setDeleteApp] = useState("")
+  const [deleteError, setDeleteError] = React.useState<string | null>(null)
 
   const handleDeleteApp = (id: string) => {
     setDeleteApp(id)
@@ -141,7 +152,7 @@ const MyApplications = () => {
         setApplications(newApplications)
       })
       .catch((error: string) => {
-        setError(error)
+        setDeleteError(error)
       })
       .finally(() => {
         setLoading(false)
@@ -212,7 +223,7 @@ const MyApplications = () => {
                   </Button>
                 </Dialog.Footer>
               </Dialog>
-              {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
+              {determineApplicationItemList(loading, error, deleteError, applications, handleDeleteApp)}
             </Card>
           </div>
         </section>
