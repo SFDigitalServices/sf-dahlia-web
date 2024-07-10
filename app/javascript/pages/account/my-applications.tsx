@@ -27,7 +27,31 @@ export const noApplications = () => {
   )
 }
 
-export const generateApplicationList = (applications: Application[]) => {
+const loadingSpinner = () => {
+  return (
+    <div data-testid="loading-spinner" className="flex justify-center pb-9">
+      <Icon symbol="spinner" size="large" />
+    </div>
+  )
+}
+
+const errorMessage = () => {
+  return (
+    <p className="w-full text-center p-4">
+      {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+    </p>
+  )
+}
+
+const applicationHeader = (text: string) => {
+  return (
+    <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+      {text}
+    </Heading>
+  )
+}
+
+const generateApplicationList = (applications: Application[]) => {
   return applications
     .sort(
       (a, b) =>
@@ -47,32 +71,8 @@ export const generateApplicationList = (applications: Application[]) => {
     ))
 }
 
-export const determineApplicationItemList = (
-  loading: boolean,
-  error: string,
-  applications: Application[]
-) => {
-  if (loading) {
-    return (
-      <div data-testid="loading-spinner" className="flex justify-center pb-9">
-        <Icon symbol="spinner" size="large" />
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <p className="w-full text-center p-4">
-        {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
-      </p>
-    )
-  }
-
-  if (applications === undefined || applications.length === 0) {
-    return noApplications()
-  }
-
-  const { rentalApplications, saleApplications } = applications.reduce<{
+const separateApplications = (applications: Application[]) =>
+  applications.reduce<{
     rentalApplications: Application[]
     saleApplications: Application[]
   }>(
@@ -88,22 +88,27 @@ export const determineApplicationItemList = (
     { rentalApplications: [], saleApplications: [] }
   )
 
+export const determineApplicationItemList = (
+  loading: boolean,
+  error: string,
+  applications: Application[]
+) => {
+  if (loading) loadingSpinner()
+
+  if (error) errorMessage()
+
+  if (applications === undefined || applications.length === 0) noApplications()
+
+  const { rentalApplications, saleApplications } = separateApplications(applications)
+
   const hasBothRentalAndSaleApplications =
     rentalApplications.length > 0 && saleApplications.length > 0
 
   return (
     <>
-      {hasBothRentalAndSaleApplications && (
-        <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
-          {t("listings.rentalUnits")}
-        </Heading>
-      )}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.rentalUnits"))}
       {generateApplicationList(rentalApplications)}
-      {hasBothRentalAndSaleApplications && (
-        <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
-          {t("listings.saleUnits")}
-        </Heading>
-      )}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.saleUnits"))}
       {generateApplicationList(saleApplications)}
     </>
   )
