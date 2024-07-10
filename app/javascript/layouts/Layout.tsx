@@ -26,6 +26,8 @@ import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import { HelmetProvider } from "react-helmet-async"
 
+import "./Layout.scss"
+
 export interface LayoutProps {
   children: React.ReactNode
   title?: string
@@ -156,7 +158,7 @@ const Layout = (props: LayoutProps) => {
           <SiteHeader
             homeURL={"/"}
             dropdownItemClassName={"text-2xs"}
-            menuItemClassName={"pb-4 pt-1 flex items-end"}
+            menuItemClassName={""}
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
