@@ -17,6 +17,7 @@ import {
   isLotteryComplete,
   isLotteryCompleteDeprecated,
   showLotteryResultsPDFonly,
+  convertToReadableDate,
 } from "../util/listingUtil"
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
@@ -31,15 +32,6 @@ interface ApplicationItemProps {
   handleDeleteApp?: (id: string) => void
   listing: RailsListing
   lotteryResultsURL?: string
-}
-
-export const convertToReadableDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  })
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {

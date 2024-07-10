@@ -673,3 +673,12 @@ export const listingHasVeteransPreference = (listing: RailsListing): boolean => 
 export const forceRecacheParam = () => ({
   params: window.location.search.includes("preview=true") ? { force: true } : {},
 })
+
+export const convertToReadableDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  })
+}
