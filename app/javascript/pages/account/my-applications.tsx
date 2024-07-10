@@ -93,11 +93,17 @@ export const determineApplicationItemList = (
   error: string,
   applications: Application[]
 ) => {
-  if (loading) loadingSpinner()
+  if (loading) {
+    return loadingSpinner()
+  }
 
-  if (error) errorMessage()
+  if (error) {
+    return errorMessage()
+  }
 
-  if (applications === undefined || applications.length === 0) noApplications()
+  if (applications === undefined || applications.length === 0) {
+    return noApplications()
+  }
 
   const { rentalApplications, saleApplications } = separateApplications(applications)
 
