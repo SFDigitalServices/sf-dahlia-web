@@ -42,7 +42,6 @@ export const determineApplicationItemList = (
   applications: Application[],
   handleDeleteApp: (id: string) => void
 ) => {
-
   if (loading) {
     return (
       <div data-testid="loading-spinner" className="flex justify-center pb-9">
@@ -223,7 +222,13 @@ const MyApplications = () => {
                   </Button>
                 </Dialog.Footer>
               </Dialog>
-              {determineApplicationItemList(loading, error, deleteError, applications, handleDeleteApp)}
+              {determineApplicationItemList(
+                loading,
+                error,
+                deleteError,
+                applications,
+                handleDeleteApp
+              )}
             </Card>
           </div>
         </section>
