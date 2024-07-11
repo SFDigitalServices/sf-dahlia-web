@@ -50,18 +50,10 @@ export const determineApplicationItemList = (
     )
   }
 
-  if (error) {
+  if (error || deleteError) {
     return (
       <p className="w-full text-center p-4">
         {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
-      </p>
-    )
-  }
-
-  if (deleteError) {
-    return (
-      <p className="w-full text-center p-4">
-        {renderInlineMarkup(`${t("error.alert.badRequest")}`)}
       </p>
     )
   }
