@@ -1,14 +1,15 @@
 import { Field, passwordRegex, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
+import "./password-fieldset.scss"
 
 const NewPasswordInstructions = () => {
   return (
-    <>
+    <ul className="password-instructions">
       <li>{t("createAccount.passwordInstructions.numCharacters")}</li>
       <li>{t("createAccount.passwordInstructions.numLetters")}</li>
       <li>{t("createAccount.passwordInstructions.numNumbers")}</li>
-    </>
+    </ul>
   )
 }
 
@@ -43,7 +44,7 @@ const PasswordFieldset = ({
         <div className="field mb-0 mt-2">
           <label htmlFor="password">{t("label.newPassword")}</label>
         </div>
-        <span className="field-note float-left pl-5 text-sm mt-2">
+        <span className="field-note mt-2">
           <NewPasswordInstructions />
         </span>
         {/* Todo: DAH-2387 Adaptive password validation */}

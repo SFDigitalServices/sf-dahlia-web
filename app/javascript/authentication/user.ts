@@ -17,7 +17,7 @@ interface User {
 
   lastName?: string
 
-  dob?: {
+  dobObject?: {
     birthDay: string
     birthMonth: string
     birthYear: string

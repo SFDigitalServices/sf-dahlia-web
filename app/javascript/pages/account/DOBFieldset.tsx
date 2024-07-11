@@ -26,81 +26,69 @@ const validateNumber = (required: boolean, value: string, maxValue: number) => {
   return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue
 }
 
+const validateAge = (month: string, day: string, year: string) => {
+  return (
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY") > dayjs().subtract(117, "years")
+  )
+}
+
 const DateField = ({
   fieldKey,
   defaultDOB,
   error,
   required,
   register,
+  watch,
 }: {
   fieldKey: string
   defaultDOB: DOBFieldValues
   error: DeepMap<DOBFieldValues, FieldError>
   required: boolean
   register: UseFormMethods["register"]
+  watch: UseFormMethods["watch"]
 }) => {
-  const isMonthField = fieldKey === "birthMonth"
+  const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
+  const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
+
+  const fieldInfo = {
+    birthDay: {
+      label: t("label.dobDate"),
+      validation: (value: string) => {
+        return validateNumber(required, value, 31)
+      },
+      maxLength: 2,
+    },
+    birthMonth: {
+      label: t("label.dobMonth"),
+      validation: (value: string) => {
+        return validateNumber(required, value, 12)
+      },
+      maxLength: 2,
+    },
+    birthYear: {
+      label: t("label.dobYear"),
+      validation: (value: string) => {
+        if (value?.length) return validateAge(birthDay, birthMonth, value)
+        return true
+      },
+      maxLength: 4,
+    },
+  }
 
   return (
     <Field
       name={`dob.${fieldKey}`}
-      label={isMonthField ? t("label.dobMonth") : t("label.dobDate")}
+      label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
       error={error?.[fieldKey] !== undefined}
       validation={{
         required: required,
         validate: {
-          monthRange: (value: string) => {
-            const maxNumber = isMonthField ? 12 : 31
-            return validateNumber(required, value, maxNumber)
-          },
+          range: fieldInfo[fieldKey].validation,
         },
       }}
-      inputProps={{ maxLength: 2 }}
-      register={register}
-    />
-  )
-}
-
-const YearField = ({
-  defaultDOB,
-  error,
-  required,
-  watch,
-  register,
-}: {
-  register: UseFormMethods["register"]
-  watch: UseFormMethods["watch"]
-  defaultDOB?: DOBFieldValues
-  error?: boolean
-  required?: boolean
-}) => {
-  const birthDay = watch("birthDay") ?? defaultDOB?.birthDay
-  const birthMonth = watch("birthMonth") ?? defaultDOB?.birthMonth
-
-  const validateAge = (value: string) => {
-    return (
-      dayjs(`${birthMonth}/${birthDay}/${value}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
-      dayjs(`${birthMonth}/${birthDay}/${value}`, "M/D/YYYY") > dayjs().subtract(117, "years")
-    )
-  }
-
-  return (
-    <Field
-      name="dob.birthYear"
-      label={t("label.dobYear")}
-      defaultValue={defaultDOB?.birthYear ?? ""}
-      error={error}
-      validation={{
-        required: required,
-        validate: {
-          yearRange: (value: string) => {
-            if (value?.length) return validateAge(value)
-            return true
-          },
-        },
-      }}
-      inputProps={{ maxLength: 4 }}
+      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
       register={register}
     />
   )
@@ -114,6 +102,7 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         defaultDOB={defaultDOB}
         error={error}
         register={register}
+        watch={watch}
         required={required}
       />
       <DateField
@@ -121,11 +110,13 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         defaultDOB={defaultDOB}
         error={error}
         register={register}
+        watch={watch}
         required={required}
       />
-      <YearField
+      <DateField
+        fieldKey="birthYear"
         defaultDOB={defaultDOB}
-        error={error?.birthYear !== undefined}
+        error={error}
         register={register}
         watch={watch}
         required={required}

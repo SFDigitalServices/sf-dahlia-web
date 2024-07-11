@@ -140,10 +140,10 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
     firstName: string
     middleName: string
     lastName: string
-    dob: DOBFieldValues
+    dobObject: DOBFieldValues
   }) => {
     setLoading(true)
-    const { firstName, middleName, lastName, dob } = data
+    const { firstName, middleName, lastName, dobObject } = data
 
     try {
       const newUser = {
@@ -151,7 +151,7 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         firstName,
         lastName,
         middleName,
-        DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
+        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
       }
 
       setUser(newUser)
@@ -176,7 +176,7 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
       <div className="px-4 pb-4">
         <DOBFieldset
           required
-          defaultDOB={user ? user.dob : null}
+          defaultDOB={user ? user.dobObject : null}
           register={register}
           error={errors.dob}
           watch={watch}
@@ -190,11 +190,13 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const dob = profile?.DOB
-    if (dob) {
-      const parts = dob.split("-")
+    // salesforce stores the date of birth as a string YYYY-MM-DD,
+    // but we need to manipulate each value separately
+    const dobString = profile?.DOB
+    if (dobString) {
+      const parts = dobString.split("-")
       const birth = { birthYear: parts[0], birthMonth: parts[1], birthDay: parts[2] }
-      profile.dob = birth
+      profile.dobObject = birth
     }
 
     setUser(profile)
