@@ -7,11 +7,6 @@ describe GoogleTranslationService do
     mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
     expected_result = [{ to: 'ES', translation: %w[Hello World] }]
     listing_id = 'a0W0P00000F8YG4UAN'
-    let(:single_listing) do
-      VCR.use_cassette('listings/single_cached_listing') do
-        Force::ListingService.send :cached_listing, listing_id
-      end
-    end
 
     it 'translates text to the target language' do
       mock_translate = instance_double('Google::Cloud::Translate::V2::Api')
@@ -28,21 +23,23 @@ describe GoogleTranslationService do
 
     it 'transforms translations from api to an object for a listing' do
       service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
-      allow(Force::ListingService).to receive(:cached_listing).and_return(single_listing)
+      allow(Rails.cache).to receive(:read).and_return(nil)
 
-      result = service.cache_listing_translations(listing_id, fields,
-                                                          expected_result)
+      result = service.cache_listing_translations(
+        listing_id,
+        fields,
+        expected_result,
+      )
 
-      expect(result[0][:translations]).to eq({ Hello: { ES: 'Hello' },
-                                               World: { ES: 'World' } })
+      expect(result).to eq({ Hello: { ES: 'Hello' }, World: { ES: 'World' } })
     end
 
     it 'updates translation object for a listing' do
       service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
-      # add translations
-      single_listing[0][:translations] =
-        { Hello: { ES: 'Hello' }, World: { ES: 'World' } }
-      allow(Force::ListingService).to receive(:cached_listing).and_return(single_listing)
+
+      # mock cached translations
+      allow(Rails.cache).to receive(:read)
+        .and_return({ Hello: { ES: 'Hello' }, World: { ES: 'World' } })
 
       fields_updated = %w[World]
       translations = [{ to: 'ES', translation: %w[Mundo] }]
@@ -53,8 +50,7 @@ describe GoogleTranslationService do
         translations,
       )
 
-      expect(result[0][:translations]).to eq({ Hello: { ES: 'Hello' },
-                                               World: { ES: 'Mundo' } })
+      expect(result).to eq({ Hello: { ES: 'Hello' }, World: { ES: 'Mundo' } })
     end
   end
 end

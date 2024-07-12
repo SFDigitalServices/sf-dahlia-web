@@ -36,11 +36,6 @@ module Force
       add_image_urls(results_with_cached_listing_images).first
     end
 
-    def self.cached_listing(id)
-      endpoint = "/ListingDetails/#{CGI.escape(id)}"
-      Request.new(parse_response: true).cached_get(endpoint, nil, false)
-    end
-
     # get all units for a given listing
     def self.units(listing_id, opts = {})
       esc_listing_id = CGI.escape(listing_id)

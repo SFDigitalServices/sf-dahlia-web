@@ -21,8 +21,8 @@ class GoogleTranslationService
   end
 
   def cache_listing_translations(listing_id, keys, translations)
-    listing = transform_translations_for_caching(listing_id, keys, translations)
-    if @cache.write("/ListingDetails/#{listing_id}", listing)
+    translations = transform_translations_for_caching(listing_id, keys, translations)
+    if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
       Rails.logger.info(
         "Successfully cached listing translations for listing id: #{listing_id}",
       )
@@ -31,7 +31,7 @@ class GoogleTranslationService
         "Error caching listing translations for listing id: #{listing_id}",
       )
     end
-    listing
+    translations
   end
 
   private
@@ -43,13 +43,11 @@ class GoogleTranslationService
   end
 
   def transform_translations_for_caching(listing_id, keys, translations)
-    listing = Force::ListingService.cached_listing(listing_id)
-    prev_cached_translations = listing[0][:translations] || {}
+    prev_cached_translations = @cache.read("/ListingDetails/#{listing_id}/translations")
+
     # keys can come from updated_values.keys in the event_subscriber_translate_service
     # they will be in the same order as the translations because the translation service
-    # uses the values from that object this would make the assumption that every value
-    # comes back with 1 translation for each translation language (we would have a problem
-    # if it came back with just 2 in the translation array but were expecting 3 fields)
+    # uses the values from that object and the api returns 1 for each key
     return_value = {}
     translations.each do |target|
       target[:translation].each_with_index do |value, i|
@@ -58,11 +56,9 @@ class GoogleTranslationService
         return_value[field][target[:to].to_sym] = value
       end
     end
-    # alternatively, we could splat translations into the listing object
-    # so they aren't nested under the translations key, but instead under each key:
-    # {**listing, **return_value}
-    # gets complicated with nested translations (like listing image descriptions)
-    listing[0][:translations] = { **prev_cached_translations, **return_value }
-    listing
+
+    return { **prev_cached_translations, **return_value } if prev_cached_translations
+
+    return_value
   end
 end
