@@ -59,7 +59,10 @@ const applicationHeader = (text: string) => {
   )
 }
 
-const generateApplicationList = (applications: Application[], handleDeleteApp: (id: string) => void) => {
+const generateApplicationList = (
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
   return applications
     .sort(
       (a, b) =>
