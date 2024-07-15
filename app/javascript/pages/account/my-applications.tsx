@@ -140,7 +140,6 @@ const MyApplications = () => {
   const [applications, setApplications] = React.useState<Application[]>([])
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
   const [deleteApp, setDeleteApp] = useState("")
-  const [deleteError, setDeleteError] = React.useState<string | null>(null)
 
   const handleDeleteApp = (id: string) => {
     setDeleteApp(id)
@@ -155,7 +154,7 @@ const MyApplications = () => {
         setApplications(newApplications)
       })
       .catch((error: string) => {
-        setDeleteError(error)
+        setError(error)
       })
       .finally(() => {
         setLoading(false)
