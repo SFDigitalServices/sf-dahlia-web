@@ -56,7 +56,7 @@ describe("<MyApplications />", () => {
 
     it("shows the correct header text", async () => {
       const { getByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
-      expect(getByText("My Applications")).not.toBeNull()
+      expect(getByText("My applications")).not.toBeNull()
     })
 
     it("calls getApplications", async () => {
@@ -108,7 +108,7 @@ describe("<MyApplications />", () => {
       const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
 
       expect(window.location.href).toBe("/sign-in")
-      expect(queryByText("My Applications")).toBeNull()
+      expect(queryByText("My applications")).toBeNull()
     })
   })
 

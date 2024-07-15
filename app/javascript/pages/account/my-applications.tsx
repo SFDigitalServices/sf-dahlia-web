@@ -62,7 +62,6 @@ const generateApplicationList = (applications: Application[]) => {
     .map((app) => (
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${app.id}`}
-        applicationId={app.id}
         applicationUpdatedAt={app.applicationSubmittedDate}
         confirmationNumber={app.lotteryNumber.toString()}
         editedDate={app.applicationSubmittedDate}
