@@ -1271,7 +1271,7 @@
   "myApplications.areYouSureYouWantToDelete": "Deleting this application means you will lose all the information you've entered.",
   "myApplications.noApplications": "It looks like you haven't applied to any listings yet.",
   "myApplications.resultsPosted": "Results Posted",
-  "myApplications.title": "My Applications",
+  "myApplications.title": "My applications",
   "myApplications.yourLotteryNumberIs": "Your lottery number is #%{lotteryNumber}",
   "myApplications.yourLotteryNumberIs.withLink": "Your lottery number is ",
   "nav.accountSettings": "Account Settings",

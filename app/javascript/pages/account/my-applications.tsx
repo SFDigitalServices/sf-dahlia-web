@@ -10,6 +10,7 @@ import { getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
+import "./my-application.scss"
 
 export const noApplications = () => {
   return (
@@ -61,6 +62,7 @@ const generateApplicationList = (applications: Application[]) => {
     .map((app) => (
       <ApplicationItem
         applicationURL={`${getApplicationPath()}/${app.id}`}
+        applicationId={app.id}
         applicationUpdatedAt={app.applicationSubmittedDate}
         confirmationNumber={app.lotteryNumber.toString()}
         editedDate={app.applicationSubmittedDate}
@@ -153,7 +155,7 @@ const MyApplications = () => {
       children={
         <section className="bg-gray-300 border-t border-gray-450">
           <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
-            <Card className="w-full">
+            <Card className="w-full mobile-card">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
                 <div
                   className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
