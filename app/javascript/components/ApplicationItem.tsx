@@ -24,7 +24,6 @@ import { ListingDetailsLotterySearchForm } from "../modules/listingDetailsLotter
 
 interface ApplicationItemProps {
   applicationURL: string
-  applicationId: string
   applicationUpdatedAt: string
   confirmationNumber?: string
   editedDate?: string
