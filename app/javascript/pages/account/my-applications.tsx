@@ -35,88 +35,97 @@ export const noApplications = () => {
   )
 }
 
+const loadingSpinner = () => {
+  return (
+    <div data-testid="loading-spinner" className="flex justify-center pb-9">
+      <Icon symbol="spinner" size="large" />
+    </div>
+  )
+}
+
+const errorMessage = () => {
+  return (
+    <p className="w-full text-center p-4">
+      {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+    </p>
+  )
+}
+
+const applicationHeader = (text: string) => {
+  return (
+    <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+      {text}
+    </Heading>
+  )
+}
+
+const generateApplicationList = (applications: Application[], handleDeleteApp: (id: string) => void) => {
+  return applications
+    .sort(
+      (a, b) =>
+        new Date(b.applicationSubmittedDate).getTime() -
+        new Date(a.applicationSubmittedDate).getTime()
+    )
+    .map((app) => (
+      <ApplicationItem
+        applicationURL={`${getApplicationPath()}/${app.id}`}
+        applicationUpdatedAt={app.applicationSubmittedDate}
+        confirmationNumber={app.lotteryNumber.toString()}
+        editedDate={app.applicationSubmittedDate}
+        submitted={app.status === "Submitted"}
+        listing={app.listing}
+        key={app.id}
+        handleDeleteApp={handleDeleteApp}
+      />
+    ))
+}
+
+const separateApplications = (applications: Application[]) =>
+  applications.reduce<{
+    rentalApplications: Application[]
+    saleApplications: Application[]
+  }>(
+    (acc, app) => {
+      if (isRental(app.listing)) {
+        acc.rentalApplications.push(app)
+      } else if (isSale(app.listing)) {
+        acc.saleApplications.push(app)
+      }
+
+      return acc
+    },
+    { rentalApplications: [], saleApplications: [] }
+  )
+
 export const determineApplicationItemList = (
   loading: boolean,
   error: string,
-  deleteError: string,
-  applications: Application[],
+  applications: Application[]
   handleDeleteApp: (id: string) => void
 ) => {
   if (loading) {
-    return (
-      <div data-testid="loading-spinner" className="flex justify-center pb-9">
-        <Icon symbol="spinner" size="large" />
-      </div>
-    )
+    return loadingSpinner()
   }
 
-  if (error || deleteError) {
-    return (
-      <p className="w-full text-center p-4">
-        {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
-      </p>
-    )
+  if (error) {
+    return errorMessage()
   }
 
   if (applications === undefined || applications.length === 0) {
     return noApplications()
   }
 
-  const rentalApplications = applications
-    .filter((app) => isRental(app.listing))
-    .sort(
-      (a, b) =>
-        new Date(b.applicationSubmittedDate).getTime() -
-        new Date(a.applicationSubmittedDate).getTime()
-    )
-
-  const saleApplications = applications
-    .filter((app) => isSale(app.listing))
-    .sort(
-      (a, b) =>
-        new Date(b.applicationSubmittedDate).getTime() -
-        new Date(a.applicationSubmittedDate).getTime()
-    )
+  const { rentalApplications, saleApplications } = separateApplications(applications)
 
   const hasBothRentalAndSaleApplications =
     rentalApplications.length > 0 && saleApplications.length > 0
 
   return (
     <>
-      {hasBothRentalAndSaleApplications && (
-        <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
-          {t("listings.rentalUnits")}
-        </Heading>
-      )}
-      {rentalApplications.map((app) => (
-        <ApplicationItem
-          applicationURL={`${getApplicationPath()}/${app.id}`}
-          applicationUpdatedAt={app.applicationSubmittedDate}
-          confirmationNumber={app.lotteryNumber.toString()}
-          editedDate={app.applicationSubmittedDate}
-          submitted={app.status === "Submitted"}
-          listing={app.listing}
-          key={app.id}
-          handleDeleteApp={handleDeleteApp}
-        />
-      ))}
-      {hasBothRentalAndSaleApplications && (
-        <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
-          {t("listings.saleUnits")}
-        </Heading>
-      )}
-      {saleApplications.map((app) => (
-        <ApplicationItem
-          applicationURL={`${getApplicationPath()}/${app.id}`}
-          applicationUpdatedAt={app.applicationSubmittedDate}
-          confirmationNumber={app.lotteryNumber.toString()}
-          editedDate={app.applicationSubmittedDate}
-          submitted={app.status === "Submitted"}
-          listing={app.listing}
-          key={app.id}
-          handleDeleteApp={handleDeleteApp}
-        />
-      ))}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.rentalUnits"))}
+      {generateApplicationList(rentalApplications, handleDeleteApp)}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.saleUnits"))}
+      {generateApplicationList(saleApplications, handleDeleteApp)}
     </>
   )
 }
@@ -178,7 +187,7 @@ const MyApplications = () => {
       children={
         <section className="bg-gray-300 border-t border-gray-450">
           <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
-            <Card className="w-full">
+            <Card className="w-full mobile-card">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
                 <div
                   className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
@@ -214,13 +223,7 @@ const MyApplications = () => {
                   </Button>
                 </Dialog.Footer>
               </Dialog>
-              {determineApplicationItemList(
-                loading,
-                error,
-                deleteError,
-                applications,
-                handleDeleteApp
-              )}
+              {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
             </Card>
           </div>
         </section>

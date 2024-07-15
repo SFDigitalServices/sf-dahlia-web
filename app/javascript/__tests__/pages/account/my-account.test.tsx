@@ -56,7 +56,7 @@ describe("<MyAccount />", () => {
 
       const links = mainContent.querySelectorAll("a")
       const linkHeader = links[0].querySelector("h1")
-      expect(linkHeader?.textContent).toBe("My Applications")
+      expect(linkHeader?.textContent).toBe("My applications")
     })
 
     it("second link has title 'Account Settings'", () => {
@@ -64,7 +64,7 @@ describe("<MyAccount />", () => {
 
       const links = mainContent.querySelectorAll("a")
       const linkHeader = links[1].querySelector("h1")
-      expect(linkHeader?.textContent).toBe("Account Settings")
+      expect(linkHeader?.textContent).toBe("Account settings")
     })
   })
 
@@ -95,7 +95,7 @@ describe("<MyAccount />", () => {
       jest.restoreAllMocks()
     })
 
-    it("contains two links within the main content", () => {
+    it("redirects to the sign in page if the user is not signed in", () => {
       // This is a temporary workaround until we implement the redirects to the sign in page
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).location
