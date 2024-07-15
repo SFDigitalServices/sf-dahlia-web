@@ -100,7 +100,7 @@ const separateApplications = (applications: Application[]) =>
 export const determineApplicationItemList = (
   loading: boolean,
   error: string,
-  applications: Application[]
+  applications: Application[],
   handleDeleteApp: (id: string) => void
 ) => {
   if (loading) {
