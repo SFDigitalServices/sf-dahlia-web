@@ -24,6 +24,7 @@ import { ListingDetailsLotterySearchForm } from "../modules/listingDetailsLotter
 
 interface ApplicationItemProps {
   applicationURL: string
+  applicationId: string
   applicationUpdatedAt: string
   confirmationNumber?: string
   editedDate?: string
@@ -70,6 +71,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
       styleType={style}
       href={getLocalizedPath(url, getCurrentLanguage())}
       newTab={newTab}
+      className="text-11"
     >
       {text}
     </LinkButton>
@@ -144,6 +146,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                 <Button
                   size={AppearanceSizeType.small}
                   styleType={AppearanceStyleType.primary}
+                  className="text-11"
                   onClick={() => {
                     setIsModalOpen(true)
                   }}
@@ -154,7 +157,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {!props.submitted &&
               !pastDue &&
               ApplicationButton(
-                props.applicationURL,
+                `/listings/${props.listing.listingID}/apply/name`,
                 t("label.continueApplication"),
                 AppearanceStyleType.primary
               )}
