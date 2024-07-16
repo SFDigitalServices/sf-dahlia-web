@@ -79,7 +79,9 @@ const ApplicationItem = (props: ApplicationItemProps) => {
           <h3 className={"application-item__title"}>{listingName}</h3>
           {applicationDueDate && (
             <p className={"application-item__text"}>
-              {`${t("listings.applicationDeadline")}: ${convertToReadableDate(applicationDueDate)}`}
+              {`${t("myApplications.applicationDeadline")}: ${convertToReadableDate(
+                applicationDueDate
+              )}`}
             </p>
           )}
         </header>
@@ -114,14 +116,16 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             <div className={"application-item__status"}>
               {`${t("t.status")}: `}
               {props.submitted && !lotteryComplete && (
-                <span className={"submitted"}>{t("t.submitted")}</span>
+                <span className={"submitted"}>{t("myApplications.status.submitted")}</span>
               )}
-              {!props.submitted && !pastDue && t("t.inProgress")}
+              {!props.submitted && !pastDue && t("myApplications.status.inProgress")}
               {props.submitted && lotteryComplete && (
-                <span className={"submitted"}>{t("myApplications.resultsPosted")}</span>
+                <span className={"submitted"}>{t("myApplications.status.resultsPosted")}</span>
               )}
               {!props.submitted && pastDue && (
-                <span className={"never-submitted"}>{t("t.neverSubmitted")}</span>
+                <span className={"never-submitted"}>
+                  {t("myApplications.status.neverSubmitted")}
+                </span>
               )}
             </div>
             {props.submitted &&
@@ -159,7 +163,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
         <div className={"application-item__footer"}>
           <span className="text-sm inline-block space-x-3">
             <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
-              {t("label.seeListing")}
+              {t("myApplications.seeListing")}
             </Link>
             {lotteryComplete && (
               <Link href={props.applicationURL}>{t("label.viewApplication")}</Link>
