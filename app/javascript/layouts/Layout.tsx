@@ -5,6 +5,7 @@ import {
   AlertTypes,
   FooterNav,
   FooterSection,
+  Icon,
   LangItem,
   MenuLink,
   SiteFooter,
@@ -89,14 +90,17 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
         {
           title: t("nav.myDashboard"),
           href: "/my-account",
+          iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.myApplications"),
           href: "/my-applications",
+          iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.accountSettings"),
           href: "/account-settings",
+          iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.signOut"),

@@ -5,3 +5,16 @@
 .site-header__navbar-inline .site-header__link {
   --link-padding-inline: 0.25rem 0.75rem 1rem 0.75rem;
 }
+
+.site-header__dropdown-item {
+  font-size: 13px !important;
+  font-weight: 600;
+  @apply text-gray-700;
+  @apply px-6;
+  @apply py-4;
+
+  &:hover {
+    @apply text-gray-850;
+    @apply bg-blue-100;
+  }
+}
