@@ -166,7 +166,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
               {t("myApplications.seeListing")}
             </Link>
             {lotteryComplete && (
-              <Link href={props.applicationURL}>{t("label.viewApplication")}</Link>
+              <Link href={props.applicationURL}>{t("myApplications.viewApplication")}</Link>
             )}
             {!props.submitted && (
               <Button
