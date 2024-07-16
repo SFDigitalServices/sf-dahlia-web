@@ -4,8 +4,9 @@ import MyApplications, {
 } from "../../../pages/account/my-applications"
 import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
-import { authenticatedGet } from "../../../api/apiService"
+import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
 import { render } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
@@ -150,6 +151,22 @@ describe("<MyApplications />", () => {
       expect(getByRole("heading", { name: /Rental Units/i, level: 2 })).toBeInTheDocument()
       expect(getByRole("heading", { name: /Sale Units/i, level: 2 })).toBeInTheDocument()
       expect(queryAllByRole("link", { name: /view application/i })).toHaveLength(2)
+    })
+  })
+
+  describe("delete application", () => {
+    const applications: Application[] = [
+      applicationWithOpenListing,
+      {
+        ...applicationWithOpenListing,
+        listing: openSaleListing,
+        status: "Draft",
+      },
+    ]
+
+    it("should display the delete button for an unsubmitted application", () => {
+      const { getByRole } = render(determineApplicationItemList(false, "", applications, () => {}))
+      expect(getByRole("button", { name: /delete/i })).toBeInTheDocument()
     })
   })
 })
