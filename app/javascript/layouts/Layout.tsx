@@ -162,7 +162,6 @@ const Layout = (props: LayoutProps) => {
           <SiteHeader
             homeURL={"/"}
             dropdownItemClassName={"text-2xs"}
-            menuItemClassName={""}
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}
