@@ -1,4 +1,4 @@
-import { authenticatedGet, post, put } from "../../api/apiService"
+import { authenticatedGet, authenticatedDelete, post, put } from "../../api/apiService"
 
 import {
   signIn,
@@ -6,12 +6,14 @@ import {
   forgotPassword,
   updatePassword,
   getApplications,
+  deleteApplication,
 } from "../../api/authApiService"
 
 jest.mock("axios")
 
 jest.mock("../../api/apiService", () => ({
   authenticatedGet: jest.fn(),
+  authenticatedDelete: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
 }))
@@ -19,6 +21,7 @@ jest.mock("../../api/apiService", () => ({
 describe("authApiService", () => {
   beforeEach(() => {
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
+    ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(post as jest.Mock).mockResolvedValue({ data: "test-data", headers: "test-headers" })
     ;(put as jest.Mock).mockResolvedValue({ data: { message: "test-message" } })
   })
@@ -70,6 +73,15 @@ describe("authApiService", () => {
       const passwordConfirmation = password
       await updatePassword(token, password, password)
       expect(put).toHaveBeenCalledWith(url, { password, passwordConfirmation, token })
+    })
+  })
+
+  describe("deleteApplication", () => {
+    it("calls apiService authenticatedDelete", async () => {
+      const id = "test-id"
+      const url = `/api/v1/short-form/application/${id}`
+      await deleteApplication(id)
+      expect(authenticatedDelete).toHaveBeenCalledWith(url)
     })
   })
 })

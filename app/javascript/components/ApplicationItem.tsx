@@ -17,6 +17,7 @@ import {
   isLotteryComplete,
   isLotteryCompleteDeprecated,
   showLotteryResultsPDFonly,
+  convertToReadableDate,
 } from "../util/listingUtil"
 import { RailsLotteryResult } from "../api/types/rails/listings/RailsLotteryResult"
 import { getLotteryBucketDetails } from "../api/listingApiService"
@@ -28,17 +29,9 @@ interface ApplicationItemProps {
   confirmationNumber?: string
   editedDate?: string
   submitted: boolean
+  handleDeleteApp?: (id: string) => void
   listing: RailsListing
   lotteryResultsURL?: string
-}
-
-export const convertToReadableDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  })
 }
 
 const ApplicationItem = (props: ApplicationItemProps) => {
@@ -50,6 +43,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   const listingURL = `${getListingDetailPath()}/${props.listing.listingID}`
   const lotteryComplete = isLotteryComplete(props.listing)
   const pastDue = new Date() > new Date(props.listing.Application_Due_Date)
+  const applicationID = props.applicationURL.split("/").pop()
 
   React.useEffect(() => {
     if (isLotteryCompleteDeprecated(props.listing)) {
@@ -170,11 +164,16 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {lotteryComplete && (
               <Link href={props.applicationURL}>{t("label.viewApplication")}</Link>
             )}
-            {/* TODO: Add functionality to delete application in Link href */}
             {!props.submitted && (
-              <Link className={"application-item__delete"} href={""}>
+              <Button
+                unstyled
+                className={"application-item__delete"}
+                onClick={() => {
+                  props.handleDeleteApp(applicationID)
+                }}
+              >
                 {t("t.delete")}
-              </Link>
+              </Button>
             )}
           </span>
           <span className={"application-item_edited-text"}>

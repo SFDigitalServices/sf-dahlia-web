@@ -1,16 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
-import { Card, Heading } from "@bloom-housing/ui-seeds"
+import {
+  t,
+  Icon,
+  LinkButton,
+  Button,
+  AppearanceStyleType,
+  AppearanceBorderType,
+} from "@bloom-housing/ui-components"
+import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
 import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
 import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
-import { getApplications } from "../../api/authApiService"
+import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
-import "./my-application.scss"
+import "./my-applications.scss"
 
 export const noApplications = () => {
   return (
@@ -52,7 +59,10 @@ const applicationHeader = (text: string) => {
   )
 }
 
-const generateApplicationList = (applications: Application[]) => {
+const generateApplicationList = (
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
   return applications
     .sort(
       (a, b) =>
@@ -68,6 +78,7 @@ const generateApplicationList = (applications: Application[]) => {
         submitted={app.status === "Submitted"}
         listing={app.listing}
         key={app.id}
+        handleDeleteApp={handleDeleteApp}
       />
     ))
 }
@@ -92,7 +103,8 @@ const separateApplications = (applications: Application[]) =>
 export const determineApplicationItemList = (
   loading: boolean,
   error: string,
-  applications: Application[]
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
 ) => {
   if (loading) {
     return loadingSpinner()
@@ -114,9 +126,9 @@ export const determineApplicationItemList = (
   return (
     <>
       {hasBothRentalAndSaleApplications && applicationHeader(t("listings.rentalUnits"))}
-      {generateApplicationList(rentalApplications)}
+      {generateApplicationList(rentalApplications, handleDeleteApp)}
       {hasBothRentalAndSaleApplications && applicationHeader(t("listings.saleUnits"))}
-      {generateApplicationList(saleApplications)}
+      {generateApplicationList(saleApplications, handleDeleteApp)}
     </>
   )
 }
@@ -126,6 +138,29 @@ const MyApplications = () => {
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [deleteApp, setDeleteApp] = useState("")
+
+  const handleDeleteApp = (id: string) => {
+    setDeleteApp(id)
+    setOpenDeleteModal(true)
+  }
+
+  const onDelete = () => {
+    setLoading(true)
+    deleteApplication(deleteApp)
+      .then(() => {
+        const newApplications = applications.filter((application) => application.id !== deleteApp)
+        setApplications(newApplications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    setOpenDeleteModal(false)
+  }
 
   React.useEffect(() => {
     setLoading(true)
@@ -167,7 +202,30 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
-              {determineApplicationItemList(loading, error, applications)}
+              <Dialog
+                isOpen={openDeleteModal}
+                onClose={() => {
+                  setOpenDeleteModal(false)
+                }}
+                className="w-3/5"
+              >
+                <Dialog.Header>
+                  <div className="delete-title">{t("t.deleteApplication")}</div>
+                </Dialog.Header>
+                <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
+                <Dialog.Footer className="delete-buttons">
+                  <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
+                    {t("t.delete")}
+                  </Button>
+                  <Button
+                    className={AppearanceBorderType.borderless}
+                    onClick={() => setOpenDeleteModal(false)}
+                  >
+                    {t("label.cancel")}
+                  </Button>
+                </Dialog.Footer>
+              </Dialog>
+              {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
             </Card>
           </div>
         </section>
