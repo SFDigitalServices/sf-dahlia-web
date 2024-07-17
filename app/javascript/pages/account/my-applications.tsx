@@ -133,6 +133,59 @@ export const determineApplicationItemList = (
   )
 }
 
+export const deleteDialog = (
+  openDeleteModal,
+  setOpenDeleteModal,
+  setLoading,
+  deleteApp,
+  applications,
+  setApplications,
+  setError
+) => {
+  const onDelete = () => {
+    setLoading(true)
+    deleteApplication(deleteApp)
+      .then(() => {
+        const newApplications = applications.filter((application) => application.id !== deleteApp)
+        setApplications(newApplications)
+      })
+      .catch((error: string) => {
+        console.log("error test", error)
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    setOpenDeleteModal(false)
+  }
+
+  return (
+    <Dialog
+      isOpen={openDeleteModal}
+      onClose={() => {
+        setOpenDeleteModal(false)
+      }}
+      className="w-3/5"
+    >
+      <Dialog.Header>
+        <div className="delete-title">{t("t.deleteApplication")}</div>
+      </Dialog.Header>
+      <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
+      <Dialog.Footer className="delete-buttons">
+        <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
+          {t("t.delete")}
+        </Button>
+        <Button
+          className={AppearanceBorderType.borderless}
+          onClick={() => setOpenDeleteModal(false)}
+        >
+          {t("label.cancel")}
+        </Button>
+      </Dialog.Footer>
+    </Dialog>
+  )
+}
+
 const MyApplications = () => {
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
   const [error, setError] = React.useState<string | null>(null)
@@ -144,22 +197,6 @@ const MyApplications = () => {
   const handleDeleteApp = (id: string) => {
     setDeleteApp(id)
     setOpenDeleteModal(true)
-  }
-
-  const onDelete = () => {
-    setLoading(true)
-    deleteApplication(deleteApp)
-      .then(() => {
-        const newApplications = applications.filter((application) => application.id !== deleteApp)
-        setApplications(newApplications)
-      })
-      .catch((error: string) => {
-        setError(error)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-    setOpenDeleteModal(false)
   }
 
   React.useEffect(() => {
@@ -202,29 +239,15 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
-              <Dialog
-                isOpen={openDeleteModal}
-                onClose={() => {
-                  setOpenDeleteModal(false)
-                }}
-                className="w-3/5"
-              >
-                <Dialog.Header>
-                  <div className="delete-title">{t("t.deleteApplication")}</div>
-                </Dialog.Header>
-                <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
-                <Dialog.Footer className="delete-buttons">
-                  <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
-                    {t("t.delete")}
-                  </Button>
-                  <Button
-                    className={AppearanceBorderType.borderless}
-                    onClick={() => setOpenDeleteModal(false)}
-                  >
-                    {t("label.cancel")}
-                  </Button>
-                </Dialog.Footer>
-              </Dialog>
+              {deleteDialog(
+                openDeleteModal,
+                setOpenDeleteModal,
+                setLoading,
+                deleteApp,
+                applications,
+                setApplications,
+                setError
+              )}
               {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
             </Card>
           </div>

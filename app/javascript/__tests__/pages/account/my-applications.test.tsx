@@ -1,11 +1,12 @@
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import MyApplications, {
   determineApplicationItemList,
+  deleteDialog,
 } from "../../../pages/account/my-applications"
 import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
-import { render } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
@@ -15,6 +16,7 @@ jest.mock("axios")
 
 jest.mock("../../../api/apiService.ts", () => ({
   authenticatedGet: jest.fn(),
+  authenticatedDelete: jest.fn(),
 }))
 
 describe("<MyApplications />", () => {
@@ -164,9 +166,83 @@ describe("<MyApplications />", () => {
       },
     ]
 
+    let originalUseContext
+
+    beforeEach(() => {
+      originalUseContext = React.useContext
+      const mockContextValue: ContextProps = {
+        profile: {
+          uid: "abc123",
+          email: "email@email.com",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        signIn: jest.fn(),
+        signOut: jest.fn(),
+        loading: false,
+        initialStateLoaded: true,
+      }
+
+      jest.spyOn(React, "useContext").mockImplementation((context) => {
+        if (context === UserContext) {
+          return mockContextValue
+        }
+        return originalUseContext(context)
+      })
+      ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { applications } })
+    })
+
+    afterEach(() => {
+      jest.restoreAllMocks()
+    })
+
     it("should display the delete button for an unsubmitted application", () => {
       const { getByRole } = render(determineApplicationItemList(false, "", applications, () => {}))
-      expect(getByRole("button", { name: /delete/i })).toBeInTheDocument()
+      expect(getByRole("button", { name: /Delete/i })).toBeInTheDocument()
+    })
+
+    // it("should make the modal appear when the delete button is clicked", async () => {
+    //   const user = userEvent.setup()
+    //   const axios = require("axios")
+    //   axios.get.mockResolvedValue({ data: { applications } })
+    //   const { getByRole, findByText, asFragment } = render(<MyApplications assetPaths={{}} />)
+
+    //   expect(getByRole("button", { name: /delete/i })).toBeInTheDocument()
+    //   expect(asFragment()).toMatchSnapshot()
+    //   await user.click(getByRole("button"))
+
+    //   expect(await findByText("Delete this application?")).toBeDefined()
+    // })
+
+    it("should call deleteApplication when the delete button is clicked", async () => {
+      const { getByRole } = render(
+        deleteDialog(
+          openDeleteModal,
+          setOpenDeleteModal,
+          setLoading,
+          deleteApp,
+          applications,
+          setApplications,
+          setError
+        )
+      )
+      // const id = "testId"
+      // const user = userEvent.setup()
+      // const { getByText, getByRole } = await renderAndLoadAsync(
+      //   <body>
+      //     <MyApplications assetPaths={{}} />
+      //     <div id="seeds-overlay-portal" />
+      //   </body>
+      // )
+      // screen.logTestingPlaygroundURL()
+      // expect(getByText("My applications")).not.toBeNull()
+      // await user.click(getByRole("button", { name: /Delete/i }))
+      // // await waitFor(() => {
+      // //   getByRole("dialog", { hidden: true })
+      // // })
+      // expect(getByRole("dialog")).toBeInTheDocument()
+
+      // expect(authenticatedDelete).toHaveBeenCalledWith(`/api/v1/short-form/application/${id}`)
     })
   })
 })
