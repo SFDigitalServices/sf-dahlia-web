@@ -22,6 +22,7 @@ import AccountSettings from "../pages/account/account-settings"
 import MyAccount from "../pages/account/my-account"
 import CreateAccount from "../pages/create-account"
 import ForgotPassword from "../pages/forgot-password"
+import ResetPassword from "../pages/reset-password"
 
 const currentLanguage = getCurrentLanguage(window.location.pathname)
 
@@ -35,6 +36,7 @@ void loadTranslations(currentLanguage).then(() =>
     SignIn,
     CreateAccount,
     ForgotPassword,
+    ResetPassword,
     HousingCounselors,
     GetAssistance,
     DocumentChecklist,

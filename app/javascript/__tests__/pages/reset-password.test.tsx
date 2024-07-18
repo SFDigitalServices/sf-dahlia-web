@@ -1,7 +1,7 @@
 import React from "react"
 
-import ForgotPassword from "../../pages/forgot-password"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
+import ResetPassword from "../../pages/reset-password"
 
 jest.mock("react-helmet-async", () => {
   return {
@@ -10,9 +10,9 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
-describe("<ForgotPassword />", () => {
+describe("<ResetPassword />", () => {
   it("shows the correct form text", async () => {
-    const { getAllByText } = await renderAndLoadAsync(<ForgotPassword assetPaths={{}} />)
-    expect(getAllByText("Forgot Password")).not.toBeNull()
+    const { getAllByText } = await renderAndLoadAsync(<ResetPassword assetPaths={{}} />)
+    expect(getAllByText("Reset Password")).not.toBeNull()
   })
 })
