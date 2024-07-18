@@ -29,15 +29,17 @@ export const ListingDetailsLotteryRanking = ({
   listingIsEducator,
   listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
-  const highestRankedBucket = lotteryResult?.lotteryBuckets
-    .filter((bucket) => bucket.preferenceOrder && bucket.totalSubmittedApps > 0)
-    .reduce((currBucket, maxBucket) => {
-      if (currBucket) {
-        return currBucket.preferenceOrder < maxBucket.preferenceOrder ? currBucket : maxBucket
-      } else {
-        return maxBucket
-      }
-    }, null)
+  const highestRankedBucket = lotteryResult?.lotteryBuckets.reduce((maxBucket, currBucket) => {
+    if (!maxBucket) {
+      return currBucket
+    }
+
+    if (currBucket.preferenceOrder && currBucket.totalSubmittedApps > 0) {
+      return currBucket.preferenceOrder < maxBucket.preferenceOrder ? currBucket : maxBucket
+    }
+
+    return maxBucket
+  }, null)
 
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
