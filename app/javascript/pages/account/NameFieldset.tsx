@@ -1,6 +1,7 @@
 import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
+import Fieldset from "./Fieldset"
 
 interface NameFieldsetProps {
   register: UseFormMethods["register"]
@@ -20,9 +21,9 @@ const NameFieldset = ({
   const hasError = errors?.firstName || errors?.lastName || errors?.middleName
 
   return (
-    <fieldset className="px-4 pb-4">
-      <legend className={hasError ? "text-alert" : ""}>{t("label.name")}</legend>
+    <Fieldset hasError={hasError} label={t("label.name")}>
       <Field
+        className="mb-4"
         name="firstName"
         label={t("label.firstName.sentenceCase")}
         register={register}
@@ -32,6 +33,7 @@ const NameFieldset = ({
         validation={{ required: true }}
       />
       <Field
+        className="mb-4"
         name="middleName"
         label={`${t("label.middleName.sentenceCase")} (${t("t.optional.lowercase")})`}
         error={errors.middleName}
@@ -39,6 +41,7 @@ const NameFieldset = ({
         register={register}
       />
       <Field
+        className="mb-4"
         name="lastName"
         label={t("label.lastName.sentenceCase")}
         errorMessage={t("error.lastName")}
@@ -47,7 +50,7 @@ const NameFieldset = ({
         register={register}
         validation={{ required: true }}
       />
-    </fieldset>
+    </Fieldset>
   )
 }
 

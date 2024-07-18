@@ -1,0 +1,68 @@
+// label for each section
+.fieldset-legend {
+  font-size: 18px;
+  line-height: 22.5px;
+  color: #555;
+}
+
+// padding for bottoms of form labels
+.form-fieldset > .fieldset-legend {
+  padding-bottom: 12px;
+}
+
+.email-fieldset > .fieldset-legend {
+  padding-bottom: 8px;
+}
+
+.password-fieldset > .fieldset-legend {
+  padding-bottom: 0px;
+}
+
+// label for fields in name and DOB section
+.form-fieldset > .field > .label {
+  color: #767676;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+// password section
+
+// new password instructions
+.password-instructions {
+  list-style-position: inside;
+}
+
+.password-instructions > li > .bullet{
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  vertical-align: -2px;
+}
+
+// label for fields in password section
+.password-fieldset > .field > .label, .new-password-label {
+  color: #555;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+// note for choosing a new password
+.password-fieldset > .field-note {
+  color: #555;
+  font-size: 13px;
+  line-height: 150%;
+}
+
+// forgot password link
+.forgot-password-link {
+  font-size: 13px;
+}
+
+// date section
+
+// label for fields in date section
+.form-fieldset > .field-group--date > .field > .label {
+  color: #767676;
+  font-size: 14px;
+  line-height: 24px;
+}
