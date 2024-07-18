@@ -1,0 +1,155 @@
+import React from "react"
+import { t, Field } from "@bloom-housing/ui-components"
+import dayjs from "dayjs"
+import customParseFormat from "dayjs/plugin/customParseFormat"
+import { UseFormMethods, FieldError, DeepMap } from "react-hook-form"
+dayjs.extend(customParseFormat)
+
+export type DOBFieldValues = {
+  birthDay: string
+  birthMonth: string
+  birthYear: string
+}
+
+export interface DOBFieldProps {
+  register: UseFormMethods["register"]
+  watch: UseFormMethods["watch"]
+  defaultDOB?: DOBFieldValues
+  error?: DeepMap<DOBFieldValues, FieldError>
+  required?: boolean
+  id?: string
+}
+
+const validateNumber = (required: boolean, value: string, maxValue: number) => {
+  if (!required && !value?.length) return true
+
+  return Number.parseInt(value) > 0 && Number.parseInt(value) <= maxValue
+}
+
+const validateAge = (month: string, day: string, year: string) => {
+  return (
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY") > dayjs().subtract(117, "years")
+  )
+}
+
+const DateField = ({
+  fieldKey,
+  defaultDOB,
+  error,
+  required,
+  register,
+  watch,
+}: {
+  fieldKey: string
+  defaultDOB: DOBFieldValues
+  error: DeepMap<DOBFieldValues, FieldError>
+  required: boolean
+  register: UseFormMethods["register"]
+  watch: UseFormMethods["watch"]
+}) => {
+  const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
+  const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
+
+  const fieldInfo = {
+    birthDay: {
+      label: t("label.dobDate"),
+      validation: (value: string) => {
+        return validateNumber(required, value, 31)
+      },
+      maxLength: 2,
+    },
+    birthMonth: {
+      label: t("label.dobMonth"),
+      validation: (value: string) => {
+        return validateNumber(required, value, 12)
+      },
+      maxLength: 2,
+    },
+    birthYear: {
+      label: t("label.dobYear"),
+      validation: (value: string) => {
+        if (value?.length) return validateAge(birthDay, birthMonth, value)
+        return true
+      },
+      maxLength: 4,
+    },
+  }
+
+  return (
+    <Field
+      name={`dob.${fieldKey}`}
+      label={fieldInfo[fieldKey].label}
+      defaultValue={defaultDOB?.[fieldKey] ?? ""}
+      error={error?.[fieldKey] !== undefined}
+      validation={{
+        required: required,
+        validate: {
+          range: fieldInfo[fieldKey].validation,
+        },
+      }}
+      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
+      register={register}
+    />
+  )
+}
+
+const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
+  return (
+    <>
+      <DateField
+        fieldKey="birthMonth"
+        defaultDOB={defaultDOB}
+        error={error}
+        register={register}
+        watch={watch}
+        required={required}
+      />
+      <DateField
+        fieldKey="birthDay"
+        defaultDOB={defaultDOB}
+        error={error}
+        register={register}
+        watch={watch}
+        required={required}
+      />
+      <DateField
+        fieldKey="birthYear"
+        defaultDOB={defaultDOB}
+        error={error}
+        register={register}
+        watch={watch}
+        required={required}
+      />
+    </>
+  )
+}
+
+const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFieldProps) => {
+  const hasError = error?.birthMonth || error?.birthDay || error?.birthYear
+
+  return (
+    <fieldset id={id}>
+      <legend className={hasError ? "text-alert" : ""}>{t("label.dob")}</legend>
+
+      <div className="field-note my-3">For example, November 23, 1975 is 11-23-1975</div>
+      <div className="field-group--date">
+        <DOBFields
+          register={register}
+          watch={watch}
+          defaultDOB={defaultDOB}
+          error={error}
+          required={required}
+        />
+      </div>
+
+      {hasError && (
+        <div className="field error">
+          <span className="error-message">{t("error.dob")}</span>
+        </div>
+      )}
+    </fieldset>
+  )
+}
+
+export default DOBFieldset
