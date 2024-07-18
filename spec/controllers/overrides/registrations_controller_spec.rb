@@ -52,6 +52,75 @@ describe Overrides::RegistrationsController do
       expect(assigns(:resource).salesforce_contact_id)
         .to eq('0036C000001sI5oQAE')
     end
+
+    it 'throws error if firstName includes invalid characters' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
+
+      post :create, params: {
+        user: {
+          id: 1,
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'http',
+          lastName: 'Doe',
+          DOB: '1985-07-23',
+          email: 'jane@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
+
+      expect(response.status).to eq 422
+    end
+
+    it 'throws error if lastName includes invalid characters' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
+
+      post :create, params: {
+        user: {
+          id: 1,
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'John',
+          lastName: 'www',
+          DOB: '1985-07-23',
+          email: 'jane@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
+      expect(response.status).to eq 422
+    end
+    it 'throws error if lastName includes "."' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
+
+      post :create, params: {
+        user: {
+          id: 1,
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'John',
+          lastName: 'bit.ly',
+          DOB: '1985-07-23',
+          email: 'jane@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
+      expect(response.status).to eq 422
+    end
   end
 
   describe '#update' do
