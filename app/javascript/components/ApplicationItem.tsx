@@ -75,7 +75,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   return (
     <>
       <Card.Section className={classNames.join(" ")}>
-        <header className={"application-item__header"}>
+        <header className={"application-item__header"} data-testid="application-item">
           <h3 className={"application-item__title"}>{listingName}</h3>
           {applicationDueDate && (
             <p className={"application-item__text"}>
