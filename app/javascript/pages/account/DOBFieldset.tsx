@@ -53,7 +53,7 @@ const DateField = ({
 
   const fieldInfo = {
     birthDay: {
-      label: t("label.dobDate"),
+      label: t("label.dobDay"),
       validation: (value: string) => {
         return validateNumber(required, value, 31)
       },
@@ -130,9 +130,8 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFi
 
   return (
     <fieldset id={id}>
-      <legend className={hasError ? "text-alert" : ""}>{t("label.dob")}</legend>
+      <legend className={hasError ? "text-alert" : ""}>{t("label.dob.sentenceCase")}</legend>
 
-      <div className="field-note my-3">For example, November 23, 1975 is 11-23-1975</div>
       <div className="field-group--date">
         <DOBFields
           register={register}

@@ -48,14 +48,14 @@ describe("<AccountSettingsPage />", () => {
       jest.restoreAllMocks()
     })
     it("shows the correct header text", () => {
-      const title = getByText("Account Settings")
+      const title = getByText("Account settings")
 
       expect(title).not.toBeNull()
     })
 
     it("updates when clicked", async () => {
       const button = getAllByText("Update")
-      const passwordField: Element = getByLabelText("New Password")
+      const passwordField: Element = getByLabelText("Choose a new password")
 
       await act(async () => {
         button[0].dispatchEvent(new MouseEvent("click"))

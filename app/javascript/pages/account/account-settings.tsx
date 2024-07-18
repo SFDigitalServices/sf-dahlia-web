@@ -28,7 +28,7 @@ const AccountSettingsHeader = () => {
         <Icon size="xlarge" className="md:hidden block" symbol="settings" />
         <Icon size="2xl" className="md:block hidden" symbol="settings" />
       </div>
-      <h1 className="text-xl md:text-2xl">{t("accountSettings.title")}</h1>
+      <h1 className="text-xl md:text-2xl">{t("accountSettings.title.sentenceCase")}</h1>
       <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
     </Card.Header>
   )
@@ -126,24 +126,18 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
+const NameSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: {
-    firstName: string
-    middleName: string
-    lastName: string
-    dobObject: DOBFieldValues
-  }) => {
+  const onSubmit = (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
-    const { firstName, middleName, lastName, dobObject } = data
+    const { firstName, middleName, lastName } = data
 
     try {
       const newUser = {
@@ -151,7 +145,6 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         firstName,
         lastName,
         middleName,
-        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
       }
 
       setUser(newUser)
@@ -173,6 +166,42 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         defaultMiddleName={user?.middleName ?? null}
         defaultLastName={user?.lastName ?? null}
       />
+    </UpdateForm>
+  )
+}
+
+const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
+  const [loading, setLoading] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({ mode: "all" })
+
+  const onSubmit = (data: { dobObject: DOBFieldValues }) => {
+    setLoading(true)
+    const { dobObject } = data
+
+    try {
+      const newUser = {
+        ...user,
+        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
+      }
+
+      setUser(newUser)
+
+      console.log("Updated user's personal info:", newUser)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
+  }
+
+  return (
+    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="px-4 pb-4">
         <DOBFieldset
           required
@@ -208,9 +237,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full">
             <AccountSettingsHeader />
+            <NameSection user={user} setUser={setUser} />
+            <DateOfBirthSection user={user} setUser={setUser} />
             <EmailSection user={user} setUser={setUser} />
             <PasswordSection user={user} setUser={setUser} />
-            <PersonalInfoSection user={user} setUser={setUser} />
           </Card>
         </div>
       </section>

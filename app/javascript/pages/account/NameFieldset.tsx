@@ -24,7 +24,7 @@ const NameFieldset = ({
       <legend className={hasError ? "text-alert" : ""}>{t("label.name")}</legend>
       <Field
         name="firstName"
-        label={t("label.firstName")}
+        label={t("label.firstName.sentenceCase")}
         register={register}
         error={errors.firstName !== undefined}
         errorMessage={t("error.firstName")}
@@ -33,14 +33,14 @@ const NameFieldset = ({
       />
       <Field
         name="middleName"
-        label={t("label.middleName")}
+        label={`${t("label.middleName.sentenceCase")} (${t("t.optional.lowercase")})`}
         error={errors.middleName}
         defaultValue={defaultMiddleName ?? null}
         register={register}
       />
       <Field
         name="lastName"
-        label={t("label.lastName")}
+        label={t("label.lastName.sentenceCase")}
         errorMessage={t("error.lastName")}
         defaultValue={defaultLastName ?? null}
         error={errors.lastName}
