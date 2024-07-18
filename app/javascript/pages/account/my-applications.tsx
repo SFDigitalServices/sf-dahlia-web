@@ -178,22 +178,6 @@ const MyApplications = () => {
     }
   }, [authLoading, initialStateLoaded, profile])
 
-  const onDelete = () => {
-    setLoading(true)
-    deleteApplication(deleteApp)
-      .then(() => {
-        const newApplications = applications.filter((application) => application.id !== deleteApp)
-        setApplications(newApplications)
-      })
-      .catch((error: string) => {
-        setError(error)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-    setOpenDeleteModal(false)
-  }
-
   if (!profile && !authLoading && initialStateLoaded) {
     // TODO: Redirect to React sign in page and show a message that user needs to sign in
     window.location.href = getSignInPath()
