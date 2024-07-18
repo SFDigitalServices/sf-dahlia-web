@@ -614,25 +614,6 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
       </div>
     </header>
     <div
-      class="bg-blue-100 border-b border-gray-450 flex mb-4 py-4"
-    >
-      <span
-        class="ui-icon ui-medium mx-4"
-      >
-        <svg
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path
-            d="M14.688 12v-2.688h2.625v2.688h-2.625zM16 26.688c5.875 0 10.688-4.813 10.688-10.688s-4.813-10.688-10.688-10.688-10.688 4.813-10.688 10.688 4.813 10.688 10.688 10.688zM16 2.688c7.375 0 13.313 5.938 13.313 13.313s-5.938 13.313-13.313 13.313-13.313-5.938-13.313-13.313 5.938-13.313 13.313-13.313zM14.688 22.688v-8h2.625v8h-2.625z"
-          />
-        </svg>
-      </span>
-      <p>
-        Please note, there are other preferences that will be considered for units first.
-      </p>
-    </div>
-    <div
       class="lottery-results-row border-b border-gray-450 flex mb-4 px-8 pb-4"
     >
       <div
