@@ -63,6 +63,7 @@ describe("<AccountSettingsPage />", () => {
         fireEvent.change(passwordField, { target: { value: "1234test" } })
         button[1].dispatchEvent(new MouseEvent("click"))
         button[2].dispatchEvent(new MouseEvent("click"))
+        button[3].dispatchEvent(new MouseEvent("click"))
         await promise
       })
 
