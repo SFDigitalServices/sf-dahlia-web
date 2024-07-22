@@ -470,6 +470,7 @@
                 "lottery_will_be_held": "El sorteo se llevará a cabo el %{lottery_date}. Los resultados del sorteo de viviendas se publicarán en %{link}.",
                 "office_hours": "Horarios de atención",
                 "on_the_listing": "en el listado",
+                "notify_about_potential_resend": "<b>Si ya recibió este correo electrónico de confirmación de nuestra parte, ignore este mensaje.</b> Tuvimos un problema al enviar correos electrónicos desde DAHLIA recientemente, por lo que los enviamos nuevamente. Hicimos esto para asegurarnos de que todos los solicitantes tengan sus números de lotería.",
                 "required_supporting_documents": "documentos de respaldo exigidos",
                 "see_below_for_contact_information": "Si necesita actualizar la información de su solicitud, no la vuelva a enviar ya que ambas solicitudes serán eliminadas del sorteo. Póngase en contacto con el agente. Consulte a continuación la información de contacto del agente para este listado.",
                 "should_your_application_be_chosen_rental": "Si su solicitud es elegida, esté listo para completar una solicitud más detallada y proporcionar los documentos de respaldo exigidos dentro de los 5 días hábiles de haber sido contactado.",

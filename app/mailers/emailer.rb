@@ -26,11 +26,13 @@ class Emailer < Devise::Mailer
     listing = Hashie::Mash.new(Force::ListingService.listing(params[:listing_id]))
     @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
+
     _submission_confirmation_email(
       email: params[:email],
-      listing: listing,
+      listing:,
       listing_url: "#{base_url}/listings/#{listing.Id}",
       lottery_number: params[:lottery_number],
+      resending: params[:resending],
     )
   end
 
@@ -116,6 +118,9 @@ class Emailer < Devise::Mailer
     @subject = I18n.translate(
       'emailer.submission_confirmation.subject', listing_name: @listing_name
     )
+    # @resending is for situations where we need to manually resend emails due to failed
+    # deliveries, but we're not sure if some recipients already received the email
+    @resending_submission_confirmation = params[:resending] || false
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'submission_confirmation' }
     end
