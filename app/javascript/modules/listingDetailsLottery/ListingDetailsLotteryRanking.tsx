@@ -30,7 +30,7 @@ export const ListingDetailsLotteryRanking = ({
   listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
   const highestRankedBucket = lotteryResult?.lotteryBuckets.reduce((maxBucket, currBucket) => {
-    if (!maxBucket) {
+    if (!maxBucket && currBucket.preferenceOrder && currBucket.totalSubmittedApps > 0) {
       return currBucket
     }
 
