@@ -1,6 +1,6 @@
 import React from "react"
 import { ExpandableContent, Heading, Icon, t } from "@bloom-housing/ui-components"
-import { LOTTERY_RANKING_VIDEO_URL, PREFERENCES } from "../constants"
+import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
 import { ListingDetailsLotteryResultsRow } from "./ListingDetailsLotteryResultsRow"
 import Link from "../../navigation/Link"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
@@ -29,6 +29,18 @@ export const ListingDetailsLotteryRanking = ({
   listingIsEducator,
   listingIsEducatorOne = false,
 }: ListingDetailsLotteryRankingProps) => {
+  const highestRankedBucket = lotteryResult?.lotteryBuckets.reduce((maxBucket, currBucket) => {
+    if (!maxBucket && currBucket.preferenceOrder && currBucket.totalSubmittedApps > 0) {
+      return currBucket
+    }
+
+    if (currBucket.preferenceOrder && currBucket.totalSubmittedApps > 0) {
+      return currBucket.preferenceOrder < maxBucket.preferenceOrder ? currBucket : maxBucket
+    }
+
+    return maxBucket
+  }, null)
+
   const preferenceBuckets = lotteryResult?.lotteryBuckets.filter((bucket) => {
     if (!bucket.preferenceResults[0]) {
       return false
@@ -40,9 +52,10 @@ export const ListingDetailsLotteryRanking = ({
     return bucket.preferenceName !== "generalLottery" && bucket.preferenceResults[0].preferenceRank
   })
   const applicantSelectedForPreference = preferenceBuckets?.length > 0
-  const applicantHasCertOfPreference = preferenceBuckets.some(
-    (bucket) => bucket.preferenceName === PREFERENCES.certificateOfPreference
+  const applicantHasHighestRankedBucket = preferenceBuckets.some(
+    (bucket) => bucket.preferenceName === highestRankedBucket.preferenceName
   )
+
   const generalLotteryBucket = lotteryResult?.lotteryBuckets.find(
     (bucket) => bucket.preferenceName === "generalLottery"
   )
@@ -65,7 +78,7 @@ export const ListingDetailsLotteryRanking = ({
           </div>
         </header>
 
-        {applicantSelectedForPreference && !applicantHasCertOfPreference && (
+        {applicantSelectedForPreference && !applicantHasHighestRankedBucket && (
           <Tooltip text={t("lottery.rankingPreferenceConsiderationNote")} />
         )}
         {!applicantSelectedForPreference && (
