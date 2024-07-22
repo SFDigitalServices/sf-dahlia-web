@@ -1,0 +1,6 @@
+.mobile-card {
+  @media (max-width: theme("screens.sm")) {
+    border-top: none;
+    border-radius: 0;
+  }
+}
