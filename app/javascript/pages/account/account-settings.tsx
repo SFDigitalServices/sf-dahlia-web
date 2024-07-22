@@ -9,7 +9,7 @@ import { Card } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
-import EmailField from "./EmailField"
+import EmailFieldset from "./EmailFieldset"
 import FormSubmitButton from "./FormSubmitButton"
 import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
@@ -19,17 +19,14 @@ const AccountSettingsHeader = () => {
   return (
     <Card.Header
       divider="flush"
-      className="flex justify-center p-5 text-center w-full flex-col items-center"
+      className="flex justify-center pt-8 text-center w-full flex-col items-center"
     >
-      <div
-        className="pb-4 border-blue-500 w-min px-4 md:px-8 mb-6"
-        style={{ borderBottom: "3px solid" }}
-      >
+      <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
         <Icon size="xlarge" className="md:hidden block" symbol="settings" />
         <Icon size="2xl" className="md:block hidden" symbol="settings" />
       </div>
-      <h1 className="text-xl md:text-2xl">{t("accountSettings.title")}</h1>
-      <p className="pt-6 pb-8 field-note text-sm">{t("accountSettings.description")}</p>
+      <h1 className="my-6 text-xl md:text-2xl">{t("accountSettings.title.sentenceCase")}</h1>
+      <p className="pb-2 field-note text-sm">{t("accountSettings.description")}</p>
     </Card.Header>
   )
 }
@@ -44,8 +41,8 @@ const UpdateForm = ({
   onSubmit?: () => unknown
 }) => {
   return (
-    <Card.Section className="p-6" divider="inset">
-      <Form data-testid="update-form" onSubmit={onSubmit}>
+    <Card.Section divider="inset">
+      <Form className="py-2 px-10" data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={t("label.update")} />
       </Form>
@@ -86,7 +83,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <EmailField register={register} errors={errors} defaultEmail={user?.email ?? null} />
+      <EmailFieldset register={register} errors={errors} defaultEmail={user?.email ?? null} />
     </UpdateForm>
   )
 }
@@ -126,24 +123,18 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
+const NameSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: {
-    firstName: string
-    middleName: string
-    lastName: string
-    dobObject: DOBFieldValues
-  }) => {
+  const onSubmit = (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
-    const { firstName, middleName, lastName, dobObject } = data
+    const { firstName, middleName, lastName } = data
 
     try {
       const newUser = {
@@ -151,7 +142,6 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         firstName,
         lastName,
         middleName,
-        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
       }
 
       setUser(newUser)
@@ -173,15 +163,49 @@ const PersonalInfoSection = ({ user, setUser }: SectionProps) => {
         defaultMiddleName={user?.middleName ?? null}
         defaultLastName={user?.lastName ?? null}
       />
-      <div className="px-4 pb-4">
-        <DOBFieldset
-          required
-          defaultDOB={user ? user.dobObject : null}
-          register={register}
-          error={errors.dob}
-          watch={watch}
-        />
-      </div>
+    </UpdateForm>
+  )
+}
+
+const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
+  const [loading, setLoading] = useState(false)
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({ mode: "all" })
+
+  const onSubmit = (data: { dobObject: DOBFieldValues }) => {
+    setLoading(true)
+    const { dobObject } = data
+
+    try {
+      const newUser = {
+        ...user,
+        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
+      }
+
+      setUser(newUser)
+
+      console.log("Updated user's personal info:", newUser)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
+  }
+
+  return (
+    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+      <DOBFieldset
+        required
+        defaultDOB={user ? user.dobObject : null}
+        register={register}
+        error={errors.dob}
+        watch={watch}
+      />
     </UpdateForm>
   )
 }
@@ -206,11 +230,12 @@ const AccountSettings = ({ profile }: { profile: User }) => {
     <Layout title={t("accountSettings.title")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className="w-full">
+          <Card className="w-full pb-8">
             <AccountSettingsHeader />
+            <NameSection user={user} setUser={setUser} />
+            <DateOfBirthSection user={user} setUser={setUser} />
             <EmailSection user={user} setUser={setUser} />
             <PasswordSection user={user} setUser={setUser} />
-            <PersonalInfoSection user={user} setUser={setUser} />
           </Card>
         </div>
       </section>

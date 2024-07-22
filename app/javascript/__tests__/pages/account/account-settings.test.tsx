@@ -48,14 +48,14 @@ describe("<AccountSettingsPage />", () => {
       jest.restoreAllMocks()
     })
     it("shows the correct header text", () => {
-      const title = getByText("Account Settings")
+      const title = getByText("Account settings")
 
       expect(title).not.toBeNull()
     })
 
     it("updates when clicked", async () => {
       const button = getAllByText("Update")
-      const passwordField: Element = getByLabelText("New Password")
+      const passwordField: Element = getByLabelText("Choose a new password")
 
       await act(async () => {
         button[0].dispatchEvent(new MouseEvent("click"))
@@ -63,6 +63,7 @@ describe("<AccountSettingsPage />", () => {
         fireEvent.change(passwordField, { target: { value: "1234test" } })
         button[1].dispatchEvent(new MouseEvent("click"))
         button[2].dispatchEvent(new MouseEvent("click"))
+        button[3].dispatchEvent(new MouseEvent("click"))
         await promise
       })
 
