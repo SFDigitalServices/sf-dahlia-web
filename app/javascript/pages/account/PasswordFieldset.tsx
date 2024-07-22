@@ -8,19 +8,10 @@ const NewPasswordInstructions = () => {
   return (
     <>
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
-      <ul className="password-instructions">
-        <li>
-          <span className="bullet">&#183; </span>
-          {t("createAccount.passwordInstructions.numCharacters")}
-        </li>
-        <li>
-          <span className="bullet">&#183; </span>
-          {t("createAccount.passwordInstructions.numLetters")}
-        </li>
-        <li>
-          <span className="bullet">&#183; </span>
-          {t("createAccount.passwordInstructions.numNumbers")}
-        </li>
+      <ul className="list-disc list-inside pl-2">
+        <li className="bullet">{t("createAccount.passwordInstructions.numCharacters")}</li>
+        <li className="bullet">{t("createAccount.passwordInstructions.numLetters")}</li>
+        <li className="bullet">{t("createAccount.passwordInstructions.numNumbers")}</li>
       </ul>
     </>
   )

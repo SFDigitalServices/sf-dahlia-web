@@ -27,16 +27,8 @@
 
 // password section
 
-// new password instructions
-.password-instructions {
-  list-style-position: inside;
-}
-
-.password-instructions > li > .bullet{
-  margin-left: 8px;
-  font-weight: bold;
-  font-size: 18px;
-  vertical-align: -2px;
+.bullet::marker {
+  font-size: 8px;
 }
 
 // label for fields in password section
