@@ -1,37 +1,176 @@
-import React from "react"
+import React, { useState } from "react"
 import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
-import { t, Icon, LinkButton } from "@bloom-housing/ui-components"
-import { Card, Heading } from "@bloom-housing/ui-seeds"
+import {
+  t,
+  Icon,
+  LinkButton,
+  Button,
+  AppearanceStyleType,
+  AppearanceBorderType,
+} from "@bloom-housing/ui-components"
+import { Card, Dialog, Heading } from "@bloom-housing/ui-seeds"
 import { ApplicationItem } from "../../components/ApplicationItem"
-import { getLocalizedPath, getSignInPath } from "../../util/routeUtil"
-import { getCurrentLanguage } from "../../util/languageUtil"
-import { getApplications } from "../../api/authApiService"
+import { getApplicationPath, getLocalizedPath, getSignInPath } from "../../util/routeUtil"
+import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
+import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
+import { isRental, isSale } from "../../util/listingUtil"
+import "./my-applications.scss"
+
+export const noApplications = () => {
+  return (
+    <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
+      <h2 className="text-xl">{t("myApplications.noApplications")}</h2>
+      <div className="flex flex-col gap-y-4 w-3/5 pt-4">
+        <LinkButton href={getLocalizedPath("/listings/for-rent", getCurrentLanguage())}>
+          {t("listings.browseRentals")}
+        </LinkButton>
+        <LinkButton href={getLocalizedPath("/listings/for-sale", getCurrentLanguage())}>
+          {t("listings.browseSales")}
+        </LinkButton>
+      </div>
+    </Card.Section>
+  )
+}
+
+const loadingSpinner = () => {
+  return (
+    <div data-testid="loading-spinner" className="flex justify-center pb-9">
+      <Icon symbol="spinner" size="large" />
+    </div>
+  )
+}
+
+const errorMessage = () => {
+  return (
+    <p className="w-full text-center p-4">
+      {renderInlineMarkup(`${t("listings.myApplications.error")}`)}
+    </p>
+  )
+}
+
+const applicationHeader = (text: string) => {
+  return (
+    <Heading className="text-xl border-t border-gray-450 px-4 py-4" priority={2}>
+      {text}
+    </Heading>
+  )
+}
+
+const generateApplicationList = (
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
+  return applications
+    .sort(
+      (a, b) =>
+        new Date(b.applicationSubmittedDate).getTime() -
+        new Date(a.applicationSubmittedDate).getTime()
+    )
+    .map((app) => (
+      <ApplicationItem
+        applicationURL={`${getApplicationPath()}/${app.id}`}
+        applicationUpdatedAt={app.applicationSubmittedDate}
+        confirmationNumber={app.lotteryNumber.toString()}
+        editedDate={app.applicationSubmittedDate}
+        submitted={app.status === "Submitted"}
+        listing={app.listing}
+        key={app.id}
+        handleDeleteApp={handleDeleteApp}
+      />
+    ))
+}
+
+const separateApplications = (applications: Application[]) =>
+  applications.reduce<{
+    rentalApplications: Application[]
+    saleApplications: Application[]
+  }>(
+    (acc, app) => {
+      if (isRental(app.listing)) {
+        acc.rentalApplications.push(app)
+      } else if (isSale(app.listing)) {
+        acc.saleApplications.push(app)
+      }
+
+      return acc
+    },
+    { rentalApplications: [], saleApplications: [] }
+  )
+
+export const determineApplicationItemList = (
+  loading: boolean,
+  error: string,
+  applications: Application[],
+  handleDeleteApp: (id: string) => void
+) => {
+  if (loading) {
+    return loadingSpinner()
+  }
+
+  if (error) {
+    return errorMessage()
+  }
+
+  if (applications === undefined || applications.length === 0) {
+    return noApplications()
+  }
+
+  const { rentalApplications, saleApplications } = separateApplications(applications)
+
+  const hasBothRentalAndSaleApplications =
+    rentalApplications.length > 0 && saleApplications.length > 0
+
+  return (
+    <>
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.rentalUnits"))}
+      {generateApplicationList(rentalApplications, handleDeleteApp)}
+      {hasBothRentalAndSaleApplications && applicationHeader(t("listings.saleUnits"))}
+      {generateApplicationList(saleApplications, handleDeleteApp)}
+    </>
+  )
+}
 
 const MyApplications = () => {
   const { profile, loading: authLoading, initialStateLoaded } = React.useContext(UserContext)
-  // Temporary until we complete DAH-2342
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const [error, setError] = React.useState<string | null>(null)
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const [loading, setLoading] = React.useState<boolean>(true)
-  // Temporary until we merge in way to display applications
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const [applications, setApplications] = React.useState<Application[]>([])
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [deleteApp, setDeleteApp] = useState("")
+
+  const handleDeleteApp = (id: string) => {
+    setDeleteApp(id)
+    setOpenDeleteModal(true)
+  }
+
+  const onDelete = () => {
+    setLoading(true)
+    deleteApplication(deleteApp)
+      .then(() => {
+        const newApplications = applications.filter((application) => application.id !== deleteApp)
+        setApplications(newApplications)
+      })
+      .catch((error: string) => {
+        setError(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    setOpenDeleteModal(false)
+  }
 
   React.useEffect(() => {
     setLoading(true)
     if (profile) {
       getApplications()
         .then((applications) => {
-          setApplications(applications)
-          setLoading(false)
+          setApplications(applications.applications)
         })
         .catch((error: string) => {
           setError(error)
-          setLoading(false)
         })
         .finally(() => {
           setLoading(false)
@@ -45,28 +184,12 @@ const MyApplications = () => {
     return null
   }
 
-  const noApplications = () => {
-    return (
-      <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
-        <h2 className="text-xl">{t("myApplications.noApplications")}</h2>
-        <div className="flex flex-col gap-y-4 w-3/5 pt-4">
-          <LinkButton href={getLocalizedPath("/listings/for-rent", getCurrentLanguage())}>
-            {t("listings.browseRentals")}
-          </LinkButton>
-          <LinkButton href={getLocalizedPath("/listings/for-sale", getCurrentLanguage())}>
-            {t("listings.browseSales")}
-          </LinkButton>
-        </div>
-      </Card.Section>
-    )
-  }
-
   return (
     <Layout
       children={
         <section className="bg-gray-300 border-t border-gray-450">
           <div className="flex flex-wrap relative max-w-2xl mx-auto sm:py-8">
-            <Card className="w-full">
+            <Card className="w-full mobile-card">
               <Card.Header className="flex justify-center w-full flex-col items-center pb-8">
                 <div
                   className="py-4 border-blue-500 w-min px-4 md:px-8 mb-6"
@@ -79,85 +202,30 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
-              {/* TODO: Headings only display if both rental and sales applications exist */}
-              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
-                {t("listings.rentalUnits")}
-              </Heading>
-              <Heading className="text-xl border-t border-gray-450 px-6 py-4" priority={2}>
-                {t("listings.saleUnits")}
-              </Heading>
-              {/* Component if application is submitted */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, no results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted
-              />
-              {/* Component if application is submitted with lottery results and error */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, download results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryResultsURL={"lotteryResults.pdf"}
-                lotteryComplete
-                lotteryError
-                submitted
-              />
-              {/* Component if application is submitted with lottery results and no error */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Submitted, view results"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete
-                lotteryError={false}
-                submitted
-              />
-              {/* Component if application is not submitted and is past due */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Not submitted, past due"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted={false}
-                pastDue
-              />
-              {/* Component if application is not submitted and is not past due */}
-              <ApplicationItem
-                applicationDueDate={"June 1, 2024"}
-                applicationURL={"application/1234abcd"}
-                applicationUpdatedAt={"March 8th, 2022"}
-                confirmationNumber={"#12345678"}
-                editedDate={"June 1, 2024"}
-                listingAddress={"1 Listing Address St, San Francisco CA, 94102"}
-                listingName={"Not submitted, not past due"}
-                listingURL={"/listing/abcd1234/listing-name"}
-                lotteryComplete={false}
-                submitted={false}
-                pastDue={false}
-              />
-              {/* Component if no applications */}
-              {noApplications()}
+              <Dialog
+                isOpen={openDeleteModal}
+                onClose={() => {
+                  setOpenDeleteModal(false)
+                }}
+                className="w-3/5"
+              >
+                <Dialog.Header>
+                  <div className="delete-title">{t("t.deleteApplication")}</div>
+                </Dialog.Header>
+                <Dialog.Content>{t("myApplications.areYouSureYouWantToDelete")}</Dialog.Content>
+                <Dialog.Footer className="delete-buttons">
+                  <Button styleType={AppearanceStyleType.alert} onClick={onDelete}>
+                    {t("t.delete")}
+                  </Button>
+                  <Button
+                    className={AppearanceBorderType.borderless}
+                    onClick={() => setOpenDeleteModal(false)}
+                  >
+                    {t("label.cancel")}
+                  </Button>
+                </Dialog.Footer>
+              </Dialog>
+              {determineApplicationItemList(loading, error, applications, handleDeleteApp)}
             </Card>
           </div>
         </section>

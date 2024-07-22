@@ -83,6 +83,23 @@ describe("ListingDetailsLotteryModal", () => {
     expect(await findByText("Live or Work in San Francisco Preference")).toBeDefined()
   })
 
+  it("displays results when a lotteryNumber is given initially", async () => {
+    axios.get.mockResolvedValue({ data: lotteryResultRentalThree })
+
+    const { findByText } = await renderAndLoadAsync(
+      <ListingDetailsLotterySearchForm
+        listing={lotteryCompleteRentalListing}
+        lotteryBucketDetails={lotteryResultRentalThree}
+        lotteryNumber="123"
+      />
+    )
+
+    expect(await findByText("Your preference ranking")).toBeDefined()
+    expect(await findByText("Displaced Tenant Housing Preference (DTHP)")).toBeDefined()
+    expect(await findByText("Certificate of Preference (COP)")).toBeDefined()
+    expect(await findByText("Live or Work in San Francisco Preference")).toBeDefined()
+  })
+
   it("displays error when invalid lottery number", async () => {
     axios.get.mockResolvedValue({ data: lotteryResultRentalInvalidLotteryNumber })
 
