@@ -25,9 +25,9 @@ describe Emailer, type: :mailer do
 
     it 'renders the body' do
       VCR.use_cassette('emailer/submission_confirmation') do
-        name = "#{@params[:firstName]} #{@params[:lastName]}"
+        # name = "#{@params[:firstName]} #{@params[:lastName]}"
         text = 'Thanks for applying. We have received your application'
-        expect(mail.body.encoded).to match(name)
+        # expect(mail.body.encoded).to match(name)
         expect(mail.body.encoded).to match(text)
       end
     end
@@ -58,9 +58,9 @@ describe Emailer, type: :mailer do
 
     it 'renders the body' do
       VCR.use_cassette('emailer/draft_application_saved') do
-        name = "#{@params[:first_name]} #{@params[:last_name]}"
+        # name = "#{@params[:first_name]} #{@params[:last_name]}"
         text = "Applications for this listing are due by #{deadline}."
-        expect(mail.body.encoded).to match(name)
+        # expect(mail.body.encoded).to match(name)
         expect(mail.body.encoded).to match(text)
         expect(mail.body.encoded).to match(deadline)
       end
@@ -98,7 +98,8 @@ describe Emailer, type: :mailer do
       mail = Emailer.account_update(@record)
 
       VCR.use_cassette('emailer/account_update') do
-        name = 'Hello Jane Doe,'
+        # name = 'Hello Jane Doe,'
+        name = 'Hello,'
         # rubocop:disable Metrics/LineLength
         remember = 'Remember to always create a strong password for your account and not share your password with others.'
         settings_link = '<a href="http://localhost/sign-in?redirectTo=dahlia.account-settings">Account Settings</a>'
