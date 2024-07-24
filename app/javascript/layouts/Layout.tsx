@@ -104,6 +104,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
         },
         {
           title: t("nav.signOut"),
+          iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974
             // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")

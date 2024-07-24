@@ -1,5 +1,4 @@
 .site-header__dropdown-container {
-  border: none;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
@@ -13,6 +12,15 @@
 
 .site-header__navbar-inline .site-header__link {
   --link-padding-inline: 0.25rem 0.75rem 1rem 0.75rem;
+}
+
+.site-header__dropdown {
+  div:nth-child(2),
+  div:nth-child(3) {
+    .site-header__dropdown-item {
+      border: none;
+    }
+  }
 }
 
 .site-header__dropdown-item {
