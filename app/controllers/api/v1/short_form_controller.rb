@@ -66,30 +66,19 @@ class Api::V1::ShortFormController < ApiController
     # the initial entry into the application Name page
     return if params['autosave'] == 'true' && params['initialSave'] != 'true'
 
-    # Additional logging to debug malformed Shirley Chisholm Village applications
-    Rails.logger.info(
-      [
-        '',
-        'ShortFormController#submit_application',
-        "  listing id: #{params.dig('application', 'listingID')}",
-        "  user agent: #{request.user_agent}",
-        "  ip address: #{request.remote_ip}",
-        "  user id: #{(user_signed_in? && current_user.id).inspect}",
-        "  user email: #{(user_signed_in? && current_user.email).inspect}",
-        "  user created_at: #{(user_signed_in? && current_user.created_at).inspect}",
-        "  user confirmed_at: #{(user_signed_in? && current_user.confirmed_at).inspect}",
-        "  locale: #{params['locale']}",
-        "  app email: #{params.dig('application', 'primaryApplicant', 'email').inspect}",
-        "  app status: #{params.dig('application', 'status').inspect}",
-        "  isSFUSDEmployee: #{params.dig('application', 'primaryApplicant', 'isSFUSDEmployee').inspect}",
-        "  jobClassification: #{params.dig('application', 'primaryApplicant', 'jobClassification').inspect}",
-        '',
-      ].join("\n"),
-    )
-
     response =
       Force::ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
+      Rails.logger.info(
+        'ShortFormController#submit_application: [' \
+        "'#{params[:locale]}', " \
+        "'#{params.dig('application', 'primaryApplicant', 'email')}', " \
+        "'#{params.dig('application', 'listingID')}', " \
+        "'#{response['lotteryNumber']}', " \
+        "'#{response['primaryApplicant']['firstName']}', " \
+        "'#{response['primaryApplicant']['lastName']}'" \
+        ']',
+      )
       process_submit_app_response(response)
       render json: response
     else
