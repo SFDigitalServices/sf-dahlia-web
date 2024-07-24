@@ -190,6 +190,14 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
+    files.each do |file|
+      Rails.logger.info(
+        'ShortFormController#send_attached_files: [' \
+        "'#{application_id}', " \
+        "'#{file.id}'" \
+        ']',
+      )
+    end
     Force::ShortFormService.queue_file_attachments(application_id, files)
   end
 
