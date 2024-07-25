@@ -599,6 +599,7 @@
             "view_and_print_a_copy": "檢視已提交的申請並列印副本"
         },
         "hello": "%{name}，您好",
+        "hello_no_name": "您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"

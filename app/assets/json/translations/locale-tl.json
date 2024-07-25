@@ -598,6 +598,7 @@
             "view_and_print_a_copy": "Tingnan ang isinumiteng aplikasyon at mag-print ng kopya"
         },
         "hello": "Kumusta %{name}",
+        "hello_no_name": "Kumusta",
         "housing_counselor": {
             "find_a_housing_counselor": "Humanap ng Tagapayo sa Pabahay (Housing Counselor). ",
             "header": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon."
