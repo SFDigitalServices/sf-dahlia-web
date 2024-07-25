@@ -599,6 +599,7 @@
             "view_and_print_a_copy": "View submitted application and print a copy"
         },
         "hello": "Hello %{name}",
+        "hello_no_name": "Hello",
         "housing_counselor": {
             "find_a_housing_counselor": "Find a Housing Counselor",
             "header": "For more help, we suggest talking with a housing counselor to explore your options."
