@@ -15,6 +15,8 @@ import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 
+const MOBILE_SIZE = 768
+
 const AccountSettingsHeader = () => {
   return (
     <Card.Header
@@ -40,9 +42,20 @@ const UpdateForm = ({
   loading: boolean
   onSubmit?: () => unknown
 }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
   return (
-    <Card.Section divider="inset">
-      <Form className="py-2 px-10" data-testid="update-form" onSubmit={onSubmit}>
+    <Card.Section divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}>
+      <Form className="p-2 md:py-2 md:px-10" data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={t("label.update")} />
       </Form>
