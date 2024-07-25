@@ -25,6 +25,7 @@ describe Emailer, type: :mailer do
 
     it 'renders the body' do
       VCR.use_cassette('emailer/submission_confirmation') do
+        # TODO: test names again for DAH-2471
         # name = "#{@params[:firstName]} #{@params[:lastName]}"
         text = 'Thanks for applying. We have received your application'
         # expect(mail.body.encoded).to match(name)
@@ -58,6 +59,7 @@ describe Emailer, type: :mailer do
 
     it 'renders the body' do
       VCR.use_cassette('emailer/draft_application_saved') do
+        # TODO: test names again for DAH-2471
         # name = "#{@params[:first_name]} #{@params[:last_name]}"
         text = "Applications for this listing are due by #{deadline}."
         # expect(mail.body.encoded).to match(name)
@@ -98,6 +100,7 @@ describe Emailer, type: :mailer do
       mail = Emailer.account_update(@record)
 
       VCR.use_cassette('emailer/account_update') do
+        # TODO: test names again for DAH-2471
         # name = 'Hello Jane Doe,'
         name = 'Hello,'
         # rubocop:disable Metrics/LineLength
