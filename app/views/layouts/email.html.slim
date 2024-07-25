@@ -2,6 +2,12 @@ doctype html
 html
   head
   body
+    - if @resending_submission_confirmation
+      p
+        == t 'emailer.submission_confirmation.notify_about_potential_resend'
+      p
+        = '-----'
+
     p
       = "#{t('hello', name: (@name || ''))},"
 
