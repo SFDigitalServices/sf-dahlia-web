@@ -87,6 +87,10 @@ module Overrides
     end
 
     def handle_registration_success
+      Rails.logger.info(
+        'RegistrationsController#handle_registration_success: ' \
+        "'#{@resource.email.downcase}'",
+      )
       if !@resource.confirmed?
         # user will require email authentication
         @resource.send_confirmation_instructions(
