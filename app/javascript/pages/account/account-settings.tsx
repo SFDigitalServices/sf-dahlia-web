@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
@@ -14,6 +14,7 @@ import FormSubmitButton from "./FormSubmitButton"
 import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
+import { updateNameOrDOB as apiUpdateNameOrDOB } from "../../api/authApiService"
 
 const MOBILE_SIZE = 768
 
@@ -136,8 +137,35 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
+const updateNameOrDOB = async (
+  newUser: User,
+  saveProfile: (profile: User) => void,
+  setUser: React.Dispatch<User>,
+  setLoading: React.Dispatch<boolean>
+) => {
+  return apiUpdateNameOrDOB(newUser)
+    .then((profile) => {
+      saveProfile(profile)
+      setUser(newUser)
+    })
+    .catch((error) => {
+      // TODO: In the case that a user's DOB is invalid, this is a snippet of the AxiosError that will be returned
+      // {
+      //  data: {
+      //    error: "Invalid DOB"
+      //  },
+      //  status: 422,
+      // }
+      console.log(error)
+    })
+    .finally(() => {
+      setLoading(false)
+    })
+}
+
 const NameSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const { saveProfile } = useContext(UserContext)
 
   const {
     register,
@@ -145,26 +173,18 @@ const NameSection = ({ user, setUser }: SectionProps) => {
     handleSubmit,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: { firstName: string; middleName: string; lastName: string }) => {
+  const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
     const { firstName, middleName, lastName } = data
 
-    try {
-      const newUser = {
-        ...user,
-        firstName,
-        lastName,
-        middleName,
-      }
-
-      setUser(newUser)
-
-      console.log("Updated user's personal info:", newUser)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
+    const newUser = {
+      ...user,
+      firstName,
+      lastName,
+      middleName,
     }
+
+    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading)
   }
 
   return (
@@ -182,6 +202,7 @@ const NameSection = ({ user, setUser }: SectionProps) => {
 
 const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const { saveProfile } = useContext(UserContext)
 
   const {
     register,
@@ -190,24 +211,16 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     watch,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: { dobObject: DOBFieldValues }) => {
+  const onSubmit = async (data: { dob: DOBFieldValues }) => {
     setLoading(true)
-    const { dobObject } = data
+    const { dob } = data
 
-    try {
-      const newUser = {
-        ...user,
-        DOB: [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-"),
-      }
-
-      setUser(newUser)
-
-      console.log("Updated user's personal info:", newUser)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
+    const newUser = {
+      ...user,
+      DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
     }
+
+    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading)
   }
 
   return (

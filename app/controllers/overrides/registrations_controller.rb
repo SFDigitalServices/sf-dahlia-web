@@ -4,7 +4,7 @@ module Overrides
     # method copied from original gem; refactored to please Rubocop
     def create
       setup_resource_for_create
-      return render_create_error if name_fields_have_invalid_characters?
+      return render_create_error if name_fields_have_invalid_characters? || !AccountValidationService.valid_dob?(account_params[:DOB])
 
       if resource_class.devise_modules.include?(:confirmable) && !@redirect_url
         return render_create_error_missing_confirm_success_url

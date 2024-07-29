@@ -38,6 +38,7 @@ const UserProvider = (props: UserProviderProps) => {
     loading: state.loading,
     profile: state.profile,
     initialStateLoaded: state.initialStateLoaded,
+    saveProfile: (profile) => dispatch(saveProfile(profile)),
     signIn: async (email, password) => {
       dispatch(signOut())
       dispatch(startLoading())
