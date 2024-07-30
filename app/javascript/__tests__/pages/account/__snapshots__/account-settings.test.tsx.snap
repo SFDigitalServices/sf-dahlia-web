@@ -1,0 +1,3299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="notranslate site-wrapper"
+      >
+        <div
+          class="site-content"
+        >
+          <header
+            class="site-header"
+          >
+            <a
+              class="site-header__skip-link"
+              href="#main-content"
+            >
+              Skip to main content
+            </a>
+            <div
+              class="language-bar"
+            >
+              <div
+                class="language-bar__inner"
+              >
+                <nav
+                  aria-label="Choose your language"
+                  class="language-nav"
+                >
+                  <ul
+                    class="language-nav__list"
+                  >
+                    <li>
+                      <button
+                        class="language-nav__list-button is-active"
+                        type="button"
+                      >
+                        English
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        Español
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        中文
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        Filipino
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div
+              class="site-header__notice "
+            >
+              <div
+                class="site-header__notice-text"
+              >
+                <span>
+                  We'd love to get 
+                  <a
+                    href="https://airtable.com/shrw64DubWTQfRkdo"
+                    target="_blank"
+                  >
+                    your feedback.
+                  </a>
+                </span>
+              </div>
+            </div>
+            <nav
+              aria-label="main navigation"
+              class="site-header__container"
+              role="navigation"
+            >
+              <div
+                class="site-header__base  site-header__base-wrapped"
+              >
+                <div
+                  class="site-header__logo-container site-header__logo-width-med"
+                  id="site-header-logo"
+                >
+                  <a
+                    aria-label="DAHLIA San Francisco Housing Portal"
+                    class="site-header__logo translate site-header__custom-width"
+                    href="/"
+                    target="_self"
+                  >
+                    <div
+                      class="site-header__logo-content site-header__image-only-container"
+                    >
+                      <img
+                        alt="Site logo"
+                        class="site-header__logo-image site-header__image-only"
+                      />
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="site-header__navbar-menu site-header__navbar-wrapped"
+                  id="site-header-links"
+                >
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Rent-0"
+                    href="/listings/for-rent"
+                    target="_self"
+                  >
+                    <div>
+                      Rent
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Buy-1"
+                    href="/listings/for-sale"
+                    target="_self"
+                  >
+                    <div>
+                      Buy
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="My Favorites-2"
+                    href="/favorites"
+                    target="_self"
+                  >
+                    <div>
+                      My Favorites
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Get Assistance-3"
+                    href="/get-assistance"
+                    target="_self"
+                  >
+                    <div>
+                      Get Assistance
+                    </div>
+                  </a>
+                  <span
+                    class="site-header__link site-header__dropdown-title"
+                    data-testid="My Account-4"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span>
+                      <span>
+                        <span
+                          class="site-header__dropdown-title-split"
+                        >
+                          My
+                        </span>
+                        <span
+                          class="site-header__dropdown-title-with-icon"
+                        >
+                          Account
+                          <span
+                            class="ui-icon ui-small pl-2"
+                          >
+                            <svg
+                              fill="#555555"
+                              viewBox="0 0 32 32"
+                            >
+                              <path
+                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <main
+            class="md:overflow-x-hidden"
+            data-testid="main-content-test-id"
+            id="main-content"
+          >
+            <section
+              class="bg-gray-300 md:border-t md:border-gray-450"
+            >
+              <div
+                class="flex flex-wrap relative md:max-w-lg mx-auto md:py-8"
+              >
+                <article
+                  class="seeds-card w-full pb-8"
+                  data-spacing="base"
+                >
+                  <header
+                    class="seeds-card-header flex justify-center pt-8 text-center w-full flex-col items-center"
+                    data-divider="flush"
+                  >
+                    <div
+                      class="pb-4 px-4 border-blue-500 w-min"
+                      style="border-bottom: 3px solid;"
+                    >
+                      <span
+                        class="ui-icon ui-xlarge md:hidden block"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#c7cbc7"
+                          />
+                          <path
+                            d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#556080"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="ui-icon ui-2xl md:block hidden"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#c7cbc7"
+                          />
+                          <path
+                            d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#556080"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <h1
+                      class="my-6 text-xl md:text-2xl"
+                    >
+                      Account settings
+                    </h1>
+                    <p
+                      class="pb-2 field-note text-sm"
+                    >
+                      We use this information to help you fill in your application.
+                    </p>
+                  </header>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="form-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Name
+                        </legend>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="firstName"
+                          >
+                            First name
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="firstName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="firstName"
+                              name="firstName"
+                              title="firstName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="middleName"
+                          >
+                            Middle name (optional)
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="middleName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="middleName"
+                              name="middleName"
+                              title="middleName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <span
+                            id="middleName-error"
+                          />
+                        </div>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="lastName"
+                          >
+                            Last name
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="lastName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="lastName"
+                              name="lastName"
+                              title="lastName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="form-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Date of birth
+                        </legend>
+                        <div
+                          class="field-group--date"
+                        >
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthMonth"
+                            >
+                              Month
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthMonth-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthMonth"
+                                maxlength="2"
+                                name="dob.birthMonth"
+                                title="dob.birthMonth"
+                                type="text"
+                                value="01"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthMonth-error"
+                            />
+                          </div>
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthDay"
+                            >
+                              Day
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthDay-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthDay"
+                                maxlength="2"
+                                name="dob.birthDay"
+                                title="dob.birthDay"
+                                type="text"
+                                value="01"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthDay-error"
+                            />
+                          </div>
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthYear"
+                            >
+                              Year
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthYear-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthYear"
+                                maxlength="4"
+                                name="dob.birthYear"
+                                title="dob.birthYear"
+                                type="text"
+                                value="1999"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthYear-error"
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="email-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Email
+                        </legend>
+                        <div
+                          class="field pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="email"
+                          />
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="email-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="email"
+                              name="email"
+                              placeholder="example@web.com"
+                              title="example@web.com"
+                              type="email"
+                              value="email@email.com"
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="password-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Password
+                        </legend>
+                        <p
+                          class="field-note mt-2 mb-4"
+                        >
+                          You must enter your current password first to change it. We do this for your security.
+                        </p>
+                        <div
+                          class="field mb-1"
+                        >
+                          <label
+                            class="label"
+                            for="currentPassword"
+                          >
+                            Current password
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="currentPassword-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="currentPassword"
+                              name="currentPassword"
+                              title="currentPassword"
+                              type="password"
+                              value=""
+                            />
+                          </div>
+                          <span
+                            id="currentPassword-error"
+                          />
+                        </div>
+                        <div
+                          class="forgot-password-link"
+                        >
+                          <a
+                            href="/forgot-password"
+                          >
+                            Forgot password?
+                          </a>
+                        </div>
+                        <div
+                          class="new-password-label pt-4"
+                        >
+                          <label
+                            for="password"
+                          >
+                            Choose a new password
+                          </label>
+                        </div>
+                        <div
+                          class="field-note my-2"
+                        >
+                          <span>
+                            Must include at least:
+                          </span>
+                          <ul
+                            class="list-disc list-inside pl-2"
+                          >
+                            <li
+                              class="bullet"
+                            >
+                              8 characters
+                            </li>
+                            <li
+                              class="bullet"
+                            >
+                              1 letter
+                            </li>
+                            <li
+                              class="bullet"
+                            >
+                              1 number
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          class="field mt-0 mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="password"
+                          />
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="password-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="password"
+                              name="password"
+                              title="password"
+                              type="password"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </main>
+        </div>
+        <footer
+          class="site-footer"
+        >
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section pb-8"
+            >
+              <img
+                alt=""
+                data-testid="footer-logo-test-id"
+              />
+            </div>
+          </div>
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section py-2"
+            >
+              <p
+                class="text-gray-500"
+              >
+                <span>
+                  DAHLIA: San Francisco Housing Portal is a project of the 
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                    target="_blank"
+                  >
+                    Mayor's Office of Housing and Community Development
+                  </a>
+                </span>
+              </p>
+              <p
+                class="text-xs mt-4 text-gray-500"
+              >
+                <span>
+                  in partnership with
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/city-administrator/digital-services"
+                    target="_blank"
+                  >
+                    San Francisco Digital Services
+                  </a>
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/mayors-office-innovation"
+                    target="_blank"
+                  >
+                    Mayor's Office of Civic Innovation
+                  </a>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section pb-8"
+            >
+              <p
+                class="text-sm"
+              >
+                For listing and application questions, please contact the agent displayed on the listing.
+                 
+                <br />
+                For general program inquiries, you may call MOHCD at 415-701-5500.
+              </p>
+            </div>
+          </div>
+          <section
+            class="footer-sock"
+          >
+            <div
+              class="footer-sock__inner"
+            >
+              <p
+                class="footer-copyright"
+              >
+                © City & County of San Francisco
+              </p>
+              <nav
+                aria-label="Footer"
+                class="footer-nav"
+              >
+                <a
+                  class="text-gray-500"
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
+                  target="_blank"
+                >
+                  Give Feedback
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="mailto:sfhousinginfo@sfgov.org"
+                  target="_self"
+                >
+                  Contact
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="/disclaimer"
+                  target="_self"
+                >
+                  Disclaimer
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="/privacy"
+                  target="_self"
+                >
+                  Privacy Policy
+                </a>
+              </nav>
+            </div>
+          </section>
+        </footer>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="notranslate site-wrapper"
+    >
+      <div
+        class="site-content"
+      >
+        <header
+          class="site-header"
+        >
+          <a
+            class="site-header__skip-link"
+            href="#main-content"
+          >
+            Skip to main content
+          </a>
+          <div
+            class="language-bar"
+          >
+            <div
+              class="language-bar__inner"
+            >
+              <nav
+                aria-label="Choose your language"
+                class="language-nav"
+              >
+                <ul
+                  class="language-nav__list"
+                >
+                  <li>
+                    <button
+                      class="language-nav__list-button is-active"
+                      type="button"
+                    >
+                      English
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Español
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      中文
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Filipino
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div
+            class="site-header__notice "
+          >
+            <div
+              class="site-header__notice-text"
+            >
+              <span>
+                We'd love to get 
+                <a
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
+                  target="_blank"
+                >
+                  your feedback.
+                </a>
+              </span>
+            </div>
+          </div>
+          <nav
+            aria-label="main navigation"
+            class="site-header__container"
+            role="navigation"
+          >
+            <div
+              class="site-header__base  site-header__base-wrapped"
+            >
+              <div
+                class="site-header__logo-container site-header__logo-width-med"
+                id="site-header-logo"
+              >
+                <a
+                  aria-label="DAHLIA San Francisco Housing Portal"
+                  class="site-header__logo translate site-header__custom-width"
+                  href="/"
+                  target="_self"
+                >
+                  <div
+                    class="site-header__logo-content site-header__image-only-container"
+                  >
+                    <img
+                      alt="Site logo"
+                      class="site-header__logo-image site-header__image-only"
+                    />
+                  </div>
+                </a>
+              </div>
+              <div
+                class="site-header__navbar-menu site-header__navbar-wrapped"
+                id="site-header-links"
+              >
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Rent-0"
+                  href="/listings/for-rent"
+                  target="_self"
+                >
+                  <div>
+                    Rent
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Buy-1"
+                  href="/listings/for-sale"
+                  target="_self"
+                >
+                  <div>
+                    Buy
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="My Favorites-2"
+                  href="/favorites"
+                  target="_self"
+                >
+                  <div>
+                    My Favorites
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Get Assistance-3"
+                  href="/get-assistance"
+                  target="_self"
+                >
+                  <div>
+                    Get Assistance
+                  </div>
+                </a>
+                <span
+                  class="site-header__link site-header__dropdown-title"
+                  data-testid="My Account-4"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    <span>
+                      <span
+                        class="site-header__dropdown-title-split"
+                      >
+                        My
+                      </span>
+                      <span
+                        class="site-header__dropdown-title-with-icon"
+                      >
+                        Account
+                        <span
+                          class="ui-icon ui-small pl-2"
+                        >
+                          <svg
+                            fill="#555555"
+                            viewBox="0 0 32 32"
+                          >
+                            <path
+                              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main
+          class="md:overflow-x-hidden"
+          data-testid="main-content-test-id"
+          id="main-content"
+        >
+          <section
+            class="bg-gray-300 md:border-t md:border-gray-450"
+          >
+            <div
+              class="flex flex-wrap relative md:max-w-lg mx-auto md:py-8"
+            >
+              <article
+                class="seeds-card w-full pb-8"
+                data-spacing="base"
+              >
+                <header
+                  class="seeds-card-header flex justify-center pt-8 text-center w-full flex-col items-center"
+                  data-divider="flush"
+                >
+                  <div
+                    class="pb-4 px-4 border-blue-500 w-min"
+                    style="border-bottom: 3px solid;"
+                  >
+                    <span
+                      class="ui-icon ui-xlarge md:hidden block"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#c7cbc7"
+                        />
+                        <path
+                          d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#556080"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="ui-icon ui-2xl md:block hidden"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#c7cbc7"
+                        />
+                        <path
+                          d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#556080"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <h1
+                    class="my-6 text-xl md:text-2xl"
+                  >
+                    Account settings
+                  </h1>
+                  <p
+                    class="pb-2 field-note text-sm"
+                  >
+                    We use this information to help you fill in your application.
+                  </p>
+                </header>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="form-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Name
+                      </legend>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="firstName"
+                        >
+                          First name
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="firstName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="firstName"
+                            name="firstName"
+                            title="firstName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="middleName"
+                        >
+                          Middle name (optional)
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="middleName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="middleName"
+                            name="middleName"
+                            title="middleName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <span
+                          id="middleName-error"
+                        />
+                      </div>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="lastName"
+                        >
+                          Last name
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="lastName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="lastName"
+                            name="lastName"
+                            title="lastName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="form-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Date of birth
+                      </legend>
+                      <div
+                        class="field-group--date"
+                      >
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthMonth"
+                          >
+                            Month
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthMonth-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthMonth"
+                              maxlength="2"
+                              name="dob.birthMonth"
+                              title="dob.birthMonth"
+                              type="text"
+                              value="01"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthMonth-error"
+                          />
+                        </div>
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthDay"
+                          >
+                            Day
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthDay-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthDay"
+                              maxlength="2"
+                              name="dob.birthDay"
+                              title="dob.birthDay"
+                              type="text"
+                              value="01"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthDay-error"
+                          />
+                        </div>
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthYear"
+                          >
+                            Year
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthYear-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthYear"
+                              maxlength="4"
+                              name="dob.birthYear"
+                              title="dob.birthYear"
+                              type="text"
+                              value="1999"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthYear-error"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="email-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Email
+                      </legend>
+                      <div
+                        class="field pb-4"
+                      >
+                        <label
+                          class="label"
+                          for="email"
+                        />
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="email-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="email"
+                            name="email"
+                            placeholder="example@web.com"
+                            title="example@web.com"
+                            type="email"
+                            value="email@email.com"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="password-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Password
+                      </legend>
+                      <p
+                        class="field-note mt-2 mb-4"
+                      >
+                        You must enter your current password first to change it. We do this for your security.
+                      </p>
+                      <div
+                        class="field mb-1"
+                      >
+                        <label
+                          class="label"
+                          for="currentPassword"
+                        >
+                          Current password
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="currentPassword-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="currentPassword"
+                            name="currentPassword"
+                            title="currentPassword"
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                        <span
+                          id="currentPassword-error"
+                        />
+                      </div>
+                      <div
+                        class="forgot-password-link"
+                      >
+                        <a
+                          href="/forgot-password"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
+                      <div
+                        class="new-password-label pt-4"
+                      >
+                        <label
+                          for="password"
+                        >
+                          Choose a new password
+                        </label>
+                      </div>
+                      <div
+                        class="field-note my-2"
+                      >
+                        <span>
+                          Must include at least:
+                        </span>
+                        <ul
+                          class="list-disc list-inside pl-2"
+                        >
+                          <li
+                            class="bullet"
+                          >
+                            8 characters
+                          </li>
+                          <li
+                            class="bullet"
+                          >
+                            1 letter
+                          </li>
+                          <li
+                            class="bullet"
+                          >
+                            1 number
+                          </li>
+                        </ul>
+                      </div>
+                      <div
+                        class="field mt-0 mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="password"
+                        />
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="password-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="password"
+                            name="password"
+                            title="password"
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+      <footer
+        class="site-footer"
+      >
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <img
+              alt=""
+              data-testid="footer-logo-test-id"
+            />
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section py-2"
+          >
+            <p
+              class="text-gray-500"
+            >
+              <span>
+                DAHLIA: San Francisco Housing Portal is a project of the 
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                  target="_blank"
+                >
+                  Mayor's Office of Housing and Community Development
+                </a>
+              </span>
+            </p>
+            <p
+              class="text-xs mt-4 text-gray-500"
+            >
+              <span>
+                in partnership with
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/city-administrator/digital-services"
+                  target="_blank"
+                >
+                  San Francisco Digital Services
+                </a>
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-innovation"
+                  target="_blank"
+                >
+                  Mayor's Office of Civic Innovation
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <p
+              class="text-sm"
+            >
+              For listing and application questions, please contact the agent displayed on the listing.
+               
+              <br />
+              For general program inquiries, you may call MOHCD at 415-701-5500.
+            </p>
+          </div>
+        </div>
+        <section
+          class="footer-sock"
+        >
+          <div
+            class="footer-sock__inner"
+          >
+            <p
+              class="footer-copyright"
+            >
+              © City & County of San Francisco
+            </p>
+            <nav
+              aria-label="Footer"
+              class="footer-nav"
+            >
+              <a
+                class="text-gray-500"
+                href="https://airtable.com/shrw64DubWTQfRkdo"
+                target="_blank"
+              >
+                Give Feedback
+              </a>
+              <a
+                class="text-gray-500"
+                href="mailto:sfhousinginfo@sfgov.org"
+                target="_self"
+              >
+                Contact
+              </a>
+              <a
+                class="text-gray-500"
+                href="/disclaimer"
+                target="_self"
+              >
+                Disclaimer
+              </a>
+              <a
+                class="text-gray-500"
+                href="/privacy"
+                target="_self"
+              >
+                Privacy Policy
+              </a>
+            </nav>
+          </div>
+        </section>
+      </footer>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="notranslate site-wrapper"
+      >
+        <div
+          class="site-content"
+        >
+          <header
+            class="site-header"
+          >
+            <a
+              class="site-header__skip-link"
+              href="#main-content"
+            >
+              Skip to main content
+            </a>
+            <div
+              class="language-bar"
+            >
+              <div
+                class="language-bar__inner"
+              >
+                <nav
+                  aria-label="Choose your language"
+                  class="language-nav"
+                >
+                  <ul
+                    class="language-nav__list"
+                  >
+                    <li>
+                      <button
+                        class="language-nav__list-button is-active"
+                        type="button"
+                      >
+                        English
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        Español
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        中文
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        class="language-nav__list-button"
+                        type="button"
+                      >
+                        Filipino
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div
+              class="site-header__notice "
+            >
+              <div
+                class="site-header__notice-text"
+              >
+                <span>
+                  We'd love to get 
+                  <a
+                    href="https://airtable.com/shrw64DubWTQfRkdo"
+                    target="_blank"
+                  >
+                    your feedback.
+                  </a>
+                </span>
+              </div>
+            </div>
+            <nav
+              aria-label="main navigation"
+              class="site-header__container"
+              role="navigation"
+            >
+              <div
+                class="site-header__base  site-header__base-wrapped"
+              >
+                <div
+                  class="site-header__logo-container site-header__logo-width-med"
+                  id="site-header-logo"
+                >
+                  <a
+                    aria-label="DAHLIA San Francisco Housing Portal"
+                    class="site-header__logo translate site-header__custom-width"
+                    href="/"
+                    target="_self"
+                  >
+                    <div
+                      class="site-header__logo-content site-header__image-only-container"
+                    >
+                      <img
+                        alt="Site logo"
+                        class="site-header__logo-image site-header__image-only"
+                      />
+                    </div>
+                  </a>
+                </div>
+                <div
+                  class="site-header__navbar-menu site-header__navbar-wrapped"
+                  id="site-header-links"
+                >
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Rent-0"
+                    href="/listings/for-rent"
+                    target="_self"
+                  >
+                    <div>
+                      Rent
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Buy-1"
+                    href="/listings/for-sale"
+                    target="_self"
+                  >
+                    <div>
+                      Buy
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="My Favorites-2"
+                    href="/favorites"
+                    target="_self"
+                  >
+                    <div>
+                      My Favorites
+                    </div>
+                  </a>
+                  <a
+                    class="site-header__link pb-4 pt-1 flex items-end "
+                    data-testid="Get Assistance-3"
+                    href="/get-assistance"
+                    target="_self"
+                  >
+                    <div>
+                      Get Assistance
+                    </div>
+                  </a>
+                  <span
+                    class="site-header__link site-header__dropdown-title"
+                    data-testid="My Account-4"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <span>
+                      <span>
+                        <span
+                          class="site-header__dropdown-title-split"
+                        >
+                          My
+                        </span>
+                        <span
+                          class="site-header__dropdown-title-with-icon"
+                        >
+                          Account
+                          <span
+                            class="ui-icon ui-small pl-2"
+                          >
+                            <svg
+                              fill="#555555"
+                              viewBox="0 0 32 32"
+                            >
+                              <path
+                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <main
+            class="md:overflow-x-hidden"
+            data-testid="main-content-test-id"
+            id="main-content"
+          >
+            <section
+              class="bg-gray-300 md:border-t md:border-gray-450"
+            >
+              <div
+                class="flex flex-wrap relative md:max-w-lg mx-auto md:py-8"
+              >
+                <article
+                  class="seeds-card w-full pb-8"
+                  data-spacing="base"
+                >
+                  <header
+                    class="seeds-card-header flex justify-center pt-8 text-center w-full flex-col items-center"
+                    data-divider="flush"
+                  >
+                    <div
+                      class="pb-4 px-4 border-blue-500 w-min"
+                      style="border-bottom: 3px solid;"
+                    >
+                      <span
+                        class="ui-icon ui-xlarge md:hidden block"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#c7cbc7"
+                          />
+                          <path
+                            d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#556080"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="ui-icon ui-2xl md:block hidden"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#c7cbc7"
+                          />
+                          <path
+                            d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                            fill="#556080"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <h1
+                      class="my-6 text-xl md:text-2xl"
+                    >
+                      Account settings
+                    </h1>
+                    <p
+                      class="pb-2 field-note text-sm"
+                    >
+                      We use this information to help you fill in your application.
+                    </p>
+                  </header>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="form-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Name
+                        </legend>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="firstName"
+                          >
+                            First name
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="firstName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="firstName"
+                              name="firstName"
+                              title="firstName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="middleName"
+                          >
+                            Middle name (optional)
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="middleName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="middleName"
+                              name="middleName"
+                              title="middleName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <span
+                            id="middleName-error"
+                          />
+                        </div>
+                        <div
+                          class="field mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="lastName"
+                          >
+                            Last name
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="lastName-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="lastName"
+                              name="lastName"
+                              title="lastName"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="form-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Date of birth
+                        </legend>
+                        <div
+                          class="field-group--date"
+                        >
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthMonth"
+                            >
+                              Month
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthMonth-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthMonth"
+                                maxlength="2"
+                                name="dob.birthMonth"
+                                title="dob.birthMonth"
+                                type="text"
+                                value="01"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthMonth-error"
+                            />
+                          </div>
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthDay"
+                            >
+                              Day
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthDay-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthDay"
+                                maxlength="2"
+                                name="dob.birthDay"
+                                title="dob.birthDay"
+                                type="text"
+                                value="01"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthDay-error"
+                            />
+                          </div>
+                          <div
+                            class="field ml-0 mr-4 pb-4"
+                          >
+                            <label
+                              class="label"
+                              for="dob.birthYear"
+                            >
+                              Year
+                            </label>
+                            <div
+                              class="control"
+                            >
+                              <input
+                                aria-describedby="dob.birthYear-error"
+                                aria-invalid="false"
+                                class="input"
+                                id="dob.birthYear"
+                                maxlength="4"
+                                name="dob.birthYear"
+                                title="dob.birthYear"
+                                type="text"
+                                value="1999"
+                              />
+                            </div>
+                            <span
+                              id="dob.birthYear-error"
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="email-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Email
+                        </legend>
+                        <div
+                          class="field pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="email"
+                          />
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="email-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="email"
+                              name="email"
+                              placeholder="example@web.com"
+                              title="example@web.com"
+                              type="email"
+                              value="email@email.com"
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="seeds-card-section"
+                    data-divider="inset"
+                  >
+                    <form
+                      class="p-2 md:py-2 md:px-10"
+                      novalidate=""
+                    >
+                      <fieldset
+                        class="password-fieldset"
+                      >
+                        <legend
+                          class="fieldset-legend"
+                        >
+                          Password
+                        </legend>
+                        <p
+                          class="field-note mt-2 mb-4"
+                        >
+                          You must enter your current password first to change it. We do this for your security.
+                        </p>
+                        <div
+                          class="field mb-1"
+                        >
+                          <label
+                            class="label"
+                            for="currentPassword"
+                          >
+                            Current password
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="currentPassword-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="currentPassword"
+                              name="currentPassword"
+                              title="currentPassword"
+                              type="password"
+                              value=""
+                            />
+                          </div>
+                          <span
+                            id="currentPassword-error"
+                          />
+                        </div>
+                        <div
+                          class="forgot-password-link"
+                        >
+                          <a
+                            href="/forgot-password"
+                          >
+                            Forgot password?
+                          </a>
+                        </div>
+                        <div
+                          class="new-password-label pt-4"
+                        >
+                          <label
+                            for="password"
+                          >
+                            Choose a new password
+                          </label>
+                        </div>
+                        <div
+                          class="field-note my-2"
+                        >
+                          <span>
+                            Must include at least:
+                          </span>
+                          <ul
+                            class="list-disc list-inside pl-2"
+                          >
+                            <li
+                              class="bullet"
+                            >
+                              8 characters
+                            </li>
+                            <li
+                              class="bullet"
+                            >
+                              1 letter
+                            </li>
+                            <li
+                              class="bullet"
+                            >
+                              1 number
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          class="field mt-0 mb-4"
+                        >
+                          <label
+                            class="label"
+                            for="password"
+                          />
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="password-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="password"
+                              name="password"
+                              title="password"
+                              type="password"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div
+                        class="flex justify-center pt-4"
+                      >
+                        <button
+                          class="button"
+                          tabindex="0"
+                          type="submit"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </main>
+        </div>
+        <footer
+          class="site-footer"
+        >
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section pb-8"
+            >
+              <img
+                alt=""
+                data-testid="footer-logo-test-id"
+              />
+            </div>
+          </div>
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section py-2"
+            >
+              <p
+                class="text-gray-500"
+              >
+                <span>
+                  DAHLIA: San Francisco Housing Portal is a project of the 
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                    target="_blank"
+                  >
+                    Mayor's Office of Housing and Community Development
+                  </a>
+                </span>
+              </p>
+              <p
+                class="text-xs mt-4 text-gray-500"
+              >
+                <span>
+                  in partnership with
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/city-administrator/digital-services"
+                    target="_blank"
+                  >
+                    San Francisco Digital Services
+                  </a>
+                  <br />
+                  <a
+                    class="text-white"
+                    href="https://sf.gov/departments/mayors-office-innovation"
+                    target="_blank"
+                  >
+                    Mayor's Office of Civic Innovation
+                  </a>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="footer-row "
+          >
+            <div
+              class="footer-row__section pb-8"
+            >
+              <p
+                class="text-sm"
+              >
+                For listing and application questions, please contact the agent displayed on the listing.
+                 
+                <br />
+                For general program inquiries, you may call MOHCD at 415-701-5500.
+              </p>
+            </div>
+          </div>
+          <section
+            class="footer-sock"
+          >
+            <div
+              class="footer-sock__inner"
+            >
+              <p
+                class="footer-copyright"
+              >
+                © City & County of San Francisco
+              </p>
+              <nav
+                aria-label="Footer"
+                class="footer-nav"
+              >
+                <a
+                  class="text-gray-500"
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
+                  target="_blank"
+                >
+                  Give Feedback
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="mailto:sfhousinginfo@sfgov.org"
+                  target="_self"
+                >
+                  Contact
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="/disclaimer"
+                  target="_self"
+                >
+                  Disclaimer
+                </a>
+                <a
+                  class="text-gray-500"
+                  href="/privacy"
+                  target="_self"
+                >
+                  Privacy Policy
+                </a>
+              </nav>
+            </div>
+          </section>
+        </footer>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="notranslate site-wrapper"
+    >
+      <div
+        class="site-content"
+      >
+        <header
+          class="site-header"
+        >
+          <a
+            class="site-header__skip-link"
+            href="#main-content"
+          >
+            Skip to main content
+          </a>
+          <div
+            class="language-bar"
+          >
+            <div
+              class="language-bar__inner"
+            >
+              <nav
+                aria-label="Choose your language"
+                class="language-nav"
+              >
+                <ul
+                  class="language-nav__list"
+                >
+                  <li>
+                    <button
+                      class="language-nav__list-button is-active"
+                      type="button"
+                    >
+                      English
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Español
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      中文
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Filipino
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div
+            class="site-header__notice "
+          >
+            <div
+              class="site-header__notice-text"
+            >
+              <span>
+                We'd love to get 
+                <a
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
+                  target="_blank"
+                >
+                  your feedback.
+                </a>
+              </span>
+            </div>
+          </div>
+          <nav
+            aria-label="main navigation"
+            class="site-header__container"
+            role="navigation"
+          >
+            <div
+              class="site-header__base  site-header__base-wrapped"
+            >
+              <div
+                class="site-header__logo-container site-header__logo-width-med"
+                id="site-header-logo"
+              >
+                <a
+                  aria-label="DAHLIA San Francisco Housing Portal"
+                  class="site-header__logo translate site-header__custom-width"
+                  href="/"
+                  target="_self"
+                >
+                  <div
+                    class="site-header__logo-content site-header__image-only-container"
+                  >
+                    <img
+                      alt="Site logo"
+                      class="site-header__logo-image site-header__image-only"
+                    />
+                  </div>
+                </a>
+              </div>
+              <div
+                class="site-header__navbar-menu site-header__navbar-wrapped"
+                id="site-header-links"
+              >
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Rent-0"
+                  href="/listings/for-rent"
+                  target="_self"
+                >
+                  <div>
+                    Rent
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Buy-1"
+                  href="/listings/for-sale"
+                  target="_self"
+                >
+                  <div>
+                    Buy
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="My Favorites-2"
+                  href="/favorites"
+                  target="_self"
+                >
+                  <div>
+                    My Favorites
+                  </div>
+                </a>
+                <a
+                  class="site-header__link pb-4 pt-1 flex items-end "
+                  data-testid="Get Assistance-3"
+                  href="/get-assistance"
+                  target="_self"
+                >
+                  <div>
+                    Get Assistance
+                  </div>
+                </a>
+                <span
+                  class="site-header__link site-header__dropdown-title"
+                  data-testid="My Account-4"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    <span>
+                      <span
+                        class="site-header__dropdown-title-split"
+                      >
+                        My
+                      </span>
+                      <span
+                        class="site-header__dropdown-title-with-icon"
+                      >
+                        Account
+                        <span
+                          class="ui-icon ui-small pl-2"
+                        >
+                          <svg
+                            fill="#555555"
+                            viewBox="0 0 32 32"
+                          >
+                            <path
+                              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main
+          class="md:overflow-x-hidden"
+          data-testid="main-content-test-id"
+          id="main-content"
+        >
+          <section
+            class="bg-gray-300 md:border-t md:border-gray-450"
+          >
+            <div
+              class="flex flex-wrap relative md:max-w-lg mx-auto md:py-8"
+            >
+              <article
+                class="seeds-card w-full pb-8"
+                data-spacing="base"
+              >
+                <header
+                  class="seeds-card-header flex justify-center pt-8 text-center w-full flex-col items-center"
+                  data-divider="flush"
+                >
+                  <div
+                    class="pb-4 px-4 border-blue-500 w-min"
+                    style="border-bottom: 3px solid;"
+                  >
+                    <span
+                      class="ui-icon ui-xlarge md:hidden block"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#c7cbc7"
+                        />
+                        <path
+                          d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#556080"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="ui-icon ui-2xl md:block hidden"
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                      >
+                        <path
+                          d="M30.075 14.091c-2.858-0.549-4.168-3.888-2.446-6.234l1.208-1.648-2.611-2.611-1.624 1.099c-2.408 1.632-5.696 0.197-6.138-2.677l-0.31-2.021h-3.693l-0.478 2.486c-0.538 2.794-3.757 4.128-6.114 2.531l-2.096-1.419-2.611 2.611 1.208 1.648c1.72 2.346 0.411 5.685-2.446 6.234l-1.925 0.37v3.693l2.021 0.31c2.875 0.443 4.309 3.73 2.677 6.139l-1.099 1.622 2.611 2.611 1.648-1.208c2.347-1.72 5.685-0.411 6.234 2.446l0.371 1.925h3.693l0.219-1.421c0.453-2.939 3.861-4.35 6.259-2.592l1.16 0.851 2.611-2.611-1.099-1.622c-1.632-2.408-0.197-5.696 2.677-6.139l2.021-0.31v-3.693l-1.925-0.37zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#c7cbc7"
+                        />
+                        <path
+                          d="M16.307 10.461c-3.229 0-5.846 2.618-5.846 5.846s2.618 5.846 5.846 5.846 5.846-2.618 5.846-5.846c0-3.229-2.618-5.846-5.846-5.846v0 0zM16.307 19.077c-1.53 0-2.77-1.24-2.77-2.77s1.24-2.77 2.77-2.77 2.77 1.24 2.77 2.77c0 1.53-1.24 2.77-2.77 2.77v0 0z"
+                          fill="#556080"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <h1
+                    class="my-6 text-xl md:text-2xl"
+                  >
+                    Account settings
+                  </h1>
+                  <p
+                    class="pb-2 field-note text-sm"
+                  >
+                    We use this information to help you fill in your application.
+                  </p>
+                </header>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="form-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Name
+                      </legend>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="firstName"
+                        >
+                          First name
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="firstName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="firstName"
+                            name="firstName"
+                            title="firstName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="middleName"
+                        >
+                          Middle name (optional)
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="middleName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="middleName"
+                            name="middleName"
+                            title="middleName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <span
+                          id="middleName-error"
+                        />
+                      </div>
+                      <div
+                        class="field mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="lastName"
+                        >
+                          Last name
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="lastName-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="lastName"
+                            name="lastName"
+                            title="lastName"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="form-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Date of birth
+                      </legend>
+                      <div
+                        class="field-group--date"
+                      >
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthMonth"
+                          >
+                            Month
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthMonth-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthMonth"
+                              maxlength="2"
+                              name="dob.birthMonth"
+                              title="dob.birthMonth"
+                              type="text"
+                              value="01"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthMonth-error"
+                          />
+                        </div>
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthDay"
+                          >
+                            Day
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthDay-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthDay"
+                              maxlength="2"
+                              name="dob.birthDay"
+                              title="dob.birthDay"
+                              type="text"
+                              value="01"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthDay-error"
+                          />
+                        </div>
+                        <div
+                          class="field ml-0 mr-4 pb-4"
+                        >
+                          <label
+                            class="label"
+                            for="dob.birthYear"
+                          >
+                            Year
+                          </label>
+                          <div
+                            class="control"
+                          >
+                            <input
+                              aria-describedby="dob.birthYear-error"
+                              aria-invalid="false"
+                              class="input"
+                              id="dob.birthYear"
+                              maxlength="4"
+                              name="dob.birthYear"
+                              title="dob.birthYear"
+                              type="text"
+                              value="1999"
+                            />
+                          </div>
+                          <span
+                            id="dob.birthYear-error"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="email-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Email
+                      </legend>
+                      <div
+                        class="field pb-4"
+                      >
+                        <label
+                          class="label"
+                          for="email"
+                        />
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="email-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="email"
+                            name="email"
+                            placeholder="example@web.com"
+                            title="example@web.com"
+                            type="email"
+                            value="email@email.com"
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div
+                  class="seeds-card-section"
+                  data-divider="inset"
+                >
+                  <form
+                    class="p-2 md:py-2 md:px-10"
+                    novalidate=""
+                  >
+                    <fieldset
+                      class="password-fieldset"
+                    >
+                      <legend
+                        class="fieldset-legend"
+                      >
+                        Password
+                      </legend>
+                      <p
+                        class="field-note mt-2 mb-4"
+                      >
+                        You must enter your current password first to change it. We do this for your security.
+                      </p>
+                      <div
+                        class="field mb-1"
+                      >
+                        <label
+                          class="label"
+                          for="currentPassword"
+                        >
+                          Current password
+                        </label>
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="currentPassword-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="currentPassword"
+                            name="currentPassword"
+                            title="currentPassword"
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                        <span
+                          id="currentPassword-error"
+                        />
+                      </div>
+                      <div
+                        class="forgot-password-link"
+                      >
+                        <a
+                          href="/forgot-password"
+                        >
+                          Forgot password?
+                        </a>
+                      </div>
+                      <div
+                        class="new-password-label pt-4"
+                      >
+                        <label
+                          for="password"
+                        >
+                          Choose a new password
+                        </label>
+                      </div>
+                      <div
+                        class="field-note my-2"
+                      >
+                        <span>
+                          Must include at least:
+                        </span>
+                        <ul
+                          class="list-disc list-inside pl-2"
+                        >
+                          <li
+                            class="bullet"
+                          >
+                            8 characters
+                          </li>
+                          <li
+                            class="bullet"
+                          >
+                            1 letter
+                          </li>
+                          <li
+                            class="bullet"
+                          >
+                            1 number
+                          </li>
+                        </ul>
+                      </div>
+                      <div
+                        class="field mt-0 mb-4"
+                      >
+                        <label
+                          class="label"
+                          for="password"
+                        />
+                        <div
+                          class="control"
+                        >
+                          <input
+                            aria-describedby="password-error"
+                            aria-invalid="false"
+                            class="input"
+                            id="password"
+                            name="password"
+                            title="password"
+                            type="password"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </fieldset>
+                    <div
+                      class="flex justify-center pt-4"
+                    >
+                      <button
+                        class="button"
+                        tabindex="0"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+      <footer
+        class="site-footer"
+      >
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <img
+              alt=""
+              data-testid="footer-logo-test-id"
+            />
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section py-2"
+          >
+            <p
+              class="text-gray-500"
+            >
+              <span>
+                DAHLIA: San Francisco Housing Portal is a project of the 
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                  target="_blank"
+                >
+                  Mayor's Office of Housing and Community Development
+                </a>
+              </span>
+            </p>
+            <p
+              class="text-xs mt-4 text-gray-500"
+            >
+              <span>
+                in partnership with
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/city-administrator/digital-services"
+                  target="_blank"
+                >
+                  San Francisco Digital Services
+                </a>
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-innovation"
+                  target="_blank"
+                >
+                  Mayor's Office of Civic Innovation
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <p
+              class="text-sm"
+            >
+              For listing and application questions, please contact the agent displayed on the listing.
+               
+              <br />
+              For general program inquiries, you may call MOHCD at 415-701-5500.
+            </p>
+          </div>
+        </div>
+        <section
+          class="footer-sock"
+        >
+          <div
+            class="footer-sock__inner"
+          >
+            <p
+              class="footer-copyright"
+            >
+              © City & County of San Francisco
+            </p>
+            <nav
+              aria-label="Footer"
+              class="footer-nav"
+            >
+              <a
+                class="text-gray-500"
+                href="https://airtable.com/shrw64DubWTQfRkdo"
+                target="_blank"
+              >
+                Give Feedback
+              </a>
+              <a
+                class="text-gray-500"
+                href="mailto:sfhousinginfo@sfgov.org"
+                target="_self"
+              >
+                Contact
+              </a>
+              <a
+                class="text-gray-500"
+                href="/disclaimer"
+                target="_self"
+              >
+                Disclaimer
+              </a>
+              <a
+                class="text-gray-500"
+                href="/privacy"
+                target="_self"
+              >
+                Privacy Policy
+              </a>
+            </nav>
+          </div>
+        </section>
+      </footer>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

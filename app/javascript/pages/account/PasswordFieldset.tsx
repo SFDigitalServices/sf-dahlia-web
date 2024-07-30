@@ -28,7 +28,7 @@ const PasswordFieldset = ({
 
   return (
     <Fieldset className="password-fieldset" hasError={hasError} label={t("label.password")}>
-      <p className="field-note my-2">{t("accountSettings.enterCurrentPassword")}</p>
+      <p className="field-note mt-2 mb-4">{t("accountSettings.enterCurrentPassword")}</p>
       {/* Todo: DAH-2387 Adaptive password validation */}
       <Field
         type="password"
@@ -36,7 +36,7 @@ const PasswordFieldset = ({
         label={t("label.currentPassword")}
         error={errors.currentPassword}
         register={register}
-        className="mb-1 mt-2"
+        className="mb-1"
       />
       <div className="forgot-password-link">
         <a href="/forgot-password">{t("signIn.forgotPassword")}</a>

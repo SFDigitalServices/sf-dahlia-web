@@ -12,6 +12,7 @@ describe("<AccountSettingsPage />", () => {
     let getByLabelText
     let originalUseContext
     let promise
+    let renderResult
 
     beforeEach(async () => {
       originalUseContext = React.useContext
@@ -38,7 +39,7 @@ describe("<AccountSettingsPage />", () => {
 
       promise = Promise.resolve()
 
-      const renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
+      renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
       getByLabelText = renderResult.getByLabelText
@@ -68,6 +69,17 @@ describe("<AccountSettingsPage />", () => {
       })
 
       // confirm that apis are called
+    })
+    test("resize events", () => {
+      expect(renderResult).toMatchSnapshot()
+
+      // Change the viewport to 500px.
+      global.innerWidth = 500
+
+      // Trigger the window resize event.
+      global.dispatchEvent(new Event("resize"))
+
+      expect(renderResult).toMatchSnapshot()
     })
   })
 
