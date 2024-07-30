@@ -5,7 +5,7 @@ import UserContext from "../../authentication/context/UserContext"
 
 import { Form, DOBFieldValues, Icon, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
-import { Card } from "@bloom-housing/ui-seeds"
+import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
@@ -14,6 +14,31 @@ import FormSubmitButton from "./FormSubmitButton"
 import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
+import "./account-settings.scss"
+
+const SavedBanner = () => {
+  return (
+    <Alert fullwidth className="account-settings-banner">
+      {t("accountSettings.accountChangesSaved")}
+    </Alert>
+  )
+}
+
+const UpdateBanner = () => {
+  return (
+    <Alert fullwidth className="account-settings-banner">
+      {t("accountSettings.update")}
+    </Alert>
+  )
+}
+
+const EmailBanner = () => {
+  return (
+    <Alert fullwidth className="account-settings-banner">
+      {t("accountSettings.checkYourEmail")}
+    </Alert>
+  )
+}
 
 const AccountSettingsHeader = () => {
   return (
@@ -53,9 +78,10 @@ const UpdateForm = ({
 interface SectionProps {
   user: User
   setUser: React.Dispatch<User>
+  handleBanners: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser }: SectionProps) => {
+const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -73,6 +99,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         email,
       }
       setUser(newUser)
+      handleBanners("emailBanner")
       console.log("Updated user's email:", newUser)
       setLoading(false)
     } catch (error) {
@@ -88,7 +115,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const PasswordSection = ({ user, setUser }: SectionProps) => {
+const PasswordSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -108,6 +135,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
     try {
       const newUser = { ...user, password, oldPassword }
       setUser(newUser)
+      handleBanners("passwordBanner")
       console.log("Updated user's password:", newUser)
       setLoading(false)
     } catch (error) {
@@ -123,7 +151,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const NameSection = ({ user, setUser }: SectionProps) => {
+const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -147,6 +175,7 @@ const NameSection = ({ user, setUser }: SectionProps) => {
       setUser(newUser)
 
       console.log("Updated user's personal info:", newUser)
+      handleBanners("nameBanner")
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -167,7 +196,7 @@ const NameSection = ({ user, setUser }: SectionProps) => {
   )
 }
 
-const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
+const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
 
   const {
@@ -188,7 +217,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       }
 
       setUser(newUser)
-
+      handleBanners("dobBanner")
       console.log("Updated user's personal info:", newUser)
       setLoading(false)
     } catch (error) {
@@ -212,6 +241,28 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
 const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
+  const [banners, setBanners] = useState({
+    nameBanner: false,
+    dobBanner: false,
+    emailBanner: false,
+    passwordBanner: false,
+  })
+
+  const handleBanners = (banner: string) => {
+    switch (banner) {
+      case "nameBanner":
+        setBanners({ ...banners, nameBanner: true })
+        break
+      case "dobBanner":
+        setBanners({ ...banners, dobBanner: true })
+        break
+      case "emailBanner":
+        setBanners({ ...banners, emailBanner: true })
+        break
+      case "passwordBanner":
+        setBanners({ ...banners, passwordBanner: true })
+    }
+  }
 
   useEffect(() => {
     // salesforce stores the date of birth as a string YYYY-MM-DD,
@@ -232,10 +283,39 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
             <AccountSettingsHeader />
-            <NameSection user={user} setUser={setUser} />
-            <DateOfBirthSection user={user} setUser={setUser} />
-            <EmailSection user={user} setUser={setUser} />
-            <PasswordSection user={user} setUser={setUser} />
+            {banners.nameBanner && (
+              <>
+                <span className="mb-8">
+                  <UpdateBanner />
+                </span>
+                <SavedBanner />
+              </>
+            )}
+            <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
+            {banners.dobBanner && (
+              <>
+                <span className="my-8">
+                  <UpdateBanner />
+                </span>
+                <SavedBanner />
+              </>
+            )}
+            <DateOfBirthSection user={user} setUser={setUser} handleBanners={handleBanners} />
+            {banners.emailBanner && (
+              <>
+                <span className="my-8">
+                  <UpdateBanner />
+                </span>
+                <EmailBanner />
+              </>
+            )}
+            <EmailSection user={user} setUser={setUser} handleBanners={handleBanners} />
+            {banners.passwordBanner && (
+              <span className="mt-8">
+                <SavedBanner />
+              </span>
+            )}
+            <PasswordSection user={user} setUser={setUser} handleBanners={handleBanners} />
           </Card>
         </div>
       </section>

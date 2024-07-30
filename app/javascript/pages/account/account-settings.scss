@@ -58,3 +58,17 @@
   font-size: 14px;
   line-height: 24px;
 }
+
+//banner for updates
+.account-settings-banner {
+  background-color: var(--seeds-color-blue-100) !important;
+}
+
+//override alert component icon
+.seeds-common-message > .seeds-icon {
+  color:  var(--seeds-color-blue-100);
+}
+
+.seeds-common-message > .seeds-icon ~ .seeds-icon {
+  color: var(--seeds-color-black);
+}
