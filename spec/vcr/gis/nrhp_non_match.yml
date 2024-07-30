@@ -146,4 +146,105 @@ http_interactions:
          "count": 0
         }
   recorded_at: Fri, 08 Mar 2024 21:21:32 GMT
+- request:
+    method: get
+    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&SingleLine=2244%20Taraval%20St&State=CA&f=pjson&outfields=loc_name
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/5.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.1
+      Date:
+      - Wed, 31 Jul 2024 17:24:23 GMT
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '1159'
+      Connection:
+      - close
+      Cache-Control:
+      - max-age=315360000
+      Etag:
+      - 41effba5
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
+      Expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+         "spatialReference": {
+          "wkid": 102100,
+          "latestWkid": 3857
+         },
+         "candidates": [
+          {
+           "address": "2244 TARAVAL ST, San Francisco, CA",
+           "location": {
+            "x": -13635572.627741044,
+            "y": 4543134.2961135982
+           },
+           "score": 100,
+           "attributes": {
+            "Loc_name": "eas"
+           },
+           "extent": {
+            "xmin": -13635772.627741044,
+            "ymin": 4542934.2961135982,
+            "xmax": -13635372.627741044,
+            "ymax": 4543334.2961135982
+           }
+          },
+          {
+           "address": "2244 TARAVAL ST, San Francisco, CA",
+           "location": {
+            "x": -13635537.586986665,
+            "y": 4543116.6615152163
+           },
+           "score": 100,
+           "attributes": {
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13635737.586986665,
+            "ymin": 4542916.6615152163,
+            "xmax": -13635337.586986665,
+            "ymax": 4543316.6615152163
+           }
+          },
+          {
+           "address": "2245 TARAVAL ST, San Francisco, CA",
+           "location": {
+            "x": -13635535.89269774,
+            "y": 4543086.2285807347
+           },
+           "score": 79,
+           "attributes": {
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13635735.89269774,
+            "ymin": 4542886.2285807347,
+            "xmax": -13635335.89269774,
+            "ymax": 4543286.2285807347
+           }
+          }
+         ]
+        }
+  recorded_at: Wed, 31 Jul 2024 17:24:23 GMT
 recorded_with: VCR 6.1.0

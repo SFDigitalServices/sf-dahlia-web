@@ -14,7 +14,7 @@ class Emailer < Devise::Mailer
     @subject = I18n.translate('emailer.account_update.subject')
     sign_in_path = 'sign-in?redirectTo=dahlia.account-settings'
     @account_settings_url = "#{base_url}/#{sign_in_path}"
-    check_for_confirmed_account(@email)
+    check_for_confirmed_account(record)
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'account_update' }
     end
@@ -39,6 +39,7 @@ class Emailer < Devise::Mailer
   end
 
   def confirmation_instructions(record, token, opts = {})
+    check_for_confirmed_account(record)
     load_salesforce_contact(record)
     if record.pending_reconfirmation?
       action = :reconfirmation_instructions
@@ -148,9 +149,9 @@ class Emailer < Devise::Mailer
 
   def check_for_confirmed_account(user_or_email)
     if user_or_email.is_a?(User)
-      @show_name_in_email = user.confirmed_at.present?
+      @show_name_in_email = user_or_email.confirmed_at.present?
     elsif user_or_email.is_a?(String)
-      @show_name_in_email = User.find_by(email: user_or_email).try(confirmed_at).present?
+      @show_name_in_email = User.find_by(email: user_or_email).try(:confirmed_at).present?
     end
   end
 end
