@@ -263,6 +263,7 @@ GEM
     http_parser.rb (0.8.0)
       concurrent-ruby (~> 1.0)
     i18n (1.14.5)
+      concurrent-ruby (~> 1.0)
     image_optimizer (1.7.2)
     iniparse (1.5.0)
     jasmine (3.99.0)
@@ -544,6 +545,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-23
   x86_64-darwin-22
   x86_64-linux
 
