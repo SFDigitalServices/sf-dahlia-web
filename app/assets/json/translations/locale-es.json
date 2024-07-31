@@ -598,6 +598,7 @@
             "view_and_print_a_copy": "Ver la solicitud presentada e imprimir una copia"
         },
         "hello": "Hola, %{name}",
+        "hello_no_name": "Hola",
         "housing_counselor": {
             "find_a_housing_counselor": "Encuentre un consejero de vivienda",
             "header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones."
