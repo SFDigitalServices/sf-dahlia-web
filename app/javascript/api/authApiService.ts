@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import { User, UserData } from "../authentication/user"
-import { authenticatedDelete, authenticatedGet, post, put } from "./apiService"
+import { authenticatedDelete, authenticatedGet, authenticatedPut, post, put } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
 
@@ -42,3 +42,15 @@ export const updatePassword = async (
     passwordConfirmation: passwordConfirmation,
     token: token,
   }).then(({ data }) => data.accessToken)
+
+export const updateNameOrDOB = async (user: User): Promise<User> => {
+  return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
+    contact: {
+      email: user.email,
+      firstName: user.firstName,
+      middleName: user.middleName,
+      lastName: user.lastName,
+      DOB: user.DOB,
+    },
+  }).then(({ data }) => data.contact)
+}

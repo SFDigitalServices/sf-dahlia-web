@@ -121,6 +121,29 @@ describe Overrides::RegistrationsController do
       }
       expect(response.status).to eq 422
     end
+
+    it 'throws error if DOB is invalid' do
+      allow(Force::AccountService)
+        .to receive(:create_or_update)
+        .and_return(salesforce_response)
+
+      post :create, params: {
+        user: {
+          id: 1,
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'John',
+          lastName: 'Doe',
+          DOB: '1823-04-23', # invalid year
+          email: 'jane@doe.com',
+        },
+        confirm_success_url: 'http://localhost/my-account',
+      }
+      expect(response.status).to eq 422
+    end
   end
 
   describe '#update' do
