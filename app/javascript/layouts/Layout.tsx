@@ -5,6 +5,7 @@ import {
   AlertTypes,
   FooterNav,
   FooterSection,
+  Icon,
   LangItem,
   MenuLink,
   SiteFooter,
@@ -25,6 +26,8 @@ import {
 import MetaTags from "./MetaTags"
 import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import { HelmetProvider } from "react-helmet-async"
+
+import "./Layout.scss"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -87,17 +90,21 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
         {
           title: t("nav.myDashboard"),
           href: "/my-account",
+          iconElement: <Icon symbol="profile" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.myApplications"),
           href: "/my-applications",
+          iconElement: <Icon symbol="application" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.accountSettings"),
           href: "/account-settings",
+          iconElement: <Icon symbol="settings" size="medium" className="pr-2" />,
         },
         {
           title: t("nav.signOut"),
+          iconElement: <div className="w-6" />, // Empty div to keep the icon space
           onClick: () => {
             // FIXME: Setup Site alert message for logging out DAH-974
             // setSiteAlertMessage(t("signIn.signedOutSuccessfully"), "notice")
@@ -156,7 +163,6 @@ const Layout = (props: LayoutProps) => {
           <SiteHeader
             homeURL={"/"}
             dropdownItemClassName={"text-2xs"}
-            menuItemClassName={"pb-4 pt-1 flex items-end"}
             languageNavLabel={t("languages.choose")}
             languages={getLanguageItems()}
             logoSrc={getAssetPath("DAHLIA-logo.svg")}

@@ -167,7 +167,7 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
                 target="_self"
@@ -177,7 +177,7 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
                 target="_self"
@@ -187,7 +187,7 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
                 target="_self"
@@ -197,7 +197,7 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
                 target="_self"
@@ -207,7 +207,7 @@ exports[`Listing Detail initializes Google Tag Manager for a rental listing 1`] 
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
                 target="_self"
@@ -545,7 +545,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
                 target="_self"
@@ -555,7 +555,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
                 target="_self"
@@ -565,7 +565,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
                 target="_self"
@@ -575,7 +575,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
                 target="_self"
@@ -585,7 +585,7 @@ exports[`Listing Detail renders a habitat listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
                 target="_self"
@@ -923,7 +923,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
                 target="_self"
@@ -933,7 +933,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
                 target="_self"
@@ -943,7 +943,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
                 target="_self"
@@ -953,7 +953,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
                 target="_self"
@@ -963,7 +963,7 @@ exports[`Listing Detail renders a listing with sro units 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
                 target="_self"
@@ -1300,7 +1300,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
                 target="_self"
@@ -1310,7 +1310,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
                 target="_self"
@@ -1320,7 +1320,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
                 target="_self"
@@ -1330,7 +1330,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
                 target="_self"
@@ -1340,7 +1340,7 @@ exports[`Listing Detail renders an open rental listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
                 target="_self"
@@ -1678,7 +1678,7 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
                 target="_self"
@@ -1688,7 +1688,7 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
                 target="_self"
@@ -1698,7 +1698,7 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
                 target="_self"
@@ -1708,7 +1708,7 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
                 target="_self"
@@ -1718,7 +1718,7 @@ exports[`initializes Google Tag Manager for a sales listing 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
                 target="_self"
