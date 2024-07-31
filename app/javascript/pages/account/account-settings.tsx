@@ -178,12 +178,15 @@ const updateNameOrDOB = async (
   newUser: User,
   saveProfile: (profile: User) => void,
   setUser: React.Dispatch<User>,
-  setLoading: React.Dispatch<boolean>
+  setLoading: React.Dispatch<boolean>,
+  handleBanners: (banner: string) => void,
+  banner: string
 ) => {
   return apiUpdateNameOrDOB(newUser)
     .then((profile) => {
       saveProfile(profile)
       setUser(newUser)
+      handleBanners(banner)
     })
     .catch((error) => {
       // TODO: In the case that a user's DOB is invalid, this is a snippet of the AxiosError that will be returned
@@ -216,7 +219,6 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
-    handleBanners("nameSavedBanner")
     const { firstName, middleName, lastName } = data
 
     const newUser = {
@@ -226,7 +228,14 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       middleName,
     }
 
-    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading)
+    await updateNameOrDOB(
+      newUser,
+      saveProfile,
+      setUser,
+      setLoading,
+      handleBanners,
+      "nameSavedBanner"
+    )
   }
 
   return (
@@ -260,7 +269,6 @@ const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
   const onSubmit = async (data: { dob: DOBFieldValues }) => {
     setLoading(true)
-    handleBanners("dobSavedBanner")
     const { dob } = data
 
     const newUser = {
@@ -268,7 +276,14 @@ const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
       DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
     }
 
-    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading)
+    await updateNameOrDOB(
+      newUser,
+      saveProfile,
+      setUser,
+      setLoading,
+      handleBanners,
+      "dobSavedBanner"
+    )
   }
 
   return (
