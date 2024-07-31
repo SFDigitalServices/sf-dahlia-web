@@ -7,9 +7,10 @@ interface EmailFieldProps {
   register: UseFormMethods["register"]
   defaultEmail?: string
   errors?: UseFormMethods["errors"]
+  onChange?: () => void
 }
 
-const EmailFieldset = ({ register, errors, defaultEmail }: EmailFieldProps) => {
+const EmailFieldset = ({ register, errors, defaultEmail, onChange }: EmailFieldProps) => {
   return (
     <Fieldset className="email-fieldset" hasError={errors.email} label={t("label.emailAddress")}>
       <Field
@@ -22,6 +23,7 @@ const EmailFieldset = ({ register, errors, defaultEmail }: EmailFieldProps) => {
         errorMessage={t("error.email")}
         register={register}
         defaultValue={defaultEmail ?? null}
+        onChange={onChange}
       />
     </Fieldset>
   )
