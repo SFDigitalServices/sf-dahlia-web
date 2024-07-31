@@ -43,12 +43,17 @@ const EmailBanner = () => {
   )
 }
 
-const AccountSettingsHeader = () => {
+interface AccountSettingsHeaderProps {
+  className?: string
+}
+
+const AccountSettingsHeader = ({ className }: AccountSettingsHeaderProps) => {
+  const classNames = ["flex justify-center pt-8 text-center w-full flex-col items-center"]
+  if (className) {
+    classNames.push(className)
+  }
   return (
-    <Card.Header
-      divider="flush"
-      className="flex justify-center pt-8 text-center w-full flex-col items-center"
-    >
+    <Card.Header divider="flush" className={classNames.join(" ")}>
       <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
         <Icon size="xlarge" className="md:hidden block" symbol="settings" />
         <Icon size="2xl" className="md:block hidden" symbol="settings" />
@@ -355,7 +360,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
-            <AccountSettingsHeader />
+            {banners.nameUpdateBanner || banners.nameSavedBanner ? (
+              <AccountSettingsHeader className={"border-none"} />
+            ) : (
+              <AccountSettingsHeader />
+            )}
             {banners.nameUpdateBanner && (
               <span className="mb-8">
                 <UpdateBanner />
