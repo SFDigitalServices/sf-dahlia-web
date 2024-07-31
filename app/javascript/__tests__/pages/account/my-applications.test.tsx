@@ -52,6 +52,7 @@ describe("<MyApplications />", () => {
         profile: undefined,
         signIn: jest.fn(),
         signOut: jest.fn(),
+        saveProfile: jest.fn(),
         loading: false,
         initialStateLoaded: true,
       }
@@ -102,6 +103,7 @@ describe("<MyApplications />", () => {
         },
         signIn: jest.fn(),
         signOut: jest.fn(),
+        saveProfile: jest.fn(),
         loading: false,
         initialStateLoaded: true,
       }
