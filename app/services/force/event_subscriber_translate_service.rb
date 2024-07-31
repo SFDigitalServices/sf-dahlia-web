@@ -21,6 +21,10 @@ module Force
       setup_faye_client
     end
 
+    # TODO: remove coverage exception comments below and write more tests once
+    # this file is no longer a proof-of-concept
+    # :nocov:
+
     def listen_and_process_events
       EM.error_handler do |error|
         logger(
@@ -129,5 +133,7 @@ module Force
         Rails.logger.info("EventSubscriberTranslateService #{message}")
       end
     end
+
+    # :nocov:
   end
 end
