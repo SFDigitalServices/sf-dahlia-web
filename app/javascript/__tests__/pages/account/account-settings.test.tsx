@@ -134,6 +134,11 @@ describe("<AccountSettingsPage />", () => {
       expect(firstNameField.getAttribute("value")).toBe("NewFirstName")
 
       expect(lastNameField.getAttribute("value")).toBe("NewLastName")
+
+      expect(getByText("Your changes have been saved.")).not.toBeNull()
+      expect(
+        getByText("We will update any applications you have not submitted yet.")
+      ).not.toBeNull()
     })
 
     it("updates DOB", async () => {
@@ -176,6 +181,11 @@ describe("<AccountSettingsPage />", () => {
       )
 
       expect(saveProfileMock).toHaveBeenCalled()
+
+      expect(getByText("Your changes have been saved.")).not.toBeNull()
+      expect(
+        getByText("We will update any applications you have not submitted yet.")
+      ).not.toBeNull()
     })
 
     it("blocks a DOB update if invalid", async () => {
