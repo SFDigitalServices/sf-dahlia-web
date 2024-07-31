@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::AccountController, type: :controller do
   describe 'PUT #update' do
     let(:user) { create(:user) }
-    let(:contact_params) { { DOB: '2000-01-01' } }
+    let(:contact_params) { { DOB: '2000-01-01', email: "test.test@test.io" } }
 
     before do
       allow(controller).to receive(:current_user).and_return(user)
@@ -22,7 +22,7 @@ RSpec.describe Api::V1::AccountController, type: :controller do
     end
 
     context 'when DOB is invalid' do
-      let(:contact_params) { { DOB: '1800-02-03' } }
+      let(:contact_params) { { DOB: '1800-02-03', email: "test@test.com" } }
 
       it 'returns an error' do
         put :update, params: { contact: contact_params }
