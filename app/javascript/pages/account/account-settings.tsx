@@ -371,26 +371,34 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             ) : (
               <AccountSettingsHeader />
             )}
-            {banners.nameUpdateBanner && (
-              <span className="mb-8">
+            {banners.nameUpdateBanner && <UpdateBanner />}
+            {banners.nameSavedBanner && (
+              <span className="mt-8">
                 <UpdateBanner />
               </span>
             )}
-            {banners.nameSavedBanner && <SavedBanner />}
             <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
             {banners.dobUpdateBanner && (
-              <span className="mb-8">
+              <span className="mt-8">
                 <UpdateBanner />
               </span>
             )}
-            {banners.dobSavedBanner && <SavedBanner />}
+            {banners.dobSavedBanner && (
+              <span className="mt-8">
+                <SavedBanner />
+              </span>
+            )}
             <DateOfBirthSection user={user} setUser={setUser} handleBanners={handleBanners} />
             {banners.emailUpdateBanner && (
-              <span className="my-8">
+              <span className="mt-8">
                 <UpdateBanner />
               </span>
             )}
-            {banners.emailBanner && <EmailBanner />}
+            {banners.emailBanner && (
+              <span className="mt-8">
+                <EmailBanner />
+              </span>
+            )}
             <EmailSection user={user} setUser={setUser} handleBanners={handleBanners} />
             {banners.passwordBanner && (
               <span className="mt-8">
