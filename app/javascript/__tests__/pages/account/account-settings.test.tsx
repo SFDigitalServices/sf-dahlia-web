@@ -248,6 +248,12 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
+        expect(
+          getByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
+        ).not.toBeNull()
+
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth",
           expect.objectContaining({
