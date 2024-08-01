@@ -14,7 +14,7 @@ import FormSubmitButton from "./FormSubmitButton"
 import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
-import { updateNameOrDOB as apiUpdateNameOrDOB } from "../../api/authApiService"
+import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
 
 const MOBILE_SIZE = 768
 
@@ -81,18 +81,24 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
   const onSubmit = (data: { email: string }) => {
     setLoading(true)
     const { email } = data
-    try {
-      const newUser = {
-        ...user,
-        email,
-      }
-      setUser(newUser)
-      console.log("Updated user's email:", newUser)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
+
+    updateEmail(email)
+      .then(() => {
+        const newUser = {
+          ...user,
+          email,
+        }
+        setUser(newUser)
+        // TODO(DAH-2343): Inform the user that they will need to verify their new email address
+      })
+      .catch((error) => {
+        // TODO(DAH-2343): Inform the user that an error has occurred
+        // In the case that the email is malformed, the error will have code 422
+        console.log(error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (

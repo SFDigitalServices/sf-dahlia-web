@@ -54,3 +54,10 @@ export const updateNameOrDOB = async (user: User): Promise<User> => {
     },
   }).then(({ data }) => data.contact)
 }
+
+export const updateEmail = async (email: string): Promise<string> =>
+  authenticatedPut<{ status: string }>("/api/v1/auth", {
+    user: {
+      email,
+    },
+  }).then(({ data }) => data.status)
