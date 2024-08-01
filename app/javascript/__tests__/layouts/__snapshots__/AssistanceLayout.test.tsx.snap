@@ -166,7 +166,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
               id="site-header-links"
             >
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Rent-0"
                 href="/listings/for-rent"
               >
@@ -175,7 +175,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Buy-1"
                 href="/listings/for-sale"
               >
@@ -184,7 +184,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="My Favorites-2"
                 href="/favorites"
               >
@@ -193,7 +193,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Get Assistance-3"
                 href="/get-assistance"
               >
@@ -202,7 +202,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
                 </div>
               </a>
               <a
-                class="site-header__link pb-4 pt-1 flex items-end "
+                class="site-header__link  "
                 data-testid="Sign In-4"
                 href="/sign-in"
               >

@@ -1,7 +1,8 @@
-import { Field, emailRegex, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
+import { emailRegex } from "../../util/accountUtil"
 
 interface EmailFieldProps {
   register: UseFormMethods["register"]

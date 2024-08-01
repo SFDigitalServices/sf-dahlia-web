@@ -1,4 +1,5 @@
 AllCops:
+  NewCops: enable
   Include:
     - "**/Rakefile"
     - "**/config.ru"
@@ -59,7 +60,8 @@ Style/ConditionalAssignment:
 Style/FormatStringToken:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
+  Enabled: true
   Max: 90
   Exclude:
     - "config/routes.rb"
