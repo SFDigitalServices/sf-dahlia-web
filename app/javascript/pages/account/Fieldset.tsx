@@ -1,6 +1,4 @@
 import React from "react"
-import "./account-settings.scss"
-
 interface FieldsetProps {
   label: string
   hasError?: boolean
