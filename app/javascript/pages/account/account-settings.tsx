@@ -125,10 +125,9 @@ const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
         }
         setUser(newUser)
         handleBanners("emailBanner")
-        // TODO(DAH-2343): Inform the user that they will need to verify their new email address
       })
       .catch((error) => {
-        // TODO(DAH-2343): Inform the user that an error has occurred
+        // TODO: Inform the user that an error has occurred
         // In the case that the email is malformed, the error will have code 422
         console.log(error)
       })
