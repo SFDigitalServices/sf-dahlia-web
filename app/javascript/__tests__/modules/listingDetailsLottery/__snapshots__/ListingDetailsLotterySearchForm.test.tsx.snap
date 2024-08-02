@@ -47,7 +47,6 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             id="lotterySearchNumber"
             name="lotterySearchNumber"
             placeholder="Enter Your Lottery Number"
-            title="Enter Your Lottery Number"
             type="text"
             value=""
           />

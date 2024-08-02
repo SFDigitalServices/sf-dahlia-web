@@ -3,6 +3,7 @@ import { t, Field } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { UseFormMethods, FieldError, DeepMap } from "react-hook-form"
+import Fieldset from "./Fieldset"
 dayjs.extend(customParseFormat)
 
 export type DOBFieldValues = {
@@ -18,6 +19,7 @@ export interface DOBFieldProps {
   error?: DeepMap<DOBFieldValues, FieldError>
   required?: boolean
   id?: string
+  onChange?: () => void
 }
 
 const validateNumber = (required: boolean, value: string, maxValue: number) => {
@@ -40,6 +42,7 @@ const DateField = ({
   required,
   register,
   watch,
+  onChange,
 }: {
   fieldKey: string
   defaultDOB: DOBFieldValues
@@ -47,13 +50,14 @@ const DateField = ({
   required: boolean
   register: UseFormMethods["register"]
   watch: UseFormMethods["watch"]
+  onChange: () => void
 }) => {
   const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
   const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
 
   const fieldInfo = {
     birthDay: {
-      label: t("label.dobDate"),
+      label: t("label.dobDay"),
       validation: (value: string) => {
         return validateNumber(required, value, 31)
       },
@@ -78,6 +82,7 @@ const DateField = ({
 
   return (
     <Field
+      className="ml-0 mr-4 pb-4"
       name={`dob.${fieldKey}`}
       label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
@@ -90,11 +95,12 @@ const DateField = ({
       }}
       inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
       register={register}
+      onChange={onChange}
     />
   )
 }
 
-const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
+const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: DOBFieldProps) => {
   return (
     <>
       <DateField
@@ -104,6 +110,7 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
       <DateField
         fieldKey="birthDay"
@@ -112,6 +119,7 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
       <DateField
         fieldKey="birthYear"
@@ -120,19 +128,17 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
     </>
   )
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFieldProps) => {
-  const hasError = error?.birthMonth || error?.birthDay || error?.birthYear
+const DOBFieldset = ({ register, watch, defaultDOB, error, required, onChange }: DOBFieldProps) => {
+  const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
 
   return (
-    <fieldset id={id}>
-      <legend className={hasError ? "text-alert" : ""}>{t("label.dob")}</legend>
-
-      <div className="field-note my-3">For example, November 23, 1975 is 11-23-1975</div>
+    <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")}>
       <div className="field-group--date">
         <DOBFields
           register={register}
@@ -140,6 +146,7 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFi
           defaultDOB={defaultDOB}
           error={error}
           required={required}
+          onChange={onChange}
         />
       </div>
 
@@ -148,7 +155,7 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, id, required }: DOBFi
           <span className="error-message">{t("error.dob")}</span>
         </div>
       )}
-    </fieldset>
+    </Fieldset>
   )
 }
 

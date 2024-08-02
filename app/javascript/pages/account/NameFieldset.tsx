@@ -1,6 +1,7 @@
 import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
+import Fieldset from "./Fieldset"
 
 interface NameFieldsetProps {
   register: UseFormMethods["register"]
@@ -8,10 +9,12 @@ interface NameFieldsetProps {
   defaultFirstName?: string
   defaultMiddleName?: string
   defaultLastName?: string
+  onChange?: () => void
 }
 
 const NameFieldset = ({
   register,
+  onChange,
   errors,
   defaultFirstName,
   defaultMiddleName,
@@ -20,34 +23,39 @@ const NameFieldset = ({
   const hasError = errors?.firstName || errors?.lastName || errors?.middleName
 
   return (
-    <fieldset className="px-4 pb-4">
-      <legend className={hasError ? "text-alert" : ""}>{t("label.name")}</legend>
+    <Fieldset hasError={hasError} label={t("label.name")}>
       <Field
+        className="mb-4"
         name="firstName"
-        label={t("label.firstName")}
+        label={t("label.firstName.sentenceCase")}
         register={register}
         error={errors.firstName !== undefined}
         errorMessage={t("error.firstName")}
         defaultValue={defaultFirstName ?? null}
         validation={{ required: true }}
+        onChange={onChange}
       />
       <Field
+        className="mb-4"
         name="middleName"
-        label={t("label.middleName")}
+        label={`${t("label.middleName.sentenceCase")} (${t("t.optional.lowercase")})`}
         error={errors.middleName}
         defaultValue={defaultMiddleName ?? null}
         register={register}
+        onChange={onChange}
       />
       <Field
+        className="mb-4"
         name="lastName"
-        label={t("label.lastName")}
+        label={t("label.lastName.sentenceCase")}
         errorMessage={t("error.lastName")}
         defaultValue={defaultLastName ?? null}
         error={errors.lastName}
         register={register}
         validation={{ required: true }}
+        onChange={onChange}
       />
-    </fieldset>
+    </Fieldset>
   )
 }
 

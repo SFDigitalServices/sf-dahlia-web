@@ -471,6 +471,7 @@
                 "lottery_will_be_held": "The lottery will be held on %{lottery_date}. Housing lottery results will be posted %{link}.",
                 "office_hours": "Office Hours",
                 "on_the_listing": "on the listing",
+                "notify_about_potential_resend": "<b>If you already got this confirmation email from us, ignore this message.</b> We had a problem sending emails from DAHLIA recently, so we sent these emails again. We did this to make sure all applicants have their lottery numbers.",
                 "required_supporting_documents": "required supporting documents",
                 "see_below_for_contact_information": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the agent. See below for contact information for the Agent for this listing.",
                 "should_your_application_be_chosen_rental": "Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.",
@@ -598,6 +599,7 @@
             "view_and_print_a_copy": "View submitted application and print a copy"
         },
         "hello": "Hello %{name}",
+        "hello_no_name": "Hello",
         "housing_counselor": {
             "find_a_housing_counselor": "Find a Housing Counselor",
             "header": "For more help, we suggest talking with a housing counselor to explore your options."
