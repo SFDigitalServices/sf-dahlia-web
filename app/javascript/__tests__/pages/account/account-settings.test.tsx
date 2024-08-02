@@ -167,6 +167,10 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+        expect(
+          getByText("We will update any applications you have not submitted yet.")
+        ).not.toBeNull()
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
@@ -243,6 +247,12 @@ describe("<AccountSettingsPage />", () => {
           emailUpdateButton.dispatchEvent(new MouseEvent("click"))
           await promise
         })
+
+        expect(
+          getByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
+        ).not.toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth",
