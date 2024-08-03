@@ -1,3 +1,7 @@
+import React from "react"
+import { Card } from "@bloom-housing/ui-seeds"
+import { Icon } from "@bloom-housing/ui-components"
+
 // We will strictly validate the email address using the following regex.
 // Devise will also validate the email address on the backend with a looser pattern.
 export const emailRegex = new RegExp(
@@ -7,3 +11,27 @@ export const emailRegex = new RegExp(
     "(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?",
   ].join("")
 )
+
+interface FormHeaderProps {
+  title: string
+  description: string
+  className?: string
+}
+
+export const FormHeader = ({ title, description, className }: FormHeaderProps) => {
+  const classNames = ["flex justify-center pt-8 text-center w-full flex-col items-center"]
+  if (className) {
+    classNames.push(className)
+  }
+
+  return (
+    <Card.Header divider="flush" className={classNames.join(" ")}>
+      <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
+        <Icon size="xlarge" className="md:hidden block" symbol="profile" />
+        <Icon size="2xl" className="md:block hidden" symbol="profile" />
+      </div>
+      <h1 className="my-6 text-xl md:text-2xl">{title}</h1>
+      <p className="pb-2 field-note text-sm">{description}</p>
+    </Card.Header>
+  )
+}

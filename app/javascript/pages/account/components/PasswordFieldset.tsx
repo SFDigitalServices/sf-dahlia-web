@@ -1,10 +1,9 @@
 import { Field, passwordRegex, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
-import "./account-settings"
 import Fieldset from "./Fieldset"
 
-const NewPasswordInstructions = () => {
+export const NewPasswordInstructions = () => {
   return (
     <>
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>

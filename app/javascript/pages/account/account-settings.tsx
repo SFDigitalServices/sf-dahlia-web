@@ -3,19 +3,20 @@ import React, { useContext, useEffect, useState } from "react"
 import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
-import { Form, DOBFieldValues, Icon, t } from "@bloom-housing/ui-components"
+import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
 import { useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
-import EmailFieldset from "./EmailFieldset"
-import FormSubmitButton from "./FormSubmitButton"
-import PasswordFieldset from "./PasswordFieldset"
-import NameFieldset from "./NameFieldset"
-import DOBFieldset from "./DOBFieldset"
-import "./account-settings.scss"
+import EmailFieldset from "./components/EmailFieldset"
+import FormSubmitButton from "./components/FormSubmitButton"
+import PasswordFieldset from "./components/PasswordFieldset"
+import NameFieldset from "./components/NameFieldset"
+import DOBFieldset from "./components/DOBFieldset"
+import "./styles/account-settings.scss"
 import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
+import { FormHeader } from "../../util/accountUtil"
 
 const MOBILE_SIZE = 768
 
@@ -40,27 +41,6 @@ const EmailBanner = () => {
     <Alert fullwidth className="account-settings-banner">
       {t("accountSettings.checkYourEmail")}
     </Alert>
-  )
-}
-
-interface AccountSettingsHeaderProps {
-  className?: string
-}
-
-const AccountSettingsHeader = ({ className }: AccountSettingsHeaderProps) => {
-  const classNames = ["flex justify-center pt-8 text-center w-full flex-col items-center"]
-  if (className) {
-    classNames.push(className)
-  }
-  return (
-    <Card.Header divider="flush" className={classNames.join(" ")}>
-      <div className="pb-4 px-4 border-blue-500 w-min" style={{ borderBottom: "3px solid" }}>
-        <Icon size="xlarge" className="md:hidden block" symbol="settings" />
-        <Icon size="2xl" className="md:block hidden" symbol="settings" />
-      </div>
-      <h1 className="my-6 text-xl md:text-2xl">{t("accountSettings.title.sentenceCase")}</h1>
-      <p className="pb-2 field-note text-sm">{t("accountSettings.description")}</p>
-    </Card.Header>
   )
 }
 
@@ -373,7 +353,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             {nameUpdateBanner || nameSavedBanner ? (
               <AccountSettingsHeader className={"border-none"} />
             ) : (
-              <AccountSettingsHeader />
+              <FormHeader
+                title={t("accountSettings.title.sentenceCase")}
+                description={t("accountSettings.description")}
+              />
             )}
             {nameUpdateBanner && <UpdateBanner />}
             {nameSavedBanner && (
