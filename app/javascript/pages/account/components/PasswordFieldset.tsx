@@ -3,7 +3,7 @@ import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 
-export const NewPasswordInstructions = () => {
+const NewPasswordInstructions = () => {
   return (
     <>
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
