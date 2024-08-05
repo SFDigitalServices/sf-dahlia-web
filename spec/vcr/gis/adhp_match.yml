@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
+    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?Address=1222%20Harrison%20St&City=San%20Francisco&State=CA&f=pjson&outfields=loc_name
     body:
       encoding: UTF-8
       string: ''
@@ -146,4 +146,47 @@ http_interactions:
          "count": 1
         }
   recorded_at: Fri, 08 Mar 2024 21:21:30 GMT
+- request:
+    method: get
+    uri: https://gis.sf.gov/dahl/rest/services/app_services/NRHP_pref_pg/MapServer/0/query?f=pjson&geometry=-13626517.066330288,4547486.355136148&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%27ADHP%27
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/5.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.1
+      Date:
+      - Fri, 02 Aug 2024 14:32:50 GMT
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '15'
+      Connection:
+      - close
+      Cache-Control:
+      - max-age=315360000
+      Etag:
+      - '"1717546232"'
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
+      Expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+         "count": 1
+        }
+  recorded_at: Fri, 02 Aug 2024 14:32:50 GMT
 recorded_with: VCR 6.1.0
