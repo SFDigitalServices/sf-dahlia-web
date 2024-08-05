@@ -14,7 +14,7 @@ import FormSubmitButton from "./components/FormSubmitButton"
 import PasswordFieldset from "./components/PasswordFieldset"
 import NameFieldset from "./components/NameFieldset"
 import DOBFieldset from "./components/DOBFieldset"
-import "./styles/account-settings.scss"
+import "./styles/account.scss"
 import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
 import { FormHeader } from "../../util/accountUtil"
 

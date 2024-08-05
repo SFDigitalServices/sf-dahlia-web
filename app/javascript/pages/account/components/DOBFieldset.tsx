@@ -20,6 +20,7 @@ export interface DOBFieldProps {
   required?: boolean
   id?: string
   onChange?: () => void
+  note?: React.ReactNode
 }
 
 const validateNumber = (required: boolean, value: string, maxValue: number) => {
@@ -134,11 +135,19 @@ const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: D
   )
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, required, onChange }: DOBFieldProps) => {
+const DOBFieldset = ({
+  register,
+  watch,
+  defaultDOB,
+  error,
+  required,
+  onChange,
+  note,
+}: DOBFieldProps) => {
   const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
 
   return (
-    <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")}>
+    <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")} note={note}>
       <div className="field-group--date">
         <DOBFields
           register={register}

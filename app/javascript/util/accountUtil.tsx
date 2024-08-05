@@ -19,7 +19,7 @@ interface FormHeaderProps {
 }
 
 export const FormHeader = ({ title, description, className }: FormHeaderProps) => {
-  const classNames = ["flex justify-center pt-8 text-center w-full flex-col items-center"]
+  const classNames = ["flex justify-center py-8 text-center w-full flex-col items-center"]
   if (className) {
     classNames.push(className)
   }
@@ -31,7 +31,7 @@ export const FormHeader = ({ title, description, className }: FormHeaderProps) =
         <Icon size="2xl" className="md:block hidden" symbol="profile" />
       </div>
       <h1 className="my-6 text-xl md:text-2xl">{title}</h1>
-      <p className="pb-2 field-note text-sm">{description}</p>
+      <p className="field-note text-sm">{description}</p>
     </Card.Header>
   )
 }

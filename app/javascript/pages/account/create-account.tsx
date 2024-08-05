@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React, { useEffect, useState } from "react"
 
-import {
-  AppearanceStyleType,
-  Button,
-  Field,
-  Form,
-  passwordRegex,
-  t,
-} from "@bloom-housing/ui-components"
+import { AppearanceStyleType, Button, Form, t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
 
 import withAppSetup from "../../layouts/withAppSetup"
@@ -17,8 +10,9 @@ import NameFieldset from "./components/NameFieldset"
 import { useForm } from "react-hook-form"
 import DOBFieldset from "./components/DOBFieldset"
 import EmailFieldset from "./components/EmailFieldset"
-import { NewPasswordInstructions } from "./components/PasswordFieldset"
+import PasswordFieldset from "./components/PasswordFieldset"
 import { FormHeader } from "../../util/accountUtil"
+import "./styles/account.scss"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -39,7 +33,12 @@ const FormSection = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <Card.Section divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}>{children}</Card.Section>
+    <Card.Section
+      className="py-4 p-2 md:py-8 md:px-10"
+      divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}
+    >
+      {children}
+    </Card.Section>
   )
 }
 
@@ -62,6 +61,15 @@ const NameSection = () => {
   )
 }
 
+const DOBNote = () => {
+  return (
+    <>
+      <div className="pb-2">{t("createAccount.dobExample")}</div>
+      <div>{t("createAccount.dobNote")}</div>
+    </>
+  )
+}
+
 const DateOfBirthSection = () => {
   const {
     register,
@@ -77,6 +85,7 @@ const DateOfBirthSection = () => {
         register={register}
         error={errors.dob}
         watch={watch}
+        note={<DOBNote />}
       />
     </FormSection>
   )
@@ -90,7 +99,12 @@ const EmailSection = () => {
 
   return (
     <FormSection>
-      <EmailFieldset register={register} errors={errors} defaultEmail={null} />
+      <EmailFieldset
+        register={register}
+        errors={errors}
+        defaultEmail={null}
+        note={t("createAccount.emailNote")}
+      />
     </FormSection>
   )
 }
@@ -103,14 +117,15 @@ const PasswordSection = () => {
 
   return (
     <FormSection>
-      <div>
+      <PasswordFieldset register={register} errors={errors} />
+      {/* <div>
         <label htmlFor="password">{t("label.choosePassword")}</label>
       </div>
       <div className="field-note my-2">
         <NewPasswordInstructions />
-      </div>
+      </div> */}
       {/* Todo: DAH-2387 Adaptive password validation */}
-      <Field
+      {/* <Field
         type="password"
         name="password"
         className="mt-0 mb-4"
@@ -121,7 +136,7 @@ const PasswordSection = () => {
         error={errors.password}
         errorMessage={t("error.password")}
         register={register}
-      />
+      /> */}
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
@@ -163,7 +178,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <Form className="p-2 md:py-2 md:px-10" onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit}>
               <NameSection />
               <DateOfBirthSection />
               <EmailSection />

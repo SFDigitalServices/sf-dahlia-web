@@ -19,33 +19,40 @@ export const NewPasswordInstructions = () => {
 const PasswordFieldset = ({
   register,
   errors,
+  edit = false,
 }: {
   register: UseFormMethods["register"]
   errors: UseFormMethods["errors"]
+  edit?: boolean
 }) => {
   const hasError = errors.currentPassword || errors.password
 
   return (
-    <Fieldset className="password-fieldset" hasError={hasError} label={t("label.password")}>
-      <p className="field-note mt-2 mb-4">{t("accountSettings.enterCurrentPassword")}</p>
-      {/* Todo: DAH-2387 Adaptive password validation */}
-      <Field
-        type="password"
-        name="currentPassword"
-        label={t("label.currentPassword")}
-        error={errors.currentPassword}
-        register={register}
-        className="mb-1"
-      />
-      <div className="forgot-password-link">
-        <a href="/forgot-password">{t("signIn.forgotPassword")}</a>
-      </div>
-      <div className="new-password-label pt-4">
-        <label htmlFor="password">{t("label.chooseNewPassword")}</label>
-      </div>
-      <div className="field-note my-2">
-        <NewPasswordInstructions />
-      </div>
+    <Fieldset
+      hasError={hasError}
+      label={edit ? t("label.password") : t("label.choosePassword")}
+      note={<NewPasswordInstructions />}
+    >
+      {edit && (
+        <>
+          <p className="field-note mt-2 mb-4">{t("accountSettings.enterCurrentPassword")}</p>
+          {/* Todo: DAH-2387 Adaptive password validation */}
+          <Field
+            type="password"
+            name="currentPassword"
+            label={t("label.currentPassword")}
+            error={errors.currentPassword}
+            register={register}
+            className="mb-1"
+          />
+          <div className="forgot-password-link">
+            <a href="/forgot-password">{t("signIn.forgotPassword")}</a>
+          </div>
+          <div className="new-password-label pt-4">
+            <label htmlFor="password">{t("label.chooseNewPassword")}</label>
+          </div>
+        </>
+      )}
       {/* Todo: DAH-2387 Adaptive password validation */}
       <Field
         type="password"
