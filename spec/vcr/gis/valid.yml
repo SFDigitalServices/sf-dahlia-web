@@ -101,4 +101,105 @@ http_interactions:
          ]
         }
   recorded_at: Fri, 08 Mar 2024 21:21:32 GMT
+- request:
+    method: get
+    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&SingleLine=1222%20Harrison%20St&State=CA&f=pjson&outfields=loc_name
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      User-Agent:
+      - http.rb/5.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.26.1
+      Date:
+      - Wed, 31 Jul 2024 17:24:23 GMT
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '1162'
+      Connection:
+      - close
+      Cache-Control:
+      - max-age=315360000
+      Etag:
+      - 1d5b3942
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
+      Expires:
+      - Thu, 31 Dec 2037 23:55:55 GMT
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+         "spatialReference": {
+          "wkid": 102100,
+          "latestWkid": 3857
+         },
+         "candidates": [
+          {
+           "address": "1222 HARRISON ST, San Francisco, CA",
+           "location": {
+            "x": -13626517.284002636,
+            "y": 4547486.5483913906
+           },
+           "score": 100,
+           "attributes": {
+            "Loc_name": "eas"
+           },
+           "extent": {
+            "xmin": -13626717.284002636,
+            "ymin": 4547286.5483913906,
+            "xmax": -13626317.284002636,
+            "ymax": 4547686.5483913906
+           }
+          },
+          {
+           "address": "1222 HARRISON ST, San Francisco, CA",
+           "location": {
+            "x": -13626501.86483863,
+            "y": 4547488.1667259131
+           },
+           "score": 100,
+           "attributes": {
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13626701.86483863,
+            "ymin": 4547288.1667259131,
+            "xmax": -13626301.86483863,
+            "ymax": 4547688.1667259131
+           }
+          },
+          {
+           "address": "1223 HARRISON ST, San Francisco, CA",
+           "location": {
+            "x": -13626484.411478126,
+            "y": 4547462.5159868533
+           },
+           "score": 79,
+           "attributes": {
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13626684.411478126,
+            "ymin": 4547262.5159868533,
+            "xmax": -13626284.411478126,
+            "ymax": 4547662.5159868533
+           }
+          }
+         ]
+        }
+  recorded_at: Wed, 31 Jul 2024 17:24:22 GMT
 recorded_with: VCR 6.1.0
