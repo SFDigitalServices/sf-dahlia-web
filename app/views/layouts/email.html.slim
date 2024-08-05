@@ -8,8 +8,12 @@ html
       p
         = '-----'
 
-    p
-      = "#{t('hello_no_name')},"
+    - if @show_name_in_email && @name.present?
+      p
+        = "#{t('hello', name: @name)},"
+    - else
+      p
+        = "#{t('hello_no_name')},"
 
     = yield
 

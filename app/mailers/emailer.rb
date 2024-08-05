@@ -14,6 +14,7 @@ class Emailer < Devise::Mailer
     @subject = I18n.translate('emailer.account_update.subject')
     sign_in_path = 'sign-in?redirectTo=dahlia.account-settings'
     @account_settings_url = "#{base_url}/#{sign_in_path}"
+    check_for_confirmed_account(record)
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'account_update' }
     end
@@ -27,6 +28,7 @@ class Emailer < Devise::Mailer
     @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
 
+    check_for_confirmed_account(params[:email])
     _submission_confirmation_email(
       email: params[:email],
       listing:,
@@ -37,6 +39,7 @@ class Emailer < Devise::Mailer
   end
 
   def confirmation_instructions(record, token, opts = {})
+    check_for_confirmed_account(record)
     load_salesforce_contact(record)
     if record.pending_reconfirmation?
       action = :reconfirmation_instructions
@@ -49,6 +52,7 @@ class Emailer < Devise::Mailer
   end
 
   def reset_password_instructions(record, token, opts = {})
+    check_for_confirmed_account(record)
     load_salesforce_contact(record)
     super
   end
@@ -69,6 +73,7 @@ class Emailer < Devise::Mailer
       deadline: @deadline,
       listing_name: @listing_name,
     )
+    check_for_confirmed_account(@email)
     mail(to: @email, subject: subject) do |format|
       format.html do
         render(
@@ -140,5 +145,13 @@ class Emailer < Devise::Mailer
     url = "http#{ssl ? 's' : ''}://#{url_options[:host]}"
     url = "#{url}:#{url_options[:port]}" if url_options[:port].present?
     url
+  end
+
+  def check_for_confirmed_account(user_or_email)
+    if user_or_email.is_a?(User)
+      @show_name_in_email = user_or_email.confirmed_at.present?
+    elsif user_or_email.is_a?(String)
+      @show_name_in_email = User.find_by(email: user_or_email).try(:confirmed_at).present?
+    end
   end
 end
