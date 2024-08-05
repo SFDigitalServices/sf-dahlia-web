@@ -45,7 +45,7 @@ http_interactions:
   recorded_at: Fri, 08 Mar 2024 21:21:32 GMT
 - request:
     method: get
-    uri: https://sfgis-portal.sfgov.org/dahl/rest/services/app_services/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&SingleLine=1299191%20Blahblah%20St&State=CA&f=pjson&outfields=loc_name
+    uri: https://gis.sf.gov/dahl/rest/services/app_services/NRHP_Composite/GeocodeServer/findAddressCandidates?Address=1299191%20Blahblah%20St&City=San%20Francisco&State=CA&f=pjson&outfields=loc_name
     body:
       encoding: UTF-8
       string: ''
@@ -62,7 +62,7 @@ http_interactions:
       Server:
       - nginx/1.26.1
       Date:
-      - Wed, 31 Jul 2024 17:24:22 GMT
+      - Fri, 02 Aug 2024 14:32:53 GMT
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
@@ -72,18 +72,16 @@ http_interactions:
       Cache-Control:
       - max-age=315360000
       Etag:
-      - 222e5f3e
+      - '"222e5f3e"'
       X-Content-Type-Options:
       - nosniff
       Vary:
       - Origin
       Expires:
       - Thu, 31 Dec 2037 23:55:55 GMT
-      X-Xss-Protection:
-      - 1; mode=block
     body:
       encoding: UTF-8
       string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
         3857\n },\n \"candidates\": [\n  \n ]\n}"
-  recorded_at: Wed, 31 Jul 2024 17:24:22 GMT
+  recorded_at: Fri, 02 Aug 2024 14:32:53 GMT
 recorded_with: VCR 6.1.0
