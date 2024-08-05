@@ -53,8 +53,8 @@ const DateField = ({
   watch: UseFormMethods["watch"]
   onChange: () => void
 }) => {
-  const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
-  const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
+  const birthDay: string = watch("dob.birthDay") ?? defaultDOB?.birthDay
+  const birthMonth: string = watch("dob.birthMonth") ?? defaultDOB?.birthMonth
 
   const fieldInfo = {
     birthDay: {

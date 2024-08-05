@@ -19,7 +19,7 @@ interface CreateAccountProps {
 }
 
 const CreateAccountFormSection = ({ children }: { children: React.ReactNode }) => {
-  return <FormSection className="py-4 p-2 md:py-8 md:px-10">{children}</FormSection>
+  return <FormSection className="py-4 md:py-8 md:px-10">{children}</FormSection>
 }
 
 const NameSection = () => {
@@ -117,7 +117,7 @@ const CreateAccountFooter = () => {
       divider="flush"
       className="flex justify-center pt-8 text-center w-full flex-col items-center"
     >
-      <div>{t("createAccount.alreadyHaveAccount")}</div>
+      <div className="pb-4">{t("createAccount.alreadyHaveAccount")}</div>
       <Button className="uppercase" type="button" onClick={signInRedirect}>
         {t("label.signIn")}
       </Button>
