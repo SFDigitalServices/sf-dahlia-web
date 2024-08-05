@@ -16,9 +16,7 @@ import NameFieldset from "./components/NameFieldset"
 import DOBFieldset from "./components/DOBFieldset"
 import "./styles/account.scss"
 import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
-import { FormHeader } from "../../util/accountUtil"
-
-const MOBILE_SIZE = 768
+import { FormHeader, FormSection } from "../../util/accountUtil"
 
 const SavedBanner = () => {
   return (
@@ -53,24 +51,13 @@ const UpdateForm = ({
   loading: boolean
   onSubmit?: () => unknown
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth)
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
   return (
-    <Card.Section divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}>
+    <FormSection>
       <Form className="p-2 md:py-2 md:px-10" data-testid="update-form" onSubmit={onSubmit}>
         {children}
         <FormSubmitButton loading={loading} label={t("label.update")} />
       </Form>
-    </Card.Section>
+    </FormSection>
   )
 }
 

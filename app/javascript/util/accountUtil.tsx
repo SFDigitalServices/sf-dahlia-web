@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon } from "@bloom-housing/ui-components"
 
@@ -33,5 +33,32 @@ export const FormHeader = ({ title, description, className }: FormHeaderProps) =
       <h1 className="my-6 text-xl md:text-2xl">{title}</h1>
       <p className="field-note text-sm">{description}</p>
     </Card.Header>
+  )
+}
+
+const MOBILE_SIZE = 768
+
+export const FormSection = ({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  return (
+    <Card.Section className={className} divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}>
+      {children}
+    </Card.Section>
   )
 }

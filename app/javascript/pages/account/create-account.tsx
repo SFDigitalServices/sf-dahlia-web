@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import { AppearanceStyleType, Button, Form, t } from "@bloom-housing/ui-components"
 import { Card } from "@bloom-housing/ui-seeds"
@@ -11,35 +11,15 @@ import { useForm } from "react-hook-form"
 import DOBFieldset from "./components/DOBFieldset"
 import EmailFieldset from "./components/EmailFieldset"
 import PasswordFieldset from "./components/PasswordFieldset"
-import { FormHeader } from "../../util/accountUtil"
+import { FormHeader, FormSection } from "../../util/accountUtil"
 import "./styles/account.scss"
 
 interface CreateAccountProps {
   assetPaths: unknown
 }
 
-const MOBILE_SIZE = 768
-
-const FormSection = ({ children }: { children: React.ReactNode }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowWidth(window.innerWidth)
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  return (
-    <Card.Section
-      className="py-4 p-2 md:py-8 md:px-10"
-      divider={windowWidth > MOBILE_SIZE ? "inset" : "flush"}
-    >
-      {children}
-    </Card.Section>
-  )
+const CreateAccountFormSection = ({ children }: { children: React.ReactNode }) => {
+  return <FormSection className="py-4 p-2 md:py-8 md:px-10">{children}</FormSection>
 }
 
 const NameSection = () => {
@@ -49,7 +29,7 @@ const NameSection = () => {
   } = useForm({ mode: "all" })
 
   return (
-    <FormSection>
+    <CreateAccountFormSection>
       <NameFieldset
         register={register}
         errors={errors}
@@ -57,7 +37,7 @@ const NameSection = () => {
         defaultMiddleName={null}
         defaultLastName={null}
       />
-    </FormSection>
+    </CreateAccountFormSection>
   )
 }
 
@@ -78,7 +58,7 @@ const DateOfBirthSection = () => {
   } = useForm({ mode: "all" })
 
   return (
-    <FormSection>
+    <CreateAccountFormSection>
       <DOBFieldset
         required
         defaultDOB={null}
@@ -87,7 +67,7 @@ const DateOfBirthSection = () => {
         watch={watch}
         note={<DOBNote />}
       />
-    </FormSection>
+    </CreateAccountFormSection>
   )
 }
 
@@ -98,14 +78,14 @@ const EmailSection = () => {
   } = useForm({ mode: "all" })
 
   return (
-    <FormSection>
+    <CreateAccountFormSection>
       <EmailFieldset
         register={register}
         errors={errors}
         defaultEmail={null}
         note={t("createAccount.emailNote")}
       />
-    </FormSection>
+    </CreateAccountFormSection>
   )
 }
 
@@ -116,33 +96,14 @@ const PasswordSection = () => {
   } = useForm({ mode: "all" })
 
   return (
-    <FormSection>
+    <CreateAccountFormSection>
       <PasswordFieldset register={register} errors={errors} />
-      {/* <div>
-        <label htmlFor="password">{t("label.choosePassword")}</label>
-      </div>
-      <div className="field-note my-2">
-        <NewPasswordInstructions />
-      </div> */}
-      {/* Todo: DAH-2387 Adaptive password validation */}
-      {/* <Field
-        type="password"
-        name="password"
-        className="mt-0 mb-4"
-        validation={{
-          minLength: 8,
-          pattern: passwordRegex,
-        }}
-        error={errors.password}
-        errorMessage={t("error.password")}
-        register={register}
-      /> */}
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
         </Button>
       </div>
-    </FormSection>
+    </CreateAccountFormSection>
   )
 }
 
