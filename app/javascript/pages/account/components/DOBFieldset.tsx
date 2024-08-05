@@ -102,35 +102,20 @@ const DateField = ({
 }
 
 const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: DOBFieldProps) => {
+  const fieldKeys = ["birthMonth", "birthDay", "birthYear"]
   return (
     <>
-      <DateField
-        fieldKey="birthMonth"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
-      <DateField
-        fieldKey="birthDay"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
-      <DateField
-        fieldKey="birthYear"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
+      {fieldKeys.map((key) => (
+        <DateField
+          fieldKey={key}
+          defaultDOB={defaultDOB}
+          error={error}
+          register={register}
+          watch={watch}
+          required={required}
+          onChange={onChange}
+        />
+      ))}
     </>
   )
 }

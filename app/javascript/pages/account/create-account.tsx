@@ -41,15 +41,6 @@ const NameSection = () => {
   )
 }
 
-const DOBNote = () => {
-  return (
-    <>
-      <div className="pb-2">{t("createAccount.dobExample")}</div>
-      <div>{t("createAccount.dobNote")}</div>
-    </>
-  )
-}
-
 const DateOfBirthSection = () => {
   const {
     register,
@@ -65,7 +56,12 @@ const DateOfBirthSection = () => {
         register={register}
         error={errors.dob}
         watch={watch}
-        note={<DOBNote />}
+        note={
+          <>
+            <div className="pb-2">{t("createAccount.dobExample")}</div>
+            <div>{t("createAccount.dobNote")}</div>
+          </>
+        }
       />
     </CreateAccountFormSection>
   )
