@@ -9,10 +9,12 @@ interface NameFieldsetProps {
   defaultFirstName?: string
   defaultMiddleName?: string
   defaultLastName?: string
+  onChange?: () => void
 }
 
 const NameFieldset = ({
   register,
+  onChange,
   errors,
   defaultFirstName,
   defaultMiddleName,
@@ -31,6 +33,7 @@ const NameFieldset = ({
         errorMessage={t("error.firstName")}
         defaultValue={defaultFirstName ?? null}
         validation={{ required: true }}
+        onChange={onChange}
       />
       <Field
         className="mb-4"
@@ -39,6 +42,7 @@ const NameFieldset = ({
         error={errors.middleName}
         defaultValue={defaultMiddleName ?? null}
         register={register}
+        onChange={onChange}
       />
       <Field
         className="mb-4"
@@ -49,6 +53,7 @@ const NameFieldset = ({
         error={errors.lastName}
         register={register}
         validation={{ required: true }}
+        onChange={onChange}
       />
     </Fieldset>
   )
