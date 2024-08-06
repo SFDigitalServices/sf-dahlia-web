@@ -42,9 +42,9 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
     !! (listing.LotteryResultsURL || Service.listingHasLotteryBuckets(listing))
 
   Service.lotteryComplete = (listing) ->
-    listing &&
-    listing.Publish_Lottery_Results_on_DAHLIA &&
-    listing.Publish_Lottery_Results_on_DAHLIA != 'Not published'
+    !!listing &&
+    !!listing.Publish_Lottery_Results_on_DAHLIA &&
+    listing.Publish_Lottery_Results_on_DAHLIA != 'Not published' &&
     listing.Lottery_Status == 'Lottery Complete'
 
   Service.openLotteryResultsModal = ->
