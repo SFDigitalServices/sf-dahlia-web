@@ -37,7 +37,7 @@ module ArcGISService
 
     def query_params
       {
-        SingleLine: @address[:street],
+        Address: @address[:street],
         City: @address[:city],
         State: @address[:state],
         f: 'pjson',

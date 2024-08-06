@@ -85,18 +85,24 @@ do ->
     describe 'Service.lotteryComplete', ->
       it "returns true when the listing's lottery status is \"Listing Complete\" and Publish_Lottery_Results is true", ->
         fakeListing.Lottery_Status = 'Lottery Complete'
-        fakeListing.Publish_Lottery_Results = true
+        fakeListing.Publish_Lottery_Results_on_DAHLIA = 'Publish results in lottery modal on DAHLIA'
         expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual true
 
       it "returns false when the listing's lottery status is not \"Listing Complete\"", ->
         fakeListing.Lottery_Status = 'Not Yet Run'
-        fakeListing.Publish_Lottery_Results = true
+        fakeListing.Publish_Lottery_Results_on_DAHLIA = 'Publish results in lottery modal on DAHLIA'
         expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
 
-      it "returns false when the listing.Publish_Lottery_Results is false", ->
+      it "returns false when the listing.Publish_Lottery_Results_on_DAHLIA is \"Not published\"", ->
         fakeListing.Lottery_Status = 'Lottery Complete'
-        fakeListing.Publish_Lottery_Results = false
+        fakeListing.Publish_Lottery_Results_on_DAHLIA = 'Not published'
         expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
+
+      it "returns false when the listing.Publish_Lottery_Results_on_DAHLIA is null", ->
+        fakeListing.Lottery_Status = 'Lottery Complete'
+        fakeListing.Publish_Lottery_Results_on_DAHLIA = null
+        expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
+
 
     describe 'Service.openLotteryResultsModal', ->
       beforeEach ->
