@@ -18,7 +18,7 @@ interface TooltipProps {
 
 const Tooltip = ({ text }: TooltipProps) => {
   return (
-    <div className="bg-blue-100 border-b border-gray-450 flex mb-4 py-4">
+    <div className="bg-blue-100 border-b border-t border-gray-450 flex mb-4 py-4">
       <Icon className="mx-4" size="medium" symbol="info" />
       <p>{text}</p>
     </div>
@@ -69,7 +69,7 @@ export const ListingDetailsLotteryRanking = ({
               ? t("lottery.rankingTitle")
               : t("lottery.rankingTitle.noPreference")}
           </Heading>
-          <div className="border-b border-gray-450 pb-4 text-gray-700 translate">
+          <div className="pb-4 text-gray-700 translate">
             {renderMarkup(
               `${t("lottery.rankingOrderNote", {
                 lotteryRankingVideoUrl: LOTTERY_RANKING_VIDEO_URL,
