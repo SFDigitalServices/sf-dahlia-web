@@ -35,7 +35,7 @@ const AccountDashCard = ({
     >
       <Card
         spacing="md"
-        className={`cursor-pointer flex justify-start items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
+        className={`cursor-pointer  text-gray-850 hover:text-primary yflex justify-start items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
           removeBottomBorder ? "border-b-0 md:border-b" : ""
         }`}
       >
@@ -47,11 +47,11 @@ const AccountDashCard = ({
             <Icon size="xlarge" className="md:hidden block" symbol={icon} />
             <Icon size="2xl" className="md:block hidden" symbol={icon} />
           </div>
-          <h1 className="text-xl md:text-2xl text-gray-850">{title}</h1>
+          <h1 className="text-xl md:text-2xl">{title}</h1>
         </Card.Header>
 
         <Card.Section>
-          <p className="text-base text-gray-850">{renderInlineMarkup(description)}</p>
+          <p className="text-base">{renderInlineMarkup(description)}</p>
         </Card.Section>
       </Card>
     </a>
