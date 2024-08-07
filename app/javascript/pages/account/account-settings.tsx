@@ -314,19 +314,19 @@ const AccountSettings = ({ profile }: { profile: User }) => {
   const handleBanners = (banner: string) => {
     switch (banner) {
       case "nameUpdateBanner":
-        setBanners({ ...banners, nameUpdateBanner: true })
+        setBanners({ ...banners, nameUpdateBanner: true, nameSavedBanner: false })
         break
       case "nameSavedBanner":
         setBanners({ ...banners, nameSavedBanner: true })
         break
       case "dobUpdateBanner":
-        setBanners({ ...banners, dobUpdateBanner: true })
+        setBanners({ ...banners, dobUpdateBanner: true, dobSavedBanner: false })
         break
       case "dobSavedBanner":
         setBanners({ ...banners, dobSavedBanner: true })
         break
       case "emailUpdateBanner":
-        setBanners({ ...banners, emailUpdateBanner: true })
+        setBanners({ ...banners, emailUpdateBanner: true, emailBanner: false })
         break
       case "emailBanner":
         setBanners({ ...banners, emailBanner: true })
@@ -362,7 +362,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
             {banners.nameUpdateBanner && <UpdateBanner />}
             {banners.nameSavedBanner && (
               <span className="mt-8">
-                <UpdateBanner />
+                <SavedBanner />
               </span>
             )}
             <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
