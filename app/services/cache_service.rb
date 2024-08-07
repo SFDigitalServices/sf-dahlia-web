@@ -24,7 +24,6 @@ class CacheService
     Listing_Other_Notes
     Required_Documents
     Legal_Disclaimers
-    Realtor_Commission_Info
     Repricing_Mechanism
     Reserved_community_type_Description
     Credit_Rating
@@ -43,7 +42,7 @@ class CacheService
     Office_Hours
     Leasing_Agent_Title
     Lottery_Summary
-  ]
+  ].freeze
   def process_translations(listing)
     translation_service = GoogleTranslationService.new(
       project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
