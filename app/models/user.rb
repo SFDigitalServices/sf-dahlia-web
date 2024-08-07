@@ -5,6 +5,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :timeoutable, :confirmable
+
+  validate :password_complexity
+
   include DeviseTokenAuth::Concerns::User
 
   def error_details(field)
@@ -47,5 +50,20 @@ class User < ApplicationRecord
   # https://github.com/plataformatec/devise#activejob-integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  private
+
+  def password_complexity
+    return if password.nil?
+
+    # password length is handled internally by Devise
+    unless password.match(/[A-Za-z]/)
+      errors.add(:password, "must include at least one letter")
+    end
+
+    unless password.match(/\d/)
+      errors.add(:password, "must include at least one number")
+    end
   end
 end
