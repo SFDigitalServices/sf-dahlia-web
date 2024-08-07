@@ -638,13 +638,19 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           <ul
                             class="list-disc list-inside pl-2"
                           >
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               8 characters
                             </li>
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               1 letter
                             </li>
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               1 number
                             </li>
                           </ul>
@@ -1481,13 +1487,19 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         <ul
                           class="list-disc list-inside pl-2"
                         >
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             8 characters
                           </li>
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             1 letter
                           </li>
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             1 number
                           </li>
                         </ul>
@@ -2381,13 +2393,19 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           <ul
                             class="list-disc list-inside pl-2"
                           >
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               8 characters
                             </li>
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               1 letter
                             </li>
-                            <li>
+                            <li
+                              data-testid="validation-none"
+                            >
                               1 number
                             </li>
                           </ul>
@@ -3224,13 +3242,19 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         <ul
                           class="list-disc list-inside pl-2"
                         >
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             8 characters
                           </li>
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             1 letter
                           </li>
-                          <li>
+                          <li
+                            data-testid="validation-none"
+                          >
                             1 number
                           </li>
                         </ul>
