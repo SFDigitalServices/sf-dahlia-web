@@ -3,6 +3,7 @@ import { User, UserData } from "../authentication/user"
 import { authenticatedDelete, authenticatedGet, authenticatedPut, post, put } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
+import { getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
@@ -32,16 +33,16 @@ export const forgotPassword = async (email: string): Promise<string> =>
     email: email,
   }).then(({ data }) => data.message)
 
-export const updatePassword = async (
-  token: string,
-  password: string,
-  passwordConfirmation: string
-): Promise<string> =>
-  put<{ accessToken: string }>("/user/update-password", {
-    password: password,
-    passwordConfirmation: passwordConfirmation,
-    token: token,
-  }).then(({ data }) => data.accessToken)
+// export const updatePassword = async (
+//   token: string,
+//   password: string,
+//   passwordConfirmation: string
+// ): Promise<string> =>
+//   put<{ accessToken: string }>("/user/update-password", {
+//     password: password,
+//     passwordConfirmation: passwordConfirmation,
+//     token: token,
+//   }).then(({ data }) => data.accessToken)
 
 export const updateNameOrDOB = async (user: User): Promise<User> => {
   return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
@@ -61,3 +62,14 @@ export const updateEmail = async (email: string): Promise<string> =>
       email,
     },
   }).then(({ data }) => data.status)
+
+export const updatePassword = async (
+  new_password: string,
+  current_password: string
+): Promise<string> =>
+  authenticatedPut<{ message: string }>("/api/v1/auth/password", {
+    password: new_password,
+    password_confirmation: new_password,
+    current_password,
+    locale: getRoutePrefix(window.location.pathname) || LanguagePrefix.English,
+  }).then(({ data }) => data.message)

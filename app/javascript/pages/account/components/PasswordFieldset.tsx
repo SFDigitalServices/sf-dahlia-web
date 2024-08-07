@@ -68,7 +68,11 @@ const PasswordField = ({
       type={showPassword ? "text" : "password"}
       inputProps={{ className: "input pr-10" }}
       postInputContent={
-        <button className="absolute right-2 h-full" onClick={() => setShowPassword(!showPassword)}>
+        <button
+          className="absolute right-2 h-full"
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+        >
           <Icon className="text-blue-500" outlined size="lg">
             {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
           </Icon>
