@@ -24,7 +24,10 @@ const instructionListItem = (
     </li>
   )
 }
-
+/**
+ *
+ * @param newPasswordContent is the new password that the user is typing and wil be validated
+ */
 const NewPasswordInstructions = ({ newPasswordContent }: { newPasswordContent: string }) => {
   const [dirty, setDirty] = React.useState(false)
   if (newPasswordContent.length > 0 && !dirty) {
