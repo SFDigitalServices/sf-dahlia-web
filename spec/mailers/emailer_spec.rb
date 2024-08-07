@@ -12,8 +12,8 @@ describe Emailer, type: :mailer do
     before(:each) do
       @confirmed_user = User.create!(
         email: 'jane@doe.com',
-        password: 'somepassword',
-        password_confirmation: 'somepassword',
+        password: 'somepassword1',
+        password_confirmation: 'somepassword1',
         salesforce_contact_id: 'fakeId',
         confirmed_at: Time.now,
       )
@@ -125,8 +125,8 @@ describe Emailer, type: :mailer do
     before(:each) do
       @unconfirmed_user = User.create!(
         email: 'jane@doe.com',
-        password: 'somepassword',
-        password_confirmation: 'somepassword',
+        password: 'somepassword1',
+        password_confirmation: 'somepassword1',
         salesforce_contact_id: 'fakeId',
         confirmed_at: nil,
       )
@@ -215,8 +215,8 @@ describe Emailer, type: :mailer do
     before(:each) do
       @user = User.create!(
         email: 'jane@doe.com',
-        password: 'somepassword',
-        password_confirmation: 'somepassword',
+        password: 'somepassword1',
+        password_confirmation: 'somepassword1',
         salesforce_contact_id: 'fakeId',
       )
     end
