@@ -577,6 +577,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                             <button
                               class="absolute right-2 h-full"
+                              type="button"
                             >
                               <span
                                 aria-hidden="true"
@@ -676,6 +677,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                             <button
                               class="absolute right-2 h-full"
+                              type="button"
                             >
                               <span
                                 aria-hidden="true"
@@ -1426,6 +1428,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                           <button
                             class="absolute right-2 h-full"
+                            type="button"
                           >
                             <span
                               aria-hidden="true"
@@ -1525,6 +1528,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                           <button
                             class="absolute right-2 h-full"
+                            type="button"
                           >
                             <span
                               aria-hidden="true"
@@ -2332,6 +2336,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                             <button
                               class="absolute right-2 h-full"
+                              type="button"
                             >
                               <span
                                 aria-hidden="true"
@@ -2431,6 +2436,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                             <button
                               class="absolute right-2 h-full"
+                              type="button"
                             >
                               <span
                                 aria-hidden="true"
@@ -3181,6 +3187,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                           <button
                             class="absolute right-2 h-full"
+                            type="button"
                           >
                             <span
                               aria-hidden="true"
@@ -3280,6 +3287,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                           <button
                             class="absolute right-2 h-full"
+                            type="button"
                           >
                             <span
                               aria-hidden="true"

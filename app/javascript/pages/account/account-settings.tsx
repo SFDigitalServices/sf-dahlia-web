@@ -15,7 +15,11 @@ import PasswordFieldset from "./PasswordFieldset"
 import NameFieldset from "./NameFieldset"
 import DOBFieldset from "./DOBFieldset"
 import "./account-settings.scss"
-import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
+import {
+  updateNameOrDOB as apiUpdateNameOrDOB,
+  updateEmail,
+  updatePassword,
+} from "../../api/authApiService"
 
 const MOBILE_SIZE = 768
 
@@ -171,26 +175,33 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: { password: string; oldPassword: string }) => {
+  const onSubmit = (data: { password: string; currentPassword: string }) => {
     setLoading(true)
-    const { password, oldPassword } = data
+    const { password, currentPassword } = data
     if (password === "") {
-      console.log("Empty password")
       setLoading(false)
       return
     }
-    try {
-      const newUser = { ...user, password, oldPassword }
-      setUser(newUser)
-      setpasswordBanner(true)
-      console.log("Updated user's password:", newUser)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
+
+    console.log({ password, currentPassword })
+
+    updatePassword(password, currentPassword)
+      .then(() => {
+        const newUser = { ...user, password, currentPassword }
+        setUser(newUser)
+      })
+      .catch((error) => {
+        // TODO(DAH-2470): Error banners
+        console.log(error)
+      })
+      .finally(() => {
+        setpasswordBanner(true)
+        setLoading(false)
+        reset()
+      })
   }
 
   return (

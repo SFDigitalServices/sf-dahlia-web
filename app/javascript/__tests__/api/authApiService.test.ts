@@ -1,4 +1,10 @@
-import { authenticatedGet, authenticatedDelete, post, put } from "../../api/apiService"
+import {
+  authenticatedGet,
+  authenticatedDelete,
+  post,
+  put,
+  authenticatedPut,
+} from "../../api/apiService"
 
 import {
   signIn,
@@ -14,6 +20,7 @@ jest.mock("axios")
 jest.mock("../../api/apiService", () => ({
   authenticatedGet: jest.fn(),
   authenticatedDelete: jest.fn(),
+  authenticatedPut: jest.fn(),
   post: jest.fn(),
   put: jest.fn(),
 }))
@@ -22,6 +29,7 @@ describe("authApiService", () => {
   beforeEach(() => {
     ;(authenticatedGet as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(authenticatedDelete as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
+    ;(authenticatedPut as jest.Mock).mockResolvedValue({ data: { data: "test-data" } })
     ;(post as jest.Mock).mockResolvedValue({ data: "test-data", headers: "test-headers" })
     ;(put as jest.Mock).mockResolvedValue({ data: { message: "test-message" } })
   })
@@ -67,12 +75,18 @@ describe("authApiService", () => {
 
   describe("updatePassword", () => {
     it("calls apiService put", async () => {
-      const url = "/user/update-password"
-      const token = "test-token"
-      const password = "test-password"
-      const passwordConfirmation = password
-      await updatePassword(token, password, password)
-      expect(put).toHaveBeenCalledWith(url, { password, passwordConfirmation, token })
+      const url = "/api/v1/auth/password"
+      const oldPassword = "old-password"
+      const newPassword = "test-password"
+      await updatePassword(newPassword, oldPassword)
+      expect(authenticatedPut).toHaveBeenCalledWith(
+        url,
+        expect.objectContaining({
+          password: newPassword,
+          password_confirmation: newPassword,
+          current_password: oldPassword,
+        })
+      )
     })
   })
 
