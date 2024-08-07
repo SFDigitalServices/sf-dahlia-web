@@ -518,6 +518,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               value="email@email.com"
                             />
                           </div>
+                          <span
+                            id="email-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -1305,6 +1308,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             value="email@email.com"
                           />
                         </div>
+                        <span
+                          id="email-error"
+                        />
                       </div>
                     </fieldset>
                     <div
@@ -2149,6 +2155,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               value="email@email.com"
                             />
                           </div>
+                          <span
+                            id="email-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -2936,6 +2945,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             value="email@email.com"
                           />
                         </div>
+                        <span
+                          id="email-error"
+                        />
                       </div>
                     </fieldset>
                     <div
