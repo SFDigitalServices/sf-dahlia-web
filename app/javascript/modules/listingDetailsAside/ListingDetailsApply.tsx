@@ -25,32 +25,53 @@ export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+const isFcfsBmrSales = false
+
+const FcfsBmrSalesHowToApply = () => (
+  <>
+    <div className="mt-1 mb-6">
+      <ol className="numbered-list">
+        <li>{t("listings.fcfs.bmrSales.howToApply.step1")}</li>
+        <li>{t("listings.fcfs.bmrSales.howToApply.step2")}</li>
+        <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
+      </ol>
+    </div>
+    <Button styleType={AppearanceStyleType.primary}>
+      {t("listings.fcfs.bmrSales.howToApply.learnMore")}
+    </Button>
+  </>
+)
+
+const ordinalHeader = (ordinal: number, title: string) => {
+  return (
+    <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
+      <span className={"text-blue-500 mr-2"}>{ordinal}</span>
+      {title}
+    </Heading>
+  )
+}
+
+const StandardHowToApply = ({
+  listingId,
+  isListingRental,
+  isHabitatListing,
+  acceptingPaperApps,
+}: {
+  listingId: string
+  isListingRental: boolean
+  isHabitatListing: boolean
+  acceptingPaperApps: boolean
+}) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
 
-  if (!isOpen(listing)) return null
-
-  const isListingRental = isRental(listing)
-
-  const acceptingPaperApps = acceptingPaperApplications(listing)
-
-  const ordinalHeader = (ordinal: number, title: string) => {
-    return (
-      <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
-        <span className={"text-blue-500 mr-2"}>{ordinal}</span>
-        {title}
-      </Heading>
-    )
-  }
-
-  const howToApplyBlock = (
-    <SidebarBlock title={t("listings.apply.howToApply")}>
+  return (
+    <>
       {!isListingRental && (
         <>
           <p className={"mb-4"}>
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
-                url: isHabitatListing(listing)
+                url: isHabitatListing
                   ? "https://habitatgsf.org/amber-drive-info/"
                   : getSfGovUrl(
                       "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
@@ -66,7 +87,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         styleType={AppearanceStyleType.primary}
         className={"w-full"}
         transition={true}
-        href={`listings/${listing.listingID}/apply-welcome/intro`}
+        href={`listings/${listingId}/apply-welcome/intro`}
       >
         {t("label.applyOnline")}
       </LinkButton>
@@ -113,6 +134,29 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
             </div>
           )}
         </>
+      )}
+    </>
+  )
+}
+
+export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+  if (!isOpen(listing)) return null
+
+  const isListingRental = isRental(listing)
+
+  const acceptingPaperApps = acceptingPaperApplications(listing)
+
+  const howToApplyBlock = (
+    <SidebarBlock title={t("listings.apply.howToApply")}>
+      {isFcfsBmrSales ? (
+        <FcfsBmrSalesHowToApply />
+      ) : (
+        <StandardHowToApply
+          listingId={listing.listingID}
+          isListingRental={isListingRental}
+          isHabitatListing={isHabitatListing(listing)}
+          acceptingPaperApps={acceptingPaperApps}
+        />
       )}
     </SidebarBlock>
   )
