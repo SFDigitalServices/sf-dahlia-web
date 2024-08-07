@@ -11,11 +11,15 @@ const instructionListItem = (
   text: string
 ) => {
   if (!shouldShowValidationInformation) {
-    return <li>{text}</li>
+    return <li data-testid="validation-none">{text}</li>
   }
   return (
     <li className={`${validation ? "text-green-500" : "text-red-500"} flex items-center gap-2`}>
-      {validation ? <CheckIcon className="h-4 w-4" /> : <XMarkIcon className="h-4 w-4" />}
+      {validation ? (
+        <CheckIcon data-testid="validation-check" className="h-4 w-4" />
+      ) : (
+        <XMarkIcon data-testid="validation-x" className="h-4 w-4" />
+      )}
       {text}
     </li>
   )
