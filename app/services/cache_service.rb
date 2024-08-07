@@ -19,40 +19,39 @@ class CacheService
     Rails.logger.info('CacheService Finished')
   end
 
+  # TODO: Decide which fields need to be refreshed
+  LISTING_TRANSLATION_FIELDS = %w[
+    Listing_Other_Notes
+    Required_Documents
+    Legal_Disclaimers
+    Realtor_Commission_Info
+    Repricing_Mechanism
+    Reserved_community_type_Description
+    Credit_Rating
+    Eviction_History
+    Neighborhood
+    Appliances
+    Services_Onsite
+    Parking_Information
+    Utilities
+    Smoking_Policy
+    Pet_Policy
+    Amenities
+    Accessibility
+    Pricing_Matrix
+    Costs_Not_Included
+    Office_Hours
+    Leasing_Agent_Title
+    Lottery_Summary
+  ]
   def process_translations(listing)
-    # TODO: Decide which fields need to be refreshed
-    listing_translation_fields = %w[
-      Listing_Other_Notes
-      Required_Documents
-      Legal_Disclaimers
-      Realtor_Commission_Info
-      Repricing_Mechanism
-      Reserved_community_type_Description
-      Credit_Rating
-      Eviction_History
-      Neighborhood
-      Appliances
-      Services_Onsite
-      Parking_Information
-      Utilities
-      Smoking_Policy
-      Pet_Policy
-      Amenities
-      Accessibility
-      Pricing_Matrix
-      Costs_Not_Included
-      Office_Hours
-      Leasing_Agent_Title
-      Lottery_Summary
-    ]
-
     translation_service = GoogleTranslationService.new(
       project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
       key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
     )
 
     strings_to_translate = {}
-    listing_translation_fields.each do |field|
+    LISTING_TRANSLATION_FIELDS.each do |field|
       strings_to_translate[field] = listing[field] unless listing[field].nil?
     end
 
@@ -97,7 +96,7 @@ class CacheService
   end
 
   def listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
-    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL')  }
+    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
     prev_li_slice = prev_cached_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
     (fresh_li_slice - prev_li_slice).empty? && (prev_li_slice - fresh_li_slice).empty?
   end
