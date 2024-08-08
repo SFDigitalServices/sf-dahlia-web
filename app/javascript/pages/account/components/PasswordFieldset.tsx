@@ -26,33 +26,31 @@ const instructionListItem = (
 }
 /**
  *
- * @param newPasswordContent is the new password that the user is typing and wil be validated
+ * @param passwordValidationContent is the new password that the user is typing and wil be validated
  */
-const NewPasswordInstructions = ({ newPasswordContent }: { newPasswordContent: string }) => {
-  const [dirty, setDirty] = React.useState(false)
-  if (newPasswordContent.length > 0 && !dirty) {
-    setDirty(true)
-  }
-
-  const shouldShowValidationInformation = newPasswordContent.length > 0 || dirty
-
+const NewPasswordInstructions = ({
+  passwordValidationContent,
+}: {
+  passwordValidationContent: string
+}) => {
+  const showValidationInfo = passwordValidationContent.length > 0
   return (
     <>
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
-      <ul className={`${shouldShowValidationInformation ? "" : "list-disc list-inside pl-2"}`}>
+      <ul className={`${showValidationInfo ? "" : "list-disc list-inside pl-2"}`}>
         {instructionListItem(
-          shouldShowValidationInformation,
-          newPasswordContent.length >= 8,
+          showValidationInfo,
+          passwordValidationContent.length >= 8,
           t("createAccount.passwordInstructions.numCharacters")
         )}
         {instructionListItem(
-          shouldShowValidationInformation,
-          /[a-zA-Z]/.test(newPasswordContent),
+          showValidationInfo,
+          /[a-zA-Z]/.test(passwordValidationContent),
           t("createAccount.passwordInstructions.numLetters")
         )}
         {instructionListItem(
-          shouldShowValidationInformation,
-          /[0-9]/.test(newPasswordContent),
+          showValidationInfo,
+          /[0-9]/.test(passwordValidationContent),
           t("createAccount.passwordInstructions.numNumbers")
         )}
       </ul>
@@ -88,20 +86,28 @@ const PasswordField = ({
 const PasswordFieldset = ({
   register,
   errors,
+  watch,
   edit = false,
 }: {
   register: UseFormMethods["register"]
   errors: UseFormMethods["errors"]
+  watch: UseFormMethods["watch"]
   edit?: boolean
 }) => {
+  const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
+  const newPassword: string = watch("password", "")
+
   const hasError = errors.currentPassword || errors.password
-  const [newPasswordContent, setNewPasswordContent] = React.useState("")
+
+  React.useEffect(() => {
+    setPasswordValidationContent(newPassword)
+  }, [newPassword, setPasswordValidationContent])
 
   return (
     <Fieldset
       hasError={hasError}
       label={edit ? t("label.password") : t("label.choosePassword")}
-      note={<NewPasswordInstructions newPasswordContent={newPasswordContent} />}
+      note={<NewPasswordInstructions passwordValidationContent={passwordValidationContent} />}
     >
       {edit && (
         <>
@@ -125,11 +131,9 @@ const PasswordFieldset = ({
         name="password"
         className="mt-0 mb-4"
         validation={{
+          required: true,
           minLength: 8,
           pattern: passwordRegex,
-        }}
-        onChange={(e) => {
-          setNewPasswordContent(e.currentTarget.value)
         }}
         error={errors.password}
         errorMessage={t("error.passwordComplexity")}

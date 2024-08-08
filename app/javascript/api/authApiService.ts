@@ -33,17 +33,6 @@ export const forgotPassword = async (email: string): Promise<string> =>
     email: email,
   }).then(({ data }) => data.message)
 
-// export const updatePassword = async (
-//   token: string,
-//   password: string,
-//   passwordConfirmation: string
-// ): Promise<string> =>
-//   put<{ accessToken: string }>("/user/update-password", {
-//     password: password,
-//     passwordConfirmation: passwordConfirmation,
-//     token: token,
-//   }).then(({ data }) => data.accessToken)
-
 export const updateNameOrDOB = async (user: User): Promise<User> => {
   return authenticatedPut<{ contact: User }>("/api/v1/account/update", {
     contact: {

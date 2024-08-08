@@ -136,13 +136,14 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 
 const PasswordSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
-  const [passwordBanner, setpasswordBanner] = useState(false)
+  const [passwordBanner, setPasswordBanner] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
+    watch,
   } = useForm({ mode: "all" })
 
   const onSubmit = (data: { password: string; currentPassword: string }) => {
@@ -153,19 +154,17 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
       return
     }
 
-    console.log({ password, currentPassword })
-
     updatePassword(password, currentPassword)
       .then(() => {
         const newUser = { ...user, password, currentPassword }
         setUser(newUser)
+        setPasswordBanner(true)
       })
       .catch((error) => {
-        // TODO(DAH-2470): Error banners
+        // TODO(DAH-2470): Error banners: Password complexity requirements not met, current password is incorrect, general server error
         console.log(error)
       })
       .finally(() => {
-        setpasswordBanner(true)
         setLoading(false)
         reset()
       })
@@ -179,7 +178,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         </span>
       )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        <PasswordFieldset register={register} errors={errors} edit />
+        <PasswordFieldset register={register} errors={errors} watch={watch} edit />
       </UpdateForm>
     </>
   )
