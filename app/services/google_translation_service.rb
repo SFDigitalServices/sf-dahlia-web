@@ -31,7 +31,6 @@ class GoogleTranslationService
         "Error caching listing translations for listing id: #{listing_id}",
       )
     end
-    translations
   end
 
   private
