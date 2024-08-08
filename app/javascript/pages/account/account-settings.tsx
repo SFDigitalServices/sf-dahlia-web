@@ -97,11 +97,13 @@ const UpdateForm = ({
 interface SectionProps {
   user: User
   setUser: React.Dispatch<User>
-  handleBanners: (banner: string) => void
+  handleBanners?: (banner: string) => void
 }
 
-const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
+const EmailSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const [emailUpdateBanner, setemailUpdateBanner] = useState(false)
+  const [emailBanner, setemailBanner] = useState(false)
 
   const {
     register,
@@ -110,7 +112,8 @@ const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
   } = useForm({ mode: "all" })
 
   const onChange = () => {
-    handleBanners("emailUpdateBanner")
+    setemailUpdateBanner(true)
+    setemailBanner(false)
   }
 
   const onSubmit = (data: { email: string }) => {
@@ -124,7 +127,7 @@ const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
           email,
         }
         setUser(newUser)
-        handleBanners("emailBanner")
+        setemailBanner(true)
       })
       .catch((error) => {
         // TODO: Inform the user that an error has occurred
@@ -137,19 +140,32 @@ const EmailSection = ({ user, setUser, handleBanners }: SectionProps) => {
   }
 
   return (
-    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <EmailFieldset
-        register={register}
-        errors={errors}
-        defaultEmail={user?.email ?? null}
-        onChange={onChange}
-      />
-    </UpdateForm>
+    <>
+      {emailUpdateBanner && (
+        <span className="mt-8">
+          <UpdateBanner />
+        </span>
+      )}
+      {emailBanner && (
+        <span className="mt-8">
+          <EmailBanner />
+        </span>
+      )}
+      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+        <EmailFieldset
+          register={register}
+          errors={errors}
+          defaultEmail={user?.email ?? null}
+          onChange={onChange}
+        />
+      </UpdateForm>
+    </>
   )
 }
 
-const PasswordSection = ({ user, setUser, handleBanners }: SectionProps) => {
+const PasswordSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
+  const [passwordBanner, setpasswordBanner] = useState(false)
 
   const {
     register,
@@ -168,7 +184,7 @@ const PasswordSection = ({ user, setUser, handleBanners }: SectionProps) => {
     try {
       const newUser = { ...user, password, oldPassword }
       setUser(newUser)
-      handleBanners("passwordBanner")
+      setpasswordBanner(true)
       console.log("Updated user's password:", newUser)
       setLoading(false)
     } catch (error) {
@@ -178,9 +194,16 @@ const PasswordSection = ({ user, setUser, handleBanners }: SectionProps) => {
   }
 
   return (
-    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <PasswordFieldset register={register} errors={errors} />
-    </UpdateForm>
+    <>
+      {passwordBanner && (
+        <span className="mt-8">
+          <SavedBanner />
+        </span>
+      )}
+      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+        <PasswordFieldset register={register} errors={errors} />
+      </UpdateForm>
+    </>
   )
 }
 
@@ -256,9 +279,11 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   )
 }
 
-const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
+const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
+  const [dobUpdateBanner, setdobUpdateBanner] = useState(false)
+  const [dobSavedBanner, setdobSavedBanner] = useState(false)
 
   const {
     register,
@@ -268,7 +293,8 @@ const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
   } = useForm({ mode: "all" })
 
   const onChange = () => {
-    handleBanners("dobUpdateBanner")
+    setdobUpdateBanner(true)
+    setdobSavedBanner(false)
   }
 
   const onSubmit = async (data: { dob: DOBFieldValues }) => {
@@ -280,59 +306,49 @@ const DateOfBirthSection = ({ user, setUser, handleBanners }: SectionProps) => {
       DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
     }
 
-    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading, () =>
-      handleBanners("dobSavedBanner")
-    )
+    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading, () => setdobSavedBanner(true))
   }
 
   return (
-    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <DOBFieldset
-        required
-        defaultDOB={user ? user.dobObject : null}
-        register={register}
-        error={errors.dob}
-        watch={watch}
-        onChange={onChange}
-      />
-    </UpdateForm>
+    <>
+      {dobUpdateBanner && (
+        <span className="mt-8">
+          <UpdateBanner />
+        </span>
+      )}
+      {dobSavedBanner && (
+        <span className="mt-8">
+          <SavedBanner />
+        </span>
+      )}
+      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+        <DOBFieldset
+          required
+          defaultDOB={user ? user.dobObject : null}
+          register={register}
+          error={errors.dob}
+          watch={watch}
+          onChange={onChange}
+        />
+      </UpdateForm>
+    </>
   )
 }
 
 const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
-  const [banners, setBanners] = useState({
-    nameUpdateBanner: false,
-    nameSavedBanner: false,
-    dobUpdateBanner: false,
-    dobSavedBanner: false,
-    emailUpdateBanner: false,
-    emailBanner: false,
-    passwordBanner: false,
-  })
+  const [nameUpdateBanner, setnameUpdateBanner] = useState(false)
+  const [nameSavedBanner, setnameSavedBanner] = useState(false)
 
   const handleBanners = (banner: string) => {
     switch (banner) {
       case "nameUpdateBanner":
-        setBanners({ ...banners, nameUpdateBanner: true })
+        setnameUpdateBanner(true)
+        setnameSavedBanner(false)
         break
       case "nameSavedBanner":
-        setBanners({ ...banners, nameSavedBanner: true })
+        setnameSavedBanner(true)
         break
-      case "dobUpdateBanner":
-        setBanners({ ...banners, dobUpdateBanner: true })
-        break
-      case "dobSavedBanner":
-        setBanners({ ...banners, dobSavedBanner: true })
-        break
-      case "emailUpdateBanner":
-        setBanners({ ...banners, emailUpdateBanner: true })
-        break
-      case "emailBanner":
-        setBanners({ ...banners, emailBanner: true })
-        break
-      case "passwordBanner":
-        setBanners({ ...banners, passwordBanner: true })
     }
   }
 
@@ -354,46 +370,21 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
-            {banners.nameUpdateBanner || banners.nameSavedBanner ? (
+            {nameUpdateBanner || nameSavedBanner ? (
               <AccountSettingsHeader className={"border-none"} />
             ) : (
               <AccountSettingsHeader />
             )}
-            {banners.nameUpdateBanner && <UpdateBanner />}
-            {banners.nameSavedBanner && (
+            {nameUpdateBanner && <UpdateBanner />}
+            {nameSavedBanner && (
               <span className="mt-8">
-                <UpdateBanner />
+                <SavedBanner />
               </span>
             )}
             <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
-            {banners.dobUpdateBanner && (
-              <span className="mt-8">
-                <UpdateBanner />
-              </span>
-            )}
-            {banners.dobSavedBanner && (
-              <span className="mt-8">
-                <SavedBanner />
-              </span>
-            )}
-            <DateOfBirthSection user={user} setUser={setUser} handleBanners={handleBanners} />
-            {banners.emailUpdateBanner && (
-              <span className="mt-8">
-                <UpdateBanner />
-              </span>
-            )}
-            {banners.emailBanner && (
-              <span className="mt-8">
-                <EmailBanner />
-              </span>
-            )}
-            <EmailSection user={user} setUser={setUser} handleBanners={handleBanners} />
-            {banners.passwordBanner && (
-              <span className="mt-8">
-                <SavedBanner />
-              </span>
-            )}
-            <PasswordSection user={user} setUser={setUser} handleBanners={handleBanners} />
+            <DateOfBirthSection user={user} setUser={setUser} />
+            <EmailSection user={user} setUser={setUser} />
+            <PasswordSection user={user} setUser={setUser} />
           </Card>
         </div>
       </section>
