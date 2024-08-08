@@ -8,7 +8,6 @@ namespace :translations_cache do
       listing = Force::ListingService.listing(listing_id)
       response = CacheService.new.process_translations(listing)
       puts "Successfully cached translations for #{listing_id}" if response
-      puts Rails.cache.fetch("/ListingDetails/#{listing_id}/translations")
     end
   end
 end
