@@ -1,39 +1,114 @@
-import { Field, passwordRegex, t } from "@bloom-housing/ui-components"
+import { Field, FieldProps, passwordRegex, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import "./account-settings"
 import Fieldset from "./Fieldset"
+import { Icon } from "@bloom-housing/ui-seeds"
+import { CheckIcon, EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline"
 
-const NewPasswordInstructions = () => {
+const instructionListItem = (
+  shouldShowValidationInformation: boolean,
+  validation: boolean,
+  text: string
+) => {
+  if (!shouldShowValidationInformation) {
+    return <li data-testid="validation-none">{text}</li>
+  }
+  return (
+    <li className={`${validation ? "text-green-500" : "text-red-500"} flex items-center gap-2`}>
+      {validation ? (
+        <CheckIcon data-testid="validation-check" className="h-4 w-4" />
+      ) : (
+        <XMarkIcon data-testid="validation-x" className="h-4 w-4" />
+      )}
+      {text}
+    </li>
+  )
+}
+/**
+ *
+ * @param passwordValidationContent is the new password that the user is typing and wil be validated
+ */
+const NewPasswordInstructions = ({
+  passwordValidationContent,
+}: {
+  passwordValidationContent: string
+}) => {
+  const showValidationInfo = passwordValidationContent.length > 0
   return (
     <>
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
-      <ul className="list-disc list-inside pl-2">
-        <li className="bullet">{t("createAccount.passwordInstructions.numCharacters")}</li>
-        <li className="bullet">{t("createAccount.passwordInstructions.numLetters")}</li>
-        <li className="bullet">{t("createAccount.passwordInstructions.numNumbers")}</li>
+      <ul className={`${showValidationInfo ? "" : "list-disc list-inside pl-2"}`}>
+        {instructionListItem(
+          showValidationInfo,
+          passwordValidationContent.length >= 8,
+          t("createAccount.passwordInstructions.numCharacters")
+        )}
+        {instructionListItem(
+          showValidationInfo,
+          /[a-zA-Z]/.test(passwordValidationContent),
+          t("createAccount.passwordInstructions.numLetters")
+        )}
+        {instructionListItem(
+          showValidationInfo,
+          /[0-9]/.test(passwordValidationContent),
+          t("createAccount.passwordInstructions.numNumbers")
+        )}
       </ul>
     </>
+  )
+}
+
+const PasswordField = ({
+  ...props
+}: Omit<FieldProps, "type" | "postInputContent" | "inputProps">) => {
+  const [showPassword, setShowPassword] = React.useState(false)
+
+  return (
+    <Field
+      {...props}
+      type={showPassword ? "text" : "password"}
+      inputProps={{ className: "input pr-10" }}
+      postInputContent={
+        <button
+          className="absolute right-2 h-full"
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          <Icon className="text-blue-500" outlined size="lg">
+            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+          </Icon>
+        </button>
+      }
+    />
   )
 }
 
 const PasswordFieldset = ({
   register,
   errors,
+  watch,
 }: {
   register: UseFormMethods["register"]
   errors: UseFormMethods["errors"]
+  watch: UseFormMethods["watch"]
 }) => {
+  const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
+  const newPassword: string = watch("password", "")
+
   const hasError = errors.currentPassword || errors.password
+
+  React.useEffect(() => {
+    setPasswordValidationContent(newPassword)
+  }, [newPassword, setPasswordValidationContent])
 
   return (
     <Fieldset className="password-fieldset" hasError={hasError} label={t("label.password")}>
       <p className="field-note mt-2 mb-4">{t("accountSettings.enterCurrentPassword")}</p>
-      {/* Todo: DAH-2387 Adaptive password validation */}
-      <Field
-        type="password"
+      <PasswordField
         name="currentPassword"
         label={t("label.currentPassword")}
+        validation={{ required: true }}
         error={errors.currentPassword}
         register={register}
         className="mb-1"
@@ -45,19 +120,18 @@ const PasswordFieldset = ({
         <label htmlFor="password">{t("label.chooseNewPassword")}</label>
       </div>
       <div className="field-note my-2">
-        <NewPasswordInstructions />
+        <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
       </div>
-      {/* Todo: DAH-2387 Adaptive password validation */}
-      <Field
-        type="password"
+      <PasswordField
         name="password"
         className="mt-0 mb-4"
         validation={{
+          required: true,
           minLength: 8,
           pattern: passwordRegex,
         }}
         error={errors.password}
-        errorMessage={t("error.password")}
+        errorMessage={t("error.passwordComplexity")}
         register={register}
       />
     </Fieldset>

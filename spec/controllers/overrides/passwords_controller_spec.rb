@@ -8,8 +8,8 @@ describe Overrides::PasswordsController do
   let!(:user) do
     @user ||= User.create(
       email: 'jane@doe.com',
-      password: 'somepassword',
-      password_confirmation: 'somepassword',
+      password: 'somepassword1',
+      password_confirmation: 'somepassword1',
     )
   end
 
@@ -72,7 +72,7 @@ describe Overrides::PasswordsController do
     it 'should update password' do
       expect(controller).to receive(:render_update_success).and_return(true)
       expect do
-        params = { password: 'newpassword', password_confirmation: 'newpassword' }
+        params = { password: 'newpassword1', password_confirmation: 'newpassword1' }
         put :update, params: params
       end.to(change { user.encrypted_password })
 
@@ -85,7 +85,7 @@ describe Overrides::PasswordsController do
       allow(message_delivery).to receive(:deliver_later)
 
       expect do
-        params = { password: 'newpassword', password_confirmation: 'newpassword' }
+        params = { password: 'newpassword1', password_confirmation: 'newpassword1' }
         put :update, params: params
       end.to(change { user.encrypted_password })
 
