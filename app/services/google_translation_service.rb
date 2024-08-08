@@ -26,12 +26,13 @@ class GoogleTranslationService
       Rails.logger.info(
         "Successfully cached listing translations for listing id: #{listing_id}",
       )
+      translations
     else
       Rails.logger.error(
         "Error caching listing translations for listing id: #{listing_id}",
       )
+      raise "Error caching listing translations for listing id: #{listing_id}"
     end
-    translations
   end
 
   private
