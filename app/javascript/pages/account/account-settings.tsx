@@ -168,7 +168,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         </span>
       )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        <PasswordFieldset register={register} errors={errors} />
+        <PasswordFieldset register={register} errors={errors} edit />
       </UpdateForm>
     </>
   )
@@ -338,7 +338,11 @@ const AccountSettings = ({ profile }: { profile: User }) => {
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
             {nameUpdateBanner || nameSavedBanner ? (
-              <AccountSettingsHeader className={"border-none"} />
+              <FormHeader
+                className={"border-none"}
+                title={t("accountSettings.title.sentenceCase")}
+                description={t("accountSettings.description")}
+              />
             ) : (
               <FormHeader
                 title={t("accountSettings.title.sentenceCase")}
