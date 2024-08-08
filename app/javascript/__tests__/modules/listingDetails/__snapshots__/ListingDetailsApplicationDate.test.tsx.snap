@@ -41,7 +41,7 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
         <div
           class="font-bold"
         >
-          1:00 AM Pacific Time
+          1:00 AM Pacific Time
         </div>
       </span>
     </div>
@@ -90,7 +90,7 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
         <div
           class="font-bold"
         >
-          1:00 AM Pacific Time
+          1:00 AM Pacific Time
         </div>
       </span>
     </div>

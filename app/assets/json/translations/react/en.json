@@ -857,7 +857,6 @@
   "listings.allUnitsReservedFor.Senior": "All units reserved for ages %{age}+",
   "listings.allUnitsReservedFor.Veteran": "All units reserved for veterans",
   "listings.applicationDeadline": "Application Deadline",
-  "listings.applicationsOpen": "Applications Open",
   "listings.applicationsClosed": "Applications Closed",
   "listings.apply.applicationsMustBeReceivedByDeadline": "Applications must be received by the deadline and postmarks will not be considered.",
   "listings.apply.covidUpdate": "COVID-19 update:",

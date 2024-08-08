@@ -90,7 +90,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                 <div
                   class="font-bold"
                 >
-                  1:00 AM Pacific Time
+                  1:00 AM Pacific Time
                 </div>
               </span>
             </div>
