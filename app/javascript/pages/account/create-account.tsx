@@ -85,9 +85,9 @@ const CreateAccountFooter = () => {
   return (
     <Card.Section
       divider="flush"
-      className="flex justify-center pt-8 text-center w-full flex-col items-center"
+      className="create-account-footer flex justify-center py-8 text-center w-full flex-col items-center"
     >
-      <div className="pb-4">{t("createAccount.alreadyHaveAccount")}</div>
+      <div className="pb-6">{t("createAccount.alreadyHaveAccount")}</div>
       <Button className="uppercase" type="button" onClick={signInRedirect}>
         {t("label.signIn")}
       </Button>
@@ -112,7 +112,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
     <Layout title={t("pageTitle.createAccount")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
-          <Card className="w-full pb-8">
+          <Card className="w-full">
             <FormHeader
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}

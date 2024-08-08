@@ -21,7 +21,7 @@
 }
 
 // note for choosing a new password
-.password-fieldset > .field-note {
+.form-fieldset > .field-note {
   font-size: 13px;
 }
 
@@ -51,4 +51,9 @@
 
 .seeds-common-message > .seeds-icon ~ .seeds-icon {
   color: var(--seeds-color-black);
+}
+
+.create-account-footer > div {
+  font-family: "Noto Serif";
+  font-size: 26px;
 }
