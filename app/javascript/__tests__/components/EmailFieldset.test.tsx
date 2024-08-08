@@ -42,6 +42,11 @@ describe("EmailFieldset", () => {
     expect(screen.queryByText(t("error.email.missingDot"))).toBeNull()
     expect(screen.queryByText(t("error.email.generalIncorrect"))).not.toBeNull()
 
+    await user.type(input, "test@testcom")
+    expect(screen.queryByText(t("error.email.missingAtSign"))).toBeNull()
+    expect(screen.queryByText(t("error.email.missingDot"))).not.toBeNull()
+    expect(screen.queryByText(t("error.email.generalIncorrect"))).toBeNull()
+
     await user.type(input, "test@test.com")
     expect(screen.queryByText(t("error.email.missingAtSign"))).toBeNull()
     expect(screen.queryByText(t("error.email.missingDot"))).toBeNull()
