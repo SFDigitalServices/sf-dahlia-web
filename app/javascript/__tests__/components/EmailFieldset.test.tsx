@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import EmailFieldset from "../../pages/account/EmailFieldset"
+import EmailFieldset from "../../pages/account/components/EmailFieldset"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
