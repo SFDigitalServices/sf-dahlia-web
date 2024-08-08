@@ -6,7 +6,8 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
     class="w-full mb-8 md:mb-0"
   >
     <div
-      class="application-status text-xs text-gray-800 bg-primary-light place-content-center"
+      class="seeds-common-message seeds-message place-content-center"
+      data-variant="primary"
     >
       <span
         class="ui-icon ui-medium"
@@ -23,8 +24,25 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
           />
         </svg>
       </span>
-      <span>
-        Application Deadline Jan 1, 2050 at 1:00 AM
+      <span
+        data-part="content"
+      >
+        <div>
+          <span>
+            Applications Deadline
+          </span>
+          : 
+          <span
+            class="font-bold"
+          >
+            January 1, 2050
+          </span>
+        </div>
+        <div
+          class="font-bold"
+        >
+          1:00 AM Pacific Time
+        </div>
       </span>
     </div>
   </div>
@@ -37,13 +55,14 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
     class="w-full mb-8 md:mb-0"
   >
     <div
-      class="application-status text-xs text-gray-800 bg-alert-light place-content-center"
+      class="seeds-common-message seeds-message place-content-center"
+      data-variant="primary"
     >
       <span
         class="ui-icon ui-medium"
       >
         <svg
-          fill="var(--bloom-color-red-700)"
+          fill="currentColor"
           viewBox="0 0 32 32"
         >
           <path
@@ -54,8 +73,25 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
           />
         </svg>
       </span>
-      <span>
-        Applications Closed Jan 1, 2000 at 1:00 AM
+      <span
+        data-part="content"
+      >
+        <div>
+          <span>
+            Applications Deadline
+          </span>
+          : 
+          <span
+            class="font-bold"
+          >
+            January 1, 2000
+          </span>
+        </div>
+        <div
+          class="font-bold"
+        >
+          1:00 AM Pacific Time
+        </div>
       </span>
     </div>
   </div>
