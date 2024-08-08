@@ -31,10 +31,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
       >
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
-            <ListingDetailsApplicationDate
-              isApplicationOpen={isApplicationOpen}
-              listing={listing}
-            />
+            <ListingDetailsApplicationDate listing={listing} />
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
