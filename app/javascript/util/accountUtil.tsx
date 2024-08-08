@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@bloom-housing/ui-seeds"
 import { Icon } from "@bloom-housing/ui-components"
+import { DOBFieldValues } from "../pages/account/components/DOBFieldset"
 
 // We will strictly validate the email address using the following regex.
 // Devise will also validate the email address on the backend with a looser pattern.
@@ -62,3 +63,6 @@ export const FormSection = ({
     </Card.Section>
   )
 }
+
+export const getDobStringFromDobObject = (dobObject: DOBFieldValues) =>
+  [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-")

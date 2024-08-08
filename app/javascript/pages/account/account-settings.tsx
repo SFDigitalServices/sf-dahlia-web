@@ -16,7 +16,7 @@ import NameFieldset from "./components/NameFieldset"
 import DOBFieldset from "./components/DOBFieldset"
 import "./styles/account.scss"
 import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
-import { FormHeader, FormSection } from "../../util/accountUtil"
+import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 
 const SavedBanner = () => {
   return (
@@ -264,13 +264,13 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     setdobSavedBanner(false)
   }
 
-  const onSubmit = async (data: { dob: DOBFieldValues }) => {
+  const onSubmit = async (data: { dobObject: DOBFieldValues }) => {
     setLoading(true)
-    const { dob } = data
+    const { dobObject } = data
 
     const newUser = {
       ...user,
-      DOB: [dob.birthYear, dob.birthMonth, dob.birthDay].join("-"),
+      DOB: getDobStringFromDobObject(dobObject),
     }
 
     await updateNameOrDOB(newUser, saveProfile, setUser, setLoading, () => setdobSavedBanner(true))

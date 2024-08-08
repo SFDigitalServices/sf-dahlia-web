@@ -390,7 +390,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthMonth"
+                              for="dobObject.birthMonth"
                             >
                               Month
                             </label>
@@ -398,18 +398,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthMonth-error"
+                                aria-describedby="dobObject.birthMonth-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthMonth"
+                                id="dobObject.birthMonth"
                                 maxlength="2"
-                                name="dob.birthMonth"
+                                name="dobObject.birthMonth"
                                 type="text"
                                 value="01"
                               />
                             </div>
                             <span
-                              id="dob.birthMonth-error"
+                              id="dobObject.birthMonth-error"
                             />
                           </div>
                           <div
@@ -417,7 +417,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthDay"
+                              for="dobObject.birthDay"
                             >
                               Day
                             </label>
@@ -425,18 +425,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthDay-error"
+                                aria-describedby="dobObject.birthDay-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthDay"
+                                id="dobObject.birthDay"
                                 maxlength="2"
-                                name="dob.birthDay"
+                                name="dobObject.birthDay"
                                 type="text"
                                 value="01"
                               />
                             </div>
                             <span
-                              id="dob.birthDay-error"
+                              id="dobObject.birthDay-error"
                             />
                           </div>
                           <div
@@ -444,7 +444,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthYear"
+                              for="dobObject.birthYear"
                             >
                               Year
                             </label>
@@ -452,18 +452,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthYear-error"
+                                aria-describedby="dobObject.birthYear-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthYear"
+                                id="dobObject.birthYear"
                                 maxlength="4"
-                                name="dob.birthYear"
+                                name="dobObject.birthYear"
                                 type="text"
                                 value="1999"
                               />
                             </div>
                             <span
-                              id="dob.birthYear-error"
+                              id="dobObject.birthYear-error"
                             />
                           </div>
                         </div>
@@ -1177,7 +1177,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthMonth"
+                            for="dobObject.birthMonth"
                           >
                             Month
                           </label>
@@ -1185,18 +1185,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthMonth-error"
+                              aria-describedby="dobObject.birthMonth-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthMonth"
+                              id="dobObject.birthMonth"
                               maxlength="2"
-                              name="dob.birthMonth"
+                              name="dobObject.birthMonth"
                               type="text"
                               value="01"
                             />
                           </div>
                           <span
-                            id="dob.birthMonth-error"
+                            id="dobObject.birthMonth-error"
                           />
                         </div>
                         <div
@@ -1204,7 +1204,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthDay"
+                            for="dobObject.birthDay"
                           >
                             Day
                           </label>
@@ -1212,18 +1212,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthDay-error"
+                              aria-describedby="dobObject.birthDay-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthDay"
+                              id="dobObject.birthDay"
                               maxlength="2"
-                              name="dob.birthDay"
+                              name="dobObject.birthDay"
                               type="text"
                               value="01"
                             />
                           </div>
                           <span
-                            id="dob.birthDay-error"
+                            id="dobObject.birthDay-error"
                           />
                         </div>
                         <div
@@ -1231,7 +1231,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthYear"
+                            for="dobObject.birthYear"
                           >
                             Year
                           </label>
@@ -1239,18 +1239,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthYear-error"
+                              aria-describedby="dobObject.birthYear-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthYear"
+                              id="dobObject.birthYear"
                               maxlength="4"
-                              name="dob.birthYear"
+                              name="dobObject.birthYear"
                               type="text"
                               value="1999"
                             />
                           </div>
                           <span
-                            id="dob.birthYear-error"
+                            id="dobObject.birthYear-error"
                           />
                         </div>
                       </div>
@@ -2021,7 +2021,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthMonth"
+                              for="dobObject.birthMonth"
                             >
                               Month
                             </label>
@@ -2029,18 +2029,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthMonth-error"
+                                aria-describedby="dobObject.birthMonth-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthMonth"
+                                id="dobObject.birthMonth"
                                 maxlength="2"
-                                name="dob.birthMonth"
+                                name="dobObject.birthMonth"
                                 type="text"
                                 value="01"
                               />
                             </div>
                             <span
-                              id="dob.birthMonth-error"
+                              id="dobObject.birthMonth-error"
                             />
                           </div>
                           <div
@@ -2048,7 +2048,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthDay"
+                              for="dobObject.birthDay"
                             >
                               Day
                             </label>
@@ -2056,18 +2056,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthDay-error"
+                                aria-describedby="dobObject.birthDay-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthDay"
+                                id="dobObject.birthDay"
                                 maxlength="2"
-                                name="dob.birthDay"
+                                name="dobObject.birthDay"
                                 type="text"
                                 value="01"
                               />
                             </div>
                             <span
-                              id="dob.birthDay-error"
+                              id="dobObject.birthDay-error"
                             />
                           </div>
                           <div
@@ -2075,7 +2075,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           >
                             <label
                               class="label"
-                              for="dob.birthYear"
+                              for="dobObject.birthYear"
                             >
                               Year
                             </label>
@@ -2083,18 +2083,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="control"
                             >
                               <input
-                                aria-describedby="dob.birthYear-error"
+                                aria-describedby="dobObject.birthYear-error"
                                 aria-invalid="false"
                                 class="input"
-                                id="dob.birthYear"
+                                id="dobObject.birthYear"
                                 maxlength="4"
-                                name="dob.birthYear"
+                                name="dobObject.birthYear"
                                 type="text"
                                 value="1999"
                               />
                             </div>
                             <span
-                              id="dob.birthYear-error"
+                              id="dobObject.birthYear-error"
                             />
                           </div>
                         </div>
@@ -2808,7 +2808,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthMonth"
+                            for="dobObject.birthMonth"
                           >
                             Month
                           </label>
@@ -2816,18 +2816,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthMonth-error"
+                              aria-describedby="dobObject.birthMonth-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthMonth"
+                              id="dobObject.birthMonth"
                               maxlength="2"
-                              name="dob.birthMonth"
+                              name="dobObject.birthMonth"
                               type="text"
                               value="01"
                             />
                           </div>
                           <span
-                            id="dob.birthMonth-error"
+                            id="dobObject.birthMonth-error"
                           />
                         </div>
                         <div
@@ -2835,7 +2835,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthDay"
+                            for="dobObject.birthDay"
                           >
                             Day
                           </label>
@@ -2843,18 +2843,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthDay-error"
+                              aria-describedby="dobObject.birthDay-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthDay"
+                              id="dobObject.birthDay"
                               maxlength="2"
-                              name="dob.birthDay"
+                              name="dobObject.birthDay"
                               type="text"
                               value="01"
                             />
                           </div>
                           <span
-                            id="dob.birthDay-error"
+                            id="dobObject.birthDay-error"
                           />
                         </div>
                         <div
@@ -2862,7 +2862,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         >
                           <label
                             class="label"
-                            for="dob.birthYear"
+                            for="dobObject.birthYear"
                           >
                             Year
                           </label>
@@ -2870,18 +2870,18 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="dob.birthYear-error"
+                              aria-describedby="dobObject.birthYear-error"
                               aria-invalid="false"
                               class="input"
-                              id="dob.birthYear"
+                              id="dobObject.birthYear"
                               maxlength="4"
-                              name="dob.birthYear"
+                              name="dobObject.birthYear"
                               type="text"
                               value="1999"
                             />
                           </div>
                           <span
-                            id="dob.birthYear-error"
+                            id="dobObject.birthYear-error"
                           />
                         </div>
                       </div>

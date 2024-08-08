@@ -53,8 +53,8 @@ const DateField = ({
   watch: UseFormMethods["watch"]
   onChange: () => void
 }) => {
-  const birthDay: string = watch("dob.birthDay") ?? defaultDOB?.birthDay
-  const birthMonth: string = watch("dob.birthMonth") ?? defaultDOB?.birthMonth
+  const birthDay: string = watch("dobObject.birthDay") ?? defaultDOB?.birthDay
+  const birthMonth: string = watch("dobObject.birthMonth") ?? defaultDOB?.birthMonth
 
   const fieldInfo = {
     birthDay: {
@@ -84,7 +84,7 @@ const DateField = ({
   return (
     <Field
       className="ml-0 mr-4 pb-4"
-      name={`dob.${fieldKey}`}
+      name={`dobObject.${fieldKey}`}
       label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
       error={error?.[fieldKey] !== undefined}
@@ -105,8 +105,9 @@ const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: D
   const fieldKeys = ["birthMonth", "birthDay", "birthYear"]
   return (
     <>
-      {fieldKeys.map((key) => (
+      {fieldKeys.map((key, index) => (
         <DateField
+          key={index}
           fieldKey={key}
           defaultDOB={defaultDOB}
           error={error}

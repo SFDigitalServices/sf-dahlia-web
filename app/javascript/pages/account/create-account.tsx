@@ -7,54 +7,43 @@ import { Card } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import NameFieldset from "./components/NameFieldset"
-import { useForm } from "react-hook-form"
+import { useForm, UseFormMethods } from "react-hook-form"
 import DOBFieldset from "./components/DOBFieldset"
 import EmailFieldset from "./components/EmailFieldset"
 import PasswordFieldset from "./components/PasswordFieldset"
-import { FormHeader, FormSection } from "../../util/accountUtil"
+import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
+import { User } from "../../authentication/user"
 
 interface CreateAccountProps {
   assetPaths: unknown
+}
+
+interface SectionProps {
+  register: UseFormMethods["register"]
+  errors?: UseFormMethods["errors"]
+  watch?: UseFormMethods["watch"]
 }
 
 const CreateAccountFormSection = ({ children }: { children: React.ReactNode }) => {
   return <FormSection className="py-4 md:py-8 md:px-10">{children}</FormSection>
 }
 
-const NameSection = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm({ mode: "all" })
-
+const NameSection = ({ register, errors }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <NameFieldset
-        register={register}
-        errors={errors}
-        defaultFirstName={null}
-        defaultMiddleName={null}
-        defaultLastName={null}
-      />
+      <NameFieldset register={register} errors={errors} />
     </CreateAccountFormSection>
   )
 }
 
-const DateOfBirthSection = () => {
-  const {
-    register,
-    formState: { errors },
-    watch,
-  } = useForm({ mode: "all" })
-
+const DateOfBirthSection = ({ register, errors, watch }: SectionProps) => {
   return (
     <CreateAccountFormSection>
       <DOBFieldset
         required
-        defaultDOB={null}
         register={register}
-        error={errors.dob}
+        error={errors.dobObject}
         watch={watch}
         note={
           <>
@@ -67,30 +56,15 @@ const DateOfBirthSection = () => {
   )
 }
 
-const EmailSection = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm({ mode: "all" })
-
+const EmailSection = ({ register, errors }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <EmailFieldset
-        register={register}
-        errors={errors}
-        defaultEmail={null}
-        note={t("createAccount.emailNote")}
-      />
+      <EmailFieldset register={register} errors={errors} note={t("createAccount.emailNote")} />
     </CreateAccountFormSection>
   )
 }
 
-const PasswordSection = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm({ mode: "all" })
-
+const PasswordSection = ({ register, errors }: SectionProps) => {
   return (
     <CreateAccountFormSection>
       <PasswordFieldset register={register} errors={errors} />
@@ -104,7 +78,7 @@ const PasswordSection = () => {
 }
 
 const signInRedirect = () => {
-  console.log("sign in ")
+  console.log("sign in redirect")
 }
 
 const CreateAccountFooter = () => {
@@ -121,11 +95,19 @@ const CreateAccountFooter = () => {
   )
 }
 
-const onSubmit = () => {
-  console.log("hello")
+const onSubmit = (user: User) => {
+  user.DOB = getDobStringFromDobObject(user.dobObject)
+  console.log(user)
 }
 
 const CreateAccount = (_props: CreateAccountProps) => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({ mode: "all" })
+
   return (
     <Layout title={t("pageTitle.createAccount")}>
       <section className="bg-gray-300 md:border-t md:border-gray-450">
@@ -135,11 +117,11 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <Form onSubmit={onSubmit}>
-              <NameSection />
-              <DateOfBirthSection />
-              <EmailSection />
-              <PasswordSection />
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <NameSection register={register} errors={errors} />
+              <DateOfBirthSection register={register} errors={errors} watch={watch} />
+              <EmailSection register={register} errors={errors} />
+              <PasswordSection register={register} errors={errors} />
               <CreateAccountFooter />
             </Form>
           </Card>
