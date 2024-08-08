@@ -15,6 +15,25 @@ interface EmailFieldProps {
   onChange?: () => void
 }
 
+const emailValidation = (data: string) => {
+  const numberOfAts = (data.match(/@/g) || []).length
+  if (numberOfAts === 0) {
+    return t("error.email.missingAtSign")
+  }
+
+  const splitString = data.split("@")
+  if (
+    splitString[splitString.length - 1] &&
+    splitString[splitString.length - 1]?.search(/\./) === -1
+  ) {
+    return t("error.email.missingDot")
+  }
+
+  if (!validateEmail(data)) {
+    return t("error.email.generalIncorrect")
+  }
+}
+
 const EmailFieldset = ({ register, errors, defaultEmail, onChange }: EmailFieldProps) => {
   return (
     <Fieldset className="email-fieldset" hasError={errors.email} label={t("label.emailAddress")}>
@@ -25,24 +44,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange }: EmailFieldP
         placeholder="example@web.com"
         validation={{
           required: true,
-          validate: (data: string) => {
-            const numberOfAts = (data.match(/@/g) || []).length
-            if (numberOfAts === 0) {
-              return t("error.email.missingAtSign")
-            }
-
-            const splitString = data.split("@")
-            if (
-              splitString[splitString.length - 1] &&
-              splitString[splitString.length - 1]?.search(/\./) === -1
-            ) {
-              return t("error.email.missingDot")
-            }
-
-            if (!validateEmail(data)) {
-              return t("error.email.generalIncorrect")
-            }
-          },
+          validate: emailValidation,
         }}
         error={errors.email}
         errorMessage={errors.email?.message}
