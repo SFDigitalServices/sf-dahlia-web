@@ -100,6 +100,16 @@ const onSubmit = (user: User) => {
   console.log(user)
 }
 
+const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
+  return (
+    <>
+      <NameSection register={register} errors={errors} />
+      <DateOfBirthSection register={register} errors={errors} watch={watch} />
+      <EmailSection register={register} errors={errors} />
+      <PasswordSection register={register} errors={errors} />
+    </>
+  )
+}
 const CreateAccount = (_props: CreateAccountProps) => {
   const {
     register,
@@ -118,10 +128,8 @@ const CreateAccount = (_props: CreateAccountProps) => {
               description={t("createAccount.description")}
             />
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <NameSection register={register} errors={errors} />
-              <DateOfBirthSection register={register} errors={errors} watch={watch} />
-              <EmailSection register={register} errors={errors} />
-              <PasswordSection register={register} errors={errors} />
+              <CreateAccountContent register={register} watch={watch} errors={errors} />
+              {/* Footer has to be in the Form because of styling */}
               <CreateAccountFooter />
             </Form>
           </Card>
