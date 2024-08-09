@@ -26,7 +26,7 @@ export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-const isFcfsBmrSales = true
+const isFcfsBmrSales = false
 
 const FcfsBmrSalesHowToApply = () => (
   <>
