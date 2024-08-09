@@ -1,15 +1,17 @@
-import { Field, emailRegex, t } from "@bloom-housing/ui-components"
+import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
+import { emailRegex } from "../../util/accountUtil"
 
 interface EmailFieldProps {
   register: UseFormMethods["register"]
   defaultEmail?: string
   errors?: UseFormMethods["errors"]
+  onChange?: () => void
 }
 
-const EmailFieldset = ({ register, errors, defaultEmail }: EmailFieldProps) => {
+const EmailFieldset = ({ register, errors, defaultEmail, onChange }: EmailFieldProps) => {
   return (
     <Fieldset className="email-fieldset" hasError={errors.email} label={t("label.emailAddress")}>
       <Field
@@ -22,6 +24,7 @@ const EmailFieldset = ({ register, errors, defaultEmail }: EmailFieldProps) => {
         errorMessage={t("error.email")}
         register={register}
         defaultValue={defaultEmail ?? null}
+        onChange={onChange}
       />
     </Fieldset>
   )

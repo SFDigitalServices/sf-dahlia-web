@@ -19,6 +19,7 @@ export interface DOBFieldProps {
   error?: DeepMap<DOBFieldValues, FieldError>
   required?: boolean
   id?: string
+  onChange?: () => void
 }
 
 const validateNumber = (required: boolean, value: string, maxValue: number) => {
@@ -41,6 +42,7 @@ const DateField = ({
   required,
   register,
   watch,
+  onChange,
 }: {
   fieldKey: string
   defaultDOB: DOBFieldValues
@@ -48,6 +50,7 @@ const DateField = ({
   required: boolean
   register: UseFormMethods["register"]
   watch: UseFormMethods["watch"]
+  onChange: () => void
 }) => {
   const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
   const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
@@ -92,11 +95,12 @@ const DateField = ({
       }}
       inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
       register={register}
+      onChange={onChange}
     />
   )
 }
 
-const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldProps) => {
+const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: DOBFieldProps) => {
   return (
     <>
       <DateField
@@ -106,6 +110,7 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
       <DateField
         fieldKey="birthDay"
@@ -114,6 +119,7 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
       <DateField
         fieldKey="birthYear"
@@ -122,12 +128,13 @@ const DOBFields = ({ register, watch, required, defaultDOB, error }: DOBFieldPro
         register={register}
         watch={watch}
         required={required}
+        onChange={onChange}
       />
     </>
   )
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, required }: DOBFieldProps) => {
+const DOBFieldset = ({ register, watch, defaultDOB, error, required, onChange }: DOBFieldProps) => {
   const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
 
   return (
@@ -139,6 +146,7 @@ const DOBFieldset = ({ register, watch, defaultDOB, error, required }: DOBFieldP
           defaultDOB={defaultDOB}
           error={error}
           required={required}
+          onChange={onChange}
         />
       </div>
 

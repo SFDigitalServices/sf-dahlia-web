@@ -11,7 +11,6 @@ class Api::V1::AccountController < ApiController
 
   def update
     contact = account_params
-    dob = contact[:DOB]
 
     if !AccountValidationService.valid_dob?(account_params[:DOB])
       render json: { error: 'Invalid DOB' }, status: :unprocessable_entity

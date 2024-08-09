@@ -3,3 +3,9 @@
     min-width: 2rem
   }
 }
+
+.lottery-results-row:first-of-type {
+  border-color: var(--bloom-color-gray-450) !important;
+  border-top-width: 1px;
+  padding-top: 16px;
+}
