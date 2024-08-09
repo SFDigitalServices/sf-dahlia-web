@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+
 import {
   AppearanceStyleType,
   Button,
@@ -25,18 +26,18 @@ export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-const isFcfsBmrSales = false
+const isFcfsBmrSales = true
 
 const FcfsBmrSalesHowToApply = () => (
   <>
     <div className="mt-1 mb-6">
-      <ol className="numbered-list">
+      <ol className="numbered-list text-black text-base">
         <li>{t("listings.fcfs.bmrSales.howToApply.step1")}</li>
         <li>{t("listings.fcfs.bmrSales.howToApply.step2")}</li>
         <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
       </ol>
     </div>
-    <Button styleType={AppearanceStyleType.primary}>
+    <Button className="w-full" styleType={AppearanceStyleType.primary}>
       {t("listings.fcfs.bmrSales.howToApply.learnMore")}
     </Button>
   </>
