@@ -17,7 +17,7 @@ import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
-import "./my-applications.scss"
+import "./styles/my-applications.scss"
 
 export const noApplications = () => {
   return (

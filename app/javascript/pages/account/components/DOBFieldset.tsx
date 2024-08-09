@@ -20,6 +20,7 @@ export interface DOBFieldProps {
   required?: boolean
   id?: string
   onChange?: () => void
+  note?: React.ReactNode
 }
 
 const validateNumber = (required: boolean, value: string, maxValue: number) => {
@@ -52,8 +53,8 @@ const DateField = ({
   watch: UseFormMethods["watch"]
   onChange: () => void
 }) => {
-  const birthDay: string = watch("birthDay") ?? defaultDOB?.birthDay
-  const birthMonth: string = watch("birthMonth") ?? defaultDOB?.birthMonth
+  const birthDay: string = watch("dobObject.birthDay") ?? defaultDOB?.birthDay
+  const birthMonth: string = watch("dobObject.birthMonth") ?? defaultDOB?.birthMonth
 
   const fieldInfo = {
     birthDay: {
@@ -83,7 +84,7 @@ const DateField = ({
   return (
     <Field
       className="ml-0 mr-4 pb-4"
-      name={`dob.${fieldKey}`}
+      name={`dobObject.${fieldKey}`}
       label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
       error={error?.[fieldKey] !== undefined}
@@ -101,44 +102,38 @@ const DateField = ({
 }
 
 const DOBFields = ({ register, watch, required, defaultDOB, error, onChange }: DOBFieldProps) => {
+  const fieldKeys = ["birthMonth", "birthDay", "birthYear"]
   return (
     <>
-      <DateField
-        fieldKey="birthMonth"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
-      <DateField
-        fieldKey="birthDay"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
-      <DateField
-        fieldKey="birthYear"
-        defaultDOB={defaultDOB}
-        error={error}
-        register={register}
-        watch={watch}
-        required={required}
-        onChange={onChange}
-      />
+      {fieldKeys.map((key, index) => (
+        <DateField
+          key={index}
+          fieldKey={key}
+          defaultDOB={defaultDOB}
+          error={error}
+          register={register}
+          watch={watch}
+          required={required}
+          onChange={onChange}
+        />
+      ))}
     </>
   )
 }
 
-const DOBFieldset = ({ register, watch, defaultDOB, error, required, onChange }: DOBFieldProps) => {
+const DOBFieldset = ({
+  register,
+  watch,
+  defaultDOB,
+  error,
+  required,
+  onChange,
+  note,
+}: DOBFieldProps) => {
   const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
 
   return (
-    <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")}>
+    <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")} note={note}>
       <div className="field-group--date">
         <DOBFields
           register={register}
