@@ -28,6 +28,8 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
     ? dayjs(listing.Application_Start_Date_Time).format("h:mm A")
     : dayjs(listing.Application_Due_Date).format("h:mm A")
 
+  const showDateAndTime = isFcfs ? !!isApplicationNotYetOpen : true
+
   return (
     <div className="w-full mb-8 md:mb-0">
       <Message
@@ -39,23 +41,21 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
       >
         <div>
           <span>{getMessage(isApplicationClosed, isFcfs)}</span>
-          {isFcfs ||
-            (!isApplicationNotYetOpen && (
-              <>
-                {": "}
-                <span className="font-bold">{date}</span>
-              </>
-            ))}
+          {showDateAndTime && (
+            <>
+              {": "}
+              <span className="font-bold">{date}</span>
+            </>
+          )}
         </div>
-        {isFcfs ||
-          (!isApplicationNotYetOpen && (
-            <div className="font-bold">
-              {time}
-              {/* non-breaking space */}
-              {"\u00A0"}
-              {t("listingDetails.applicationsDeadline.timezone")}
-            </div>
-          ))}
+        {showDateAndTime && (
+          <div className="font-bold">
+            {time}
+            {/* non-breaking space */}
+            {"\u00A0"}
+            {t("listingDetails.applicationsDeadline.timezone")}
+          </div>
+        )}
       </Message>
     </div>
   )
