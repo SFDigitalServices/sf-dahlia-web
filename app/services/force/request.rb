@@ -37,7 +37,7 @@ module Force
       Rails.logger.info(
         "running cached_get for #{endpoint} with force set to #{force_refresh}",
       )
-      @cache.fetch(key, force: force_refresh, expires_in: expires_in) do
+      @cache.fetch(key, force: force_refresh, expires_in:) do
         get(endpoint, params)
       end
     end
@@ -52,6 +52,7 @@ module Force
       process_request do
         response = post_request_with_headers_and_auth(endpoint, body, headers)
         raise Restforce::UnauthorizedError if response.status == 401
+
         response
       end
     end
@@ -149,6 +150,7 @@ module Force
     # after Salesforce changes w/ ListingDetails
     def flatten_response(body)
       return [] if body.blank?
+
       body.collect do |listing|
         listing.merge(listing['listing'] || {}).except('listing')
       end
@@ -169,6 +171,7 @@ module Force
 
     def hash_massage(h)
       return h['records'].map { |i| massage(i) } if h.include?('records')
+
       # massage each hash value
       h.each { |k, v| h[k] = massage(v) }
       # massage each hash key
