@@ -21,10 +21,6 @@ module Force
       setup_faye_client
     end
 
-    # TODO: remove coverage exception comments below and write more tests once
-    # this file is no longer a proof-of-concept
-    # :nocov:
-
     def listen_and_process_events
       EM.error_handler do |error|
         logger(
@@ -56,12 +52,12 @@ module Force
 
     def setup_salesforce_client
       @salesforce_client = Restforce.new(
-        username: ENV['SALESFORCE_USERNAME'],
-        password: ENV['SALESFORCE_PASSWORD'],
-        instance_url: ENV['SALESFORCE_INSTANCE_URL'],
-        host: ENV['SALESFORCE_HOST'],
-        client_id: ENV['SALESFORCE_CLIENT_ID'],
-        client_secret: ENV['SALESFORCE_CLIENT_SECRET'],
+        username: ENV.fetch('SALESFORCE_USERNAME', nil),
+        password: ENV.fetch('SALESFORCE_PASSWORD', nil),
+        instance_url: ENV.fetch('SALESFORCE_INSTANCE_URL', nil),
+        host: ENV.fetch('SALESFORCE_HOST', nil),
+        client_id: ENV.fetch('SALESFORCE_CLIENT_ID', nil),
+        client_secret: ENV.fetch('SALESFORCE_CLIENT_SECRET', nil),
         api_version: '31.0',
       )
     end
@@ -92,8 +88,8 @@ module Force
 
     def translate_event_values(values)
       translation_service = GoogleTranslationService.new(
-        project_id: ENV['GOOGLE_PROJECT_ID'],
-        key: ENV['GOOGLE_TRANSLATE_KEY'],
+        project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
+        key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
       )
       languages = %w[ES ZH TL]
       translation_service.translate(values.values, languages)
@@ -133,7 +129,5 @@ module Force
         Rails.logger.info("EventSubscriberTranslateService #{message}")
       end
     end
-
-    # :nocov:
   end
 end
