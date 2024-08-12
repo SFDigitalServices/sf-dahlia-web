@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
+exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = `
 <DocumentFragment>
   <ul>
     <li
@@ -257,6 +257,464 @@ exports[`ListingDetailsAside renders ListingDetailsAside component 1`] = `
                     </button>
                   </div>
                 </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
+
+exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
+<DocumentFragment>
+  <ul>
+    <li
+      class="responsive-content-item header-hidden"
+    >
+      <header
+        class="detail-header md:hidden"
+      >
+        <span
+          class="detail-header__image-container"
+        >
+          <img
+            alt=""
+            class="detail-header__image "
+            src=""
+          />
+        </span>
+        <hgroup
+          class="detail-header__hgroup"
+        >
+          <h2
+            class="detail-header__title"
+          >
+            Process
+          </h2>
+          <span
+            class="detail-header__subtitle"
+          >
+            Important dates and contact information
+          </span>
+          <span
+            class="ui-icon ui-medium"
+          >
+            <svg
+              fill="currentColor"
+              viewBox="0 0 32 32"
+            >
+              <path
+                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+              />
+            </svg>
+          </span>
+        </hgroup>
+      </header>
+      <aside
+        class="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white"
+      >
+        <div
+          class="hidden md:block"
+        >
+          <div
+            class="w-full mb-8 md:mb-0"
+          >
+            <div
+              class="application-status text-xs text-gray-800 bg-primary-light place-content-center"
+            >
+              <span
+                class="ui-icon ui-medium"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 32 32"
+                >
+                  <path
+                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                  />
+                  <path
+                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                  />
+                </svg>
+              </span>
+              <span>
+                Application Deadline Jan 1, 2050 at 1:00 AM
+              </span>
+            </div>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
+          >
+            <section
+              class="aside-block"
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                Information Sessions
+              </h4>
+              <div
+                class="false"
+              >
+                <p
+                  class="text text-gray-800 pb-2 flex justify-between items-center"
+                >
+                  <span
+                    class="inline-block text-sm uppercase normal-case"
+                  >
+                    November 19, 2019
+                  </span>
+                  <span
+                    class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                  >
+                    6:00 PM
+                  </span>
+                </p>
+                <div
+                  class="text-sm text-gray-700 false"
+                >
+                  <div
+                    class="flex flex-col"
+                  >
+                    <span
+                      class="links-space translate"
+                    >
+                      <span>
+                        MOHCD
+                      </span>
+                    </span>
+                    <span>
+                      1 South Van Ness Ave, Fl 5, San Francisco
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <section
+            class="aside-block see-the-unit"
+          >
+            <div
+              class="see-the-unit__heading"
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                See the Unit
+              </h4>
+            </div>
+            <div
+              class="see-the-unit__subsection pb-6"
+            >
+              <h1
+                class="text-heading-md"
+              >
+                Open Houses
+              </h1>
+              <div>
+                <div
+                  class="see-the-unit__subsection-content"
+                >
+                  <p
+                    class="flex justify-between open-house"
+                  >
+                    <span>
+                      December 3, 2019
+                    </span>
+                    <span
+                      class="font-semibold"
+                    >
+                      2:00 PM - 6:00 PM
+                    </span>
+                  </p>
+                  <p
+                    class="flex justify-between open-house"
+                  >
+                    <span>
+                      December 7, 2019
+                    </span>
+                    <span
+                      class="font-semibold"
+                    >
+                      10:00 AM - 12:00 PM
+                    </span>
+                  </p>
+                  <p
+                    class="flex justify-between open-house"
+                  >
+                    <span>
+                      December 8, 2019
+                    </span>
+                    <span
+                      class="font-semibold"
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="see-the-unit__subsection pb-6"
+            >
+              <h1
+                class="text-heading-md"
+              >
+                See details online
+              </h1>
+              <div>
+                <p
+                  class="mt-1"
+                >
+                  <a
+                    href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+                    target="_blank"
+                  >
+                    See this unit on MLS
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div
+              class="see-the-unit__subsection pb-6"
+            >
+              <h1
+                class="text-heading-md"
+              >
+                Make an appointment
+              </h1>
+              <div>
+                <div
+                  class="see-the-unit__subsection-content"
+                >
+                  <p>
+                    Call, email, or text to request a tour.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="see-the-unit__subsection pb-6"
+            >
+              <div>
+                <p
+                  class="text-xl leasing-agent-name"
+                >
+                  Matthew Burns
+                </p>
+                <p
+                  class="text-gray-700"
+                >
+                  Leasing Agent
+                </p>
+                <div
+                  class="py-4"
+                >
+                  <p
+                    class="pb-2"
+                  >
+                    <a
+                      href="tel:415 5552323"
+                    >
+                      <span
+                        class="ui-icon ui-medium pr-2"
+                      >
+                        <svg
+                          fill="#0077DA"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
+                          />
+                        </svg>
+                      </span>
+                      Call (415) 555-2323
+                    </a>
+                  </p>
+                  <p>
+                    <a
+                      href="mailto:ae@email.com"
+                    >
+                      <span
+                        class="ui-icon ui-medium pr-2"
+                      >
+                        <svg
+                          fill="#0077DA"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
+                          />
+                        </svg>
+                      </span>
+                      Email
+                    </a>
+                  </p>
+                </div>
+                <h1
+                  class="text-heading-md"
+                >
+                  Office Hours
+                </h1>
+                <div
+                  class="see-the-unit__subsection-content"
+                >
+                  <p>
+                    8-4 Mon-Thurs
+9-4 Fri
+10-2 Weekends
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div
+            class="md:px-0 px-2"
+          >
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                How to Apply
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <p
+                  class="mb-4"
+                >
+                  <span>
+                    Make sure you fulfill the 
+                    <a
+                      href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+                      target="_blank"
+                    >
+                      eligibility requirements
+                    </a>
+                     for this listing before you begin.
+                  </span>
+                </p>
+                <p
+                  class="mb-4"
+                >
+                  Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+                </p>
+                <a
+                  class="button is-primary w-full transition"
+                  href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+                  tabindex="0"
+                >
+                  Apply Online
+                </a>
+              </div>
+            </section>
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                Need Help?
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <a
+                  class="button w-full transition"
+                  href="https://www.homeownershipsf.org/buyerapplications/"
+                  target="_blank"
+                >
+                  Visit HomeownershipSF
+                </a>
+              </div>
+            </section>
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                Expected move-in date
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                June 2020
+              </div>
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0"
+          >
+            <section
+              class="aside-block"
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                What to Expect
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <span>
+                  Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+                </span>
+                <div
+                  class="mt-2"
+                >
+                  <div>
+                    <button
+                      aria-expanded="false"
+                      aria-label="Show more about what to expect"
+                      class="button is-unstyled m-0 no-underline has-toggle"
+                      type="button"
+                    >
+                      Show more
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+          >
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                Housing Program
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <a
+                  class="text-base"
+                  href="https://sfmohcd.org/for-buyers"
+                  target="_blank"
+                >
+                  Below Market Rate
+                </a>
+              </div>
+            </section>
+          </div>
+          <div
+            class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+          >
+            <section
+              class="aside-block "
+            >
+              <div
+                class="text-sm text-gray-750"
+              >
+                <p>
+                  Listing Updated: April 11, 2022
+                </p>
               </div>
             </section>
           </div>
