@@ -470,7 +470,6 @@
                 "lottery_will_be_held": "Isasagawa ang loterry o palabunutan sa %{lottery_date}. Ipapaskil ang mga resulta ng lottery sa pabahay sa %{link}.",
                 "office_hours": "Mga Oras ng Opisina",
                 "on_the_listing": "sa nakalistang pabahay",
-                "notify_about_potential_resend": "<b>Kung nakuha mo na ang email sa pagkumpirma na ito mula sa amin, huwag pansinin ang mensaheng ito.</b> Nagkaroon kami ng problema sa pagpapadala ng mga email mula sa DAHLIA kamakailan, kaya ipinadala namin muli ang mga email na ito. Ginawa namin ito upang matiyak na ang lahat ng mga aplikante ay may kanilang mga numero ng lottery.",
                 "required_supporting_documents": "mga kinakailangang dokumento na nagbibigay ng suporta",
                 "see_below_for_contact_information": "Kung kailangan ninyong maglagay ng pinakabagong impormasyon sa inyong aplikasyon, huwag mag-aplay muli, dahil kapag ginawa ninyo ito, tatanggalin ang dalawa ninyong aplikasyon mula sa lottery o palabunutan. Kontakin ang ahente. Tingnan sa ibaba ang impormasyon sa pagkontak sa Ahente para sa nakalistang pabahay na ito. ",
                 "should_your_application_be_chosen_rental": "Kapag napili ang inyong aplikasyon, maging handa para sa pagsagot ng mas detalyadong aplikasyon at magbigay ng kinakailangang dokumentong nagbibigay ng suporta sa loob ng 5 araw ng negosyo matapos kayong kontakin.",
@@ -598,7 +597,6 @@
             "view_and_print_a_copy": "Tingnan ang isinumiteng aplikasyon at mag-print ng kopya"
         },
         "hello": "Kumusta %{name}",
-        "hello_no_name": "Kumusta",
         "housing_counselor": {
             "find_a_housing_counselor": "Humanap ng Tagapayo sa Pabahay (Housing Counselor). ",
             "header": "Para sa dagdag na tulong, iminumungkahi naming makipag-usap kayo sa tagapayo sa pabahay para masiyasat ang inyong mga opsiyon."

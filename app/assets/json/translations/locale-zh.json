@@ -471,7 +471,6 @@
                 "lottery_will_be_held": "抽籤將於%{lottery_date}舉行。住房抽籤結果將在%{link}公佈。",
                 "office_hours": "辦公時間",
                 "on_the_listing": "在物業資料上",
-                "notify_about_potential_resend": "<b>如果您已經收到我們發送的確認電子郵件，請忽略此訊息。</b>我們近日從 DAHLIA 發送電子郵件時遇到了問題，為確保所有申請人都有他們的抽籤號碼，因此我們再次發送了這些電子郵件。",
                 "required_supporting_documents": "必需的證明文件",
                 "see_below_for_contact_information": "若要更新您的申請資料，切勿再次申請，重複申請將被抽籤除名。請聯繫代理人。本物業的代理人的聯絡資料見下。",
                 "should_your_application_be_chosen_rental": "如果您的申請中簽，請準備好在接到通知後5個工作日內填妥詳細申請並提供必需的證明文件。",
@@ -599,7 +598,6 @@
             "view_and_print_a_copy": "檢視已提交的申請並列印副本"
         },
         "hello": "%{name}，您好",
-        "hello_no_name": "您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"
