@@ -3,7 +3,8 @@ import React from "react"
 import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { Icon } from "@bloom-housing/ui-seeds"
-import { CheckIcon, EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 const instructionListItem = (
   shouldShowValidationInformation: boolean,
@@ -16,9 +17,9 @@ const instructionListItem = (
   return (
     <li className={`${validation ? "text-green-500" : "text-red-500"} flex items-center gap-2`}>
       {validation ? (
-        <CheckIcon data-testid="validation-check" className="h-4 w-4" />
+        <FontAwesomeIcon data-testid="validation-check" className="h-4 w-4" icon={faCheck} />
       ) : (
-        <XMarkIcon data-testid="validation-x" className="h-4 w-4" />
+        <FontAwesomeIcon data-testid="validation-x" className="h-4 w-4" icon={faXmark} />
       )}
       {text}
     </li>
@@ -75,7 +76,11 @@ const PasswordField = ({
           onClick={() => setShowPassword(!showPassword)}
         >
           <Icon className="text-blue-500" outlined size="lg">
-            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+            {showPassword ? (
+              <FontAwesomeIcon icon={faEyeSlash} />
+            ) : (
+              <FontAwesomeIcon icon={faEye} />
+            )}
           </Icon>
         </button>
       }
