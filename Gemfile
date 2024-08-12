@@ -46,6 +46,10 @@ gem 'psych', '< 4'
 
 # salesforce
 gem 'restforce', '~> 6.2.2', require: false
+gem 'faye'
+gem 'cometd-rails', '~> 3.0', '>= 3.0.3.1'
+gem 'em-http-request'
+gem 'public_suffix' # used for config/initializers/cookie_jar.rb
 
 # handy ruby extensions
 gem 'facets', require: false
