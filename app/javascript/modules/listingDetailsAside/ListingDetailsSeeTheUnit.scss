@@ -1,0 +1,26 @@
+.see-the-unit {
+  .text-heading-md {
+    font-size: 18px;
+    font-family: "Open Sans";
+    color: #000;
+  }
+
+  .leasing-agent-name {
+    color: #000A12;
+  }
+
+  .see-the-unit__subsection:last-of-type {
+    padding-bottom: 0px!important;
+  }
+
+  .see-the-unit__heading {
+    h4.text__underline-weighted {
+      margin-bottom: 0px!important;
+    }
+    padding-bottom: 24px;
+  }
+
+  .see-the-unit__subsection-content {
+    font-family: "Lato";
+  }
+}

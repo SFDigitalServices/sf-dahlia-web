@@ -3,13 +3,14 @@ import { ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isOpen } from "../../util/listingUtil"
+import { isOpen, isSale } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
 import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
+import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -18,6 +19,7 @@ export interface ListingDetailsSidebarProps {
 
 export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
+  const isSaleListing = isSale(listing)
 
   return (
     <ul>
@@ -38,7 +40,11 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            <ListingDetailsOpenHouses listing={listing} />
+            {isSaleListing ? (
+              <ListingDetailsSeeTheUnit listing={listing} />
+            ) : (
+              <ListingDetailsOpenHouses listing={listing} />
+            )}
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
