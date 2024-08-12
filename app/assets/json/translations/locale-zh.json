@@ -469,6 +469,7 @@
                 "here_is_your_lottery_number": "這是您的抽籤號：%{lottery_number}",
                 "how_are_we_doing": "您如何評價我們的工作？",
                 "lottery_will_be_held": "抽籤將於%{lottery_date}舉行。住房抽籤結果將在%{link}公佈。",
+                "notify_about_potential_resend": "<b>如果您已經收到我們發送的確認電子郵件，請忽略此訊息。</b>我們近日從 DAHLIA 發送電子郵件時遇到了問題，為確保所有申請人都有他們的抽籤號碼，因此我們再次發送了這些電子郵件。",
                 "office_hours": "辦公時間",
                 "on_the_listing": "在物業資料上",
                 "required_supporting_documents": "必需的證明文件",
@@ -598,6 +599,7 @@
             "view_and_print_a_copy": "檢視已提交的申請並列印副本"
         },
         "hello": "%{name}，您好",
+        "hello_no_name": "您好",
         "housing_counselor": {
             "find_a_housing_counselor": "尋找住房顧問",
             "header": "如您需要更多協助，我們建議您諮詢一位住房顧問，幫您探索各種方案。"

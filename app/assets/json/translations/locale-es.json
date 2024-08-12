@@ -468,6 +468,7 @@
                 "here_is_your_lottery_number": "Aquí está su número de sorteo: %{lottery_number}",
                 "how_are_we_doing": "¿Cómo lo estamos haciendo?",
                 "lottery_will_be_held": "El sorteo se llevará a cabo el %{lottery_date}. Los resultados del sorteo de viviendas se publicarán en %{link}.",
+                "notify_about_potential_resend": "<b>Si ya recibió este correo electrónico de confirmación de nuestra parte, ignore este mensaje.</b> Tuvimos un problema al enviar correos electrónicos desde DAHLIA recientemente, por lo que los enviamos nuevamente. Hicimos esto para asegurarnos de que todos los solicitantes tengan sus números de lotería.",
                 "office_hours": "Horarios de atención",
                 "on_the_listing": "en el listado",
                 "required_supporting_documents": "documentos de respaldo exigidos",
@@ -597,6 +598,7 @@
             "view_and_print_a_copy": "Ver la solicitud presentada e imprimir una copia"
         },
         "hello": "Hola, %{name}",
+        "hello_no_name": "Hola",
         "housing_counselor": {
             "find_a_housing_counselor": "Encuentre un consejero de vivienda",
             "header": "Para obtener más ayuda, le sugerimos que hable con un consejero de vivienda para explorar sus opciones."
