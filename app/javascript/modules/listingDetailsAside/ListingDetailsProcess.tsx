@@ -11,6 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
+import { SeeThisUnitMLS } from "./ListingDetailsAsideHelpers"
 
 export interface ListingDetailsProcessProps {
   listing: RailsListing
@@ -129,11 +130,7 @@ export const ListingDetailsProcess = ({
           <SidebarBlock>
             <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
             {listing.Multiple_Listing_Service_URL && isListingRental && (
-              <p className="mt-1">
-                <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
-                  {t("listings.process.seeThisUnitOnMls")}
-                </a>
-              </p>
+              <SeeThisUnitMLS url={listing.Multiple_Listing_Service_URL} />
             )}
           </SidebarBlock>
         </div>
