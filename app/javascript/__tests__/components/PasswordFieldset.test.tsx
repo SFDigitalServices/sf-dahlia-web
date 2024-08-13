@@ -2,7 +2,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import PasswordFieldset from "../../pages/account/PasswordFieldset"
+import PasswordFieldset from "../../pages/account/components/PasswordFieldset"
 import { useForm } from "react-hook-form"
 
 const WrappedPasswordFieldset = () => {
@@ -12,7 +12,7 @@ const WrappedPasswordFieldset = () => {
     watch,
   } = useForm({ mode: "all" })
 
-  return <PasswordFieldset register={register} errors={errors} watch={watch} />
+  return <PasswordFieldset register={register} errors={errors} watch={watch} edit />
 }
 
 describe("Password Fieldset", () => {

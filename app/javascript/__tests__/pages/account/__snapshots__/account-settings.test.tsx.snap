@@ -562,17 +562,17 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="list-disc list-inside pl-2"
                           >
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               8 characters
                             </li>
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               1 letter
                             </li>
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               1 number
                             </li>
@@ -1406,17 +1406,17 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="list-disc list-inside pl-2"
                         >
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             8 characters
                           </li>
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             1 letter
                           </li>
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             1 number
                           </li>
@@ -2307,17 +2307,17 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="list-disc list-inside pl-2"
                           >
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               8 characters
                             </li>
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               1 letter
                             </li>
                             <li
-                              class="bullet"
+                              data-testid="validation-none"
                             >
                               1 number
                             </li>
@@ -3151,17 +3151,17 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="list-disc list-inside pl-2"
                         >
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             8 characters
                           </li>
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             1 letter
                           </li>
                           <li
-                            class="bullet"
+                            data-testid="validation-none"
                           >
                             1 number
                           </li>
