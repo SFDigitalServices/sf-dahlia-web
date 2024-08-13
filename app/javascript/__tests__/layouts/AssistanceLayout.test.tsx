@@ -2,6 +2,7 @@ import React from "react"
 import { render, within } from "@testing-library/react"
 import AssistanceLayout from "../../layouts/AssistanceLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
+import UserContext from "../../authentication/context/UserContext"
 
 const CHILD_CONTENT = "Content!"
 
@@ -15,9 +16,11 @@ jest.mock("react-helmet-async", () => {
 describe("<AssistanceLayout />", () => {
   it("renders children", async () => {
     const { getByTestId } = await renderAndLoadAsync(
-      <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-        <h1>{CHILD_CONTENT}</h1>
-      </AssistanceLayout>
+      <UserContext.Provider value={{ loading: false, initialStateLoaded: true }}>
+        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      </UserContext.Provider>
     )
     const mainContent = getByTestId("assistance-main-content")
 
@@ -28,9 +31,11 @@ describe("<AssistanceLayout />", () => {
     const TitleText = "Title Text"
     const SubtitleText = "SubTitle Text"
     const { getAllByText } = await renderAndLoadAsync(
-      <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
-        <h1>{CHILD_CONTENT}</h1>
-      </AssistanceLayout>
+      <UserContext.Provider value={{ loading: false, initialStateLoaded: true }}>
+        <AssistanceLayout title={TitleText} subtitle={SubtitleText}>
+          <h1>{CHILD_CONTENT}</h1>
+        </AssistanceLayout>
+      </UserContext.Provider>
     )
 
     expect(getAllByText(TitleText).length).not.toBeNull()
@@ -40,9 +45,11 @@ describe("<AssistanceLayout />", () => {
   describe("Contact Bar", () => {
     it("renders Contact Information", () => {
       const { asFragment } = render(
-        <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
-          <h1>{CHILD_CONTENT}</h1>
-        </AssistanceLayout>
+        <UserContext.Provider value={{ loading: false, initialStateLoaded: true }}>
+          <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
+            <h1>{CHILD_CONTENT}</h1>
+          </AssistanceLayout>
+        </UserContext.Provider>
       )
 
       expect(asFragment()).toMatchSnapshot()

@@ -12,8 +12,8 @@ type UserState = {
 }
 
 const UserReducer = createReducer({ loading: false, initialStateLoaded: false } as UserState, {
-  [UserAction.StartLoading]: (state) => ({ ...state, loading: true }),
-  [UserAction.StopLoading]: (state) => ({ ...state, loading: false }),
+  [UserAction.StartLoading]: (state) => ({ ...state, loading: true, initialStateLoaded: true }),
+  [UserAction.StopLoading]: (state) => ({ ...state, loading: false, initialStateLoaded: true }),
   [UserAction.SaveProfile]: (state, { payload: user }) => ({ ...state, profile: user }),
   [UserAction.SignOut]: () => {
     clearHeaders()
