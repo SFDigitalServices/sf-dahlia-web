@@ -19,7 +19,7 @@ class AmiCacheService
     }
     unique_charts.each do |unique_chart|
       if unique_chart['year'] != unit['AMI_chart_year'] ||
-         unique_chart['type'] != unit['AMI_chart_type']
+         unique_chart['chartType'] != unit['AMI_chart_type']
         next
       end
 
@@ -38,7 +38,7 @@ class AmiCacheService
   def build_uniq_chart(unit, max)
     {
       'year' => unit['AMI_chart_year'],
-      'type' => unit['AMI_chart_type'],
+      'chartType' => unit['AMI_chart_type'],
       'percent' => if max
                      unit['Max_AMI_for_Qualifying_Unit']
                    else
