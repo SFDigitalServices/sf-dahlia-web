@@ -117,9 +117,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
             ordinal: index + 1,
             subtitle:
               preference.unitsAvailable &&
-              t("listings.lotteryPreference.upToUnits", {
-                units: preference.unitsAvailable,
-              }),
+              t("listings.lotteryPreference.upToUnits", preference.unitsAvailable),
             title: t(`listings.lotteryPreference.${preference.preferenceName}.title`),
           }
         })}

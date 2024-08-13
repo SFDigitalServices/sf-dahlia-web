@@ -20,9 +20,7 @@ export const ListingDetailsWaitlist = ({ listing }: ListingDetailsWaitlistProps)
 
   const waitlistAvailableDescription = (
     <p>
-      {t("listings.availableUnitsAndWaitlistDescription", {
-        number: listing.Total_number_of_building_units,
-      })}
+      {t("listings.availableUnitsAndWaitlistDescription", listing.Total_number_of_building_units)}
     </p>
   )
 
