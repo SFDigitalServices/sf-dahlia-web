@@ -3,7 +3,6 @@ import TagManager from "react-gtm-module"
 
 import {
   ListingDetails,
-  LoadingOverlay,
   Mobile,
   NavigationContext,
   SiteAlert,
@@ -111,98 +110,96 @@ const ListingDetail = () => {
       }
     )}`
   return (
-    <LoadingOverlay isLoading={!listing}>
-      <Layout
-        title={listing?.Name ? listing?.Name : null}
-        description={listing ? getDescription(listing) : null}
-        image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
-      >
-        <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
-          <SiteAlert type="alert" className={alertClasses} />
-          <SiteAlert type="success" className={alertClasses} timeout={30_000} />
-        </div>
-        {listing && (
-          <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
-            <ListingDetailsImageCard listing={listing} />
-            {listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
-              </Mobile>
-            )}
-            <ListingDetailsHabitat listing={listing} />
-            {!isApplicationOpen && !listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
-              </Mobile>
-            )}
-            <ListingDetailsReservedBanner
-              reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
-              reservedCommunityType={listing.Reserved_community_type}
-              customListingType={listing.Custom_Listing_Type}
-            />
-            <ErrorBoundary
-              boundaryScope={BoundaryScope.component}
-              componentClassNames="p-4 text-left"
-            >
-              <ListingDetailsPricingTable listing={listing} />
-            </ErrorBoundary>
-            {listingHasSROUnits(listing) && (
-              <div className="md:w-2/3 md:pr-8">
-                <ListingDetailsSROInfo listing={listing} />
-              </div>
-            )}
-            {isApplicationOpen && !listingIsHabitat && (
-              <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
-                <ListingDetailsWaitlist listing={listing} />
-              </Mobile>
-            )}
+    <Layout
+      title={listing?.Name ? listing?.Name : null}
+      description={listing ? getDescription(listing) : null}
+      image={listing?.Listing_Images ? listing?.Listing_Images[0].displayImageURL : null}
+    >
+      <div className="flex absolute w-full flex-col items-center border-0 border-t border-solid">
+        <SiteAlert type="alert" className={alertClasses} />
+        <SiteAlert type="success" className={alertClasses} timeout={30_000} />
+      </div>
+      {listing && (
+        <article className="flex flex-wrap flex-col relative max-w-5xl m-auto w-full">
+          <ListingDetailsImageCard listing={listing} />
+          {listingIsHabitat && (
             <Mobile>
-              <ListingDetailsApply listing={listing} />
-            </Mobile>
-            <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
-            <ListingDetails>
-              <MobileListingDetailsLottery
-                imageSrc={getAssetPath("listing-units.svg")}
-                listing={listing}
-              />
-              <ListingDetailsEligibility
-                listing={listing}
-                imageSrc={getAssetPath("listing-eligibility.svg")}
-              />
-              <MobileListingDetailsProcess
-                listing={listing}
-                imageSrc={getAssetPath("listing-units.svg")}
+              <ListingDetailsApplicationDate
                 isApplicationOpen={isApplicationOpen}
-              />
-              <ListingDetailsFeatures
-                listing={listing}
-                imageSrc={getAssetPath("listing-features.svg")}
-              />
-              <ListingDetailsNeighborhood
-                imageSrc={getAssetPath("listing-neighborhood.svg")}
                 listing={listing}
               />
-              <ListingDetailsAdditionalInformation
+            </Mobile>
+          )}
+          <ListingDetailsHabitat listing={listing} />
+          {!isApplicationOpen && !listingIsHabitat && (
+            <Mobile>
+              <ListingDetailsApplicationDate
+                isApplicationOpen={isApplicationOpen}
                 listing={listing}
-                imageSrc={getAssetPath("listing-legal.svg")}
               />
-              <ListingDetailsMOHCD />
-            </ListingDetails>
-          </article>
-        )}
-        <MailingListSignup />
-      </Layout>
-    </LoadingOverlay>
+            </Mobile>
+          )}
+          <ListingDetailsReservedBanner
+            reservedCommunityMinimumAge={listing.Reserved_community_minimum_age}
+            reservedCommunityType={listing.Reserved_community_type}
+            customListingType={listing.Custom_Listing_Type}
+          />
+          <ErrorBoundary
+            boundaryScope={BoundaryScope.component}
+            componentClassNames="p-4 text-left"
+          >
+            <ListingDetailsPricingTable listing={listing} />
+          </ErrorBoundary>
+          {listingHasSROUnits(listing) && (
+            <div className="md:w-2/3 md:pr-8">
+              <ListingDetailsSROInfo listing={listing} />
+            </div>
+          )}
+          {isApplicationOpen && !listingIsHabitat && (
+            <Mobile>
+              <ListingDetailsApplicationDate
+                isApplicationOpen={isApplicationOpen}
+                listing={listing}
+              />
+              <ListingDetailsWaitlist listing={listing} />
+            </Mobile>
+          )}
+          <Mobile>
+            <ListingDetailsApply listing={listing} />
+          </Mobile>
+          <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
+          <ListingDetails>
+            <MobileListingDetailsLottery
+              imageSrc={getAssetPath("listing-units.svg")}
+              listing={listing}
+            />
+            <ListingDetailsEligibility
+              listing={listing}
+              imageSrc={getAssetPath("listing-eligibility.svg")}
+            />
+            <MobileListingDetailsProcess
+              listing={listing}
+              imageSrc={getAssetPath("listing-units.svg")}
+              isApplicationOpen={isApplicationOpen}
+            />
+            <ListingDetailsFeatures
+              listing={listing}
+              imageSrc={getAssetPath("listing-features.svg")}
+            />
+            <ListingDetailsNeighborhood
+              imageSrc={getAssetPath("listing-neighborhood.svg")}
+              listing={listing}
+            />
+            <ListingDetailsAdditionalInformation
+              listing={listing}
+              imageSrc={getAssetPath("listing-legal.svg")}
+            />
+            <ListingDetailsMOHCD />
+          </ListingDetails>
+        </article>
+      )}
+      <MailingListSignup />
+    </Layout>
   )
 }
 
