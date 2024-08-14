@@ -44,13 +44,9 @@ export const ListingDetailsLotteryPreferences = ({
                   bucket.preferenceName
                 )}
               </Heading>
-              <p className="text-sm">
-                {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
-              </p>
+              <p className="text-sm">{t("lottery.upToXUnitsAvailable", bucket.unitsAvailable)}</p>
               <p className="text-gray-700 text-sm">
-                {t("lottery.numberApplicantsQualifiedForPreference", {
-                  number: bucket.totalSubmittedApps,
-                })}
+                {t("lottery.numberApplicantsQualifiedForPreference", bucket.totalSubmittedApps)}
               </p>
             </div>
             <hr className={arr.length - 1 === index ? "mt-4" : "my-4"} />
@@ -72,9 +68,7 @@ export const ListingDetailsLotteryPreferences = ({
               </Heading>
               <p className="mb-1 text-sm">{t("lottery.anyRemainingUnits")}</p>
               <p className="text-gray-700 text-sm">
-                {t("lottery.numberApplicantsQualifiedForGeneralPool", {
-                  number: bucket.totalSubmittedApps,
-                })}
+                {t("lottery.numberApplicantsQualifiedForGeneralPool", bucket.totalSubmittedApps)}
               </p>
             </div>
             <hr className="mt-4" />

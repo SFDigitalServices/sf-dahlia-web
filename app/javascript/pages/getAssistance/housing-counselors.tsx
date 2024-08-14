@@ -175,9 +175,6 @@ const HousingCounselors = () => {
       case housingCounselorsList.counselors.length: {
         return t("assistance.housingCounselors.findACounselor.filter.all")
       }
-      case 1: {
-        return t("assistance.housingCounselors.findACounselor.filter.singular")
-      }
       case 0: {
         return (
           <div>
@@ -188,9 +185,7 @@ const HousingCounselors = () => {
         )
       }
       default: {
-        return t("assistance.housingCounselors.findACounselor.filter.results", {
-          num: num,
-        })
+        return t("assistance.housingCounselors.findACounselor.filter.results", num)
       }
     }
   }

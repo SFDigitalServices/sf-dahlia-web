@@ -121,12 +121,12 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-sm"
             >
-              Up to 1 units
+              Up to 1 unit
             </p>
             <p
               class="text-gray-700 text-sm"
             >
-              1 applicants are on this list.
+              1 applicant is on this list.
             </p>
           </div>
           <hr
@@ -145,7 +145,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-sm"
             >
-              Up to 1 units
+              Up to 1 unit
             </p>
             <p
               class="text-gray-700 text-sm"
@@ -169,7 +169,7 @@ exports[`ListingDetailsLotteryModal displays initial view with form and listing 
             <p
               class="text-sm"
             >
-              Up to 1 units
+              Up to 1 unit
             </p>
             <p
               class="text-gray-700 text-sm"

@@ -54,12 +54,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -90,12 +90,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -126,12 +126,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -162,7 +162,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -198,7 +198,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -234,12 +234,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -270,12 +270,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -306,12 +306,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -342,12 +342,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -378,12 +378,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -414,7 +414,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -450,12 +450,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -486,7 +486,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -522,7 +522,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -558,7 +558,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator 1`] 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -640,12 +640,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -676,12 +676,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -712,12 +712,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -748,7 +748,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -784,7 +784,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -820,12 +820,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -856,12 +856,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -892,12 +892,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -928,12 +928,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -964,12 +964,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -1000,7 +1000,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for educator one 
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to %{units} units
+          Up to %{smart_count} unit |||| Up to %{smart_count} units
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1100,7 +1100,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with o
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
@@ -1181,12 +1181,12 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
         >
-          1 applicants are on this list.
+          1 applicant is on this list.
         </p>
       </div>
     </div>
@@ -1216,7 +1216,7 @@ exports[`ListingDetailsLotteryRanking displays lottery ranking for rental with t
         <p
           class="mb-1 text-gray-950 text-sm"
         >
-          Up to 1 units
+          Up to 1 unit
         </p>
         <p
           class="text-gray-700 text-sm"
