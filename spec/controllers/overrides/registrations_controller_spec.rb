@@ -16,8 +16,8 @@ describe Overrides::RegistrationsController do
       user: {
         id: 1,
         email: 'jane@doe.com',
-        password: 'somepassword',
-        password_confirmation: 'somepassword',
+        password: 'somepassword1',
+        password_confirmation: 'somepassword1',
       },
       contact: {
         firstName: 'Jane',
@@ -32,8 +32,8 @@ describe Overrides::RegistrationsController do
   let!(:user) do
     @user ||= User.create(
       email: 'jack@doe.com',
-      password: 'somepassword',
-      password_confirmation: 'somepassword',
+      password: 'somepassword1',
+      password_confirmation: 'somepassword1',
     )
   end
 
@@ -62,8 +62,8 @@ describe Overrides::RegistrationsController do
         user: {
           id: 1,
           email: 'jane@doe.com',
-          password: 'somepassword',
-          password_confirmation: 'somepassword',
+          password: 'somepassword1',
+          password_confirmation: 'somepassword1',
         },
         contact: {
           firstName: 'http',
@@ -86,8 +86,8 @@ describe Overrides::RegistrationsController do
         user: {
           id: 1,
           email: 'jane@doe.com',
-          password: 'somepassword',
-          password_confirmation: 'somepassword',
+          password: 'somepassword1',
+          password_confirmation: 'somepassword1',
         },
         contact: {
           firstName: 'John',
@@ -108,8 +108,8 @@ describe Overrides::RegistrationsController do
         user: {
           id: 1,
           email: 'jane@doe.com',
-          password: 'somepassword',
-          password_confirmation: 'somepassword',
+          password: 'somepassword1',
+          password_confirmation: 'somepassword1',
         },
         contact: {
           firstName: 'John',
@@ -131,8 +131,8 @@ describe Overrides::RegistrationsController do
         user: {
           id: 1,
           email: 'jane@doe.com',
-          password: 'somepassword',
-          password_confirmation: 'somepassword',
+          password: 'somepassword1',
+          password_confirmation: 'somepassword1',
         },
         contact: {
           firstName: 'John',

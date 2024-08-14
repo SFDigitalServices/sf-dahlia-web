@@ -15,7 +15,11 @@ import PasswordFieldset from "./components/PasswordFieldset"
 import NameFieldset from "./components/NameFieldset"
 import DOBFieldset from "./components/DOBFieldset"
 import "./styles/account.scss"
-import { updateNameOrDOB as apiUpdateNameOrDOB, updateEmail } from "../../api/authApiService"
+import {
+  updateNameOrDOB as apiUpdateNameOrDOB,
+  updateEmail,
+  updatePassword,
+} from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 
 const SavedBanner = () => {
@@ -132,32 +136,38 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 
 const PasswordSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
-  const [passwordBanner, setpasswordBanner] = useState(false)
+  const [passwordBanner, setPasswordBanner] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
+    watch,
   } = useForm({ mode: "all" })
 
-  const onSubmit = (data: { password: string; oldPassword: string }) => {
+  const onSubmit = (data: { password: string; currentPassword: string }) => {
     setLoading(true)
-    const { password, oldPassword } = data
+    const { password, currentPassword } = data
     if (password === "") {
-      console.log("Empty password")
       setLoading(false)
       return
     }
-    try {
-      const newUser = { ...user, password, oldPassword }
-      setUser(newUser)
-      setpasswordBanner(true)
-      console.log("Updated user's password:", newUser)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
+
+    updatePassword(password, currentPassword)
+      .then(() => {
+        const newUser = { ...user, password, currentPassword }
+        setUser(newUser)
+        setPasswordBanner(true)
+      })
+      .catch((error) => {
+        // TODO(DAH-2470): Error banners: Password complexity requirements not met, current password is incorrect, general server error
+        console.log(error)
+      })
+      .finally(() => {
+        setLoading(false)
+        reset()
+      })
   }
 
   return (
@@ -168,7 +178,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         </span>
       )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        <PasswordFieldset register={register} errors={errors} edit />
+        <PasswordFieldset register={register} errors={errors} watch={watch} edit />
       </UpdateForm>
     </>
   )
