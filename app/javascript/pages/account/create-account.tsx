@@ -64,10 +64,10 @@ const EmailSection = ({ register, errors }: SectionProps) => {
   )
 }
 
-const PasswordSection = ({ register, errors }: SectionProps) => {
+const PasswordSection = ({ register, errors, watch }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <PasswordFieldset register={register} errors={errors} />
+      <PasswordFieldset register={register} errors={errors} watch={watch} />
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
@@ -106,7 +106,7 @@ const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
       <NameSection register={register} errors={errors} />
       <DateOfBirthSection register={register} errors={errors} watch={watch} />
       <EmailSection register={register} errors={errors} />
-      <PasswordSection register={register} errors={errors} />
+      <PasswordSection register={register} errors={errors} watch={watch} />
     </>
   )
 }

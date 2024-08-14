@@ -479,6 +479,7 @@
   "error.notEligible": "Unfortunately it appears you do not qualify for this listing.",
   "error.notEligibleDescription": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
   "error.password": "Please enter a valid password",
+  "error.passwordComplexity": "Choose a strong password with at least 8 characters, 1 letter, and 1 number",
   "error.passwordConfirmation": "Password confirmation does not match",
   "error.passwordUpdate": "Error updating your password. Please try again or contact us.",
   "error.phoneNumber": "Please enter a phone number",
