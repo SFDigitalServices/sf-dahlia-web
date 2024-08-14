@@ -28,12 +28,21 @@ module Force
 
     # get one detailed listing result by id
     def self.listing(id, opts = {})
+      @cache = Rails.cache
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
-      add_image_urls(results_with_cached_listing_images).first
+      listing = add_image_urls(results_with_cached_listing_images).first
+      listing_translations = @cache.read("/ListingDetails/#{id}/translations")
+      # TODO: DAH-2451
+      # @cache.fetch("/ListingDetails/#{id}/translations") do
+      #   # call translation service
+      # end
+      Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
+      listing['translations'] = listing_translations || {}
+      listing
     end
 
     # get all units for a given listing

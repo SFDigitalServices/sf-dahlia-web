@@ -6,6 +6,10 @@ import React from "react"
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
+import {
+  RailsTranslations,
+  RailsTranslationLanguage,
+} from "../api/types/rails/listings/RailsTranslation"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -226,4 +230,15 @@ export function localizedFormat(date: string, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
 
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
+}
+
+export const getTranslatedString = (
+  originalValue: string,
+  fieldName: string,
+  translations: RailsTranslations
+) => {
+  const languageInRoute = getCurrentLanguage()
+  const languageConfig = LANGUAGE_CONFIGS[languageInRoute]
+  const languageCode = RailsTranslationLanguage[languageConfig.prefix.toUpperCase()]
+  return translations[fieldName]?.[languageCode] || originalValue
 }

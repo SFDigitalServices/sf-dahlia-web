@@ -23,6 +23,7 @@ import {
 import {
   defaultIfNotTranslated,
   getSfGovUrl,
+  getTranslatedString,
   renderInlineMarkup,
   renderMarkup,
 } from "../../util/languageUtil"
@@ -110,6 +111,10 @@ export const ListingDetailsEligibility = ({
       },
     }
   })
+
+  console.log(
+    getTranslatedString(listing?.Credit_Rating, "Credit_Rating__c", listing?.translations)
+  )
 
   return (
     <ListingDetailItem
@@ -380,7 +385,13 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {stripMostTags(listing.Credit_Rating)}
+                  {stripMostTags(
+                    getTranslatedString(
+                      listing?.Credit_Rating,
+                      "Credit_Rating__c",
+                      listing?.translations
+                    )
+                  )}
                 </ExpandableText>
               </InfoCard>
             )}

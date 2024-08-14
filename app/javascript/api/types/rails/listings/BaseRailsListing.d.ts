@@ -1,4 +1,5 @@
 import type RailsListingDescriptor from "./RailsListingDescriptor"
+import { RailsTranslations } from "./RailsTranslation"
 import type RailsUnit from "./RailsUnit"
 
 type ListingBuilding = {
@@ -160,6 +161,7 @@ type BaseRailsListing = {
   nGeneral_Application_Total: number
   prioritiesDescriptor?: Array<RailsListingDescriptor>
   reservedDescriptor?: Array<RailsListingDescriptor>
+  translations?: RailsTranslations
 }
 
 export default BaseRailsListing
