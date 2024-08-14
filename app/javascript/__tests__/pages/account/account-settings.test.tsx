@@ -287,6 +287,81 @@ describe("<AccountSettingsPage />", () => {
         expect(authenticatedPut).not.toHaveBeenCalled()
       })
     })
+
+    describe("when the user updates their password", () => {
+      it("does not update when only one field is filled out", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            status: "success",
+          },
+        })
+
+        const passwordUpdateButton = getAllByText("Update")[3]
+        const currentPasswordField = screen.getByLabelText(/current password/i)
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(authenticatedPut).not.toHaveBeenCalled()
+      })
+
+      it("does not update when the new password field is insufficiently complex", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            status: "success",
+          },
+        })
+
+        const passwordUpdateButton = getAllByText("Update")[3]
+
+        const currentPasswordField = screen.getByLabelText(/current password/i)
+        const newPasswordField = screen.getByLabelText(/choose a new password/i)
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          fireEvent.change(newPasswordField, { target: { value: "password" } })
+          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(authenticatedPut).not.toHaveBeenCalled()
+      })
+
+      it("updates the password field", async () => {
+        ;(authenticatedPut as jest.Mock).mockResolvedValue({
+          data: {
+            status: "success",
+          },
+        })
+
+        const passwordUpdateButton = getAllByText("Update")[3]
+
+        const currentPasswordField = screen.getByLabelText(/current password/i)
+        const newPasswordField = screen.getByLabelText(/choose a new password/i)
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          fireEvent.change(newPasswordField, { target: { value: "abcd1234!" } })
+          passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(authenticatedPut).toHaveBeenCalledWith(
+          "/api/v1/auth/password",
+          expect.objectContaining({
+            current_password: "abcd1234",
+            password: "abcd1234!",
+            password_confirmation: "abcd1234!",
+          })
+        )
+
+        expect(newPasswordField.getAttribute("value")).toBe("")
+        expect(currentPasswordField.getAttribute("value")).toBe("")
+      })
+    })
   })
 
   describe("when the user is not signed in", () => {
