@@ -25,13 +25,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         <h2
           class="detail-header__title"
         >
-          Process
+          See the Unit
         </h2>
         <span
           class="detail-header__subtitle"
-        >
-          Important dates and contact information
-        </span>
+        />
         <span
           class="ui-icon ui-medium"
         >
@@ -95,159 +93,181 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
         </div>
       </section>
     </div>
-    <div
-      class="open-houses border-b border-gray-400 md:border-b-0"
+    <section
+      class="aside-block see-the-unit"
     >
-      <section
-        class="aside-block"
+      <div
+        class="see-the-unit__heading"
       >
         <h4
           class="text__underline-weighted"
+        >
+          See the Unit
+        </h4>
+      </div>
+      <div
+        class="see-the-unit__subsection pb-6"
+      >
+        <h1
+          class="text-heading-md"
         >
           Open Houses
-        </h4>
-        <div
-          class="pb-3"
-        >
-          <p
-            class="text text-gray-800 pb-2 flex justify-between items-center"
-          >
-            <span
-              class="inline-block text-sm uppercase normal-case"
-            >
-              December 3, 2019
-            </span>
-            <span
-              class="inline-block text-xs font-bold ml-5 font-alt-sans"
-            >
-              2:00 PM - 6:00 PM
-            </span>
-          </p>
-        </div>
-        <div
-          class="pb-3"
-        >
-          <p
-            class="text text-gray-800 pb-2 flex justify-between items-center"
-          >
-            <span
-              class="inline-block text-sm uppercase normal-case"
-            >
-              December 7, 2019
-            </span>
-            <span
-              class="inline-block text-xs font-bold ml-5 font-alt-sans"
-            >
-              10:00 AM - 12:00 PM
-            </span>
-          </p>
+        </h1>
+        <div>
           <div
-            class="text-sm text-gray-700 pb-3"
+            class="see-the-unit__subsection-content"
           >
-            <div
-              class="flex flex-col"
+            <p
+              class="flex justify-between open-house"
             >
-              <span
-                class="links-space translate"
-              >
-                <span>
-                  SFPL
-                </span>
-              </span>
               <span>
-                1 Library Way, San Francisco
+                December 3, 2019
               </span>
-            </div>
-          </div>
-        </div>
-        <div
-          class="false"
-        >
-          <p
-            class="text text-gray-800 pb-2 flex justify-between items-center"
-          >
-            <span
-              class="inline-block text-sm uppercase normal-case"
-            >
-              December 8, 2019
-            </span>
-          </p>
-        </div>
-      </section>
-    </div>
-    <div
-      class="border-b border-gray-400 md:border-b-0"
-    >
-      <section
-        class="aside-block"
-      >
-        <h4
-          class="text__underline-weighted"
-        >
-          What to Expect
-        </h4>
-        <div
-          class="text-sm text-gray-750"
-        >
-          <span>
-            Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
-          </span>
-          <div
-            class="mt-2"
-          >
-            <div>
-              <button
-                aria-expanded="false"
-                aria-label="Show more about what to expect"
-                class="button is-unstyled m-0 no-underline has-toggle"
-                type="button"
+              <span
+                class="font-semibold"
               >
-                Show more
-              </button>
-            </div>
+                2:00 PM - 6:00 PM
+              </span>
+            </p>
+            <p
+              class="flex justify-between open-house"
+            >
+              <span>
+                December 7, 2019
+              </span>
+              <span
+                class="font-semibold"
+              >
+                10:00 AM - 12:00 PM
+              </span>
+            </p>
+            <p
+              class="flex justify-between open-house"
+            >
+              <span>
+                December 8, 2019
+              </span>
+              <span
+                class="font-semibold"
+              />
+            </p>
           </div>
         </div>
-      </section>
-    </div>
-    <div
-      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
-    >
-      <section
-        class="aside-block "
+      </div>
+      <div
+        class="see-the-unit__subsection pb-6"
       >
-        <h4
-          class="text__underline-weighted"
+        <h1
+          class="text-heading-md"
         >
-          Housing Program
-        </h4>
-        <div
-          class="text-sm text-gray-750"
-        >
-          <a
-            class="text-base"
-            href="https://sfmohcd.org/for-buyers"
-            target="_blank"
+          See details online
+        </h1>
+        <div>
+          <p
+            class="mt-1"
           >
-            Below Market Rate
-          </a>
-        </div>
-      </section>
-    </div>
-    <div
-      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
-    >
-      <section
-        class="aside-block "
-      >
-        <div
-          class="text-sm text-gray-750"
-        >
-          <p>
-            Listing Updated: April 11, 2022
+            <a
+              href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+              target="_blank"
+            >
+              See the unit on MLS
+            </a>
           </p>
         </div>
-      </section>
-    </div>
+      </div>
+      <div
+        class="see-the-unit__subsection pb-6"
+      >
+        <h1
+          class="text-heading-md"
+        >
+          Make an appointment
+        </h1>
+        <div>
+          <div
+            class="see-the-unit__subsection-content"
+          >
+            <p>
+              Call, email, or text to request a tour.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="see-the-unit__subsection pb-6"
+      >
+        <div>
+          <p
+            class="text-xl leasing-agent-name"
+          >
+            Matthew Burns
+          </p>
+          <p
+            class="text-gray-700"
+          >
+            Leasing Agent
+          </p>
+          <div
+            class="py-4"
+          >
+            <p
+              class="pb-2"
+            >
+              <a
+                href="tel:415 5552323"
+              >
+                <span
+                  class="ui-icon ui-medium pr-2"
+                >
+                  <svg
+                    fill="#0077DA"
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
+                    />
+                  </svg>
+                </span>
+                Call (415) 555-2323
+              </a>
+            </p>
+            <p>
+              <a
+                href="mailto:ae@email.com"
+              >
+                <span
+                  class="ui-icon ui-medium pr-2"
+                >
+                  <svg
+                    fill="#0077DA"
+                    viewBox="0 0 32 32"
+                  >
+                    <path
+                      d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
+                    />
+                  </svg>
+                </span>
+                Email
+              </a>
+            </p>
+          </div>
+          <h1
+            class="text-heading-md"
+          >
+            Office Hours
+          </h1>
+          <div
+            class="see-the-unit__subsection-content"
+          >
+            <p>
+              8-4 Mon-Thurs
+9-4 Fri
+10-2 Weekends
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </li>
 </DocumentFragment>
 `;

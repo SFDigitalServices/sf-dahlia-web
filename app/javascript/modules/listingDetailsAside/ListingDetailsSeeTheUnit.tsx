@@ -7,7 +7,6 @@ import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
 import { getEventDateTime, getEventTimeString, sortByDateTimeString } from "../../util/listingUtil"
-import { SeeThisUnitMLS } from "./ListingDetailsAsideHelpers"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -62,7 +61,11 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
       </SeeTheUnitSubsection>
       {listing.Multiple_Listing_Service_URL && (
         <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <SeeThisUnitMLS url={listing.Multiple_Listing_Service_URL} />
+          <p className="mt-1">
+            <a href={listing.Multiple_Listing_Service_URL} target="_blank">
+              {t("listings.process.seeTheUnitOnMls")}
+            </a>
+          </p>
         </SeeTheUnitSubsection>
       )}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
