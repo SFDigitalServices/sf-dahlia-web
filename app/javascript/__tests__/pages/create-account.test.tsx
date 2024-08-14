@@ -1,6 +1,6 @@
 import React from "react"
 
-import CreateAccount from "../../pages/create-account"
+import CreateAccount from "../../pages/account/create-account"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 jest.mock("react-helmet-async", () => {
