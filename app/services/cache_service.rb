@@ -19,6 +19,53 @@ class CacheService
     Rails.logger.info('CacheService Finished')
   end
 
+  # TODO: Decide which fields need to be refreshed
+  LISTING_TRANSLATION_FIELDS = %w[
+    Listing_Other_Notes
+    Required_Documents
+    Legal_Disclaimers
+    Repricing_Mechanism
+    Reserved_community_type_Description
+    Credit_Rating
+    Eviction_History
+    Neighborhood
+    Appliances
+    Services_Onsite
+    Parking_Information
+    Utilities
+    Smoking_Policy
+    Pet_Policy
+    Amenities
+    Accessibility
+    Pricing_Matrix
+    Costs_Not_Included
+    Office_Hours
+    Leasing_Agent_Title
+    Lottery_Summary
+  ].freeze
+  def process_translations(listing)
+    translation_service = GoogleTranslationService.new(
+      project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
+      key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
+    )
+
+    strings_to_translate = {}
+    LISTING_TRANSLATION_FIELDS.each do |field|
+      strings_to_translate[field] = listing[field] unless listing[field].nil?
+    end
+
+    languages = %w[ES ZH TL]
+
+    translations = translation_service.translate(strings_to_translate.values,
+                                                 languages)
+
+    translation_service.cache_listing_translations(
+      listing['Id'],
+      strings_to_translate.keys,
+      translations,
+    )
+  end
+
   private
 
   attr_accessor :prev_cached_listings, :fresh_listings
@@ -48,7 +95,7 @@ class CacheService
   end
 
   def listing_images_equal?(prev_cached_listing_images, fresh_listing_images)
-    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL')  }
+    fresh_li_slice = fresh_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
     prev_li_slice = prev_cached_listing_images&.map { |li| li.slice('Id', 'Image_URL') }
     (fresh_li_slice - prev_li_slice).empty? && (prev_li_slice - fresh_li_slice).empty?
   end

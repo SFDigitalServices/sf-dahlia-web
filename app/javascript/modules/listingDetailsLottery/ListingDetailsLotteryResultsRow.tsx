@@ -71,16 +71,14 @@ export const ListingDetailsLotteryResultsRow = ({
         )}
         {bucket.preferenceName !== "generalLottery" && (
           <p className="mb-1 text-gray-950 text-sm">
-            {t("lottery.upToXUnitsAvailable", { units: bucket.unitsAvailable })}
+            {t("lottery.upToXUnitsAvailable", bucket.unitsAvailable)}
           </p>
         )}
         {bucket.preferenceName === "generalLottery" && (
           <p className="mb-1 text-gray-950 text-sm">{t("lottery.anyRemainingUnits")}</p>
         )}
         <p className="text-gray-700 text-sm">
-          {t("lottery.numberApplicantsQualifiedForPreference", {
-            number: bucket.totalSubmittedApps,
-          })}
+          {t("lottery.numberApplicantsQualifiedForPreference", bucket.totalSubmittedApps)}
         </p>
       </div>
     </div>

@@ -33,28 +33,19 @@ const LotteryPreferences = ({
           preferenceName
         )}
       </Heading>
-      <p className="text-sm">{t("lottery.upToXUnitsAvailable", { units: unitsAvailable })}</p>
+      <p className="text-sm">{t("lottery.upToXUnitsAvailable", unitsAvailable)}</p>
       {numVeteranApps > 0 ? (
         <>
           <p className="text-gray-700 text-sm">
-            {t("lottery.numberApplicantsQualifiedForPreference.veteran", {
-              number: numVeteranApps,
-              plural: numVeteranApps > 1 ? "s" : "",
-            })}
+            {t("lottery.numberApplicantsQualifiedForPreference.veteran", numVeteranApps)}
           </p>
           <p className="text-gray-700 text-sm">
-            {t("lottery.numberApplicantsQualifiedForPreference.nonVeteran", {
-              number: totalSubmittedApps,
-              plural: totalSubmittedApps > 1 ? "s" : "",
-            })}
+            {t("lottery.numberApplicantsQualifiedForPreference.nonVeteran", totalSubmittedApps)}
           </p>
         </>
       ) : (
         <p className="text-gray-700 text-sm">
-          {t("lottery.numberApplicantsQualifiedForPreference", {
-            number: totalSubmittedApps,
-            plural: totalSubmittedApps > 1 ? "s" : "",
-          })}
+          {t("lottery.numberApplicantsQualifiedForPreference", totalSubmittedApps)}
         </p>
       )}
     </div>
@@ -212,9 +203,7 @@ export const ListingDetailsLotteryPreferencesEducator = ({
                 </Heading>
                 <p className="mb-1 text-sm">{t("lottery.anyRemainingUnits")}</p>
                 <p className="text-gray-700 text-sm">
-                  {t("lottery.numberApplicantsQualifiedForGeneralPool", {
-                    number: bucket.totalSubmittedApps,
-                  })}
+                  {t("lottery.numberApplicantsQualifiedForGeneralPool", bucket.totalSubmittedApps)}
                 </p>
               </div>
               <hr className="mt-4" />
