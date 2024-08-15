@@ -19,7 +19,7 @@ export interface SubsectionProps {
 
 const SeeTheUnitSubsection = ({ title, children }: SubsectionProps) => {
   return (
-    <div className="see-the-unit__subsection pb-6">
+    <div className="see-the-unit__subsection">
       {title && <HeadingSeeds size="md">{title}</HeadingSeeds>}
       <div>{children}</div>
     </div>
@@ -54,7 +54,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           {t("label.seeTheUnit")}
         </Heading>
       </div>
-      <SeeTheUnitSubsection title={t("label.openHouses")}>
+      <SeeTheUnitSubsection title={t("label.openHouses.seeTheUnit")}>
         <div className="see-the-unit__subsection-content">
           {listing.Open_Houses?.length ? <OpenHouses openHouses={listing.Open_Houses} /> : null}
         </div>
@@ -74,7 +74,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         </div>
       </SeeTheUnitSubsection>
       <SeeTheUnitSubsection>
-        <p className="text-xl leasing-agent-name">{listing.Leasing_Agent_Name}</p>
+        <p className="text-xl">{listing.Leasing_Agent_Name}</p>
         <p className="text-gray-700">{listing.Leasing_Agent_Title}</p>
         <div className="py-4">
           <p className="pb-2">

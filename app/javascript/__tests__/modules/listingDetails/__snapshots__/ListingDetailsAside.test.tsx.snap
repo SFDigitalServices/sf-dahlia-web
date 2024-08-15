@@ -406,12 +406,12 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </h4>
             </div>
             <div
-              class="see-the-unit__subsection pb-6"
+              class="see-the-unit__subsection"
             >
               <h1
                 class="text-heading-md"
               >
-                Open Houses
+                Open houses
               </h1>
               <div>
                 <div
@@ -455,7 +455,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </div>
             </div>
             <div
-              class="see-the-unit__subsection pb-6"
+              class="see-the-unit__subsection"
             >
               <h1
                 class="text-heading-md"
@@ -476,7 +476,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </div>
             </div>
             <div
-              class="see-the-unit__subsection pb-6"
+              class="see-the-unit__subsection"
             >
               <h1
                 class="text-heading-md"
@@ -494,11 +494,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </div>
             </div>
             <div
-              class="see-the-unit__subsection pb-6"
+              class="see-the-unit__subsection"
             >
               <div>
                 <p
-                  class="text-xl leasing-agent-name"
+                  class="text-xl"
                 >
                   Matthew Burns
                 </p>
