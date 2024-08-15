@@ -27,7 +27,7 @@ export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-const isFcfsBmrSales = true
+const isFcfsBmrSales = false
 
 const FcfsBmrSalesHowToApply = () => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
