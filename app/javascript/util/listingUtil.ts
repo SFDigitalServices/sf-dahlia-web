@@ -174,6 +174,24 @@ export const getEventTimeString = (listingEvent: ListingEvent) => {
   return ""
 }
 
+export const getEventTimeStringSimplified = (listingEvent: ListingEvent) => {
+  if (listingEvent.Start_Time) {
+    const startTime = dayjs(listingEvent.Start_Time, "h:mm A")
+    let endTimeDisplay
+    if (listingEvent.End_Time) {
+      const endTime = dayjs(listingEvent.End_Time, "h:mm A")
+      endTimeDisplay = endTime.minute() ? endTime.format("h:mm A") : endTime.format("h A")
+    }
+
+    const startTimeDisplay = startTime.minute()
+      ? startTime.format("h:mm A")
+      : startTime.format("h A")
+
+    return endTimeDisplay ? `${startTimeDisplay} - ${endTimeDisplay}` : startTimeDisplay
+  }
+  return ""
+}
+
 const formatEventTime = (eventTime: string) => {
   if (eventTime) {
     const hour = Number.parseInt(eventTime, 10)

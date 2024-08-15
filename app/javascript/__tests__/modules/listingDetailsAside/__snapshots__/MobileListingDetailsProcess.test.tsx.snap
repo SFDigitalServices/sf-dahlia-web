@@ -126,7 +126,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               <span
                 class="font-semibold"
               >
-                2:00 PM - 6:00 PM
+                2 PM - 6 PM
               </span>
             </p>
             <p
@@ -138,7 +138,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
               <span
                 class="font-semibold"
               >
-                10:00 AM - 12:00 PM
+                10 AM - 12 PM
               </span>
             </p>
             <p
@@ -236,14 +236,21 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
                 href="mailto:ae@email.com"
               >
                 <span
-                  class="ui-icon ui-medium pr-2"
+                  class="pr-2"
                 >
                   <svg
-                    fill="#0077DA"
-                    viewBox="0 0 32 32"
+                    aria-hidden="true"
+                    class="svg-inline--fa fa-envelope "
+                    data-icon="envelope"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
+                      d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+                      fill="currentColor"
                     />
                   </svg>
                 </span>
@@ -254,7 +261,7 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           <h1
             class="text-heading-md"
           >
-            Office Hours
+            Office hours
           </h1>
           <div
             class="see-the-unit__subsection-content"

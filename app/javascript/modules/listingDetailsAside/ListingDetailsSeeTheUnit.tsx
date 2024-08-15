@@ -2,11 +2,16 @@ import React from "react"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsSeeTheUnit.scss"
 import { t, Heading, Icon, IconFillColors } from "@bloom-housing/ui-components"
-
 import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import { localizedFormat } from "../../util/languageUtil"
-import { getEventDateTime, getEventTimeString, sortByDateTimeString } from "../../util/listingUtil"
+import {
+  getEventDateTime,
+  sortByDateTimeString,
+  getEventTimeStringSimplified,
+} from "../../util/listingUtil"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -37,9 +42,9 @@ const OpenHouses = ({ openHouses }: { openHouses: ListingEvent[] }) => {
     .map((openHouse: ListingEvent) => {
       return (
         openHouse.Date && (
-          <p className="flex justify-between open-house">
+          <p key={openHouse.Id} className="flex justify-between open-house">
             <span>{openHouse.Date && localizedFormat(openHouse.Date, "LL")}</span>
-            <span className="font-semibold">{getEventTimeString(openHouse)}</span>
+            <span className="font-semibold">{getEventTimeStringSimplified(openHouse)}</span>
           </p>
         )
       )
@@ -93,7 +98,9 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           </p>
           <p>
             <a href={`mailto:${listing.Leasing_Agent_Email}`}>
-              <Icon symbol="mail" size="medium" fill={IconFillColors.primary} className={"pr-2"} />
+              <span className="pr-2">
+                <FontAwesomeIcon icon={faEnvelope} />
+              </span>
               {t("label.emailAddress")}
             </a>
           </p>
