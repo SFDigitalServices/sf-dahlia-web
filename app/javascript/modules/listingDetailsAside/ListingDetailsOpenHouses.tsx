@@ -14,7 +14,7 @@ export const ListingDetailsOpenHouses = ({ listing }: OpenHousesProps) => {
   return (
     <>
       {listing.Open_Houses?.length ? (
-        <div className="border-b border-gray-400 md:border-b-0">
+        <div className="open-houses border-b border-gray-400 md:border-b-0">
           <EventSection
             dateClassName="normal-case"
             events={listing.Open_Houses?.map((openHouse: ListingEvent) => {
