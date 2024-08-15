@@ -398,14 +398,8 @@ export const eligibilityHeader = (
   }
 
   const getSubHeader = () => {
-    const householdSizeContent = t("listings.forHouseholdSize", {
-      size: filters.household_size,
-      people: filters.household_size === "1" ? t("listings.person") : t("listings.people"),
-    })
-    const childrenContent = t("listings.includingChildren", {
-      number: filters.children_under_6,
-      children: filters.children_under_6 === "1" ? t("t.child") : t("t.children"),
-    })
+    const householdSizeContent = t("listings.forHouseholdSize", filters.household_size)
+    const childrenContent = t("listings.includingChildren", filters.children_under_6)
     const incomeContent = t("listings.atTotalIncome", {
       income: filters.income_total.toLocaleString(),
       per: getYearString(),
