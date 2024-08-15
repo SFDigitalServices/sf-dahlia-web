@@ -98,7 +98,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
             </a>
           </p>
         </div>
-        <HeadingSeeds size="md">{t("contactAgent.officeHours")}</HeadingSeeds>
+        <HeadingSeeds size="md">{t("contactAgent.officeHours.seeTheUnit")}</HeadingSeeds>
         <div className="see-the-unit__subsection-content">
           <p>{listing.Office_Hours}</p>
         </div>
