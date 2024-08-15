@@ -6,7 +6,7 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
     class="md:px-0 px-2"
   >
     <section
-      class="aside-block fcfs-bmr-how-to-apply"
+      class="aside-block "
     >
       <h4
         class="text__underline-weighted"
@@ -16,29 +16,32 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
       <div
         class="text-sm text-gray-750"
       >
-        <div
-          class="fcfs-bmr-how-to-apply__list"
+        <p
+          class="mb-4"
         >
-          <ol
-            class="numbered-list text-black text-base"
-          >
-            <li>
-              Fill out PDF application
-            </li>
-            <li>
-              Gather documents
-            </li>
-            <li>
-              When you are ready, submit application
-            </li>
-          </ol>
-        </div>
-        <button
-          class="button is-primary w-full"
+          <span>
+            Make sure you fulfill the 
+            <a
+              href="https://habitatgsf.org/amber-drive-info/"
+              target="_blank"
+            >
+              eligibility requirements
+            </a>
+             for this listing before you begin.
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+        </p>
+        <a
+          class="button is-primary w-full transition"
+          href="listings/a0W8H000000HI2uUAG/apply-welcome/intro"
           tabindex="0"
         >
-          Learn more and apply
-        </button>
+          Apply Online
+        </a>
       </div>
     </section>
     <section
@@ -73,7 +76,7 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
     class="md:px-0 px-2"
   >
     <section
-      class="aside-block fcfs-bmr-how-to-apply"
+      class="aside-block "
     >
       <h4
         class="text__underline-weighted"
@@ -83,29 +86,32 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
       <div
         class="text-sm text-gray-750"
       >
-        <div
-          class="fcfs-bmr-how-to-apply__list"
+        <p
+          class="mb-4"
         >
-          <ol
-            class="numbered-list text-black text-base"
-          >
-            <li>
-              Fill out PDF application
-            </li>
-            <li>
-              Gather documents
-            </li>
-            <li>
-              When you are ready, submit application
-            </li>
-          </ol>
-        </div>
-        <button
-          class="button is-primary w-full"
+          <span>
+            Make sure you fulfill the 
+            <a
+              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+              target="_blank"
+            >
+              eligibility requirements
+            </a>
+             for this listing before you begin.
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+        </p>
+        <a
+          class="button is-primary w-full transition"
+          href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
           tabindex="0"
         >
-          Learn more and apply
-        </button>
+          Apply Online
+        </a>
       </div>
     </section>
     <section
