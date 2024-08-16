@@ -3,7 +3,7 @@
 exports[`ListingDetailsOpenHouses displays Open Houses with Listing containing Open_Houses 1`] = `
 <DocumentFragment>
   <div
-    class="border-b border-gray-400 md:border-b-0"
+    class="open-houses border-b border-gray-400 md:border-b-0"
   >
     <section
       class="aside-block"
