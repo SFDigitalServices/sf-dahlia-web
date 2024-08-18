@@ -8,6 +8,7 @@ import {
 
 import {
   signIn,
+  createAccount,
   getProfile,
   forgotPassword,
   updatePassword,
@@ -43,6 +44,32 @@ describe("authApiService", () => {
       }
       const storageSpy = jest.spyOn(Storage.prototype, "setItem")
       await signIn(data.email, data.password)
+      expect(post).toHaveBeenCalledWith(url, data)
+      expect(storageSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe("createAccount", () => {
+    it("calls apiService post and sets headers", async () => {
+      const url = "/api/v1/auth"
+      const data = {
+        user: {
+          email: "email@test.com",
+          password: "test-password",
+          password_confirmation: "test-password",
+        },
+        contact: {
+          firstName: "test",
+          lastName: "test",
+          email: "email@test.com",
+          DOB: "1980-01-01",
+        },
+        locale: "en",
+        confirm_success_url: "http://localhost:3000/my-account",
+        config_name: "default",
+      }
+      const storageSpy = jest.spyOn(Storage.prototype, "setItem")
+      await createAccount(data.user, data.contact)
       expect(post).toHaveBeenCalledWith(url, data)
       expect(storageSpy).toHaveBeenCalled()
     })

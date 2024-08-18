@@ -35,7 +35,6 @@ export const createAccount = async (
     confirm_success_url: "http://localhost:3000/my-account", // TODO DAH-2566
     config_name: "default",
   }).then(({ data, headers }: AxiosResponse<UserData>) => {
-    console.log("createAccount API call .then", data.data)
     setAuthHeaders(headers as AuthHeaders)
     return data.data
   })
