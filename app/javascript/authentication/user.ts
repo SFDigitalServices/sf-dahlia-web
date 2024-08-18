@@ -24,6 +24,8 @@ interface User {
   }
 
   DOB?: string
+
+  password?: string
 }
 
 interface UserData {

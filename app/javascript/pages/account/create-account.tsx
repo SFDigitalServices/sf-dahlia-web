@@ -14,6 +14,7 @@ import PasswordFieldset from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
+import { createAccount } from "../../api/authApiService"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -98,6 +99,25 @@ const CreateAccountFooter = () => {
 const onSubmit = (user: User) => {
   user.DOB = getDobStringFromDobObject(user.dobObject)
   console.log(user)
+  const userData = {
+    email: user.email,
+    password: user.password,
+    password_confirmation: user.password,
+  }
+  const contactData = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    DOB: user.DOB,
+  }
+  createAccount(userData, contactData)
+    // TODO DAH-2565
+    .then(() => {
+      console.log("Created an account.")
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
