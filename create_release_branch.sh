@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# This creates a new release branch off of production, merges it with main,
-# and creates a new pull request for that branch.
+# This creates a new release branch off of main
 
 skip_branch_creation='false'
 
@@ -33,7 +32,6 @@ git checkout main && git pull --rebase origin main
 echo "Checking out new branch off main: $branch_name"
 git checkout -b $branch_name
 
-echo "Pushing branch to Github and opening the compare view in browser."
-
+echo "Pushing branch to Github and opening in browser."
 git push origin -u $branch_name
-open "https://github.com/SFDigitalServices/sf-dahlia-web/compare/production...$branch_name?expand=1";
+open "https://github.com/SFDigitalServices/sf-dahlia-web/compare/tree/$branch_name";
