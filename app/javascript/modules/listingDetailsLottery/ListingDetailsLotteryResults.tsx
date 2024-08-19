@@ -13,7 +13,7 @@ import { isLotteryCompleteDeprecated, showLotteryResultsPDFonly } from "../../ut
 import { getLotteryBucketDetails } from "../../api/listingApiService"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { ListingDetailsLotterySearchForm } from "./ListingDetailsLotterySearchForm"
-import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 
 export interface ListingDetailsLotteryResultsProps {
@@ -43,7 +43,13 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
           <div className="bg-gray-100 py-4">
             {listing.Lottery_Summary && (
               <div className="mb-3 mx-2 text-gray-700 text-xs translate">
-                {renderInlineMarkup(listing.Lottery_Summary)}
+                {renderInlineMarkup(
+                  getTranslatedString(
+                    listing.Lottery_Summary,
+                    "Lottery_Summary__c",
+                    listing.translations
+                  )
+                )}
               </div>
             )}
             {showLotteryResultsPDFonly(listing) ? (

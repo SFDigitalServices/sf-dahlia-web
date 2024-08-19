@@ -61,7 +61,7 @@ class CacheService
 
     translation_service.cache_listing_translations(
       listing['Id'],
-      strings_to_translate.keys,
+      strings_to_translate.keys.map { |key| "#{key}__c" },
       translations,
     )
   end
