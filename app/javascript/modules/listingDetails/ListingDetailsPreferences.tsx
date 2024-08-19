@@ -105,8 +105,6 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
                     ),
             })
           }
-          console.log("hello")
-          console.log(preference)
 
           return {
             ...determineDescription(
