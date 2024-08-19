@@ -79,6 +79,7 @@ describe Force::EventSubscriberTranslateService do
         EM.run do
           expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent').and_yield(event)
           expect(translation_service).to receive(:translate)
+          expect(translation_service).to receive(:cache_listing_translations)
 
           EM.add_timer(0.1) { EM.stop }
 

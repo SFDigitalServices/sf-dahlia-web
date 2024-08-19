@@ -7,8 +7,8 @@ import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
 import {
-  RailsTranslations,
   RailsTranslationLanguage,
+  RailsTranslation,
 } from "../api/types/rails/listings/RailsTranslation"
 
 type PhraseBundle = Record<string, unknown>
@@ -235,7 +235,7 @@ export function localizedFormat(date: string, format: string): string {
 export const getTranslatedString = (
   originalValue: string,
   fieldName: string,
-  translations: RailsTranslations
+  translations: { [key: string]: RailsTranslation }
 ) => {
   const languageInRoute = getCurrentLanguage()
   const languageConfig = LANGUAGE_CONFIGS[languageInRoute]

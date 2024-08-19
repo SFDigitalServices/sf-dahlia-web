@@ -9,6 +9,3 @@ export type RailsTranslation = {
   ZH: string
   TL: string
 }
-export type RailsTranslations = {
-  Credit_Rating__c: RailsTranslation
-}

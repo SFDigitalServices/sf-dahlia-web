@@ -407,7 +407,13 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {stripMostTags(listing.Eviction_History)}
+                  {stripMostTags(
+                    getTranslatedString(
+                      listing?.Eviction_History,
+                      "Eviction_History__c",
+                      listing?.translations
+                    )
+                  )}
                 </ExpandableText>
               </InfoCard>
             )}

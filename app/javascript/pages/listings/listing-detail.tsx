@@ -53,6 +53,7 @@ const ListingDetail = () => {
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
+  // TODO: Remove this function call once Google Cloud Translate is fully implemented
   useTranslate()
 
   const {

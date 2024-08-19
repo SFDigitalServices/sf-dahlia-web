@@ -19,6 +19,10 @@ module Force
     def initialize
       setup_salesforce_client
       setup_faye_client
+      @translation_service = GoogleTranslationService.new(
+        project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
+        key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
+      )
     end
 
     def listen_and_process_events
@@ -92,10 +96,6 @@ module Force
     end
 
     def translate_event_values(values)
-      @translation_service = GoogleTranslationService.new(
-        project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-        key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-      )
       languages = %w[ES ZH TL]
       @translation_service.translate(values.values, languages)
     end
