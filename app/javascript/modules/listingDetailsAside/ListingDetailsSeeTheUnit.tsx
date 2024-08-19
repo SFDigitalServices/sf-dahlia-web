@@ -1,5 +1,5 @@
 import React from "react"
-import { RailsListing } from "../../modules/listings/SharedHelpers"
+import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsSeeTheUnit.scss"
 import { t, Heading, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
@@ -40,13 +40,22 @@ const OpenHouses = ({ openHouses }: { openHouses: ListingEvent[] }) => {
       )
     )
     .map((openHouse: ListingEvent) => {
+      const eventNote = getEventNote(openHouse)
+
       return (
-        openHouse.Date && (
-          <p key={openHouse.Id} className="flex justify-between open-house">
-            <span>{openHouse.Date && localizedFormat(openHouse.Date, "LL")}</span>
-            <span className="font-semibold">{getEventTimeStringSimplified(openHouse)}</span>
-          </p>
-        )
+        <>
+          {openHouse.Date && (
+            <p key={openHouse.Id} className="flex justify-between open-house">
+              <span>{openHouse.Date && localizedFormat(openHouse.Date, "LL")}</span>
+              <span className="font-semibold">{getEventTimeStringSimplified(openHouse)}</span>
+            </p>
+          )}
+          {eventNote && (
+            <div className="mt-1 text-sm text-gray-700">
+              {typeof eventNote === "string" ? <p>{eventNote}</p> : eventNote}
+            </div>
+          )}
+        </>
       )
     })
 }

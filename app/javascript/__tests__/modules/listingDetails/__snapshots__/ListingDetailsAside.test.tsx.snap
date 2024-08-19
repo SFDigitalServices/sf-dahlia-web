@@ -441,6 +441,24 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                       10 AM - 12 PM
                     </span>
                   </p>
+                  <div
+                    class="mt-1 text-sm text-gray-700"
+                  >
+                    <div
+                      class="flex flex-col"
+                    >
+                      <span
+                        class="links-space translate"
+                      >
+                        <span>
+                          SFPL
+                        </span>
+                      </span>
+                      <span>
+                        1 Library Way, San Francisco
+                      </span>
+                    </div>
+                  </div>
                   <p
                     class="flex justify-between open-house"
                   >
