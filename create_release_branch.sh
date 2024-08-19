@@ -34,4 +34,4 @@ git checkout -b $branch_name
 
 echo "Pushing branch to Github and opening in browser."
 git push origin -u $branch_name
-open "https://github.com/SFDigitalServices/sf-dahlia-web/compare/tree/$branch_name";
+open "https://github.com/SFDigitalServices/sf-dahlia-web/tree/$branch_name";
