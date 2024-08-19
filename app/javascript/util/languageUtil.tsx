@@ -8,7 +8,7 @@ import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
 import {
   RailsTranslationLanguage,
-  RailsTranslation,
+  RailsTranslations,
 } from "../api/types/rails/listings/RailsTranslation"
 
 type PhraseBundle = Record<string, unknown>
@@ -253,8 +253,9 @@ export const getPageLanguageCode = (): string => {
 export const getTranslatedString = (
   originalValue: string,
   fieldName: string,
-  translations: { [key: string]: RailsTranslation }
+  translations: RailsTranslations
 ) => {
   const languageCode = getPageLanguageCode()
-  return translations ? translations[fieldName]?.[languageCode] || originalValue : {}
+  const translatedValue = translations ? (translations[fieldName]?.[languageCode] as string) : null
+  return translatedValue || originalValue
 }
