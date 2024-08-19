@@ -644,7 +644,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
     'S20D',
     'S20V',
     'S22',
-    'T10'
+    'T10',
+    '0701',
+    'A03M'
   ]
 
   return Service
