@@ -232,13 +232,29 @@ export function localizedFormat(date: string, format: string): string {
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
 }
 
+/**
+ * Get the current language prefix as a capitalized string, or default to the english prefix if there is no explicit prefix in
+ * the path.
+ * @returns {string} - language code: ES, ZH, TL, EN
+ */
+export const getPageLanguageCode = (): string => {
+  const languageInRoute = getCurrentLanguage()
+  const languageConfig = LANGUAGE_CONFIGS[languageInRoute]
+  return RailsTranslationLanguage[languageConfig?.prefix.toUpperCase()]
+}
+
+/**
+ * Get the translated string for a given field name from the translations object.
+ * @param originalValue {string} - original value of the field
+ * @param fieldName {string} - field name to get the translation for in Saleforce notation: Credit_Rating__c
+ * @param translations {[key: string]: RailsTranslation} - translations object for the listing
+ * @returns {string} - translated string for current language or original value if no translation exists
+ */
 export const getTranslatedString = (
   originalValue: string,
   fieldName: string,
   translations: { [key: string]: RailsTranslation }
 ) => {
-  const languageInRoute = getCurrentLanguage()
-  const languageConfig = LANGUAGE_CONFIGS[languageInRoute]
-  const languageCode = RailsTranslationLanguage[languageConfig.prefix.toUpperCase()]
-  return translations[fieldName]?.[languageCode] || originalValue
+  const languageCode = getPageLanguageCode()
+  return translations ? translations[fieldName]?.[languageCode] || originalValue : {}
 }
