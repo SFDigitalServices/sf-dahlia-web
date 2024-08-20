@@ -1,17 +1,11 @@
 import React from "react"
-import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers"
+import { RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsSeeTheUnit.scss"
 import { t, Heading, Icon, IconFillColors } from "@bloom-housing/ui-components"
 import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
-import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
-import { localizedFormat } from "../../util/languageUtil"
-import {
-  getEventDateTime,
-  sortByDateTimeString,
-  getEventTimeStringSimplified,
-} from "../../util/listingUtil"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -25,39 +19,14 @@ export interface SubsectionProps {
 const SeeTheUnitSubsection = ({ title, children }: SubsectionProps) => {
   return (
     <div className="see-the-unit__subsection">
-      {title && <HeadingSeeds size="md">{title}</HeadingSeeds>}
+      {title && (
+        <HeadingSeeds size="md" className="pb-3">
+          {title}
+        </HeadingSeeds>
+      )}
       <div>{children}</div>
     </div>
   )
-}
-
-const OpenHouses = ({ openHouses }: { openHouses: ListingEvent[] }) => {
-  return openHouses
-    .sort((a, b) =>
-      sortByDateTimeString(
-        getEventDateTime(a.Date, a.Start_Time),
-        getEventDateTime(b.Date, b.Start_Time)
-      )
-    )
-    .map((openHouse: ListingEvent) => {
-      const eventNote = getEventNote(openHouse)
-
-      return (
-        <>
-          {openHouse.Date && (
-            <p key={openHouse.Id} className="flex justify-between open-house">
-              <span>{openHouse.Date && localizedFormat(openHouse.Date, "LL")}</span>
-              <span className="font-semibold">{getEventTimeStringSimplified(openHouse)}</span>
-            </p>
-          )}
-          {eventNote && (
-            <div className="mt-1 text-sm text-gray-700">
-              {typeof eventNote === "string" ? <p>{eventNote}</p> : eventNote}
-            </div>
-          )}
-        </>
-      )
-    })
 }
 
 export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
@@ -69,13 +38,13 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         </Heading>
       </div>
       <SeeTheUnitSubsection title={t("label.openHouses.seeTheUnit")}>
-        <div className="see-the-unit__subsection-content">
-          {listing.Open_Houses?.length ? <OpenHouses openHouses={listing.Open_Houses} /> : null}
-        </div>
+        {listing.Open_Houses?.length ? (
+          <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
+        ) : null}
       </SeeTheUnitSubsection>
       {listing.Multiple_Listing_Service_URL && (
         <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <p className="mt-1">
+          <p>
             <a href={listing.Multiple_Listing_Service_URL} target="_blank">
               {t("listings.process.seeTheUnitOnMls")}
             </a>
@@ -88,10 +57,10 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         </div>
       </SeeTheUnitSubsection>
       <SeeTheUnitSubsection>
-        <p className="text-xl">{listing.Leasing_Agent_Name}</p>
-        <p className="text-gray-700">{listing.Leasing_Agent_Title}</p>
-        <div className="py-4">
-          <p className="pb-2">
+        <p>{listing.Leasing_Agent_Name}</p>
+        <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
+        <div className="pt-2">
+          <p className="pb-1">
             <a
               href={
                 listing.Leasing_Agent_Phone
@@ -105,7 +74,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
                 : undefined}
             </a>
           </p>
-          <p>
+          <p className="pb-3">
             <a href={`mailto:${listing.Leasing_Agent_Email}`}>
               <span className="pr-2">
                 <FontAwesomeIcon icon={faEnvelope} />

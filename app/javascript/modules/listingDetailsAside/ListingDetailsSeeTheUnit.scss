@@ -1,12 +1,6 @@
 .see-the-unit {
   padding: var(--seeds-spacer-content) !important;
 
-  .text-heading-md {
-    font-size: var(--seeds-font-size-lg);
-    font-family: var(--seeds-font-sans);
-    color: var(--seeds-color-black);
-  }
-
   .see-the-unit__subsection:not(:last-of-type) {
     padding-bottom: var(--seeds-spacer-content);
   }
@@ -16,9 +10,5 @@
       margin-bottom: 0px !important;
     }
     padding-bottom: var(--seeds-spacer-content);
-  }
-
-  .see-the-unit__subsection-content {
-    font-family: var(--seeds-font-alt-sans);
   }
 }
