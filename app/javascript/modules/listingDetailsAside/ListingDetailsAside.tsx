@@ -11,6 +11,7 @@ import { ListingDetailsLotteryInfo } from "../listingDetailsLottery/LotteryDetai
 import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -20,6 +21,8 @@ export interface ListingDetailsSidebarProps {
 export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
   const isSaleListing = isSale(listing)
+
+  const seeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
 
   return (
     <ul>
@@ -40,7 +43,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {isSaleListing ? (
+            {isSaleListing && seeTheUnitEnabled ? (
               <ListingDetailsSeeTheUnit listing={listing} />
             ) : (
               <ListingDetailsOpenHouses listing={listing} />
