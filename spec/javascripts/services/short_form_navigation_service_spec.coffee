@@ -149,6 +149,7 @@ do ->
           fakeListingIdentityService.isRental.and.returnValue(true)
           expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('household-priorities')
 
+    # TODO update test to account for HCBS page
     describe 'getPostHouseholdPrioritiesPage', ->
       it 'returns income-vouchers for rentals', ->
           listing = {id: 'foo'}

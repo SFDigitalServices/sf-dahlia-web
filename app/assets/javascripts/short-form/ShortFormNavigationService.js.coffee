@@ -64,6 +64,14 @@ ShortFormNavigationService = (
       'income'
 
   Service.getPostHouseholdPrioritiesPage = (listing) ->
+    if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
+      'home-and-community-based-services'
+    else if Service.showIncomeVouchersPage(listing)
+      'income-vouchers'
+    else
+      'income'
+
+  Service.getPostHomeAndCommunityBasedServicesPage = (listing) ->
     if Service.showIncomeVouchersPage(listing)
       'income-vouchers'
     else
@@ -153,6 +161,9 @@ ShortFormNavigationService = (
       # This needs to be a callback to call with the right listing
       scopedCallbacks: [{func: 'goToPostHouseholdPrioritiesPage'}]
     }
+    'home-and-community-based-services': {
+      scopedCallbacks: [{func: 'goToPostHomeAndCommunityBasedServicesPage'}]
+    }
     # income
     'income-vouchers': {path: 'income'}
     'income':
@@ -228,6 +239,7 @@ ShortFormNavigationService = (
           'household-reserved-units-veteran'
           'household-reserved-units-disabled'
           'household-priorities'
+          'home-and-community-based-services'
         ]
       },
       {
@@ -338,7 +350,6 @@ ShortFormNavigationService = (
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
-        ,'income-vouchers'
         ,'preferences-intro'
         ,'review-summary'
         ,'review-terms'
@@ -368,7 +379,12 @@ ShortFormNavigationService = (
         Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.VETERAN, 'prev')
       when 'household-priorities'
         Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
+      when 'home-and-community-based-services'
+        # to simplify navigation, let's assume home-and-community-based-services page's existence guarantees household-priorities page
+        'household-priorities'
       # -- Income
+      when 'income-vouchers'
+        Service.getPrevPageOfIncomeVouchersPage()
       when 'income'
         Service.getPrevPageOfIncomePage()
       # -- Preferences
@@ -456,12 +472,23 @@ ShortFormNavigationService = (
     else
       'household-intro'
 
+  Service.getPrevPageOfIncomeVouchersPage = ->
+    listing = ShortFormApplicationService.listing
+    if !Service.showHouseholdPrioritiesPage(listing)
+      Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
+    else if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
+      'home-and-community-based-services'
+    else
+      'household-priorities'
+
   Service.getPrevPageOfIncomePage = ->
     listing = ShortFormApplicationService.listing
     if !Service.showHouseholdPrioritiesPage(listing)
       Service.getNextReservedPageIfAvailable(Service.RESERVED_TYPES.DISABLED, 'prev')
     else if Service.showIncomeVouchersPage(listing)
       'income-vouchers'
+    else if ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits(listing)
+      'home-and-community-based-services'
     else
       'household-priorities'
 

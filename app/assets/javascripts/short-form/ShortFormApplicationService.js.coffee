@@ -93,6 +93,7 @@ ShortFormApplicationService = (
     customEducatorScreeningAnswer: null
     customEducatorJobClassificationNumber: null
     isAnyoneAVeteran: null
+    hasHomeAndCommunityBasedServices: null
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -1145,6 +1146,10 @@ ShortFormApplicationService = (
       ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
       ListingDataService.listing.Custom_Listing_Type
     )
+
+  # TODO: The Kelsey - find a better way to ID before this goes live
+  Service.listingHasHomeAndCommunityBasedServicesUnits  = (listing) ->
+    _.includes(Service.listing.Name.toLowerCase(), "the kelsey")
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
