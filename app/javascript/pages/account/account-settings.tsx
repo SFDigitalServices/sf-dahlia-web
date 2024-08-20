@@ -4,16 +4,23 @@ import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
-import { useForm } from "react-hook-form"
+import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
-import EmailFieldset from "./components/EmailFieldset"
+import EmailFieldset, { emailErrorsMap, handleEmailServerErrors } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
-import PasswordFieldset from "./components/PasswordFieldset"
-import NameFieldset from "./components/NameFieldset"
-import DOBFieldset from "./components/DOBFieldset"
+import PasswordFieldset, {
+  handleServerErrors,
+  passwordErrorsMap,
+} from "./components/PasswordFieldset"
+import NameFieldset, { nameErrorsMap } from "./components/NameFieldset"
+import DOBFieldset, {
+  deduplicateDOBErrors,
+  dobErrorsMap,
+  handleDOBServerErrors,
+} from "./components/DOBFieldset"
 import "./styles/account.scss"
 import {
   updateNameOrDOB as apiUpdateNameOrDOB,
@@ -21,6 +28,8 @@ import {
   updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
+import { renderInlineMarkup } from "../../util/languageUtil"
+import { AxiosError } from "axios"
 
 const SavedBanner = () => {
   return (
@@ -34,6 +43,53 @@ const UpdateBanner = () => {
   return (
     <Alert fullwidth className="account-settings-banner">
       {t("accountSettings.update")}
+    </Alert>
+  )
+}
+
+const ErrorSummaryBanner = ({
+  errors,
+  messageMap,
+}: {
+  errors: DeepMap<FieldValues, FieldError>
+  messageMap?: (message: string) => string
+}) => {
+  if (Object.keys(errors).length === 0) {
+    return null
+  }
+
+  return (
+    <Alert fullwidth variant="alert" className="">
+      {t("error.accountBanner.header")}
+      <ul className="list-disc list-inside pl-2 pt-1">
+        {Object.keys(errors).map((key: string) => {
+          let fieldError = errors[key]
+
+          if (messageMap && fieldError.message && typeof fieldError.message === "string") {
+            fieldError = {
+              ...fieldError,
+              message: messageMap(fieldError.message as string),
+            }
+          }
+
+          return fieldError && fieldError.message ? (
+            <li key={key}>
+              <button
+                type="button"
+                className="text-blue-500 cursor-pointer background-none border-none p-0 text-left"
+                onClick={() => {
+                  if (fieldError.ref) {
+                    fieldError.ref.scrollIntoView({ behavior: "smooth" })
+                    fieldError.ref.focus()
+                  }
+                }}
+              >
+                {renderInlineMarkup(fieldError.message as string)}
+              </button>
+            </li>
+          ) : null
+        })}
+      </ul>
     </Alert>
   )
 }
@@ -73,18 +129,19 @@ interface SectionProps {
 
 const EmailSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
-  const [emailUpdateBanner, setemailUpdateBanner] = useState(false)
-  const [emailBanner, setemailBanner] = useState(false)
+  const [emailUpdateBanner, setEmailUpdateBanner] = useState(false)
+  const [emailBanner, setEmailBanner] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: "all" })
+    setError,
+  } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    setemailUpdateBanner(true)
-    setemailBanner(false)
+    setEmailUpdateBanner(true)
+    setEmailBanner(false)
   }
 
   const onSubmit = (data: { email: string }) => {
@@ -98,13 +155,14 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
           email,
         }
         setUser(newUser)
-        setemailBanner(true)
+        setEmailBanner(true)
       })
-      .catch((error) => {
-        // TODO: Inform the user that an error has occurred
-        // In the case that the email is malformed, the error will have code 422
-        console.log(error)
-      })
+      .catch(
+        handleEmailServerErrors(setError, () => {
+          setEmailBanner(false)
+          setEmailUpdateBanner(false)
+        })
+      )
       .finally(() => {
         setLoading(false)
       })
@@ -122,6 +180,10 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
           <EmailBanner />
         </span>
       )}
+      <ErrorSummaryBanner
+        errors={errors}
+        messageMap={(messageKey) => emailErrorsMap(messageKey, true)}
+      />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
         <EmailFieldset
           register={register}
@@ -144,7 +206,8 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
     handleSubmit,
     reset,
     watch,
-  } = useForm({ mode: "all" })
+    setError,
+  } = useForm({ mode: "onTouched" })
 
   const onSubmit = (data: { password: string; currentPassword: string }) => {
     setLoading(true)
@@ -160,13 +223,10 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         setUser(newUser)
         setPasswordBanner(true)
       })
-      .catch((error) => {
-        // TODO(DAH-2470): Error banners: Password complexity requirements not met, current password is incorrect, general server error
-        console.log(error)
-      })
+      .catch(handleServerErrors(setError))
       .finally(() => {
+        reset({}, { errors: true })
         setLoading(false)
-        reset()
       })
   }
 
@@ -177,6 +237,10 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
           <SavedBanner />
         </span>
       )}
+      <ErrorSummaryBanner
+        errors={errors}
+        messageMap={(messageKey) => passwordErrorsMap(messageKey, true)}
+      />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
         <PasswordFieldset register={register} errors={errors} watch={watch} edit />
       </UpdateForm>
@@ -189,6 +253,7 @@ const updateNameOrDOB = async (
   saveProfile: (profile: User) => void,
   setUser: React.Dispatch<User>,
   setLoading: React.Dispatch<boolean>,
+  errorCallback: (error: AxiosError) => void,
   bannersCallback?: () => void
 ) => {
   return apiUpdateNameOrDOB(newUser)
@@ -197,16 +262,7 @@ const updateNameOrDOB = async (
       setUser(newUser)
       bannersCallback()
     })
-    .catch((error) => {
-      // TODO: In the case that a user's DOB is invalid, this is a snippet of the AxiosError that will be returned
-      // {
-      //  data: {
-      //    error: "Invalid DOB"
-      //  },
-      //  status: 422,
-      // }
-      console.log(error)
-    })
+    .catch(errorCallback)
     .finally(() => {
       setLoading(false)
     })
@@ -220,7 +276,8 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: "all" })
+    setError,
+  } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
     handleBanners("nameUpdateBanner")
@@ -237,41 +294,60 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       middleName,
     }
 
-    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading, () =>
-      handleBanners("nameSavedBanner")
+    await updateNameOrDOB(
+      newUser,
+      saveProfile,
+      setUser,
+      setLoading,
+      handleDOBServerErrors(setError),
+      () => handleBanners("nameSavedBanner")
     )
   }
 
   return (
-    <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-      <NameFieldset
-        register={register}
-        errors={errors}
-        defaultFirstName={user?.firstName ?? null}
-        defaultMiddleName={user?.middleName ?? null}
-        defaultLastName={user?.lastName ?? null}
-        onChange={onChange}
-      />
-    </UpdateForm>
+    <>
+      {errors && (
+        <ErrorSummaryBanner
+          errors={errors}
+          messageMap={(messageKey) => nameErrorsMap(messageKey, true)}
+        />
+      )}
+      <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
+        <NameFieldset
+          register={register}
+          errors={errors}
+          defaultFirstName={user?.firstName ?? null}
+          defaultMiddleName={user?.middleName ?? null}
+          defaultLastName={user?.lastName ?? null}
+          onChange={onChange}
+        />
+      </UpdateForm>
+    </>
   )
 }
 
 const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
-  const [dobUpdateBanner, setdobUpdateBanner] = useState(false)
-  const [dobSavedBanner, setdobSavedBanner] = useState(false)
+  const [dobUpdateBanner, setDOBUpdateBanner] = useState(false)
+  const [dobSavedBanner, setDOBSavedBanner] = useState(false)
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm({ mode: "all" })
+    setError,
+  } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    setdobUpdateBanner(true)
-    setdobSavedBanner(false)
+    setDOBUpdateBanner(true)
+    setDOBSavedBanner(false)
+  }
+
+  const dobServerErrorsCallback = () => {
+    setDOBSavedBanner(false)
+    setDOBUpdateBanner(false)
   }
 
   const onSubmit = async (data: { dobObject: DOBFieldValues }) => {
@@ -283,7 +359,14 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       DOB: getDobStringFromDobObject(dobObject),
     }
 
-    await updateNameOrDOB(newUser, saveProfile, setUser, setLoading, () => setdobSavedBanner(true))
+    await updateNameOrDOB(
+      newUser,
+      saveProfile,
+      setUser,
+      setLoading,
+      handleDOBServerErrors(setError, dobServerErrorsCallback),
+      () => setDOBSavedBanner(true)
+    )
   }
 
   return (
@@ -298,12 +381,18 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
           <SavedBanner />
         </span>
       )}
+      {errors && errors?.dobObject && (
+        <ErrorSummaryBanner
+          errors={deduplicateDOBErrors(errors.dobObject as DeepMap<DOBFieldValues, FieldError>)}
+          messageMap={(messageKey) => dobErrorsMap(messageKey, true)}
+        />
+      )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
         <DOBFieldset
           required
           defaultDOB={user ? user.dobObject : null}
           register={register}
-          error={errors.dob}
+          error={errors.dobObject}
           watch={watch}
           onChange={onChange}
         />
@@ -314,17 +403,17 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
 const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
-  const [nameUpdateBanner, setnameUpdateBanner] = useState(false)
-  const [nameSavedBanner, setnameSavedBanner] = useState(false)
+  const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
+  const [nameSavedBanner, setNameSavedBanner] = useState(false)
 
   const handleBanners = (banner: string) => {
     switch (banner) {
       case "nameUpdateBanner":
-        setnameUpdateBanner(true)
-        setnameSavedBanner(false)
+        setNameUpdateBanner(true)
+        setNameSavedBanner(false)
         break
       case "nameSavedBanner":
-        setnameSavedBanner(true)
+        setNameSavedBanner(true)
         break
     }
   }

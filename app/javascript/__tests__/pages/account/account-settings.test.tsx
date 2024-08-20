@@ -28,7 +28,6 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
     let getAllByText
-    let getByLabelText
     let originalUseContext
     let promise
     let renderResult
@@ -56,7 +55,6 @@ describe("<AccountSettingsPage />", () => {
       renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
-      getByLabelText = renderResult.getByLabelText
     })
 
     afterEach(() => {
@@ -69,22 +67,6 @@ describe("<AccountSettingsPage />", () => {
       expect(title).not.toBeNull()
     })
 
-    it("updates when clicked", async () => {
-      const button = getAllByText("Update")
-      const passwordField: Element = getByLabelText("Choose a new password")
-
-      await act(async () => {
-        button[0].dispatchEvent(new MouseEvent("click"))
-        button[1].dispatchEvent(new MouseEvent("click"))
-        fireEvent.change(passwordField, { target: { value: "1234test" } })
-        button[1].dispatchEvent(new MouseEvent("click"))
-        button[2].dispatchEvent(new MouseEvent("click"))
-        button[3].dispatchEvent(new MouseEvent("click"))
-        await promise
-      })
-
-      // confirm that apis are called
-    })
     test("resize events", () => {
       expect(renderResult).toMatchSnapshot()
 
