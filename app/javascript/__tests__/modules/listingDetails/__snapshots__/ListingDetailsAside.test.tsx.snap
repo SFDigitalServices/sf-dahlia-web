@@ -322,7 +322,8 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="application-status text-xs text-gray-800 bg-primary-light place-content-center"
+              class="seeds-common-message seeds-message place-content-center"
+              data-variant="primary"
             >
               <span
                 class="ui-icon ui-medium"
@@ -339,8 +340,25 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                   />
                 </svg>
               </span>
-              <span>
-                Application Deadline Jan 1, 2050 at 1:00 AM
+              <span
+                data-part="content"
+              >
+                <div>
+                  <span>
+                    Applications Deadline
+                  </span>
+                  : 
+                  <span
+                    class="font-bold"
+                  >
+                    January 1, 2050
+                  </span>
+                </div>
+                <div
+                  class="font-bold"
+                >
+                  1:00 AM Pacific Time
+                </div>
               </span>
             </div>
           </div>
@@ -409,66 +427,85 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               class="see-the-unit__subsection"
             >
               <h1
-                class="text-heading-md"
+                class="text-heading-md pb-3"
               >
                 Open houses
               </h1>
               <div>
                 <div
-                  class="see-the-unit__subsection-content"
+                  class="open-houses border-b border-gray-400 md:border-b-0"
                 >
-                  <p
-                    class="flex justify-between open-house"
-                  >
-                    <span>
-                      December 3, 2019
-                    </span>
-                    <span
-                      class="font-semibold"
-                    >
-                      2 PM - 6 PM
-                    </span>
-                  </p>
-                  <p
-                    class="flex justify-between open-house"
-                  >
-                    <span>
-                      December 7, 2019
-                    </span>
-                    <span
-                      class="font-semibold"
-                    >
-                      10 AM - 12 PM
-                    </span>
-                  </p>
-                  <div
-                    class="mt-1 text-sm text-gray-700"
+                  <section
+                    class=""
                   >
                     <div
-                      class="flex flex-col"
+                      class="pb-3"
                     >
-                      <span
-                        class="links-space translate"
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
                       >
-                        <span>
-                          SFPL
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          December 3, 2019
                         </span>
-                      </span>
-                      <span>
-                        1 Library Way, San Francisco
-                      </span>
+                        <span
+                          class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                        >
+                          2:00 PM - 6:00 PM
+                        </span>
+                      </p>
                     </div>
-                  </div>
-                  <p
-                    class="flex justify-between open-house"
-                  >
-                    <span>
-                      December 8, 2019
-                    </span>
-                    <span
-                      class="font-semibold"
-                    />
-                  </p>
+                    <div
+                      class="pb-3"
+                    >
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
+                      >
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          December 7, 2019
+                        </span>
+                        <span
+                          class="inline-block text-xs font-bold ml-5 font-alt-sans"
+                        >
+                          10:00 AM - 12:00 PM
+                        </span>
+                      </p>
+                      <div
+                        class="text-sm text-gray-700 pb-3"
+                      >
+                        <div
+                          class="flex flex-col"
+                        >
+                          <span
+                            class="links-space translate"
+                          >
+                            <span>
+                              SFPL
+                            </span>
+                          </span>
+                          <span>
+                            1 Library Way, San Francisco
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="false"
+                    >
+                      <p
+                        class="text text-gray-800 pb-2 flex justify-between items-center"
+                      >
+                        <span
+                          class="inline-block text-sm uppercase normal-case"
+                        >
+                          December 8, 2019
+                        </span>
+                      </p>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
@@ -476,14 +513,12 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               class="see-the-unit__subsection"
             >
               <h1
-                class="text-heading-md"
+                class="text-heading-md pb-3"
               >
                 See details online
               </h1>
               <div>
-                <p
-                  class="mt-1"
-                >
+                <p>
                   <a
                     href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
                     target="_blank"
@@ -497,7 +532,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               class="see-the-unit__subsection"
             >
               <h1
-                class="text-heading-md"
+                class="text-heading-md pb-3"
               >
                 Make an appointment
               </h1>
@@ -515,21 +550,19 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               class="see-the-unit__subsection"
             >
               <div>
-                <p
-                  class="text-xl"
-                >
+                <p>
                   Matthew Burns
                 </p>
                 <p
-                  class="text-gray-700"
+                  class="text-gray-700 text-sm"
                 >
                   Leasing Agent
                 </p>
                 <div
-                  class="py-4"
+                  class="pt-2"
                 >
                   <p
-                    class="pb-2"
+                    class="pb-1"
                   >
                     <a
                       href="tel:415 5552323"
@@ -549,7 +582,9 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                       Call (415) 555-2323
                     </a>
                   </p>
-                  <p>
+                  <p
+                    class="pb-3"
+                  >
                     <a
                       href="mailto:ae@email.com"
                     >
