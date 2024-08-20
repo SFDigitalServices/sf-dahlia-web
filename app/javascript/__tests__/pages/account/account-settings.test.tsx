@@ -344,6 +344,40 @@ describe("<AccountSettingsPage />", () => {
         expect(currentPasswordField.getAttribute("value")).toBe("")
       })
     })
+
+    describe("renders the correct errors", () => {
+      test("name Errors", async () => {
+        const button = getAllByText("Update")
+        const firstNameField: Element = screen.getByRole("textbox", {
+          name: /first name/i,
+        })
+
+        const lastNameField: Element = screen.getByRole("textbox", {
+          name: /last name/i,
+        })
+
+        await act(async () => {
+          fireEvent.change(firstNameField, { target: { value: "" } })
+          fireEvent.change(lastNameField, { target: { value: "" } })
+          button[0].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(getAllByText("Enter first name")).toHaveLength(2)
+        expect(getAllByText("Enter last name")).toHaveLength(2)
+
+        await act(async () => {
+          screen
+            .getByRole("button", {
+              name: /enter last name/i,
+            })
+            .dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(firstNameField).toHaveFocus()
+      })
+    })
   })
 
   describe("when the user is not signed in", () => {
