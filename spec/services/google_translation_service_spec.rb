@@ -11,7 +11,7 @@ describe GoogleTranslationService do
     it 'translates text to the target language' do
       mock_translate = instance_double('Google::Cloud::Translate::V2::Api')
       allow(Google::Cloud::Translate::V2).to receive(:new).and_return(mock_translate)
-      service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
+      service = GoogleTranslationService.new
       allow(mock_translate).to receive(:translate).with(
         fields,
         { to: 'ES' },
@@ -22,7 +22,7 @@ describe GoogleTranslationService do
     end
 
     it 'transforms translations from api to an object for a listing' do
-      service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
+      service = GoogleTranslationService.new
       allow(Rails.cache).to receive(:read).and_return(nil)
 
       result = service.cache_listing_translations(
@@ -35,7 +35,7 @@ describe GoogleTranslationService do
     end
 
     it 'updates translation object for a listing' do
-      service = GoogleTranslationService.new(project_id: 'testId', key: 'testKey')
+      service = GoogleTranslationService.new
 
       # mock cached translations
       allow(Rails.cache).to receive(:read)

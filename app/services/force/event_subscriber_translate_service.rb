@@ -19,10 +19,7 @@ module Force
     def initialize
       setup_salesforce_client
       setup_faye_client
-      @translation_service = GoogleTranslationService.new(
-        project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-        key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-      )
+      @translation_service = GoogleTranslationService.new
     end
 
     def listen_and_process_events
@@ -79,23 +76,36 @@ module Force
           "#{platform_event.inspect}",
         )
         event = parse_event(platform_event)
-        translate_and_log_event(event)
+        translate_and_cache(event)
       end
     end
 
-    def translate_and_log_event(event)
+    def translate_and_cache(event)
       translations = translate_event_values(event.updated_values)
-      @translation_service.cache_listing_translations(
+      logger(
+        "Event Translations: #{translations.inspect}",
+      )
+      if translations.empty?
+        logger(
+          "No translations for event: #{event.inspect}",
+        )
+        return []
+      end
+
+      cached_response = @translation_service.cache_listing_translations(
         event.listing_id,
         event.updated_values.keys,
         translations,
       )
       logger(
-        "Event Translations: #{translations.inspect}",
+        "Event Translations: #{cached_response.inspect}",
       )
     end
 
     def translate_event_values(values)
+      logger("Translating values: #{values.inspect}")
+      return [] unless values&.values
+
       languages = %w[ES ZH TL]
       @translation_service.translate(values.values, languages)
     end
@@ -113,15 +123,11 @@ module Force
     end
 
     def extract_updated_values(changed_fields, event)
-      updated_values = changed_fields.each_with_object({}) do |field, values|
+      logger("Extracting updated values: #{changed_fields.inspect}")
+
+      changed_fields.each_with_object({}) do |field, values|
         values[field] = event.dig('payload', field) unless field == 'LastModifiedDate'
       end
-      return updated_values unless updated_values.empty?
-
-      logger(
-        "No updated values found in Salesforce event: #{event.inspect}",
-        error: true,
-      )
     end
 
     def check_for_unsubscribe(subscription)

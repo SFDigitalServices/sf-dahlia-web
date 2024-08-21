@@ -13,19 +13,13 @@ namespace :translate_test do # rubocop:disable Metrics/BlockLength
   task translate: :environment do
     fields = %w[hello world]
     languages = %w[ES ZH TL]
-    translation_service = GoogleTranslationService.new(
-      project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-      key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-    )
+    translation_service = GoogleTranslationService.new
     translations = translation_service.translate(fields, languages)
     Rails.logger.info("Test translation results #{translations}")
   end
 
   task cache: :environment do
-    translation_service = GoogleTranslationService.new(
-      project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-      key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-    )
+    translation_service = GoogleTranslationService.new
 
     # this is to mimic how the subscriber service will work
     event = Event.new(
