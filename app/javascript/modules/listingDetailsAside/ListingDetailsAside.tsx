@@ -1,9 +1,9 @@
 import React from "react"
-import { ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isOpen, isSale } from "../../util/listingUtil"
+import { isOpen, isRental, isSale } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -12,6 +12,8 @@ import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { localizedFormat } from "../../util/languageUtil"
+import { getHousingCounselorsPath } from "../../util/routeUtil"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -21,8 +23,37 @@ export interface ListingDetailsSidebarProps {
 export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
   const isApplicationOpen = isOpen(listing)
   const isSaleListing = isSale(listing)
+  const isListingRental = isRental(listing)
 
   const seeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
+
+  const expectedMoveInDateBlock = (
+    <SidebarBlock title={t("listings.expectedMoveinDate")}>
+      {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
+    </SidebarBlock>
+  )
+
+  const needHelpBlock = (
+    <SidebarBlock title={t("listings.apply.needHelp")}>
+      {isListingRental && (
+        <div className={"mb-4"}>{t("listings.apply.visitAHousingCounselor")}</div>
+      )}
+      <LinkButton
+        transition={true}
+        newTab={true}
+        href={
+          !isListingRental
+            ? "https://www.homeownershipsf.org/buyerapplications/"
+            : getHousingCounselorsPath()
+        }
+        className={"w-full"}
+      >
+        {isListingRental
+          ? t("housingCounselor.findAHousingCounselor")
+          : t("listings.apply.visitHomeownershipSf")}
+      </LinkButton>
+    </SidebarBlock>
+  )
 
   return (
     <ul>
@@ -43,13 +74,14 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {isSaleListing && seeTheUnitEnabled ? (
-              <ListingDetailsSeeTheUnit listing={listing} />
-            ) : (
+            {(!isSaleListing || !seeTheUnitEnabled) && (
               <ListingDetailsOpenHouses listing={listing} />
             )}
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
+            {isSaleListing && seeTheUnitEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
+            {needHelpBlock}
+            {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>
         </aside>

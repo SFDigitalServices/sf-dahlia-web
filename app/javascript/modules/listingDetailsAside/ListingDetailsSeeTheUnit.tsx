@@ -12,18 +12,17 @@ export interface SeeTheUnitProps {
 }
 
 export interface SubsectionProps {
-  title?: string
+  title: string
   children: React.ReactNode
+  headingClass?: string
 }
 
-const SeeTheUnitSubsection = ({ title, children }: SubsectionProps) => {
+const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps) => {
   return (
     <div className="see-the-unit__subsection">
-      {title && (
-        <HeadingSeeds size="md" className="pb-3">
-          {title}
-        </HeadingSeeds>
-      )}
+      <HeadingSeeds size="md" className={headingClass ?? "pb-3"}>
+        {title}
+      </HeadingSeeds>
       <div>{children}</div>
     </div>
   )
@@ -52,11 +51,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         </SeeTheUnitSubsection>
       )}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
-        <div className="see-the-unit__subsection-content">
-          <p>{t("seeTheUnit.requestATour")}</p>
-        </div>
-      </SeeTheUnitSubsection>
-      <SeeTheUnitSubsection>
+        <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
         <p>{listing.Leasing_Agent_Name}</p>
         <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
         <div className="pt-2">
@@ -83,10 +78,10 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
             </a>
           </p>
         </div>
-        <HeadingSeeds size="md">{t("contactAgent.officeHours.seeTheUnit")}</HeadingSeeds>
-        <div className="see-the-unit__subsection-content">
-          <p>{listing.Office_Hours}</p>
-        </div>
+        <HeadingSeeds size="sm" className="pb-1">
+          {t("contactAgent.officeHours.seeTheUnit")}
+        </HeadingSeeds>
+        <p className="text-sm">{listing.Office_Hours}</p>
       </SeeTheUnitSubsection>
     </section>
   )
