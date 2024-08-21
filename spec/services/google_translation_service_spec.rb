@@ -7,10 +7,13 @@ describe GoogleTranslationService do
     mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
     expected_result = [{ to: 'ES', translation: %w[Hello World] }]
     listing_id = 'a0W0P00000F8YG4UAN'
+    let(:mock_translate) { instance_double(Google::Cloud::Translate::V2::Api) }
+
+    before do
+      allow(Google::Cloud::Translate::V2).to receive(:new).and_return(mock_translate)
+    end
 
     it 'translates text to the target language' do
-      mock_translate = instance_double('Google::Cloud::Translate::V2::Api')
-      allow(Google::Cloud::Translate::V2).to receive(:new).and_return(mock_translate)
       service = GoogleTranslationService.new
       allow(mock_translate).to receive(:translate).with(
         fields,
