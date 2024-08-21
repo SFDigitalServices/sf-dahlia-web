@@ -404,7 +404,7 @@ describe("<AccountSettingsPage />", () => {
         expect(screen.getByText(/an error occurred\. please try again/i)).not.toBeNull()
       })
 
-      test("dOB Errors", async () => {
+      test("date of birth errors", async () => {
         const button = getAllByText("Update")
         const monthField: Element = screen.getByRole("textbox", {
           name: /month/i,
@@ -429,16 +429,6 @@ describe("<AccountSettingsPage />", () => {
             name: /enter a valid date of birth/i,
           })
         ).not.toBeNull()
-        expect(
-          screen.getByRole("button", {
-            name: /you must be 18 or older/i,
-          })
-        ).not.toBeNull()
-        expect(
-          screen.getByText(
-            /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
-          )
-        ).not.toBeNull()
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 1 } })
@@ -452,16 +442,6 @@ describe("<AccountSettingsPage />", () => {
           screen.getByRole("button", {
             name: /enter a valid date of birth/i,
           })
-        ).not.toBeNull()
-        expect(
-          screen.getByRole("button", {
-            name: /you must be 18 or older/i,
-          })
-        ).not.toBeNull()
-        expect(
-          screen.getByText(
-            /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
-          )
         ).not.toBeNull()
 
         await act(async () => {

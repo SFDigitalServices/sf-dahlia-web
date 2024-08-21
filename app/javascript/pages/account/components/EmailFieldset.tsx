@@ -33,6 +33,8 @@ export const emailErrorsMap = (errorCode: string, abbreviated?: boolean) => {
       return abbreviated
         ? t("error.email.generalIncorrect.abbreviated")
         : t("error.email.generalIncorrect")
+    case "email:missing":
+      return abbreviated ? t("error.email.missing.abbreviated") : t("error.email.missing")
     default:
       return abbreviated
         ? t("error.account.genericServerError.abbreviated")
@@ -76,7 +78,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         name="email"
         placeholder="example@web.com"
         validation={{
-          required: true,
+          required: "email:missing",
           validate: emailValidation,
         }}
         error={errors.email}

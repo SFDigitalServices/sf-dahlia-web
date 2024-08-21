@@ -93,11 +93,18 @@ const validateNumber = (required: boolean, value: string, maxValue: number, erro
 }
 
 const validateAge = (month: string, day: string, year: string) => {
-  if (dayjs(year, "YYYY").year() > dayjs().year()) return "error:dob:invalid"
-  return dayjs(`${month}/${day}/${year}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
-    dayjs(`${month}/${day}/${year}`, "M/D/YYYY") > dayjs().subtract(117, "years")
-    ? true
-    : "error:dob:age"
+  if (dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().valueOf())
+    return "error:dob:invalid"
+  if (
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() <
+    dayjs().subtract(117, "years").valueOf()
+  )
+    return "error:dob:invalid"
+  if (
+    dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().subtract(18, "years").valueOf()
+  )
+    return "error:dob:age"
+  return true
 }
 
 const DateField = ({
