@@ -219,19 +219,11 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           Make an appointment
         </h1>
         <div>
-          <div
-            class="see-the-unit__subsection-content"
+          <p
+            class="text-sm pb-3"
           >
-            <p>
-              Call, email, or text to request a tour.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="see-the-unit__subsection"
-      >
-        <div>
+            Call, email, or text to request a tour.
+          </p>
           <p>
             Matthew Burns
           </p>
@@ -294,19 +286,17 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
             </p>
           </div>
           <h1
-            class="text-heading-md"
+            class="text-heading-sm pb-1"
           >
             Office hours
           </h1>
-          <div
-            class="see-the-unit__subsection-content"
+          <p
+            class="text-sm"
           >
-            <p>
-              8-4 Mon-Thurs
+            8-4 Mon-Thurs
 9-4 Fri
 10-2 Weekends
-            </p>
-          </div>
+          </p>
         </div>
       </div>
     </section>

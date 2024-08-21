@@ -226,6 +226,31 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               </div>
             </section>
           </div>
+          <section
+            class="aside-block "
+          >
+            <h4
+              class="text__underline-weighted"
+            >
+              Need Help?
+            </h4>
+            <div
+              class="text-sm text-gray-750"
+            >
+              <div
+                class="mb-4"
+              >
+                Visit a local housing counselor for help with your application.
+              </div>
+              <a
+                class="button w-full transition"
+                href="/housing-counselors"
+                tabindex="0"
+              >
+                Find a Housing Counselor
+              </a>
+            </div>
+          </section>
           <div
             class="border-b border-gray-400 md:border-b-0"
           >
@@ -411,6 +436,49 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </div>
             </section>
           </div>
+          <div
+            class="md:px-0 px-2"
+          >
+            <section
+              class="aside-block "
+            >
+              <h4
+                class="text__underline-weighted"
+              >
+                How to Apply
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <p
+                  class="mb-4"
+                >
+                  <span>
+                    Make sure you fulfill the 
+                    <a
+                      href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+                      target="_blank"
+                    >
+                      eligibility requirements
+                    </a>
+                     for this listing before you begin.
+                  </span>
+                </p>
+                <p
+                  class="mb-4"
+                >
+                  Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
+                </p>
+                <a
+                  class="button is-primary w-full transition"
+                  href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+                  tabindex="0"
+                >
+                  Apply Online
+                </a>
+              </div>
+            </section>
+          </div>
           <section
             class="aside-block see-the-unit"
           >
@@ -537,19 +605,11 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 Make an appointment
               </h1>
               <div>
-                <div
-                  class="see-the-unit__subsection-content"
+                <p
+                  class="text-sm pb-3"
                 >
-                  <p>
-                    Call, email, or text to request a tour.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="see-the-unit__subsection"
-            >
-              <div>
+                  Call, email, or text to request a tour.
+                </p>
                 <p>
                   Matthew Burns
                 </p>
@@ -612,99 +672,54 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                   </p>
                 </div>
                 <h1
-                  class="text-heading-md"
+                  class="text-heading-sm pb-1"
                 >
                   Office hours
                 </h1>
-                <div
-                  class="see-the-unit__subsection-content"
+                <p
+                  class="text-sm"
                 >
-                  <p>
-                    8-4 Mon-Thurs
+                  8-4 Mon-Thurs
 9-4 Fri
 10-2 Weekends
-                  </p>
-                </div>
+                </p>
               </div>
             </div>
           </section>
-          <div
-            class="md:px-0 px-2"
+          <section
+            class="aside-block "
           >
-            <section
-              class="aside-block "
+            <h4
+              class="text__underline-weighted"
             >
-              <h4
-                class="text__underline-weighted"
-              >
-                How to Apply
-              </h4>
-              <div
-                class="text-sm text-gray-750"
-              >
-                <p
-                  class="mb-4"
-                >
-                  <span>
-                    Make sure you fulfill the 
-                    <a
-                      href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
-                      target="_blank"
-                    >
-                      eligibility requirements
-                    </a>
-                     for this listing before you begin.
-                  </span>
-                </p>
-                <p
-                  class="mb-4"
-                >
-                  Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
-                </p>
-                <a
-                  class="button is-primary w-full transition"
-                  href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
-                  tabindex="0"
-                >
-                  Apply Online
-                </a>
-              </div>
-            </section>
-            <section
-              class="aside-block "
+              Need Help?
+            </h4>
+            <div
+              class="text-sm text-gray-750"
             >
-              <h4
-                class="text__underline-weighted"
+              <a
+                class="button w-full transition"
+                href="https://www.homeownershipsf.org/buyerapplications/"
+                target="_blank"
               >
-                Need Help?
-              </h4>
-              <div
-                class="text-sm text-gray-750"
-              >
-                <a
-                  class="button w-full transition"
-                  href="https://www.homeownershipsf.org/buyerapplications/"
-                  target="_blank"
-                >
-                  Visit HomeownershipSF
-                </a>
-              </div>
-            </section>
-            <section
-              class="aside-block "
+                Visit HomeownershipSF
+              </a>
+            </div>
+          </section>
+          <section
+            class="aside-block "
+          >
+            <h4
+              class="text__underline-weighted"
             >
-              <h4
-                class="text__underline-weighted"
-              >
-                Expected move-in date
-              </h4>
-              <div
-                class="text-sm text-gray-750"
-              >
-                June 2020
-              </div>
-            </section>
-          </div>
+              Expected move-in date
+            </h4>
+            <div
+              class="text-sm text-gray-750"
+            >
+              June 2020
+            </div>
+          </section>
           <div
             class="border-b border-gray-400 md:border-b-0"
           >
