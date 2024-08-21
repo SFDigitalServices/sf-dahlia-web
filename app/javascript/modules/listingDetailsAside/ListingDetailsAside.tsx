@@ -74,14 +74,14 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {(!isSaleListing || !seeTheUnitEnabled) && (
+            {(isListingRental || !seeTheUnitEnabled) && (
               <ListingDetailsOpenHouses listing={listing} />
             )}
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
             {isSaleListing && seeTheUnitEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
-            {isOpen(listing) && needHelpBlock}
-            {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
+            {isApplicationOpen && needHelpBlock}
+            {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>
         </aside>

@@ -24,7 +24,11 @@ export const ListingDetailsOpenHouses = ({ listing, sectionHeader = true }: Open
   return (
     <>
       {listing.Open_Houses?.length ? (
-        <div className="open-houses border-b border-gray-400 md:border-b-0">
+        <div
+          className={
+            sectionHeader ? "open-houses border-b border-gray-400 md:border-b-0" : "open-houses"
+          }
+        >
           <section className={sectionHeader ? "aside-block" : ""}>
             {sectionHeader && (
               <Heading priority={4} styleType="underlineWeighted">

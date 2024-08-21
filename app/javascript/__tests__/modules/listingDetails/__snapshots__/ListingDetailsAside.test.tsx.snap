@@ -226,31 +226,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               </div>
             </section>
           </div>
-          <section
-            class="aside-block "
-          >
-            <h4
-              class="text__underline-weighted"
-            >
-              Need Help?
-            </h4>
-            <div
-              class="text-sm text-gray-750"
-            >
-              <div
-                class="mb-4"
-              >
-                Visit a local housing counselor for help with your application.
-              </div>
-              <a
-                class="button w-full transition"
-                href="/housing-counselors"
-                tabindex="0"
-              >
-                Find a Housing Counselor
-              </a>
-            </div>
-          </section>
           <div
             class="border-b border-gray-400 md:border-b-0"
           >
@@ -501,7 +476,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </h1>
               <div>
                 <div
-                  class="open-houses border-b border-gray-400 md:border-b-0"
+                  class="open-houses"
                 >
                   <section
                     class=""
