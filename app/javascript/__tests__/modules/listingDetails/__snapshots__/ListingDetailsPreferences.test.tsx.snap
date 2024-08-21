@@ -64,7 +64,7 @@ exports[`ListingDetailsPreferences display 3 default preferences - COP, DTHP, L/
       <div
         class="preferences-list__subtitle"
       >
-        Up to 1 units available
+        Up to 1 unit available
       </div>
       <div
         class="preferences-list__description "
@@ -162,7 +162,7 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
       <div
         class="preferences-list__subtitle"
       >
-        Up to 1 units available
+        Up to 1 unit available
       </div>
       <div
         class="preferences-list__description "
