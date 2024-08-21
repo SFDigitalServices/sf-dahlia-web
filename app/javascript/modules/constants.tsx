@@ -51,6 +51,14 @@ export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_THREE: "Educator 3: Waitlist - SFUSD employees & public",
 }
 
+export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First come, first served"
+
+export const LISTING_STATES = {
+  CLOSED: "Closed",
+  OPEN: "Open",
+  NOT_YET_OPEN: "Not yet open",
+}
+
 export const TENURE_TYPES = {
   NEW_SALE: "New sale",
   RESALE: "Resale",
