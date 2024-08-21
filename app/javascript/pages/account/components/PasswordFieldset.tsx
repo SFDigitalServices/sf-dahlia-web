@@ -16,7 +16,7 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
 export const handleServerErrors =
   (setError: (name: string, error: ErrorOption) => void) =>
   (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
-    const errorMessages = error.response.data.errors.full_messages
+    const errorMessages = error.response.data?.errors?.full_messages
     if (errorMessages && errorMessages.length > 0) {
       if (errorMessages[0] === "Current password is invalid") {
         setError("currentPassword", {

@@ -15,7 +15,7 @@ import PasswordFieldset, {
   handleServerErrors,
   passwordErrorsMap,
 } from "./components/PasswordFieldset"
-import NameFieldset, { nameErrorsMap } from "./components/NameFieldset"
+import NameFieldset, { handleNameServerErrors, nameErrorsMap } from "./components/NameFieldset"
 import DOBFieldset, {
   deduplicateDOBErrors,
   dobErrorsMap,
@@ -299,7 +299,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       saveProfile,
       setUser,
       setLoading,
-      handleDOBServerErrors(setError),
+      handleNameServerErrors(setError),
       () => handleBanners("nameSavedBanner")
     )
   }

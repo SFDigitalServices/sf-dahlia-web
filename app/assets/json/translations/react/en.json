@@ -449,7 +449,7 @@
   "error.account.dobTooYoung": "You must be 18 or older. If you are under 18, email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> to get info on housing resources for youth",
   "error.account.dobTooYoung.abbreviated": "You must be 18 or older",
   "error.account.firstName": "Enter first name",
-  "error.account.genericServerError": "An error occurred. Please try again and if the issue persists contact support at <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a>",
+  "error.account.genericServerError": "An error occurred. Please try again",
   "error.account.genericServerError.abbreviated": "An error occurred",
   "error.account.lastName": "Enter last name",
   "error.account.passwordComplexity": "Choose a strong password with at least 8 characters, 1 letter, and 1 number",

@@ -12,16 +12,14 @@ interface NameFieldsetProps {
   onChange?: () => void
 }
 
-export const handleDOBServerErrors =
+export const handleNameServerErrors =
   (setError: (name: string, error: ErrorOption) => void) => () => {
-    setError("firstName", { message: "error:name:generic", shouldFocus: true })
+    setError("firstName", { message: "error:name:genericServer", shouldFocus: true })
   }
 
 export const nameErrorsMap = (errorKey: string, abbreviated: boolean) => {
   if (errorKey) {
     switch (errorKey) {
-      case "error:name:generic":
-        return abbreviated ? t("error.account.name.abbreviated") : t("error.account.name")
       case "error:firstName":
         return t("error.account.firstName")
       case "error:lastName":

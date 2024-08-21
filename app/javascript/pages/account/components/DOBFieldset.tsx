@@ -59,10 +59,10 @@ export const handleDOBServerErrors =
         type: "range",
       })
     } else {
-      setError("email", { message: "error:dob:generic", shouldFocus: true })
+      setError("dobObject.birthYear", { message: "error:dob:generic", shouldFocus: true })
     }
 
-    errorCallback()
+    errorCallback && errorCallback()
   }
 
 export const dobErrorsMap = (errorKey: string, abbreviated: boolean) => {
