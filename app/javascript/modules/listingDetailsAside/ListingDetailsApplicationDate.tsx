@@ -1,35 +1,62 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import dayjs from "dayjs"
-import { ApplicationStatus, ApplicationStatusType, t } from "@bloom-housing/ui-components"
-import bloomTheme from "../../../../tailwind.config"
+import { Icon, t } from "@bloom-housing/ui-components"
+import { Message } from "@bloom-housing/ui-seeds"
 import { localizedFormat } from "../../util/languageUtil"
+import dayjs from "dayjs"
+import { LISTING_STATES, LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
 
 export interface ListingDetailsApplicationDateProps {
-  isApplicationOpen: boolean
   listing: RailsListing
 }
 
-export const ListingDetailsApplicationDate = ({
-  isApplicationOpen,
-  listing,
-}: ListingDetailsApplicationDateProps) => {
+const getMessage = (isApplicationClosed: boolean, isFcfs: boolean) => {
+  if (!isApplicationClosed) {
+    return t(isFcfs ? "listingDetails.applicationsOpen" : "listingDetails.applicationsDeadline")
+  }
+  return t("listingDetails.applicationsClosed")
+}
+
+export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
+  const isApplicationNotYetOpen = listing.Listing_State === LISTING_STATES.NOT_YET_OPEN
+  const isApplicationClosed = listing.Listing_State === LISTING_STATES.CLOSED
+  const isFcfs = listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
+  const date = isFcfs
+    ? localizedFormat(listing.Application_Start_Date_Time, "LL")
+    : localizedFormat(listing.Application_Due_Date, "LL")
+  const time = isFcfs
+    ? dayjs(listing.Application_Start_Date_Time).format("h:mm A")
+    : dayjs(listing.Application_Due_Date).format("h:mm A")
+
+  const showDateAndTime = isFcfs ? !!isApplicationNotYetOpen : true
+
   return (
     <div className="w-full mb-8 md:mb-0">
-      <ApplicationStatus
+      <Message
         className="place-content-center"
-        content={t(
-          isApplicationOpen
-            ? "listingDetails.applicationDeadline.open"
-            : "listingDetails.applicationDeadline.closed",
-          {
-            date: localizedFormat(listing.Application_Due_Date, "ll"),
-            time: dayjs(listing.Application_Due_Date).format("h:mm A"),
-          }
+        variant={isApplicationClosed ? "alert" : "primary"}
+        customIcon={
+          <Icon fill={isApplicationClosed ? "red-700" : ""} symbol="clock" size="medium" />
+        }
+      >
+        <div>
+          <span>{getMessage(isApplicationClosed, isFcfs)}</span>
+          {showDateAndTime && (
+            <>
+              {": "}
+              <span className="font-bold">{date}</span>
+            </>
+          )}
+        </div>
+        {showDateAndTime && (
+          <div className="font-bold">
+            {time}
+            {/* non-breaking space */}
+            {"\u00A0"}
+            {t("listingDetails.applicationsDeadline.timezone")}
+          </div>
         )}
-        iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
-        status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
-      />
+      </Message>
     </div>
   )
 }
