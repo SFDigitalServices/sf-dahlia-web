@@ -44,10 +44,7 @@ class CacheService
     Lottery_Summary
   ].freeze
   def process_translations(listing)
-    translation_service = GoogleTranslationService.new(
-      project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-      key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-    )
+    translation_service = GoogleTranslationService.new
 
     strings_to_translate = {}
     LISTING_TRANSLATION_FIELDS.each do |field|

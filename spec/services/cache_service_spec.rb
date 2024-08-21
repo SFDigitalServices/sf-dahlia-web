@@ -124,16 +124,17 @@ describe CacheService do
 
   describe '#process_translations(listing)' do
     let(:listing) { cached_listings.first }
+    let(:mock_translate_service) { instance_double(GoogleTranslationService) }
+
+    before do
+      allow(GoogleTranslationService).to receive(:new).and_return(mock_translate_service)
+    end
 
     it 'calls translation service for the listing' do
       # mock cached listing
       listing['Listing_Other_Notes'] = 'Test Notes'
       allow(Force::ListingService).to receive(:listing)
         .and_return(:listing)
-
-      # mock translate service
-      mock_translate_service = instance_double(GoogleTranslationService)
-      allow(GoogleTranslationService).to receive(:new).and_return(mock_translate_service)
 
       mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
       allow(mock_translate_service).to receive(:translate).and_return(mock_response)
