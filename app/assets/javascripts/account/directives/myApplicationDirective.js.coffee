@@ -65,11 +65,17 @@ angular.module('dahlia.directives')
       scope.submittedWithLotteryResults = ->
         scope.isSubmitted() && ListingLotteryService.lotteryComplete(scope.listing)
 
+      scope.listingIsEducator = ->
+        _.includes(
+            ['Educator 1: SFUSD employees only', 'Educator 2: SFUSD employees & public', 'Educator 3: Waitlist - SFUSD employees & public'],
+            scope.listing.Custom_Listing_Type
+        )
+
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
       scope.lotteryNumber = ->
-        if ListingLotteryService.lotteryComplete(scope.listing)
+        if ListingLotteryService.lotteryComplete(scope.listing) && !scope.listingIsEducator()
           html = """
             <button class='button-link lined' ng-click='viewLotteryResults()'>
               ##{scope.application.lotteryNumber}

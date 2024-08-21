@@ -20,9 +20,9 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
               | {{'t.submitted' | translate}}
             span ng-if="::submittedWithLotteryResults()"
               | {{'my_applications.results_posted' | translate}}
-        a.button.small ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::!submittedWithLotteryResults()"
+        a.button.small ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::(!submittedWithLotteryResults() || listingIsEducator())"
           | {{'label.view_application' | translate}}
-        button.button.small.primary ng-click="viewLotteryResults()" ng-if="::submittedWithLotteryResults()"
+        button.button.small.primary ng-click="viewLotteryResults()" ng-if="::(submittedWithLotteryResults() && !listingIsEducator())"
           span ng-if="!lotteryError.lotteryRank"
             | {{'listings.view_lottery_results' | translate}}
           span ng-if="lotteryError.lotteryRank"
