@@ -4,6 +4,7 @@ export enum RailsTranslationLanguage {
   ZH = "ZH",
   TL = "TL",
 }
+
 export type RailsTranslation = {
   ES: string
   ZH: string
