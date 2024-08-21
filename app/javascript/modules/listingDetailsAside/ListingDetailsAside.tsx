@@ -80,7 +80,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
             {isSaleListing && seeTheUnitEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
-            {needHelpBlock}
+            {isOpen(listing) && needHelpBlock}
             {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>
