@@ -741,8 +741,13 @@ ShortFormApplicationController = (
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
   # Go to income-vouchers or income based on what type of listing it is
+  # Or go to home-and-community-based-services page for the Kelsey listing
   $scope.goToPostHouseholdPrioritiesPage = ->
     page = ShortFormNavigationService.getPostHouseholdPrioritiesPage($scope.listing)
+    ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
+
+  $scope.goToPostHomeAndCommunityBasedServicesPage = ->
+    page = ShortFormNavigationService.getPostHomeAndCommunityBasedServicesPage($scope.listing)
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
   $scope.publicHousingYes = ->
