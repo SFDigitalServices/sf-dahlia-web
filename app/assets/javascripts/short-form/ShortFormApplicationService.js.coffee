@@ -1149,7 +1149,7 @@ ShortFormApplicationService = (
 
   # TODO: The Kelsey - find a better way to ID before this goes live
   Service.listingHasHomeAndCommunityBasedServicesUnits  = (listing) ->
-    _.includes(Service.listing.Name.toLowerCase(), "the kelsey")
+    !!listing.Name.match(/the kelsey/i)
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
