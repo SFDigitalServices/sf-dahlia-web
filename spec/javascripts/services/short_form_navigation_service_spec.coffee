@@ -15,6 +15,7 @@ do ->
       application:
         householdMembers: []
       listingHasReservedUnitType: jasmine.createSpy()
+      listingHasHomeAndCommunityBasedServicesUnits: jasmine.createSpy()
       RESERVED_TYPES:
         VETERAN: 'Veteran'
         DISABLED: 'Developmental disabilities'
@@ -149,7 +150,6 @@ do ->
           fakeListingIdentityService.isRental.and.returnValue(true)
           expect(ShortFormNavigationService.getPostReservedPage(listing)).toEqual('household-priorities')
 
-    # TODO update test to account for HCBS page
     describe 'getPostHouseholdPrioritiesPage', ->
       it 'returns income-vouchers for rentals', ->
           listing = {id: 'foo'}
