@@ -64,6 +64,7 @@ type BaseRailsListing = {
   Appliances?: string
   Application_City?: string
   Application_Due_Date: string
+  Application_Start_Date_Time?: string
   Application_Organization?: string
   Application_Phone?: string
   Application_Postal_Code?: string
@@ -104,6 +105,8 @@ type BaseRailsListing = {
   Leasing_Agent_Title?: string
   Leasing_Agent_Zip?: string
   Legal_Disclaimers?: string
+  Listing_Type?: string
+  Listing_State?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
   LotteryResultsURL?: string

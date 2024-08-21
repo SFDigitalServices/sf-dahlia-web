@@ -6,16 +6,12 @@ import { closedRentalListing } from "../../data/RailsRentalListing/listing-renta
 
 describe("ListingDetailsApplicationDate", () => {
   it("displays Application Deadline when listing is a sale and due date has not passed", () => {
-    const { asFragment } = render(
-      <ListingDetailsApplicationDate isApplicationOpen={true} listing={openSaleListing} />
-    )
+    const { asFragment } = render(<ListingDetailsApplicationDate listing={openSaleListing} />)
 
     expect(asFragment()).toMatchSnapshot()
   })
   it("displays Applications Closed when listing is a rental and due date has passed", () => {
-    const { asFragment } = render(
-      <ListingDetailsApplicationDate isApplicationOpen={false} listing={closedRentalListing} />
-    )
+    const { asFragment } = render(<ListingDetailsApplicationDate listing={closedRentalListing} />)
 
     expect(asFragment()).toMatchSnapshot()
   })

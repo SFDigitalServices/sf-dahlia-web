@@ -127,19 +127,13 @@ const ListingDetail = () => {
             <ListingDetailsImageCard listing={listing} />
             {listingIsHabitat && (
               <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
+                <ListingDetailsApplicationDate listing={listing} />
               </Mobile>
             )}
             <ListingDetailsHabitat listing={listing} />
             {!isApplicationOpen && !listingIsHabitat && (
               <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
+                <ListingDetailsApplicationDate listing={listing} />
               </Mobile>
             )}
             <ListingDetailsReservedBanner
@@ -160,10 +154,7 @@ const ListingDetail = () => {
             )}
             {isApplicationOpen && !listingIsHabitat && (
               <Mobile>
-                <ListingDetailsApplicationDate
-                  isApplicationOpen={isApplicationOpen}
-                  listing={listing}
-                />
+                <ListingDetailsApplicationDate listing={listing} />
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
             )}
