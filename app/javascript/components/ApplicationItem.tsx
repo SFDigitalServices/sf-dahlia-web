@@ -131,7 +131,8 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {props.submitted &&
               !lotteryComplete &&
               ApplicationButton(props.applicationURL, t("label.viewApplication"))}
-            {lotteryComplete &&
+            {props.submitted &&
+              lotteryComplete &&
               (showLotteryResultsPDFonly(props.listing) ? (
                 ApplicationButton(
                   props.listing.LotteryResultsURL,
