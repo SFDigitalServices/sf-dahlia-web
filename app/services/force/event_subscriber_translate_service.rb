@@ -19,7 +19,7 @@ module Force
     def initialize
       setup_salesforce_client
       setup_faye_client
-      @translation_service = GoogleTranslationService.new
+      setup_translation_service
     end
 
     def listen_and_process_events
@@ -67,6 +67,10 @@ module Force
       credentials = @salesforce_client.authenticate!
       @faye_client = Faye::Client.new("#{credentials.instance_url}/cometd/31.0/")
       @faye_client.set_header('Authorization', "OAuth #{credentials.access_token}")
+    end
+
+    def setup_translation_service
+      @translation_service = GoogleTranslationService.new
     end
 
     def subscribe_to_listing_updates
