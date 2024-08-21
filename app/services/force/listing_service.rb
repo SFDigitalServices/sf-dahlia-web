@@ -28,6 +28,7 @@ module Force
 
     # get one detailed listing result by id
     def self.listing(id, opts = {})
+      @cache = Rails.cache
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
