@@ -166,7 +166,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
               {t("myApplications.seeListing")}
             </Link>
-            {lotteryComplete && (
+            {props.submitted && lotteryComplete && (
               <Link href={props.applicationURL}>{t("myApplications.viewApplication")}</Link>
             )}
             {!props.submitted && (
