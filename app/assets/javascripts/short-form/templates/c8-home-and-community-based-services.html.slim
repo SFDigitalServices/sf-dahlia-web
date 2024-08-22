@@ -1,0 +1,15 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | "Home and Community Based Services"
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('hasHomeAndCommunityBasedServices') }"
+      p.form-note.margin-bottom translate="label.please_select_one"
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
+        radio-block-item value='Yes' user='application' name='hasHomeAndCommunityBasedServices' ng-required='true'
+          | {{'t.yes' | translate}}
+        radio-block-item value='No' user='application' name='hasHomeAndCommunityBasedServices' ng-required='true'
+          | {{'t.no' | translate}}
+
+  short-form-save-and-submit
