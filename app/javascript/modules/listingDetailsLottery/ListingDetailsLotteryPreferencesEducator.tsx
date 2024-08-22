@@ -24,34 +24,36 @@ const LotteryPreferences = ({
   preferenceName,
   numVeteranApps,
   lastPref,
-}: PreferencesProps) => (
-  <div>
-    <div className="px-8">
-      <Heading className="font-sans font-semibold text-xs tracking-wide uppercase" priority={3}>
-        {defaultIfNotTranslated(
-          `listings.lotteryPreference.${preferenceName}.title`,
-          preferenceName
+}: PreferencesProps) => {
+  return (
+    <div>
+      <div className="px-8">
+        <Heading className="font-sans font-semibold text-xs tracking-wide uppercase" priority={3}>
+          {defaultIfNotTranslated(
+            `listings.lotteryPreference.${preferenceName}.title`,
+            preferenceName
+          )}
+        </Heading>
+        <p className="text-sm">{t("lottery.upToXUnitsAvailable", unitsAvailable)}</p>
+        {numVeteranApps > 0 ? (
+          <>
+            <p className="text-gray-700 text-sm">
+              {t("lottery.numberApplicantsQualifiedForPreference.veteran", numVeteranApps)}
+            </p>
+            <p className="text-gray-700 text-sm">
+              {t("lottery.numberApplicantsQualifiedForPreference.nonVeteran", totalSubmittedApps)}
+            </p>
+          </>
+        ) : (
+          <p className="text-gray-700 text-sm">
+            {t("lottery.numberApplicantsQualifiedForPreference", totalSubmittedApps)}
+          </p>
         )}
-      </Heading>
-      <p className="text-sm">{t("lottery.upToXUnitsAvailable", unitsAvailable)}</p>
-      {numVeteranApps > 0 ? (
-        <>
-          <p className="text-gray-700 text-sm">
-            {t("lottery.numberApplicantsQualifiedForPreference.veteran", numVeteranApps)}
-          </p>
-          <p className="text-gray-700 text-sm">
-            {t("lottery.numberApplicantsQualifiedForPreference.nonVeteran", totalSubmittedApps)}
-          </p>
-        </>
-      ) : (
-        <p className="text-gray-700 text-sm">
-          {t("lottery.numberApplicantsQualifiedForPreference", totalSubmittedApps)}
-        </p>
-      )}
+      </div>
+      <hr className={lastPref ? "mt-4" : "my-4"} />
     </div>
-    <hr className={lastPref ? "mt-4" : "my-4"} />
-  </div>
-)
+  )
+}
 
 const LotteryBucketHeader = ({ headerKey }: { headerKey: string }) => {
   return (
@@ -84,9 +86,10 @@ const LotteryBucketsContent = ({
     // from the preference short code by adding in the 'V-'
     // e.g. The number of veteran applications for 'T1-COP' are stored in veteranAppsByBucketMap
     // under the key 'T1-V-COP', so we insert 'V-' using replace to get the veteran preference short code
-    const veteransPreferenceShortCode = bucket.preferenceShortCode
-    const numVeteranApps =
-      veteranAppsByBucketMap[veteransPreferenceShortCode.replace("-", "-V-")] ?? 0
+    const veteransPreferenceShortCode = bucket.preferenceShortCode.startsWith("T")
+      ? bucket.preferenceShortCode.replace("-", "-V-")
+      : `V-${bucket.preferenceShortCode}`
+    const numVeteranApps = veteranAppsByBucketMap[veteransPreferenceShortCode] ?? 0
 
     return (
       <LotteryPreferences

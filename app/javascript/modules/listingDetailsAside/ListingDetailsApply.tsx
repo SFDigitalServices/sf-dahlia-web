@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+
 import {
   AppearanceStyleType,
   Button,
@@ -20,37 +21,59 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { getHousingCounselorsPath } from "../../util/routeUtil"
+import "./ListingDetailsApply.scss"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+const isFcfsBmrSales = false
+
+const FcfsBmrSalesHowToApply = () => (
+  <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
+    <div className="fcfs-bmr-how-to-apply__list">
+      <ol className="numbered-list text-black text-base">
+        <li>{t("listings.fcfs.bmrSales.howToApply.step1")}</li>
+        <li>{t("listings.fcfs.bmrSales.howToApply.step2")}</li>
+        <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
+      </ol>
+    </div>
+    <Button className="w-full" styleType={AppearanceStyleType.primary}>
+      {t("listings.fcfs.bmrSales.howToApply.learnMore")}
+    </Button>
+  </SidebarBlock>
+)
+
+const ordinalHeader = (ordinal: number, title: string) => {
+  return (
+    <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
+      <span className={"text-blue-500 mr-2"}>{ordinal}</span>
+      {title}
+    </Heading>
+  )
+}
+
+const StandardHowToApply = ({
+  listingId,
+  isListingRental,
+  isHabitatListing,
+  acceptingPaperApps,
+}: {
+  listingId: string
+  isListingRental: boolean
+  isHabitatListing: boolean
+  acceptingPaperApps: boolean
+}) => {
   const [paperApplicationsOpen, setPaperApplicationsOpen] = useState(false)
 
-  if (!isOpen(listing)) return null
-
-  const isListingRental = isRental(listing)
-
-  const acceptingPaperApps = acceptingPaperApplications(listing)
-
-  const ordinalHeader = (ordinal: number, title: string) => {
-    return (
-      <Heading priority={4} className={"text-gray-950 text-xl -mt-2 mb-3"}>
-        <span className={"text-blue-500 mr-2"}>{ordinal}</span>
-        {title}
-      </Heading>
-    )
-  }
-
-  const howToApplyBlock = (
+  return (
     <SidebarBlock title={t("listings.apply.howToApply")}>
       {!isListingRental && (
         <>
           <p className={"mb-4"}>
             {renderInlineMarkup(
               t("listings.apply.fulfillEligibilityRequirements", {
-                url: isHabitatListing(listing)
+                url: isHabitatListing
                   ? "https://habitatgsf.org/amber-drive-info/"
                   : getSfGovUrl(
                       "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
@@ -66,7 +89,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         styleType={AppearanceStyleType.primary}
         className={"w-full"}
         transition={true}
-        href={`listings/${listing.listingID}/apply-welcome/intro`}
+        href={`listings/${listingId}/apply-welcome/intro`}
       >
         {t("label.applyOnline")}
       </LinkButton>
@@ -115,6 +138,25 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
         </>
       )}
     </SidebarBlock>
+  )
+}
+
+export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+  if (!isOpen(listing)) return null
+
+  const isListingRental = isRental(listing)
+
+  const acceptingPaperApps = acceptingPaperApplications(listing)
+
+  const howToApplyBlock = isFcfsBmrSales ? (
+    <FcfsBmrSalesHowToApply />
+  ) : (
+    <StandardHowToApply
+      listingId={listing.listingID}
+      isListingRental={isListingRental}
+      isHabitatListing={isHabitatListing(listing)}
+      acceptingPaperApps={acceptingPaperApps}
+    />
   )
 
   const submitPaperApplicationBlocks = (
@@ -178,7 +220,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   return (
     <div className="md:px-0 px-2">
       {howToApplyBlock}
-      {acceptingPaperApps && submitPaperApplicationBlocks}
+      {!isFcfsBmrSales && acceptingPaperApps && submitPaperApplicationBlocks}
       {needHelpBlock}
       {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
     </div>

@@ -128,6 +128,8 @@ ListingConstantsService = () ->
     'Treasure Island Resident (TIR) Preference',
   ]
 
+  Service.HCBS_PRIORITY_NAME = 'HCBS Units'
+
   return Service
 
 

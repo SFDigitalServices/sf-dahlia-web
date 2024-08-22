@@ -38,6 +38,7 @@ generatedWebpackConfig.plugins.unshift(
       GOOGLE_TAG_MANAGER_KEY: JSON.stringify(process.env.GOOGLE_TAG_MANAGER_KEY),
       UNLEASH_URL: JSON.stringify(process.env.UNLEASH_URL),
       UNLEASH_TOKEN: JSON.stringify(process.env.UNLEASH_TOKEN),
+      UNLEASH_ENV: JSON.stringify(process.env.UNLEASH_ENV),
     },
   })
 )
