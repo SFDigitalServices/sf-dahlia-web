@@ -96,18 +96,20 @@ const CreateAccountFooter = () => {
   )
 }
 
-const onSubmit = ({ user, password }: { user: User; password: string }) => {
-  user.DOB = getDobStringFromDobObject(user.dobObject)
+const onSubmit = (data) => {
+  const { password, ...user } = data
+  const userInfo: User = user
+  user.DOB = getDobStringFromDobObject(userInfo.dobObject)
   const userData = {
-    email: user.email,
+    email: userInfo.email,
     password: password,
     password_confirmation: password,
   }
   const contactData = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    DOB: user.DOB,
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    email: userInfo.email,
+    DOB: userInfo.DOB,
   }
   createAccount(userData, contactData)
     // TODO DAH-2565
