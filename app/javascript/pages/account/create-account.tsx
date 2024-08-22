@@ -96,13 +96,12 @@ const CreateAccountFooter = () => {
   )
 }
 
-const onSubmit = (user: User) => {
+const onSubmit = ({ user, password }: { user: User; password: string }) => {
   user.DOB = getDobStringFromDobObject(user.dobObject)
-  console.log(user)
   const userData = {
     email: user.email,
-    password: user.password,
-    password_confirmation: user.password,
+    password: password,
+    password_confirmation: password,
   }
   const contactData = {
     firstName: user.firstName,
