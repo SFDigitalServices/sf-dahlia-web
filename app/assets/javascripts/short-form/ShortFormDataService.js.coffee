@@ -144,6 +144,12 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     sfApp.primaryApplicant.isSFUSDEmployee = application.customEducatorScreeningAnswer
     sfApp.primaryApplicant.jobClassification = application.customEducatorJobClassificationNumber
 
+    # add the HCBS answer to the priorities object, so that it appears with priorities in the Leasing Agent Portal
+    if application.hasHomeAndCommunityBasedServices == 'Yes' && sfApp.adaPrioritiesSelected == 'None;'
+      sfApp.adaPrioritiesSelected = ListingConstantsService.HCBS_PRIORITY_NAME + ';'
+    else if application.hasHomeAndCommunityBasedServices == 'Yes'
+      sfApp.adaPrioritiesSelected += ListingConstantsService.HCBS_PRIORITY_NAME + ';'
+
     # add preferences and return
     sfApp.shortFormPreferences = Service._formatPreferences(application)
     return sfApp
@@ -394,6 +400,12 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     # custom educator
     data.customEducatorScreeningAnswer = sfApp.primaryApplicant.isSFUSDEmployee
     data.customEducatorJobClassificationNumber = sfApp.primaryApplicant.jobClassification
+
+    if !!data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
+      delete data.adaPrioritiesSelected[ListingConstantsService.HCBS_PRIORITY_NAME]
+      data.hasHomeAndCommunityBasedServices = 'Yes'
+    else
+      data.hasHomeAndCommunityBasedServices = 'No'
 
     allHousehold = angular.copy(data.householdMembers)
     allHousehold.unshift(data.applicant)
