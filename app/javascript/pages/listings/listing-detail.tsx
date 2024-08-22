@@ -44,8 +44,13 @@ import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDe
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import dayjs from "dayjs"
+import useTranslate from "../../hooks/useTranslate"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const ListingDetail = () => {
+  const isCloudTranslationEnabled = useFeatureFlag("GoogleCloudTranslate", true)
+  useTranslate(isCloudTranslationEnabled)
+
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)

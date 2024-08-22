@@ -3,11 +3,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useState, useEffect } from "react"
 
-const useScript = (src) => {
+const useScript = (src, disable) => {
   // Keep track of script status ("idle", "loading", "ready", "error")
   const [status, setStatus] = useState(src ? "loading" : "idle")
   useEffect(
     () => {
+      if (disable) {
+        setStatus("error")
+        return
+      }
       // Allow falsy src value if waiting on other data needed for
       // constructing the script URL passed to this hook.
       if (!src) {
@@ -54,7 +58,7 @@ const useScript = (src) => {
         }
       }
     },
-    [src] // Only re-run effect if script src changes
+    [disable, src] // Only re-run effect if script src changes
   )
   return status
 }
