@@ -33,13 +33,12 @@ class GoogleTranslationService
       logger(
         "Successfully cached listing translations for listing id: #{listing_id}",
       )
-      translations
     else
       logger(
         "Error caching listing translations for listing id: #{listing_id}", error: true
       )
-      {}
     end
+    translations
   end
 
   private

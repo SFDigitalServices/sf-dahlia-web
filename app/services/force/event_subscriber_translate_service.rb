@@ -129,8 +129,12 @@ module Force
     def extract_updated_values(changed_fields, event)
       logger("Extracting updated values: #{changed_fields.inspect}")
 
-      changed_fields.each_with_object({}) do |field, values|
-        values[field] = event.dig('payload', field) unless field == 'LastModifiedDate'
+      filtered_fields = changed_fields.select do |field|
+        ServiceHelper::SALESFORCE_LISTING_FIELD_NAMES_TO_TRANSLATE.include?(field)
+      end
+
+      filtered_fields.each_with_object({}) do |field, values|
+        values[field] = event.dig('payload', field)
       end
     end
 
