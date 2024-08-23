@@ -21,13 +21,28 @@ class CacheService
 
   def process_translations(listing)
     translation_service = GoogleTranslationService.new
-    puts 'HELLO'
-    puts listing[Open_House__c.Venue__c]
 
     strings_to_translate = {}
     ServiceHelper.listing_field_names.each do |field|
       strings_to_translate[field] = listing[field] unless listing[field].nil?
     end
+
+    listing['Open_Houses']&.each do |open_house|
+      unless open_house['Venue'].nil?
+        strings_to_translate[open_house['Id']] =
+          open_house['Venue']
+      end
+    end
+
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Open_Houses',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Information_Sessions',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Listing_Images',
+                                                       'Image_Description')
 
     languages = %w[ES ZH TL]
 

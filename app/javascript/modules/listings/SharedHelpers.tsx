@@ -7,6 +7,7 @@ import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalL
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./SharedHelpers.scss"
+import { RailsTranslations } from "../../api/types/rails/listings/RailsTranslation"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -219,8 +220,8 @@ export const getImageCardProps = (
     listing?.Listing_Images?.length > 0
       ? getTranslatedString(
           listing.Listing_Images[0].Image_Description,
-          "Image_Description__c",
-          listing.Listing_Images[0].translations
+          listing.Listing_Images[0].Id,
+          listing.translations
         )
       : `${listing.Building_Name} Building`
   return {
@@ -234,14 +235,14 @@ export const getImageCardProps = (
   }
 }
 
-export const getEventNote = (listingEvent: ListingEvent) => {
+export const getEventNote = (listingEvent: ListingEvent, translations: RailsTranslations) => {
   if (!listingEvent.Venue) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
         <span className="links-space translate">
           {renderInlineMarkup(
-            getTranslatedString(listingEvent.Venue, "Venue__c", listingEvent.translations)
+            getTranslatedString(listingEvent.Venue, listingEvent.Id, translations)
           )}
         </span>
       )}

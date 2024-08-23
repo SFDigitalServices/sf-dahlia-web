@@ -190,7 +190,7 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
                 {renderMarkup(
                   getTranslatedString(
                     listing?.Costs_Not_Included,
-                    "Costs_Not_Included__c",
+                    "Costs_Not_Included",
                     listing?.translations
                   )
                 )}

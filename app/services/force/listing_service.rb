@@ -46,7 +46,7 @@ module Force
         Rails.logger.info("Fetching new translations for #{id}")
         CacheService.new.process_translations(listing)
       end
-      Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
+      # Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
       listing['translations'] = listing_translations || {}
       listing
     end

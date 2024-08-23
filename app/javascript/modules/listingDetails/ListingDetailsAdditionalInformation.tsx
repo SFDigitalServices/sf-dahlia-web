@@ -40,7 +40,7 @@ export const ListingDetailsAdditionalInformation = ({
               text={stripMostTags(
                 getTranslatedString(
                   listing.Listing_Other_Notes,
-                  "Listing_Other_Notes__c",
+                  "Listing_Other_Notes",
                   listing.translations
                 )
               )}
@@ -57,7 +57,7 @@ export const ListingDetailsAdditionalInformation = ({
                 text={stripMostTags(
                   getTranslatedString(
                     listing.Required_Documents,
-                    "Required_Documents__c",
+                    "Required_Documents",
                     listing.translations
                   )
                 )}
@@ -84,7 +84,7 @@ export const ListingDetailsAdditionalInformation = ({
                 text={stripMostTags(
                   getTranslatedString(
                     listing.Legal_Disclaimers,
-                    "Legal_Disclaimers__c",
+                    "Legal_Disclaimers",
                     listing.translations
                   )
                 )}
@@ -132,7 +132,7 @@ export const ListingDetailsAdditionalInformation = ({
                       text={stripMostTags(
                         getTranslatedString(
                           listing.Realtor_Commission_Info,
-                          "Realtor_Commission_Info__c",
+                          "Realtor_Commission_Info",
                           listing.translations
                         )
                       )}
@@ -165,7 +165,7 @@ export const ListingDetailsAdditionalInformation = ({
                 text={stripMostTags(
                   getTranslatedString(
                     listing.Repricing_Mechanism,
-                    "Repricing_Mechanism__c",
+                    "Repricing_Mechanism",
                     listing.translations
                   )
                 )}

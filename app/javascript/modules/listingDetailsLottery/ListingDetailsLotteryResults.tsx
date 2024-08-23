@@ -46,7 +46,7 @@ export const ListingDetailsLotteryResults = ({ listing }: ListingDetailsLotteryR
                 {renderInlineMarkup(
                   getTranslatedString(
                     listing.Lottery_Summary,
-                    "Lottery_Summary__c",
+                    "Lottery_Summary",
                     listing.translations
                   )
                 )}
