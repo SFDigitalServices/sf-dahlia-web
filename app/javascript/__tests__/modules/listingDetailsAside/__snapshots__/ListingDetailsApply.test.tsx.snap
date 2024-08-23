@@ -44,26 +44,6 @@ exports[`ListingDetailsApply displays habitat link for eligibility requirements 
         </a>
       </div>
     </section>
-    <section
-      class="aside-block "
-    >
-      <h4
-        class="text__underline-weighted"
-      >
-        Need Help?
-      </h4>
-      <div
-        class="text-sm text-gray-750"
-      >
-        <a
-          class="button w-full transition"
-          href="https://www.homeownershipsf.org/buyerapplications/"
-          target="_blank"
-        >
-          Visit HomeownershipSF
-        </a>
-      </div>
-    </section>
   </div>
 </DocumentFragment>
 `;
@@ -112,40 +92,6 @@ exports[`ListingDetailsApply renders if listing is open 1`] = `
         >
           Apply Online
         </a>
-      </div>
-    </section>
-    <section
-      class="aside-block "
-    >
-      <h4
-        class="text__underline-weighted"
-      >
-        Need Help?
-      </h4>
-      <div
-        class="text-sm text-gray-750"
-      >
-        <a
-          class="button w-full transition"
-          href="https://www.homeownershipsf.org/buyerapplications/"
-          target="_blank"
-        >
-          Visit HomeownershipSF
-        </a>
-      </div>
-    </section>
-    <section
-      class="aside-block "
-    >
-      <h4
-        class="text__underline-weighted"
-      >
-        Expected move-in date
-      </h4>
-      <div
-        class="text-sm text-gray-750"
-      >
-        June 2020
       </div>
     </section>
   </div>
