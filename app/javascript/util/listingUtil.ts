@@ -649,6 +649,9 @@ export const getPriorityTypeText = (priorityType: string): string => {
     case "Hearing/Vision (Communication)":
       text = t("listings.Hearing/Vision (Communication).title")
       break
+    case "HCBS Units":
+      text = t("listings.HCBS Units.title")
+      break
     default:
       text = ""
   }
