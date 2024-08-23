@@ -26,6 +26,7 @@ export interface ListingDetailsApplyProps {
 }
 
 const isFcfsBmrSales = false
+const isFcfsApplicationClosed = false
 
 const FcfsBmrSalesHowToApply = () => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
@@ -140,7 +141,7 @@ const StandardHowToApply = ({
 }
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
-  if (!isOpen(listing)) return null
+  if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)
 
