@@ -13,7 +13,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application deadline: January 1, 2050",
             status: 0,
           },
         ],
@@ -32,7 +32,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application deadline: January 1, 2050",
             status: 0,
           },
         ],
@@ -55,7 +55,7 @@ describe("SharedHelpers", () => {
         imageUrl: {},
         statuses: [
           {
-            content: "Application Deadline: January 1, 2050",
+            content: "Application deadline: January 1, 2050",
             status: 0,
           },
         ],

@@ -1,6 +1,6 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { isLotteryCompleteDeprecated, getTagContent } from "../../util/listingUtil"
+import { getTagContent, isLotteryCompleteDeprecated } from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -16,22 +16,49 @@ export const getListingImageCardStatuses = (
   hasFiltersSet: boolean
 ): StatusBarType[] => {
   const statuses: StatusBarType[] = []
-  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+
+  // TODO: Determine if listing is FCFS and what state the listing is in
+  const isFcfs = false
+  const isFcfsApplicationNotYetOpen = false
+  const isFcfsApplicationClosed = false
+
+  const isListingClosed = isFcfs
+    ? isFcfsApplicationClosed
+    : new Date(listing.Application_Due_Date) < new Date()
+  const isLotteryComplete = isLotteryCompleteDeprecated(listing)
+
+  const formattedDueDateString = isFcfs
+    ? localizedFormat(listing.Application_Start_Date_Time, "LL")
+    : localizedFormat(listing.Application_Due_Date, "LL")
   const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
 
-  if (new Date(listing.Application_Due_Date) < new Date()) {
-    if (!isLotteryCompleteDeprecated(listing)) {
+  if (isListingClosed) {
+    if (isFcfs || !isLotteryComplete) {
       statuses.push({
         status: ApplicationStatusType.Closed,
-        content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
+        content: isFcfs
+          ? t("listingDirectory.listingStatusContent.applicationsClosed")
+          : `${t(
+              "listingDirectory.listingStatusContent.applicationsClosed"
+            )}: ${formattedDueDateString}`,
+        subContent: isFcfs
+          ? t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed")
+          : "",
         hideIcon: true,
       })
     }
-    statuses.push({
-      status: ApplicationStatusType.PostLottery,
-      content: `${t("listings.lotteryResults.cardTitle")}: ${lotteryResultsDateString}`,
-      hideIcon: true,
-    })
+
+    if (!isFcfs) {
+      statuses.push({
+        status: ApplicationStatusType.PostLottery,
+        content: `${t(
+          "listingDirectory.listingStatusContent.lotteryResultsPosted"
+        )}: ${lotteryResultsDateString}`,
+        hideIcon: true,
+      })
+    }
+
+    return statuses
   } else {
     if (hasFiltersSet && listing.Does_Match) {
       return [
@@ -51,15 +78,29 @@ export const getListingImageCardStatuses = (
         },
       ]
     } else {
+      let content: string
+      if (isFcfs) {
+        content = isFcfsApplicationNotYetOpen
+          ? `${t(
+              "listingDirectory.listingStatusContent.applicationsOpen"
+            )}: ${formattedDueDateString}`
+          : t("listingDirectory.listingStatusContent.applicationsOpen")
+      } else {
+        content = `${t(
+          "listingDirectory.listingStatusContent.applicationDeadline"
+        )}: ${formattedDueDateString}`
+      }
       return [
         {
           status: ApplicationStatusType.Open,
-          content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
+          content: content,
+          subContent: isFcfs
+            ? t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed")
+            : "",
         },
       ]
     }
   }
-  return statuses
 }
 
 // Get imageCardProps for a given listing
