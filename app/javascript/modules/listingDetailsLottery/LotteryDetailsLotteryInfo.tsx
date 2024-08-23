@@ -24,7 +24,7 @@ export const ListingDetailsLotteryInfo = ({ listing }: ListingDetailsLotteryInfo
           <div className="text-gray-700">
             {listing.Lottery_Venue &&
               renderMarkup(
-                getTranslatedString(listing.Lottery_Venue, "Lottery_Venue", listing.translations)
+                getTranslatedString(listing.Lottery_Venue, "Lottery_Venue__c", listing.translations)
               )}
           </div>
           {process.env.COVID_UPDATE !== "true" && (

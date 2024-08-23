@@ -238,7 +238,7 @@ export const ListingDetailsEligibility = ({
                   {renderMarkup(
                     getTranslatedString(
                       listing.Reserved_community_type_Description,
-                      "Reserved_community_type_Description",
+                      "Reserved_community_type_Description__c",
                       listing.translations
                     )
                   )}
@@ -390,7 +390,7 @@ export const ListingDetailsEligibility = ({
                   {stripMostTags(
                     getTranslatedString(
                       listing?.Credit_Rating,
-                      "Credit_Rating",
+                      "Credit_Rating__c",
                       listing?.translations
                     )
                   )}
@@ -412,7 +412,7 @@ export const ListingDetailsEligibility = ({
                   {stripMostTags(
                     getTranslatedString(
                       listing?.Eviction_History,
-                      "Eviction_History",
+                      "Eviction_History__c",
                       listing?.translations
                     )
                   )}
