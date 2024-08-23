@@ -21,6 +21,8 @@ class CacheService
 
   def process_translations(listing)
     translation_service = GoogleTranslationService.new
+    puts 'HELLO'
+    puts listing[Open_House__c.Venue__c]
 
     strings_to_translate = {}
     ServiceHelper.listing_field_names.each do |field|

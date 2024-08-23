@@ -1,7 +1,7 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import { getTagContent, isFcfsListing, isLotteryCompleteDeprecated } from "../../util/listingUtil"
-import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
@@ -217,7 +217,11 @@ export const getImageCardProps = (
 
   const imageDescription =
     listing?.Listing_Images?.length > 0
-      ? listing.Listing_Images[0].Image_Description
+      ? getTranslatedString(
+          listing.Listing_Images[0].Image_Description,
+          "Image_Description__c",
+          listing.Listing_Images[0].translations
+        )
       : `${listing.Building_Name} Building`
   return {
     imageUrl: imageUrl,
@@ -235,7 +239,11 @@ export const getEventNote = (listingEvent: ListingEvent) => {
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="links-space translate">{renderInlineMarkup(listingEvent.Venue)}</span>
+        <span className="links-space translate">
+          {renderInlineMarkup(
+            getTranslatedString(listingEvent.Venue, "Venue__c", listingEvent.translations)
+          )}
+        </span>
       )}
       {listingEvent.Street_Address && listingEvent.City && (
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
