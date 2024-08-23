@@ -33,6 +33,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
   return (
     <div className="w-full mb-8 md:mb-0">
       <Message
+        fullwidth
         className="place-content-center"
         variant={isApplicationClosed ? "alert" : "primary"}
         customIcon={
