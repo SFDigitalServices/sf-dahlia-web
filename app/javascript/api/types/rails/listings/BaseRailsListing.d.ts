@@ -30,7 +30,6 @@ export type ListingEvent = {
   Street_Address?: string
   Venue?: string
   attributes?: { type: string; url: string }
-  translations?: RailsTranslations
 }
 
 export type ImageItem = {
@@ -41,7 +40,6 @@ export type ImageItem = {
   Name?: string
   Image_URL?: string
   Image_Description?: string
-  translations?: RailsTranslations
 }
 
 export type ListingLotteryPreference = {
