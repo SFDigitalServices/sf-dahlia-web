@@ -220,7 +220,7 @@ export const getImageCardProps = (
     listing?.Listing_Images?.length > 0
       ? getTranslatedString(
           listing.Listing_Images[0].Image_Description,
-          listing.Listing_Images[0].Id,
+          `${listing.Listing_Images[0].Id}.Image_Description__c`,
           listing.translations
         )
       : `${listing.Building_Name} Building`
@@ -242,7 +242,7 @@ export const getEventNote = (listingEvent: ListingEvent, translations: RailsTran
       {listingEvent.Venue && (
         <span className="links-space translate">
           {renderInlineMarkup(
-            getTranslatedString(listingEvent.Venue, listingEvent.Id, translations)
+            getTranslatedString(listingEvent.Venue, `${listingEvent.Id}.Venue__c`, translations)
           )}
         </span>
       )}

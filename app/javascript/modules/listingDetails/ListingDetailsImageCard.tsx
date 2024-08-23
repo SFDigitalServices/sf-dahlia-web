@@ -20,7 +20,7 @@ const createImageCardProps = (listing: RailsListing) => {
       url: listingImage.displayImageURL,
       description: getTranslatedString(
         listingImage.Image_Description,
-        listingImage.Id,
+        `${listingImage.Id}.Image_Description__c`,
         listing.translations
       ),
     }

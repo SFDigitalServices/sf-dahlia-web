@@ -43,10 +43,10 @@ import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDe
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import dayjs from "dayjs"
-import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import useTranslate from "../../hooks/useTranslate"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(

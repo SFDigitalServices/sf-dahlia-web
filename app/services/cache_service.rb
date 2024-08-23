@@ -27,13 +27,6 @@ class CacheService
       strings_to_translate[field] = listing[field] unless listing[field].nil?
     end
 
-    listing['Open_Houses']&.each do |open_house|
-      unless open_house['Venue'].nil?
-        strings_to_translate[open_house['Id']] =
-          open_house['Venue']
-      end
-    end
-
     strings_to_translate = process_nested_translations(listing, strings_to_translate,
                                                        'Open_Houses',
                                                        'Venue')
