@@ -55,7 +55,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
+              class="seeds-common-message is-fullwidth seeds-message place-content-center leading-5"
               data-variant="primary"
             >
               <span
@@ -78,17 +78,17 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               >
                 <div>
                   <span>
-                    Applications Deadline
+                    Application deadline
                   </span>
                   : 
                   <span
-                    class="font-bold"
+                    class="font-semibold"
                   >
                     January 1, 2000
                   </span>
                 </div>
                 <div
-                  class="font-bold"
+                  class="font-semibold"
                 >
                   1:00 AM Pacific Time
                 </div>
@@ -322,7 +322,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
+              class="seeds-common-message is-fullwidth seeds-message place-content-center leading-5"
               data-variant="primary"
             >
               <span
@@ -345,17 +345,17 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               >
                 <div>
                   <span>
-                    Applications Deadline
+                    Application deadline
                   </span>
                   : 
                   <span
-                    class="font-bold"
+                    class="font-semibold"
                   >
                     January 1, 2050
                   </span>
                 </div>
                 <div
-                  class="font-bold"
+                  class="font-semibold"
                 >
                   1:00 AM Pacific Time
                 </div>

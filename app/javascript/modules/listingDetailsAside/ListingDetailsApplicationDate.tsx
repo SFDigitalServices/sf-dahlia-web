@@ -34,7 +34,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
     <div className="w-full mb-8 md:mb-0">
       <Message
         fullwidth
-        className="place-content-center"
+        className="place-content-center leading-5"
         variant={isApplicationClosed ? "alert" : "primary"}
         customIcon={
           <Icon fill={isApplicationClosed ? "red-700" : ""} symbol="clock" size="medium" />
@@ -45,15 +45,14 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
           {showDateAndTime && (
             <>
               {": "}
-              <span className="font-bold">{date}</span>
+              <span className="font-semibold">{date}</span>
             </>
           )}
         </div>
         {showDateAndTime && (
-          <div className="font-bold">
+          <div className="font-semibold">
             {time}
-            {/* non-breaking space */}
-            {"\u00A0"}
+            {"\u00A0" /* non-breaking space */}
             {t("listingDetails.applicationsDeadline.timezone")}
           </div>
         )}
