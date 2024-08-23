@@ -112,10 +112,6 @@ export const ListingDetailsEligibility = ({
     }
   })
 
-  console.log(
-    getTranslatedString(listing?.Credit_Rating, "Credit_Rating__c", listing?.translations)
-  )
-
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -239,7 +235,13 @@ export const ListingDetailsEligibility = ({
             >
               {listing.Reserved_community_type_Description && (
                 <div className="text-gray-700 text-xs translate">
-                  {renderMarkup(listing.Reserved_community_type_Description)}
+                  {renderMarkup(
+                    getTranslatedString(
+                      listing.Reserved_community_type_Description,
+                      "Reserved_community_type_Description__c",
+                      listing.translations
+                    )
+                  )}
                 </div>
               )}
             </InfoCard>

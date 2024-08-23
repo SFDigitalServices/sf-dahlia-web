@@ -38,23 +38,25 @@ import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
-import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import dayjs from "dayjs"
+import useTranslate from "../../hooks/useTranslate"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const ListingDetail = () => {
+  const isCloudTranslationEnabled = useFeatureFlag("GoogleCloudTranslate", true)
+  useTranslate(isCloudTranslationEnabled)
+
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
-  // TODO: Remove this function call once Google Cloud Translate is fully implemented
-  useTranslate()
 
   const {
     fetchUnits,

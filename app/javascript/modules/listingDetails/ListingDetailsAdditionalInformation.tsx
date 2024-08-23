@@ -4,6 +4,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
+import { getTranslatedString } from "../../util/languageUtil"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -36,7 +37,13 @@ export const ListingDetailsAdditionalInformation = ({
             <TextTruncate
               className="primary-lighter-markup-link translate"
               buttonClassName="text-blue-700"
-              text={stripMostTags(listing.Listing_Other_Notes)}
+              text={stripMostTags(
+                getTranslatedString(
+                  listing.Listing_Other_Notes,
+                  "Listing_Other_Notes__c",
+                  listing.translations
+                )
+              )}
             />
           </div>
         )}
@@ -47,7 +54,13 @@ export const ListingDetailsAdditionalInformation = ({
               <TextTruncate
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-700"
-                text={stripMostTags(listing.Required_Documents)}
+                text={stripMostTags(
+                  getTranslatedString(
+                    listing.Required_Documents,
+                    "Required_Documents__c",
+                    listing.translations
+                  )
+                )}
               />
             </div>
             {isSale(listing) && !isHabitatListing(listing) && (
@@ -68,7 +81,13 @@ export const ListingDetailsAdditionalInformation = ({
             <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
             <div className="text-xs">
               <TextTruncate
-                text={stripMostTags(listing.Legal_Disclaimers)}
+                text={stripMostTags(
+                  getTranslatedString(
+                    listing.Legal_Disclaimers,
+                    "Legal_Disclaimers__c",
+                    listing.translations
+                  )
+                )}
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-500"
               />
@@ -110,7 +129,13 @@ export const ListingDetailsAdditionalInformation = ({
                     <TextTruncate
                       className="primary-lighter-markup-link translate"
                       buttonClassName="text-blue-500"
-                      text={stripMostTags(listing.Realtor_Commission_Info)}
+                      text={stripMostTags(
+                        getTranslatedString(
+                          listing.Realtor_Commission_Info,
+                          "Realtor_Commission_Info__c",
+                          listing.translations
+                        )
+                      )}
                     />
                   </span>
                 </div>
@@ -137,7 +162,13 @@ export const ListingDetailsAdditionalInformation = ({
               <TextTruncate
                 className="primary-lighter-markup-link translate"
                 buttonClassName="text-blue-500"
-                text={stripMostTags(listing.Repricing_Mechanism)}
+                text={stripMostTags(
+                  getTranslatedString(
+                    listing.Repricing_Mechanism,
+                    "Repricing_Mechanism__c",
+                    listing.translations
+                  )
+                )}
               />
             </div>
           </div>

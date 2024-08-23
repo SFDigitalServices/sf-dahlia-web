@@ -59,13 +59,14 @@ describe Force::EventSubscriberTranslateService do
     end
 
     describe 'when the service is initialized' do
-      it 'initializes salesforce and faye client' do
+      it 'initializes salesforce, faye client, and translation service' do
         expect(Restforce).to receive(:new).and_return(salesforce_client)
         expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
         expect(Faye::Client).to receive(:new).and_return(faye_client)
         expect(faye_client).to receive(:set_header).with(
           'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
         )
+        expect(GoogleTranslationService).to receive(:new)
         service.new
       end
     end
@@ -78,7 +79,7 @@ describe Force::EventSubscriberTranslateService do
       it 'detects incoming events from Salesforce and calls translations service' do
         EM.run do
           expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent').and_yield(event)
-          expect(translation_service).to receive(:translate)
+          expect(translation_service).to receive(:translate).and_return(['Hello World'])
           expect(translation_service).to receive(:cache_listing_translations)
 
           EM.add_timer(0.1) { EM.stop }
