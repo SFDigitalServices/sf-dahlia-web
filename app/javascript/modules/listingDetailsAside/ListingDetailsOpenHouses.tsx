@@ -16,7 +16,7 @@ export const ListingDetailsOpenHouses = ({ listing, sectionHeader = true }: Open
     return {
       dateString: openHouse.Date && localizedFormat(openHouse.Date, "LL"),
       timeString: getEventTimeString(openHouse),
-      note: getEventNote(openHouse),
+      note: getEventNote(openHouse, listing.translations),
       dateStartTime: getEventDateTime(openHouse.Date, openHouse.Start_Time),
     }
   }).sort((a, b) => sortByDateTimeString(a.dateStartTime, b.dateStartTime))
