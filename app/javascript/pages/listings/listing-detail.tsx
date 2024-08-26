@@ -36,7 +36,6 @@ import {
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
-import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
@@ -46,6 +45,8 @@ import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import dayjs from "dayjs"
 import useTranslate from "../../hooks/useTranslate"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
+import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 
 const ListingDetail = () => {
   const isCloudTranslationEnabled = useFeatureFlag("GoogleCloudTranslate", true)
@@ -102,6 +103,8 @@ const ListingDetail = () => {
       setListing(listing)
     })
   }, [router, router.pathname])
+
+  const isSeeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
 
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(
@@ -173,11 +176,19 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
               />
-              <MobileListingDetailsProcess
-                listing={listing}
-                imageSrc={getAssetPath("listing-units.svg")}
-                isApplicationOpen={isApplicationOpen}
-              />
+              {isSeeTheUnitEnabled ? (
+                <MobileListingDetailsSeeTheUnit
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-units.svg")}
+                />
+              ) : (
+                <MobileListingDetailsProcess
+                  listing={listing}
+                  imageSrc={getAssetPath("listing-units.svg")}
+                  isApplicationOpen={isApplicationOpen}
+                />
+              )}
+              <></>
               <ListingDetailsFeatures
                 listing={listing}
                 imageSrc={getAssetPath("listing-features.svg")}
