@@ -55,8 +55,8 @@ describe("authApiService", () => {
       const data = {
         user: {
           email: "email@test.com",
-          password: "test-password",
-          password_confirmation: "test-password",
+          password: "testpassword1",
+          password_confirmation: "testpassword1",
         },
         contact: {
           firstName: "test",
