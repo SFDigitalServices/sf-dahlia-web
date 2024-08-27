@@ -30,7 +30,6 @@ const validateNumber = (required: boolean, value: string, maxValue: number) => {
 }
 
 const validateAge = (month: string, day: string, year: string) => {
-  console.log("validateAge", month, day, year)
   return (
     dayjs(`${month}/${day}/${year}`, "M/D/YYYY") < dayjs().subtract(18, "years") &&
     dayjs(`${month}/${day}/${year}`, "M/D/YYYY") > dayjs().subtract(117, "years")
@@ -61,7 +60,6 @@ const DateField = ({
     birthDay: {
       label: t("label.dobDay"),
       validation: (value: string) => {
-        console.log("birthDay", value)
         return validateNumber(required, value, 31)
       },
       maxLength: 2,
@@ -69,7 +67,6 @@ const DateField = ({
     birthMonth: {
       label: t("label.dobMonth"),
       validation: (value: string) => {
-        console.log("birthMonth", value)
         return validateNumber(required, value, 12)
       },
       maxLength: 2,
@@ -77,7 +74,6 @@ const DateField = ({
     birthYear: {
       label: t("label.dobYear"),
       validation: (value: string) => {
-        console.log("birthYear", value, validateAge(birthDay, birthMonth, value))
         if (value?.length) return validateAge(birthDay, birthMonth, value)
         return true
       },
@@ -135,7 +131,6 @@ const DOBFieldset = ({
   note,
 }: DOBFieldProps) => {
   const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
-  console.log("Error", error)
   return (
     <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")} note={note}>
       <div className="field-group--date">

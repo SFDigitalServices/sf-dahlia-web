@@ -135,6 +135,7 @@ const PasswordFieldset = ({
       <PasswordField
         name="password"
         label="password"
+        labelClassName="invisible"
         className="mt-0 mb-4"
         validation={{
           required: true,

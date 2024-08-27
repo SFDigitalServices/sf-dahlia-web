@@ -4,7 +4,7 @@ import CreateAccountPage from "../../pages/account/create-account"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { post } from "../../api/apiService"
 import { act } from "react-dom/test-utils"
-import { fireEvent, screen, within } from "@testing-library/dom"
+import { screen, within } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 
 jest.mock("../../api/apiService", () => ({
@@ -74,13 +74,13 @@ describe("<CreateAccount />", () => {
       await promise
     })
 
-    screen.logTestingPlaygroundURL()
-
     expect(post).toHaveBeenCalledWith(
       "/api/v1/auth",
       expect.objectContaining({
         user: expect.objectContaining({
           email: "test@test.com",
+          password: "testpassword1",
+          password_confirmation: "testpassword1",
         }),
       })
     )
