@@ -17,6 +17,14 @@ const getMessage = (isApplicationClosed: boolean, isFcfs: boolean) => {
   return t("listingDetails.applicationsClosed")
 }
 
+export const formatTime = (time: string) => {
+  const formattedTime = dayjs(time).format("h:mm")
+  const hour = Number(dayjs(time).format("H"))
+  // \u00A0 is a non-breaking space
+  const suffix = hour >= 12 ? "\u00A0PM" : "\u00A0AM"
+  return `${formattedTime}${suffix}`
+}
+
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
   const isApplicationNotYetOpen = listing.Listing_State === LISTING_STATES.NOT_YET_OPEN
   const isApplicationClosed = listing.Listing_State === LISTING_STATES.CLOSED
@@ -25,8 +33,8 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
     ? localizedFormat(listing.Application_Start_Date_Time, "LL")
     : localizedFormat(listing.Application_Due_Date, "LL")
   const time = isFcfs
-    ? dayjs(listing.Application_Start_Date_Time).format("h:mm A")
-    : dayjs(listing.Application_Due_Date).format("h:mm A")
+    ? formatTime(listing.Application_Start_Date_Time)
+    : formatTime(listing.Application_Due_Date)
 
   const showDateAndTime = isFcfs ? !!isApplicationNotYetOpen : true
 
@@ -34,27 +42,20 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
     <div className="w-full mb-8 md:mb-0">
       <Message
         fullwidth
-        className="place-content-center leading-5"
+        className="justify-start leading-5"
         variant={isApplicationClosed ? "alert" : "primary"}
         customIcon={
           <Icon fill={isApplicationClosed ? "red-700" : ""} symbol="clock" size="medium" />
         }
       >
-        <div>
-          <span>{getMessage(isApplicationClosed, isFcfs)}</span>
-          {showDateAndTime && (
-            <>
-              {": "}
-              <span className="font-semibold">{date}</span>
-            </>
-          )}
-        </div>
+        {getMessage(isApplicationClosed, isFcfs)}
         {showDateAndTime && (
-          <div className="font-semibold">
-            {time}
+          <span className="font-semibold">
+            {": "}
+            {date} {time}
             {"\u00A0" /* non-breaking space */}
             {t("listingDetails.applicationsDeadline.timezone")}
-          </div>
+          </span>
         )}
       </Message>
     </div>
