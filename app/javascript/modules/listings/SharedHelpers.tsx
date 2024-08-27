@@ -62,36 +62,35 @@ const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
   const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
 
   if (new Date(listing.Application_Due_Date) < new Date()) {
-    const statuses: StatusBarType[] = []
-    if (!isLotteryCompleteDeprecated(listing)) {
-      statuses.push({
-        status: ApplicationStatusType.Closed,
-        content: `${t(
-          "listingDirectory.listingStatusContent.applicationsClosed"
-        )}: ${formattedDueDateString}`,
-        hideIcon: true,
-      })
+    const applicationsClosedStatus = {
+      status: ApplicationStatusType.Closed,
+      content: `${t(
+        "listingDirectory.listingStatusContent.applicationsClosed"
+      )}: ${formattedDueDateString}`,
+      hideIcon: true,
     }
 
-    statuses.push({
+    const postLotteryStatus = {
       status: ApplicationStatusType.PostLottery,
       content: `${t(
         "listingDirectory.listingStatusContent.lotteryResultsPosted"
       )}: ${localizedFormat(listing.Lottery_Results_Date, "LL")}`,
       hideIcon: true,
-    })
+    }
 
-    return statuses
-  } else {
-    return [
-      {
-        status: ApplicationStatusType.Open,
-        content: `${t(
-          "listingDirectory.listingStatusContent.applicationDeadline"
-        )}: ${formattedDueDateString}`,
-      },
-    ]
+    return isLotteryCompleteDeprecated(listing)
+      ? [postLotteryStatus]
+      : [applicationsClosedStatus, postLotteryStatus]
   }
+
+  return [
+    {
+      status: ApplicationStatusType.Open,
+      content: `${t(
+        "listingDirectory.listingStatusContent.applicationDeadline"
+      )}: ${formattedDueDateString}`,
+    },
+  ]
 }
 
 // Returns every status bar under the image card for one listing
