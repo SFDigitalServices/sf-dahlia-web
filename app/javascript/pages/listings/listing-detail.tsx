@@ -107,7 +107,7 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
-  const isSeeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: isSeeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
 
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(

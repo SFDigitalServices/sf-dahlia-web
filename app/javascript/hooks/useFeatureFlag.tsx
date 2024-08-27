@@ -25,7 +25,7 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   if (flagsError || unleashFlag === undefined) {
     console.error(flagsError)
-    return { flagsReady, defaultValue }
+    return { flagsReady, unleashFlag: defaultValue }
   } else {
     return { flagsReady, unleashFlag }
   }
