@@ -135,6 +135,7 @@
 
 .application-item_edited-text {
   @apply text-xs;
+  @apply self-center;
   color: var(--seeds-color-gray-750);
 }
 
