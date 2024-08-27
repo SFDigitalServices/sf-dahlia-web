@@ -5,6 +5,7 @@ import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { post } from "../../api/apiService"
 import { act } from "react-dom/test-utils"
 import { fireEvent, screen, within } from "@testing-library/dom"
+import userEvent from "@testing-library/user-event"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
@@ -30,7 +31,8 @@ describe("<CreateAccount />", () => {
     expect(getAllByText("Create an account")).not.toBeNull()
   })
 
-  it.only("creates a new account", async () => {
+  it("creates a new account", async () => {
+    const user = userEvent.setup()
     ;(post as jest.Mock).mockResolvedValue({
       data: {
         status: "success",
@@ -61,19 +63,26 @@ describe("<CreateAccount />", () => {
     const emailField = within(emailGroup).getByRole("textbox")
     const passwordField: Element = getByLabelText(/password/i)
     await act(async () => {
-      fireEvent.change(firstNameField, { target: { value: "NewFirstName" } })
-      fireEvent.change(lastNameField, { target: { value: "NewLastName" } })
-      fireEvent.change(monthField, { target: { value: 2 } })
-      fireEvent.change(dayField, { target: { value: 6 } })
-      fireEvent.change(yearField, { target: { value: 1990 } })
-      fireEvent.change(emailField, { target: { value: "test@test.com" } })
-      fireEvent.change(passwordField, { target: { value: "testpassword1" } })
-      // fireEvent.click(createAccountButton)
-      createAccountButton.dispatchEvent(new MouseEvent("click"))
+      await user.type(firstNameField, "NewFirstName")
+      await user.type(lastNameField, "NewLastName")
+      await user.type(monthField, "2")
+      await user.type(dayField, "6")
+      await user.type(yearField, "1990")
+      await user.type(emailField, "test@test.com")
+      await user.type(passwordField, "testpassword1")
+      await user.click(createAccountButton)
       await promise
     })
 
     screen.logTestingPlaygroundURL()
-    expect(post).toHaveBeenCalledWith("/api/v1/auth")
+
+    expect(post).toHaveBeenCalledWith(
+      "/api/v1/auth",
+      expect.objectContaining({
+        user: expect.objectContaining({
+          email: "test@test.com",
+        }),
+      })
+    )
   })
 })

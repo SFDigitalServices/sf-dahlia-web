@@ -137,7 +137,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm({ mode: "all" })
+  } = useForm({ mode: "onTouched" })
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
