@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isSale } from "../../util/listingUtil"
+import { isRental, isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -22,6 +22,7 @@ export const ListingDetailsProcess = ({
   isApplicationOpen,
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
+  const isListingRental = isRental(listing)
 
   return (
     <>
@@ -72,47 +73,48 @@ export const ListingDetailsProcess = ({
         listing.Leasing_Agent_Name ||
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
-        listing.Leasing_Agent_Title) && (
-        <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-          <Contact
-            sectionTitle={t("contactAgent.contact")}
-            contactAddress={{
-              street: listing.Leasing_Agent_Street,
-              city: listing.Leasing_Agent_City,
-              state: listing.Leasing_Agent_State,
-              zipCode: listing.Leasing_Agent_Zip,
-            }}
-            additionalInformation={
-              listing.Office_Hours
-                ? [
-                    {
-                      title: t("contactAgent.officeHours"),
-                      content: (
-                        <span className="translate">
-                          {renderInlineMarkup(listing.Office_Hours)}
-                        </span>
-                      ),
-                    },
-                  ]
-                : undefined
-            }
-            contactEmail={listing.Leasing_Agent_Email}
-            contactName={listing.Leasing_Agent_Name}
-            contactPhoneNumber={
-              listing.Leasing_Agent_Phone
-                ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
-                : undefined
-            }
-            contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
-            contactTitle={listing.Leasing_Agent_Title}
-            contactTitleClassname="translate"
-            strings={{
-              email: t("label.emailAddress"),
-              getDirections: t("label.getDirections"),
-            }}
-          />
-        </div>
-      )}
+        listing.Leasing_Agent_Title) &&
+        isListingRental && (
+          <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+            <Contact
+              sectionTitle={t("contactAgent.contact")}
+              contactAddress={{
+                street: listing.Leasing_Agent_Street,
+                city: listing.Leasing_Agent_City,
+                state: listing.Leasing_Agent_State,
+                zipCode: listing.Leasing_Agent_Zip,
+              }}
+              additionalInformation={
+                listing.Office_Hours
+                  ? [
+                      {
+                        title: t("contactAgent.officeHours"),
+                        content: (
+                          <span className="translate">
+                            {renderInlineMarkup(listing.Office_Hours)}
+                          </span>
+                        ),
+                      },
+                    ]
+                  : undefined
+              }
+              contactEmail={listing.Leasing_Agent_Email}
+              contactName={listing.Leasing_Agent_Name}
+              contactPhoneNumber={
+                listing.Leasing_Agent_Phone
+                  ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
+                  : undefined
+              }
+              contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
+              contactTitle={listing.Leasing_Agent_Title}
+              contactTitleClassname="translate"
+              strings={{
+                email: t("label.emailAddress"),
+                getDirections: t("label.getDirections"),
+              }}
+            />
+          </div>
+        )}
       {isListingSale && (
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock title={t("listings.housingProgram")}>
@@ -126,13 +128,6 @@ export const ListingDetailsProcess = ({
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock>
             <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
-            {listing.Multiple_Listing_Service_URL && (
-              <p className="mt-1">
-                <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
-                  {t("listings.process.seeThisUnitOnMls")}
-                </a>
-              </p>
-            )}
           </SidebarBlock>
         </div>
       )}

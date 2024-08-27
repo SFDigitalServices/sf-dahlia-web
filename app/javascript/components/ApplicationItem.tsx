@@ -131,7 +131,8 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             {props.submitted &&
               !lotteryComplete &&
               ApplicationButton(props.applicationURL, t("label.viewApplication"))}
-            {lotteryComplete &&
+            {props.submitted &&
+              lotteryComplete &&
               (showLotteryResultsPDFonly(props.listing) ? (
                 ApplicationButton(
                   props.listing.LotteryResultsURL,
@@ -165,7 +166,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
             <Link href={getLocalizedPath(listingURL, getCurrentLanguage())}>
               {t("myApplications.seeListing")}
             </Link>
-            {lotteryComplete && (
+            {props.submitted && lotteryComplete && (
               <Link href={props.applicationURL}>{t("myApplications.viewApplication")}</Link>
             )}
             {!props.submitted && (
