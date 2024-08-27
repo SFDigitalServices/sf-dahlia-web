@@ -59,15 +59,11 @@ const getFcfsStatuses = (listing: RailsListing) => {
 }
 
 const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
-  const statuses: StatusBarType[] = []
-  const isListingClosed = new Date(listing.Application_Due_Date) < new Date()
-  const isLotteryComplete = isLotteryCompleteDeprecated(listing)
-
   const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
-  const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
 
-  if (isListingClosed) {
-    if (!isLotteryComplete) {
+  if (new Date(listing.Application_Due_Date) < new Date()) {
+    const statuses: StatusBarType[] = []
+    if (!isLotteryCompleteDeprecated(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
         content: `${t(
@@ -81,7 +77,7 @@ const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
       status: ApplicationStatusType.PostLottery,
       content: `${t(
         "listingDirectory.listingStatusContent.lotteryResultsPosted"
-      )}: ${lotteryResultsDateString}`,
+      )}: ${localizedFormat(listing.Lottery_Results_Date, "LL")}`,
       hideIcon: true,
     })
 
