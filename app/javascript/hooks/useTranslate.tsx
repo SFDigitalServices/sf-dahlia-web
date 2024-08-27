@@ -13,8 +13,8 @@
 
 import { useEffect } from "react"
 import usePollElementRender from "./usePollElementRender"
-import { getCurrentLanguage } from "../util/languageUtil"
 import useScript from "./useScript"
+import { getCurrentLanguage } from "../util/languageUtil"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const tWindow = window as any
 const languageMap = {
@@ -37,8 +37,8 @@ const initGoogleTranslate = () => {
 
 tWindow.initGoogleTranslate = initGoogleTranslate
 
-const useTranslate = (disable) => {
-  const languageInRoute = getCurrentLanguage()
+const useTranslate = (disable: boolean = true) => {
+  const languageInRoute = disable ? "en" : getCurrentLanguage()
   useScript("//translate.google.com/translate_a/element.js?cb=initGoogleTranslate", disable)
   /*
    * It seems the <select> and the <options> get added at different times.
@@ -49,12 +49,9 @@ const useTranslate = (disable) => {
     "select.goog-te-combo option",
     disable
   )
-
   useEffect(() => {
     if (!disable && languageInRoute && googleTranslateDropdownElHasBeenRendered) {
-      // TODO(DAH-1581): Remove any type on line 55
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const selectInDom: any = document.querySelector("select.goog-te-combo")
+      const selectInDom: HTMLSelectElement = document.querySelector("select.goog-te-combo")
       selectInDom.value = languageMap[languageInRoute] || languageInRoute
       const ev = new Event("change", { bubbles: true })
       selectInDom.dispatchEvent(ev)

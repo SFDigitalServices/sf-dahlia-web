@@ -31,7 +31,7 @@ const usePollElementRender = (selector, disable) => {
     return () => clearInterval(interval)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [disable])
 
   return elementHasBeenRenderedStatus
 }

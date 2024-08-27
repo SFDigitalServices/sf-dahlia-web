@@ -49,8 +49,11 @@ import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAsid
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 
 const ListingDetail = () => {
-  const isCloudTranslationEnabled = useFeatureFlag("GoogleCloudTranslate", true)
-  useTranslate(isCloudTranslationEnabled)
+  const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
+    "GoogleCloudTranslate",
+    true
+  )
+  useTranslate(flagsReady ? isCloudTranslationEnabled : undefined)
 
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
