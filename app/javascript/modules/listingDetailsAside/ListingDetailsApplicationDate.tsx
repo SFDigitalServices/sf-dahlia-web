@@ -53,7 +53,6 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
           <span className="font-semibold">
             {": "}
             {date} {time}
-            {"\u00A0" /* non-breaking space */}
             {t("listingDetails.applicationsDeadline.timezone")}
           </span>
         )}
