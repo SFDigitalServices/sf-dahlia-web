@@ -52,8 +52,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
         {showDateAndTime && (
           <span className="font-semibold">
             {": "}
-            {date} {time}
-            {t("listingDetails.applicationsDeadline.timezone")}
+            {date} {time} {t("listingDetails.applicationsDeadline.timezone")}
           </span>
         )}
       </Message>
