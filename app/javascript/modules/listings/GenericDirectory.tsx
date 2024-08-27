@@ -15,6 +15,7 @@ import {
 import { RailsListing } from "./SharedHelpers"
 import "./ListingDirectory.scss"
 import { MailingListSignup } from "../../components/MailingListSignup"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 interface RentalDirectoryProps {
   listingsAPI: (filters?: EligibilityFilters) => Promise<RailsListing[]>
@@ -60,6 +61,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
+  const useUpdatedDirectoryStatuses = useFeatureFlag("UpdatedDirectoryStatuses", false)
+
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -71,7 +74,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 listings.open,
                 props.directoryType,
                 props.getSummaryTable,
-                hasFiltersSet
+                hasFiltersSet,
+                useUpdatedDirectoryStatuses
               )}
 
               {props.findMoreActionBlock()}
@@ -80,10 +84,21 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   listings.additional,
                   props.directoryType,
                   props.getSummaryTable,
-                  hasFiltersSet
+                  hasFiltersSet,
+                  useUpdatedDirectoryStatuses
                 )}
-              {upcomingLotteriesView(listings.upcoming, props.directoryType, props.getSummaryTable)}
-              {lotteryResultsView(listings.results, props.directoryType, props.getSummaryTable)}
+              {upcomingLotteriesView(
+                listings.upcoming,
+                props.directoryType,
+                props.getSummaryTable,
+                useUpdatedDirectoryStatuses
+              )}
+              {lotteryResultsView(
+                listings.results,
+                props.directoryType,
+                props.getSummaryTable,
+                useUpdatedDirectoryStatuses
+              )}
             </div>
           </>
         )}

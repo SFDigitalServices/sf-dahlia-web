@@ -23,7 +23,7 @@ describe("DirectoryHelpers", () => {
           Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
-          [{ status: 0, content: "Application deadline: October 30, 2100", subContent: "" }]
+          [{ status: 0, content: "Application Deadline: October 30, 2100" }]
         )
       })
 
@@ -38,13 +38,12 @@ describe("DirectoryHelpers", () => {
           [
             {
               status: 1,
-              content: "Applications closed: October 30, 2000",
+              content: "Applications Closed: October 30, 2000",
               hideIcon: true,
-              subContent: "",
             },
             {
               status: 3,
-              content: "Lottery results posted: October 31, 2100",
+              content: "Lottery Results Posted: October 31, 2100",
               hideIcon: true,
             },
           ]
@@ -62,7 +61,7 @@ describe("DirectoryHelpers", () => {
           [
             {
               status: 3,
-              content: "Lottery results posted: October 31, 2000",
+              content: "Lottery Results Posted: October 31, 2000",
               hideIcon: true,
             },
           ]
@@ -77,7 +76,7 @@ describe("DirectoryHelpers", () => {
           Does_Match: true,
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
-          [{ status: 0, content: "Application deadline: October 30, 2100", subContent: "" }]
+          [{ status: 0, content: "Application Deadline: October 30, 2100" }]
         )
       })
     })
@@ -116,13 +115,12 @@ describe("DirectoryHelpers", () => {
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
           {
             status: 1,
-            content: "Applications closed: October 30, 2000",
+            content: "Applications Closed: October 30, 2000",
             hideIcon: true,
-            subContent: "",
           },
           {
             status: 3,
-            content: "Lottery results posted: October 31, 2100",
+            content: "Lottery Results Posted: October 31, 2100",
             hideIcon: true,
           },
         ])

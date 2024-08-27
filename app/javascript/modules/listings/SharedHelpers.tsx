@@ -1,6 +1,6 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { getTagContent, isLotteryCompleteDeprecated } from "../../util/listingUtil"
+import { getTagContent, isFcfsListing, isLotteryCompleteDeprecated } from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -10,55 +10,136 @@ import "./SharedHelpers.scss"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
+const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
+  return doesMatch
+    ? [
+        {
+          status: ApplicationStatusType.Matched,
+          content: `${t("listings.eligibilityCalculator.matched")}`,
+          hideIcon: false,
+          iconType: "check",
+        },
+      ]
+    : [
+        {
+          status: ApplicationStatusType.PostLottery,
+          content: `${t("listings.eligibilityCalculator.notAMatch")}`,
+          hideIcon: true,
+        },
+      ]
+}
+
+const getFcfsStatuses = (listing: RailsListing) => {
+  const isFcfsApplicationNotYetOpen = false
+  const isFcfsApplicationClosed = false
+
+  const isListingClosed = isFcfsApplicationClosed
+  const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
+
+  return isListingClosed
+    ? [
+        {
+          status: ApplicationStatusType.Closed,
+          content: t("listingDirectory.listingStatusContent.applicationsClosed"),
+          subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+          hideIcon: true,
+        },
+      ]
+    : [
+        {
+          status: ApplicationStatusType.Open,
+          content: isFcfsApplicationNotYetOpen
+            ? `${t(
+                "listingDirectory.listingStatusContent.applicationsOpen"
+              )}: ${formattedDueDateString}`
+            : t("listingDirectory.listingStatusContent.applicationsOpen"),
+          subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+        },
+      ]
+}
+
+const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
+  const statuses: StatusBarType[] = []
+  const isListingClosed = new Date(listing.Application_Due_Date) < new Date()
+  const isLotteryComplete = isLotteryCompleteDeprecated(listing)
+
+  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+  const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
+
+  if (isListingClosed) {
+    if (!isLotteryComplete) {
+      statuses.push({
+        status: ApplicationStatusType.Closed,
+        content: `${t(
+          "listingDirectory.listingStatusContent.applicationsClosed"
+        )}: ${formattedDueDateString}`,
+        hideIcon: true,
+      })
+    }
+
+    statuses.push({
+      status: ApplicationStatusType.PostLottery,
+      content: `${t(
+        "listingDirectory.listingStatusContent.lotteryResultsPosted"
+      )}: ${lotteryResultsDateString}`,
+      hideIcon: true,
+    })
+
+    return statuses
+  } else {
+    return [
+      {
+        status: ApplicationStatusType.Open,
+        content: `${t(
+          "listingDirectory.listingStatusContent.applicationDeadline"
+        )}: ${formattedDueDateString}`,
+      },
+    ]
+  }
+}
+
 // Returns every status bar under the image card for one listing
+export const getListingStatuses = (
+  listing: RailsListing,
+  hasFiltersSet: boolean
+): StatusBarType[] => {
+  if (hasFiltersSet) {
+    return getMatchStatuses(listing.Does_Match)
+  }
+
+  if (isFcfsListing(listing)) {
+    return getFcfsStatuses(listing)
+  }
+
+  return getLotteryStatuses(listing)
+}
+
+/**
+ * @deprecated In favor of getListingStatuses.
+ *
+ * Returns every status bar under the image card for one listing
+ */
 export const getListingImageCardStatuses = (
   listing: RailsListing,
   hasFiltersSet: boolean
 ): StatusBarType[] => {
   const statuses: StatusBarType[] = []
-
-  // TODO: Determine if listing is FCFS and what state the listing is in
-  const isFcfs = false
-  const isFcfsApplicationNotYetOpen = false
-  const isFcfsApplicationClosed = false
-
-  const isListingClosed = isFcfs
-    ? isFcfsApplicationClosed
-    : new Date(listing.Application_Due_Date) < new Date()
-  const isLotteryComplete = isLotteryCompleteDeprecated(listing)
-
-  const formattedDueDateString = isFcfs
-    ? localizedFormat(listing.Application_Start_Date_Time, "LL")
-    : localizedFormat(listing.Application_Due_Date, "LL")
+  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
   const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
 
-  if (isListingClosed) {
-    if (isFcfs || !isLotteryComplete) {
+  if (new Date(listing.Application_Due_Date) < new Date()) {
+    if (!isLotteryCompleteDeprecated(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
-        content: isFcfs
-          ? t("listingDirectory.listingStatusContent.applicationsClosed")
-          : `${t(
-              "listingDirectory.listingStatusContent.applicationsClosed"
-            )}: ${formattedDueDateString}`,
-        subContent: isFcfs
-          ? t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed")
-          : "",
+        content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,
         hideIcon: true,
       })
     }
-
-    if (!isFcfs) {
-      statuses.push({
-        status: ApplicationStatusType.PostLottery,
-        content: `${t(
-          "listingDirectory.listingStatusContent.lotteryResultsPosted"
-        )}: ${lotteryResultsDateString}`,
-        hideIcon: true,
-      })
-    }
-
-    return statuses
+    statuses.push({
+      status: ApplicationStatusType.PostLottery,
+      content: `${t("listings.lotteryResults.cardTitle")}: ${lotteryResultsDateString}`,
+      hideIcon: true,
+    })
   } else {
     if (hasFiltersSet && listing.Does_Match) {
       return [
@@ -78,33 +159,23 @@ export const getListingImageCardStatuses = (
         },
       ]
     } else {
-      let content: string
-      if (isFcfs) {
-        content = isFcfsApplicationNotYetOpen
-          ? `${t(
-              "listingDirectory.listingStatusContent.applicationsOpen"
-            )}: ${formattedDueDateString}`
-          : t("listingDirectory.listingStatusContent.applicationsOpen")
-      } else {
-        content = `${t(
-          "listingDirectory.listingStatusContent.applicationDeadline"
-        )}: ${formattedDueDateString}`
-      }
       return [
         {
           status: ApplicationStatusType.Open,
-          content: content,
-          subContent: isFcfs
-            ? t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed")
-            : "",
+          content: `${t("listings.applicationDeadline")}: ${formattedDueDateString}`,
         },
       ]
     }
   }
+  return statuses
 }
 
 // Get imageCardProps for a given listing
-export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean) => {
+export const getImageCardProps = (
+  listing: RailsListing,
+  hasFiltersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
+) => {
   const imageUrl =
     listing?.Listing_Images?.length > 0
       ? listing.Listing_Images[0].displayImageURL
@@ -118,7 +189,9 @@ export const getImageCardProps = (listing: RailsListing, hasFiltersSet?: boolean
     imageUrl: imageUrl,
     href: `/listings/${listing.listingID}`,
     tags: getTagContent(listing),
-    statuses: getListingImageCardStatuses(listing, hasFiltersSet),
+    statuses: useUpdatedDirectoryStatuses
+      ? getListingStatuses(listing, hasFiltersSet)
+      : getListingImageCardStatuses(listing, hasFiltersSet),
     description: imageDescription,
   }
 }
