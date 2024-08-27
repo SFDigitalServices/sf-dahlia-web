@@ -446,6 +446,20 @@ describe("<AccountSettingsPage />", () => {
 
         await act(async () => {
           fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 1 } }) // invalid
+          fireEvent.change(yearField, { target: { value: 202 } }) // invalid
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter a valid date of birth/i,
+          })
+        ).not.toBeNull()
+
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
           fireEvent.change(dayField, { target: { value: 56 } }) // invalid
           fireEvent.change(yearField, { target: { value: 1999 } })
           button[1].dispatchEvent(new MouseEvent("click"))

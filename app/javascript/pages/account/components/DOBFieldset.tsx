@@ -93,6 +93,7 @@ const validateNumber = (required: boolean, value: string, maxValue: number, erro
 }
 
 const validateAge = (month: string, day: string, year: string) => {
+  if (year.length < 4) return "error:dob:invalid"
   if (dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().valueOf())
     return "error:dob:invalid"
   if (
