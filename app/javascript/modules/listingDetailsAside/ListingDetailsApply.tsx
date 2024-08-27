@@ -16,11 +16,9 @@ import {
   isHabitatListing,
   isOpen,
   isRental,
-  isSale,
   paperApplicationURLs,
 } from "../../util/listingUtil"
-import { getSfGovUrl, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
-import { getHousingCounselorsPath } from "../../util/routeUtil"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 
 export interface ListingDetailsApplyProps {
@@ -28,6 +26,7 @@ export interface ListingDetailsApplyProps {
 }
 
 const isFcfsBmrSales = false
+const isFcfsApplicationClosed = false
 
 const FcfsBmrSalesHowToApply = () => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
@@ -142,7 +141,7 @@ const StandardHowToApply = ({
 }
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
-  if (!isOpen(listing)) return null
+  if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)
 
@@ -189,40 +188,10 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
     </>
   )
 
-  const needHelpBlock = (
-    <SidebarBlock title={t("listings.apply.needHelp")}>
-      {isListingRental && (
-        <div className={"mb-4"}>{t("listings.apply.visitAHousingCounselor")}</div>
-      )}
-      <LinkButton
-        transition={true}
-        newTab={true}
-        href={
-          !isListingRental
-            ? "https://www.homeownershipsf.org/buyerapplications/"
-            : getHousingCounselorsPath()
-        }
-        className={"w-full"}
-      >
-        {isListingRental
-          ? t("housingCounselor.findAHousingCounselor")
-          : t("listings.apply.visitHomeownershipSf")}
-      </LinkButton>
-    </SidebarBlock>
-  )
-
-  const expectedMoveInDateBlock = (
-    <SidebarBlock title={t("listings.expectedMoveinDate")}>
-      {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
-    </SidebarBlock>
-  )
-
   return (
     <div className="md:px-0 px-2">
       {howToApplyBlock}
       {!isFcfsBmrSales && acceptingPaperApps && submitPaperApplicationBlocks}
-      {needHelpBlock}
-      {isSale(listing) && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
     </div>
   )
 }
