@@ -11,86 +11,87 @@ import "./SharedHelpers.scss"
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
 const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
-  return doesMatch
-    ? [
-        {
-          status: ApplicationStatusType.Matched,
-          content: `${t("listings.eligibilityCalculator.matched")}`,
-          hideIcon: false,
-          iconType: "check",
-        },
-      ]
-    : [
-        {
-          status: ApplicationStatusType.PostLottery,
-          content: `${t("listings.eligibilityCalculator.notAMatch")}`,
-          hideIcon: true,
-        },
-      ]
+  const matchedStatus = {
+    status: ApplicationStatusType.Matched,
+    content: `${t("listings.eligibilityCalculator.matched")}`,
+    hideIcon: false,
+    iconType: "check",
+  }
+
+  const notMatchedStatus = {
+    status: ApplicationStatusType.PostLottery,
+    content: `${t("listings.eligibilityCalculator.notAMatch")}`,
+    hideIcon: true,
+  }
+  return [doesMatch ? matchedStatus : notMatchedStatus]
 }
 
 const getFcfsStatuses = (listing: RailsListing) => {
   const isFcfsApplicationNotYetOpen = false
   const isFcfsApplicationClosed = false
-
-  const isListingClosed = isFcfsApplicationClosed
   const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
 
-  return isListingClosed
-    ? [
-        {
-          status: ApplicationStatusType.Closed,
-          content: t("listingDirectory.listingStatusContent.applicationsClosed"),
-          subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
-          hideIcon: true,
-        },
-      ]
-    : [
-        {
-          status: ApplicationStatusType.Open,
-          content: isFcfsApplicationNotYetOpen
-            ? `${t(
-                "listingDirectory.listingStatusContent.applicationsOpen"
-              )}: ${formattedDueDateString}`
-            : t("listingDirectory.listingStatusContent.applicationsOpen"),
-          subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
-        },
-      ]
+  const applicationsClosedStatus = {
+    status: ApplicationStatusType.Closed,
+    content: t("listingDirectory.listingStatusContent.applicationsClosed"),
+    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+    hideIcon: true,
+  }
+
+  const applcationsNotYetOpenStatus = {
+    status: ApplicationStatusType.Open,
+    content: `${t(
+      "listingDirectory.listingStatusContent.applicationsOpen"
+    )}: ${formattedDueDateString}`,
+    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+  }
+
+  const applicationsOpenStatus = {
+    status: ApplicationStatusType.Open,
+    content: t("listingDirectory.listingStatusContent.applicationsOpen"),
+    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+  }
+
+  return [
+    isFcfsApplicationClosed
+      ? [applicationsClosedStatus]
+      : [isFcfsApplicationNotYetOpen ? applcationsNotYetOpenStatus : applicationsOpenStatus],
+  ]
 }
 
 const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
   const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+  const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
+  const applicationsClosedStatus = {
+    status: ApplicationStatusType.Closed,
+    content: `${t(
+      "listingDirectory.listingStatusContent.applicationsClosed"
+    )}: ${formattedDueDateString}`,
+    hideIcon: true,
+  }
+
+  const postLotteryStatus = {
+    status: ApplicationStatusType.PostLottery,
+    content: `${t(
+      "listingDirectory.listingStatusContent.lotteryResultsPosted"
+    )}: ${lotteryResultsDateString}`,
+    hideIcon: true,
+  }
+
+  const applicationsOpenStatus = {
+    status: ApplicationStatusType.Open,
+    content: `${t(
+      "listingDirectory.listingStatusContent.applicationDeadline"
+    )}: ${formattedDueDateString}`,
+  }
 
   if (new Date(listing.Application_Due_Date) < new Date()) {
-    const applicationsClosedStatus = {
-      status: ApplicationStatusType.Closed,
-      content: `${t(
-        "listingDirectory.listingStatusContent.applicationsClosed"
-      )}: ${formattedDueDateString}`,
-      hideIcon: true,
-    }
-
-    const postLotteryStatus = {
-      status: ApplicationStatusType.PostLottery,
-      content: `${t(
-        "listingDirectory.listingStatusContent.lotteryResultsPosted"
-      )}: ${localizedFormat(listing.Lottery_Results_Date, "LL")}`,
-      hideIcon: true,
-    }
-
     return isLotteryCompleteDeprecated(listing)
       ? [postLotteryStatus]
       : [applicationsClosedStatus, postLotteryStatus]
   }
 
-  return [
-    {
-      status: ApplicationStatusType.Open,
-      content: `${t(
-        "listingDirectory.listingStatusContent.applicationDeadline"
-      )}: ${formattedDueDateString}`,
-    },
-  ]
+  return [applicationsOpenStatus]
 }
 
 // Returns every status bar under the image card for one listing
