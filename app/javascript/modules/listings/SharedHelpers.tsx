@@ -10,6 +10,12 @@ import "./SharedHelpers.scss"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
+/**
+ * Get status banners for listing search results on the directory page
+ *
+ * @param listing: RailsListing
+ * @returns StatusBarType[]
+ */
 const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
   const matchedStatus = {
     status: ApplicationStatusType.Matched,
@@ -26,6 +32,12 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
   return [doesMatch ? matchedStatus : notMatchedStatus]
 }
 
+/**
+ * Get status banners for first come, first served listings on the directory page
+ *
+ * @param listing: RailsListing
+ * @returns StatusBarType[]
+ */
 const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
   const isFcfsApplicationNotYetOpen = false
   const isFcfsApplicationClosed = false
@@ -57,9 +69,19 @@ const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
     : [isFcfsApplicationNotYetOpen ? applicationsNotYetOpenStatus : applicationsOpenStatus]
 }
 
-const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
-  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+/**
+ * Get status banners for closed lottery listings on the directory page
+ *
+ * @param listing: RailsListing
+ * @param formattedDueDateString: string
+ * @returns StatusBarType[]
+ */
+const getLotteryClosedStatuses = (
+  listing: RailsListing,
+  formattedDueDateString: string
+): StatusBarType[] => {
   const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
+
   const applicationsClosedStatus = {
     status: ApplicationStatusType.Closed,
     content: `${t(
@@ -76,6 +98,21 @@ const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
     hideIcon: true,
   }
 
+  return isLotteryCompleteDeprecated(listing)
+    ? [postLotteryStatus]
+    : [applicationsClosedStatus, postLotteryStatus]
+}
+
+/**
+ * Get status banners for lottery listings on the directory page
+ *
+ * @param listing: RailsListing
+ * @returns StatusBarType[]
+ */
+const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
+  const isLotteryClosed = new Date(listing.Application_Due_Date) < new Date()
+  const formattedDueDateString = localizedFormat(listing.Application_Due_Date, "LL")
+
   const applicationsOpenStatus = {
     status: ApplicationStatusType.Open,
     content: `${t(
@@ -83,16 +120,19 @@ const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
     )}: ${formattedDueDateString}`,
   }
 
-  if (new Date(listing.Application_Due_Date) < new Date()) {
-    return isLotteryCompleteDeprecated(listing)
-      ? [postLotteryStatus]
-      : [applicationsClosedStatus, postLotteryStatus]
-  }
-
-  return [applicationsOpenStatus]
+  return isLotteryClosed
+    ? getLotteryClosedStatuses(listing, formattedDueDateString)
+    : [applicationsOpenStatus]
 }
 
-// Returns every status bar under the image card for one listing
+/**
+ *
+ * Returns every status bar under the image card for one listing for the directory page
+ *
+ * @param listing: RailsListing
+ * @param hasFiltersSet: boolean
+ * @returns StatusBarType[]
+ */
 export const getListingStatuses = (
   listing: RailsListing,
   hasFiltersSet: boolean
@@ -111,7 +151,7 @@ export const getListingStatuses = (
 /**
  * @deprecated In favor of getListingStatuses.
  *
- * Returns every status bar under the image card for one listing
+ * Returns every status bar under the image card for one listing for the directory page
  */
 export const getListingImageCardStatuses = (
   listing: RailsListing,
