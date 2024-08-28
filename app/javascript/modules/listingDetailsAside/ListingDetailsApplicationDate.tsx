@@ -1,20 +1,16 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
-import { Icon, t } from "@bloom-housing/ui-components"
-import { Message } from "@bloom-housing/ui-seeds"
+import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
 import { LISTING_STATES, LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { isOpen } from "../../util/listingUtil"
+import bloomTheme from "../../../../tailwind.config"
+import { Message } from "@bloom-housing/ui-seeds"
 
 export interface ListingDetailsApplicationDateProps {
   listing: RailsListing
-}
-
-const getMessage = (isApplicationClosed: boolean, isFcfs: boolean) => {
-  if (!isApplicationClosed) {
-    return t(isFcfs ? "listingDetails.applicationsOpen" : "listingDetails.applicationsDeadline")
-  }
-  return t("listingDetails.applicationsClosed")
 }
 
 export const formatTime = (time: string) => {
@@ -25,37 +21,88 @@ export const formatTime = (time: string) => {
   return `${formattedTime}${suffix}`
 }
 
-export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
-  const isApplicationNotYetOpen = listing.Listing_State === LISTING_STATES.NOT_YET_OPEN
-  const isApplicationClosed = listing.Listing_State === LISTING_STATES.CLOSED
-  const isFcfs = listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
-  const date = isFcfs
-    ? localizedFormat(listing.Application_Start_Date_Time, "LL")
-    : localizedFormat(listing.Application_Due_Date, "LL")
-  const time = isFcfs
-    ? formatTime(listing.Application_Start_Date_Time)
-    : formatTime(listing.Application_Due_Date)
+const StatusMessage = ({
+  isClosed,
+  datetime,
+  openMessage,
+  showDateTime = true,
+}: {
+  isClosed: boolean
+  datetime: string
+  openMessage: string
+  showDateTime?: boolean
+}) => {
+  return (
+    <Message
+      fullwidth
+      className="justify-start leading-5"
+      variant={isClosed ? "alert" : "primary"}
+      customIcon={<Icon fill={isClosed ? "red-700" : ""} symbol="clock" size="medium" />}
+    >
+      {isClosed ? t("listingDetails.applicationsClosed") : openMessage}
+      {showDateTime && (
+        <span className="font-semibold">
+          {": "}
+          {localizedFormat(datetime, "LL")} {formatTime(datetime)}{" "}
+          {t("listingDetails.applicationsDeadline.timezone")}
+        </span>
+      )}
+    </Message>
+  )
+}
 
-  const showDateAndTime = isFcfs ? !!isApplicationNotYetOpen : true
+const getStatusLottery = (listing: RailsListing) => {
+  return (
+    <StatusMessage
+      isClosed={!isOpen(listing)}
+      datetime={listing.Application_Due_Date}
+      openMessage={t("listingDetails.applicationsDeadline")}
+    />
+  )
+}
+
+const getStatusFcfs = (listing: RailsListing) => {
+  return (
+    <StatusMessage
+      isClosed={listing.Listing_State === LISTING_STATES.CLOSED}
+      datetime={listing.Application_Start_Date_Time}
+      openMessage={t("listingDetails.applicationsOpen")}
+      showDateTime={listing.Listing_State === LISTING_STATES.NOT_YET_OPEN}
+    />
+  )
+}
+
+export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
+  const isApplicationOpen = listing && isOpen(listing)
+
+  const useUpdatedStatuses = useFeatureFlag("UpdatedStatuses", false)
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      <Message
-        fullwidth
-        className="justify-start leading-5"
-        variant={isApplicationClosed ? "alert" : "primary"}
-        customIcon={
-          <Icon fill={isApplicationClosed ? "red-700" : ""} symbol="clock" size="medium" />
-        }
-      >
-        {getMessage(isApplicationClosed, isFcfs)}
-        {showDateAndTime && (
-          <span className="font-semibold">
-            {": "}
-            {date} {time} {t("listingDetails.applicationsDeadline.timezone")}
-          </span>
-        )}
-      </Message>
+      {useUpdatedStatuses ? (
+        listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED ? (
+          getStatusFcfs(listing)
+        ) : (
+          getStatusLottery(listing)
+        )
+      ) : (
+        <div className="w-full mb-8 md:mb-0">
+          <ApplicationStatus
+            className="place-content-center"
+            content={t(
+              isApplicationOpen
+                ? "listingDetails.applicationDeadline.open"
+                : "listingDetails.applicationDeadline.closed",
+              {
+                date: localizedFormat(listing.Application_Due_Date, "ll"),
+                time: dayjs(listing.Application_Due_Date).format("h:mm A"),
+              }
+            )}
+            iconColor={!isApplicationOpen && bloomTheme.theme.colors.red["700"]}
+            status={isApplicationOpen ? ApplicationStatusType.Open : ApplicationStatusType.Closed}
+          />
+        </div>
+      )}
     </div>
   )
 }

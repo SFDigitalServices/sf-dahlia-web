@@ -56,13 +56,13 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
           >
             <div
               class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
-              data-variant="primary"
+              data-variant="alert"
             >
               <span
                 class="ui-icon ui-medium"
               >
                 <svg
-                  fill="currentColor"
+                  fill="red-700"
                   viewBox="0 0 32 32"
                 >
                   <path
@@ -76,7 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               <span
                 data-part="content"
               >
-                Application deadline
+                Applications closed
                 <span
                   class="font-semibold"
                 >
