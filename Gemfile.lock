@@ -306,6 +306,7 @@ GEM
     minitest (5.23.1)
     multi_json (1.15.0)
     multipart-post (2.3.0)
+    murmurhash3 (0.1.7)
     net-imap (0.4.10)
       date
       net-protocol
@@ -530,6 +531,8 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
+    unleash (5.0.5)
+      murmurhash3 (~> 0.1.7)
     vcr (6.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -623,6 +626,7 @@ DEPENDENCIES
   sprockets-rails
   sprockets_uglifier_with_source_maps
   uglifier (~> 3.2)
+  unleash (~> 5.0.4)
   vcr
   webmock
 

@@ -57,4 +57,12 @@ namespace :translate_test do # rubocop:disable Metrics/BlockLength
   task unsubscribe: :environment do
     Rails.cache.write(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY, true)
   end
+
+  task flag: :environment do
+    if UNLEASH.is_enabled? 'test'
+      puts 'test is enabled'
+    else
+      puts 'test is NOT enabled'
+    end
+  end
 end
