@@ -3,12 +3,37 @@ import { User, UserData } from "../authentication/user"
 import { authenticatedDelete, authenticatedGet, authenticatedPut, post, put } from "./apiService"
 import { AuthHeaders, setAuthHeaders } from "../authentication/token"
 import { Application } from "./types/rails/application/RailsApplication"
-import { getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
+import { getCurrentLanguage, getRoutePrefix, LanguagePrefix } from "../util/languageUtil"
 
 export const signIn = async (email: string, password: string): Promise<User> =>
   post<UserData>("/api/v1/auth/sign_in", {
     email,
     password,
+  }).then(({ data, headers }: AxiosResponse<UserData>) => {
+    setAuthHeaders(headers as AuthHeaders)
+    return data.data
+  })
+
+export const createAccount = async (
+  user: {
+    email: string
+    password: string
+    password_confirmation: string
+    temp_session_id?: string
+  },
+  contact: {
+    firstName: string
+    lastName: string
+    email: string
+    DOB: string
+  }
+): Promise<User> =>
+  post<UserData>("/api/v1/auth", {
+    user,
+    contact,
+    locale: getCurrentLanguage(),
+    confirm_success_url: "http://localhost:3000/my-account", // TODO DAH-2566
+    config_name: "default",
   }).then(({ data, headers }: AxiosResponse<UserData>) => {
     setAuthHeaders(headers as AuthHeaders)
     return data.data
