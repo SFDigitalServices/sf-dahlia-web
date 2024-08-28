@@ -173,9 +173,9 @@
             "instructions_p2": "Be <b>under 62</b> years old",
             "instructions_p3": "Show proof that you receive support in your home, like:",
             "instructions_p4": "In-Home Support Services (IHSS)",
-            "instructions_p5": "Regional Center Services",
+            "instructions_p5": "Regional Center services",
             "instructions_p6": "1915(c) waiver",
-            "instructions_p7": "Email {{emailLink}} if you have questions about your eligibility",
+            "instructions_p7": "Email {{emailLink}} if you have questions about your eligibility.",
             "title": "Do you have a disability and get support in your home paid for by the government?",
             "yes_i_get_this_type_of_support": "Yes, I get this type of support"
         },
