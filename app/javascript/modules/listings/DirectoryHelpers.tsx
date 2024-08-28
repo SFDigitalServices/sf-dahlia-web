@@ -184,7 +184,8 @@ export const getListingCards = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  hasFiltersSet?: boolean
+  hasFiltersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
 ) =>
   listings.map((listing: Listing, index) => {
     const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
@@ -192,7 +193,7 @@ export const getListingCards = (
       <ListingCard
         key={index}
         stackedTable={true}
-        imageCardProps={getImageCardProps(listing, hasFiltersSet)}
+        imageCardProps={getImageCardProps(listing, hasFiltersSet, useUpdatedDirectoryStatuses)}
         contentProps={
           hasCustomContent
             ? null
@@ -239,8 +240,11 @@ export const openListingsView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
-) => listings.length > 0 && getListingCards(listings, directoryType, stackedDataFxn, filtersSet)
+  filtersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
+) =>
+  listings.length > 0 &&
+  getListingCards(listings, directoryType, stackedDataFxn, filtersSet, useUpdatedDirectoryStatuses)
 
 // Get an expandable group of listings
 export const getListingGroup = (
@@ -251,6 +255,7 @@ export const getListingGroup = (
   hide,
   show,
   hasFiltersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false,
   subtitle?: string,
   icon?: IconTypes
 ) => {
@@ -264,7 +269,13 @@ export const getListingGroup = (
         info={subtitle}
         icon={icon}
       >
-        {getListingCards(listings, directoryType, stackedDataFxn, hasFiltersSet)}
+        {getListingCards(
+          listings,
+          directoryType,
+          stackedDataFxn,
+          hasFiltersSet,
+          useUpdatedDirectoryStatuses
+        )}
       </ListingsGroup>
     )
   )
@@ -273,7 +284,8 @@ export const getListingGroup = (
 export const upcomingLotteriesView = (
   listings,
   directoryType,
-  stackedDataFxn: StackedDataFxnType
+  stackedDataFxn: StackedDataFxnType,
+  useUpdatedDirectoryStatuses: boolean
 ) => {
   return getListingGroup(
     listings,
@@ -283,11 +295,17 @@ export const upcomingLotteriesView = (
     t("listings.upcomingLotteries.hide"),
     t("listings.upcomingLotteries.show"),
     undefined,
+    useUpdatedDirectoryStatuses,
     t("listings.upcomingLotteries.subtitle")
   )
 }
 
-export const lotteryResultsView = (listings, directoryType, stackedDataFxn: StackedDataFxnType) => {
+export const lotteryResultsView = (
+  listings,
+  directoryType,
+  stackedDataFxn: StackedDataFxnType,
+  useUpdatedDirectoryStatuses: boolean
+) => {
   return getListingGroup(
     listings,
     directoryType,
@@ -296,6 +314,7 @@ export const lotteryResultsView = (listings, directoryType, stackedDataFxn: Stac
     t("listings.lotteryResults.hide"),
     t("listings.lotteryResults.show"),
     undefined,
+    useUpdatedDirectoryStatuses,
     t("listings.lotteryResults.subtitle"),
     "result"
   )
@@ -305,7 +324,8 @@ export const additionalView = (
   listings,
   directoryType,
   stackedDataFxn: StackedDataFxnType,
-  filtersSet?: boolean
+  filtersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
 ) => {
   return getListingGroup(
     listings,
@@ -315,6 +335,7 @@ export const additionalView = (
     `${t("listings.additional.hide")}`,
     `${t("listings.additional.show")}`,
     filtersSet,
+    useUpdatedDirectoryStatuses,
     t("listings.additional.subtitle"),
     "doubleHouse"
   )

@@ -36,8 +36,16 @@ describe("DirectoryHelpers", () => {
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
           [
-            { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
-            { status: 3, content: "Lottery Results Posted: October 31, 2100", hideIcon: true },
+            {
+              status: 1,
+              content: "Applications Closed: October 30, 2000",
+              hideIcon: true,
+            },
+            {
+              status: 3,
+              content: "Lottery Results Posted: October 31, 2100",
+              hideIcon: true,
+            },
           ]
         )
       })
@@ -50,7 +58,13 @@ describe("DirectoryHelpers", () => {
           Lottery_Status: "Lottery Complete",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
-          [{ status: 3, content: "Lottery Results Posted: October 31, 2000", hideIcon: true }]
+          [
+            {
+              status: 3,
+              content: "Lottery Results Posted: October 31, 2000",
+              hideIcon: true,
+            },
+          ]
         )
       })
       it("does not render listing as matched", () => {
@@ -99,8 +113,16 @@ describe("DirectoryHelpers", () => {
           Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([
-          { status: 1, content: "Applications Closed: October 30, 2000", hideIcon: true },
-          { status: 3, content: "Lottery Results Posted: October 31, 2100", hideIcon: true },
+          {
+            status: 1,
+            content: "Applications Closed: October 30, 2000",
+            hideIcon: true,
+          },
+          {
+            status: 3,
+            content: "Lottery Results Posted: October 31, 2100",
+            hideIcon: true,
+          },
         ])
       })
     })

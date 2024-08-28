@@ -16,13 +16,20 @@ import type {
 } from "../api/types/rails/listings/RailsAmiChart"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
-import { RESERVED_COMMUNITY_TYPES, TENURE_TYPES, CUSTOM_LISTING_TYPES } from "../modules/constants"
+import {
+  RESERVED_COMMUNITY_TYPES,
+  TENURE_TYPES,
+  CUSTOM_LISTING_TYPES,
+  LISTING_TYPE_FIRST_COME_FIRST_SERVED,
+} from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
 
+export const isFcfsListing = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing
