@@ -1,17 +1,17 @@
-.fcfs-aside {
+.fcfs-no-lottery {
     --card-border-radius: rounded-none;
     --card-background-color: var(--bloom-color-gray-200);
     --card-footer-background-color: var(--bloom-color-gray-200);
     --card-border-width: border-b-1;
 
-    .aside-card-header {
+    .fcfs-no-lottery-header {
         font-family: var(--seeds-font-alt-sans);
         font-size: var(--seeds-font-size-lg);
         font-weight: var(-seeds-font-weight-semibold);
         line-height: var(--seeds-line-height-6);
     }
 
-    .aside-card-section {
+    .fcfs-no-lottery-section {
         font-family: var(--seeds-font-sans);
         font-size: var(--seeds-font-size-sm);
         font-weight: var(--seeds-font-weight-regular);

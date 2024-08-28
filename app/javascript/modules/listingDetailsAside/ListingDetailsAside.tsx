@@ -58,19 +58,17 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
     </SidebarBlock>
   )
 
-  const fcfsNoLottery = () => {
+  const fcfsNoLotteryRequired = () => {
     return (
-      <Card className="fcfs-aside border-b-1">
-        <CardHeader className="font-bold aside-card-header">
-          {t("listing.fcfs.bmrSales.noLotteryRequired.header")}
+      <Card className="fcfs-no-lottery border-b-1">
+        <CardHeader className="font-bold fcfs-no-lottery-header">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
         </CardHeader>
-        <CardSection className="aside-card-section">
-          {t("listing.fcfs.bmrSales.noLotteryRequired.section")}
+        <CardSection className="fcfs-no-lottery-section">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
         </CardSection>
-        <CardFooter className="ml-6 mb-6 aside-card-section">
-          <Link href="" className="underline">
-            {t("listing.fcfs.bmrSales.noLotteryRequired.footer")}
-          </Link>
+        <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
+          <Link href="">{t("listings.fcfs.bmrSales.noLotteryRequired.footer")}</Link>
         </CardFooter>
       </Card>
     )
@@ -89,7 +87,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsListing(listing) && fcfsNoLottery()}
+            {isFcfsListing(listing) && fcfsNoLotteryRequired()}
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
