@@ -26,7 +26,7 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
   return [doesMatch ? matchedStatus : notMatchedStatus]
 }
 
-const getFcfsStatuses = (listing: RailsListing) => {
+const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
   const isFcfsApplicationNotYetOpen = false
   const isFcfsApplicationClosed = false
   const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
@@ -38,7 +38,7 @@ const getFcfsStatuses = (listing: RailsListing) => {
     hideIcon: true,
   }
 
-  const applcationsNotYetOpenStatus = {
+  const applicationsNotYetOpenStatus = {
     status: ApplicationStatusType.Open,
     content: `${t(
       "listingDirectory.listingStatusContent.applicationsOpen"
@@ -52,11 +52,9 @@ const getFcfsStatuses = (listing: RailsListing) => {
     subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
   }
 
-  return [
-    isFcfsApplicationClosed
-      ? [applicationsClosedStatus]
-      : [isFcfsApplicationNotYetOpen ? applcationsNotYetOpenStatus : applicationsOpenStatus],
-  ]
+  return isFcfsApplicationClosed
+    ? [applicationsClosedStatus]
+    : [isFcfsApplicationNotYetOpen ? applicationsNotYetOpenStatus : applicationsOpenStatus]
 }
 
 const getLotteryStatuses = (listing: RailsListing): StatusBarType[] => {
