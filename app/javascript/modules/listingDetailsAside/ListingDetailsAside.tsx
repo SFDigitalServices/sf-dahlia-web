@@ -58,18 +58,18 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
     </SidebarBlock>
   )
 
-  // TODO: clean up and move to own file??
-  // <Card className="rounded-none bg-gray-200 border-b-1 border-l-0 border-r-0 border-t-0 p-1.5">
   const fcfsNoLottery = () => {
     return (
       <Card className="fcfs-aside border-b-1">
-        <CardHeader className="font-bold aside-card-header">No lottery required</CardHeader>
+        <CardHeader className="font-bold aside-card-header">
+          {t("listing.fcfs.bmrSales.noLotteryRequired.header")}
+        </CardHeader>
         <CardSection className="aside-card-section">
-          Your application will be considered in the order it comes in - first come, first served
+          {t("listing.fcfs.bmrSales.noLotteryRequired.section")}
         </CardSection>
         <CardFooter className="ml-6 mb-6 aside-card-section">
           <Link href="" className="underline">
-            Learn more about how it works
+            {t("listing.fcfs.bmrSales.noLotteryRequired.footer")}
           </Link>
         </CardFooter>
       </Card>

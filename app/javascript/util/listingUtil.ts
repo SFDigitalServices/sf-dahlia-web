@@ -21,7 +21,6 @@ import {
   TENURE_TYPES,
   CUSTOM_LISTING_TYPES,
   LISTING_TYPE_FIRST_COME_FIRST_SERVED,
-  LISTING_STATES,
 } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -31,15 +30,6 @@ import { t } from "@bloom-housing/ui-components"
 
 export const isFcfsListing = (listing: RailsRentalListing | RailsSaleListing) =>
   listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
-
-// TODO: add comment about current vs new automated states
-export const fcfsState = (listing: RailsRentalListing | RailsSaleListing) => {
-  if (!listing.Accepting_Online_Applications) return LISTING_STATES.CLOSED
-  else if (new Date(listing.Application_Start_Date_Time) < new Date())
-    return LISTING_STATES.NOT_YET_OPEN
-  else return LISTING_STATES.OPEN
-}
-
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing
