@@ -1,15 +1,40 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | "Home and Community Based Services"
+    h2.app-card_question translate="c8_home_and_community_based_services.title"
+    p.margin-bottom translate="c8_home_and_community_based_services.instructions_p1"
+    p.margin-bottom
+      span.ui-icon.ui-medium style="padding-right:4px;"
+        | ✓
+      span translate="c8_home_and_community_based_services.instructions_p2"
+    p.no-margin
+      span.ui-icon.ui-medium style="padding-right:4px;"
+        | ✓
+      span
+        | {{ 'c8_home_and_community_based_services.instructions_p3' | translate }}
+    ul.bullet-list.margin-bottom
+      li.margin-bottom-none.margin-bottom.margin-left
+        | {{'c8_home_and_community_based_services.instructions_p4' | translate }}
+      li.margin-bottom-none.margin-bottom.margin-left
+        | {{'c8_home_and_community_based_services.instructions_p5' | translate }}
+      li.margin-bottom-none.margin-bottom.margin-left
+        | {{'c8_home_and_community_based_services.instructions_p6' | translate }}
+
+    p.margin-bottom translate="c8_home_and_community_based_services.instructions_p7" translate-value-email-link='<a href="mailto:housing@thekelsey.org">housing@thekelsey.org</a>'
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('hasHomeAndCommunityBasedServices') }"
       p.form-note.margin-bottom translate="label.please_select_one"
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
         radio-block-item value='Yes' user='application' name='hasHomeAndCommunityBasedServices' ng-required='true'
-          | {{'t.yes' | translate}}
+          | {{'c8_home_and_community_based_services.yes_i_get_this_type_of_support' | translate}}
         radio-block-item value='No' user='application' name='hasHomeAndCommunityBasedServices' ng-required='true'
           | {{'t.no' | translate}}
+        .margin-left--2x ng-show="hasHomeAndCommunityBasedServicesYes()"
+          p.form-note
+            span.ui-icon.ui-medium style="padding-right:4px;"
+              svg
+                use xlink:href="#i-info-green"
+            span.t-bold  style="color:#2E8540;"
+              | {{ 'c8_home_and_community_based_services.after_the_lottery_we_will_ask_for_proof' | translate }}
 
   short-form-save-and-submit
