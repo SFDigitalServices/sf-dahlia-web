@@ -19,35 +19,11 @@ class CacheService
     Rails.logger.info('CacheService Finished')
   end
 
-  # TODO: Decide which fields need to be refreshed
-  LISTING_TRANSLATION_FIELDS = %w[
-    Listing_Other_Notes
-    Required_Documents
-    Legal_Disclaimers
-    Repricing_Mechanism
-    Reserved_community_type_Description
-    Credit_Rating
-    Eviction_History
-    Neighborhood
-    Appliances
-    Services_Onsite
-    Parking_Information
-    Utilities
-    Smoking_Policy
-    Pet_Policy
-    Amenities
-    Accessibility
-    Pricing_Matrix
-    Costs_Not_Included
-    Office_Hours
-    Leasing_Agent_Title
-    Lottery_Summary
-  ].freeze
   def process_translations(listing)
     translation_service = GoogleTranslationService.new
 
     strings_to_translate = {}
-    LISTING_TRANSLATION_FIELDS.each do |field|
+    ServiceHelper.listing_field_names.each do |field|
       strings_to_translate[field] = listing[field] unless listing[field].nil?
     end
 
@@ -58,7 +34,9 @@ class CacheService
 
     translation_service.cache_listing_translations(
       listing['Id'],
-      strings_to_translate.keys.map { |key| "#{key}__c" },
+      strings_to_translate.keys.map do |key|
+        ServiceHelper.convert_to_salesforce_field_name(key)
+      end,
       translations,
     )
   end

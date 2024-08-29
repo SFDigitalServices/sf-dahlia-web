@@ -1,27 +1,5 @@
+# Helper methods for services
 module ServiceHelper
-  SALESFORCE_LISTING_FIELD_NAMES_TO_TRANSLATE = %w[
-    Accessibility__c
-    Amenities__c
-    Appliances__c
-    Costs_Not_Included__c
-    Credit_Rating__c
-    Legal_Disclaimers__c
-    Leasing_Agent_Title__c
-    Listing_Other_Notes__c
-    Lottery_Summary__c
-    Lottery_Venue__c
-    Office_Hours__c
-    Parking_Information__c
-    Pet_Policy__c
-    Eviction_History__c
-    Required_Documents__c
-    Reserved_community_type_Description__c
-    Services_Onsite__c
-    Smoking_Policy__c
-    Utilities__c
-    Realtor_Commission_Info__c
-    Repricing_Mechanism__c
-  ].freeze
   LISTING_FIELD_NAMES_TO_TRANSLATE = %w[
     Accessibility
     Amenities
@@ -36,6 +14,7 @@ module ServiceHelper
     Office_Hours
     Parking_Information
     Pet_Policy
+    Pricing_Matrix
     Eviction_History
     Required_Documents
     Reserved_community_type_Description
@@ -45,4 +24,18 @@ module ServiceHelper
     Realtor_Commission_Info
     Repricing_Mechanism
   ].freeze
+
+  def listing_field_names
+    LISTING_FIELD_NAMES_TO_TRANSLATE
+  end
+
+  def listing_field_names_salesforce
+    LISTING_FIELD_NAMES_TO_TRANSLATE.map do |field|
+      convert_to_salesforce_field_name(field)
+    end
+  end
+
+  def convert_to_salesforce_field_name(field_name)
+    "#{field_name}__c"
+  end
 end

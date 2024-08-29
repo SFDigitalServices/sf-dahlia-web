@@ -129,8 +129,9 @@ module Force
     def extract_updated_values(changed_fields, event)
       logger("Extracting updated values: #{changed_fields.inspect}")
 
+      listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
       filtered_fields = changed_fields.select do |field|
-        ServiceHelper::SALESFORCE_LISTING_FIELD_NAMES_TO_TRANSLATE.include?(field)
+        listing_field_names_salesforce.include?(field)
       end
 
       filtered_fields.each_with_object({}) do |field, values|
