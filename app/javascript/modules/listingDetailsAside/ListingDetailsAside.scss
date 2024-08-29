@@ -1,8 +1,8 @@
 .fcfs-no-lottery {
     --card-border-radius: rounded-none;
-    --card-background-color: var(--bloom-color-gray-200);
-    --card-footer-background-color: var(--bloom-color-gray-200);
-    --card-border-width: border-b-1;
+    --card-background-color: var(--seeds-color-gray-200);
+    --card-footer-background-color: var(--seeds-color-gray-200);
+    --card-border-width: var(--seeds-border-0);
 
     .fcfs-no-lottery-header {
         font-family: var(--seeds-font-alt-sans);
