@@ -626,7 +626,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           </a>
                         </div>
                         <div
-                          class="new-password-label pt-4"
+                          class="new-password-label pt-4 undefined"
                         >
                           <label
                             for="password"
@@ -1481,7 +1481,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </a>
                       </div>
                       <div
-                        class="new-password-label pt-4"
+                        class="new-password-label pt-4 undefined"
                       >
                         <label
                           for="password"
@@ -2393,7 +2393,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           </a>
                         </div>
                         <div
-                          class="new-password-label pt-4"
+                          class="new-password-label pt-4 undefined"
                         >
                           <label
                             for="password"
@@ -3248,7 +3248,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </a>
                       </div>
                       <div
-                        class="new-password-label pt-4"
+                        class="new-password-label pt-4 undefined"
                       >
                         <label
                           for="password"

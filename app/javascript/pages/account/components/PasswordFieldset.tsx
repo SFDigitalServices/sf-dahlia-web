@@ -188,7 +188,7 @@ const PasswordFieldset = ({
           <div className="forgot-password-link">
             <a href="/forgot-password">{t("signIn.forgotPassword")}</a>
           </div>
-          <div className="new-password-label pt-4">
+          <div className={`new-password-label pt-4 ${errors.password && "text-alert"}`}>
             <label htmlFor="password">{t("label.chooseNewPassword")}</label>
           </div>
         </>
