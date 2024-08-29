@@ -64,5 +64,11 @@ export const FormSection = ({
   )
 }
 
-export const getDobStringFromDobObject = (dobObject: DOBFieldValues) =>
-  [dobObject.birthYear, dobObject.birthMonth, dobObject.birthDay].join("-")
+export const getDobStringFromDobObject = (dobObject: DOBFieldValues) => {
+  const date = new Date(
+    Number.parseInt(dobObject.birthYear),
+    Number.parseInt(dobObject.birthMonth) - 1,
+    Number.parseInt(dobObject.birthDay)
+  )
+  return date.toISOString().split("T")[0]
+}
