@@ -486,7 +486,7 @@ describe("getPriorityTypeText", () => {
     ${"Hearing/Vision impairments"}          | ${"Vision and/or Hearing Impairments"}
     ${"Mobility/Hearing/Vision impairments"} | ${"Mobility, Hearing and/or Vision Impairments"}
     ${"Mobility impairments"}                | ${"Mobility Impairments"}
-    ${"HCBS Units"}                          | ${"In-home support for a disability"}
+    ${"HCBS Units"}                          | ${"In-home Support for a Disability"}
   `(
     "returns text $text when priority type is $priorityType",
     ({ priorityType, text }: { priorityType: string; text: string }) => {
