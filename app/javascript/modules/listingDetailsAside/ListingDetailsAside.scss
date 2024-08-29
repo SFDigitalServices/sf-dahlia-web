@@ -3,11 +3,12 @@
     --card-background-color: var(--seeds-color-gray-200);
     --card-footer-background-color: var(--seeds-color-gray-200);
     --card-border-width: var(--seeds-border-0);
+    border-bottom: 1px solid var(--seeds-border-color);
 
     .fcfs-no-lottery-header {
         font-family: var(--seeds-font-alt-sans);
         font-size: var(--seeds-font-size-lg);
-        font-weight: var(-seeds-font-weight-semibold);
+        font-weight: var(--seeds-font-weight-semibold);
         line-height: var(--seeds-line-height-6);
     }
 

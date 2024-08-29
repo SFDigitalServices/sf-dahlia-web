@@ -60,24 +60,22 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
 
   const fcfsNoLotteryRequired = () => {
     return (
-      <div className="border-b">
-        <Card className="fcfs-no-lottery">
-          <CardHeader className="font-bold fcfs-no-lottery-header">
-            {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
-          </CardHeader>
-          <CardSection className="fcfs-no-lottery-section">
-            {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
-          </CardSection>
-          <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
-            <Link
-              href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
-              hideExternalLinkIcon={true}
-            >
-              {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
-            </Link>
-          </CardFooter>
-        </Card>
-      </div>
+      <Card className="fcfs-no-lottery">
+        <CardHeader className="font-bold fcfs-no-lottery-header">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
+        </CardHeader>
+        <CardSection className="fcfs-no-lottery-section">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
+        </CardSection>
+        <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
+          <Link
+            href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
+            hideExternalLinkIcon={true}
+          >
+            {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
+          </Link>
+        </CardFooter>
+      </Card>
     )
   }
 
