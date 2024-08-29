@@ -61,6 +61,9 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    # default all feature flags to false
+    ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
+    allow(::UNLEASH).to receive(:is_enabled?).and_return(false) # rubocop:disable Style/RedundantConstantBase
     DatabaseCleaner.clean
     Rails.cache.clear
   end
