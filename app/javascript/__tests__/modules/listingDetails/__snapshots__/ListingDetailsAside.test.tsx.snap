@@ -84,31 +84,35 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               </span>
             </div>
           </div>
-          <article
-            class="seeds-card fcfs-no-lottery border-b-1"
-            data-spacing="base"
+          <div
+            class="border-b"
           >
-            <header
-              class="seeds-card-header font-bold fcfs-no-lottery-header"
+            <article
+              class="seeds-card fcfs-no-lottery"
+              data-spacing="base"
             >
-              No lottery required
-            </header>
-            <div
-              class="seeds-card-section fcfs-no-lottery-section"
-            >
-              Your application will be considered in the order it comes in - first come, first served.
-            </div>
-            <footer
-              class="seeds-card-footer ml-6 mb-6 underline fcfs-no-lottery-section"
-            >
-              <a
-                class="seeds-link"
-                href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
+              <header
+                class="seeds-card-header font-bold fcfs-no-lottery-header"
               >
-                Learn more about how it works
-              </a>
-            </footer>
-          </article>
+                No lottery required
+              </header>
+              <div
+                class="seeds-card-section fcfs-no-lottery-section"
+              >
+                Your application will be considered in the order it comes in - first come, first served.
+              </div>
+              <footer
+                class="seeds-card-footer ml-6 mb-6 underline fcfs-no-lottery-section"
+              >
+                <a
+                  class="seeds-link"
+                  href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
+                >
+                  Learn more about how it works
+                </a>
+              </footer>
+            </article>
+          </div>
           <div
             class="border-b border-gray-400 md:border-b-0"
           >
