@@ -4,6 +4,7 @@ import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { emailRegex } from "../../../util/accountUtil"
 import { AxiosError } from "axios"
+import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
@@ -15,31 +16,33 @@ export const handleEmailServerErrors =
     if (error.response.status === 422) {
       setError("email", { message: "email:generalFormat", shouldFocus: true })
     } else {
-      setError("email", { message: "email:generic", shouldFocus: true })
+      setError("email", { message: "email:server:generic", shouldFocus: true })
     }
 
     errorCallback()
   }
 
-export const emailErrorsMap = (errorCode: string, abbreviated?: boolean) => {
-  switch (errorCode) {
-    case "email:missingAtSign":
-      return abbreviated
-        ? t("error.email.missingAtSign.abbreviated")
-        : t("error.email.missingAtSign")
-    case "email:missingDot":
-      return abbreviated ? t("error.email.missingDot.abbreviated") : t("error.email.missingDot")
-    case "email:generalFormat":
-      return abbreviated
-        ? t("error.email.generalIncorrect.abbreviated")
-        : t("error.email.generalIncorrect")
-    case "email:missing":
-      return abbreviated ? t("error.email.missing.abbreviated") : t("error.email.missing")
-    default:
-      return abbreviated
-        ? t("error.account.genericServerError.abbreviated")
-        : t("error.account.genericServerError")
-  }
+export const emailFieldsetErrors: ErrorMessages = {
+  "email:missingAtSign": {
+    default: "error.email.missingAtSign",
+    abbreviated: "error.email.missingAtSign.abbreviated",
+  },
+  "email:missingDot": {
+    default: "error.email.missingDot",
+    abbreviated: "error.email.missingDot.abbreviated",
+  },
+  "email:generalFormat": {
+    default: "error.email.generalIncorrect",
+    abbreviated: "error.email.generalIncorrect.abbreviated",
+  },
+  "email:missing": {
+    default: "error.email.missing",
+    abbreviated: "error.email.missing.abbreviated",
+  },
+  "email:server:generic": {
+    default: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError.abbreviated",
+  },
 }
 
 const emailValidation = (data: string) => {
@@ -83,7 +86,8 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         }}
         error={errors.email}
         errorMessage={
-          errors.email?.message && emailErrorsMap(errors.email?.message as string, false)
+          errors.email?.message &&
+          getErrorMessage(errors.email?.message as string, emailFieldsetErrors, false)
         }
         register={register}
         defaultValue={defaultEmail ?? null}

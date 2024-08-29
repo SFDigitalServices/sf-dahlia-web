@@ -7,14 +7,19 @@ import { Card } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
 import NameFieldset from "./components/NameFieldset"
-import { useForm, UseFormMethods } from "react-hook-form"
-import DOBFieldset from "./components/DOBFieldset"
+import { DeepMap, FieldError, FieldValues, useForm, UseFormMethods } from "react-hook-form"
+import DOBFieldset, { deduplicateDOBErrors, DOBFieldValues } from "./components/DOBFieldset"
 import EmailFieldset from "./components/EmailFieldset"
 import PasswordFieldset from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
+import {
+  ErrorSummaryBanner,
+  getErrorMessage,
+  UnifiedErrorMessageMap,
+} from "./components/ErrorSummaryBanner"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -131,6 +136,16 @@ const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
     </>
   )
 }
+
+const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
+  if (errors?.dobObject) {
+    const dobObject: DeepMap<DOBFieldValues, FieldError> = errors.dobObject
+    delete errors.dobObject
+    return { ...errors, ...deduplicateDOBErrors(dobObject) }
+  }
+  return errors
+}
+
 const CreateAccount = (_props: CreateAccountProps) => {
   const {
     register,
@@ -147,6 +162,10 @@ const CreateAccount = (_props: CreateAccountProps) => {
             <FormHeader
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
+            />
+            <ErrorSummaryBanner
+              errors={modifyErrors(errors)}
+              messageMap={(messageKey) => getErrorMessage(messageKey, UnifiedErrorMessageMap, true)}
             />
             <Form onSubmit={handleSubmit(onSubmit)}>
               <CreateAccountContent register={register} watch={watch} errors={errors} />

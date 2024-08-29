@@ -2,6 +2,7 @@ import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
+import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
 
 interface NameFieldsetProps {
   register: UseFormMethods["register"]
@@ -14,22 +15,22 @@ interface NameFieldsetProps {
 
 export const handleNameServerErrors =
   (setError: (name: string, error: ErrorOption) => void) => () => {
-    setError("firstName", { message: "error:name:genericServer", shouldFocus: true })
+    setError("firstName", { message: "name:server:generic", shouldFocus: true })
   }
 
-export const nameErrorsMap = (errorKey: string, abbreviated: boolean) => {
-  if (errorKey) {
-    switch (errorKey) {
-      case "error:firstName":
-        return t("error.account.firstName")
-      case "error:lastName":
-        return t("error.account.lastName")
-      default:
-        return abbreviated
-          ? t("error.account.genericServerError.abbreviated")
-          : t("error.account.genericServerError")
-    }
-  }
+export const nameFieldsetErrors: ErrorMessages = {
+  "name:firstName": {
+    default: "error.account.firstName",
+    abbreviated: "error.account.firstName",
+  },
+  "name:lastName": {
+    default: "error.account.lastName",
+    abbreviated: "error.account.lastName",
+  },
+  "name:server:generic": {
+    default: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError.abbreviated",
+  },
 }
 
 const NameFieldset = ({
@@ -51,11 +52,12 @@ const NameFieldset = ({
         register={register}
         error={errors.firstName !== undefined}
         errorMessage={
-          errors.firstName?.message && nameErrorsMap(errors.firstName.message as string, false)
+          errors.firstName?.message &&
+          getErrorMessage(errors.firstName?.message as string, nameFieldsetErrors, false)
         }
         defaultValue={defaultFirstName ?? null}
         validation={{
-          required: "error:firstName",
+          required: "name:firstName",
         }}
         onChange={onChange}
       />
@@ -73,12 +75,13 @@ const NameFieldset = ({
         name="lastName"
         label={t("label.lastName.sentenceCase")}
         errorMessage={
-          errors.lastName?.message && nameErrorsMap(errors.lastName.message as string, false)
+          errors.lastName?.message &&
+          getErrorMessage(errors.lastName?.message as string, nameFieldsetErrors, false)
         }
         defaultValue={defaultLastName ?? null}
         error={errors.lastName}
         register={register}
-        validation={{ required: "error:lastName" }}
+        validation={{ required: "name:lastName" }}
         onChange={onChange}
       />
     </Fieldset>

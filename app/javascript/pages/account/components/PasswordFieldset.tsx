@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import { AxiosError } from "axios"
+import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -31,34 +32,57 @@ export const handleServerErrors =
       }
     } else {
       setError("password", {
-        message: "password:generic",
+        message: "password:server:generic",
         shouldFocus: true,
       })
     }
   }
 
-export const passwordErrorsMap = (errorKey: string, abbreviated: boolean) => {
-  if (errorKey) {
-    switch (errorKey) {
-      case "currentPassword:incorrect":
-        return abbreviated
-          ? t("error.account.currentPasswordIncorrect.abbreviated")
-          : t("error.account.currentPasswordIncorrect")
-      case "password:complexity":
-        return abbreviated
-          ? t("error.account.passwordComplexity.abbreviated")
-          : t("error.account.passwordComplexity")
-      case "currentPassword:required":
-        return t("error.account.currentPasswordMissing")
-      case "password:required":
-        return t("error.account.newPasswordMissing")
-      default:
-        return abbreviated
-          ? t("error.account.genericServerError.abbreviated")
-          : t("error.account.genericServerError")
-    }
-  }
+export const passwordFieldsetErrors: ErrorMessages = {
+  "currentPassword:incorrect": {
+    default: "error.account.currentPasswordIncorrect",
+    abbreviated: "error.account.currentPasswordIncorrect.abbreviated",
+  },
+  "password:complexity": {
+    default: "error.account.passwordComplexity",
+    abbreviated: "error.account.passwordComplexity.abbreviated",
+  },
+  "currentPassword:required": {
+    default: "error.account.currentPasswordMissing",
+    abbreviated: "error.account.currentPasswordMissing",
+  },
+  "password:required": {
+    default: "error.account.newPasswordMissing",
+    abbreviated: "error.account.newPasswordMissing",
+  },
+  "password:server:generic": {
+    default: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError",
+  },
 }
+
+// export const passwordErrorsMap = (errorKey: string, abbreviated: boolean) => {
+//   if (errorKey) {
+//     switch (errorKey) {
+//       case "currentPassword:incorrect":
+//         return abbreviated
+//           ? t("error.account.currentPasswordIncorrect.abbreviated")
+//           : t("error.account.currentPasswordIncorrect")
+//       case "password:complexity":
+//         return abbreviated
+//           ? t("error.account.passwordComplexity.abbreviated")
+//           : t("error.account.passwordComplexity")
+//       case "currentPassword:required":
+//         return t("error.account.currentPasswordMissing")
+//       case "password:required":
+//         return t("error.account.newPasswordMissing")
+//       default:
+//         return abbreviated
+//           ? t("error.account.genericServerError.abbreviated")
+//           : t("error.account.genericServerError")
+//     }
+//   }
+// }
 
 const instructionListItem = (
   shouldShowValidationInformation: boolean,
@@ -180,7 +204,11 @@ const PasswordFieldset = ({
             error={errors.currentPassword}
             errorMessage={
               errors.currentPassword?.message &&
-              passwordErrorsMap(errors.currentPassword?.message as string, false)
+              getErrorMessage(
+                errors.currentPassword?.message as string,
+                passwordFieldsetErrors,
+                false
+              )
             }
             validation={{ required: "currentPassword:required" }}
             register={register}
@@ -206,7 +234,8 @@ const PasswordFieldset = ({
         }}
         error={errors.password}
         errorMessage={
-          errors.password?.message && passwordErrorsMap(errors.password?.message as string, false)
+          errors.password?.message &&
+          getErrorMessage(errors.password?.message as string, passwordFieldsetErrors, false)
         }
         register={register}
       />
