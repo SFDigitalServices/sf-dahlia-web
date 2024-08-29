@@ -25,17 +25,17 @@ module ServiceHelper
     Repricing_Mechanism
   ].freeze
 
-  def listing_field_names
+  def self.listing_field_names
     LISTING_FIELD_NAMES_TO_TRANSLATE
   end
 
-  def listing_field_names_salesforce
+  def self.listing_field_names_salesforce
     LISTING_FIELD_NAMES_TO_TRANSLATE.map do |field|
       convert_to_salesforce_field_name(field)
     end
   end
 
-  def convert_to_salesforce_field_name(field_name)
+  def self.convert_to_salesforce_field_name(field_name)
     "#{field_name}__c"
   end
 end
