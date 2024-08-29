@@ -68,7 +68,12 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
         </CardSection>
         <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
-          <Link href="">{t("listings.fcfs.bmrSales.noLotteryRequired.footer")}</Link>
+          <Link
+            href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
+            hideExternalLinkIcon={true}
+          >
+            {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
+          </Link>
         </CardFooter>
       </Card>
     )
