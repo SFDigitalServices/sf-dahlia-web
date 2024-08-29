@@ -256,6 +256,13 @@ export const getTranslatedString = (
   translations: RailsTranslations
 ) => {
   const languageCode = getPageLanguageCode()
-  const translatedValue = translations ? (translations[fieldName]?.[languageCode] as string) : null
+  if (!languageCode || languageCode === "EN") {
+    return originalValue
+  }
+  const isTranslationsEmpty = !translations || Object.keys(translations).length === 0
+  if (isTranslationsEmpty) {
+    return originalValue
+  }
+  const translatedValue = translations[fieldName]?.[languageCode] as string
   return translatedValue || originalValue
 }

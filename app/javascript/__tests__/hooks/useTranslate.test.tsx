@@ -43,7 +43,7 @@ describe("useTranslate", () => {
     expect(dispatchEventSpy).toHaveBeenCalled()
   })
 
-  it("render dom element for translation when disabled", () => {
+  it("do not render dom element for translation when disabled", () => {
     useScriptSpy = jest.spyOn(useScript, "default").mockImplementation(() => "error")
     usePollElementRenderSpy = jest
       .spyOn(usePollElementRender, "default")
