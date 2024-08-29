@@ -5,7 +5,7 @@ class GoogleTranslationService
   class TranslationError < StandardError; end
 
   def initialize
-    logger('Connecting to Google Cloud Translate...')
+    google_translation_logger('Connecting to Google Cloud Translate...')
     @translate = Google::Cloud::Translate::V2.new(
       project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
       key: ENV.fetch('GOOGLE_TRANSLATE_KEY',
@@ -17,12 +17,12 @@ class GoogleTranslationService
   def translate(text, to)
     return [] if text.empty?
 
-    logger("Translating text: #{text} to: #{to}")
+    google_translation_logger("Translating text: #{text} to: #{to}")
     to.map do |target|
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
-      logger("An error occured: #{e.inspect}", error: true)
+      google_translation_logger("An error occured: #{e.inspect}", error: true)
       return []
     end
   end
@@ -30,11 +30,11 @@ class GoogleTranslationService
   def cache_listing_translations(listing_id, keys, translations)
     translations = transform_translations_for_caching(listing_id, keys, translations)
     if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
-      logger(
+      google_translation_logger(
         "Successfully cached listing translations for listing id: #{listing_id}",
       )
     else
-      logger(
+      google_translation_logger(
         "Error caching listing translations for listing id: #{listing_id}", error: true
       )
     end
@@ -69,7 +69,7 @@ class GoogleTranslationService
     return_value
   end
 
-  def logger(message, error: false)
+  def google_translation_logger(message, error: false)
     if error
       Rails.logger.error("GoogleTranslationService #{message}")
     else
