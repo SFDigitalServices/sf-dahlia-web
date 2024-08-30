@@ -1,3 +1,3 @@
-web: bundle exec puma -C config/puma.rb
+web: ./web-tasks.sh
 worker: bundle exec sidekiq -C config/sidekiq.yml
-release: ./release-tasks.sh
+release: bundle exec rake db:migrate
