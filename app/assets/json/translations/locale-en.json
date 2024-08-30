@@ -167,6 +167,18 @@
             "title_household": "Do you or anyone in your household need any of the following ADA accessibility features?",
             "title_you": "Do you need any of the following ADA accessibility features?"
         },
+        "c8_home_and_community_based_services": {
+            "after_the_lottery_we_will_ask_for_proof": "After the lottery, we will ask for proof that shows you receive these services",
+            "instructions_p1": "You can get priority for certain units. To qualify, you must:",
+            "instructions_p2": "Be <b>under 62</b> years old",
+            "instructions_p3": "Show proof that you receive support in your home, like:",
+            "instructions_p4": "In-Home Support Services (IHSS)",
+            "instructions_p5": "Regional Center services",
+            "instructions_p6": "1915(c) waiver",
+            "instructions_p7": "Email {{emailLink}} if you have questions about your eligibility.",
+            "title": "Do you have a disability and get support in your home paid for by the government?",
+            "yes_i_get_this_type_of_support": "Yes, I get this type of support"
+        },
         "choose_applicant_details": {
             "alert_message": "All primary contact details on this application and in account settings will be overwritten by your selection.",
             "continue_anon": "Continue without an account",

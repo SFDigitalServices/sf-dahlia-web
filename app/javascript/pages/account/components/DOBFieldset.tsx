@@ -131,7 +131,6 @@ const DOBFieldset = ({
   note,
 }: DOBFieldProps) => {
   const hasError = !!error?.birthMonth || !!error?.birthDay || !!error?.birthYear
-
   return (
     <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")} note={note}>
       <div className="field-group--date">

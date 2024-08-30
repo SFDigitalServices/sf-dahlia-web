@@ -658,9 +658,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label"
+                            class="label invisible"
                             for="password"
-                          />
+                          >
+                            password
+                          </label>
                           <div
                             class="control"
                           >
@@ -1502,9 +1504,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label"
+                          class="label invisible"
                           for="password"
-                        />
+                        >
+                          password
+                        </label>
                         <div
                           class="control"
                         >
@@ -2403,9 +2407,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label"
+                            class="label invisible"
                             for="password"
-                          />
+                          >
+                            password
+                          </label>
                           <div
                             class="control"
                           >
@@ -3247,9 +3253,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label"
+                          class="label invisible"
                           for="password"
-                        />
+                        >
+                          password
+                        </label>
                         <div
                           class="control"
                         >

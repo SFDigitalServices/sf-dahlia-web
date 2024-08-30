@@ -175,7 +175,7 @@ describe("<AccountSettingsPage />", () => {
           "/api/v1/account/update",
           expect.objectContaining({
             contact: expect.objectContaining({
-              DOB: "2000-2-6",
+              DOB: "2000-02-06",
             }),
           })
         )

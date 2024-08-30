@@ -17,7 +17,7 @@ interface ObjectWithAssets {
 }
 
 const config = {
-  url: process.env.UNLEASH_URL,
+  url: `${process.env.UNLEASH_URL}frontend`,
   clientKey: process.env.UNLEASH_TOKEN,
   refreshInterval: 15, // How often (in seconds) the client should poll the proxy for updates
   appName: "webapp", // The name of your application. It's only used for identifying your application

@@ -14,6 +14,7 @@ import PasswordFieldset from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
+import { createAccount } from "../../api/authApiService"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -95,9 +96,29 @@ const CreateAccountFooter = () => {
   )
 }
 
-const onSubmit = (user: User) => {
-  user.DOB = getDobStringFromDobObject(user.dobObject)
-  console.log(user)
+const onSubmit = (data) => {
+  const { password, ...user } = data
+  const userInfo: User = user
+  user.DOB = getDobStringFromDobObject(userInfo.dobObject)
+  const userData = {
+    email: userInfo.email,
+    password: password,
+    password_confirmation: password,
+  }
+  const contactData = {
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
+    email: userInfo.email,
+    DOB: userInfo.DOB,
+  }
+  createAccount(userData, contactData)
+    // TODO DAH-2565
+    .then(() => {
+      console.log("Created an account.")
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
@@ -116,7 +137,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm({ mode: "all" })
+  } = useForm({ mode: "onTouched" })
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
