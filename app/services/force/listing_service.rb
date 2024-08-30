@@ -36,23 +36,12 @@ module Force
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       listing = add_image_urls(results_with_cached_listing_images).first
       # TODO: DAH-2636 conditionally get translations using feature flag
-      if ::UNLEASH.is_enabled? 'test'
-        puts 'test is enabled'
-      else
-        puts 'test is NOT enabled'
-      end
-      
-      listing_translations = @cache.read("/ListingDetails/#{id}/translations")
-      # TODO: DAH-2451
-      # @cache.fetch("/ListingDetails/#{id}/translations") do
-      #   # call translation service
-      # end
-
-      # TODO: DAH-2636 conditionally get translations using feature flag
-      if ::UNLEASH.is_enabled? 'test'
-        puts 'test is enabled'
-      else
-        puts 'test is NOT enabled'
+      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+        listing_translations = @cache.read("/ListingDetails/#{id}/translations")
+        # TODO: DAH-2451
+        # @cache.fetch("/ListingDetails/#{id}/translations") do
+        #   # call translation service
+        # end
       end
 
       add_image_urls(results_with_cached_listing_images).first
