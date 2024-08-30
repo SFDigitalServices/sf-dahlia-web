@@ -144,10 +144,12 @@ module Force
     end
 
     def check_for_unsubscribe(subscription)
-      unless subscription &&
-             (Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY) ||
-             ::UNLEASH.is_disabled?('GoogleCloudTranslate'))
-        return
+      return unless subscription
+
+      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+        return unless Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY)
+      else
+        logger('GoogleCloudTranslate is disabled')
       end
 
       subscription.unsubscribe
