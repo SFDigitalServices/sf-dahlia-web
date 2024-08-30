@@ -90,6 +90,7 @@ export const SFGOV_LINKS = [
   "https://sf.gov/departments/mayors-office-innovation",
   "https://sf.gov/information/special-calculations-household-income",
   "https://sf.gov/after-rental-housing-lottery",
+  "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
   // Salesforce links that redirect to sf.gov pages
   "http://sfmohcd.org/certificate-preference",
   "http://sfmohcd.org/housing-preference-programs",

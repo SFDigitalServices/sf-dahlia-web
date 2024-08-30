@@ -12,7 +12,7 @@ import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { localizedFormat } from "../../util/languageUtil"
+import { getSfGovUrl, localizedFormat } from "../../util/languageUtil"
 import { getHousingCounselorsPath } from "../../util/routeUtil"
 import { Card, Link } from "@bloom-housing/ui-seeds"
 import { CardFooter, CardHeader, CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
@@ -59,6 +59,10 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
   )
 
   const fcfsNoLotteryRequired = () => {
+    const url = getSfGovUrl(
+      "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
+      14246
+    )
     return (
       <Card className="fcfs-no-lottery">
         <CardHeader className="font-bold fcfs-no-lottery-header">
@@ -68,10 +72,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
           {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
         </CardSection>
         <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
-          <Link
-            href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
-            hideExternalLinkIcon={true}
-          >
+          <Link href={url} hideExternalLinkIcon={true}>
             {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
           </Link>
         </CardFooter>
