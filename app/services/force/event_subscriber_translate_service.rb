@@ -104,6 +104,21 @@ module Force
       logger(
         "Event Translations: #{cached_response.inspect}",
       )
+      if translations.empty?
+        logger(
+          "No translations for event: #{event.inspect}",
+        )
+        return []
+      end
+
+      cached_response = @translation_service.cache_listing_translations(
+        event.listing_id,
+        event.updated_values.keys,
+        translations,
+      )
+      logger(
+        "Event Translations: #{cached_response.inspect}",
+      )
     end
 
     def translate_event_values(values)
