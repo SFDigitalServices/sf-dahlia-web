@@ -5,4 +5,4 @@ Unleash.configure do |config|
   config.custom_http_headers = { Authorization: ENV.fetch('UNLEASH_TOKEN_RAILS', nil) }
 end
 
-::UNLEASH = Unleash::Client.new # rubocop:disable Style/RedundantConstantBase
+::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant

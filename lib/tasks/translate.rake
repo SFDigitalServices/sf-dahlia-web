@@ -45,12 +45,8 @@ namespace :translate do # rubocop:disable Metrics/BlockLength
   end
 
   task subscribe: :environment do
-    if UNLEASH.is_enabled? 'GoogleCloudTranslate'
-      subscriber = Force::EventSubscriberTranslateService.new
-      subscriber.listen_and_process_events
-    else
-      Rails.logger.info('GoogleCloudTranslate feature flag is not enabled')
-    end
+    subscriber = Force::EventSubscriberTranslateService.new
+    subscriber.listen_and_process_events
   end
   task unsubscribe: :environment do
     Rails.cache.write(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY, true)
