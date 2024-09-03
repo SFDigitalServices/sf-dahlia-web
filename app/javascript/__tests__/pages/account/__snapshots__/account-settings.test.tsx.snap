@@ -302,6 +302,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               value="FirstName"
                             />
                           </div>
+                          <span
+                            id="firstName-error"
+                          />
                         </div>
                         <div
                           class="field mb-4"
@@ -351,6 +354,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               value="LastName"
                             />
                           </div>
+                          <span
+                            id="lastName-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -552,32 +558,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         >
                           Password
                         </legend>
-                        <div
-                          class="pb-2 field-note"
-                        >
-                          <span>
-                            Must include at least:
-                          </span>
-                          <ul
-                            class="list-disc list-inside pl-2"
-                          >
-                            <li
-                              data-testid="validation-none"
-                            >
-                              8 characters
-                            </li>
-                            <li
-                              data-testid="validation-none"
-                            >
-                              1 letter
-                            </li>
-                            <li
-                              data-testid="validation-none"
-                            >
-                              1 number
-                            </li>
-                          </ul>
-                        </div>
                         <p
                           class="field-note mt-2 mb-4"
                         >
@@ -646,7 +626,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           </a>
                         </div>
                         <div
-                          class="new-password-label pt-4"
+                          class="new-password-label pt-4 undefined"
                         >
                           <label
                             for="password"
@@ -655,12 +635,40 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           </label>
                         </div>
                         <div
+                          class="field-note"
+                        >
+                          <span>
+                            Must include at least:
+                          </span>
+                          <ul
+                            class="list-disc list-inside pl-2"
+                          >
+                            <li
+                              data-testid="validation-none"
+                            >
+                              8 characters
+                            </li>
+                            <li
+                              data-testid="validation-none"
+                            >
+                              1 letter
+                            </li>
+                            <li
+                              data-testid="validation-none"
+                            >
+                              1 number
+                            </li>
+                          </ul>
+                        </div>
+                        <div
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label"
+                            class="label invisible"
                             for="password"
-                          />
+                          >
+                            password
+                          </label>
                           <div
                             class="control"
                           >
@@ -701,6 +709,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               </span>
                             </button>
                           </div>
+                          <span
+                            id="password-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -1146,6 +1157,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             value="FirstName"
                           />
                         </div>
+                        <span
+                          id="firstName-error"
+                        />
                       </div>
                       <div
                         class="field mb-4"
@@ -1195,6 +1209,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             value="LastName"
                           />
                         </div>
+                        <span
+                          id="lastName-error"
+                        />
                       </div>
                     </fieldset>
                     <div
@@ -1396,32 +1413,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       >
                         Password
                       </legend>
-                      <div
-                        class="pb-2 field-note"
-                      >
-                        <span>
-                          Must include at least:
-                        </span>
-                        <ul
-                          class="list-disc list-inside pl-2"
-                        >
-                          <li
-                            data-testid="validation-none"
-                          >
-                            8 characters
-                          </li>
-                          <li
-                            data-testid="validation-none"
-                          >
-                            1 letter
-                          </li>
-                          <li
-                            data-testid="validation-none"
-                          >
-                            1 number
-                          </li>
-                        </ul>
-                      </div>
                       <p
                         class="field-note mt-2 mb-4"
                       >
@@ -1490,7 +1481,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </a>
                       </div>
                       <div
-                        class="new-password-label pt-4"
+                        class="new-password-label pt-4 undefined"
                       >
                         <label
                           for="password"
@@ -1499,12 +1490,40 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </label>
                       </div>
                       <div
+                        class="field-note"
+                      >
+                        <span>
+                          Must include at least:
+                        </span>
+                        <ul
+                          class="list-disc list-inside pl-2"
+                        >
+                          <li
+                            data-testid="validation-none"
+                          >
+                            8 characters
+                          </li>
+                          <li
+                            data-testid="validation-none"
+                          >
+                            1 letter
+                          </li>
+                          <li
+                            data-testid="validation-none"
+                          >
+                            1 number
+                          </li>
+                        </ul>
+                      </div>
+                      <div
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label"
+                          class="label invisible"
                           for="password"
-                        />
+                        >
+                          password
+                        </label>
                         <div
                           class="control"
                         >
@@ -1545,6 +1564,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             </span>
                           </button>
                         </div>
+                        <span
+                          id="password-error"
+                        />
                       </div>
                     </fieldset>
                     <div
@@ -2047,6 +2069,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               value="FirstName"
                             />
                           </div>
+                          <span
+                            id="firstName-error"
+                          />
                         </div>
                         <div
                           class="field mb-4"
@@ -2096,6 +2121,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               value="LastName"
                             />
                           </div>
+                          <span
+                            id="lastName-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -2297,32 +2325,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         >
                           Password
                         </legend>
-                        <div
-                          class="pb-2 field-note"
-                        >
-                          <span>
-                            Must include at least:
-                          </span>
-                          <ul
-                            class="list-disc list-inside pl-2"
-                          >
-                            <li
-                              data-testid="validation-none"
-                            >
-                              8 characters
-                            </li>
-                            <li
-                              data-testid="validation-none"
-                            >
-                              1 letter
-                            </li>
-                            <li
-                              data-testid="validation-none"
-                            >
-                              1 number
-                            </li>
-                          </ul>
-                        </div>
                         <p
                           class="field-note mt-2 mb-4"
                         >
@@ -2391,7 +2393,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           </a>
                         </div>
                         <div
-                          class="new-password-label pt-4"
+                          class="new-password-label pt-4 undefined"
                         >
                           <label
                             for="password"
@@ -2400,12 +2402,40 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           </label>
                         </div>
                         <div
+                          class="field-note"
+                        >
+                          <span>
+                            Must include at least:
+                          </span>
+                          <ul
+                            class="list-disc list-inside pl-2"
+                          >
+                            <li
+                              data-testid="validation-none"
+                            >
+                              8 characters
+                            </li>
+                            <li
+                              data-testid="validation-none"
+                            >
+                              1 letter
+                            </li>
+                            <li
+                              data-testid="validation-none"
+                            >
+                              1 number
+                            </li>
+                          </ul>
+                        </div>
+                        <div
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label"
+                            class="label invisible"
                             for="password"
-                          />
+                          >
+                            password
+                          </label>
                           <div
                             class="control"
                           >
@@ -2446,6 +2476,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               </span>
                             </button>
                           </div>
+                          <span
+                            id="password-error"
+                          />
                         </div>
                       </fieldset>
                       <div
@@ -2891,6 +2924,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             value="FirstName"
                           />
                         </div>
+                        <span
+                          id="firstName-error"
+                        />
                       </div>
                       <div
                         class="field mb-4"
@@ -2940,6 +2976,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             value="LastName"
                           />
                         </div>
+                        <span
+                          id="lastName-error"
+                        />
                       </div>
                     </fieldset>
                     <div
@@ -3141,32 +3180,6 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       >
                         Password
                       </legend>
-                      <div
-                        class="pb-2 field-note"
-                      >
-                        <span>
-                          Must include at least:
-                        </span>
-                        <ul
-                          class="list-disc list-inside pl-2"
-                        >
-                          <li
-                            data-testid="validation-none"
-                          >
-                            8 characters
-                          </li>
-                          <li
-                            data-testid="validation-none"
-                          >
-                            1 letter
-                          </li>
-                          <li
-                            data-testid="validation-none"
-                          >
-                            1 number
-                          </li>
-                        </ul>
-                      </div>
                       <p
                         class="field-note mt-2 mb-4"
                       >
@@ -3235,7 +3248,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </a>
                       </div>
                       <div
-                        class="new-password-label pt-4"
+                        class="new-password-label pt-4 undefined"
                       >
                         <label
                           for="password"
@@ -3244,12 +3257,40 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </label>
                       </div>
                       <div
+                        class="field-note"
+                      >
+                        <span>
+                          Must include at least:
+                        </span>
+                        <ul
+                          class="list-disc list-inside pl-2"
+                        >
+                          <li
+                            data-testid="validation-none"
+                          >
+                            8 characters
+                          </li>
+                          <li
+                            data-testid="validation-none"
+                          >
+                            1 letter
+                          </li>
+                          <li
+                            data-testid="validation-none"
+                          >
+                            1 number
+                          </li>
+                        </ul>
+                      </div>
+                      <div
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label"
+                          class="label invisible"
                           for="password"
-                        />
+                        >
+                          password
+                        </label>
                         <div
                           class="control"
                         >
@@ -3290,6 +3331,9 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             </span>
                           </button>
                         </div>
+                        <span
+                          id="password-error"
+                        />
                       </div>
                     </fieldset>
                     <div

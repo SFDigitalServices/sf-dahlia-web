@@ -10,8 +10,9 @@ const testListingId = 'a0W0P00000F8YG4UAN'
 const urlsToTest = [
   join(baseUrl, '/'),
   join(baseUrl, '/listings/for-rent'),
-  join(baseUrl, `/listings/${testListingId}`),
-  join(baseUrl, `/listings/${testListingId}/apply/name`)
+  join(baseUrl, `/listings/${testListingId}`)
+  // application pages are in Angular, we do not plan to improve Lighthouse scores until they are migrated to React
+  // join(baseUrl, `/listings/${testListingId}/apply/name`)
 ]
 
 module.exports = {

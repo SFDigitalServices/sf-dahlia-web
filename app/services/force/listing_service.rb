@@ -35,10 +35,18 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       listing = add_image_urls(results_with_cached_listing_images).first
+      # TODO: DAH-2636 conditionally get translations using feature flag
+      if ::UNLEASH.is_enabled? 'test'
+        puts 'test is enabled'
+      else
+        puts 'test is NOT enabled'
+      end
+
       listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
         Rails.logger.info("Fetching new translations for #{id}")
         CacheService.new.process_translations(listing)
       end
+
       Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
       listing['translations'] = listing_translations || {}
       listing

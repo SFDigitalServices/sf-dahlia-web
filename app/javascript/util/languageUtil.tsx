@@ -6,6 +6,10 @@ import React from "react"
 import { stripMostTags } from "./filterUtil"
 import { cleanPath, getPathWithoutLeadingSlash } from "./urlUtil"
 import { CUSTOM_LISTING_TYPES, SFGOV_LINKS } from "../modules/constants"
+import {
+  RailsTranslationLanguage,
+  RailsTranslations,
+} from "../api/types/rails/listings/RailsTranslation"
 
 type PhraseBundle = Record<string, unknown>
 export interface LangConfig {
@@ -226,4 +230,39 @@ export function localizedFormat(date: string, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
 
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
+}
+
+/**
+ * Get the current language prefix as a capitalized string, or default to the english prefix if there is no explicit prefix in
+ * the path.
+ * @returns {string} - language code: ES, ZH, TL, EN
+ */
+export const getPageLanguageCode = (): string => {
+  const languageInRoute = getCurrentLanguage()
+  const languageConfig = LANGUAGE_CONFIGS[languageInRoute]
+  return RailsTranslationLanguage[languageConfig?.prefix.toUpperCase()]
+}
+
+/**
+ * Get the translated string for a given field name from the translations object.
+ * @param originalValue {string} - original value of the field
+ * @param fieldName {string} - field name to get the translation for in Saleforce notation: Credit_Rating__c
+ * @param translations {[key: string]: RailsTranslation} - translations object for the listing
+ * @returns {string} - translated string for current language or original value if no translation exists
+ */
+export const getTranslatedString = (
+  originalValue: string,
+  fieldName: string,
+  translations: RailsTranslations
+) => {
+  const languageCode = getPageLanguageCode()
+  if (!languageCode || languageCode === "EN") {
+    return originalValue
+  }
+  const isTranslationsEmpty = !translations || Object.keys(translations).length === 0
+  if (isTranslationsEmpty) {
+    return originalValue
+  }
+  const translatedValue = translations[fieldName]?.[languageCode] as string
+  return translatedValue || originalValue
 }

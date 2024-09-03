@@ -37,25 +37,30 @@ import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery
 import { MailingListSignup } from "../../components/MailingListSignup"
 import { ListingDetailsWaitlist } from "../../modules/listingDetailsAside/ListingDetailsWaitlist"
 import { ListingDetailsSROInfo } from "../../modules/listingDetails/ListingDetailsSROInfo"
-import useTranslate from "../../hooks/useTranslate"
 import { ListingDetailsHabitat } from "../../modules/listingDetails/ListingDetailsHabitat"
 import { ListingDetailsMOHCD } from "../../modules/listingDetails/ListingDetailsMOHCD"
 import { ListingDetailsApply } from "../../modules/listingDetailsAside/ListingDetailsApply"
 import ListingDetailsContext from "../../contexts/listingDetails/listingDetailsContext"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
 import dayjs from "dayjs"
+import useTranslate from "../../hooks/useTranslate"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 
 const ListingDetail = () => {
+  const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
+    "GoogleCloudTranslate",
+    true
+  )
+  useTranslate(flagsReady ? isCloudTranslationEnabled : undefined)
+
   const alertClasses = "flex-grow mt-6 max-w-6xl w-full"
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
   const isApplicationOpen = listing && isOpen(listing)
   const listingIsHabitat = listing && isHabitatListing(listing)
-  useTranslate()
 
   const {
     fetchUnits,
@@ -102,7 +107,7 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
-  const isSeeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: isSeeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
 
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(

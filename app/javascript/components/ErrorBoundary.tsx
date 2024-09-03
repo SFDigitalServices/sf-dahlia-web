@@ -43,7 +43,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // TODO: add to papertrail or sentry integration
-    console.debug(`Uncaught error with scope[${this.props.boundaryScope}]`, error, errorInfo)
+    console.debug(`Uncaught error with scope[${this?.props?.boundaryScope}]`, error, errorInfo)
   }
 
   render() {

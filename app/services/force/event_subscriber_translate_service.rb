@@ -19,6 +19,7 @@ module Force
     def initialize
       setup_salesforce_client
       setup_faye_client
+      setup_translation_service
     end
 
     def listen_and_process_events
@@ -68,6 +69,10 @@ module Force
       @faye_client.set_header('Authorization', "OAuth #{credentials.access_token}")
     end
 
+    def setup_translation_service
+      @translation_service = GoogleTranslationService.new
+    end
+
     def subscribe_to_listing_updates
       @faye_client.subscribe('/data/Listing__ChangeEvent') do |platform_event|
         logger(
@@ -75,24 +80,38 @@ module Force
           "#{platform_event.inspect}",
         )
         event = parse_event(platform_event)
-        translate_and_log_event(event)
+        translate_and_cache(event)
       end
     end
 
-    def translate_and_log_event(event)
+    def translate_and_cache(event)
       translations = translate_event_values(event.updated_values)
       logger(
         "Event Translations: #{translations.inspect}",
       )
+      if translations.empty?
+        logger(
+          "No translations for event: #{event.inspect}",
+        )
+        return []
+      end
+
+      cached_response = @translation_service.cache_listing_translations(
+        event.listing_id,
+        event.updated_values.keys,
+        translations,
+      )
+      logger(
+        "Event Translations: #{cached_response.inspect}",
+      )
     end
 
     def translate_event_values(values)
-      translation_service = GoogleTranslationService.new(
-        project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
-        key: ENV.fetch('GOOGLE_TRANSLATE_KEY', nil),
-      )
+      logger("Translating values: #{values.inspect}")
+      return [] unless values&.values
+
       languages = %w[ES ZH TL]
-      translation_service.translate(values.values, languages)
+      @translation_service.translate(values.values, languages)
     end
 
     def parse_event(platform_event)
@@ -108,8 +127,15 @@ module Force
     end
 
     def extract_updated_values(changed_fields, event)
-      changed_fields.each_with_object({}) do |field, values|
-        values[field] = event.dig('payload', field) unless field == 'LastModifiedDate'
+      logger("Extracting updated values: #{changed_fields.inspect}")
+
+      listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
+      filtered_fields = changed_fields.select do |field|
+        listing_field_names_salesforce.include?(field)
+      end
+
+      filtered_fields.each_with_object({}) do |field, values|
+        values[field] = event.dig('payload', field)
       end
     end
 

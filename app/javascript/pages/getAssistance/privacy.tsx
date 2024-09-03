@@ -9,7 +9,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const Privacy = () => {
   const { getAssetPath } = React.useContext(ConfigContext)
-  const testFlag = useFeatureFlag("test", false)
+  const { unleashFlag: testFlag } = useFeatureFlag("test", false)
 
   return (
     <Layout title={t("pageTitle.privacy")}>

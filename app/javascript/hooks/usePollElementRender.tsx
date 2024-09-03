@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react"
 
-const usePollElementRender = (selector) => {
+const usePollElementRender = (selector, disable) => {
   const [elementHasBeenRenderedStatus, setElementHasBeenRenderedStatus] = useState(false)
 
   useEffect(() => {
+    if (disable) {
+      setElementHasBeenRenderedStatus(false)
+      return () => elementHasBeenRenderedStatus
+    }
     /*
       This useEffect is checking for when an element get added to the dom
      */
@@ -27,7 +31,7 @@ const usePollElementRender = (selector) => {
     return () => clearInterval(interval)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [disable])
 
   return elementHasBeenRenderedStatus
 }

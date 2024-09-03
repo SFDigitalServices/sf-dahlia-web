@@ -23,6 +23,7 @@ import {
 import {
   defaultIfNotTranslated,
   getSfGovUrl,
+  getTranslatedString,
   renderInlineMarkup,
   renderMarkup,
 } from "../../util/languageUtil"
@@ -234,7 +235,13 @@ export const ListingDetailsEligibility = ({
             >
               {listing.Reserved_community_type_Description && (
                 <div className="text-gray-700 text-xs translate">
-                  {renderMarkup(listing.Reserved_community_type_Description)}
+                  {renderMarkup(
+                    getTranslatedString(
+                      listing.Reserved_community_type_Description,
+                      "Reserved_community_type_Description__c",
+                      listing.translations
+                    )
+                  )}
                 </div>
               )}
             </InfoCard>
@@ -380,7 +387,13 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {stripMostTags(listing.Credit_Rating)}
+                  {stripMostTags(
+                    getTranslatedString(
+                      listing?.Credit_Rating,
+                      "Credit_Rating__c",
+                      listing?.translations
+                    )
+                  )}
                 </ExpandableText>
               </InfoCard>
             )}
@@ -396,7 +409,13 @@ export const ListingDetailsEligibility = ({
                   }}
                   buttonClassName="mt-2 has-toggle"
                 >
-                  {stripMostTags(listing.Eviction_History)}
+                  {stripMostTags(
+                    getTranslatedString(
+                      listing?.Eviction_History,
+                      "Eviction_History__c",
+                      listing?.translations
+                    )
+                  )}
                 </ExpandableText>
               </InfoCard>
             )}

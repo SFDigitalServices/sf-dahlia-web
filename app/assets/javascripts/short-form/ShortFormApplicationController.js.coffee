@@ -750,6 +750,9 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getPostHomeAndCommunityBasedServicesPage($scope.listing)
     ShortFormNavigationService.goToApplicationPage("dahlia.short-form-application.#{page}")
 
+  $scope.hasHomeAndCommunityBasedServicesYes = ->
+    $scope.application.hasHomeAndCommunityBasedServices == 'Yes'
+
   $scope.publicHousingYes = ->
     ShortFormApplicationService.resetMonthlyRentForm()
     # make sure they're forced through now that they have the assistedHousing option
