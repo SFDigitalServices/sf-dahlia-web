@@ -4,7 +4,8 @@ import { ErrorOption, UseFormMethods, Validate } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { Icon } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import { AxiosError } from "axios"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([

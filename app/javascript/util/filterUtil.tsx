@@ -6,6 +6,8 @@
 
 // https://github.com/probablyup/markdown-to-jsx/issues?q=is%3Aissue+is%3Aopen+span
 
+// TODO: we should enforce input to be a string
+
 export const stripMostTags = (input, allowed?: string) => {
   if (!input) return ""
   allowed = (((allowed || "<br><a><p>") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join(

@@ -11,22 +11,22 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
   const doesURLHaveFlag = urlParams.has(flagSearchParam)
   const flagFromUrl = urlParams.get(flagSearchParam)
 
-  const { flagsError } = useFlagsStatus()
+  const { flagsError, flagsReady } = useFlagsStatus()
 
   const unleashFlag = useFlagUnleash(flagName)
 
   if (doesURLHaveFlag && !urlBlockList.has(flagName) && process.env.UNLEASH_ENV === "development") {
     if (flagFromUrl === "true") {
-      return true
+      return { flagsReady: true, unleashFlag: true }
     } else if (flagFromUrl === "false") {
-      return false
+      return { flagsReady: true, unleashFlag: false }
     }
   }
 
   if (flagsError || unleashFlag === undefined) {
     console.error(flagsError)
-    return defaultValue
+    return { flagsReady, unleashFlag: defaultValue }
   } else {
-    return unleashFlag
+    return { flagsReady, unleashFlag }
   }
 }

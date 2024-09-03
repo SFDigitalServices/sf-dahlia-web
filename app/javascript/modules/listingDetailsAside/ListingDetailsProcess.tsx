@@ -9,7 +9,7 @@ import {
   ExpandableSection,
   SidebarBlock,
 } from "@bloom-housing/ui-components"
-import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
 
 export interface ListingDetailsProcessProps {
@@ -91,7 +91,13 @@ export const ListingDetailsProcess = ({
                         title: t("contactAgent.officeHours"),
                         content: (
                           <span className="translate">
-                            {renderInlineMarkup(listing.Office_Hours)}
+                            {renderInlineMarkup(
+                              getTranslatedString(
+                                listing.Office_Hours,
+                                "Office_Hours__c",
+                                listing.translations
+                              )
+                            )}
                           </span>
                         ),
                       },
@@ -106,7 +112,11 @@ export const ListingDetailsProcess = ({
                   : undefined
               }
               contactPhoneNumberNote={t("contactAgent.dueToHighCallVolume")}
-              contactTitle={listing.Leasing_Agent_Title}
+              contactTitle={getTranslatedString(
+                listing.Leasing_Agent_Title,
+                "Leasing_Agent_Title__c",
+                listing.translations
+              )}
               contactTitleClassname="translate"
               strings={{
                 email: t("label.emailAddress"),
