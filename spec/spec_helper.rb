@@ -62,12 +62,17 @@ RSpec.configure do |config|
 
   config.before(:each) do
     # default all feature flags to false
-    ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
+    unleash_client = instance_double(Unleash::Client)
+    allow(Unleash::Client).to receive(:new).and_return(unleash_client)
+    allow(unleash_client).to receive(:is_enabled?).and_return(false)
+    stub_const('UNLEASH', unleash_client)
+
+    ::UNLEASH ||= unleash_client # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
     allow(::UNLEASH).to receive(:is_enabled?).and_return(false) # rubocop:disable Style/RedundantConstantBase
+
     DatabaseCleaner.clean
     Rails.cache.clear
   end
-
   # The settings below are suggested to provide a good initial experience
   # with RSpec, but feel free to customize to your heart's content.
   #   # These two settings work together to allow you to limit a spec run
