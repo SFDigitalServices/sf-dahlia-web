@@ -61,7 +61,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
-  const useUpdatedDirectoryStatuses = useFeatureFlag("UpdatedStatuses", false)
+  const { unleashFlag: useUpdatedDirectoryStatuses } = useFeatureFlag("UpdatedStatuses", false)
 
   return (
     <LoadingOverlay isLoading={loading}>
