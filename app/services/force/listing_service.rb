@@ -35,7 +35,7 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       listing = add_image_urls(results_with_cached_listing_images).first
-      # TODO: DAH-2636 conditionally get translations using feature flag
+
       if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
         listing_translations = @cache.read("/ListingDetails/#{id}/translations")
         # TODO: DAH-2451
@@ -44,7 +44,6 @@ module Force
         # end
       end
 
-      add_image_urls(results_with_cached_listing_images).first
       Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
       listing['translations'] = listing_translations || {}
       listing
