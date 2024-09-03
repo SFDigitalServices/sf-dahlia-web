@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, act } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import PasswordFieldset from "../../pages/account/components/PasswordFieldset"
+import PasswordFieldset, {
+  handleServerErrors,
+  passwordErrorsMap,
+} from "../../pages/account/components/PasswordFieldset"
 import { useForm } from "react-hook-form"
+import { AxiosError } from "axios"
 
 const WrappedPasswordFieldset = () => {
   const {
@@ -58,5 +62,85 @@ describe("Password Fieldset", () => {
     expect(input.getAttribute("type")).toBe("text")
     await user.click(button)
     expect(input.getAttribute("type")).toBe("password")
+  })
+
+  describe("handleServerErrors", () => {
+    test("handleServerErrors sets currentPassword error for invalid current password", () => {
+      const setError = jest.fn()
+      const error = {
+        response: {
+          data: {
+            errors: {
+              full_messages: ["Current password is invalid"],
+            },
+          },
+        },
+      } as AxiosError<{ errors: { full_messages: string[] } }>
+
+      const handleError = handleServerErrors(setError)
+
+      act(() => {
+        handleError(error)
+      })
+
+      expect(setError).toHaveBeenCalledWith("currentPassword", {
+        message: "currentPassword:incorrect",
+        shouldFocus: true,
+      })
+    })
+
+    test("handleServerErrors sets password complexity error for password validation errors", () => {
+      const setError = jest.fn()
+      const error = {
+        response: {
+          data: {
+            errors: {
+              full_messages: ["Password is too short (minimum is 8 characters)"],
+            },
+          },
+        },
+      } as AxiosError<{ errors: { full_messages: string[] } }>
+
+      const handleError = handleServerErrors(setError)
+
+      act(() => {
+        handleError(error)
+      })
+
+      expect(setError).toHaveBeenCalledWith("password", {
+        message: "password:complexity",
+        shouldFocus: true,
+      })
+    })
+
+    test("handleServerErrors sets generic password error for other errors", () => {
+      const setError = jest.fn()
+      const error = {
+        response: {},
+      } as AxiosError<{ errors: { full_messages: string[] } }>
+
+      const handleError = handleServerErrors(setError)
+
+      act(() => {
+        handleError(error)
+      })
+
+      expect(setError).toHaveBeenCalledWith("password", {
+        message: "password:generic",
+        shouldFocus: true,
+      })
+    })
+  })
+
+  describe("passwordErrorsMap", () => {
+    test("passwordErrorsMap returns correct error message", () => {
+      expect(passwordErrorsMap("currentPassword:incorrect", false)).toBe(
+        "Password is incorrect. Check for mistakes and try again."
+      )
+      expect(passwordErrorsMap("password:complexity", true)).toBe("Choose a strong password")
+      expect(passwordErrorsMap("currentPassword:required", false)).toBe("Enter current password")
+      expect(passwordErrorsMap("password:required", false)).toBe("Enter new password")
+      expect(passwordErrorsMap("unknown:error", true)).toBe("Something went wrong")
+    })
   })
 })
