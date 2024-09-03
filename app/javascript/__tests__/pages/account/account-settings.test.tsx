@@ -28,7 +28,6 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
     let getAllByText
-    let getByLabelText
     let originalUseContext
     let promise
     let renderResult
@@ -56,7 +55,8 @@ describe("<AccountSettingsPage />", () => {
       renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
-      getByLabelText = renderResult.getByLabelText
+
+      document.documentElement.lang = "en"
     })
 
     afterEach(() => {
@@ -69,22 +69,6 @@ describe("<AccountSettingsPage />", () => {
       expect(title).not.toBeNull()
     })
 
-    it("updates when clicked", async () => {
-      const button = getAllByText("Update")
-      const passwordField: Element = getByLabelText("Choose a new password")
-
-      await act(async () => {
-        button[0].dispatchEvent(new MouseEvent("click"))
-        button[1].dispatchEvent(new MouseEvent("click"))
-        fireEvent.change(passwordField, { target: { value: "1234test" } })
-        button[1].dispatchEvent(new MouseEvent("click"))
-        button[2].dispatchEvent(new MouseEvent("click"))
-        button[3].dispatchEvent(new MouseEvent("click"))
-        await promise
-      })
-
-      // confirm that apis are called
-    })
     test("resize events", () => {
       expect(renderResult).toMatchSnapshot()
 
@@ -360,6 +344,314 @@ describe("<AccountSettingsPage />", () => {
 
         expect(newPasswordField.getAttribute("value")).toBe("")
         expect(currentPasswordField.getAttribute("value")).toBe("")
+      })
+    })
+
+    describe("renders the correct errors", () => {
+      test("name Errors", async () => {
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 422,
+            data: {
+              message: "Unprocessable Entity",
+            },
+          },
+        })
+
+        const button = getAllByText("Update")
+        const firstNameField: Element = screen.getByRole("textbox", {
+          name: /first name/i,
+        })
+
+        const lastNameField: Element = screen.getByRole("textbox", {
+          name: /last name/i,
+        })
+
+        await act(async () => {
+          fireEvent.change(firstNameField, { target: { value: "" } })
+          fireEvent.change(lastNameField, { target: { value: "" } })
+          button[0].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(getAllByText("Enter first name")).toHaveLength(2)
+        expect(getAllByText("Enter last name")).toHaveLength(2)
+
+        await act(async () => {
+          screen
+            .getByRole("button", {
+              name: /enter last name/i,
+            })
+            .dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(firstNameField).toHaveFocus()
+
+        await act(async () => {
+          fireEvent.change(firstNameField, { target: { value: "First Name" } })
+          fireEvent.change(lastNameField, { target: { value: "Last Name" } })
+          button[0].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(
+          screen.getByRole("button", {
+            name: /something went wrong/i,
+          })
+        ).not.toBeNull()
+        // Something went wrong. Try again or check back later.
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
+      })
+
+      test("date of birth errors", async () => {
+        const button = getAllByText("Update")
+        const monthField: Element = screen.getByRole("textbox", {
+          name: /month/i,
+        })
+        const dayField: Element = screen.getByRole("textbox", {
+          name: /day/i,
+        })
+        const yearField: Element = screen.getByRole("textbox", {
+          name: /year/i,
+        })
+
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 45 } }) // invalid
+          fireEvent.change(dayField, { target: { value: 56 } }) // invalid
+          fireEvent.change(yearField, { target: { value: 1800 } }) // invalid
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter a valid date of birth/i,
+          })
+        ).not.toBeNull()
+
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 56 } }) // invalid
+          fireEvent.change(yearField, { target: { value: 1800 } }) // invalid
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter a valid date of birth/i,
+          })
+        ).not.toBeNull()
+
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 1 } }) // invalid
+          fireEvent.change(yearField, { target: { value: 202 } }) // invalid
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter a valid date of birth/i,
+          })
+        ).not.toBeNull()
+
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 56 } }) // invalid
+          fireEvent.change(yearField, { target: { value: 1999 } })
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter a valid date of birth/i,
+          })
+        ).not.toBeNull()
+        expect(
+          screen.getByText(/enter a valid date of birth\. enter date like: mm dd yyyy/i)
+        ).not.toBeNull()
+        expect(
+          screen.queryByText(
+            /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
+          )
+        ).toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 422, // Indicates that the age is too young
+            data: {
+              message: "Unprocessable Entity",
+            },
+          },
+        })
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 12 } })
+          fireEvent.change(yearField, { target: { value: 1998 } })
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.queryByText(
+            /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
+          )
+        ).not.toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 500, // General server error
+          },
+        })
+        await act(async () => {
+          fireEvent.change(monthField, { target: { value: 1 } })
+          fireEvent.change(dayField, { target: { value: 12 } })
+          fireEvent.change(yearField, { target: { value: 1998 } })
+          button[1].dispatchEvent(new MouseEvent("click"))
+
+          await promise
+        })
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
+      })
+
+      test("email Errors", async () => {
+        const button = getAllByText("Update")
+        const group = screen.getByRole("group", {
+          name: /email/i,
+        })
+
+        const emailField = within(group).getByRole("textbox")
+
+        await act(async () => {
+          fireEvent.change(emailField, { target: { value: "testtest.com" } })
+          button[2].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(
+          screen.getByRole("button", {
+            name: /email missing @ symbol/i,
+          })
+        ).not.toBeNull()
+
+        expect(
+          screen.getByText(/email missing @ symbol\. enter email like: example@web\.com/i)
+        ).not.toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 422, // Indicates that the email is invalid
+            data: {
+              message: "Unprocessable Entity",
+            },
+          },
+        })
+        await act(async () => {
+          fireEvent.change(emailField, { target: { value: "test@test.com" } })
+          button[2].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /email entered incorrectly/i,
+          })
+        ).not.toBeNull()
+        expect(
+          screen.getByText(/email entered incorrectly\. enter email like: example@web\.com/i)
+        ).not.toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 500, // General server error
+          },
+        })
+        await act(async () => {
+          fireEvent.change(emailField, { target: { value: "test@test.com" } })
+          button[2].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
+      })
+      test("password Errors", async () => {
+        const button = getAllByText("Update")
+        const currentPasswordField = screen.getByLabelText(/current password/i)
+        const newPasswordField = screen.getByLabelText(/choose a new password/i)
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          fireEvent.change(newPasswordField, { target: { value: "password" } })
+          button[3].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+        expect(
+          screen.getByText(
+            /choose a strong password with at least 8 characters, 1 letter, and 1 number/i
+          )
+        ).not.toBeNull()
+        expect(
+          screen.getByRole("button", {
+            name: /choose a strong password/i,
+          })
+        ).not.toBeNull()
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "" } })
+          fireEvent.change(newPasswordField, { target: { value: "" } })
+          button[3].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /enter current password/i,
+          })
+        ).not.toBeNull()
+        expect(
+          screen.getByRole("button", {
+            name: /enter new password/i,
+          })
+        ).not.toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            status: 500, // General server error
+          },
+        })
+
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          fireEvent.change(newPasswordField, { target: { value: "password1" } })
+          button[3].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
+        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+          response: {
+            data: {
+              errors: {
+                full_messages: ["Current password is invalid"],
+              },
+            },
+          },
+        })
+        await act(async () => {
+          fireEvent.change(currentPasswordField, { target: { value: "abcd1234" } })
+          fireEvent.change(newPasswordField, { target: { value: "password1" } })
+          button[3].dispatchEvent(new MouseEvent("click"))
+          await promise
+        })
+        expect(
+          screen.getByRole("button", {
+            name: /current password is incorrect/i,
+          })
+        ).not.toBeNull()
       })
     })
   })
