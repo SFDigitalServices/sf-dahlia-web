@@ -7,10 +7,13 @@
 }
 
 // field labels
-.form-fieldset > .field > .label, .password-fieldset > .field > .label, .new-password-label, .form-fieldset > .field-group--date > .field > .label {
+.form-fieldset > .field > .label,
+.password-fieldset > .field > .label,
+.new-password-label,
+.form-fieldset > .field-group--date > .field > .label {
   color: #555;
   font-size: 14px;
-  font-family: 'Lato';
+  font-family: "Lato";
   line-height: 24px;
 }
 
@@ -42,11 +45,16 @@
 //banner for updates
 .account-settings-banner {
   background-color: var(--seeds-color-blue-100) !important;
+  // color: var(--seeds-color-blue-100);
+  svg:not(button svg) {
+    fill: none !important;
+  }
 }
 
-//override alert component icon
-.seeds-common-message > .seeds-icon {
-  color:  var(--seeds-color-blue-100);
+.seeds-common-message {
+  a {
+    margin-inline-start: 0;
+  }
 }
 
 .seeds-common-message > .seeds-icon ~ .seeds-icon {

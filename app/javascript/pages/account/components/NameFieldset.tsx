@@ -1,6 +1,6 @@
 import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { UseFormMethods } from "react-hook-form"
+import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 
 interface NameFieldsetProps {
@@ -10,6 +10,26 @@ interface NameFieldsetProps {
   defaultMiddleName?: string
   defaultLastName?: string
   onChange?: () => void
+}
+
+export const handleNameServerErrors =
+  (setError: (name: string, error: ErrorOption) => void) => () => {
+    setError("firstName", { message: "error:name:genericServer", shouldFocus: true })
+  }
+
+export const nameErrorsMap = (errorKey: string, abbreviated: boolean) => {
+  if (errorKey) {
+    switch (errorKey) {
+      case "error:firstName":
+        return t("error.account.firstName")
+      case "error:lastName":
+        return t("error.account.lastName")
+      default:
+        return abbreviated
+          ? t("error.account.genericServerError.abbreviated")
+          : t("error.account.genericServerError")
+    }
+  }
 }
 
 const NameFieldset = ({
@@ -30,9 +50,13 @@ const NameFieldset = ({
         label={t("label.firstName.sentenceCase")}
         register={register}
         error={errors.firstName !== undefined}
-        errorMessage={t("error.firstName")}
+        errorMessage={
+          errors.firstName?.message && nameErrorsMap(errors.firstName.message as string, false)
+        }
         defaultValue={defaultFirstName ?? null}
-        validation={{ required: true }}
+        validation={{
+          required: "error:firstName",
+        }}
         onChange={onChange}
       />
       <Field
@@ -48,11 +72,13 @@ const NameFieldset = ({
         className="mb-4"
         name="lastName"
         label={t("label.lastName.sentenceCase")}
-        errorMessage={t("error.lastName")}
+        errorMessage={
+          errors.lastName?.message && nameErrorsMap(errors.lastName.message as string, false)
+        }
         defaultValue={defaultLastName ?? null}
         error={errors.lastName}
         register={register}
-        validation={{ required: true }}
+        validation={{ required: "error:lastName" }}
         onChange={onChange}
       />
     </Fieldset>
