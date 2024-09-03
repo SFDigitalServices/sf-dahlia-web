@@ -55,6 +55,15 @@ class CacheService
 
   attr_accessor :prev_cached_listings, :fresh_listings
 
+  def process_nested_translations(listing, strings_to_translate, object_key, value)
+    listing[object_key]&.each do |object|
+      unless object[value].nil?
+        strings_to_translate["#{object['Id']}.#{object_key}.#{value}"] ||= object[value]
+      end
+    end
+    strings_to_translate
+  end
+
   def cache_all_listings
     fresh_listings.each do |l|
       cache_single_listing(l)

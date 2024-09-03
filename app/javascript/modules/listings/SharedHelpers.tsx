@@ -242,7 +242,11 @@ export const getEventNote = (listingEvent: ListingEvent, translations: RailsTran
       {listingEvent.Venue && (
         <span className="links-space translate">
           {renderInlineMarkup(
-            getTranslatedString(listingEvent.Venue, `${listingEvent.Id}.Venue__c`, translations)
+            getTranslatedString(
+              listingEvent.Venue,
+              `${listingEvent.Id}.Open_House__c.Venue__c`,
+              translations
+            )
           )}
         </span>
       )}
