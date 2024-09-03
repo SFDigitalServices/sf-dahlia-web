@@ -244,7 +244,7 @@ export const getEventNote = (listingEvent: ListingEvent, translations: RailsTran
           {renderInlineMarkup(
             getTranslatedString(
               listingEvent.Venue,
-              `${listingEvent.Id}.Open_House__c.Venue__c`,
+              `${listingEvent.Id}.Open_Houses__c.Venue__c`,
               translations
             )
           )}
