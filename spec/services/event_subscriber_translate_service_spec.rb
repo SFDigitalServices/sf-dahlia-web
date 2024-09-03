@@ -57,19 +57,6 @@ describe Force::EventSubscriberTranslateService do
     allow(cache).to receive(:delete)
   end
 
-  describe 'when the service is initialized' do
-    it 'initializes salesforce, faye client, and translation service' do
-      expect(Restforce).to receive(:new).and_return(salesforce_client)
-      expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
-      expect(Faye::Client).to receive(:new).and_return(faye_client)
-      expect(faye_client).to receive(:set_header).with(
-        'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
-      )
-      expect(GoogleTranslationService).to receive(:new)
-      service.new
-    end
-  end
-
   describe '#listen_and_process_events when the GoogleCloudTranslate ff is enabled' do
     before do
       allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
@@ -80,6 +67,19 @@ describe Force::EventSubscriberTranslateService do
       allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
         .and_return(false)
     end
+    describe 'when the service is initialized' do
+      it 'initializes salesforce, faye client, and translation service' do
+        expect(Restforce).to receive(:new).and_return(salesforce_client)
+        expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
+        expect(Faye::Client).to receive(:new).and_return(faye_client)
+        expect(faye_client).to receive(:set_header).with(
+          'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
+        )
+        expect(GoogleTranslationService).to receive(:new)
+        service.new
+      end
+    end
+
     describe 'when listen_and_process_events is called' do
       it 'subscribes and unsubscribes to Salesforce platform event channel' do
         expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent')
@@ -102,6 +102,19 @@ describe Force::EventSubscriberTranslateService do
 
   describe '#listen_and_process_events when the GoogleCloudTranslate ff is disabled' do
     # feature flag defaults to false
+    describe 'when the service is initialized' do
+      it 'initializes salesforce, faye client, and translation service' do
+        expect(Restforce).to receive(:new).and_return(salesforce_client)
+        expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
+        expect(Faye::Client).to receive(:new).and_return(faye_client)
+        expect(faye_client).to receive(:set_header).with(
+          'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
+        )
+        expect(GoogleTranslationService).to receive(:new)
+        service.new
+      end
+    end
+
     describe 'when listen_and_process_events is called' do
       it 'does not subscribe to Salesforce platform event channel' do
         expect(faye_client).to_not receive(:subscribe).with('/data/Listing__ChangeEvent')
