@@ -13,8 +13,8 @@
 
 import { useEffect } from "react"
 import usePollElementRender from "./usePollElementRender"
-import { getCurrentLanguage } from "../util/languageUtil"
 import useScript from "./useScript"
+import { getCurrentLanguage } from "../util/languageUtil"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const tWindow = window as any
 const languageMap = {
@@ -37,28 +37,26 @@ const initGoogleTranslate = () => {
 
 tWindow.initGoogleTranslate = initGoogleTranslate
 
-const useTranslate = () => {
-  const languageInRoute = getCurrentLanguage()
-  useScript("//translate.google.com/translate_a/element.js?cb=initGoogleTranslate")
+const useTranslate = (disable: boolean = true) => {
+  const languageInRoute = disable ? "en" : getCurrentLanguage()
+  useScript("//translate.google.com/translate_a/element.js?cb=initGoogleTranslate", disable)
   /*
    * It seems the <select> and the <options> get added at different times.
    * We want to target the <select> for dispatching the change event, but we have to wait
    * until the <options> appear to dispatch the event.
    */
   const googleTranslateDropdownElHasBeenRendered = usePollElementRender(
-    "select.goog-te-combo option"
+    "select.goog-te-combo option",
+    disable
   )
-
   useEffect(() => {
-    if (languageInRoute && googleTranslateDropdownElHasBeenRendered) {
-      // TODO(DAH-1581): Remove any type on line 55
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const selectInDom: any = document.querySelector("select.goog-te-combo")
+    if (!disable && languageInRoute && googleTranslateDropdownElHasBeenRendered) {
+      const selectInDom: HTMLSelectElement = document.querySelector("select.goog-te-combo")
       selectInDom.value = languageMap[languageInRoute] || languageInRoute
       const ev = new Event("change", { bubbles: true })
       selectInDom.dispatchEvent(ev)
     }
-  }, [languageInRoute, googleTranslateDropdownElHasBeenRendered])
+  }, [languageInRoute, googleTranslateDropdownElHasBeenRendered, disable])
 }
 
 export default useTranslate

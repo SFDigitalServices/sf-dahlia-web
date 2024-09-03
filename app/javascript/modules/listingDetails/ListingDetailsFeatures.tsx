@@ -6,7 +6,8 @@ import { isBMR, isRental, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { isValidUrl } from "../../util/urlUtil"
 import ErrorBoundary, { BoundaryScope } from "../../components/ErrorBoundary"
-import { renderMarkup } from "../../util/languageUtil"
+import { getTranslatedString, renderMarkup } from "../../util/languageUtil"
+import { RailsTranslations } from "../../api/types/rails/listings/RailsTranslation"
 
 export interface ListingDetailsFeaturesProps {
   listing: RailsListing
@@ -23,15 +24,23 @@ const getDepositString = (min?: string, max?: string) => {
 interface FeatureItemProps {
   content: string
   title: string
+  fieldName?: string
+  translations?: RailsTranslations
   toTranslate?: boolean
 }
-const FeatureItem = ({ content, title, toTranslate }: FeatureItemProps) => {
+const FeatureItem = ({
+  content,
+  fieldName,
+  title,
+  translations,
+  toTranslate,
+}: FeatureItemProps) => {
   if (!content) return <></>
-
+  const description = toTranslate ? getTranslatedString(content, fieldName, translations) : content
   return (
     <Description
       term={title}
-      description={stripMostTags(content)}
+      description={stripMostTags(description)}
       markdownProps={{
         disableParsingRawHTML: false,
       }}
@@ -73,6 +82,8 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
     depositSubtext.push(t("listings.features.mayBeHigherForLowerCreditScores"))
   }
 
+  const translations = listing.translations
+
   return (
     <ListingDetailItem
       imageAlt={""}
@@ -100,6 +111,8 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             content={listing.Appliances}
             title={t("listings.features.appliances")}
             toTranslate={true}
+            fieldName={"Appliances__c"}
+            translations={translations}
           />
           <FeatureItem
             content={listing.Services_Onsite}
@@ -109,38 +122,52 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
                 : "listings.features.servicesOnsite"
             )}
             toTranslate={true}
+            fieldName={"Services_Onsite__c"}
+            translations={translations}
           />
           <FeatureItem
             content={listing.Parking_Information}
             title={t("listings.features.parking")}
             toTranslate={true}
+            fieldName={"Parking_Information__c"}
+            translations={translations}
           />
           {isRental(listing) && (
             <FeatureItem
               content={listing.Utilities}
               title={t("listings.features.utilities")}
               toTranslate={true}
+              fieldName={"Utilities__c"}
+              translations={translations}
             />
           )}
           <FeatureItem
             content={listing.Smoking_Policy}
             title={t("listings.features.smokingPolicy")}
             toTranslate={true}
+            fieldName={"Smoking_Policy__c"}
+            translations={translations}
           />
           <FeatureItem
             content={listing.Pet_Policy}
             title={t("listings.features.petsPolicy")}
             toTranslate={true}
+            fieldName={"Pet_Policy__c"}
+            translations={translations}
           />
           <FeatureItem
             content={listing.Amenities}
             title={t("listings.features.propertyAmenities")}
             toTranslate={true}
+            fieldName={"Amenities__c"}
+            translations={translations}
           />
           <FeatureItem
             content={listing.Accessibility}
             title={t("listings.features.accessibility")}
             toTranslate={true}
+            fieldName={"Accessibility__c"}
+            translations={translations}
           />
 
           {isRental(listing) && (
@@ -159,7 +186,15 @@ export const ListingDetailsFeatures = ({ listing, imageSrc }: ListingDetailsFeat
             )}
             applicationFee={listing.Fee ? `$${listing.Fee.toFixed(2)?.toLocaleString()}` : null}
             footerContent={[
-              <span className="translate">{renderMarkup(listing.Costs_Not_Included)}</span>,
+              <span className="translate">
+                {renderMarkup(
+                  getTranslatedString(
+                    listing?.Costs_Not_Included,
+                    "Costs_Not_Included__c",
+                    listing?.translations
+                  )
+                )}
+              </span>,
             ]}
             strings={{
               sectionHeader: t("listings.features.additionalFees"),

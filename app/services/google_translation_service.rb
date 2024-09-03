@@ -4,35 +4,41 @@ require 'google/cloud/translate/v2'
 class GoogleTranslationService
   class TranslationError < StandardError; end
 
-  def initialize(project_id:, key:)
-    Rails.logger.info('Connecting to Google Cloud Translate...')
-    @translate = Google::Cloud::Translate::V2.new(project_id:, key:)
+  def initialize
+    google_translation_logger('Connecting to Google Cloud Translate...')
+    @translate = Google::Cloud::Translate::V2.new(
+      project_id: ENV.fetch('GOOGLE_PROJECT_ID', nil),
+      key: ENV.fetch('GOOGLE_TRANSLATE_KEY',
+                     nil),
+    )
     @cache = Rails.cache
   end
 
   def translate(text, to)
+    return [] if text.empty?
+
+    google_translation_logger("Translating text: #{text} to: #{to}")
     to.map do |target|
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
-      Rails.logger.error("An error occured: #{e.message}")
-      raise TranslationError, e.message
+      google_translation_logger("An error occured: #{e.inspect}", error: true)
+      return []
     end
   end
 
   def cache_listing_translations(listing_id, keys, translations)
     translations = transform_translations_for_caching(listing_id, keys, translations)
     if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
-      Rails.logger.info(
+      google_translation_logger(
         "Successfully cached listing translations for listing id: #{listing_id}",
       )
-      translations
     else
-      Rails.logger.error(
-        "Error caching listing translations for listing id: #{listing_id}",
+      google_translation_logger(
+        "Error caching listing translations for listing id: #{listing_id}", error: true
       )
-      raise "Error caching listing translations for listing id: #{listing_id}"
     end
+    translations
   end
 
   private
@@ -61,5 +67,13 @@ class GoogleTranslationService
     return { **prev_cached_translations, **return_value } if prev_cached_translations
 
     return_value
+  end
+
+  def google_translation_logger(message, error: false)
+    if error
+      Rails.logger.error("GoogleTranslationService #{message}")
+    else
+      Rails.logger.info("GoogleTranslationService #{message}")
+    end
   end
 end
