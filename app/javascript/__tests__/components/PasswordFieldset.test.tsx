@@ -140,7 +140,7 @@ describe("Password Fieldset", () => {
       expect(passwordErrorsMap("password:complexity", true)).toBe("Choose a strong password")
       expect(passwordErrorsMap("currentPassword:required", false)).toBe("Enter current password")
       expect(passwordErrorsMap("password:required", false)).toBe("Enter new password")
-      expect(passwordErrorsMap("unknown:error", true)).toBe("An error occurred")
+      expect(passwordErrorsMap("unknown:error", true)).toBe("Something went wrong")
     })
   })
 })

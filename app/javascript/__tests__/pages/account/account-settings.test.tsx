@@ -397,11 +397,13 @@ describe("<AccountSettingsPage />", () => {
 
         expect(
           screen.getByRole("button", {
-            name: /an error occurred/i,
+            name: /something went wrong/i,
           })
         ).not.toBeNull()
-
-        expect(screen.getByText(/an error occurred\. please try again/i)).not.toBeNull()
+        // Something went wrong. Try again or check back later.
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
       })
 
       test("date of birth errors", async () => {
@@ -513,7 +515,9 @@ describe("<AccountSettingsPage />", () => {
 
           await promise
         })
-        expect(screen.getByText(/An error occurred\. Please try again/i)).not.toBeNull()
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
       })
 
       test("email Errors", async () => {
@@ -570,7 +574,9 @@ describe("<AccountSettingsPage />", () => {
           button[2].dispatchEvent(new MouseEvent("click"))
           await promise
         })
-        expect(screen.getByText(/An error occurred\. Please try again/i)).not.toBeNull()
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
       })
       test("password Errors", async () => {
         const button = getAllByText("Update")
@@ -623,7 +629,9 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        expect(screen.getByText(/An error occurred\. Please try again/i)).not.toBeNull()
+        expect(
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
         ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
           response: {
             data: {

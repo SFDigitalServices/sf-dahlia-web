@@ -21,12 +21,12 @@ describe("NameFieldset", () => {
         {
           errorKey: "unknown:error",
           abbreviated: false,
-          expected: "An error occurred. Please try again",
+          expected: "Something went wrong. Try again or check back later.",
         },
         {
           errorKey: "unknown:error",
           abbreviated: true,
-          expected: "An error occurred",
+          expected: "Something went wrong",
         },
         { errorKey: "", abbreviated: false, expected: undefined },
       ]

@@ -134,8 +134,10 @@ describe("DOBFieldset", () => {
         "You must be 18 or older. If you are under 18, email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> to get info on housing resources for youth"
       )
       expect(dobErrorsMap("error:dob:age", true)).toBe("You must be 18 or older")
-      expect(dobErrorsMap("unknown:error", false)).toBe("An error occurred. Please try again")
-      expect(dobErrorsMap("unknown:error", true)).toBe("An error occurred")
+      expect(dobErrorsMap("unknown:error", false)).toBe(
+        "Something went wrong. Try again or check back later."
+      )
+      expect(dobErrorsMap("unknown:error", true)).toBe("Something went wrong")
     })
   })
 })
