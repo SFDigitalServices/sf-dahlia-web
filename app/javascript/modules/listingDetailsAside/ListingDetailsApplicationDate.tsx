@@ -73,6 +73,12 @@ const getStatusFcfs = (listing: RailsListing) => {
   return <StatusMessage isClosed={isClosed} message={getMessage()} />
 }
 
+const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
+  return listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
+    ? getStatusFcfs(listing)
+    : getStatusLottery(listing)
+}
+
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
   const isApplicationOpen = listing && isOpen(listing)
 
@@ -81,11 +87,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
   return (
     <div className="w-full mb-8 md:mb-0">
       {useUpdatedStatuses ? (
-        listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED ? (
-          getStatusFcfs(listing)
-        ) : (
-          getStatusLottery(listing)
-        )
+        <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">
           <ApplicationStatus
