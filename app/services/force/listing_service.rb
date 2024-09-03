@@ -42,10 +42,10 @@ module Force
         # @cache.fetch("/ListingDetails/#{id}/translations") do
         #   # call translation service
         # end
+        Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
+        listing['translations'] = listing_translations || {}
       end
 
-      Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
-      listing['translations'] = listing_translations || {}
       listing
     end
 
