@@ -27,12 +27,7 @@ exports[`ListingDetailsApplicationDate displays Application Deadline when listin
       <span
         data-part="content"
       >
-        Application deadline
-        <span
-          class="font-semibold"
-        >
-          : January 1, 2050 1:00 AM Pacific Time
-        </span>
+        Application deadline: %{date} at %{time} Pacific Time
       </span>
     </div>
   </div>
@@ -66,12 +61,7 @@ exports[`ListingDetailsApplicationDate displays Applications Closed when listing
       <span
         data-part="content"
       >
-        Applications closed
-        <span
-          class="font-semibold"
-        >
-          : January 1, 2000 1:00 AM Pacific Time
-        </span>
+        Applications closed: January 1, 2000 at 1:00 AM Pacific Time
       </span>
     </div>
   </div>

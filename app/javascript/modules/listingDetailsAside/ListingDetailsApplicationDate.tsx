@@ -21,17 +21,7 @@ export const formatTime = (time: string) => {
   return `${formattedTime}${suffix}`
 }
 
-const StatusMessage = ({
-  isClosed,
-  datetime,
-  openMessage,
-  showDateTime = true,
-}: {
-  isClosed: boolean
-  datetime: string
-  openMessage: string
-  showDateTime?: boolean
-}) => {
+const StatusMessage = ({ isClosed, message }: { isClosed: boolean; message: string }) => {
   return (
     <Message
       fullwidth
@@ -39,37 +29,48 @@ const StatusMessage = ({
       variant={isClosed ? "alert" : "primary"}
       customIcon={<Icon fill={isClosed ? "red-700" : ""} symbol="clock" size="medium" />}
     >
-      {isClosed ? t("listingDetails.applicationsClosed") : openMessage}
-      {showDateTime && (
-        <span className="font-semibold">
-          {": "}
-          {localizedFormat(datetime, "LL")} {formatTime(datetime)}{" "}
-          {t("listingDetails.applicationsDeadline.timezone")}
-        </span>
-      )}
+      {message}
     </Message>
   )
 }
 
 const getStatusLottery = (listing: RailsListing) => {
+  const isClosed = !isOpen(listing)
+  const datetime = listing.Application_Due_Date
   return (
     <StatusMessage
       isClosed={!isOpen(listing)}
-      datetime={listing.Application_Due_Date}
-      openMessage={t("listingDetails.applicationsDeadline")}
+      message={
+        isClosed
+          ? t("listingDetails.applicationsClosed.withDateTime", {
+              date: localizedFormat(datetime, "LL"),
+              time: formatTime(datetime),
+            })
+          : t("listingDetails.applicationsDeadline.withDateTime")
+      }
     />
   )
 }
 
 const getStatusFcfs = (listing: RailsListing) => {
-  return (
-    <StatusMessage
-      isClosed={listing.Listing_State === LISTING_STATES.CLOSED}
-      datetime={listing.Application_Start_Date_Time}
-      openMessage={t("listingDetails.applicationsOpen")}
-      showDateTime={listing.Listing_State === LISTING_STATES.NOT_YET_OPEN}
-    />
-  )
+  const isClosed = listing.Listing_State === LISTING_STATES.CLOSED
+  const datetime = listing.Application_Start_Date_Time
+  const showDateTime = listing.Listing_State === LISTING_STATES.NOT_YET_OPEN
+
+  const getMessage = () => {
+    if (isClosed) {
+      return t("listingDetails.applicationsClosed")
+    } else {
+      return showDateTime
+        ? t("listingDetails.applicationsOpen.withDateTime", {
+            date: localizedFormat(datetime, "LL"),
+            time: formatTime(datetime),
+          })
+        : t("listingDetails.applicationsOpen")
+    }
+  }
+
+  return <StatusMessage isClosed={isClosed} message={getMessage()} />
 }
 
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
