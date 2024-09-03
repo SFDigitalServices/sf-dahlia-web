@@ -63,12 +63,31 @@ describe Force::ListingService do
     end
   end
 
-  describe '.listing' do
+  describe '.listing with GoogleCloudTranslate feature flag enabled' do
     it 'should return details of a listing' do
       endpoint = '/ListingDetails/' + listing_id
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with(endpoint, nil, false).and_return([single_listing])
       Force::ListingService.listing(listing_id)
+    end
+  end
+
+  describe '.listing with GoogleCloudTranslate feature flag disabled' do
+    before do
+      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+        .with('GoogleCloudTranslate')
+        .and_return(true)
+    end
+    after do
+      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+        .and_return(false)
+    end
+    it 'should return details of a listing with listing_translations attached' do
+      endpoint = "/ListingDetails/#{listing_id}"
+      expect_any_instance_of(Force::Request).to receive(:cached_get)
+        .with(endpoint, nil, false).and_return([single_listing])
+      listing = Force::ListingService.listing(listing_id)
+      expect(listing).to have_key('translations')
     end
   end
 
