@@ -4,6 +4,17 @@ require 'faye'
 require 'ostruct'
 
 describe Force::EventSubscriberTranslateService do
+  before do
+    allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+      .with('GoogleCloudTranslate')
+      .and_return(true)
+  end
+
+  after do
+    allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+      .and_return(false)
+  end
+
   describe '#listen_and_process_events' do
     let(:service) { Force::EventSubscriberTranslateService }
     let(:faye_client) { instance_double(Faye::Client) }
