@@ -39,15 +39,16 @@ const getStatusLottery = (listing: RailsListing) => {
   const datetime = listing.Application_Due_Date
   return (
     <StatusMessage
-      isClosed={!isOpen(listing)}
-      message={
+      isClosed={isClosed}
+      message={t(
         isClosed
-          ? t("listingDetails.applicationsClosed.withDateTime", {
-              date: localizedFormat(datetime, "LL"),
-              time: formatTime(datetime),
-            })
-          : t("listingDetails.applicationsDeadline.withDateTime")
-      }
+          ? "listingDetails.applicationsClosed.withDateTime"
+          : "listingDetails.applicationsDeadline.withDateTime",
+        {
+          date: localizedFormat(datetime, "LL"),
+          time: formatTime(datetime),
+        }
+      )}
     />
   )
 }

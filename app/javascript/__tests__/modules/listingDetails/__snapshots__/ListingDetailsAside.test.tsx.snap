@@ -328,7 +328,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               <span
                 data-part="content"
               >
-                Application deadline: %{date} at %{time} Pacific Time
+                Application deadline: January 1, 2050 at 1:00 AM Pacific Time
               </span>
             </div>
           </div>
