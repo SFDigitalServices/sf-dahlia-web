@@ -52,8 +52,8 @@ module Force
         results = Request.new(parse_response: true).cached_get(endpoint, nil, true)
         listing_translations = CacheService.new.process_translations(results.first)
       end
-
-      listing['translations'] = listing_translations
+      
+      listing['translations'] = listing_translations || {}
       listing
     end
 

@@ -8,6 +8,7 @@ import { ConfigContext } from "../../lib/ConfigContext"
 import { ListingAddress } from "../../components/ListingAddress"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./ListingDetailsImageCard.scss"
+import { getTranslatedString } from "../../util/languageUtil"
 
 export interface ListingDetailsImageCardProps {
   listing: RailsListing
@@ -17,7 +18,11 @@ const createImageCardProps = (listing: RailsListing) => {
   const listingImages: ImageItem[] = listing?.Listing_Images?.map((listingImage) => {
     return {
       url: listingImage.displayImageURL,
-      description: listingImage.Image_Description,
+      description: getTranslatedString(
+        listingImage.Image_Description,
+        `${listingImage.Id}.Listing_Images.Image_Description__c`,
+        listing.translations
+      ),
     }
   })
 
