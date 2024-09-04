@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import { EventSection, t } from "@bloom-housing/ui-components"
-import { localizedFormat } from "../../util/languageUtil"
+import { localizedFormat, getTranslatedString } from "../../util/languageUtil"
 import { getEventTimeString } from "../../util/listingUtil"
 
 export interface ListingDetailsInfoSessionProps {
@@ -21,11 +21,14 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
                 dateString:
                   informationSession.Date && localizedFormat(informationSession.Date, "LL"),
                 timeString: getEventTimeString(informationSession),
-                note: getEventNote(
-                  informationSession,
-                  listing.translations,
-                  `${informationSession.Id}.Information_Sessions.Venue__c`
-                ),
+                note: getEventNote({
+                  ...informationSession,
+                  Venue: getTranslatedString(
+                    informationSession.Venue,
+                    `${informationSession.Id}.Information_Sessions.Venue__c`,
+                    listing.translations
+                  ),
+                }),
               }
             })}
             headerText={t("listings.process.informationSessions")}

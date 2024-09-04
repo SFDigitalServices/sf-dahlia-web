@@ -3,7 +3,7 @@ import { getEventNote, RailsListing } from "../../modules/listings/SharedHelpers
 import "./ListingDetailsOpenHouses.scss"
 import { Heading, t } from "@bloom-housing/ui-components"
 import { getEventDateTime, getEventTimeString, sortByDateTimeString } from "../../util/listingUtil"
-import { localizedFormat } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
 import { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface OpenHousesProps {
@@ -16,7 +16,14 @@ export const ListingDetailsOpenHouses = ({ listing, sectionHeader = true }: Open
     return {
       dateString: openHouse.Date && localizedFormat(openHouse.Date, "LL"),
       timeString: getEventTimeString(openHouse),
-      note: getEventNote(openHouse, listing.translations, `${openHouse.Id}.Open_Houses.Venue__c`),
+      note: getEventNote({
+        ...openHouse,
+        Venue: getTranslatedString(
+          openHouse.Venue,
+          `${openHouse.Id}.Open_Houses.Venue__c`,
+          listing.translations
+        ),
+      }),
       dateStartTime: getEventDateTime(openHouse.Date, openHouse.Start_Time),
     }
   }).sort((a, b) => sortByDateTimeString(a.dateStartTime, b.dateStartTime))

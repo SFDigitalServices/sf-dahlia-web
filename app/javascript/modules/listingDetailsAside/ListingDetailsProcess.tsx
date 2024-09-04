@@ -36,15 +36,15 @@ export const ListingDetailsProcess = ({
                 {
                   dateString: localizedFormat(listing.Lottery_Date, "LL"),
                   timeString: dayjs(listing.Lottery_Date).format("hh:mma"),
-                  note: getEventNote(
-                    {
-                      City: listing.Lottery_City,
-                      Street_Address: listing.Lottery_Street_Address,
-                      Venue: listing.Lottery_Venue,
-                    },
-                    listing.translations,
-                    "Lottery_Venue__c"
-                  ),
+                  note: getEventNote({
+                    City: listing.Lottery_City,
+                    Street_Address: listing.Lottery_Street_Address,
+                    Venue: getTranslatedString(
+                      listing.Lottery_Venue,
+                      "Lottery_Venue__c",
+                      listing.translations
+                    ),
+                  }),
                 },
               ]}
               headerText={t("listings.process.publicLottery")}

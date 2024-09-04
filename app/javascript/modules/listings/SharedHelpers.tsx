@@ -1,13 +1,12 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
 import { getTagContent, isFcfsListing, isLotteryCompleteDeprecated } from "../../util/listingUtil"
-import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
+import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./SharedHelpers.scss"
-import { RailsTranslations } from "../../api/types/rails/listings/RailsTranslation"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -218,11 +217,7 @@ export const getImageCardProps = (
 
   const imageDescription =
     listing?.Listing_Images?.length > 0
-      ? getTranslatedString(
-          listing.Listing_Images[0].Image_Description,
-          `${listing.Listing_Images[0].Id}.Image_Description__c`,
-          listing.translations
-        )
+      ? listing.Listing_Images[0].Image_Description
       : `${listing.Building_Name} Building`
   return {
     imageUrl: imageUrl,
@@ -235,18 +230,12 @@ export const getImageCardProps = (
   }
 }
 
-export const getEventNote = (
-  listingEvent: ListingEvent,
-  translations: RailsTranslations,
-  fieldName: string
-) => {
+export const getEventNote = (listingEvent: ListingEvent) => {
   if (!listingEvent.Venue) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
-        <span className="links-space translate">
-          {renderInlineMarkup(getTranslatedString(listingEvent.Venue, fieldName, translations))}
-        </span>
+        <span className="links-space translate">{renderInlineMarkup(listingEvent.Venue)}</span>
       )}
       {listingEvent.Street_Address && listingEvent.City && (
         <span>{`${listingEvent.Street_Address}, ${listingEvent.City}`}</span>
