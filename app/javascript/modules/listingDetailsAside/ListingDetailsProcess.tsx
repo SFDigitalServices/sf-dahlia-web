@@ -42,7 +42,8 @@ export const ListingDetailsProcess = ({
                       Street_Address: listing.Lottery_Street_Address,
                       Venue: listing.Lottery_Venue,
                     },
-                    listing.translations
+                    listing.translations,
+                    "Lottery_Venue__c"
                   ),
                 },
               ]}

@@ -21,7 +21,11 @@ export const ListingDetailsInfoSession = ({ listing }: ListingDetailsInfoSession
                 dateString:
                   informationSession.Date && localizedFormat(informationSession.Date, "LL"),
                 timeString: getEventTimeString(informationSession),
-                note: getEventNote(informationSession, listing.translations),
+                note: getEventNote(
+                  informationSession,
+                  listing.translations,
+                  `${informationSession.Id}.Information_Sessions.Venue__c`
+                ),
               }
             })}
             headerText={t("listings.process.informationSessions")}

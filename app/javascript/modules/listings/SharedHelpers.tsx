@@ -235,19 +235,17 @@ export const getImageCardProps = (
   }
 }
 
-export const getEventNote = (listingEvent: ListingEvent, translations: RailsTranslations) => {
+export const getEventNote = (
+  listingEvent: ListingEvent,
+  translations: RailsTranslations,
+  fieldName: string
+) => {
   if (!listingEvent.Venue) return null
   return (
     <div className="flex flex-col">
       {listingEvent.Venue && (
         <span className="links-space translate">
-          {renderInlineMarkup(
-            getTranslatedString(
-              listingEvent.Venue,
-              `${listingEvent.Id}.Open_Houses__c.Venue__c`,
-              translations
-            )
-          )}
+          {renderInlineMarkup(getTranslatedString(listingEvent.Venue, fieldName, translations))}
         </span>
       )}
       {listingEvent.Street_Address && listingEvent.City && (
