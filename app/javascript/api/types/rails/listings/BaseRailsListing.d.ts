@@ -54,6 +54,15 @@ export type ListingLotteryPreference = {
   PDF_URL?: string
 }
 
+export type ListingOnlineDetails = {
+  records: Array<ListingOnlineDetail>
+}
+
+export type ListingOnlineDetail = {
+  Name: string
+  URL: string
+}
+
 type BaseRailsListing = {
   Accepting_Online_Applications: boolean
   Accepting_applications_at_leasing_agent: boolean
@@ -109,6 +118,7 @@ type BaseRailsListing = {
   Listing_State?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
+  Listing_Online_Details__r?: ListingOnlineDetails
   LotteryResultsURL?: string
   Lottery_City?: string
   Lottery_Date?: string

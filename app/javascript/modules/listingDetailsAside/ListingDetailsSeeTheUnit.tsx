@@ -2,7 +2,7 @@ import React from "react"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsSeeTheUnit.scss"
 import { t, Heading, Icon, IconFillColors } from "@bloom-housing/ui-components"
-import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
+import { Heading as HeadingSeeds, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
@@ -43,11 +43,19 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
       </SeeTheUnitSubsection>
       {listing.Multiple_Listing_Service_URL && (
         <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <p>
-            <a href={listing.Multiple_Listing_Service_URL} target="_blank">
-              {t("listings.process.seeTheUnitOnMls")}
-            </a>
-          </p>
+          <ul>
+            <li>
+              <Link href={listing.Multiple_Listing_Service_URL} hideExternalLinkIcon={true}>
+                {t("listings.process.seeTheUnitOnMls")}
+              </Link>
+            </li>
+            <li>
+              <Link href="www.google.com">hello</Link>
+            </li>
+            <li>
+              <Link href="www.google.com">world</Link>
+            </li>
+          </ul>
         </SeeTheUnitSubsection>
       )}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
