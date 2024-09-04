@@ -6,6 +6,7 @@ import { Heading as HeadingSeeds, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
+import { ListingOnlineDetails } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -41,20 +42,27 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
         ) : null}
       </SeeTheUnitSubsection>
-      {listing.Multiple_Listing_Service_URL && (
+      {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) && (
         <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
           <ul>
             <li>
-              <Link href={listing.Multiple_Listing_Service_URL} hideExternalLinkIcon={true}>
+              <Link
+                className="no-underline"
+                href={listing.Multiple_Listing_Service_URL}
+                hideExternalLinkIcon={true}
+              >
                 {t("listings.process.seeTheUnitOnMls")}
               </Link>
             </li>
-            <li>
-              <Link href="www.google.com">hello</Link>
-            </li>
-            <li>
-              <Link href="www.google.com">world</Link>
-            </li>
+            {listing.Listing_Online_Details.map((record: ListingOnlineDetails) => {
+              return (
+                <li>
+                  <Link className="no-underline" href={record.URL}>
+                    {record.Name}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </SeeTheUnitSubsection>
       )}

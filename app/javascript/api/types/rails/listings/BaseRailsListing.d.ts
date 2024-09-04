@@ -55,7 +55,8 @@ export type ListingLotteryPreference = {
 }
 
 export type ListingOnlineDetails = {
-  records: Array<ListingOnlineDetail>
+  Name: string
+  URL: string
 }
 
 export type ListingOnlineDetail = {
@@ -118,7 +119,7 @@ type BaseRailsListing = {
   Listing_State?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
-  Listing_Online_Details__r?: ListingOnlineDetails
+  Listing_Online_Details?: ListingOnlineDetails[]
   LotteryResultsURL?: string
   Lottery_City?: string
   Lottery_Date?: string
