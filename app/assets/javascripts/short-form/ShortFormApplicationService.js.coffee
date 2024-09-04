@@ -1147,9 +1147,8 @@ ShortFormApplicationService = (
       ListingDataService.listing.Custom_Listing_Type
     )
 
-  # TODO: The Kelsey - find a better way to ID before this goes live
-  Service.listingHasHomeAndCommunityBasedServicesUnits  = (listing) ->
-    !!listing.Name.match(/the kelsey/i)
+  Service.listingHasHomeAndCommunityBasedServicesUnits = (listing) ->
+    listing.Custom_Listing_Type == 'HCBS Units'
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
