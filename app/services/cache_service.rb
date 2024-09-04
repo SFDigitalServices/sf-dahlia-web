@@ -24,7 +24,7 @@ class CacheService
 
     strings_to_translate = {}
     ServiceHelper.listing_field_names.each do |field|
-      strings_to_translate[field] = listing[field] unless listing[field].nil?
+      strings_to_translate[field] = listing[field].present? ? listing[field] : ''
     end
 
     languages = %w[ES ZH TL]
