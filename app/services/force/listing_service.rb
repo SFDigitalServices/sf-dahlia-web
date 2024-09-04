@@ -37,15 +37,13 @@ module Force
       listing = add_image_urls(results_with_cached_listing_images).first
 
       if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
-        listing_translations = @cache.read("/ListingDetails/#{id}/translations")
-        # TODO: DAH-2451
-        # @cache.fetch("/ListingDetails/#{id}/translations") do
-        #   # call translation service
-        # end
+        listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
+          Rails.logger.info("Fetching new translations for #{id}")
+          CacheService.new.process_translations(listing)
+        end
         Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
         listing['translations'] = listing_translations || {}
       end
-
       listing
     end
 
