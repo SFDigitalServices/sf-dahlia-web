@@ -27,6 +27,16 @@ class CacheService
       strings_to_translate[field] = listing[field] unless listing[field].nil?
     end
 
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Open_Houses',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Information_Sessions',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Listing_Images',
+                                                       'Image_Description')
+
     languages = %w[ES ZH TL]
 
     translations = translation_service.translate(strings_to_translate.values,
@@ -44,6 +54,15 @@ class CacheService
   private
 
   attr_accessor :prev_cached_listings, :fresh_listings
+
+  def process_nested_translations(listing, strings_to_translate, object_key, value)
+    listing[object_key]&.each do |object|
+      unless object[value].nil?
+        strings_to_translate["#{object['Id']}.#{object_key}.#{value}"] ||= object[value]
+      end
+    end
+    strings_to_translate
+  end
 
   def cache_all_listings
     fresh_listings.each do |l|

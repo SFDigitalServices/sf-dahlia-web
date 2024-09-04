@@ -41,12 +41,11 @@ module Force
       else
         puts 'test is NOT enabled'
       end
-      
-      listing_translations = @cache.read("/ListingDetails/#{id}/translations")
-      # TODO: DAH-2451
-      # @cache.fetch("/ListingDetails/#{id}/translations") do
-      #   # call translation service
-      # end
+
+      listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
+        Rails.logger.info("Fetching new translations for #{id}")
+        CacheService.new.process_translations(listing)
+      end
       Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
       listing['translations'] = listing_translations || {}
       listing
