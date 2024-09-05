@@ -56,7 +56,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
             </div>
             {listing.Listing_Online_Details.map((record: ListingOnlineDetails) => {
               return (
-                <div>
+                <div key={record.Id}>
                   <Link className="no-underline" href={record.URL} hideExternalLinkIcon={true}>
                     {record.Name}
                   </Link>

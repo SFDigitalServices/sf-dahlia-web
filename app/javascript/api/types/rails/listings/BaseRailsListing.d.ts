@@ -55,6 +55,7 @@ export type ListingLotteryPreference = {
 }
 
 export type ListingOnlineDetails = {
+  Id: string
   Name: string
   URL: string
 }
