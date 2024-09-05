@@ -44,8 +44,8 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
       </SeeTheUnitSubsection>
       {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) && (
         <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <ul>
-            <li>
+          <div className="flex-row gap-x-8 gap-y-4 grid-cols-3 space-y-2">
+            <div>
               <Link
                 className="no-underline"
                 href={listing.Multiple_Listing_Service_URL}
@@ -53,17 +53,17 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
               >
                 {t("listings.process.seeTheUnitOnMls")}
               </Link>
-            </li>
+            </div>
             {listing.Listing_Online_Details.map((record: ListingOnlineDetails) => {
               return (
-                <li>
-                  <Link className="no-underline" href={record.URL}>
+                <div>
+                  <Link className="no-underline" href={record.URL} hideExternalLinkIcon={true}>
                     {record.Name}
                   </Link>
-                </li>
+                </div>
               )
             })}
-          </ul>
+          </div>
         </SeeTheUnitSubsection>
       )}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
