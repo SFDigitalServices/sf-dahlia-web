@@ -55,7 +55,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
               data-variant="primary"
             >
               <span
@@ -76,11 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                <div>
-                  <span>
-                    Applications Open
-                  </span>
-                </div>
+                Applications open
               </span>
             </div>
           </div>
