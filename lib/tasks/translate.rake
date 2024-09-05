@@ -8,7 +8,7 @@ Event = Struct.new(
   keyword_init: true,
 )
 
-namespace :translate_test do # rubocop:disable Metrics/BlockLength
+namespace :translate do # rubocop:disable Metrics/BlockLength
   desc 'Testing Translation Service'
   task translate: :environment do
     fields = %w[hello world]
