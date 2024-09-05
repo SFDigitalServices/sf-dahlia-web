@@ -37,14 +37,28 @@ module Force
       listing = add_image_urls(results_with_cached_listing_images).first
 
       if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
-        listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
-          Rails.logger.info("Fetching new translations for #{id}")
-          CacheService.new.process_translations(listing)
-        end
-        Rails.logger.info("Cached translations for #{id}: #{listing_translations}")
-        listing['translations'] = listing_translations || {}
+      listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
+        Rails.logger.info("Nothing in cache for Listing #{id} translations")
+        {}
+      end
+
+      unless translations_valid?(listing_translations)
+        Rails.logger.info("Translations are not valid for #{id}")
+        results = Request.new(parse_response: true).cached_get(endpoint, nil, true)
+        listing_translations = CacheService.new.process_translations(results.first)
+      end
+      
+      listing['translations'] = listing_translations || {}
       end
       listing
+    end
+
+    def self.translations_valid?(listing_translations)
+      listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
+      listing_field_names_salesforce.each do |field_name|
+        return false unless listing_translations.key?(field_name.to_sym)
+      end
+      true
     end
 
     # get all units for a given listing
