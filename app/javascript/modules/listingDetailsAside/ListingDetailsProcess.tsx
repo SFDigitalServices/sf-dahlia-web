@@ -39,7 +39,11 @@ export const ListingDetailsProcess = ({
                   note: getEventNote({
                     City: listing.Lottery_City,
                     Street_Address: listing.Lottery_Street_Address,
-                    Venue: listing.Lottery_Venue,
+                    Venue: getTranslatedString(
+                      listing.Lottery_Venue,
+                      "Lottery_Venue__c",
+                      listing.translations
+                    ),
                   }),
                 },
               ]}
