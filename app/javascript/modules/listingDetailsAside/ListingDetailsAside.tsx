@@ -3,7 +3,7 @@ import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/u
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isOpen, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsListing, isOpen, isRental, isSale } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -12,8 +12,11 @@ import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { localizedFormat } from "../../util/languageUtil"
+import { getSfGovUrl, localizedFormat } from "../../util/languageUtil"
 import { getHousingCounselorsPath } from "../../util/routeUtil"
+import { Card, Link } from "@bloom-housing/ui-seeds"
+import { CardFooter, CardHeader, CardSection } from "@bloom-housing/ui-seeds/src/blocks/Card"
+import "./ListingDetailsAside.scss"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -55,6 +58,28 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
     </SidebarBlock>
   )
 
+  const fcfsNoLotteryRequired = () => {
+    const url = getSfGovUrl(
+      "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
+      14246
+    )
+    return (
+      <Card className="fcfs-no-lottery">
+        <CardHeader className="font-bold fcfs-no-lottery-header">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.header")}
+        </CardHeader>
+        <CardSection className="fcfs-no-lottery-section">
+          {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
+        </CardSection>
+        <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
+          <Link href={url} hideExternalLinkIcon={true}>
+            {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
+          </Link>
+        </CardFooter>
+      </Card>
+    )
+  }
+
   return (
     <ul>
       <ListingDetailItem
@@ -68,6 +93,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
+            {isFcfsListing(listing) && fcfsNoLotteryRequired()}
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
