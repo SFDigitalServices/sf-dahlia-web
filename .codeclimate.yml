@@ -12,3 +12,6 @@ checks:
   method-complexity:
     config:
       threshold: 8
+  similar-code:
+    config:
+      threshold: 50
