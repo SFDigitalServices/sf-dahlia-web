@@ -135,7 +135,6 @@ describe CacheService do
       listing['Listing_Other_Notes'] = 'Test Notes'
       listing['Realtor_Commission_Info'] = 'Test Commission Info'
 
-      puts listing
       allow(Force::ListingService).to receive(:listing)
         .and_return(:listing)
 
