@@ -104,6 +104,7 @@ module Force
         event.listing_id,
         event.updated_values.keys,
         translations,
+        event.last_modified_date,
       )
       logger(
         "Event Translations: #{cached_response.inspect}",

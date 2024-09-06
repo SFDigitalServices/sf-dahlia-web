@@ -27,8 +27,12 @@ class GoogleTranslationService
     end
   end
 
-  def cache_listing_translations(listing_id, keys, translations)
-    translations = transform_translations_for_caching(listing_id, keys, translations)
+  def cache_listing_translations(listing_id, keys, translations, last_modified)
+    Force::Request.new(parse_response: true).cached_get(
+      "/ListingDetails/#{CGI.escape(listing_id)}", nil, true
+    )
+    translations = transform_translations_for_caching(listing_id, keys, translations,
+                                                      last_modified)
     if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
       google_translation_logger(
         "Successfully cached listing translations for listing id: #{listing_id}",
@@ -49,13 +53,13 @@ class GoogleTranslationService
     results.map(&:text)
   end
 
-  def transform_translations_for_caching(listing_id, keys, translations)
+  def transform_translations_for_caching(listing_id, keys, translations, last_modified)
     prev_cached_translations = @cache.read("/ListingDetails/#{listing_id}/translations")
 
     # keys can come from updated_values.keys in the event_subscriber_translate_service
     # they will be in the same order as the translations because the translation service
     # uses the values from that object and the api returns 1 for each key
-    return_value = {}
+    return_value = { LastModifiedDate: last_modified }
     translations.each do |target|
       target[:translation].each_with_index do |value, i|
         field = keys[i].to_sym

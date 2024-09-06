@@ -42,8 +42,9 @@ module Force
           {}
         end
 
-        unless translations_valid?(listing_translations)
+        unless translations_valid?(listing_translations, listing['LastModifiedDate'])
           Rails.logger.info("Translations are not valid for #{id}")
+          # TODO: when should we force salesforce listing recache?
           results = Request.new(parse_response: true).cached_get(endpoint, nil, true)
           listing_translations = CacheService.new.process_translations(results.first)
         end
@@ -53,7 +54,10 @@ module Force
       listing
     end
 
-    def self.translations_valid?(listing_translations)
+    def self.translations_valid?(listing_translations, listing_last_modified)
+      return false unless listing_translations[:LastModifiedDate] == listing_last_modified
+
+      Rails.logger.info('Translations cache is up to date')
       listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
       listing_field_names_salesforce.each do |field_name|
         return false unless listing_translations.key?(field_name.to_sym)

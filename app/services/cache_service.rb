@@ -48,6 +48,7 @@ class CacheService
         ServiceHelper.convert_to_salesforce_field_name(key)
       end,
       translations,
+      listing['LastModifiedDate'],
     )
   end
 
