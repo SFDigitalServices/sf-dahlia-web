@@ -308,14 +308,18 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                 See details online
               </h1>
               <div>
-                <p>
-                  <a
-                    href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
-                    target="_blank"
-                  >
-                    See the unit on MLS
-                  </a>
-                </p>
+                <div
+                  class="flex-row space-y-1"
+                >
+                  <div>
+                    <a
+                      class="seeds-link no-underline"
+                      href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+                    >
+                      See the unit on MLS
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             <div
@@ -1083,14 +1087,18 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 See details online
               </h1>
               <div>
-                <p>
-                  <a
-                    href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
-                    target="_blank"
-                  >
-                    See the unit on MLS
-                  </a>
-                </p>
+                <div
+                  class="flex-row space-y-1"
+                >
+                  <div>
+                    <a
+                      class="seeds-link no-underline"
+                      href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+                    >
+                      See the unit on MLS
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
             <div

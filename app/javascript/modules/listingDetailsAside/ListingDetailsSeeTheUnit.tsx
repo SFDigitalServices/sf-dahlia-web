@@ -29,6 +29,39 @@ const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps
   )
 }
 
+const SeeDetailsOnline = (listing: RailsListing) => {
+  if (!listing.Multiple_Listing_Service_URL && !listing.Listing_Online_Details) {
+    return null
+  }
+
+  return (
+    <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
+      <div className="flex-row space-y-1">
+        {listing.Multiple_Listing_Service_URL && (
+          <div>
+            <Link
+              className="no-underline"
+              href={listing.Multiple_Listing_Service_URL}
+              hideExternalLinkIcon={true}
+            >
+              {t("listings.process.seeTheUnitOnMls")}
+            </Link>
+          </div>
+        )}
+        {listing.Listing_Online_Details?.map((record: ListingOnlineDetails) => {
+          return (
+            <div key={record.Id}>
+              <Link className="no-underline" href={record.URL} hideExternalLinkIcon={true}>
+                {record.Name}
+              </Link>
+            </div>
+          )
+        })}
+      </div>
+    </SeeTheUnitSubsection>
+  )
+}
+
 export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
   return (
     <section className="aside-block see-the-unit">
@@ -42,30 +75,7 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
         ) : null}
       </SeeTheUnitSubsection>
-      {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) && (
-        <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <div className="flex-row gap-x-8 gap-y-4 grid-cols-3 space-y-2">
-            <div>
-              <Link
-                className="no-underline"
-                href={listing.Multiple_Listing_Service_URL}
-                hideExternalLinkIcon={true}
-              >
-                {t("listings.process.seeTheUnitOnMls")}
-              </Link>
-            </div>
-            {listing.Listing_Online_Details.map((record: ListingOnlineDetails) => {
-              return (
-                <div key={record.Id}>
-                  <Link className="no-underline" href={record.URL} hideExternalLinkIcon={true}>
-                    {record.Name}
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-        </SeeTheUnitSubsection>
-      )}
+      {SeeDetailsOnline(listing)}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
         <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
         <p>{listing.Leasing_Agent_Name}</p>
