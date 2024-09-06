@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DOBFieldValues } from "@bloom-housing/ui-components"
+import { DOBFieldValues, t } from "@bloom-housing/ui-components"
 import {
   deduplicateDOBErrors,
-  dobErrorsMap,
+  dobFieldsetErrors,
   handleDOBServerErrors,
 } from "../../pages/account/components/DOBFieldset"
 import { FieldError, DeepMap } from "react-hook-form"
 import { AxiosError } from "axios"
 import { act } from "@testing-library/react"
+import { getErrorMessage } from "../../pages/account/components/util"
 
 describe("DOBFieldset", () => {
   describe("deduplicateDOBErrors", () => {
@@ -92,7 +93,7 @@ describe("DOBFieldset", () => {
       })
 
       expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {
-        message: "error:dob:age",
+        message: "dob:invalid",
         shouldFocus: true,
         type: "range",
       })
@@ -115,7 +116,7 @@ describe("DOBFieldset", () => {
       })
 
       expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {
-        message: "error:dob:generic",
+        message: "dob:server:generic",
         shouldFocus: true,
       })
       expect(errorCallback).toHaveBeenCalled()
@@ -123,21 +124,53 @@ describe("DOBFieldset", () => {
   })
 
   describe("dobErrorsMap", () => {
-    test("returns correct error message", () => {
-      expect(dobErrorsMap("error:dob:invalid", false)).toBe(
-        "Enter a valid date of birth. Enter date like: MM DD YYYY"
-      )
-      expect(dobErrorsMap("error:dob:invalid", true)).toBe("Enter a valid date of birth")
-      expect(dobErrorsMap("error:dob:missing", false)).toBe("Enter date like: MM DD YYYY")
-      expect(dobErrorsMap("error:dob:missing", true)).toBe("Enter date of birth")
-      expect(dobErrorsMap("error:dob:age", false)).toBe(
-        "You must be 18 or older. If you are under 18, email <a href='mailto:sfhousinginfo@sfgov.org'>sfhousinginfo@sfgov.org</a> to get info on housing resources for youth"
-      )
-      expect(dobErrorsMap("error:dob:age", true)).toBe("You must be 18 or older")
-      expect(dobErrorsMap("unknown:error", false)).toBe(
-        "Something went wrong. Try again or check back later."
-      )
-      expect(dobErrorsMap("unknown:error", true)).toBe("Something went wrong")
+    const testCases = [
+      {
+        key: "dob:invalid",
+        abbreviated: false,
+        expected: "error.account.dob",
+      },
+      {
+        key: "dob:invalid",
+        abbreviated: true,
+        expected: "error.account.dob.abbreviated",
+      },
+      {
+        key: "dob:missing",
+        abbreviated: false,
+        expected: "error.account.dobMissing",
+      },
+      {
+        key: "dob:missing",
+        abbreviated: true,
+        expected: "error.account.dobMissing.abbreviated",
+      },
+      {
+        key: "dob:age",
+        abbreviated: false,
+        expected: "error.account.dobTooYoung",
+      },
+      {
+        key: "dob:age",
+        abbreviated: true,
+        expected: "error.account.dobTooYoung.abbreviated",
+      },
+      {
+        key: "dob:server:generic",
+        abbreviated: false,
+        expected: "error.account.genericServerError",
+      },
+      {
+        key: "dob:server:generic",
+        abbreviated: true,
+        expected: "error.account.genericServerError.abbreviated",
+      },
+    ]
+
+    testCases.forEach(({ key, abbreviated, expected }) => {
+      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+        expect(getErrorMessage(key, dobFieldsetErrors, abbreviated)).toBe(t(expected))
+      })
     })
   })
 })

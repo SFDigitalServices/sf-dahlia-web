@@ -15,7 +15,7 @@ import EmailFieldset, {
 } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import PasswordFieldset, {
-  handleServerErrors,
+  handlePasswordServerErrors,
   passwordFieldsetErrors,
 } from "./components/PasswordFieldset"
 import NameFieldset, { handleNameServerErrors, nameFieldsetErrors } from "./components/NameFieldset"
@@ -32,7 +32,8 @@ import {
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
-import { ErrorSummaryBanner, getErrorMessage } from "./components/ErrorSummaryBanner"
+import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
+import { getErrorMessage } from "./components/util"
 
 const SavedBanner = () => {
   return (
@@ -179,7 +180,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         setUser(newUser)
         setPasswordBanner(true)
       })
-      .catch(handleServerErrors(setError))
+      .catch(handlePasswordServerErrors(setError))
       .finally(() => {
         reset({}, { errors: true })
         setLoading(false)

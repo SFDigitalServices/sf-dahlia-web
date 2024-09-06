@@ -3,11 +3,13 @@ import React from "react"
 import { render, screen, act } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import PasswordFieldset, {
-  handleServerErrors,
-  passwordErrorsMap,
+  handlePasswordServerErrors,
+  passwordFieldsetErrors,
 } from "../../pages/account/components/PasswordFieldset"
 import { useForm } from "react-hook-form"
 import { AxiosError } from "axios"
+import { getErrorMessage } from "../../pages/account/components/util"
+import { t } from "@bloom-housing/ui-components"
 
 const WrappedPasswordFieldset = () => {
   const {
@@ -69,6 +71,7 @@ describe("Password Fieldset", () => {
       const setError = jest.fn()
       const error = {
         response: {
+          status: 422,
           data: {
             errors: {
               full_messages: ["Current password is invalid"],
@@ -77,7 +80,7 @@ describe("Password Fieldset", () => {
         },
       } as AxiosError<{ errors: { full_messages: string[] } }>
 
-      const handleError = handleServerErrors(setError)
+      const handleError = handlePasswordServerErrors(setError)
 
       act(() => {
         handleError(error)
@@ -93,6 +96,7 @@ describe("Password Fieldset", () => {
       const setError = jest.fn()
       const error = {
         response: {
+          status: 422,
           data: {
             errors: {
               full_messages: ["Password is too short (minimum is 8 characters)"],
@@ -101,7 +105,7 @@ describe("Password Fieldset", () => {
         },
       } as AxiosError<{ errors: { full_messages: string[] } }>
 
-      const handleError = handleServerErrors(setError)
+      const handleError = handlePasswordServerErrors(setError)
 
       act(() => {
         handleError(error)
@@ -119,28 +123,76 @@ describe("Password Fieldset", () => {
         response: {},
       } as AxiosError<{ errors: { full_messages: string[] } }>
 
-      const handleError = handleServerErrors(setError)
+      const handleError = handlePasswordServerErrors(setError)
 
       act(() => {
         handleError(error)
       })
 
       expect(setError).toHaveBeenCalledWith("password", {
-        message: "password:generic",
+        message: "password:server:generic",
         shouldFocus: true,
       })
     })
   })
 
   describe("passwordErrorsMap", () => {
-    test("passwordErrorsMap returns correct error message", () => {
-      expect(passwordErrorsMap("currentPassword:incorrect", false)).toBe(
-        "Password is incorrect. Check for mistakes and try again."
-      )
-      expect(passwordErrorsMap("password:complexity", true)).toBe("Choose a strong password")
-      expect(passwordErrorsMap("currentPassword:required", false)).toBe("Enter current password")
-      expect(passwordErrorsMap("password:required", false)).toBe("Enter new password")
-      expect(passwordErrorsMap("unknown:error", true)).toBe("Something went wrong")
+    const testCases = [
+      {
+        key: "currentPassword:incorrect",
+        abbreviated: false,
+        expected: "error.account.currentPasswordIncorrect",
+      },
+      {
+        key: "currentPassword:incorrect",
+        abbreviated: true,
+        expected: "error.account.currentPasswordIncorrect.abbreviated",
+      },
+      {
+        key: "password:complexity",
+        abbreviated: false,
+        expected: "error.account.passwordComplexity",
+      },
+      {
+        key: "password:complexity",
+        abbreviated: true,
+        expected: "error.account.passwordComplexity.abbreviated",
+      },
+      {
+        key: "currentPassword:required",
+        abbreviated: false,
+        expected: "error.account.currentPasswordMissing",
+      },
+      {
+        key: "currentPassword:required",
+        abbreviated: true,
+        expected: "error.account.currentPasswordMissing",
+      },
+      {
+        key: "password:required",
+        abbreviated: false,
+        expected: "error.account.newPasswordMissing",
+      },
+      {
+        key: "password:required",
+        abbreviated: true,
+        expected: "error.account.newPasswordMissing",
+      },
+      {
+        key: "password:server:generic",
+        abbreviated: false,
+        expected: "error.account.genericServerError",
+      },
+      {
+        key: "password:server:generic",
+        abbreviated: true,
+        expected: "error.account.genericServerError.abbreviated",
+      },
+    ]
+    testCases.forEach(({ key, abbreviated, expected }) => {
+      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+        expect(getErrorMessage(key, passwordFieldsetErrors, abbreviated)).toBe(t(expected))
+      })
     })
   })
 })

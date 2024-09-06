@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import { AxiosError } from "axios"
-import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
+import { ErrorMessages } from "./ErrorSummaryBanner"
+import { getErrorMessage } from "./util"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -15,11 +16,12 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password must include at least one letter",
 ])
 
-export const handleServerErrors =
+export const handlePasswordServerErrors =
   (setError: (name: string, error: ErrorOption) => void) =>
   (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
     const errorMessages = error.response.data?.errors?.full_messages
-    if (errorMessages && errorMessages.length > 0) {
+
+    if (error.response.status === 422) {
       if (errorMessages[0] === "Current password is invalid") {
         setError("currentPassword", {
           message: "currentPassword:incorrect",
@@ -57,32 +59,9 @@ export const passwordFieldsetErrors: ErrorMessages = {
   },
   "password:server:generic": {
     default: "error.account.genericServerError",
-    abbreviated: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError.abbreviated",
   },
 }
-
-// export const passwordErrorsMap = (errorKey: string, abbreviated: boolean) => {
-//   if (errorKey) {
-//     switch (errorKey) {
-//       case "currentPassword:incorrect":
-//         return abbreviated
-//           ? t("error.account.currentPasswordIncorrect.abbreviated")
-//           : t("error.account.currentPasswordIncorrect")
-//       case "password:complexity":
-//         return abbreviated
-//           ? t("error.account.passwordComplexity.abbreviated")
-//           : t("error.account.passwordComplexity")
-//       case "currentPassword:required":
-//         return t("error.account.currentPasswordMissing")
-//       case "password:required":
-//         return t("error.account.newPasswordMissing")
-//       default:
-//         return abbreviated
-//           ? t("error.account.genericServerError.abbreviated")
-//           : t("error.account.genericServerError")
-//     }
-//   }
-// }
 
 const instructionListItem = (
   shouldShowValidationInformation: boolean,

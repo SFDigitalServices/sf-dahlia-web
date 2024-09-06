@@ -8,7 +8,7 @@ import { dobFieldsetErrors } from "./DOBFieldset"
 import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
 
-interface ErrorMessage {
+export interface ErrorMessage {
   default: string
   abbreviated: string
 }
@@ -17,20 +17,11 @@ export type ErrorMessages = {
   [key: string]: ErrorMessage
 }
 
-export const getErrorMessage = (
-  errorCode: string,
-  errorMessages: ErrorMessages,
-  abbreviated?: boolean
-) => {
-  const error: ErrorMessage = errorMessages[errorCode]
-  return abbreviated ? t(error.abbreviated) : t(error.default)
-}
-
 export const UnifiedErrorMessageMap: ErrorMessages = {
-  ...emailFieldsetErrors,
   ...nameFieldsetErrors,
   ...dobFieldsetErrors,
   ...passwordFieldsetErrors,
+  ...emailFieldsetErrors,
 }
 
 export const ErrorSummaryBanner = ({

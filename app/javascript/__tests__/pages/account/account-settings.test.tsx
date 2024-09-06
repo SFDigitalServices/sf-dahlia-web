@@ -395,14 +395,15 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
+        screen.logTestingPlaygroundURL()
+
         expect(
-          screen.getByRole("button", {
+          screen.getAllByRole("button", {
             name: /something went wrong/i,
           })
         ).not.toBeNull()
-        // Something went wrong. Try again or check back later.
         expect(
-          screen.getByText(/something went wrong\. try again or check back later/i)
+          screen.getAllByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
 
@@ -498,9 +499,7 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
         expect(
-          screen.queryByText(
-            /you must be 18 or older\. if you are under 18, email to get info on housing resources for youth/i
-          )
+          screen.getByText(/enter a valid date of birth\. enter date like: mm dd yyyy/i)
         ).not.toBeNull()
         ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
           response: {
@@ -628,12 +627,12 @@ describe("<AccountSettingsPage />", () => {
           button[3].dispatchEvent(new MouseEvent("click"))
           await promise
         })
-
         expect(
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
         ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
           response: {
+            status: 422,
             data: {
               errors: {
                 full_messages: ["Current password is invalid"],

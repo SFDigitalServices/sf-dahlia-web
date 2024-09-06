@@ -2,7 +2,9 @@ import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
-import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
+import { ErrorMessages } from "./ErrorSummaryBanner"
+import { getErrorMessage } from "./util"
+import { AxiosError } from "axios"
 
 interface NameFieldsetProps {
   register: UseFormMethods["register"]
@@ -14,8 +16,19 @@ interface NameFieldsetProps {
 }
 
 export const handleNameServerErrors =
-  (setError: (name: string, error: ErrorOption) => void) => () => {
-    setError("firstName", { message: "name:server:generic", shouldFocus: true })
+  (setError: (name: string, error: ErrorOption) => void) =>
+  (error?: AxiosError<{ errors: { full_messages: string[] } }>) => {
+    // In the case that the name contains invalid characters (http, www, .), we will show the generic server error
+    if (error.response.data?.errors?.full_messages.includes("Firstname is empty")) {
+      setError("firstName", { message: "name:firstName", shouldFocus: true })
+    } else {
+      setError("firstName", { message: "name:server:generic", shouldFocus: true })
+    }
+    if (error.response.data?.errors?.full_messages.includes("Lastname is empty")) {
+      setError("lastName", { message: "name:lastName", shouldFocus: true })
+    } else {
+      setError("lastName", { message: "name:server:generic", shouldFocus: true })
+    }
   }
 
 export const nameFieldsetErrors: ErrorMessages = {

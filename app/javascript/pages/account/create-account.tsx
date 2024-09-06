@@ -6,20 +6,29 @@ import { Card } from "@bloom-housing/ui-seeds"
 
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import NameFieldset from "./components/NameFieldset"
-import { DeepMap, FieldError, FieldValues, useForm, UseFormMethods } from "react-hook-form"
-import DOBFieldset, { deduplicateDOBErrors, DOBFieldValues } from "./components/DOBFieldset"
-import EmailFieldset from "./components/EmailFieldset"
-import PasswordFieldset from "./components/PasswordFieldset"
+import NameFieldset, { handleNameServerErrors } from "./components/NameFieldset"
+import {
+  DeepMap,
+  ErrorOption,
+  FieldError,
+  FieldValues,
+  useForm,
+  UseFormMethods,
+} from "react-hook-form"
+import DOBFieldset, {
+  deduplicateDOBErrors,
+  DOBFieldValues,
+  handleDOBServerErrors,
+} from "./components/DOBFieldset"
+import EmailFieldset, { handleEmailServerErrors } from "./components/EmailFieldset"
+import PasswordFieldset, { handlePasswordServerErrors } from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
-import {
-  ErrorSummaryBanner,
-  getErrorMessage,
-  UnifiedErrorMessageMap,
-} from "./components/ErrorSummaryBanner"
+import { ErrorSummaryBanner, UnifiedErrorMessageMap } from "./components/ErrorSummaryBanner"
+import { getErrorMessage } from "./components/util"
+import { AxiosError } from "axios"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -49,7 +58,7 @@ const DateOfBirthSection = ({ register, errors, watch }: SectionProps) => {
       <DOBFieldset
         required
         register={register}
-        error={errors.dobObject}
+        error={errors.dobObject as DeepMap<DOBFieldValues, FieldError>}
         watch={watch}
         note={
           <>
@@ -101,7 +110,45 @@ const CreateAccountFooter = () => {
   )
 }
 
-const onSubmit = (data) => {
+const handleCreateAccountErrors =
+  (setError: (name: string, error: ErrorOption) => void) =>
+  (
+    error: AxiosError<{
+      errors: {
+        email: string[]
+        password: string[]
+        DOB: string[]
+        full_messages: string[]
+        firstName: string[]
+        lastName: string[]
+      }
+    }>
+  ) => {
+    if (
+      !error.response?.data ||
+      !error.response?.data?.errors ||
+      !error.response?.data?.errors?.full_messages ||
+      error.response?.data?.errors?.full_messages?.length === 0
+    ) {
+      // Generic Server Error, placing it on the first name since that is the first field
+      setError("firstName", { message: "name:server:generic", shouldFocus: true })
+    }
+
+    if (error.response?.data?.errors?.email) {
+      handleEmailServerErrors(setError)(error)
+    }
+    if (error.response?.data?.errors?.password) {
+      handlePasswordServerErrors(setError)(error)
+    }
+    if (error.response?.data?.errors?.DOB) {
+      handleDOBServerErrors(setError)(error)
+    }
+    if (error.response?.data?.errors?.firstName || error.response?.data?.errors?.lastName) {
+      handleNameServerErrors(setError)(error)
+    }
+  }
+
+const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data) => {
   const { password, ...user } = data
   const userInfo: User = user
   user.DOB = getDobStringFromDobObject(userInfo.dobObject)
@@ -117,13 +164,11 @@ const onSubmit = (data) => {
     DOB: userInfo.DOB,
   }
   createAccount(userData, contactData)
-    // TODO DAH-2565
     .then(() => {
+      // TODO: Redirect to Sign In page with modal message
       console.log("Created an account.")
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(handleCreateAccountErrors(setError))
 }
 
 const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
@@ -152,6 +197,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
     formState: { errors },
     handleSubmit,
     watch,
+    setError,
   } = useForm({ mode: "onTouched" })
 
   return (
@@ -164,10 +210,10 @@ const CreateAccount = (_props: CreateAccountProps) => {
               description={t("createAccount.description")}
             />
             <ErrorSummaryBanner
-              errors={modifyErrors(errors)}
+              errors={modifyErrors({ ...errors })}
               messageMap={(messageKey) => getErrorMessage(messageKey, UnifiedErrorMessageMap, true)}
             />
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit(setError))}>
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}
               <CreateAccountFooter />

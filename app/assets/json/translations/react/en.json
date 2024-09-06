@@ -475,6 +475,8 @@
   "error.emailAlreadyInUse": "Email is already in use.",
   "error.emailConfirmation": "Email confirmation does not match",
   "error.emailNotFound": "Email not found. Please make sure your email has an account with us and is confirmed.",
+  "error.email.duplicate.abbreviated": "Email is already in use",
+  "error.email.duplicate": "Email is already in use. Check for mistakes or <a href='/sign-in' target='_blank'>sign in to your account</a>",
   "error.email.missingAtSign": "Email missing @ symbol. Enter email like: example@web.com",
   "error.email.missing": "Enter email address like: example@web.com",
   "error.email.missing.abbreviated": "Enter email address",

@@ -4,22 +4,33 @@ import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { emailRegex } from "../../../util/accountUtil"
 import { AxiosError } from "axios"
-import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
+import { ErrorMessages } from "./ErrorSummaryBanner"
+import { getErrorMessage } from "./util"
+import { renderInlineMarkup } from "../../../util/languageUtil"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
 }
 
 export const handleEmailServerErrors =
-  (setError: (name: string, error: ErrorOption) => void, errorCallback: () => void) =>
-  (error: AxiosError) => {
+  (setError: (name: string, error: ErrorOption) => void, errorCallback?: () => void) =>
+  (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
     if (error.response.status === 422) {
-      setError("email", { message: "email:generalFormat", shouldFocus: true })
+      const errorMessages = error.response.data?.errors?.full_messages
+      if (
+        errorMessages &&
+        errorMessages.length > 0 &&
+        errorMessages.includes("Email has already been taken")
+      ) {
+        setError("email", { message: "email:server:duplicate", shouldFocus: true })
+      } else {
+        setError("email", { message: "email:generalFormat", shouldFocus: true })
+      }
     } else {
       setError("email", { message: "email:server:generic", shouldFocus: true })
     }
 
-    errorCallback()
+    errorCallback && errorCallback()
   }
 
 export const emailFieldsetErrors: ErrorMessages = {
@@ -42,6 +53,10 @@ export const emailFieldsetErrors: ErrorMessages = {
   "email:server:generic": {
     default: "error.account.genericServerError",
     abbreviated: "error.account.genericServerError.abbreviated",
+  },
+  "email:server:duplicate": {
+    default: "error.email.duplicate",
+    abbreviated: "error.email.duplicate.abbreviated",
   },
 }
 
@@ -87,7 +102,9 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         error={errors.email}
         errorMessage={
           errors.email?.message &&
-          getErrorMessage(errors.email?.message as string, emailFieldsetErrors, false)
+          renderInlineMarkup(
+            getErrorMessage(errors.email?.message as string, emailFieldsetErrors, false)
+          )
         }
         register={register}
         defaultValue={defaultEmail ?? null}

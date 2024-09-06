@@ -6,7 +6,8 @@ import { UseFormMethods, FieldError, DeepMap, ErrorOption } from "react-hook-for
 import Fieldset from "./Fieldset"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { AxiosError } from "axios"
-import { ErrorMessages, getErrorMessage } from "./ErrorSummaryBanner"
+import { ErrorMessages } from "./ErrorSummaryBanner"
+import { getErrorMessage } from "./util"
 dayjs.extend(customParseFormat)
 
 export type DOBFieldValues = {
@@ -55,7 +56,7 @@ export const handleDOBServerErrors =
   (error: AxiosError) => {
     if (error.response.status === 422) {
       setError("dobObject.birthYear", {
-        message: "dob:age",
+        message: "dob:invalid",
         shouldFocus: true,
         type: "range",
       })
