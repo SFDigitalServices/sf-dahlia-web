@@ -95,6 +95,7 @@ const LotteryBucketsContent = ({
 
     return (
       <LotteryPreferences
+        key={preferenceName}
         unitsAvailable={bucket.unitsAvailable}
         totalSubmittedApps={bucket.totalSubmittedApps}
         preferenceName={preferenceName}
