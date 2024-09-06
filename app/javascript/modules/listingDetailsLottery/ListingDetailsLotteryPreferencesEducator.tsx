@@ -3,7 +3,7 @@ import { Heading, t } from "@bloom-housing/ui-components"
 import type { RailsLotteryResult } from "../../api/types/rails/listings/RailsLotteryResult"
 import { defaultIfNotTranslated, renderMarkup } from "../../util/languageUtil"
 import { preferenceNameHasVeteran } from "../../util/listingUtil"
-import { LOTTERY_RANKING_VIDEO_URL } from "../constants"
+import { LOTTERY_RANKING_VIDEO_URL, PREFERENCES } from "../constants"
 import { RailsLotteryBucket } from "../../api/types/rails/listings/RailsLotteryBucket"
 
 export interface ListingDetailsLotteryPreferencesProps {
@@ -29,10 +29,12 @@ const LotteryPreferences = ({
     <div>
       <div className="px-8">
         <Heading className="font-sans font-semibold text-xs tracking-wide uppercase" priority={3}>
-          {defaultIfNotTranslated(
-            `listings.lotteryPreference.${preferenceName}.title`,
-            preferenceName
-          )}
+          {preferenceName === PREFERENCES.generalLottery
+            ? t("lottery.generalPool")
+            : defaultIfNotTranslated(
+                `listings.lotteryPreference.${preferenceName}.title`,
+                preferenceName
+              )}
         </Heading>
         <p className="text-sm">{t("lottery.upToXUnitsAvailable", unitsAvailable)}</p>
         {numVeteranApps > 0 ? (
@@ -86,9 +88,9 @@ const LotteryBucketsContent = ({
     // from the preference short code by adding in the 'V-'
     // e.g. The number of veteran applications for 'T1-COP' are stored in veteranAppsByBucketMap
     // under the key 'T1-V-COP', so we insert 'V-' using replace to get the veteran preference short code
-    const veteransPreferenceShortCode = bucket.preferenceShortCode.startsWith("T")
+    const veteransPreferenceShortCode = bucket.preferenceShortCode?.startsWith("T")
       ? bucket.preferenceShortCode.replace("-", "-V-")
-      : `V-${bucket.preferenceShortCode}`
+      : `V-${bucket.preferenceShortCode}` // may be 'V-null' if preferenceShortCode does not exist, which will not affect numVeteranApps
     const numVeteranApps = veteranAppsByBucketMap[veteransPreferenceShortCode] ?? 0
 
     return (
@@ -151,7 +153,7 @@ export const ListingDetailsLotteryPreferencesEducator = ({
   // Then, get the general lottery bucket
   // This only applies for SCV 2 & 3 (SCV 1 only allows educators to apply)
   const generalLottery = lotteryBucketsDetails.lotteryBuckets.filter(
-    (bucket) => bucket.preferenceName === "generalLottery"
+    (bucket) => bucket.preferenceName === PREFERENCES.generalLottery
   )
 
   return (
@@ -188,30 +190,10 @@ export const ListingDetailsLotteryPreferencesEducator = ({
         <>
           <LotteryBucketHeader headerKey="lottery.generalPublic" />
           <LotteryBucketsContent
-            buckets={nonEducatorsWithoutVeterans}
+            buckets={[...nonEducatorsWithoutVeterans, ...generalLottery]}
             veteranAppsByBucketMap={veteranAppsByBucketMap}
             lastPref
           />
-          <div className="bg-gray-100 border-b mb-4 p-4">
-            <hr className="border-b-4 border-primary" />
-          </div>
-          {generalLottery.map((bucket) => (
-            <React.Fragment key={bucket.preferenceOrder}>
-              <div className="px-8">
-                <Heading
-                  className="font-sans font-semibold text-sm tracking-wide uppercase"
-                  priority={3}
-                >
-                  {t("lottery.generalPool")}
-                </Heading>
-                <p className="mb-1 text-sm">{t("lottery.anyRemainingUnits")}</p>
-                <p className="text-gray-700 text-sm">
-                  {t("lottery.numberApplicantsQualifiedForGeneralPool", bucket.totalSubmittedApps)}
-                </p>
-              </div>
-              <hr className="mt-4" />
-            </React.Fragment>
-          ))}
         </>
       )}
     </div>
