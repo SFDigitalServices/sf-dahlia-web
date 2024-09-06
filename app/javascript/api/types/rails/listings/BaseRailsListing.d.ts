@@ -54,13 +54,8 @@ export type ListingLotteryPreference = {
   PDF_URL?: string
 }
 
-export type ListingOnlineDetails = {
-  Id: string
-  Name: string
-  URL: string
-}
-
 export type ListingOnlineDetail = {
+  Id: string
   Name: string
   URL: string
 }
@@ -120,7 +115,7 @@ type BaseRailsListing = {
   Listing_State?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
-  Listing_Online_Details?: ListingOnlineDetails[]
+  Listing_Online_Details?: ListingOnlineDetail[]
   LotteryResultsURL?: string
   Lottery_City?: string
   Lottery_Date?: string

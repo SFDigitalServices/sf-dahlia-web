@@ -6,7 +6,7 @@ import { Heading as HeadingSeeds, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
-import { ListingOnlineDetails } from "../../api/types/rails/listings/BaseRailsListing"
+import { ListingOnlineDetail } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -48,11 +48,11 @@ const SeeDetailsOnline = (listing: RailsListing) => {
             </Link>
           </div>
         )}
-        {listing.Listing_Online_Details?.map((record: ListingOnlineDetails) => {
+        {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
           return (
-            <div key={record.Id}>
-              <Link className="no-underline" href={record.URL} hideExternalLinkIcon={true}>
-                {record.Name}
+            <div key={detail.Id}>
+              <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
+                {detail.Name}
               </Link>
             </div>
           )
