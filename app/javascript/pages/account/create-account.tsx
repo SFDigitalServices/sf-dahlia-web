@@ -110,20 +110,19 @@ const CreateAccountFooter = () => {
   )
 }
 
+type ExpandedAxiosError = AxiosError<{
+  errors: {
+    email: string[]
+    password: string[]
+    DOB: string[]
+    full_messages: string[]
+    firstName: string[]
+    lastName: string[]
+  }
+}>
+
 const handleCreateAccountErrors =
-  (setError: (name: string, error: ErrorOption) => void) =>
-  (
-    error: AxiosError<{
-      errors: {
-        email: string[]
-        password: string[]
-        DOB: string[]
-        full_messages: string[]
-        firstName: string[]
-        lastName: string[]
-      }
-    }>
-  ) => {
+  (setError: (name: string, error: ErrorOption) => void) => (error: ExpandedAxiosError) => {
     if (
       !error.response?.data ||
       !error.response?.data?.errors ||
