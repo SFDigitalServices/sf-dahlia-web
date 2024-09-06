@@ -11,7 +11,7 @@ import {
 } from "@bloom-housing/ui-components"
 import { getTranslatedString, localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import { ListingDetailsLotteryPreferenceLists } from "./ListingDetailsLotteryPreferenceLists"
-
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 export interface ListingDetailsProcessProps {
   listing: RailsListing
   isApplicationOpen: boolean
@@ -23,6 +23,7 @@ export const ListingDetailsProcess = ({
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
   const isListingRental = isRental(listing)
+  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
 
   return (
     <>
@@ -78,7 +79,7 @@ export const ListingDetailsProcess = ({
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
         listing.Leasing_Agent_Title) &&
-        isListingRental && (
+        (isListingRental || !seeTheUnitEnabled) && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
