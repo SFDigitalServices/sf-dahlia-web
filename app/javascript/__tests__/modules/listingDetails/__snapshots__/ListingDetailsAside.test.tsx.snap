@@ -55,7 +55,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
               data-variant="primary"
             >
               <span
@@ -76,11 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                <div>
-                  <span>
-                    Applications Open
-                  </span>
-                </div>
+                Applications open
               </span>
             </div>
           </div>
@@ -581,14 +577,14 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
-              data-variant="primary"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
+              data-variant="alert"
             >
               <span
                 class="ui-icon ui-medium"
               >
                 <svg
-                  fill="currentColor"
+                  fill="red-700"
                   viewBox="0 0 32 32"
                 >
                   <path
@@ -602,22 +598,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component rental 1`] = 
               <span
                 data-part="content"
               >
-                <div>
-                  <span>
-                    Applications Deadline
-                  </span>
-                  : 
-                  <span
-                    class="font-bold"
-                  >
-                    January 1, 2000
-                  </span>
-                </div>
-                <div
-                  class="font-bold"
-                >
-                  1:00 AM Pacific Time
-                </div>
+                Applications closed: January 1, 2000 at 1:00 AM Pacific Time
               </span>
             </div>
           </div>
@@ -848,7 +829,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             class="w-full mb-8 md:mb-0"
           >
             <div
-              class="seeds-common-message is-fullwidth seeds-message place-content-center"
+              class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
               data-variant="primary"
             >
               <span
@@ -869,22 +850,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               <span
                 data-part="content"
               >
-                <div>
-                  <span>
-                    Applications Deadline
-                  </span>
-                  : 
-                  <span
-                    class="font-bold"
-                  >
-                    January 1, 2050
-                  </span>
-                </div>
-                <div
-                  class="font-bold"
-                >
-                  1:00 AM Pacific Time
-                </div>
+                Application deadline: January 1, 2050 at 1:00 AM Pacific Time
               </span>
             </div>
           </div>
