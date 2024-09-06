@@ -83,7 +83,7 @@ const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
   const isApplicationOpen = listing && isOpen(listing)
 
-  const useUpdatedStatuses = useFeatureFlag("UpdatedStatuses", false)
+  const { unleashFlag: useUpdatedStatuses } = useFeatureFlag("UpdatedStatuses", false)
 
   return (
     <div className="w-full mb-8 md:mb-0">

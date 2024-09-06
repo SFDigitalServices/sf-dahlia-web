@@ -28,7 +28,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
   const isSaleListing = isSale(listing)
   const isListingRental = isRental(listing)
 
-  const seeTheUnitEnabled = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
 
   const expectedMoveInDateBlock = (
     <SidebarBlock title={t("listings.expectedMoveinDate")}>
