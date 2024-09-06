@@ -16,11 +16,8 @@ export const handleEmailServerErrors =
   (setError: (name: string, error: ErrorOption) => void, errorCallback?: () => void) =>
   (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
     if (error.response.status === 422) {
-      const errorMessages = error.response.data?.errors?.full_messages
       if (
-        errorMessages &&
-        errorMessages.length > 0 &&
-        errorMessages.includes("Email has already been taken")
+        (error.response.data?.errors?.full_messages || []).includes("Email has already been taken")
       ) {
         setError("email", { message: "email:server:duplicate", shouldFocus: true })
       } else {
