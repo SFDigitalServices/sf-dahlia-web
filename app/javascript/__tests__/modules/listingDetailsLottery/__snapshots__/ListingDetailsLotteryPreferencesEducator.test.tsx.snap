@@ -340,38 +340,33 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         </p>
       </div>
       <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          General Pool
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 unit
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicants are on this list.
+        </p>
+      </div>
+      <hr
         class="mt-4"
       />
     </div>
-    <div
-      class="bg-gray-100 border-b mb-4 p-4"
-    >
-      <hr
-        class="border-b-4 border-primary"
-      />
-    </div>
-    <div
-      class="px-8"
-    >
-      <h3
-        class="font-sans font-semibold text-sm tracking-wide uppercase"
-      >
-        General Pool
-      </h3>
-      <p
-        class="mb-1 text-sm"
-      >
-        Any remaining units
-      </p>
-      <p
-        class="text-gray-700 text-sm"
-      >
-        2 applicants are on this list. Please note, preference holders will be considered for all units first.
-      </p>
-    </div>
-    <hr
-      class="mt-4"
-    />
   </div>
 </DocumentFragment>
 `;
@@ -716,38 +711,33 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         </p>
       </div>
       <hr
+        class="my-4"
+      />
+    </div>
+    <div>
+      <div
+        class="px-8"
+      >
+        <h3
+          class="font-sans font-semibold text-xs tracking-wide uppercase"
+        >
+          General Pool
+        </h3>
+        <p
+          class="text-sm"
+        >
+          Up to 1 unit
+        </p>
+        <p
+          class="text-gray-700 text-sm"
+        >
+          2 applicants are on this list.
+        </p>
+      </div>
+      <hr
         class="mt-4"
       />
     </div>
-    <div
-      class="bg-gray-100 border-b mb-4 p-4"
-    >
-      <hr
-        class="border-b-4 border-primary"
-      />
-    </div>
-    <div
-      class="px-8"
-    >
-      <h3
-        class="font-sans font-semibold text-sm tracking-wide uppercase"
-      >
-        General Pool
-      </h3>
-      <p
-        class="mb-1 text-sm"
-      >
-        Any remaining units
-      </p>
-      <p
-        class="text-gray-700 text-sm"
-      >
-        2 applicants are on this list. Please note, preference holders will be considered for all units first.
-      </p>
-    </div>
-    <hr
-      class="mt-4"
-    />
   </div>
 </DocumentFragment>
 `;
