@@ -4,5 +4,3 @@ Unleash.configure do |config|
   config.logger   = Rails.logger
   config.custom_http_headers = { Authorization: ENV.fetch('UNLEASH_TOKEN_RAILS', nil) }
 end
-
-::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
