@@ -11,17 +11,16 @@ describe("NameFieldset", () => {
     test("should set error to genericServer", () => {
       const error = {
         response: {
-          data: { errors: { full_messages: [] } },
+          status: 422,
+          data: { errors: { firstName: [], lastName: [], full_messages: [] } },
         },
-      } as unknown as AxiosError<{ errors: { full_messages: string[] } }>
+      } as unknown as AxiosError<{
+        errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
+      }>
       const setError = jest.fn()
       const handler = handleNameServerErrors(setError)
       handler(error)
 
-      expect(setError).toHaveBeenCalledWith("lastName", {
-        message: "name:server:generic",
-        shouldFocus: true,
-      })
       expect(setError).toHaveBeenCalledWith("firstName", {
         message: "name:server:generic",
         shouldFocus: true,
@@ -31,9 +30,18 @@ describe("NameFieldset", () => {
     test("should set name missing error", () => {
       const error = {
         response: {
-          data: { errors: { full_messages: ["Firstname is empty", "Lastname is empty"] } },
+          status: 422,
+          data: {
+            errors: {
+              full_messages: ["Firstname is empty", "Lastname is empty"],
+              firstName: ["is empty"],
+              lastName: ["is empty"],
+            },
+          },
         },
-      } as unknown as AxiosError<{ errors: { full_messages: string[] } }>
+      } as unknown as AxiosError<{
+        errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
+      }>
       const setError = jest.fn()
       const handler = handleNameServerErrors(setError)
       handler(error)

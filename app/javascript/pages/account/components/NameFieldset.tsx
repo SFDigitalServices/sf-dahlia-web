@@ -17,17 +17,32 @@ interface NameFieldsetProps {
 
 export const handleNameServerErrors =
   (setError: (name: string, error: ErrorOption) => void) =>
-  (error?: AxiosError<{ errors: { full_messages: string[] } }>) => {
-    // In the case that the name contains invalid characters (http, www, .), we will show the generic server error
-    if (error.response.data?.errors?.full_messages.includes("Firstname is empty")) {
-      setError("firstName", { message: "name:firstName", shouldFocus: true })
+  (
+    error?: AxiosError<{
+      errors: { full_messages: string[]; lastName: string[]; firstName: string[] }
+    }>
+  ) => {
+    if (
+      error?.response?.status === 422 &&
+      error?.response?.data?.errors?.full_messages.length > 0
+    ) {
+      if (error?.response?.data?.errors?.firstName) {
+        // In the case that the name contains invalid characters (http, www, .), we will show the generic server error
+        if (error.response.data?.errors?.full_messages.includes("Firstname is empty")) {
+          setError("firstName", { message: "name:firstName", shouldFocus: true })
+        } else {
+          setError("firstName", { message: "name:server:generic", shouldFocus: true })
+        }
+      }
+      if (error.response.data?.errors?.lastName) {
+        if (error.response.data?.errors?.full_messages.includes("Lastname is empty")) {
+          setError("lastName", { message: "name:lastName", shouldFocus: true })
+        } else {
+          setError("lastName", { message: "name:server:generic", shouldFocus: true })
+        }
+      }
     } else {
       setError("firstName", { message: "name:server:generic", shouldFocus: true })
-    }
-    if (error.response.data?.errors?.full_messages.includes("Lastname is empty")) {
-      setError("lastName", { message: "name:lastName", shouldFocus: true })
-    } else {
-      setError("lastName", { message: "name:server:generic", shouldFocus: true })
     }
   }
 
@@ -71,6 +86,7 @@ const NameFieldset = ({
         defaultValue={defaultFirstName ?? null}
         validation={{
           required: "name:firstName",
+          validate: (data: string) => data.trim() !== "" || "name:firstName",
         }}
         onChange={onChange}
       />
@@ -94,7 +110,10 @@ const NameFieldset = ({
         defaultValue={defaultLastName ?? null}
         error={errors.lastName}
         register={register}
-        validation={{ required: "name:lastName" }}
+        validation={{
+          required: "name:lastName",
+          validate: (data: string) => data.trim() !== "" || "name:firstName",
+        }}
         onChange={onChange}
       />
     </Fieldset>

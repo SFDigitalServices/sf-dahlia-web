@@ -357,6 +357,7 @@ describe("<CreateAccount />", () => {
         })
         ;(post as jest.Mock).mockRejectedValue({
           response: {
+            status: 422,
             data: {
               errors: {
                 firstName: ["is empty"],
@@ -394,13 +395,13 @@ describe("<CreateAccount />", () => {
         })
 
         expect(
-          screen.getAllByRole("button", {
+          screen.getByRole("button", {
             name: /something went wrong/i,
           })
-        ).toHaveLength(2)
+        ).not.toBeNull()
         expect(
-          screen.getAllByText(/something went wrong\. try again or check back later/i)
-        ).toHaveLength(2)
+          screen.getByText(/something went wrong\. try again or check back later/i)
+        ).not.toBeNull()
       })
 
       it("shows server errors for dob fields", async () => {

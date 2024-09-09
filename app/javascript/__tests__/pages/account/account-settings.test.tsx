@@ -395,8 +395,6 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
-        screen.logTestingPlaygroundURL()
-
         expect(
           screen.getAllByRole("button", {
             name: /something went wrong/i,
