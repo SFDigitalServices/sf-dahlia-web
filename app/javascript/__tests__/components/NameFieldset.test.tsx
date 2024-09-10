@@ -18,7 +18,7 @@ describe("NameFieldset", () => {
         errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
       }>
       const setError = jest.fn()
-      const handler = handleNameServerErrors(setError)
+      const handler = handleNameServerErrors(setError, "firstName")
       handler(error)
 
       expect(setError).toHaveBeenCalledWith("firstName", {
@@ -43,8 +43,10 @@ describe("NameFieldset", () => {
         errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
       }>
       const setError = jest.fn()
-      const handler = handleNameServerErrors(setError)
-      handler(error)
+      const firstNameHandler = handleNameServerErrors(setError, "firstName")
+      firstNameHandler(error)
+      const lastNameHandler = handleNameServerErrors(setError, "lastName")
+      lastNameHandler(error)
 
       expect(setError).toHaveBeenCalledWith("lastName", {
         message: "name:lastName",

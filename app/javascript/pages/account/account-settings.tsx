@@ -256,7 +256,17 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       saveProfile,
       setUser,
       setLoading,
-      handleNameServerErrors(setError),
+      (
+        error: AxiosError<{
+          errors: { full_messages: string[]; lastName: string[]; firstName: string[] }
+        }>
+      ) => {
+        if (error.response?.data?.errors?.firstName) {
+          handleNameServerErrors(setError, "firstName")(error)
+        } else if (error.response?.data?.errors?.lastName) {
+          handleNameServerErrors(setError, "lastName")(error)
+        }
+      },
       () => handleBanners("nameSavedBanner")
     )
   }

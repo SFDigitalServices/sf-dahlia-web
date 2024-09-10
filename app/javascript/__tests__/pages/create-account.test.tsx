@@ -395,13 +395,13 @@ describe("<CreateAccount />", () => {
         })
 
         expect(
-          screen.getByRole("button", {
+          screen.getAllByRole("button", {
             name: /something went wrong/i,
           })
-        ).not.toBeNull()
+        ).toHaveLength(2)
         expect(
-          screen.getByText(/something went wrong\. try again or check back later/i)
-        ).not.toBeNull()
+          screen.getAllByText(/something went wrong\. try again or check back later/i)
+        ).toHaveLength(2)
       })
 
       it("shows server errors for dob fields", async () => {

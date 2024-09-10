@@ -129,17 +129,16 @@ const handleCreateAccountErrors =
       !error.response?.data?.errors?.full_messages ||
       error.response?.data?.errors?.full_messages?.length === 0
     ) {
-      // Generic Server Error, placing it on the first name since that is the first field
+      // In the case that we get an error that we don't understand, we will assign it to the
+      // first name field since that is the first field in the form
       setError("firstName", { message: "name:server:generic", shouldFocus: true })
     }
 
     error.response?.data?.errors?.email && handleEmailServerErrors(setError)(error)
     error.response?.data?.errors?.password && handlePasswordServerErrors(setError)(error)
     error.response?.data?.errors?.DOB && handleDOBServerErrors(setError)(error)
-
-    if (error.response?.data?.errors?.firstName || error.response?.data?.errors?.lastName) {
-      handleNameServerErrors(setError)(error)
-    }
+    error.response?.data?.errors?.firstName && handleNameServerErrors(setError, "firstName")(error)
+    error.response?.data?.errors?.lastName && handleNameServerErrors(setError, "lastName")(error)
   }
 
 const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data) => {

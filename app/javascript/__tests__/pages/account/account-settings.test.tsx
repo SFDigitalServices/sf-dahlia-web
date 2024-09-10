@@ -349,11 +349,14 @@ describe("<AccountSettingsPage />", () => {
 
     describe("renders the correct errors", () => {
       test("name Errors", async () => {
-        ;(authenticatedPut as jest.Mock).mockRejectedValueOnce({
+        ;(authenticatedPut as jest.Mock).mockRejectedValue({
           response: {
-            status: 422,
             data: {
-              message: "Unprocessable Entity",
+              errors: {
+                firstName: ["unknown error"],
+                lastName: ["unknown error"],
+                full_messages: ["unknown error", "unknown error"],
+              },
             },
           },
         })

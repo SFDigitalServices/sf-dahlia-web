@@ -16,7 +16,7 @@ interface NameFieldsetProps {
 }
 
 export const handleNameServerErrors =
-  (setError: (name: string, error: ErrorOption) => void) =>
+  (setError: (name: string, error: ErrorOption) => void, name: "firstName" | "lastName") =>
   (
     error?: AxiosError<{
       errors: { full_messages: string[]; lastName: string[]; firstName: string[] }
@@ -26,23 +26,15 @@ export const handleNameServerErrors =
       error?.response?.status === 422 &&
       error?.response?.data?.errors?.full_messages.length > 0
     ) {
-      if (error?.response?.data?.errors?.firstName) {
-        // In the case that the name contains invalid characters (http, www, .), we will show the generic server error
-        if (error.response.data?.errors?.full_messages.includes("Firstname is empty")) {
-          setError("firstName", { message: "name:firstName", shouldFocus: true })
-        } else {
-          setError("firstName", { message: "name:server:generic", shouldFocus: true })
-        }
-      }
-      if (error.response.data?.errors?.lastName) {
-        if (error.response.data?.errors?.full_messages.includes("Lastname is empty")) {
-          setError("lastName", { message: "name:lastName", shouldFocus: true })
-        } else {
-          setError("lastName", { message: "name:server:generic", shouldFocus: true })
-        }
-      }
+      // In the case that the name contains invalid characters (http, www, .), we will show the generic server error
+      setError(
+        name,
+        error.response.data?.errors?.[name].includes("is empty")
+          ? { message: `name:${name}`, shouldFocus: true }
+          : { message: "name:server:generic", shouldFocus: true }
+      )
     } else {
-      setError("firstName", { message: "name:server:generic", shouldFocus: true })
+      setError(name, { message: "name:server:generic", shouldFocus: true })
     }
   }
 
