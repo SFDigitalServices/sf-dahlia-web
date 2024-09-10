@@ -8,8 +8,7 @@ export interface ListingDetailsWaitlistProps {
 }
 
 export const ListingDetailsWaitlist = ({ listing }: ListingDetailsWaitlistProps) => {
-  if (!listing.hasWaitlist || (!isOpen(listing) && !isLotteryComplete(listing)))
-    return null
+  if (!listing.hasWaitlist || (!isOpen(listing) && !isLotteryComplete(listing))) return null
 
   const waitlistUnavailableDescription = (
     <>
