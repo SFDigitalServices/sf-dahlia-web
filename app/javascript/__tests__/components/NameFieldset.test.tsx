@@ -18,8 +18,7 @@ describe("NameFieldset", () => {
         errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
       }>
       const setError = jest.fn()
-      const handler = handleNameServerErrors(setError, "firstName")
-      handler(error)
+      handleNameServerErrors(setError, "firstName", error)
 
       expect(setError).toHaveBeenCalledWith("firstName", {
         message: "name:server:generic",
@@ -42,11 +41,10 @@ describe("NameFieldset", () => {
       } as unknown as AxiosError<{
         errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
       }>
+
       const setError = jest.fn()
-      const firstNameHandler = handleNameServerErrors(setError, "firstName")
-      firstNameHandler(error)
-      const lastNameHandler = handleNameServerErrors(setError, "lastName")
-      lastNameHandler(error)
+      handleNameServerErrors(setError, "firstName", error)
+      handleNameServerErrors(setError, "lastName", error)
 
       expect(setError).toHaveBeenCalledWith("lastName", {
         message: "name:lastName",

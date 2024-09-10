@@ -137,8 +137,8 @@ const handleCreateAccountErrors =
     error.response?.data?.errors?.email && handleEmailServerErrors(setError)(error)
     error.response?.data?.errors?.password && handlePasswordServerErrors(setError)(error)
     error.response?.data?.errors?.DOB && handleDOBServerErrors(setError)(error)
-    error.response?.data?.errors?.firstName && handleNameServerErrors(setError, "firstName")(error)
-    error.response?.data?.errors?.lastName && handleNameServerErrors(setError, "lastName")(error)
+    error.response?.data?.errors?.firstName && handleNameServerErrors(setError, "firstName", error)
+    error.response?.data?.errors?.lastName && handleNameServerErrors(setError, "lastName", error)
   }
 
 const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data) => {
