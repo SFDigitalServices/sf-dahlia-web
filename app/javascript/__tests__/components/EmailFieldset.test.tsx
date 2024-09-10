@@ -58,14 +58,6 @@ describe("EmailFieldset", () => {
   })
 
   describe("handleEmailServerErrors", () => {
-    let setError: jest.Mock
-    let errorCallback: jest.Mock
-
-    beforeEach(() => {
-      setError = jest.fn()
-      errorCallback = jest.fn()
-    })
-
     test("should set error to generalFormat when status is 422", () => {
       const error = {
         response: {
@@ -73,13 +65,15 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: [] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      handleEmailServerErrors(setError, error, errorCallback)
+      const errorReturn = handleEmailServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("email", {
-        message: "email:generalFormat",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:generalFormat",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("should set error to generic when status is not 422", () => {
@@ -88,13 +82,15 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: [] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      handleEmailServerErrors(setError, error, errorCallback)
+      const errorReturn = handleEmailServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("email", {
-        message: "email:server:generic",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:server:generic",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("should set error email duplicate error", () => {
@@ -104,13 +100,15 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: ["Email has already been taken"] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      handleEmailServerErrors(setError, error, errorCallback)
+      const errorReturn = handleEmailServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("email", {
-        message: "email:server:duplicate",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:server:duplicate",
+          shouldFocus: true,
+        },
+      ])
     })
   })
 

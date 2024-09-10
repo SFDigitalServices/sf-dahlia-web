@@ -2,11 +2,11 @@ import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
-import { UseFormMethods, FieldError, DeepMap, ErrorOption } from "react-hook-form"
+import { UseFormMethods, FieldError, DeepMap } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 dayjs.extend(customParseFormat)
 
 export type DOBFieldValues = {
@@ -50,22 +50,17 @@ export const deduplicateDOBErrors = (
   return consolidatedErrors
 }
 
-export const handleDOBServerErrors = (
-  setError: (name: string, error: ErrorOption) => void,
-  error: ExpandedAccountAxiosError,
-  errorCallback?: () => void
-) => {
-  if (error.response.status === 422) {
-    setError("dobObject.birthYear", {
-      message: "dob:invalid",
-      shouldFocus: true,
-      type: "range",
-    })
-  } else {
-    setError("dobObject.birthYear", { message: "dob:server:generic", shouldFocus: true })
-  }
-
-  errorCallback && errorCallback()
+export const handleDOBServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
+  return error.response.status === 422
+    ? [
+        "dobObject.birthYear",
+        {
+          message: "dob:invalid",
+          shouldFocus: true,
+          type: "range",
+        },
+      ]
+    : ["dobObject.birthYear", { message: "dob:server:generic", shouldFocus: true }]
 }
 
 export const dobFieldsetErrors: ErrorMessages = {

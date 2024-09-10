@@ -122,11 +122,12 @@ const handleCreateAccountErrors =
       setError("firstName", { message: "name:server:generic", shouldFocus: true })
     }
 
-    error.response?.data?.errors?.email && handleEmailServerErrors(setError, error)
-    error.response?.data?.errors?.password && handlePasswordServerErrors(setError, error)
-    error.response?.data?.errors?.DOB && handleDOBServerErrors(setError, error)
-    error.response?.data?.errors?.firstName && handleNameServerErrors(setError, "firstName", error)
-    error.response?.data?.errors?.lastName && handleNameServerErrors(setError, "lastName", error)
+    error.response?.data?.errors?.email && setError(...handleEmailServerErrors(error))
+    error.response?.data?.errors?.password && setError(...handlePasswordServerErrors(error))
+    error.response?.data?.errors?.DOB && setError(...handleDOBServerErrors(error))
+    error.response?.data?.errors?.firstName &&
+      setError(...handleNameServerErrors("firstName", error))
+    error.response?.data?.errors?.lastName && setError(...handleNameServerErrors("lastName", error))
   }
 
 const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data) => {

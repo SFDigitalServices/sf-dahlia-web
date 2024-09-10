@@ -1,13 +1,13 @@
 import { Field, FieldProps, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { ErrorOption, UseFormMethods, Validate } from "react-hook-form"
+import { UseFormMethods, Validate } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { Icon } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -15,26 +15,29 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password must include at least one letter",
 ])
 
-export const handlePasswordServerErrors = (
-  setError: (name: string, error: ErrorOption) => void,
-  error: ExpandedAccountAxiosError
-) => {
+export const handlePasswordServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
   const errorMessages = error.response.data?.errors?.full_messages
 
   if (error.response.status === 422) {
     if (errorMessages[0] === "Current password is invalid") {
-      setError("currentPassword", {
-        message: "currentPassword:incorrect",
-        shouldFocus: true,
-      })
+      return [
+        "currentPassword",
+        {
+          message: "currentPassword:incorrect",
+          shouldFocus: true,
+        },
+      ]
     } else if (errorMessages.some((errorMessage) => PASSWORD_VALIDATION_ERRORS.has(errorMessage))) {
-      setError("password", { message: "password:complexity", shouldFocus: true })
+      return ["password", { message: "password:complexity", shouldFocus: true }]
     }
   } else {
-    setError("password", {
-      message: "password:server:generic",
-      shouldFocus: true,
-    })
+    return [
+      "password",
+      {
+        message: "password:server:generic",
+        shouldFocus: true,
+      },
+    ]
   }
 }
 

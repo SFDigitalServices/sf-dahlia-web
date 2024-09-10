@@ -1,6 +1,7 @@
 import { t } from "@bloom-housing/ui-components"
 import { ErrorMessages, ErrorMessage } from "./ErrorSummaryBanner"
 import { AxiosError } from "axios"
+import { ErrorOption } from "react-hook-form"
 
 export type ExpandedAccountAxiosError = AxiosError<{
   errors: {
@@ -12,6 +13,8 @@ export type ExpandedAccountAxiosError = AxiosError<{
     lastName: string[]
   }
 }>
+
+export type SetErrorArgs = [name: string, error: ErrorOption]
 
 export const getErrorMessage = (
   errorCode: string,

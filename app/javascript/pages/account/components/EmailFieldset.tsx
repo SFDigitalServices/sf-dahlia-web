@@ -1,34 +1,26 @@
 import { Field, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { ErrorOption, UseFormMethods } from "react-hook-form"
+import { UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { emailRegex } from "../../../util/accountUtil"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 
 const validateEmail = (email: string) => {
   return emailRegex.test(email)
 }
 
-export const handleEmailServerErrors = (
-  setError: (name: string, error: ErrorOption) => void,
-  error: ExpandedAccountAxiosError,
-  errorCallback?: () => void
-) => {
+export const handleEmailServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
   if (error.response.status === 422) {
-    if (
-      (error.response.data?.errors?.full_messages || []).includes("Email has already been taken")
-    ) {
-      setError("email", { message: "email:server:duplicate", shouldFocus: true })
-    } else {
-      setError("email", { message: "email:generalFormat", shouldFocus: true })
-    }
+    return (error.response.data?.errors?.full_messages || []).includes(
+      "Email has already been taken"
+    )
+      ? ["email", { message: "email:server:duplicate", shouldFocus: true }]
+      : ["email", { message: "email:generalFormat", shouldFocus: true }]
   } else {
-    setError("email", { message: "email:server:generic", shouldFocus: true })
+    return ["email", { message: "email:server:generic", shouldFocus: true }]
   }
-
-  errorCallback && errorCallback()
 }
 
 export const emailFieldsetErrors: ErrorMessages = {

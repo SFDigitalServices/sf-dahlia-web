@@ -115,10 +115,9 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         setEmailBanner(true)
       })
       .catch((error: ExpandedAccountAxiosError) => {
-        handleEmailServerErrors(setError, error, () => {
-          setEmailBanner(false)
-          setEmailUpdateBanner(false)
-        })
+        setError(...handleEmailServerErrors(error))
+        setEmailBanner(false)
+        setEmailUpdateBanner(false)
       })
       .finally(() => {
         setLoading(false)
@@ -180,7 +179,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         setUser(newUser)
         setPasswordBanner(true)
       })
-      .catch((error: ExpandedAccountAxiosError) => handlePasswordServerErrors(setError, error))
+      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
       .finally(() => {
         reset({}, { errors: true })
         setLoading(false)
@@ -252,9 +251,9 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       setLoading,
       (error: ExpandedAccountAxiosError) => {
         if (error.response?.data?.errors?.firstName) {
-          handleNameServerErrors(setError, "firstName", error)
+          setError(...handleNameServerErrors("firstName", error))
         } else if (error.response?.data?.errors?.lastName) {
-          handleNameServerErrors(setError, "lastName", error)
+          setError(...handleNameServerErrors("lastName", error))
         }
       },
       () => handleBanners("nameSavedBanner")
@@ -321,8 +320,10 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       saveProfile,
       setUser,
       setLoading,
-      (error: ExpandedAccountAxiosError) =>
-        handleDOBServerErrors(setError, error, dobServerErrorsCallback),
+      (error: ExpandedAccountAxiosError) => {
+        setError(...handleDOBServerErrors(error))
+        dobServerErrorsCallback()
+      },
       () => setDOBSavedBanner(true)
     )
   }

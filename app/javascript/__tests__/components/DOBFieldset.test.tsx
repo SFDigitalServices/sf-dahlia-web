@@ -6,7 +6,6 @@ import {
   handleDOBServerErrors,
 } from "../../pages/account/components/DOBFieldset"
 import { FieldError, DeepMap } from "react-hook-form"
-import { act } from "@testing-library/react"
 import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 describe("DOBFieldset", () => {
@@ -77,46 +76,40 @@ describe("DOBFieldset", () => {
 
   describe("handleDOBServerErrors", () => {
     test("sets age error for 422 status", () => {
-      const setError = jest.fn()
-      const errorCallback = jest.fn()
       const error = {
         response: {
           status: 422,
         },
       } as ExpandedAccountAxiosError
 
-      act(() => {
-        handleDOBServerErrors(setError, error, errorCallback)
-      })
+      const errorReturn = handleDOBServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {
-        message: "dob:invalid",
-        shouldFocus: true,
-        type: "range",
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "dobObject.birthYear",
+        {
+          message: "dob:invalid",
+          shouldFocus: true,
+          type: "range",
+        },
+      ])
     })
 
     test("sets generic error for non-422 status", () => {
-      const setError = jest.fn()
-      const errorCallback = jest.fn()
       const error = {
         response: {
           status: 500,
         },
       } as ExpandedAccountAxiosError
 
-      handleDOBServerErrors(setError, error, errorCallback)
+      const errorReturn = handleDOBServerErrors(error)
 
-      act(() => {
-        handleDOBServerErrors(setError, error, errorCallback)
-      })
-
-      expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {
-        message: "dob:server:generic",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "dobObject.birthYear",
+        {
+          message: "dob:server:generic",
+          shouldFocus: true,
+        },
+      ])
     })
   })
 

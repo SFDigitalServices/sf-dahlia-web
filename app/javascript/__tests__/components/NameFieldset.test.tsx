@@ -14,13 +14,16 @@ describe("NameFieldset", () => {
           data: { errors: { firstName: [], lastName: [], full_messages: [] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      const setError = jest.fn()
-      handleNameServerErrors(setError, "firstName", error)
 
-      expect(setError).toHaveBeenCalledWith("firstName", {
-        message: "name:server:generic",
-        shouldFocus: true,
-      })
+      const errorResponse = handleNameServerErrors("firstName", error)
+
+      expect(errorResponse).toEqual([
+        "firstName",
+        {
+          message: "name:server:generic",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("should set name missing error", () => {
@@ -37,18 +40,23 @@ describe("NameFieldset", () => {
         },
       } as unknown as ExpandedAccountAxiosError
 
-      const setError = jest.fn()
-      handleNameServerErrors(setError, "firstName", error)
-      handleNameServerErrors(setError, "lastName", error)
+      const firstNameErrorResponse = handleNameServerErrors("firstName", error)
+      const lastNameErrorResponse = handleNameServerErrors("lastName", error)
 
-      expect(setError).toHaveBeenCalledWith("lastName", {
-        message: "name:lastName",
-        shouldFocus: true,
-      })
-      expect(setError).toHaveBeenCalledWith("firstName", {
-        message: "name:firstName",
-        shouldFocus: true,
-      })
+      expect(lastNameErrorResponse).toEqual([
+        "lastName",
+        {
+          message: "name:lastName",
+          shouldFocus: true,
+        },
+      ])
+      expect(firstNameErrorResponse).toEqual([
+        "firstName",
+        {
+          message: "name:firstName",
+          shouldFocus: true,
+        },
+      ])
     })
   })
   describe("nameErrorsMap", () => {

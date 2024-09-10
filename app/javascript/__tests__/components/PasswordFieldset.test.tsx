@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
-import { render, screen, act } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import PasswordFieldset, {
   handlePasswordServerErrors,
@@ -67,7 +67,6 @@ describe("Password Fieldset", () => {
 
   describe("handleServerErrors", () => {
     test("handleServerErrors sets currentPassword error for invalid current password", () => {
-      const setError = jest.fn()
       const error = {
         response: {
           status: 422,
@@ -79,18 +78,18 @@ describe("Password Fieldset", () => {
         },
       } as ExpandedAccountAxiosError
 
-      act(() => {
-        handlePasswordServerErrors(setError, error)
-      })
+      const errorReturn = handlePasswordServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("currentPassword", {
-        message: "currentPassword:incorrect",
-        shouldFocus: true,
-      })
+      expect(errorReturn).toEqual([
+        "currentPassword",
+        {
+          message: "currentPassword:incorrect",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("handleServerErrors sets password complexity error for password validation errors", () => {
-      const setError = jest.fn()
       const error = {
         response: {
           status: 422,
@@ -102,30 +101,31 @@ describe("Password Fieldset", () => {
         },
       } as ExpandedAccountAxiosError
 
-      act(() => {
-        handlePasswordServerErrors(setError, error)
-      })
+      const errorReturn = handlePasswordServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("password", {
-        message: "password:complexity",
-        shouldFocus: true,
-      })
+      expect(errorReturn).toEqual([
+        "password",
+        {
+          message: "password:complexity",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("handleServerErrors sets generic password error for other errors", () => {
-      const setError = jest.fn()
       const error = {
         response: {},
       } as ExpandedAccountAxiosError
 
-      act(() => {
-        handlePasswordServerErrors(setError, error)
-      })
+      const errorReturn = handlePasswordServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("password", {
-        message: "password:server:generic",
-        shouldFocus: true,
-      })
+      expect(errorReturn).toEqual([
+        "password",
+        {
+          message: "password:server:generic",
+          shouldFocus: true,
+        },
+      ])
     })
   })
 
