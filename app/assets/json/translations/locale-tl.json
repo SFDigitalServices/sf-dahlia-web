@@ -166,6 +166,18 @@
             "title_household": "Mayroon ba kayong pangangailangan, o may pangangailangan ba ang sinuman sa inyong kabahayan, para sa mga sumusunod na katangian sa paggamit batay sa ADA (batas sa pagkakaroon ng mga daraanan ng may kapansanan)?",
             "title_you": "Kailangan ba ninyo ng alinman sa mga sumusunod na na katangian para sa paggamit batay sa ADA (batas sa pagkakaroon ng mga daraanan ng may kapansanan)?"
         },
+        "c8_home_and_community_based_services": {
+            "after_the_lottery_we_will_ask_for_proof": "Pagkatapos ng lottery, hihingi kami ng patunay na nagpapakita na natatanggap mo ang mga serbisyong ito",
+            "instructions_p1": "Maaari kang makakuha ng priyoridad para sa ilang partikular na unit. Upang maging kwalipikado, kailangan mong:",
+            "instructions_p2": "Maging <b>wala pang 62</b> taong gulang",
+            "instructions_p3": "Magpakita ng patunay na tumatanggap ka ng suporta sa iyong tahanan, tulad ng:",
+            "instructions_p4": "In-Home Support Services (IHSS)",
+            "instructions_p5": "Mga serbisyo ng Regional Center",
+            "instructions_p6": "1915(c) waiver",
+            "instructions_p7": "Mag-email {{emailLink}} kung mayroon kang mga tanong tungkol sa iyong pagiging kwalipikado.",
+            "title": "Mayroon ka bang kapansanan at nakakakuha ng suporta sa iyong tahanan na binayaran ng gobyerno?",
+            "yes_i_get_this_type_of_support": "Oo, nakakakuha ako ng ganitong uri ng suporta"
+        },
         "choose_applicant_details": {
             "alert_message": "Papalitan ng mga napili ninyo ang lahat ng detalye ukol sa pangunahing kontak na nasa aplikasyong ito at nasa settings ng account. \n",
             "continue_anon": "Magpatuloy nang walang account",
@@ -700,6 +712,7 @@
             "good_news_for_higher_ranking": "Magandang balita! Kuwalipikado kayo para sa mas mataas na ranggo sa lottery?",
             "grandparent": "Lolo o Lola",
             "great_grandparent": "Lolo o Lola sa Tuhod",
+            "hcbs_units": "Nakakatanggap ng suporta sa tahanan para sa kapansanan",
             "hearing_impairments": "Para sa mga Kapansanan sa Pandinig",
             "household_details": "Mga Detalye tungkol sa Kabahayan",
             "household_member": "Miyembro ng Kabahayan",

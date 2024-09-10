@@ -166,6 +166,17 @@
             "title_household": "¿Usted o alguna de las personas que figuran en esta solicitud necesitan alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?",
             "title_you": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Ley de Estadounidenses con Discapacidades (Americans with Disabilities Act, ADA)?"
         },
+        "c8_home_and_community_based_services": {
+            "instructions_p1": "Puedes obtener prioridad para determinadas unidades. A fin de calificar, debe reunir estos requisitos:",
+            "instructions_p2": "Tener <b>menos de 62</b> años",
+            "instructions_p3": "Muestre pruebas de que recibe apoyo en su hogar, como:",
+            "instructions_p4": "Servicios de apoyo en el hogar (IHSS)",
+            "instructions_p5": "Servicios del Centro Regional",
+            "instructions_p6": "Sección&nbsp;1915(c) del programa de exención",
+            "instructions_p7": "Envíe un correo electrónico {{emailLink}} si tiene preguntas sobre su elegibilidad.",
+            "title": "¿Tiene usted una discapacidad y recibe asistencia en su hogar pagada por el gobierno?",
+            "yes_i_get_this_type_of_support": "Sí, recibo este tipo de apoyo"
+        },
         "choose_applicant_details": {
             "alert_message": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
             "continue_anon": "Continuar sin ninguna cuenta",
@@ -700,6 +711,7 @@
             "good_news_for_higher_ranking": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
             "grandparent": "Abuelo(a)",
             "great_grandparent": "Bisabuelo(a)",
+            "hcbs_units": "Recibe apoyo en el hogar por una discapacidad",
             "hearing_impairments": "Para personas con impedimentos auditivos",
             "household_details": "Detalles del grupo familiar",
             "household_member": "Integrante del grupo familiar",
