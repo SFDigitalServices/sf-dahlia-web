@@ -23,20 +23,9 @@ export interface ListingDetailsSidebarProps {
   imageSrc: string
 }
 
-export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
-  const isApplicationOpen = isOpen(listing)
-  const isSaleListing = isSale(listing)
+export const needHelpBlock = (listing: RailsListing) => {
   const isListingRental = isRental(listing)
-
-  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
-
-  const expectedMoveInDateBlock = (
-    <SidebarBlock title={t("listings.expectedMoveinDate")}>
-      {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
-    </SidebarBlock>
-  )
-
-  const needHelpBlock = (
+  return (
     <SidebarBlock title={t("listings.apply.needHelp")}>
       {isListingRental && (
         <div className={"mb-4"}>{t("listings.apply.visitAHousingCounselor")}</div>
@@ -53,8 +42,22 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
       >
         {isListingRental
           ? t("housingCounselor.findAHousingCounselor")
-          : t("listings.apply.visitHomeownershipSf")}
+          : t("listings.apply.findAHousingCounselor")}
       </LinkButton>
+    </SidebarBlock>
+  )
+}
+
+export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
+  const isApplicationOpen = isOpen(listing)
+  const isSaleListing = isSale(listing)
+  const isListingRental = isRental(listing)
+
+  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
+
+  const expectedMoveInDateBlock = (
+    <SidebarBlock title={t("listings.expectedMoveinDate")}>
+      {localizedFormat(listing.Expected_Move_in_Date, "MMMM YYYY")}
     </SidebarBlock>
   )
 
@@ -106,7 +109,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
             {isSaleListing && seeTheUnitEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
-            {isApplicationOpen && needHelpBlock}
+            {isApplicationOpen && needHelpBlock(listing)}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
           </div>

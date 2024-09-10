@@ -16,7 +16,10 @@ import { getListing } from "../../api/listingApiService"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import { ListingDetailsImageCard } from "../../modules/listingDetails/ListingDetailsImageCard"
 import { ListingDetailsPricingTable } from "../../modules/listingDetails/ListingDetailsPricingTable"
-import { ListingDetailsAside } from "../../modules/listingDetailsAside/ListingDetailsAside"
+import {
+  ListingDetailsAside,
+  needHelpBlock,
+} from "../../modules/listingDetailsAside/ListingDetailsAside"
 import { ListingDetailsEligibility } from "../../modules/listingDetails/ListingDetailsEligibility"
 import { ListingDetailsFeatures } from "../../modules/listingDetails/ListingDetailsFeatures"
 import { ListingDetailsNeighborhood } from "../../modules/listingDetails/ListingDetailsNeighborhood"
@@ -169,6 +172,7 @@ const ListingDetail = () => {
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
+            <Mobile>{needHelpBlock(listing)}</Mobile>
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <MobileListingDetailsLottery
