@@ -28,9 +28,6 @@ class GoogleTranslationService
   end
 
   def cache_listing_translations(listing_id, keys, translations, last_modified)
-    Force::Request.new(parse_response: true).cached_get(
-      "/ListingDetails/#{CGI.escape(listing_id)}", nil, true
-    )
     translations = transform_translations_for_caching(listing_id, keys, translations,
                                                       last_modified)
     if @cache.write("/ListingDetails/#{listing_id}/translations", translations)

@@ -3,6 +3,8 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService
+    CACHE_KEY_PREFIX = '/ListingDetails/'
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # `type` designates "ownership" or "rental" listings
@@ -29,40 +31,70 @@ module Force
     # get one detailed listing result by id
     def self.listing(id, opts = {})
       @cache = Rails.cache
-      endpoint = "/ListingDetails/#{CGI.escape(id)}"
+      endpoint = "#{CACHE_KEY_PREFIX}#{CGI.escape(id)}"
       force = opts[:force] || false
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
+
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
-      listing = add_image_urls(results_with_cached_listing_images).first
+      listing = process_listing_results(results)
 
-      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
-        listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
-          Rails.logger.info("Nothing in cache for Listing #{id} translations")
-          {}
-        end
-
-        unless translations_valid?(listing_translations, listing['LastModifiedDate'])
-          Rails.logger.info("Translations are not valid for #{id}")
-          # TODO: when should we force salesforce listing recache?
-          results = Request.new(parse_response: true).cached_get(endpoint, nil, true)
-          listing_translations = CacheService.new.process_translations(results.first)
-        end
-
-        listing['translations'] = listing_translations || {}
-      end
+      listing['translations'] = get_listing_translations(listing) || {}
       listing
     end
 
-    def self.translations_valid?(listing_translations, listing_last_modified)
-      return false unless listing_translations[:LastModifiedDate] == listing_last_modified
+    def self.process_listing_images(results)
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images).first
+    end
 
-      Rails.logger.info('Translations cache is up to date')
-      listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
-      listing_field_names_salesforce.each do |field_name|
-        return false unless listing_translations.key?(field_name.to_sym)
+    def self.get_listing_translations(listing)
+      return unless ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+
+      listing_translations = fetch_listing_translations_from_cache(listing.id)
+
+      if translations_invalid?(listing_translations) || translations_are_outdated?(
+        listing_translations&.last_modified_date, listing['LastModifiedDate']
+      )
+        Rails.logger.info("Translations are not valid for #{listing.id}")
+        return CacheService.new.process_translations(listing)
       end
-      true
+
+      if listing_is_outdated?(listing_translations&.last_modified_date,
+                              listing['LastModifiedDate'])
+        Rails.logger.info("Listing is outdated for #{listing.id}")
+        refresh_listing_cache(listing.id)
+      end
+      listing_translations
+    end
+
+    def self.translations_invalid?(listing_translations)
+      ServiceHelper.listing_field_names_salesforce.any? do |field_name|
+        !listing_translations.key?(field_name.to_sym)
+      end
+    end
+
+    def self.translations_are_outdated?(cache_last_modified, listing_last_modified)
+      parse_time(cache_last_modified) < parse_time(listing_last_modified)
+    end
+
+    def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
+      parse_time(cache_last_modified) > parse_time(listing_last_modified)
+    end
+
+    def self.fetch_listing_translations_from_cache(listing_id)
+      @cache.fetch("#{CACHE_KEY_PREFIX}#{listing_id}/translations") do
+        Rails.logger.info("Nothing in cache for Listing #{listing_id} translations")
+        {}
+      end
+    end
+
+    def self.refresh_listing_cache(listing_id)
+      endpoint = "#{CACHE_KEY_PREFIX}#{CGI.escape(listing_id)}"
+      Request.new(parse_response: true).cached_get(endpoint, nil, true)
+    end
+
+    def self.parse_time(time_str)
+      Time.strptime(time_str, DATE_FORMAT)
     end
 
     # get all units for a given listing
