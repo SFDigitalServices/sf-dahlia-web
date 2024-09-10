@@ -46,6 +46,7 @@ describe Force::EventSubscriberTranslateService do
     end
   end
   before do
+    listing_id = 'a0W4U00000KnjQuUAJ'
     allow(Restforce).to receive(:new).and_return(salesforce_client)
     allow(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
     allow(salesforce_client).to receive(:options).and_return({})
@@ -62,7 +63,10 @@ describe Force::EventSubscriberTranslateService do
       .with(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY)
       .and_return(true)
     allow(cache).to receive(:fetch)
-      .with('salesforce_oauth_token', { force: false })
+      .with('salesforce_oauth_token', any_args).and_yield
+    allow(cache).to receive(:fetch)
+      .with("/ListingDetails/#{CGI.escape(listing_id)}", { expires_in: 1.day,
+                                                           force: true })
       .and_return([:single_listing])
     allow(cache).to receive(:delete)
   end
