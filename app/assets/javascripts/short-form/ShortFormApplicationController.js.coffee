@@ -753,6 +753,9 @@ ShortFormApplicationController = (
   $scope.hasHomeAndCommunityBasedServicesYes = ->
     $scope.application.hasHomeAndCommunityBasedServices == 'Yes'
 
+  $scope.listingHasHomeAndCommunityBasedServicesUnits = ->
+    ShortFormApplicationService.listingHasHomeAndCommunityBasedServicesUnits($scope.listing)
+
   $scope.publicHousingYes = ->
     ShortFormApplicationService.resetMonthlyRentForm()
     # make sure they're forced through now that they have the assistedHousing option
