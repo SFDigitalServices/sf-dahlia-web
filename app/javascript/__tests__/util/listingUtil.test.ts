@@ -2,7 +2,6 @@ import {
   getListingAddressString,
   isHabitatListing,
   isLotteryComplete,
-  isLotteryCompleteDeprecated,
   showLotteryResultsPDFonly,
   isOpen,
   isRental,
@@ -55,16 +54,6 @@ describe("listingUtil", () => {
 
   afterAll(() => {
     process.env = OLD_ENV
-  })
-
-  describe("isLotteryCompleteDeprecated", () => {
-    it("should return false when listing is open", () => {
-      expect(isLotteryCompleteDeprecated(openSaleListing)).toBe(false)
-    })
-
-    it("should return false when lottery status is 'Not Yet Run'", () => {
-      expect(isLotteryCompleteDeprecated(closedRentalListing)).toBe(false)
-    })
   })
 
   describe("isLotteryComplete", () => {

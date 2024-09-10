@@ -17,7 +17,7 @@ import dayjs from "dayjs"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { isLotteryCompleteDeprecated, getPriorityTypeText } from "../../util/listingUtil"
+import { isLotteryComplete, getPriorityTypeText } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -360,7 +360,7 @@ export const sortListings = (
         additional.push(listing)
       }
     } else {
-      if (isLotteryCompleteDeprecated(listing)) {
+      if (isLotteryComplete(listing)) {
         results.push(listing)
       } else {
         upcoming.push(listing)
