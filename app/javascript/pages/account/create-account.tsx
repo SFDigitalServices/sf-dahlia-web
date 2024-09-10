@@ -122,9 +122,9 @@ const handleCreateAccountErrors =
       setError("firstName", { message: "name:server:generic", shouldFocus: true })
     }
 
-    error.response?.data?.errors?.email && handleEmailServerErrors(setError)(error)
-    error.response?.data?.errors?.password && handlePasswordServerErrors(setError)(error)
-    error.response?.data?.errors?.DOB && handleDOBServerErrors(setError)(error)
+    error.response?.data?.errors?.email && handleEmailServerErrors(setError, error)
+    error.response?.data?.errors?.password && handlePasswordServerErrors(setError, error)
+    error.response?.data?.errors?.DOB && handleDOBServerErrors(setError, error)
     error.response?.data?.errors?.firstName && handleNameServerErrors(setError, "firstName", error)
     error.response?.data?.errors?.lastName && handleNameServerErrors(setError, "lastName", error)
   }

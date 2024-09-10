@@ -79,10 +79,8 @@ describe("Password Fieldset", () => {
         },
       } as ExpandedAccountAxiosError
 
-      const handleError = handlePasswordServerErrors(setError)
-
       act(() => {
-        handleError(error)
+        handlePasswordServerErrors(setError, error)
       })
 
       expect(setError).toHaveBeenCalledWith("currentPassword", {
@@ -104,10 +102,8 @@ describe("Password Fieldset", () => {
         },
       } as ExpandedAccountAxiosError
 
-      const handleError = handlePasswordServerErrors(setError)
-
       act(() => {
-        handleError(error)
+        handlePasswordServerErrors(setError, error)
       })
 
       expect(setError).toHaveBeenCalledWith("password", {
@@ -122,10 +118,8 @@ describe("Password Fieldset", () => {
         response: {},
       } as ExpandedAccountAxiosError
 
-      const handleError = handlePasswordServerErrors(setError)
-
       act(() => {
-        handleError(error)
+        handlePasswordServerErrors(setError, error)
       })
 
       expect(setError).toHaveBeenCalledWith("password", {

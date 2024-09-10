@@ -6,9 +6,8 @@ import {
   handleDOBServerErrors,
 } from "../../pages/account/components/DOBFieldset"
 import { FieldError, DeepMap } from "react-hook-form"
-import { AxiosError } from "axios"
 import { act } from "@testing-library/react"
-import { getErrorMessage } from "../../pages/account/components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 describe("DOBFieldset", () => {
   describe("deduplicateDOBErrors", () => {
@@ -84,12 +83,10 @@ describe("DOBFieldset", () => {
         response: {
           status: 422,
         },
-      } as AxiosError
-
-      const handleError = handleDOBServerErrors(setError, errorCallback)
+      } as ExpandedAccountAxiosError
 
       act(() => {
-        handleError(error)
+        handleDOBServerErrors(setError, error, errorCallback)
       })
 
       expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {
@@ -107,12 +104,12 @@ describe("DOBFieldset", () => {
         response: {
           status: 500,
         },
-      } as AxiosError
+      } as ExpandedAccountAxiosError
 
-      const handleError = handleDOBServerErrors(setError, errorCallback)
+      handleDOBServerErrors(setError, error, errorCallback)
 
       act(() => {
-        handleError(error)
+        handleDOBServerErrors(setError, error, errorCallback)
       })
 
       expect(setError).toHaveBeenCalledWith("dobObject.birthYear", {

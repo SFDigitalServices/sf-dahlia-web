@@ -15,28 +15,28 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password must include at least one letter",
 ])
 
-export const handlePasswordServerErrors =
-  (setError: (name: string, error: ErrorOption) => void) => (error: ExpandedAccountAxiosError) => {
-    const errorMessages = error.response.data?.errors?.full_messages
+export const handlePasswordServerErrors = (
+  setError: (name: string, error: ErrorOption) => void,
+  error: ExpandedAccountAxiosError
+) => {
+  const errorMessages = error.response.data?.errors?.full_messages
 
-    if (error.response.status === 422) {
-      if (errorMessages[0] === "Current password is invalid") {
-        setError("currentPassword", {
-          message: "currentPassword:incorrect",
-          shouldFocus: true,
-        })
-      } else if (
-        errorMessages.some((errorMessage) => PASSWORD_VALIDATION_ERRORS.has(errorMessage))
-      ) {
-        setError("password", { message: "password:complexity", shouldFocus: true })
-      }
-    } else {
-      setError("password", {
-        message: "password:server:generic",
+  if (error.response.status === 422) {
+    if (errorMessages[0] === "Current password is invalid") {
+      setError("currentPassword", {
+        message: "currentPassword:incorrect",
         shouldFocus: true,
       })
+    } else if (errorMessages.some((errorMessage) => PASSWORD_VALIDATION_ERRORS.has(errorMessage))) {
+      setError("password", { message: "password:complexity", shouldFocus: true })
     }
+  } else {
+    setError("password", {
+      message: "password:server:generic",
+      shouldFocus: true,
+    })
   }
+}
 
 export const passwordFieldsetErrors: ErrorMessages = {
   "currentPassword:incorrect": {

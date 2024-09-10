@@ -73,8 +73,7 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: [] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      const handler = handleEmailServerErrors(setError, errorCallback)
-      handler(error)
+      handleEmailServerErrors(setError, error, errorCallback)
 
       expect(setError).toHaveBeenCalledWith("email", {
         message: "email:generalFormat",
@@ -89,8 +88,7 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: [] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      const handler = handleEmailServerErrors(setError, errorCallback)
-      handler(error)
+      handleEmailServerErrors(setError, error, errorCallback)
 
       expect(setError).toHaveBeenCalledWith("email", {
         message: "email:server:generic",
@@ -106,8 +104,7 @@ describe("EmailFieldset", () => {
           data: { errors: { full_messages: ["Email has already been taken"] } },
         },
       } as unknown as ExpandedAccountAxiosError
-      const handler = handleEmailServerErrors(setError, errorCallback)
-      handler(error)
+      handleEmailServerErrors(setError, error, errorCallback)
 
       expect(setError).toHaveBeenCalledWith("email", {
         message: "email:server:duplicate",

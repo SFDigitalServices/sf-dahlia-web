@@ -11,23 +11,25 @@ const validateEmail = (email: string) => {
   return emailRegex.test(email)
 }
 
-export const handleEmailServerErrors =
-  (setError: (name: string, error: ErrorOption) => void, errorCallback?: () => void) =>
-  (error: ExpandedAccountAxiosError) => {
-    if (error.response.status === 422) {
-      if (
-        (error.response.data?.errors?.full_messages || []).includes("Email has already been taken")
-      ) {
-        setError("email", { message: "email:server:duplicate", shouldFocus: true })
-      } else {
-        setError("email", { message: "email:generalFormat", shouldFocus: true })
-      }
+export const handleEmailServerErrors = (
+  setError: (name: string, error: ErrorOption) => void,
+  error: ExpandedAccountAxiosError,
+  errorCallback?: () => void
+) => {
+  if (error.response.status === 422) {
+    if (
+      (error.response.data?.errors?.full_messages || []).includes("Email has already been taken")
+    ) {
+      setError("email", { message: "email:server:duplicate", shouldFocus: true })
     } else {
-      setError("email", { message: "email:server:generic", shouldFocus: true })
+      setError("email", { message: "email:generalFormat", shouldFocus: true })
     }
-
-    errorCallback && errorCallback()
+  } else {
+    setError("email", { message: "email:server:generic", shouldFocus: true })
   }
+
+  errorCallback && errorCallback()
+}
 
 export const emailFieldsetErrors: ErrorMessages = {
   "email:missingAtSign": {
