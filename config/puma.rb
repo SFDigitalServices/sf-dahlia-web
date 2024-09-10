@@ -42,7 +42,7 @@ preload_app!
 # cannot share connections between processes.
 #
 on_worker_boot do
-  ::UNLEASH = Unleash::Client.new # rubocop:disable Style/RedundantConstantBase
+  ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
 end
 
 on_worker_shutdown do

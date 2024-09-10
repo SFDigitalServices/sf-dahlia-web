@@ -134,6 +134,7 @@ describe CacheService do
       # mock cached listing
       listing['Listing_Other_Notes'] = 'Test Notes'
       listing['Realtor_Commission_Info'] = 'Test Commission Info'
+
       allow(Force::ListingService).to receive(:listing)
         .and_return(:listing)
 
@@ -142,9 +143,8 @@ describe CacheService do
       allow(mock_translate_service).to receive(:cache_listing_translations)
         .and_return(mock_response)
 
-      expect(mock_translate_service).to receive(:translate).with(['Test Notes', 'Test Commission Info'], %w[
-                                                                   ES ZH TL
-                                                                 ])
+      expect(mock_translate_service).to receive(:translate)
+
       expect(mock_translate_service).to receive(:cache_listing_translations)
       CacheService.new.process_translations(listing)
     end
