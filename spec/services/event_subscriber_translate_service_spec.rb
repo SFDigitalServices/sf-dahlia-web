@@ -29,22 +29,6 @@ describe Force::EventSubscriberTranslateService do
       'event' => { 'replayId' => 9_730_266 },
     }
   end
-  let(:event_obj) do
-    OpenStruct.new(
-      listing_id: 'a0W4U00000KnjQuUAJ',
-      last_modified_date: '2024-06-29T19:09:24Z',
-      entity_name: 'Listing__c',
-      changed_fields: %w[Name Credit_Rating__c LastModifiedDate],
-      replay_id: 9_730_266,
-      updated_values: {},
-    )
-    listing_id = 'a0W0P00000F8YG4UAN'
-    let(:single_listing) do
-      VCR.use_cassette('listings/single_listing') do
-        Force::ListingService.send :listing, listing_id
-      end
-    end
-  end
   before do
     listing_id = 'a0W4U00000KnjQuUAJ'
     allow(Restforce).to receive(:new).and_return(salesforce_client)
