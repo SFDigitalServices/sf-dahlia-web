@@ -24,7 +24,11 @@ describe Force::EventSubscriberTranslateService do
         },
         'LastModifiedDate' => '2024-06-29T19:09:24Z',
         'Name' => '1075 Market St Unit 206 Update 3',
-        'Credit_Rating__c' => 'Test update again, again',
+        'Credit_Rating__c' => {
+          Eviction_History__c: {
+            diff: "--- \n+++ 62fad941bf896e7ac7c8381acc271fa2cb32671af45fe9a6c01c1b805b399c2d\n@@ -1,1 +1,1 @@\n-Hello, world 4\n+Hello, world",
+          },
+        },
       },
       'event' => { 'replayId' => 9_730_266 },
     }
@@ -86,7 +90,8 @@ describe Force::EventSubscriberTranslateService do
       end
       it 'detects incoming events from Salesforce and calls translations service' do
         EM.run do
-          expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent').and_yield(event)
+          expect(faye_client).to receive(:subscribe)
+            .with('/data/Listing__ChangeEvent').and_yield(event)
           expect(translation_service).to receive(:translate).and_return(['Hello World'])
           expect(translation_service).to receive(:cache_listing_translations)
 
