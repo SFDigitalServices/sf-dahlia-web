@@ -10,6 +10,7 @@ angular.module('dahlia.components')
     isSale: '<'
     isHabitatListing: '<'
     isCustomEducatorListing: '<'
+    listingHasHomeAndCommunityBasedServicesUnits: '<'
     listing: '<'
     preferences: '<'
     showVeteransApplicationQuestion: '<'
@@ -53,7 +54,8 @@ angular.module('dahlia.components')
           ctrl.application.hasPublicHousing,
           !_.isEmpty(ctrl.application.groupedHouseholdAddresses), # standin for rent-burdened question
           ctrl.application.hasMilitaryService, # this doesn't appear to be populated
-          ctrl.application.hasDevelopmentalDisability # this doesn't appear to be populated
+          ctrl.application.hasDevelopmentalDisability, # this doesn't appear to be populated,
+          ctrl.listingHasHomeAndCommunityBasedServicesUnits
         ])
 
       ctrl.applicationVouchersSubsidies = ->

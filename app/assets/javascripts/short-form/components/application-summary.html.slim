@@ -135,6 +135,13 @@ div ng-if="::$ctrl.showHouseholdDetails()"
         br
       span ng-if="::$ctrl.application.adaPrioritiesSelected.None"
         | {{'t.no' | translate}}
+    review-summary-item label="{{'label.hcbs_units' | translate}}" identifier="home-and-community-based-services" ng-if="::$ctrl.listingHasHomeAndCommunityBasedServicesUnits"
+      span ng-if="::$ctrl.application.hasHomeAndCommunityBasedServices == 'Yes'"
+        | {{'t.yes' | translate}}
+        br
+      span ng-if="::$ctrl.application.hasHomeAndCommunityBasedServices == 'No'"
+        | {{'t.no' | translate}}
+
 
 / Income
 div ng-if="::$ctrl.application.householdIncome.incomeTotal"
