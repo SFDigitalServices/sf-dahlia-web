@@ -6,9 +6,8 @@ import { Icon } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
-import { AxiosError } from "axios"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
 
 const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password is too short (minimum is 8 characters)",
@@ -17,8 +16,7 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
 ])
 
 export const handlePasswordServerErrors =
-  (setError: (name: string, error: ErrorOption) => void) =>
-  (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
+  (setError: (name: string, error: ErrorOption) => void) => (error: ExpandedAccountAxiosError) => {
     const errorMessages = error.response.data?.errors?.full_messages
 
     if (error.response.status === 422) {

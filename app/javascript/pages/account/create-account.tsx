@@ -27,8 +27,7 @@ import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
 import { ErrorSummaryBanner, UnifiedErrorMessageMap } from "./components/ErrorSummaryBanner"
-import { getErrorMessage } from "./components/util"
-import { AxiosError } from "axios"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -110,19 +109,8 @@ const CreateAccountFooter = () => {
   )
 }
 
-type ExpandedAxiosError = AxiosError<{
-  errors: {
-    email: string[]
-    password: string[]
-    DOB: string[]
-    full_messages: string[]
-    firstName: string[]
-    lastName: string[]
-  }
-}>
-
 const handleCreateAccountErrors =
-  (setError: (name: string, error: ErrorOption) => void) => (error: ExpandedAxiosError) => {
+  (setError: (name: string, error: ErrorOption) => void) => (error: ExpandedAccountAxiosError) => {
     if (
       !error.response?.data ||
       !error.response?.data?.errors ||

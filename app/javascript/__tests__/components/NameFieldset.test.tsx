@@ -3,8 +3,7 @@ import {
   handleNameServerErrors,
   nameFieldsetErrors,
 } from "../../pages/account/components/NameFieldset"
-import { getErrorMessage } from "../../pages/account/components/util"
-import { AxiosError } from "axios"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 describe("NameFieldset", () => {
   describe("handleNameServerErrors", () => {
@@ -14,9 +13,7 @@ describe("NameFieldset", () => {
           status: 422,
           data: { errors: { firstName: [], lastName: [], full_messages: [] } },
         },
-      } as unknown as AxiosError<{
-        errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
-      }>
+      } as unknown as ExpandedAccountAxiosError
       const setError = jest.fn()
       handleNameServerErrors(setError, "firstName", error)
 
@@ -38,9 +35,7 @@ describe("NameFieldset", () => {
             },
           },
         },
-      } as unknown as AxiosError<{
-        errors: { full_messages: string[]; firstName: string[]; lastName: string[] }
-      }>
+      } as unknown as ExpandedAccountAxiosError
 
       const setError = jest.fn()
       handleNameServerErrors(setError, "firstName", error)

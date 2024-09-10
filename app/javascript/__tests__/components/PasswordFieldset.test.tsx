@@ -7,8 +7,7 @@ import PasswordFieldset, {
   passwordFieldsetErrors,
 } from "../../pages/account/components/PasswordFieldset"
 import { useForm } from "react-hook-form"
-import { AxiosError } from "axios"
-import { getErrorMessage } from "../../pages/account/components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 import { t } from "@bloom-housing/ui-components"
 
 const WrappedPasswordFieldset = () => {
@@ -78,7 +77,7 @@ describe("Password Fieldset", () => {
             },
           },
         },
-      } as AxiosError<{ errors: { full_messages: string[] } }>
+      } as ExpandedAccountAxiosError
 
       const handleError = handlePasswordServerErrors(setError)
 
@@ -103,7 +102,7 @@ describe("Password Fieldset", () => {
             },
           },
         },
-      } as AxiosError<{ errors: { full_messages: string[] } }>
+      } as ExpandedAccountAxiosError
 
       const handleError = handlePasswordServerErrors(setError)
 
@@ -121,7 +120,7 @@ describe("Password Fieldset", () => {
       const setError = jest.fn()
       const error = {
         response: {},
-      } as AxiosError<{ errors: { full_messages: string[] } }>
+      } as ExpandedAccountAxiosError
 
       const handleError = handlePasswordServerErrors(setError)
 

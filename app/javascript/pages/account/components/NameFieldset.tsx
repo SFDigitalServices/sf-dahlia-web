@@ -3,8 +3,7 @@ import React from "react"
 import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { getErrorMessage } from "./util"
-import { AxiosError } from "axios"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
 
 interface NameFieldsetProps {
   register: UseFormMethods["register"]
@@ -18,9 +17,7 @@ interface NameFieldsetProps {
 export const handleNameServerErrors = (
   setError: (name: string, error: ErrorOption) => void,
   name: "firstName" | "lastName",
-  error?: AxiosError<{
-    errors: { full_messages: string[]; lastName: string[]; firstName: string[] }
-  }>
+  error?: ExpandedAccountAxiosError
 ) => {
   if (error?.response?.status === 422 && error?.response?.data?.errors?.full_messages.length > 0) {
     // In the case that the name contains invalid characters (http, www, .), we will show the generic server error

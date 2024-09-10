@@ -3,9 +3,8 @@ import React from "react"
 import { ErrorOption, UseFormMethods } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { emailRegex } from "../../../util/accountUtil"
-import { AxiosError } from "axios"
 import { ErrorMessages } from "./ErrorSummaryBanner"
-import { getErrorMessage } from "./util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./util"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 
 const validateEmail = (email: string) => {
@@ -14,7 +13,7 @@ const validateEmail = (email: string) => {
 
 export const handleEmailServerErrors =
   (setError: (name: string, error: ErrorOption) => void, errorCallback?: () => void) =>
-  (error: AxiosError<{ errors: { full_messages: string[] } }>) => {
+  (error: ExpandedAccountAxiosError) => {
     if (error.response.status === 422) {
       if (
         (error.response.data?.errors?.full_messages || []).includes("Email has already been taken")

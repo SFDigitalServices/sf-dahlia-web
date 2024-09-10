@@ -33,7 +33,7 @@ import {
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
-import { getErrorMessage } from "./components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 const SavedBanner = () => {
   return (
@@ -242,25 +242,15 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
-    const { firstName, middleName, lastName } = data
 
-    const newUser = {
-      ...user,
-      firstName,
-      lastName,
-      middleName,
-    }
+    const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
       newUser,
       saveProfile,
       setUser,
       setLoading,
-      (
-        error: AxiosError<{
-          errors: { full_messages: string[]; lastName: string[]; firstName: string[] }
-        }>
-      ) => {
+      (error: ExpandedAccountAxiosError) => {
         if (error.response?.data?.errors?.firstName) {
           handleNameServerErrors(setError, "firstName", error)
         } else if (error.response?.data?.errors?.lastName) {

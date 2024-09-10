@@ -8,8 +8,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
-import { AxiosError } from "axios"
-import { getErrorMessage } from "../../pages/account/components/util"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 const FieldSetWrapper = () => {
   const {
@@ -73,7 +72,7 @@ describe("EmailFieldset", () => {
           status: 422,
           data: { errors: { full_messages: [] } },
         },
-      } as unknown as AxiosError<{ errors: { full_messages: string[] } }>
+      } as unknown as ExpandedAccountAxiosError
       const handler = handleEmailServerErrors(setError, errorCallback)
       handler(error)
 
@@ -89,7 +88,7 @@ describe("EmailFieldset", () => {
         response: {
           data: { errors: { full_messages: [] } },
         },
-      } as unknown as AxiosError<{ errors: { full_messages: string[] } }>
+      } as unknown as ExpandedAccountAxiosError
       const handler = handleEmailServerErrors(setError, errorCallback)
       handler(error)
 
@@ -106,7 +105,7 @@ describe("EmailFieldset", () => {
           status: 422,
           data: { errors: { full_messages: ["Email has already been taken"] } },
         },
-      } as unknown as AxiosError<{ errors: { full_messages: string[] } }>
+      } as unknown as ExpandedAccountAxiosError
       const handler = handleEmailServerErrors(setError, errorCallback)
       handler(error)
 
