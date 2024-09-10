@@ -38,10 +38,17 @@ describe Force::EventSubscriberTranslateService do
       replay_id: 9_730_266,
       updated_values: {},
     )
+    listing_id = 'a0W0P00000F8YG4UAN'
+    let(:single_listing) do
+      VCR.use_cassette('listings/single_listing') do
+        Force::ListingService.send :listing, listing_id
+      end
+    end
   end
   before do
     allow(Restforce).to receive(:new).and_return(salesforce_client)
     allow(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
+    allow(salesforce_client).to receive(:options).and_return({})
     allow(Faye::Client).to receive(:new).and_return(faye_client)
     allow(faye_client).to receive(:set_header)
     allow(faye_client).to receive(:subscribe).and_return(faye_subscription)
@@ -54,6 +61,9 @@ describe Force::EventSubscriberTranslateService do
     allow(cache).to receive(:fetch)
       .with(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY)
       .and_return(true)
+    allow(cache).to receive(:fetch)
+      .with('salesforce_oauth_token', { force: false })
+      .and_return([:single_listing])
     allow(cache).to receive(:delete)
   end
 
