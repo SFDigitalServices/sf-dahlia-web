@@ -113,15 +113,18 @@ module Force
     def process_event_values(listing_id, values)
       return [] unless values&.values
 
-      listing = Request.new(parse_response: true).get(
-        "/ListingDetails/#{CGI.escape(listing_id)}",
-      ).first
+      listing = nil
 
       text_to_translate = []
       values.each do |key, value|
         if value.is_a?(String)
           text_to_translate.push(value)
         else
+          if listing.nil?
+            listing = Request.new(parse_response: true).get(
+              "/ListingDetails/#{CGI.escape(listing_id)}",
+            ).first
+          end
           domain_key = ServiceHelper.convert_to_domain_field_name(key)
           text_to_translate.push(listing[domain_key])
         end
