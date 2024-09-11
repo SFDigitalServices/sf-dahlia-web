@@ -44,6 +44,7 @@ export const isHabitatListing = (listing: RailsRentalListing | RailsSaleListing)
  * @returns {boolean} returns true if the lottery is complete and results are ready to be published, false otherwise
  */
 export const isLotteryComplete = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Publish_Lottery_Results_on_DAHLIA &&
   listing.Publish_Lottery_Results_on_DAHLIA !== "Not published" &&
   listing.Lottery_Status === "Lottery Complete"
 
