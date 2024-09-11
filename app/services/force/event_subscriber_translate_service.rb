@@ -113,8 +113,8 @@ module Force
     def process_event_values(listing_id, values)
       return [] unless values&.values
 
-      listing = Request.new(parse_response: true).cached_get(
-        "/ListingDetails/#{CGI.escape(listing_id)}", nil, true
+      listing = Request.new(parse_response: true).get(
+        "/ListingDetails/#{CGI.escape(listing_id)}",
       ).first
 
       text_to_translate = []
