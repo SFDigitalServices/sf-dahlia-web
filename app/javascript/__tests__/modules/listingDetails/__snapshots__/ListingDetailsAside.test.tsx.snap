@@ -439,40 +439,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             </div>
           </section>
           <div
-            class="border-b border-gray-400 md:border-b-0"
-          >
-            <section
-              class="aside-block"
-            >
-              <h4
-                class="text__underline-weighted"
-              >
-                What to Expect
-              </h4>
-              <div
-                class="text-sm text-gray-750"
-              >
-                <span>
-                  Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
-                </span>
-                <div
-                  class="mt-2"
-                >
-                  <div>
-                    <button
-                      aria-expanded="false"
-                      aria-label="Show more about what to expect"
-                      class="button is-unstyled m-0 no-underline has-toggle"
-                      type="button"
-                    >
-                      Show more
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div
             class="border-b border-gray-400 md:border-b-0 last:border-b-0"
           >
             <section

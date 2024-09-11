@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isRental, isSale } from "../../util/listingUtil"
+import { isFcfsListing, isRental, isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -53,23 +53,25 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      <div className="border-b border-gray-400 md:border-b-0">
-        <ExpandableSection
-          content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
-          expandableContent={
-            <>
-              <p>{t("f2ReviewTerms.p3")}</p>
-              <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
-            </>
-          }
-          strings={{
-            title: t("label.whatToExpect"),
-            readMore: t("label.showMore"),
-            readLess: t("label.showLess"),
-            buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
-          }}
-        />
-      </div>
+      {!isFcfsListing(listing) && (
+        <div className="border-b border-gray-400 md:border-b-0">
+          <ExpandableSection
+            content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
+            expandableContent={
+              <>
+                <p>{t("f2ReviewTerms.p3")}</p>
+                <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
+              </>
+            }
+            strings={{
+              title: t("label.whatToExpect"),
+              readMore: t("label.showMore"),
+              readLess: t("label.showLess"),
+              buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
+            }}
+          />
+        </div>
+      )}
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
