@@ -24,6 +24,7 @@ export const ListingDetailsProcess = ({
   const isListingSale = isSale(listing)
   const isListingRental = isRental(listing)
   const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: fcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <>
@@ -53,25 +54,26 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      {!isFcfsListing(listing) && (
-        <div className="border-b border-gray-400 md:border-b-0">
-          <ExpandableSection
-            content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
-            expandableContent={
-              <>
-                <p>{t("f2ReviewTerms.p3")}</p>
-                <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
-              </>
-            }
-            strings={{
-              title: t("label.whatToExpect"),
-              readMore: t("label.showMore"),
-              readLess: t("label.showLess"),
-              buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
-            }}
-          />
-        </div>
-      )}
+      {!isFcfsListing(listing) ||
+        (!fcfsEnabled && (
+          <div className="border-b border-gray-400 md:border-b-0">
+            <ExpandableSection
+              content={t("emailer.submissionConfirmation.applicantsWillBeContacted")}
+              expandableContent={
+                <>
+                  <p>{t("f2ReviewTerms.p3")}</p>
+                  <p className={"mt-2 mb-2"}>{t("label.whatToExpectApplicationChosen")}</p>
+                </>
+              }
+              strings={{
+                title: t("label.whatToExpect"),
+                readMore: t("label.showMore"),
+                readLess: t("label.showLess"),
+                buttonAriaLabel: t("listings.whatToExpect.showMore.aria"),
+              }}
+            />
+          </div>
+        ))}
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
