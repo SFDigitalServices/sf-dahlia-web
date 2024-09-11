@@ -32,10 +32,6 @@ describe Force::ListingService do
     end
   end
 
-  # before do
-  #   allow_any_instance_of(Force::Request).to receive(:oauth_token)
-  # end
-
   describe '.listings' do
     it 'should pass type down to Salesforce request for ownership listing' do
       expect_any_instance_of(Force::Request).to receive(:cached_get)
@@ -63,29 +59,65 @@ describe Force::ListingService do
     end
   end
 
-  describe '.listing with GoogleCloudTranslate feature flag enabled' do
+  describe '.listing with GoogleCloudTranslate feature flag disabled' do
     it 'should return details of a listing' do
-      endpoint = '/ListingDetails/' + listing_id
+      endpoint = "/ListingDetails/#{listing_id}"
       expect_any_instance_of(Force::Request).to receive(:cached_get)
         .with(endpoint, nil, false).and_return([single_listing])
       Force::ListingService.listing(listing_id)
     end
   end
 
-  describe '.listing with GoogleCloudTranslate feature flag disabled' do
+  describe '.listing with GoogleCloudTranslate feature flag enabled' do
+    let(:cache_store) { instance_double(ActiveSupport::Cache::MemoryStore) }
+    let(:endpoint) { "/ListingDetails/#{listing_id}" }
+    let(:single_listing) do
+      { 'Id' => listing_id, 'LastModifiedDate' => '2024-03-08T16:51:35.000+0000' }
+    end
+    let(:request_instance) { instance_double(Force::Request) }
+    let(:cache_service) { instance_double(CacheService) }
+
     before do
+      allow(Rails).to receive(:cache).and_return(cache_store)
+
+      allow(Force::Request).to receive(:new).and_return(request_instance)
+      allow(request_instance).to receive(:cached_get).with(endpoint, nil,
+                                                           false).and_return([single_listing])
       allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
         .with('GoogleCloudTranslate')
         .and_return(true)
+
+      allow(cache_store).to receive(:fetch)
+        .with("/ListingDetails/#{listing_id}/translations")
+        .and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
+
+      allow(CacheService).to receive(:new).and_return(cache_service)
+
+      allow(cache_service).to receive(:process_translations).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
     end
-    after do
-      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
-        .and_return(false)
-    end
-    it 'should return details of a listing with listing_translations attached' do
+    it 'should return details of a listing with cached listing_translations attached' do
       endpoint = "/ListingDetails/#{listing_id}"
-      expect_any_instance_of(Force::Request).to receive(:cached_get)
+      expect(request_instance).to receive(:cached_get)
         .with(endpoint, nil, false).and_return([single_listing])
+
+      expect(Force::ListingService).to receive(:translations_invalid?).and_return(false)
+
+      expect(cache_store).to receive(:fetch).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
+
+      listing = Force::ListingService.listing(listing_id)
+      expect(listing).to have_key('translations')
+    end
+    it 'should return details of a listing with fresh listing_translations attached' do
+      endpoint = "/ListingDetails/#{listing_id}"
+      expect(request_instance).to receive(:cached_get)
+        .with(endpoint, nil, false).and_return([single_listing])
+
+      expect(Force::ListingService).to receive(:translations_invalid?).and_return(true)
+
+      expect(cache_store).to receive(:fetch).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
+
+      expect(cache_service).to receive(:process_translations).and_return({ LastModifiedDate: '2024-03-08T16:51:35.000+0000' })
+
       listing = Force::ListingService.listing(listing_id)
       expect(listing).to have_key('translations')
     end

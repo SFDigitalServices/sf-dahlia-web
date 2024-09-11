@@ -36,7 +36,7 @@ module Force
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
 
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      listing = process_listing_results(results)
+      listing = process_listing_images(results)
 
       listing['translations'] = get_listing_translations(listing) || {}
       listing
@@ -50,19 +50,19 @@ module Force
     def self.get_listing_translations(listing)
       return unless ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
 
-      listing_translations = fetch_listing_translations_from_cache(listing.id)
-
+      listing_id = listing['Id']
+      listing_translations = fetch_listing_translations_from_cache(listing_id)
       if translations_invalid?(listing_translations) || translations_are_outdated?(
-        listing_translations&.last_modified_date, listing['LastModifiedDate']
+        listing_translations[:LastModifiedDate], listing['LastModifiedDate']
       )
-        Rails.logger.info("Translations are not valid for #{listing.id}")
+        Rails.logger.info("Translations are not valid for #{listing_id}")
         return CacheService.new.process_translations(listing)
       end
 
-      if listing_is_outdated?(listing_translations&.last_modified_date,
+      if listing_is_outdated?(listing_translations[:LastModifiedDate],
                               listing['LastModifiedDate'])
-        Rails.logger.info("Listing is outdated for #{listing.id}")
-        refresh_listing_cache(listing.id)
+        Rails.logger.info("Listing is outdated for #{listing_id}")
+        refresh_listing_cache(listing_id)
       end
       listing_translations
     end
@@ -94,7 +94,7 @@ module Force
     end
 
     def self.parse_time(time_str)
-      Time.strptime(time_str, DATE_FORMAT)
+      Time.parse(time_str)
     end
 
     # get all units for a given listing
