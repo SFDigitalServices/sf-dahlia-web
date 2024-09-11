@@ -125,7 +125,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "engines": {
-    "npm": "5.3.0",
     "yarn": "1.x.x",
     "node": "18.x.x"
   },
