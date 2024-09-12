@@ -159,14 +159,22 @@ describe("<AccountSettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 2 } })
           fireEvent.change(dayField, { target: { value: 6 } })
           fireEvent.change(yearField, { target: { value: 2000 } })
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+
+          fireEvent.click(closeButton)
+
           button[1].dispatchEvent(new MouseEvent("click"))
           await promise
         })
 
-        expect(getByText("Your changes have been saved.")).not.toBeNull()
         expect(
-          getByText("We will update any applications you have not submitted yet.")
-        ).not.toBeNull()
+          queryByText("We will update any applications you have not submitted yet.")
+        ).toBeNull()
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
@@ -241,6 +249,13 @@ describe("<AccountSettingsPage />", () => {
         await act(async () => {
           fireEvent.change(emailField, { target: { value: "test@test.com" } })
           emailUpdateButton.dispatchEvent(new MouseEvent("click"))
+
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
           await promise
         })
 
