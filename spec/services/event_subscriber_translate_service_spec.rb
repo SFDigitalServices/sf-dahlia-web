@@ -8,6 +8,7 @@ describe Force::EventSubscriberTranslateService do
   let(:faye_client) { instance_double(Faye::Client) }
   let(:faye_subscription) { instance_double(Faye::Subscription) }
   let(:salesforce_client) { instance_double(Restforce::Client) }
+  let(:request_client) { instance_double(Force::Request) }
   let(:salesforce_auth_obj) do
     OpenStruct.new(instance_url: 'test_url', access_token: 'test_token')
   end
@@ -24,16 +25,22 @@ describe Force::EventSubscriberTranslateService do
         },
         'LastModifiedDate' => '2024-06-29T19:09:24Z',
         'Name' => '1075 Market St Unit 206 Update 3',
-        'Credit_Rating__c' => 'Test update again, again',
+        'Credit_Rating__c' => {
+          'diff' => "--- \n+++ 716e7fbcdb7de11a33487ab9e725acd742b2f79cacaf13e9e5bc48b6d09c85e8\n@@ -1,1 +1,1 @@\n-Hello, world 2\n+Hello, world 3",
+        },
       },
       'event' => { 'replayId' => 9_730_266 },
     }
   end
   before do
-    listing_id = 'a0W4U00000KnjQuUAJ'
+    allow(Force::Request).to receive(:new).and_return(request_client)
+    allow(request_client).to receive(:get).and_return(
+      [
+        { 'Credit_Rating' => 'Hello, world!' },
+      ],
+    )
     allow(Restforce).to receive(:new).and_return(salesforce_client)
     allow(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
-    allow(salesforce_client).to receive(:options).and_return({})
     allow(Faye::Client).to receive(:new).and_return(faye_client)
     allow(faye_client).to receive(:set_header)
     allow(faye_client).to receive(:subscribe).and_return(faye_subscription)
@@ -46,12 +53,6 @@ describe Force::EventSubscriberTranslateService do
     allow(cache).to receive(:fetch)
       .with(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY)
       .and_return(true)
-    allow(cache).to receive(:fetch)
-      .with('salesforce_oauth_token', any_args).and_yield
-    allow(cache).to receive(:fetch)
-      .with("/ListingDetails/#{CGI.escape(listing_id)}", { expires_in: 1.day,
-                                                           force: true })
-      .and_return([:single_listing])
     allow(cache).to receive(:delete)
   end
 
@@ -86,8 +87,7 @@ describe Force::EventSubscriberTranslateService do
       end
       it 'detects incoming events from Salesforce and calls translations service' do
         EM.run do
-          expect(faye_client).to receive(:subscribe)
-            .with('/data/Listing__ChangeEvent').and_yield(event)
+          expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent').and_yield(event)
           expect(translation_service).to receive(:translate).and_return(['Hello World'])
           expect(translation_service).to receive(:cache_listing_translations)
 
