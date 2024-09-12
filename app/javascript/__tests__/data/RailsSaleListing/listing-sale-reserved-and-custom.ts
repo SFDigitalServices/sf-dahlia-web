@@ -139,7 +139,6 @@ export const saleListingReservedAndCustom: RailsSaleListing = {
   Application_State: "CA",
   Lottery_City: "San Francisco",
   Lottery_Date: "2022-12-15T20:00:00.000+0000",
-  Publish_Lottery_Results: false,
   Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,

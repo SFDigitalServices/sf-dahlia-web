@@ -110,7 +110,6 @@ export const lotteryCompleteRentalListingWithSummary: RailsRentalListing = {
   Lottery_Venue:
     '<p><span style="font-size: 14px;">Virtual Lottery today. </span><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_NGI4NWM2MWUtMDc4OC00ODUxLWExYzQtMmYzNjU3NjY1ZGEz%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22995d825f-a039-42a9-994a-6ee2e71d314b%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a" target="_blank" style="font-size: 14px; background-color: rgb(255, 255, 255);">Watch it live</a><span style="font-size: 14px;">.</span></p>',
   Lottery_Date: "2021-12-20T19:00:00.000+0000",
-  Publish_Lottery_Results: true,
   Publish_Lottery_Results_on_DAHLIA: "Publish results in lottery modal on DAHLIA",
   LotteryResultsURL:
     "https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/55%20Page%20Street%20Unit%20211%20Lottery%20Results.pdf",

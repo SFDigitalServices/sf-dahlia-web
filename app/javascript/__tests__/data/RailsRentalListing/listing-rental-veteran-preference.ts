@@ -214,7 +214,6 @@ export const rentalVeteranPreferenceListing: RailsRentalListing = {
   Lottery_Venue:
     '<p><span style="font-size: 15px; color: rgb(34, 34, 34);">Virtual lottery today. </span><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDg4YmYzYTQtMjY3MS00NTliLWJkYzEtMWM3MDU3NTQ0M2Nl%40thread.v2/0?context=%7b%22Tid%22%3a%2222d5c2cf-ce3e-443d-9a7f-dfcc0231f73f%22%2c%22Oid%22%3a%22a1924752-de5c-4553-b0c3-e21c56e7651f%22%2c%22IsBroadcastMeeting%22%3atrue%7d&amp;btype=a&amp;role=a" target="_blank" style="font-size: 15px; color: rgb(34, 34, 34);">Click here to watch. </a></p>',
   Lottery_Date: "2022-06-13T18:00:00.000+0000",
-  Publish_Lottery_Results: false,
   Publish_Lottery_Results_on_DAHLIA: "Not published",
   LotteryResultsURL:
     "https://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/681%20Florida%20Lottery%20Results%206.21.22.pdf",
