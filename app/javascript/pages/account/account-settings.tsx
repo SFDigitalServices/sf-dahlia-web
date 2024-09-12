@@ -228,11 +228,9 @@ const updateNameOrDOB = async (
     })
 }
 
-const NameSection = ({ user, setUser }: SectionProps) => {
+const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
-  const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
-  const [nameSavedBanner, setNameSavedBanner] = useState(false)
 
   const {
     register,
@@ -242,8 +240,7 @@ const NameSection = ({ user, setUser }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    setNameUpdateBanner(true)
-    setNameSavedBanner(false)
+    handleBanners("nameUpdateBanner")
   }
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
@@ -268,29 +265,6 @@ const NameSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <>
-      {nameUpdateBanner || nameSavedBanner ? (
-        <FormHeader
-          className={"border-none"}
-          title={t("accountSettings.title.sentenceCase")}
-          description={t("accountSettings.description")}
-        />
-      ) : (
-        <FormHeader
-          title={t("accountSettings.title.sentenceCase")}
-          description={t("accountSettings.description")}
-        />
-      )}
-      <Banner
-        showBanner={nameUpdateBanner}
-        message={t("accountSettings.update")}
-        onClose={() => setNameUpdateBanner(false)}
-      />
-      <Banner
-        showBanner={nameSavedBanner}
-        className="mt-8"
-        message={t("accountSettings.accountChangesSaved")}
-        onClose={() => setNameSavedBanner(false)}
-      />
       {errors && (
         <ErrorSummaryBanner
           errors={errors}
@@ -393,6 +367,20 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
 const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
+  const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
+  const [nameSavedBanner, setNameSavedBanner] = useState(false)
+
+  const handleBanners = (banner: string) => {
+    switch (banner) {
+      case "nameUpdateBanner":
+        setNameUpdateBanner(true)
+        setNameSavedBanner(false)
+        break
+      case "nameSavedBanner":
+        setNameSavedBanner(true)
+        break
+    }
+  }
 
   useEffect(() => {
     // salesforce stores the date of birth as a string YYYY-MM-DD,
@@ -412,7 +400,30 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
-            <NameSection user={user} setUser={setUser} />
+            {nameUpdateBanner || nameSavedBanner ? (
+              <FormHeader
+                className={"border-none"}
+                title={t("accountSettings.title.sentenceCase")}
+                description={t("accountSettings.description")}
+              />
+            ) : (
+              <FormHeader
+                title={t("accountSettings.title.sentenceCase")}
+                description={t("accountSettings.description")}
+              />
+            )}
+            <Banner
+              showBanner={nameUpdateBanner}
+              message={t("accountSettings.update")}
+              onClose={() => setNameUpdateBanner(false)}
+            />
+            <Banner
+              showBanner={nameSavedBanner}
+              className="mt-8"
+              message={t("accountSettings.accountChangesSaved")}
+              onClose={() => setNameSavedBanner(false)}
+            />
+            <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
             <DateOfBirthSection user={user} setUser={setUser} />
             <EmailSection user={user} setUser={setUser} />
             <PasswordSection user={user} setUser={setUser} />
