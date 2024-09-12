@@ -1148,7 +1148,7 @@ ShortFormApplicationService = (
     )
 
   Service.listingHasHomeAndCommunityBasedServicesUnits = (listing) ->
-    listing.Custom_Listing_Type == 'HCBS Units'
+    listing.Custom_Listing_Type == ListingConstantsService.HCBS_PRIORITY_NAME
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
