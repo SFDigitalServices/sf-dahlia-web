@@ -29,6 +29,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
   const isListingRental = isRental(listing)
 
   const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: fcfsEnabled } = useFeatureFlag("FCFS", false)
 
   const expectedMoveInDateBlock = (
     <SidebarBlock title={t("listings.expectedMoveinDate")}>
@@ -93,7 +94,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsListing(listing) && fcfsNoLotteryRequired()}
+            {isFcfsListing(listing) && fcfsEnabled && fcfsNoLotteryRequired()}
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
