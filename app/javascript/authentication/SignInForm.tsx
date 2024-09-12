@@ -86,6 +86,7 @@ const SignInForm = () => {
           <div className="text-center mt-6">
             <Button
               styleType={AppearanceStyleType.primary}
+              type="submit"
               onClick={() => {
                 //
               }}
