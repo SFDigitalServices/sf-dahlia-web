@@ -38,7 +38,7 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      unless ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
         listing['translations'] = get_listing_translations(listing) || {}
       end
       listing
