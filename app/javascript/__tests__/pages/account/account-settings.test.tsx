@@ -28,6 +28,7 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
     let getAllByText
+    let queryByText
     let originalUseContext
     let promise
     let renderResult
@@ -55,6 +56,7 @@ describe("<AccountSettingsPage />", () => {
       renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
+      queryByText = renderResult.queryByText
 
       document.documentElement.lang = "en"
     })
@@ -100,9 +102,19 @@ describe("<AccountSettingsPage />", () => {
         await act(async () => {
           fireEvent.change(firstNameField, { target: { value: "NewFirstName" } })
           fireEvent.change(lastNameField, { target: { value: "NewLastName" } })
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+
+          fireEvent.click(closeButton)
           button[0].dispatchEvent(new MouseEvent("click"))
           await promise
         })
+
+        expect(
+          queryByText("We will update any applications you have not submitted yet.")
+        ).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
