@@ -35,25 +35,25 @@ import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
-const SavedBanner = () => {
+const SavedBanner = ({ onClose }: { onClose: () => void }) => {
   return (
-    <Alert fullwidth className="account-settings-banner">
+    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
       {t("accountSettings.accountChangesSaved")}
     </Alert>
   )
 }
 
-const UpdateBanner = () => {
+const UpdateBanner = ({ onClose }: { onClose: () => void }) => {
   return (
-    <Alert fullwidth className="account-settings-banner">
+    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
       {t("accountSettings.update")}
     </Alert>
   )
 }
 
-const EmailBanner = () => {
+const EmailBanner = ({ onClose }: { onClose: () => void }) => {
   return (
-    <Alert fullwidth className="account-settings-banner">
+    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
       {t("accountSettings.checkYourEmail")}
     </Alert>
   )
@@ -128,12 +128,12 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
     <>
       {emailUpdateBanner && (
         <span className="mt-8">
-          <UpdateBanner />
+          <UpdateBanner onClose={() => setEmailUpdateBanner(false)} />
         </span>
       )}
       {emailBanner && (
         <span className="mt-8">
-          <EmailBanner />
+          <EmailBanner onClose={() => setEmailBanner(false)} />
         </span>
       )}
       <ErrorSummaryBanner
@@ -190,7 +190,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
     <>
       {passwordBanner && (
         <span className="mt-8">
-          <SavedBanner />
+          <SavedBanner onClose={() => setPasswordBanner(false)} />
         </span>
       )}
       <ErrorSummaryBanner
@@ -332,12 +332,12 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
     <>
       {dobUpdateBanner && (
         <span className="mt-8">
-          <UpdateBanner />
+          <UpdateBanner onClose={() => setDOBUpdateBanner(false)} />
         </span>
       )}
       {dobSavedBanner && (
         <span className="mt-8">
-          <SavedBanner />
+          <SavedBanner onClose={() => setDOBSavedBanner(false)} />
         </span>
       )}
       {errors && errors?.dobObject && (
@@ -407,10 +407,10 @@ const AccountSettings = ({ profile }: { profile: User }) => {
                 description={t("accountSettings.description")}
               />
             )}
-            {nameUpdateBanner && <UpdateBanner />}
+            {nameUpdateBanner && <UpdateBanner onClose={() => setNameUpdateBanner(false)} />}
             {nameSavedBanner && (
               <span className="mt-8">
-                <SavedBanner />
+                <SavedBanner onClose={() => setNameSavedBanner(false)} />
               </span>
             )}
             <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
