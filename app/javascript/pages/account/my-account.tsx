@@ -76,7 +76,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountDashboard.myApplications.title")}
               description={t("accountDashboard.myApplications.description")}
-              link={getMyApplicationsPath()}
+              link={`${getMyApplicationsPath()}?react=true`} // TODO: Remove react=true when we have the Accounts flag set to true in CircleCI
               icon="application"
               removeBottomBorder
             />

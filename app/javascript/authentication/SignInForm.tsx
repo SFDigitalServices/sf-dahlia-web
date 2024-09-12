@@ -74,6 +74,7 @@ const SignInForm = () => {
           <div className="text-center mt-4">
             <Button
               styleType={AppearanceStyleType.primary}
+              type="submit"
               onClick={() => {
                 //
               }}

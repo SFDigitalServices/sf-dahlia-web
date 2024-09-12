@@ -1,0 +1,555 @@
+{
+	"test": true,
+    "listing": {
+        "unitSummaries": {
+            "reserved": null,
+            "general": [
+                {
+                    "unitType": "1 BR",
+                    "totalUnits": 2,
+                    "minSquareFt": 900,
+                    "minRentalMinIncome": 0,
+                    "minPriceWithParking": null,
+                    "minPriceWithoutParking": null,
+                    "minPercentIncome": null,
+                    "minOccupancy": 1,
+                    "minMonthlyRent": 2000,
+                    "minHoaDuesWithParking": null,
+                    "minHoaDuesWithoutParking": null,
+                    "maxSquareFt": 900,
+                    "maxRentalMinIncome": 0,
+                    "maxPriceWithParking": null,
+                    "maxPriceWithoutParking": null,
+                    "maxPercentIncome": null,
+                    "maxOccupancy": 3,
+                    "maxMonthlyRent": 2000,
+                    "maxHoaDuesWithParking": null,
+                    "maxHoaDuesWithoutParking": null,
+                    "listingID": "a0W0P00000Hc7RcUAJ",
+                    "availability": 2,
+                    "absoluteMinIncome": null,
+                    "absoluteMaxIncome": 6233
+                },
+                {
+                    "unitType": "2 BR",
+                    "totalUnits": 1,
+                    "minSquareFt": 1000,
+                    "minRentalMinIncome": 0,
+                    "minPriceWithParking": null,
+                    "minPriceWithoutParking": null,
+                    "minPercentIncome": null,
+                    "minOccupancy": 2,
+                    "minMonthlyRent": 4000,
+                    "minHoaDuesWithParking": null,
+                    "minHoaDuesWithoutParking": null,
+                    "maxSquareFt": 1000,
+                    "maxRentalMinIncome": 0,
+                    "maxPriceWithParking": null,
+                    "maxPriceWithoutParking": null,
+                    "maxPercentIncome": null,
+                    "maxOccupancy": 5,
+                    "maxMonthlyRent": 4000,
+                    "maxHoaDuesWithParking": null,
+                    "maxHoaDuesWithoutParking": null,
+                    "listingID": "a0W0P00000Hc7RcUAJ",
+                    "availability": 1,
+                    "absoluteMinIncome": null,
+                    "absoluteMaxIncome": 9870
+                },
+                {
+                    "unitType": "3 BR",
+                    "totalUnits": 1,
+                    "minSquareFt": 1100,
+                    "minRentalMinIncome": 0,
+                    "minPriceWithParking": null,
+                    "minPriceWithoutParking": null,
+                    "minPercentIncome": null,
+                    "minOccupancy": 3,
+                    "minMonthlyRent": 6000,
+                    "minHoaDuesWithParking": null,
+                    "minHoaDuesWithoutParking": null,
+                    "maxSquareFt": 1100,
+                    "maxRentalMinIncome": 0,
+                    "maxPriceWithParking": null,
+                    "maxPriceWithoutParking": null,
+                    "maxPercentIncome": null,
+                    "maxOccupancy": 7,
+                    "maxMonthlyRent": 6000,
+                    "maxHoaDuesWithParking": null,
+                    "maxHoaDuesWithoutParking": null,
+                    "listingID": "a0W0P00000Hc7RcUAJ",
+                    "availability": 1,
+                    "absoluteMinIncome": null,
+                    "absoluteMaxIncome": null
+                }
+            ]
+        },
+        "reservedDescriptor": null,
+        "prioritiesDescriptor": null,
+        "listingID": "a0W0P00000Hc7RcUAJ",
+        "chartTypes": [
+            {
+                "year": "2021",
+                "percent": 50,
+                "numOfHousehold": null,
+                "chartType": "HCD Unadjusted",
+                "amount": null
+            },
+            {
+                "year": "2024",
+                "percent": 60,
+                "numOfHousehold": null,
+                "chartType": "HCD Unadjusted",
+                "amount": null
+            },
+            {
+                "year": "2021",
+                "percent": 60,
+                "numOfHousehold": null,
+                "chartType": "TCAC",
+                "amount": null
+            },
+            {
+                "year": "2022",
+                "percent": 60,
+                "numOfHousehold": null,
+                "chartType": "MOHCD",
+                "amount": null
+            }
+        ],
+        "attributes": {
+            "type": "Listing",
+            "url": "/services/data/v35.0/sobjects/Listing/a0W0P00000Hc7RcUAJ"
+        },
+        "Name": "TEST Dahlia Commons",
+        "Realtor_Commission_Unit": "percent",
+        "Allows_Realtor_Commission": false,
+        "Tenure": "Re-rental",
+        "First_Come_First_Served": false,
+        "Building": {
+            "attributes": {
+                "type": "Building",
+                "url": "/services/data/v35.0/sobjects/Building/a0a0P00000GTl2nQAD"
+            },
+            "Id": "a0a0P00000GTl2nQAD",
+            "Number_of_Parking_Spaces": 0
+        },
+        "In_Lottery": 58,
+        "Program_Type": "MF-RENTAL",
+        "Units_Available": 4,
+        "SASE_Required_for_Lottery_Ticket": true,
+        "nGeneral_Application_Total": 32,
+        "Office_Hours": "Monday – Friday 8:30 am – 5 pm",
+        "Lottery_Status": "Not Yet Run",
+        "Building_Name": "Eddy & Taylor Family Housing",
+        "Project_ID": "2007-003",
+        "Building_Street_Address": "222 Taylor St",
+        "Building_City": "San Francisco",
+        "Building_State": "CA",
+        "Building_Zip_Code": "94102",
+        "Developer": "Tenderloin Neighborhood Development Corporation (TNDC)",
+        "Neighborhood": "Tenderloin",
+        "Year_Built": 2019,
+        "LastModifiedDate": "2024-09-26T18:44:01.000+0000",
+        "Marketing_URL": "TEST-Dahlia-Com-Feb20",
+        "Application_Due_Date": "2025-03-08T20:00:00.000+0000",
+        "Building_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+        "Legal_Disclaimers": "<p><span style=\"color: rgb(68, 68, 68);\">In addition to qualifying under the rules for income and household size, applicants must qualify under the rules of the building</span></p><p><br></p><p><strong style=\"font-family: courier; background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</strong></p><p><br></p><p style=\"text-align: right;\"><em style=\"font-family: serif; background-color: rgb(255, 255, 255); font-size: 9px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</em></p><p style=\"text-align: right;\"><br></p><p style=\"text-align: center;\"><strike style=\"font-family: verdana; background-color: rgb(255, 255, 255); font-size: 36px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</strike></p><p style=\"text-align: center;\"><br></p><ol><li><span style=\"background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></li><li><span style=\"background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></li><li><span style=\"background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. laborum</span></li><li><span style=\"background-color: rgb(255, 255, 255); font-size: 14px; color: rgb(0, 0, 0);\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></li></ol>",
+        "Application_Organization": "Dahlia Commons",
+        "Application_Street_Address": "PO Box 420847",
+        "Application_City": "San Francisco",
+        "Application_State": "CA",
+        "Application_Postal_Code": "94142",
+        "Application_Phone": "(415) 776-2151",
+        "Lottery_Results_Date": "2024-11-27",
+        "Lottery_Venue": "<p>Mayor&#39;s Office of Housing and Community Development</p><p><a href=\"\" target=\"_blank\">Link to MLS</a></p><p><a href=\"\" target=\"_blank\">Floor plans</a></p><p><a href=\"\" target=\"_blank\">More photos of the unit</a></p><p>Photos of the units do not represent all units</p>",
+        "Lottery_Street_Address": "1 South Van Ness, 5th Floor",
+        "Lottery_City": "San Francisco",
+        "Lottery_Date": "2024-11-26T21:00:00.000+0000",
+        "Accepting_Online_Applications": true,
+        "Lottery_Winners": 0,
+        "Credit_Rating": "An unsatisfactory credit history is one that reflects past or current bad debts, late payments or unpaid bills, liens, or judgments, all in excess of $2,500 (within the last 2 years). If an applicant is rejected for poor credit history, the applicant will be provided with a copy of the credit report and will be given the name, address and telephone number of the credit reporting agency that provided the credit information, as required by the Fair Credit Reporting Act (“FCRA”), and will be encouraged to appeal the negative credit report. \r\nNo credit history will not result in an automatic denial. No Bankruptcies in the past 12 months or pending. No outstanding collection on utilities (in past 2 years). Any denials on this basis may be cured by the applicant by paying off the collection item with the utility company. No Dispossessory Warrants or Evictions (in past 2 years) (Applicants with “no-fault” evictions will be considered.). No households where all household members are full-time students (some exceptions apply). \r\nForeclosures and foreclosure evictions will not be held against a household. Medical and student loan debt will not be held against a household. \r\nMitigating Circumstances will be taken into account on a case by case basis. Test multi-fields",
+        "Eviction_History": "No Eviction in the past three (3) years or no more than two (2) in the past five (5) years. With exception for no fault evictions.",
+        "Leasing_Agent_Name": "Sarah Couch",
+        "Leasing_Agent_Title": "Leasing Agent",
+        "Leasing_Agent_Email": "complianceteam@tndc.org",
+        "Leasing_Agent_Phone": "(415) 776-2151",
+        "Accepting_applications_at_leasing_agent": false,
+        "Accepting_applications_by_PO_Box": true,
+        "Blank_paper_application_can_be_picked_up": false,
+        "Fee": 25,
+        "Deposit_Min": 1000,
+        "Costs_Not_Included": "PG&E, Cable & Internet paid by tenant.  Late payment fee: $20.  Returned Check fee: $35.  Replacement key fee: $25. No Parking. ",
+        "Amenities": "Laundry Room, bicycle storage, outdoor courtyard",
+        "Accessibility": "The building’s common areas are accessible to persons with disabilities. 9 units will be designed to be accessible to persons with disabilities and 100% of the units will be adaptable.",
+        "Building_Selection_Criteria": "https://sfmohcd.org/sites/default/files/Resident%20Selection%20Criteria/RSC%20%20AFHMP%20-%20PROPERTY%20-%20ET%20-%20Verbiage%20ALL%20REVISED%201.16.19.pdf",
+        "Required_Documents": "Post-Lottery Application",
+        "Smoking_Policy": "Per San Francisco Health Code, Article 19F Smoking is not allowed in enclosed common areas, building entry, exit and operable doors or vents.",
+        "Pet_Policy": "No Pets, Companion Animals allowed via Reasonable Accommodations.",
+        "Reserved_community_maximum_age": 0,
+        "Reserved_community_minimum_age": 0,
+        "hasWaitlist": true,
+        "Number_of_people_currently_on_waitlist": 0,
+        "Maximum_waitlist_size": 500,
+        "Total_waitlist_openings": 500,
+        "Total_number_of_building_units": 4,
+        "Listing_Type": "Standard Lottery",
+        "RecordTypeId": "0120P000000kPUSQA2",
+        "Id": "a0W0P00000Hc7RcUAJ",
+        "Listing_Images": [
+            {
+                "attributes": {
+                    "type": "Listing_Image",
+                    "url": "/services/data/v35.0/sobjects/Listing_Image/a0t4U00000eAQLMQA4"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0t4U00000eAQLMQA4",
+                "Name": "Front of building",
+                "Image_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+                "Image_Description": "Front of building",
+                "Display_Order": 1,
+                "displayImageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Image",
+                    "url": "/services/data/v35.0/sobjects/Listing_Image/a0t4U00000eAS9JQAW"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0t4U00000eAS9JQAW",
+                "Name": "TEST Dahlia Commons Cover Image",
+                "Image_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+                "Image_Description": "Listing Name:TEST Dahlia Commons, Address:222 Taylor St, San Francisco CA, 94102",
+                "Display_Order": 1,
+                "displayImageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Image",
+                    "url": "/services/data/v35.0/sobjects/Listing_Image/a0t4U00000eAQLRQA4"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0t4U00000eAQLRQA4",
+                "Name": "Back of building",
+                "Image_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+                "Image_Description": "Back of building",
+                "Display_Order": 2,
+                "displayImageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Image",
+                    "url": "/services/data/v35.0/sobjects/Listing_Image/a0t4U00000eAQLWQA4"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0t4U00000eAQLWQA4",
+                "Name": "Side of building",
+                "Image_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+                "Image_Description": "Side of building",
+                "Display_Order": 3,
+                "displayImageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Image",
+                    "url": "/services/data/v35.0/sobjects/Listing_Image/a0t4U00000eAQLbQAO"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0t4U00000eAQLbQAO",
+                "Name": "other side of building",
+                "Image_URL": "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/Eddy%20and%20Taylor.jpg",
+                "Image_Description": "other side of building",
+                "Display_Order": 4,
+                "displayImageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+            }
+        ],
+        "Information_Sessions": [
+            {
+                "attributes": {
+                    "type": "Information_Session",
+                    "url": "/services/data/v35.0/sobjects/Information_Session/a0V0P00000BglrgUAB"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0V0P00000BglrgUAB",
+                "Date": "2020-02-24",
+                "Start_Time": "5:00 PM",
+                "Venue": "Mayor&#39;s Office of Housing and Community Development",
+                "Street_Address": "1 South Van Ness, 5th Floor",
+                "City": "San Francisco"
+            },
+            {
+                "attributes": {
+                    "type": "Information_Session",
+                    "url": "/services/data/v35.0/sobjects/Information_Session/a0V6s000004iSPzEAM"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0V6s000004iSPzEAM",
+                "Date": "2024-07-31",
+                "Start_Time": "8:00 PM"
+            },
+            {
+                "attributes": {
+                    "type": "Information_Session",
+                    "url": "/services/data/v35.0/sobjects/Information_Session/a0V6s000004iSQ4EAM"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0V6s000004iSQ4EAM",
+                "Date": "2024-08-01",
+                "Start_Time": "10:00 AM"
+            }
+        ],
+        "Listing_Lottery_Preferences": [
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l0P00001SjVPQQA3"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l0P00001SjVPQQA3",
+                "Total_Submitted_Apps": 3,
+                "Order": 7,
+                "Available_Units": 60,
+                "Current_Units_Available": 60,
+                "Custom_Preference_Description": true,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m0P00000wwi3IQAQ"
+                    },
+                    "Id": "a0m0P00000wwi3IQAQ",
+                    "Name": "Certificate of Preference (COP)",
+                    "Preference_Short_Code": "COP"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l0P00001SjVPVQA3"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l0P00001SjVPVQA3",
+                "Total_Submitted_Apps": 1,
+                "Order": 2,
+                "Available_Units": 12,
+                "Current_Units_Available": 12,
+                "Custom_Preference_Description": true,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m0P00000www1mQAA"
+                    },
+                    "Id": "a0m0P00000www1mQAA",
+                    "Name": "Displaced Tenant Housing Preference (DTHP)",
+                    "Preference_Short_Code": "DTHP"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l0P00001SjVPaQAN"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l0P00001SjVPaQAN",
+                "Total_Submitted_Apps": 9,
+                "Order": 4,
+                "Available_Units": 24,
+                "Current_Units_Available": 24,
+                "Custom_Preference_Description": true,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m0P00000www1rQAA"
+                    },
+                    "Id": "a0m0P00000www1rQAA",
+                    "Name": "Neighborhood Resident Housing Preference (NRHP)",
+                    "Preference_Short_Code": "NRHP"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l0P00001SjVPbQAN"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l0P00001SjVPbQAN",
+                "Total_Submitted_Apps": 16,
+                "Order": 6,
+                "Available_Units": 60,
+                "Current_Units_Available": 60,
+                "Custom_Preference_Description": false,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m0P00000wwi3NQAQ"
+                    },
+                    "Id": "a0m0P00000wwi3NQAQ",
+                    "Name": "Live or Work in San Francisco Preference",
+                    "Preference_Short_Code": "L_W"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l6s000001QrOXAA0"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l6s000001QrOXAA0",
+                "Total_Submitted_Apps": 1,
+                "Order": 3,
+                "Current_Units_Available": 0,
+                "Custom_Preference_Description": false,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m4U000016XejnQAC"
+                    },
+                    "Id": "a0m4U000016XejnQAC",
+                    "Name": "Veteran with Neighborhood Resident Housing Preference",
+                    "Preference_Short_Code": "V-NRHP"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l6s000001QrOcAAK"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l6s000001QrOcAAK",
+                "Total_Submitted_Apps": 1,
+                "Order": 5,
+                "Current_Units_Available": 0,
+                "Custom_Preference_Description": false,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m4U000016XejiQAC"
+                    },
+                    "Id": "a0m4U000016XejiQAC",
+                    "Name": "Veteran with Live or Work in San Francisco Preference",
+                    "Preference_Short_Code": "V-L_W"
+                }
+            },
+            {
+                "attributes": {
+                    "type": "Listing_Lottery_Preference",
+                    "url": "/services/data/v35.0/sobjects/Listing_Lottery_Preference/a0l6s000001QwhVAAS"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0l6s000001QwhVAAS",
+                "Total_Submitted_Apps": 7,
+                "Order": 1,
+                "Available_Units": 10,
+                "Current_Units_Available": 10,
+                "Custom_Preference_Description": true,
+                "Lottery_Preference": {
+                    "attributes": {
+                        "type": "Lottery_Preference",
+                        "url": "/services/data/v35.0/sobjects/Lottery_Preference/a0m6s000005Vto6AAC"
+                    },
+                    "Id": "a0m6s000005Vto6AAC",
+                    "Name": "Right to Return - Hunters View",
+                    "Preference_Short_Code": "RTR-H"
+                }
+            }
+        ],
+        "Open_Houses": [
+            {
+                "attributes": {
+                    "type": "Open_Houses",
+                    "url": "/services/data/v35.0/sobjects/Open_Houses/a0Y6s0000048okrEAA"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0Y6s0000048okrEAA",
+                "Venue": "<p><a href=\"\" target=\"_blank\">Floor plan</a></p>"
+            },
+            {
+                "attributes": {
+                    "type": "Open_Houses",
+                    "url": "/services/data/v35.0/sobjects/Open_Houses/a0Y6s0000048okwEAA"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0Y6s0000048okwEAA",
+                "Venue": "<p><a href=\"\" target=\"_blank\">More photos and video tour</a></p>"
+            }
+        ],
+        "Units": [
+            {
+                "attributes": {
+                    "type": "Unit",
+                    "url": "/services/data/v35.0/sobjects/Unit/a0b4U00001K2fqiQAB"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0b4U00001K2fqiQAB",
+                "Unit_Type": "1 BR",
+                "BMR_Rent_Monthly": 2000,
+                "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+                "Status": "Available",
+                "Property_Type": "Apartment",
+                "isReservedCommunity": false,
+                "AMI_chart_type": "HCD Unadjusted",
+                "AMI_chart_year": 2024,
+                "Max_AMI_for_Qualifying_Unit": 60
+            },
+            {
+                "attributes": {
+                    "type": "Unit",
+                    "url": "/services/data/v35.0/sobjects/Unit/a0b4U00001K2fr4QAB"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0b4U00001K2fr4QAB",
+                "Unit_Type": "1 BR",
+                "BMR_Rent_Monthly": 2000,
+                "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+                "Status": "Available",
+                "Property_Type": "Apartment",
+                "isReservedCommunity": false,
+                "AMI_chart_type": "MOHCD",
+                "AMI_chart_year": 2022,
+                "Max_AMI_for_Qualifying_Unit": 60
+            },
+            {
+                "attributes": {
+                    "type": "Unit",
+                    "url": "/services/data/v35.0/sobjects/Unit/a0b4U00001K2fqnQAB"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0b4U00001K2fqnQAB",
+                "Unit_Type": "2 BR",
+                "BMR_Rent_Monthly": 4000,
+                "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+                "Status": "Available",
+                "Property_Type": "Apartment",
+                "isReservedCommunity": false,
+                "AMI_chart_type": "TCAC",
+                "AMI_chart_year": 2021,
+                "Max_AMI_for_Qualifying_Unit": 60
+            },
+            {
+                "attributes": {
+                    "type": "Unit",
+                    "url": "/services/data/v35.0/sobjects/Unit/a0b4U00001K2fqsQAB"
+                },
+                "Listing": "a0W0P00000Hc7RcUAJ",
+                "Id": "a0b4U00001K2fqsQAB",
+                "Unit_Type": "3 BR",
+                "BMR_Rent_Monthly": 6000,
+                "BMR_Rental_Minimum_Monthly_Income_Needed": 0,
+                "Status": "Available",
+                "Property_Type": "Apartment",
+                "isReservedCommunity": false,
+                "AMI_chart_type": "HCD Unadjusted",
+                "AMI_chart_year": 2021,
+                "Max_AMI_for_Qualifying_Unit": 50
+            }
+        ],
+        "RecordType": {
+            "attributes": {
+                "type": "RecordType",
+                "url": "/services/data/v35.0/sobjects/RecordType/0120P000000kPUSQA2"
+            },
+            "Id": "0120P000000kPUSQA2",
+            "Name": "Rental"
+        },
+        "imageURL": "https://media.full.housing.dev.sf.gov/images/listings/a0W0P00000Hc7RcUAJ-59d2a60b233e6ac1f2c2bf266b084a59.jpg"
+    }
+}
