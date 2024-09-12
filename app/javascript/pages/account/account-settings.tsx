@@ -259,7 +259,8 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
         } else if (error.response?.data?.errors?.lastName) {
           setError(...handleNameServerErrors("lastName", error))
         }
-      }
+      },
+      () => handleBanners("nameSavedBanner")
     )
   }
 
