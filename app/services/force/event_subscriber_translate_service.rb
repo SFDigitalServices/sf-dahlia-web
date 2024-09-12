@@ -89,7 +89,7 @@ module Force
     end
 
     def translate_and_cache(event)
-      translations = translate_event_values(event.updated_values)
+      translations = translate_event_values(event.listing_id, event.updated_values)
       logger(
         "Event Translations: #{translations.inspect}",
       )
@@ -110,12 +110,33 @@ module Force
       )
     end
 
-    def translate_event_values(values)
-      logger("Translating values: #{values.inspect}")
+    def process_event_values(listing_id, values)
       return [] unless values&.values
 
+      listing = nil
+
+      text_to_translate = []
+      values.each do |key, value|
+        if value.is_a?(String)
+          text_to_translate.push(value)
+        else
+          if listing.nil?
+            listing = Request.new(parse_response: true).get(
+              "/ListingDetails/#{CGI.escape(listing_id)}",
+            ).first
+          end
+          domain_key = ServiceHelper.convert_to_domain_field_name(key)
+          text_to_translate.push(listing[domain_key])
+        end
+      end
+      text_to_translate
+    end
+
+    def translate_event_values(listing_id, values)
+      logger("Translating values: #{values.inspect}")
       languages = %w[ES ZH TL]
-      @translation_service.translate(values.values, languages)
+      text_to_translate = process_event_values(listing_id, values)
+      @translation_service.translate(text_to_translate, languages)
     end
 
     def parse_event(platform_event)

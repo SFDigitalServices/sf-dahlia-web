@@ -38,4 +38,8 @@ module ServiceHelper
   def self.convert_to_salesforce_field_name(field_name)
     "#{field_name}__c"
   end
+
+  def self.convert_to_domain_field_name(field_name)
+    field_name[0..-4]
+  end
 end

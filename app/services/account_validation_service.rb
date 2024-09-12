@@ -11,9 +11,14 @@ class AccountValidationService
     end
   end
 
-  def self.name_fields_have_invalid_characters?(contact)
-    contact_names = [contact[:firstName], contact[:lastName]]
-    contact_names.any? { |name| includes_url_characters(name) }
+  def self.name_field_has_invalid_characters?(name)
+    if name.empty?
+      return "is empty"
+    elsif includes_url_characters(name)
+      return "contains invalid characters"
+    end
+
+    return false
   end
 
   def self.includes_url_characters(value)
