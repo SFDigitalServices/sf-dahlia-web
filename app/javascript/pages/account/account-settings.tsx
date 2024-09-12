@@ -35,27 +35,27 @@ import { AxiosError } from "axios"
 import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
-const SavedBanner = ({ onClose }: { onClose: () => void }) => {
+const Banner = ({
+  showBanner,
+  className,
+  message,
+  onClose,
+}: {
+  showBanner: boolean
+  className?: string
+  message: string
+  onClose?: () => void
+}) => {
   return (
-    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
-      {t("accountSettings.accountChangesSaved")}
-    </Alert>
-  )
-}
-
-const UpdateBanner = ({ onClose }: { onClose: () => void }) => {
-  return (
-    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
-      {t("accountSettings.update")}
-    </Alert>
-  )
-}
-
-const EmailBanner = ({ onClose }: { onClose: () => void }) => {
-  return (
-    <Alert fullwidth className="account-settings-banner" onClose={onClose}>
-      {t("accountSettings.checkYourEmail")}
-    </Alert>
+    <>
+      {showBanner && (
+        <span className={className}>
+          <Alert fullwidth className="account-settings-banner" onClose={onClose}>
+            {message}
+          </Alert>
+        </span>
+      )}
+    </>
   )
 }
 
@@ -126,16 +126,19 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <>
-      {emailUpdateBanner && (
-        <span className="mt-8">
-          <UpdateBanner onClose={() => setEmailUpdateBanner(false)} />
-        </span>
-      )}
-      {emailBanner && (
-        <span className="mt-8">
-          <EmailBanner onClose={() => setEmailBanner(false)} />
-        </span>
-      )}
+      <Banner
+        className="mt-8"
+        showBanner={emailUpdateBanner}
+        message={t("accountSettings.update")}
+        onClose={() => setEmailUpdateBanner(false)}
+      />
+
+      <Banner
+        showBanner={emailBanner}
+        className="mt-8"
+        message={t("accountSettings.checkYourEmail")}
+        onClose={() => setEmailBanner(false)}
+      />
       <ErrorSummaryBanner
         errors={errors}
         messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
@@ -188,11 +191,12 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <>
-      {passwordBanner && (
-        <span className="mt-8">
-          <SavedBanner onClose={() => setPasswordBanner(false)} />
-        </span>
-      )}
+      <Banner
+        showBanner={passwordBanner}
+        className="mt-8"
+        message={t("accountSettings.accountChangesSaved")}
+        onClose={() => setPasswordBanner(false)}
+      />
       <ErrorSummaryBanner
         errors={errors}
         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
@@ -224,9 +228,11 @@ const updateNameOrDOB = async (
     })
 }
 
-const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
+const NameSection = ({ user, setUser }: SectionProps) => {
   const [loading, setLoading] = useState(false)
   const { saveProfile } = useContext(UserContext)
+  const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
+  const [nameSavedBanner, setNameSavedBanner] = useState(false)
 
   const {
     register,
@@ -236,7 +242,8 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
   } = useForm({ mode: "onTouched" })
 
   const onChange = () => {
-    handleBanners("nameUpdateBanner")
+    setNameUpdateBanner(true)
+    setNameSavedBanner(false)
   }
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
@@ -255,13 +262,35 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
         } else if (error.response?.data?.errors?.lastName) {
           setError(...handleNameServerErrors("lastName", error))
         }
-      },
-      () => handleBanners("nameSavedBanner")
+      }
     )
   }
 
   return (
     <>
+      {nameUpdateBanner || nameSavedBanner ? (
+        <FormHeader
+          className={"border-none"}
+          title={t("accountSettings.title.sentenceCase")}
+          description={t("accountSettings.description")}
+        />
+      ) : (
+        <FormHeader
+          title={t("accountSettings.title.sentenceCase")}
+          description={t("accountSettings.description")}
+        />
+      )}
+      <Banner
+        showBanner={nameUpdateBanner}
+        message={t("accountSettings.update")}
+        onClose={() => setNameUpdateBanner(false)}
+      />
+      <Banner
+        showBanner={nameSavedBanner}
+        className="mt-8"
+        message={t("accountSettings.accountChangesSaved")}
+        onClose={() => setNameSavedBanner(false)}
+      />
       {errors && (
         <ErrorSummaryBanner
           errors={errors}
@@ -330,16 +359,18 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
   return (
     <>
-      {dobUpdateBanner && (
-        <span className="mt-8">
-          <UpdateBanner onClose={() => setDOBUpdateBanner(false)} />
-        </span>
-      )}
-      {dobSavedBanner && (
-        <span className="mt-8">
-          <SavedBanner onClose={() => setDOBSavedBanner(false)} />
-        </span>
-      )}
+      <Banner
+        showBanner={dobUpdateBanner}
+        className="mt-8"
+        message={t("accountSettings.update")}
+        onClose={() => setDOBUpdateBanner(false)}
+      />
+      <Banner
+        showBanner={dobSavedBanner}
+        className="mt-8"
+        message={t("accountSettings.accountChangesSaved")}
+        onClose={() => setDOBSavedBanner(false)}
+      />
       {errors && errors?.dobObject && (
         <ErrorSummaryBanner
           errors={deduplicateDOBErrors(errors.dobObject as DeepMap<DOBFieldValues, FieldError>)}
@@ -362,20 +393,6 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
 
 const AccountSettings = ({ profile }: { profile: User }) => {
   const [user, setUser] = useState(null)
-  const [nameUpdateBanner, setNameUpdateBanner] = useState(false)
-  const [nameSavedBanner, setNameSavedBanner] = useState(false)
-
-  const handleBanners = (banner: string) => {
-    switch (banner) {
-      case "nameUpdateBanner":
-        setNameUpdateBanner(true)
-        setNameSavedBanner(false)
-        break
-      case "nameSavedBanner":
-        setNameSavedBanner(true)
-        break
-    }
-  }
 
   useEffect(() => {
     // salesforce stores the date of birth as a string YYYY-MM-DD,
@@ -395,25 +412,7 @@ const AccountSettings = ({ profile }: { profile: User }) => {
       <section className="bg-gray-300 md:border-t md:border-gray-450">
         <div className="flex flex-wrap relative md:max-w-lg mx-auto md:py-8">
           <Card className="w-full pb-8">
-            {nameUpdateBanner || nameSavedBanner ? (
-              <FormHeader
-                className={"border-none"}
-                title={t("accountSettings.title.sentenceCase")}
-                description={t("accountSettings.description")}
-              />
-            ) : (
-              <FormHeader
-                title={t("accountSettings.title.sentenceCase")}
-                description={t("accountSettings.description")}
-              />
-            )}
-            {nameUpdateBanner && <UpdateBanner onClose={() => setNameUpdateBanner(false)} />}
-            {nameSavedBanner && (
-              <span className="mt-8">
-                <SavedBanner onClose={() => setNameSavedBanner(false)} />
-              </span>
-            )}
-            <NameSection user={user} setUser={setUser} handleBanners={handleBanners} />
+            <NameSection user={user} setUser={setUser} />
             <DateOfBirthSection user={user} setUser={setUser} />
             <EmailSection user={user} setUser={setUser} />
             <PasswordSection user={user} setUser={setUser} />
