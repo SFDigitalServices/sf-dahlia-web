@@ -124,10 +124,6 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-server": "^4.15.1"
   },
-  "engines": {
-    "yarn": "1.x.x",
-    "node": "18.x.x"
-  },
   "scripts": {
     "postinstall": "bower install",
     "protractor": "protractor ./spec/e2e/conf.js",
