@@ -38,7 +38,9 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       listing = process_listing_images(results)
 
-      listing['translations'] = get_listing_translations(listing) || {}
+      unless ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+        listing['translations'] = get_listing_translations(listing) || {}
+      end
       listing
     end
 
@@ -48,8 +50,6 @@ module Force
     end
 
     def self.get_listing_translations(listing)
-      return unless ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
-
       listing_id = listing['Id']
       listing_translations = fetch_listing_translations_from_cache(listing_id)
       if translations_invalid?(listing_translations) || translations_are_outdated?(
