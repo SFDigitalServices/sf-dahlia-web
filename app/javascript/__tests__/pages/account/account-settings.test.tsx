@@ -112,9 +112,22 @@ describe("<AccountSettingsPage />", () => {
           await promise
         })
 
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
+          await promise
+        })
+
         expect(
-          queryByText("We will update any applications you have not submitted yet.")
+          queryByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
         ).toBeNull()
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -264,6 +277,19 @@ describe("<AccountSettingsPage />", () => {
             "We sent you an email. Check your email and follow the link to finish changing your information."
           )
         ).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
+          await promise
+        })
+
+        expect(
+          queryByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
+        ).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth",
