@@ -36,7 +36,7 @@ module Force
       results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
       listing = add_image_urls(results_with_cached_listing_images).first
 
-      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
+      if Unleash::Client.new.is_enabled? 'GoogleCloudTranslate'
         listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
           Rails.logger.info("Nothing in cache for Listing #{id} translations")
           {}
