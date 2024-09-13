@@ -188,6 +188,14 @@ describe("<AccountSettingsPage />", () => {
         ).toBeNull()
         expect(getByText("Your changes have been saved.")).not.toBeNull()
 
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+          await promise
+        })
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
+
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
@@ -385,6 +393,16 @@ describe("<AccountSettingsPage />", () => {
           passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
           await promise
         })
+
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+          await promise
+        })
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth/password",
