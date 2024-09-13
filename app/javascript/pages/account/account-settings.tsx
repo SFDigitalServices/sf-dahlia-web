@@ -4,21 +4,24 @@ import withAppSetup from "../../layouts/withAppSetup"
 import UserContext from "../../authentication/context/UserContext"
 
 import { Form, DOBFieldValues, t } from "@bloom-housing/ui-components"
-import { DeepMap, FieldError, FieldValues, useForm } from "react-hook-form"
+import { DeepMap, FieldError, useForm } from "react-hook-form"
 import { Card, Alert } from "@bloom-housing/ui-seeds"
 import { getSignInPath } from "../../util/routeUtil"
 import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
-import EmailFieldset, { emailErrorsMap, handleEmailServerErrors } from "./components/EmailFieldset"
+import EmailFieldset, {
+  emailFieldsetErrors,
+  handleEmailServerErrors,
+} from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import PasswordFieldset, {
-  handleServerErrors,
-  passwordErrorsMap,
+  handlePasswordServerErrors,
+  passwordFieldsetErrors,
 } from "./components/PasswordFieldset"
-import NameFieldset, { handleNameServerErrors, nameErrorsMap } from "./components/NameFieldset"
+import NameFieldset, { handleNameServerErrors, nameFieldsetErrors } from "./components/NameFieldset"
 import DOBFieldset, {
   deduplicateDOBErrors,
-  dobErrorsMap,
+  dobFieldsetErrors,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
 import "./styles/account.scss"
@@ -28,8 +31,9 @@ import {
   updatePassword,
 } from "../../api/authApiService"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
-import { renderInlineMarkup } from "../../util/languageUtil"
 import { AxiosError } from "axios"
+import { ErrorSummaryBanner } from "./components/ErrorSummaryBanner"
+import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
 
 const SavedBanner = () => {
   return (
@@ -43,53 +47,6 @@ const UpdateBanner = () => {
   return (
     <Alert fullwidth className="account-settings-banner">
       {t("accountSettings.update")}
-    </Alert>
-  )
-}
-
-const ErrorSummaryBanner = ({
-  errors,
-  messageMap,
-}: {
-  errors: DeepMap<FieldValues, FieldError>
-  messageMap?: (message: string) => string
-}) => {
-  if (Object.keys(errors).length === 0) {
-    return null
-  }
-
-  return (
-    <Alert fullwidth variant="alert" className="">
-      {t("error.accountBanner.header")}
-      <ul className="list-disc list-inside pl-2 pt-1">
-        {Object.keys(errors).map((key: string) => {
-          let fieldError = errors[key]
-
-          if (messageMap && fieldError.message && typeof fieldError.message === "string") {
-            fieldError = {
-              ...fieldError,
-              message: messageMap(fieldError.message as string),
-            }
-          }
-
-          return fieldError && fieldError.message ? (
-            <li key={key}>
-              <button
-                type="button"
-                className="text-blue-500 cursor-pointer background-none border-none p-0 text-left"
-                onClick={() => {
-                  if (fieldError.ref) {
-                    fieldError.ref.scrollIntoView({ behavior: "smooth" })
-                    fieldError.ref.focus()
-                  }
-                }}
-              >
-                {renderInlineMarkup(fieldError.message as string)}
-              </button>
-            </li>
-          ) : null
-        })}
-      </ul>
     </Alert>
   )
 }
@@ -157,12 +114,11 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
         setUser(newUser)
         setEmailBanner(true)
       })
-      .catch(
-        handleEmailServerErrors(setError, () => {
-          setEmailBanner(false)
-          setEmailUpdateBanner(false)
-        })
-      )
+      .catch((error: ExpandedAccountAxiosError) => {
+        setError(...handleEmailServerErrors(error))
+        setEmailBanner(false)
+        setEmailUpdateBanner(false)
+      })
       .finally(() => {
         setLoading(false)
       })
@@ -182,7 +138,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
       )}
       <ErrorSummaryBanner
         errors={errors}
-        messageMap={(messageKey) => emailErrorsMap(messageKey, true)}
+        messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
       />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
         <EmailFieldset
@@ -223,7 +179,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         setUser(newUser)
         setPasswordBanner(true)
       })
-      .catch(handleServerErrors(setError))
+      .catch((error: ExpandedAccountAxiosError) => setError(...handlePasswordServerErrors(error)))
       .finally(() => {
         reset({}, { errors: true })
         setLoading(false)
@@ -239,7 +195,7 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
       )}
       <ErrorSummaryBanner
         errors={errors}
-        messageMap={(messageKey) => passwordErrorsMap(messageKey, true)}
+        messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
       />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
         <PasswordFieldset register={register} errors={errors} watch={watch} edit />
@@ -285,21 +241,21 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
 
   const onSubmit = async (data: { firstName: string; middleName: string; lastName: string }) => {
     setLoading(true)
-    const { firstName, middleName, lastName } = data
 
-    const newUser = {
-      ...user,
-      firstName,
-      lastName,
-      middleName,
-    }
+    const newUser = { ...user, ...data }
 
     await updateNameOrDOB(
       newUser,
       saveProfile,
       setUser,
       setLoading,
-      handleNameServerErrors(setError),
+      (error: ExpandedAccountAxiosError) => {
+        if (error.response?.data?.errors?.firstName) {
+          setError(...handleNameServerErrors("firstName", error))
+        } else if (error.response?.data?.errors?.lastName) {
+          setError(...handleNameServerErrors("lastName", error))
+        }
+      },
       () => handleBanners("nameSavedBanner")
     )
   }
@@ -309,7 +265,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       {errors && (
         <ErrorSummaryBanner
           errors={errors}
-          messageMap={(messageKey) => nameErrorsMap(messageKey, true)}
+          messageMap={(messageKey) => getErrorMessage(messageKey, nameFieldsetErrors, true)}
         />
       )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
@@ -364,7 +320,10 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       saveProfile,
       setUser,
       setLoading,
-      handleDOBServerErrors(setError, dobServerErrorsCallback),
+      (error: ExpandedAccountAxiosError) => {
+        setError(...handleDOBServerErrors(error))
+        dobServerErrorsCallback()
+      },
       () => setDOBSavedBanner(true)
     )
   }
@@ -384,7 +343,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       {errors && errors?.dobObject && (
         <ErrorSummaryBanner
           errors={deduplicateDOBErrors(errors.dobObject as DeepMap<DOBFieldValues, FieldError>)}
-          messageMap={(messageKey) => dobErrorsMap(messageKey, true)}
+          messageMap={(messageKey) => getErrorMessage(messageKey, dobFieldsetErrors, true)}
         />
       )}
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>

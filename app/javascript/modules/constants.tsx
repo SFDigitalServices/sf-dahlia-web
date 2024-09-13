@@ -8,6 +8,7 @@ export const PREFERENCES = {
   dalpGeneral: "DALP General",
   displacedTenant: "Displaced Tenant Housing Preference (DTHP)",
   employmentOrDisability: "Employment or Disability Preference",
+  generalLottery: "generalLottery",
   hud221d3: "HUD 221(d)(3) Statutory Preference; Federal or Presidential Disasters (HUD 221)",
   liveWorkInSf: "Live or Work in San Francisco Preference",
   neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)",

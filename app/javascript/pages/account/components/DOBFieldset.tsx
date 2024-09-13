@@ -2,10 +2,11 @@ import React from "react"
 import { t, Field } from "@bloom-housing/ui-components"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
-import { UseFormMethods, FieldError, DeepMap, ErrorOption } from "react-hook-form"
+import { UseFormMethods, FieldError, DeepMap } from "react-hook-form"
 import Fieldset from "./Fieldset"
 import { renderInlineMarkup } from "../../../util/languageUtil"
-import { AxiosError } from "axios"
+import { ErrorMessages } from "./ErrorSummaryBanner"
+import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 dayjs.extend(customParseFormat)
 
 export type DOBFieldValues = {
@@ -49,41 +50,36 @@ export const deduplicateDOBErrors = (
   return consolidatedErrors
 }
 
-export const handleDOBServerErrors =
-  (setError: (name: string, error: ErrorOption) => void, errorCallback?: () => void) =>
-  (error: AxiosError) => {
-    if (error.response.status === 422) {
-      setError("dobObject.birthYear", {
-        message: "error:dob:age",
-        shouldFocus: true,
-        type: "range",
-      })
-    } else {
-      setError("dobObject.birthYear", { message: "error:dob:generic", shouldFocus: true })
-    }
+export const handleDOBServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
+  return error.response.status === 422
+    ? [
+        "dobObject.birthYear",
+        {
+          message: "dob:invalid",
+          shouldFocus: true,
+          type: "range",
+        },
+      ]
+    : ["dobObject.birthYear", { message: "dob:server:generic", shouldFocus: true }]
+}
 
-    errorCallback && errorCallback()
-  }
-
-export const dobErrorsMap = (errorKey: string, abbreviated: boolean) => {
-  if (errorKey) {
-    switch (errorKey) {
-      case "error:dob:invalid":
-        return abbreviated ? t("error.account.dob.abbreviated") : t("error.account.dob")
-      case "error:dob:missing":
-        return abbreviated
-          ? t("error.account.dobMissing.abbreviated")
-          : t("error.account.dobMissing")
-      case "error:dob:age":
-        return abbreviated
-          ? t("error.account.dobTooYoung.abbreviated")
-          : t("error.account.dobTooYoung")
-      default:
-        return abbreviated
-          ? t("error.account.genericServerError.abbreviated")
-          : t("error.account.genericServerError")
-    }
-  }
+export const dobFieldsetErrors: ErrorMessages = {
+  "dob:invalid": {
+    default: "error.account.dob",
+    abbreviated: "error.account.dob.abbreviated",
+  },
+  "dob:missing": {
+    default: "error.account.dobMissing",
+    abbreviated: "error.account.dobMissing.abbreviated",
+  },
+  "dob:age": {
+    default: "error.account.dobTooYoung",
+    abbreviated: "error.account.dobTooYoung.abbreviated",
+  },
+  "dob:server:generic": {
+    default: "error.account.genericServerError",
+    abbreviated: "error.account.genericServerError.abbreviated",
+  },
 }
 
 const validateNumber = (required: boolean, value: string, maxValue: number, errorKey: string) => {
@@ -93,18 +89,18 @@ const validateNumber = (required: boolean, value: string, maxValue: number, erro
 }
 
 const validateAge = (month: string, day: string, year: string) => {
-  if (year.length < 4) return "error:dob:invalid"
+  if (year.length < 4) return "dob:invalid"
   if (dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().valueOf())
-    return "error:dob:invalid"
+    return "dob:invalid"
   if (
     dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() <
     dayjs().subtract(117, "years").valueOf()
   )
-    return "error:dob:invalid"
+    return "dob:invalid"
   if (
     dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().subtract(18, "years").valueOf()
   )
-    return "error:dob:age"
+    return "dob:age"
   return true
 }
 
@@ -132,17 +128,17 @@ const DateField = ({
     birthDay: {
       label: t("label.dobDay"),
       validation: (value: string) => {
-        return validateNumber(required, value, 31, "error:dob:invalid")
+        return validateNumber(required, value, 31, "dob:invalid")
       },
-      required: required ? "error:dob:missing" : undefined,
+      required: required ? "dob:missing" : undefined,
       maxLength: 2,
     },
     birthMonth: {
       label: t("label.dobMonth"),
       validation: (value: string) => {
-        return validateNumber(required, value, 12, "error:dob:invalid")
+        return validateNumber(required, value, 12, "dob:invalid")
       },
-      required: required ? "error:dob:missing" : undefined,
+      required: required ? "dob:missing" : undefined,
       maxLength: 2,
     },
     birthYear: {
@@ -151,7 +147,7 @@ const DateField = ({
         if (value?.length) return validateAge(birthDay, birthMonth, value)
         return true
       },
-      required: required ? "error:dob:missing" : undefined,
+      required: required ? "dob:missing" : undefined,
       maxLength: 4,
     },
   }
@@ -209,11 +205,11 @@ const DOBFieldset = ({
 
   const determineErrorLanguage = () => {
     if (error?.birthYear) {
-      return dobErrorsMap(error?.birthYear?.message, false)
+      return getErrorMessage(error?.birthYear?.message, dobFieldsetErrors, false)
     } else if (error?.birthMonth) {
-      return dobErrorsMap(error?.birthMonth?.message, false)
+      return getErrorMessage(error?.birthMonth?.message, dobFieldsetErrors, false)
     } else {
-      return dobErrorsMap(error?.birthDay?.message, false)
+      return getErrorMessage(error?.birthDay?.message, dobFieldsetErrors, false)
     }
   }
 
