@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import React from "react"
 import EmailFieldset, {
-  emailErrorsMap,
+  emailFieldsetErrors,
   handleEmailServerErrors,
 } from "../../pages/account/components/EmailFieldset"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { useForm } from "react-hook-form"
 import { t } from "@bloom-housing/ui-components"
-import { AxiosError } from "axios"
+import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
 
 const FieldSetWrapper = () => {
   const {
@@ -58,64 +58,118 @@ describe("EmailFieldset", () => {
   })
 
   describe("handleEmailServerErrors", () => {
-    let setError: jest.Mock
-    let errorCallback: jest.Mock
-
-    beforeEach(() => {
-      setError = jest.fn()
-      errorCallback = jest.fn()
-    })
-
     test("should set error to generalFormat when status is 422", () => {
-      const error = { response: { status: 422 } } as AxiosError
-      const handler = handleEmailServerErrors(setError, errorCallback)
-      handler(error)
+      const error = {
+        response: {
+          status: 422,
+          data: { errors: { full_messages: [] } },
+        },
+      } as unknown as ExpandedAccountAxiosError
+      const errorReturn = handleEmailServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("email", {
-        message: "email:generalFormat",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:generalFormat",
+          shouldFocus: true,
+        },
+      ])
     })
 
     test("should set error to generic when status is not 422", () => {
-      const error = { response: { status: 500 } } as AxiosError
-      const handler = handleEmailServerErrors(setError, errorCallback)
-      handler(error)
+      const error = {
+        response: {
+          data: { errors: { full_messages: [] } },
+        },
+      } as unknown as ExpandedAccountAxiosError
+      const errorReturn = handleEmailServerErrors(error)
 
-      expect(setError).toHaveBeenCalledWith("email", {
-        message: "email:generic",
-        shouldFocus: true,
-      })
-      expect(errorCallback).toHaveBeenCalled()
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:server:generic",
+          shouldFocus: true,
+        },
+      ])
+    })
+
+    test("should set error email duplicate error", () => {
+      const error = {
+        response: {
+          status: 422,
+          data: { errors: { full_messages: ["Email has already been taken"] } },
+        },
+      } as unknown as ExpandedAccountAxiosError
+      const errorReturn = handleEmailServerErrors(error)
+
+      expect(errorReturn).toEqual([
+        "email",
+        {
+          message: "email:server:duplicate",
+          shouldFocus: true,
+        },
+      ])
     })
   })
 
   describe("emailErrorsMap", () => {
-    test("should return correct message for email:missingAtSign", () => {
-      expect(emailErrorsMap("email:missingAtSign")).toBe(t("error.email.missingAtSign"))
-      expect(emailErrorsMap("email:missingAtSign", true)).toBe(
-        t("error.email.missingAtSign.abbreviated")
-      )
-    })
+    const testCases = [
+      {
+        key: "email:missingAtSign",
+        abbreviated: false,
+        expected: "error.email.missingAtSign",
+      },
+      {
+        key: "email:missingAtSign",
+        abbreviated: true,
+        expected: "error.email.missingAtSign.abbreviated",
+      },
+      {
+        key: "email:missingDot",
+        abbreviated: false,
+        expected: "error.email.missingDot",
+      },
+      {
+        key: "email:missingDot",
+        abbreviated: true,
+        expected: "error.email.missingDot.abbreviated",
+      },
+      {
+        key: "email:generalFormat",
+        abbreviated: false,
+        expected: "error.email.generalIncorrect",
+      },
+      {
+        key: "email:generalFormat",
+        abbreviated: true,
+        expected: "error.email.generalIncorrect.abbreviated",
+      },
+      {
+        key: "email:missing",
+        abbreviated: false,
+        expected: "error.email.missing",
+      },
+      {
+        key: "email:missing",
+        abbreviated: true,
+        expected: "error.email.missing.abbreviated",
+      },
+      {
+        key: "email:server:generic",
+        abbreviated: false,
+        expected: "error.account.genericServerError",
+      },
+      {
+        key: "email:server:generic",
+        abbreviated: true,
+        expected: "error.account.genericServerError.abbreviated",
+      },
+    ]
 
-    test("should return correct message for email:missingDot", () => {
-      expect(emailErrorsMap("email:missingDot")).toBe(t("error.email.missingDot"))
-      expect(emailErrorsMap("email:missingDot", true)).toBe(t("error.email.missingDot.abbreviated"))
-    })
-
-    test("should return correct message for email:generalFormat", () => {
-      expect(emailErrorsMap("email:generalFormat")).toBe(t("error.email.generalIncorrect"))
-      expect(emailErrorsMap("email:generalFormat", true)).toBe(
-        t("error.email.generalIncorrect.abbreviated")
-      )
-    })
-
-    test("should return generic server error message for unknown error code", () => {
-      expect(emailErrorsMap("unknownError")).toBe(t("error.account.genericServerError"))
-      expect(emailErrorsMap("unknownError", true)).toBe(
-        t("error.account.genericServerError.abbreviated")
-      )
+    testCases.forEach(({ key, abbreviated, expected }) => {
+      test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
+        expect(getErrorMessage(key, emailFieldsetErrors, abbreviated)).toBe(t(expected))
+      })
     })
   })
 })

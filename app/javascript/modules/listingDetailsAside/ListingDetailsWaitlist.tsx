@@ -1,15 +1,14 @@
 import React from "react"
 import { QuantityRowSection, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
-import { isLotteryCompleteDeprecated, isOpen } from "../../util/listingUtil"
+import { isLotteryComplete, isOpen } from "../../util/listingUtil"
 
 export interface ListingDetailsWaitlistProps {
   listing: RailsListing
 }
 
 export const ListingDetailsWaitlist = ({ listing }: ListingDetailsWaitlistProps) => {
-  if (!listing.hasWaitlist || (!isOpen(listing) && !isLotteryCompleteDeprecated(listing)))
-    return null
+  if (!listing.hasWaitlist || (!isOpen(listing) && !isLotteryComplete(listing))) return null
 
   const waitlistUnavailableDescription = (
     <>

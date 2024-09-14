@@ -1,6 +1,6 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { getTagContent, isFcfsListing, isLotteryCompleteDeprecated } from "../../util/listingUtil"
+import { getTagContent, isFcfsListing, isLotteryComplete } from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -98,7 +98,7 @@ const getLotteryClosedStatuses = (
     hideIcon: true,
   }
 
-  return isLotteryCompleteDeprecated(listing)
+  return isLotteryComplete(listing)
     ? [postLotteryStatus]
     : [applicationsClosedStatus, postLotteryStatus]
 }
@@ -162,7 +162,7 @@ export const getListingImageCardStatuses = (
   const lotteryResultsDateString = localizedFormat(listing.Lottery_Results_Date, "LL")
 
   if (new Date(listing.Application_Due_Date) < new Date()) {
-    if (!isLotteryCompleteDeprecated(listing)) {
+    if (!isLotteryComplete(listing)) {
       statuses.push({
         status: ApplicationStatusType.Closed,
         content: `${t("listings.applicationsClosed")}: ${formattedDueDateString}`,

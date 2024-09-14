@@ -19,7 +19,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
@@ -31,7 +30,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, false)).toStrictEqual(
@@ -53,7 +51,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2000-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: true,
           Publish_Lottery_Results_on_DAHLIA: "Publish results in lottery modal on DAHLIA",
           Lottery_Status: "Lottery Complete",
         }
@@ -71,7 +68,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: true,
         }
@@ -85,7 +81,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: true,
         }
@@ -97,7 +92,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2100-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
           Does_Match: false,
         }
@@ -109,7 +103,6 @@ describe("DirectoryHelpers", () => {
         const testListing = {
           Application_Due_Date: "2000-10-30T00:00:00.000+0000",
           Lottery_Results_Date: "2100-10-31T00:00:00.000+0000",
-          Publish_Lottery_Results: false,
           Publish_Lottery_Results_on_DAHLIA: "Not published",
         }
         expect(getListingImageCardStatuses(testListing as RailsRentalListing, true)).toStrictEqual([

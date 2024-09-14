@@ -15,7 +15,6 @@ import { RailsListing } from "../modules/listings/SharedHelpers"
 import {
   getListingAddressString,
   isLotteryComplete,
-  isLotteryCompleteDeprecated,
   showLotteryResultsPDFonly,
   convertToReadableDate,
 } from "../util/listingUtil"
@@ -46,7 +45,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
   const applicationID = props.applicationURL.split("/").pop()
 
   React.useEffect(() => {
-    if (isLotteryCompleteDeprecated(props.listing)) {
+    if (isLotteryComplete(props.listing)) {
       void getLotteryBucketDetails(props.listing.Id).then((lotteryBucketDetails) => {
         setLotteryBucketDetails(lotteryBucketDetails)
       })
