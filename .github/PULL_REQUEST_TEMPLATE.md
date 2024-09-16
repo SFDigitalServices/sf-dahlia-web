@@ -4,7 +4,7 @@ _just one or two sentences_
 
 ## Jira ticket
 
-
+https://sfgovdt.jira.com/
 
 ## Checklist before requesting review
 
@@ -17,20 +17,15 @@ _just one or two sentences_
 ### Code quality
 
 - [ ] [the set of changes is small](https://google.github.io/eng-practices/review/developer/small-cls.html#what-is-small)
-- [ ] [if the set of changes cannot be small, reviewers have been forewarned](https://google.github.io/eng-practices/review/developer/small-cls.html#cant)
-- [ ] code meets test coverage thresholds
-- [ ] code is properly formatted
-- [ ] code is linted
+- [ ] all automated code checks pass (linting, tests, coverage, etc.)
 - [ ] code irrelevant to the ticket is not modified e.g. changing indentation due to automated formatting
-- [ ] automated tests pass
 - [ ] if the code changes the UI, it matches the UI design exactly
 
 ### Review instructions
 
 - [ ] instructions specify which environment(s) it applies to
+- [ ] instructions work for PA testers
 - [ ] instructions have already been performed at least once
-- [ ] instructions can be followed by PA testers
-- [ ] instructions specify if it can only be followed by an engineer
 
 ### Request review
 
