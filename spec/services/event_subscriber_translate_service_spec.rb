@@ -8,6 +8,7 @@ describe Force::EventSubscriberTranslateService do
   let(:faye_client) { instance_double(Faye::Client) }
   let(:faye_subscription) { instance_double(Faye::Subscription) }
   let(:salesforce_client) { instance_double(Restforce::Client) }
+  let(:request_client) { instance_double(Force::Request) }
   let(:salesforce_auth_obj) do
     OpenStruct.new(instance_url: 'test_url', access_token: 'test_token')
   end
@@ -24,22 +25,20 @@ describe Force::EventSubscriberTranslateService do
         },
         'LastModifiedDate' => '2024-06-29T19:09:24Z',
         'Name' => '1075 Market St Unit 206 Update 3',
-        'Credit_Rating__c' => 'Test update again, again',
+        'Credit_Rating__c' => {
+          'diff' => "--- \n+++ 716e7fbcdb7de11a33487ab9e725acd742b2f79cacaf13e9e5bc48b6d09c85e8\n@@ -1,1 +1,1 @@\n-Hello, world 2\n+Hello, world 3",
+        },
       },
       'event' => { 'replayId' => 9_730_266 },
     }
   end
-  let(:event_obj) do
-    OpenStruct.new(
-      listing_id: 'a0W4U00000KnjQuUAJ',
-      last_modified_date: '2024-06-29T19:09:24Z',
-      entity_name: 'Listing__c',
-      changed_fields: %w[Name Credit_Rating__c LastModifiedDate],
-      replay_id: 9_730_266,
-      updated_values: {},
-    )
-  end
   before do
+    allow(Force::Request).to receive(:new).and_return(request_client)
+    allow(request_client).to receive(:get).and_return(
+      [
+        { 'Credit_Rating' => 'Hello, world!' },
+      ],
+    )
     allow(Restforce).to receive(:new).and_return(salesforce_client)
     allow(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
     allow(Faye::Client).to receive(:new).and_return(faye_client)

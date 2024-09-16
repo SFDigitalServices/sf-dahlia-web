@@ -4,7 +4,8 @@ module Overrides
     # method copied from original gem; refactored to please Rubocop
     def create
       setup_resource_for_create
-      return render_create_error if AccountValidationService.name_fields_have_invalid_characters?(params[:contact]) || !AccountValidationService.valid_dob?(account_params[:DOB])
+
+      check_name_and_dob_errors
 
       if resource_class.devise_modules.include?(:confirmable) && !@redirect_url
         return render_create_error_missing_confirm_success_url
@@ -33,6 +34,22 @@ module Overrides
 
     private
 
+    def check_name_and_dob_errors
+      firstNameErrors = AccountValidationService.name_field_has_invalid_characters?(params[:contact][:firstName])
+      if firstNameErrors
+        @resource.errors.add(:firstName, firstNameErrors)
+      end
+
+      lastNameErrors = AccountValidationService.name_field_has_invalid_characters?(params[:contact][:lastName])
+      if lastNameErrors
+        @resource.errors.add(:lastName, lastNameErrors)
+      end
+
+      if !AccountValidationService.valid_dob?(account_params[:DOB])
+        @resource.errors.add(:DOB, 'is invalid')
+      end
+    end
+
     def error_checks_for_create
       # success redirect url is required
     end
@@ -56,7 +73,9 @@ module Overrides
     end
 
     def save_and_render_created_registration
-      if @resource.save
+      non_save_based_errors = @resource.errors.deep_dup
+
+      if @resource.save && non_save_based_errors.empty?
         # <SFDAHLIA ...
         synced = sync_with_salesforce
         if synced
@@ -72,6 +91,14 @@ module Overrides
         handle_registration_success
         render_create_success
       else
+        non_save_based_errors.each do |error|
+          attribute = error.attribute
+          message = error.message
+          @resource.errors.add(attribute, message)
+        end
+
+        @resource.destroy
+
         clean_up_passwords @resource
         render_create_error
       end
