@@ -78,7 +78,7 @@ export const ListingDetailsEligibility = ({
   } else if (isAllSRO && !isPluralSRO(listing)) {
     occupancySubtitle = t("listings.occupancyDescriptionAllSro", 1)
   } else if (isPluralSRO(listing)) {
-    occupancySubtitle = t("listings.occupancyDescriptionAllSroPlural", 2)
+    occupancySubtitle = t("listings.occupancyDescriptionAllSro", 2)
   } else if (!isAllSRO && isSomeSRO) {
     occupancySubtitle = t("listings.occupancyDescriptionSomeSro")
   } else {
