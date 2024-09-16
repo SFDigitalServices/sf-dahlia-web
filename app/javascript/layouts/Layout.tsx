@@ -28,6 +28,7 @@ import ErrorBoundary, { BoundaryScope } from "../components/ErrorBoundary"
 import { HelmetProvider } from "react-helmet-async"
 
 import "./Layout.scss"
+import { isTokenValid } from "../authentication/token"
 
 export interface LayoutProps {
   children: React.ReactNode
@@ -126,7 +127,7 @@ const getMenuLinks = (signedIn: boolean, signOut: () => void) => {
 
 const Layout = (props: LayoutProps) => {
   const { getAssetPath } = useContext(ConfigContext)
-  const { profile, signOut } = useContext(UserContext)
+  const { signOut } = useContext(UserContext)
 
   // eslint-disable-next-line dot-notation
   if (window.document["documentMode"]) {
@@ -174,7 +175,7 @@ const Layout = (props: LayoutProps) => {
             mobileText={true}
             logoWidth={"medium"}
             logoClass="translate"
-            menuLinks={getMenuLinks(!!profile, signOut)}
+            menuLinks={getMenuLinks(isTokenValid(), signOut)}
             strings={{
               skipToMainContent: t("t.skipToMainContent"),
               logoAriaLable: t("t.dahliaSanFranciscoHousingPortal"),
