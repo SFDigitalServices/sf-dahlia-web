@@ -8,9 +8,12 @@ describe GoogleTranslationService do
     expected_result = [{ to: 'ES', translation: %w[Hello World] }]
     listing_id = 'a0W0P00000F8YG4UAN'
     let(:mock_translate) { instance_double(Google::Cloud::Translate::V2::Api) }
+    let(:mock_request) { instance_double(Force::Request) }
 
     before do
       allow(Google::Cloud::Translate::V2).to receive(:new).and_return(mock_translate)
+      allow(Force::Request).to receive(:new).and_return(mock_request)
+      allow(mock_request).to receive(:cached_get).and_return(true)
     end
 
     it 'translates text to the target language' do
@@ -32,9 +35,11 @@ describe GoogleTranslationService do
         listing_id,
         fields,
         expected_result,
+        '2021-07-01T00:00:00Z',
       )
 
-      expect(result).to eq({ Hello: { ES: 'Hello' }, World: { ES: 'World' } })
+      expect(result).to eq({ LastModifiedDate: '2021-07-01T00:00:00Z',
+                             Hello: { ES: 'Hello' }, World: { ES: 'World' } })
     end
 
     it 'updates translation object for a listing' do
@@ -51,9 +56,11 @@ describe GoogleTranslationService do
         listing_id,
         fields_updated,
         translations,
+        '2021-07-01T00:00:00Z',
       )
 
-      expect(result).to eq({ Hello: { ES: 'Hello' }, World: { ES: 'Mundo' } })
+      expect(result).to eq({ LastModifiedDate: '2021-07-01T00:00:00Z',
+                             Hello: { ES: 'Hello' }, World: { ES: 'Mundo' } })
     end
   end
 end
