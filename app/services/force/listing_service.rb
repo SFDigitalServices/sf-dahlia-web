@@ -3,6 +3,8 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService
+    class InvalidLastModifiedDateError < StandardError; end
+
     CACHE_KEY_PREFIX = '/ListingDetails/'
     DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
     # get all open listings or specific set of listings by id
@@ -74,15 +76,17 @@ module Force
     end
 
     def self.translations_are_outdated?(cache_last_modified, listing_last_modified)
-      return true if cache_last_modified.nil? || listing_last_modified.nil?
-
       parse_time(cache_last_modified) < parse_time(listing_last_modified)
+    rescue InvalidLastModifiedDateError => e
+      Rails.logger.error("Error checking if translations are outdated: #{e.message}")
+      true
     end
 
     def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
-      return true if cache_last_modified.nil? || listing_last_modified.nil?
-
       parse_time(cache_last_modified) > parse_time(listing_last_modified)
+    rescue InvalidLastModifiedDateError => e
+      Rails.logger.error("Error checking if translations are outdated: #{e.message}")
+      true
     end
 
     def self.fetch_listing_translations_from_cache(listing_id)
@@ -98,12 +102,12 @@ module Force
     end
 
     def self.parse_time(time_str)
-      return nil if time_str.nil?
+      raise InvalidLastModifiedDateError, 'Time string cannot be nil' if time_str.nil?
 
       Time.parse(time_str)
     rescue ArgumentError => e
       Rails.logger.error("Error parsing time: #{e.message}")
-      nil
+      raise InvalidLastModifiedDateError, "Invalid time format: #{time_str}"
     end
 
     # get all units for a given listing
