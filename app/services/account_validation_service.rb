@@ -5,7 +5,7 @@ class AccountValidationService
       year = Regexp.last_match(1).to_i
       month = Regexp.last_match(2).to_i
       day = Regexp.last_match(3).to_i
-      year > 1900 && (1..12).include?(month) && (1..31).include?(day)
+      year >= 1900 && (1..12).include?(month) && (1..31).include?(day)
     else
       false
     end
