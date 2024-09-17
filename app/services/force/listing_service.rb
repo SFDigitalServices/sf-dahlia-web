@@ -85,7 +85,7 @@ module Force
     def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
       parse_time(cache_last_modified) > parse_time(listing_last_modified)
     rescue InvalidLastModifiedDateError => e
-      Rails.logger.error("Error checking if translations are outdated: #{e.message}")
+      Rails.logger.error("Error checking if listing is outdated: #{e.message}")
       true
     end
 
