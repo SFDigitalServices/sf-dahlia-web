@@ -30,10 +30,6 @@ const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps
 }
 
 const SeeDetailsOnline = (listing: RailsListing) => {
-  if (!listing.Multiple_Listing_Service_URL && !listing.Listing_Online_Details) {
-    return null
-  }
-
   return (
     <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
       <div className="flex-row space-y-1">
@@ -75,7 +71,8 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
         ) : null}
       </SeeTheUnitSubsection>
-      {SeeDetailsOnline(listing)}
+      {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) &&
+        SeeDetailsOnline(listing)}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
         <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
         <p>{listing.Leasing_Agent_Name}</p>
