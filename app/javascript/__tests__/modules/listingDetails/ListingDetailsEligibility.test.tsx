@@ -8,6 +8,7 @@ import ListingDetailsContext from "../../../contexts/listingDetails/listingDetai
 import { unitsWithOneAmi } from "../../data/RailsListingUnits/listing-units"
 import { amiChartsWithOneAmi } from "../../data/RailsAmiCharts/ami-charts"
 import {
+  pluralSroRentalListing,
   sroMixedRentalListing,
   sroRentalListing,
 } from "../../data/RailsRentalListing/listing-rental-sro"
@@ -120,6 +121,34 @@ describe("ListingDetailsEligibility", () => {
       >
         <ListingDetailsEligibility
           listing={sroRentalListing}
+          imageSrc={"listing-eligibility.svg"}
+        />
+      </ListingDetailsContext.Provider>
+    )
+
+    await waitFor(() => {
+      expect(findByText("Eligibility")).toBeDefined()
+    })
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays listing details eligibility section for a listing with multiple occupancy SRO units", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: defaultPreferences } })
+    const { asFragment, findByText } = await renderAndLoadAsync(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility
+          listing={pluralSroRentalListing}
           imageSrc={"listing-eligibility.svg"}
         />
       </ListingDetailsContext.Provider>
