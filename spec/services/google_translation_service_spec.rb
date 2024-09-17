@@ -5,7 +5,10 @@ describe GoogleTranslationService do
     fields = %w[Hello World]
     languages = %w[ES]
     mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
-    expected_result = [{ to: 'ES', translation: %w[Hello World] }]
+    expected_result = [
+      { to: 'ES', translation: %w[Hello World] },
+      { to: 'EN', translation: %w[Hello World] },
+    ]
     listing_id = 'a0W0P00000F8YG4UAN'
     let(:mock_translate) { instance_double(Google::Cloud::Translate::V2::Api) }
     let(:mock_request) { instance_double(Force::Request) }
@@ -39,7 +42,7 @@ describe GoogleTranslationService do
       )
 
       expect(result).to eq({ LastModifiedDate: '2021-07-01T00:00:00Z',
-                             Hello: { ES: 'Hello' }, World: { ES: 'World' } })
+                             Hello: { EN: 'Hello', ES: 'Hello' }, World: { EN: 'World', ES: 'World' } })
     end
 
     it 'updates translation object for a listing' do
