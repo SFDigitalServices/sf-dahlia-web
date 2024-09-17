@@ -158,39 +158,16 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       Get Assistance
                     </div>
                   </a>
-                  <span
-                    class="site-header__link site-header__dropdown-title"
-                    data-testid="My Account-4"
-                    role="button"
-                    tabindex="0"
+                  <a
+                    class="site-header__link  "
+                    data-testid="Sign In-4"
+                    href="/sign-in"
+                    target="_self"
                   >
-                    <span>
-                      <span>
-                        <span
-                          class="site-header__dropdown-title-split"
-                        >
-                          My
-                        </span>
-                        <span
-                          class="site-header__dropdown-title-with-icon"
-                        >
-                          Account
-                          <span
-                            class="ui-icon ui-small pl-2"
-                          >
-                            <svg
-                              fill="#555555"
-                              viewBox="0 0 32 32"
-                            >
-                              <path
-                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </span>
+                    <div>
+                      Sign In
+                    </div>
+                  </a>
                 </div>
               </div>
             </nav>
@@ -1013,39 +990,16 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     Get Assistance
                   </div>
                 </a>
-                <span
-                  class="site-header__link site-header__dropdown-title"
-                  data-testid="My Account-4"
-                  role="button"
-                  tabindex="0"
+                <a
+                  class="site-header__link  "
+                  data-testid="Sign In-4"
+                  href="/sign-in"
+                  target="_self"
                 >
-                  <span>
-                    <span>
-                      <span
-                        class="site-header__dropdown-title-split"
-                      >
-                        My
-                      </span>
-                      <span
-                        class="site-header__dropdown-title-with-icon"
-                      >
-                        Account
-                        <span
-                          class="ui-icon ui-small pl-2"
-                        >
-                          <svg
-                            fill="#555555"
-                            viewBox="0 0 32 32"
-                          >
-                            <path
-                              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-                            />
-                          </svg>
-                        </span>
-                      </span>
-                    </span>
-                  </span>
-                </span>
+                  <div>
+                    Sign In
+                  </div>
+                </a>
               </div>
             </div>
           </nav>
@@ -1925,39 +1879,16 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       Get Assistance
                     </div>
                   </a>
-                  <span
-                    class="site-header__link site-header__dropdown-title"
-                    data-testid="My Account-4"
-                    role="button"
-                    tabindex="0"
+                  <a
+                    class="site-header__link  "
+                    data-testid="Sign In-4"
+                    href="/sign-in"
+                    target="_self"
                   >
-                    <span>
-                      <span>
-                        <span
-                          class="site-header__dropdown-title-split"
-                        >
-                          My
-                        </span>
-                        <span
-                          class="site-header__dropdown-title-with-icon"
-                        >
-                          Account
-                          <span
-                            class="ui-icon ui-small pl-2"
-                          >
-                            <svg
-                              fill="#555555"
-                              viewBox="0 0 32 32"
-                            >
-                              <path
-                                d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </span>
+                    <div>
+                      Sign In
+                    </div>
+                  </a>
                 </div>
               </div>
             </nav>
@@ -2780,39 +2711,16 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     Get Assistance
                   </div>
                 </a>
-                <span
-                  class="site-header__link site-header__dropdown-title"
-                  data-testid="My Account-4"
-                  role="button"
-                  tabindex="0"
+                <a
+                  class="site-header__link  "
+                  data-testid="Sign In-4"
+                  href="/sign-in"
+                  target="_self"
                 >
-                  <span>
-                    <span>
-                      <span
-                        class="site-header__dropdown-title-split"
-                      >
-                        My
-                      </span>
-                      <span
-                        class="site-header__dropdown-title-with-icon"
-                      >
-                        Account
-                        <span
-                          class="ui-icon ui-small pl-2"
-                        >
-                          <svg
-                            fill="#555555"
-                            viewBox="0 0 32 32"
-                          >
-                            <path
-                              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
-                            />
-                          </svg>
-                        </span>
-                      </span>
-                    </span>
-                  </span>
-                </span>
+                  <div>
+                    Sign In
+                  </div>
+                </a>
               </div>
             </div>
           </nav>
