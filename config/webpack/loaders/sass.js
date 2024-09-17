@@ -41,7 +41,7 @@ module.exports = {
     },
     // Translates CSS into CommonJS
     // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
-    { loader: 'css-loader', options: { sourceMap: true } },
+    { loader: 'css-loader', options: { sourceMap: process.env.NODE_ENV === 'production' ? false : true } },
     // Various CSS pre and post-processors, including tailwind.
     // See postcss.config.js for specifics
     // This line must come after style/css loaders and before the sass loader
