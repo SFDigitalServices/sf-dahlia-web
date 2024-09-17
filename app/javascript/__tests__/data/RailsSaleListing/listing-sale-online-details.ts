@@ -169,7 +169,6 @@ export const onlineDetailsSaleListing: RailsSaleListing = {
   Lottery_Street_Address: "1 South Van Ness Ave, Fl 5",
   Lottery_City: "San Francisco",
   Lottery_Date: "2021-01-17T19:00:00.000+0000",
-  Publish_Lottery_Results: false,
   Publish_Lottery_Results_on_DAHLIA: "Not published",
   Accepting_Online_Applications: true,
   Lottery_Winners: 0,
