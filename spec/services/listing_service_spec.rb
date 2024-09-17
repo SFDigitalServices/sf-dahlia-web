@@ -156,7 +156,7 @@ describe Force::ListingService do
       expect(translations_invalid).to be_truthy
     end
     it 'translations are valid if all fields are present' do
-      translations = ServiceHelper.listing_field_names_salesforce.for_each do |field|
+      translations = ServiceHelper.listing_field_names_salesforce.each do |field|
         field => 'value'
       end
       translations_invalid = Force::ListingService.translations_invalid?(translations)
