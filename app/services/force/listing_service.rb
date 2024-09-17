@@ -74,10 +74,14 @@ module Force
     end
 
     def self.translations_are_outdated?(cache_last_modified, listing_last_modified)
+      return true if cache_last_modified.nil? || listing_last_modified.nil?
+
       parse_time(cache_last_modified) < parse_time(listing_last_modified)
     end
 
     def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
+      return true if cache_last_modified.nil? || listing_last_modified.nil?
+
       parse_time(cache_last_modified) > parse_time(listing_last_modified)
     end
 
@@ -94,7 +98,12 @@ module Force
     end
 
     def self.parse_time(time_str)
+      return nil if time_str.nil?
+
       Time.parse(time_str)
+    rescue ArgumentError => e
+      Rails.logger.error("Error parsing time: #{e.message}")
+      nil
     end
 
     # get all units for a given listing
