@@ -2,7 +2,7 @@ import { Field, FieldProps, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods, Validate } from "react-hook-form"
 import Fieldset from "./Fieldset"
-import { Icon } from "@bloom-housing/ui-seeds"
+import { Icon, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
@@ -194,9 +194,9 @@ const PasswordFieldset = ({
             register={register}
             className="mb-1"
           />
-          <div className="forgot-password-link">
-            <a href="/forgot-password">{t("signIn.forgotPassword")}</a>
-          </div>
+          <Link href="/forgot-password" className="forgot-password-link">
+            {t("signIn.forgotPassword")}
+          </Link>
           <div className={`new-password-label pt-4 ${errors.password && "text-alert"}`}>
             <label htmlFor="password">{t("label.chooseNewPassword")}</label>
           </div>
