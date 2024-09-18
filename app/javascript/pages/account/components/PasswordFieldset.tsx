@@ -177,7 +177,7 @@ const PasswordFieldset = ({
     <Fieldset hasError={hasError} label={edit ? t("label.password") : t("label.choosePassword")}>
       {edit && (
         <>
-          <p className="field-note mt-2 mb-4">{t("accountSettings.enterCurrentPassword")}</p>
+          <p className="field-note mb-3">{t("accountSettings.enterCurrentPassword")}</p>
           <PasswordField
             name="currentPassword"
             label={t("label.currentPassword")}
@@ -197,7 +197,7 @@ const PasswordFieldset = ({
           <Link href="/forgot-password" className="forgot-password-link">
             {t("signIn.forgotPassword")}
           </Link>
-          <div className={`new-password-label pt-4 ${errors.password && "text-alert"}`}>
+          <div className={`new-password-label pt-4 pb-2 ${errors.password && "text-alert"}`}>
             <label htmlFor="password">{t("label.chooseNewPassword")}</label>
           </div>
         </>
@@ -206,7 +206,7 @@ const PasswordFieldset = ({
       <PasswordField
         name="password"
         label="password"
-        labelClassName="invisible"
+        labelClassName="hidden"
         className="mt-0 mb-4"
         validation={{
           required: "password:required",

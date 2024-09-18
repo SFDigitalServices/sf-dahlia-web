@@ -31,7 +31,7 @@ export const FormHeader = ({ title, description, className }: FormHeaderProps) =
         <Icon size="xlarge" className="md:hidden block" symbol="profile" />
         <Icon size="2xl" className="md:block hidden" symbol="profile" />
       </div>
-      <h1 className="my-6 text-xl md:text-2xl">{title}</h1>
+      <h1 className="mt-6 mb-4 text-xl md:text-2xl">{title}</h1>
       <p className="field-note text-base">{description}</p>
     </Card.Header>
   )
