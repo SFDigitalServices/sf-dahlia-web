@@ -56,7 +56,7 @@ const NameFieldset = ({
   return (
     <Fieldset hasError={hasError} label={t("label.name")}>
       <Field
-        className="mb-4"
+        className="mt-1 mb-4"
         name="firstName"
         label={t("label.firstName.sentenceCase")}
         register={register}

@@ -258,7 +258,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           Name
                         </legend>
                         <div
-                          class="field mb-4"
+                          class="field mt-1 mb-4"
                         >
                           <label
                             class="label"
@@ -366,7 +366,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           Date of birth
                         </legend>
                         <div
-                          class="field-group--date"
+                          class="field-group--date mt-1"
                         >
                           <div
                             class="field ml-0 mr-4 pb-4"
@@ -1087,7 +1087,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         Name
                       </legend>
                       <div
-                        class="field mb-4"
+                        class="field mt-1 mb-4"
                       >
                         <label
                           class="label"
@@ -1195,7 +1195,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         Date of birth
                       </legend>
                       <div
-                        class="field-group--date"
+                        class="field-group--date mt-1"
                       >
                         <div
                           class="field ml-0 mr-4 pb-4"
@@ -1973,7 +1973,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           Name
                         </legend>
                         <div
-                          class="field mb-4"
+                          class="field mt-1 mb-4"
                         >
                           <label
                             class="label"
@@ -2081,7 +2081,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           Date of birth
                         </legend>
                         <div
-                          class="field-group--date"
+                          class="field-group--date mt-1"
                         >
                           <div
                             class="field ml-0 mr-4 pb-4"
@@ -2802,7 +2802,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         Name
                       </legend>
                       <div
-                        class="field mb-4"
+                        class="field mt-1 mb-4"
                       >
                         <label
                           class="label"
@@ -2910,7 +2910,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         Date of birth
                       </legend>
                       <div
-                        class="field-group--date"
+                        class="field-group--date mt-1"
                       >
                         <div
                           class="field ml-0 mr-4 pb-4"
