@@ -112,6 +112,8 @@ gem 'fog-aws'
 # https://elements.heroku.com/addons/sentry
 gem 'sentry-raven'
 
+gem 'scout_apm'
+
 group :test do
   gem 'simplecov', '~> 0.22.0'
 
