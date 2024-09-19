@@ -76,10 +76,9 @@ async function fillCreateAccountForm({
     await userEvent.type(passwordField, password)
   })
 
-  // Assertions to validate that the typing worked
   expect(firstNameField).toHaveValue(firstName)
   expect(lastNameField).toHaveValue(lastName)
-  expect(monthField).toHaveValue(Number(month)) // spinbutton fields return numbers
+  expect(monthField).toHaveValue(Number(month))
   expect(dayField).toHaveValue(Number(day))
   expect(yearField).toHaveValue(Number(year))
   expect(emailField).toHaveValue(email)
@@ -406,7 +405,6 @@ describe("<CreateAccount />", () => {
 
         await act(async () => {
           await fillCreateAccountForm(defaultFormValues)
-          screen.logTestingPlaygroundURL()
           await user.click(createAccountButton)
           await promise
         })
