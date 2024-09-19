@@ -59,6 +59,9 @@ describe("My Applications", () => {
       })
 
     // Verify various layout details and click to view the lottery results
+    cy.intercept("/api/v1/listings/a0W4U00000IhGZcUAN/lottery_ranking?lottery_number=01517927", {
+      fixture: "lotteryRanking.json",
+    })
     cy.get(".application-item")
       .eq(3)
       .within(() => {
@@ -68,7 +71,7 @@ describe("My Applications", () => {
       })
 
     cy.contains("Lottery Results")
-    cy.contains("Your lottery ranking")
+    cy.contains("Your preference ranking")
     cy.get("input#lotterySearchNumber").should("have.value", "01517927")
   })
 })
