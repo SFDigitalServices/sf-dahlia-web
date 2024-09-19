@@ -18,13 +18,16 @@ class GoogleTranslationService
     return [] if text.empty?
 
     google_translation_logger("Translating text: #{text} to: #{to}")
-    to.map do |target|
+    translations = to.map do |target|
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
       google_translation_logger("An error occured: #{e.inspect}", error: true)
       return []
     end
+    # include original values on the response
+    translations.push({ to: 'EN', translation: text })
+    translations
   end
 
   def cache_listing_translations(listing_id, keys, translations, last_modified)
