@@ -1,8 +1,9 @@
 # Save as .codeclimate.yml (note leading .) in project root directory
+version: "2"
 languages:
   Ruby: true
   JavaScript: true
-exclude_paths:
+exclude_patterns:
   - "lib/assets"
   # code climate complains a bunch about our toolkit.css -- is it useful to validate our CSS?
   - "app/assets/stylesheets"
@@ -12,3 +13,8 @@ checks:
   method-complexity:
     config:
       threshold: 8
+plugins:
+ duplication:
+   enabled: true
+   config:
+     count_threshold: 3
