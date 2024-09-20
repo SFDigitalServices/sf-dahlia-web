@@ -29,34 +29,32 @@ const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps
   )
 }
 
-const SeeDetailsOnline = (listing: RailsListing) => {
-  return (
-    <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-      <div className="flex-row space-y-1">
-        {listing.Multiple_Listing_Service_URL && (
-          <div>
-            <Link
-              className="no-underline"
-              href={listing.Multiple_Listing_Service_URL}
-              hideExternalLinkIcon={true}
-            >
-              {t("listings.process.seeTheUnitOnMls")}
+const SeeDetailsOnline = (listing: RailsListing) => (
+  <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
+    <div className="flex-row space-y-1">
+      {listing.Multiple_Listing_Service_URL && (
+        <div>
+          <Link
+            className="no-underline"
+            href={listing.Multiple_Listing_Service_URL}
+            hideExternalLinkIcon={true}
+          >
+            {t("listings.process.seeTheUnitOnMls")}
+          </Link>
+        </div>
+      )}
+      {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
+        return (
+          <div key={detail.Id}>
+            <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
+              {detail.Name}
             </Link>
           </div>
-        )}
-        {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
-          return (
-            <div key={detail.Id}>
-              <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
-                {detail.Name}
-              </Link>
-            </div>
-          )
-        })}
-      </div>
-    </SeeTheUnitSubsection>
-  )
-}
+        )
+      })}
+    </div>
+  </SeeTheUnitSubsection>
+)
 
 export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
   return (
