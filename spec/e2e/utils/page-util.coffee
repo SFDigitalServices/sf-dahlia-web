@@ -24,7 +24,7 @@ PageUtil = {
       elem.isDisplayed()
     ).first()
   goTo: (url) ->
-    browser.get(url)
+    browser.get("#{url}?react=false")
   httpGet: (siteUrl) ->
     http.get(siteUrl, (response) ->
       bodyString = ''
