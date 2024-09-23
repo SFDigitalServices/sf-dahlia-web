@@ -164,6 +164,39 @@ describe Force::ListingService do
       translations_invalid = Force::ListingService.translations_invalid?(translations)
       expect(translations_invalid).to be_falsey
     end
+    it 'listing_outdated returns true when listing LastModifiedDate is old' do
+      listing_is_outdated = Force::ListingService.listing_is_outdated?(
+        '2024-03-08T16:51:35.000+0000', '2024-02-08T16:51:35.000+0000'
+      )
+      expect(listing_is_outdated).to be_truthy
+    end
+    it 'listing_outdated returns false when listing LastModifiedDate is fresh' do
+      listing_is_outdated = Force::ListingService.listing_is_outdated?(
+        '2024-03-08T16:51:35.000+0000', '2024-03-08T16:51:35.000+0000'
+      )
+      expect(listing_is_outdated).to be_falsey
+    end
+    it 'listing_outdated returns true when listing LastModifiedDate is Nil' do
+      listing_is_outdated = Force::ListingService.listing_is_outdated?(nil, nil)
+      expect(listing_is_outdated).to be_truthy
+    end
+    it 'translations_are_outdated returns true when translation LastModifiedDate is old' do
+      translations_are_outdated = Force::ListingService.translations_are_outdated?(
+        '2024-02-08T16:51:35.000+0000', '2024-03-08T16:51:35.000+0000'
+      )
+      expect(translations_are_outdated).to be_truthy
+    end
+    it 'translations_are_outdated returns false when translation LastModifiedDate is fresh' do
+      translations_are_outdated = Force::ListingService.translations_are_outdated?(
+        '2024-03-08T16:51:35.000+0000', '2024-03-08T16:51:35.000+0000'
+      )
+      expect(translations_are_outdated).to be_falsey
+    end
+    it 'translations_are_outdated returns true when translation LastModifiedDate is nil' do
+      translations_are_outdated = Force::ListingService.translations_are_outdated?(nil,
+                                                                                   nil)
+      expect(translations_are_outdated).to be_truthy
+    end
   end
 
   describe '.eligible_listings' do
