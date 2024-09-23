@@ -38,12 +38,16 @@ module Force
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
 
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      listing = process_listing_images(results)
 
-      if ::UNLEASH.is_enabled? 'GoogleCloudTranslate'
-        listing['translations'] = get_listing_translations(listing) || {}
-      end
-      listing
+      # TODO: DAH-2744 UNLEASH constant is not initialized for sidekiq mailer
+      # re-enable translation logic once fixed
+      process_listing_images(results)
+      # listing = process_listing_images(results)
+
+      # if ::UNLEASH.is_enabled?('GoogleCloudTranslate')
+      #   listing['translations'] = get_listing_translations(listing) || {}
+      # end
+      # listing
     end
 
     def self.process_listing_images(results)
