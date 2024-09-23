@@ -215,7 +215,7 @@ const DOBFieldset = ({
 
   return (
     <Fieldset hasError={hasError} label={t("label.dob.sentenceCase")} note={note}>
-      <div className="field-group--date">
+      <div className="field-group--date mt-1">
         <DOBFields
           register={register}
           watch={watch}

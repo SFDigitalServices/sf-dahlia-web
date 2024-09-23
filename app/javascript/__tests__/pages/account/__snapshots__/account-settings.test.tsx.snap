@@ -231,12 +231,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </span>
                     </div>
                     <h1
-                      class="my-6 text-xl md:text-2xl"
+                      class="mt-6 mb-4 text-xl md:text-2xl"
                     >
                       Account settings
                     </h1>
                     <p
-                      class="field-note text-sm"
+                      class="field-note text-base"
                     >
                       We use this information to help you fill in your application.
                     </p>
@@ -258,7 +258,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           Name
                         </legend>
                         <div
-                          class="field mb-4"
+                          class="field mt-1 mb-4"
                         >
                           <label
                             class="label"
@@ -337,7 +337,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -366,7 +366,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           Date of birth
                         </legend>
                         <div
-                          class="field-group--date"
+                          class="field-group--date mt-1"
                         >
                           <div
                             class="field ml-0 mr-4 pb-4"
@@ -452,7 +452,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -488,7 +488,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             for="email"
                           />
                           <div
-                            class="control"
+                            class="control mt-1"
                           >
                             <input
                               aria-describedby="email-error"
@@ -507,7 +507,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -536,7 +536,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           Password
                         </legend>
                         <p
-                          class="field-note mt-2 mb-4"
+                          class="field-note mb-3"
                         >
                           You must enter your current password first to change it. We do this for your security.
                         </p>
@@ -593,17 +593,14 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             id="currentPassword-error"
                           />
                         </div>
-                        <div
-                          class="forgot-password-link"
+                        <a
+                          class="seeds-link forgot-password-link"
+                          href="/forgot-password"
                         >
-                          <a
-                            href="/forgot-password"
-                          >
-                            Forgot password?
-                          </a>
-                        </div>
+                          Forgot password?
+                        </a>
                         <div
-                          class="new-password-label pt-4 undefined"
+                          class="new-password-label pt-4 pb-2 undefined"
                         >
                           <label
                             for="password"
@@ -641,7 +638,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label invisible"
+                            class="label hidden"
                             for="password"
                           >
                             password
@@ -692,7 +689,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -1063,12 +1060,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     </span>
                   </div>
                   <h1
-                    class="my-6 text-xl md:text-2xl"
+                    class="mt-6 mb-4 text-xl md:text-2xl"
                   >
                     Account settings
                   </h1>
                   <p
-                    class="field-note text-sm"
+                    class="field-note text-base"
                   >
                     We use this information to help you fill in your application.
                   </p>
@@ -1090,7 +1087,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         Name
                       </legend>
                       <div
-                        class="field mb-4"
+                        class="field mt-1 mb-4"
                       >
                         <label
                           class="label"
@@ -1169,7 +1166,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -1198,7 +1195,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         Date of birth
                       </legend>
                       <div
-                        class="field-group--date"
+                        class="field-group--date mt-1"
                       >
                         <div
                           class="field ml-0 mr-4 pb-4"
@@ -1284,7 +1281,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -1320,7 +1317,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           for="email"
                         />
                         <div
-                          class="control"
+                          class="control mt-1"
                         >
                           <input
                             aria-describedby="email-error"
@@ -1339,7 +1336,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -1368,7 +1365,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         Password
                       </legend>
                       <p
-                        class="field-note mt-2 mb-4"
+                        class="field-note mb-3"
                       >
                         You must enter your current password first to change it. We do this for your security.
                       </p>
@@ -1425,17 +1422,14 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           id="currentPassword-error"
                         />
                       </div>
-                      <div
-                        class="forgot-password-link"
+                      <a
+                        class="seeds-link forgot-password-link"
+                        href="/forgot-password"
                       >
-                        <a
-                          href="/forgot-password"
-                        >
-                          Forgot password?
-                        </a>
-                      </div>
+                        Forgot password?
+                      </a>
                       <div
-                        class="new-password-label pt-4 undefined"
+                        class="new-password-label pt-4 pb-2 undefined"
                       >
                         <label
                           for="password"
@@ -1473,7 +1467,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label invisible"
+                          class="label hidden"
                           for="password"
                         >
                           password
@@ -1524,7 +1518,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -1952,12 +1946,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </span>
                     </div>
                     <h1
-                      class="my-6 text-xl md:text-2xl"
+                      class="mt-6 mb-4 text-xl md:text-2xl"
                     >
                       Account settings
                     </h1>
                     <p
-                      class="field-note text-sm"
+                      class="field-note text-base"
                     >
                       We use this information to help you fill in your application.
                     </p>
@@ -1979,7 +1973,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           Name
                         </legend>
                         <div
-                          class="field mb-4"
+                          class="field mt-1 mb-4"
                         >
                           <label
                             class="label"
@@ -2058,7 +2052,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -2087,7 +2081,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           Date of birth
                         </legend>
                         <div
-                          class="field-group--date"
+                          class="field-group--date mt-1"
                         >
                           <div
                             class="field ml-0 mr-4 pb-4"
@@ -2173,7 +2167,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -2209,7 +2203,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             for="email"
                           />
                           <div
-                            class="control"
+                            class="control mt-1"
                           >
                             <input
                               aria-describedby="email-error"
@@ -2228,7 +2222,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -2257,7 +2251,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           Password
                         </legend>
                         <p
-                          class="field-note mt-2 mb-4"
+                          class="field-note mb-3"
                         >
                           You must enter your current password first to change it. We do this for your security.
                         </p>
@@ -2314,17 +2308,14 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             id="currentPassword-error"
                           />
                         </div>
-                        <div
-                          class="forgot-password-link"
+                        <a
+                          class="seeds-link forgot-password-link"
+                          href="/forgot-password"
                         >
-                          <a
-                            href="/forgot-password"
-                          >
-                            Forgot password?
-                          </a>
-                        </div>
+                          Forgot password?
+                        </a>
                         <div
-                          class="new-password-label pt-4 undefined"
+                          class="new-password-label pt-4 pb-2 undefined"
                         >
                           <label
                             for="password"
@@ -2362,7 +2353,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field mt-0 mb-4"
                         >
                           <label
-                            class="label invisible"
+                            class="label hidden"
                             for="password"
                           >
                             password
@@ -2413,7 +2404,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                       </fieldset>
                       <div
-                        class="flex justify-center pt-4"
+                        class="flex justify-center pt-2"
                       >
                         <button
                           class="button"
@@ -2784,12 +2775,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     </span>
                   </div>
                   <h1
-                    class="my-6 text-xl md:text-2xl"
+                    class="mt-6 mb-4 text-xl md:text-2xl"
                   >
                     Account settings
                   </h1>
                   <p
-                    class="field-note text-sm"
+                    class="field-note text-base"
                   >
                     We use this information to help you fill in your application.
                   </p>
@@ -2811,7 +2802,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         Name
                       </legend>
                       <div
-                        class="field mb-4"
+                        class="field mt-1 mb-4"
                       >
                         <label
                           class="label"
@@ -2890,7 +2881,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -2919,7 +2910,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         Date of birth
                       </legend>
                       <div
-                        class="field-group--date"
+                        class="field-group--date mt-1"
                       >
                         <div
                           class="field ml-0 mr-4 pb-4"
@@ -3005,7 +2996,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -3041,7 +3032,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           for="email"
                         />
                         <div
-                          class="control"
+                          class="control mt-1"
                         >
                           <input
                             aria-describedby="email-error"
@@ -3060,7 +3051,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
@@ -3089,7 +3080,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         Password
                       </legend>
                       <p
-                        class="field-note mt-2 mb-4"
+                        class="field-note mb-3"
                       >
                         You must enter your current password first to change it. We do this for your security.
                       </p>
@@ -3146,17 +3137,14 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           id="currentPassword-error"
                         />
                       </div>
-                      <div
-                        class="forgot-password-link"
+                      <a
+                        class="seeds-link forgot-password-link"
+                        href="/forgot-password"
                       >
-                        <a
-                          href="/forgot-password"
-                        >
-                          Forgot password?
-                        </a>
-                      </div>
+                        Forgot password?
+                      </a>
                       <div
-                        class="new-password-label pt-4 undefined"
+                        class="new-password-label pt-4 pb-2 undefined"
                       >
                         <label
                           for="password"
@@ -3194,7 +3182,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field mt-0 mb-4"
                       >
                         <label
-                          class="label invisible"
+                          class="label hidden"
                           for="password"
                         >
                           password
@@ -3245,7 +3233,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                     </fieldset>
                     <div
-                      class="flex justify-center pt-4"
+                      class="flex justify-center pt-2"
                     >
                       <button
                         class="button"
