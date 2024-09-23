@@ -117,10 +117,12 @@ const NewPasswordInstructions = ({
   )
 }
 
-const PasswordField = ({
-  ...props
-}: Omit<FieldProps, "type" | "postInputContent" | "inputProps">) => {
-  const [showPassword, setShowPassword] = React.useState(false)
+interface PasswordFieldProps extends Omit<FieldProps, "type" | "postInputContent" | "inputProps"> {
+  passwordVisibilityDefault?: boolean
+}
+
+const PasswordField = ({ passwordVisibilityDefault = false, ...props }: PasswordFieldProps) => {
+  const [showPassword, setShowPassword] = React.useState(passwordVisibilityDefault)
 
   return (
     <Field
@@ -212,6 +214,7 @@ const PasswordFieldset = ({
           required: "password:required",
           validate: newPasswordValidation,
         }}
+        passwordVisibilityDefault={true}
         error={errors.password}
         errorMessage={
           errors.password?.message &&

@@ -28,6 +28,7 @@ describe("<AccountSettingsPage />", () => {
   describe("when the user is signed in", () => {
     let getByText
     let getAllByText
+    let queryByText
     let originalUseContext
     let promise
     let renderResult
@@ -55,6 +56,7 @@ describe("<AccountSettingsPage />", () => {
       renderResult = await renderAndLoadAsync(<AccountSettingsPage assetPaths={{}} />)
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
+      queryByText = renderResult.queryByText
 
       document.documentElement.lang = "en"
     })
@@ -100,9 +102,32 @@ describe("<AccountSettingsPage />", () => {
         await act(async () => {
           fireEvent.change(firstNameField, { target: { value: "NewFirstName" } })
           fireEvent.change(lastNameField, { target: { value: "NewLastName" } })
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+
+          fireEvent.click(closeButton)
           button[0].dispatchEvent(new MouseEvent("click"))
           await promise
         })
+
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
+          await promise
+        })
+
+        expect(
+          queryByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
+        ).toBeNull()
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
@@ -147,14 +172,30 @@ describe("<AccountSettingsPage />", () => {
           fireEvent.change(monthField, { target: { value: 2 } })
           fireEvent.change(dayField, { target: { value: 6 } })
           fireEvent.change(yearField, { target: { value: 2000 } })
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+
+          fireEvent.click(closeButton)
+
           button[1].dispatchEvent(new MouseEvent("click"))
           await promise
         })
 
-        expect(getByText("Your changes have been saved.")).not.toBeNull()
         expect(
-          getByText("We will update any applications you have not submitted yet.")
-        ).not.toBeNull()
+          queryByText("We will update any applications you have not submitted yet.")
+        ).toBeNull()
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+          await promise
+        })
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
+
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/account/update",
           expect.objectContaining({
@@ -229,6 +270,13 @@ describe("<AccountSettingsPage />", () => {
         await act(async () => {
           fireEvent.change(emailField, { target: { value: "test@test.com" } })
           emailUpdateButton.dispatchEvent(new MouseEvent("click"))
+
+          expect(
+            getByText("We will update any applications you have not submitted yet.")
+          ).not.toBeNull()
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
           await promise
         })
 
@@ -237,6 +285,19 @@ describe("<AccountSettingsPage />", () => {
             "We sent you an email. Check your email and follow the link to finish changing your information."
           )
         ).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+
+          await promise
+        })
+
+        expect(
+          queryByText(
+            "We sent you an email. Check your email and follow the link to finish changing your information."
+          )
+        ).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth",
@@ -332,6 +393,16 @@ describe("<AccountSettingsPage />", () => {
           passwordUpdateButton.dispatchEvent(new MouseEvent("click"))
           await promise
         })
+
+        expect(getByText("Your changes have been saved.")).not.toBeNull()
+
+        await act(async () => {
+          const closeButton = screen.getByLabelText("Close")
+          fireEvent.click(closeButton)
+          await promise
+        })
+
+        expect(queryByText("Your changes have been saved.")).toBeNull()
 
         expect(authenticatedPut).toHaveBeenCalledWith(
           "/api/v1/auth/password",
