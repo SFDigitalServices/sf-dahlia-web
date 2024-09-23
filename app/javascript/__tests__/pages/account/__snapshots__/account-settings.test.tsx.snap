@@ -488,7 +488,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             for="email"
                           />
                           <div
-                            class="control"
+                            class="control mt-1"
                           >
                             <input
                               aria-describedby="email-error"
@@ -1317,7 +1317,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           for="email"
                         />
                         <div
-                          class="control"
+                          class="control mt-1"
                         >
                           <input
                             aria-describedby="email-error"
@@ -2203,7 +2203,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             for="email"
                           />
                           <div
-                            class="control"
+                            class="control mt-1"
                           >
                             <input
                               aria-describedby="email-error"
@@ -3032,7 +3032,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           for="email"
                         />
                         <div
-                          class="control"
+                          class="control mt-1"
                         >
                           <input
                             aria-describedby="email-error"
