@@ -1,6 +1,5 @@
 import React from "react"
 import { t } from "@bloom-housing/ui-components"
-import { localizedFormat } from "../../util/languageUtil"
 import { LOTTERY_SEARCH_FORM_STATUS } from "./ListingDetailsLotterySearchForm"
 import { RailsListing } from "../listings/SharedHelpers"
 
@@ -26,38 +25,14 @@ export const ListingDetailsLotterySearchFooter = ({
       </div>
       {lotterySearchFormStatus === LOTTERY_SEARCH_FORM_STATUS.INITIAL_STATE && (
         <>
-          {listing.LotteryResultsURL ? (
-            <>
-              <div className="p-4 text-center text-sm">
-                <p className="py-2">
-                  {t("lottery.resultsFrom", {
-                    date: localizedFormat(listing.Lottery_Results_Date, "LL"),
-                  })}
-                </p>
-                <p className="py-2">
-                  <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-900">
-                    {t("lottery.lotteryResultsPdfLink")}
-                  </a>
-                </p>
-                <p className="text-gray-700 py-2">
-                  {t("lottery.unsortedResultsNote", {
-                    date: localizedFormat(listing.Lottery_Date, "LL"),
-                  })}
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              {listing.Lottery_Results_Date && (
-                <div className="p-4 text-center text-sm">
-                  <p className="py-2">
-                    {t("lottery.resultsWillBePostedOn", {
-                      date: localizedFormat(listing.Lottery_Results_Date, "LL"),
-                    })}
-                  </p>
-                </div>
-              )}
-            </>
+          {listing.LotteryResultsURL && (
+            <div className="p-4 text-center text-sm">
+              <p className="py-2">
+                <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-900">
+                  {t("lottery.downloadLotteryResults")}
+                </a>
+              </p>
+            </div>
           )}
         </>
       )}
