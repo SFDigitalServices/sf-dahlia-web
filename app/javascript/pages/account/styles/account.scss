@@ -1,8 +1,7 @@
 // headings
 .fieldset-legend {
-  font-size: 16px;
-  line-height: 22.5px;
-  color: #222;
+  font-size: var(--seeds-type-heading-size-sm);
+  color: var(--seeds-text-color-darker);
   padding-bottom: 8px;
 }
 
@@ -31,6 +30,8 @@
 // forgot password link
 .forgot-password-link {
   font-size: 13px;
+  text-decoration: none;
+
 }
 
 // date section
