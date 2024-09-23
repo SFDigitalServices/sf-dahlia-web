@@ -20,7 +20,9 @@ const tailwindVars = require('@bloom-housing/ui-components/tailwind.tosass.js')(
   bloomTheme
 )
 
-if (process.env.NODE_ENV === 'production') {
+const isProduction = process.env.NODE_ENV === 'production'
+
+if (isProduction) {
   plugins.push(cssnano)
   minimize = true
 }
@@ -36,12 +38,12 @@ module.exports = {
       loader: 'style-loader',
       options: {
         // the singleton option crashes the browser in E2E tests
-        injectType: process.env.NODE_ENV === 'production' ? 'singletonStyleTag' : 'styleTag',
+        injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
       }
     },
     // Translates CSS into CommonJS
     // https://stackoverflow.com/questions/72970312/webpack-wont-compile-when-i-use-an-image-url-in-scss
-    { loader: 'css-loader', options: { sourceMap: true } },
+    { loader: 'css-loader', options: { sourceMap: !isProduction } },
     // Various CSS pre and post-processors, including tailwind.
     // See postcss.config.js for specifics
     // This line must come after style/css loaders and before the sass loader
@@ -51,7 +53,7 @@ module.exports = {
         postcssOptions: {
           plugins: plugins,
           minimize: minimize,
-          sourceMap: true
+          sourceMap: !isProduction
         }
       }
     },
@@ -59,8 +61,7 @@ module.exports = {
       loader: 'resolve-url-loader',
       options: {
         attempts: 1,
-        sourceMap: true,
-        debug: true,
+        sourceMap: !isProduction,
         root: path.resolve(__dirname, "../../../app/assets")
       }
     },
