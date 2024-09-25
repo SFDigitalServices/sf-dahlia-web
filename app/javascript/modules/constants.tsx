@@ -19,7 +19,6 @@ export const PREFERENCES = {
 }
 
 export const PREFERENCES_IDS = {
-  aliceGriffith: "hope-sf",
   rightToReturn: "hope-sf",
   neighborhoodResidence: "nrhp",
   assistedHousing: "rent-burdened-assisted-housing",
