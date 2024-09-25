@@ -4,8 +4,11 @@ import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
+import useTranslate from "../../hooks/useTranslate"
 
 const DocumentChecklist = () => {
+  // false means useTranslate will not be disabled when GoogleCloudTranslate is enabled
+  useTranslate(false)
   const anchor = window.location.href.split("#").pop()
   const preferences = [
     {
@@ -137,16 +140,17 @@ const DocumentChecklist = () => {
       ),
     },
     {
-      id: PREFERENCES_IDS.aliceGriffith,
+      id: PREFERENCES_IDS.rightToReturn,
       title: t("documentChecklist.hopeSfTitle"),
       expanded: (
         <div className="space-y-2.5">
-          <p>{t("documentChecklist.hopeSfDoc1")}</p>
-          <p>{t("documentChecklist.hopeSfDoc2")}</p>
+          {/* When there are human translated strings, those will take precedence */}
+          <p className="translate">{t("documentChecklist.hopeSf.p1")}</p>
+          <p className="translate">{t("documentChecklist.hopeSf.p2")}</p>
           <ul className="list-disc ml-7">
-            <li>{t("label.proof.sfhaResidencyLetter")}</li>
+            <li className="translate">{t("label.proof.sfhaLetterVerifyingResidency")}</li>
             <li>{t("label.proof.sfhaLease")}</li>
-            <li>{t("label.proof.sfCityId")}</li>
+            <li className="translate">{t("label.proof.governmentIssuedId")}</li>
             <li>{t("label.proof.telephoneBill")}</li>
             <li>{t("label.proof.cableBill")}</li>
             <li>{t("label.proof.paystubHome")}</li>
