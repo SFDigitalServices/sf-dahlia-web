@@ -36,6 +36,7 @@ export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.neighborhoodResidence,
   PREFERENCES.rightToReturnSunnydale,
   PREFERENCES.rightToReturnHuntersView,
+  PREFERENCES.rightToReturnPotrero,
 ]
 
 /**
