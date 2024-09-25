@@ -13,11 +13,12 @@ export const PREFERENCES = {
   liveWorkInSf: "Live or Work in San Francisco Preference",
   neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)",
   rightToReturnSunnydale: "Right to Return - Sunnydale",
-  rightToReturnHuntersView: "Right to Return - Hunter's View",
+  rightToReturnHuntersView: "Right to Return - Hunter’s View",
   treasureIsland: "Treasure Island Resident (TIR) Preference",
 }
 
 export const PREFERENCES_IDS = {
+  aliceGriffith: "hope-sf",
   rightToReturn: "hope-sf",
   neighborhoodResidence: "nrhp",
   assistedHousing: "rent-burdened-assisted-housing",
