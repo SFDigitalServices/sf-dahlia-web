@@ -89,7 +89,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
                 PREFERENCES_IDS.neighborhoodResidence,
               "Rent Burdened / Assisted Housing Preference": PREFERENCES_IDS.assistedHousing,
               "Live or Work in San Francisco Preference": PREFERENCES_IDS.liveWorkInSf,
-              "Alice Griffith Housing Development Resident": PREFERENCES_IDS.aliceGriffith,
+              "Alice Griffith Housing Development Resident": PREFERENCES_IDS.rightToReturn,
             }
             links.push({
               title: t("label.viewDocumentChecklist"),
