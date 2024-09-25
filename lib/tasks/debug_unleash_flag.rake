@@ -6,7 +6,7 @@ namespace :debug do
     email = ENV.fetch('email', nil)
     raise 'Error: invalid email' if email.blank? || !/.+@.+\..+/.match(email)
 
-    puts "creating fake submission confirmation email to #{email}" \
+    puts "sending fake submission confirmation email to '#{email}' " \
          'to debug sidekiq job'
     Emailer.submission_confirmation(
       locale: 'en',
