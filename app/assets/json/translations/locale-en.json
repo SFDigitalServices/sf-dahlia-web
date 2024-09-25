@@ -1268,6 +1268,12 @@
                 "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address",
                 "title": "Alice Griffith Housing Development Resident Preference"
             },
+            "rtr_huntersview": {
+                "address": "Hunters View Address",
+                "address_desc": "Your current or former address at the Hunters View public housing development",
+                "desc": "For households in which at least one person is a former or current resident of Hunters View public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
+                "title": "Right to Return - Hunters View Preference"
+            },
             "rtr_sunnydale": {
                 "address": "Sunnydale Address",
                 "address_desc": "Your current or former address at the Sunnydale public housing development",

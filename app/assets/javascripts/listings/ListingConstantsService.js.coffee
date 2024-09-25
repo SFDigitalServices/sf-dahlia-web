@@ -92,10 +92,11 @@ ListingConstantsService = () ->
     antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
     aliceGriffith: "Alice Griffith Housing Development Resident"
     rightToReturnSunnydale: "Right to Return - Sunnydale"
+    rightToReturnHuntersView: "Right to Return - Hunters View"
 
   # List of preferences that follow the right to return pattern.
   Service.rightToReturnPreferences =
-    ['aliceGriffith', 'rightToReturnSunnydale']
+    ['aliceGriffith', 'rightToReturnSunnydale', 'rightToReturnHuntersView']
 
   # Create a mapping to Salesforce naming conventions
   Service.RESERVED_TYPES = {
