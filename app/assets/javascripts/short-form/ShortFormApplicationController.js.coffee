@@ -556,6 +556,12 @@ ShortFormApplicationController = (
           title: $translate.instant("preferences.alice_griffith.title")
           addressTitle: $translate.instant("preferences.alice_griffith.address")
           addressDesc: $translate.instant("preferences.alice_griffith.address_desc")
+      when 'rightToReturnHuntersView'
+        return key =
+          desc: $translate.instant("preferences.rtr_huntersview.desc")
+          title: $translate.instant("preferences.rtr_huntersview.title")
+          addressTitle: $translate.instant("preferences.rtr_huntersview.address")
+          addressDesc: $translate.instant("preferences.rtr_huntersview.address_desc")
 
 
 
