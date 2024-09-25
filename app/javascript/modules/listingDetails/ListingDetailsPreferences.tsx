@@ -94,6 +94,7 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
               "Live or Work in San Francisco Preference": PREFERENCES_IDS.liveWorkInSf,
               "Alice Griffith Housing Development Resident": PREFERENCES_IDS.rightToReturn,
               [PREFERENCES.rightToReturnHuntersView]: PREFERENCES_IDS.rightToReturn,
+              [PREFERENCES.rightToReturnPotrero]: PREFERENCES_IDS.rightToReturn,
             }
             links.push({
               title: t("label.viewDocumentChecklist"),

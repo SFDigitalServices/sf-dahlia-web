@@ -14,6 +14,7 @@ export const PREFERENCES = {
   neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)",
   rightToReturnSunnydale: "Right to Return - Sunnydale",
   rightToReturnHuntersView: "Right to Return - Hunter’s View",
+  rightToReturnPotrero: "Right to Return - Potrero",
   treasureIsland: "Treasure Island Resident (TIR) Preference",
 }
 
