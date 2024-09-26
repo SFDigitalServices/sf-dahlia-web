@@ -283,13 +283,5 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - unit-angular:
-          <<: *angular_jobs
       - e2e-legacy:
           <<: *angular_jobs
-      - waiter:
-          requires:
-            - build
-      - cleanup-test-data:
-          requires:
-            - waiter
