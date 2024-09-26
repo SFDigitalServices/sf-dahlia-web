@@ -1,7 +1,7 @@
 namespace :debug do
   desc 'Debug Unleash flag initialization'
   task debug_unleash_flag: :environment do
-    puts "::UNLEASH constant: #{::UNLEASH.inspect}" # rubocop:disable Style/RedundantConstantBase
+    puts "Rails.configuration.unleash: #{Rails.configuration.unleash.inspect}"
 
     email = ENV.fetch('email', nil)
     raise 'Error: invalid email' if email.blank? || !/.+@.+\..+/.match(email)

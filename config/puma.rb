@@ -40,11 +40,11 @@ preload_app!
 # cannot share connections between processes.
 #
 on_worker_boot do
-  ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
+  Rails.configuration.unleash = Unleash::Client.new
 end
 
 on_worker_shutdown do
-  ::UNLEASH.shutdown # rubocop:disable Style/RedundantConstantBase
+  Rails.configuration.unleash.shutdown
 end
 
 # Allow puma to be restarted by `rails restart` command.

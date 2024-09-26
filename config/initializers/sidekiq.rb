@@ -2,11 +2,11 @@ Sidekiq.configure_server do |config|
   config.redis = { ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE } }
 
   config.on(:startup) do
-    ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
+    Rails.configuration.unleash = Unleash::Client.new
   end
 
   config.on(:shutdown) do
-    ::UNLEASH.shutdown # rubocop:disable Style/RedundantConstantBase
+    Rails.configuration.unleash.shutdown
   end
 end
 

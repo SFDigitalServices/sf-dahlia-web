@@ -83,7 +83,7 @@ describe Force::ListingService do
       allow(Force::Request).to receive(:new).and_return(request_instance)
       allow(request_instance).to receive(:cached_get).with(endpoint, nil,
                                                            false).and_return([single_listing])
-      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
         .with('GoogleCloudTranslate')
         .and_return(true)
 
