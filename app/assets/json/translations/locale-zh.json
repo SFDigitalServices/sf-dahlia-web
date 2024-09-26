@@ -1272,6 +1272,7 @@
                 "address": "Hunters View 住址",
                 "address_desc": "您目前或從前在Hunters View公共住宅建築的住址。",
                 "desc": "適用於家庭中至少有一位是曾經或現在居住在Hunters View公共住宅的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
+                "proof_desc": "您需要準備以下其中一項的文件來證明您在Hunters View住宅建築的地址。",
                 "title": "回歸權 - Hunters View 優先權"
             },
             "rtr_sunnydale": {
