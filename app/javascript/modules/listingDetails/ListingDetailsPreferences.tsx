@@ -15,7 +15,7 @@ const determineDescription = (
   NRHPDistrict?: string
 ) => {
   if (customPreferenceDescription) {
-    // todo: Use GoogleCloudTranslate here
+    // todo: DAH-2767 Use Google Cloud Translate here
     return { description: listingDescription, descriptionClassName: "translate" }
   } else {
     return preferenceName === PREFERENCES.neighborhoodResidence && NRHPDistrict
