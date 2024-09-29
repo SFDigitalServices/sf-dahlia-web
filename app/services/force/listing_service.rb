@@ -3,6 +3,10 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService
+    class InvalidLastModifiedDateError < StandardError; end
+
+    CACHE_KEY_PREFIX = '/ListingDetails/'
+    DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # `type` designates "ownership" or "rental" listings
@@ -29,36 +33,81 @@ module Force
     # get one detailed listing result by id
     def self.listing(id, opts = {})
       @cache = Rails.cache
-      endpoint = "/ListingDetails/#{CGI.escape(id)}"
+      endpoint = "#{CACHE_KEY_PREFIX}#{CGI.escape(id)}"
       force = opts[:force] || false
       Rails.logger.info("Calling self.listing for #{id} with force: #{force}")
+
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
-      listing = add_image_urls(results_with_cached_listing_images).first
+      listing = process_listing_images(results)
 
-      if Unleash::Client.new.is_enabled? 'GoogleCloudTranslate'
-        listing_translations = @cache.fetch("/ListingDetails/#{id}/translations") do
-          Rails.logger.info("Nothing in cache for Listing #{id} translations")
-          {}
-        end
-
-        unless translations_valid?(listing_translations)
-          Rails.logger.info("Translations are not valid for #{id}")
-          results = Request.new(parse_response: true).cached_get(endpoint, nil, true)
-          listing_translations = CacheService.new.process_translations(results.first)
-        end
-
-        listing['translations'] = listing_translations || {}
+      if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
+        listing['translations'] = get_listing_translations(listing) || {}
       end
       listing
     end
 
-    def self.translations_valid?(listing_translations)
-      listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
-      listing_field_names_salesforce.each do |field_name|
-        return false unless listing_translations.key?(field_name.to_sym)
+    def self.process_listing_images(results)
+      results_with_cached_listing_images = add_cloudfront_urls_for_listing_images(results)
+      add_image_urls(results_with_cached_listing_images).first
+    end
+
+    def self.get_listing_translations(listing)
+      listing_id = listing['Id']
+      listing_translations = fetch_listing_translations_from_cache(listing_id)
+      if translations_invalid?(listing_translations) || translations_are_outdated?(
+        listing_translations[:LastModifiedDate], listing['LastModifiedDate']
+      )
+        Rails.logger.info("Translations are not valid for #{listing_id}")
+        return CacheService.new.process_translations(listing)
       end
+
+      if listing_is_outdated?(listing_translations[:LastModifiedDate],
+                              listing['LastModifiedDate'])
+        Rails.logger.info("Listing is outdated for #{listing_id}")
+        refresh_listing_cache(listing_id)
+      end
+      listing_translations
+    end
+
+    def self.translations_invalid?(listing_translations)
+      ServiceHelper.listing_field_names_salesforce.any? do |field_name|
+        !listing_translations.key?(field_name.to_sym)
+      end
+    end
+
+    def self.translations_are_outdated?(cache_last_modified, listing_last_modified)
+      parse_time(cache_last_modified) < parse_time(listing_last_modified)
+    rescue InvalidLastModifiedDateError => e
+      Rails.logger.error("Error checking if translations are outdated: #{e.message}")
       true
+    end
+
+    def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
+      parse_time(cache_last_modified) > parse_time(listing_last_modified)
+    rescue InvalidLastModifiedDateError => e
+      Rails.logger.error("Error checking if listing is outdated: #{e.message}")
+      true
+    end
+
+    def self.fetch_listing_translations_from_cache(listing_id)
+      @cache.fetch("#{CACHE_KEY_PREFIX}#{listing_id}/translations") do
+        Rails.logger.info("Nothing in cache for Listing #{listing_id} translations")
+        {}
+      end
+    end
+
+    def self.refresh_listing_cache(listing_id)
+      endpoint = "#{CACHE_KEY_PREFIX}#{CGI.escape(listing_id)}"
+      Request.new(parse_response: true).cached_get(endpoint, nil, true)
+    end
+
+    def self.parse_time(time_str)
+      raise InvalidLastModifiedDateError, 'Time string cannot be nil' if time_str.nil?
+
+      Time.parse(time_str)
+    rescue ArgumentError => e
+      Rails.logger.error("Error parsing time: #{e.message}")
+      raise InvalidLastModifiedDateError, "Invalid time format: #{time_str}"
     end
 
     # get all units for a given listing

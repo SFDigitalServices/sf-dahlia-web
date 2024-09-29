@@ -8,7 +8,7 @@ interface FormSubmitButtonProps {
 
 const FormSubmitButton = ({ loading, label }: FormSubmitButtonProps) => {
   return (
-    <div className="flex justify-center pt-4">
+    <div className="flex justify-center pt-2">
       <Button loading={loading} type="submit">
         {label}
       </Button>

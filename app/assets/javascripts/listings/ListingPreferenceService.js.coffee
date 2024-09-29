@@ -54,6 +54,8 @@ ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityServi
   Service.getRTRPreferenceKey = (listing) ->
     # If there's a right to return preference, return the key for it.
     # if not, return null
+    # If there are multiple right to return preferences (which there shouldn't), return the first one found
+    # in coffeescript the return statement will break out of the for...in loop
     for prefKey in ListingConstantsService.rightToReturnPreferences
       return prefKey if Service.hasPreference(prefKey, listing)
 

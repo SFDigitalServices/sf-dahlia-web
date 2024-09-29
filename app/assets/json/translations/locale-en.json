@@ -170,7 +170,6 @@
         "c8_home_and_community_based_services": {
             "after_the_lottery_we_will_ask_for_proof": "After the lottery, we will ask for proof that shows you receive these services",
             "instructions_p1": "You can get priority for certain units. To qualify, you must:",
-            "instructions_p2": "Be <b>under 62</b> years old",
             "instructions_p3": "Show proof that you receive support in your home, like:",
             "instructions_p4": "In-Home Support Services (IHSS)",
             "instructions_p5": "Regional Center services",
@@ -1268,6 +1267,13 @@
                 "proof_desc": "You'll need one of the following documents showing your address at Alice Griffith Housing Development:",
                 "sfha_letter_instructions": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address",
                 "title": "Alice Griffith Housing Development Resident Preference"
+            },
+            "rtr_huntersview": {
+                "address": "Hunters View Address",
+                "address_desc": "Your current or former address at the Hunters View public housing development",
+                "desc": "For households in which at least one person is a former or current resident of Hunters View public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
+                "proof_desc": "You'll need one of the following documents showing your address at Hunters View Housing Development.",
+                "title": "Right to Return - Hunters View Preference"
             },
             "rtr_sunnydale": {
                 "address": "Sunnydale Address",

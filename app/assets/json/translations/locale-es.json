@@ -166,6 +166,17 @@
             "title_household": "¿Usted o alguna de las personas que figuran en esta solicitud necesitan alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?",
             "title_you": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Ley de Estadounidenses con Discapacidades (Americans with Disabilities Act, ADA)?"
         },
+        "c8_home_and_community_based_services": {
+            "after_the_lottery_we_will_ask_for_proof": "Después del sorteo, le solicitaremos un documento de respaldo que demuestre que recibe estos servicios",
+            "instructions_p1": "Puedes obtener prioridad para determinadas unidades. A fin de calificar, debe reunir estos requisitos:",
+            "instructions_p3": "Muestre pruebas de que recibe apoyo en su hogar, como:",
+            "instructions_p4": "Servicios de apoyo en el hogar (IHSS)",
+            "instructions_p5": "Servicios del Centro Regional",
+            "instructions_p6": "Sección 1915(c) del programa de exención",
+            "instructions_p7": "Envíe un correo electrónico {{emailLink}} si tiene preguntas sobre su elegibilidad.",
+            "title": "¿Tiene usted una discapacidad y recibe asistencia en su hogar pagada por el gobierno?",
+            "yes_i_get_this_type_of_support": "Sí, recibo este tipo de apoyo"
+        },
         "choose_applicant_details": {
             "alert_message": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
             "continue_anon": "Continuar sin ninguna cuenta",
@@ -700,6 +711,7 @@
             "good_news_for_higher_ranking": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
             "grandparent": "Abuelo(a)",
             "great_grandparent": "Bisabuelo(a)",
+            "hcbs_units": "Recibe apoyo en el hogar por una discapacidad",
             "hearing_impairments": "Para personas con impedimentos auditivos",
             "household_details": "Detalles del grupo familiar",
             "household_member": "Integrante del grupo familiar",
@@ -1254,6 +1266,13 @@
                 "proof_desc": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith:",
                 "sfha_letter_instructions": "Carta de la Autoridad de Vivienda de San Francisco que verifique que el solicitante vivía en la dirección de Alice Griffith",
                 "title": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
+            },
+            "rtr_huntersview": {
+                "address": "Dirección en Hunters View",
+                "address_desc": "Su dirección actual o anterior en el desarrollo de vivienda pública Hunters View",
+                "desc": "Para hogares en donde por lo menos una persona es o era residente de la vivienda pública de Hunters View. Por favor tome nota de que estas unidades no son subsidiadas, la renta no cambiará si su su ingreso cambia. ",
+                "proof_desc": "Necesitará uno de los siguientes documentos que incluyan su dirección en el desarrollo de vivienda pública de Hunters View.",
+                "title": "Derecho a regresar - preferencia de vivienda en Hunters View"
             },
             "rtr_sunnydale": {
                 "address": "Dirección en Sunnydale",

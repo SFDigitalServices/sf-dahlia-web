@@ -25,7 +25,7 @@ gem "sprockets-rails"
 gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
-gem 'puma', '~> 6.4.2'
+gem 'puma', '~> 6.4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.8.0'
@@ -111,6 +111,8 @@ gem 'fog-aws'
 
 # https://elements.heroku.com/addons/sentry
 gem 'sentry-raven'
+
+gem 'scout_apm'
 
 group :test do
   gem 'simplecov', '~> 0.22.0'

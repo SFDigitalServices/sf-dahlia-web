@@ -2,10 +2,11 @@ import React from "react"
 import { RailsListing } from "../../modules/listings/SharedHelpers"
 import "./ListingDetailsSeeTheUnit.scss"
 import { t, Heading, Icon, IconFillColors } from "@bloom-housing/ui-components"
-import { Heading as HeadingSeeds } from "@bloom-housing/ui-seeds"
+import { Heading as HeadingSeeds, Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
+import { ListingOnlineDetail } from "../../api/types/rails/listings/BaseRailsListing"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -28,6 +29,33 @@ const SeeTheUnitSubsection = ({ title, children, headingClass }: SubsectionProps
   )
 }
 
+const SeeDetailsOnline = (listing: RailsListing) => (
+  <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
+    <div className="flex-row space-y-1">
+      {listing.Multiple_Listing_Service_URL && (
+        <div>
+          <Link
+            className="no-underline"
+            href={listing.Multiple_Listing_Service_URL}
+            hideExternalLinkIcon={true}
+          >
+            {t("listings.process.seeTheUnitOnMls")}
+          </Link>
+        </div>
+      )}
+      {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
+        return (
+          <div key={detail.Id}>
+            <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
+              {detail.Name}
+            </Link>
+          </div>
+        )
+      })}
+    </div>
+  </SeeTheUnitSubsection>
+)
+
 export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
   return (
     <section className="aside-block see-the-unit">
@@ -41,15 +69,8 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
         ) : null}
       </SeeTheUnitSubsection>
-      {listing.Multiple_Listing_Service_URL && (
-        <SeeTheUnitSubsection title={t("seeTheUnit.seeDetailsOnline")}>
-          <p>
-            <a href={listing.Multiple_Listing_Service_URL} target="_blank">
-              {t("listings.process.seeTheUnitOnMls")}
-            </a>
-          </p>
-        </SeeTheUnitSubsection>
-      )}
+      {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) &&
+        SeeDetailsOnline(listing)}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
         <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
         <p>{listing.Leasing_Agent_Name}</p>

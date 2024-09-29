@@ -167,6 +167,17 @@
             "title_household": "您本人或本申請中的任何一位需要下列任何 ADA 無障礙設施嗎？",
             "title_you": "您本人需要下列任何 ADA 無障礙設施嗎？"
         },
+        "c8_home_and_community_based_services": {
+            "after_the_lottery_we_will_ask_for_proof": "抽籤後，我們將要求提供您接受這些服務的證明",
+            "instructions_p1": "您可享得特定住房單位的優先權。符合資格的條件包括：",
+            "instructions_p3": "提供您接受居家支援服務的證明，例如：",
+            "instructions_p4": "居家支援服務 (IHSS)",
+            "instructions_p5": "區域中心服務",
+            "instructions_p6": "1915(c) 豁免條款",
+            "instructions_p7": "如果您對資格有疑問，請發送電子郵件至 {{emailLink}}。",
+            "title": "您是否為身心障礙人士，並接受由政府付費的居家支援服務？",
+            "yes_i_get_this_type_of_support": "是的，我有接受這類支援服務"
+        },
         "choose_applicant_details": {
             "alert_message": "有關此申請及帳戶設定中的所有主要聯絡詳細資料均會根據您的選擇覆寫。",
             "continue_anon": "無帳戶繼續執行",
@@ -701,6 +712,7 @@
             "good_news_for_higher_ranking": "好消息！您符合較高抽籤順位的資格。",
             "grandparent": "(外) 祖父母",
             "great_grandparent": "曾 (外) 祖父母",
+            "hcbs_units": "接受適用於身心障礙人士的居家支援服務",
             "hearing_impairments": "針對聽力障礙",
             "household_details": "家庭詳細資料",
             "household_member": "家庭成員",
@@ -1255,6 +1267,13 @@
                 "proof_desc": "您需要提供以下任一文件，證明您的地址位在 Alice Griffith 住宅區:",
                 "sfha_letter_instructions": "由舊金山房屋管理局發出的確認申請人居住在 Alice Griffith 地址的信函",
                 "title": "Alice Griffith 住宅區居民優先權利"
+            },
+            "rtr_huntersview": {
+                "address": "Hunters View 住址",
+                "address_desc": "您目前或從前在Hunters View公共住宅建築的住址。",
+                "desc": "適用於家庭中至少有一位是曾經或現在居住在Hunters View公共住宅的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
+                "proof_desc": "您需要準備以下其中一項的文件來證明您在Hunters View住宅建築的地址。",
+                "title": "回歸權 - Hunters View 優先權"
             },
             "rtr_sunnydale": {
                 "address": "Sunnydale 住址",
