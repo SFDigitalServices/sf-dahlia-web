@@ -617,6 +617,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                         <div
                           class="field-note"
+                          id="newPasswordInstructions"
                         >
                           <span>
                             Must include at least:
@@ -654,7 +655,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="password-error"
+                              aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
                               class="input pr-10"
                               id="password"
@@ -1454,6 +1455,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                       <div
                         class="field-note"
+                        id="newPasswordInstructions"
                       >
                         <span>
                           Must include at least:
@@ -1491,7 +1493,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="control"
                         >
                           <input
-                            aria-describedby="password-error"
+                            aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
                             class="input pr-10"
                             id="password"
@@ -2348,6 +2350,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                         <div
                           class="field-note"
+                          id="newPasswordInstructions"
                         >
                           <span>
                             Must include at least:
@@ -2385,7 +2388,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="password-error"
+                              aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
                               class="input pr-10"
                               id="password"
@@ -3185,6 +3188,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                       <div
                         class="field-note"
+                        id="newPasswordInstructions"
                       >
                         <span>
                           Must include at least:
@@ -3222,7 +3226,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="control"
                         >
                           <input
-                            aria-describedby="password-error"
+                            aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
                             class="input pr-10"
                             id="password"
