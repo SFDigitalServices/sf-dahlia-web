@@ -1,10 +1,24 @@
 describe("My Applications", () => {
+  beforeEach(() => {
+    cy.intercept("/api/v1/short-form/listing-application/a0W0P00000Hc7RcUAJ?autofill=true", {
+      fixture: "draftApplication.json",
+    })
+    cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ/preferences", {
+      fixtures: "preferences.json",
+    })
+
+    cy.intercept(`/api/v1/listings/a0W0P00000Hc7RcUAJ.json`, { fixture: "completedReRental.json" })
+    cy.intercept("/api/v1/listings/a0W4U00000IhGZcUAN/lottery_buckets", {
+      fixture: "lotteryRanking.json",
+    })
+  })
+
   it("signs in", () => {
     cy.signIn()
     cy.addReactQueryParam()
 
     cy.intercept("/api/v1/account/my-applications", { applications: [] })
-    cy.get('a[href="/my-applications"]').click()
+    cy.get('a[href="/my-applications?react=true"]').click()
     cy.addReactQueryParam()
 
     // There should be no applications right now
@@ -24,16 +38,8 @@ describe("My Applications", () => {
     // Try to continue an application
     cy.intercept("/api/v1/account/my-applications", { fixture: "applications.json" })
     cy.visit("/my-applications?react=true")
-    cy.intercept("/api/v1/short-form/listing-application/a0W0P00000Hc7RcUAJ?autofill=true", {
-      fixture: "draftApplication.json",
-    })
-    cy.intercept("/api/v1/listings/a0W0P00000Hc7RcUAJ/preferences", {
-      fixtures: "preferences.json",
-    })
-
     cy.get('a[href="/listings/a0W0P00000Hc7RcUAJ/apply/name"]').click()
     cy.contains("TEST Dahlia Commons Application")
-
     cy.visit("/my-applications?react=true")
 
     // Ensure correct formatting
