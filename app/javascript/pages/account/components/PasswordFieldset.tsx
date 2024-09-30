@@ -207,7 +207,7 @@ const PasswordFieldset = ({
           </div>
         </>
       )}
-      {(passwordType === "createAccount" || passwordType === "accountSettings") && (
+      {passwordType !== "signIn" && (
         <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
       )}
       <PasswordField
@@ -219,7 +219,7 @@ const PasswordFieldset = ({
           required: "password:required",
           validate: newPasswordValidation,
         }}
-        passwordVisibilityDefault={true}
+        passwordVisibilityDefault={passwordType !== "signIn"}
         error={errors.password}
         errorMessage={
           errors.password?.message &&
