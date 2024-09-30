@@ -57,9 +57,9 @@ const SignInForm = () => {
       )}
       <SiteAlert type="notice" dismissable />
       <div className="form-card__group pt-0 border-b">
-        <Form id="sign-in" className="mt-10" onSubmit={handleSubmit(onSubmit)}>
+        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
           <EmailFieldset register={register} errors={errors} />
-          <span className="float-right">
+          <span className="right-0 absolute">
             <Link href="/forgot-password" className="forgot-password-link">
               {t("forgotPassword.title")}
             </Link>
