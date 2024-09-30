@@ -165,7 +165,7 @@ const DateField = ({
           range: fieldInfo[fieldKey].validation,
         },
       }}
-      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
+      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength, required: true }}
       type="number"
       register={register}
       onChange={onChange}
