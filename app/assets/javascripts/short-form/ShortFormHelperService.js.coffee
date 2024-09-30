@@ -321,6 +321,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state, ListingPreferenceSe
         Service.preference_proof_options_alice_griffith
       when 'rightToReturnSunnydale'
         Service.preference_proof_options_right_to_return
+      when 'rightToReturnHuntersView'
+        Service.preference_proof_options_right_to_return
       else
         Service.preference_proof_options_default
 

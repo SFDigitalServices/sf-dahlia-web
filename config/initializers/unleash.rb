@@ -4,3 +4,5 @@ Unleash.configure do |config|
   config.logger   = Rails.logger
   config.custom_http_headers = { Authorization: ENV.fetch('UNLEASH_TOKEN_RAILS', nil) }
 end
+
+Rails.configuration.unleash = Unleash::Client.new
