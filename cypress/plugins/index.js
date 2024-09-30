@@ -19,6 +19,9 @@ module.exports = (_on, _config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   _on("task", {
+    // Centralized logging call for the entire test suite,
+    // can be used to log a message in CircleCI and locally in the terminal.
+    // Example: cy.task("log", "This is a log message")
     log(message) {
       console.log(message)
       return null
