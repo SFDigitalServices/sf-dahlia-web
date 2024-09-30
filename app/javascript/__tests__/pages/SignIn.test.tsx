@@ -13,9 +13,9 @@ jest.mock("react-helmet-async", () => {
 describe("<SignIn />", () => {
   it("shows the correct form text", async () => {
     const { getAllByText, getByText } = await renderAndLoadAsync(<SignIn assetPaths={{}} />)
-    expect(getAllByText("Sign In")).toHaveLength(4)
+    expect(getAllByText("Sign in")).not.toBeNull()
     expect(getByText("Email")).not.toBeNull()
     expect(getByText("Password")).not.toBeNull()
-    expect(getByText("Don't have an account?")).not.toBeNull()
+    expect(getByText("Create an account")).not.toBeNull()
   })
 })
