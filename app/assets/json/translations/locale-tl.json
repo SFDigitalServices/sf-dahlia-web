@@ -1267,6 +1267,13 @@
                 "sfha_letter_instructions": "Ang liham mula sa San Francisco Housing Authority na nagpapatunay sa aplikante ay nakatira sa address ng Alice Griffith",
                 "title": "Preperensiya para sa Residente ng Alice Griffith Housing Development. "
             },
+            "rtr_huntersview": {
+                "address": "Address sa Hunters View",
+                "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Hunters View",
+                "desc": "Para sa mga kabahayan kung saan may kahit isang tao na dati o kasalukuyang residente ng pampublikong pabahay ng Hunters View. Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
+                "proof_desc": "Kakailanganin mo ng isa sa mga sumusunod na dokumentong nagpapakita ng iyong address sa Hunters View Housing Development.",
+                "title": "Karapatang Bumalik - Kagustuhan sa Hunters View"
+            },
             "rtr_sunnydale": {
                 "address": "Address sa Sunnydale",
                 "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Sunnydale",

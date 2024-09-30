@@ -15,6 +15,7 @@ const determineDescription = (
   NRHPDistrict?: string
 ) => {
   if (customPreferenceDescription) {
+    // todo: DAH-2767 Use Google Cloud Translate here
     return { description: listingDescription, descriptionClassName: "translate" }
   } else {
     return preferenceName === PREFERENCES.neighborhoodResidence && NRHPDistrict
@@ -43,6 +44,8 @@ export const mapPreferenceLink = (link: string): string => {
       return getSfGovUrl(link, 3274)
     case "http://sfmohcd.org/neighborhood-resident-housing-preference":
       return getSfGovUrl(link, 3274)
+    case "https://www.sf.gov/certain-buildings-have-special-lottery-preferences":
+      return getSfGovUrl(link, 11931)
     default:
       return link
   }
@@ -89,7 +92,9 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
                 PREFERENCES_IDS.neighborhoodResidence,
               "Rent Burdened / Assisted Housing Preference": PREFERENCES_IDS.assistedHousing,
               "Live or Work in San Francisco Preference": PREFERENCES_IDS.liveWorkInSf,
-              "Alice Griffith Housing Development Resident": PREFERENCES_IDS.aliceGriffith,
+              "Alice Griffith Housing Development Resident": PREFERENCES_IDS.rightToReturn,
+              [PREFERENCES.rightToReturnHuntersView]: PREFERENCES_IDS.rightToReturn,
+              [PREFERENCES.rightToReturnPotrero]: PREFERENCES_IDS.rightToReturn,
             }
             links.push({
               title: t("label.viewDocumentChecklist"),

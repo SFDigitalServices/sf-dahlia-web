@@ -82,6 +82,7 @@ angular.module('dahlia.components')
               when 'rentBurden' then flagForI18n('e3b_rent_burden_preference.rent_burden_preference')
               when 'aliceGriffith' then flagForI18n('preferences.alice_griffith.title')
               when 'rightToReturnSunnydale' then flagForI18n('preferences.rtr_sunnydale.title')
+              when 'rightToReturnHuntersView' then flagForI18n('preferences.rtr_huntersview.title')
 
             # If we didn't find a display name for this key, skip over it
             return unless displayNameTranslateKey
