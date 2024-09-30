@@ -81,7 +81,13 @@ const EmailSection = ({ register, errors }: SectionProps) => {
 const PasswordSection = ({ register, errors, watch }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <PasswordFieldset register={register} errors={errors} watch={watch} />
+      <PasswordFieldset
+        register={register}
+        errors={errors}
+        watch={watch}
+        labelText={t("label.choosePassword")}
+        passwordType="createAccount"
+      />
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
