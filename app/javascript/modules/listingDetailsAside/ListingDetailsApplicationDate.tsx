@@ -83,11 +83,11 @@ const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
   const isApplicationOpen = listing && isOpen(listing)
 
-  const { unleashFlag: useUpdatedStatuses } = useFeatureFlag("UpdatedStatuses", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      {useUpdatedStatuses ? (
+      {isSalesFcfsEnabled ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">
