@@ -56,7 +56,7 @@ export type ListingLotteryPreference = {
 
 export type ListingOnlineDetail = {
   Id: string
-  Name: string
+  Listing_Online_Detail_Name: string
   URL: string
 }
 
