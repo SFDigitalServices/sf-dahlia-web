@@ -35,6 +35,7 @@
   "accountSettings.contactInformationUpdated": "Contact Information Updated",
   "accountSettings.contactInformationUpdatedMessage": "Some of the primary contact information on your application was updated to match your account settings.",
   "accountSettings.description": "We use this information to help you fill in your application.",
+  "accountSettings.deleteAria": "Delete application to %{listing}",
   "accountSettings.emailReconfirmedUpdated": "Your email has been updated here and on any unsubmitted applications.",
   "accountSettings.enterCurrentPassword": "You must enter your current password first to change it. We do this for your security.",
   "accountSettings.informationChangeNotice": "Your information will be changed on any applications that you haven't submitted yet.",

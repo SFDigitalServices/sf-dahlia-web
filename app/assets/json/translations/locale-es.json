@@ -1269,10 +1269,10 @@
             },
             "rtr_huntersview": {
                 "address": "Dirección en Hunters View",
-                "address_desc": "Su dirección actual o anterior en el desarrollo de vivienda pública Hunters View",
-                "desc": "Para hogares en donde por lo menos una persona es o era residente de la vivienda pública de Hunters View. Por favor tome nota de que estas unidades no son subsidiadas, la renta no cambiará si su su ingreso cambia. ",
-                "proof_desc": "Necesitará uno de los siguientes documentos que incluyan su dirección en el desarrollo de vivienda pública de Hunters View.",
-                "title": "Derecho a regresar - preferencia de vivienda en Hunters View"
+                "address_desc": "Su dirección actual o anterior de la vivienda pública de Hunters View",
+                "desc": "Para hogares en donde por lo menos una persona es o era residente de la vivienda pública de Hunters View (anteriormente conocida como West Point). Por favor tome nota de que estas unidades no son subsidiadas, la renta no cambiará si su su ingreso cambia. ",
+                "proof_desc": "Necesitará uno de los siguientes documentos que incluyan su dirección de la vivienda pública de Hunters View.",
+                "title": "Derecho a regresar - Hunters View (West Point)"
             },
             "rtr_sunnydale": {
                 "address": "Dirección en Sunnydale",
