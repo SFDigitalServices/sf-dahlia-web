@@ -107,7 +107,7 @@ const ListingDetail = () => {
     })
   }, [router, router.pathname])
 
-  const { unleashFlag: isSeeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   const getDescription = (listing: RailsListing) =>
     `${getListingAddressString(listing)}. ${t(
@@ -179,7 +179,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
               />
-              {isSeeTheUnitEnabled ? (
+              {isSalesFcfsEnabled ? (
                 <MobileListingDetailsSeeTheUnit
                   listing={listing}
                   imageSrc={getAssetPath("listing-units.svg")}
