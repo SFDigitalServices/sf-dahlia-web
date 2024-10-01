@@ -19,12 +19,12 @@ export interface ListingDetailsProcessProps {
 
 const WhatToExpect = ({
   listing,
-  isFcfsEnabled,
+  isSalesFcfsEnabled,
 }: {
   listing: RailsListing
-  isFcfsEnabled: boolean
+  isSalesFcfsEnabled: boolean
 }) => {
-  if (isFcfsListing(listing) && isFcfsEnabled) {
+  if (isFcfsListing(listing) && isSalesFcfsEnabled) {
     return null
   }
   return (
@@ -54,8 +54,7 @@ export const ListingDetailsProcess = ({
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
   const isListingRental = isRental(listing)
-  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
-  const { unleashFlag: isFcfsEnabled } = useFeatureFlag("FCFS", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <>
@@ -85,7 +84,7 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      <WhatToExpect listing={listing} isFcfsEnabled={isFcfsEnabled} />
+      <WhatToExpect listing={listing} isSalesFcfsEnabled={isSalesFcfsEnabled} />
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
@@ -95,7 +94,7 @@ export const ListingDetailsProcess = ({
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
         listing.Leasing_Agent_Title) &&
-        (isListingRental || !seeTheUnitEnabled) && (
+        (isListingRental || !isSalesFcfsEnabled) && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
