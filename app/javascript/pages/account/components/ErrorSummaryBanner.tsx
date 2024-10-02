@@ -11,20 +11,15 @@ import "./ErrorSummaryBanner.scss"
 
 export const scrollToErrorOnSubmit =
   (ref: React.MutableRefObject<HTMLSpanElement>) => (errors: DeepMap<FieldValues, FieldError>) => {
-    if (Object.keys(errors).length === 0) {
-      return
-    }
+    const errorKeys = Object.keys(errors)
 
-    if (Object.keys(errors).length === 1) {
-      const key = Object.keys(errors)[0]
-      const fieldError = errors[key]
+    if (errorKeys.length === 0) return
 
-      if (fieldError && fieldError.ref) {
-        console.log("scrolling to error", fieldError)
-        fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
-      }
+    const firstError = errors[errorKeys[0]]
+
+    if (firstError?.ref) {
+      firstError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
     } else {
-      console.log("scrolling to list", ref)
       ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }
   }
