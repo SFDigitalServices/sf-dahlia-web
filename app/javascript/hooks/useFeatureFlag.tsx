@@ -15,10 +15,8 @@ export const useFeatureFlag = (flagName: string, defaultValue: boolean) => {
 
   const unleashFlag = useFlagUnleash(flagName)
 
-  if (
-    doesURLHaveFlag &&
-    (urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development")
-  ) {
+  const useUrlOverride = urlWhiteList.has(flagName) || process.env.UNLEASH_ENV === "development"
+  if (doesURLHaveFlag && useUrlOverride) {
     if (flagFromUrl === "true") {
       return { flagsReady: true, unleashFlag: true }
     } else if (flagFromUrl === "false") {
