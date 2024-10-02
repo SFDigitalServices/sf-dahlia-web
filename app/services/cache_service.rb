@@ -21,24 +21,7 @@ class CacheService
 
   def process_translations(listing)
     translation_service = GoogleTranslationService.new
-
-    strings_to_translate = {}
-    ServiceHelper.listing_field_names.each do |field|
-      strings_to_translate[field] = listing[field].present? ? listing[field] : ''
-    end
-
-    strings_to_translate = process_nested_translations(listing, strings_to_translate,
-                                                       'Open_Houses',
-                                                       'Venue')
-    strings_to_translate = process_nested_translations(listing, strings_to_translate,
-                                                       'Information_Sessions',
-                                                       'Venue')
-    strings_to_translate = process_nested_translations(listing, strings_to_translate,
-                                                       'Listing_Images',
-                                                       'Image_Description')
-    strings_to_translate = process_listing_preferences_translations(listing['listingID'],
-                                                                    strings_to_translate)
-
+    strings_to_translate = build_strings_to_translate(listing)
     languages = %w[ES ZH TL]
 
     translations = translation_service.translate(strings_to_translate.values,
@@ -58,20 +41,35 @@ class CacheService
 
   attr_accessor :prev_cached_listings, :fresh_listings
 
+  def build_strings_to_translate(listing)
+    strings_to_translate = {}
+    ServiceHelper.listing_field_names.each do |field|
+      strings_to_translate[field] = listing[field].present? ? listing[field] : ''
+    end
+
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Open_Houses',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Information_Sessions',
+                                                       'Venue')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Listing_Images',
+                                                       'Image_Description')
+
+    listing_preferences = Force::ListingService.preferences(listing['listingID'])
+    listing_preferences&.each do |preference|
+      strings_to_translate["#{preference['listingPreferenceID']}.Description"] ||=
+        preference['description']
+    end
+    strings_to_translate
+  end
+
   def process_nested_translations(listing, strings_to_translate, object_key, value)
     listing[object_key]&.each do |object|
       unless object[value].nil?
         strings_to_translate["#{object['Id']}.#{object_key}.#{value}"] ||= object[value]
       end
-    end
-    strings_to_translate
-  end
-
-  def process_listing_preferences_translations(listing_id, strings_to_translate)
-    listing_preferences = Force::ListingService.preferences(listing_id)
-    listing_preferences&.each do |preference|
-      strings_to_translate["#{preference['listingPreferenceID']}.Description"] ||=
-        preference['description']
     end
     strings_to_translate
   end
