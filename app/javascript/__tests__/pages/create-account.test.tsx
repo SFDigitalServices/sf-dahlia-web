@@ -44,13 +44,13 @@ async function fillCreateAccountForm({
   const lastNameField: Element = screen.getByRole("textbox", {
     name: /last name/i,
   })
-  const monthField: Element = screen.getByRole("textbox", {
+  const monthField: Element = screen.getByRole("spinbutton", {
     name: /month/i,
   })
-  const dayField: Element = screen.getByRole("textbox", {
+  const dayField: Element = screen.getByRole("spinbutton", {
     name: /day/i,
   })
-  const yearField: Element = screen.getByRole("textbox", {
+  const yearField: Element = screen.getByRole("spinbutton", {
     name: /year/i,
   })
   const emailGroup = screen.getByRole("group", {
@@ -60,14 +60,29 @@ async function fillCreateAccountForm({
   const passwordField: Element = screen.getByLabelText(/password/i)
 
   await act(async () => {
+    await userEvent.clear(firstNameField)
     await userEvent.type(firstNameField, firstName)
+    await userEvent.clear(lastNameField)
     await userEvent.type(lastNameField, lastName)
+    await userEvent.clear(monthField)
     await userEvent.type(monthField, month)
+    await userEvent.clear(dayField)
     await userEvent.type(dayField, day)
+    await userEvent.clear(yearField)
     await userEvent.type(yearField, year)
+    await userEvent.clear(emailField)
     await userEvent.type(emailField, email)
+    await userEvent.clear(passwordField)
     await userEvent.type(passwordField, password)
   })
+
+  expect(firstNameField).toHaveValue(firstName)
+  expect(lastNameField).toHaveValue(lastName)
+  expect(monthField).toHaveValue(Number(month))
+  expect(dayField).toHaveValue(Number(day))
+  expect(yearField).toHaveValue(Number(year))
+  expect(emailField).toHaveValue(email)
+  expect(passwordField).toHaveValue(password)
 }
 
 describe("<CreateAccount />", () => {
@@ -148,13 +163,13 @@ describe("<CreateAccount />", () => {
     })
 
     it("shows an error message for DOB fields", async () => {
-      const monthField: Element = screen.getByRole("textbox", {
+      const monthField: Element = screen.getByRole("spinbutton", {
         name: /month/i,
       })
-      const dayField: Element = screen.getByRole("textbox", {
+      const dayField: Element = screen.getByRole("spinbutton", {
         name: /day/i,
       })
-      const yearField: Element = screen.getByRole("textbox", {
+      const yearField: Element = screen.getByRole("spinbutton", {
         name: /year/i,
       })
       await act(async () => {

@@ -90,17 +90,17 @@ const validateNumber = (required: boolean, value: string, maxValue: number, erro
 
 const validateAge = (month: string, day: string, year: string) => {
   if (year.length < 4) return "dob:invalid"
-  if (dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().valueOf())
-    return "dob:invalid"
+  const enteredDate = dayjs(`${month}/${day}/${year}`, "M/D/YYYY")
+  const minDate = dayjs("1/1/1900", "M/D/YYYY")
+
   if (
-    dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() <
-    dayjs().subtract(117, "years").valueOf()
-  )
+    !enteredDate.isValid() ||
+    enteredDate.valueOf() > dayjs().valueOf() ||
+    enteredDate.valueOf() < minDate.valueOf()
+  ) {
     return "dob:invalid"
-  if (
-    dayjs(`${month}/${day}/${year}`, "M/D/YYYY").valueOf() > dayjs().subtract(18, "years").valueOf()
-  )
-    return "dob:age"
+  }
+  if (enteredDate.valueOf() > dayjs().subtract(18, "years").valueOf()) return "dob:age"
   return true
 }
 
@@ -166,6 +166,7 @@ const DateField = ({
         },
       }}
       inputProps={{ maxLength: fieldInfo[fieldKey].maxLength }}
+      type="number"
       register={register}
       onChange={onChange}
     />

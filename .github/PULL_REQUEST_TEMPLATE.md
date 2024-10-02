@@ -4,7 +4,7 @@ _just one or two sentences_
 
 ## Jira ticket
 
-https://sfgovdt.jira.com/
+https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 
 ## Checklist before requesting review
 
