@@ -29,6 +29,8 @@ export const handleNameServerErrors = (
 }
 
 const nameValidation = (name: "firstName" | "lastName", value: string) => {
+  // The below check is also happening on the backend, but we want to provide immediate feedback to the user
+  // The backend check is happening in the account_validation_service.rb file
   if (value.includes("www") || value.includes("http") || value.includes(".")) {
     return `name:server:generic`
   }
