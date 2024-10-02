@@ -154,7 +154,7 @@ const DateField = ({
 
   return (
     <Field
-      className="ml-0 mr-4 pb-4"
+      className="ml-0 mr-4"
       name={`dobObject.${fieldKey}`}
       label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
