@@ -371,7 +371,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field-group--date mt-1"
                         >
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -399,7 +399,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -427,7 +427,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -1209,7 +1209,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field-group--date mt-1"
                       >
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -1237,7 +1237,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -1265,7 +1265,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2104,7 +2104,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field-group--date mt-1"
                         >
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2132,7 +2132,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2160,7 +2160,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2942,7 +2942,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field-group--date mt-1"
                       >
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2970,7 +2970,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2998,7 +2998,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"

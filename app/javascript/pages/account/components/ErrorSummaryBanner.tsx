@@ -9,19 +9,25 @@ import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
 import "./ErrorSummaryBanner.scss"
 
-// const useDeepCompareEffect = (
-//   callback: React.EffectCallback,
-//   dependencies: DeepMap<FieldValues, FieldError>[]
-// ) => {
-//   const currentDependenciesRef = useRef<DeepMap<FieldValues, FieldError>[]>([])
+export const scrollToErrorOnSubmit =
+  (ref: React.MutableRefObject<HTMLSpanElement>) => (errors: DeepMap<FieldValues, FieldError>) => {
+    if (Object.keys(errors).length === 0) {
+      return
+    }
 
-//   if (!_.isEqual(currentDependenciesRef.current, dependencies)) {
-//     currentDependenciesRef.current = dependencies
-//   }
+    if (Object.keys(errors).length === 1) {
+      const key = Object.keys(errors)[0]
+      const fieldError = errors[key]
 
-//   useEffect(callback, [currentDependenciesRef.current])
-// }
-
+      if (fieldError && fieldError.ref) {
+        console.log("scrolling to error", fieldError)
+        fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
+      }
+    } else {
+      console.log("scrolling to list", ref)
+      ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }
 export interface ErrorMessage {
   default: string
   abbreviated: string
@@ -46,32 +52,6 @@ export const ErrorSummaryBanner = ({
   messageMap?: (message: string) => string
 }) => {
   const listRef = React.useRef<HTMLUListElement>(null)
-  // const prevErrorsRef = useRef<DeepMap<FieldValues, FieldError>>(errors)
-
-  // useEffect(() => {
-  // console.log("errors", errors)
-  // if (!_.isEqual(prevErrorsRef.current, errors)) {
-  //   console.log("errors are not equal", errors)
-  //   prevErrorsRef.current = errors
-
-  //   if (Object.keys(errors).length === 0) {
-  //     return
-  //   }
-
-  //   if (Object.keys(errors).length === 1) {
-  //     const key = Object.keys(errors)[0]
-  //     const fieldError = errors[key]
-
-  //     if (fieldError && fieldError.ref) {
-  //       console.log("scrolling to error", fieldError)
-  //       fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
-  //     }
-  //   } else {
-  //     console.log("scrolling to list", listRef)
-  //     listRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-  //   }
-  // }
-  // }, [errors])
 
   if (Object.keys(errors).length === 0) {
     return null

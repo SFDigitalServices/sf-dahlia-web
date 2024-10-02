@@ -26,8 +26,14 @@ import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/a
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
-import { ErrorSummaryBanner, UnifiedErrorMessageMap } from "./components/ErrorSummaryBanner"
+import {
+  ErrorSummaryBanner,
+  scrollToErrorOnSubmit,
+  UnifiedErrorMessageMap,
+} from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+
+import "./create-account.scss"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -187,7 +193,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
     handleSubmit,
     watch,
     setError,
-  } = useForm({ mode: "onTouched" })
+  } = useForm({ mode: "onTouched", shouldFocusError: false })
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
@@ -207,24 +213,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
               />
             </span>
             <Form
-              onSubmit={handleSubmit(onSubmit(setError), (errors) => {
-                if (Object.keys(errors).length === 0) {
-                  return
-                }
-
-                if (Object.keys(errors).length === 1) {
-                  const key = Object.keys(errors)[0]
-                  const fieldError = errors[key]
-
-                  if (fieldError && fieldError.ref) {
-                    console.log("scrolling to error", fieldError)
-                    fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
-                  }
-                } else {
-                  console.log("scrolling to list", errorBannerRef)
-                  errorBannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-                }
-              })}
+              onSubmit={handleSubmit(onSubmit(setError), scrollToErrorOnSubmit(errorBannerRef))}
             >
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}
