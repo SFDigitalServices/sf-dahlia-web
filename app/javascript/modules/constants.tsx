@@ -13,11 +13,13 @@ export const PREFERENCES = {
   liveWorkInSf: "Live or Work in San Francisco Preference",
   neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)",
   rightToReturnSunnydale: "Right to Return - Sunnydale",
+  rightToReturnHuntersView: "Right to Return - Hunters View",
+  rightToReturnPotrero: "Right to Return - Potrero",
   treasureIsland: "Treasure Island Resident (TIR) Preference",
 }
 
 export const PREFERENCES_IDS = {
-  aliceGriffith: "hope-sf",
+  rightToReturn: "hope-sf",
   neighborhoodResidence: "nrhp",
   assistedHousing: "rent-burdened-assisted-housing",
   liveWorkInSf: "live-or-work-sf",
@@ -32,6 +34,8 @@ export const PREFERENCES_WITH_PROOF = [
   PREFERENCES.liveWorkInSf,
   PREFERENCES.neighborhoodResidence,
   PREFERENCES.rightToReturnSunnydale,
+  PREFERENCES.rightToReturnHuntersView,
+  PREFERENCES.rightToReturnPotrero,
 ]
 
 /**

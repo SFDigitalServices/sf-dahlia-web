@@ -408,3 +408,61 @@ exports[`ListingDetailsPreferences display 6 preferences 1`] = `
   </ol>
 </DocumentFragment>
 `;
+
+exports[`ListingDetailsPreferences displays right to return preference 1`] = `
+<DocumentFragment>
+  <ol
+    class="preferences-list"
+  >
+    <li
+      class="preferences-list__item info-card"
+    >
+      <div
+        class="preferences-list__number"
+      >
+        1
+        <sup>
+          st
+        </sup>
+      </div>
+      <h4
+        class="info-card__title"
+      >
+        Right to Return - Sunnydale
+      </h4>
+      <div
+        class="preferences-list__subtitle"
+      >
+        Up to 6 units available
+      </div>
+      <div
+        class="preferences-list__description translate"
+      >
+        Test Custom Description
+      </div>
+      <div
+        class="preferences-list__links"
+      >
+        <span>
+          <a
+            aria-label="Read more about the Sunnydale Right to Return Preference"
+            href="https://www.sf.gov/certain-buildings-have-special-lottery-preferences"
+            target="_blank"
+          >
+            Read More
+          </a>
+        </span>
+        <span>
+          <a
+            aria-label="View document checklist for the Sunnydale Right to Return Preference"
+            href="/document-checklist#undefined"
+            target="_blank"
+          >
+            View Document Checklist
+          </a>
+        </span>
+      </div>
+    </li>
+  </ol>
+</DocumentFragment>
+`;

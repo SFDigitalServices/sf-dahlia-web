@@ -58,12 +58,12 @@ describe Force::EventSubscriberTranslateService do
 
   describe '#listen_and_process_events when the GoogleCloudTranslate ff is enabled' do
     before do
-      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
         .with('GoogleCloudTranslate')
         .and_return(true)
     end
     after do
-      allow(::UNLEASH).to receive(:is_enabled?) # rubocop:disable Style/RedundantConstantBase
+      allow(Rails.configuration.unleash).to receive(:is_enabled?)
         .and_return(false)
     end
     describe 'when the service is initialized' do

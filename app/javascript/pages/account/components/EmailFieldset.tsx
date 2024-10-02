@@ -82,6 +82,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
     <Fieldset hasError={errors.email} label={t("label.emailAddress")} note={note}>
       <Field
         className="pb-4"
+        controlClassName="mt-1"
         type="email"
         name="email"
         placeholder="example@web.com"

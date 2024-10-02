@@ -4,6 +4,7 @@ import { cleanup, waitFor } from "@testing-library/react"
 import { ListingDetailsPreferences } from "../../../modules/listingDetails/ListingDetailsPreferences"
 import { preferences as defaultPreferences } from "../../data/RailsListingPreferences/lottery-preferences-default"
 import { preferences as sixPreferences } from "../../data/RailsListingPreferences/lottery-preferences-six"
+import { preferences as rtrPreferences } from "../../data/RailsListingPreferences/lottery-preferences-rtr"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 
 const axios = require("axios")
@@ -36,6 +37,17 @@ describe("ListingDetailsPreferences", () => {
     )
 
     await waitFor(() => getByText("Certificate of Preference (COP)"))
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("displays right to return preference", async () => {
+    axios.get.mockResolvedValue({ data: { preferences: rtrPreferences } })
+
+    const { asFragment, getByText } = await renderAndLoadAsync(
+      <ListingDetailsPreferences listingID={"test"} />
+    )
+
+    await waitFor(() => getByText("Right to Return - Sunnydale"))
     expect(asFragment()).toMatchSnapshot()
   })
 })

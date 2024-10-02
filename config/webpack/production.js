@@ -2,8 +2,9 @@
 // does the globals, it's tricky
 const webpackConfig = require('./envSpecific')
 
-const productionEnvOnly = (_clientWebpackConfig) => {
+const productionEnvOnly = (clientWebpackConfig) => {
   // place any code here that is for production only
+  clientWebpackConfig.devtool = false
 }
 
 module.exports = webpackConfig(productionEnvOnly)

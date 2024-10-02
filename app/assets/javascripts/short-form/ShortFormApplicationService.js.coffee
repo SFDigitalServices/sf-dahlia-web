@@ -60,6 +60,7 @@ ShortFormApplicationService = (
       rentBurden: null
       aliceGriffith: null
       rightToReturnSunnydale: null
+      rightToReturnHuntersView: null
       veterans_household_member: null
       optOut: {}
       documents:
