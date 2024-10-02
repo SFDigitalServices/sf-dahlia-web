@@ -180,6 +180,7 @@ const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
 }
 
 const CreateAccount = (_props: CreateAccountProps) => {
+  const errorBannerRef = React.useRef<HTMLSpanElement>(null)
   const {
     register,
     formState: { errors },
@@ -197,11 +198,34 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <ErrorSummaryBanner
-              errors={modifyErrors({ ...errors })}
-              messageMap={(messageKey) => getErrorMessage(messageKey, UnifiedErrorMessageMap, true)}
-            />
-            <Form onSubmit={handleSubmit(onSubmit(setError))}>
+            <span ref={errorBannerRef}>
+              <ErrorSummaryBanner
+                errors={modifyErrors({ ...errors })}
+                messageMap={(messageKey) =>
+                  getErrorMessage(messageKey, UnifiedErrorMessageMap, true)
+                }
+              />
+            </span>
+            <Form
+              onSubmit={handleSubmit(onSubmit(setError), (errors) => {
+                if (Object.keys(errors).length === 0) {
+                  return
+                }
+
+                if (Object.keys(errors).length === 1) {
+                  const key = Object.keys(errors)[0]
+                  const fieldError = errors[key]
+
+                  if (fieldError && fieldError.ref) {
+                    console.log("scrolling to error", fieldError)
+                    fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
+                  }
+                } else {
+                  console.log("scrolling to list", errorBannerRef)
+                  errorBannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+                }
+              })}
+            >
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}
               <CreateAccountFooter />

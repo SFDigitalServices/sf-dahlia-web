@@ -7,6 +7,20 @@ import { nameFieldsetErrors } from "./NameFieldset"
 import { dobFieldsetErrors } from "./DOBFieldset"
 import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
+import "./ErrorSummaryBanner.scss"
+
+// const useDeepCompareEffect = (
+//   callback: React.EffectCallback,
+//   dependencies: DeepMap<FieldValues, FieldError>[]
+// ) => {
+//   const currentDependenciesRef = useRef<DeepMap<FieldValues, FieldError>[]>([])
+
+//   if (!_.isEqual(currentDependenciesRef.current, dependencies)) {
+//     currentDependenciesRef.current = dependencies
+//   }
+
+//   useEffect(callback, [currentDependenciesRef.current])
+// }
 
 export interface ErrorMessage {
   default: string
@@ -31,14 +45,44 @@ export const ErrorSummaryBanner = ({
   errors: DeepMap<FieldValues, FieldError>
   messageMap?: (message: string) => string
 }) => {
+  const listRef = React.useRef<HTMLUListElement>(null)
+  // const prevErrorsRef = useRef<DeepMap<FieldValues, FieldError>>(errors)
+
+  // useEffect(() => {
+  // console.log("errors", errors)
+  // if (!_.isEqual(prevErrorsRef.current, errors)) {
+  //   console.log("errors are not equal", errors)
+  //   prevErrorsRef.current = errors
+
+  //   if (Object.keys(errors).length === 0) {
+  //     return
+  //   }
+
+  //   if (Object.keys(errors).length === 1) {
+  //     const key = Object.keys(errors)[0]
+  //     const fieldError = errors[key]
+
+  //     if (fieldError && fieldError.ref) {
+  //       console.log("scrolling to error", fieldError)
+  //       fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
+  //     }
+  //   } else {
+  //     console.log("scrolling to list", listRef)
+  //     listRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+  //   }
+  // }
+  // }, [errors])
+
   if (Object.keys(errors).length === 0) {
     return null
   }
 
+  // if there is only one error then scroll to it
+
   return (
-    <Alert fullwidth variant="alert" className="">
+    <Alert fullwidth variant="alert">
       {t("error.accountBanner.header")}
-      <ul className="list-disc list-inside pl-2 pt-1">
+      <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
         {Object.keys(errors).map((key: string) => {
           let fieldError = errors[key]
 
@@ -56,7 +100,7 @@ export const ErrorSummaryBanner = ({
                 className="text-blue-500 cursor-pointer background-none border-none p-0 text-left"
                 onClick={() => {
                   if (fieldError.ref) {
-                    fieldError.ref.scrollIntoView({ behavior: "smooth" })
+                    fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
                     fieldError.ref.focus()
                   }
                 }}
