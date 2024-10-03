@@ -22,6 +22,6 @@ class AccountValidationService
   end
 
   def self.includes_url_characters(value)
-    value.include?('www') || value.include?('http') || value.include?('.')
+    value.include?('www') || value.include?('http')
   end
 end
