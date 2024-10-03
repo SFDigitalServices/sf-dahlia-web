@@ -15,14 +15,16 @@ export const scrollToErrorOnSubmit =
 
     if (errorKeys.length === 0) return
 
-    const firstError = errors[errorKeys[0]]
-
-    if (firstError?.ref) {
-      firstError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
+    if (errorKeys.length === 1) {
+      const firstError = errors[errorKeys[0]]
+      if (firstError?.ref) {
+        firstError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
+      }
     } else {
       ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }
   }
+
 export interface ErrorMessage {
   default: string
   abbreviated: string
@@ -51,8 +53,6 @@ export const ErrorSummaryBanner = ({
   if (Object.keys(errors).length === 0) {
     return null
   }
-
-  // if there is only one error then scroll to it
 
   return (
     <Alert fullwidth variant="alert">
