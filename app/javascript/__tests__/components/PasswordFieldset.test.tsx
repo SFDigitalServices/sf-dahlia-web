@@ -17,7 +17,15 @@ const WrappedPasswordFieldset = () => {
     watch,
   } = useForm({ mode: "all" })
 
-  return <PasswordFieldset register={register} errors={errors} watch={watch} edit />
+  return (
+    <PasswordFieldset
+      register={register}
+      errors={errors}
+      watch={watch}
+      passwordType="accountSettings"
+      labelText={t("label.password")}
+    />
+  )
 }
 
 describe("Password Fieldset", () => {

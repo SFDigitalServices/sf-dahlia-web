@@ -3,7 +3,6 @@ import React, { useState, useContext } from "react"
 import {
   AppearanceStyleType,
   Button,
-  Field,
   Form,
   t,
   FormCard,
@@ -16,6 +15,10 @@ import { useForm } from "react-hook-form"
 
 import { getMyAccountPath } from "../util/routeUtil"
 import UserContext from "./context/UserContext"
+import EmailFieldset from "../pages/account/components/EmailFieldset"
+import PasswordFieldset from "../pages/account/components/PasswordFieldset"
+import { Link, Heading } from "@bloom-housing/ui-seeds"
+import "../pages/account/styles/account.scss"
 
 const SignInForm = () => {
   const { signIn } = useContext(UserContext)
@@ -24,7 +27,7 @@ const SignInForm = () => {
   // This is causing a linting issue with unbound-method, see open issue as of 10/21/2020:
   // https://github.com/react-hook-form/react-hook-form/issues/2887
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { register, handleSubmit, errors } = useForm()
+  const { register, handleSubmit, errors, watch } = useForm()
   const [requestError, setRequestError] = useState<string>()
 
   const onSubmit = (data: { email: string; password: string }) => {
@@ -45,7 +48,7 @@ const SignInForm = () => {
     <FormCard>
       <div className="form-card__lead text-center border-b mx-0">
         <Icon size="2xl" symbol="profile" />
-        <h2 className="form-card__title">Sign In</h2>
+        <h2 className="form-card__title">{t("pageTitle.signIn")}</h2>
       </div>
       {requestError && (
         <AlertBox onClose={() => setRequestError(undefined)} type="alert">
@@ -54,51 +57,41 @@ const SignInForm = () => {
       )}
       <SiteAlert type="notice" dismissable />
       <div className="form-card__group pt-0 border-b">
-        <Form id="sign-in" className="mt-10" onSubmit={handleSubmit(onSubmit)}>
-          <Field
-            caps={true}
-            name="email"
-            label="Email"
-            validation={{ required: true }}
-            error={errors.email}
-            errorMessage="Please enter your login email"
+        <Form id="sign-in" className="mt-10 relative" onSubmit={handleSubmit(onSubmit)}>
+          <EmailFieldset register={register} errors={errors} />
+          <span className="right-0 absolute">
+            <Link href="/forgot-password" className="forgot-password-link">
+              {t("forgotPassword.title")}
+            </Link>
+          </span>
+          <PasswordFieldset
             register={register}
+            errors={errors}
+            watch={watch}
+            labelText={t("label.password")}
+            passwordType="signIn"
           />
-
-          {/* TODO: Add /forgot-password link */}
-          <aside className="float-right font-bold">
-            {/* <Link href="/forgot-password">
-                {t("signIn.forgotPassword")}
-              </Link> */}
-          </aside>
-
-          <Field
-            caps={true}
-            name="password"
-            label="Password"
-            validation={{ required: true }}
-            error={errors.password}
-            errorMessage="Please enter your login password"
-            register={register}
-            type="password"
-          />
-
-          <div className="text-center mt-6">
+          <div className="text-center mt-4">
             <Button
               styleType={AppearanceStyleType.primary}
               onClick={() => {
                 //
               }}
             >
-              Sign In
+              {t("pageTitle.signIn")}
             </Button>
           </div>
         </Form>
       </div>
       <div className="form-card__group text-center">
-        <h2 className="mb-6">Don't have an account?</h2>
-
-        <LinkButton href="/create-account">Create Account</LinkButton>
+        <Heading size="2xl" priority={3}>
+          {t("createAccount.title.sentenceCase")}
+        </Heading>
+        <div className="py-4">
+          <p>{t("signIn.fillInFaster")}</p>
+          <p>{t("signIn.easilyCheckLottery")}</p>
+        </div>
+        <LinkButton href="/create-account">{t("label.createAccount")}</LinkButton>
       </div>
     </FormCard>
   )

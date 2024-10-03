@@ -250,7 +250,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -360,7 +360,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -478,7 +478,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -534,7 +534,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -1087,7 +1087,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1197,7 +1197,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1315,7 +1315,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1371,7 +1371,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1981,7 +1981,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2091,7 +2091,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2209,7 +2209,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2265,7 +2265,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2818,7 +2818,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -2928,7 +2928,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -3046,7 +3046,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -3102,7 +3102,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
