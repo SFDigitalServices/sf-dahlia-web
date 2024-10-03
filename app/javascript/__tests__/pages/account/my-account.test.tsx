@@ -56,7 +56,7 @@ describe("<MyAccount />", () => {
       const mainContent = getByTestId("main-content-test-id")
 
       const links = mainContent.querySelectorAll("a")
-      const linkHeader = links[0].querySelector("h1")
+      const linkHeader = links[0].querySelector("h2")
       expect(linkHeader?.textContent).toBe("My applications")
     })
 
@@ -64,7 +64,7 @@ describe("<MyAccount />", () => {
       const mainContent = getByTestId("main-content-test-id")
 
       const links = mainContent.querySelectorAll("a")
-      const linkHeader = links[1].querySelector("h1")
+      const linkHeader = links[1].querySelector("h2")
       expect(linkHeader?.textContent).toBe("Account settings")
     })
   })

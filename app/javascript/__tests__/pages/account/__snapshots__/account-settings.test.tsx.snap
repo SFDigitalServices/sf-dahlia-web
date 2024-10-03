@@ -387,7 +387,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
-                                type="text"
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -414,7 +414,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
-                                type="text"
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -441,7 +441,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
-                                type="text"
+                                type="number"
                                 value="1999"
                               />
                             </div>
@@ -1216,7 +1216,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
-                              type="text"
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -1243,7 +1243,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
-                              type="text"
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -1270,7 +1270,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
-                              type="text"
+                              type="number"
                               value="1999"
                             />
                           </div>
@@ -2102,7 +2102,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
-                                type="text"
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -2129,7 +2129,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
-                                type="text"
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -2156,7 +2156,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
-                                type="text"
+                                type="number"
                                 value="1999"
                               />
                             </div>
@@ -2931,7 +2931,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
-                              type="text"
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -2958,7 +2958,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
-                              type="text"
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -2985,7 +2985,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
-                              type="text"
+                              type="number"
                               value="1999"
                             />
                           </div>
