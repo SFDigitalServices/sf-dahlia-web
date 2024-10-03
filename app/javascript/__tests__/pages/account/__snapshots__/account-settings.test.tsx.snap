@@ -275,6 +275,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input"
                               id="firstName"
                               name="firstName"
+                              required=""
                               type="text"
                               value="FirstName"
                             />
@@ -327,6 +328,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input"
                               id="lastName"
                               name="lastName"
+                              required=""
                               type="text"
                               value="LastName"
                             />
@@ -387,6 +389,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
+                                required=""
                                 type="number"
                                 value="01"
                               />
@@ -414,6 +417,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
+                                required=""
                                 type="number"
                                 value="01"
                               />
@@ -441,6 +445,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
+                                required=""
                                 type="number"
                                 value="1999"
                               />
@@ -497,6 +502,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="email"
                               name="email"
                               placeholder="example@web.com"
+                              required=""
                               type="email"
                               value="email@email.com"
                             />
@@ -558,6 +564,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input pr-10"
                               id="currentPassword"
                               name="currentPassword"
+                              required=""
                               type="password"
                               value=""
                             />
@@ -652,6 +659,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input pr-10"
                               id="password"
                               name="password"
+                              required=""
                               type="text"
                               value=""
                             />
@@ -1104,6 +1112,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input"
                             id="firstName"
                             name="firstName"
+                            required=""
                             type="text"
                             value="FirstName"
                           />
@@ -1156,6 +1165,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input"
                             id="lastName"
                             name="lastName"
+                            required=""
                             type="text"
                             value="LastName"
                           />
@@ -1216,6 +1226,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
+                              required=""
                               type="number"
                               value="01"
                             />
@@ -1243,6 +1254,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
+                              required=""
                               type="number"
                               value="01"
                             />
@@ -1270,6 +1282,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
+                              required=""
                               type="number"
                               value="1999"
                             />
@@ -1326,6 +1339,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             id="email"
                             name="email"
                             placeholder="example@web.com"
+                            required=""
                             type="email"
                             value="email@email.com"
                           />
@@ -1387,6 +1401,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input pr-10"
                             id="currentPassword"
                             name="currentPassword"
+                            required=""
                             type="password"
                             value=""
                           />
@@ -1481,6 +1496,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input pr-10"
                             id="password"
                             name="password"
+                            required=""
                             type="text"
                             value=""
                           />
@@ -1990,6 +2006,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input"
                               id="firstName"
                               name="firstName"
+                              required=""
                               type="text"
                               value="FirstName"
                             />
@@ -2042,6 +2059,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input"
                               id="lastName"
                               name="lastName"
+                              required=""
                               type="text"
                               value="LastName"
                             />
@@ -2102,6 +2120,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
+                                required=""
                                 type="number"
                                 value="01"
                               />
@@ -2129,6 +2148,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
+                                required=""
                                 type="number"
                                 value="01"
                               />
@@ -2156,6 +2176,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
+                                required=""
                                 type="number"
                                 value="1999"
                               />
@@ -2212,6 +2233,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="email"
                               name="email"
                               placeholder="example@web.com"
+                              required=""
                               type="email"
                               value="email@email.com"
                             />
@@ -2273,6 +2295,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input pr-10"
                               id="currentPassword"
                               name="currentPassword"
+                              required=""
                               type="password"
                               value=""
                             />
@@ -2367,6 +2390,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input pr-10"
                               id="password"
                               name="password"
+                              required=""
                               type="text"
                               value=""
                             />
@@ -2819,6 +2843,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input"
                             id="firstName"
                             name="firstName"
+                            required=""
                             type="text"
                             value="FirstName"
                           />
@@ -2871,6 +2896,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input"
                             id="lastName"
                             name="lastName"
+                            required=""
                             type="text"
                             value="LastName"
                           />
@@ -2931,6 +2957,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
+                              required=""
                               type="number"
                               value="01"
                             />
@@ -2958,6 +2985,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
+                              required=""
                               type="number"
                               value="01"
                             />
@@ -2985,6 +3013,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
+                              required=""
                               type="number"
                               value="1999"
                             />
@@ -3041,6 +3070,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             id="email"
                             name="email"
                             placeholder="example@web.com"
+                            required=""
                             type="email"
                             value="email@email.com"
                           />
@@ -3102,6 +3132,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input pr-10"
                             id="currentPassword"
                             name="currentPassword"
+                            required=""
                             type="password"
                             value=""
                           />
@@ -3196,6 +3227,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input pr-10"
                             id="password"
                             name="password"
+                            required=""
                             type="text"
                             value=""
                           />
