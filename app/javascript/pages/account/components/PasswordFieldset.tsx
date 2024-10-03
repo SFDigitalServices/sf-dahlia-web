@@ -128,7 +128,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
     <Field
       {...props}
       type={showPassword ? "text" : "password"}
-      inputProps={{ className: "input pr-10" }}
+      inputProps={{ className: "input pr-10", required: true }}
       postInputContent={
         <button
           className="absolute right-2 h-full"

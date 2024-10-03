@@ -70,6 +70,7 @@ const NameFieldset = ({
           required: "name:firstName",
           validate: (data: string) => data.trim() !== "" || "name:firstName",
         }}
+        inputProps={{ required: true }}
         onChange={onChange}
       />
       <Field
@@ -97,6 +98,7 @@ const NameFieldset = ({
           validate: (data: string) => data.trim() !== "" || "name:firstName",
         }}
         onChange={onChange}
+        inputProps={{ required: true }}
       />
     </Fieldset>
   )
