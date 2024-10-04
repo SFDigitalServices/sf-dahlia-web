@@ -23,7 +23,7 @@ import {
   getTagContent,
   listingHasVeteransPreference,
   preferenceNameHasVeteran,
-  isFcfsListing,
+  isFcfsSalesListing,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
@@ -531,14 +531,14 @@ describe("preferenceNameHasVeteran", () => {
 
 describe("first come, first served", () => {
   test("returns false when listing is not fcfs", () => {
-    expect(isFcfsListing(openSaleListing)).toBe(false)
+    expect(isFcfsSalesListing(openSaleListing)).toBe(false)
   })
 
   test("returns false when listing is rental fcfs", () => {
-    expect(isFcfsListing(openRentalFcfsListing)).toBe(false)
+    expect(isFcfsSalesListing(openRentalFcfsListing)).toBe(false)
   })
 
   test("returns true when listing is sales fcfs", () => {
-    expect(isFcfsListing(fcfsSaleListing)).toBe(true)
+    expect(isFcfsSalesListing(fcfsSaleListing)).toBe(true)
   })
 })
