@@ -100,6 +100,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         register={register}
         defaultValue={defaultEmail ?? null}
         onChange={onChange}
+        inputProps={{ required: true }}
       />
     </Fieldset>
   )

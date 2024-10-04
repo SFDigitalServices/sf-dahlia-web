@@ -9,7 +9,7 @@ interface FieldsetProps {
 
 const Fieldset = ({ hasError, label, children, note }: FieldsetProps) => {
   return (
-    <fieldset className="form-fieldset">
+    <fieldset className="form-fieldset w-full">
       <legend className={hasError ? "fieldset-legend text-alert" : "fieldset-legend"}>
         {label}
       </legend>

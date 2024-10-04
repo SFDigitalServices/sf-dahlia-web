@@ -35,7 +35,7 @@ const AccountDashCard = ({
     >
       <Card
         spacing="md"
-        className={`cursor-pointer  text-gray-850 hover:text-primary yflex justify-start items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
+        className={`cursor-pointer text-gray-850 hover:text-primary flex justify-start items-center text-center h-full md:h-60 rounded-none md:rounded-lg ${
           removeBottomBorder ? "border-b-0 md:border-b" : ""
         }`}
       >
@@ -47,7 +47,7 @@ const AccountDashCard = ({
             <Icon size="xlarge" className="md:hidden block" symbol={icon} />
             <Icon size="2xl" className="md:block hidden" symbol={icon} />
           </div>
-          <h1 className="text-xl md:text-2xl">{title}</h1>
+          <h2 className="text-xl md:text-2xl">{title}</h2>
         </Card.Header>
 
         <Card.Section>
@@ -70,6 +70,7 @@ const MyAccount = (_props: MyAccountProps) => {
   return (
     <Layout title={"My Account"}>
       <section className="bg-gray-300 flex justify-center">
+        <h1 className="sr-only">{t("nav.myDashboard")}</h1>
         <div className="w-full md:py-16 max-w-5xl">
           <div className="bg-gray-300 h-full flex flex-grow flex-col md:flex-row md:gap-7">
             <AccountDashCard
