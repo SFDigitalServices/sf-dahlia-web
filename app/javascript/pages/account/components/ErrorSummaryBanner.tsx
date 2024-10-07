@@ -4,22 +4,36 @@ import { Alert } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldValues, FieldError } from "react-hook-form"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { nameFieldsetErrors } from "./NameFieldset"
-import { dobFieldsetErrors } from "./DOBFieldset"
+import { dobFieldsetErrors, DOBFieldValues } from "./DOBFieldset"
 import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
 import "./ErrorSummaryBanner.scss"
 
+const handleScrollToDOBError = (errors: DeepMap<FieldValues, FieldError>) => {
+  const errorKeys = Object.keys(errors)
+  const dobErrors: DeepMap<DOBFieldValues, FieldError> = errors[errorKeys[0]]
+  if (dobErrors) {
+    const dobErrorKeys = Object.keys(dobErrors)
+    if (dobErrorKeys.length > 0 && dobErrors[dobErrorKeys[0]]?.ref) {
+      dobErrors[dobErrorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }
+}
+
 export const scrollToErrorOnSubmit =
   (ref: React.MutableRefObject<HTMLSpanElement>) => (errors: DeepMap<FieldValues, FieldError>) => {
+    console.log(errors)
     const errorKeys = Object.keys(errors)
 
     if (errorKeys.length === 0) return
 
-    if (errorKeys.length === 1) {
-      const firstError = errors[errorKeys[0]]
-      if (firstError?.ref) {
-        firstError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
-      }
+    if (errorKeys.length === 1 && errorKeys[0] === "dobObject") {
+      handleScrollToDOBError(errors)
+      return
+    }
+
+    if (errorKeys.length === 1 && errors[errorKeys[0]]?.ref) {
+      errors[errorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
     } else {
       ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     }

@@ -111,6 +111,27 @@ describe("ErrorSummaryBanner", () => {
       })
     })
 
+    it("should scroll to the DOB error if there is only one", () => {
+      const errorRef = { current: document.createElement("input") }
+      errorRef.current.scrollIntoView = jest.fn()
+      errors = {
+        dobObject: {
+          birthDay: { ref: errorRef.current, message: "dob:missing", type: "required" },
+          birthMonth: { ref: errorRef.current, message: "dob:missing", type: "required" },
+          birthYear: { ref: errorRef.current, message: "dob:missing", type: "required" },
+        },
+      }
+
+      const scrollToError = scrollToErrorOnSubmit(bannerRef)
+      scrollToError(errors)
+
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(errorRef.current.scrollIntoView).toHaveBeenCalledWith({
+        behavior: "smooth",
+        block: "center",
+      })
+    })
+
     it("should scroll to the banner ref if there are multiple errors", () => {
       const errorRef = { current: document.createElement("input") }
       bannerRef.current.scrollIntoView = jest.fn()
