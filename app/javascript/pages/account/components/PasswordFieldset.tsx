@@ -102,7 +102,7 @@ const NewPasswordInstructions = ({
 }) => {
   const showValidationInfo = passwordValidationContent.length > 0
   return (
-    <div className="field-note">
+    <div className="field-note" id="newPasswordInstructions">
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
       <ul className={`${showValidationInfo ? "" : "list-disc list-inside pl-2"}`}>
         {instructionListItem(
@@ -211,6 +211,7 @@ const PasswordFieldset = ({
         <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
       )}
       <PasswordField
+        describedBy={errors.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
         name="password"
         label="password"
         labelClassName="hidden"
