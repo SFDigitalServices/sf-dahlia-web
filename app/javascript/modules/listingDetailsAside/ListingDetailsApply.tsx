@@ -13,6 +13,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
+  isFcfsListing,
   isHabitatListing,
   isOpen,
   isRental,
@@ -24,9 +25,6 @@ import "./ListingDetailsApply.scss"
 export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
-
-const isFcfsBmrSales = false
-const isFcfsApplicationClosed = false
 
 const FcfsBmrSalesHowToApply = () => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
@@ -141,6 +139,9 @@ const StandardHowToApply = ({
 }
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
+  const isFcfsBmrSales = isFcfsListing(listing)
+  const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
+
   if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)

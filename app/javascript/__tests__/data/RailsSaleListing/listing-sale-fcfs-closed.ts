@@ -1,10 +1,9 @@
 import type RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
-import { LISTING_STATES, LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../../../modules/constants"
+import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../../../modules/constants"
 
 export const closedFcfsSaleListing: RailsSaleListing = {
   Listing_Type: LISTING_TYPE_FIRST_COME_FIRST_SERVED,
   Application_Start_Date_Time: "2050-01-01T01:00:00.000+0000",
-  Listing_State: LISTING_STATES.CLOSED,
   unitSummaries: {
     reserved: null,
     general: [
@@ -175,7 +174,7 @@ export const closedFcfsSaleListing: RailsSaleListing = {
   Lottery_City: "San Francisco",
   Lottery_Date: "2021-01-17T19:00:00.000+0000",
   Publish_Lottery_Results_on_DAHLIA: "Not published",
-  Accepting_Online_Applications: true,
+  Accepting_Online_Applications: false,
   Lottery_Winners: 0,
   Leasing_Agent_Name: "Matthew Burns",
   Leasing_Agent_Title: "Leasing Agent",
