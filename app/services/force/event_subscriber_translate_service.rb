@@ -35,7 +35,7 @@ module Force
         # available methods for the subscription instance:
         #   https://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Deferrable
         #   https://www.rubydoc.info/gems/faye/Faye/Subscription
-        if Unleash::Client.new.is_enabled? 'GoogleCloudTranslate'
+        if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
           subscription = subscribe_to_listing_updates
           subscription.callback do
             Rails.logger.info('Subscribed to Salesforce Platform Events')
@@ -166,7 +166,7 @@ module Force
     end
 
     def check_for_unsubscribe(subscription)
-      if Unleash::Client.new.is_enabled?('GoogleCloudTranslate') &&
+      if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
          !Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY)
         return
       end
