@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   validate :password_complexity
 
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+
   include DeviseTokenAuth::Concerns::User
 
   def error_details(field)
