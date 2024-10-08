@@ -1,10 +1,9 @@
 import type RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
-import { LISTING_STATES, LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../../../modules/constants"
+import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../../../modules/constants"
 
 export const notYetOpenSaleFcfsListing: RailsSaleListing = {
   Listing_Type: LISTING_TYPE_FIRST_COME_FIRST_SERVED,
   Application_Start_Date_Time: "2050-01-01T01:00:00.000+0000",
-  Listing_State: LISTING_STATES.NOT_YET_OPEN,
   unitSummaries: {
     reserved: null,
     general: [
