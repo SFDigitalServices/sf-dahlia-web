@@ -38,7 +38,7 @@ module Force
         if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
           subscription = subscribe_to_listing_updates
           subscription.callback do
-            Rails.logger.info('Subscribed to Salesforce Platform Events')
+            logger.info('Subscribed to Salesforce Platform Events')
           end
           subscription.errback do |error|
             logger(
@@ -49,7 +49,7 @@ module Force
         else
           logger('GoogleCloudTranslate is disabled')
         end
-        EM.add_periodic_timer(10, proc { check_for_unsubscribe(subscription) })
+        EM.add_periodic_timer(60, proc { check_for_unsubscribe(subscription) })
       end
     end
 
@@ -166,6 +166,14 @@ module Force
     end
 
     def check_for_unsubscribe(subscription)
+      logger(
+        'Checking for unsubscribe conditions... ' \
+        'GoogleCloudTranslate flag is enabled: ' \
+        "#{Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate')} - " \
+        'Unsubcribe request from cache: ' \
+        "#{Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY).inspect}",
+      )
+
       if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
          !Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY)
         return
@@ -173,7 +181,7 @@ module Force
 
       subscription&.unsubscribe
       Rails.cache.delete(UNSUBSCRIBE_CACHE_KEY)
-      logger('Unsubscribed to Salesforce Platform Events')
+      logger('Unsubscribed from Salesforce Platform Events')
       EM.stop_event_loop
     end
 
