@@ -12,9 +12,9 @@ Cypress.Commands.add("signIn", (email: string = "test@test.com") => {
   cy.intercept("/api/v1/auth/validate_token", userObjectGenerator(email))
 
   cy.visit("/sign-in?react=true")
-  cy.contains("Don't have an account?")
+  cy.contains("Sign in")
   cy.get("input[name=email]").type("test@test.com")
-  cy.get("input[name=password]").type("password")
+  cy.get("input[name=password]").type("password123")
   cy.get("button[type=submit]").click()
 })
 
