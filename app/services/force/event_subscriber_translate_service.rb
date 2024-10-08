@@ -32,9 +32,6 @@ module Force
       end
 
       EM.run do
-        # available methods for the subscription instance:
-        #   https://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Deferrable
-        #   https://www.rubydoc.info/gems/faye/Faye/Subscription
         if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
           subscription = subscribe_to_listing_updates
           subscription.callback do
