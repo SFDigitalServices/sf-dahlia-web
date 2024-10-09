@@ -1,6 +1,6 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { getTagContent, isFcfsListing, isLotteryComplete } from "../../util/listingUtil"
+import { getTagContent, isFcfsSalesListing, isLotteryComplete } from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -141,7 +141,7 @@ export const getListingStatuses = (
     return getMatchStatuses(listing.Does_Match)
   }
 
-  if (isFcfsListing(listing)) {
+  if (isFcfsSalesListing(listing)) {
     return getFcfsStatuses(listing)
   }
 
