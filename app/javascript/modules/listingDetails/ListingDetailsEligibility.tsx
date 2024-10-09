@@ -317,43 +317,46 @@ export const ListingDetailsEligibility = ({
             </span>
           </ErrorBoundary>
         )}
-        {showLotteryPreferenceSection(isLoadingPreferences, preferences) && (
-          <ListSection
-            title={t("listings.lottery.title")}
-            subtitle={
-              <>
-                <div className="mb-4">
-                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
-                </div>
-                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
-                {listingHasVeteransPreference(listing) && (
-                  <>
-                    <div className="mt-4">
-                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
-                    </div>
-                    <div className="mb-4">
-                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
-                    </div>
-                    <div>
-                      <Link
-                        className="text-blue-700"
-                        external={true}
-                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
-                        target="_blank"
-                      >
-                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
-                      </Link>
-                    </div>
-                  </>
-                )}
-              </>
-            }
-          >
-            <ErrorBoundary boundaryScope={BoundaryScope.component}>
-              <ListingDetailsPreferences preferences={preferences} />
-            </ErrorBoundary>
-          </ListSection>
-        )}
+        {!isEducator(listing) &&
+          showLotteryPreferenceSection(isLoadingPreferences, preferences) && (
+            <ListSection
+              title={t("listings.lottery.title")}
+              subtitle={
+                <>
+                  <div className="mb-4">
+                    {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
+                  </div>
+                  <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                  {listingHasVeteransPreference(listing) && (
+                    <>
+                      <div className="mt-4">
+                        <b>
+                          {t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}
+                        </b>
+                      </div>
+                      <div className="mb-4">
+                        {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                      </div>
+                      <div>
+                        <Link
+                          className="text-blue-700"
+                          external={true}
+                          href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                          target="_blank"
+                        >
+                          {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                        </Link>
+                      </div>
+                    </>
+                  )}
+                </>
+              }
+            >
+              <ErrorBoundary boundaryScope={BoundaryScope.component}>
+                <ListingDetailsPreferences preferences={preferences} />
+              </ErrorBoundary>
+            </ListSection>
+          )}
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}
