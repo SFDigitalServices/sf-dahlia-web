@@ -1294,6 +1294,7 @@
   "lottery.applicationsThatQualifyForPreference": "Las solicitudes elegibles para esta preferencia tendrán mayor prioridad en el sorteo.",
   "lottery.bucketsIntro": "Los resultados del sorteo se dividen en distintas listas. Abajo encontrará información general de cada preferencia. Si desea ver su resultado, ingrese su número de sorteo.",
   "lottery.completeResultsWillBePosted": "Los resultados completos del sorteo se publicarán en esta fecha antes de las 5 p.m.",
+  "lottery.downloadLotteryResults": "Descargar resultados de lotería en PDF",
   "lottery.enterLotteryNo": "Ingrese su número de sorteo",
   "lottery.enterLotteryNumber": "Ingrese su número de sorteo",
   "lottery.generalPool": "Pozo general",
