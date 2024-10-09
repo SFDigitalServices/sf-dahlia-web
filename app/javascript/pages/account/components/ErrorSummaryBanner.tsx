@@ -22,7 +22,6 @@ const handleScrollToDOBError = (errors: DeepMap<FieldValues, FieldError>) => {
 
 export const scrollToErrorOnSubmit =
   (ref: React.MutableRefObject<HTMLSpanElement>) => (errors: DeepMap<FieldValues, FieldError>) => {
-    console.log(errors)
     const errorKeys = Object.keys(errors)
 
     if (errorKeys.length === 0) return

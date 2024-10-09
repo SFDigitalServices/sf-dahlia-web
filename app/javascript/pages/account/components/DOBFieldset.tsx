@@ -119,7 +119,7 @@ const DateField = ({
   required?: boolean
   register: UseFormMethods["register"]
   watch: UseFormMethods["watch"]
-  onChange: () => void
+  onChange?: () => void
 }) => {
   const birthDay: string = watch("dobObject.birthDay") ?? defaultDOB?.birthDay
   const birthMonth: string = watch("dobObject.birthMonth") ?? defaultDOB?.birthMonth
@@ -152,6 +152,17 @@ const DateField = ({
     },
   }
 
+  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = new Set(["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"])
+    const isNumericKey = e.key >= "0" && e.key <= "9"
+
+    if (e.currentTarget.value.length === fieldInfo[fieldKey].maxLength && !allowedKeys.has(e.key)) {
+      e.preventDefault()
+    } else if (!isNumericKey && !allowedKeys.has(e.key)) {
+      e.preventDefault()
+    }
+  }
+
   return (
     <Field
       className="ml-0 mr-4"
@@ -165,7 +176,11 @@ const DateField = ({
           range: fieldInfo[fieldKey].validation,
         },
       }}
-      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength, required: true }}
+      inputProps={{
+        maxLength: fieldInfo[fieldKey].maxLength,
+        required: true,
+        onKeyDown: handleInput,
+      }}
       type="number"
       register={register}
       onChange={onChange}
