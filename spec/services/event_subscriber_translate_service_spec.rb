@@ -81,7 +81,9 @@ describe Force::EventSubscriberTranslateService do
       it 'subscribes to and unsubscribes from Salesforce platform event channel' do
         EM.run do
           expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent')
+          expect(faye_subscription).to receive(:callback).and_yield
           expect(faye_subscription).to receive(:unsubscribe)
+          expect(Rails.logger).to receive(:info).twice
 
           EM.add_timer(0.1) { EM.stop }
 
