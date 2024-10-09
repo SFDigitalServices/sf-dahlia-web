@@ -117,17 +117,6 @@ interface DOBFieldsetInfo {
   birthYear: FieldInfo
 }
 
-const handleInput = (e: React.KeyboardEvent<HTMLInputElement>, maxLength: number) => {
-  const allowedKeys = new Set(["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"])
-  const isNumericKey = e.key >= "0" && e.key <= "9"
-
-  if (e.currentTarget.value.length === maxLength && !allowedKeys.has(e.key)) {
-    e.preventDefault()
-  } else if (!isNumericKey && !allowedKeys.has(e.key)) {
-    e.preventDefault()
-  }
-}
-
 const DateField = ({
   fieldKey,
   defaultDOB,
@@ -192,8 +181,6 @@ const DateField = ({
       inputProps={{
         maxLength: fieldInfo[fieldKey].maxLength,
         required: true,
-        onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) =>
-          handleInput(e, fieldInfo[fieldKey].maxLength as number),
       }}
       type="number"
       register={register}

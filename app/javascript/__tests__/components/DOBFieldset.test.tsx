@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DOBFieldValues, t } from "@bloom-housing/ui-components"
-import DOBFieldset, {
+import {
   deduplicateDOBErrors,
   dobFieldsetErrors,
   handleDOBServerErrors,
 } from "../../pages/account/components/DOBFieldset"
 import { FieldError, DeepMap } from "react-hook-form"
 import { ExpandedAccountAxiosError, getErrorMessage } from "../../pages/account/components/util"
-import React from "react"
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 
 describe("DOBFieldset", () => {
   describe("deduplicateDOBErrors", () => {
@@ -164,67 +161,6 @@ describe("DOBFieldset", () => {
       test(`returns correct error message for ${key} with abbreviated=${abbreviated}`, () => {
         expect(getErrorMessage(key, dobFieldsetErrors, abbreviated)).toBe(t(expected))
       })
-    })
-  })
-
-  describe("DOBFieldset handleInput", () => {
-    it("should allow numeric keys", async () => {
-      render(<DOBFieldset register={jest.fn()} watch={jest.fn()} />)
-      const yearField: HTMLInputElement = screen.getByRole("spinbutton", {
-        name: /year/i,
-      })
-
-      await userEvent.type(yearField, "1")
-      expect(yearField.value).toBe("1")
-    })
-
-    it("should prevent non-numeric keys", async () => {
-      render(<DOBFieldset register={jest.fn()} watch={jest.fn()} />)
-      const yearField: HTMLInputElement = screen.getByRole("spinbutton", {
-        name: /year/i,
-      })
-
-      await userEvent.type(yearField, "a")
-      expect(yearField.value).toBe("")
-    })
-
-    it("should allow allowed keys like Backspace, Tab, Arrow keys, and Delete", async () => {
-      render(<DOBFieldset register={jest.fn()} watch={jest.fn()} />)
-      const yearField: HTMLInputElement = screen.getByRole("spinbutton", {
-        name: /year/i,
-      })
-
-      await userEvent.type(yearField, "1")
-      expect(yearField.value).toBe("1")
-
-      await userEvent.type(yearField, "{backspace}")
-      expect(yearField.value).toBe("")
-
-      await userEvent.type(yearField, "{tab}")
-      expect(yearField.value).toBe("")
-
-      await userEvent.type(yearField, "{arrowleft}")
-      expect(yearField.value).toBe("")
-
-      await userEvent.type(yearField, "{arrowright}")
-      expect(yearField.value).toBe("")
-
-      await userEvent.type(yearField, "{delete}")
-      expect(yearField.value).toBe("")
-    })
-
-    it("should prevent input when maxLength is reached and key is not allowed", async () => {
-      render(<DOBFieldset register={jest.fn()} watch={jest.fn()} />)
-      const yearField: HTMLInputElement = screen.getByRole("spinbutton", {
-        name: /year/i,
-      })
-
-      // Simulate input reaching maxLength
-      await userEvent.type(yearField, "1234")
-      expect(yearField.value).toBe("1234")
-
-      await userEvent.type(yearField, "5")
-      expect(yearField.value).toBe("1234") // Value should not change
     })
   })
 })
