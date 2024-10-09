@@ -29,7 +29,7 @@ export const ListingDetailsLotterySearchFooter = ({
             <div className="p-4 text-center text-sm">
               <p className="py-2">
                 <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-900">
-                  {t("lottery.downloadLotteryResults")}
+                  {t("lottery.downloadLotteryResultsPdf.temp")}
                 </a>
               </p>
             </div>

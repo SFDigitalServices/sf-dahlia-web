@@ -951,7 +951,7 @@
   "listings.customListingType.educator.preferences.part4b": "<a target='_blank' href='%{preferencesLink}'>Obtenga más información sobre los programas de preferencia de sorteo para vivienda</a>",
   "listings.customListingType.educator.priorityUnits": "Empleados del Distrito Unificado de Escuelas de San Francisco",
   "listings.doNotApplyOneAndPaperOrMultiple": "No envíe su solicitud por Internet. Envíe su solicitud impresa. Todas las solicitudes en las que una persona figure más de una vez se eliminarán del sorteo.",
-  "listings.downloadLotteryResults": "Descargue los resultados del sorteo",
+  "lottery.downloadLotteryResultsPdf.temp": "Descargue los resultados del sorteo",
   "listings.downloadPdf": "Descargue en formato PDF",
   "listings.eligibility.guidelines.creditHistory": "Obtenga más información sobre las pautas del historial crediticio",
   "listings.eligibility.guidelines.criminalBackground": "Obtenga más información sobre las pautas de antecedentes penales",
