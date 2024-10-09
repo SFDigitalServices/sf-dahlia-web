@@ -12,7 +12,6 @@ describe Force::EventSubscriberTranslateService do
   let(:salesforce_auth_obj) do
     OpenStruct.new(instance_url: 'test_url', access_token: 'test_token')
   end
-  let(:cache) { instance_double(ActiveSupport::Cache::Store) }
   let(:translation_service) { instance_double(GoogleTranslationService) }
 
   let(:event) do
@@ -26,7 +25,9 @@ describe Force::EventSubscriberTranslateService do
         'LastModifiedDate' => '2024-06-29T19:09:24Z',
         'Name' => '1075 Market St Unit 206 Update 3',
         'Credit_Rating__c' => {
-          'diff' => "--- \n+++ 716e7fbcdb7de11a33487ab9e725acd742b2f79cacaf13e9e5bc48b6d09c85e8\n@@ -1,1 +1,1 @@\n-Hello, world 2\n+Hello, world 3",
+          'diff' =>
+            "--- \n+++ 716e7fbcdb7de11a33487ab9e725acd742b2f79cacaf13e9e5bc48b6d09c85e8" \
+            "\n@@ -1,1 +1,1 @@\n-Hello, world 2\n+Hello, world 3",
         },
       },
       'event' => { 'replayId' => 9_730_266 },
@@ -49,11 +50,6 @@ describe Force::EventSubscriberTranslateService do
     allow(faye_subscription).to receive(:unsubscribe)
     allow(GoogleTranslationService).to receive(:new).and_return(translation_service)
     allow(translation_service).to receive(:translate).and_return([])
-    allow(Rails).to receive(:cache).and_return(cache)
-    allow(cache).to receive(:fetch)
-      .with(Force::EventSubscriberTranslateService::UNSUBSCRIBE_CACHE_KEY)
-      .and_return(true)
-    allow(cache).to receive(:delete)
   end
 
   describe '#listen_and_process_events when the GoogleCloudTranslate ff is enabled' do
@@ -66,10 +62,12 @@ describe Force::EventSubscriberTranslateService do
       allow(Rails.configuration.unleash).to receive(:is_enabled?)
         .and_return(false)
     end
+
     describe 'when the service is initialized' do
       it 'initializes salesforce, faye client, and translation service' do
         expect(Restforce).to receive(:new).and_return(salesforce_client)
-        expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
+        expect(salesforce_client)
+          .to receive(:authenticate!).and_return(salesforce_auth_obj)
         expect(Faye::Client).to receive(:new).and_return(faye_client)
         expect(faye_client).to receive(:set_header).with(
           'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
@@ -80,14 +78,22 @@ describe Force::EventSubscriberTranslateService do
     end
 
     describe 'when listen_and_process_events is called' do
-      it 'subscribes and unsubscribes to Salesforce platform event channel' do
-        expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent')
-        expect(faye_subscription).to receive(:unsubscribe)
-        service.new.listen_and_process_events
+      it 'subscribes to and unsubscribes from Salesforce platform event channel' do
+        EM.run do
+          expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent')
+          expect(faye_subscription).to receive(:unsubscribe)
+
+          EM.add_timer(0.1) { EM.stop }
+
+          service.new.listen_and_process_events
+        end
       end
       it 'detects incoming events from Salesforce and calls translations service' do
         EM.run do
-          expect(faye_client).to receive(:subscribe).with('/data/Listing__ChangeEvent').and_yield(event)
+          expect(faye_client).to receive(:subscribe)
+            .with('/data/Listing__ChangeEvent')
+            .and_yield(event)
+            .and_return(faye_subscription)
           expect(translation_service).to receive(:translate).and_return(['Hello World'])
           expect(translation_service).to receive(:cache_listing_translations)
 
@@ -104,7 +110,9 @@ describe Force::EventSubscriberTranslateService do
     describe 'when the service is initialized' do
       it 'initializes salesforce, faye client, and translation service' do
         expect(Restforce).to receive(:new).and_return(salesforce_client)
-        expect(salesforce_client).to receive(:authenticate!).and_return(salesforce_auth_obj)
+        expect(salesforce_client)
+          .to receive(:authenticate!)
+          .and_return(salesforce_auth_obj)
         expect(Faye::Client).to receive(:new).and_return(faye_client)
         expect(faye_client).to receive(:set_header).with(
           'Authorization', "OAuth #{salesforce_auth_obj.access_token}"
@@ -116,9 +124,14 @@ describe Force::EventSubscriberTranslateService do
 
     describe 'when listen_and_process_events is called' do
       it 'does not subscribe to Salesforce platform event channel' do
-        expect(faye_client).to_not receive(:subscribe).with('/data/Listing__ChangeEvent')
+        EM.run do
+          expect(faye_client)
+            .to_not receive(:subscribe).with('/data/Listing__ChangeEvent')
 
-        service.new.listen_and_process_events
+          EM.add_timer(0.1) { EM.stop }
+
+          service.new.listen_and_process_events
+        end
       end
     end
   end

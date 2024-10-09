@@ -14,8 +14,6 @@ module Force
       keyword_init: true,
     )
 
-    UNSUBSCRIBE_CACHE_KEY = 'unsubscribe_from_listing_updates'.freeze
-
     def initialize
       setup_salesforce_client
       setup_faye_client
