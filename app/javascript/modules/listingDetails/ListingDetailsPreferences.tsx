@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Icon, PreferencesList, t } from "@bloom-housing/ui-components"
 import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 import { PREFERENCES, PREFERENCES_IDS, PREFERENCES_WITH_PROOF } from "../constants"
-import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 import { getLocalizedPath } from "../../util/routeUtil"
 import { getRoutePrefix, getSfGovUrl } from "../../util/languageUtil"
-import { preferenceNameHasVeteran } from "../../util/listingUtil"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -31,7 +29,7 @@ const determineDescription = (
   }
 }
 export interface ListingDetailsPreferencesProps {
-  listingID: string
+  preferences: RailsListingPreference[]
 }
 
 export const mapPreferenceLink = (link: string): string => {
@@ -51,20 +49,7 @@ export const mapPreferenceLink = (link: string): string => {
   }
 }
 
-export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferencesProps) => {
-  const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
-
-  useEffect(() => {
-    void getPreferences(listingID).then((preferences) => {
-      setPreferences(
-        preferences?.filter((preference) => !preferenceNameHasVeteran(preference.preferenceName))
-      )
-    })
-    return () => {
-      setPreferences([])
-    }
-  }, [listingID])
-
+export const ListingDetailsPreferences = ({ preferences }: ListingDetailsPreferencesProps) => {
   if (preferences?.length === 0) {
     return (
       <div className="flex justify-center">

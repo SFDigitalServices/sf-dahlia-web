@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Card,
   ExpandableText,
@@ -19,6 +19,7 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
   listingHasVeteransPreference,
+  preferenceNameHasVeteran,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -36,6 +37,8 @@ import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
 import Link from "../../navigation/Link"
+import { getPreferences } from "../../api/listingApiService"
+import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -47,6 +50,18 @@ export interface ReducedUnit {
   numberOfUnits: number
 }
 
+// show the lottery preference section when...
+// the preferences are still loading from the backend
+// or when the loading has completed and there are no preferences
+const showLotteryPreferenceSection = (
+  isLoadingPreferences: boolean,
+  preferences: RailsListingPreference[]
+) => {
+  if (isLoadingPreferences) return true
+  if (preferences && preferences.length > 0) return true
+  return false
+}
+
 export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
@@ -54,6 +69,20 @@ export const ListingDetailsEligibility = ({
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
   const priorityUnits = []
+  const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
+  const [isLoadingPreferences, setIsLoadingPreferences] = useState<boolean>(true)
+
+  useEffect(() => {
+    void getPreferences(listing.listingID).then((preferences) => {
+      setPreferences(
+        preferences?.filter((preference) => !preferenceNameHasVeteran(preference.preferenceName))
+      )
+      setIsLoadingPreferences(false)
+    })
+    return () => {
+      setPreferences([])
+    }
+  }, [listing])
 
   listing.Units?.forEach((unit: RailsUnit) => {
     const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
@@ -281,49 +310,53 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        {isEducator(listing) ? (
+        {isEducator(listing) && (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
               <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
             </span>
           </ErrorBoundary>
-        ) : (
-          <ListSection
-            title={t("listings.lottery.title")}
-            subtitle={
-              <>
-                <div className="mb-4">
-                  {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
-                </div>
-                <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
-                {listingHasVeteransPreference(listing) && (
-                  <>
-                    <div className="mt-4">
-                      <b>{t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}</b>
-                    </div>
-                    <div className="mb-4">
-                      {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
-                    </div>
-                    <div>
-                      <Link
-                        className="text-blue-700"
-                        external={true}
-                        href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
-                        target="_blank"
-                      >
-                        {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
-                      </Link>
-                    </div>
-                  </>
-                )}
-              </>
-            }
-          >
-            <ErrorBoundary boundaryScope={BoundaryScope.component}>
-              <ListingDetailsPreferences listingID={listing.listingID} />
-            </ErrorBoundary>
-          </ListSection>
         )}
+        {!isEducator(listing) &&
+          showLotteryPreferenceSection(isLoadingPreferences, preferences) && (
+            <ListSection
+              title={t("listings.lottery.title")}
+              subtitle={
+                <>
+                  <div className="mb-4">
+                    {t("listingsForSale.lotteryPreferences.lotteryPreferencesArePrograms")}
+                  </div>
+                  <div>{t("listingsForSale.lotteryPreferences.weContactApplicants")}</div>
+                  {listingHasVeteransPreference(listing) && (
+                    <>
+                      <div className="mt-4">
+                        <b>
+                          {t("listingsForSale.lotteryPreferences.priorityForUsMilitaryVeterans")}
+                        </b>
+                      </div>
+                      <div className="mb-4">
+                        {t("listingsForSale.lotteryPreferences.veteransGetPriority")}
+                      </div>
+                      <div>
+                        <Link
+                          className="text-blue-700"
+                          external={true}
+                          href="https://www.sf.gov/get-priority-housing-lottery-if-you-are-veteran"
+                          target="_blank"
+                        >
+                          {t("listingsForSale.lotteryPreferences.moreAboutPriority")}
+                        </Link>
+                      </div>
+                    </>
+                  )}
+                </>
+              }
+            >
+              <ErrorBoundary boundaryScope={BoundaryScope.component}>
+                <ListingDetailsPreferences preferences={preferences} />
+              </ErrorBoundary>
+            </ListSection>
+          )}
         {priorityUnits?.length > 0 ? (
           <ListSection
             title={t("listings.priorityUnits")}
