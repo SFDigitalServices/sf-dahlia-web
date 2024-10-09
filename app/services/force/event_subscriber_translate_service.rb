@@ -14,8 +14,6 @@ module Force
       keyword_init: true,
     )
 
-    UNSUBSCRIBE_CACHE_KEY = 'unsubscribe_from_listing_updates'.freeze
-
     def initialize
       setup_salesforce_client
       setup_faye_client
@@ -23,6 +21,8 @@ module Force
     end
 
     def listen_and_process_events
+      subscription = nil
+
       EM.error_handler do |error|
         logger(
           "Error while listening for Salesforce Platform Events: #{error.message}; " \
@@ -31,14 +31,18 @@ module Force
         )
       end
 
+      EM.add_shutdown_hook do
+        subscription&.unsubscribe
+        logger(
+          'Unsubscribed from Salesforce Platform Events due to EventMachine shutdown',
+        )
+      end
+
       EM.run do
-        # available methods for the subscription instance:
-        #   https://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Deferrable
-        #   https://www.rubydoc.info/gems/faye/Faye/Subscription
         if Rails.configuration.unleash.is_enabled? 'GoogleCloudTranslate'
           subscription = subscribe_to_listing_updates
           subscription.callback do
-            Rails.logger.info('Subscribed to Salesforce Platform Events')
+            logger('Subscribed to Salesforce Platform Events')
           end
           subscription.errback do |error|
             logger(
@@ -49,7 +53,10 @@ module Force
         else
           logger('GoogleCloudTranslate is disabled')
         end
-        EM.add_periodic_timer(10, proc { check_for_unsubscribe(subscription) })
+
+        # cannot log in the trap block to improve observability,
+        #  but we can rely on logs in EM.add_shutdown_hook
+        Signal.trap('TERM') { EM.stop }
       end
     end
 
@@ -163,18 +170,6 @@ module Force
       filtered_fields.each_with_object({}) do |field, values|
         values[field] = event.dig('payload', field)
       end
-    end
-
-    def check_for_unsubscribe(subscription)
-      if Rails.configuration.unleash.is_enabled?('GoogleCloudTranslate') &&
-         !Rails.cache.fetch(UNSUBSCRIBE_CACHE_KEY)
-        return
-      end
-
-      subscription&.unsubscribe
-      Rails.cache.delete(UNSUBSCRIBE_CACHE_KEY)
-      logger('Unsubscribed to Salesforce Platform Events')
-      EM.stop_event_loop
     end
 
     def logger(message, error: false)
