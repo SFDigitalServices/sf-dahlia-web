@@ -30,7 +30,7 @@ export const ListingDetailsLotterySearchFooter = ({
               <p className="py-2">
                 <a href={listing.LotteryResultsURL} target="_blank" className="text-blue-900">
                   {/* To be replaced with lottery.downloadLotteryResultsPdf when human translations are back DAH-2820 */}
-                  {t("lottery.downloadLotteryResultsPdf.temp")}
+                  {t("lottery.lotteryResultsPdfLink")}
                 </a>
               </p>
             </div>
