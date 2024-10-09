@@ -5,8 +5,9 @@ import { PREFERENCES, PREFERENCES_IDS, PREFERENCES_WITH_PROOF } from "../constan
 import { getPreferences } from "../../api/listingApiService"
 import "./ListingDetailsPreferences.scss"
 import { getLocalizedPath } from "../../util/routeUtil"
-import { getRoutePrefix, getSfGovUrl } from "../../util/languageUtil"
+import { getRoutePrefix, getSfGovUrl, getTranslatedString } from "../../util/languageUtil"
 import { preferenceNameHasVeteran } from "../../util/listingUtil"
+import { RailsTranslations } from "../../api/types/rails/listings/RailsTranslation"
 
 const determineDescription = (
   customPreferenceDescription: boolean,
@@ -15,7 +16,6 @@ const determineDescription = (
   NRHPDistrict?: string
 ) => {
   if (customPreferenceDescription) {
-    // todo: DAH-2767 Use Google Cloud Translate here
     return { description: listingDescription, descriptionClassName: "translate" }
   } else {
     return preferenceName === PREFERENCES.neighborhoodResidence && NRHPDistrict
@@ -32,6 +32,7 @@ const determineDescription = (
 }
 export interface ListingDetailsPreferencesProps {
   listingID: string
+  translations?: RailsTranslations
 }
 
 export const mapPreferenceLink = (link: string): string => {
@@ -51,7 +52,10 @@ export const mapPreferenceLink = (link: string): string => {
   }
 }
 
-export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferencesProps) => {
+export const ListingDetailsPreferences = ({
+  listingID,
+  translations,
+}: ListingDetailsPreferencesProps) => {
   const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
 
   useEffect(() => {
@@ -114,7 +118,11 @@ export const ListingDetailsPreferences = ({ listingID }: ListingDetailsPreferenc
           return {
             ...determineDescription(
               preference.customPreferenceDescription,
-              preference.description,
+              getTranslatedString(
+                preference.description,
+                `${preference.listingPreferenceID}.Description__c`,
+                translations
+              ),
               preference.preferenceName,
               preference.NRHPDistrict
             ),
