@@ -68,7 +68,7 @@ export const ErrorSummaryBanner = ({
   }
 
   return (
-    <Alert fullwidth variant="alert">
+    <Alert fullwidth variant="alert" className="error-summary-banner">
       {t("error.accountBanner.header")}
       <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
         {Object.keys(errors).map((key: string) => {
