@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Card,
   ExpandableText,
@@ -19,6 +19,7 @@ import {
   listingHasOnlySROUnits,
   listingHasSROUnits,
   listingHasVeteransPreference,
+  preferenceNameHasVeteran,
 } from "../../util/listingUtil"
 import {
   defaultIfNotTranslated,
@@ -36,6 +37,8 @@ import "./ListingDetailsEligibility.scss"
 import { ListingDetailsChisholmPreferences } from "./ListingDetailsChisholmPreferences"
 import { stripMostTags } from "../../util/filterUtil"
 import Link from "../../navigation/Link"
+import { getPreferences } from "../../api/listingApiService"
+import { RailsListingPreference } from "../../api/types/rails/listings/RailsListingPreferences"
 
 export interface ListingDetailsEligibilityProps {
   listing: RailsListing
@@ -54,6 +57,20 @@ export const ListingDetailsEligibility = ({
   const isAllSRO = listingHasOnlySROUnits(listing)
   const isSomeSRO = listingHasSROUnits(listing)
   const priorityUnits = []
+  const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
+  const [loadingPreferences, setLoadingPreferences] = useState<boolean>(true)
+
+  useEffect(() => {
+    void getPreferences(listing.listingID).then((preferences) => {
+      setPreferences(
+        preferences?.filter((preference) => !preferenceNameHasVeteran(preference.preferenceName))
+      )
+      setLoadingPreferences(false)
+    })
+    return () => {
+      setPreferences([])
+    }
+  }, [listing])
 
   listing.Units?.forEach((unit: RailsUnit) => {
     const priorityUnit = priorityUnits?.find((priorityUnit: ReducedUnit) => {
@@ -111,6 +128,8 @@ export const ListingDetailsEligibility = ({
       },
     }
   })
+
+  console.log(loadingPreferences)
 
   return (
     <ListingDetailItem
@@ -281,13 +300,14 @@ export const ListingDetailsEligibility = ({
           <StandardTable headers={occupancyTableHeaders} data={occupancyTableData} />
         </ListSection>
 
-        {isEducator(listing) ? (
+        {isEducator(listing) && (
           <ErrorBoundary boundaryScope={BoundaryScope.component}>
             <span id="chisholm-preferences">
               <ListingDetailsChisholmPreferences isEducatorOne={isEducatorOne(listing)} />
             </span>
           </ErrorBoundary>
-        ) : (
+        )}
+        {!loadingPreferences && preferences.length > 0 && (
           <ListSection
             title={t("listings.lottery.title")}
             subtitle={
@@ -320,7 +340,7 @@ export const ListingDetailsEligibility = ({
             }
           >
             <ErrorBoundary boundaryScope={BoundaryScope.component}>
-              <ListingDetailsPreferences listingID={listing.listingID} />
+              <ListingDetailsPreferences preferences={preferences} />
             </ErrorBoundary>
           </ListSection>
         )}
