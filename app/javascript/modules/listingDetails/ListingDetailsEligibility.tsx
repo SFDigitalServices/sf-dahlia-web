@@ -50,6 +50,18 @@ export interface ReducedUnit {
   numberOfUnits: number
 }
 
+// show the lottery preference section when...
+// the preferences are still loading from the backend
+// or when the loading has completed and there are no preferences
+const showLotteryPreferenceSection = (
+  isLoadingPreferences: boolean,
+  preferences: RailsListingPreference[]
+) => {
+  if (isLoadingPreferences) return true
+  if (preferences && preferences.length > 0) return true
+  return false
+}
+
 export const ListingDetailsEligibility = ({
   listing,
   imageSrc,
@@ -58,14 +70,14 @@ export const ListingDetailsEligibility = ({
   const isSomeSRO = listingHasSROUnits(listing)
   const priorityUnits = []
   const [preferences, setPreferences] = useState<RailsListingPreference[]>([])
-  const [loadingPreferences, setLoadingPreferences] = useState<boolean>(true)
+  const [isLoadingPreferences, setIsLoadingPreferences] = useState<boolean>(true)
 
   useEffect(() => {
     void getPreferences(listing.listingID).then((preferences) => {
       setPreferences(
         preferences?.filter((preference) => !preferenceNameHasVeteran(preference.preferenceName))
       )
-      setLoadingPreferences(false)
+      setIsLoadingPreferences(false)
     })
     return () => {
       setPreferences([])
@@ -128,8 +140,6 @@ export const ListingDetailsEligibility = ({
       },
     }
   })
-
-  console.log(loadingPreferences)
 
   return (
     <ListingDetailItem
@@ -307,7 +317,7 @@ export const ListingDetailsEligibility = ({
             </span>
           </ErrorBoundary>
         )}
-        {!loadingPreferences && preferences.length > 0 && (
+        {showLotteryPreferenceSection(isLoadingPreferences, preferences) && (
           <ListSection
             title={t("listings.lottery.title")}
             subtitle={
