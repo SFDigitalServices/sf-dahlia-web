@@ -104,6 +104,30 @@ const validateAge = (month: string, day: string, year: string) => {
   return true
 }
 
+interface FieldInfo {
+  label: string
+  validation: (value: string) => boolean | string
+  required?: string
+  maxLength: number
+}
+
+interface DOBFieldsetInfo {
+  birthDay: FieldInfo
+  birthMonth: FieldInfo
+  birthYear: FieldInfo
+}
+
+const handleInput = (e: React.KeyboardEvent<HTMLInputElement>, maxLength: number) => {
+  const allowedKeys = new Set(["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"])
+  const isNumericKey = e.key >= "0" && e.key <= "9"
+
+  if (e.currentTarget.value.length === maxLength && !allowedKeys.has(e.key)) {
+    e.preventDefault()
+  } else if (!isNumericKey && !allowedKeys.has(e.key)) {
+    e.preventDefault()
+  }
+}
+
 const DateField = ({
   fieldKey,
   defaultDOB,
@@ -124,7 +148,7 @@ const DateField = ({
   const birthDay: string = watch("dobObject.birthDay") ?? defaultDOB?.birthDay
   const birthMonth: string = watch("dobObject.birthMonth") ?? defaultDOB?.birthMonth
 
-  const fieldInfo = {
+  const fieldInfo: DOBFieldsetInfo = {
     birthDay: {
       label: t("label.dobDay"),
       validation: (value: string) => {
@@ -152,17 +176,6 @@ const DateField = ({
     },
   }
 
-  const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const allowedKeys = new Set(["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"])
-    const isNumericKey = e.key >= "0" && e.key <= "9"
-
-    if (e.currentTarget.value.length === fieldInfo[fieldKey].maxLength && !allowedKeys.has(e.key)) {
-      e.preventDefault()
-    } else if (!isNumericKey && !allowedKeys.has(e.key)) {
-      e.preventDefault()
-    }
-  }
-
   return (
     <Field
       className="ml-0 mr-4"
@@ -179,7 +192,8 @@ const DateField = ({
       inputProps={{
         maxLength: fieldInfo[fieldKey].maxLength,
         required: true,
-        onKeyDown: handleInput,
+        onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) =>
+          handleInput(e, fieldInfo[fieldKey].maxLength as number),
       }}
       type="number"
       register={register}
