@@ -84,7 +84,7 @@ const MyAccount = (_props: MyAccountProps) => {
             <AccountDashCard
               title={t("accountSettings.title.sentenceCase")}
               description={t("accountDashboard.accountSettings.description")}
-              link={getMyAccountSettingsPath()}
+              link={`${getMyAccountSettingsPath()}?react=true`}
               icon="settings"
             />
           </div>
