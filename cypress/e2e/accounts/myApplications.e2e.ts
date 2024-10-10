@@ -13,7 +13,7 @@ describe("My Applications", () => {
     })
   })
 
-  it("signs in", () => {
+  it("runs through the my applications page", () => {
     cy.signIn()
     cy.addReactQueryParam()
 
