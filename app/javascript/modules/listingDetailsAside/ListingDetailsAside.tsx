@@ -3,7 +3,7 @@ import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/u
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isFcfsListing, isOpen, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen, isRental, isSale } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -93,7 +93,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsListing(listing) && isSalesFcfsEnabled && fcfsNoLotteryRequired()}
+            {isFcfsSalesListing(listing) && isSalesFcfsEnabled && fcfsNoLotteryRequired()}
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture

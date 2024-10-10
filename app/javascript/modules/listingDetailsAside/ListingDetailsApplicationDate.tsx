@@ -5,7 +5,7 @@ import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
 import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { isOpen } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import bloomTheme from "../../../../tailwind.config"
 import { Message } from "@bloom-housing/ui-seeds"
 
@@ -87,7 +87,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      {isSalesFcfsEnabled ? (
+      {isSalesFcfsEnabled && isFcfsSalesListing(listing) ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">

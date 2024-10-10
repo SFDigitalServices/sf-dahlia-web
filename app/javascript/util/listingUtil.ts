@@ -21,6 +21,7 @@ import {
   TENURE_TYPES,
   CUSTOM_LISTING_TYPES,
   LISTING_TYPE_FIRST_COME_FIRST_SERVED,
+  LISTING_TYPES,
 } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
@@ -28,8 +29,9 @@ import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetail
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
 
-export const isFcfsListing = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
+export const isFcfsSalesListing = (listing: RailsRentalListing | RailsSaleListing) =>
+  listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED &&
+  listing.RecordType.Name === LISTING_TYPES.OWNERSHIP
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing

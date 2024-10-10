@@ -23,6 +23,7 @@ import {
   getTagContent,
   listingHasVeteransPreference,
   preferenceNameHasVeteran,
+  isFcfsSalesListing,
 } from "../../util/listingUtil"
 import { openSaleListing } from "../data/RailsSaleListing/listing-sale-open"
 import { saleEducatorListing } from "../data/RailsSaleListing/listing-sale-educator"
@@ -43,6 +44,8 @@ import RailsUnit, {
   RailsUnitWithOccupancy,
   RailsUnitWithOccupancyAndMinMaxIncome,
 } from "../../api/types/rails/listings/RailsUnit"
+import { fcfsSaleListing } from "../data/RailsSaleListing/listing-sale-fcfs"
+import { openRentalFcfsListing } from "../data/RailsRentalListing/listing-rental-fcfs"
 
 describe("listingUtil", () => {
   const OLD_ENV = process.env
@@ -523,5 +526,19 @@ describe("preferenceNameHasVeteran", () => {
 
   test("returns false for strings that do not contain 'veteran'", () => {
     expect(preferenceNameHasVeteran("Certificate of Preference (COP)")).toBe(false)
+  })
+})
+
+describe("first come, first served", () => {
+  test("returns false when listing is not fcfs", () => {
+    expect(isFcfsSalesListing(openSaleListing)).toBe(false)
+  })
+
+  test("returns false when listing is rental fcfs", () => {
+    expect(isFcfsSalesListing(openRentalFcfsListing)).toBe(false)
+  })
+
+  test("returns true when listing is sales fcfs", () => {
+    expect(isFcfsSalesListing(fcfsSaleListing)).toBe(true)
   })
 })
