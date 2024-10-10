@@ -351,4 +351,12 @@ describe("ListingDetailsEligibility", () => {
     expect(findByText(t("listings.customListingType.educator.preferences.part1"))).not.toBeNull()
     expect(asFragment()).toMatchSnapshot()
   })
+
+  it("does not display preferences when still loading", async () => {
+
+  })
+
+  it("does not display preferences when there are no preferences", async () => {
+
+  })
 })

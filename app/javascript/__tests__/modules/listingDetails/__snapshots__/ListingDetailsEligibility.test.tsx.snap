@@ -6738,36 +6738,6 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
             <h3
               class="custom-counter__title"
             >
-              Lottery Preferences
-            </h3>
-            <span
-              class="custom-counter__subtitle"
-            >
-              <div
-                class="mb-4"
-              >
-                Lottery preferences are programs that help you rank higher in the lottery. If you qualify for a preference, you have a better chance in the lottery. If you do not qualify for a preference, you will be ranked below those who do.
-              </div>
-              <div>
-                We contact applicants in the order of the lottery results. If your household qualifies for one of the following preferences, you will be considered in the order shown here.
-              </div>
-            </span>
-          </hgroup>
-        </header>
-        <ol
-          class="preferences-list"
-        />
-      </li>
-      <li
-        class="list-section custom-counter__item"
-      >
-        <header
-          class="list-section__header custom-counter__header"
-        >
-          <hgroup>
-            <h3
-              class="custom-counter__title"
-            >
               Rental Assistance
             </h3>
             <span
