@@ -228,8 +228,8 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
           </div>
           <div>
             <a
-              class="seeds-link no-underline"
               href="https://www.google.com/"
+              target="_blank"
             >
               Online Detail
             </a>
@@ -444,8 +444,8 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
         >
           <div>
             <a
-              class="seeds-link no-underline"
               href="https://www.google.com/"
+              target="_blank"
             >
               Online Detail
             </a>
