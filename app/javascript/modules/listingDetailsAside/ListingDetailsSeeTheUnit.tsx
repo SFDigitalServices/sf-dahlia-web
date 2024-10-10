@@ -44,9 +44,10 @@ const SeeDetailsOnline = (listing: RailsListing) => (
         </div>
       )}
       {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
+        const link = detail.URL.includes("http") ? detail.URL : `//${detail.URL}`
         return (
           <div key={detail.Id}>
-            <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
+            <Link className="no-underline" href={link} hideExternalLinkIcon={true}>
               {detail.Listing_Online_Detail_Name}
             </Link>
           </div>
