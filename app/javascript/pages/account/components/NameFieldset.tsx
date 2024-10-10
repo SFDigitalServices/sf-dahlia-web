@@ -28,6 +28,17 @@ export const handleNameServerErrors = (
     : [name, { message: "name:server:generic", shouldFocus: true }]
 }
 
+const nameValidation = (name: "firstName" | "lastName", value: string) => {
+  // The below check is also happening on the backend, but we want to provide immediate feedback to the user
+  // The backend check is happening in the account_validation_service.rb file
+  if (value.includes("www") || value.includes("http")) {
+    return `name:server:generic`
+  }
+  if (value.trim() === "") {
+    return `name:${name}`
+  }
+}
+
 export const nameFieldsetErrors: ErrorMessages = {
   "name:firstName": {
     default: "error.account.firstName",
@@ -68,7 +79,7 @@ const NameFieldset = ({
         defaultValue={defaultFirstName ?? null}
         validation={{
           required: "name:firstName",
-          validate: (data: string) => data.trim() !== "" || "name:firstName",
+          validate: (data: string) => nameValidation("firstName", data),
         }}
         inputProps={{ required: true }}
         onChange={onChange}
@@ -95,7 +106,7 @@ const NameFieldset = ({
         register={register}
         validation={{
           required: "name:lastName",
-          validate: (data: string) => data.trim() !== "" || "name:firstName",
+          validate: (data: string) => nameValidation("lastName", data),
         }}
         onChange={onChange}
         inputProps={{ required: true }}
