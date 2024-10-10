@@ -1,6 +1,7 @@
 import type RailsSaleListing from "../../../api/types/rails/listings/RailsSaleListing"
 
 export const fcfsSaleListing: RailsSaleListing = {
+  Application_Start_Date_Time: "2050-01-01T01:00:00.000+0000",
   unitSummaries: {
     reserved: null,
     general: [

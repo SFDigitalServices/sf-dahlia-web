@@ -3,7 +3,7 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
-import { LISTING_STATES, LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
+import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { isOpen } from "../../util/listingUtil"
 import bloomTheme from "../../../../tailwind.config"
@@ -54,9 +54,9 @@ const getStatusLottery = (listing: RailsListing) => {
 }
 
 const getStatusFcfs = (listing: RailsListing) => {
-  const isClosed = listing.Listing_State === LISTING_STATES.CLOSED
+  const isClosed = !listing.Accepting_Online_Applications
   const datetime = listing.Application_Start_Date_Time
-  const showDateTime = listing.Listing_State === LISTING_STATES.NOT_YET_OPEN
+  const showDateTime = new Date(listing.Application_Start_Date_Time) > new Date()
 
   const getMessage = () => {
     if (isClosed) {
@@ -83,11 +83,11 @@ const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
   const isApplicationOpen = listing && isOpen(listing)
 
-  const { unleashFlag: useUpdatedStatuses } = useFeatureFlag("UpdatedStatuses", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      {useUpdatedStatuses ? (
+      {isSalesFcfsEnabled ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">

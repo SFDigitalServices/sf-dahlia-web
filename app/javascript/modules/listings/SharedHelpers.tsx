@@ -39,8 +39,8 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
  * @returns StatusBarType[]
  */
 const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
-  const isFcfsApplicationNotYetOpen = false
-  const isFcfsApplicationClosed = false
+  const isFcfsApplicationNotYetOpen = new Date(listing.Application_Start_Date_Time) > new Date()
+  const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
   const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
 
   const applicationsClosedStatus = {

@@ -4,9 +4,39 @@ import { Alert } from "@bloom-housing/ui-seeds"
 import { DeepMap, FieldValues, FieldError } from "react-hook-form"
 import { renderInlineMarkup } from "../../../util/languageUtil"
 import { nameFieldsetErrors } from "./NameFieldset"
-import { dobFieldsetErrors } from "./DOBFieldset"
+import { dobFieldsetErrors, DOBFieldValues } from "./DOBFieldset"
 import { passwordFieldsetErrors } from "./PasswordFieldset"
 import { emailFieldsetErrors } from "./EmailFieldset"
+import "./ErrorSummaryBanner.scss"
+
+const handleScrollToDOBError = (errors: DeepMap<FieldValues, FieldError>) => {
+  const errorKeys = Object.keys(errors)
+  const dobErrors: DeepMap<DOBFieldValues, FieldError> = errors[errorKeys[0]]
+  if (dobErrors) {
+    const dobErrorKeys = Object.keys(dobErrors)
+    if (dobErrorKeys.length > 0 && dobErrors[dobErrorKeys[0]]?.ref) {
+      dobErrors[dobErrorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }
+}
+
+export const scrollToErrorOnSubmit =
+  (ref: React.MutableRefObject<HTMLSpanElement>) => (errors: DeepMap<FieldValues, FieldError>) => {
+    const errorKeys = Object.keys(errors)
+
+    if (errorKeys.length === 0) return
+
+    if (errorKeys.length === 1 && errorKeys[0] === "dobObject") {
+      handleScrollToDOBError(errors)
+      return
+    }
+
+    if (errorKeys.length === 1 && errors[errorKeys[0]]?.ref) {
+      errors[errorKeys[0]].ref.scrollIntoView({ behavior: "smooth", block: "center" })
+    } else {
+      ref.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+  }
 
 export interface ErrorMessage {
   default: string
@@ -31,14 +61,16 @@ export const ErrorSummaryBanner = ({
   errors: DeepMap<FieldValues, FieldError>
   messageMap?: (message: string) => string
 }) => {
+  const listRef = React.useRef<HTMLUListElement>(null)
+
   if (Object.keys(errors).length === 0) {
     return null
   }
 
   return (
-    <Alert fullwidth variant="alert" className="">
+    <Alert fullwidth variant="alert" className="error-summary-banner">
       {t("error.accountBanner.header")}
-      <ul className="list-disc list-inside pl-2 pt-1">
+      <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
         {Object.keys(errors).map((key: string) => {
           let fieldError = errors[key]
 
@@ -56,7 +88,7 @@ export const ErrorSummaryBanner = ({
                 className="text-blue-500 cursor-pointer background-none border-none p-0 text-left"
                 onClick={() => {
                   if (fieldError.ref) {
-                    fieldError.ref.scrollIntoView({ behavior: "smooth" })
+                    fieldError.ref.scrollIntoView({ behavior: "smooth", block: "center" })
                     fieldError.ref.focus()
                   }
                 }}

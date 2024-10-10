@@ -65,10 +65,8 @@ RSpec.configure do |config|
     unleash_client = instance_double(Unleash::Client)
     allow(Unleash::Client).to receive(:new).and_return(unleash_client)
     allow(unleash_client).to receive(:is_enabled?).and_return(false)
-    stub_const('UNLEASH', unleash_client)
-
-    ::UNLEASH ||= unleash_client # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
-    allow(::UNLEASH).to receive(:is_enabled?).and_return(false) # rubocop:disable Style/RedundantConstantBase
+    Rails.configuration.unleash = unleash_client
+    allow(Rails.configuration.unleash).to receive(:is_enabled?).and_return(false)
 
     DatabaseCleaner.clean
     Rails.cache.clear

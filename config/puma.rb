@@ -1,5 +1,3 @@
-require 'unleash'
-
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -42,11 +40,11 @@ preload_app!
 # cannot share connections between processes.
 #
 on_worker_boot do
-  ::UNLEASH ||= Unleash::Client.new # rubocop:disable Style/RedundantConstantBase, Lint/OrAssignmentToConstant
+  Rails.configuration.unleash = Unleash::Client.new
 end
 
 on_worker_shutdown do
-  ::UNLEASH.shutdown # rubocop:disable Style/RedundantConstantBase
+  Rails.configuration.unleash.shutdown
 end
 
 # Allow puma to be restarted by `rails restart` command.

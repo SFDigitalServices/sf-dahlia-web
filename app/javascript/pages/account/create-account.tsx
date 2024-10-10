@@ -26,8 +26,14 @@ import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/a
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
-import { ErrorSummaryBanner, UnifiedErrorMessageMap } from "./components/ErrorSummaryBanner"
+import {
+  ErrorSummaryBanner,
+  scrollToErrorOnSubmit,
+  UnifiedErrorMessageMap,
+} from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+
+import "./create-account.scss"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -81,7 +87,13 @@ const EmailSection = ({ register, errors }: SectionProps) => {
 const PasswordSection = ({ register, errors, watch }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <PasswordFieldset register={register} errors={errors} watch={watch} />
+      <PasswordFieldset
+        register={register}
+        errors={errors}
+        watch={watch}
+        labelText={t("label.choosePassword")}
+        passwordType="createAccount"
+      />
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
@@ -174,13 +186,14 @@ const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
 }
 
 const CreateAccount = (_props: CreateAccountProps) => {
+  const errorBannerRef = React.useRef<HTMLSpanElement>(null)
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
     setError,
-  } = useForm({ mode: "onTouched" })
+  } = useForm({ mode: "onTouched", shouldFocusError: false })
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
@@ -191,11 +204,17 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <ErrorSummaryBanner
-              errors={modifyErrors({ ...errors })}
-              messageMap={(messageKey) => getErrorMessage(messageKey, UnifiedErrorMessageMap, true)}
-            />
-            <Form onSubmit={handleSubmit(onSubmit(setError))}>
+            <span ref={errorBannerRef}>
+              <ErrorSummaryBanner
+                errors={modifyErrors({ ...errors })}
+                messageMap={(messageKey) =>
+                  getErrorMessage(messageKey, UnifiedErrorMessageMap, true)
+                }
+              />
+            </span>
+            <Form
+              onSubmit={handleSubmit(onSubmit(setError), scrollToErrorOnSubmit(errorBannerRef))}
+            >
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}
               <CreateAccountFooter />

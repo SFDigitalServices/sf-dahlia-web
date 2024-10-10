@@ -61,7 +61,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
-  const { unleashFlag: useUpdatedDirectoryStatuses } = useFeatureFlag("UpdatedStatuses", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <LoadingOverlay isLoading={loading}>
@@ -75,7 +75,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 props.directoryType,
                 props.getSummaryTable,
                 hasFiltersSet,
-                useUpdatedDirectoryStatuses
+                isSalesFcfsEnabled
               )}
 
               {props.findMoreActionBlock()}
@@ -85,19 +85,19 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   props.directoryType,
                   props.getSummaryTable,
                   hasFiltersSet,
-                  useUpdatedDirectoryStatuses
+                  isSalesFcfsEnabled
                 )}
               {upcomingLotteriesView(
                 listings.upcoming,
                 props.directoryType,
                 props.getSummaryTable,
-                useUpdatedDirectoryStatuses
+                isSalesFcfsEnabled
               )}
               {lotteryResultsView(
                 listings.results,
                 props.directoryType,
                 props.getSummaryTable,
-                useUpdatedDirectoryStatuses
+                isSalesFcfsEnabled
               )}
             </div>
           </>

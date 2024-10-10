@@ -202,7 +202,13 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
       />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        <PasswordFieldset register={register} errors={errors} watch={watch} edit />
+        <PasswordFieldset
+          register={register}
+          errors={errors}
+          watch={watch}
+          labelText={t("label.password")}
+          passwordType="accountSettings"
+        />
       </UpdateForm>
     </>
   )

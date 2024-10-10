@@ -76,7 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                Applications open
+                Applications open: January 1, 2050 at 1:00 AM Pacific Time
               </span>
             </div>
           </div>
@@ -158,7 +158,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             class="md:px-0 px-2"
           >
             <section
-              class="aside-block "
+              class="aside-block fcfs-bmr-how-to-apply"
             >
               <h4
                 class="text__underline-weighted"
@@ -168,32 +168,29 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <div
                 class="text-sm text-gray-750"
               >
-                <p
-                  class="mb-4"
+                <div
+                  class="fcfs-bmr-how-to-apply__list"
                 >
-                  <span>
-                    Make sure you fulfill the 
-                    <a
-                      href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
-                      target="_blank"
-                    >
-                      eligibility requirements
-                    </a>
-                     for this listing before you begin.
-                  </span>
-                </p>
-                <p
-                  class="mb-4"
-                >
-                  Your loan pre-approval letter must be dated within the past 120 days, and your Homebuyer Education verification must be dated within the past year.
-                </p>
-                <a
-                  class="button is-primary w-full transition"
-                  href="listings/a0W0P00000GlKfBUAV/apply-welcome/intro"
+                  <ol
+                    class="numbered-list text-black text-base"
+                  >
+                    <li>
+                      Fill out PDF application
+                    </li>
+                    <li>
+                      Gather documents
+                    </li>
+                    <li>
+                      When you are ready, submit application
+                    </li>
+                  </ol>
+                </div>
+                <button
+                  class="button is-primary w-full"
                   tabindex="0"
                 >
-                  Apply Online
-                </a>
+                  Learn more and apply
+                </button>
               </div>
             </section>
           </div>

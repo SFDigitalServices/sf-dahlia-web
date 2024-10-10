@@ -15,6 +15,14 @@ const PASSWORD_VALIDATION_ERRORS = new Set([
   "Password must include at least one letter",
 ])
 
+export interface PasswordFieldsetProps {
+  register: UseFormMethods["register"]
+  errors: UseFormMethods["errors"]
+  watch: UseFormMethods["watch"]
+  passwordType: "signIn" | "createAccount" | "accountSettings"
+  labelText: string
+}
+
 export const handlePasswordServerErrors = (error: ExpandedAccountAxiosError): SetErrorArgs => {
   const errorMessages = error.response.data?.errors?.full_messages
 
@@ -94,7 +102,7 @@ const NewPasswordInstructions = ({
 }) => {
   const showValidationInfo = passwordValidationContent.length > 0
   return (
-    <div className="field-note">
+    <div className="field-note" id="newPasswordInstructions">
       <span>{t("createAccount.passwordInstructions.mustInclude")}</span>
       <ul className={`${showValidationInfo ? "" : "list-disc list-inside pl-2"}`}>
         {instructionListItem(
@@ -128,7 +136,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
     <Field
       {...props}
       type={showPassword ? "text" : "password"}
-      inputProps={{ className: "input pr-10" }}
+      inputProps={{ className: "input pr-10", required: true }}
       postInputContent={
         <button
           className="absolute right-2 h-full"
@@ -154,18 +162,13 @@ const newPasswordValidation: Validate = (newPassword: string) => {
   }
   return true
 }
-
 const PasswordFieldset = ({
   register,
   errors,
   watch,
-  edit = false,
-}: {
-  register: UseFormMethods["register"]
-  errors: UseFormMethods["errors"]
-  watch: UseFormMethods["watch"]
-  edit?: boolean
-}) => {
+  passwordType,
+  labelText,
+}: PasswordFieldsetProps) => {
   const [passwordValidationContent, setPasswordValidationContent] = React.useState("")
   const newPassword: string = watch("password", "")
 
@@ -176,8 +179,8 @@ const PasswordFieldset = ({
   }, [newPassword, setPasswordValidationContent])
 
   return (
-    <Fieldset hasError={hasError} label={edit ? t("label.password") : t("label.choosePassword")}>
-      {edit && (
+    <Fieldset hasError={hasError} label={labelText}>
+      {passwordType === "accountSettings" && (
         <>
           <p className="field-note mb-3">{t("accountSettings.enterCurrentPassword")}</p>
           <PasswordField
@@ -204,8 +207,11 @@ const PasswordFieldset = ({
           </div>
         </>
       )}
-      <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
+      {passwordType !== "signIn" && (
+        <NewPasswordInstructions passwordValidationContent={passwordValidationContent} />
+      )}
       <PasswordField
+        describedBy={errors.password?.message ? undefined : "newPasswordInstructions"} // undefined will force the input to be described by the error message
         name="password"
         label="password"
         labelClassName="hidden"
@@ -214,7 +220,7 @@ const PasswordFieldset = ({
           required: "password:required",
           validate: newPasswordValidation,
         }}
-        passwordVisibilityDefault={true}
+        passwordVisibilityDefault={passwordType !== "signIn"}
         error={errors.password}
         errorMessage={
           errors.password?.message &&

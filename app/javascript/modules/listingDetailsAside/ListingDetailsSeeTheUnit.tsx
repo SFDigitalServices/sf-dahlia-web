@@ -47,7 +47,7 @@ const SeeDetailsOnline = (listing: RailsListing) => (
         return (
           <div key={detail.Id}>
             <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
-              {detail.Name}
+              {detail.Listing_Online_Detail_Name}
             </Link>
           </div>
         )

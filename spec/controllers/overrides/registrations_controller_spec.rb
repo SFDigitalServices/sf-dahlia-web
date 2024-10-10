@@ -77,7 +77,7 @@ describe Overrides::RegistrationsController do
       expect(response.status).to eq 422
     end
 
-    it 'throws error if lastName includes invalid characters' do
+    it 'throws error if lastName includes invalid characters "www"' do
       allow(Force::AccountService)
         .to receive(:create_or_update)
         .and_return(salesforce_response)
@@ -99,7 +99,8 @@ describe Overrides::RegistrationsController do
       }
       expect(response.status).to eq 422
     end
-    it 'throws error if lastName includes "."' do
+
+    it 'throws error if lastName includes invalid characters "http"' do
       allow(Force::AccountService)
         .to receive(:create_or_update)
         .and_return(salesforce_response)
@@ -113,7 +114,7 @@ describe Overrides::RegistrationsController do
         },
         contact: {
           firstName: 'John',
-          lastName: 'bit.ly',
+          lastName: 'http',
           DOB: '1985-07-23',
           email: 'jane@doe.com',
         },

@@ -439,7 +439,7 @@ export const mlsOnlineDetailsSaleListing: RailsSaleListing = {
   Listing_Online_Details: [
     {
       Id: "a3V6s000000SiJbEAK",
-      Name: "Online Detail",
+      Listing_Online_Detail_Name: "Online Detail",
       URL: "https://www.google.com/",
     },
   ],

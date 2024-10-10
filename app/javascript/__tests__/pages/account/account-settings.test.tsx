@@ -158,13 +158,13 @@ describe("<AccountSettingsPage />", () => {
         })
 
         const button = getAllByText("Update")
-        const monthField: Element = screen.getByRole("textbox", {
+        const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
-        const dayField: Element = screen.getByRole("textbox", {
+        const dayField: Element = screen.getByRole("spinbutton", {
           name: /day/i,
         })
-        const yearField: Element = screen.getByRole("textbox", {
+        const yearField: Element = screen.getByRole("spinbutton", {
           name: /year/i,
         })
 
@@ -210,13 +210,13 @@ describe("<AccountSettingsPage />", () => {
 
       it("blocks a DOB update if invalid", async () => {
         const button = getAllByText("Update")
-        const monthField: Element = screen.getByRole("textbox", {
+        const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
-        const dayField: Element = screen.getByRole("textbox", {
+        const dayField: Element = screen.getByRole("spinbutton", {
           name: /day/i,
         })
-        const yearField: Element = screen.getByRole("textbox", {
+        const yearField: Element = screen.getByRole("spinbutton", {
           name: /year/i,
         })
 
@@ -481,13 +481,13 @@ describe("<AccountSettingsPage />", () => {
 
       test("date of birth errors", async () => {
         const button = getAllByText("Update")
-        const monthField: Element = screen.getByRole("textbox", {
+        const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
         })
-        const dayField: Element = screen.getByRole("textbox", {
+        const dayField: Element = screen.getByRole("spinbutton", {
           name: /day/i,
         })
-        const yearField: Element = screen.getByRole("textbox", {
+        const yearField: Element = screen.getByRole("spinbutton", {
           name: /year/i,
         })
 

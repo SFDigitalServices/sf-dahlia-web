@@ -175,6 +175,7 @@ const ApplicationItem = (props: ApplicationItemProps) => {
                 onClick={() => {
                   props.handleDeleteApp(applicationID)
                 }}
+                ariaLabel={t("accountSettings.deleteAria", { listing: props.listing.Name })}
               >
                 {t("t.delete")}
               </Button>
