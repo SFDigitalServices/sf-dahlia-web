@@ -82,10 +82,6 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
 
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
-  console.log(isSalesFcfsEnabled)
-  console.log(listing)
-  console.log(isFcfsSalesListing(listing))
-
   return (
     <div className="w-full mb-8 md:mb-0">
       {isSalesFcfsEnabled ? (
