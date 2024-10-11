@@ -3,7 +3,6 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
-import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import bloomTheme from "../../../../tailwind.config"
@@ -75,9 +74,7 @@ const getStatusFcfs = (listing: RailsListing) => {
 }
 
 const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
-  return listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
-    ? getStatusFcfs(listing)
-    : getStatusLottery(listing)
+  return isFcfsSalesListing(listing) ? getStatusFcfs(listing) : getStatusLottery(listing)
 }
 
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
@@ -85,9 +82,13 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
 
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
+  console.log(isSalesFcfsEnabled)
+  console.log(listing)
+  console.log(isFcfsSalesListing(listing))
+
   return (
     <div className="w-full mb-8 md:mb-0">
-      {isSalesFcfsEnabled && isFcfsSalesListing(listing) ? (
+      {isSalesFcfsEnabled ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">
