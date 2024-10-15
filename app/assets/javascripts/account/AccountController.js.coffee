@@ -122,7 +122,7 @@ AccountController = (
           else
             $scope._signInRedirect()
       ).catch( error ->
-      if (error.message == 'transition prevented')
+      if error.message == 'transition prevented' && $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
         ### TODO:
           If the user is navigating from an Angular Sign In page to a React my account page,
           the ui-router will prevent the transition and force routing via Rails.
