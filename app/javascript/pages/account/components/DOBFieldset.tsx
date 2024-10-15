@@ -104,6 +104,19 @@ const validateAge = (month: string, day: string, year: string) => {
   return true
 }
 
+interface FieldInfo {
+  label: string
+  validation: (value: string) => boolean | string
+  required?: string
+  maxLength: number
+}
+
+interface DOBFieldsetInfo {
+  birthDay: FieldInfo
+  birthMonth: FieldInfo
+  birthYear: FieldInfo
+}
+
 const DateField = ({
   fieldKey,
   defaultDOB,
@@ -119,12 +132,12 @@ const DateField = ({
   required?: boolean
   register: UseFormMethods["register"]
   watch: UseFormMethods["watch"]
-  onChange: () => void
+  onChange?: () => void
 }) => {
   const birthDay: string = watch("dobObject.birthDay") ?? defaultDOB?.birthDay
   const birthMonth: string = watch("dobObject.birthMonth") ?? defaultDOB?.birthMonth
 
-  const fieldInfo = {
+  const fieldInfo: DOBFieldsetInfo = {
     birthDay: {
       label: t("label.dobDay"),
       validation: (value: string) => {
@@ -154,7 +167,7 @@ const DateField = ({
 
   return (
     <Field
-      className="ml-0 mr-4 pb-4"
+      className="ml-0 mr-4"
       name={`dobObject.${fieldKey}`}
       label={fieldInfo[fieldKey].label}
       defaultValue={defaultDOB?.[fieldKey] ?? ""}
@@ -165,7 +178,10 @@ const DateField = ({
           range: fieldInfo[fieldKey].validation,
         },
       }}
-      inputProps={{ maxLength: fieldInfo[fieldKey].maxLength, required: true }}
+      inputProps={{
+        maxLength: fieldInfo[fieldKey].maxLength,
+        required: true,
+      }}
       type="number"
       register={register}
       onChange={onChange}

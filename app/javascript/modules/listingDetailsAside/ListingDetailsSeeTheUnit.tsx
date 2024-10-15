@@ -44,11 +44,14 @@ const SeeDetailsOnline = (listing: RailsListing) => (
         </div>
       )}
       {listing.Listing_Online_Details?.map((detail: ListingOnlineDetail) => {
+        // if the link provided from salesforce doesn't include http|https it gets treated as an internal link
+        // prepending // forces it to be treated as an internal link
+        const link = detail.URL.includes("http") ? detail.URL : `//${detail.URL}`
         return (
           <div key={detail.Id}>
-            <Link className="no-underline" href={detail.URL} hideExternalLinkIcon={true}>
+            <a href={link} target="_blank">
               {detail.Listing_Online_Detail_Name}
-            </Link>
+            </a>
           </div>
         )
       })}
