@@ -13,7 +13,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
-  isFcfsListing,
+  isFcfsSalesListing,
   isHabitatListing,
   isOpen,
   isRental,
@@ -140,7 +140,7 @@ const StandardHowToApply = ({
 }
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
-  const isFcfsBmrSales = isFcfsListing(listing)
+  const isFcfsBmrSales = isFcfsSalesListing(listing)
   const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
 
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
