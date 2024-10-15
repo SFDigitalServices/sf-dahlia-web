@@ -22,9 +22,9 @@ describe("My Applications", () => {
     cy.signIn()
     cy.addReactQueryParam()
 
+    cy.task("log", "Go to the My Applications page")
     cy.intercept("/api/v1/account/my-applications", { applications: [] })
     cy.get('a[href="/my-applications?react=true"]').click()
-    cy.addReactQueryParam()
 
     // There should be no applications right now
     cy.contains("It looks like you haven't applied to any listings yet.")
