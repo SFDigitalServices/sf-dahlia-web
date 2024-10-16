@@ -3,6 +3,7 @@ AccountController = (
   $scope,
   $state,
   $translate,
+  $window,
   AccountService,
   AnalyticsService,
   inputMaxLength,
@@ -304,7 +305,7 @@ AccountController = (
       $translate.instant('error.password_confirmation')
 
 AccountController.$inject = [
-  '$document', '$scope', '$state', '$translate', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
   'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 
