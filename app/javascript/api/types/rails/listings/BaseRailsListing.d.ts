@@ -152,6 +152,9 @@ type BaseRailsListing = {
   SASE_Required_for_Lottery_Ticket: boolean
   Services_Onsite?: string
   Smoking_Policy?: string
+  // TODO: We don't yet get Status back for a listing. Salesforce needs to add it to the API response
+  // for now, it will always return null
+  Status?: string
   Tenure: string
   Total_number_of_building_units: number
   Total_waitlist_openings?: number

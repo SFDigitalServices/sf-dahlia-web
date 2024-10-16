@@ -1,12 +1,18 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { getTagContent, isFcfsSalesListing, isLotteryComplete } from "../../util/listingUtil"
+import {
+  getFcfsSalesListingState,
+  getTagContent,
+  isFcfsSalesListing,
+  isLotteryComplete,
+} from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./SharedHelpers.scss"
+import { ListingState } from "./ListingState"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -39,8 +45,7 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
  * @returns StatusBarType[]
  */
 const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
-  const isFcfsApplicationNotYetOpen = new Date(listing.Application_Start_Date_Time) > new Date()
-  const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
+  const listingState = getFcfsSalesListingState(listing)
   const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
 
   const applicationsClosedStatus = {
@@ -64,9 +69,13 @@ const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
     subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
   }
 
-  return isFcfsApplicationClosed
+  return listingState === ListingState.Closed
     ? [applicationsClosedStatus]
-    : [isFcfsApplicationNotYetOpen ? applicationsNotYetOpenStatus : applicationsOpenStatus]
+    : [
+        listingState === ListingState.NotYetOpen
+          ? applicationsNotYetOpenStatus
+          : applicationsOpenStatus,
+      ]
 }
 
 /**

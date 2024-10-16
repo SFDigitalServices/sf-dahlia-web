@@ -56,13 +56,13 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
           >
             <div
               class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
-              data-variant="primary"
+              data-variant="alert"
             >
               <span
                 class="ui-icon ui-medium"
               >
                 <svg
-                  fill="currentColor"
+                  fill="red-700"
                   viewBox="0 0 32 32"
                 >
                   <path
@@ -76,7 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                Applications closed
               </span>
             </div>
           </div>
@@ -151,46 +151,6 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                     </span>
                   </div>
                 </div>
-              </div>
-            </section>
-          </div>
-          <div
-            class="md:px-0 px-2"
-          >
-            <section
-              class="aside-block fcfs-bmr-how-to-apply"
-            >
-              <h4
-                class="text__underline-weighted"
-              >
-                How to Apply
-              </h4>
-              <div
-                class="text-sm text-gray-750"
-              >
-                <div
-                  class="fcfs-bmr-how-to-apply__list"
-                >
-                  <ol
-                    class="numbered-list text-black text-base"
-                  >
-                    <li>
-                      Fill out PDF application
-                    </li>
-                    <li>
-                      Gather documents
-                    </li>
-                    <li>
-                      When you are ready, submit application
-                    </li>
-                  </ol>
-                </div>
-                <button
-                  class="button is-primary w-full"
-                  tabindex="0"
-                >
-                  Learn more and apply
-                </button>
               </div>
             </section>
           </div>

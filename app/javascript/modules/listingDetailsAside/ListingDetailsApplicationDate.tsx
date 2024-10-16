@@ -4,9 +4,10 @@ import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housin
 import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
+import { getFcfsSalesListingState, isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import bloomTheme from "../../../../tailwind.config"
 import { Message } from "@bloom-housing/ui-seeds"
+import { ListingState } from "../listings/ListingState"
 
 export interface ListingDetailsApplicationDateProps {
   listing: RailsListing
@@ -53,15 +54,14 @@ const getStatusLottery = (listing: RailsListing) => {
 }
 
 const getStatusFcfs = (listing: RailsListing) => {
-  const isClosed = !listing.Accepting_Online_Applications
+  const listingState = getFcfsSalesListingState(listing)
   const datetime = listing.Application_Start_Date_Time
-  const showDateTime = new Date(listing.Application_Start_Date_Time) > new Date()
 
   const getMessage = () => {
-    if (isClosed) {
+    if (listingState === ListingState.Closed) {
       return t("listingDetails.applicationsClosed")
     } else {
-      return showDateTime
+      return listingState === ListingState.NotYetOpen
         ? t("listingDetails.applicationsOpen.withDateTime", {
             date: localizedFormat(datetime, "LL"),
             time: formatTime(datetime),
@@ -70,7 +70,7 @@ const getStatusFcfs = (listing: RailsListing) => {
     }
   }
 
-  return <StatusMessage isClosed={isClosed} message={getMessage()} />
+  return <StatusMessage isClosed={listingState === ListingState.Closed} message={getMessage()} />
 }
 
 const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {

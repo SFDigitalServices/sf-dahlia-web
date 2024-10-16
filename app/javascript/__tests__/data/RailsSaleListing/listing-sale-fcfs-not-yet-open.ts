@@ -3,6 +3,7 @@ import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../../../modules/constants
 
 export const notYetOpenSaleFcfsListing: RailsSaleListing = {
   Listing_Type: LISTING_TYPE_FIRST_COME_FIRST_SERVED,
+  Status: "Active",
   Application_Start_Date_Time: "2050-01-01T01:00:00.000+0000",
   unitSummaries: {
     reserved: null,
