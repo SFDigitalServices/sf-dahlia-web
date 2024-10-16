@@ -28,6 +28,8 @@ export const handleNameServerErrors = (
     : [name, { message: "name:server:generic", shouldFocus: true }]
 }
 
+export const nameSortOrder = ["firstName", "middleName", "lastName"]
+
 const nameValidation = (name: "firstName" | "lastName", value: string) => {
   // The below check is also happening on the backend, but we want to provide immediate feedback to the user
   // The backend check is happening in the account_validation_service.rb file

@@ -50,6 +50,8 @@ export const emailFieldsetErrors: ErrorMessages = {
   },
 }
 
+export const emailSortOrder = ["email"]
+
 const emailValidation = (data: string) => {
   const numberOfAts = (data.match(/@/g) || []).length
   if (numberOfAts === 0) {

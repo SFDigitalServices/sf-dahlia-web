@@ -36,6 +36,30 @@ describe("ErrorSummaryBanner", () => {
     expect(errorItems).toHaveLength(2)
   })
 
+  test("should display errors in alignment with the fieldOrder", () => {
+    const fieldOrder = ["firstName", "lastName", "birthMonth", "email", "password"]
+
+    const errors: DeepMap<FieldValues, FieldError> = {
+      email: { type: "required", message: "Email is required" },
+      password: { type: "minLength", message: "Password must be at least 6 characters" },
+      firstName: { type: "required", message: "First name is required" },
+      lastName: { type: "required", message: "Last name is required" },
+      birthMonth: { type: "required", message: "Date of birth is required" },
+    }
+
+    render(<ErrorSummaryBanner errors={errors} sortOrder={fieldOrder} />)
+
+    const errorMessages = screen.getAllByRole("listitem").map((button) => button.textContent)
+
+    expect(errorMessages).toEqual([
+      "First name is required",
+      "Last name is required",
+      "Date of birth is required",
+      "Email is required",
+      "Password must be at least 6 characters",
+    ])
+  })
+
   test("will call messageMap if provided", () => {
     const messageMap = jest.fn((message) => message)
     render(
