@@ -5,6 +5,10 @@ import {
   scrollToErrorOnSubmit,
 } from "../../pages/account/components/ErrorSummaryBanner"
 import { DeepMap, FieldValues, FieldError } from "react-hook-form"
+import { dobSortOrder } from "../../pages/account/components/DOBFieldset"
+import { emailSortOrder } from "../../pages/account/components/EmailFieldset"
+import { nameSortOrder } from "../../pages/account/components/NameFieldset"
+import { passwordSortOrder } from "../../pages/account/components/PasswordFieldset"
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
@@ -37,7 +41,7 @@ describe("ErrorSummaryBanner", () => {
   })
 
   test("should display errors in alignment with the fieldOrder", () => {
-    const fieldOrder = ["firstName", "lastName", "birthMonth", "email", "password"]
+    const fieldOrder = [...nameSortOrder, ...dobSortOrder, ...emailSortOrder, ...passwordSortOrder]
 
     const errors: DeepMap<FieldValues, FieldError> = {
       email: { type: "required", message: "Email is required" },
