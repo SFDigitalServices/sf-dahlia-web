@@ -6925,3 +6925,485 @@ exports[`ListingDetailsEligibility does not display ListingDetailsChisholmPrefer
   </li>
 </DocumentFragment>
 `;
+
+exports[`ListingDetailsEligibility does not display lottery preferences for fcfs listing 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item bg-primary-lighter"
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src="listing-eligibility.svg"
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Eligibility
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        />
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <ul>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Before applying
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              Make sure you:
+            </span>
+          </hgroup>
+        </header>
+        <ol
+          class="numbered-list my-5 bg-white p-4 pt-6 text-xs"
+        >
+          <li
+            class="text-gray-750 primary-lighter-markup-link"
+          >
+            Haven't owned residential property in the past 3 years
+          </li>
+          <li
+            class="text-gray-750 primary-lighter-markup-link"
+          >
+            <span>
+              Meet our 
+              <a
+                href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+                target="_blank"
+              >
+                income requirements
+              </a>
+            </span>
+          </li>
+          <li
+            class="text-gray-750 primary-lighter-markup-link"
+          >
+            <span>
+              Complete 
+              <a
+                href="https://sf.gov/sign-complete-homebuyer-education"
+                target="_blank"
+              >
+                homebuyer education
+              </a>
+            </span>
+          </li>
+          <li
+            class="text-gray-750 primary-lighter-markup-link"
+          >
+            <span>
+              Get pre-approved for a mortgage loan by a 
+              <a
+                href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
+                target="_blank"
+              >
+                lender on our list
+              </a>
+            </span>
+          </li>
+          <li
+            class="text-gray-750 primary-lighter-markup-link"
+          >
+            Have enough in savings for closing costs and downpayment
+          </li>
+        </ol>
+        <div
+          class="text-gray-750 primary-lighter-markup-link-desktop"
+        >
+          <span>
+            Read 
+            <a
+              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
+              target="_blank"
+            >
+              our full list of requirements
+            </a>
+             for more details.
+          </span>
+        </div>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Household Maximum Income
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              <div>
+                <div
+                  class="mb-4"
+                >
+                  <p>
+                    For income calculations, household size includes everyone (all ages) living in the unit.
+                  </p>
+                </div>
+                <div
+                  class="mb-4 primary-lighter-markup-link-desktop"
+                >
+                  <p>
+                    People in your household may need 
+                    <a
+                      href="https://sf.gov/information/special-calculations-household-income"
+                      target="_blank"
+                    >
+                      special income calculations
+                    </a>
+                     if they:
+                  </p>
+                </div>
+                <ul
+                  class="list-disc ml-5"
+                >
+                  <li>
+                    Are full-time students (but not the primary applicant).
+                  </li>
+                  <li>
+                    Receive non-taxable income (non-taxable income might include SSI, SSDI, child support payments, and worker’s compensation benefits).
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    household size
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per month
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    maximum income per year
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 person
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,275 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $51,300 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $4,883 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $58,600 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $5,495 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $65,950 per year
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-3"
+              >
+                <td
+                  class="p-5"
+                  data-label="household size"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    4 people
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per month"
+                >
+                  $6,104 per month
+                </td>
+                <td
+                  class="p-5"
+                  data-label="maximum income per year"
+                >
+                  $73,250 per year
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button
+          aria-expanded="false"
+          aria-label="Show more about maximum income based on household size"
+          class="button has-icon-right is-inline font-medium md:bg-primary-lighter mt-3 text-primary-dark"
+          tabindex="0"
+        >
+          <span
+            class="button__content"
+          >
+            Show more
+          </span>
+          <span
+            class="ui-icon ui-small button__icon "
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-angle-down "
+              data-icon="angle-down"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 448 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        class="list-section custom-counter__item"
+      >
+        <header
+          class="list-section__header custom-counter__header"
+        >
+          <hgroup>
+            <h3
+              class="custom-counter__title"
+            >
+              Occupancy
+            </h3>
+            <span
+              class="custom-counter__subtitle"
+            >
+              A minimum of one person per bedroom is required.
+            </span>
+          </hgroup>
+        </header>
+        <div
+          style="overflow-x: auto;"
+        >
+          <table
+            class="w-full text-xs"
+          >
+            <thead>
+              <tr>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Unit Type
+                  </span>
+                </th>
+                <th
+                  class=""
+                >
+                  <span
+                    class=""
+                  >
+                    Occupancy
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class=""
+                id="standardrow-0"
+              >
+                <td
+                  class="p-5"
+                  data-label="Unit Type"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    1 Bedroom
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="Occupancy"
+                >
+                  at least 1 people
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-1"
+              >
+                <td
+                  class="p-5"
+                  data-label="Unit Type"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    2 Bedroom
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="Occupancy"
+                >
+                  at least 2 people
+                </td>
+              </tr>
+              <tr
+                class=""
+                id="standardrow-2"
+              >
+                <td
+                  class="p-5"
+                  data-label="Unit Type"
+                >
+                  <span
+                    class="font-semibold"
+                  >
+                    3 Bedroom
+                  </span>
+                </td>
+                <td
+                  class="p-5"
+                  data-label="Occupancy"
+                >
+                  at least 3 people
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </li>
+    </ul>
+  </li>
+</DocumentFragment>
+`;
