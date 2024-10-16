@@ -2,8 +2,6 @@
 
 exports[`MobileListingDetailsProcess does not render if listing is closed 1`] = `<DocumentFragment />`;
 
-exports[`MobileListingDetailsProcess does not render if listing is fcfs 1`] = `<DocumentFragment />`;
-
 exports[`MobileListingDetailsProcess renders with listing with open application 1`] = `
 <DocumentFragment>
   <li
