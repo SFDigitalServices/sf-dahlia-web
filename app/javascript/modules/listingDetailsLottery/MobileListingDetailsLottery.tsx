@@ -7,6 +7,7 @@ import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsLotteryProps {
   imageSrc: string
@@ -14,8 +15,9 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
-  // render this component if the listing is not sales fcfs and is not open
-  const shouldRenderComponent = !isOpen(listing) && !isFcfsSalesListing(listing)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+  const shouldHideFcfs = isSalesFcfsEnabled && isFcfsSalesListing(listing)
+  const shouldRenderComponent = !shouldHideFcfs || !isOpen(listing)
 
   return (
     listing &&
