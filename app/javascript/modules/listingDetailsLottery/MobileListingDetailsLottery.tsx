@@ -16,8 +16,8 @@ export interface ListingDetailsLotteryProps {
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-  const shouldHideFcfs = isSalesFcfsEnabled && isFcfsSalesListing(listing)
-  const shouldRenderComponent = !shouldHideFcfs || !isOpen(listing)
+  const shouldNotRenderForFcfs = isSalesFcfsEnabled && isFcfsSalesListing(listing)
+  const shouldRenderComponent = shouldNotRenderForFcfs ? false : !isOpen(listing)
 
   return (
     listing &&
