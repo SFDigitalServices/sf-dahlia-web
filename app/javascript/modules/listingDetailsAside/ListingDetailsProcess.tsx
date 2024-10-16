@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isFcfsListing, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isRental, isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -24,7 +24,7 @@ const WhatToExpect = ({
   listing: RailsListing
   isSalesFcfsEnabled: boolean
 }) => {
-  if (isFcfsListing(listing) && isSalesFcfsEnabled) {
+  if (isFcfsSalesListing(listing) && isSalesFcfsEnabled) {
     return null
   }
   return (

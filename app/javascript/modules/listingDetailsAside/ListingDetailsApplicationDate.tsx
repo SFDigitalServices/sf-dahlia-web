@@ -3,9 +3,8 @@ import { RailsListing } from "../listings/SharedHelpers"
 import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
 import { localizedFormat } from "../../util/languageUtil"
 import dayjs from "dayjs"
-import { LISTING_TYPE_FIRST_COME_FIRST_SERVED } from "../constants"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { isOpen } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import bloomTheme from "../../../../tailwind.config"
 import { Message } from "@bloom-housing/ui-seeds"
 
@@ -75,9 +74,7 @@ const getStatusFcfs = (listing: RailsListing) => {
 }
 
 const ListingDetailsStatus = ({ listing }: { listing: RailsListing }) => {
-  return listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
-    ? getStatusFcfs(listing)
-    : getStatusLottery(listing)
+  return isFcfsSalesListing(listing) ? getStatusFcfs(listing) : getStatusLottery(listing)
 }
 
 export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplicationDateProps) => {
@@ -87,7 +84,7 @@ export const ListingDetailsApplicationDate = ({ listing }: ListingDetailsApplica
 
   return (
     <div className="w-full mb-8 md:mb-0">
-      {isSalesFcfsEnabled ? (
+      {isSalesFcfsEnabled && isFcfsSalesListing(listing) ? (
         <ListingDetailsStatus listing={listing} />
       ) : (
         <div className="w-full mb-8 md:mb-0">
