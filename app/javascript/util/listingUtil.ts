@@ -40,7 +40,7 @@ export const isFcfsSalesListing = (listing: RailsRentalListing | RailsSaleListin
 
 export const getFcfsSalesListingState = (listing: RailsSaleListing): ListingState => {
   if (
-    (listing.Status !== null && listing.Status !== LISTING_STATUS_ACTIVE) ||
+    (!!listing.Status && listing.Status !== LISTING_STATUS_ACTIVE) ||
     !listing.Accepting_Online_Applications
   ) {
     return ListingState.Closed
