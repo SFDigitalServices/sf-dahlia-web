@@ -87,9 +87,6 @@ SharedService = ($http, $state, $window, $document) ->
     'dahlia.reset-password':
       buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/reset-password")
       shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.PASSWORD_PAGES_REACT is "true"
-    'dahlia.how-to-apply':
-      buildUrl: (state, params) -> Service._addLanguageAndParamsToUrl(params.lang, "/listings/#{params.id}/how-to-apply")
-      shouldRailsRoute: (isFirstLoad) -> !isFirstLoad && $window.HOW_TO_APPLY_PAGE_REACT is "true"
 
   Service.getLanguageCode = (langName) ->
     # will take "English" and return "en", for example
