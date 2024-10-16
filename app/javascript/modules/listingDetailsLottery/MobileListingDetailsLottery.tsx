@@ -3,7 +3,7 @@ import { ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsLotteryResults } from "./ListingDetailsLotteryResults"
 import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProcess"
-import { isOpen } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
@@ -14,11 +14,12 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
-  const isApplicationOpen = isOpen(listing)
+  // render this component if the listing is not sales fcfs and is not open
+  const shouldRenderComponent = !isOpen(listing) && !isFcfsSalesListing(listing)
 
   return (
     listing &&
-    !isApplicationOpen && (
+    shouldRenderComponent && (
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
@@ -30,7 +31,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={shouldRenderComponent} />
         </ListingDetailItem>
       </Mobile>
     )
