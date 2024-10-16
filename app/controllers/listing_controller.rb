@@ -13,7 +13,9 @@ class ListingController < ApplicationController
     # TODO: DAH-2846 Status will be added to the listing object
     # Until then, that field will be nil
     # If the listing is closed, redirect
-    if (!listing['Status'].nil? && listing['Status'] != 'Active') ||
+    if listing['RecordType']['Name'] != 'Ownership' ||
+       listing['Listing_Type'] != 'First Come, First Served' ||
+       (!listing['Status'].nil? && listing['Status'] != 'Active') ||
        listing['Accepting_Online_Applications'] == false
       redirect_back_or_to({ action: 'index' })
       nil
