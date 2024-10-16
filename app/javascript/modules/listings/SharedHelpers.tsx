@@ -38,6 +38,18 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
   return [doesMatch ? matchedStatus : notMatchedStatus]
 }
 
+const getFcfsApplicationNotYetOpenStatus = (listing: RailsSaleListing) => {
+  const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
+
+  return {
+    status: ApplicationStatusType.Open,
+    content: `${t(
+      "listingDirectory.listingStatusContent.applicationsOpen"
+    )}: ${formattedDueDateString}`,
+    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+  }
+}
+
 /**
  * Get status banners for first come, first served listings on the directory page
  *
@@ -46,7 +58,6 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
  */
 const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
   const listingState = getFcfsSalesListingState(listing)
-  const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
 
   const applicationsClosedStatus = {
     status: ApplicationStatusType.Closed,
@@ -55,19 +66,13 @@ const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
     hideIcon: true,
   }
 
-  const applicationsNotYetOpenStatus = {
-    status: ApplicationStatusType.Open,
-    content: `${t(
-      "listingDirectory.listingStatusContent.applicationsOpen"
-    )}: ${formattedDueDateString}`,
-    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
-  }
-
   const applicationsOpenStatus = {
     status: ApplicationStatusType.Open,
     content: t("listingDirectory.listingStatusContent.applicationsOpen"),
     subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
   }
+
+  const applicationsNotYetOpenStatus = getFcfsApplicationNotYetOpenStatus(listing)
 
   return listingState === ListingState.Closed
     ? [applicationsClosedStatus]
