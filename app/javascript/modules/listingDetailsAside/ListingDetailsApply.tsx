@@ -22,12 +22,13 @@ import {
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { localizedPath } from "../../util/routeUtil"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-const FcfsBmrSalesHowToApply = () => (
+const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
     <div className="fcfs-bmr-how-to-apply__list">
       <ol className="numbered-list text-black text-base">
@@ -36,7 +37,13 @@ const FcfsBmrSalesHowToApply = () => (
         <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
       </ol>
     </div>
-    <Button className="w-full" styleType={AppearanceStyleType.primary}>
+    <Button
+      className="w-full"
+      styleType={AppearanceStyleType.primary}
+      onClick={() => {
+        window.location.href = localizedPath(`listings/${listingId}/how-to-apply`)
+      }}
+    >
       {t("listings.fcfs.bmrSales.howToApply.learnMore")}
     </Button>
   </SidebarBlock>
@@ -153,7 +160,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const howToApplyBlock =
     isSalesFcfsEnabled && isFcfsBmrSales ? (
-      <FcfsBmrSalesHowToApply />
+      <FcfsBmrSalesHowToApply listingId={listing.listingID} />
     ) : (
       <StandardHowToApply
         listingId={listing.listingID}
