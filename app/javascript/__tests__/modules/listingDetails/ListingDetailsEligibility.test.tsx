@@ -19,6 +19,7 @@ import {
 } from "../../data/RailsRentalListing/listing-rental-educator"
 import { t } from "@bloom-housing/ui-components"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
+import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 
 const axios = require("axios")
 
@@ -349,6 +350,27 @@ describe("ListingDetailsEligibility", () => {
     )
 
     expect(findByText(t("listings.customListingType.educator.preferences.part1"))).not.toBeNull()
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it("does not display lottery preferences for fcfs listing", async () => {
+    axios.get.mockResolvedValue({ data: { listings: [fcfsSaleListing] } })
+    const { asFragment } = await renderAndLoadAsync(
+      <ListingDetailsContext.Provider
+        value={{
+          units: unitsWithOneAmi,
+          amiCharts: amiChartsWithOneAmi,
+          fetchingUnits: false,
+          fetchedUnits: true,
+          fetchingAmiCharts: false,
+          fetchedAmiCharts: true,
+          fetchingAmiChartsError: undefined,
+          fetchingUnitsError: undefined,
+        }}
+      >
+        <ListingDetailsEligibility listing={fcfsSaleListing} imageSrc={"listing-eligibility.svg"} />
+      </ListingDetailsContext.Provider>
+    )
     expect(asFragment()).toMatchSnapshot()
   })
 })
