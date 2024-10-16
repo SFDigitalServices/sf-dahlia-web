@@ -10,11 +10,12 @@ class ListingController < ApplicationController
     @how_to_apply_props = { assetPaths: static_asset_paths }
     listing_id = params['id']
     listing = Force::ListingService.listing(listing_id)
-    # TODO: DAH-2846 Status will be added to the listing object
-    # Until then, that field will be nil
-    # If the listing is closed, redirect
+    # if listing is not ownership fcfs
     if listing['RecordType']['Name'] != 'Ownership' ||
        listing['Listing_Type'] != 'First Come, First Served' ||
+       # If the listing is closed, redirect
+       # TODO: DAH-2846 Status will be added to the listing object
+       # Until then, that field will be nil
        (!listing['Status'].nil? && listing['Status'] != 'Active') ||
        listing['Accepting_Online_Applications'] == false
       redirect_back_or_to({ action: 'index' })
