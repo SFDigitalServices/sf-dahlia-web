@@ -21,6 +21,7 @@ import {
 } from "../../util/listingUtil"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -142,22 +143,25 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const isFcfsBmrSales = isFcfsSalesListing(listing)
   const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
 
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+
   if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
 
   const isListingRental = isRental(listing)
 
   const acceptingPaperApps = acceptingPaperApplications(listing)
 
-  const howToApplyBlock = isFcfsBmrSales ? (
-    <FcfsBmrSalesHowToApply />
-  ) : (
-    <StandardHowToApply
-      listingId={listing.listingID}
-      isListingRental={isListingRental}
-      isHabitatListing={isHabitatListing(listing)}
-      acceptingPaperApps={acceptingPaperApps}
-    />
-  )
+  const howToApplyBlock =
+    isSalesFcfsEnabled && isFcfsBmrSales ? (
+      <FcfsBmrSalesHowToApply />
+    ) : (
+      <StandardHowToApply
+        listingId={listing.listingID}
+        isListingRental={isListingRental}
+        isHabitatListing={isHabitatListing(listing)}
+        acceptingPaperApps={acceptingPaperApps}
+      />
+    )
 
   const submitPaperApplicationBlocks = (
     <>

@@ -1306,7 +1306,7 @@
   "lottery.applicationsThatQualifyForPreference": "Applications that qualify for this preference will be given a higher priority in the lottery.",
   "lottery.bucketsIntro": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
   "lottery.completeResultsWillBePosted": "Complete lottery results will be posted on this date by 5 pm.",
-  "lottery.downloadLotteryResults": "Download lottery results PDF",
+  "lottery.downloadLotteryResultsPdf": "Download lottery results PDF",
   "lottery.enterLotteryNo": "Enter Your Lottery Number",
   "lottery.enterLotteryNumber": "Enter Your Lottery Number",
   "lottery.generalPool": "General Pool",

@@ -162,6 +162,54 @@ describe("<CreateAccount />", () => {
       ).not.toBeNull()
     })
 
+    it("shows an error message when name fields contain www, http, or .", async () => {
+      const firstName = screen.getByRole("textbox", {
+        name: /first name/i,
+      })
+      const lastName = screen.getByRole("textbox", {
+        name: /last name/i,
+      })
+      await act(async () => {
+        await user.type(firstName, "http")
+        await user.type(lastName, "www")
+        await user.tab()
+      })
+      expect(
+        screen.getAllByRole("button", {
+          name: /something went wrong/i,
+        })
+      ).toHaveLength(2)
+      expect(
+        screen.getAllByText(/something went wrong\. try again or check back later/i)
+      ).toHaveLength(2)
+    })
+
+    it("shows an error message when name fields contain empty spaces", async () => {
+      const firstName = screen.getByRole("textbox", {
+        name: /first name/i,
+      })
+      const lastName = screen.getByRole("textbox", {
+        name: /last name/i,
+      })
+      await act(async () => {
+        await user.type(firstName, "   ")
+        await user.type(lastName, "   ")
+        await user.tab()
+      })
+      expect(screen.getAllByText("Enter first name")).toHaveLength(2)
+      expect(
+        screen.getByRole("button", {
+          name: /enter first name/i,
+        })
+      ).not.toBeNull()
+      expect(screen.getAllByText("Enter last name")).toHaveLength(2)
+      expect(
+        screen.getByRole("button", {
+          name: /enter last name/i,
+        })
+      ).not.toBeNull()
+    })
+
     it("shows an error message for DOB fields", async () => {
       const monthField: Element = screen.getByRole("spinbutton", {
         name: /month/i,

@@ -324,7 +324,10 @@ export const ListingDetailsEligibility = ({
               }
             >
               <ErrorBoundary boundaryScope={BoundaryScope.component}>
-                <ListingDetailsPreferences listingID={listing.listingID} />
+                <ListingDetailsPreferences
+                  listingID={listing.listingID}
+                  translations={listing.translations}
+                />
               </ErrorBoundary>
             </ListSection>
           )
