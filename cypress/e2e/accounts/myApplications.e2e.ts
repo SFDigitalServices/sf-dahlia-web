@@ -11,6 +11,10 @@ describe("My Applications", () => {
     cy.intercept("/api/v1/listings/a0W4U00000IhGZcUAN/lottery_buckets", {
       fixture: "lotteryRanking.json",
     })
+
+    cy.window().then((win) => {
+      win.ACCOUNT_INFORMATION_PAGES_REACT = true
+    })
   })
 
   it("runs through the my applications page", () => {
