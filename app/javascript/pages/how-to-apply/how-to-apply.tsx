@@ -1,6 +1,5 @@
 import React from "react"
 
-import "./how-to-apply.scss"
 import Layout from "../../layouts/Layout"
 import { t } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
