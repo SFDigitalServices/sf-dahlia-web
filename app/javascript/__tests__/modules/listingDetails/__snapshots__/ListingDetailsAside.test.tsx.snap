@@ -185,12 +185,13 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                     </li>
                   </ol>
                 </div>
-                <button
-                  class="button is-primary w-full"
+                <a
+                  class="button is-primary w-full transition"
+                  href="/listings/a0W0P00000GlKfBUAV/how-to-apply"
                   tabindex="0"
                 >
                   Learn more and apply
-                </button>
+                </a>
               </div>
             </section>
           </div>
