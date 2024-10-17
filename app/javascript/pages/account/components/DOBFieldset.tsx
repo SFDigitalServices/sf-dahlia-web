@@ -82,6 +82,8 @@ export const dobFieldsetErrors: ErrorMessages = {
   },
 }
 
+export const dobSortOrder = ["birthMonth", "birthDay", "birthYear"]
+
 const validateNumber = (required: boolean, value: string, maxValue: number, errorKey: string) => {
   if (!required && !value?.length) return true
 

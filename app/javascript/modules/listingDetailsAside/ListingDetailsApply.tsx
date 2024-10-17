@@ -13,6 +13,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
+  getFcfsSalesListingState,
   isFcfsSalesListing,
   isHabitatListing,
   isOpen,
@@ -23,6 +24,7 @@ import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { localizedPath } from "../../util/routeUtil"
+import { ListingState } from "../listings/ListingState"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
@@ -147,11 +149,14 @@ const StandardHowToApply = ({
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const isFcfsBmrSales = isFcfsSalesListing(listing)
-  const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
+  const listingState = getFcfsSalesListingState(listing)
 
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
-  if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
+  if (
+    isSalesFcfsEnabled && isFcfsBmrSales ? listingState === ListingState.Closed : !isOpen(listing)
+  )
+    return null
 
   const isListingRental = isRental(listing)
 
