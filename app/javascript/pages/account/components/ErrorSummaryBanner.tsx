@@ -38,6 +38,18 @@ export const scrollToErrorOnSubmit =
     }
   }
 
+const sortErrors = (errors: DeepMap<FieldValues, FieldError>, fieldOrder: string[]): string[] => {
+  const errorKeys = Object.keys(errors)
+
+  const sortedKeys = errorKeys.sort((keyA, keyB) => {
+    const indexA = fieldOrder.indexOf(keyA)
+    const indexB = fieldOrder.indexOf(keyB)
+    return indexA - indexB
+  })
+
+  return sortedKeys
+}
+
 export interface ErrorMessage {
   default: string
   abbreviated: string
@@ -57,9 +69,11 @@ export const UnifiedErrorMessageMap: ErrorMessages = {
 export const ErrorSummaryBanner = ({
   errors,
   messageMap,
+  sortOrder,
 }: {
   errors: DeepMap<FieldValues, FieldError>
   messageMap?: (message: string) => string
+  sortOrder?: string[]
 }) => {
   const listRef = React.useRef<HTMLUListElement>(null)
 
@@ -67,11 +81,13 @@ export const ErrorSummaryBanner = ({
     return null
   }
 
+  const sortedErrors = sortOrder ? sortErrors(errors, sortOrder) : Object.keys(errors)
+
   return (
     <Alert fullwidth variant="alert" className="error-summary-banner">
       {t("error.accountBanner.header")}
       <ul className="list-disc list-inside pl-2 pt-1" ref={listRef}>
-        {Object.keys(errors).map((key: string) => {
+        {sortedErrors.map((key: string) => {
           let fieldError = errors[key]
 
           if (messageMap && fieldError.message && typeof fieldError.message === "string") {
