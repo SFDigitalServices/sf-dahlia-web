@@ -22,6 +22,10 @@
   margin-bottom: 0.4rem;
 }
 
+.is-card-link::after {
+  content: none !important;
+}
+
 .match-container {
   width: 64rem;
 }
