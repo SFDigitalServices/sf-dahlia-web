@@ -5,6 +5,10 @@ import {
   scrollToErrorOnSubmit,
 } from "../../pages/account/components/ErrorSummaryBanner"
 import { DeepMap, FieldValues, FieldError } from "react-hook-form"
+import { dobSortOrder } from "../../pages/account/components/DOBFieldset"
+import { emailSortOrder } from "../../pages/account/components/EmailFieldset"
+import { nameSortOrder } from "../../pages/account/components/NameFieldset"
+import { passwordSortOrder } from "../../pages/account/components/PasswordFieldset"
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn()
 
@@ -34,6 +38,30 @@ describe("ErrorSummaryBanner", () => {
     )
     const errorItems = screen.getAllByRole("listitem")
     expect(errorItems).toHaveLength(2)
+  })
+
+  test("should display errors in alignment with the fieldOrder", () => {
+    const fieldOrder = [...nameSortOrder, ...dobSortOrder, ...emailSortOrder, ...passwordSortOrder]
+
+    const errors: DeepMap<FieldValues, FieldError> = {
+      email: { type: "required", message: "Email is required" },
+      password: { type: "minLength", message: "Password must be at least 6 characters" },
+      firstName: { type: "required", message: "First name is required" },
+      lastName: { type: "required", message: "Last name is required" },
+      birthMonth: { type: "required", message: "Date of birth is required" },
+    }
+
+    render(<ErrorSummaryBanner errors={errors} sortOrder={fieldOrder} />)
+
+    const errorMessages = screen.getAllByRole("listitem").map((button) => button.textContent)
+
+    expect(errorMessages).toEqual([
+      "First name is required",
+      "Last name is required",
+      "Date of birth is required",
+      "Email is required",
+      "Password must be at least 6 characters",
+    ])
   })
 
   test("will call messageMap if provided", () => {
