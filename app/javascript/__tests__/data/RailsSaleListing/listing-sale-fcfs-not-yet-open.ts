@@ -161,7 +161,7 @@ export const notYetOpenSaleFcfsListing: RailsSaleListing = {
   Year_Built: 2018,
   LastModifiedDate: "2022-04-11T23:49:30.000+0000",
   Marketing_URL: "TEST-Sale-Listi-Jan19",
-  Application_Due_Date: "2050-01-01T01:00:00.000+0000",
+  Application_Due_Date: "",
   Building_URL:
     "https://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/test-apologies.png",
   Legal_Disclaimers:
