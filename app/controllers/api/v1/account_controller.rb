@@ -25,13 +25,14 @@ class Api::V1::AccountController < ApiController
   end
 
   def check_account
-    if User.find_by_email(params[:email])
+    if User.find_by_email(params[:email]&.downcase)
       render json: { account_exists: true }
     else
       render json: { account_exists: false }
     end
   end
 
+  # this method is probably not used anywhere
   def confirm
     unless Rails.env.development? || ENV['SAUCE_URL']
       return render plain: 'Forbidden', status: 403
