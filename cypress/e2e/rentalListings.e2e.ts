@@ -5,6 +5,32 @@ describe("Rental listings directory page", () => {
     cy.wait("@listings")
   })
 
+  it("renders a listing with the correct interactivity", () => {
+    cy.intercept("/api/v1/listings/a0W8H00000140LvUAI.json", {
+      fixture: "openRentalListing.json",
+    }).as("listingDetails")
+
+    cy.get('[data-testid="listing-card-component"]')
+      .first()
+      .within(() => {
+        cy.get("table").click()
+        cy.url().should("include", "/listings/for-rent?react=true")
+        cy.get("@listingDetails.all").should("have.length", 0)
+        cy.contains("a", "See Details").click()
+        cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
+      })
+    cy.url().should("include", "/listings/a0W8H00000140LvUAI")
+    cy.go("back")
+
+    cy.get('[data-testid="listing-card-component"]')
+      .first()
+      .within(() => {
+        cy.get("h2").click()
+        cy.wait("@listingDetails").its("response.statusCode").should("eq", 200)
+      })
+    cy.url().should("include", "/listings/a0W8H00000140LvUAI")
+  })
+
   it("renders upcoming and results", () => {
     cy.contains("Upcoming Lotteries")
     cy.contains("Lottery Results")
