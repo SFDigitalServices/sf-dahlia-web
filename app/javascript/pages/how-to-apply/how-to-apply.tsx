@@ -4,7 +4,7 @@ import "./how-to-apply.scss"
 import Layout from "../../layouts/Layout"
 import { t } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
-import { Link } from "@bloom-housing/ui-seeds"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -44,9 +44,36 @@ const HowToApply = (_props: HowToApplyProps) => {
                     </div>
                     <ul className="mb-0 pb-6">
                       <li>{t("howToApplyPage.beforeYouStart.eligibilityList.listItem1")}</li>
-                      <li>{t("howToApplyPage.beforeYouStart.eligibilityList.listItem2")}</li>
-                      <li>{t("howToApplyPage.beforeYouStart.eligibilityList.listItem3")}</li>
-                      <li>{t("howToApplyPage.beforeYouStart.eligibilityList.listItem4")}</li>
+                      <li>
+                        {renderInlineMarkup(
+                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem2", {
+                            url: getSfGovUrl(
+                              "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+                              7164
+                            ),
+                          })}`
+                        )}
+                      </li>
+                      <li>
+                        {renderInlineMarkup(
+                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem3", {
+                            url: getSfGovUrl(
+                              "https://sf.gov/sign-complete-homebuyer-education",
+                              212
+                            ),
+                          })}`
+                        )}
+                      </li>
+                      <li>
+                        {renderInlineMarkup(
+                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem4", {
+                            url: getSfGovUrl(
+                              "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
+                              6953
+                            ),
+                          })}`
+                        )}
+                      </li>
                       <li>{t("listingsForSale.beforeApplying.step5")}</li>
                     </ul>
                     <h4 className="font-alt-sans pb-4">
@@ -88,8 +115,9 @@ const HowToApply = (_props: HowToApplyProps) => {
                         {t("howToApplyPage.howToApply.step4.title")}
                       </h4>
                       <div className="text-base pb-2">
-                        <Link href="#">{t("howToApplyPage.howToApply.step4.link")}</Link>{" "}
-                        {t("howToApplyPage.howToApply.step4.desc1")}
+                        {renderInlineMarkup(
+                          t("howToApplyPage.howToApply.step4.desc1", { url: "#" })
+                        )}
                       </div>
                       <div className="text-base">{t("howToApplyPage.howToApply.step4.desc2")}</div>
                     </li>
@@ -102,7 +130,9 @@ const HowToApply = (_props: HowToApplyProps) => {
                       </div>
                       <ul className="mb-0 pb-2">
                         <li className="text-base">
-                          {t("howToApplyPage.howToApply.step5.list.listItem1")}
+                          {renderInlineMarkup(
+                            t("howToApplyPage.howToApply.step5.list.listItem1", { url: "#" })
+                          )}
                         </li>
                         <li className="text-base">
                           {t("howToApplyPage.howToApply.step5.list.listItem2")}
@@ -119,7 +149,9 @@ const HowToApply = (_props: HowToApplyProps) => {
                   </h3>
                   <div className="pb-2">{t("howToApplyPage.whatHappensNext.desc1")}</div>
                   <div className="pb-2">{t("howToApplyPage.whatHappensNext.desc2")}</div>
-                  <Link href="#">{t("listings.fcfs.bmrSales.noLotteryRequired.footer")}</Link>
+                  <a className="underline" target="_blank" href="//google.com">
+                    {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
+                  </a>
                 </article>
               </div>
             </div>
