@@ -14,13 +14,13 @@ const Header = ({ headerText }: { headerText: string }) => {
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
-  return <h4 className="font-alt-sans pt-6">{subHeaderText}</h4>
+  return <h4 className="font-alt-sans pt-6 pb-4">{subHeaderText}</h4>
 }
 
 const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
   return (
-    <div className="mt-4 p-6 bg-gray-200">
-      <div className="font-semibold font-alt-sans text-lg">{title}</div>
+    <div className="my-6 p-6 bg-gray-200">
+      <div className="font-semibold font-alt-sans text-lg pb-2">{title}</div>
       <div>{children}</div>
     </div>
   )
@@ -72,7 +72,7 @@ const BeforeYouStartSection = () => {
       <Header headerText={t("howToApplyPage.beforeYouStartSection.title")} />
       <SubHeader subHeaderText={t("howToApplyPage.beforeYouStartSection.subtitle1")} />
       <div>{t("howToApplyPage.beforeYouStartSection.eligibilityList.title")}</div>
-      <ul className="mb-0">
+      <ul className="mb-0 pt-2">
         {eligibilityListItems.map((item) => (
           <li>
             {renderInlineSfGovUrl(
@@ -98,7 +98,7 @@ const HowToApplyListItem = ({
 }) => {
   return (
     <li>
-      <h4 className="font-alt-sans pb-4">{headerText}</h4>
+      <h4 className="font-semibold font-alt-sans pb-4">{headerText}</h4>
       <div className="text-base">{children}</div>
     </li>
   )
@@ -133,10 +133,12 @@ const CombineStep = () => {
       <div className="text-base">{t("howToApplyPage.howToApplySection.step3.p1")}</div>
       <InfoBox title={t("howToApplyPage.howToApplySection.step3.infoBox.title")}>
         <div>{t("howToApplyPage.howToApplySection.step3.infoBox.p1")}</div>
-        <div className="italic">{t("howToApplyPage.howToApplySection.step3.infoBox.p2")}</div>
-        <div className="italic">
-          <Icon size="medium" symbol="document" />
-          {t("howToApplyPage.howToApplySection.step3.infoBox.p3")}
+        <div className="pt-4 italic">
+          <div>{t("howToApplyPage.howToApplySection.step3.infoBox.p2")}</div>
+          <div>
+            <Icon size="medium" symbol="document" />
+            {t("howToApplyPage.howToApplySection.step3.infoBox.p3")}
+          </div>
         </div>
       </InfoBox>
       <div className="text-base">
@@ -180,13 +182,15 @@ const HowToApplySection = () => {
   return (
     <>
       <Header headerText={t("pageTitle.howToApply")} />
-      <ol className="process-list">
-        <FillOutPdfAppStep />
-        <GatherDocumentsStep />
-        <CombineStep />
-        <CreateBoxAccountStep />
-        <SubmitApplicationStep />
-      </ol>
+      <div className="pt-4">
+        <ol className="process-list">
+          <FillOutPdfAppStep />
+          <GatherDocumentsStep />
+          <CombineStep />
+          <CreateBoxAccountStep />
+          <SubmitApplicationStep />
+        </ol>
+      </div>
     </>
   )
 }
@@ -195,8 +199,8 @@ const WhatHappensNextSection = () => {
   return (
     <>
       <Header headerText={t("howToApplyPage.whatHappensNext.title")} />
-      <div className="pb-2">{t("howToApplyPage.whatHappensNext.p1")}</div>
-      <div className="pb-2">{t("howToApplyPage.whatHappensNext.p2")}</div>
+      <div className="pt-4">{t("howToApplyPage.whatHappensNext.p1")}</div>
+      <div className="py-2">{t("howToApplyPage.whatHappensNext.p2")}</div>
       <a className="underline" target="_blank" href="//google.com">
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>
