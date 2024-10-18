@@ -11,6 +11,7 @@ import SignIn from "../pages/sign-in"
 import ListingDetail from "../pages/listings/listing-detail"
 import { getCurrentLanguage, loadTranslations } from "../util/languageUtil"
 import HousingCounselors from "../pages/getAssistance/housing-counselors"
+import HowToApply from "../pages/how-to-apply/how-to-apply"
 import GetAssistance from "../pages/getAssistance/get-assistance"
 import DocumentChecklist from "../pages/getAssistance/document-checklist"
 import ListingInterestPage from "../pages/listingInterest/listing-interest-page"
@@ -38,6 +39,7 @@ void loadTranslations(currentLanguage).then(() =>
     ForgotPassword,
     ResetPassword,
     HousingCounselors,
+    HowToApply,
     GetAssistance,
     DocumentChecklist,
     AdditionalResources,
