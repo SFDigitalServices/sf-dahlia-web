@@ -41,7 +41,6 @@ PreCommit:
     description: "Checking Rails best practices"
     exclude:
       - "**/__snapshots__/*"
-      - "**/**_controller.rb"
 
   CoffeeLint:
     enabled: true
