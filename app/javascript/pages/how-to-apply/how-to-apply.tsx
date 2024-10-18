@@ -14,7 +14,7 @@ const Header = ({ headerText }: { headerText: string }) => {
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
-  return <h4 className="font-alt-sans pt-6 pb-4">{subHeaderText}</h4>
+  return <h4 className="font-semibold font-alt-sans pt-6 pb-4">{subHeaderText}</h4>
 }
 
 const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
@@ -226,18 +226,14 @@ const WhatHappensNextSection = () => {
 const HowToApply = (_props: HowToApplyProps) => {
   return (
     <Layout title={t("pageTitle.howToApply")}>
-      <section className="flex flex-col justify-center md:px-5">
+      <section className="flex md:px-5">
         <article className="markdown max-w-5xl m-auto">
           <div className="pt-4 md:py-0 max-w-3xl">
-            <div className="markdown-section markdown-section--with-padding">
-              <div className="markdown-section__inner">
-                <article className="markdown">
-                  <HowLongItTakesSection />
-                  <BeforeYouStartSection />
-                  <HowToApplySection />
-                  <WhatHappensNextSection />
-                </article>
-              </div>
+            <div className="my-6 md:my-12 px-5">
+              <HowLongItTakesSection />
+              <BeforeYouStartSection />
+              <HowToApplySection />
+              <WhatHappensNextSection />
             </div>
           </div>
         </article>
