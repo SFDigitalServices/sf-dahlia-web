@@ -1,12 +1,207 @@
-import React from "react"
+import React, { ReactNode } from "react"
 
 import Layout from "../../layouts/Layout"
-import { t } from "@bloom-housing/ui-components"
+import { Icon, t } from "@bloom-housing/ui-components"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 
 interface HowToApplyProps {
   assetPaths: unknown
+}
+
+const Header = ({ headerText }: { headerText: string }) => {
+  return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
+}
+
+const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
+  return <h4 className="font-alt-sans pt-6">{subHeaderText}</h4>
+}
+
+const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
+  return (
+    <div className="mt-4 p-6 bg-gray-200">
+      <div className="font-semibold font-alt-sans text-lg">{title}</div>
+      <div>{children}</div>
+    </div>
+  )
+}
+
+const HowLongItTakesSection = () => {
+  return (
+    <div className="py-10">
+      <Header headerText={t("howToApplyPage.howLongItTakesSection.title")} />
+      <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle1")} />
+      {t("howToApplyPage.howLongItTakesSection.p1")}
+      <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle2")} />
+      {t("howToApplyPage.howLongItTakesSection.p2")}
+    </div>
+  )
+}
+
+const renderInlineSfGovUrl = (key: string, url: string, node: number) => {
+  return renderInlineMarkup(
+    `${t(key, {
+      url: getSfGovUrl(url, node),
+    })}`
+  )
+}
+
+const eligibilityListItems = [
+  { index: 1 },
+  {
+    index: 2,
+    link: "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
+    node: 7164,
+  },
+  {
+    index: 3,
+    link: "https://sf.gov/sign-complete-homebuyer-education",
+    node: 212,
+  },
+  {
+    index: 4,
+    link: "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
+    node: 6953,
+  },
+  { index: 5 },
+]
+
+const BeforeYouStartSection = () => {
+  return (
+    <div className="pb-10">
+      <Header headerText={t("howToApplyPage.beforeYouStartSection.title")} />
+      <SubHeader subHeaderText={t("howToApplyPage.beforeYouStartSection.subtitle1")} />
+      <div>{t("howToApplyPage.beforeYouStartSection.eligibilityList.title")}</div>
+      <ul className="mb-0">
+        {eligibilityListItems.map((item) => (
+          <li>
+            {renderInlineSfGovUrl(
+              `howToApplyPage.beforeYouStartSection.eligibilityList.listItem${item.index}`,
+              item.link,
+              item.node
+            )}
+          </li>
+        ))}
+      </ul>
+      <SubHeader subHeaderText={t("howToApplyPage.beforeYouStartSection.subtitle2")} />
+      {t("howToApplyPage.beforeYouStartSection.p2")}
+    </div>
+  )
+}
+
+const HowToApplyListItem = ({
+  headerText,
+  children,
+}: {
+  headerText: string
+  children: ReactNode
+}) => {
+  return (
+    <li>
+      <h4 className="font-alt-sans pb-4">{headerText}</h4>
+      <div className="text-base">{children}</div>
+    </li>
+  )
+}
+
+const FillOutPdfAppStep = () => {
+  return (
+    <HowToApplyListItem headerText={t("listings.fcfs.bmrSales.howToApply.step1")}>
+      <div className="text-base pb-2">{t("howToApplyPage.howToApplySection.step1.p1")}</div>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step1.p2")}</div>
+      <InfoBox title={t("howToApplyPage.howToApplySection.step1.infoBox.title")}>
+        {t("howToApplyPage.howToApplySection.step1.infoBox.p1")}
+      </InfoBox>
+    </HowToApplyListItem>
+  )
+}
+
+const GatherDocumentsStep = () => {
+  return (
+    <HowToApplyListItem headerText={t("listings.fcfs.bmrSales.howToApply.step2")}>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step2.p1")}</div>
+      <InfoBox title={t("howToApplyPage.howToApplySection.step2.infoBox.title")}>
+        {t("howToApplyPage.howToApplySection.step2.infoBox.p1")}
+      </InfoBox>
+    </HowToApplyListItem>
+  )
+}
+
+const CombineStep = () => {
+  return (
+    <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step3.title")}>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step3.p1")}</div>
+      <InfoBox title={t("howToApplyPage.howToApplySection.step3.infoBox.title")}>
+        <div>{t("howToApplyPage.howToApplySection.step3.infoBox.p1")}</div>
+        <div className="italic">{t("howToApplyPage.howToApplySection.step3.infoBox.p2")}</div>
+        <div className="italic">
+          <Icon size="medium" symbol="document" />
+          {t("howToApplyPage.howToApplySection.step3.infoBox.p3")}
+        </div>
+      </InfoBox>
+      <div className="text-base">
+        {renderInlineMarkup(t("howToApplyPage.howToApplySection.step3.p2"), "<i>")}
+      </div>
+    </HowToApplyListItem>
+  )
+}
+
+const CreateBoxAccountStep = () => {
+  return (
+    <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step4.title")}>
+      <div className="text-base pb-2">
+        {renderInlineMarkup(t("howToApplyPage.howToApplySection.step4.p1", { url: "#" }))}
+      </div>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step4.p2")}</div>
+    </HowToApplyListItem>
+  )
+}
+
+const SubmitApplicationStep = () => {
+  return (
+    <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p1")}</div>
+      <ul className="mb-0 pb-2">
+        <li className="text-base">
+          {renderInlineMarkup(t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#" }))}
+        </li>
+        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2")}</li>
+        <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
+      </ul>
+      <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p2")}</div>
+      <InfoBox title={t("howToApplyPage.howToApplySection.step5.infoBox.title")}>
+        {t("howToApplyPage.howToApplySection.step5.infoBox.p1")}
+      </InfoBox>
+    </HowToApplyListItem>
+  )
+}
+
+const HowToApplySection = () => {
+  return (
+    <>
+      <Header headerText={t("pageTitle.howToApply")} />
+      <ol className="process-list">
+        <FillOutPdfAppStep />
+        <GatherDocumentsStep />
+        <CombineStep />
+        <CreateBoxAccountStep />
+        <SubmitApplicationStep />
+      </ol>
+    </>
+  )
+}
+
+const WhatHappensNextSection = () => {
+  return (
+    <>
+      <Header headerText={t("howToApplyPage.whatHappensNext.title")} />
+      <div className="pb-2">{t("howToApplyPage.whatHappensNext.p1")}</div>
+      <div className="pb-2">{t("howToApplyPage.whatHappensNext.p2")}</div>
+      <a className="underline" target="_blank" href="//google.com">
+        {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
+      </a>
+    </>
+  )
 }
 
 const HowToApply = (_props: HowToApplyProps) => {
@@ -18,139 +213,10 @@ const HowToApply = (_props: HowToApplyProps) => {
             <div className="markdown-section markdown-section--with-padding">
               <div className="markdown-section__inner">
                 <article className="markdown">
-                  <div className="py-10">
-                    <h3 className="text-2xl font-alt-serif pb-6">
-                      {t("howToApplyPage.howLongItTakes.title")}
-                    </h3>
-                    <h4 className="font-alt-sans pb-4">
-                      {t("howToApplyPage.howLongItTakes.subtitle1")}
-                    </h4>
-                    <div className="pb-6">{t("howToApplyPage.howLongItTakes.desc1")}</div>
-                    <h4 className="font-alt-sans pb-4">
-                      {t("howToApplyPage.howLongItTakes.subtitle2")}
-                    </h4>
-                    <div>{t("howToApplyPage.howLongItTakes.desc2")}</div>
-                  </div>
-                  <div className="pb-10">
-                    <h3 className="text-2xl font-alt-serif pb-6">
-                      {t("howToApplyPage.beforeYouStart.title")}
-                    </h3>
-                    <h4 className="font-alt-sans pb-4">
-                      {t("howToApplyPage.beforeYouStart.subtitle1")}
-                    </h4>
-                    <div className="pb-2">
-                      {t("howToApplyPage.beforeYouStart.eligibilityList.title")}
-                    </div>
-                    <ul className="mb-0 pb-6">
-                      <li>{t("howToApplyPage.beforeYouStart.eligibilityList.listItem1")}</li>
-                      <li>
-                        {renderInlineMarkup(
-                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem2", {
-                            url: getSfGovUrl(
-                              "https://sf.gov/determine-if-you-can-buy-affordable-housing-program",
-                              7164
-                            ),
-                          })}`
-                        )}
-                      </li>
-                      <li>
-                        {renderInlineMarkup(
-                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem3", {
-                            url: getSfGovUrl(
-                              "https://sf.gov/sign-complete-homebuyer-education",
-                              212
-                            ),
-                          })}`
-                        )}
-                      </li>
-                      <li>
-                        {renderInlineMarkup(
-                          `${t("howToApplyPage.beforeYouStart.eligibilityList.listItem4", {
-                            url: getSfGovUrl(
-                              "https://sf.gov/reports/october-2023/find-lender-below-market-rate-program",
-                              6953
-                            ),
-                          })}`
-                        )}
-                      </li>
-                      <li>{t("listingsForSale.beforeApplying.step5")}</li>
-                    </ul>
-                    <h4 className="font-alt-sans pb-4">
-                      {t("howToApplyPage.beforeYouStart.subtitle2")}
-                    </h4>
-                    <div className="pb-2">{t("howToApplyPage.beforeYouStart.desc2")}</div>
-                  </div>
-                  <h3 className="text-2xl font-alt-serif pb-4">{t("listings.apply.howToApply")}</h3>
-                  <ol className="process-list">
-                    <li>
-                      <h4 className="font-alt-sans pb-4">
-                        {t("listings.fcfs.bmrSales.howToApply.step1")}
-                      </h4>
-                      <div className="text-base pb-2">
-                        {t("howToApplyPage.howToApply.step1.desc1")}
-                      </div>
-                      <div className="text-base">{t("howToApplyPage.howToApply.step1.desc2")}</div>
-                    </li>
-                    <li>
-                      <h4 className="font-alt-sans pb-4">
-                        {t("listings.fcfs.bmrSales.howToApply.step2")}
-                      </h4>
-                      <div className="text-base">{t("howToApplyPage.howToApply.step2.desc1")}</div>
-                    </li>
-                    <li>
-                      <h4 className="font-alt-sans pb-4">
-                        {t("howToApplyPage.howToApply.step3.title")}
-                      </h4>
-                      <div className="text-base">{t("howToApplyPage.howToApply.step3.desc1")} </div>
-                      <div className="text-base">
-                        {t("howToApplyPage.howToApply.step3.desc2")}{" "}
-                        <span className="italic">
-                          {t("howToApplyPage.howToApply.step3.example")}
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <h4 className="font-alt-sans pb-4">
-                        {t("howToApplyPage.howToApply.step4.title")}
-                      </h4>
-                      <div className="text-base pb-2">
-                        {renderInlineMarkup(
-                          t("howToApplyPage.howToApply.step4.desc1", { url: "#" })
-                        )}
-                      </div>
-                      <div className="text-base">{t("howToApplyPage.howToApply.step4.desc2")}</div>
-                    </li>
-                    <li>
-                      <h4 className="font-alt-sans pb-4">
-                        {t("howToApplyPage.howToApply.step5.title")}
-                      </h4>
-                      <div className="text-base">
-                        {t("howToApplyPage.howToApply.step5.list.title")}
-                      </div>
-                      <ul className="mb-0 pb-2">
-                        <li className="text-base">
-                          {renderInlineMarkup(
-                            t("howToApplyPage.howToApply.step5.list.listItem1", { url: "#" })
-                          )}
-                        </li>
-                        <li className="text-base">
-                          {t("howToApplyPage.howToApply.step5.list.listItem2")}
-                        </li>
-                        <li className="text-base">
-                          {t("howToApplyPage.howToApply.step5.list.listItem3")}
-                        </li>
-                      </ul>
-                      <div className="text-base">{t("howToApplyPage.howToApply.step5.desc3")}</div>
-                    </li>
-                  </ol>
-                  <h3 className="text-2xl font-alt-serif pb-4">
-                    {t("howToApplyPage.whatHappensNext.title")}
-                  </h3>
-                  <div className="pb-2">{t("howToApplyPage.whatHappensNext.desc1")}</div>
-                  <div className="pb-2">{t("howToApplyPage.whatHappensNext.desc2")}</div>
-                  <a className="underline" target="_blank" href="//google.com">
-                    {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
-                  </a>
+                  <HowLongItTakesSection />
+                  <BeforeYouStartSection />
+                  <HowToApplySection />
+                  <WhatHappensNextSection />
                 </article>
               </div>
             </div>
