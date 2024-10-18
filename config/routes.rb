@@ -5,6 +5,38 @@ class RestrictProduction
   end
 end
 
+# Constraint for visiting (:lang)/listings/:id/how-to-apply
+class HowToApplyConstraint
+  def matches?(request)
+    # if the FCFS feature flag is enabled
+    listing_id = request.params['id']
+    listing = Force::ListingService.listing(listing_id)
+    return true if fcfs_flag_enabled &&
+                   listing_type_fcfs_sales_bmr(listing) &&
+                   listing_active(listing)
+  end
+
+  def fcfs_flag_enabled
+    Rails.configuration.unleash.is_enabled? 'FCFS'
+  end
+
+  def listing_type_fcfs_sales_bmr(listing)
+    # Record Type has to be Ownership
+    # Listing Type has to be First Come, First Served
+    listing['RecordType']['Name'] == 'Ownership' &&
+      listing['Listing_Type'] == 'First Come, First Served'
+  end
+
+  def listing_active(listing)
+    # Status has to be Active
+    # TODO: DAH-2846 Status will be added to the listing object
+    # Until then, that field will be nil
+    (!listing['Status'].nil? && listing['Status'] == 'Active') ||
+      # Accepting Online Applications has to be true
+      listing['Accepting_Online_Applications'] == true
+  end
+end
+
 Rails.application.routes.draw do
   root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
   mount_devise_token_auth_for(
@@ -84,8 +116,12 @@ Rails.application.routes.draw do
   get '(:lang)/listings/for-rent' => 'directory#rent', lang: /(en|es|zh|tl)/
   get '(:lang)/listings/for-sale' => 'directory#sale', lang: /(en|es|zh|tl)/
   # TODO: Paths on Bloom needs to be configurable
-  get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/, as: 'listing'
-  get '(:lang)/listings/:id/how-to-apply' => 'listing#how_to_apply', lang: /(en|es|zh|tl)/
+  get '(:lang)/listings/:id' => 'listing#index', lang: /(en|es|zh|tl)/
+
+  # If the constraint doesn't pass, it falls back to the next match
+  get '(:lang)/listings/:id/how-to-apply' => 'listing#how_to_apply', lang: /(en|es|zh|tl)/, constraints: HowToApplyConstraint.new
+  get '(:lang)/listings/:id/how-to-apply', to: redirect('%{lang}/listings/%{id}')
+
   get '(:lang)/sign-in' => 'auth#sign_in', lang: /(en|es|zh|tl)/
   get '(:lang)/create-account' => 'auth#create_account', lang: /(en|es|zh|tl)/
   get '(:lang)/forgot-password' => 'auth#forgot_password', lang: /(en|es|zh|tl)/
