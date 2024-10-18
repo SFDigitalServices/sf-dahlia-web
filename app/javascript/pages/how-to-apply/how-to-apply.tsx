@@ -75,11 +75,20 @@ const BeforeYouStartSection = () => {
       <ul className="mb-0 pt-2">
         {eligibilityListItems.map((item) => (
           <li>
-            {renderInlineSfGovUrl(
-              `howToApplyPage.beforeYouStartSection.eligibilityList.listItem${item.index}`,
-              item.link,
-              item.node
-            )}
+            {
+              // Possible keys:
+              // howToApplyPage.beforeYouStartSection.eligibilityList.listItem1
+              // howToApplyPage.beforeYouStartSection.eligibilityList.listItem2
+              // howToApplyPage.beforeYouStartSection.eligibilityList.listItem3
+              // howToApplyPage.beforeYouStartSection.eligibilityList.listItem4
+              // howToApplyPage.beforeYouStartSection.eligibilityList.listItem5
+
+              renderInlineSfGovUrl(
+                `howToApplyPage.beforeYouStartSection.eligibilityList.listItem${item.index}`,
+                item.link,
+                item.node
+              )
+            }
           </li>
         ))}
       </ul>
@@ -152,7 +161,10 @@ const CreateBoxAccountStep = () => {
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step4.title")}>
       <div className="text-base pb-2">
-        {renderInlineMarkup(t("howToApplyPage.howToApplySection.step4.p1", { url: "#" }))}
+        {
+          // TODO: DAH-2847 Add url
+          renderInlineMarkup(t("howToApplyPage.howToApplySection.step4.p1", { url: "#" }))
+        }
       </div>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step4.p2")}</div>
     </HowToApplyListItem>
@@ -165,7 +177,10 @@ const SubmitApplicationStep = () => {
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p1")}</div>
       <ul className="mb-0 pb-2">
         <li className="text-base">
-          {renderInlineMarkup(t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#" }))}
+          {
+            // TODO: DAH-2847 Add url
+            renderInlineMarkup(t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#" }))
+          }
         </li>
         <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2")}</li>
         <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
