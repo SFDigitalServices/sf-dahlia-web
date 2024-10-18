@@ -42,6 +42,10 @@ angular.module('dahlia.components')
     @isOpenMatchListing = (listing) ->
       @openMatchListings.indexOf(listing) > -1
 
+    @clickToNavigate = () ->
+      console.log("here")
+      ListingDataService.clickToNavigate()
+
     @isFavorited = (listingId) ->
       ListingDataService.isFavorited(listingId)
 

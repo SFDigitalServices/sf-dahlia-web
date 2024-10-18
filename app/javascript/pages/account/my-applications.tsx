@@ -19,6 +19,24 @@ import { Application } from "../../api/types/rails/application/RailsApplication"
 import { isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
 
+const AlreadySubmittedModal = () => {
+  return (
+    <Dialog
+      isOpen={true}
+      onClose={() => {
+        console.log("Close")
+      }}
+    >
+      <Dialog.Header>Good news!</Dialog.Header>
+      <Dialog.Content>You have already submitted an application to this listing.</Dialog.Content>
+      <Dialog.Content>Submitted: Oct 3, 2024</Dialog.Content>
+      <Dialog.Footer>
+        <Button>View Application</Button>
+      </Dialog.Footer>
+    </Dialog>
+  )
+}
+
 export const noApplications = () => {
   return (
     <Card.Section className="flex flex-col bg-primary-lighter items-center pb-12 border-t">
@@ -202,6 +220,7 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
+              <AlreadySubmittedModal />
               <Dialog
                 isOpen={openDeleteModal}
                 onClose={() => {

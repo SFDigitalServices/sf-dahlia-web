@@ -46,6 +46,24 @@ ListingDataService = (
     else
       # remove the favorite
       Service.favorites.splice(index, 1)
+  # a0o6s000001ddS5AAI
+  Service.clickToNavigate = () ->
+    $state.go('dahlia.my-applications', {
+      skipConfirm: true,
+      alreadySubmittedId: "a0o6s000001ddS5AAI",
+      doubleSubmit: false
+    })
+    # currentUrl = window.location.origin
+    # previousAppId = "a0o6s000001ddS5AAI"
+    # doubleSubmit = true
+    # newUrl = "#{currentUrl}/my-applications?react=true&alreadySubmittedId=#{previousAppId}&doubleSubmit=#{doubleSubmit}"
+    # window.location.href = newUrl
+    # console.log("here")
+    # $state.go('dahlia.my-applications', {
+    #     skipConfirm: true
+    #     alreadySubmittedId: ,
+    #     doubleSubmit: true
+    #   }, { location: 'replace' })
 
   Service.isFavorited = (listing_id) ->
     Service.favorites.indexOf(listing_id) > -1
