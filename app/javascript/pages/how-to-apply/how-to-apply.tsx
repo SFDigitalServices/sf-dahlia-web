@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react"
+import Markdown from "markdown-to-jsx"
 
 import Layout from "../../layouts/Layout"
 import { Icon, t } from "@bloom-housing/ui-components"
@@ -39,10 +40,12 @@ const HowLongItTakesSection = () => {
 }
 
 const renderInlineSfGovUrl = (key: string, url: string, node: number) => {
-  return renderInlineMarkup(
-    `${t(key, {
-      url: getSfGovUrl(url, node),
-    })}`
+  return (
+    <Markdown>
+      {`${t(key, {
+        url: getSfGovUrl(url, node),
+      })}`}
+    </Markdown>
   )
 }
 
@@ -214,8 +217,12 @@ const WhatHappensNextSection = () => {
   return (
     <>
       <Header headerText={t("howToApplyPage.whatHappensNext.title")} />
-      <div className="pt-4">{t("howToApplyPage.whatHappensNext.p1")}</div>
-      <div className="py-2">{t("howToApplyPage.whatHappensNext.p2")}</div>
+      <div className="pt-4">
+        {renderInlineMarkup(t("howToApplyPage.whatHappensNext.p1"), "<b>")}
+      </div>
+      <div className="py-2">
+        {renderInlineMarkup(t("howToApplyPage.whatHappensNext.p2"), "<b>")}
+      </div>
       <a className="underline" target="_blank" href="//google.com">
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>
