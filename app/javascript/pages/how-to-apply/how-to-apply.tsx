@@ -1,13 +1,27 @@
-import React, { ReactNode } from "react"
-
+import React, { ReactNode, useEffect, useState, useContext } from "react"
+import dayjs from "dayjs"
 import Layout from "../../layouts/Layout"
-import { Icon, t } from "@bloom-housing/ui-components"
+import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import {
+  localizedFormat,
+  formatTime,
+  getSfGovUrl,
+  renderInlineMarkup,
+  getPathWithoutLanguagePrefix,
+} from "../../util/languageUtil"
+import { Icon, t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
+import { Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
-import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
+import { getListing } from "../../api/listingApiService"
+
+import "./how-to-apply.scss"
 
 interface HowToApplyProps {
   assetPaths: unknown
 }
+
+const applicationsNotYetOpen = (listing: RailsSaleListing) =>
+  listing && dayjs(listing.Application_Start_Date_Time) > dayjs()
 
 const Header = ({ headerText }: { headerText: string }) => {
   return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
@@ -23,6 +37,26 @@ const InfoBox = ({ title, children }: { title: string; children: ReactNode }) =>
       <div className="font-semibold font-alt-sans text-lg pb-2">{title}</div>
       <div>{children}</div>
     </div>
+  )
+}
+
+const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
+  const datetime = listing.Application_Start_Date_Time
+
+  return (
+    <Message
+      fullwidth
+      className="justify-start leading-5"
+      variant="primary"
+      customIcon={<Icon symbol="clock" size="medium" />}
+    >
+      <b>{`${t("howToApplyPage.weAreNotAcceptingApplicationsYet")}`}</b>
+      <br />
+      {t("listingDetails.applicationsOpen.withDateTime", {
+        date: localizedFormat(datetime, "LL"),
+        time: formatTime(datetime),
+      })}
+    </Message>
   )
 }
 
@@ -171,7 +205,9 @@ const CreateBoxAccountStep = () => {
   )
 }
 
-const SubmitApplicationStep = () => {
+const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
+  const datetime = listing.Application_Start_Date_Time
+
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p1")}</div>
@@ -186,6 +222,17 @@ const SubmitApplicationStep = () => {
         <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
       </ul>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p2")}</div>
+      {applicationsNotYetOpen(listing) && (
+        <div className="text-base pt-2">
+          <Icon symbol="clock" size="medium" />
+          &nbsp;
+          {t("howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere", {
+            date: localizedFormat(datetime, "LL"),
+            time: formatTime(datetime),
+          })}
+        </div>
+      )}
+
       <InfoBox title={t("howToApplyPage.howToApplySection.step5.infoBox.title")}>
         {t("howToApplyPage.howToApplySection.step5.infoBox.p1")}
       </InfoBox>
@@ -193,7 +240,7 @@ const SubmitApplicationStep = () => {
   )
 }
 
-const HowToApplySection = () => {
+const HowToApplySection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
       <Header headerText={t("pageTitle.howToApply")} />
@@ -203,7 +250,7 @@ const HowToApplySection = () => {
           <GatherDocumentsStep />
           <CombineStep />
           <CreateBoxAccountStep />
-          <SubmitApplicationStep />
+          <SubmitApplicationStep listing={listing} />
         </ol>
       </div>
     </>
@@ -228,21 +275,43 @@ const WhatHappensNextSection = () => {
 }
 
 const HowToApply = (_props: HowToApplyProps) => {
+  const [listing, setListing] = useState<RailsSaleListing>(null)
+
+  const { router } = useContext(NavigationContext)
+
+  // identical data loading strategy to the Listing Details page
+  useEffect(() => {
+    const path = getPathWithoutLanguagePrefix(router.pathname)
+    void getListing(path.split("/")[2]).then((listing: RailsSaleListing) => {
+      if (!listing) {
+        router.push("/")
+      }
+      setListing(listing)
+    })
+  }, [router, router.pathname])
+
   return (
-    <Layout title={t("pageTitle.howToApply")}>
-      <section className="flex md:px-5">
-        <article className="markdown max-w-5xl m-auto">
-          <div className="pt-4 md:py-0 max-w-3xl">
-            <div className="my-6 md:my-12 px-5">
-              <HowLongItTakesSection />
-              <BeforeYouStartSection />
-              <HowToApplySection />
-              <WhatHappensNextSection />
+    <LoadingOverlay isLoading={!listing}>
+      <Layout title={t("pageTitle.howToApply")}>
+        <section className="flex md:px-5">
+          <article className="markdown max-w-5xl m-auto">
+            <div className="pt-4 md:py-0 max-w-3xl">
+              <div className="my-6 md:my-12 px-5">
+                {listing && (
+                  <>
+                    {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
+                    <HowLongItTakesSection />
+                    <BeforeYouStartSection />
+                    <HowToApplySection listing={listing} />
+                    <WhatHappensNextSection />
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </article>
-      </section>
-    </Layout>
+          </article>
+        </section>
+      </Layout>
+    </LoadingOverlay>
   )
 }
 
