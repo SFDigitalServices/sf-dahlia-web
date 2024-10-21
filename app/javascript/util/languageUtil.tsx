@@ -219,6 +219,7 @@ export function defaultIfNotTranslated(
   return translatedKey === key ? value : translatedKey
 }
 
+// TODO: rename to specify this formats date only, not time-of-day
 /**
  * Localize a given date for the current language.
  *
@@ -230,6 +231,15 @@ export function localizedFormat(date: string, format: string): string {
   const lang = getCurrentLanguage(window.location.pathname)
 
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
+}
+
+// TODO: rename to specify this formats time-of-day
+export const formatTime = (time: string) => {
+  const formattedTime = dayjs(time).format("h:mm")
+  const hour = Number(dayjs(time).format("H"))
+  // \u00A0 is a non-breaking space
+  const suffix = hour >= 12 ? "\u00A0PM" : "\u00A0AM"
+  return `${formattedTime}${suffix}`
 }
 
 /**
