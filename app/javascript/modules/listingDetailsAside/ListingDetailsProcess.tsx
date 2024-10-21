@@ -158,7 +158,7 @@ export const ListingDetailsProcess = ({
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock>
             <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
-            {(isListingRental || !isSalesFcfsEnabled) && listing.Multiple_Listing_Service_URL && (
+            {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
               <p className="mt-1">
                 <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
                   {t("listings.process.seeThisUnitOnMls")}
