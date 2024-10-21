@@ -245,6 +245,17 @@ exports[`MobileListingDetailsProcess renders with listing with open application 
           <p>
             Listing Updated: April 11, 2022
           </p>
+          <p
+            class="mt-1"
+          >
+            <a
+              class=""
+              href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+              target="_blank"
+            >
+              See this unit on MLS
+            </a>
+          </p>
         </div>
       </section>
     </div>
