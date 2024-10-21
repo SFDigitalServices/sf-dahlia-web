@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react"
-import Markdown from "markdown-to-jsx"
 
 import Layout from "../../layouts/Layout"
 import { Icon, t } from "@bloom-housing/ui-components"
@@ -40,12 +39,10 @@ const HowLongItTakesSection = () => {
 }
 
 const renderInlineSfGovUrl = (key: string, url: string, node: number) => {
-  return (
-    <Markdown>
-      {`${t(key, {
-        url: getSfGovUrl(url, node),
-      })}`}
-    </Markdown>
+  return renderInlineMarkup(
+    `${t(key, {
+      url: getSfGovUrl(url, node),
+    })}`
   )
 }
 
