@@ -108,7 +108,7 @@ const BeforeYouStartSection = () => {
       <div>{t("howToApplyPage.beforeYouStartSection.eligibilityList.title")}</div>
       <ul className="mb-0 pt-2">
         {eligibilityListItems.map((item) => (
-          <li>
+          <li key={item.index}>
             {
               // Possible keys:
               // howToApplyPage.beforeYouStartSection.eligibilityList.listItem1
