@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
-import { localizedFormat, formatTime } from "../../util/languageUtil"
+import { localizedFormat, formatTimeOfDay } from "../../util/languageUtil"
 import dayjs from "dayjs"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { getFcfsSalesListingState, isFcfsSalesListing, isOpen } from "../../util/listingUtil"
@@ -38,7 +38,7 @@ const getStatusLottery = (listing: RailsListing) => {
           : "listingDetails.applicationsDeadline.withDateTime",
         {
           date: localizedFormat(datetime, "LL"),
-          time: formatTime(datetime),
+          time: formatTimeOfDay(datetime),
         }
       )}
     />
@@ -56,7 +56,7 @@ const getStatusFcfs = (listing: RailsListing) => {
       return listingState === ListingState.NotYetOpen
         ? t("listingDetails.applicationsOpen.withDateTime", {
             date: localizedFormat(datetime, "LL"),
-            time: formatTime(datetime),
+            time: formatTimeOfDay(datetime),
           })
         : t("listingDetails.applicationsOpen")
     }

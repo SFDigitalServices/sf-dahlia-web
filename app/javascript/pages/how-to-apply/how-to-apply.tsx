@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
   localizedFormat,
-  formatTime,
+  formatTimeOfDay,
   getSfGovUrl,
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
@@ -54,7 +54,7 @@ const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
       <br />
       {t("listingDetails.applicationsOpen.withDateTime", {
         date: localizedFormat(datetime, "LL"),
-        time: formatTime(datetime),
+        time: formatTimeOfDay(datetime),
       })}
     </Message>
   )
@@ -228,7 +228,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           &nbsp;
           {t("howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere", {
             date: localizedFormat(datetime, "LL"),
-            time: formatTime(datetime),
+            time: formatTimeOfDay(datetime),
           })}
         </div>
       )}
