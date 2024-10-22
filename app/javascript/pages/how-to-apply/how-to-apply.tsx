@@ -315,4 +315,4 @@ const HowToApply = (_props: HowToApplyProps) => {
   )
 }
 
-export default withAppSetup(HowToApply, true)
+export default withAppSetup(HowToApply)
