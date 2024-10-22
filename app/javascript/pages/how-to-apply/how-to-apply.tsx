@@ -108,7 +108,7 @@ const eligibilityListItems = [
   { index: 5 },
 ]
 
-const BeforeYouStartSection = () => {
+const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="pb-10">
       <Header headerText={t("howToApplyPage.beforeYouStartSection.title")} />
@@ -143,7 +143,7 @@ const BeforeYouStartSection = () => {
         }}
         order={Order.below}
       >
-        <ListingDetailsSeeTheUnit listing={undefined} />
+        <ListingDetailsSeeTheUnit listing={listing} />
       </ExpandableContent>
     </div>
   )
@@ -323,7 +323,7 @@ const HowToApply = (_props: HowToApplyProps) => {
                   <>
                     {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
                     <HowLongItTakesSection />
-                    <BeforeYouStartSection />
+                    <BeforeYouStartSection listing={listing}/>
                     <HowToApplySection listing={listing} />
                     <WhatHappensNextSection />
                   </>
