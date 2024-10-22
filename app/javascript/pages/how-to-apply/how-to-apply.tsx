@@ -9,10 +9,18 @@ import {
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
 } from "../../util/languageUtil"
-import { Icon, t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
+import {
+  Icon,
+  t,
+  NavigationContext,
+  LoadingOverlay,
+  ExpandableContent,
+  Order,
+} from "@bloom-housing/ui-components"
 import { Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
+import { ListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/ListingDetailsSeeTheUnit"
 
 import "./how-to-apply.scss"
 
@@ -128,6 +136,15 @@ const BeforeYouStartSection = () => {
       </ul>
       <SubHeader subHeaderText={t("howToApplyPage.beforeYouStartSection.subtitle2")} />
       {t("howToApplyPage.beforeYouStartSection.p2")}
+      <ExpandableContent
+        strings={{
+          readMore: t("seeTheUnit.makeAnAppointment"),
+          readLess: t("seeTheUnit.makeAnAppointment"),
+        }}
+        order={Order.below}
+      >
+        <ListingDetailsSeeTheUnit listing={undefined} />
+      </ExpandableContent>
     </div>
   )
 }
@@ -201,6 +218,15 @@ const CreateBoxAccountStep = () => {
         }
       </div>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step4.p2")}</div>
+      <ExpandableContent
+        strings={{
+          readMore: t("howToApplyPage.howToApplySection.step4.p3"),
+          readLess: t("howToApplyPage.howToApplySection.step4.p3"),
+        }}
+        order={Order.below}
+      >
+        {t("howToApplyPage.howToApplySection.step4.p4")}
+      </ExpandableContent>
     </HowToApplyListItem>
   )
 }
