@@ -214,8 +214,12 @@ const WhatHappensNextSection = () => {
   return (
     <>
       <Header headerText={t("howToApplyPage.whatHappensNext.title")} />
-      <div className="pt-4">{t("howToApplyPage.whatHappensNext.p1")}</div>
-      <div className="py-2">{t("howToApplyPage.whatHappensNext.p2")}</div>
+      <div className="pt-4">
+        {renderInlineMarkup(t("howToApplyPage.whatHappensNext.p1"), "<b>")}
+      </div>
+      <div className="py-2">
+        {renderInlineMarkup(t("howToApplyPage.whatHappensNext.p2"), "<b>")}
+      </div>
       <a className="underline" target="_blank" href="//google.com">
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>
