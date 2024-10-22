@@ -114,38 +114,32 @@ const eligibilityListItems = [
 
 const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
   return (
-    <>
+    <div className="leasing-agent">
       <p>{listing.Leasing_Agent_Name}</p>
       <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
-      <div className="pt-2">
-        <p className="pb-1">
-          <a
-            href={
-              listing.Leasing_Agent_Phone
-                ? `tel:${listing.Leasing_Agent_Phone.replace(/[-()]/g, "")}`
-                : undefined
-            }
-          >
-            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} className={"pr-2"} />
-            {listing.Leasing_Agent_Phone
-              ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
-              : undefined}
-          </a>
-        </p>
-        <p className="pb-3">
-          <a href={`mailto:${listing.Leasing_Agent_Email}`}>
-            <span className="pr-2">
-              <FontAwesomeIcon icon={faEnvelope} />
-            </span>
-            {t("label.emailAddress")}
-          </a>
-        </p>
+      <a
+        href={
+          listing.Leasing_Agent_Phone
+            ? `tel:${listing.Leasing_Agent_Phone.replace(/[-()]/g, "")}`
+            : undefined
+        }
+      >
+        <Icon symbol="phone" size="medium" fill={IconFillColors.primary} className={"pr-2"} />
+        {listing.Leasing_Agent_Phone
+          ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
+          : undefined}
+      </a>
+      <div>
+        <a href={`mailto:${listing.Leasing_Agent_Email}`}>
+          <span className="pr-2">
+            <FontAwesomeIcon icon={faEnvelope} />
+          </span>
+          {t("label.emailAddress")}
+        </a>
       </div>
-      <Heading size="sm" className="pb-1">
-        {t("contactAgent.officeHours.seeTheUnit")}
-      </Heading>
+      <Heading size="sm">{t("contactAgent.officeHours.seeTheUnit")}</Heading>
       <p className="text-sm">{listing.Office_Hours}</p>
-    </>
+    </div>
   )
 }
 
