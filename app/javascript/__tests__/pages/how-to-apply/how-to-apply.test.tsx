@@ -1,7 +1,7 @@
 import React from "react"
 import { cleanup } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import HowToApply from "../../../pages/how-to-apply/how-to-apply"
+import HowToApply from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
