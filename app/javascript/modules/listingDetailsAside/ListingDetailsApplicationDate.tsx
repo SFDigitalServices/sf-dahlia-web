@@ -1,7 +1,7 @@
 import React from "react"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ApplicationStatus, ApplicationStatusType, Icon, t } from "@bloom-housing/ui-components"
-import { localizedFormat } from "../../util/languageUtil"
+import { localizedFormat, formatTime } from "../../util/languageUtil"
 import dayjs from "dayjs"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { getFcfsSalesListingState, isFcfsSalesListing, isOpen } from "../../util/listingUtil"
@@ -11,14 +11,6 @@ import { ListingState } from "../listings/ListingState"
 
 export interface ListingDetailsApplicationDateProps {
   listing: RailsListing
-}
-
-export const formatTime = (time: string) => {
-  const formattedTime = dayjs(time).format("h:mm")
-  const hour = Number(dayjs(time).format("H"))
-  // \u00A0 is a non-breaking space
-  const suffix = hour >= 12 ? "\u00A0PM" : "\u00A0AM"
-  return `${formattedTime}${suffix}`
 }
 
 const StatusMessage = ({ isClosed, message }: { isClosed: boolean; message: string }) => {
