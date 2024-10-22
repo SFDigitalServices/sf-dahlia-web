@@ -236,9 +236,8 @@ export function localizedFormat(date: string, format: string): string {
 export const formatTimeOfDay = (time: string) => {
   const formattedTime = dayjs(time).format("h:mm")
   const hour = Number(dayjs(time).format("H"))
-  // \u00A0 is a non-breaking space
-  const suffix = hour >= 12 ? "\u00A0PM" : "\u00A0AM"
-  return `${formattedTime}${suffix}`
+  const suffix = hour >= 12 ? "PM" : "AM"
+  return `${formattedTime} ${suffix}`
 }
 
 /**

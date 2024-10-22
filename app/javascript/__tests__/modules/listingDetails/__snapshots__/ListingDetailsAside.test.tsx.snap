@@ -76,7 +76,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <span
                 data-part="content"
               >
-                Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                Applications open: January 1, 2050 at 1:00 AM Pacific Time
               </span>
             </div>
           </div>
