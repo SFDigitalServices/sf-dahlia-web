@@ -16,13 +16,17 @@ import {
   LoadingOverlay,
   ExpandableContent,
   Order,
+  IconFillColors,
 } from "@bloom-housing/ui-components"
-import { Message } from "@bloom-housing/ui-seeds"
+import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { ListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/ListingDetailsSeeTheUnit"
 
 import "./how-to-apply.scss"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { listing } from "../../api/apiEndpoints"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -108,6 +112,43 @@ const eligibilityListItems = [
   { index: 5 },
 ]
 
+const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
+  return (
+    <>
+      <p>{listing.Leasing_Agent_Name}</p>
+      <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
+      <div className="pt-2">
+        <p className="pb-1">
+          <a
+            href={
+              listing.Leasing_Agent_Phone
+                ? `tel:${listing.Leasing_Agent_Phone.replace(/[-()]/g, "")}`
+                : undefined
+            }
+          >
+            <Icon symbol="phone" size="medium" fill={IconFillColors.primary} className={"pr-2"} />
+            {listing.Leasing_Agent_Phone
+              ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
+              : undefined}
+          </a>
+        </p>
+        <p className="pb-3">
+          <a href={`mailto:${listing.Leasing_Agent_Email}`}>
+            <span className="pr-2">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            {t("label.emailAddress")}
+          </a>
+        </p>
+      </div>
+      <Heading size="sm" className="pb-1">
+        {t("contactAgent.officeHours.seeTheUnit")}
+      </Heading>
+      <p className="text-sm">{listing.Office_Hours}</p>
+    </>
+  )
+}
+
 const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="pb-10">
@@ -143,7 +184,7 @@ const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
         }}
         order={Order.below}
       >
-        <ListingDetailsSeeTheUnit listing={listing} />
+        <LeasingAgentBox listing={listing} />
       </ExpandableContent>
     </div>
   )
@@ -323,7 +364,7 @@ const HowToApply = (_props: HowToApplyProps) => {
                   <>
                     {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
                     <HowLongItTakesSection />
-                    <BeforeYouStartSection listing={listing}/>
+                    <BeforeYouStartSection listing={listing} />
                     <HowToApplySection listing={listing} />
                     <WhatHappensNextSection />
                   </>
