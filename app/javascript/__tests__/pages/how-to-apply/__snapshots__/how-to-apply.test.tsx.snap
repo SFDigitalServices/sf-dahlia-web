@@ -359,6 +359,17 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     See the unit in person
                   </h4>
                   This is not required, but we encourage you to make sure the unit is right for you before applying.
+                  <div
+                    class="how-to-apply-dropdown pt-2"
+                  >
+                    <button
+                      aria-expanded="false"
+                      class="button is-unstyled m-0 no-underline has-toggle"
+                      type="button"
+                    >
+                      Make an appointment
+                    </button>
+                  </div>
                 </div>
                 <h3
                   class="text-2xl font-alt-serif"
@@ -521,6 +532,17 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           class="text-base"
                         >
                           If you already have an account, use that one.
+                        </div>
+                        <div
+                          class="how-to-apply-dropdown pt-2"
+                        >
+                          <button
+                            aria-expanded="false"
+                            class="button is-unstyled m-0 no-underline has-toggle"
+                            type="button"
+                          >
+                            What is Box.com
+                          </button>
                         </div>
                       </div>
                     </li>
