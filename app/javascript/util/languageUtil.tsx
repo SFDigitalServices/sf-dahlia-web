@@ -232,6 +232,14 @@ export function localizedFormat(date: string, format: string): string {
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
 }
 
+// Time zone is assumed to be Pacific
+export const formatTimeOfDay = (time: string) => {
+  const formattedTime = dayjs(time).format("h:mm")
+  const hour = Number(dayjs(time).format("H"))
+  const suffix = hour >= 12 ? "PM" : "AM"
+  return `${formattedTime} ${suffix}`
+}
+
 /**
  * Get the current language prefix as a capitalized string, or default to the english prefix if there is no explicit prefix in
  * the path.

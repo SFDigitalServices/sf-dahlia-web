@@ -8,6 +8,57 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
     <div
       class="site-content"
     >
+      <title
+        class="notranslate"
+      >
+        How to Apply
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
+        content="How to Apply"
+        property="og:title"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:description"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        name="description"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
+      />
       <header
         class="site-header"
       >
@@ -186,6 +237,35 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
               <div
                 class="my-6 md:my-12 px-5"
               >
+                <div
+                  class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
+                  data-variant="primary"
+                >
+                  <span
+                    class="ui-icon ui-medium"
+                  >
+                    <svg
+                      fill="currentColor"
+                      viewBox="0 0 32 32"
+                    >
+                      <path
+                        d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                      />
+                      <path
+                        d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    data-part="content"
+                  >
+                    <b>
+                      We are not accepting applications yet.
+                    </b>
+                    <br />
+                    Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                  </span>
+                </div>
                 <div
                   class="py-10"
                 >
@@ -490,6 +570,26 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           class="text-base"
                         >
                           The time and date you apply determines your place in line.
+                        </div>
+                        <div
+                          class="text-base pt-6"
+                        >
+                          <span
+                            class="ui-icon ui-medium"
+                          >
+                            <svg
+                              fill="currentColor"
+                              viewBox="0 0 32 32"
+                            >
+                              <path
+                                d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                              />
+                              <path
+                                d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                              />
+                            </svg>
+                          </span>
+                           Applications open January 1, 2050 at 1:00 AM Pacific Time. Check back here to apply.
                         </div>
                         <div
                           class="my-6 p-6 bg-gray-200"
