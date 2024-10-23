@@ -125,7 +125,7 @@ GEM
     dalli (3.2.4)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
-    database_cleaner-active_record (2.1.0)
+    database_cleaner-active_record (2.2.0)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
@@ -307,14 +307,14 @@ GEM
     multi_json (1.15.0)
     multipart-post (2.3.0)
     murmurhash3 (0.1.7)
-    net-imap (0.4.10)
+    net-imap (0.4.17)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.5.0)
       net-protocol
     newrelic_rpm (9.0.0)
     nio4r (2.7.3)
