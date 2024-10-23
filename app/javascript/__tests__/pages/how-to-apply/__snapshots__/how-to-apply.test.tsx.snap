@@ -3,673 +3,340 @@
 exports[`<HowToApply /> renders HowToApply component 1`] = `
 <DocumentFragment>
   <div
-    class="notranslate site-wrapper"
+    class="loading-overlay"
+    data-testid="loading-overlay"
   >
-    <div
-      class="site-content"
+    <span
+      class="ui-icon ui-3xl loading-overlay__spinner spinner-animation"
     >
-      <header
-        class="site-header"
+      <svg
+        fill="currentColor"
+        viewBox="0 0 100 100"
       >
-        <a
-          class="site-header__skip-link"
-          href="#main-content"
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="32"
+          stroke="currentColor"
+          stroke-dasharray="150.79644737231007 52.26548245743669"
+          stroke-width="9"
+        />
+      </svg>
+    </span>
+    <div
+      class="notranslate site-wrapper"
+    >
+      <div
+        class="site-content"
+      >
+        <header
+          class="site-header"
         >
-          Skip to main content
-        </a>
-        <div
-          class="language-bar"
-        >
-          <div
-            class="language-bar__inner"
+          <a
+            class="site-header__skip-link"
+            href="#main-content"
           >
-            <nav
-              aria-label="Choose your language"
-              class="language-nav"
-            >
-              <ul
-                class="language-nav__list"
-              >
-                <li>
-                  <button
-                    class="language-nav__list-button is-active"
-                    type="button"
-                  >
-                    English
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    Español
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    中文
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="language-nav__list-button"
-                    type="button"
-                  >
-                    Filipino
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-        <div
-          class="site-header__notice "
-        >
+            Skip to main content
+          </a>
           <div
-            class="site-header__notice-text"
-          >
-            <span>
-              We'd love to get 
-              <a
-                href="https://airtable.com/shrw64DubWTQfRkdo"
-                target="_blank"
-              >
-                your feedback.
-              </a>
-            </span>
-          </div>
-        </div>
-        <nav
-          aria-label="main navigation"
-          class="site-header__container"
-          role="navigation"
-        >
-          <div
-            class="site-header__base  site-header__base-wrapped"
+            class="language-bar"
           >
             <div
-              class="site-header__logo-container site-header__logo-width-med"
-              id="site-header-logo"
+              class="language-bar__inner"
             >
-              <a
-                aria-label="DAHLIA San Francisco Housing Portal"
-                class="site-header__logo translate site-header__custom-width"
-                href="/"
-                target="_self"
+              <nav
+                aria-label="Choose your language"
+                class="language-nav"
               >
-                <div
-                  class="site-header__logo-content site-header__image-only-container"
+                <ul
+                  class="language-nav__list"
                 >
-                  <img
-                    alt="Site logo"
-                    class="site-header__logo-image site-header__image-only"
-                  />
-                </div>
-              </a>
-            </div>
-            <div
-              class="site-header__navbar-menu site-header__navbar-wrapped"
-              id="site-header-links"
-            >
-              <a
-                class="site-header__link  "
-                data-testid="Rent-0"
-                href="/listings/for-rent"
-                target="_self"
-              >
-                <div>
-                  Rent
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Buy-1"
-                href="/listings/for-sale"
-                target="_self"
-              >
-                <div>
-                  Buy
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="My Favorites-2"
-                href="/favorites"
-                target="_self"
-              >
-                <div>
-                  My Favorites
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Get Assistance-3"
-                href="/get-assistance"
-                target="_self"
-              >
-                <div>
-                  Get Assistance
-                </div>
-              </a>
-              <a
-                class="site-header__link  "
-                data-testid="Sign In-4"
-                href="/sign-in"
-                target="_self"
-              >
-                <div>
-                  Sign In
-                </div>
-              </a>
+                  <li>
+                    <button
+                      class="language-nav__list-button is-active"
+                      type="button"
+                    >
+                      English
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Español
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      中文
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      class="language-nav__list-button"
+                      type="button"
+                    >
+                      Filipino
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
-        </nav>
-      </header>
-      <main
-        class="md:overflow-x-hidden"
-        data-testid="main-content-test-id"
-        id="main-content"
-      >
-        <section
-          class="flex md:px-5"
-        >
-          <article
-            class="markdown max-w-5xl m-auto"
+          <div
+            class="site-header__notice "
           >
             <div
-              class="pt-4 md:py-0 max-w-3xl"
+              class="site-header__notice-text"
             >
-              <div
-                class="my-6 md:my-12 px-5"
-              >
-                <div
-                  class="py-10"
-                >
-                  <h3
-                    class="text-2xl font-alt-serif"
-                  >
-                    How long it takes
-                  </h3>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Preparing your application
-                  </h4>
-                  It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Submitting your application
-                  </h4>
-                  30 minutes or less
-                </div>
-                <div
-                  class="pb-10"
-                >
-                  <h3
-                    class="text-2xl font-alt-serif"
-                  >
-                    Before you start
-                  </h3>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Make sure you are eligible
-                  </h4>
-                  <div>
-                    To apply for this unit you must:
-                  </div>
-                  <ul
-                    class="mb-0 pt-2"
-                  >
-                    <li>
-                      <span>
-                        Not have owned residential property in the past 3 years
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Meet our 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
-                          target="_blank"
-                        >
-                          income requirements
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Have completed 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/sign-complete-homebuyer-education"
-                          target="_blank"
-                        >
-                          homebuyer education
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Be pre-approved for a mortgage by a 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
-                          target="_blank"
-                        >
-                          lender on our list
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Have enough in savings for closing costs and downpayment
-                      </span>
-                    </li>
-                  </ul>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    See the unit in person
-                  </h4>
-                  This is not required, but we encourage you to make sure the unit is right for you before applying.
-                </div>
-                <h3
-                  class="text-2xl font-alt-serif"
-                >
-                  How to Apply
-                </h3>
-                <div
-                  class="pt-4"
-                >
-                  <ol
-                    class="process-list"
-                  >
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Fill out PDF application
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base pb-2"
-                        >
-                          Download and fill out the application on your computer or print and fill out.
-                        </div>
-                        <div
-                          class="text-base"
-                        >
-                          If you print the application, you will need to be able to scan it back into your computer later.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            Important
-                          </div>
-                          <div>
-                            Read and follow all application instructions carefully.
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Gather documents
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base"
-                        >
-                          You must provide documents for everyone you will be living with who is over 18.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            What documents you need.
-                          </div>
-                          <div>
-                            See first 2 pages of the PDF application to find out what documents you need.
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Combine everything into 1 PDF file
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base"
-                        >
-                          Save your documents and filled out application into 1 PDF file.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            Name your file like this
-                          </div>
-                          <div>
-                            <div>
-                              Name of building - Last name, First name
-                            </div>
-                            <div
-                              class="pt-4 italic"
-                            >
-                              <div>
-                                Example
-                              </div>
-                              <div>
-                                <span
-                                  class="ui-icon ui-medium"
-                                >
-                                  <svg
-                                    fill="currentColor"
-                                    viewBox="0 0 38 51"
-                                  >
-                                    <path
-                                      d="M36.1495 12.6898L25.6104 2.28944C24.413 1.1119 22.8099 0.453501 21.1276 0.453501L6.33333 0.453491C2.83516 0.453491 0 3.25134 0 6.70349L0.000643229 44.2035C0.000643229 47.6556 2.8358 50.4535 6.33398 50.4535H31.6667C35.1648 50.4535 38 47.6556 38 44.2035V17.1039C38 15.4437 37.337 13.8617 36.1495 12.6898ZM22.1667 3.78163C22.6097 3.93456 23.0242 4.15721 23.366 4.49442L33.9051 14.8948C34.2495 15.2289 34.4771 15.639 34.6255 16.0785H23.75C22.8792 16.0785 22.1667 15.3754 22.1667 14.516V3.78163ZM34.8333 44.2035C34.8333 45.9262 33.4123 47.3285 31.6667 47.3285H6.33333C4.58771 47.3285 3.16667 45.9262 3.16667 44.2035V6.7035C3.16667 4.98084 4.58771 3.5785 6.33333 3.5785H19V14.516C19 17.1039 21.1276 19.2035 23.75 19.2035H34.8333V44.2035ZM9.5 27.016C9.5 27.8754 10.2125 28.5785 11.0833 28.5785H26.9167C27.7875 28.5785 28.5 27.8754 28.5 27.016C28.5 26.1566 27.7875 25.4535 26.9167 25.4535H11.0833C10.2125 25.4535 9.5 26.1566 9.5 27.016ZM26.9167 31.7035H11.0833C10.2125 31.7035 9.5 32.4066 9.5 33.266C9.5 34.1254 10.2125 34.8285 11.0833 34.8285H26.9167C27.7913 34.8285 28.5 34.1289 28.5 33.266C28.5 32.4031 27.7875 31.7035 26.9167 31.7035ZM26.9167 37.9535H11.0833C10.2125 37.9535 9.5 38.6566 9.5 39.516C9.5 40.3754 10.2125 41.0785 11.0833 41.0785H26.9167C27.7913 41.0785 28.5 40.3789 28.5 39.516C28.5 38.6531 27.7875 37.9535 26.9167 37.9535Z"
-                                    />
-                                  </svg>
-                                </span>
-                                1288 Howard - Chow, Tania
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="text-base"
-                        >
-                          <span>
-                            If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document. 
-                            <i>
-                              Example: 1288 Howard - Chow, Tania - Proof of Income
-                            </i>
-                          </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Create a free account at Box.com
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base pb-2"
-                        >
-                          <span>
-                            <a
-                              class="underline"
-                              href="#"
-                              target="_blank"
-                            >
-                              Create a Box.com account.
-                            </a>
-                             In the next step, you will need a free Box.com account to submit your application.
-                          </span>
-                        </div>
-                        <div
-                          class="text-base"
-                        >
-                          If you already have an account, use that one.
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Submit your application and get your place in line
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base"
-                        >
-                          When you are ready, submit your application in 3 steps:
-                        </div>
-                        <ul
-                          class="mb-0 pb-2"
-                        >
-                          <li
-                            class="text-base"
-                          >
-                            <span>
-                              Fill out your information and get a link to upload your 
-                              <a
-                                class="underline"
-                                href="#"
-                                target="_blank"
-                              >
-                                PDF application and documents
-                              </a>
-                            </span>
-                          </li>
-                          <li
-                            class="text-base"
-                          >
-                            Follow the link to Box.com
-                          </li>
-                          <li
-                            class="text-base"
-                          >
-                            Upload your filled out application and all documents to Box.com
-                          </li>
-                        </ul>
-                        <div
-                          class="text-base"
-                        >
-                          The time and date you apply determines your place in line.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            Upload your application within 30 minutes
-                          </div>
-                          <div>
-                            If you do not upload your application and all documents within 30 minutes, you will lose your place in line. You will get a new place in line based on the time and date we receive your completed application.
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-                <h3
-                  class="text-2xl font-alt-serif"
-                >
-                  What happens next
-                </h3>
-                <div
-                  class="pt-4"
-                >
-                  <span>
-                    We will email you your place in line within 
-                    <b>
-                      2 business days
-                    </b>
-                    . If anyone applied before you, we review their application(s) first.
-                  </span>
-                </div>
-                <div
-                  class="py-2"
-                >
-                  <span>
-                    If your application is approved, you will need to enter a purchase agreement within 
-                    <b>
-                      7 days
-                    </b>
-                    .
-                  </span>
-                </div>
+              <span>
+                We'd love to get 
                 <a
-                  class="underline"
-                  href="//google.com"
+                  href="https://airtable.com/shrw64DubWTQfRkdo"
                   target="_blank"
                 >
-                  Learn more about how it works
+                  your feedback.
+                </a>
+              </span>
+            </div>
+          </div>
+          <nav
+            aria-label="main navigation"
+            class="site-header__container"
+            role="navigation"
+          >
+            <div
+              class="site-header__base  site-header__base-wrapped"
+            >
+              <div
+                class="site-header__logo-container site-header__logo-width-med"
+                id="site-header-logo"
+              >
+                <a
+                  aria-label="DAHLIA San Francisco Housing Portal"
+                  class="site-header__logo translate site-header__custom-width"
+                  href="/"
+                  target="_self"
+                >
+                  <div
+                    class="site-header__logo-content site-header__image-only-container"
+                  >
+                    <img
+                      alt="Site logo"
+                      class="site-header__logo-image site-header__image-only"
+                    />
+                  </div>
+                </a>
+              </div>
+              <div
+                class="site-header__navbar-menu site-header__navbar-wrapped"
+                id="site-header-links"
+              >
+                <a
+                  class="site-header__link  "
+                  data-testid="Rent-0"
+                  href="/listings/for-rent"
+                  target="_self"
+                >
+                  <div>
+                    Rent
+                  </div>
+                </a>
+                <a
+                  class="site-header__link  "
+                  data-testid="Buy-1"
+                  href="/listings/for-sale"
+                  target="_self"
+                >
+                  <div>
+                    Buy
+                  </div>
+                </a>
+                <a
+                  class="site-header__link  "
+                  data-testid="My Favorites-2"
+                  href="/favorites"
+                  target="_self"
+                >
+                  <div>
+                    My Favorites
+                  </div>
+                </a>
+                <a
+                  class="site-header__link  "
+                  data-testid="Get Assistance-3"
+                  href="/get-assistance"
+                  target="_self"
+                >
+                  <div>
+                    Get Assistance
+                  </div>
+                </a>
+                <a
+                  class="site-header__link  "
+                  data-testid="Sign In-4"
+                  href="/sign-in"
+                  target="_self"
+                >
+                  <div>
+                    Sign In
+                  </div>
                 </a>
               </div>
             </div>
-          </article>
-        </section>
-      </main>
-    </div>
-    <footer
-      class="site-footer"
-    >
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section pb-8"
-        >
-          <img
-            alt=""
-            data-testid="footer-logo-test-id"
-          />
-        </div>
-      </div>
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section py-2"
-        >
-          <p
-            class="text-gray-500"
-          >
-            <span>
-              DAHLIA: San Francisco Housing Portal is a project of the 
-              <br />
-              <a
-                class="text-white"
-                href="https://sf.gov/departments/mayors-office-housing-and-community-development"
-                target="_blank"
-              >
-                Mayor's Office of Housing and Community Development
-              </a>
-            </span>
-          </p>
-          <p
-            class="text-xs mt-4 text-gray-500"
-          >
-            <span>
-              in partnership with
-              <br />
-              <a
-                class="text-white"
-                href="https://sf.gov/departments/city-administrator/digital-services"
-                target="_blank"
-              >
-                San Francisco Digital Services
-              </a>
-              <br />
-              <a
-                class="text-white"
-                href="https://sf.gov/departments/mayors-office-innovation"
-                target="_blank"
-              >
-                Mayor's Office of Civic Innovation
-              </a>
-            </span>
-          </p>
-        </div>
-      </div>
-      <div
-        class="footer-row "
-      >
-        <div
-          class="footer-row__section pb-8"
-        >
-          <p
-            class="text-sm"
-          >
-            For listing and application questions, please contact the agent displayed on the listing. 
-            <br />
-            For general program inquiries, you may call MOHCD at 415-701-5500.
-          </p>
-        </div>
-      </div>
-      <section
-        class="footer-sock"
-      >
-        <div
-          class="footer-sock__inner"
-        >
-          <p
-            class="footer-copyright"
-          >
-            © City & County of San Francisco
-          </p>
-          <nav
-            aria-label="Footer"
-            class="footer-nav"
-          >
-            <a
-              class="text-gray-500"
-              href="https://airtable.com/shrw64DubWTQfRkdo"
-              target="_blank"
-            >
-              Give Feedback
-            </a>
-            <a
-              class="text-gray-500"
-              href="mailto:sfhousinginfo@sfgov.org"
-              target="_self"
-            >
-              Contact
-            </a>
-            <a
-              class="text-gray-500"
-              href="/disclaimer"
-              target="_self"
-            >
-              Disclaimer
-            </a>
-            <a
-              class="text-gray-500"
-              href="/privacy"
-              target="_self"
-            >
-              Privacy Policy
-            </a>
           </nav>
+        </header>
+        <main
+          class="md:overflow-x-hidden"
+          data-testid="main-content-test-id"
+          id="main-content"
+        >
+          <section
+            class="flex md:px-5"
+          >
+            <article
+              class="markdown max-w-5xl m-auto"
+            >
+              <div
+                class="pt-4 md:py-0 max-w-3xl"
+              >
+                <div
+                  class="my-6 md:my-12 px-5"
+                />
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+      <footer
+        class="site-footer"
+      >
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <img
+              alt=""
+              data-testid="footer-logo-test-id"
+            />
+          </div>
         </div>
-      </section>
-    </footer>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section py-2"
+          >
+            <p
+              class="text-gray-500"
+            >
+              <span>
+                DAHLIA: San Francisco Housing Portal is a project of the 
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-housing-and-community-development"
+                  target="_blank"
+                >
+                  Mayor's Office of Housing and Community Development
+                </a>
+              </span>
+            </p>
+            <p
+              class="text-xs mt-4 text-gray-500"
+            >
+              <span>
+                in partnership with
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/city-administrator/digital-services"
+                  target="_blank"
+                >
+                  San Francisco Digital Services
+                </a>
+                <br />
+                <a
+                  class="text-white"
+                  href="https://sf.gov/departments/mayors-office-innovation"
+                  target="_blank"
+                >
+                  Mayor's Office of Civic Innovation
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="footer-row "
+        >
+          <div
+            class="footer-row__section pb-8"
+          >
+            <p
+              class="text-sm"
+            >
+              For listing and application questions, please contact the agent displayed on the listing. 
+              <br />
+              For general program inquiries, you may call MOHCD at 415-701-5500.
+            </p>
+          </div>
+        </div>
+        <section
+          class="footer-sock"
+        >
+          <div
+            class="footer-sock__inner"
+          >
+            <p
+              class="footer-copyright"
+            >
+              © City & County of San Francisco
+            </p>
+            <nav
+              aria-label="Footer"
+              class="footer-nav"
+            >
+              <a
+                class="text-gray-500"
+                href="https://airtable.com/shrw64DubWTQfRkdo"
+                target="_blank"
+              >
+                Give Feedback
+              </a>
+              <a
+                class="text-gray-500"
+                href="mailto:sfhousinginfo@sfgov.org"
+                target="_self"
+              >
+                Contact
+              </a>
+              <a
+                class="text-gray-500"
+                href="/disclaimer"
+                target="_self"
+              >
+                Disclaimer
+              </a>
+              <a
+                class="text-gray-500"
+                href="/privacy"
+                target="_self"
+              >
+                Privacy Policy
+              </a>
+            </nav>
+          </div>
+        </section>
+      </footer>
+    </div>
   </div>
 </DocumentFragment>
 `;
