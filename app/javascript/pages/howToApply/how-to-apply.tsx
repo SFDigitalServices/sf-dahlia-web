@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState, useContext } from "react"
-import dayjs from "dayjs"
 import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
@@ -13,6 +12,8 @@ import { Icon, t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-co
 import { Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
+import { getFcfsSalesListingState } from "../../util/listingUtil"
+import { ListingState } from "../../modules/listings/ListingState"
 
 import "./how-to-apply.scss"
 
@@ -21,7 +22,7 @@ interface HowToApplyProps {
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
-  listing && dayjs(listing.Application_Start_Date_Time) > dayjs()
+  listing && getFcfsSalesListingState(listing) === ListingState.NotYetOpen
 
 const Header = ({ headerText }: { headerText: string }) => {
   return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
