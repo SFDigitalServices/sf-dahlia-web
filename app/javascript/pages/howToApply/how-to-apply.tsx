@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
   localizedFormat,
-  formatTime,
+  formatTimeOfDay,
   getSfGovUrl,
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
@@ -21,15 +21,19 @@ import {
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
-import "./how-to-apply.scss"
+import { getListing } from "../../api/listingApiService"
+import { getFcfsSalesListingState } from "../../util/listingUtil"
+import { ListingState } from "../../modules/listings/ListingState"
+
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import "./how-to-apply.scss"
 interface HowToApplyProps {
   assetPaths: unknown
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
-  listing && dayjs(listing.Application_Start_Date_Time) > dayjs()
+  listing && getFcfsSalesListingState(listing) === ListingState.NotYetOpen
 
 const Header = ({ headerText }: { headerText: string }) => {
   return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
@@ -62,7 +66,7 @@ const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
       <br />
       {t("listingDetails.applicationsOpen.withDateTime", {
         date: localizedFormat(datetime, "LL"),
-        time: formatTime(datetime),
+        time: formatTimeOfDay(datetime),
       })}
     </Message>
   )
@@ -147,7 +151,7 @@ const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
       <div>{t("howToApplyPage.beforeYouStartSection.eligibilityList.title")}</div>
       <ul className="mb-0 pt-2">
         {eligibilityListItems.map((item) => (
-          <li>
+          <li key={item.index}>
             {
               // Possible keys:
               // howToApplyPage.beforeYouStartSection.eligibilityList.listItem1
@@ -282,12 +286,12 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
       </ul>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p2")}</div>
       {applicationsNotYetOpen(listing) && (
-        <div className="text-base pt-2">
+        <div className="text-base pt-6">
           <Icon symbol="clock" size="medium" />
           &nbsp;
           {t("howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere", {
             date: localizedFormat(datetime, "LL"),
-            time: formatTime(datetime),
+            time: formatTimeOfDay(datetime),
           })}
         </div>
       )}
@@ -374,4 +378,4 @@ const HowToApply = (_props: HowToApplyProps) => {
   )
 }
 
-export default withAppSetup(HowToApply, true)
+export default withAppSetup(HowToApply)

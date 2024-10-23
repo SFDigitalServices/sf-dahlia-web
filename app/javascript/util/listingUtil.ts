@@ -46,13 +46,13 @@ export const getFcfsSalesListingState = (listing: RailsSaleListing): ListingStat
     return ListingState.Closed
   }
 
-  if (new Date(listing.Application_Start_Date_Time) < new Date()) {
-    console.log("open")
+  if (dayjs(listing.Application_Start_Date_Time) < dayjs()) {
     return ListingState.Open
   }
 
   return ListingState.NotYetOpen
 }
+
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing

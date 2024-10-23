@@ -233,13 +233,12 @@ export function localizedFormat(date: string, format: string): string {
   return dayjs(date).locale(dayJsLocales[lang]).format(format)
 }
 
-// TODO: rename to specify this formats time-of-day
-export const formatTime = (time: string) => {
+// Time zone is assumed to be Pacific
+export const formatTimeOfDay = (time: string) => {
   const formattedTime = dayjs(time).format("h:mm")
   const hour = Number(dayjs(time).format("H"))
-  // \u00A0 is a non-breaking space
-  const suffix = hour >= 12 ? "\u00A0PM" : "\u00A0AM"
-  return `${formattedTime}${suffix}`
+  const suffix = hour >= 12 ? "PM" : "AM"
+  return `${formattedTime} ${suffix}`
 }
 
 /**

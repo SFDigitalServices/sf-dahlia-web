@@ -605,6 +605,7 @@
   "howToApplyPage.howToApplySection.step4.p3": "What is Box.com",
   "howToApplyPage.howToApplySection.step4.p4": "Box.com is a safe, secure way for you to send your application to us.",
   "howToApplyPage.howToApplySection.step4.title": "Create a free account at Box.com",
+  "howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere": "Applications open %{date} at %{time} Pacific Time. Check back here to apply.",
   "howToApplyPage.howToApplySection.step5.infoBox.p1": "If you do not upload your application and all documents within 30 minutes, you will lose your place in line. You will get a new place in line based on the time and date we receive your completed application.",
   "howToApplyPage.howToApplySection.step5.infoBox.title": "Upload your application within 30 minutes",
   "howToApplyPage.howToApplySection.step5.listItem1": "Fill out your information and get a link to upload your <a className='underline' href='%{url}' target='_blank'>PDF application and documents</a>",
