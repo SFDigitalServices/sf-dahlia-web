@@ -572,7 +572,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           The time and date you apply determines your place in line.
                         </div>
                         <div
-                          class="text-base pt-2"
+                          class="text-base pt-6"
                         >
                           <span
                             class="ui-icon ui-medium"
