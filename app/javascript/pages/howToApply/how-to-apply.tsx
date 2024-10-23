@@ -8,7 +8,14 @@ import {
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
 } from "../../util/languageUtil"
-import { Icon, t, NavigationContext, LoadingOverlay, Button, AppearanceStyleType } from "@bloom-housing/ui-components"
+import {
+  Icon,
+  t,
+  NavigationContext,
+  LoadingOverlay,
+  Button,
+  AppearanceStyleType,
+} from "@bloom-housing/ui-components"
 import { Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
@@ -23,6 +30,9 @@ interface HowToApplyProps {
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.NotYetOpen
+
+const applicationsOpen = (listing: RailsSaleListing) =>
+  listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
   return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
@@ -69,7 +79,7 @@ const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
       {t("howToApplyPage.howLongItTakesSection.p1")}
       <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle2")} />
       {t("howToApplyPage.howLongItTakesSection.p2")}
-      {listingIsOpen(listing) && (
+      {applicationsOpen(listing) && (
         <>
           <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle3")} />
           {renderInlineMarkup(t("howToApplyPage.howLongItTakesSection.p3", { url: "#" }))}
@@ -239,8 +249,7 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           })}
         </div>
       )}
-
-      {listingIsOpen(listing) && (
+      {applicationsOpen(listing) && (
         <Button className="mt-6" styleType={AppearanceStyleType.primary}>
           {t("howToApplyPage.howToApplySection.step5.button")}
         </Button>

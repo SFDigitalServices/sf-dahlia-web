@@ -286,21 +286,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     Submitting your application
                   </h4>
                   30 minutes or less
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Ready to submit?
-                  </h4>
-                  <span>
-                    If you have your application and documents ready, 
-                    <a
-                      class="underline"
-                      href="#"
-                      target="_blank"
-                    >
-                      submit your application now.
-                    </a>
-                  </span>
                 </div>
                 <div
                   class="pb-10"
@@ -586,12 +571,6 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         >
                           The time and date you apply determines your place in line.
                         </div>
-                        <button
-                          class="button is-primary mt-6"
-                          tabindex="0"
-                        >
-                          Submit application
-                        </button>
                         <div
                           class="text-base pt-6"
                         >
