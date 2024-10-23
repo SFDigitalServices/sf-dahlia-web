@@ -21,13 +21,9 @@ import {
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
-import { ListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/ListingDetailsSeeTheUnit"
-
 import "./how-to-apply.scss"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { listing } from "../../api/apiEndpoints"
-
 interface HowToApplyProps {
   assetPaths: unknown
 }
@@ -177,6 +173,7 @@ const BeforeYouStartSection = ({ listing }: { listing: RailsSaleListing }) => {
           readLess: t("seeTheUnit.makeAnAppointment"),
         }}
         order={Order.below}
+        className="how-to-apply-dropdown pt-2"
       >
         <LeasingAgentBox listing={listing} />
       </ExpandableContent>
@@ -259,6 +256,7 @@ const CreateBoxAccountStep = () => {
           readLess: t("howToApplyPage.howToApplySection.step4.p3"),
         }}
         order={Order.below}
+        className="how-to-apply-dropdown pt-2"
       >
         {t("howToApplyPage.howToApplySection.step4.p4")}
       </ExpandableContent>
