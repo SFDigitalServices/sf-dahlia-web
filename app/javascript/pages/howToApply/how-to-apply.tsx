@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState, useContext } from "react"
-import dayjs from "dayjs"
 import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
@@ -20,7 +19,6 @@ import {
 } from "@bloom-housing/ui-components"
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
-import { getListing } from "../../api/listingApiService"
 import { getListing } from "../../api/listingApiService"
 import { getFcfsSalesListingState } from "../../util/listingUtil"
 import { ListingState } from "../../modules/listings/ListingState"
