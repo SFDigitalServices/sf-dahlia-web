@@ -219,7 +219,6 @@ export function defaultIfNotTranslated(
   return translatedKey === key ? value : translatedKey
 }
 
-// TODO: rename to specify this formats date only, not time-of-day
 /**
  * Localize a given date for the current language.
  *

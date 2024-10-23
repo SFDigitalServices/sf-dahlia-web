@@ -618,7 +618,6 @@
   "howToApplyPage.whatHappensNext.p1": "We will email you your place in line within <b>2 business days</b>. If anyone applied before you, we review their application(s) first.",
   "howToApplyPage.whatHappensNext.p2": "If your application is approved, you will need to enter a purchase agreement within <b>7 days</b>.",
   "howToApplyPage.whatHappensNext.title": "What happens next",
-  "howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere": "Applications open %{date} at %{time} Pacific Time. Check back here to apply.",
   "idleTimeout.sessionExpired": "Your session has expired.",
   "idleTimeout.sessionInactivity": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information you've entered into the application for this listing if you choose not to respond.",
   "idleTimeout.sessionInactivityLoggedIn": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",

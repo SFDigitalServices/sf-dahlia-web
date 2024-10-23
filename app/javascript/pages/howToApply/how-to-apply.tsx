@@ -22,7 +22,6 @@ import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
 import { getFcfsSalesListingState } from "../../util/listingUtil"
 import { ListingState } from "../../modules/listings/ListingState"
-
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./how-to-apply.scss"
