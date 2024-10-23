@@ -206,8 +206,8 @@ const CreateBoxAccountStep = () => {
   )
 }
 
-const SubmitApplicationStep = ({ listing }: { listing?: RailsSaleListing }) => {
-  const datetime = listing?.Application_Start_Date_Time
+const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
+  const datetime = listing.Application_Start_Date_Time
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
@@ -241,7 +241,7 @@ const SubmitApplicationStep = ({ listing }: { listing?: RailsSaleListing }) => {
   )
 }
 
-const HowToApplySection = ({ listing }: { listing?: RailsSaleListing }) => {
+const HowToApplySection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
       <Header headerText={t("pageTitle.howToApply")} />
@@ -298,11 +298,15 @@ const HowToApply = (_props: HowToApplyProps) => {
           <article className="markdown max-w-5xl m-auto">
             <div className="pt-4 md:py-0 max-w-3xl">
               <div className="my-6 md:my-12 px-5">
-                {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
-                <HowLongItTakesSection />
-                <BeforeYouStartSection />
-                <HowToApplySection listing={listing} />
-                <WhatHappensNextSection />
+                {listing && (
+                  <>
+                    {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
+                    <HowLongItTakesSection />
+                    <BeforeYouStartSection />
+                    <HowToApplySection listing={listing} />
+                    <WhatHappensNextSection />
+                  </>
+                )}
               </div>
             </div>
           </article>
