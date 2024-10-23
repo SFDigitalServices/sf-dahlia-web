@@ -6,7 +6,7 @@ import { Card } from "@bloom-housing/ui-seeds"
 
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import NameFieldset, { handleNameServerErrors } from "./components/NameFieldset"
+import NameFieldset, { handleNameServerErrors, nameSortOrder } from "./components/NameFieldset"
 import {
   DeepMap,
   ErrorOption,
@@ -18,10 +18,14 @@ import {
 import DOBFieldset, {
   deduplicateDOBErrors,
   DOBFieldValues,
+  dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
-import EmailFieldset, { handleEmailServerErrors } from "./components/EmailFieldset"
-import PasswordFieldset, { handlePasswordServerErrors } from "./components/PasswordFieldset"
+import EmailFieldset, { emailSortOrder, handleEmailServerErrors } from "./components/EmailFieldset"
+import PasswordFieldset, {
+  handlePasswordServerErrors,
+  passwordSortOrder,
+} from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
@@ -176,6 +180,8 @@ const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
   )
 }
 
+const fieldOrder = [...nameSortOrder, ...dobSortOrder, ...emailSortOrder, ...passwordSortOrder]
+
 const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
   if (errors?.dobObject) {
     const dobObject: DeepMap<DOBFieldValues, FieldError> = errors.dobObject
@@ -210,6 +216,7 @@ const CreateAccount = (_props: CreateAccountProps) => {
                 messageMap={(messageKey) =>
                   getErrorMessage(messageKey, UnifiedErrorMessageMap, true)
                 }
+                sortOrder={fieldOrder}
               />
             </span>
             <Form

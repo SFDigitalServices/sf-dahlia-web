@@ -957,6 +957,8 @@ ShortFormApplicationController = (
     if (previousApp)
       # previous app submitted
       if $scope.appIsSubmitted(previousApp)
+        # My Applications page is now in React, prevent the "Leave Site?" popup when redirecting
+        $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         doubleSubmit = !! $scope.appIsSubmitted($scope.application)
         return $state.go('dahlia.my-applications', {
           skipConfirm: true,

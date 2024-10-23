@@ -13,6 +13,7 @@ import {
 import { RailsListing } from "../listings/SharedHelpers"
 import {
   acceptingPaperApplications,
+  getFcfsSalesListingState,
   isFcfsSalesListing,
   isHabitatListing,
   isOpen,
@@ -22,12 +23,14 @@ import {
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import "./ListingDetailsApply.scss"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
+import { localizedPath } from "../../util/routeUtil"
+import { ListingState } from "../listings/ListingState"
 
 export interface ListingDetailsApplyProps {
   listing: RailsListing
 }
 
-const FcfsBmrSalesHowToApply = () => (
+const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
   <SidebarBlock className="fcfs-bmr-how-to-apply" title={t("listings.apply.howToApply")}>
     <div className="fcfs-bmr-how-to-apply__list">
       <ol className="numbered-list text-black text-base">
@@ -36,9 +39,14 @@ const FcfsBmrSalesHowToApply = () => (
         <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
       </ol>
     </div>
-    <Button className="w-full" styleType={AppearanceStyleType.primary}>
+    <LinkButton
+      styleType={AppearanceStyleType.primary}
+      className={"w-full"}
+      transition={true}
+      href={localizedPath(`listings/${listingId}/how-to-apply`)}
+    >
       {t("listings.fcfs.bmrSales.howToApply.learnMore")}
-    </Button>
+    </LinkButton>
   </SidebarBlock>
 )
 
@@ -141,11 +149,14 @@ const StandardHowToApply = ({
 
 export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
   const isFcfsBmrSales = isFcfsSalesListing(listing)
-  const isFcfsApplicationClosed = !listing.Accepting_Online_Applications
+  const listingState = getFcfsSalesListingState(listing)
 
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
-  if (isFcfsBmrSales ? isFcfsApplicationClosed : !isOpen(listing)) return null
+  if (
+    isSalesFcfsEnabled && isFcfsBmrSales ? listingState === ListingState.Closed : !isOpen(listing)
+  )
+    return null
 
   const isListingRental = isRental(listing)
 
@@ -153,7 +164,7 @@ export const ListingDetailsApply = ({ listing }: ListingDetailsApplyProps) => {
 
   const howToApplyBlock =
     isSalesFcfsEnabled && isFcfsBmrSales ? (
-      <FcfsBmrSalesHowToApply />
+      <FcfsBmrSalesHowToApply listingId={listing.listingID} />
     ) : (
       <StandardHowToApply
         listingId={listing.listingID}

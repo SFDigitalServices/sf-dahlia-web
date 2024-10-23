@@ -12,4 +12,7 @@ declare global {
       addReactQueryParam(): Chainable<any>
     }
   }
+  interface Window {
+    ACCOUNT_INFORMATION_PAGES_REACT: boolean
+  }
 }

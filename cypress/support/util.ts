@@ -1,6 +1,8 @@
 const staticUserData = {
   provider: "email",
   id: 123,
+  email: "test@test.com",
+  uid: "test@test.com",
   created_at: "2024-08-19T10:40:19.671-07:00",
   updated_at: "2024-09-11T12:12:57.160-07:00",
   salesforce_contact_id: "000000000000000000",
@@ -82,16 +84,29 @@ const generateHeaders = (email: string) => ({
   "token-type": "Bearer",
 })
 
-export const userObjectGenerator = (email: string) => {
+export const userObjectGenerator = ({
+  email,
+  firstName,
+  lastName,
+  DOB,
+}: {
+  email?: string
+  firstName?: string
+  lastName?: string
+  DOB?: string
+}) => {
   return {
     statusCode: 200,
     body: {
       data: {
-        email,
-        uid: email,
+        email: email || staticUserData.email,
+        uid: email || staticUserData.email,
+        firstName: firstName || staticUserData.firstName,
+        lastName: lastName || staticUserData.lastName,
+        DOB: DOB || staticUserData.DOB,
         ...staticUserData,
       },
     },
-    headers: generateHeaders(email),
+    headers: generateHeaders(email || staticUserData.email),
   }
 }

@@ -8,8 +8,8 @@ Cypress.Commands.add("findAndClickMenuItem", (href: string) => {
 })
 
 Cypress.Commands.add("signIn", (email: string = "test@test.com") => {
-  cy.intercept("/api/v1/auth/sign_in", userObjectGenerator(email))
-  cy.intercept("/api/v1/auth/validate_token", userObjectGenerator(email))
+  cy.intercept("/api/v1/auth/sign_in", userObjectGenerator({ email }))
+  cy.intercept("/api/v1/auth/validate_token", userObjectGenerator({ email }))
 
   cy.visit("/sign-in?react=true")
   cy.contains("Sign in")

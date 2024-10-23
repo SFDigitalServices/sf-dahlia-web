@@ -3,6 +3,7 @@ AccountController = (
   $scope,
   $state,
   $translate,
+  $window,
   AccountService,
   AnalyticsService,
   inputMaxLength,
@@ -121,20 +122,10 @@ AccountController = (
             $state.go('dahlia.short-form-application.name', id: $state.params.listing_id)
           else
             $scope._signInRedirect()
-      ).catch( error ->
-      if (error.message == 'transition prevented')
-        ### TODO:
-          If the user is navigating from an Angular Sign In page to a React my account page,
-          the ui-router will prevent the transition and force routing via Rails.
-          Preventing the transition causes the ui-router to throw an error, which we catch here.
-          Setting the timeout allows the Rails routing system time to catch up and
-          route the user to the React My Account page without throwing an error.
-          This is a temporary solution until we can launch the re-written Sign In page.
-        ###
-        setTimeout (-> $scope.handleErrorState()), 1000
-      else
-        $scope.handleErrorState()
-        $scope.submitDisabled = false
+      ).catch( ->
+        if $window.env.ACCOUNT_INFORMATION_PAGES_REACT == "false"
+          $scope.handleErrorState()
+          $scope.submitDisabled = false
       )
     else
       AnalyticsService.trackFormError('Accounts')
@@ -314,7 +305,7 @@ AccountController = (
       $translate.instant('error.password_confirmation')
 
 AccountController.$inject = [
-  '$document', '$scope', '$state', '$translate', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
   'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 

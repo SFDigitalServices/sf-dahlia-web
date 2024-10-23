@@ -72,6 +72,8 @@ export const passwordFieldsetErrors: ErrorMessages = {
   },
 }
 
+export const passwordSortOrder = ["currentPassword", "password"]
+
 const instructionListItem = (
   shouldShowValidationInformation: boolean,
   validation: boolean,
