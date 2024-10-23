@@ -12,3 +12,8 @@
 .how-to-apply-dropdown button {
   font-size: 16px !important;
 }
+
+.dropdown-content {
+  @apply pt-2;
+  @apply block;
+}

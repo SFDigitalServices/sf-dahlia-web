@@ -111,7 +111,7 @@ const eligibilityListItems = [
 const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="leasing-agent">
-      <p>{listing.Leasing_Agent_Name}</p>
+      <p className="m-0">{listing.Leasing_Agent_Name}</p>
       <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
       <a
         href={
@@ -125,7 +125,7 @@ const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
           ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
           : undefined}
       </a>
-      <div>
+      <div className="pb-2">
         <a href={`mailto:${listing.Leasing_Agent_Email}`}>
           <span className="pr-2">
             <FontAwesomeIcon icon={faEnvelope} />
@@ -258,7 +258,7 @@ const CreateBoxAccountStep = () => {
         order={Order.below}
         className="how-to-apply-dropdown pt-2"
       >
-        {t("howToApplyPage.howToApplySection.step4.p4")}
+        <span className="dropdown-content">{t("howToApplyPage.howToApplySection.step4.p4")}</span>
       </ExpandableContent>
     </HowToApplyListItem>
   )
