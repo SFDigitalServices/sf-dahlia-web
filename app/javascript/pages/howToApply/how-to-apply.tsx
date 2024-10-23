@@ -25,6 +25,7 @@ import { ListingState } from "../../modules/listings/ListingState"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./how-to-apply.scss"
+        
 interface HowToApplyProps {
   assetPaths: unknown
 }
