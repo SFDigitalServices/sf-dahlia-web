@@ -38,13 +38,19 @@ describe("<HowToApply />", () => {
 
   it("renders not-yet-open components", async () => {
     axios.get.mockResolvedValue({ data: { listing: notYetOpenSaleFcfsListing } })
-    const { getAllByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
-    const datetime = notYetOpenSaleFcfsListing.Application_Start_Date_Time
+    const { findByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    const datetime = notYetOpenSaleFcfsListing.Application_Start_Date_Time || ""
     const date = localizedFormat(datetime, "LL")
     const time = formatTimeOfDay(datetime)
-    expect(getAllByText(`Applications open: ${date} at ${time} Pacific Time`)).not.toBeNull()
+    expect(findByText(`Applications open: ${date} at ${time} Pacific Time`)).toBeDefined()
     expect(
-      getAllByText(`Applications open ${date} at ${time} Pacific Time. Check back here to apply.`)
-    ).not.toBeNull()
+      findByText(`Applications open ${date} at ${time} Pacific Time. Check back here to apply.`)
+    ).toBeDefined()
+  })
+
+  it("redirects to home page if listing not found", async () => {
+    axios.get.mockResolvedValue({ data: { listing: null } })
+    await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
+    expect(window.location.pathname).toBe("/")
   })
 })
