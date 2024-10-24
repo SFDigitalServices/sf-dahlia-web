@@ -1276,11 +1276,11 @@
                 "title": "回歸權 - Hunters View (West Point)"
             },
             "rtr_potrero": {
-                "address": "Potrero 住址",
+                "address": "Potrero Terrace and Annex 住址",
                 "address_desc": "您目前或從前在Potrero公共住宅的住址。",
-                "desc": "適用於家庭中至少有一位是曾經或現在居住在Potrero公共住宅 的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
-                "proof_desc": "您需要準備以下其中一項的文件來證明您在Potrero公共住宅的地址。",
-                "title": "回歸權 - Potrero"
+                "desc": "適用於家庭中至少有一位是曾經或現在居住在Potrero Terrace and Annex公共住宅 的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
+                "proof_desc": "您需要準備以下其中一項的文件來證明您在Potrero Terrace and Annex公共住宅的地址。",
+                "title": "回歸權 - Potrero Terrace and Annex"
             },
             "rtr_sunnydale": {
                 "address": "Sunnydale 住址",

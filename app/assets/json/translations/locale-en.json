@@ -1276,11 +1276,11 @@
                 "title": "Right to Return - Hunters View (West Point)"
             },
             "rtr_potrero": {
-                "address": "Potrero Address",
-                "address_desc": "Your current or former address at Potrero public housing",
-                "desc": "For households in which at least one person is a former or current resident of Potrero public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
-                "proof_desc": "You'll need one of the following documents showing your address at Potrero public housing.",
-                "title": "Right to Return - Potrero"
+                "address": "Potrero Terrace and Annex Address",
+                "address_desc": "Your current or former address at Potrero Terrace and Annex public housing",
+                "desc": "For households in which at least one person is a former or current resident of Potrero Terrace and Annex public housing. Please note, these units are not subsidized, the rent will not change if your income changes. ",
+                "proof_desc": "You'll need one of the following documents showing your address at Potrero Terrace and Annex public housing.",
+                "title": "Right to Return - Potrero Terrace and Annex"
             },
             "rtr_sunnydale": {
                 "address": "Sunnydale Address",
