@@ -28,6 +28,10 @@ interface HowToApplyProps {
   assetPaths: unknown
 }
 
+const submissionUrl = (listingId: string) => {
+  return `https://sfmoh.tfaforms.net/20?ListingID=${listingId}`
+}
+
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.NotYetOpen
 
@@ -82,7 +86,11 @@ const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
       {applicationsOpen(listing) && (
         <>
           <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle3")} />
-          {renderInlineMarkup(t("howToApplyPage.howLongItTakesSection.p3", { url: "#" }))}
+          {renderInlineMarkup(
+            t("howToApplyPage.howLongItTakesSection.p3", {
+              url: submissionUrl(listing.listingID),
+            })
+          )}
         </>
       )}
     </div>
@@ -250,7 +258,13 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
         </div>
       )}
       {applicationsOpen(listing) && (
-        <Button className="mt-6" styleType={AppearanceStyleType.primary}>
+        <Button
+          className="mt-6"
+          styleType={AppearanceStyleType.primary}
+          onClick={() => {
+            window.open(submissionUrl(listing.listingID), "_blank")
+          }}
+        >
           {t("howToApplyPage.howToApplySection.step5.button")}
         </Button>
       )}
