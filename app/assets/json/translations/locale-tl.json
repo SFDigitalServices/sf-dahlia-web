@@ -1274,6 +1274,13 @@
                 "proof_desc": "Kakailanganin mo ng isa sa mga sumusunod na dokumentong nagpapakita ng iyong address sa pampublikong pabahay ng Hunters View.",
                 "title": "Karapatang Bumalik - Hunters View (West Point)"
             },
+            "rtr_potrero": {
+                "address": "Address sa Potrero",
+                "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Potrero",
+                "desc": "Para sa mga kabahayan kung saan may kahit isang tao na dati o kasalukuyang residente ng pampublikong pabahay ng Potrero. Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
+                "proof_desc": "Kakailanganin mo ng isa sa mga sumusunod na dokumentong nagpapakita ng iyong address sa pampublikong pabahay ng Potrero.",
+                "title": "Karapatang Bumalik - Potrero"
+            },
             "rtr_sunnydale": {
                 "address": "Address sa Sunnydale",
                 "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Sunnydale",
