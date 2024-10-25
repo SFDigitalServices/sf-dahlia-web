@@ -24,11 +24,7 @@ module Force
       subscription = nil
 
       EM.error_handler do |error|
-        logger(
-          "Error while listening for Salesforce Platform Events: #{error.message}; " \
-          "Backtrace: #{error.backtrace[0..5]}",
-          error: true,
-        )
+        logger('Error while listening for Salesforce Platform Events', error)
       end
 
       EM.add_shutdown_hook do
@@ -45,10 +41,7 @@ module Force
             logger('Subscribed to Salesforce Platform Events')
           end
           subscription.errback do |error|
-            logger(
-              "Error subscribing to Salesforce Platform Events: #{error.inspect}",
-              error: true,
-            )
+            logger('Error subscribing to Salesforce Platform Events', error)
           end
         else
           logger('GoogleCloudTranslate is disabled')
@@ -172,9 +165,12 @@ module Force
       end
     end
 
-    def logger(message, error: false)
+    def logger(message, error = nil)
       if error
-        Rails.logger.error("EventSubscriberTranslateService #{message}")
+        Rails.logger.error(
+          "EventSubscriberTranslateService #{message}: #{error&.message}, " \
+          "backtrace: #{error&.backtrace&.[](0..5)}",
+        )
       else
         Rails.logger.info("EventSubscriberTranslateService #{message}")
       end

@@ -22,7 +22,7 @@ class GoogleTranslationService
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
-      google_translation_logger("An error occured: #{e.inspect}", error: true)
+      google_translation_logger('Error translating text', e)
       return []
     end
     # include original values on the response
@@ -73,9 +73,12 @@ class GoogleTranslationService
     return_value
   end
 
-  def google_translation_logger(message, error: false)
+  def google_translation_logger(message, error = nil)
     if error
-      Rails.logger.error("GoogleTranslationService #{message}")
+      Rails.logger.error(
+        "GoogleTranslationService #{message}: #{error&.message}, " \
+        "backtrace: #{error&.backtrace&.[](0..5)}",
+      )
     else
       Rails.logger.info("GoogleTranslationService #{message}")
     end
