@@ -6,7 +6,7 @@ import { Card } from "@bloom-housing/ui-seeds"
 
 import withAppSetup from "../../layouts/withAppSetup"
 import Layout from "../../layouts/Layout"
-import NameFieldset, { handleNameServerErrors } from "./components/NameFieldset"
+import NameFieldset, { handleNameServerErrors, nameSortOrder } from "./components/NameFieldset"
 import {
   DeepMap,
   ErrorOption,
@@ -18,16 +18,26 @@ import {
 import DOBFieldset, {
   deduplicateDOBErrors,
   DOBFieldValues,
+  dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
-import EmailFieldset, { handleEmailServerErrors } from "./components/EmailFieldset"
-import PasswordFieldset, { handlePasswordServerErrors } from "./components/PasswordFieldset"
+import EmailFieldset, { emailSortOrder, handleEmailServerErrors } from "./components/EmailFieldset"
+import PasswordFieldset, {
+  handlePasswordServerErrors,
+  passwordSortOrder,
+} from "./components/PasswordFieldset"
 import { FormHeader, FormSection, getDobStringFromDobObject } from "../../util/accountUtil"
 import "./styles/account.scss"
 import { User } from "../../authentication/user"
 import { createAccount } from "../../api/authApiService"
-import { ErrorSummaryBanner, UnifiedErrorMessageMap } from "./components/ErrorSummaryBanner"
+import {
+  ErrorSummaryBanner,
+  scrollToErrorOnSubmit,
+  UnifiedErrorMessageMap,
+} from "./components/ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage } from "./components/util"
+
+import "./create-account.scss"
 
 interface CreateAccountProps {
   assetPaths: unknown
@@ -81,7 +91,13 @@ const EmailSection = ({ register, errors }: SectionProps) => {
 const PasswordSection = ({ register, errors, watch }: SectionProps) => {
   return (
     <CreateAccountFormSection>
-      <PasswordFieldset register={register} errors={errors} watch={watch} />
+      <PasswordFieldset
+        register={register}
+        errors={errors}
+        watch={watch}
+        labelText={t("label.choosePassword")}
+        passwordType="createAccount"
+      />
       <div className="flex justify-center pt-4">
         <Button styleType={AppearanceStyleType.primary} type="submit">
           {t("label.createAccount")}
@@ -164,6 +180,8 @@ const CreateAccountContent = ({ register, watch, errors }: SectionProps) => {
   )
 }
 
+const fieldOrder = [...nameSortOrder, ...dobSortOrder, ...emailSortOrder, ...passwordSortOrder]
+
 const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
   if (errors?.dobObject) {
     const dobObject: DeepMap<DOBFieldValues, FieldError> = errors.dobObject
@@ -174,13 +192,14 @@ const modifyErrors = (errors: DeepMap<FieldValues, FieldError>) => {
 }
 
 const CreateAccount = (_props: CreateAccountProps) => {
+  const errorBannerRef = React.useRef<HTMLSpanElement>(null)
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
     setError,
-  } = useForm({ mode: "onTouched" })
+  } = useForm({ mode: "onTouched", shouldFocusError: false })
 
   return (
     <Layout title={t("pageTitle.createAccount")}>
@@ -191,11 +210,18 @@ const CreateAccount = (_props: CreateAccountProps) => {
               title={t("createAccount.title.sentenceCase")}
               description={t("createAccount.description")}
             />
-            <ErrorSummaryBanner
-              errors={modifyErrors({ ...errors })}
-              messageMap={(messageKey) => getErrorMessage(messageKey, UnifiedErrorMessageMap, true)}
-            />
-            <Form onSubmit={handleSubmit(onSubmit(setError))}>
+            <span ref={errorBannerRef}>
+              <ErrorSummaryBanner
+                errors={modifyErrors({ ...errors })}
+                messageMap={(messageKey) =>
+                  getErrorMessage(messageKey, UnifiedErrorMessageMap, true)
+                }
+                sortOrder={fieldOrder}
+              />
+            </span>
+            <Form
+              onSubmit={handleSubmit(onSubmit(setError), scrollToErrorOnSubmit(errorBannerRef))}
+            >
               <CreateAccountContent register={register} watch={watch} errors={errors} />
               {/* Footer has to be in the Form because of styling */}
               <CreateAccountFooter />

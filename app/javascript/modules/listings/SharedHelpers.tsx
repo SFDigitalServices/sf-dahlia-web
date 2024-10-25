@@ -1,12 +1,18 @@
 import React from "react"
 import { ApplicationStatusType, StatusBarType, t } from "@bloom-housing/ui-components"
-import { getTagContent, isFcfsListing, isLotteryComplete } from "../../util/listingUtil"
+import {
+  getFcfsSalesListingState,
+  getTagContent,
+  isFcfsSalesListing,
+  isLotteryComplete,
+} from "../../util/listingUtil"
 import { localizedFormat, renderInlineMarkup } from "../../util/languageUtil"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type { ListingEvent } from "../../api/types/rails/listings/BaseRailsListing"
 import fallbackImg from "../../../assets/images/bg@1200.jpg"
 import "./SharedHelpers.scss"
+import { ListingState } from "./ListingState"
 
 export type RailsListing = RailsSaleListing | RailsRentalListing
 
@@ -32,6 +38,18 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
   return [doesMatch ? matchedStatus : notMatchedStatus]
 }
 
+const getFcfsApplicationNotYetOpenStatus = (listing: RailsSaleListing) => {
+  const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
+
+  return {
+    status: ApplicationStatusType.Open,
+    content: `${t(
+      "listingDirectory.listingStatusContent.applicationsOpen"
+    )}: ${formattedDueDateString}`,
+    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
+  }
+}
+
 /**
  * Get status banners for first come, first served listings on the directory page
  *
@@ -39,9 +57,7 @@ const getMatchStatuses = (doesMatch: boolean): StatusBarType[] => {
  * @returns StatusBarType[]
  */
 const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
-  const isFcfsApplicationNotYetOpen = false
-  const isFcfsApplicationClosed = false
-  const formattedDueDateString = localizedFormat(listing.Application_Start_Date_Time, "LL")
+  const listingState = getFcfsSalesListingState(listing)
 
   const applicationsClosedStatus = {
     status: ApplicationStatusType.Closed,
@@ -50,23 +66,21 @@ const getFcfsStatuses = (listing: RailsListing): StatusBarType[] => {
     hideIcon: true,
   }
 
-  const applicationsNotYetOpenStatus = {
-    status: ApplicationStatusType.Open,
-    content: `${t(
-      "listingDirectory.listingStatusContent.applicationsOpen"
-    )}: ${formattedDueDateString}`,
-    subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
-  }
-
   const applicationsOpenStatus = {
     status: ApplicationStatusType.Open,
     content: t("listingDirectory.listingStatusContent.applicationsOpen"),
     subContent: t("listingDirectory.listingStatusContent.subContent.firstComeFirstServed"),
   }
 
-  return isFcfsApplicationClosed
+  const applicationsNotYetOpenStatus = getFcfsApplicationNotYetOpenStatus(listing)
+
+  return listingState === ListingState.Closed
     ? [applicationsClosedStatus]
-    : [isFcfsApplicationNotYetOpen ? applicationsNotYetOpenStatus : applicationsOpenStatus]
+    : [
+        listingState === ListingState.NotYetOpen
+          ? applicationsNotYetOpenStatus
+          : applicationsOpenStatus,
+      ]
 }
 
 /**
@@ -141,7 +155,7 @@ export const getListingStatuses = (
     return getMatchStatuses(listing.Does_Match)
   }
 
-  if (isFcfsListing(listing)) {
+  if (isFcfsSalesListing(listing)) {
     return getFcfsStatuses(listing)
   }
 

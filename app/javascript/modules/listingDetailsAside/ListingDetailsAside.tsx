@@ -3,7 +3,7 @@ import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/u
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isFcfsListing, isOpen, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen, isRental, isSale } from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -28,8 +28,7 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
   const isSaleListing = isSale(listing)
   const isListingRental = isRental(listing)
 
-  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
-  const { unleashFlag: fcfsEnabled } = useFeatureFlag("FCFS", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   const expectedMoveInDateBlock = (
     <SidebarBlock title={t("listings.expectedMoveinDate")}>
@@ -94,19 +93,19 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         <aside className="w-full static md:absolute md:right-0 md:w-1/3 md:top-0 sm:w-2/3 md:ml-2 h-full md:border border-solid bg-white">
           <div className="hidden md:block">
             <ListingDetailsApplicationDate listing={listing} />
-            {isFcfsListing(listing) && fcfsEnabled && fcfsNoLotteryRequired()}
+            {isFcfsSalesListing(listing) && isSalesFcfsEnabled && fcfsNoLotteryRequired()}
             <ListingDetailsLotteryInfo listing={listing} />
             <ListingDetailsLotteryResults listing={listing} />
             {/* ListingDetailsWaitlist gets rendered in a different order due to info architecture
           importance in different states */}
             {!isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             {isApplicationOpen && <ListingDetailsInfoSession listing={listing} />}
-            {(isListingRental || !seeTheUnitEnabled) && (
+            {(isListingRental || !isSalesFcfsEnabled) && (
               <ListingDetailsOpenHouses listing={listing} />
             )}
             {isApplicationOpen && <ListingDetailsWaitlist listing={listing} />}
             <ListingDetailsApply listing={listing} />
-            {isSaleListing && seeTheUnitEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
+            {isSaleListing && isSalesFcfsEnabled && <ListingDetailsSeeTheUnit listing={listing} />}
             {isApplicationOpen && needHelpBlock}
             {isSaleListing && listing.Expected_Move_in_Date && expectedMoveInDateBlock}
             <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />

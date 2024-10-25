@@ -1,0 +1,642 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileListingDetailsLottery does display when fcfs toggle is disabled 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src=""
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Lottery
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Lottery selection, important dates and contact
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Lottery
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p
+            class="flex justify-between mb-4"
+          >
+            <span>
+              January 17, 2021
+            </span>
+            <span
+              class="font-bold"
+            >
+              7:00 pm
+            </span>
+          </p>
+          <div
+            class="text-gray-700"
+          >
+            <p>
+              MOHCD Offices
+            </p>
+          </div>
+          <p
+            class="mt-4 text-gray-700"
+          >
+            An open lottery will be held to draw numbers to determine selection. Attendance is optional.
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Lottery Results
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p
+            class="mb-4"
+          >
+            January 24, 2021
+          </p>
+          <p
+            class="text-gray-700"
+          >
+            Complete lottery results will be posted on this date by 5 pm.
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="open-houses border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Open Houses
+        </h4>
+        <div
+          class="pb-3"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 3, 2019
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              2:00 PM - 6:00 PM
+            </span>
+          </p>
+        </div>
+        <div
+          class="pb-3"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 7, 2019
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              10:00 AM - 12:00 PM
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 pb-3"
+          >
+            <div
+              class="flex flex-col"
+            >
+              <span
+                class="links-space translate"
+              >
+                <span>
+                  SFPL
+                </span>
+              </span>
+              <span>
+                1 Library Way, San Francisco
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="false"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              December 8, 2019
+            </span>
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          What to Expect
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <span>
+            Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+          </span>
+          <div
+            class="mt-2"
+          >
+            <div>
+              <button
+                aria-expanded="false"
+                aria-label="Show more about what to expect"
+                class="button is-unstyled m-0 no-underline has-toggle"
+                type="button"
+              >
+                Show more
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Contact
+        </h4>
+        <p
+          class="text-xl"
+        >
+          Matthew Burns
+        </p>
+        <p
+          class="text-gray-700 translate"
+        >
+          Leasing Agent
+        </p>
+        <p
+          class="mt-3"
+        >
+          <a
+            href="tel:Call 415 5552323"
+          >
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
+                />
+              </svg>
+            </span>
+            Call (415) 555-2323
+          </a>
+        </p>
+        <p
+          class="text-xs text-gray-700"
+        >
+          Due to high call volume you may hear a message.
+        </p>
+        <p
+          class="my-3"
+        >
+          <a
+            href="mailto:ae@email.com"
+          >
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  d="M29.091 27.637h-26.182c-1.606 0-2.909-1.304-2.909-2.909v-17.454c0-1.606 1.304-2.909 2.909-2.909h26.182c1.606 0 2.909 1.304 2.909 2.909v17.454c0 1.606-1.304 2.909-2.909 2.909zM27.637 24.728l-8.338-7.296-3.299 2.933-3.299-2.933-8.338 7.296h23.272zM2.909 23.272l8.182-7.272-8.182-7.272v14.546zM4.363 7.272l11.637 10.182 11.637-10.182h-23.272zM29.091 8.728l-8.182 7.272 8.182 7.272v-14.546z"
+                />
+              </svg>
+            </span>
+            Email
+          </a>
+        </p>
+        <p
+          class="text-gray-700 mb-1"
+        >
+          <span>
+            1 South Van Ness Ave  
+            <br />
+            San Francisco, CA 94131
+          </span>
+        </p>
+        <p
+          class="mb-4"
+        >
+          <a
+            class="inline-block pt-1"
+            href="https://www.google.com/maps/place/1 South Van Ness Ave , San Francisco, CA 94131"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            <span
+              class="ui-icon ui-medium pr-2"
+            >
+              <svg
+                fill="#0077DA"
+                viewBox="0 0 18 32"
+              >
+                <path
+                  d="M13.714 11.429q0-1.893-1.339-3.232t-3.232-1.339-3.232 1.339-1.339 3.232 1.339 3.232 3.232 1.339 3.232-1.339 1.339-3.232zM18.286 11.429q0 1.947-0.589 3.197l-6.501 13.821q-0.286 0.589-0.848 0.928t-1.205 0.339-1.205-0.339-0.83-0.928l-6.518-13.821q-0.589-1.25-0.589-3.197 0-3.786 2.678-6.464t6.464-2.678 6.464 2.678 2.678 6.464z"
+                />
+              </svg>
+            </span>
+            Get Directions
+          </a>
+        </p>
+        <div
+          class="my-3"
+        >
+          <h3
+            class="text__caps-weighted"
+          >
+            Office Hours
+          </h3>
+          <div
+            class="text-gray-800 text-sm markdown"
+          >
+            <span
+              class="translate"
+            >
+              <span>
+                8-4 Mon-Thurs
+
+                <br />
+                9-4 Fri
+
+                <br />
+                10-2 Weekends
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Housing Program
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <a
+            class="text-base"
+            href="https://sfmohcd.org/for-buyers"
+            target="_blank"
+          >
+            Below Market Rate
+          </a>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p>
+            Listing Updated: April 11, 2022
+          </p>
+          <p
+            class="mt-1"
+          >
+            <a
+              class=""
+              href="https://thefrontsteps.com/featured-listings/sfar/mls-481663-2820_scott_street_san_francisco_ca_94123/"
+              target="_blank"
+            >
+              See this unit on MLS
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`MobileListingDetailsLottery does display when lottery listing is closed 1`] = `
+<DocumentFragment>
+  <li
+    class="responsive-content-item "
+  >
+    <header
+      class="detail-header "
+    >
+      <span
+        class="detail-header__image-container"
+      >
+        <img
+          alt=""
+          class="detail-header__image "
+          src=""
+        />
+      </span>
+      <hgroup
+        class="detail-header__hgroup"
+      >
+        <h2
+          class="detail-header__title"
+        >
+          Lottery
+        </h2>
+        <span
+          class="detail-header__subtitle"
+        >
+          Lottery selection, important dates and contact
+        </span>
+        <span
+          class="ui-icon ui-medium"
+        >
+          <svg
+            fill="currentColor"
+            viewBox="0 0 32 32"
+          >
+            <path
+              d="M28.267 6.133l-12.267 12.267-12.267-12.267-3.733 3.733 16 16 16-16z"
+            />
+          </svg>
+        </span>
+      </hgroup>
+    </header>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Lottery
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p
+            class="flex justify-between mb-4"
+          >
+            <span>
+              March 22, 2023
+            </span>
+            <span
+              class="font-bold"
+            >
+              6:00 pm
+            </span>
+          </p>
+          <div
+            class="text-gray-700"
+          >
+            <div>
+              <p>
+                The lottery will not be in person, but instead will be a virtual lottery.
+              </p>
+              <p>
+                 
+              </p>
+              <p>
+                Come back to this page on the day of the lottery for a link you can click on to watch the lottery live.
+              </p>
+              <p>
+                <br />
+              </p>
+              <p>
+                <br />
+              </p>
+            </div>
+          </div>
+          <p
+            class="mt-4 text-gray-700"
+          >
+            An open lottery will be held to draw numbers to determine selection. Attendance is optional.
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Lottery Results
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p
+            class="mb-4"
+          >
+            March 23, 2023
+          </p>
+          <p
+            class="text-gray-700"
+          >
+            Complete lottery results will be posted on this date by 5 pm.
+          </p>
+        </div>
+      </section>
+    </div>
+    <div
+      class="open-houses border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          Open Houses
+        </h4>
+        <div
+          class="false"
+        >
+          <p
+            class="text text-gray-800 pb-2 flex justify-between items-center"
+          >
+            <span
+              class="inline-block text-sm uppercase normal-case"
+            >
+              February 23, 2018
+            </span>
+            <span
+              class="inline-block text-xs font-bold ml-5 font-alt-sans"
+            >
+              9:00AM - 12:00PM
+            </span>
+          </p>
+          <div
+            class="text-sm text-gray-700 false"
+          >
+            <div
+              class="flex flex-col"
+            >
+              <span
+                class="links-space translate"
+              >
+                <span>
+                  Library
+                </span>
+              </span>
+              <span>
+                123 Van ness, San Francisco
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0"
+    >
+      <section
+        class="aside-block"
+      >
+        <h4
+          class="text__underline-weighted"
+        >
+          What to Expect
+        </h4>
+        <div
+          class="text-sm text-gray-750"
+        >
+          <span>
+            Applicants will be contacted by the agent in lottery rank order until vacancies are filled.
+          </span>
+          <div
+            class="mt-2"
+          >
+            <div>
+              <button
+                aria-expanded="false"
+                aria-label="Show more about what to expect"
+                class="button is-unstyled m-0 no-underline has-toggle"
+                type="button"
+              >
+                Show more
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div
+      class="border-b border-gray-400 md:border-b-0 last:border-b-0"
+    >
+      <section
+        class="aside-block "
+      >
+        <div
+          class="text-sm text-gray-750"
+        >
+          <p>
+            Listing Updated: April 1, 2022
+          </p>
+        </div>
+      </section>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`MobileListingDetailsLottery does not display if listing is open 1`] = `<DocumentFragment />`;
+
+exports[`MobileListingDetailsLottery does not display when fcfs sale listing 1`] = `<DocumentFragment />`;

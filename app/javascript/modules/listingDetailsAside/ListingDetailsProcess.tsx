@@ -1,7 +1,7 @@
 import React from "react"
 import { getEventNote, RailsListing } from "../listings/SharedHelpers"
 import dayjs from "dayjs"
-import { isFcfsListing, isRental, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isRental, isSale } from "../../util/listingUtil"
 import {
   EventSection,
   Contact,
@@ -19,12 +19,12 @@ export interface ListingDetailsProcessProps {
 
 const WhatToExpect = ({
   listing,
-  isFcfsEnabled,
+  isSalesFcfsEnabled,
 }: {
   listing: RailsListing
-  isFcfsEnabled: boolean
+  isSalesFcfsEnabled: boolean
 }) => {
-  if (isFcfsListing(listing) && isFcfsEnabled) {
+  if (isFcfsSalesListing(listing) && isSalesFcfsEnabled) {
     return null
   }
   return (
@@ -54,8 +54,7 @@ export const ListingDetailsProcess = ({
 }: ListingDetailsProcessProps) => {
   const isListingSale = isSale(listing)
   const isListingRental = isRental(listing)
-  const { unleashFlag: seeTheUnitEnabled } = useFeatureFlag("see_the_unit", false)
-  const { unleashFlag: isFcfsEnabled } = useFeatureFlag("FCFS", false)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <>
@@ -85,7 +84,7 @@ export const ListingDetailsProcess = ({
             />
           </div>
         )}
-      <WhatToExpect listing={listing} isFcfsEnabled={isFcfsEnabled} />
+      <WhatToExpect listing={listing} isSalesFcfsEnabled={isSalesFcfsEnabled} />
       <ListingDetailsLotteryPreferenceLists
         listing={listing}
         isApplicationOpen={isApplicationOpen}
@@ -95,7 +94,7 @@ export const ListingDetailsProcess = ({
         listing.Leasing_Agent_Phone ||
         listing.Office_Hours ||
         listing.Leasing_Agent_Title) &&
-        (isListingRental || !seeTheUnitEnabled) && (
+        (isListingRental || !isSalesFcfsEnabled) && (
           <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
             <Contact
               sectionTitle={t("contactAgent.contact")}
@@ -159,6 +158,13 @@ export const ListingDetailsProcess = ({
         <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
           <SidebarBlock>
             <p>{`${t("t.listingUpdated")}: ${localizedFormat(listing.LastModifiedDate, "LL")}`}</p>
+            {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
+              <p className="mt-1">
+                <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
+                  {t("listings.process.seeThisUnitOnMls")}
+                </a>
+              </p>
+            )}
           </SidebarBlock>
         </div>
       )}

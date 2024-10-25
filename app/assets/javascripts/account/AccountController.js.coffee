@@ -3,6 +3,7 @@ AccountController = (
   $scope,
   $state,
   $translate,
+  $window,
   AccountService,
   AnalyticsService,
   inputMaxLength,
@@ -122,8 +123,9 @@ AccountController = (
           else
             $scope._signInRedirect()
       ).catch( ->
-        $scope.handleErrorState()
-        $scope.submitDisabled = false
+        if $window.env.ACCOUNT_INFORMATION_PAGES_REACT == "false"
+          $scope.handleErrorState()
+          $scope.submitDisabled = false
       )
     else
       AnalyticsService.trackFormError('Accounts')
@@ -303,7 +305,7 @@ AccountController = (
       $translate.instant('error.password_confirmation')
 
 AccountController.$inject = [
-  '$document', '$scope', '$state', '$translate', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
   'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 

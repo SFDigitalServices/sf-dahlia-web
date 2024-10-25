@@ -11,17 +11,24 @@ import { User } from "../../authentication/user"
 import Layout from "../../layouts/Layout"
 import EmailFieldset, {
   emailFieldsetErrors,
+  emailSortOrder,
   handleEmailServerErrors,
 } from "./components/EmailFieldset"
 import FormSubmitButton from "./components/FormSubmitButton"
 import PasswordFieldset, {
   handlePasswordServerErrors,
   passwordFieldsetErrors,
+  passwordSortOrder,
 } from "./components/PasswordFieldset"
-import NameFieldset, { handleNameServerErrors, nameFieldsetErrors } from "./components/NameFieldset"
+import NameFieldset, {
+  handleNameServerErrors,
+  nameFieldsetErrors,
+  nameSortOrder,
+} from "./components/NameFieldset"
 import DOBFieldset, {
   deduplicateDOBErrors,
   dobFieldsetErrors,
+  dobSortOrder,
   handleDOBServerErrors,
 } from "./components/DOBFieldset"
 import "./styles/account.scss"
@@ -141,6 +148,7 @@ const EmailSection = ({ user, setUser }: SectionProps) => {
       />
       <ErrorSummaryBanner
         errors={errors}
+        sortOrder={emailSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, emailFieldsetErrors, true)}
       />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
@@ -199,10 +207,17 @@ const PasswordSection = ({ user, setUser }: SectionProps) => {
       />
       <ErrorSummaryBanner
         errors={errors}
+        sortOrder={passwordSortOrder}
         messageMap={(messageKey) => getErrorMessage(messageKey, passwordFieldsetErrors, true)}
       />
       <UpdateForm onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        <PasswordFieldset register={register} errors={errors} watch={watch} edit />
+        <PasswordFieldset
+          register={register}
+          errors={errors}
+          watch={watch}
+          labelText={t("label.password")}
+          passwordType="accountSettings"
+        />
       </UpdateForm>
     </>
   )
@@ -269,6 +284,7 @@ const NameSection = ({ user, setUser, handleBanners }: SectionProps) => {
       {errors && (
         <ErrorSummaryBanner
           errors={errors}
+          sortOrder={nameSortOrder}
           messageMap={(messageKey) => getErrorMessage(messageKey, nameFieldsetErrors, true)}
         />
       )}
@@ -348,6 +364,7 @@ const DateOfBirthSection = ({ user, setUser }: SectionProps) => {
       />
       {errors && errors?.dobObject && (
         <ErrorSummaryBanner
+          sortOrder={dobSortOrder}
           errors={deduplicateDOBErrors(errors.dobObject as DeepMap<DOBFieldValues, FieldError>)}
           messageMap={(messageKey) => getErrorMessage(messageKey, dobFieldsetErrors, true)}
         />

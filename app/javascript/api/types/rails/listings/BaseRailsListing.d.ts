@@ -56,7 +56,7 @@ export type ListingLotteryPreference = {
 
 export type ListingOnlineDetail = {
   Id: string
-  Name: string
+  Listing_Online_Detail_Name: string
   URL: string
 }
 
@@ -112,7 +112,6 @@ type BaseRailsListing = {
   Leasing_Agent_Zip?: string
   Legal_Disclaimers?: string
   Listing_Type?: string
-  Listing_State?: string
   Listing_Lottery_Preferences?: ListingLotteryPreference[]
   Listing_Other_Notes?: string
   Listing_Online_Details?: ListingOnlineDetail[]
@@ -153,6 +152,11 @@ type BaseRailsListing = {
   SASE_Required_for_Lottery_Ticket: boolean
   Services_Onsite?: string
   Smoking_Policy?: string
+  // TODO: DAH-2846
+  // We don't yet get Status back for a listing
+  // Salesforce will add it to the API response
+  // for now, it will always return null
+  Status?: string
   Tenure: string
   Total_number_of_building_units: number
   Total_waitlist_openings?: number

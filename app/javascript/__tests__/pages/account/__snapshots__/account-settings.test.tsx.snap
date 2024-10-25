@@ -250,7 +250,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -275,6 +275,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input"
                               id="firstName"
                               name="firstName"
+                              required=""
                               type="text"
                               value="FirstName"
                             />
@@ -327,6 +328,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input"
                               id="lastName"
                               name="lastName"
+                              required=""
                               type="text"
                               value="LastName"
                             />
@@ -358,7 +360,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -369,7 +371,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field-group--date mt-1"
                         >
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -387,7 +389,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -396,7 +399,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -414,7 +417,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -423,7 +427,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -441,7 +445,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="1999"
                               />
                             </div>
@@ -473,7 +478,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -497,6 +502,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="email"
                               name="email"
                               placeholder="example@web.com"
+                              required=""
                               type="email"
                               value="email@email.com"
                             />
@@ -528,7 +534,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -558,6 +564,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               class="input pr-10"
                               id="currentPassword"
                               name="currentPassword"
+                              required=""
                               type="password"
                               value=""
                             />
@@ -610,6 +617,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         </div>
                         <div
                           class="field-note"
+                          id="newPasswordInstructions"
                         >
                           <span>
                             Must include at least:
@@ -647,11 +655,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="password-error"
+                              aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
                               class="input pr-10"
                               id="password"
                               name="password"
+                              required=""
                               type="text"
                               value=""
                             />
@@ -1079,7 +1088,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1104,6 +1113,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input"
                             id="firstName"
                             name="firstName"
+                            required=""
                             type="text"
                             value="FirstName"
                           />
@@ -1156,6 +1166,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input"
                             id="lastName"
                             name="lastName"
+                            required=""
                             type="text"
                             value="LastName"
                           />
@@ -1187,7 +1198,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1198,7 +1209,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field-group--date mt-1"
                       >
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -1216,7 +1227,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
-                              type="text"
+                              required=""
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -1225,7 +1237,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -1243,7 +1255,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
-                              type="text"
+                              required=""
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -1252,7 +1265,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -1270,7 +1283,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
-                              type="text"
+                              required=""
+                              type="number"
                               value="1999"
                             />
                           </div>
@@ -1302,7 +1316,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1326,6 +1340,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             id="email"
                             name="email"
                             placeholder="example@web.com"
+                            required=""
                             type="email"
                             value="email@email.com"
                           />
@@ -1357,7 +1372,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -1387,6 +1402,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                             class="input pr-10"
                             id="currentPassword"
                             name="currentPassword"
+                            required=""
                             type="password"
                             value=""
                           />
@@ -1439,6 +1455,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       </div>
                       <div
                         class="field-note"
+                        id="newPasswordInstructions"
                       >
                         <span>
                           Must include at least:
@@ -1476,11 +1493,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="control"
                         >
                           <input
-                            aria-describedby="password-error"
+                            aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
                             class="input pr-10"
                             id="password"
                             name="password"
+                            required=""
                             type="text"
                             value=""
                           />
@@ -1965,7 +1983,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -1990,6 +2008,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input"
                               id="firstName"
                               name="firstName"
+                              required=""
                               type="text"
                               value="FirstName"
                             />
@@ -2042,6 +2061,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input"
                               id="lastName"
                               name="lastName"
+                              required=""
                               type="text"
                               value="LastName"
                             />
@@ -2073,7 +2093,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2084,7 +2104,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field-group--date mt-1"
                         >
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2102,7 +2122,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthMonth"
                                 maxlength="2"
                                 name="dobObject.birthMonth"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -2111,7 +2132,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2129,7 +2150,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthDay"
                                 maxlength="2"
                                 name="dobObject.birthDay"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="01"
                               />
                             </div>
@@ -2138,7 +2160,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             />
                           </div>
                           <div
-                            class="field ml-0 mr-4 pb-4"
+                            class="field ml-0 mr-4"
                           >
                             <label
                               class="label"
@@ -2156,7 +2178,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                                 id="dobObject.birthYear"
                                 maxlength="4"
                                 name="dobObject.birthYear"
-                                type="text"
+                                required=""
+                                type="number"
                                 value="1999"
                               />
                             </div>
@@ -2188,7 +2211,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2212,6 +2235,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="email"
                               name="email"
                               placeholder="example@web.com"
+                              required=""
                               type="email"
                               value="email@email.com"
                             />
@@ -2243,7 +2267,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       novalidate=""
                     >
                       <fieldset
-                        class="form-fieldset"
+                        class="form-fieldset w-full"
                       >
                         <legend
                           class="fieldset-legend"
@@ -2273,6 +2297,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               class="input pr-10"
                               id="currentPassword"
                               name="currentPassword"
+                              required=""
                               type="password"
                               value=""
                             />
@@ -2325,6 +2350,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         </div>
                         <div
                           class="field-note"
+                          id="newPasswordInstructions"
                         >
                           <span>
                             Must include at least:
@@ -2362,11 +2388,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="control"
                           >
                             <input
-                              aria-describedby="password-error"
+                              aria-describedby="newPasswordInstructions"
                               aria-invalid="false"
                               class="input pr-10"
                               id="password"
                               name="password"
+                              required=""
                               type="text"
                               value=""
                             />
@@ -2794,7 +2821,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -2819,6 +2846,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input"
                             id="firstName"
                             name="firstName"
+                            required=""
                             type="text"
                             value="FirstName"
                           />
@@ -2871,6 +2899,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input"
                             id="lastName"
                             name="lastName"
+                            required=""
                             type="text"
                             value="LastName"
                           />
@@ -2902,7 +2931,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -2913,7 +2942,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field-group--date mt-1"
                       >
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2931,7 +2960,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthMonth"
                               maxlength="2"
                               name="dobObject.birthMonth"
-                              type="text"
+                              required=""
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -2940,7 +2970,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2958,7 +2988,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthDay"
                               maxlength="2"
                               name="dobObject.birthDay"
-                              type="text"
+                              required=""
+                              type="number"
                               value="01"
                             />
                           </div>
@@ -2967,7 +2998,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           />
                         </div>
                         <div
-                          class="field ml-0 mr-4 pb-4"
+                          class="field ml-0 mr-4"
                         >
                           <label
                             class="label"
@@ -2985,7 +3016,8 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                               id="dobObject.birthYear"
                               maxlength="4"
                               name="dobObject.birthYear"
-                              type="text"
+                              required=""
+                              type="number"
                               value="1999"
                             />
                           </div>
@@ -3017,7 +3049,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -3041,6 +3073,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             id="email"
                             name="email"
                             placeholder="example@web.com"
+                            required=""
                             type="email"
                             value="email@email.com"
                           />
@@ -3072,7 +3105,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                     novalidate=""
                   >
                     <fieldset
-                      class="form-fieldset"
+                      class="form-fieldset w-full"
                     >
                       <legend
                         class="fieldset-legend"
@@ -3102,6 +3135,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                             class="input pr-10"
                             id="currentPassword"
                             name="currentPassword"
+                            required=""
                             type="password"
                             value=""
                           />
@@ -3154,6 +3188,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       </div>
                       <div
                         class="field-note"
+                        id="newPasswordInstructions"
                       >
                         <span>
                           Must include at least:
@@ -3191,11 +3226,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="control"
                         >
                           <input
-                            aria-describedby="password-error"
+                            aria-describedby="newPasswordInstructions"
                             aria-invalid="false"
                             class="input pr-10"
                             id="password"
                             name="password"
+                            required=""
                             type="text"
                             value=""
                           />

@@ -50,6 +50,12 @@ export const RESERVED_COMMUNITY_TYPES = {
   VETERAN: "Veteran",
 }
 
+export const LISTING_TYPES = {
+  OWNERSHIP: "Ownership",
+}
+
+export const LISTING_STATUS_ACTIVE = "Active"
+
 export const CUSTOM_LISTING_TYPES = {
   EDUCATOR_ONE: "Educator 1: SFUSD employees only",
   EDUCATOR_TWO: "Educator 2: SFUSD employees & public",
@@ -57,12 +63,6 @@ export const CUSTOM_LISTING_TYPES = {
 }
 
 export const LISTING_TYPE_FIRST_COME_FIRST_SERVED = "First Come, First Served"
-
-export const LISTING_STATES = {
-  CLOSED: "Closed",
-  OPEN: "Open",
-  NOT_YET_OPEN: "Not yet open",
-}
 
 export const TENURE_TYPES = {
   NEW_SALE: "New sale",

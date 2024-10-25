@@ -50,6 +50,8 @@ export const emailFieldsetErrors: ErrorMessages = {
   },
 }
 
+export const emailSortOrder = ["email"]
+
 const emailValidation = (data: string) => {
   const numberOfAts = (data.match(/@/g) || []).length
   if (numberOfAts === 0) {
@@ -100,6 +102,7 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
         register={register}
         defaultValue={defaultEmail ?? null}
         onChange={onChange}
+        inputProps={{ required: true }}
       />
     </Fieldset>
   )

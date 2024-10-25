@@ -21,15 +21,38 @@ import {
   TENURE_TYPES,
   CUSTOM_LISTING_TYPES,
   LISTING_TYPE_FIRST_COME_FIRST_SERVED,
+  LISTING_TYPES,
+  LISTING_STATUS_ACTIVE,
 } from "../modules/constants"
 import { RailsListing } from "../modules/listings/SharedHelpers"
 import { LANGUAGE_CONFIGS, getCustomListingType, getReservedCommunityType } from "./languageUtil"
 import { GroupedUnitsByOccupancy } from "../modules/listingDetails/ListingDetailsPricingTable"
 import { getRangeString } from "../modules/listings/DirectoryHelpers"
 import { t } from "@bloom-housing/ui-components"
+import { ListingState } from "../modules/listings/ListingState"
 
-export const isFcfsListing = (listing: RailsRentalListing | RailsSaleListing) =>
-  listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED
+export const isFcfsSalesListing = (listing: RailsRentalListing | RailsSaleListing) => {
+  return (
+    listing.Listing_Type === LISTING_TYPE_FIRST_COME_FIRST_SERVED &&
+    listing.RecordType.Name === LISTING_TYPES.OWNERSHIP
+  )
+}
+
+export const getFcfsSalesListingState = (listing: RailsSaleListing): ListingState => {
+  if (
+    (!!listing.Status && listing.Status !== LISTING_STATUS_ACTIVE) ||
+    !listing.Accepting_Online_Applications
+  ) {
+    return ListingState.Closed
+  }
+
+  if (dayjs(listing.Application_Start_Date_Time) < dayjs()) {
+    return ListingState.Open
+  }
+
+  return ListingState.NotYetOpen
+}
+
 /**
  * Check if a listing is for Habitat for Humanity
  * @param {RailsRentalListing | RailsRentalListing} listing

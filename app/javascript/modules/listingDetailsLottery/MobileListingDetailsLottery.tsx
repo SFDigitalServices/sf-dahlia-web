@@ -3,10 +3,11 @@ import { ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsLotteryResults } from "./ListingDetailsLotteryResults"
 import { ListingDetailsProcess } from "../listingDetailsAside/ListingDetailsProcess"
-import { isOpen } from "../../util/listingUtil"
+import { isFcfsSalesListing, isOpen } from "../../util/listingUtil"
 import { ListingDetailsLotteryInfo } from "./LotteryDetailsLotteryInfo"
 import { ListingDetailsWaitlist } from "../listingDetailsAside/ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "../listingDetailsAside/ListingDetailsOpenHouses"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsLotteryProps {
   imageSrc: string
@@ -14,11 +15,13 @@ export interface ListingDetailsLotteryProps {
 }
 
 export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetailsLotteryProps) => {
-  const isApplicationOpen = isOpen(listing)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+  const shouldNotRenderForFcfs = isSalesFcfsEnabled && isFcfsSalesListing(listing)
+  const shouldRenderComponent = shouldNotRenderForFcfs ? false : !isOpen(listing)
 
   return (
     listing &&
-    !isApplicationOpen && (
+    shouldRenderComponent && (
       <Mobile>
         <ListingDetailItem
           imageAlt={""}
@@ -30,7 +33,7 @@ export const MobileListingDetailsLottery = ({ imageSrc, listing }: ListingDetail
           <ListingDetailsLotteryResults listing={listing} />
           <ListingDetailsWaitlist listing={listing} />
           <ListingDetailsOpenHouses listing={listing} />
-          <ListingDetailsProcess listing={listing} isApplicationOpen={isApplicationOpen} />
+          <ListingDetailsProcess listing={listing} isApplicationOpen={shouldRenderComponent} />
         </ListingDetailItem>
       </Mobile>
     )
