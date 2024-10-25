@@ -57,13 +57,21 @@ module Force
       if translations_invalid?(listing_translations) || translations_are_outdated?(
         listing_translations[:LastModifiedDate], listing['LastModifiedDate']
       )
-        Rails.logger.info("Translations are not valid for #{listing_id}")
+        Rails.logger.info(
+          'ListingService ' \
+          "Translations are not valid for listing #{listing_id}, " \
+          'translating all fields',
+        )
         return CacheService.new.process_translations(listing)
       end
 
       if listing_is_outdated?(listing_translations[:LastModifiedDate],
                               listing['LastModifiedDate'])
-        Rails.logger.info("Listing is outdated for #{listing_id}")
+        Rails.logger.info(
+          'ListingService ' \
+          "Listing is outdated for #{listing_id}, " \
+          'refreshing the cached listing',
+        )
         refresh_listing_cache(listing_id)
       end
       listing_translations

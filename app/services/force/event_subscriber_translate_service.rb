@@ -90,24 +90,17 @@ module Force
 
     def translate_and_cache(event)
       translations = translate_event_values(event.listing_id, event.updated_values)
-      logger(
-        "Event Translations: #{translations.inspect}",
-      )
       if translations.empty?
-        logger(
-          "No translations for event: #{event.inspect}",
-        )
+        logger("No translations for event: #{event.inspect}")
         return []
       end
+      logger("Caching translations for event: #{event.inspect}")
 
-      cached_response = @translation_service.cache_listing_translations(
+      @translation_service.cache_listing_translations(
         event.listing_id,
         event.updated_values.keys,
         translations,
         event.last_modified_date,
-      )
-      logger(
-        "Event Translations: #{cached_response.inspect}",
       )
     end
 
@@ -134,7 +127,6 @@ module Force
     end
 
     def translate_event_values(listing_id, values)
-      logger("Translating values: #{values.inspect}")
       languages = %w[ES ZH TL]
       text_to_translate, keys_of_text = process_event_values(listing_id, values)
       @translation_service.translate(
