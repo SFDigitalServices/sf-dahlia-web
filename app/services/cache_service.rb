@@ -24,8 +24,13 @@ class CacheService
     strings_to_translate = build_strings_to_translate(listing)
     languages = %w[ES ZH TL]
 
-    translations = translation_service.translate(strings_to_translate.values,
-                                                 languages)
+    translations = translation_service.translate(
+      text: strings_to_translate.values,
+      targets: languages,
+      caller_method: "#{self.class.name}##{__method__}",
+      listing_id: listing['Id'],
+      field_names: strings_to_translate.keys,
+    )
 
     translation_service.cache_listing_translations(
       listing['Id'],

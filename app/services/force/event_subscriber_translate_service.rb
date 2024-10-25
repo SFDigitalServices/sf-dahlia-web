@@ -130,14 +130,20 @@ module Force
           text_to_translate.push(listing[domain_key])
         end
       end
-      text_to_translate
+      [text_to_translate, values.keys]
     end
 
     def translate_event_values(listing_id, values)
       logger("Translating values: #{values.inspect}")
       languages = %w[ES ZH TL]
-      text_to_translate = process_event_values(listing_id, values)
-      @translation_service.translate(text_to_translate, languages)
+      text_to_translate, keys_of_text = process_event_values(listing_id, values)
+      @translation_service.translate(
+        text: text_to_translate,
+        targets: languages,
+        caller_method: "#{self.class.name}##{__method__}",
+        listing_id:,
+        field_names: keys_of_text,
+      )
     end
 
     def parse_event(platform_event)

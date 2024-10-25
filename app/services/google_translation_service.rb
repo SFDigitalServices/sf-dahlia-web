@@ -14,13 +14,21 @@ class GoogleTranslationService
     @cache = Rails.cache
   end
 
-  def translate(text, to)
+  def translate(text:, field_names:, targets:, caller_method:, listing_id: nil)
     return [] if text.empty?
 
-    google_translation_logger("Translating text: #{text} to: #{to}")
-    translations = to.map do |target|
+    log_text_to_translate(caller_method, targets, text, field_names, listing_id)
+    translations = targets.map do |target|
       translation = @translate.translate(text, to: target)
-      { to: target, translation: parse_translations(translation) }
+      parsed_translations = parse_translations(translation)
+      log_translated_text(
+        caller_method,
+        target,
+        parsed_translations,
+        field_names,
+        listing_id,
+      )
+      { to: target, translation: parsed_translations }
     rescue StandardError => e
       google_translation_logger('Error translating text', e)
       return []
@@ -30,6 +38,8 @@ class GoogleTranslationService
     translations
   end
 
+  # we should keep `keys` and `translations` in one hash instead of
+  #   separating and recombining them across different methods
   def cache_listing_translations(listing_id, keys, translations, last_modified)
     translations = transform_translations_for_caching(listing_id, keys, translations,
                                                       last_modified)
@@ -71,6 +81,23 @@ class GoogleTranslationService
     return { **prev_cached_translations, **return_value } if prev_cached_translations
 
     return_value
+  end
+
+  def log_text_to_translate(caller_method, targets, text, field_names, listing_id)
+    to_translate_log = {
+      caller_method:, targets:, listing_id:, to_translate: field_names.zip(text).to_h
+    }.to_json
+    google_translation_logger("Translating text: #{to_translate_log}")
+  end
+
+  def log_translated_text(caller_method, target, translations, field_names, listing_id)
+    translated_log = {
+      caller_method:,
+      target:,
+      listing_id:,
+      translated: field_names.zip(translations).to_h,
+    }.to_json
+    google_translation_logger("Translated text: #{translated_log}")
   end
 
   def google_translation_logger(message, error = nil)
