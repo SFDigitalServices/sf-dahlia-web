@@ -80,8 +80,8 @@ module Force
     def subscribe_to_listing_updates
       @faye_client.subscribe('/data/Listing__ChangeEvent') do |platform_event|
         logger(
-          'New Salesforce event via /data/Listing__ChangeEvent: ' \
-          "#{platform_event.inspect}",
+          "New Salesforce event via '/data/Listing__ChangeEvent': " \
+          "#{platform_event.to_json}",
         )
         event = parse_event(platform_event)
         translate_and_cache(event)
@@ -91,10 +91,10 @@ module Force
     def translate_and_cache(event)
       translations = translate_event_values(event.listing_id, event.updated_values)
       if translations.empty?
-        logger("No translations for event: #{event.inspect}")
+        logger("No translations for event: #{event.to_json}")
         return []
       end
-      logger("Caching translations for event: #{event.inspect}")
+      logger("Caching translations for event: #{event.to_json}")
 
       @translation_service.cache_listing_translations(
         event.listing_id,
@@ -151,7 +151,7 @@ module Force
     end
 
     def extract_updated_values(changed_fields, event)
-      logger("Extracting updated values: #{changed_fields.inspect}")
+      logger("Extracting updated values: #{changed_fields.to_json}")
 
       listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
       filtered_fields = changed_fields.select do |field|
