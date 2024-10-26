@@ -3,6 +3,7 @@ require 'rails_helper'
 describe GoogleTranslationService do
   describe 'when an array of text and an array of target languages is passed' do
     fields = %w[Hello World]
+    field_names = %w[hello_key world_key]
     languages = %w[ES]
     mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
     expected_result = [
@@ -26,7 +27,9 @@ describe GoogleTranslationService do
         { to: 'ES' },
       ).and_return(mock_response)
 
-      result = service.translate(fields, languages)
+      result = service.translate(
+        text: fields, field_names:, targets: languages, caller_method: __method__,
+      )
       expect(result).to eq(expected_result)
     end
 
