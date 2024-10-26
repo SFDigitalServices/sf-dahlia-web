@@ -45,13 +45,14 @@ class GoogleTranslationService
   def cache_listing_translations(listing_id, keys, translations, last_modified)
     translations = transform_translations_for_caching(listing_id, keys, translations,
                                                       last_modified)
-    if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
+    cache_key = Force::ListingService.listing_translations_cache_key(listing_id)
+    if @cache.write(cache_key, translations)
       google_translation_logger(
-        "Successfully cached listing translations for listing id: #{listing_id}",
+        "Successfully wrote translations to cache with key '#{cache_key}'",
       )
     else
       google_translation_logger(
-        "Error caching listing translations for listing id: #{listing_id}", error: true
+        "Error writing translations to cache with key '#{cache_key}'", error: true
       )
     end
     translations
@@ -66,7 +67,9 @@ class GoogleTranslationService
   end
 
   def transform_translations_for_caching(listing_id, keys, translations, last_modified)
-    prev_cached_translations = @cache.read("/ListingDetails/#{listing_id}/translations")
+    prev_cached_translations = @cache.read(
+      Force::ListingService.listing_translations_cache_key(listing_id),
+    )
 
     # keys can come from updated_values.keys in the event_subscriber_translate_service
     # they will be in the same order as the translations because the translation service
