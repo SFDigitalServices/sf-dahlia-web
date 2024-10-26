@@ -4,6 +4,8 @@ require 'google/cloud/translate/v2'
 class GoogleTranslationService
   class TranslationError < StandardError; end
 
+  MAX_TRANSLATION_LOG_LENGTH = 128
+
   def initialize
     google_translation_logger('Connecting to Google Cloud Translate...')
     @translate = Google::Cloud::Translate::V2.new(
@@ -85,7 +87,10 @@ class GoogleTranslationService
 
   def log_text_to_translate(caller_method, targets, text, field_names, listing_id)
     to_translate_log = {
-      caller_method:, targets:, listing_id:, to_translate: field_names.zip(text).to_h
+      caller_method:,
+      targets:,
+      listing_id:,
+      to_translate: field_names.zip(truncate_translations(text)).to_h,
     }.to_json
     google_translation_logger("Translating text: #{to_translate_log}")
   end
@@ -95,9 +100,19 @@ class GoogleTranslationService
       caller_method:,
       target:,
       listing_id:,
-      translated: field_names.zip(translations).to_h,
+      translated: field_names.zip(truncate_translations(translations)).to_h,
     }.to_json
     google_translation_logger("Translated text: #{translated_log}")
+  end
+
+  def truncate_translations(translations)
+    translations.map do |translation|
+      if translation.length > MAX_TRANSLATION_LOG_LENGTH
+        "#{translation[0..MAX_TRANSLATION_LOG_LENGTH]}..."
+      else
+        translation
+      end
+    end
   end
 
   def google_translation_logger(message, error = nil)
