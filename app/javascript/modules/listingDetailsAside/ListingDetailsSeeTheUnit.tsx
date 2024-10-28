@@ -67,11 +67,11 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
           {t("label.seeTheUnit")}
         </Heading>
       </div>
-      <SeeTheUnitSubsection title={t("label.openHouses.seeTheUnit")}>
-        {listing.Open_Houses?.length ? (
+      {listing.Open_Houses?.length && (
+        <SeeTheUnitSubsection title={t("label.openHouses.seeTheUnit")}>
           <ListingDetailsOpenHouses listing={listing} sectionHeader={false} />
-        ) : null}
-      </SeeTheUnitSubsection>
+        </SeeTheUnitSubsection>
+      )}
       {(listing.Multiple_Listing_Service_URL || listing.Listing_Online_Details) &&
         SeeDetailsOnline(listing)}
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
