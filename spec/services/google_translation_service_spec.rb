@@ -2,13 +2,22 @@ require 'rails_helper'
 
 describe GoogleTranslationService do
   describe 'when an array of text and an array of target languages is passed' do
-    fields = %w[Hello World]
-    field_names = %w[hello_key world_key]
+    fields = [
+      'Hello',
+      'World',
+      'Long text that gets truncated in the logs, long text long text long text ' \
+      'long text long text long text long text long text long text long text ',
+    ]
+    field_names = %w[hello_key world_key long_text_key]
     languages = %w[ES]
-    mock_response = [OpenStruct.new(text: 'Hello'), OpenStruct.new(text: 'World')]
+    mock_response = [
+      OpenStruct.new(text: fields[0]),
+      OpenStruct.new(text: fields[1]),
+      OpenStruct.new(text: fields[2]),
+    ]
     expected_result = [
-      { to: 'ES', translation: %w[Hello World] },
-      { to: 'EN', translation: %w[Hello World] },
+      { to: 'ES', translation: fields },
+      { to: 'EN', translation: fields },
     ]
     listing_id = 'a0W0P00000F8YG4UAN'
     let(:mock_translate) { instance_double(Google::Cloud::Translate::V2::Api) }
@@ -39,13 +48,19 @@ describe GoogleTranslationService do
 
       result = service.cache_listing_translations(
         listing_id,
-        fields,
+        field_names,
         expected_result,
         '2021-07-01T00:00:00Z',
       )
 
-      expect(result).to eq({ LastModifiedDate: '2021-07-01T00:00:00Z',
-                             Hello: { EN: 'Hello', ES: 'Hello' }, World: { EN: 'World', ES: 'World' } })
+      cache_object = {
+        LastModifiedDate: '2021-07-01T00:00:00Z',
+        hello_key: { EN: fields[0], ES: fields[0] },
+        world_key: { EN: fields[1], ES: fields[1] },
+        long_text_key: { EN: fields[2], ES: fields[2] },
+      }
+
+      expect(result).to eq(cache_object)
     end
 
     it 'updates translation object for a listing' do
