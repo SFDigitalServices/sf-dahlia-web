@@ -97,15 +97,6 @@ const getFindMoreActionBlock = () => {
             actions={[
               <Link
                 className="button"
-                key="action-1"
-                external
-                href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
-              >
-                {t("saleDirectory.callout.firstComeFirstServed")}
-              </Link>,
-              <Link
-                className="button"
-                key="action-2"
                 external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
