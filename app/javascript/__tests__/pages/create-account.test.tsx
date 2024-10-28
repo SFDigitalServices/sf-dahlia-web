@@ -57,7 +57,7 @@ async function fillCreateAccountForm({
     name: /email/i,
   })
   const emailField = within(emailGroup).getByRole("textbox")
-  const passwordField: Element = screen.getAllByLabelText(/password/i)[0]
+  const passwordField: Element = screen.getByRole("textbox", { name: /password/i })
 
   await act(async () => {
     await userEvent.clear(firstNameField)
@@ -351,7 +351,7 @@ describe("<CreateAccount />", () => {
     })
 
     it("shows an error message for the password field", async () => {
-      const passwordField = screen.getAllByLabelText(/password/i)[0]
+      const passwordField: Element = screen.getByRole("textbox", { name: /password/i })
 
       await act(async () => {
         await user.click(passwordField)
