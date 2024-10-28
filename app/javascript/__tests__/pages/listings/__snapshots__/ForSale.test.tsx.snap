@@ -425,13 +425,6 @@ exports[`For Sale renders ForSale component 1`] = `
                   >
                     <a
                       class="button"
-                      href="https://sfmohcd.org/current-bmr-homeownership-listings"
-                      target="_self"
-                    >
-                      First come, first served
-                    </a>
-                    <a
-                      class="button"
                       href="https://sfmohcd.org/current-listings-city-second-program"
                       target="_self"
                     >
