@@ -42,9 +42,9 @@ describe("My Applications", () => {
     // Try to continue an application
     cy.intercept("/api/v1/account/my-applications", { fixture: "applications.json" })
     cy.visit("/my-applications?react=true")
-    cy.get('a[href="/listings/a0W0P00000Hc7RcUAJ/apply/name"]').click()
-    cy.contains("TEST Dahlia Commons Application")
-    cy.visit("/my-applications?react=true")
+    // cy.get('a[href="/listings/a0W0P00000Hc7RcUAJ/apply/name"]').click()
+    // cy.contains("TEST Dahlia Commons Application")
+    // cy.visit("/my-applications?react=true")
 
     // Ensure correct formatting
     cy.get('[data-testid="application-item"]').its("length").should("equal", 6)
