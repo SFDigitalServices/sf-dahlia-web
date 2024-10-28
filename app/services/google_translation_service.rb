@@ -16,23 +16,15 @@ class GoogleTranslationService
     @cache = Rails.cache
   end
 
-  def translate(text:, field_names:, targets:, caller_method:, listing_id: nil)
+  def translate(text, to)
     return [] if text.empty?
 
-    log_text_to_translate(caller_method, targets, text, field_names, listing_id)
-    translations = targets.map do |target|
+    google_translation_logger('Translating text...')
+    translations = to.map do |target|
       translation = @translate.translate(text, to: target)
-      parsed_translations = parse_translations(translation)
-      log_translated_text(
-        caller_method,
-        target,
-        parsed_translations,
-        field_names,
-        listing_id,
-      )
-      { to: target, translation: parsed_translations }
+      { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
-      google_translation_logger('Error translating text', e)
+      google_translation_logger("An error occured: #{e.inspect}", error: true)
       return []
     end
     # include original values on the response
@@ -56,6 +48,15 @@ class GoogleTranslationService
       )
     end
     translations
+  end
+
+  def self.log_translations(msg:, caller_method:, text:, listing_id:)
+    msg_hash = {
+      caller_method:,
+      listing_id:,
+      text:,
+    }.to_json
+    Rails.logger.info("#{msg}: #{msg_hash}")
   end
 
   private
@@ -86,36 +87,6 @@ class GoogleTranslationService
     return { **prev_cached_translations, **return_value } if prev_cached_translations
 
     return_value
-  end
-
-  def log_text_to_translate(caller_method, targets, text, field_names, listing_id)
-    to_translate_log = {
-      caller_method:,
-      targets:,
-      listing_id:,
-      to_translate: field_names.zip(truncate_translations(text)).to_h,
-    }.to_json
-    google_translation_logger("Translating text: #{to_translate_log}")
-  end
-
-  def log_translated_text(caller_method, target, translations, field_names, listing_id)
-    translated_log = {
-      caller_method:,
-      target:,
-      listing_id:,
-      translated: field_names.zip(truncate_translations(translations)).to_h,
-    }.to_json
-    google_translation_logger("Translated text: #{translated_log}")
-  end
-
-  def truncate_translations(translations)
-    translations.map do |translation|
-      if translation.length > MAX_TRANSLATION_LOG_LENGTH
-        "#{translation[0..MAX_TRANSLATION_LOG_LENGTH]}..."
-      else
-        translation
-      end
-    end
   end
 
   def google_translation_logger(message, error = nil)

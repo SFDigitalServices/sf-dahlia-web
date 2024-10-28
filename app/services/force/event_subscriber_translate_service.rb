@@ -90,6 +90,12 @@ module Force
 
     def translate_and_cache(event)
       translations = translate_event_values(event.listing_id, event.updated_values)
+      GoogleTranslationService.log_translations(
+        msg: 'Translated text',
+        caller_method: "#{self.class.name}##{__method__}",
+        listing_id: event.listing_id,
+        text: translations,
+      )
       if translations.empty?
         logger("No translations for event: #{event.to_json}")
         return []
@@ -129,13 +135,13 @@ module Force
     def translate_event_values(listing_id, values)
       languages = %w[ES ZH TL]
       text_to_translate = process_event_values(listing_id, values)
-      @translation_service.translate(
-        text: text_to_translate,
-        targets: languages,
+      GoogleTranslationService.log_translations(
+        msg: 'Text to translate',
         caller_method: "#{self.class.name}##{__method__}",
         listing_id:,
-        field_names: values.keys,
+        text: values,
       )
+      @translation_service.translate(text_to_translate, languages)
     end
 
     def parse_event(platform_event)
