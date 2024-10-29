@@ -20,6 +20,7 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
+import "./for-sale.scss"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -96,7 +97,7 @@ const getFindMoreActionBlock = () => {
             layout={ActionBlockLayout.inline}
             actions={[
               <Link
-                className="button"
+                className="button ml-8"
                 external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
