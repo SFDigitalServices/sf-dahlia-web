@@ -399,7 +399,7 @@ exports[`For Sale renders ForSale component 1`] = `
             id="listing-results"
           >
             <div
-              class="bg-primary-darker"
+              class="bg-primary-darker sale-directory"
             >
               <div
                 class="max-w-5xl mx-auto p-2 md:p-4"

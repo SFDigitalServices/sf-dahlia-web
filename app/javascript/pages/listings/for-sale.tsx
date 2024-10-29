@@ -7,6 +7,7 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Link from "../../navigation/Link"
+import "./for-sale.scss"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {
@@ -20,7 +21,6 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
-import "./for-sale.scss"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -89,7 +89,7 @@ const getBuyHeader = (
 const getFindMoreActionBlock = () => {
   return (
     <>
-      <div className="bg-primary-darker">
+      <div className="bg-primary-darker sale-directory">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
             header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
