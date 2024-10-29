@@ -16,6 +16,8 @@ import {
   ExpandableContent,
   Order,
   IconFillColors,
+  Button,
+  AppearanceStyleType,
 } from "@bloom-housing/ui-components"
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -32,6 +34,9 @@ interface HowToApplyProps {
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.NotYetOpen
+
+const applicationsOpen = (listing: RailsSaleListing) =>
+  listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
   return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
@@ -70,7 +75,7 @@ const NotYetOpenMessage = ({ listing }: { listing: RailsSaleListing }) => {
   )
 }
 
-const HowLongItTakesSection = () => {
+const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="py-10">
       <Header headerText={t("howToApplyPage.howLongItTakesSection.title")} />
@@ -78,6 +83,12 @@ const HowLongItTakesSection = () => {
       {t("howToApplyPage.howLongItTakesSection.p1")}
       <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle2")} />
       {t("howToApplyPage.howLongItTakesSection.p2")}
+      {applicationsOpen(listing) && (
+        <>
+          <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle3")} />
+          {renderInlineMarkup(t("howToApplyPage.howLongItTakesSection.p3", { url: "#" }))}
+        </>
+      )}
     </div>
   )
 }
@@ -293,7 +304,11 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           })}
         </div>
       )}
-
+      {applicationsOpen(listing) && (
+        <Button className="mt-6" styleType={AppearanceStyleType.primary}>
+          {t("howToApplyPage.howToApplySection.step5.button")}
+        </Button>
+      )}
       <InfoBox title={t("howToApplyPage.howToApplySection.step5.infoBox.title")}>
         {t("howToApplyPage.howToApplySection.step5.infoBox.p1")}
       </InfoBox>
@@ -361,7 +376,7 @@ const HowToApply = (_props: HowToApplyProps) => {
                 {listing && (
                   <>
                     {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
-                    <HowLongItTakesSection />
+                    <HowLongItTakesSection listing={listing} />
                     <BeforeYouStartSection listing={listing} />
                     <HowToApplySection listing={listing} />
                     <WhatHappensNextSection />
