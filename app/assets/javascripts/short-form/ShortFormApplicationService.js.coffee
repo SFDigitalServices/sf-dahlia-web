@@ -61,6 +61,7 @@ ShortFormApplicationService = (
       aliceGriffith: null
       rightToReturnSunnydale: null
       rightToReturnHuntersView: null
+      rightToReturnPotrero: null
       veterans_household_member: null
       optOut: {}
       documents:

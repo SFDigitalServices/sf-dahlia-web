@@ -24,11 +24,7 @@ module Force
       subscription = nil
 
       EM.error_handler do |error|
-        logger(
-          "Error while listening for Salesforce Platform Events: #{error.message}; " \
-          "Backtrace: #{error.backtrace[0..5]}",
-          error: true,
-        )
+        logger('Error while listening for Salesforce Platform Events', error)
       end
 
       EM.add_shutdown_hook do
@@ -45,10 +41,7 @@ module Force
             logger('Subscribed to Salesforce Platform Events')
           end
           subscription.errback do |error|
-            logger(
-              "Error subscribing to Salesforce Platform Events: #{error.inspect}",
-              error: true,
-            )
+            logger('Error subscribing to Salesforce Platform Events', error)
           end
         else
           logger('GoogleCloudTranslate is disabled')
@@ -87,8 +80,8 @@ module Force
     def subscribe_to_listing_updates
       @faye_client.subscribe('/data/Listing__ChangeEvent') do |platform_event|
         logger(
-          'New Salesforce event via /data/Listing__ChangeEvent: ' \
-          "#{platform_event.inspect}",
+          "New Salesforce event via '/data/Listing__ChangeEvent': " \
+          "#{platform_event.to_json}",
         )
         event = parse_event(platform_event)
         translate_and_cache(event)
@@ -97,24 +90,23 @@ module Force
 
     def translate_and_cache(event)
       translations = translate_event_values(event.listing_id, event.updated_values)
-      logger(
-        "Event Translations: #{translations.inspect}",
+      GoogleTranslationService.log_translations(
+        msg: 'Translated text',
+        caller_method: "#{self.class.name}##{__method__}",
+        listing_id: event.listing_id,
+        text: translations,
       )
       if translations.empty?
-        logger(
-          "No translations for event: #{event.inspect}",
-        )
+        logger("No translations for event: #{event.to_json}")
         return []
       end
+      logger("Caching translations for event: #{event.to_json}")
 
-      cached_response = @translation_service.cache_listing_translations(
+      @translation_service.cache_listing_translations(
         event.listing_id,
         event.updated_values.keys,
         translations,
         event.last_modified_date,
-      )
-      logger(
-        "Event Translations: #{cached_response.inspect}",
       )
     end
 
@@ -141,9 +133,14 @@ module Force
     end
 
     def translate_event_values(listing_id, values)
-      logger("Translating values: #{values.inspect}")
       languages = %w[ES ZH TL]
       text_to_translate = process_event_values(listing_id, values)
+      GoogleTranslationService.log_translations(
+        msg: 'Text to translate',
+        caller_method: "#{self.class.name}##{__method__}",
+        listing_id:,
+        text: values,
+      )
       @translation_service.translate(text_to_translate, languages)
     end
 
@@ -160,7 +157,7 @@ module Force
     end
 
     def extract_updated_values(changed_fields, event)
-      logger("Extracting updated values: #{changed_fields.inspect}")
+      logger("Extracting updated values: #{changed_fields.to_json}")
 
       listing_field_names_salesforce = ServiceHelper.listing_field_names_salesforce
       filtered_fields = changed_fields.select do |field|
@@ -172,9 +169,12 @@ module Force
       end
     end
 
-    def logger(message, error: false)
+    def logger(message, error = nil)
       if error
-        Rails.logger.error("EventSubscriberTranslateService #{message}")
+        Rails.logger.error(
+          "EventSubscriberTranslateService #{message}: #{error&.message}, " \
+          "backtrace: #{error&.backtrace&.[](0..5)}",
+        )
       else
         Rails.logger.info("EventSubscriberTranslateService #{message}")
       end

@@ -20,16 +20,6 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
       <h1
         class="text-heading-md pb-3"
       >
-        Open houses
-      </h1>
-      <div />
-    </div>
-    <div
-      class="see-the-unit__subsection"
-    >
-      <h1
-        class="text-heading-md pb-3"
-      >
         Make an appointment
       </h1>
       <div>
