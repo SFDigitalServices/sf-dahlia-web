@@ -17,6 +17,7 @@ describe GoogleTranslationService do
       allow(Google::Cloud::Translate::V2).to receive(:new).and_return(mock_translate)
       allow(Force::Request).to receive(:new).and_return(mock_request)
       allow(mock_request).to receive(:cached_get).and_return(true)
+      allow(Rails.logger).to receive(:error)
     end
 
     it 'translates text to the target language' do
@@ -64,6 +65,27 @@ describe GoogleTranslationService do
 
       expect(result).to eq({ LastModifiedDate: '2021-07-01T00:00:00Z',
                              Hello: { ES: 'Hello' }, World: { ES: 'Mundo' } })
+    end
+
+    it 'logs errors encountered by the translation client' do
+      service = GoogleTranslationService.new
+      allow(mock_translate).to receive(:translate).and_raise(StandardError)
+
+      service.translate(fields, languages)
+      expect(Rails.logger).to have_received(:error)
+    end
+
+    it 'logs errors on failing to write to cache' do
+      service = GoogleTranslationService.new
+      allow(Rails.cache).to receive(:write).and_return(nil)
+
+      service.cache_listing_translations(
+        listing_id,
+        fields,
+        expected_result,
+        '2021-07-01T00:00:00Z',
+      )
+      expect(Rails.logger).to have_received(:error)
     end
   end
 end
