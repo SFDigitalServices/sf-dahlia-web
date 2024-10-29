@@ -48,7 +48,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -72,7 +72,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -139,7 +139,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Certificate of Preference
+          Certificate of Preference (COP)
         </h3>
         <p
           class="text-sm"
@@ -163,7 +163,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -192,7 +192,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 2 preferences - NRHP
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -419,7 +419,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -443,7 +443,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -510,7 +510,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Certificate of Preference
+          Certificate of Preference (COP)
         </h3>
         <p
           class="text-sm"
@@ -534,7 +534,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -563,7 +563,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory displays 3 default preference
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -790,7 +790,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -814,7 +814,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -881,7 +881,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Certificate of Preference
+          Certificate of Preference (COP)
         </h3>
         <p
           class="text-sm"
@@ -905,7 +905,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -934,7 +934,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 2 prefere
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -1032,7 +1032,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -1056,7 +1056,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"
@@ -1123,7 +1123,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Certificate of Preference
+          Certificate of Preference (COP)
         </h3>
         <p
           class="text-sm"
@@ -1147,7 +1147,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Displaced Tenant Housing Preference
+          Displaced Tenant Housing Preference (DTHP)
         </h3>
         <p
           class="text-sm"
@@ -1176,7 +1176,7 @@ exports[`ListingDetailsLotteryPreferencesEducatory educator 1 displays 3 default
         <h3
           class="font-sans font-semibold text-xs tracking-wide uppercase"
         >
-          Neighborhood Resident Housing Preference
+          Neighborhood Resident Housing Preference (NRHP)
         </h3>
         <p
           class="text-sm"

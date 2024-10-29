@@ -489,9 +489,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field pb-4"
                         >
                           <label
-                            class="label"
+                            class="label sr-only"
                             for="email"
-                          />
+                          >
+                            Email
+                          </label>
                           <div
                             class="control mt-1"
                           >
@@ -1302,9 +1304,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field pb-4"
                       >
                         <label
-                          class="label"
+                          class="label sr-only"
                           for="email"
-                        />
+                        >
+                          Email
+                        </label>
                         <div
                           class="control mt-1"
                         >
@@ -2172,9 +2176,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field pb-4"
                         >
                           <label
-                            class="label"
+                            class="label sr-only"
                             for="email"
-                          />
+                          >
+                            Email
+                          </label>
                           <div
                             class="control mt-1"
                           >
@@ -2985,9 +2991,11 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field pb-4"
                       >
                         <label
-                          class="label"
+                          class="label sr-only"
                           for="email"
-                        />
+                        >
+                          Email
+                        </label>
                         <div
                           class="control mt-1"
                         >
