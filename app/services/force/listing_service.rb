@@ -57,13 +57,21 @@ module Force
       if translations_invalid?(listing_translations) || translations_are_outdated?(
         listing_translations[:LastModifiedDate], listing['LastModifiedDate']
       )
-        Rails.logger.info("Translations are not valid for #{listing_id}")
+        Rails.logger.info(
+          'ListingService ' \
+          "Translations are not valid for listing #{listing_id}, " \
+          'translating all fields',
+        )
         return CacheService.new.process_translations(listing)
       end
 
       if listing_is_outdated?(listing_translations[:LastModifiedDate],
                               listing['LastModifiedDate'])
-        Rails.logger.info("Listing is outdated for #{listing_id}")
+        Rails.logger.info(
+          'ListingService ' \
+          "Listing is outdated for #{listing_id}, " \
+          'refreshing the cached listing',
+        )
         refresh_listing_cache(listing_id)
       end
       listing_translations
@@ -90,8 +98,14 @@ module Force
     end
 
     def self.fetch_listing_translations_from_cache(listing_id)
-      @cache.fetch("#{CACHE_KEY_PREFIX}#{listing_id}/translations") do
-        Rails.logger.info("Nothing in cache for Listing #{listing_id} translations")
+      cache_key = listing_translations_cache_key(listing_id)
+      Rails.logger.info(
+        "ListingService Fetching translations from cache with key '#{cache_key}'",
+      )
+      @cache.fetch(listing_translations_cache_key(listing_id)) do
+        Rails.logger.info(
+          "ListingService Nothing in cache for key '#{cache_key}'",
+        )
         {}
       end
     end
@@ -181,6 +195,10 @@ module Force
       listing.each do |k, v|
         listing[k] = v.sort_by { |i| i['Id'] } if v.is_a?(Array) && v[0] && v[0]['Id']
       end
+    end
+
+    def self.listing_translations_cache_key(listing_id)
+      "#{CACHE_KEY_PREFIX}#{listing_id}/translations"
     end
 
     private_class_method def self.get_listings(params: {}, force_recache: false)

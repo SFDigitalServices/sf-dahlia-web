@@ -335,63 +335,6 @@ exports[`For Sale renders ForSale component 1`] = `
                     </div>
                   </div>
                 </div>
-                <div
-                  class="buy-header_right_col"
-                >
-                  <div
-                    class="md:bg-white md:p-4"
-                  >
-                    <h2
-                      class="text__underline-weighted mb-5"
-                    >
-                      Skip the lottery
-                    </h2>
-                    <p
-                      class="mb-4"
-                    >
-                      There are some opportunities to buy a home without entering a lottery.
-                    </p>
-                    <p
-                      class="mb-4"
-                    >
-                      Instead, we review applications in the order we receive them - first come, first served.
-                    </p>
-                    <p
-                      class="mb-4"
-                    >
-                      Apply to buy a home:
-                    </p>
-                    <ul
-                      class="list-disc ml-6"
-                    >
-                      <li>
-                        <span>
-                          At a 
-                          <a
-                            href="https://sf.gov/reports/august-2023/first-come-first-served-bmr-listings"
-                            target="_blank"
-                          >
-                            below-market-rate (BMR) price
-                          </a>
-                          . Sometimes, prices are negotiable.
-                        </span>
-                      </li>
-                      <br />
-                      <li>
-                        <span>
-                          At a 
-                          <a
-                            href="https://sf.gov/reports/august-2023/city-second-program-current-listings"
-                            target="_blank"
-                          >
-                            firm price set by the open market
-                          </a>
-                          . No bidding is needed. These listings are part of the City Second program.
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
               </div>
             </hgroup>
           </header>
@@ -399,7 +342,7 @@ exports[`For Sale renders ForSale component 1`] = `
             id="listing-results"
           >
             <div
-              class="bg-primary-darker"
+              class="bg-primary-darker sale-directory"
             >
               <div
                 class="max-w-5xl mx-auto p-2 md:p-4"
@@ -424,14 +367,7 @@ exports[`For Sale renders ForSale component 1`] = `
                     class="action-block__actions"
                   >
                     <a
-                      class="button"
-                      href="https://sfmohcd.org/current-bmr-homeownership-listings"
-                      target="_self"
-                    >
-                      First come, first served
-                    </a>
-                    <a
-                      class="button"
+                      class="button ml-8"
                       href="https://sfmohcd.org/current-listings-city-second-program"
                       target="_self"
                     >
