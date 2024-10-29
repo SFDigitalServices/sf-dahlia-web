@@ -140,9 +140,8 @@ AccountController = (
         $scope.submitDisabled = false
       )
     else
-      if $window.env.ACCOUNT_INFORMATION_PAGES_REACT == "false"
-        AnalyticsService.trackFormError('Accounts')
-        $scope.handleErrorState()
+      AnalyticsService.trackFormError('Accounts')
+      $scope.handleErrorState()
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')

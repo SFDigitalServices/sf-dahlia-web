@@ -7,6 +7,7 @@ AccountService = (
   $auth,
   $http,
   $translate,
+  $window,
   bsLoadingOverlayService,
   ShortFormApplicationService,
   ShortFormDataService,
@@ -123,11 +124,12 @@ AccountService = (
         $state.go('dahlia.my-applications')
     ).catch (response) ->
       response = response.data if response.data
-      msg = response.errors.full_messages[0]
-      if msg == 'Current password is invalid'
-        msg = $translate.instant("error.current_password_invalid")
-      else
-        msg = $translate.instant("error.password_update")
+      if $window.env.ACCOUNT_INFORMATION_PAGES_REACT == "false"
+        msg = response.errors.full_messages[0]
+        if msg == 'Current password is invalid'
+          msg = $translate.instant("error.current_password_invalid")
+        else
+          msg = $translate.instant("error.password_update")
       Service.accountError.messages.password = msg
 
   Service.checkForAccount = (email) ->
@@ -319,7 +321,7 @@ AccountService = (
 ############################################################################################
 
 AccountService.$inject = [
-  '$state', '$auth', '$http', '$translate', 'bsLoadingOverlayService'
+  '$state', '$auth', '$http', '$translate', '$window', 'bsLoadingOverlayService'
   'ShortFormApplicationService', 'ShortFormDataService', 'ModalService'
 ]
 
