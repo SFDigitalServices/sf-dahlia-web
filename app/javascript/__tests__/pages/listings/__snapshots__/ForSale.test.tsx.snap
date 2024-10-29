@@ -342,7 +342,7 @@ exports[`For Sale renders ForSale component 1`] = `
             id="listing-results"
           >
             <div
-              class="bg-primary-darker"
+              class="bg-primary-darker sale-directory"
             >
               <div
                 class="max-w-5xl mx-auto p-2 md:p-4"
@@ -367,14 +367,7 @@ exports[`For Sale renders ForSale component 1`] = `
                     class="action-block__actions"
                   >
                     <a
-                      class="button"
-                      href="https://sfmohcd.org/current-bmr-homeownership-listings"
-                      target="_self"
-                    >
-                      First come, first served
-                    </a>
-                    <a
-                      class="button"
+                      class="button ml-8"
                       href="https://sfmohcd.org/current-listings-city-second-program"
                       target="_self"
                     >
