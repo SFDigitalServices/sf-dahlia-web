@@ -32,6 +32,7 @@ import {
   isRental,
   listingHasSROUnits,
   getListingAddressString,
+  isFcfsSalesListing,
 } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
@@ -47,6 +48,7 @@ import useTranslate from "../../hooks/useTranslate"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
+import { fcfsNoLotteryRequired } from "../../modules/noLotteryRequired/fcfsNoLotteryRequired"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
@@ -165,6 +167,9 @@ const ListingDetail = () => {
                 <ListingDetailsApplicationDate listing={listing} />
                 <ListingDetailsWaitlist listing={listing} />
               </Mobile>
+            )}
+            {isFcfsSalesListing(listing) && isSalesFcfsEnabled && (
+              <Mobile>{fcfsNoLotteryRequired()}</Mobile>
             )}
             <Mobile>
               <ListingDetailsApply listing={listing} />
