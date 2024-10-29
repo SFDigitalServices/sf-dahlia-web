@@ -8,7 +8,16 @@ import {
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
 } from "../../util/languageUtil"
-import { Icon, t, NavigationContext, LoadingOverlay } from "@bloom-housing/ui-components"
+import {
+  Icon,
+  t,
+  NavigationContext,
+  LoadingOverlay,
+  Button,
+  AppearanceStyleType,
+  AppearanceSizeType,
+  LinkButton,
+} from "@bloom-housing/ui-components"
 import { Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getListing } from "../../api/listingApiService"
@@ -156,6 +165,14 @@ const FillOutPdfAppStep = () => {
       <InfoBox title={t("howToApplyPage.howToApplySection.step1.infoBox.title")}>
         {t("howToApplyPage.howToApplySection.step1.infoBox.p1")}
       </InfoBox>
+      <LinkButton
+        styleType={AppearanceStyleType.info}
+        size={AppearanceSizeType.small}
+        newTab
+        href="https://www.sf.gov/sites/default/files/2024-04/BMR Homeownership FCFS Full Application 04.2024.pdf"
+      >
+        {t("howToApplyPage.howToApplySection.step1.infoBox.button")}
+      </LinkButton>
     </HowToApplyListItem>
   )
 }
@@ -196,10 +213,11 @@ const CreateBoxAccountStep = () => {
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step4.title")}>
       <div className="text-base pb-2">
-        {
-          // TODO: DAH-2847 Add url
-          renderInlineMarkup(t("howToApplyPage.howToApplySection.step4.p1", { url: "#" }))
-        }
+        {renderInlineMarkup(
+          t("howToApplyPage.howToApplySection.step4.p1", {
+            url: "https://account.box.com/signup/personal?tc=annual",
+          })
+        )}
       </div>
       <div className="text-base">{t("howToApplyPage.howToApplySection.step4.p2")}</div>
     </HowToApplyListItem>
@@ -214,10 +232,9 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
       <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p1")}</div>
       <ul className="mb-0 pb-2">
         <li className="text-base">
-          {
-            // TODO: DAH-2847 Add url
-            renderInlineMarkup(t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#" }))
-          }
+          {renderInlineMarkup(
+            t("howToApplyPage.howToApplySection.step5.listItem1", { url: "#HowToApplySection" })
+          )}
         </li>
         <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem2")}</li>
         <li className="text-base">{t("howToApplyPage.howToApplySection.step5.listItem3")}</li>
@@ -245,7 +262,7 @@ const HowToApplySection = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <>
       <Header headerText={t("pageTitle.howToApply")} />
-      <div className="pt-4">
+      <div className="pt-4" id="HowToApplySection">
         <ol className="process-list">
           <FillOutPdfAppStep />
           <GatherDocumentsStep />
@@ -268,7 +285,11 @@ const WhatHappensNextSection = () => {
       <div className="py-2">
         {renderInlineMarkup(t("howToApplyPage.whatHappensNext.p2"), "<b>")}
       </div>
-      <a className="underline" target="_blank" href="//google.com">
+      <a
+        className="underline"
+        target="_blank"
+        href={getSfGovUrl("https://www.sf.gov/node/14246", 14246)}
+      >
         {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
       </a>
     </>
