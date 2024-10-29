@@ -179,7 +179,7 @@ const ListingDetail = () => {
                 listing={listing}
                 imageSrc={getAssetPath("listing-eligibility.svg")}
               />
-              {isSalesFcfsEnabled ? (
+              {!isRental(listing) && isSalesFcfsEnabled ? (
                 <MobileListingDetailsSeeTheUnit
                   listing={listing}
                   imageSrc={getAssetPath("listing-units.svg")}
