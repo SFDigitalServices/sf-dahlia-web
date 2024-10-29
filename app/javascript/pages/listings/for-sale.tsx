@@ -7,6 +7,7 @@ import Layout from "../../layouts/Layout"
 import withAppSetup from "../../layouts/withAppSetup"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import Link from "../../navigation/Link"
+import "./for-sale.scss"
 
 import { GenericDirectory } from "../../modules/listings/GenericDirectory"
 import {
@@ -88,7 +89,7 @@ const getBuyHeader = (
 const getFindMoreActionBlock = () => {
   return (
     <>
-      <div className="bg-primary-darker">
+      <div className="bg-primary-darker sale-directory">
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
             header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
@@ -96,16 +97,7 @@ const getFindMoreActionBlock = () => {
             layout={ActionBlockLayout.inline}
             actions={[
               <Link
-                className="button"
-                key="action-1"
-                external
-                href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
-              >
-                {t("saleDirectory.callout.firstComeFirstServed")}
-              </Link>,
-              <Link
-                className="button"
-                key="action-2"
+                className="button ml-8"
                 external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
