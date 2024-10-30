@@ -4,6 +4,8 @@ require 'google/cloud/translate/v2'
 class GoogleTranslationService
   class TranslationError < StandardError; end
 
+  MAX_TRANSLATION_LOG_LENGTH = 128
+
   def initialize
     google_translation_logger('Connecting to Google Cloud Translate...')
     @translate = Google::Cloud::Translate::V2.new(
@@ -17,12 +19,12 @@ class GoogleTranslationService
   def translate(text, to)
     return [] if text.empty?
 
-    google_translation_logger("Translating text: #{text} to: #{to}")
+    google_translation_logger('Translating text...')
     translations = to.map do |target|
       translation = @translate.translate(text, to: target)
       { to: target, translation: parse_translations(translation) }
     rescue StandardError => e
-      google_translation_logger("An error occured: #{e.inspect}", error: true)
+      google_translation_logger('Error translating', e)
       return []
     end
     # include original values on the response
@@ -30,19 +32,31 @@ class GoogleTranslationService
     translations
   end
 
+  # we should keep `keys` and `translations` in one hash instead of
+  #   separating and recombining them across different methods
   def cache_listing_translations(listing_id, keys, translations, last_modified)
     translations = transform_translations_for_caching(listing_id, keys, translations,
                                                       last_modified)
-    if @cache.write("/ListingDetails/#{listing_id}/translations", translations)
+    cache_key = Force::ListingService.listing_translations_cache_key(listing_id)
+    if @cache.write(cache_key, translations)
       google_translation_logger(
-        "Successfully cached listing translations for listing id: #{listing_id}",
+        "Successfully wrote translations to cache with key '#{cache_key}'",
       )
     else
       google_translation_logger(
-        "Error caching listing translations for listing id: #{listing_id}", error: true
+        "Error writing translations to cache with key '#{cache_key}'", true
       )
     end
     translations
+  end
+
+  def self.log_translations(msg:, caller_method:, text:, listing_id:)
+    msg_hash = {
+      caller_method:,
+      listing_id:,
+      text:,
+    }.to_json
+    Rails.logger.info("#{msg}: #{msg_hash}")
   end
 
   private
@@ -54,7 +68,9 @@ class GoogleTranslationService
   end
 
   def transform_translations_for_caching(listing_id, keys, translations, last_modified)
-    prev_cached_translations = @cache.read("/ListingDetails/#{listing_id}/translations")
+    prev_cached_translations = @cache.read(
+      Force::ListingService.listing_translations_cache_key(listing_id),
+    )
 
     # keys can come from updated_values.keys in the event_subscriber_translate_service
     # they will be in the same order as the translations because the translation service
@@ -73,9 +89,12 @@ class GoogleTranslationService
     return_value
   end
 
-  def google_translation_logger(message, error: false)
+  def google_translation_logger(message, error = nil)
     if error
-      Rails.logger.error("GoogleTranslationService #{message}")
+      Rails.logger.error(
+        "GoogleTranslationService #{message}: #{error.try(:message)}, " \
+        "backtrace: #{error.try(:backtrace)&.[](0..5)}",
+      )
     else
       Rails.logger.info("GoogleTranslationService #{message}")
     end
