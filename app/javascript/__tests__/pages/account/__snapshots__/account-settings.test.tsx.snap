@@ -547,7 +547,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           You must enter your current password first to change it. We do this for your security.
                         </p>
                         <div
-                          class="field mb-1"
+                          class="field mb-4"
                         >
                           <label
                             class="label"
@@ -1360,7 +1360,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         You must enter your current password first to change it. We do this for your security.
                       </p>
                       <div
-                        class="field mb-1"
+                        class="field mb-4"
                       >
                         <label
                           class="label"
@@ -2230,7 +2230,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           You must enter your current password first to change it. We do this for your security.
                         </p>
                         <div
-                          class="field mb-1"
+                          class="field mb-4"
                         >
                           <label
                             class="label"
@@ -3043,7 +3043,7 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         You must enter your current password first to change it. We do this for your security.
                       </p>
                       <div
-                        class="field mb-1"
+                        class="field mb-4"
                       >
                         <label
                           class="label"
