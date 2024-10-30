@@ -1,7 +1,6 @@
 import { ActionBlock, Icon, t, Heading } from "@bloom-housing/ui-components"
 import Link from "../../navigation/Link"
 import React from "react"
-import AssistanceLayout from "../../layouts/AssistanceLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import {
   faClipboardList,
@@ -16,13 +15,15 @@ import {
   getDocumentChecklistPath,
   getHousingCounselorsPath,
 } from "../../util/routeUtil"
+import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 
 const GetAssistance = () => {
   return (
-    <AssistanceLayout
+    <HeaderSidebarLayout
       title={t("assistance.title.getAssistance")}
       subtitle={t("assistance.subtitle.getAssistance")}
       mainPage={true}
+      sidebarType="contact"
     >
       <ActionBlock
         header={<Heading priority={2}>{t("assistance.title.housingCouneslors")}</Heading>}
@@ -115,7 +116,7 @@ const GetAssistance = () => {
           </Link>,
         ]}
       />
-    </AssistanceLayout>
+    </HeaderSidebarLayout>
   )
 }
 

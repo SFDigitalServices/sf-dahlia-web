@@ -1,6 +1,6 @@
 import { ContentAccordion, t } from "@bloom-housing/ui-components"
 import React from "react"
-import AssistanceLayout from "../../layouts/AssistanceLayout"
+import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import withAppSetup from "../../layouts/withAppSetup"
 import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 import { PREFERENCES_IDS } from "../../modules/constants"
