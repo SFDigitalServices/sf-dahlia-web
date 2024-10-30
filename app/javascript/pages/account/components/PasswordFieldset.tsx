@@ -195,7 +195,7 @@ const PasswordFieldset = ({
             }
             validation={{ required: "currentPassword:required" }}
             register={register}
-            className="mb-1"
+            className="mb-4"
           />
           <Link href="/forgot-password" className="forgot-password-link">
             {t("signIn.forgotPassword")}
