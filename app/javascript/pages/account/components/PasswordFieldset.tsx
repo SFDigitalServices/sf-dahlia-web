@@ -2,10 +2,9 @@ import { Field, FieldProps, t } from "@bloom-housing/ui-components"
 import React from "react"
 import { UseFormMethods, Validate } from "react-hook-form"
 import Fieldset from "./Fieldset"
-import { Icon, Link } from "@bloom-housing/ui-seeds"
+import { Link } from "@bloom-housing/ui-seeds"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons"
 import { ErrorMessages } from "./ErrorSummaryBanner"
 import { ExpandedAccountAxiosError, getErrorMessage, SetErrorArgs } from "./util"
 
@@ -135,26 +134,23 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
   const [showPassword, setShowPassword] = React.useState(passwordVisibilityDefault)
 
   return (
-    <Field
-      {...props}
-      type={showPassword ? "text" : "password"}
-      inputProps={{ className: "input pr-10", required: true }}
-      postInputContent={
-        <button
-          className="absolute right-2 h-full"
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          <Icon className="text-blue-500" outlined size="lg">
-            {showPassword ? (
-              <FontAwesomeIcon icon={faEyeSlash} />
-            ) : (
-              <FontAwesomeIcon icon={faEye} />
-            )}
-          </Icon>
-        </button>
-      }
-    />
+    <>
+      <Field
+        {...props}
+        type={showPassword ? "text" : "password"}
+        inputProps={{ className: "input", required: true }}
+      />
+      <div className="field">
+        <input
+          type="checkbox"
+          id="showPassword"
+          name="showPassword"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+        />
+        <label htmlFor="showPassword">Show password</label>
+      </div>
+    </>
   )
 }
 
