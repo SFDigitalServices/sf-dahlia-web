@@ -11,7 +11,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
       <title
         class="notranslate"
       >
-        How to Apply
+        Apply to TEST Sale Listing (do not modify) - Homeownership Acres
       </title>
       <meta
         charset="utf-8"
@@ -37,7 +37,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
         property="og:type"
       />
       <meta
-        content="How to Apply"
+        content="Apply to TEST Sale Listing (do not modify) - Homeownership Acres"
         property="og:title"
       />
       <meta
@@ -235,7 +235,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
               class="page-header__title"
               data-testid="page-header"
             >
-              How to Apply
+              Apply to TEST Sale Listing (do not modify) - Homeownership Acres
             </h1>
             <p
               class="page-header__lead"
@@ -389,7 +389,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     <h3
                       class="text-2xl font-alt-serif"
                     >
-                      How to Apply
+                      Apply to
                     </h3>
                     <div
                       class="pt-4"
