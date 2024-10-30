@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState, useContext } from "react"
-import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
   localizedFormat,
@@ -16,6 +15,7 @@ import { getFcfsSalesListingState } from "../../util/listingUtil"
 import { ListingState } from "../../modules/listings/ListingState"
 
 import "./how-to-apply.scss"
+import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -293,7 +293,11 @@ const HowToApply = (_props: HowToApplyProps) => {
 
   return (
     <LoadingOverlay isLoading={!listing}>
-      <Layout title={t("pageTitle.howToApply")}>
+      <HeaderSidebarLayout
+        title={t("pageTitle.howToApply")}
+        subtitle={t("howToApplyPage.subTitle")}
+        sidebarType="getHelp"
+      >
         <section className="flex md:px-5">
           <article className="markdown max-w-5xl m-auto">
             <div className="pt-4 md:py-0 max-w-3xl">
@@ -311,7 +315,7 @@ const HowToApply = (_props: HowToApplyProps) => {
             </div>
           </article>
         </section>
-      </Layout>
+      </HeaderSidebarLayout>
     </LoadingOverlay>
   )
 }

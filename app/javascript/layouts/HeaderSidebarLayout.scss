@@ -1,0 +1,47 @@
+.page-header {
+    background-size: cover;
+    background-position: center;
+    padding: var(--bloom-s8);
+
+    @media (min-width: $screen-md) {
+        padding: var(--bloom-s12) 0;
+    }
+
+    .page-header__group {
+        padding: 0;
+        width: full;
+
+        @media (min-width: $screen-md) {
+            text-align: start;
+            padding-left: var(--bloom-s6);
+        }
+
+        @media (min-width: $screen-lg) {
+            padding-left:0px
+        }
+
+        .page-header__title {
+            font-size: var(--bloom-font-size-3xl);
+            text-align: center !important;
+            word-break: normal;
+            padding-bottom: var(--bloom-s4);
+
+            @media (min-width: $screen-md) {
+                text-align: start !important;
+                @apply w-2/3;
+            }
+        }
+
+        .page-header__lead {
+            text-align: center !important;
+            word-break: normal;
+            font-size: var(--bloom-font-size-sm);
+
+            @media (min-width: $screen-md) {
+                font-size: var(--bloom-font-size-lg);
+                text-align: start !important;
+                @apply w-2/3;
+            }
+        }
+    }
+}
