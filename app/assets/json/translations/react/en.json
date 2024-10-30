@@ -571,7 +571,7 @@
   "hello": "Hello %{name}",
   "housingCounselor.findAHousingCounselor": "Find a Housing Counselor",
   "housingCounselor.header": "For more help, we suggest talking with a housing counselor to explore your options.",
-  "howToApplyPage.sidebar.getHelp.counselor": "Housing counselors can help with your application. Support is available in many languages. ",
+  "howToApplyPage.sidebar.getHelp.counselor": "Housing counselors can help with your application. Support is available in many languages.",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem1": "Not have owned residential property in the past 3 years",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem2": "Meet our <a className='underline' href='%{url}' target='_blank'>income requirements</a>",
   "howToApplyPage.beforeYouStartSection.eligibilityList.listItem3": "Have completed <a className='underline' href='%{url}' target='_blank'>homebuyer education</a>",
