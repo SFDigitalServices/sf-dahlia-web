@@ -294,7 +294,7 @@ const HowToApply = (_props: HowToApplyProps) => {
   return (
     <LoadingOverlay isLoading={!listing}>
       <HeaderSidebarLayout
-        title={`${t("pageTitle.howToApply")} ${listing?.Name}`}
+        title={`${t("pageTitle.howToApply")} ${listing?.Name || "listing"}`}
         subtitle={t("howToApplyPage.subTitle")}
         sidebarType="getHelp"
       >
