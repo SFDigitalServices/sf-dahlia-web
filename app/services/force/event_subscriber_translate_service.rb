@@ -172,8 +172,8 @@ module Force
     def logger(message, error = nil)
       if error
         Rails.logger.error(
-          "EventSubscriberTranslateService #{message}: #{error&.message}, " \
-          "backtrace: #{error&.backtrace&.[](0..5)}",
+          "EventSubscriberTranslateService #{message}: #{error.try(:message)}, " \
+          "backtrace: #{error.try(:backtrace)&.[](0..5)}",
         )
       else
         Rails.logger.info("EventSubscriberTranslateService #{message}")
