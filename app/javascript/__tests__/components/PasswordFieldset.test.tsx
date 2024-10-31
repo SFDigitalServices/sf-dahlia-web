@@ -65,7 +65,7 @@ describe("Password Fieldset", () => {
     const user = userEvent.setup()
 
     const input = screen.getByLabelText(/current password/i)
-    const button = screen.getAllByRole("button")[0]
+    const button = screen.getAllByRole("checkbox")[0]
     expect(input.getAttribute("type")).toBe("password")
     await user.click(button)
     expect(input.getAttribute("type")).toBe("text")
