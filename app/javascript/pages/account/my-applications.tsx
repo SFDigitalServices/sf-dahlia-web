@@ -16,22 +16,70 @@ import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
-import { isRental, isSale } from "../../util/listingUtil"
+import { convertToReadableDate, isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
+import Link from "../../navigation/Link"
 
-const AlreadySubmittedModal = () => {
+const extractParamsFromUrl = (
+  url: string
+): {
+  alreadySubmittedIdFromURL: string | null
+  doubleSubmitFromURL: boolean
+} => {
+  const parsedUrl = new URL(url)
+  const alreadySubmittedIdFromURL = parsedUrl.searchParams.get("alreadySubmittedId")
+  const doubleSubmitFromURL = parsedUrl.searchParams.get("doubleSubmit") === "true"
+
+  return {
+    alreadySubmittedIdFromURL,
+    doubleSubmitFromURL,
+  }
+}
+
+const DoubleSubmittedModal: React.FC<{
+  openModal: boolean
+  onClose: () => void
+}> = ({ openModal, onClose }) => {
   return (
-    <Dialog
-      isOpen={true}
-      onClose={() => {
-        console.log("Close")
-      }}
-    >
-      <Dialog.Header>Good news!</Dialog.Header>
-      <Dialog.Content>You have already submitted an application to this listing.</Dialog.Content>
-      <Dialog.Content>Submitted: Oct 3, 2024</Dialog.Content>
+    <Dialog isOpen={openModal} onClose={onClose}>
+      <Dialog.Header>{t("doubleSubmitted.title")}</Dialog.Header>
+      <Dialog.Content>{t("doubleSubmitted.p1")}</Dialog.Content>
+      <Dialog.Content>
+        {renderInlineMarkup(
+          t("doubleSubmitted.p2", {
+            email:
+              "<a href='mailto:dahliahousingportal@sfgov.org'>dahliahousingportal@sfgov.org</a>",
+          })
+        )}
+      </Dialog.Content>
+    </Dialog>
+  )
+}
+
+const AlreadySubmittedModal: React.FC<{
+  alreadySubmittedId: string | null
+  onClose: () => void
+  alreadySubmittedApplication?: Application
+}> = ({ alreadySubmittedId, onClose, alreadySubmittedApplication }) => {
+  if (!alreadySubmittedId || !alreadySubmittedApplication) {
+    return null
+  }
+
+  const applicationSubmittedDate = convertToReadableDate(
+    alreadySubmittedApplication.applicationSubmittedDate
+  )
+
+  return (
+    <Dialog isOpen={!!alreadySubmittedId} onClose={onClose}>
+      <Dialog.Header>{t("alreadySubmitted.title")}</Dialog.Header>
+      <Dialog.Content>{t("alreadySubmitted.message")}</Dialog.Content>
+      <Dialog.Content>
+        {t("alreadySubmitted.date", { date: applicationSubmittedDate })}
+      </Dialog.Content>
       <Dialog.Footer>
-        <Button>View Application</Button>
+        <Link href={`${getApplicationPath()}/${alreadySubmittedId}`}>
+          <Button>{t("label.viewApplication")}</Button>
+        </Link>
       </Dialog.Footer>
     </Dialog>
   )
@@ -157,6 +205,8 @@ const MyApplications = () => {
   const [loading, setLoading] = React.useState<boolean>(true)
   const [applications, setApplications] = React.useState<Application[]>([])
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false)
+  const [alreadySubmittedId, setAlreadySubmittedId] = useState<string | null>(null)
+  const [openDoubleSubmittedModal, setOpenDoubleSubmittedModal] = useState<boolean>(false)
   const [deleteApp, setDeleteApp] = useState("")
 
   const handleDeleteApp = (id: string) => {
@@ -181,6 +231,20 @@ const MyApplications = () => {
   }
 
   React.useEffect(() => {
+    const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractParamsFromUrl(
+      window.location.href
+    )
+
+    if (alreadySubmittedIdFromURL) {
+      setAlreadySubmittedId(alreadySubmittedIdFromURL)
+    }
+
+    if (doubleSubmitFromURL) {
+      setOpenDoubleSubmittedModal(true)
+    }
+  }, [])
+
+  React.useEffect(() => {
     setLoading(true)
     if (profile) {
       getApplications()
@@ -197,7 +261,6 @@ const MyApplications = () => {
   }, [authLoading, initialStateLoaded, profile])
 
   if (!profile && !authLoading && initialStateLoaded) {
-    // TODO: Redirect to React sign in page and show a message that user needs to sign in
     window.location.href = getSignInPath()
     return null
   }
@@ -220,7 +283,21 @@ const MyApplications = () => {
                   {t("myApplications.title")}
                 </Heading>
               </Card.Header>
-              <AlreadySubmittedModal />
+              <AlreadySubmittedModal
+                alreadySubmittedId={alreadySubmittedId}
+                alreadySubmittedApplication={
+                  applications && applications.find((item) => item.id === alreadySubmittedId)
+                }
+                onClose={() => {
+                  setAlreadySubmittedId(null)
+                }}
+              />
+              <DoubleSubmittedModal
+                openModal={openDoubleSubmittedModal}
+                onClose={() => {
+                  setOpenDoubleSubmittedModal(false)
+                }}
+              />
               <Dialog
                 isOpen={openDeleteModal}
                 onClose={() => {
