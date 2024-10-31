@@ -1,6 +1,5 @@
 import { LinkButton, SidebarBlock, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { getHousingCounselorsPath } from "../../util/routeUtil"
 import { renderInlineMarkup } from "../../util/languageUtil"
 
 const HousingCounselorHelp = () => (
@@ -16,7 +15,7 @@ const GetHelpSidebarBlock = () => (
     <LinkButton
       transition={true}
       newTab={true}
-      href={getHousingCounselorsPath()}
+      href={"https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"}
       className={"w-full"}
     >
       {t("housingCounselor.findAHousingCounselor")}

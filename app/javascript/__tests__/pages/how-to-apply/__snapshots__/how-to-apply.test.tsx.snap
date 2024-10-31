@@ -692,9 +692,8 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
               </p>
               <a
                 class="button w-full transition"
-                href="/housing-counselors"
-                tabindex="0"
-                target="_self"
+                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
+                target="_blank"
               >
                 Find a Housing Counselor
               </a>

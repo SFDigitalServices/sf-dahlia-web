@@ -23,6 +23,7 @@ import { ListingState } from "../../modules/listings/ListingState"
 
 import "./how-to-apply.scss"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
+import GetHelpSidebarBlock from "../../layouts/Sidebar/GetHelpSidebarBlock"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -330,7 +331,7 @@ const HowToApply = (_props: HowToApplyProps) => {
       <HeaderSidebarLayout
         title={`${t("pageTitle.howToApply")} ${listing?.Name || "listing"}`}
         subtitle={t("howToApplyPage.subTitle")}
-        sidebarType="getHelp"
+        sidebarContent={<GetHelpSidebarBlock />}
       >
         <section className="flex md:px-5">
           <article className="markdown max-w-5xl m-auto">

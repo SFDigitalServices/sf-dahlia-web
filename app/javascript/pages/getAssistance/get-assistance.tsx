@@ -16,6 +16,7 @@ import {
   getHousingCounselorsPath,
 } from "../../util/routeUtil"
 import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
+import ContactSideBarBlock from "../../layouts/Sidebar/ContactSidebarBlock"
 
 const GetAssistance = () => {
   return (
@@ -23,7 +24,7 @@ const GetAssistance = () => {
       title={t("assistance.title.getAssistance")}
       subtitle={t("assistance.subtitle.getAssistance")}
       mainPage={true}
-      sidebarType="contact"
+      sidebarContent={<ContactSideBarBlock />}
     >
       <ActionBlock
         header={<Heading priority={2}>{t("assistance.title.housingCouneslors")}</Heading>}
