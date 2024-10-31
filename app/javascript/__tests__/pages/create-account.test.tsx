@@ -57,7 +57,7 @@ async function fillCreateAccountForm({
     name: /email/i,
   })
   const emailField = within(emailGroup).getByRole("textbox")
-  const passwordField: Element = screen.getByLabelText(/password/i)
+  const passwordField: Element = screen.getAllByLabelText(/password/i)[0]
 
   await act(async () => {
     await userEvent.clear(firstNameField)
@@ -87,14 +87,11 @@ async function fillCreateAccountForm({
 
 describe("<CreateAccount />", () => {
   let promise
-  let getByLabelText
-  let renderResult
   let user
 
   beforeEach(async () => {
     promise = Promise.resolve()
-    renderResult = await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
-    getByLabelText = renderResult.getByLabelText
+    await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
     user = userEvent.setup()
   })
 
@@ -354,7 +351,7 @@ describe("<CreateAccount />", () => {
     })
 
     it("shows an error message for the password field", async () => {
-      const passwordField = getByLabelText(/password/i)
+      const passwordField = screen.getAllByLabelText(/password/i)[0]
 
       await act(async () => {
         await user.click(passwordField)
