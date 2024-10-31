@@ -367,6 +367,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 </h3>
                 <div
                   class="pt-4"
+                  id="HowToApplySection"
                 >
                   <ol
                     class="process-list"
@@ -402,6 +403,13 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                             Read and follow all application instructions carefully.
                           </div>
                         </div>
+                        <a
+                          class="button is-info is-small"
+                          href="https://www.sf.gov/sites/default/files/2024-04/BMR Homeownership FCFS Full Application 04.2024.pdf"
+                          target="_blank"
+                        >
+                          Download PDF application
+                        </a>
                       </div>
                     </li>
                     <li>
@@ -509,7 +517,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           <span>
                             <a
                               class="underline"
-                              href="#"
+                              href="https://account.box.com/signup/personal?tc=annual"
                               target="_blank"
                             >
                               Create a Box.com account.
@@ -548,8 +556,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               Fill out your information and get a link to upload your 
                               <a
                                 class="underline"
-                                href="#"
-                                target="_blank"
+                                href="#HowToApplySection"
                               >
                                 PDF application and documents
                               </a>
@@ -636,7 +643,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                 </div>
                 <a
                   class="underline"
-                  href="//google.com"
+                  href="https://www.sf.gov/node/14246"
                   target="_blank"
                 >
                   Learn more about how it works

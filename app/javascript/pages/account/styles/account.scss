@@ -47,9 +47,11 @@
 //banner for updates
 .account-settings-banner {
   background-color: var(--seeds-color-blue-100) !important;
-  // color: var(--seeds-color-blue-100);
   svg:not(button svg) {
     fill: none !important;
+  }
+  button[aria-label="Close"] {
+    display: none;
   }
 }
 
