@@ -148,7 +148,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
           checked={showPassword}
           onChange={() => setShowPassword(!showPassword)}
         />
-        <label htmlFor="showPassword">Show password</label>
+        <label htmlFor="showPassword">{t("label.showPassword")}</label>
       </div>
     </>
   )
