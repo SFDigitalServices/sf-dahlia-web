@@ -16,74 +16,11 @@ import { getCurrentLanguage, renderInlineMarkup } from "../../util/languageUtil"
 import { deleteApplication, getApplications } from "../../api/authApiService"
 import UserContext from "../../authentication/context/UserContext"
 import { Application } from "../../api/types/rails/application/RailsApplication"
-import { convertToReadableDate, isRental, isSale } from "../../util/listingUtil"
+import { isRental, isSale } from "../../util/listingUtil"
 import "./styles/my-applications.scss"
-import Link from "../../navigation/Link"
-
-const extractParamsFromUrl = (
-  url: string
-): {
-  alreadySubmittedIdFromURL: string | null
-  doubleSubmitFromURL: boolean
-} => {
-  const parsedUrl = new URL(url)
-  const alreadySubmittedIdFromURL = parsedUrl.searchParams.get("alreadySubmittedId")
-  const doubleSubmitFromURL = parsedUrl.searchParams.get("doubleSubmit") === "true"
-
-  return {
-    alreadySubmittedIdFromURL,
-    doubleSubmitFromURL,
-  }
-}
-
-const DoubleSubmittedModal: React.FC<{
-  openModal: boolean
-  onClose: () => void
-}> = ({ openModal, onClose }) => {
-  return (
-    <Dialog isOpen={openModal} onClose={onClose}>
-      <Dialog.Header>{t("doubleSubmitted.title")}</Dialog.Header>
-      <Dialog.Content>{t("doubleSubmitted.p1")}</Dialog.Content>
-      <Dialog.Content>
-        {renderInlineMarkup(
-          t("doubleSubmitted.p2", {
-            email:
-              "<a href='mailto:dahliahousingportal@sfgov.org'>dahliahousingportal@sfgov.org</a>",
-          })
-        )}
-      </Dialog.Content>
-    </Dialog>
-  )
-}
-
-const AlreadySubmittedModal: React.FC<{
-  alreadySubmittedId: string | null
-  onClose: () => void
-  alreadySubmittedApplication?: Application
-}> = ({ alreadySubmittedId, onClose, alreadySubmittedApplication }) => {
-  if (!alreadySubmittedId || !alreadySubmittedApplication) {
-    return null
-  }
-
-  const applicationSubmittedDate = convertToReadableDate(
-    alreadySubmittedApplication.applicationSubmittedDate
-  )
-
-  return (
-    <Dialog isOpen={!!alreadySubmittedId} onClose={onClose}>
-      <Dialog.Header>{t("alreadySubmitted.title")}</Dialog.Header>
-      <Dialog.Content>{t("alreadySubmitted.message")}</Dialog.Content>
-      <Dialog.Content>
-        {t("alreadySubmitted.date", { date: applicationSubmittedDate })}
-      </Dialog.Content>
-      <Dialog.Footer>
-        <Link href={`${getApplicationPath()}/${alreadySubmittedId}`}>
-          <Button>{t("label.viewApplication")}</Button>
-        </Link>
-      </Dialog.Footer>
-    </Dialog>
-  )
-}
+import { DoubleSubmittedModal } from "./components/DoubleSubmittedModal"
+import { AlreadySubmittedModal } from "./components/AlreadySubmittedModal"
+import { extractModalParamsFromUrl } from "./components/util"
 
 export const noApplications = () => {
   return (
@@ -231,7 +168,7 @@ const MyApplications = () => {
   }
 
   React.useEffect(() => {
-    const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractParamsFromUrl(
+    const { alreadySubmittedIdFromURL, doubleSubmitFromURL } = extractModalParamsFromUrl(
       window.location.href
     )
 
