@@ -3,7 +3,7 @@
 exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and Listing_Online_Details are not set 1`] = `
 <DocumentFragment>
   <section
-    class="aside-block see-the-unit"
+    class="aside-block see-the-unit translate"
   >
     <div
       class="see-the-unit__heading"
@@ -89,7 +89,9 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
         </h1>
         <p
           class="text-sm"
-        />
+        >
+          <span />
+        </p>
       </div>
     </div>
   </section>
@@ -99,7 +101,7 @@ exports[`ListingDetailsSeeTheUnit does not render SeeDetailsOnline when MLS and 
 exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Listing_Online_Details are set 1`] = `
 <DocumentFragment>
   <section
-    class="aside-block see-the-unit"
+    class="aside-block see-the-unit translate"
   >
     <div
       class="see-the-unit__heading"
@@ -310,9 +312,15 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
         <p
           class="text-sm"
         >
-          8-4 Mon-Thurs
-9-4 Fri
-10-2 Weekends
+          <span>
+            8-4 Mon-Thurs
+
+            <br />
+            9-4 Fri
+
+            <br />
+            10-2 Weekends
+          </span>
         </p>
       </div>
     </div>
@@ -323,7 +331,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when both MLS and Lis
 exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Online_Details is set 1`] = `
 <DocumentFragment>
   <section
-    class="aside-block see-the-unit"
+    class="aside-block see-the-unit translate"
   >
     <div
       class="see-the-unit__heading"
@@ -526,9 +534,15 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
         <p
           class="text-sm"
         >
-          8-4 Mon-Thurs
-9-4 Fri
-10-2 Weekends
+          <span>
+            8-4 Mon-Thurs
+
+            <br />
+            9-4 Fri
+
+            <br />
+            10-2 Weekends
+          </span>
         </p>
       </div>
     </div>
@@ -539,7 +553,7 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only Listing_Onl
 exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 1`] = `
 <DocumentFragment>
   <section
-    class="aside-block see-the-unit"
+    class="aside-block see-the-unit translate"
   >
     <div
       class="see-the-unit__heading"
@@ -742,9 +756,15 @@ exports[`ListingDetailsSeeTheUnit renders SeeDetailsOnline when only MLS is set 
         <p
           class="text-sm"
         >
-          8-4 Mon-Thurs
-9-4 Fri
-10-2 Weekends
+          <span>
+            8-4 Mon-Thurs
+
+            <br />
+            9-4 Fri
+
+            <br />
+            10-2 Weekends
+          </span>
         </p>
       </div>
     </div>

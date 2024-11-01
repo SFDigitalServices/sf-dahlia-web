@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingOnlineDetail } from "../../api/types/rails/listings/BaseRailsListing"
+import { getTranslatedString, renderInlineMarkup } from "../../util/languageUtil"
 
 export interface SeeTheUnitProps {
   listing: RailsListing
@@ -50,7 +51,11 @@ const SeeDetailsOnline = (listing: RailsListing) => (
         return (
           <div key={detail.Id}>
             <a href={link} target="_blank">
-              {detail.Listing_Online_Detail_Name}
+              {getTranslatedString(
+                detail.Listing_Online_Detail_Name,
+                `${detail.Id}.Listing_Online_Details.Listing_Online_Detail_Name__c`,
+                listing.translations
+              )}
             </a>
           </div>
         )
@@ -61,7 +66,7 @@ const SeeDetailsOnline = (listing: RailsListing) => (
 
 export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
   return (
-    <section className="aside-block see-the-unit">
+    <section className="aside-block see-the-unit translate">
       <div className="see-the-unit__heading">
         <Heading priority={4} styleType="underlineWeighted">
           {t("label.seeTheUnit")}
@@ -77,7 +82,13 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
       <SeeTheUnitSubsection title={t("seeTheUnit.makeAnAppointment")}>
         <p className="text-sm pb-3">{t("seeTheUnit.requestATour")}</p>
         <p>{listing.Leasing_Agent_Name}</p>
-        <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
+        <p className="text-gray-700 text-sm">
+          {getTranslatedString(
+            listing.Leasing_Agent_Title,
+            "Leasing_Agent_Title__c",
+            listing.translations
+          )}
+        </p>
         <div className="pt-2">
           <p className="pb-1">
             <a
@@ -105,7 +116,11 @@ export const ListingDetailsSeeTheUnit = ({ listing }: SeeTheUnitProps) => {
         <HeadingSeeds size="sm" className="pb-1">
           {t("contactAgent.officeHours.seeTheUnit")}
         </HeadingSeeds>
-        <p className="text-sm">{listing.Office_Hours}</p>
+        <p className="text-sm">
+          {renderInlineMarkup(
+            getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)
+          )}
+        </p>
       </SeeTheUnitSubsection>
     </section>
   )
