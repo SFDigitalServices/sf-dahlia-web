@@ -968,7 +968,12 @@ ShortFormApplicationController = (
         doubleSubmit = !! $scope.appIsSubmitted($scope.application)
         if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
           currentUrl = window.location.origin
-          newUrl = "#{currentUrl}/my-applications?react=true#{previousApp.id ? "&alreadySubmittedId=#{previousApp.id}" : "" }#{doubleSubmit ? "&doubleSubmit=true" : ""}"
+          newUrl = "#{currentUrl}/my-applications?react=true"
+          if previousApp.id
+            newUrl += "&alreadySubmittedId=#{previousApp.id}"
+          if doubleSubmit
+            newUrl += "&doubleSubmit=true"
+
           window.location.href = newUrl
           return
         else
