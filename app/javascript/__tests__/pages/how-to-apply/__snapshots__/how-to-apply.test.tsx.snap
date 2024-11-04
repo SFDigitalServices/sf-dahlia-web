@@ -124,7 +124,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
             class="site-header__notice-text"
           >
             <span>
-              We'd love to get
+              We'd love to get 
               <a
                 href="https://airtable.com/shrw64DubWTQfRkdo"
                 target="_blank"
@@ -339,7 +339,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <span>
-                            Meet our
+                            Meet our 
                             <a
                               class="underline"
                               href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
@@ -351,7 +351,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <span>
-                            Have completed
+                            Have completed 
                             <a
                               class="underline"
                               href="https://sf.gov/sign-complete-homebuyer-education"
@@ -363,7 +363,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         </li>
                         <li>
                           <span>
-                            Be pre-approved for a mortgage by a
+                            Be pre-approved for a mortgage by a 
                             <a
                               class="underline"
                               href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
@@ -393,6 +393,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     </h3>
                     <div
                       class="pt-4"
+                      id="HowToApplySection"
                     >
                       <ol
                         class="process-list"
@@ -428,6 +429,13 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                                 Read and follow all application instructions carefully.
                               </div>
                             </div>
+                            <a
+                              class="button is-info is-small"
+                              href="https://www.sf.gov/sites/default/files/2024-04/BMR Homeownership FCFS Full Application 04.2024.pdf"
+                              target="_blank"
+                            >
+                              Download PDF application
+                            </a>
                           </div>
                         </li>
                         <li>
@@ -512,7 +520,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               class="text-base"
                             >
                               <span>
-                                If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document.
+                                If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document. 
                                 <i>
                                   Example: 1288 Howard - Chow, Tania - Proof of Income
                                 </i>
@@ -535,7 +543,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               <span>
                                 <a
                                   class="underline"
-                                  href="#"
+                                  href="https://account.box.com/signup/personal?tc=annual"
                                   target="_blank"
                                 >
                                   Create a Box.com account.
@@ -571,11 +579,10 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                                 class="text-base"
                               >
                                 <span>
-                                  Fill out your information and get a link to upload your
+                                  Fill out your information and get a link to upload your 
                                   <a
                                     class="underline"
-                                    href="#"
-                                    target="_blank"
+                                    href="#HowToApplySection"
                                   >
                                     PDF application and documents
                                   </a>
@@ -642,7 +649,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="pt-4"
                     >
                       <span>
-                        We will email you your place in line within
+                        We will email you your place in line within 
                         <b>
                           2 business days
                         </b>
@@ -653,7 +660,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                       class="py-2"
                     >
                       <span>
-                        If your application is approved, you will need to enter a purchase agreement within
+                        If your application is approved, you will need to enter a purchase agreement within 
                         <b>
                           7 days
                         </b>
@@ -662,7 +669,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     </div>
                     <a
                       class="underline"
-                      href="//google.com"
+                      href="https://www.sf.gov/node/14246"
                       target="_blank"
                     >
                       Learn more about how it works
@@ -727,7 +734,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
             class="text-gray-500"
           >
             <span>
-              DAHLIA: San Francisco Housing Portal is a project of the
+              DAHLIA: San Francisco Housing Portal is a project of the 
               <br />
               <a
                 class="text-white"
@@ -772,7 +779,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
           <p
             class="text-sm"
           >
-            For listing and application questions, please contact the agent displayed on the listing.
+            For listing and application questions, please contact the agent displayed on the listing. 
             <br />
             For general program inquiries, you may call MOHCD at 415-701-5500.
           </p>
