@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
+exports[`<HeaderSidebarLayout /> Contact Bar renders Contact Information 1`] = `
 <DocumentFragment>
   <div
     class="notranslate site-wrapper"
@@ -243,7 +243,7 @@ exports[`<AssistanceLayout /> Contact Bar renders Contact Information 1`] = `
         >
           <div
             class="w-full md:w-2/3"
-            data-testid="assistance-main-content"
+            data-testid="info-main-content"
           >
             <h1>
               Content!
