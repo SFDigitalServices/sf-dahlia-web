@@ -196,7 +196,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             </section>
           </div>
           <section
-            class="aside-block see-the-unit"
+            class="aside-block see-the-unit translate"
           >
             <div
               class="see-the-unit__heading"
@@ -399,9 +399,15 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                 <p
                   class="text-sm"
                 >
-                  8-4 Mon-Thurs
-9-4 Fri
-10-2 Weekends
+                  <span>
+                    8-4 Mon-Thurs
+
+                    <br />
+                    9-4 Fri
+
+                    <br />
+                    10-2 Weekends
+                  </span>
                 </p>
               </div>
             </div>
@@ -913,7 +919,7 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             </section>
           </div>
           <section
-            class="aside-block see-the-unit"
+            class="aside-block see-the-unit translate"
           >
             <div
               class="see-the-unit__heading"
@@ -1116,9 +1122,15 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
                 <p
                   class="text-sm"
                 >
-                  8-4 Mon-Thurs
-9-4 Fri
-10-2 Weekends
+                  <span>
+                    8-4 Mon-Thurs
+
+                    <br />
+                    9-4 Fri
+
+                    <br />
+                    10-2 Weekends
+                  </span>
                 </p>
               </div>
             </div>
