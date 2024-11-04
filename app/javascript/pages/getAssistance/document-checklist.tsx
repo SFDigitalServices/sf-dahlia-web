@@ -150,7 +150,7 @@ const DocumentChecklist = () => {
           <ul className="list-disc ml-7">
             <li className="translate">{t("label.proof.sfhaLetterVerifyingResidency")}</li>
             <li>{t("label.proof.sfhaLease")}</li>
-            <li className="translate">{t("label.proof.governmentIssuedId")}</li>
+            <li>{t("label.proof.sfCityId")}</li>
             <li>{t("label.proof.telephoneBill")}</li>
             <li>{t("label.proof.cableBill")}</li>
             <li>{t("label.proof.paystubHome")}</li>
