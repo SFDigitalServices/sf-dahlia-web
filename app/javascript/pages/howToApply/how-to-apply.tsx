@@ -156,7 +156,7 @@ export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
           ? t("listings.call", { phoneNumber: listing.Leasing_Agent_Phone })
           : undefined}
       </a>
-      <div className="pb-2">
+      <div className="pb-3 pt-1">
         <a href={`mailto:${listing.Leasing_Agent_Email}`}>
           <span className="pr-2">
             <FontAwesomeIcon icon={faEnvelope} />

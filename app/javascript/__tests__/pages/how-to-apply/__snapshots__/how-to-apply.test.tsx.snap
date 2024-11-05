@@ -891,7 +891,7 @@ exports[`<HowToApply /> shows the correct leasing agent box for the listing 1`] 
       Call (415) 555-2323
     </a>
     <div
-      class="pb-2"
+      class="pb-3 pt-1"
     >
       <a
         href="mailto:ae@email.com"
