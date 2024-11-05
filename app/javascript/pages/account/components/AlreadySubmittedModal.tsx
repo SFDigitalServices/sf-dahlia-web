@@ -1,5 +1,5 @@
-import { t, Button } from "@bloom-housing/ui-components"
-import { Dialog, Link } from "@bloom-housing/ui-seeds"
+import { t, LinkButton } from "@bloom-housing/ui-components"
+import { Dialog } from "@bloom-housing/ui-seeds"
 import React from "react"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { convertToReadableDate } from "../../../util/listingUtil"
@@ -26,9 +26,9 @@ export const AlreadySubmittedModal: React.FC<{
         {t("alreadySubmitted.date", { date: applicationSubmittedDate })}
       </Dialog.Content>
       <Dialog.Footer>
-        <Link href={`${getApplicationPath()}/${alreadySubmittedId}`}>
-          <Button>{t("label.viewApplication")}</Button>
-        </Link>
+        <LinkButton href={`${getApplicationPath()}/${alreadySubmittedId}`}>
+          {t("label.viewApplication")}
+        </LinkButton>
       </Dialog.Footer>
     </Dialog>
   )
