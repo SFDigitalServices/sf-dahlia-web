@@ -68,6 +68,9 @@ class CacheService
     strings_to_translate = process_nested_translations(listing, strings_to_translate,
                                                        'Listing_Images',
                                                        'Image_Description')
+    strings_to_translate = process_nested_translations(listing, strings_to_translate,
+                                                       'Listing_Online_Details',
+                                                       'Listing_Online_Detail_Name')
 
     listing_preferences = Force::ListingService.preferences(listing['listingID'])
     listing_preferences&.each do |preference|

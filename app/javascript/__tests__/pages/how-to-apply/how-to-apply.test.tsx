@@ -31,9 +31,10 @@ describe("<HowToApply />", () => {
   })
 
   it("shows the correct header text", async () => {
-    axios.get.mockResolvedValue({ data: { listing: fcfsSaleListing } })
+    const listingData = { data: { listing: fcfsSaleListing } }
+    axios.get.mockResolvedValue(listingData)
     const { getAllByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
-    expect(getAllByText("How to Apply")).not.toBeNull()
+    expect(getAllByText(`Apply to ${listingData.data.listing.Name}`)).not.toBeNull()
   })
 
   it("renders not-yet-open components", async () => {

@@ -1,6 +1,6 @@
 import React from "react"
 import withAppSetup from "../../layouts/withAppSetup"
-import AssistanceLayout from "../../layouts/AssistanceLayout"
+import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import additionalResources from "../../../assets/json/additional-resources.json"
 import { InfoCard, InfoCardGrid, t } from "@bloom-housing/ui-components"
 import "./additional-resources.scss"

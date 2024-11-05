@@ -11,7 +11,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
       <title
         class="notranslate"
       >
-        How to Apply
+        Apply to TEST Sale Listing (do not modify) - Homeownership Acres
       </title>
       <meta
         charset="utf-8"
@@ -37,7 +37,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
         property="og:type"
       />
       <meta
-        content="How to Apply"
+        content="Apply to TEST Sale Listing (do not modify) - Homeownership Acres"
         property="og:title"
       />
       <meta
@@ -225,315 +225,152 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
         data-testid="main-content-test-id"
         id="main-content"
       >
-        <section
-          class="flex md:px-5"
+        <header
+          class="page-header is-inverse"
         >
-          <article
-            class="markdown max-w-5xl m-auto"
+          <hgroup
+            class="page-header__group"
           >
-            <div
-              class="pt-4 md:py-0 max-w-3xl"
+            <h1
+              class="page-header__title"
+              data-testid="page-header"
             >
-              <div
-                class="my-6 md:my-12 px-5"
+              Apply to TEST Sale Listing (do not modify) - Homeownership Acres
+            </h1>
+            <p
+              class="page-header__lead"
+            >
+               Apply to buy a home without entering a lottery. Your application will be considered in the order it comes in — first come, first served.
+            </p>
+          </hgroup>
+        </header>
+        <article
+          class="flex flex-wrap flex-col md:flex-row relative max-w-5xl m-auto w-full"
+        >
+          <div
+            class="w-full md:w-2/3"
+            data-testid="info-main-content"
+          >
+            <section
+              class="flex md:px-5"
+            >
+              <article
+                class="markdown max-w-5xl m-auto"
               >
                 <div
-                  class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
-                  data-variant="primary"
+                  class="pt-4 md:py-0 max-w-3xl"
                 >
-                  <span
-                    class="ui-icon ui-medium"
-                  >
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 32 32"
-                    >
-                      <path
-                        d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
-                      />
-                      <path
-                        d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    data-part="content"
-                  >
-                    <b>
-                      We are not accepting applications yet.
-                    </b>
-                    <br />
-                    Applications open: January 1, 2050 at 1:00 AM Pacific Time
-                  </span>
-                </div>
-                <div
-                  class="py-10"
-                >
-                  <h3
-                    class="text-2xl font-alt-serif"
-                  >
-                    How long it takes
-                  </h3>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Preparing your application
-                  </h4>
-                  It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Submitting your application
-                  </h4>
-                  30 minutes or less
-                </div>
-                <div
-                  class="pb-10"
-                >
-                  <h3
-                    class="text-2xl font-alt-serif"
-                  >
-                    Before you start
-                  </h3>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    Make sure you are eligible
-                  </h4>
-                  <div>
-                    To apply for this unit you must:
-                  </div>
-                  <ul
-                    class="mb-0 pt-2"
-                  >
-                    <li>
-                      <span>
-                        Not have owned residential property in the past 3 years
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Meet our 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
-                          target="_blank"
-                        >
-                          income requirements
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Have completed 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/sign-complete-homebuyer-education"
-                          target="_blank"
-                        >
-                          homebuyer education
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Be pre-approved for a mortgage by a 
-                        <a
-                          class="underline"
-                          href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
-                          target="_blank"
-                        >
-                          lender on our list
-                        </a>
-                      </span>
-                    </li>
-                    <li>
-                      <span>
-                        Have enough in savings for closing costs and downpayment
-                      </span>
-                    </li>
-                  </ul>
-                  <h4
-                    class="font-semibold font-alt-sans pt-6 pb-4"
-                  >
-                    See the unit in person
-                  </h4>
-                  This is not required, but we encourage you to make sure the unit is right for you before applying.
                   <div
-                    class="how-to-apply-dropdown pt-2"
+                    class="my-6 md:my-12 px-5"
                   >
-                    <button
-                      aria-expanded="false"
-                      class="button is-unstyled m-0 no-underline has-toggle"
-                      type="button"
+                    <div
+                      class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
+                      data-variant="primary"
                     >
-                      Make an appointment
-                    </button>
-                  </div>
-                </div>
-                <h3
-                  class="text-2xl font-alt-serif"
-                >
-                  How to Apply
-                </h3>
-                <div
-                  class="pt-4"
-                  id="HowToApplySection"
-                >
-                  <ol
-                    class="process-list"
-                  >
-                    <li>
+                      <span
+                        class="ui-icon ui-medium"
+                      >
+                        <svg
+                          fill="currentColor"
+                          viewBox="0 0 32 32"
+                        >
+                          <path
+                            d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                          />
+                          <path
+                            d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        data-part="content"
+                      >
+                        <b>
+                          We are not accepting applications yet.
+                        </b>
+                        <br />
+                        Applications open: January 1, 2050 at 1:00 AM Pacific Time
+                      </span>
+                    </div>
+                    <div
+                      class="py-10"
+                    >
+                      <h3
+                        class="text-2xl font-alt-serif"
+                      >
+                        How long it takes
+                      </h3>
                       <h4
-                        class="font-semibold font-alt-sans pb-4"
+                        class="font-semibold font-alt-sans pt-6 pb-4"
                       >
-                        Fill out PDF application
+                        Preparing your application
                       </h4>
-                      <div
-                        class="text-base"
+                      It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.
+                      <h4
+                        class="font-semibold font-alt-sans pt-6 pb-4"
                       >
-                        <div
-                          class="text-base pb-2"
-                        >
-                          Download and fill out the application on your computer or print and fill out.
-                        </div>
-                        <div
-                          class="text-base"
-                        >
-                          If you print the application, you will need to be able to scan it back into your computer later.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            Important
-                          </div>
-                          <div>
-                            Read and follow all application instructions carefully.
-                          </div>
-                        </div>
-                        <a
-                          class="button is-info is-small"
-                          href="https://www.sf.gov/sites/default/files/2024-04/BMR Homeownership FCFS Full Application 04.2024.pdf"
-                          target="_blank"
-                        >
-                          Download PDF application
-                        </a>
+                        Submitting your application
+                      </h4>
+                      30 minutes or less
+                    </div>
+                    <div
+                      class="pb-10"
+                    >
+                      <h3
+                        class="text-2xl font-alt-serif"
+                      >
+                        Before you start
+                      </h3>
+                      <h4
+                        class="font-semibold font-alt-sans pt-6 pb-4"
+                      >
+                        Make sure you are eligible
+                      </h4>
+                      <div>
+                        To apply for this unit you must:
                       </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
+                      <ul
+                        class="mb-0 pt-2"
                       >
-                        Gather documents
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base"
-                        >
-                          You must provide documents for everyone you will be living with who is over 18.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            What documents you need.
-                          </div>
-                          <div>
-                            See first 2 pages of the PDF application to find out what documents you need.
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Combine everything into 1 PDF file
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base"
-                        >
-                          Save your documents and filled out application into 1 PDF file.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
-                          <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
-                          >
-                            Name your file like this
-                          </div>
-                          <div>
-                            <div>
-                              Name of building - Last name, First name
-                            </div>
-                            <div
-                              class="pt-4 italic"
-                            >
-                              <div>
-                                Example
-                              </div>
-                              <div>
-                                <span
-                                  class="ui-icon ui-medium"
-                                >
-                                  <svg
-                                    fill="currentColor"
-                                    viewBox="0 0 38 51"
-                                  >
-                                    <path
-                                      d="M36.1495 12.6898L25.6104 2.28944C24.413 1.1119 22.8099 0.453501 21.1276 0.453501L6.33333 0.453491C2.83516 0.453491 0 3.25134 0 6.70349L0.000643229 44.2035C0.000643229 47.6556 2.8358 50.4535 6.33398 50.4535H31.6667C35.1648 50.4535 38 47.6556 38 44.2035V17.1039C38 15.4437 37.337 13.8617 36.1495 12.6898ZM22.1667 3.78163C22.6097 3.93456 23.0242 4.15721 23.366 4.49442L33.9051 14.8948C34.2495 15.2289 34.4771 15.639 34.6255 16.0785H23.75C22.8792 16.0785 22.1667 15.3754 22.1667 14.516V3.78163ZM34.8333 44.2035C34.8333 45.9262 33.4123 47.3285 31.6667 47.3285H6.33333C4.58771 47.3285 3.16667 45.9262 3.16667 44.2035V6.7035C3.16667 4.98084 4.58771 3.5785 6.33333 3.5785H19V14.516C19 17.1039 21.1276 19.2035 23.75 19.2035H34.8333V44.2035ZM9.5 27.016C9.5 27.8754 10.2125 28.5785 11.0833 28.5785H26.9167C27.7875 28.5785 28.5 27.8754 28.5 27.016C28.5 26.1566 27.7875 25.4535 26.9167 25.4535H11.0833C10.2125 25.4535 9.5 26.1566 9.5 27.016ZM26.9167 31.7035H11.0833C10.2125 31.7035 9.5 32.4066 9.5 33.266C9.5 34.1254 10.2125 34.8285 11.0833 34.8285H26.9167C27.7913 34.8285 28.5 34.1289 28.5 33.266C28.5 32.4031 27.7875 31.7035 26.9167 31.7035ZM26.9167 37.9535H11.0833C10.2125 37.9535 9.5 38.6566 9.5 39.516C9.5 40.3754 10.2125 41.0785 11.0833 41.0785H26.9167C27.7913 41.0785 28.5 40.3789 28.5 39.516C28.5 38.6531 27.7875 37.9535 26.9167 37.9535Z"
-                                    />
-                                  </svg>
-                                </span>
-                                1288 Howard - Chow, Tania
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="text-base"
-                        >
+                        <li>
                           <span>
-                            If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document. 
-                            <i>
-                              Example: 1288 Howard - Chow, Tania - Proof of Income
-                            </i>
+                            Not have owned residential property in the past 3 years
                           </span>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <h4
-                        class="font-semibold font-alt-sans pb-4"
-                      >
-                        Create a free account at Box.com
-                      </h4>
-                      <div
-                        class="text-base"
-                      >
-                        <div
-                          class="text-base pb-2"
-                        >
+                        </li>
+                        <li>
                           <span>
+                            Meet our 
                             <a
                               class="underline"
-                              href="https://account.box.com/signup/personal?tc=annual"
+                              href="https://sf.gov/determine-if-you-can-buy-affordable-housing-program"
                               target="_blank"
                             >
-                              Create a Box.com account.
+                              income requirements
                             </a>
-                             In the next step, you will need a free Box.com account to submit your application.
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Have completed 
+                            <a
+                              class="underline"
+                              href="https://sf.gov/sign-complete-homebuyer-education"
+                              target="_blank"
+                            >
+                              homebuyer education
+                            </a>
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                            Be pre-approved for a mortgage by a 
+                            <a
+                              class="underline"
+                              href="https://sf.gov/reports/october-2023/find-lender-below-market-rate-program"
+                              target="_blank"
+                            >
+                              lender on our list
+                            </a>
                           </span>
                         </div>
                         <div
@@ -556,124 +393,333 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                     </li>
                     <li>
                       <h4
-                        class="font-semibold font-alt-sans pb-4"
+                        class="font-semibold font-alt-sans pt-6 pb-4"
                       >
-                        Submit your application and get your place in line
+                        See the unit in person
                       </h4>
-                      <div
-                        class="text-base"
+                      This is not required, but we encourage you to make sure the unit is right for you before applying.
+                    </div>
+                    <h3
+                      class="text-2xl font-alt-serif"
+                    >
+                      Apply to
+                    </h3>
+                    <div
+                      class="pt-4"
+                      id="HowToApplySection"
+                    >
+                      <ol
+                        class="process-list"
                       >
-                        <div
-                          class="text-base"
-                        >
-                          When you are ready, submit your application in 3 steps:
-                        </div>
-                        <ul
-                          class="mb-0 pb-2"
-                        >
-                          <li
-                            class="text-base"
+                        <li>
+                          <h4
+                            class="font-semibold font-alt-sans pb-4"
                           >
-                            <span>
-                              Fill out your information and get a link to upload your 
-                              <a
-                                class="underline"
-                                href="#HowToApplySection"
-                              >
-                                PDF application and documents
-                              </a>
-                            </span>
-                          </li>
-                          <li
-                            class="text-base"
-                          >
-                            Follow the link to Box.com
-                          </li>
-                          <li
-                            class="text-base"
-                          >
-                            Upload your filled out application and all documents to Box.com
-                          </li>
-                        </ul>
-                        <div
-                          class="text-base"
-                        >
-                          The time and date you apply determines your place in line.
-                        </div>
-                        <div
-                          class="text-base pt-6"
-                        >
-                          <span
-                            class="ui-icon ui-medium"
-                          >
-                            <svg
-                              fill="currentColor"
-                              viewBox="0 0 32 32"
-                            >
-                              <path
-                                d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
-                              />
-                              <path
-                                d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
-                              />
-                            </svg>
-                          </span>
-                           Applications open January 1, 2050 at 1:00 AM Pacific Time. Check back here to apply.
-                        </div>
-                        <div
-                          class="my-6 p-6 bg-gray-200"
-                        >
+                            Fill out PDF application
+                          </h4>
                           <div
-                            class="font-semibold font-alt-sans text-lg pb-2"
+                            class="text-base"
                           >
-                            Upload your application within 30 minutes
+                            <div
+                              class="text-base pb-2"
+                            >
+                              Download and fill out the application on your computer or print and fill out.
+                            </div>
+                            <div
+                              class="text-base"
+                            >
+                              If you print the application, you will need to be able to scan it back into your computer later.
+                            </div>
+                            <div
+                              class="my-6 p-6 bg-gray-200"
+                            >
+                              <div
+                                class="font-semibold font-alt-sans text-lg pb-2"
+                              >
+                                Important
+                              </div>
+                              <div>
+                                Read and follow all application instructions carefully.
+                              </div>
+                            </div>
+                            <a
+                              class="button is-info is-small"
+                              href="https://www.sf.gov/sites/default/files/2024-04/BMR Homeownership FCFS Full Application 04.2024.pdf"
+                              target="_blank"
+                            >
+                              Download PDF application
+                            </a>
                           </div>
-                          <div>
-                            If you do not upload your application and all documents within 30 minutes, you will lose your place in line. You will get a new place in line based on the time and date we receive your completed application.
+                        </li>
+                        <li>
+                          <h4
+                            class="font-semibold font-alt-sans pb-4"
+                          >
+                            Gather documents
+                          </h4>
+                          <div
+                            class="text-base"
+                          >
+                            <div
+                              class="text-base"
+                            >
+                              You must provide documents for everyone you will be living with who is over 18.
+                            </div>
+                            <div
+                              class="my-6 p-6 bg-gray-200"
+                            >
+                              <div
+                                class="font-semibold font-alt-sans text-lg pb-2"
+                              >
+                                What documents you need.
+                              </div>
+                              <div>
+                                See first 2 pages of the PDF application to find out what documents you need.
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
+                        </li>
+                        <li>
+                          <h4
+                            class="font-semibold font-alt-sans pb-4"
+                          >
+                            Combine everything into 1 PDF file
+                          </h4>
+                          <div
+                            class="text-base"
+                          >
+                            <div
+                              class="text-base"
+                            >
+                              Save your documents and filled out application into 1 PDF file.
+                            </div>
+                            <div
+                              class="my-6 p-6 bg-gray-200"
+                            >
+                              <div
+                                class="font-semibold font-alt-sans text-lg pb-2"
+                              >
+                                Name your file like this
+                              </div>
+                              <div>
+                                <div>
+                                  Name of building - Last name, First name
+                                </div>
+                                <div
+                                  class="pt-4 italic"
+                                >
+                                  <div>
+                                    Example
+                                  </div>
+                                  <div>
+                                    <span
+                                      class="ui-icon ui-medium"
+                                    >
+                                      <svg
+                                        fill="currentColor"
+                                        viewBox="0 0 38 51"
+                                      >
+                                        <path
+                                          d="M36.1495 12.6898L25.6104 2.28944C24.413 1.1119 22.8099 0.453501 21.1276 0.453501L6.33333 0.453491C2.83516 0.453491 0 3.25134 0 6.70349L0.000643229 44.2035C0.000643229 47.6556 2.8358 50.4535 6.33398 50.4535H31.6667C35.1648 50.4535 38 47.6556 38 44.2035V17.1039C38 15.4437 37.337 13.8617 36.1495 12.6898ZM22.1667 3.78163C22.6097 3.93456 23.0242 4.15721 23.366 4.49442L33.9051 14.8948C34.2495 15.2289 34.4771 15.639 34.6255 16.0785H23.75C22.8792 16.0785 22.1667 15.3754 22.1667 14.516V3.78163ZM34.8333 44.2035C34.8333 45.9262 33.4123 47.3285 31.6667 47.3285H6.33333C4.58771 47.3285 3.16667 45.9262 3.16667 44.2035V6.7035C3.16667 4.98084 4.58771 3.5785 6.33333 3.5785H19V14.516C19 17.1039 21.1276 19.2035 23.75 19.2035H34.8333V44.2035ZM9.5 27.016C9.5 27.8754 10.2125 28.5785 11.0833 28.5785H26.9167C27.7875 28.5785 28.5 27.8754 28.5 27.016C28.5 26.1566 27.7875 25.4535 26.9167 25.4535H11.0833C10.2125 25.4535 9.5 26.1566 9.5 27.016ZM26.9167 31.7035H11.0833C10.2125 31.7035 9.5 32.4066 9.5 33.266C9.5 34.1254 10.2125 34.8285 11.0833 34.8285H26.9167C27.7913 34.8285 28.5 34.1289 28.5 33.266C28.5 32.4031 27.7875 31.7035 26.9167 31.7035ZM26.9167 37.9535H11.0833C10.2125 37.9535 9.5 38.6566 9.5 39.516C9.5 40.3754 10.2125 41.0785 11.0833 41.0785H26.9167C27.7913 41.0785 28.5 40.3789 28.5 39.516C28.5 38.6531 27.7875 37.9535 26.9167 37.9535Z"
+                                        />
+                                      </svg>
+                                    </span>
+                                    1288 Howard - Chow, Tania
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="text-base"
+                            >
+                              <span>
+                                If you cannot combine everything into 1 file, you can upload multiple files. Name each file as shown above and include the type of document. 
+                                <i>
+                                  Example: 1288 Howard - Chow, Tania - Proof of Income
+                                </i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <h4
+                            class="font-semibold font-alt-sans pb-4"
+                          >
+                            Create a free account at Box.com
+                          </h4>
+                          <div
+                            class="text-base"
+                          >
+                            <div
+                              class="text-base pb-2"
+                            >
+                              <span>
+                                <a
+                                  class="underline"
+                                  href="https://account.box.com/signup/personal?tc=annual"
+                                  target="_blank"
+                                >
+                                  Create a Box.com account.
+                                </a>
+                                 In the next step, you will need a free Box.com account to submit your application.
+                              </span>
+                            </div>
+                            <div
+                              class="text-base"
+                            >
+                              If you already have an account, use that one.
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <h4
+                            class="font-semibold font-alt-sans pb-4"
+                          >
+                            Submit your application and get your place in line
+                          </h4>
+                          <div
+                            class="text-base"
+                          >
+                            <div
+                              class="text-base"
+                            >
+                              When you are ready, submit your application in 3 steps:
+                            </div>
+                            <ul
+                              class="mb-0 pb-2"
+                            >
+                              <li
+                                class="text-base"
+                              >
+                                <span>
+                                  Fill out your information and get a link to upload your 
+                                  <a
+                                    class="underline"
+                                    href="#HowToApplySection"
+                                  >
+                                    PDF application and documents
+                                  </a>
+                                </span>
+                              </li>
+                              <li
+                                class="text-base"
+                              >
+                                Follow the link to Box.com
+                              </li>
+                              <li
+                                class="text-base"
+                              >
+                                Upload your filled out application and all documents to Box.com
+                              </li>
+                            </ul>
+                            <div
+                              class="text-base"
+                            >
+                              The time and date you apply determines your place in line.
+                            </div>
+                            <div
+                              class="text-base pt-6"
+                            >
+                              <span
+                                class="ui-icon ui-medium"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  viewBox="0 0 32 32"
+                                >
+                                  <path
+                                    d="M23.258 15.994h-7.251v-11.266c0-0.368-0.299-0.667-0.667-0.667s-0.667 0.299-0.667 0.667v11.931c0 0.368 0.299 0.667 0.667 0.667h7.917c0.368 0 0.667-0.299 0.667-0.667s-0.298-0.667-0.667-0.667z"
+                                  />
+                                  <path
+                                    d="M16 0.333c-8.64 0-15.669 7.029-15.669 15.669s7.029 15.669 15.669 15.669c8.64 0 15.669-7.027 15.669-15.667s-7.029-15.67-15.669-15.67zM16 30.338c-7.906 0-14.336-6.43-14.336-14.334s6.43-14.338 14.336-14.338 14.336 6.43 14.336 14.336c0 7.904-6.43 14.336-14.336 14.336z"
+                                  />
+                                </svg>
+                              </span>
+                               Applications open January 1, 2050 at 1:00 AM Pacific Time. Check back here to apply.
+                            </div>
+                            <div
+                              class="my-6 p-6 bg-gray-200"
+                            >
+                              <div
+                                class="font-semibold font-alt-sans text-lg pb-2"
+                              >
+                                Upload your application within 30 minutes
+                              </div>
+                              <div>
+                                If you do not upload your application and all documents within 30 minutes, you will lose your place in line. You will get a new place in line based on the time and date we receive your completed application.
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ol>
+                    </div>
+                    <h3
+                      class="text-2xl font-alt-serif"
+                    >
+                      What happens next
+                    </h3>
+                    <div
+                      class="pt-4"
+                    >
+                      <span>
+                        We will email you your place in line within 
+                        <b>
+                          2 business days
+                        </b>
+                        . If anyone applied before you, we review their application(s) first.
+                      </span>
+                    </div>
+                    <div
+                      class="py-2"
+                    >
+                      <span>
+                        If your application is approved, you will need to enter a purchase agreement within 
+                        <b>
+                          7 days
+                        </b>
+                        .
+                      </span>
+                    </div>
+                    <a
+                      class="underline"
+                      href="https://www.sf.gov/node/14246"
+                      target="_blank"
+                    >
+                      Learn more about how it works
+                    </a>
+                  </div>
                 </div>
-                <h3
-                  class="text-2xl font-alt-serif"
-                >
-                  What happens next
-                </h3>
-                <div
-                  class="pt-4"
-                >
-                  <span>
-                    We will email you your place in line within 
-                    <b>
-                      2 business days
-                    </b>
-                    . If anyone applied before you, we review their application(s) first.
-                  </span>
-                </div>
-                <div
-                  class="py-2"
-                >
-                  <span>
-                    If your application is approved, you will need to enter a purchase agreement within 
-                    <b>
-                      7 days
-                    </b>
-                    .
-                  </span>
-                </div>
-                <a
-                  class="underline"
-                  href="https://www.sf.gov/node/14246"
-                  target="_blank"
-                >
-                  Learn more about how it works
-                </a>
-              </div>
+              </article>
+            </section>
+          </div>
+          <section
+            class="aside-block w-full md:w-1/3 md:max-w-xs text-gray-950 md:border-l border-t md:border-t-0 border-gray-450 border-b-0 p-6 mx-0"
+          >
+            <h4
+              class="text__underline-weighted"
+            >
+              Need Help?
+            </h4>
+            <div
+              class="text-sm text-gray-750"
+            >
+              <p
+                class="mb-4"
+              >
+                <span>
+                  Housing counselors can help with your application. Support is available in many languages.
+                </span>
+              </p>
+              <a
+                class="button w-full transition"
+                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
+                target="_blank"
+              >
+                Find a Housing Counselor
+              </a>
             </div>
-          </article>
-        </section>
+          </section>
+        </article>
       </main>
     </div>
     <footer

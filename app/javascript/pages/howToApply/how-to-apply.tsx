@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState, useContext } from "react"
-import Layout from "../../layouts/Layout"
 import type RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 import {
   localizedFormat,
@@ -30,6 +29,8 @@ import { ListingState } from "../../modules/listings/ListingState"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./how-to-apply.scss"
+import HeaderSidebarLayout from "../../layouts/HeaderSidebarLayout"
+import GetHelpSidebarBlock from "../../layouts/Sidebar/GetHelpSidebarBlock"
 
 interface HowToApplyProps {
   assetPaths: unknown
@@ -405,7 +406,11 @@ const HowToApply = (_props: HowToApplyProps) => {
 
   return (
     <LoadingOverlay isLoading={!listing}>
-      <Layout title={t("pageTitle.howToApply")}>
+      <HeaderSidebarLayout
+        title={`${t("pageTitle.howToApply")} ${listing?.Name || "listing"}`}
+        subtitle={t("howToApplyPage.subTitle")}
+        sidebarContent={<GetHelpSidebarBlock />}
+      >
         <section className="flex md:px-5">
           <article className="markdown max-w-5xl m-auto">
             <div className="pt-4 md:py-0 max-w-3xl">
@@ -423,7 +428,7 @@ const HowToApply = (_props: HowToApplyProps) => {
             </div>
           </article>
         </section>
-      </Layout>
+      </HeaderSidebarLayout>
     </LoadingOverlay>
   )
 }
