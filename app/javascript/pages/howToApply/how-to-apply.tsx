@@ -137,7 +137,7 @@ export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="leasing-agent">
       <p className="m-0">{listing.Leasing_Agent_Name}</p>
-      <p className="text-gray-700 text-sm">
+      <p className="text-gray-750 text-sm">
         {getTranslatedString(
           listing.Leasing_Agent_Title,
           "Leasing_Agent_Title__c",
