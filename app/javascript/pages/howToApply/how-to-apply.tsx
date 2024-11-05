@@ -7,6 +7,7 @@ import {
   getSfGovUrl,
   renderInlineMarkup,
   getPathWithoutLanguagePrefix,
+  getTranslatedString,
 } from "../../util/languageUtil"
 import {
   Icon,
@@ -20,7 +21,6 @@ import {
   AppearanceStyleType,
   AppearanceSizeType,
   LinkButton,
-  Button,
 } from "@bloom-housing/ui-components"
 import { Heading, Message } from "@bloom-housing/ui-seeds"
 import withAppSetup from "../../layouts/withAppSetup"
@@ -132,11 +132,17 @@ const eligibilityListItems = [
   { index: 5 },
 ]
 
-const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
+export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
   return (
     <div className="leasing-agent">
       <p className="m-0">{listing.Leasing_Agent_Name}</p>
-      <p className="text-gray-700 text-sm">{listing.Leasing_Agent_Title}</p>
+      <p className="text-gray-700 text-sm">
+        {getTranslatedString(
+          listing.Leasing_Agent_Title,
+          "Leasing_Agent_Title__c",
+          listing.translations
+        )}
+      </p>
       <a
         href={
           listing.Leasing_Agent_Phone
@@ -158,7 +164,9 @@ const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
         </a>
       </div>
       <Heading size="sm">{t("contactAgent.officeHours.seeTheUnit")}</Heading>
-      <p className="text-sm">{listing.Office_Hours}</p>
+      <p className="text-sm">
+        {getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)}
+      </p>
     </div>
   )
 }
