@@ -117,8 +117,8 @@ module Force
       false
     end
 
-    def self.submitted?(application)
-      application['status'] == 'Submitted'
+    def self.draft?(application)
+      application['status'] == 'Draft'
     end
 
     def self.lending_institutions
