@@ -94,7 +94,8 @@ class Api::V1::ShortFormController < ApiController
     return if params['autosave'] == 'true' && autosave_disabled
     @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
-    return render_unauthorized_error if submitted?(@application)
+    return render_unauthorized_error unless draft?(@application)
+
     # calls same underlying method for submit
     submit_application
   end
@@ -109,7 +110,8 @@ class Api::V1::ShortFormController < ApiController
   def delete_application
     @application = Force::ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
-    return render_unauthorized_error if submitted?(@application)
+    return render_unauthorized_error unless draft?(@application)
+
     result = Force::ShortFormService.delete(params[:id])
     render json: result
   end
@@ -262,6 +264,10 @@ class Api::V1::ShortFormController < ApiController
 
   def submitted?(application)
     Force::ShortFormService.submitted?(application)
+  end
+
+  def draft?(application)
+    Force::ShortFormService.draft?(application)
   end
 
   def render_unauthorized_error

@@ -121,6 +121,10 @@ module Force
       application['status'] == 'Submitted'
     end
 
+    def self.draft?(application)
+      application['status'] == 'Draft'
+    end
+
     def self.lending_institutions
       return @institutions if @institutions
 
