@@ -75,7 +75,7 @@ const generateApplicationList = (
         applicationUpdatedAt={app.applicationSubmittedDate}
         confirmationNumber={app.lotteryNumber.toString()}
         editedDate={app.applicationSubmittedDate}
-        submitted={app.status === "Submitted"}
+        submitted={app.status !== "Draft"} // possible status values: 'Draft', 'Removed', 'Submitted', 'Submitted - Needs Review'
         listing={app.listing}
         key={app.id}
         handleDeleteApp={handleDeleteApp}
