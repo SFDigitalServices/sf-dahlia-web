@@ -2,9 +2,8 @@ import React from "react"
 
 import CreateAccountPage from "../../pages/account/create-account"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
+import { screen, within, cleanup } from "@testing-library/react"
 import { post } from "../../api/apiService"
-import { act } from "react-dom/test-utils"
-import { screen, within } from "@testing-library/dom"
 import userEvent from "@testing-library/user-event"
 
 jest.mock("../../api/apiService", () => ({
@@ -59,22 +58,20 @@ async function fillCreateAccountForm({
   const emailField = within(emailGroup).getByRole("textbox")
   const passwordField: Element = screen.getByRole("textbox", { name: /password/i })
 
-  await act(async () => {
-    await userEvent.clear(firstNameField)
-    await userEvent.type(firstNameField, firstName)
-    await userEvent.clear(lastNameField)
-    await userEvent.type(lastNameField, lastName)
-    await userEvent.clear(monthField)
-    await userEvent.type(monthField, month)
-    await userEvent.clear(dayField)
-    await userEvent.type(dayField, day)
-    await userEvent.clear(yearField)
-    await userEvent.type(yearField, year)
-    await userEvent.clear(emailField)
-    await userEvent.type(emailField, email)
-    await userEvent.clear(passwordField)
-    await userEvent.type(passwordField, password)
-  })
+  await userEvent.clear(firstNameField)
+  await userEvent.type(firstNameField, firstName)
+  await userEvent.clear(lastNameField)
+  await userEvent.type(lastNameField, lastName)
+  await userEvent.clear(monthField)
+  await userEvent.type(monthField, month)
+  await userEvent.clear(dayField)
+  await userEvent.type(dayField, day)
+  await userEvent.clear(yearField)
+  await userEvent.type(yearField, year)
+  await userEvent.clear(emailField)
+  await userEvent.type(emailField, email)
+  await userEvent.clear(passwordField)
+  await userEvent.type(passwordField, password)
 
   expect(firstNameField).toHaveValue(firstName)
   expect(lastNameField).toHaveValue(lastName)
@@ -86,22 +83,21 @@ async function fillCreateAccountForm({
 }
 
 describe("<CreateAccount />", () => {
-  let promise
   let user
 
   beforeEach(async () => {
-    promise = Promise.resolve()
+    document.documentElement.lang = "en"
     await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
     user = userEvent.setup()
   })
 
   afterEach(() => {
     jest.restoreAllMocks()
+    cleanup()
   })
 
-  it("shows the correct form text", async () => {
-    const { getAllByText } = await renderAndLoadAsync(<CreateAccountPage assetPaths={{}} />)
-    expect(getAllByText("Create an account")).not.toBeNull()
+  it("shows the correct form text", () => {
+    expect(screen.getAllByText("Create an account")).not.toBeNull()
   })
 
   it("creates a new account", async () => {
@@ -114,11 +110,9 @@ describe("<CreateAccount />", () => {
     const createAccountButton = screen.getByRole("button", {
       name: /create account/i,
     })
-    await act(async () => {
-      await fillCreateAccountForm(defaultFormValues)
-      await user.click(createAccountButton)
-      await promise
-    })
+
+    await fillCreateAccountForm(defaultFormValues)
+    await user.click(createAccountButton)
 
     expect(post).toHaveBeenCalledWith(
       "/api/v1/auth",
@@ -140,11 +134,11 @@ describe("<CreateAccount />", () => {
       const lastName = screen.getByRole("textbox", {
         name: /last name/i,
       })
-      await act(async () => {
-        await user.click(firstName)
-        await user.click(lastName)
-        await user.tab()
-      })
+
+      await user.click(firstName)
+      await user.click(lastName)
+      await user.tab()
+
       expect(screen.getAllByText("Enter first name")).toHaveLength(2)
       expect(
         screen.getByRole("button", {
@@ -166,11 +160,9 @@ describe("<CreateAccount />", () => {
       const lastName = screen.getByRole("textbox", {
         name: /last name/i,
       })
-      await act(async () => {
-        await user.type(firstName, "http")
-        await user.type(lastName, "www")
-        await user.tab()
-      })
+      await user.type(firstName, "http")
+      await user.type(lastName, "www")
+      await user.tab()
       expect(
         screen.getAllByRole("button", {
           name: /something went wrong/i,
@@ -188,11 +180,9 @@ describe("<CreateAccount />", () => {
       const lastName = screen.getByRole("textbox", {
         name: /last name/i,
       })
-      await act(async () => {
-        await user.type(firstName, "   ")
-        await user.type(lastName, "   ")
-        await user.tab()
-      })
+      await user.type(firstName, "   ")
+      await user.type(lastName, "   ")
+      await user.tab()
       expect(screen.getAllByText("Enter first name")).toHaveLength(2)
       expect(
         screen.getByRole("button", {
@@ -217,12 +207,10 @@ describe("<CreateAccount />", () => {
       const yearField: Element = screen.getByRole("spinbutton", {
         name: /year/i,
       })
-      await act(async () => {
-        await user.click(monthField)
-        await user.click(dayField)
-        await user.click(yearField)
-        await user.tab()
-      })
+      await user.click(monthField)
+      await user.click(dayField)
+      await user.click(yearField)
+      await user.tab()
 
       expect(screen.getByText("Enter date like: MM DD YYYY")).not.toBeNull()
       expect(
@@ -231,12 +219,10 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(monthField, "15")
-        await user.type(dayField, "56")
-        await user.type(yearField, "3")
-        await user.tab()
-      })
+      await user.type(monthField, "15")
+      await user.type(dayField, "56")
+      await user.type(yearField, "3")
+      await user.tab()
 
       expect(
         screen.getByText("Enter a valid date of birth. Enter date like: MM DD YYYY")
@@ -247,12 +233,10 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(monthField, "12")
-        await user.type(dayField, "12")
-        await user.type(yearField, "2020")
-        await user.tab()
-      })
+      await user.type(monthField, "12")
+      await user.type(dayField, "12")
+      await user.type(yearField, "2020")
+      await user.tab()
 
       expect(
         screen.queryByText(
@@ -271,10 +255,8 @@ describe("<CreateAccount />", () => {
       })
       const emailField = within(emailGroup).getByRole("textbox")
 
-      await act(async () => {
-        await user.click(emailField)
-        await user.tab()
-      })
+      await user.click(emailField)
+      await user.tab()
       expect(screen.getByText("Enter email address like: example@web.com")).not.toBeNull()
       expect(
         screen.getByRole("button", {
@@ -282,10 +264,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(emailField, "t")
-        await user.tab()
-      })
+      await user.type(emailField, "t")
+      await user.tab()
       expect(
         screen.getByText("Email missing @ symbol. Enter email like: example@web.com")
       ).not.toBeNull()
@@ -295,10 +275,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(emailField, "est@")
-        await user.tab()
-      })
+      await user.type(emailField, "est@")
+      await user.tab()
       expect(
         screen.getByText(/email entered incorrectly. Enter email like: example@web.com/i)
       ).not.toBeNull()
@@ -308,10 +286,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(emailField, "test")
-        await user.tab()
-      })
+      await user.type(emailField, "test")
+      await user.tab()
       expect(
         screen.getByText(
           /email missing a dot ‘.’ in the domain. Enter email like: example@web.com/i
@@ -323,10 +299,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(emailField, ".")
-        await user.tab()
-      })
+      await user.type(emailField, ".")
+      await user.tab()
       expect(
         screen.getByText(/email entered incorrectly. Enter email like: example@web.com/i)
       ).not.toBeNull()
@@ -336,10 +310,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(emailField, "com")
-        await user.tab()
-      })
+      await user.type(emailField, "com")
+      await user.tab()
       expect(
         screen.queryByText(/email entered incorrectly. Enter email like: example@web.com/i)
       ).toBeNull()
@@ -353,10 +325,8 @@ describe("<CreateAccount />", () => {
     it("shows an error message for the password field", async () => {
       const passwordField: Element = screen.getByRole("textbox", { name: /password/i })
 
-      await act(async () => {
-        await user.click(passwordField)
-        await user.tab()
-      })
+      await user.click(passwordField)
+      await user.tab()
       expect(screen.getAllByText(/enter new password/i)).not.toBeNull()
       expect(
         screen.getByRole("button", {
@@ -364,10 +334,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(passwordField, "pass")
-        await user.tab()
-      })
+      await user.type(passwordField, "pass")
+      await user.tab()
       expect(
         screen.getByText(
           "Choose a strong password with at least 8 characters, 1 letter, and 1 number"
@@ -379,10 +347,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(passwordField, "word")
-        await user.tab()
-      })
+      await user.type(passwordField, "word")
+      await user.tab()
       expect(
         screen.getByText(
           /choose a strong password with at least 8 characters, 1 letter, and 1 number/i
@@ -394,10 +360,8 @@ describe("<CreateAccount />", () => {
         })
       ).not.toBeNull()
 
-      await act(async () => {
-        await user.type(passwordField, "1")
-        await user.tab()
-      })
+      await user.type(passwordField, "1")
+      await user.tab()
       expect(
         screen.queryByText(
           /choose a strong password with at least 8 characters, 1 letter, and 1 number/i
@@ -428,11 +392,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(screen.getAllByText(/enter first name/i)).toHaveLength(2)
         expect(screen.getAllByText(/enter last name/i)).toHaveLength(2)
@@ -448,11 +409,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getAllByRole("button", {
@@ -480,11 +438,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getByText("Enter a valid date of birth. Enter date like: MM DD YYYY")
@@ -505,11 +460,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getAllByRole("button", {
@@ -537,11 +489,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getByRole("button", {
@@ -566,11 +515,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getByText(/email entered incorrectly. Enter email like: example@web.com/i)
@@ -592,11 +538,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getAllByRole("button", {
@@ -624,11 +567,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getByText(
@@ -652,11 +592,8 @@ describe("<CreateAccount />", () => {
           },
         })
 
-        await act(async () => {
-          await fillCreateAccountForm(defaultFormValues)
-          await user.click(createAccountButton)
-          await promise
-        })
+        await fillCreateAccountForm(defaultFormValues)
+        await user.click(createAccountButton)
 
         expect(
           screen.getAllByRole("button", {

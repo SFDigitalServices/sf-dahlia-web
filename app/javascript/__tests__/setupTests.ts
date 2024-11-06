@@ -5,6 +5,8 @@ import { cleanup } from "@testing-library/react"
 
 import { LanguagePrefix, loadTranslations } from "../util/languageUtil"
 
+document.documentElement.lang = "en"
+
 const spies = {
   delete: jest.spyOn(axios, "delete"),
   get: jest.spyOn(axios, "get"),
