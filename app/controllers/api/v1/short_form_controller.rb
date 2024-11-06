@@ -262,10 +262,6 @@ class Api::V1::ShortFormController < ApiController
     Force::ShortFormService.can_claim?(uid, application)
   end
 
-  def submitted?(application)
-    Force::ShortFormService.submitted?(application)
-  end
-
   def draft?(application)
     Force::ShortFormService.draft?(application)
   end

@@ -117,10 +117,6 @@ module Force
       false
     end
 
-    def self.submitted?(application)
-      application['status'] == 'Submitted'
-    end
-
     def self.draft?(application)
       application['status'] == 'Draft'
     end
