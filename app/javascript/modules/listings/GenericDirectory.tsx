@@ -37,6 +37,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     upcoming: [],
     results: [],
     additional: [],
+    fcfsSales: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
   // Whether any listings are a match.
@@ -62,7 +63,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const hasFiltersSet = filters !== null
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
+  console.log(listings.fcfsSales)
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -77,7 +78,14 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet,
                 isSalesFcfsEnabled
               )}
-
+              // TODO: Add FCFS sales view
+              {openListingsView(
+                listings.fcfsSales,
+                props.directoryType,
+                props.getSummaryTable,
+                hasFiltersSet,
+                isSalesFcfsEnabled
+              )}
               {props.findMoreActionBlock()}
               {filters &&
                 additionalView(

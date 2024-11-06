@@ -17,7 +17,7 @@ import dayjs from "dayjs"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { isLotteryComplete, getPriorityTypeText } from "../../util/listingUtil"
+import { isLotteryComplete, getPriorityTypeText, isFcfsSalesListing } from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -27,6 +27,7 @@ import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
 import TableSubHeader from "./TableSubHeader"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -41,6 +42,7 @@ export interface ListingsGroups {
   upcoming: RailsListing[]
   results: RailsListing[]
   additional: RailsListing[]
+  fcfsSales: RailsListing[]
 }
 
 type Listing = RailsRentalListing & {
@@ -191,7 +193,7 @@ export const getListingCards = (
     const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
     return (
       <ListingCard
-        key={index}
+        key={index} // TODO: key should be listing.listingID not just the index
         stackedTable={true}
         imageCardProps={getImageCardProps(listing, hasFiltersSet, useUpdatedDirectoryStatuses)}
         contentProps={
@@ -351,8 +353,11 @@ export const sortListings = (
   const upcoming = []
   const results = []
   const additional = []
+  const fcfsSales = []
   listings.forEach((listing) => {
-    if (dayjs(listing.Application_Due_Date) > dayjs()) {
+    if (isFcfsSalesListing(listing)) {
+      fcfsSales.push(listing)
+    } else if (dayjs(listing.Application_Due_Date) > dayjs()) {
       if (!filters || listing.Does_Match) {
         setMatch(true)
         open.push(listing)
@@ -379,7 +384,11 @@ export const sortListings = (
   results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
     new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
   )
-  return { open, upcoming, results, additional }
+  fcfsSales.sort((a: RailsSaleListing, b: RailsSaleListing) =>
+    new Date(a.Application_Start_Date_Time) < new Date(b.Application_Start_Date_Time) ? 1 : -1
+  )
+
+  return { open, upcoming, results, additional, fcfsSales }
 }
 
 export const matchedTextBanner = () => {
