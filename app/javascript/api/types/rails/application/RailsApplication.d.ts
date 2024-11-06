@@ -27,7 +27,7 @@ export type Application = {
   monthlyIncome: number
   totalMonthlyRent: number
   externalSessionId: string // "#{uuid.v4()}-#{uuid.v4()}"
-  status: "Draft" | "Submitted" | "Removed"
+  status: "Draft" | "Submitted" | "Removed" | "Submitted - Needs Review"
   applicationSubmissionType: "Electronic" | "Paper"
   applicationSubmittedDate: string // "YYYY-MM-DD"
   formMetadata: string // JSON.stringify(_.pick(app,'completedSections', 'session_uid','lastPage','groupedHouseholdAddresses','aliceGriffith_address_verified')
