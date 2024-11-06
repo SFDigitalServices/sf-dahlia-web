@@ -591,6 +591,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           >
                             <div
                               class="text-base"
+                              id="SubmitApplicationStep"
                             >
                               When you are ready, submit your application in 3 steps:
                             </div>
