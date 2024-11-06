@@ -133,6 +133,8 @@ interface PasswordFieldProps extends Omit<FieldProps, "type" | "postInputContent
 const PasswordField = ({ passwordVisibilityDefault = false, ...props }: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = React.useState(passwordVisibilityDefault)
 
+  const showPasswordId = `${props.name}-showPassword`
+
   return (
     <>
       <Field
@@ -143,19 +145,26 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
       <div className="field">
         <input
           type="checkbox"
-          id="showPassword"
-          name="showPassword"
+          id={showPasswordId}
+          name={showPasswordId}
           checked={showPassword}
-          onChange={() => setShowPassword(!showPassword)}
+          onChange={() => {
+            console.log(props.label)
+            setShowPassword(!showPassword)
+          }}
         />
-        <label htmlFor="showPassword">{t("label.showPassword")}</label>
+        <label htmlFor={showPasswordId}>{t("label.showPassword")}</label>
       </div>
     </>
   )
 }
 
 const newPasswordValidation: Validate = (newPassword: string) => {
-  if (newPassword.length < 8 || !/(?=.*[0-9])(?=.*[a-zA-Z])/.test(newPassword)) {
+  if (
+    newPassword.length < 8 ||
+    !/(?=.*[0-9])(?=.*[a-zA-Z])/.test(newPassword) ||
+    /\s/.test(newPassword)
+  ) {
     return "password:complexity"
   }
   return true
