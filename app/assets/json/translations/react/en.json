@@ -605,6 +605,8 @@
   "howToApplyPage.howToApplySection.step3.title": "Combine everything into 1 PDF file",
   "howToApplyPage.howToApplySection.step4.p1": "<a className='underline' href='%{url}' target='_blank'>Create a Box.com account.</a> In the next step, you will need a free Box.com account to submit your application.",
   "howToApplyPage.howToApplySection.step4.p2": "If you already have an account, use that one.",
+  "howToApplyPage.howToApplySection.step4.p3": "What is Box.com",
+  "howToApplyPage.howToApplySection.step4.p4": "Box.com is a safe, secure way for you to send your application to us.",
   "howToApplyPage.howToApplySection.step4.title": "Create a free account at Box.com",
   "howToApplyPage.howToApplySection.step5.applicationsOpenCheckBackHere": "Applications open %{date} at %{time} Pacific Time. Check back here to apply.",
   "howToApplyPage.howToApplySection.step5.button": "Submit application",

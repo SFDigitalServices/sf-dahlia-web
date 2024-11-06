@@ -1,7 +1,7 @@
 import React from "react"
 import { cleanup } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import HowToApply from "../../../pages/howToApply/how-to-apply"
+import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
@@ -53,5 +53,10 @@ describe("<HowToApply />", () => {
     axios.get.mockResolvedValue({ data: { listing: null } })
     await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(window.location.pathname).toBe("/")
+  })
+
+  it("shows the correct leasing agent box for the listing", async () => {
+    const { asFragment } = await renderAndLoadAsync(<LeasingAgentBox listing={fcfsSaleListing} />)
+    expect(asFragment()).toMatchSnapshot()
   })
 })

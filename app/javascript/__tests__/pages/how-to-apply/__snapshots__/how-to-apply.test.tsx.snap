@@ -385,6 +385,17 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         See the unit in person
                       </h4>
                       This is not required, but we encourage you to make sure the unit is right for you before applying.
+                      <div
+                        class="how-to-apply-dropdown pt-2"
+                      >
+                        <button
+                          aria-expanded="false"
+                          class="button is-unstyled m-0 no-underline has-toggle"
+                          type="button"
+                        >
+                          Make an appointment
+                        </button>
+                      </div>
                     </div>
                     <h3
                       class="text-2xl font-alt-serif"
@@ -555,6 +566,17 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                               class="text-base"
                             >
                               If you already have an account, use that one.
+                            </div>
+                            <div
+                              class="how-to-apply-dropdown pt-2"
+                            >
+                              <button
+                                aria-expanded="false"
+                                class="button is-unstyled m-0 no-underline has-toggle"
+                                type="button"
+                              >
+                                What is Box.com
+                              </button>
                             </div>
                           </div>
                         </li>
@@ -832,6 +854,82 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
         </div>
       </section>
     </footer>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`<HowToApply /> shows the correct leasing agent box for the listing 1`] = `
+<DocumentFragment>
+  <div
+    class="leasing-agent"
+  >
+    <p
+      class="m-0"
+    >
+      Matthew Burns
+    </p>
+    <p
+      class="text-gray-750 text-sm"
+    >
+      Leasing Agent
+    </p>
+    <a
+      href="tel:415 5552323"
+    >
+      <span
+        class="ui-icon ui-medium pr-2"
+      >
+        <svg
+          fill="#0077DA"
+          viewBox="0 0 32 32"
+        >
+          <path
+            d="M22 20c-2 2-2 4-4 4s-4-2-6-4-4-4-4-6 2-2 4-4-4-8-6-8-6 6-6 6c0 4 4.109 12.109 8 16s12 8 16 8c0 0 6-4 6-6s-6-8-8-6z"
+          />
+        </svg>
+      </span>
+      Call (415) 555-2323
+    </a>
+    <div
+      class="pb-3 pt-1"
+    >
+      <a
+        href="mailto:ae@email.com"
+      >
+        <span
+          class="pr-2"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-envelope "
+            data-icon="envelope"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+              fill="currentColor"
+            />
+          </svg>
+        </span>
+        Email
+      </a>
+    </div>
+    <h1
+      class="text-heading-sm"
+    >
+      Office hours
+    </h1>
+    <p
+      class="text-sm"
+    >
+      8-4 Mon-Thurs
+9-4 Fri
+10-2 Weekends
+    </p>
   </div>
 </DocumentFragment>
 `;
