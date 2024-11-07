@@ -189,11 +189,11 @@ export const getListingCards = (
   hasFiltersSet?: boolean,
   useUpdatedDirectoryStatuses: boolean = false
 ) =>
-  listings.map((listing: Listing, index) => {
+  listings.map((listing: Listing) => {
     const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
     return (
       <ListingCard
-        key={index} // TODO: key should be listing.listingID not just the index
+        key={`${listing.Id}`}
         stackedTable={true}
         imageCardProps={getImageCardProps(listing, hasFiltersSet, useUpdatedDirectoryStatuses)}
         contentProps={
