@@ -1,6 +1,6 @@
 import { LinkButton, SidebarBlock, t } from "@bloom-housing/ui-components"
 import React from "react"
-import { renderInlineMarkup } from "../../util/languageUtil"
+import { getSfGovUrl, renderInlineMarkup } from "../../util/languageUtil"
 
 const HousingCounselorHelp = () => (
   <p className="mb-4">{renderInlineMarkup(t("howToApplyPage.sidebar.getHelp.counselor"))}</p>
@@ -15,7 +15,7 @@ const GetHelpSidebarBlock = () => (
     <LinkButton
       transition={true}
       newTab={true}
-      href={"https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"}
+      href={getSfGovUrl("https://sf.gov/node/7209", 7209)}
       className={"w-full"}
     >
       {t("housingCounselor.findAHousingCounselor")}
