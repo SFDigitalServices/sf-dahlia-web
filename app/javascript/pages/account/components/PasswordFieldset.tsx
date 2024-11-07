@@ -148,10 +148,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
           id={showPasswordId}
           name={showPasswordId}
           checked={showPassword}
-          onChange={() => {
-            console.log(props.label)
-            setShowPassword(!showPassword)
-          }}
+          onChange={() => setShowPassword(!showPassword)}
         />
         <label htmlFor={showPasswordId}>{t("label.showPassword")}</label>
       </div>
@@ -160,11 +157,7 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
 }
 
 const newPasswordValidation: Validate = (newPassword: string) => {
-  if (
-    newPassword.length < 8 ||
-    !/(?=.*[0-9])(?=.*[a-zA-Z])/.test(newPassword) ||
-    /\s/.test(newPassword)
-  ) {
+  if (newPassword.length < 8 || !/(?=.*[0-9])(?=.*[a-zA-Z])/.test(newPassword)) {
     return "password:complexity"
   }
   return true
