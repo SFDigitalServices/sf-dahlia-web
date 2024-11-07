@@ -248,6 +248,16 @@ export const openListingsView = (
   listings.length > 0 &&
   getListingCards(listings, directoryType, stackedDataFxn, filtersSet, useUpdatedDirectoryStatuses)
 
+export const fcfsSalesView = (
+  listings: RailsListing[],
+  directoryType: DirectoryType,
+  stackedDataFxn: StackedDataFxnType,
+  filtersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
+) =>
+  listings.length > 0 &&
+  getListingCards(listings, directoryType, stackedDataFxn, filtersSet, useUpdatedDirectoryStatuses)
+
 // Get an expandable group of listings
 export const getListingGroup = (
   listings,
@@ -384,9 +394,15 @@ export const sortListings = (
   results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
     new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
   )
-  fcfsSales.sort((a: RailsSaleListing, b: RailsSaleListing) =>
-    new Date(a.Application_Start_Date_Time) < new Date(b.Application_Start_Date_Time) ? 1 : -1
-  )
+  fcfsSales.sort((a: RailsSaleListing, b: RailsSaleListing) => {
+    const dateA = new Date(a.Application_Start_Date_Time)
+    const dateB = new Date(b.Application_Start_Date_Time)
+
+    if (!a.Application_Start_Date_Time) return 1
+    if (!b.Application_Start_Date_Time) return -1
+
+    return dateB > dateA ? 1 : -1
+  })
 
   return { open, upcoming, results, additional, fcfsSales }
 }

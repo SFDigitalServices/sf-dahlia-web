@@ -6,6 +6,7 @@ import { EligibilityFilters } from "../../api/listingsApiService"
 import {
   additionalView,
   DirectoryType,
+  fcfsSalesView,
   ListingsGroups,
   lotteryResultsView,
   openListingsView,
@@ -63,7 +64,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const hasFiltersSet = filters !== null
   const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-  console.log(listings.fcfsSales)
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -78,8 +78,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet,
                 isSalesFcfsEnabled
               )}
-              // TODO: Add FCFS sales view
-              {openListingsView(
+              {fcfsSalesView(
                 listings.fcfsSales,
                 props.directoryType,
                 props.getSummaryTable,
