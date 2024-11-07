@@ -1,7 +1,7 @@
 import React from "react"
 import { cleanup } from "@testing-library/react"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import HowToApply from "../../../pages/howToApply/how-to-apply"
+import HowToApply, { LeasingAgentBox } from "../../../pages/howToApply/how-to-apply"
 import { notYetOpenSaleFcfsListing } from "../../data/RailsSaleListing/listing-sale-fcfs-not-yet-open"
 import { fcfsSaleListing } from "../../data/RailsSaleListing/listing-sale-fcfs"
 import { localizedFormat, formatTimeOfDay } from "../../../util/languageUtil"
@@ -31,9 +31,10 @@ describe("<HowToApply />", () => {
   })
 
   it("shows the correct header text", async () => {
-    axios.get.mockResolvedValue({ data: { listing: fcfsSaleListing } })
+    const listingData = { data: { listing: fcfsSaleListing } }
+    axios.get.mockResolvedValue(listingData)
     const { getAllByText } = await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
-    expect(getAllByText("How to Apply")).not.toBeNull()
+    expect(getAllByText(`Apply to ${listingData.data.listing.Name}`)).not.toBeNull()
   })
 
   it("renders not-yet-open components", async () => {
@@ -52,5 +53,10 @@ describe("<HowToApply />", () => {
     axios.get.mockResolvedValue({ data: { listing: null } })
     await renderAndLoadAsync(<HowToApply assetPaths={{}} />)
     expect(window.location.pathname).toBe("/")
+  })
+
+  it("shows the correct leasing agent box for the listing", async () => {
+    const { asFragment } = await renderAndLoadAsync(<LeasingAgentBox listing={fcfsSaleListing} />)
+    expect(asFragment()).toMatchSnapshot()
   })
 })

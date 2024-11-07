@@ -1,6 +1,6 @@
 import React from "react"
 import { render, within } from "@testing-library/react"
-import AssistanceLayout from "../../layouts/AssistanceLayout"
+import AssistanceLayout from "../../layouts/HeaderSidebarLayout"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 
 const CHILD_CONTENT = "Content!"
@@ -12,14 +12,14 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
-describe("<AssistanceLayout />", () => {
+describe("<HeaderSidebarLayout />", () => {
   it("renders children", async () => {
     const { getByTestId } = await renderAndLoadAsync(
       <AssistanceLayout title="Title Text" subtitle="Subtitle Text">
         <h1>{CHILD_CONTENT}</h1>
       </AssistanceLayout>
     )
-    const mainContent = getByTestId("assistance-main-content")
+    const mainContent = getByTestId("info-main-content")
 
     expect(within(mainContent).getByText(CHILD_CONTENT)).not.toBeNull()
   })

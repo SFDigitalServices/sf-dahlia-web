@@ -1,3 +1,19 @@
 .seeds-message {
   --message-max-width: 100%
 }
+
+.leasing-agent {
+  background-color: var(--seeds-color-gray-200);
+  width: fit-content;
+  padding: var(--seeds-s5);
+  margin-top: var(--seeds-s2);
+}
+
+.how-to-apply-dropdown button {
+  font-size: 16px !important;
+}
+
+.dropdown-content {
+  @apply pt-2;
+  @apply block;
+}
