@@ -133,6 +133,8 @@ interface PasswordFieldProps extends Omit<FieldProps, "type" | "postInputContent
 const PasswordField = ({ passwordVisibilityDefault = false, ...props }: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = React.useState(passwordVisibilityDefault)
 
+  const showPasswordId = `${props.name}-showPassword`
+
   return (
     <>
       <Field
@@ -143,12 +145,12 @@ const PasswordField = ({ passwordVisibilityDefault = false, ...props }: Password
       <div className="field">
         <input
           type="checkbox"
-          id="showPassword"
-          name="showPassword"
+          id={showPasswordId}
+          name={showPasswordId}
           checked={showPassword}
           onChange={() => setShowPassword(!showPassword)}
         />
-        <label htmlFor="showPassword">{t("label.showPassword")}</label>
+        <label htmlFor={showPasswordId}>{t("label.showPassword")}</label>
       </div>
     </>
   )
