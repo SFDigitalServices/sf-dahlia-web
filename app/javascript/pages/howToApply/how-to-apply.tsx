@@ -96,7 +96,7 @@ const HowLongItTakesSection = ({ listing }: { listing: RailsSaleListing }) => {
           <SubHeader subHeaderText={t("howToApplyPage.howLongItTakesSection.subtitle3")} />
           {renderInlineMarkup(
             t("howToApplyPage.howLongItTakesSection.p3", {
-              url: submissionUrl(listing.listingID),
+              url: "#SubmitApplicationStep",
             })
           )}
         </>
@@ -311,7 +311,9 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
-      <div className="text-base">{t("howToApplyPage.howToApplySection.step5.p1")}</div>
+      <div id="SubmitApplicationStep" className="text-base">
+        {t("howToApplyPage.howToApplySection.step5.p1")}
+      </div>
       <ul className="mb-0 pb-2">
         <li className="text-base">
           {renderInlineMarkup(
