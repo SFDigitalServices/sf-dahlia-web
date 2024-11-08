@@ -15,7 +15,10 @@ const GetHelpSidebarBlock = () => (
     <LinkButton
       transition={true}
       newTab={true}
-      href={getSfGovUrl("https://sf.gov/node/7209", 7209)}
+      href={getSfGovUrl(
+        "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
+        7209
+      )}
       className={"w-full"}
     >
       {t("housingCounselor.findAHousingCounselor")}

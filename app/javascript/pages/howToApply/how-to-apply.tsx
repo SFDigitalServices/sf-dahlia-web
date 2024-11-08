@@ -411,10 +411,10 @@ const HowToApply = (_props: HowToApplyProps) => {
         subtitle={t("howToApplyPage.subTitle")}
         sidebarContent={<GetHelpSidebarBlock />}
       >
-        <section className="flex md:px-5">
+        <section className="flex">
           <article className="markdown max-w-5xl m-auto">
             <div className="pt-4 md:py-0 max-w-3xl">
-              <div className="my-6 md:my-12 px-5">
+              <div className="my-6 px-6 md:my-12 md:px-0 md:mr-24">
                 {listing && (
                   <>
                     {applicationsNotYetOpen(listing) && <NotYetOpenMessage listing={listing} />}
