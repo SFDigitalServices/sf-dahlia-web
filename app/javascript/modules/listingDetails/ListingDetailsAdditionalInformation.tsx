@@ -1,5 +1,5 @@
 import React from "react"
-import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isSale } from "../../util/listingUtil"
@@ -143,18 +143,6 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {/* TODO: implement once we've established needs for sales listings
-              {listing.isSale && (
-                <div className="info-card bg-gray-100 border-0">
-                  <h3 className="text-serif-xl">For the Buyer's Realtor</h3>
-                  {listing.Allows_Realtor_Commission ? (
-                    display realtor_commission_header
-                    realtorComissionMessage
-                    {listing.Realtor_Commission_Info && realtor_commission_how_to}
-                  ) : display realtor_commission_not_eligible message}
-                </div>
-              )}
-            */}
         {listing.Repricing_Mechanism && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.rePricing")}</h3>
@@ -170,6 +158,17 @@ export const ListingDetailsAdditionalInformation = ({
                   )
                 )}
               />
+            </div>
+          </div>
+        )}
+        {isSale(listing) && (
+          <div className="info-card bg-gray-100 border-0">
+            <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+              <SidebarBlock title={t("listings.housingProgram")}>
+                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
+                  {t("listings.belowMarketRate")}
+                </a>
+              </SidebarBlock>
             </div>
           </div>
         )}
