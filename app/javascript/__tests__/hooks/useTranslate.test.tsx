@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks"
+import { renderHook } from "@testing-library/react"
 import useTranslate from "../../hooks/useTranslate"
 import * as useScript from "../../hooks/useScript"
 import * as usePollElementRender from "../../hooks/usePollElementRender"
