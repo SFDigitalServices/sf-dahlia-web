@@ -577,12 +577,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                           class="field"
                         >
                           <input
-                            id="showPassword"
-                            name="showPassword"
+                            id="currentPassword-showPassword"
+                            name="currentPassword-showPassword"
                             type="checkbox"
                           />
                           <label
-                            for="showPassword"
+                            for="currentPassword-showPassword"
                           >
                             Show password
                           </label>
@@ -661,12 +661,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         >
                           <input
                             checked=""
-                            id="showPassword"
-                            name="showPassword"
+                            id="password-showPassword"
+                            name="password-showPassword"
                             type="checkbox"
                           />
                           <label
-                            for="showPassword"
+                            for="password-showPassword"
                           >
                             Show password
                           </label>
@@ -1390,12 +1390,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                         class="field"
                       >
                         <input
-                          id="showPassword"
-                          name="showPassword"
+                          id="currentPassword-showPassword"
+                          name="currentPassword-showPassword"
                           type="checkbox"
                         />
                         <label
-                          for="showPassword"
+                          for="currentPassword-showPassword"
                         >
                           Show password
                         </label>
@@ -1474,12 +1474,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 1`] = 
                       >
                         <input
                           checked=""
-                          id="showPassword"
-                          name="showPassword"
+                          id="password-showPassword"
+                          name="password-showPassword"
                           type="checkbox"
                         />
                         <label
-                          for="showPassword"
+                          for="password-showPassword"
                         >
                           Show password
                         </label>
@@ -2260,12 +2260,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                           class="field"
                         >
                           <input
-                            id="showPassword"
-                            name="showPassword"
+                            id="currentPassword-showPassword"
+                            name="currentPassword-showPassword"
                             type="checkbox"
                           />
                           <label
-                            for="showPassword"
+                            for="currentPassword-showPassword"
                           >
                             Show password
                           </label>
@@ -2344,12 +2344,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         >
                           <input
                             checked=""
-                            id="showPassword"
-                            name="showPassword"
+                            id="password-showPassword"
+                            name="password-showPassword"
                             type="checkbox"
                           />
                           <label
-                            for="showPassword"
+                            for="password-showPassword"
                           >
                             Show password
                           </label>
@@ -3073,12 +3073,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                         class="field"
                       >
                         <input
-                          id="showPassword"
-                          name="showPassword"
+                          id="currentPassword-showPassword"
+                          name="currentPassword-showPassword"
                           type="checkbox"
                         />
                         <label
-                          for="showPassword"
+                          for="currentPassword-showPassword"
                         >
                           Show password
                         </label>
@@ -3157,12 +3157,12 @@ exports[`<AccountSettingsPage /> when the user is signed in resize events 2`] = 
                       >
                         <input
                           checked=""
-                          id="showPassword"
-                          name="showPassword"
+                          id="password-showPassword"
+                          name="password-showPassword"
                           type="checkbox"
                         />
                         <label
-                          for="showPassword"
+                          for="password-showPassword"
                         >
                           Show password
                         </label>
