@@ -38,7 +38,8 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     upcoming: [],
     results: [],
     additional: [],
-    fcfsSales: [],
+    fcfsSalesOpen: [],
+    fcfsSalesNotYetOpen: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
   // Whether any listings are a match.
@@ -79,7 +80,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 isSalesFcfsEnabled
               )}
               {fcfsSalesView(
-                listings.fcfsSales,
+                [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
                 props.directoryType,
                 props.getSummaryTable,
                 hasFiltersSet,
