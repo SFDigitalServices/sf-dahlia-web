@@ -583,7 +583,7 @@
   "howToApplyPage.beforeYouStartSection.title": "Before you start",
   "howToApplyPage.howLongItTakesSection.p1": "It depends on how easy it is for you to gather all your information and documents. It may take a few hours, or you may need to do it over several days. If you applied before, it might take you less time.",
   "howToApplyPage.howLongItTakesSection.p2": "30 minutes or less",
-  "howToApplyPage.howLongItTakesSection.p3": "If you have your application and documents ready, <a className='underline' href='%{url}' target='_blank'>submit your application now.</a>",
+  "howToApplyPage.howLongItTakesSection.p3": "If you have your application and documents ready, <a className='underline' href='%{url}'>submit your application now.</a>",
   "howToApplyPage.howLongItTakesSection.subtitle1": "Preparing your application",
   "howToApplyPage.howLongItTakesSection.subtitle2": "Submitting your application",
   "howToApplyPage.howLongItTakesSection.subtitle3": "Ready to submit?",
