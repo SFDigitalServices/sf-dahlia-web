@@ -1,5 +1,5 @@
 import React from "react"
-import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, Mobile, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isOpen, isSale } from "../../util/listingUtil"
@@ -164,36 +164,31 @@ export const ListingDetailsAdditionalInformation = ({
             </div>
           </div>
         )}
-        {isSale(listing) && (
-          <div className="info-card bg-gray-100 border-0">
-            <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-              <SidebarBlock title={t("listings.housingProgram")}>
-                <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
-                  {t("listings.belowMarketRate")}
-                </a>
-              </SidebarBlock>
+        <Mobile>
+          {isSale(listing) && (
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-xl">{t("listings.housingProgram")}</h3>
+              <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-xs">
+                {t("listings.belowMarketRate")}
+              </a>
             </div>
-          </div>
-        )}
-        {isOpen(listing) && (
-          <div className="info-card bg-gray-100 border-0">
-            <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
-              <SidebarBlock>
-                <p>{`${t("t.listingUpdated")}: ${localizedFormat(
-                  listing.LastModifiedDate,
-                  "LL"
-                )}`}</p>
-                {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
-                  <p className="mt-1">
-                    <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
-                      {t("listings.process.seeThisUnitOnMls")}
-                    </a>
-                  </p>
-                )}
-              </SidebarBlock>
+          )}
+          {isOpen(listing) && (
+            <div className="info-card bg-gray-100 border-0">
+              <p className="text-xs">{`${t("t.listingUpdated")}: ${localizedFormat(
+                listing.LastModifiedDate,
+                "LL"
+              )}`}</p>
+              {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
+                <p className="mt-1">
+                  <a href={listing.Multiple_Listing_Service_URL} target="_blank">
+                    {t("listings.process.seeThisUnitOnMls")}
+                  </a>
+                </p>
+              )}
             </div>
-          </div>
-        )}
+          )}
+        </Mobile>
       </div>
     </ListingDetailItem>
   )
