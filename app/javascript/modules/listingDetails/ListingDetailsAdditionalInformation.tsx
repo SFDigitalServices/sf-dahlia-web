@@ -1,5 +1,5 @@
 import React from "react"
-import { LinkButton, ListingDetailItem, Mobile, SidebarBlock, t } from "@bloom-housing/ui-components"
+import { LinkButton, ListingDetailItem, Mobile, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
 import { isHabitatListing, isOpen, isSale } from "../../util/listingUtil"
