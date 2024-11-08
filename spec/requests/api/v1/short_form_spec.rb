@@ -140,7 +140,7 @@ describe 'ShortForm API' do
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:user_can_access?).and_return(true)
       allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:submitted?).and_return(false)
+        .to receive(:draft?).and_return(true)
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/delete_application') do
