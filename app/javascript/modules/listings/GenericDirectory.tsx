@@ -45,12 +45,13 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
       setLoading(true)
       setRawListings(listings)
-      const sortedListings = sortListings(listings, filters, setMatch)
+      const sortedListings = sortListings(listings, filters, setMatch, isSalesFcfsEnabled)
       setListings(sortedListings)
       setLoading(false)
     })
@@ -64,7 +65,6 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
   return (
     <LoadingOverlay isLoading={loading}>
       <div>
@@ -79,13 +79,14 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet,
                 isSalesFcfsEnabled
               )}
-              {fcfsSalesView(
-                [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
-                props.directoryType,
-                props.getSummaryTable,
-                hasFiltersSet,
-                isSalesFcfsEnabled
-              )}
+              {isSalesFcfsEnabled &&
+                fcfsSalesView(
+                  [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+                  props.directoryType,
+                  props.getSummaryTable,
+                  hasFiltersSet,
+                  isSalesFcfsEnabled
+                )}
               {props.findMoreActionBlock()}
               {filters &&
                 additionalView(
