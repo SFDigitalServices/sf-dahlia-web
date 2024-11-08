@@ -252,7 +252,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
             data-testid="info-main-content"
           >
             <section
-              class="flex md:px-5"
+              class="flex"
             >
               <article
                 class="markdown max-w-5xl m-auto"
@@ -261,7 +261,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                   class="pt-4 md:py-0 max-w-3xl"
                 >
                   <div
-                    class="my-6 md:my-12 px-5"
+                    class="my-6 px-6 md:my-12 md:px-0 md:mr-24"
                   >
                     <div
                       class="seeds-common-message is-fullwidth seeds-message justify-start leading-5"
@@ -721,7 +721,7 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
               </p>
               <a
                 class="button w-full transition"
-                href="https://sf.gov/node/7209"
+                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
                 target="_blank"
               >
                 Find a Housing Counselor
