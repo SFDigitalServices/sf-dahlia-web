@@ -2,9 +2,10 @@ import React from "react"
 import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isHabitatListing, isSale } from "../../util/listingUtil"
+import { isHabitatListing, isOpen, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
-import { getTranslatedString } from "../../util/languageUtil"
+import { getTranslatedString, localizedFormat } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -15,6 +16,8 @@ export const ListingDetailsAdditionalInformation = ({
   listing,
   imageSrc,
 }: ListingDetailsAdditionalInformationProps) => {
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+
   const getCommissionString = () => {
     return listing.Realtor_Commission_Unit === "percent"
       ? t("listings.realtorCommissionPercentage", {
@@ -168,6 +171,25 @@ export const ListingDetailsAdditionalInformation = ({
                 <a href={`https://sfmohcd.org/for-buyers`} target="_blank" className="text-base">
                   {t("listings.belowMarketRate")}
                 </a>
+              </SidebarBlock>
+            </div>
+          </div>
+        )}
+        {isOpen(listing) && (
+          <div className="info-card bg-gray-100 border-0">
+            <div className="border-b border-gray-400 md:border-b-0 last:border-b-0">
+              <SidebarBlock>
+                <p>{`${t("t.listingUpdated")}: ${localizedFormat(
+                  listing.LastModifiedDate,
+                  "LL"
+                )}`}</p>
+                {!isSalesFcfsEnabled && listing.Multiple_Listing_Service_URL && (
+                  <p className="mt-1">
+                    <a href={listing.Multiple_Listing_Service_URL} target="_blank" className="">
+                      {t("listings.process.seeThisUnitOnMls")}
+                    </a>
+                  </p>
+                )}
               </SidebarBlock>
             </div>
           </div>
