@@ -974,6 +974,8 @@ ShortFormApplicationController = (
             if doubleSubmit
               newUrl += "&"
           if doubleSubmit
+            # As we rebuilt the My Applications page in React we were not able to figure out a way to trigger the Double Submit Modal.
+            # We are leaving the code here both to document past behavior and to protect the application in case somehow the modal is triggered
             newUrl += "doubleSubmit=true"
 
           window.location.href = newUrl
