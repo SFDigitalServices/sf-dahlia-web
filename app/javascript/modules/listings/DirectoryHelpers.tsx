@@ -369,8 +369,8 @@ const sortListingByStringDate = (
   const dateA = new Date(a[fieldName] as string)
   const dateB = new Date(b[fieldName] as string)
 
-  if (a[fieldName]) return -1
-  if (b[fieldName]) return 1
+  if (!a[fieldName]) return 1
+  if (!b[fieldName]) return -1
 
   if (acscending) {
     return dateB < dateA ? 1 : -1
@@ -433,6 +433,18 @@ export const sortListings = (
   fcfsSalesNotYetOpen.sort((a: RailsSaleListing, b: RailsSaleListing) =>
     sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
   )
+
+  // uncomment to see the listings order in the console
+
+  // console.log("FCFS Open Listings")
+  // fcfsSalesOpen.map((listing) =>
+  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
+  // )
+
+  // console.log("FCFS Not Yet Open Listings")
+  // fcfsSalesNotYetOpen.map((listing) =>
+  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
+  // )
 
   return {
     open,
