@@ -369,14 +369,14 @@ const sortListingByStringDate = (
   const dateA = new Date(a[fieldName] as string)
   const dateB = new Date(b[fieldName] as string)
 
-  if (!dateA) return 1
-  if (!dateB) return -1
+  if (a[fieldName]) return -1
+  if (b[fieldName]) return 1
 
   if (acscending) {
-    return dateB > dateA ? 1 : -1
+    return dateB < dateA ? 1 : -1
   }
 
-  return dateB < dateA ? 1 : -1
+  return dateB > dateA ? 1 : -1
 }
 
 // Sort listings in four buckets based on their status and filters
@@ -431,7 +431,7 @@ export const sortListings = (
     sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
   )
   fcfsSalesNotYetOpen.sort((a: RailsSaleListing, b: RailsSaleListing) =>
-    sortListingByStringDate(a, b, "Application_Start_Date_Time", false)
+    sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
   )
 
   return {
