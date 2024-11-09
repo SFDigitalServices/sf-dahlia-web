@@ -45,7 +45,7 @@ const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
       transition={true}
       href={localizedPath(`listings/${listingId}/how-to-apply`)}
     >
-      {t("listings.fcfs.bmrSales.howToApply.learnMore")}
+      {t("t.getStarted")}
     </LinkButton>
   </SidebarBlock>
 )
