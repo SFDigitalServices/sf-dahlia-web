@@ -45,18 +45,20 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+  const { flagsReady, unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
-      setLoading(true)
-      setRawListings(listings)
-      const sortedListings = sortListings(listings, filters, setMatch, isSalesFcfsEnabled)
-      setListings(sortedListings)
-      setLoading(false)
+      if (flagsReady) {
+        setLoading(true)
+        setRawListings(listings)
+        const sortedListings = sortListings(listings, filters, setMatch, isSalesFcfsEnabled)
+        setListings(sortedListings)
+        setLoading(false)
+      }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props])
+  }, [props, flagsReady])
 
   useEffect(() => {
     const sortedListings = sortListings(rawListings, filters, setMatch)
@@ -66,9 +68,9 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
 
   const hasFiltersSet = filters !== null
   return (
-    <LoadingOverlay isLoading={loading}>
+    <LoadingOverlay isLoading={loading || !flagsReady}>
       <div>
-        {!loading && (
+        {!loading && flagsReady && (
           <>
             {props.getPageHeader(filters, setFilters, match)}
             <div id="listing-results">
