@@ -407,8 +407,8 @@ const HowToApply = (_props: HowToApplyProps) => {
   return (
     <LoadingOverlay isLoading={!listing}>
       <HeaderSidebarLayout
-        title={`${t("pageTitle.howToApply")} ${listing?.Name || "listing"}`}
-        subtitle={t("howToApplyPage.subTitle")}
+        title={listing && `${t("pageTitle.howToApply")} ${listing?.Name}`}
+        subtitle={listing && t("howToApplyPage.subTitle")}
         sidebarContent={<GetHelpSidebarBlock />}
       >
         <section className="flex">
