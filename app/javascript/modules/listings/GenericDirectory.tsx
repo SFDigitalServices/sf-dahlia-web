@@ -6,6 +6,7 @@ import { EligibilityFilters } from "../../api/listingsApiService"
 import {
   additionalView,
   DirectoryType,
+  fcfsSalesView,
   ListingsGroups,
   lotteryResultsView,
   openListingsView,
@@ -37,22 +38,27 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
     upcoming: [],
     results: [],
     additional: [],
+    fcfsSalesOpen: [],
+    fcfsSalesNotYetOpen: [],
   })
   const [loading, setLoading] = useState<boolean>(true)
   // Whether any listings are a match.
   const [match, setMatch] = useState<boolean>(false)
   const [filters, setFilters] = useState(props.filters ?? null)
+  const { flagsReady, unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   useEffect(() => {
     void props.listingsAPI(props.filters).then((listings) => {
-      setLoading(true)
-      setRawListings(listings)
-      const sortedListings = sortListings(listings, filters, setMatch)
-      setListings(sortedListings)
-      setLoading(false)
+      if (flagsReady) {
+        setLoading(true)
+        setRawListings(listings)
+        const sortedListings = sortListings(listings, filters, setMatch)
+        setListings(sortedListings)
+        setLoading(false)
+      }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props])
+  }, [props, flagsReady])
 
   useEffect(() => {
     const sortedListings = sortListings(rawListings, filters, setMatch)
@@ -61,12 +67,10 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
   }, [filters])
 
   const hasFiltersSet = filters !== null
-  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
-
   return (
-    <LoadingOverlay isLoading={loading}>
+    <LoadingOverlay isLoading={loading || !flagsReady}>
       <div>
-        {!loading && (
+        {!loading && flagsReady && (
           <>
             {props.getPageHeader(filters, setFilters, match)}
             <div id="listing-results">
@@ -77,7 +81,14 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                 hasFiltersSet,
                 isSalesFcfsEnabled
               )}
-
+              {isSalesFcfsEnabled &&
+                fcfsSalesView(
+                  [...listings.fcfsSalesOpen, ...listings.fcfsSalesNotYetOpen],
+                  props.directoryType,
+                  props.getSummaryTable,
+                  hasFiltersSet,
+                  isSalesFcfsEnabled
+                )}
               {props.findMoreActionBlock()}
               {filters &&
                 additionalView(

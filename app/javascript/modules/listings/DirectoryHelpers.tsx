@@ -17,7 +17,12 @@ import dayjs from "dayjs"
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
 import type RailsRentalUnitSummary from "../../api/types/rails/listings/RailsRentalUnitSummary"
 import { getEligibilityEstimatorLink, getHousingCounselorsPath } from "../../util/routeUtil"
-import { isLotteryComplete, getPriorityTypeText } from "../../util/listingUtil"
+import {
+  isLotteryComplete,
+  getPriorityTypeText,
+  isFcfsSalesListing,
+  getFcfsSalesListingState,
+} from "../../util/listingUtil"
 import RailsSaleUnitSummary from "../../api/types/rails/listings/RailsSaleUnitSummary"
 import { EligibilityFilters } from "../../api/listingsApiService"
 import { renderInlineMarkup } from "../../util/languageUtil"
@@ -27,6 +32,8 @@ import TextBanner from "../../components/TextBanner"
 import { getHabitatContent } from "./HabitatForHumanity"
 import { getImageCardProps, RailsListing } from "./SharedHelpers"
 import TableSubHeader from "./TableSubHeader"
+import RailsSaleListing from "../../api/types/rails/listings/RailsSaleListing"
+import { ListingState } from "./ListingState"
 
 export type RailsUnitSummary = RailsSaleUnitSummary | RailsRentalUnitSummary
 
@@ -41,6 +48,8 @@ export interface ListingsGroups {
   upcoming: RailsListing[]
   results: RailsListing[]
   additional: RailsListing[]
+  fcfsSalesOpen: RailsListing[]
+  fcfsSalesNotYetOpen: RailsListing[]
 }
 
 type Listing = RailsRentalListing & {
@@ -187,11 +196,11 @@ export const getListingCards = (
   hasFiltersSet?: boolean,
   useUpdatedDirectoryStatuses: boolean = false
 ) =>
-  listings.map((listing: Listing, index) => {
+  listings.map((listing: Listing) => {
     const hasCustomContent = listing.Reserved_community_type === habitatForHumanity
     return (
       <ListingCard
-        key={index}
+        key={`${listing.Id}`}
         stackedTable={true}
         imageCardProps={getImageCardProps(listing, hasFiltersSet, useUpdatedDirectoryStatuses)}
         contentProps={
@@ -237,6 +246,16 @@ export const getListingCards = (
   })
 
 export const openListingsView = (
+  listings: RailsListing[],
+  directoryType: DirectoryType,
+  stackedDataFxn: StackedDataFxnType,
+  filtersSet?: boolean,
+  useUpdatedDirectoryStatuses: boolean = false
+) =>
+  listings.length > 0 &&
+  getListingCards(listings, directoryType, stackedDataFxn, filtersSet, useUpdatedDirectoryStatuses)
+
+export const fcfsSalesView = (
   listings: RailsListing[],
   directoryType: DirectoryType,
   stackedDataFxn: StackedDataFxnType,
@@ -341,18 +360,46 @@ export const additionalView = (
   )
 }
 
+const sortListingByStringDate = (
+  a: RailsListing,
+  b: RailsListing,
+  fieldName: string,
+  acscending = true
+) => {
+  const dateA = new Date(a[fieldName] as string)
+  const dateB = new Date(b[fieldName] as string)
+
+  if (!a[fieldName]) return 1
+  if (!b[fieldName]) return -1
+
+  if (acscending) {
+    return dateB < dateA ? 1 : -1
+  }
+
+  return dateB > dateA ? 1 : -1
+}
+
 // Sort listings in four buckets based on their status and filters
 export const sortListings = (
   listings: RailsListing[],
   filters: EligibilityFilters,
   setMatch: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const open = []
-  const upcoming = []
-  const results = []
-  const additional = []
+  const open: RailsListing[] = []
+  const upcoming: RailsListing[] = []
+  const results: RailsListing[] = []
+  const additional: RailsListing[] = []
+  const fcfsSalesOpen: RailsListing[] = []
+  const fcfsSalesNotYetOpen: RailsListing[] = []
   listings.forEach((listing) => {
-    if (dayjs(listing.Application_Due_Date) > dayjs()) {
+    if (isFcfsSalesListing(listing)) {
+      const listingState = getFcfsSalesListingState(listing)
+      if (listingState === ListingState.Open) {
+        fcfsSalesOpen.push(listing)
+      } else if (listingState === ListingState.NotYetOpen) {
+        fcfsSalesNotYetOpen.push(listing)
+      }
+    } else if (dayjs(listing.Application_Due_Date) > dayjs()) {
       if (!filters || listing.Does_Match) {
         setMatch(true)
         open.push(listing)
@@ -379,7 +426,34 @@ export const sortListings = (
   results.sort((a: RailsRentalListing, b: RailsRentalListing) =>
     new Date(a.Lottery_Results_Date) < new Date(b.Lottery_Results_Date) ? 1 : -1
   )
-  return { open, upcoming, results, additional }
+
+  fcfsSalesOpen.sort((a: RailsSaleListing, b: RailsSaleListing) =>
+    sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
+  )
+  fcfsSalesNotYetOpen.sort((a: RailsSaleListing, b: RailsSaleListing) =>
+    sortListingByStringDate(a, b, "Application_Start_Date_Time", true)
+  )
+
+  // uncomment to see the listings order in the console
+
+  // console.log("FCFS Open Listings")
+  // fcfsSalesOpen.map((listing) =>
+  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
+  // )
+
+  // console.log("FCFS Not Yet Open Listings")
+  // fcfsSalesNotYetOpen.map((listing) =>
+  //   console.log(`Name: ${listing.Name} ${listing.Application_Start_Date_Time}`)
+  // )
+
+  return {
+    open,
+    upcoming,
+    results,
+    additional,
+    fcfsSalesOpen,
+    fcfsSalesNotYetOpen,
+  } as ListingsGroups
 }
 
 export const matchedTextBanner = () => {
