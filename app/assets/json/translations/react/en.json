@@ -44,6 +44,7 @@
   "accountSettings.title.sentenceCase": "Account settings",
   "accountSettings.update": "We will update any applications you have not submitted yet.",
   "accountSettings.verifyEmail": "Please check your email inbox to verify this change.",
+  "alreadySubmitted.date": "Submitted: %{date}",
   "alreadySubmitted.message": "You have already submitted an application to this listing.",
   "alreadySubmitted.title": "Good news!",
   "assistance.additionalResources.nonMOHCDHousingPrograms.alameda.agency": "Alameda County - Housing and Community Development (HCD) Department",
