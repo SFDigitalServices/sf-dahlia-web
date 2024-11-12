@@ -966,11 +966,26 @@ ShortFormApplicationController = (
         # My Applications page is now in React, prevent the "Leave Site?" popup when redirecting
         $window.removeEventListener('beforeunload', ShortFormApplicationService.onExit)
         doubleSubmit = !! $scope.appIsSubmitted($scope.application)
-        return $state.go('dahlia.my-applications', {
-          skipConfirm: true,
-          alreadySubmittedId: previousApp.id,
-          doubleSubmit: doubleSubmit
-        })
+        if $window.ACCOUNT_INFORMATION_PAGES_REACT is "true"
+          currentUrl = window.location.origin
+          newUrl = "#{currentUrl}/my-applications?"
+          if previousApp.id
+            newUrl += "alreadySubmittedId=#{previousApp.id}"
+            if doubleSubmit
+              newUrl += "&"
+          if doubleSubmit
+            # As we rebuilt the My Applications page in React we were not able to figure out a way to trigger the Double Submit Modal.
+            # We are leaving the code here both to document past behavior and to protect the application in case somehow the modal is triggered
+            newUrl += "doubleSubmit=true"
+
+          window.location.href = newUrl
+          return
+        else
+          return $state.go('dahlia.my-applications', {
+            skipConfirm: true,
+            alreadySubmittedId: previousApp.id,
+            doubleSubmit: doubleSubmit
+          })
       # previous app draft
       else if $state.current.name == 'dahlia.short-form-application.welcome-back'
         $scope.replaceAppWithPreviousDraft(previousAppData)

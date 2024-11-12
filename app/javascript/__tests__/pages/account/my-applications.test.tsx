@@ -35,20 +35,58 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 })
 
 describe("<MyApplications />", () => {
+  let originalLocation
   beforeAll(() => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
   })
 
+  beforeEach(() => {
+    originalLocation = window.location
+
+    const customLocation = {
+      ...originalLocation,
+      href: "http://dahlia.com",
+      assign: jest.fn(),
+      replace: jest.fn(),
+      reload: jest.fn(),
+      toString: jest.fn(),
+    }
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: customLocation,
+    })
+
+    // Redefine the href setter to resolve relative URLs
+    Object.defineProperty(window.location, "href", {
+      configurable: true,
+      enumerable: true,
+      set: function (href: string) {
+        const base = "http://dahlia.com"
+        try {
+          const newUrl = new URL(href, base)
+          this._href = newUrl.href
+        } catch {
+          this._href = href
+        }
+      },
+      get: function () {
+        return this._href || "http://dahlia.com"
+      },
+    })
+  })
+
   describe("when the user is not signed in", () => {
     let originalUseContext
-    let originalLocation: Location
 
     beforeEach(() => {
       originalUseContext = React.useContext
-      originalLocation = window.location
-      const mockContextValue: ContextProps = {
+
+      const mockContextValue = {
         profile: undefined,
         signIn: jest.fn(),
         signOut: jest.fn(),
@@ -63,17 +101,6 @@ describe("<MyApplications />", () => {
         }
         return originalUseContext(context)
       })
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (window as any)?.location
-      ;(window as Window).location = {
-        ...originalLocation,
-        href: "http://dahlia.com",
-        assign: jest.fn(),
-        replace: jest.fn(),
-        reload: jest.fn(),
-        toString: jest.fn(),
-      }
     })
 
     afterEach(() => {
@@ -84,7 +111,7 @@ describe("<MyApplications />", () => {
     it("redirects to the sign in page", async () => {
       const { queryByText } = await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
 
-      expect(window.location.href).toBe("/sign-in")
+      expect(window.location.href).toBe("http://dahlia.com/sign-in")
       expect(queryByText("My applications")).toBeNull()
     })
   })
@@ -242,6 +269,33 @@ describe("<MyApplications />", () => {
 
         expect(screen.queryByRole("button", { name: /Delete/i })).not.toBeInTheDocument()
       })
+    })
+
+    it("renders the correct double submit modal", async () => {
+      window.location.href = "http://dahlia.com?doubleSubmit=true"
+      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      const modal = screen.getByTestId("modalMock")
+      within(modal).getByRole("link", {
+        name: /dahliahousingportal@sfgov\.org/i,
+      })
+      within(modal).getByText(
+        /an application has already been submitted to this listing using this account\./i
+      )
+    })
+
+    it("renders the correct already submitted modal", async () => {
+      ;(authenticatedGet as jest.Mock).mockResolvedValue({
+        data: { applications: [applicationWithOpenListing] },
+      })
+
+      window.location.href = "http://dahlia.com?alreadySubmittedId=a0o6s000001cn02AAA"
+      await renderAndLoadAsync(<MyApplications assetPaths={{}} />)
+      const modal = screen.getByTestId("modalMock")
+      within(modal).getByText(/submitted: jun 6, 2024/i)
+      const button = within(modal).getByRole("link", {
+        name: /view application/i,
+      })
+      expect(button).toHaveAttribute("href", "/applications/a0o6s000001cn02AAA")
     })
   })
 })
