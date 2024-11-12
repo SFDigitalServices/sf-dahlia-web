@@ -2,6 +2,7 @@ import React from "react"
 import { render, cleanup, screen, waitFor } from "@testing-library/react"
 import ForRent from "../../../../javascript/pages/listings/for-rent"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
+import { useFeatureFlag } from "../../../hooks/useFeatureFlag"
 
 const axios = require("axios")
 
@@ -14,7 +15,14 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+jest.mock("../../../hooks/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
+
 describe("For Rent", () => {
+  beforeEach(() => {
+    ;(useFeatureFlag as jest.Mock).mockReturnValue({ flagsReady: true })
+  })
   afterEach(() => {
     cleanup()
     jest.clearAllMocks()
