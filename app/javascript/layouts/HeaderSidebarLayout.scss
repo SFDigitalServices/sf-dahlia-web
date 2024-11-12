@@ -1,7 +1,8 @@
 .page-header {
     background-size: cover;
     background-position: center;
-    padding: var(--bloom-s6);
+    padding: var(--bloom-s6) 0;
+
 
     @media (min-width: $screen-md) {
         padding: var(--bloom-s12) 0;
@@ -10,9 +11,10 @@
     .page-header__group {
         width: full;
 
-        padding-left: var(--bloom-s9);
+
         @media (min-width: $screen-md) {
             text-align: start;
+            padding-left: 0;
         }
 
 

@@ -97,6 +97,7 @@ export const SFGOV_LINKS = [
   "https://sf.gov/after-rental-housing-lottery",
   "https://www.sf.gov/step-by-step/buy-home-without-entering-lottery",
   "https://www.sf.gov/node/14246",
+  "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
   // Salesforce links that redirect to sf.gov pages
   "http://sfmohcd.org/certificate-preference",
   "http://sfmohcd.org/housing-preference-programs",
