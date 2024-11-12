@@ -383,8 +383,7 @@ const sortListingByStringDate = (
 export const sortListings = (
   listings: RailsListing[],
   filters: EligibilityFilters,
-  setMatch: React.Dispatch<React.SetStateAction<boolean>>,
-  isSalesFcfsEnabled = false
+  setMatch: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const open: RailsListing[] = []
   const upcoming: RailsListing[] = []
@@ -393,7 +392,7 @@ export const sortListings = (
   const fcfsSalesOpen: RailsListing[] = []
   const fcfsSalesNotYetOpen: RailsListing[] = []
   listings.forEach((listing) => {
-    if (isSalesFcfsEnabled && isFcfsSalesListing(listing)) {
+    if (isFcfsSalesListing(listing)) {
       const listingState = getFcfsSalesListingState(listing)
       if (listingState === ListingState.Open) {
         fcfsSalesOpen.push(listing)

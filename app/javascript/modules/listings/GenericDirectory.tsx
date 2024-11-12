@@ -52,7 +52,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
       if (flagsReady) {
         setLoading(true)
         setRawListings(listings)
-        const sortedListings = sortListings(listings, filters, setMatch, isSalesFcfsEnabled)
+        const sortedListings = sortListings(listings, filters, setMatch)
         setListings(sortedListings)
         setLoading(false)
       }
