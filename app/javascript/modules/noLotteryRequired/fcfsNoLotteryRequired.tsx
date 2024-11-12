@@ -20,7 +20,7 @@ export const fcfsNoLotteryRequired = () => {
         {t("listings.fcfs.bmrSales.noLotteryRequired.section")}
       </CardSection>
       <CardFooter className="ml-6 mb-6 underline fcfs-no-lottery-section">
-        <Link href={url} hideExternalLinkIcon={true}>
+        <Link newWindowTarget href={url} hideExternalLinkIcon={true}>
           {t("listings.fcfs.bmrSales.noLotteryRequired.footer")}
         </Link>
       </CardFooter>
