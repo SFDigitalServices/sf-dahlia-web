@@ -21,6 +21,7 @@ import {
 } from "../../modules/listings/DirectoryHelpers"
 import BuyHeader from "../../modules/listings/BuyHeader"
 import { defaultIfNotTranslated } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 const getForSaleSummaryTable = (listing: RailsSaleListing) => {
   const summary = listing.unitSummaries.general ?? listing.unitSummaries.reserved
@@ -86,18 +87,29 @@ const getBuyHeader = (
   )
 }
 
-const getFindMoreActionBlock = () => {
+const getFindMoreActionBlock = (isSalesFcfsEnabled: boolean) => {
   return (
     <>
-      <div className="bg-primary-darker sale-directory">
+      <div className={`bg-primary-darker ${isSalesFcfsEnabled ? "sale-directory" : ""}`}>
         <div className="max-w-5xl mx-auto p-2 md:p-4">
           <ActionBlock
             header={<Heading priority={2}>{t("saleDirectory.callout.title")}</Heading>}
             background="primary-darker"
             layout={ActionBlockLayout.inline}
             actions={[
+              !isSalesFcfsEnabled && (
+                <Link
+                  className="button"
+                  key="action-1"
+                  external
+                  href={"https://sfmohcd.org/current-bmr-homeownership-listings"}
+                >
+                  {t("saleDirectory.callout.firstComeFirstServed")}
+                </Link>
+              ),
               <Link
-                className="button ml-8"
+                className={`button ${isSalesFcfsEnabled ? "ml-8" : ""}`}
+                key={isSalesFcfsEnabled ? "action-1" : "action-2"}
                 external
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
@@ -110,7 +122,10 @@ const getFindMoreActionBlock = () => {
     </>
   )
 }
+
 const SaleDirectory = () => {
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
+
   const eligibilityFilters: EligibilityFilters = JSON.parse(
     localStorage.getItem("ngStorage-eligibility_filters")
   )
@@ -124,6 +139,7 @@ const SaleDirectory = () => {
       eligibilityFilters?.income_total
     )
   }
+
   return (
     <Layout title={t("pageTitle.saleListings")}>
       <GenericDirectory
@@ -132,7 +148,7 @@ const SaleDirectory = () => {
         filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
         getSummaryTable={getForSaleSummaryTable}
         getPageHeader={getBuyHeader}
-        findMoreActionBlock={getFindMoreActionBlock}
+        findMoreActionBlock={getFindMoreActionBlock(isSalesFcfsEnabled)}
       />
     </Layout>
   )
