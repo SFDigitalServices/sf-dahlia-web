@@ -3,7 +3,13 @@ import { LinkButton, ListingDetailItem, SidebarBlock, t } from "@bloom-housing/u
 import { RailsListing } from "../listings/SharedHelpers"
 import { ListingDetailsInfoSession } from "./ListingDetailsInfoSession"
 import { ListingDetailsProcess } from "./ListingDetailsProcess"
-import { isFcfsSalesListing, isOpen, isRental, isSale } from "../../util/listingUtil"
+import {
+  getFcfsSalesListingState,
+  isFcfsSalesListing,
+  isOpen,
+  isRental,
+  isSale,
+} from "../../util/listingUtil"
 import { ListingDetailsApply } from "./ListingDetailsApply"
 import { ListingDetailsApplicationDate } from "./ListingDetailsApplicationDate"
 import { ListingDetailsLotteryResults } from "../listingDetailsLottery/ListingDetailsLotteryResults"
@@ -12,9 +18,10 @@ import { ListingDetailsWaitlist } from "./ListingDetailsWaitlist"
 import { ListingDetailsOpenHouses } from "./ListingDetailsOpenHouses"
 import { ListingDetailsSeeTheUnit } from "./ListingDetailsSeeTheUnit"
 import { useFeatureFlag } from "../../hooks/useFeatureFlag"
-import { localizedFormat } from "../../util/languageUtil"
-import { getHousingCounselorsPath } from "../../util/routeUtil"
+import { getSfGovUrl, localizedFormat } from "../../util/languageUtil"
 import { fcfsNoLotteryRequired } from "../noLotteryRequired/fcfsNoLotteryRequired"
+import { ListingState } from "../listings/ListingState"
+import { getHousingCounselorsPath } from "../../util/routeUtil"
 
 export interface ListingDetailsSidebarProps {
   listing: RailsListing
@@ -22,7 +29,9 @@ export interface ListingDetailsSidebarProps {
 }
 
 export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebarProps) => {
-  const isApplicationOpen = isOpen(listing)
+  const isApplicationOpen = isFcfsSalesListing(listing)
+    ? getFcfsSalesListingState(listing) !== ListingState.Closed
+    : isOpen(listing)
   const isSaleListing = isSale(listing)
   const isListingRental = isRental(listing)
 
@@ -44,14 +53,15 @@ export const ListingDetailsAside = ({ listing, imageSrc }: ListingDetailsSidebar
         newTab={true}
         href={
           !isListingRental
-            ? "https://www.homeownershipsf.org/buyerapplications/"
+            ? getSfGovUrl(
+                "https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies",
+                7209
+              )
             : getHousingCounselorsPath()
         }
         className={"w-full"}
       >
-        {isListingRental
-          ? t("housingCounselor.findAHousingCounselor")
-          : t("listings.apply.visitHomeownershipSf")}
+        {t("housingCounselor.findAHousingCounselor")}
       </LinkButton>
     </SidebarBlock>
   )
