@@ -586,7 +586,7 @@
   "howToApplyPage.beforeYouStartSection.title": "Bago ka magsimula",
   "howToApplyPage.howLongItTakesSection.p1": "Depende ito sa kung gaano kadali para sa iyo na kolektahin ang lahat ng iyong impormasyon at mga dokumento. Maaaring gumugol ito ng ilang oras, o maaaring kailanganin mong gawin ito sa loob ng ilang araw. Kung nag-apply ka na dati, maaaring mas maiksing panahon ang gugugulin mo.",
   "howToApplyPage.howLongItTakesSection.p2": "30 minuto o mas kaunti",
-  "howToApplyPage.howLongItTakesSection.p3": "Kung nakahanda na ang iyong aplikasyon at mga dokumento, <a className='underline' href='%{url}' target='_blank'>ipasa mo na ang iyong aplikasyon ngayon.</a>",
+  "howToApplyPage.howLongItTakesSection.p3": "Kung nakahanda na ang iyong aplikasyon at mga dokumento, <a className='underline' href='%{url}'>ipasa mo na ang iyong aplikasyon ngayon.</a>",
   "howToApplyPage.howLongItTakesSection.subtitle1": "Paghahanda sa iyong aplikasyon",
   "howToApplyPage.howLongItTakesSection.subtitle2": "Pagsusumite ng iyong aplikasyon",
   "howToApplyPage.howLongItTakesSection.subtitle3": "Handa nang isumite?",
