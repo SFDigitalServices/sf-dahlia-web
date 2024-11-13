@@ -143,6 +143,7 @@ describe CacheService do
       # mock cached listing
       listing['Listing_Other_Notes'] = 'Test Notes'
       listing['Realtor_Commission_Info'] = 'Test Commission Info'
+      listing['Lottery_Status'] = 'Lottery Complete'
 
       allow(Force::ListingService).to receive(:listing)
         .and_return(:listing)

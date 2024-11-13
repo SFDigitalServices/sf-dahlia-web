@@ -106,6 +106,8 @@ class CacheService
   # This is a workaround to address that, ahead of a future project
   #   to better integrate human and machine translations
   def translate_lottery_bucket_preference_names(listing, strings_to_translate)
+    return strings_to_translate unless listing['Lottery_Status'] == 'Lottery Complete'
+
     lottery_buckets = Force::ListingService.lottery_buckets(listing['listingID'])
     return strings_to_translate unless lottery_buckets.try(:[], 'lotteryBuckets')
 
