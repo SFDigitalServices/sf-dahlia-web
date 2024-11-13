@@ -58,7 +58,6 @@ class CacheService
     ServiceHelper.listing_field_names.each do |field|
       strings_to_translate[field] = listing[field].present? ? listing[field] : ''
     end
-
     strings_to_translate = process_nested_translations(listing, strings_to_translate,
                                                        'Open_Houses',
                                                        'Venue')
@@ -71,6 +70,10 @@ class CacheService
     strings_to_translate = process_nested_translations(listing, strings_to_translate,
                                                        'Listing_Online_Details',
                                                        'Listing_Online_Detail_Name')
+    strings_to_translate = translate_lottery_bucket_preference_names(
+      listing,
+      strings_to_translate,
+    )
 
     listing_preferences = Force::ListingService.preferences(listing['listingID'])
     listing_preferences&.each do |preference|
@@ -85,6 +88,22 @@ class CacheService
       unless object[value].nil?
         strings_to_translate["#{object['Id']}.#{object_key}.#{value}"] ||= object[value]
       end
+    end
+    strings_to_translate
+  end
+
+  # Lottery bucket preference names *may* be missing
+  #   human translations, and *may* need to be machine translated
+  # This is a workaround to address that, ahead of a future project
+  #   to better integrate human and machine translations
+  def translate_lottery_bucket_preference_names(listing, strings_to_translate)
+    lottery_buckets = Force::ListingService.lottery_buckets(listing['listingID'])
+    return strings_to_translate unless lottery_buckets.try(:[], 'lotteryBuckets')
+
+    lottery_buckets['lotteryBuckets'].each do |bucket|
+      pref_name = bucket['preferenceName']
+      pref_name_translation_key = "listings.lotteryPreference.#{pref_name}.title"
+      strings_to_translate[pref_name_translation_key] ||= pref_name
     end
     strings_to_translate
   end
