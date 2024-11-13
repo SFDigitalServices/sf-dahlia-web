@@ -55,11 +55,13 @@ jest.mock("react-helmet-async", () => {
   }
 })
 
+// eslint-disable-next-line jest/require-top-level-describe
 beforeEach(() => {
   jest.resetAllMocks()
 })
 
 // fail test if api call has not been mocked up
+// eslint-disable-next-line jest/require-top-level-describe
 afterEach(() => {
   cleanup()
   expect(spies.delete).not.toHaveBeenCalled()

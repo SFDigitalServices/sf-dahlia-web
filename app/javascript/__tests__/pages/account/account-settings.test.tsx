@@ -419,7 +419,7 @@ describe("<AccountSettingsPage />", () => {
     })
 
     describe("renders the correct errors", () => {
-      test("name Errors", async () => {
+      it("name Errors", async () => {
         ;(authenticatedPut as jest.Mock).mockRejectedValue({
           response: {
             data: {
@@ -479,7 +479,7 @@ describe("<AccountSettingsPage />", () => {
         ).not.toBeNull()
       })
 
-      test("date of birth errors", async () => {
+      it("date of birth errors", async () => {
         const button = getAllByText("Update")
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
@@ -591,7 +591,7 @@ describe("<AccountSettingsPage />", () => {
         ).not.toBeNull()
       })
 
-      test("email Errors", async () => {
+      it("email Errors", async () => {
         const button = getAllByText("Update")
         const group = screen.getByRole("group", {
           name: /email/i,
@@ -649,7 +649,7 @@ describe("<AccountSettingsPage />", () => {
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
-      test("password Errors", async () => {
+      it("password Errors", async () => {
         const button = getAllByText("Update")
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)

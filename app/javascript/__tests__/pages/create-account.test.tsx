@@ -4,7 +4,7 @@ import CreateAccountPage from "../../pages/account/create-account"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { screen, within, cleanup } from "@testing-library/react"
 import { post } from "../../api/apiService"
-import userEvent from "@testing-library/user-event"
+import { userEvent } from "@testing-library/user-event"
 
 jest.mock("../../api/apiService", () => ({
   post: jest.fn(),
