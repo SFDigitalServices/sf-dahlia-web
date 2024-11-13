@@ -28,7 +28,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
       preferenceShortCode: "T1-COP",
       preferenceResults: [],
       preferenceOrder: 2,
-      preferenceName: "Tier 1 Certificate of Preference (COP)",
+      preferenceName: "Tier 1 Certificate of Preference",
     },
     {
       unitsAvailable: null,
@@ -51,7 +51,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
         },
       ],
       preferenceOrder: 4,
-      preferenceName: "Tier 1 Displaced Tenant Housing Preference (DTHP)",
+      preferenceName: "Tier 1 Displaced Tenant Housing Preference",
     },
     {
       unitsAvailable: null,
@@ -81,7 +81,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
         },
       ],
       preferenceOrder: 6,
-      preferenceName: "Tier 1 Neighborhood Resident Housing Preference (NRHP)",
+      preferenceName: "Tier 1 Neighborhood Resident Housing Preference",
     },
     {
       unitsAvailable: null,
@@ -134,7 +134,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
         },
       ],
       preferenceOrder: 10,
-      preferenceName: "Tier 2 Certificate of Preference (COP)",
+      preferenceName: "Tier 2 Certificate of Preference",
     },
     {
       unitsAvailable: null,
@@ -164,7 +164,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
         },
       ],
       preferenceOrder: 12,
-      preferenceName: "Tier 2 Displaced Tenant Housing Preference (DTHP)",
+      preferenceName: "Tier 2 Displaced Tenant Housing Preference",
     },
     {
       unitsAvailable: null,
@@ -187,7 +187,7 @@ export const lotteryResultRentalEducator: RailsLotteryResult = {
         },
       ],
       preferenceOrder: 14,
-      preferenceName: "Tier 2 Neighborhood Resident Housing Preference (NRHP)",
+      preferenceName: "Tier 2 Neighborhood Resident Housing Preference",
     },
     {
       unitsAvailable: null,
