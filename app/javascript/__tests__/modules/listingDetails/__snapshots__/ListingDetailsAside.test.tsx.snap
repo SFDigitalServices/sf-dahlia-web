@@ -431,10 +431,10 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
             >
               <a
                 class="button w-full transition"
-                href="https://www.homeownershipsf.org/buyerapplications/"
+                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
                 target="_blank"
               >
-                Visit HomeownershipSF
+                Find a Housing Counselor
               </a>
             </div>
           </section>
@@ -1154,10 +1154,10 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
             >
               <a
                 class="button w-full transition"
-                href="https://www.homeownershipsf.org/buyerapplications/"
+                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
                 target="_blank"
               >
-                Visit HomeownershipSF
+                Find a Housing Counselor
               </a>
             </div>
           </section>
