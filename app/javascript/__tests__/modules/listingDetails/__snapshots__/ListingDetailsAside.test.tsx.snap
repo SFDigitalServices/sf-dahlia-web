@@ -100,8 +100,14 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               <a
                 class="seeds-link"
                 href="https://www.sf.gov/step-by-step/buy-home-without-entering-lottery"
+                target="_blank"
               >
                 Learn more about how it works
+                <span
+                  class="seeds-screen-reader-only"
+                >
+                  (opens in a new tab)
+                </span>
               </a>
             </footer>
           </article>
