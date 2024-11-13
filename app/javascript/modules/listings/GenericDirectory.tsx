@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import React, { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
 import { LoadingOverlay, StackedTableRow } from "@bloom-housing/ui-components"
 
 import type RailsRentalListing from "../../api/types/rails/listings/RailsRentalListing"
@@ -28,7 +28,7 @@ interface RentalDirectoryProps {
     setFilters: Dispatch<SetStateAction<EligibilityFilters>>,
     match: boolean
   ) => JSX.Element
-  findMoreActionBlock: () => JSX.Element
+  findMoreActionBlock: ReactNode
 }
 
 export const GenericDirectory = (props: RentalDirectoryProps) => {
@@ -89,7 +89,7 @@ export const GenericDirectory = (props: RentalDirectoryProps) => {
                   hasFiltersSet,
                   isSalesFcfsEnabled
                 )}
-              {props.findMoreActionBlock()}
+              {props.findMoreActionBlock}
               {filters &&
                 additionalView(
                   listings.additional,
