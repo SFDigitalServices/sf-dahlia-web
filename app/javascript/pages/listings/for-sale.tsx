@@ -111,7 +111,6 @@ const getFindMoreActionBlock = (isSalesFcfsEnabled: boolean) => {
                 className={`button ${isSalesFcfsEnabled ? "ml-8" : ""}`}
                 key={isSalesFcfsEnabled ? "action-1" : "action-2"}
                 external
-                key={1}
                 href={"https://sfmohcd.org/current-listings-city-second-program"}
               >
                 {t("saleDirectory.callout.citySecondLoan")}
