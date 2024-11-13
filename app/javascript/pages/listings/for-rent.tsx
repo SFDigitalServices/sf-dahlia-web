@@ -136,7 +136,7 @@ const RentDirectory = () => {
         filters={hasSetEligibilityFilters() ? eligibilityFilters : null}
         getSummaryTable={getForRentSummaryTable}
         getPageHeader={getRentalHeader}
-        findMoreActionBlock={getFindMoreActionBlock}
+        findMoreActionBlock={getFindMoreActionBlock()}
       />
     </Layout>
   )

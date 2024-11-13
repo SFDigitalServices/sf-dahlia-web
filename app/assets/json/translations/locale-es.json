@@ -1268,11 +1268,18 @@
                 "title": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
             },
             "rtr_huntersview": {
-                "address": "Dirección en Hunters View",
-                "address_desc": "Su dirección actual o anterior de la vivienda pública de Hunters View",
-                "desc": "Para hogares en donde por lo menos una persona es o era residente de la vivienda pública de Hunters View (anteriormente conocida como West Point). Por favor tome nota de que estas unidades no son subsidiadas, la renta no cambiará si su su ingreso cambia. ",
-                "proof_desc": "Necesitará uno de los siguientes documentos que incluyan su dirección de la vivienda pública de Hunters View.",
-                "title": "Derecho a regresar - Hunters View (West Point)"
+                "address": "Dirección de Hunters View",
+                "address_desc": "Su dirección actual o anterior en la vivienda pública de Hunters View",
+                "desc": "Para hogares en los que al menos una persona es residente anterior o actual de la vivienda pública Hunters View (anteriormente conocida como West Point). Tenga en cuenta que estas unidades no reciben subvención; el alquiler no se modificará si cambian sus ingresos. ",
+                "proof_desc": "Necesitará uno de los siguientes documentos que muestren su dirección en la vivienda pública de Hunters View.",
+                "title": "Derecho de devolución - Hunters View (West Point)"
+            },
+            "rtr_potrero": {
+                "address": "Dirección de Potrero Terrace and Annex",
+                "address_desc": "Su dirección actual o anterior en la vivienda pública Potrero Terrace and Annex",
+                "desc": "Para los hogares en los que al menos una persona sea residente anterior o actual de la vivienda pública Potrero Terrace and Annex. Tenga en cuenta que estas unidades no reciben subvención; el alquiler no se modificará si cambian sus ingresos. ",
+                "proof_desc": "Necesitará alguno de los siguientes documentos que muestren su dirección en la vivienda pública Potrero Terrace and Annex.",
+                "title": "Derecho de devolución - Vivienda pública Potrero Terrace and Annex"
             },
             "rtr_sunnydale": {
                 "address": "Dirección en Sunnydale",
