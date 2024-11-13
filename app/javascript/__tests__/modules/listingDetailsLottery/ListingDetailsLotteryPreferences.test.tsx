@@ -7,7 +7,10 @@ import { lotteryResultSaleTwo } from "../../data/RailsLotteryResult/lottery-resu
 describe("ListingDetailsLotteryPreferences", () => {
   it("displays 3 default preferences - COP, DTHP, L/W", () => {
     const { asFragment } = render(
-      <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultRentalThree} />
+      <ListingDetailsLotteryPreferences
+        lotteryBucketsDetails={lotteryResultRentalThree}
+        machineTranslations={{}}
+      />
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -15,7 +18,10 @@ describe("ListingDetailsLotteryPreferences", () => {
 
   it("displays 2 preferences - NRHP, L/W", () => {
     const { asFragment } = render(
-      <ListingDetailsLotteryPreferences lotteryBucketsDetails={lotteryResultSaleTwo} />
+      <ListingDetailsLotteryPreferences
+        lotteryBucketsDetails={lotteryResultSaleTwo}
+        machineTranslations={{}}
+      />
     )
 
     expect(asFragment()).toMatchSnapshot()
