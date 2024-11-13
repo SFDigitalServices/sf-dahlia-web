@@ -8,6 +8,57 @@ exports[`Listing Interest Page renders listing interest page with error response
     <div
       class="site-content"
     >
+      <title
+        class="notranslate"
+      >
+        DAHLIA San Francisco Housing Portal
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:title"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:description"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        name="description"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
+      />
       <header
         class="site-header"
       >
@@ -337,6 +388,57 @@ exports[`Listing Interest Page renders listing interest page with expired respon
     <div
       class="site-content"
     >
+      <title
+        class="notranslate"
+      >
+        DAHLIA San Francisco Housing Portal
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:title"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:description"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        name="description"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
+      />
       <header
         class="site-header"
       >
@@ -736,6 +838,57 @@ exports[`Listing Interest Page renders listing interest page with no response 1`
     <div
       class="site-content"
     >
+      <title
+        class="notranslate"
+      >
+        DAHLIA San Francisco Housing Portal
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:title"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:description"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        name="description"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
+      />
       <header
         class="site-header"
       >
@@ -1097,6 +1250,57 @@ exports[`Listing Interest Page renders listing interest page with yes response 1
     <div
       class="site-content"
     >
+      <title
+        class="notranslate"
+      >
+        DAHLIA San Francisco Housing Portal
+      </title>
+      <meta
+        charset="utf-8"
+      />
+      <meta
+        content="IE=edge"
+        http-equiv="X-UA-Compatible"
+      />
+      <meta
+        content="width=device-width, initial-scale=1"
+        name="viewport"
+      />
+      <meta
+        content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg"
+        name="google-site-verification"
+      />
+      <meta
+        content="http://localhost/"
+        property="og:url"
+      />
+      <meta
+        content="website"
+        property="og:type"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:title"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:description"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        name="description"
+      />
+      <meta
+        property="og:image"
+      />
+      <meta
+        content="DAHLIA San Francisco Housing Portal"
+        property="og:site_name"
+      />
+      <meta
+        content="summary_large_image"
+        name="twitter:card"
+      />
       <header
         class="site-header"
       >

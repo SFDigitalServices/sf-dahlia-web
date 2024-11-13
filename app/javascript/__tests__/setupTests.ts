@@ -2,6 +2,7 @@
 import "@testing-library/jest-dom"
 import axios from "axios"
 import { cleanup } from "@testing-library/react"
+import failOnConsole from "jest-fail-on-console"
 
 import { LanguagePrefix, loadTranslations } from "../util/languageUtil"
 
@@ -14,6 +15,21 @@ const spies = {
   put: jest.spyOn(axios, "put"),
   create: jest.spyOn(axios, "create"),
 }
+
+failOnConsole({
+  shouldFailOnLog: true,
+  shouldFailOnInfo: true,
+  shouldFailOnWarn: true,
+  shouldFailOnError: true,
+  shouldFailOnAssert: true,
+})
+// If you want to permit a console message, you can use the following:
+// ```
+// const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+// Run code that triggers a warning
+// spy.mockRestore(); // Restore original behavior after test
+// ```
+// Make sure that you absorb the console output so that it doesn't clutter the test output.
 
 // The current nanoid implementation is not compatible with jest. This is a temporary workaround until the issue is resolved
 // https://github.com/ai/nanoid/issues/363
@@ -29,6 +45,13 @@ jest.mock("@unleash/proxy-client-react", () => {
     useFlag: () => true,
     useFlagsStatus: () => ({ flagsError: false }),
     FlagProvider: ({ children }) => children,
+  }
+})
+
+jest.mock("react-helmet-async", () => {
+  return {
+    HelmetProvider: ({ children }: { children: React.ReactNode }) => children, // Mock HelmetProvider
+    Helmet: ({ children }: { children: React.ReactNode }) => children, // Mock Helmet component
   }
 })
 

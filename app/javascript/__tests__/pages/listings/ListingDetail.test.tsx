@@ -6,7 +6,7 @@ import { openRentalListing } from "../../data/RailsRentalListing/listing-rental-
 import { habitatListing } from "../../data/RailsSaleListing/listing-sale-habitat"
 import { sroRentalListing } from "../../data/RailsRentalListing/listing-rental-sro"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
-import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
+import { resetAccordionUuid } from "@bloom-housing/ui-components"
 
 const axios = require("axios")
 jest.useRealTimers()
@@ -40,21 +40,23 @@ describe("Listing Detail", () => {
         find: jest.fn(),
       }
     })
+
+    resetAccordionUuid()
   })
 
   it("renders an open rental listing", async () => {
     axios.get.mockResolvedValue({
       data: { listing: openRentalListing, units: openRentalListing.Units, ami: [] },
     })
-    const { findByText, asFragment } = render(<ListingDetail assetPaths="/" />)
+    const { findAllByText, asFragment } = render(<ListingDetail assetPaths="/" />)
 
-    expect(await findByText(openRentalListing.Name)).toBeDefined()
+    expect(await findAllByText(openRentalListing.Name)).toBeDefined()
     expect(asFragment()).toMatchSnapshot()
   })
 
   it("renders a habitat listing", async () => {
     axios.get.mockResolvedValue({
-      data: { listing: habitatListing, units: openSaleListing.Units, ami: [] },
+      data: { listing: habitatListing, units: habitatListing.Units, ami: [] },
     })
     const { findAllByText, asFragment } = render(<ListingDetail assetPaths="/" />)
 
@@ -76,7 +78,7 @@ describe("Listing Detail", () => {
     process.env.GOOGLE_TAG_MANAGER_KEY = "testkey"
     const initializeTagManager = jest.spyOn(TagManager, "initialize")
     axios.get.mockResolvedValue({
-      data: { listing: habitatListing, units: openSaleListing.Units, ami: [] },
+      data: { listing: habitatListing, units: habitatListing.Units, ami: [] },
     })
     const { asFragment } = await renderAndLoadAsync(<ListingDetail assetPaths="/" />)
 
