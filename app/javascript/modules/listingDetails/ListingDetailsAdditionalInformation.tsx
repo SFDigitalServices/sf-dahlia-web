@@ -2,9 +2,10 @@ import React from "react"
 import { LinkButton, ListingDetailItem, t } from "@bloom-housing/ui-components"
 import { RailsListing } from "../listings/SharedHelpers"
 import { TextTruncate } from "../../components/TextTruncate"
-import { isHabitatListing, isSale } from "../../util/listingUtil"
+import { isFcfsSalesListing, isHabitatListing, isSale } from "../../util/listingUtil"
 import { stripMostTags } from "../../util/filterUtil"
 import { getTranslatedString } from "../../util/languageUtil"
+import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 
 export interface ListingDetailsAdditionalInformationProps {
   listing: RailsListing
@@ -22,6 +23,8 @@ export const ListingDetailsAdditionalInformation = ({
         })
       : `$${listing.Realtor_Commission_Amount.toLocaleString()}`
   }
+
+  const { unleashFlag: isSalesFcfsEnabled } = useFeatureFlag("FCFS", false)
 
   return (
     <ListingDetailItem
@@ -47,35 +50,37 @@ export const ListingDetailsAdditionalInformation = ({
             />
           </div>
         )}
-        {(!!listing.Required_Documents || isSale(listing)) && (
-          <div className="info-card bg-gray-100 border-0">
-            <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
-            <div className="text-xs">
-              <TextTruncate
-                className="primary-lighter-markup-link translate"
-                buttonClassName="text-blue-700"
-                text={stripMostTags(
-                  getTranslatedString(
-                    listing.Required_Documents,
-                    "Required_Documents__c",
-                    listing.translations
-                  )
-                )}
-              />
-            </div>
-            {isSale(listing) && !isHabitatListing(listing) && (
-              <div className="text-xs mt-4">
+        {isSalesFcfsEnabled &&
+          !isFcfsSalesListing(listing) &&
+          (!!listing.Required_Documents || isSale(listing)) && (
+            <div className="info-card bg-gray-100 border-0">
+              <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
+              <div className="text-xs">
                 <TextTruncate
                   className="primary-lighter-markup-link translate"
                   buttonClassName="text-blue-700"
-                  text={t("listings.requiredDocumentsAfterApplying", {
-                    url: "https://sfmohcd.org/after-homebuyer-lottery",
-                  })}
+                  text={stripMostTags(
+                    getTranslatedString(
+                      listing.Required_Documents,
+                      "Required_Documents__c",
+                      listing.translations
+                    )
+                  )}
                 />
               </div>
-            )}
-          </div>
-        )}
+              {isSale(listing) && !isHabitatListing(listing) && (
+                <div className="text-xs mt-4">
+                  <TextTruncate
+                    className="primary-lighter-markup-link translate"
+                    buttonClassName="text-blue-700"
+                    text={t("listings.requiredDocumentsAfterApplying", {
+                      url: "https://sfmohcd.org/after-homebuyer-lottery",
+                    })}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         {listing.Legal_Disclaimers && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
