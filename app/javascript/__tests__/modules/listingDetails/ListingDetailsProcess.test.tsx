@@ -17,7 +17,7 @@ describe("ListingDetailsProcess", () => {
         dispatchEvent: jest.fn(),
       }
     })
-    
+
     const { asFragment } = render(
       <ListingDetailsProcess listing={lotteryCompleteRentalListing} isApplicationOpen={true} />
     )
