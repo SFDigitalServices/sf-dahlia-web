@@ -49,6 +49,7 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { fcfsNoLotteryRequired } from "../../modules/noLotteryRequired/fcfsNoLotteryRequired"
+import { NeedHelpBlock } from "../../modules/listingDetailsAside/ListingDetailsNeedHelp"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
@@ -174,6 +175,13 @@ const ListingDetail = () => {
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
+            {isSalesFcfsEnabled && (
+              <Mobile>
+                <div className="border-b border-t m-0">
+                  <NeedHelpBlock listing={listing} />
+                </div>
+              </Mobile>
+            )}
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <MobileListingDetailsLottery

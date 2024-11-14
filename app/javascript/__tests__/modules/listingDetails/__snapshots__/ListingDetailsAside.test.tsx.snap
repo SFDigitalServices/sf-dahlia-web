@@ -418,26 +418,35 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
               </div>
             </div>
           </section>
-          <section
-            class="aside-block "
+          <div
+            class="md:px-0 px-2"
           >
-            <h4
-              class="text__underline-weighted"
+            <section
+              class="aside-block listing-details-need-help"
             >
-              Need Help?
-            </h4>
-            <div
-              class="text-sm text-gray-750"
-            >
-              <a
-                class="button w-full transition"
-                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
-                target="_blank"
+              <h4
+                class="text__underline-weighted"
               >
-                Find a Housing Counselor
-              </a>
-            </div>
-          </section>
+                Need Help?
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <div
+                  class="mb-4"
+                >
+                  Housing counselors can help with your application. Support is available in many languages.
+                </div>
+                <a
+                  class="button w-full transition"
+                  href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
+                  target="_blank"
+                >
+                  Find a Housing Counselor
+                </a>
+              </div>
+            </section>
+          </div>
           <section
             class="aside-block "
           >
@@ -1141,26 +1150,35 @@ exports[`ListingDetailsAside renders ListingDetailsAside component sales 1`] = `
               </div>
             </div>
           </section>
-          <section
-            class="aside-block "
+          <div
+            class="md:px-0 px-2"
           >
-            <h4
-              class="text__underline-weighted"
+            <section
+              class="aside-block listing-details-need-help"
             >
-              Need Help?
-            </h4>
-            <div
-              class="text-sm text-gray-750"
-            >
-              <a
-                class="button w-full transition"
-                href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
-                target="_blank"
+              <h4
+                class="text__underline-weighted"
               >
-                Find a Housing Counselor
-              </a>
-            </div>
-          </section>
+                Need Help?
+              </h4>
+              <div
+                class="text-sm text-gray-750"
+              >
+                <div
+                  class="mb-4"
+                >
+                  Housing counselors can help with your application. Support is available in many languages.
+                </div>
+                <a
+                  class="button w-full transition"
+                  href="https://www.sf.gov/resource/2022/homebuyer-program-counseling-agencies"
+                  target="_blank"
+                >
+                  Find a Housing Counselor
+                </a>
+              </div>
+            </section>
+          </div>
           <section
             class="aside-block "
           >
