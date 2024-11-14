@@ -1268,11 +1268,18 @@
                 "title": "Preperensiya para sa Residente ng Alice Griffith Housing Development. "
             },
             "rtr_huntersview": {
-                "address": "Address sa Hunters View",
-                "address_desc": "Ang iyong kasalukuyan o dating address sa pampublikong pabahay ng Hunters View",
-                "desc": "Para sa mga kabahayan kung saan may kahit isang tao na dati o kasalukuyang residente ng pampublikong pabahay ng Hunters View (dating kilala bilang West Point). Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
-                "proof_desc": "Kakailanganin mo ng isa sa mga sumusunod na dokumentong nagpapakita ng iyong address sa pampublikong pabahay ng Hunters View.",
+                "address": "Address ng Hunters View",
+                "address_desc": "Ang iyong kasalukuyan o dating address sa Hunters View pampublikong pabahay",
+                "desc": "Para sa mga sambahayan na may kahit isang tao na dati o kasalukuyang residente sa Hunters View na pampublikong pabahay (dating kilala bilang West Point). Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
+                "proof_desc": "Kakailanganin mo ang isa sa mga sumusunod na dokumento na nagpapakita ng iyong address sa Hunters View pampublikong pabahay.",
                 "title": "Karapatang Bumalik - Hunters View (West Point)"
+            },
+            "rtr_potrero": {
+                "address": "Address ng Potrero Terrace at Annex",
+                "address_desc": "Ang iyong kasalukuyan o dating address sa Potrero Terrace at Annex pampublikong pabahay",
+                "desc": "Para sa mga sambahayan kung saan kahit isang tao ay dating o kasalukuyang residente ng Potrero Terrace at Annex pampublikong pabahay. Pakitandaang hindi naka-subsidize ang mga yunit na ito, hindi magbabago ang renta kung magbabago ang iyong kita. ",
+                "proof_desc": "Kakailanganin mo ang isa sa mga sumusunod na dokumento na nagpapakita ng iyong address sa Potrero Terrace at Annex pampublikong pabahay.",
+                "title": "Karapatang Ibalik - Potrero Terrace at Annex na pampublikong pabahay"
             },
             "rtr_sunnydale": {
                 "address": "Address sa Sunnydale",

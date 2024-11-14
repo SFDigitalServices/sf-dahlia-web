@@ -28,3 +28,19 @@ export const getErrorMessage = (
     return t(error.default)
   } else return undefined
 }
+
+export const extractModalParamsFromUrl = (
+  url: string
+): {
+  alreadySubmittedIdFromURL: string | null
+  doubleSubmitFromURL: boolean
+} => {
+  const parsedUrl = new URL(url)
+  const alreadySubmittedIdFromURL = parsedUrl.searchParams.get("alreadySubmittedId")
+  const doubleSubmitFromURL = parsedUrl.searchParams.get("doubleSubmit") === "true"
+
+  return {
+    alreadySubmittedIdFromURL,
+    doubleSubmitFromURL,
+  }
+}

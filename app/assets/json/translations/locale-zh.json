@@ -1269,11 +1269,18 @@
                 "title": "Alice Griffith 住宅區居民優先權利"
             },
             "rtr_huntersview": {
-                "address": "Hunters View 住址",
-                "address_desc": "您目前或從前在Hunters View公共住宅的住址。",
-                "desc": "適用於家庭中至少有一位是曾經或現在居住在Hunters View公共住宅 (以前稱為 West Point) 的民眾。請注意，這些單位沒有提供補助。房租不會因您的收入改變而調整。",
-                "proof_desc": "您需要準備以下其中一項的文件來證明您在Hunters View公共住宅的地址。",
-                "title": "回歸權 - Hunters View (West Point)"
+                "address": "Hunters View 地址",
+                "address_desc": "您現居或曾經居住的 Hunters View 公共住房地址",
+                "desc": "適用於住戶成員當中，至少有一人是 Hunters View 公共住宅 (舊稱 West Point) 前任或現任居民的家庭。請注意，這些住房單位不提供補助；即使您的收入有所變動，租金仍維持不變。",
+                "proof_desc": "您需要提供下列任一文件，當中應顯示您的 Hunters View 公共住房地址。",
+                "title": "回遷權 - Hunters View (West Point)"
+            },
+            "rtr_potrero": {
+                "address": "Potrero Terrace 和 Annex 地址",
+                "address_desc": "您現居或曾經居住的 Potrero Terrace 和 Annex 公共住房地址",
+                "desc": "適用於住戶成員當中，至少有一人是 Potrero Terrace 和 Annex 公共住房前任或現任居民的住戶。請注意，這些住房單位不提供補助；即使您的收入有所變動，租金仍維持不變。",
+                "proof_desc": "您需要提供下列任一文件，當中應顯示您的 Potrero Terrace 和 Annex 公共住房地址。",
+                "title": "回遷權 - Potrero Terrace 和 Annex 公共住房"
             },
             "rtr_sunnydale": {
                 "address": "Sunnydale 住址",
