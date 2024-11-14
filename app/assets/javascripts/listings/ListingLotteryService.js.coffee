@@ -27,8 +27,6 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
   Service.listingHasLotteryBuckets = (listing) ->
     return false unless listing
 
-    # Temporary workaround for `lottery_buckets` API issues, revert once fixed
-    return true if listing.Id == 'a0W4U00000IXRHWUA5'
 
     listingLotteryBucketInfo = Service.lotteryBucketInfo[listing.Id]
     if listingLotteryBucketInfo
