@@ -8,6 +8,7 @@ import {
   getPathWithoutLanguagePrefix,
   getTranslatedString,
 } from "../../util/languageUtil"
+import { isValidUrl } from "../../util/urlUtil"
 import {
   Icon,
   t,
@@ -38,7 +39,7 @@ interface HowToApplyProps {
 
 const generateSubmissionUrl = (listingId: string) => {
   const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL
-  if (!formAssemblyUrl) return null
+  if (!isValidUrl(formAssemblyUrl)) return null
 
   return `${formAssemblyUrl}?ListingID=${listingId}`
 }
