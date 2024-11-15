@@ -54,9 +54,13 @@ module Force
     def self.get_listing_translations(listing)
       listing_id = listing['Id']
       listing_translations = fetch_listing_translations_from_cache(listing_id)
-      if translations_invalid?(listing_translations) || translations_are_outdated?(
-        listing_translations[:LastModifiedDate], listing['LastModifiedDate']
-      )
+      if translations_invalid?(listing_translations) ||
+         translations_are_outdated?(
+           listing_translations[:LastModifiedDate], listing['LastModifiedDate']
+         ) ||
+         translations_are_missing_lottery_bucket_pref_names?(
+           listing, listing_translations
+         )
         Rails.logger.info(
           'ListingService ' \
           "Translations are not valid for listing #{listing_id}, " \
@@ -88,6 +92,18 @@ module Force
     rescue InvalidLastModifiedDateError => e
       Rails.logger.error("Error checking if translations are outdated: #{e.message}")
       true
+    end
+
+    # Lottery bucket preference names *may* be missing
+    #   human translations, and *may* need to be machine translated
+    # This is a workaround to address that, ahead of a future project
+    #   to better integrate human and machine translations
+    def self.translations_are_missing_lottery_bucket_pref_names?(
+      listing,
+      listing_translations
+    )
+      listing['Lottery_Status'] == 'Lottery Complete' &&
+        listing_translations.keys.none? { |key| key.match('listings.lotteryPreference.') }
     end
 
     def self.listing_is_outdated?(cache_last_modified, listing_last_modified)
