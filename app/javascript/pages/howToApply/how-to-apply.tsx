@@ -47,11 +47,11 @@ const applicationsOpen = (listing: RailsSaleListing) =>
   listing && getFcfsSalesListingState(listing) === ListingState.Open
 
 const Header = ({ headerText }: { headerText: string }) => {
-  return <h3 className="text-2xl font-alt-serif">{headerText}</h3>
+  return <h2 className="text-2xl font-alt-serif">{headerText}</h2>
 }
 
 const SubHeader = ({ subHeaderText }: { subHeaderText: string }) => {
-  return <h4 className="font-semibold font-alt-sans pt-6 pb-4">{subHeaderText}</h4>
+  return <h3 className="font-semibold font-alt-sans pt-6 pb-4">{subHeaderText}</h3>
 }
 
 const InfoBox = ({ title, children }: { title: string; children: ReactNode }) => {
@@ -164,7 +164,9 @@ export const LeasingAgentBox = ({ listing }: { listing: RailsSaleListing }) => {
           {t("label.emailAddress")}
         </a>
       </div>
-      <Heading size="sm">{t("contactAgent.officeHours.seeTheUnit")}</Heading>
+      <Heading size="sm" priority={3}>
+        {t("contactAgent.officeHours.seeTheUnit")}
+      </Heading>
       <p className="text-sm">
         {getTranslatedString(listing.Office_Hours, "Office_Hours__c", listing.translations)}
       </p>
@@ -223,7 +225,7 @@ const HowToApplyListItem = ({
 }) => {
   return (
     <li>
-      <h4 className="font-semibold font-alt-sans pb-4">{headerText}</h4>
+      <h2 className="font-semibold font-alt-sans pb-4">{headerText}</h2>
       <div className="text-base">{children}</div>
     </li>
   )
