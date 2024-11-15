@@ -163,8 +163,8 @@ const onSubmit = (setError: (name: string, error: ErrorOption) => void) => (data
   }
   createAccount(userData, contactData)
     .then(() => {
-      // TODO: Redirect to Sign In page with modal message
-      console.log("Created an account.")
+      window.sessionStorage.setItem("redirect", "true")
+      window.location.replace("/sign-in")
     })
     .catch(handleCreateAccountErrors(setError))
 }
