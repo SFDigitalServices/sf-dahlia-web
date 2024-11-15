@@ -20,6 +20,7 @@ https://sfgovdt.jira.com/browse/<JIRA TICKET NUMBER>
 - [ ] all automated code checks pass (linting, tests, coverage, etc.)
 - [ ] code irrelevant to the ticket is not modified e.g. changing indentation due to automated formatting
 - [ ] if the code changes the UI, it matches the UI design exactly
+- [ ] if the changes include human translations, follow the [human translations process](https://sfgovdt.jira.com/l/cp/XS1KpvE4)
 
 ### Review instructions
 
