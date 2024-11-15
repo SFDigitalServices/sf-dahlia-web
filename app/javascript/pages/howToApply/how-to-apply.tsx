@@ -37,7 +37,8 @@ interface HowToApplyProps {
 }
 
 const submissionUrl = (listingId: string) => {
-  return `https://sfmoh.tfaforms.net/20?ListingID=${listingId}`
+  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL || "https://sfmoh.tfaforms.net/20"
+  return `${formAssemblyUrl}?ListingID=${listingId}`
 }
 
 const applicationsNotYetOpen = (listing: RailsSaleListing) =>
