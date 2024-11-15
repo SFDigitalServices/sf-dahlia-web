@@ -586,7 +586,7 @@
   "howToApplyPage.beforeYouStartSection.title": "申請準備事項",
   "howToApplyPage.howLongItTakesSection.p1": "這取決於您備齊所有資訊和文件的難易程度。可能需時數小時，也可能需要分幾天完成。如果您之前申請過，或許可以花費較少的時間。",
   "howToApplyPage.howLongItTakesSection.p2": "30 分鐘以內",
-  "howToApplyPage.howLongItTakesSection.p3": "如果您已備妥申請表和文件，請<a className='underline' href='%{url}' target='_blank'>立即提交申請表。</a>",
+  "howToApplyPage.howLongItTakesSection.p3": "如果您已備妥申請表和文件，請<a className='underline' href='%{url}'>立即提交申請表。</a>",
   "howToApplyPage.howLongItTakesSection.subtitle1": "準備申請表",
   "howToApplyPage.howLongItTakesSection.subtitle2": "提交申請表",
   "howToApplyPage.howLongItTakesSection.subtitle3": "準備好提交了嗎？",
