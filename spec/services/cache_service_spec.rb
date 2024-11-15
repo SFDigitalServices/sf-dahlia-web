@@ -27,6 +27,15 @@ describe CacheService do
 
   let(:multiple_listing_image_service) { instance_double(MultipleListingImageService) }
 
+  let(:lottery_buckets) do
+    {
+      'lotteryBuckets' => [
+        { 'preferenceName' => 'Veteran with Certificate of Preference' },
+        { 'preferenceName' => 'Certificate of Preference (COP)' },
+      ],
+    }
+  end
+
   before do
     allow(Force::ListingService).to receive(:listings).and_return(cached_listings)
     allow(Force::ListingService).to receive(:listings)
@@ -34,7 +43,7 @@ describe CacheService do
     allow(Force::ListingService).to receive(:listing)
     allow(Force::ListingService).to receive(:units)
     allow(Force::ListingService).to receive(:preferences)
-    allow(Force::ListingService).to receive(:lottery_buckets)
+    allow(Force::ListingService).to receive(:lottery_buckets).and_return(lottery_buckets)
     allow(multiple_listing_image_service).to receive(:process_images)
       .and_return(OpenStruct.new(errors: nil))
     allow(MultipleListingImageService).to receive(:new).and_return(multiple_listing_image_service)
@@ -134,6 +143,7 @@ describe CacheService do
       # mock cached listing
       listing['Listing_Other_Notes'] = 'Test Notes'
       listing['Realtor_Commission_Info'] = 'Test Commission Info'
+      listing['Lottery_Status'] = 'Lottery Complete'
 
       allow(Force::ListingService).to receive(:listing)
         .and_return(:listing)
