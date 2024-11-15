@@ -36,8 +36,10 @@ interface HowToApplyProps {
   assetPaths: unknown
 }
 
-const submissionUrl = (listingId: string) => {
-  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL || "https://sfmoh.tfaforms.net/20"
+const generateSubmissionUrl = (listingId: string) => {
+  const formAssemblyUrl = process.env.FCFS_FORMASSEMBLY_URL
+  if (!formAssemblyUrl) return null
+
   return `${formAssemblyUrl}?ListingID=${listingId}`
 }
 
@@ -309,6 +311,7 @@ const CreateBoxAccountStep = () => {
 
 const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
   const datetime = listing.Application_Start_Date_Time
+  const submissionUrl = generateSubmissionUrl(listing.listingID)
 
   return (
     <HowToApplyListItem headerText={t("howToApplyPage.howToApplySection.step5.title")}>
@@ -335,12 +338,12 @@ const SubmitApplicationStep = ({ listing }: { listing: RailsSaleListing }) => {
           })}
         </div>
       )}
-      {applicationsOpen(listing) && (
+      {applicationsOpen(listing) && submissionUrl && (
         <Button
           className="mt-6"
           styleType={AppearanceStyleType.primary}
           onClick={() => {
-            window.open(submissionUrl(listing.listingID), "_blank")
+            window.open(submissionUrl, "_blank")
           }}
         >
           {t("howToApplyPage.howToApplySection.step5.button")}
