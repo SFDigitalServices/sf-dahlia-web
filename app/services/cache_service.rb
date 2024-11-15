@@ -71,11 +71,7 @@ class CacheService
       listing,
       strings_to_translate,
     )
-    strings_to_translate = translate_lottery_bucket_preference_names(
-      listing,
-      strings_to_translate,
-    )
-    translate_listing_preference_descriptions(
+    translate_lottery_bucket_preference_names(
       listing,
       strings_to_translate,
     )
