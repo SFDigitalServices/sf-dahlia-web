@@ -50,25 +50,27 @@ export const ListingDetailsAdditionalInformation = ({
             />
           </div>
         )}
-        {isSalesFcfsEnabled &&
-          !isFcfsSalesListing(listing) &&
-          (!!listing.Required_Documents || isSale(listing)) && (
-            <div className="info-card bg-gray-100 border-0">
-              <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
-              <div className="text-xs">
-                <TextTruncate
-                  className="primary-lighter-markup-link translate"
-                  buttonClassName="text-blue-700"
-                  text={stripMostTags(
-                    getTranslatedString(
-                      listing.Required_Documents,
-                      "Required_Documents__c",
-                      listing.translations
-                    )
-                  )}
-                />
-              </div>
-              {isSale(listing) && !isHabitatListing(listing) && (
+        {(!!listing.Required_Documents ||
+          (isSale(listing) && isSalesFcfsEnabled && !isFcfsSalesListing(listing))) && (
+          <div className="info-card bg-gray-100 border-0">
+            <h3 className="text-serif-xl">{t("listings.requiredDocuments")}</h3>
+            <div className="text-xs">
+              <TextTruncate
+                className="primary-lighter-markup-link translate"
+                buttonClassName="text-blue-700"
+                text={stripMostTags(
+                  getTranslatedString(
+                    listing.Required_Documents,
+                    "Required_Documents__c",
+                    listing.translations
+                  )
+                )}
+              />
+            </div>
+            {isSalesFcfsEnabled &&
+              !isFcfsSalesListing(listing) &&
+              isSale(listing) &&
+              !isHabitatListing(listing) && (
                 <div className="text-xs mt-4">
                   <TextTruncate
                     className="primary-lighter-markup-link translate"
@@ -79,8 +81,8 @@ export const ListingDetailsAdditionalInformation = ({
                   />
                 </div>
               )}
-            </div>
-          )}
+          </div>
+        )}
         {listing.Legal_Disclaimers && (
           <div className="info-card bg-gray-100 border-0">
             <h3 className="text-serif-xl">{t("listings.importantProgramRules")}</h3>
