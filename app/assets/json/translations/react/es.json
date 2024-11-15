@@ -586,7 +586,7 @@
   "howToApplyPage.beforeYouStartSection.title": "Antes de empezar",
   "howToApplyPage.howLongItTakesSection.p1": "Depende de lo fácil que sea para usted reunir toda su información y documentos. Es posible esto lleve algunas horas o que tenga que hacerlo en el curso de varios días. Si ya ha presentado una solicitud antes, es posible que le lleve menos tiempo.",
   "howToApplyPage.howLongItTakesSection.p2": "30 minutos o menos",
-  "howToApplyPage.howLongItTakesSection.p3": "Si tiene la solicitud y los documentos listos, <a className='underline' href='%{url}' target='_blank'>envíe su solicitud ahora.</a>",
+  "howToApplyPage.howLongItTakesSection.p3": "Si tiene la solicitud y los documentos listos, <a className='underline' href='%{url}'>envíe su solicitud ahora.</a>",
   "howToApplyPage.howLongItTakesSection.subtitle1": "Preparando su solicitud",
   "howToApplyPage.howLongItTakesSection.subtitle2": "Enviando su solicitud",
   "howToApplyPage.howLongItTakesSection.subtitle3": "¿Listo para enviar?",
