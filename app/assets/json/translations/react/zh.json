@@ -912,6 +912,7 @@
   "listingDetails.applicationsDeadline.withDateTime": "申請截止時間：%{date}的 %{time} (太平洋時間)",
   "listingDetails.applicationsOpen": "開放申請",
   "listingDetails.applicationsOpen.withDateTime": "開放申請時間：%{date}的 %{time} (太平洋時間)",
+  "listingDetails.sales.aside.needHelp": "住房顧問可協助您完成申請表相關事宜。提供多種語言支援。",
   "listingDirectory.listingStatusContent.applicationDeadline": "申請截止時間",
   "listingDirectory.listingStatusContent.applicationDeadline.withDateTime": "申請截止時間：%{date}的 %{time}",
   "listingDirectory.listingStatusContent.applicationsClosed": "申請已截止",

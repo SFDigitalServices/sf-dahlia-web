@@ -33,6 +33,7 @@ import {
   listingHasSROUnits,
   getListingAddressString,
   isFcfsSalesListing,
+  getFcfsSalesListingState,
 } from "../../util/listingUtil"
 import { MobileListingDetailsLottery } from "../../modules/listingDetailsLottery/MobileListingDetailsLottery"
 import { MailingListSignup } from "../../components/MailingListSignup"
@@ -49,6 +50,8 @@ import { useFeatureFlag } from "../../hooks/useFeatureFlag"
 import { MobileListingDetailsSeeTheUnit } from "../../modules/listingDetailsAside/MobileListingDetailsSeeTheUnit"
 import { MobileListingDetailsProcess } from "../../modules/listingDetailsAside/MobileListingDetailsProcess"
 import { fcfsNoLotteryRequired } from "../../modules/noLotteryRequired/fcfsNoLotteryRequired"
+import { NeedHelpBlock } from "../../modules/listingDetailsAside/ListingDetailsNeedHelp"
+import { ListingState } from "../../modules/listings/ListingState"
 
 const ListingDetail = () => {
   const { flagsReady, unleashFlag: isCloudTranslationEnabled } = useFeatureFlag(
@@ -61,7 +64,11 @@ const ListingDetail = () => {
   const { router } = useContext(NavigationContext)
   const { getAssetPath } = useContext(ConfigContext)
   const [listing, setListing] = useState<RailsListing>(null)
-  const isApplicationOpen = listing && isOpen(listing)
+  const isApplicationOpen =
+    listing &&
+    (isFcfsSalesListing(listing)
+      ? getFcfsSalesListingState(listing) !== ListingState.Closed
+      : isOpen(listing))
   const listingIsHabitat = listing && isHabitatListing(listing)
 
   const {
@@ -174,6 +181,13 @@ const ListingDetail = () => {
             <Mobile>
               <ListingDetailsApply listing={listing} />
             </Mobile>
+            {isSalesFcfsEnabled && isApplicationOpen && (
+              <Mobile>
+                <div className="border-b border-t m-0">
+                  <NeedHelpBlock listing={listing} />
+                </div>
+              </Mobile>
+            )}
             <ListingDetailsAside listing={listing} imageSrc={getAssetPath("listing-units.svg")} />
             <ListingDetails>
               <MobileListingDetailsLottery
