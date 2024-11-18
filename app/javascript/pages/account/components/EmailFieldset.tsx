@@ -92,6 +92,8 @@ const EmailFieldset = ({ register, errors, defaultEmail, onChange, note }: Email
           required: "email:missing",
           validate: emailValidation,
         }}
+        labelClassName="sr-only"
+        label="Email"
         error={errors.email}
         errorMessage={
           errors.email?.message &&

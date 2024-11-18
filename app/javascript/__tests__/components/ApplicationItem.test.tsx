@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { getApplicationPath } from "../../util/routeUtil"
 import { applicationWithOpenListing } from "../data/RailsApplication/application-with-open-listing"
-import ApplicationItem from "../../components/ApplicationItem"
+import { ApplicationItem } from "../../components/ApplicationItem"
 import { renderAndLoadAsync } from "../__util__/renderUtils"
 import { convertToReadableDate } from "../../util/listingUtil"
 

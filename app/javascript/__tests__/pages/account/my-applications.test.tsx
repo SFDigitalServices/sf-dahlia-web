@@ -6,7 +6,7 @@ import MyApplications, {
 import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { authenticatedGet, authenticatedDelete } from "../../../api/apiService"
-import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import { applicationWithOpenListing } from "../../data/RailsApplication/application-with-open-listing"
 import { Application } from "../../../api/types/rails/application/RailsApplication"
 import { openSaleListing } from "../../data/RailsSaleListing/listing-sale-open"
@@ -36,7 +36,7 @@ jest.mock("@bloom-housing/ui-seeds", () => {
 
 describe("<MyApplications />", () => {
   let originalLocation
-  beforeAll(() => {
+  beforeEach(() => {
     // The below line prevents @axe-core from throwing an error
     // when the html tag does not have a lang attribute
     document.documentElement.lang = "en"
@@ -233,23 +233,19 @@ describe("<MyApplications />", () => {
         )
         expect(screen.getByText("My applications")).not.toBeNull()
 
-        act(() => {
-          fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
-        })
+        fireEvent.click(screen.getByRole("button", { name: /Delete/i }))
 
         const modal = screen.getByTestId("modalMock")
-        await act(async () => {
-          fireEvent.click(within(modal).getByRole("button", { name: /Delete/i }))
+        fireEvent.click(within(modal).getByRole("button", { name: /Delete/i }))
 
-          await waitFor(() => {
-            const loadingSpinner = screen.queryByTestId("loading-spinner")
-            expect(loadingSpinner).not.toBeInTheDocument()
-            expect(
-              screen.getByRole("heading", {
-                name: /681 florida - casa adelante/i,
-              })
-            ).toBeInTheDocument()
-          })
+        await waitFor(() => {
+          const loadingSpinner = screen.queryByTestId("loading-spinner")
+          expect(loadingSpinner).not.toBeInTheDocument()
+          expect(
+            screen.getByRole("heading", {
+              name: /681 florida - casa adelante/i,
+            })
+          ).toBeInTheDocument()
         })
 
         await waitFor(() => {

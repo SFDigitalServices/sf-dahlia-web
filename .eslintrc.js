@@ -160,6 +160,10 @@ module.exports = {
     "import/order": "off",
     "@typescript-eslint/no-empty-function": "off",
     "unicorn/no-array-reduce": "off",
+    "jest/require-top-level-describe": "error",
+
+    // Enforce using "it" for test cases
+    "jest/consistent-test-it": ["error", { fn: "it", withinDescribe: "it" }],
   },
   overrides: [
     {

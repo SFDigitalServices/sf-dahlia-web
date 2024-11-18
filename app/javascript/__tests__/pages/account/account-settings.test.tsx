@@ -2,8 +2,7 @@ import React from "react"
 import UserContext, { ContextProps } from "../../../authentication/context/UserContext"
 import { renderAndLoadAsync } from "../../__util__/renderUtils"
 import AccountSettingsPage from "../../../pages/account/account-settings"
-import { act } from "react-dom/test-utils"
-import { fireEvent, screen, within } from "@testing-library/dom"
+import { fireEvent, screen, within, act } from "@testing-library/react"
 import { authenticatedPut } from "../../../api/apiService"
 import { User } from "../../../authentication/user"
 
@@ -34,6 +33,7 @@ describe("<AccountSettingsPage />", () => {
     let renderResult
 
     beforeEach(async () => {
+      document.documentElement.lang = "en"
       originalUseContext = React.useContext
       const mockContextValue: ContextProps = {
         profile: mockProfile,
@@ -57,8 +57,6 @@ describe("<AccountSettingsPage />", () => {
       getByText = renderResult.getByText
       getAllByText = renderResult.getAllByText
       queryByText = renderResult.queryByText
-
-      document.documentElement.lang = "en"
     })
 
     afterEach(() => {
@@ -71,14 +69,16 @@ describe("<AccountSettingsPage />", () => {
       expect(title).not.toBeNull()
     })
 
-    test("resize events", () => {
+    it("resize events", () => {
       expect(renderResult).toMatchSnapshot()
 
-      // Change the viewport to 500px.
-      global.innerWidth = 500
+      act(() => {
+        // Change the viewport to 500px.
+        global.innerWidth = 500
 
-      // Trigger the window resize event.
-      global.dispatchEvent(new Event("resize"))
+        // Trigger the window resize event.
+        global.dispatchEvent(new Event("resize"))
+      })
 
       expect(renderResult).toMatchSnapshot()
     })
@@ -419,7 +419,7 @@ describe("<AccountSettingsPage />", () => {
     })
 
     describe("renders the correct errors", () => {
-      test("name Errors", async () => {
+      it("name Errors", async () => {
         ;(authenticatedPut as jest.Mock).mockRejectedValue({
           response: {
             data: {
@@ -479,7 +479,7 @@ describe("<AccountSettingsPage />", () => {
         ).not.toBeNull()
       })
 
-      test("date of birth errors", async () => {
+      it("date of birth errors", async () => {
         const button = getAllByText("Update")
         const monthField: Element = screen.getByRole("spinbutton", {
           name: /month/i,
@@ -591,7 +591,7 @@ describe("<AccountSettingsPage />", () => {
         ).not.toBeNull()
       })
 
-      test("email Errors", async () => {
+      it("email Errors", async () => {
         const button = getAllByText("Update")
         const group = screen.getByRole("group", {
           name: /email/i,
@@ -649,7 +649,7 @@ describe("<AccountSettingsPage />", () => {
           screen.getByText(/something went wrong\. try again or check back later/i)
         ).not.toBeNull()
       })
-      test("password Errors", async () => {
+      it("password Errors", async () => {
         const button = getAllByText("Update")
         const currentPasswordField = screen.getByLabelText(/current password/i)
         const newPasswordField = screen.getByLabelText(/choose a new password/i)
