@@ -192,13 +192,13 @@ exports[`ListingDetailsAside renders ListingDetailsAside component fcfs 1`] = `
                     </li>
                   </ol>
                 </div>
-                <a
+                <button
+                  aria-label="Get started with your application"
                   class="button is-primary w-full transition"
-                  href="/listings/a0W0P00000GlKfBUAV/how-to-apply"
                   tabindex="0"
                 >
                   Get started
-                </a>
+                </button>
               </div>
             </section>
           </div>

@@ -39,15 +39,15 @@ const FcfsBmrSalesHowToApply = ({ listingId }: { listingId: string }) => (
         <li>{t("listings.fcfs.bmrSales.howToApply.step3")}</li>
       </ol>
     </div>
-    <LinkButton
+    <Button
       styleType={AppearanceStyleType.primary}
       className={"w-full"}
       transition={true}
-      href={localizedPath(`listings/${listingId}/how-to-apply`)}
+      onClick={() => (window.location.href = localizedPath(`listings/${listingId}/how-to-apply`))}
       ariaLabel={t("listings.fcfs.bmrSales.howToApply.aria")}
     >
       {t("t.getStarted")}
-    </LinkButton>
+    </Button>
   </SidebarBlock>
 )
 
