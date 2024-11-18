@@ -410,11 +410,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                         class="process-list"
                       >
                         <li>
-                          <h2
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Fill out PDF application
-                          </h2>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -450,11 +450,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h2
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Gather documents
-                          </h2>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -478,11 +478,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h2
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Combine everything into 1 PDF file
-                          </h2>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -540,11 +540,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h2
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Create a free account at Box.com
-                          </h2>
+                          </h3>
                           <div
                             class="text-base"
                           >
@@ -581,11 +581,11 @@ exports[`<HowToApply /> renders HowToApply component 1`] = `
                           </div>
                         </li>
                         <li>
-                          <h2
+                          <h3
                             class="font-semibold font-alt-sans pb-4"
                           >
                             Submit your application and get your place in line
-                          </h2>
+                          </h3>
                           <div
                             class="text-base"
                           >

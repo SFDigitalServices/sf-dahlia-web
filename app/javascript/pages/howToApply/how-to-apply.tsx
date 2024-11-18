@@ -229,7 +229,7 @@ const HowToApplyListItem = ({
 }) => {
   return (
     <li>
-      <h2 className="font-semibold font-alt-sans pb-4">{headerText}</h2>
+      <h3 className="font-semibold font-alt-sans pb-4">{headerText}</h3>
       <div className="text-base">{children}</div>
     </li>
   )
